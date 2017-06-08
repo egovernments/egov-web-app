@@ -2,7 +2,29 @@ body{
 	/*font-family: 'ralewayregular';*/
 	font-size: 14px;
 	line-height: 18px;
+	top: 0px !important;
+
 }
+
+.side-bar {
+  margin-top: 64px;
+}
+
+.side-bar a{
+	color: rgb(90, 62, 27)
+}
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+    }
+
+		/*.goog-logo-link {
+		   display:none !important;
+		}
+
+		.goog-te-gadget span{
+		   color: transparent !important;
+		}*/
 /*-- Fonts --*/
 /*@font-face {
     font-family: 'ralewaybold';
@@ -586,20 +608,4 @@ ul{list-style-type: none; padding: 0; margin: 0;}
   	.head-top h1 span{display: block;}
 	.head-top h1{font-size: 12px;}
 	.left-side-menu{width: 80%;}
-}
-
-.display-span {
-	margin-top: 4px;
-}
-
-input:invalid {
-    box-shadow: none !important;
-}
-
-div#agreementTable_filter input {
-    border: solid 1px #ddd;
-}
-
-div#relatedTable_filter input {
-	border: solid 1px #ddd;
 }
