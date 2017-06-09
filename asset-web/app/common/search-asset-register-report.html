@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>EIS</title>
-    <base href="/hr-web/"/>
-
+    <title>Asset</title>
+    <base href="/asset-web/"/>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="resources/stylesheet/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="resources/stylesheet/global/multi-level-menu/jquery.multilevelpushmenu.min.css">
@@ -89,36 +88,33 @@
     <script type="text/javascript" src="resources/javascript/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="resources/javascript/moment.js"></script>
     <script type="text/javascript" src="resources/javascript/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js">
+    <script type="text/javascript" src="resources/javascript/data-table/dataTables.buttons.min.js">
 
     </script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js">
+    <script type="text/javascript" src="resources/javascript/data-table/buttons.flash.min.js">
 
     </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js">
+    <script type="text/javascript" src="resources/javascript/data-table/jszip.min.js">
 
     </script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" charset="utf-8"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" charset="utf-8"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js" charset="utf-8"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js" charset="utf-8"></script>
+    <script src="resources/javascript/data-table/pdfmake.min.js" charset="utf-8"></script>
+    <script src="resources/javascript/data-table/vfs_fonts.js" charset="utf-8"></script>
+    <script src="resources/javascript/data-table/buttons.html5.min.js" charset="utf-8"></script>
+    <script src="resources/javascript/data-table/buttons.print.min.js" charset="utf-8"></script>
     <!-- <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js" charset="utf-8"></script> -->
     <script type="text/javascript" src="resources/javascript/dataTables.responsive.min.js"></script>
 
     <!-- Jquery form validator -->
     <script type="text/javascript" src="resources/javascript/global/jquery-validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="resources/javascript/global/jquery-validation/additional-methods.min.js"></script>
-    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.js"></script>
-    <script src="resources/javascript/hr/common/commonAPI.js" charset="utf-8"></script>
-    <script src="/egi/resources/global/js/egov/inbox.js"></script>
-
+    <script src="resources/javascript/reactjs/react.min.js"></script>
+    <script src="resources/javascript/reactjs/react-dom.min.js"></script>
+    <script src="resources/javascript/reactjs/browser.js"></script>
+    <script src="resources/javascript/common/common.js" charset="utf-8"></script>
 </head>
 
 <body class="page-body">
     <!-- for showing loading spinner -->
-
     <div id="loadingMask" style="display: none;"></div>
     <div id="loading" style="display: none;">
         <div class="loading-indicator"><i class="fa fa-spinner fa-pulse fa-2x"></i></div>
@@ -136,7 +132,7 @@
                 </div>
 
                 <div class="navbar-brand">
-                    <h3 class="horizontal-page-title homepage hidden-xs" id="hp-citizen-title">Apply Leave</h3>
+                    <h3 class="horizontal-page-title homepage hidden-xs" id="hpCitizenTitle"></h3>
                 </div>
 
                 <!-- notifications and other links -->
@@ -226,26 +222,24 @@
                     <div class="col-xs-12">
                         <!-- Middle Section -->
                         <div class="body-cont">
-                            <div class="body-cont-inner">
-                                <div class="form-section">
-                                    <div id="root"></div>
-                                     <script type="text/babel"  src="resources/javascript/hr/leavemaster/apply-leave.js"></script>
-
-                                </div>
+                            <form  id="createAgreementForm" name="createAgreementForm" >
+                                <div class="body-cont-inner">
+                                   <div class="form-section" id="shopAssetDetailsBlock">
+                                        <div id="root"></div>
+                                        <script type="text/babel"  src="resources/javascript/common/search-asset-register-report.js"></script>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                        <!-- /Middle Section -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+                      </div>
 
     <!-- <footer class="clearfix simple">
         <div class="constrain">
             <div id="legal">
-                <span class="copyright">Copyright <span><i class="fa fa-copyright"></i></span> 2017 <a href="http://www.egovernments.org" target="_blank"> eGovernments Foundation.<sup>®</sup></a></span>
+                <span class="copyright">Copyright <span><i class="fa fa-copyright"></i></span> 2017 <a href="http://www.egovernments.org" target="_blank"> eGovernments Foundation.<sup>Â®</sup></a></span>
                 <span class="version">eGov ERP - 2.1.0-SNAPSHOT_2486 @ Core - 2.1.0-SNAPSHOT_2486</span>
             </div>
         </div>
@@ -253,7 +247,6 @@
 
     <script src="resources/javascript/egov/custom.js"></script>
     <script src="resources/javascript/js.cookies.js"></script>
-
 
     <script type="text/javascript">
         $(window).load(function() {
@@ -264,7 +257,10 @@
     </script>
 
     <script type="text/javascript">
-
+        $('#ast-srch').DataTable({
+            "bFilter": false
+            // "bLengthChange": false
+        });
         $('.menu-responsive').mouseover(function() {
             $('.menu-responsive > ul').css('display', 'block')
         });
@@ -272,6 +268,6 @@
             $('.menu-responsive > ul').css('display', 'none')
         });
     </script>
-</body>
+    </body>
 
-</html>
+    </html>
