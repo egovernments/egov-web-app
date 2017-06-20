@@ -13,9 +13,9 @@ var instance = axios.create({
   }
 });
 
-document.cookie = "SESSIONID=262a86bb-fbbc-469b-b57d-5f5fa22519c1; JSESSIONID=aGB5rngaHCQOjf2MPGPWEt1Ft11lXX-9LfCjUT0_.ip-10-0-0-100; Authorization=Basic Og==";
+//document.cookie = "SESSIONID=75dedd21-1145-4745-a8aa-1790a737b7c5; JSESSIONID=Nw2kKeNF6Eu42vtXypb3kP4fER1ghjXNMNISiIF5.ip-10-0-0-100; Authorization=Basic Og==";
 
-var authToken = localStorage.getItem("auth-token");
+var authToken = localStorage.getItem("auth");
 
 //request info from cookies
 var requestInfo = {
@@ -31,15 +31,11 @@ var requestInfo = {
 };
 //uncomment for ap
 // var tenantId = "ap." + window.location.origin.split("-")[0].split("//")[1];
-var tenantId = "ap.kurnool";
+var tenantId = localStorage.getItem("tenantId");
 
 module.exports = {
-  commonApiPost: (context, resource = "", action = "", queryObject = {}, body = {}) => {
-    var url = "/" + context + (resource
-      ? "/" + resource
-      : "") + (action
-      ? "/" + action
-      : "");
+  commonApiPost: (context, queryObject = {}, body = {}) => {
+    var url = context;
     url += "?tenantId=" + tenantId;
     for (var variable in queryObject) {
       if (queryObject[variable]) {
@@ -47,19 +43,14 @@ module.exports = {
       }
     }
     body["RequestInfo"] = requestInfo;
-    console.log(body);
     return instance.post(url, body).then(function(response) {
       return response.data;
     }).catch(function(response) {
       throw new Error(response.data.message);
     });
   },
-  commonApiGet: (context, resource = "", action = "", queryObject = {}) => {
-    var url = "/" + context + (resource
-      ? "/" + resource
-      : "") + (action
-      ? "/" + action
-      : "");
+  commonApiGet: (context, queryObject = {}) => {
+    var url = context ;
     url += "?tenantId=" + tenantId;
     for (var variable in queryObject) {
       if (queryObject[variable]) {
