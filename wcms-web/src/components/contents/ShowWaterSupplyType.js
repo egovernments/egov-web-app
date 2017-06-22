@@ -63,7 +63,7 @@ const styles = {
   }
 };
 
-class ShowDocumentTypeApplicationType extends Component {
+class ShowWaterSupplyType extends Component {
   constructor(props) {
        super(props);
        this.state = {
@@ -81,7 +81,7 @@ class ShowDocumentTypeApplicationType extends Component {
 
   componentWillMount()
   {
-    $('#documentTypeTable').DataTable({
+    $('#waterSupplyTypeTable').DataTable({
          dom: 'lBfrtip',
          buttons: [
                    'excel', 'pdf', 'print'
@@ -91,10 +91,10 @@ class ShowDocumentTypeApplicationType extends Component {
 
        });
 
-        let response=Api.commonApiPost("wcms-masters", "documenttype", "_search", {},{}).then((res)=>
+        let response=Api.commonApiPost("wcms-masters", "supplytype", "_search", {},{}).then((res)=>
     {
       this.setState({
-        list: res.documentTypes
+        list: res.supplytypes
       });
 
     },(err)=> {
@@ -113,7 +113,7 @@ class ShowDocumentTypeApplicationType extends Component {
 }
 
   componentWillUnmount(){
-     $('#documentTypeTable')
+     $('#waterSupplyTypeTable')
      .DataTable()
      .destroy(true);
   }
@@ -134,13 +134,13 @@ class ShowDocumentTypeApplicationType extends Component {
   componentWillUpdate() {
     if(flag == 1) {
       flag = 0;
-      $('#documentTypeTable').dataTable().fnDestroy();
+      $('#waterSupplyTypeTable').dataTable().fnDestroy();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     // if (true) {
-    //     $('#documentTypeTable').DataTable({
+    //     $('#waterSupplyTypeTable').DataTable({
     //       dom: 'lBfrtip',
     //       buttons: [
     //                 'excel', 'pdf', 'print'
@@ -155,7 +155,7 @@ class ShowDocumentTypeApplicationType extends Component {
 
   render() {
     let {
-      showDocumentTypeApplicationType,
+      showWaterSupplyType,
       fieldErrors,
       isFormValid,
       isTableShow,
@@ -167,7 +167,7 @@ class ShowDocumentTypeApplicationType extends Component {
 
     let {search} = this;
     let{list}=this.state;
-    // console.log(showDocumentTypeApplicationType);
+    // console.log(showWaterSupplyType);
     // console.log(isTableShow);
     // console.log(list);
     let renderAction=function(type,id){
@@ -175,14 +175,14 @@ class ShowDocumentTypeApplicationType extends Component {
         console.log(type);
 
               return (
-                      <a href={`masters/DocumentTypeApplicationType?id=${id}&type=${type}`} className="btn btn-default btn-action"><span className="glyphicon glyphicon-pencil"></span></a>
+                      <a href={`masters/WaterSupplyType?id=${id}&type=${type}`} className="btn btn-default btn-action"><span className="glyphicon glyphicon-pencil"></span></a>
               );
 
     }
     else {
 
             return (
-                    <a href={`masters/DocumentTypeApplicationType?id=${id}&type=${type}`} className="btn btn-default btn-action"><span className="glyphicon glyphicon-modal-window"></span></a>
+                    <a href={`masters/WaterSupplyType?id=${id}&type=${type}`} className="btn btn-default btn-action"><span className="glyphicon glyphicon-modal-window"></span></a>
 
             );
 
@@ -219,17 +219,17 @@ class ShowDocumentTypeApplicationType extends Component {
         <Card>
           <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Search Result < /strong>}/>
           <CardText>
-        <Table id="documentTypeApplicationTypeTable" style={{color:"black",fontWeight: "normal"}} bordered responsive>
+        <Table id="waterSupplyTypeTable" style={{color:"black",fontWeight: "normal"}} bordered responsive>
           <thead style={{backgroundColor:"#f2851f",color:"white"}}>
             <tr>
               <th>Sl No.</th>
               <th>Code</th>
-              <th>Document Type</th>
+              <th>Water Supply Type</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
-          <tbody id="documentTypeApplicationTypeTableResultBoday">
+          <tbody id="waterSupplyTypeTableResultBoday">
                 {renderBody()}
             </tbody>
 
@@ -239,12 +239,12 @@ class ShowDocumentTypeApplicationType extends Component {
       )
     }
     return (
-      <div className="showDocumentTypeApplicationType">
+      <div className="showWaterSupplyType">
         <form onSubmit={(e) => {
           search(e)
         }}>
           <Card>
-             <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Search Document Type < /strong>}/>
+             <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Search Water Supply Type < /strong>}/>
 
             <CardText>
               <Card>
@@ -252,10 +252,10 @@ class ShowDocumentTypeApplicationType extends Component {
                   <Grid>
                     <Row>
                     <Col xs={12} md={6}>
-                      <TextField value={showDocumentTypeApplicationType.name?showDocumentTypeApplicationType.name:""} onChange={(e) => handleChange(e, "name", false, "")} hintText="documentType" floatingLabelText="documentType" />
+                      <TextField value={showWaterSupplyType.name?showWaterSupplyType.name:""} onChange={(e) => handleChange(e, "name", false, "")} hintText="waterSupplyType" floatingLabelText="waterSupplyType" />
                     </Col>
                     <Col xs={12} md={6}>
-                      <TextField value={showDocumentTypeApplicationType.code?showDocumentTypeApplicationType.code:""} onChange={(e) => handleChange(e, "code", false, "")} hintText="Code" floatingLabelText="Code" />
+                      <TextField value={showWaterSupplyType.code?showWaterSupplyType.code:""} onChange={(e) => handleChange(e, "code", false, "")} hintText="Code" floatingLabelText="Code" />
                     </Col>
 
 
@@ -265,7 +265,7 @@ class ShowDocumentTypeApplicationType extends Component {
                                         <Checkbox
                                          label="Active"
                                          defaultChecked={true}
-                                         value={showDocumentTypeApplicationType.active?showDocumentTypeApplicationType.active:""}
+                                         value={showWaterSupplyType.active?showWaterSupplyType.active:""}
                                          onCheck={(event,isInputChecked) => {
                                            var e={
                                              "target":{
@@ -307,7 +307,7 @@ class ShowDocumentTypeApplicationType extends Component {
   }
 }
 
-const mapStateToProps = state => ({showDocumentTypeApplicationType: state.form.form, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
+const mapStateToProps = state => ({showWaterSupplyType: state.form.form, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
 
 const mapDispatchToProps = dispatch => ({
   initForm: () => {
@@ -339,4 +339,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowDocumentTypeApplicationType);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowWaterSupplyType);
