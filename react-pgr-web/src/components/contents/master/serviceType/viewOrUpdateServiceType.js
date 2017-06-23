@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import ImagePreview from '../../../common/ImagePreview.js';
 import SimpleMap from '../../../common/GoogleMaps.js';
 import {Link, Route} from 'react-router-dom';
-
 import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
@@ -56,7 +55,7 @@ const styles = {
 
 var _this;
 
-class ViewEditReceivingCenter extends Component {
+class viewOrUpdateServiceType extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -67,9 +66,9 @@ class ViewEditReceivingCenter extends Component {
     componentWillMount() {
         var body = {}
         let  current = this;
-        Api.commonApiPost("/pgr-master/serviceGroup/_search",{},body).then(function(response){
-            console.log(response);
-            current.setState({data:response.ServiceGroups});
+        Api.commonApiPost("/pgr-master/service/_search",{},body).then(function(response){
+            console.log(response.Service);
+            current.setState({data:response.Service});
         }).catch((error)=>{
             console.log(error);
         })
@@ -85,7 +84,7 @@ class ViewEditReceivingCenter extends Component {
     render() {
 
       let {
-        serviceGroupCreate,
+        serviceTypeCreate,
         fieldErrors,
         isFormValid,
         isTableShow,
@@ -98,14 +97,12 @@ class ViewEditReceivingCenter extends Component {
         buttonText
       } = this.props;
 
-
-
       let url = this.props.location.pathname;
 
       return(
-        <div className="serviceGroupCreate">
+        <div className="serviceTypeCreate">
             <Card style={styles.marginStyle}>
-                <CardHeader style={{paddingBottom:0}}  title={<div style={styles.headerStyle}>All Receiving Center</div>} />
+                <CardHeader style={{paddingBottom:0}}  title={<div style={styles.headerStyle}>All Service Type</div>} />
                 <CardText style={{padding:0}}>
                     <Grid>
                         <Row>
@@ -113,27 +110,31 @@ class ViewEditReceivingCenter extends Component {
                                 <Table>
                                     <thead>
                                         <tr>
-                                          <th>ID</th>
+                                          <th>Sl No</th>
                                           <th>Name</th>
                                           <th>Code</th>
+                                          <th>Category</th>
+                                          <th>Active</th>
                                           <th>Description</th>
-                                          <th></th>
+                                          <th>SLA Hour</th>
+                                          <th>Has Financial Impact</th>
+                                          <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.data && this.state.data.map((e,i)=>{
                                           return(
                                             <tr key={i}>
-                                              <td>{e.id}</td>
-                                              <td>{e.name}</td>
-                                              <td>{e.code}</td>
+                                              <td>{i+1}</td>
+                                              <td>{e.serviceName}</td>
+                                              <td>{e.serviceCode}</td>
+                                              <td>{e.category}</td>
+                                              <td>{e.active?"True":"False"}</td>
                                               <td>{e.description}</td>
-                                              <td>{e.active}</td>
-                                              <td>{e.auditDetails}</td>
-                                              <td>{e.iscrnrequired}</td>
-                                              <td>{e.orderno}</td>
-                                              {url == '/serviceGroup/view' && <td><Link to={`/viewServiceGroup/${e.id}`}><RaisedButton style={{margin:'0 3px'}} label="View"/></Link></td>}
-                                              {url == '/serviceGroup/edit' && <td><Link to={`/createServiceGroup/${e.id}`}><RaisedButton style={{margin:'0 3px'}} label="Edit"/></Link></td>}
+                                              <td>{e.slaHours}</td>
+                                              <td>{e.metadata?"True":"False"}</td>
+                                              {url == '/viewOrUpdateServiceType/view' && <td><Link to={`/viewServiceType/${e.id}`}><RaisedButton style={{margin:'0 3px'}} label="View"/></Link></td>}
+                                              {url == '/viewOrUpdateServiceType/edit' && <td><Link  to={`/viewServiceType/${e.id}`}><RaisedButton style={{margin:'0 3px'}} label="Edit"/></Link></td>}
                                             </tr>
                                           )
                                         })}
@@ -150,7 +151,7 @@ class ViewEditReceivingCenter extends Component {
 }
 
 const mapStateToProps = state => {
-  return ({serviceGroupCreate: state.form.form, files: state.form.files, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
+  return ({serviceTypeCreate: state.form.form, files: state.form.files, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -160,7 +161,7 @@ const mapDispatchToProps = dispatch => ({
       validationData: {
         required: {
           current: [],
-          required: ["name","code","orderno", "description"]
+          required: ["name","code","channel","description"]
         },
         pattern: {
           current: [],
@@ -182,4 +183,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewEditReceivingCenter);
+export default connect(mapStateToProps, mapDispatchToProps)(viewOrUpdateServiceType);
