@@ -14,7 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import DataTable from '../../../common/Table';
 import Api from '../../../../api/api';
-
+import {translate} from '../../../common/common';
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
@@ -62,20 +62,44 @@ const styles = {
   }
 };
 
-class DefineEscalation extends Component {
+const getNameById = function(object, id, property = "") {
+  if (id == "" || id == null) {
+        return "";
+    }
+    for (var i = 0; i < object.length; i++) {
+        if (property == "") {
+            if (object[i].id == id) {
+                return object[i].name;
+            }
+        } else {
+            if (object[i].hasOwnProperty(property)) {
+                if (object[i].id == id) {
+                    return object[i][property];
+                }
+            } else {
+                return "";
+            }
+        }
+    }
+    return "";
+}
+
+class DefineEscalationTime extends Component {
     constructor(props) {
       super(props)
       this.state = {
-              positionSource:[],
+              serviceTypeSource:[],
+              designation:[],
               dataSourceConfig : {
-                text: 'name',
+                text: 'serviceName',
                 value: 'id',
               },
               isSearchClicked: false,
               resultList: [],
               noData:false,
               escalationForm:{
-              }
+              },
+              editIndex: -1
             };
     }
 
@@ -95,19 +119,29 @@ class DefineEscalation extends Component {
 
     componentDidMount() {
       let self = this;
-      Api.commonApiPost("/hr-masters/positions/_search").then(function(response) {
+      Api.commonApiPost("/pgr/services/v1/_search", {type: "all"}).then(function(response) {
+          console.log(response);
           self.setState({
-            positionSource: response.Position
+            serviceTypeSource: response.complaintTypes
           })
       }, function(err) {
         self.setState({
-            positionSource: []
+            serviceTypeSource: []
+          })
+      });
+
+      Api.commonApiPost("/hr-masters/designations/_search").then(function(response) {
+          self.setState({
+            designation: response.Designation
+          })
+      }, function(err) {
+        self.setState({
+            designation: []
           })
       });
     }
 
     componentWillUpdate() {
-
       if(flag == 1) {
         flag = 0;
         $('#searchTable').dataTable().fnDestroy();
@@ -125,12 +159,11 @@ class DefineEscalation extends Component {
       let current = this;
 
       let query = {
-        id:this.props.defineEscalation.position.id
+        id:this.props.defineEscalationTime.serviceType.id
       }
 
-      Api.commonApiPost("/pgr-master/escalation/_search",query,{}).then(function(response){
+      Api.commonApiPost("workflow/escalation-hours/v1/_search",query,{}).then(function(response){
           console.log(response);
-
           if (response.EscalationTimeType[0] != null) {
               flag = 1;
               current.setState({
@@ -148,32 +181,82 @@ class DefineEscalation extends Component {
 
   }
 
-  localHandleChange = (e, property, isRequired, pattern) => {
-    if(this.state.escalationForm.hasOwnProperty('fromPosition')){
-      this.setState({
-          escalationForm: {
-            ...this.state.escalationForm,
-              [property]: e.target.value
-          }
-      })
-    } else {
-      this.setState({
-          escalationForm: {
-            ...this.state.escalationForm,
-            fromPosition: this.props.defineEscalation.position.id,
-              [property]: e.target.value
-          }
-      })
-    }
-  }
-
   addEscalation = () => {
-        this.setState({
+    var current = this
+    var body = {
+      EscalationTimeType:{
+        grievancetype:{
+          id: this.props.defineEscalationTime.serviceType.id
+        },
+        noOfHours:this.props.defineEscalationTime.numberOfHours,
+        designation:this.props.defineEscalationTime.designation.id,
+        tenantId :localStorage.getItem("tenantId") ? localStorage.getItem("tenantId") : 'default'
+
+      }
+    }
+
+    Api.commonApiPost("workflow/escalation-hours/v1/_create",{},body).then(function(response){
+        console.log(response);
+        current.setState({
           resultList:[
-            ...this.state.resultList,
-            this.state.escalationForm
+            ...current.state.resultList,
+            current.props.defineEscalationTime
           ]
       })
+    }).catch((error)=>{
+        console.log(error);
+    })
+
+  /*  current.setState({
+      resultList:[
+        ...this.state.resultList,
+        this.props.defineEscalationTime
+      ]
+    })*/
+  }
+
+  updateEscalation = () => {
+
+    var current = this
+    var body = {
+      EscalationTimeType:{
+        grievancetype:{
+          id: this.props.defineEscalationTime.serviceType.id
+        },
+        noOfHours:this.props.defineEscalationTime.numberOfHours,
+        designation:this.props.defineEscalationTime.designation.id,
+        tenantId :localStorage.getItem("tenantId") ? localStorage.getItem("tenantId") : 'default'
+      }
+    }
+
+    var idd = this.props.defineEscalationTime.serviceType.id
+
+    Api.commonApiPost("workflow/escalation-hours/v1/_update/"+idd,{},body).then(function(response){
+        console.log(response);
+        current.setState((prevState)=>{
+          resultList:[
+            ...current.state.resultList,
+            prevState.resultList[prevState.editIndex] = current.props.defineEscalationTime
+          ],
+          prevState.editIndex=-1
+        })
+    }).catch((error)=>{
+        console.log(error);
+    })
+
+  }
+
+  editObject = (index) => {
+      this.props.setForm(this.state.resultList[index])
+  }
+
+  deleteObject = (index) => {
+    this.setState({
+        resultList:[
+          ...this.state.resultList.slice(0, index),
+          ...this.state.resultList.slice(index+1)
+        ]
+    })
   }
 
     render() {
@@ -182,123 +265,86 @@ class DefineEscalation extends Component {
 
       let {
         isFormValid,
-        defineEscalation,
+        defineEscalationTime,
         fieldErrors,
         handleChange,
         handleAutoCompleteKeyUp
       } = this.props;
 
-      let {submitForm, localHandleChange, addEscalation} = this;
+      let {submitForm, localHandleChange, addEscalation, deleteObject, editObject, updateEscalation} = this;
 
       console.log(this.state.escalationForm, this.state.resultList);
 
-      let {isSearchClicked, resultList, escalationForm} = this.state;
+      let {isSearchClicked, resultList, escalationForm, designation, editIndex} = this.state;
+
+      console.log(designation);
 
       const renderBody = function() {
       	  if(resultList && resultList.length)
       		return resultList.map(function(val, i) {
       			return (
       				<tr key={i}>
-                <td>{val.fromPosition}</td>
-      					<td>{val.grievanceType}</td>
-      					<td>{val.department}</td>
-      					<td>{val.designation}</td>
-                <td>{val.toPosition}</td>
-                <td><RaisedButton style={{margin:'15px 5px'}} label="Delete" backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
-                    }}/></td>
+                <td>{i+1}</td>
+      					<td>{val.designation.name}</td>
+                <td>{val.numberOfHours}</td>
+                <td>
+                <RaisedButton style={{margin:'0 3px'}} label={translate("pgr.lbl.update")} backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
+                    editObject(i);
+                    current.setState({editIndex:i})
+                }}/>
+                {false && <RaisedButton style={{margin:'0 3px'}} label={translate("pgr.lbl.delete")} disabled={editIndex<0?false:true} backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
+                    deleteObject(i);
+                }}/>}</td>
       				</tr>
       			)
       		})
       }
 
       const viewTable = function() {
-      	  if(isSearchClicked)
+      	  if(!isSearchClicked)
       		return (
    	        <Card>
               <CardText>
                   <Row>
                     <Col xs={12} md={3} sm={6}>
-                        <TextField
-                            fullWidth={true}
-                            floatingLabelText="From Position"
-                            value={defineEscalation.position ? defineEscalation.position.name : ""}
-                            id="name"
-                            disabled={true}
-                        />
-                    </Col>
-                    <Col xs={12} md={3} sm={6}>
                         <SelectField
-                           floatingLabelText="Grievance Type"
+                           floatingLabelText={translate("pgr.lbl.designation")}
                            fullWidth={true}
-                           value={escalationForm.grievanceType ? escalationForm.grievanceType : ""}
+                           value={defineEscalationTime.designation ? defineEscalationTime.designation : ""}
                            onChange= {(e, index ,value) => {
                              var e = {
                                target: {
                                  value: value
                                }
                              };
-                             localHandleChange(e, "grievanceType", true, "");
+                             handleChange(e, "designation", true, "");
                             }}
                           >
-                           <MenuItem value={1} primaryText="Options" />
+                              {current.state.designation && current.state.designation.map((e,i)=>{
+                                  return(<MenuItem key={i} value={e} primaryText={e.name} />)
+                              })}
                         </SelectField>
                     </Col>
                     <Col xs={12} md={3} sm={6}>
-                        <SelectField
-                           floatingLabelText="Department"
-                           fullWidth={true}
-                           value={escalationForm.department ? escalationForm.department : ""}
-                           onChange= {(e, index ,value) => {
-                             var e = {
-                               target: {
-                                 value: value
-                               }
-                             };
-                             localHandleChange(e, "department", true, "");
+                        <TextField
+                            fullWidth={true}
+                            floatingLabelText={translate("pgr.noof.hours")}
+                            value={defineEscalationTime.numberOfHours ? defineEscalationTime.numberOfHours : ""}
+                            errorText={fieldErrors.numberOfHours ? fieldErrors.numberOfHours : ""}
+                            onChange={(e) => {
+                              handleChange(e, "numberOfHours", true, /^\d+$/)
                             }}
-                         >
-                           <MenuItem value={2} primaryText="Options" />
-                        </SelectField>
-                    </Col>
-                    <Col xs={12} md={3} sm={6}>
-                        <SelectField
-                           floatingLabelText="Designation"
-                           fullWidth={true}
-                           value={escalationForm.designation ? escalationForm.designation : ""}
-                           onChange= {(e, index ,value) => {
-                             var e = {
-                               target: {
-                                 value: value
-                               }
-                             };
-                             localHandleChange(e, "designation", true, "");
-                            }}
-                         >
-                           <MenuItem value={1} primaryText="Options" />
-                        </SelectField>
-                    </Col>
-                    <Col xs={12} md={3} sm={6}>
-                        <SelectField
-                           floatingLabelText="To Position"
-                           fullWidth={true}
-                           value={escalationForm.toPosition ? escalationForm.toPosition : ""}
-                           onChange= {(e, index ,value) => {
-                             var e = {
-                               target: {
-                                 value: value
-                               }
-                             };
-                             localHandleChange(e, "toPosition", true, "");
-                            }}
-                         >
-                           <MenuItem value={1} primaryText="Options" />
-                        </SelectField>
+                            id="numberOfHours"
+                        />
                     </Col>
                     <div className="clearfix"></div>
                     <Col xs={12} md={12} style={{textAlign:"center"}}>
-                        <RaisedButton style={{margin:'0 3px'}} label="Update" backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
+                        {editIndex<0 && <RaisedButton style={{margin:'15px 5px'}} disabled={!isFormValid} label={translate("pgr.lbl.add")} backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
                           addEscalation();
-                        }}/>
+                        }}/>}
+                        {editIndex>=0 && <RaisedButton style={{margin:'15px 5px'}} disabled={!isFormValid} label={translate("pgr.lbl.update")} backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
+                          updateEscalation();
+                        }}/>}
                     </Col>
                   </Row>
               </CardText>
@@ -306,11 +352,9 @@ class DefineEscalation extends Component {
    		        <Table id="searchTable" style={{color:"black",fontWeight: "normal"}} bordered responsive>
    		          <thead style={{backgroundColor:"#f2851f",color:"white"}}>
    		            <tr>
-   		              <th>From Position</th>
-   		              <th>Grievance Type</th>
-   		              <th>Department</th>
-                    <th>Designation</th>
-                    <th>To Position</th>
+   		              <th>No.</th>
+                    <th>{translate("pgr.lbl.designation")}</th>
+                    <th>{translate("pgr.noof.hours")}</th>
                     <th></th>
    		            </tr>
    		          </thead>
@@ -323,10 +367,12 @@ class DefineEscalation extends Component {
    		)
       }
 
-      return(<div className="defineEscalation">
+      console.log(defineEscalationTime);
+
+      return(<div className="defineEscalationTime">
       <form autoComplete="off" onSubmit={(e) => {submitForm(e)}}>
           <Card  style={styles.marginStyle}>
-              <CardHeader style={{paddingBottom:0}} title={< div style = {styles.headerStyle} > Create/Update Escalation < /div>} />
+              <CardHeader style={{paddingBottom:0}} title={< div style = {styles.headerStyle} > Search Escalation Time < /div>} />
               <CardText>
                   <Card>
                       <CardText>
@@ -334,22 +380,22 @@ class DefineEscalation extends Component {
                               <Row>
                                   <Col xs={12} md={4} mdPush={4}>
                                         <AutoComplete
-                                          floatingLabelText="Position"
+                                          floatingLabelText={translate("pgr.lbl.grievance.type")}
                                           fullWidth={true}
                                           filter={function filter(searchText, key) {
                                                     return key.toLowerCase().includes(searchText.toLowerCase());
                                                  }}
-                                          dataSource={this.state.positionSource}
+                                          dataSource={this.state.serviceTypeSource}
                                           dataSourceConfig={this.state.dataSourceConfig}
-                                          onKeyUp={(e) => {handleAutoCompleteKeyUp(e, "position")}}
-                                          value={defineEscalation.position ? defineEscalation.position : ""}
+                                          //onKeyUp={(e) => {handleAutoCompleteKeyUp(e, "serviceType")}}
+                                          value={defineEscalationTime.serviceType ? defineEscalationTime.serviceType : ""}
                                           onNewRequest={(chosenRequest, index) => {
                   	                        var e = {
                   	                          target: {
                   	                            value: chosenRequest
                   	                          }
                   	                        };
-                  	                        handleChange(e, "position", true, "");
+                  	                        handleChange(e, "serviceType", false, "");
                   	                       }}
                                         />
                                   </Col>
@@ -358,14 +404,14 @@ class DefineEscalation extends Component {
                       </CardText>
                   </Card>
                   <div style={{textAlign:'center'}}>
-                      <RaisedButton style={{margin:'15px 5px'}} type="submit" disabled={!isFormValid} label="Search" backgroundColor={"#5a3e1b"} labelColor={white}/>
-                      <RaisedButton style={{margin:'15px 5px'}} label="Close"/>
+                      <RaisedButton style={{margin:'15px 5px'}} type="submit" disabled={defineEscalationTime.serviceType ? false : true} label={translate("core.lbl.search")} backgroundColor={"#5a3e1b"} labelColor={white}/>
+                      <RaisedButton style={{margin:'15px 5px'}} label={translate("core.lbl.close")}/>
                   </div>
                   {this.state.noData &&
                     <Card style = {{textAlign:"center"}}>
-                      <CardHeader title={<strong style = {{color:"#5a3e1b", paddingLeft:90}} > There is no escalation details available for the selected position. </strong>}/>
+                      <CardHeader title={<strong style = {{color:"#5a3e1b", paddingLeft:90}} >{translate("pgr.lbl.escdetail")}</strong>}/>
                       <CardText>
-                          <RaisedButton style={{margin:'10px 0'}} label="Add Escalation Details" backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
+                          <RaisedButton style={{margin:'10px 0'}} label={translate("pgr.lbl.addesc")} backgroundColor={"#5a3e1b"} labelColor={white} onClick={() => {
                             this.setState({
                               isSearchClicked: true,
                               noData:false
@@ -384,7 +430,7 @@ class DefineEscalation extends Component {
 
 
 const mapStateToProps = state => {
-  return ({defineEscalation : state.form.form, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid});
+  return ({defineEscalationTime : state.form.form, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid});
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -394,11 +440,11 @@ const mapDispatchToProps = dispatch => ({
       validationData: {
         required: {
           current: [],
-          required: ["position"]
+          required: ["designation", "numberOfHours"]
         },
         pattern: {
           current: [],
-          required: []
+          required: [ "numberOfHours"]
         }
       }
     });
@@ -412,12 +458,12 @@ const mapDispatchToProps = dispatch => ({
       fieldErrors: {},
       validationData: {
         required: {
-          current: [],
-          required: []
+          current: ["designation", "numberOfHours"],
+          required: ["designation", "numberOfHours"]
         },
         pattern: {
-          current: [],
-          required: []
+          current: ["numberOfHours"],
+          required: [ "numberOfHours"]
         }
       }
     });
@@ -445,4 +491,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefineEscalation);
+export default connect(mapStateToProps, mapDispatchToProps)(DefineEscalationTime);
