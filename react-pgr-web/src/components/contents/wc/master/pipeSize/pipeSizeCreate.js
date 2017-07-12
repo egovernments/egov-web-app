@@ -54,7 +54,7 @@ const styles = {
 
 var _this;
 
-class ServiceGroupCreate extends Component {
+class PipeSizeCreate extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -83,11 +83,11 @@ class ServiceGroupCreate extends Component {
             let  current = this;
             let {setForm} = this.props;
 
-            Api.commonApiPost("/pgr-master/serviceGroup/v1/_search",{id:this.props.match.params.id},body).then(function(response){
+            Api.commonApiPost("/wcms-masters/pipesize/_search",{id:this.props.match.params.id},body).then(function(response){
                 console.log("response",response);
-                  console.log("response object",response.ServiceGroups[0]);
-                current.setState({data:response.ServiceGroups})
-                setForm(response.ServiceGroups[0])
+                  console.log("response object",response.PipeSize[0]);
+                current.setState({data:response.PipeSize})
+                setForm(response.PipeSize[0])
             }, function(err) {
               current.props.toggleSnackbarAndSetText(true, err.message);
               current.props.setLoadingStatus('hide');
@@ -99,16 +99,11 @@ class ServiceGroupCreate extends Component {
     }
 
     componentDidMount() {
+      //   this.props.setForm({
+      //     active : true
+      // })
 
-    }
 
-    componentWillUpdate() {
-      if(window.urlCheck) {
-        let {initForm}=this.props;
-        initForm();
-        this.setState({id:undefined});
-        window.urlCheck = false;
-      }
     }
 
     componentDidUpdate() {
@@ -120,24 +115,36 @@ class ServiceGroupCreate extends Component {
 
     }
 
+    handleChangeState = (e, name, isRequired, pattern) => {
+      if(e.target.value===0.0){
+        this.props.toggleSnackbarAndSetText("0.0 not a valid size");
+      }else{
+            this.props.handleChange(e, name, isRequired, pattern);
+            var inches = e.target.value * 0.039370;
+            this.props.handleChange({target:{value: inches}}, "sizeInInch", false, "");
+          }
+    }
+
+
     submitForm = (e) => {
 
       e.preventDefault()
         var current = this;
 
       var body = {
-          "ServiceGroup":{
-           "id": this.props.createServiceGroup.id,
-           "name" :this.props.createServiceGroup.name,
-           "code" :this.props.createServiceGroup.code,
-           "description" :this.props.createServiceGroup.description,
+          "PipeSize":{
+           "id": this.props.createPipeSize.id,
+           "sizeInMilimeter" :this.props.createPipeSize.sizeInMilimeter,
+           "code" :this.props.createPipeSize.code,
+           "active" : !this.props.createPipeSize.active ? false : this.props.createPipeSize.active,
+           "description" :this.props.createPipeSize.description,
            "tenantId":"default"
           }
       }
 
       if(this.props.match.params.id){
 
-          Api.commonApiPost("/pgr-master/serviceGroup/v1/"+body.ServiceGroup.code+"/_update",{},body).then(function(response){
+          Api.commonApiPost("/wcms-masters/pipesize/"+body.PipeSize.code+"/_update",{},body).then(function(response){
               console.log(response);
               current.setState({
                 open: true
@@ -147,12 +154,12 @@ class ServiceGroupCreate extends Component {
             current.props.setLoadingStatus('hide');
         	})
       } else {
-          Api.commonApiPost("/pgr-master/serviceGroup/v1/_create",{},body).then(function(response){
+          Api.commonApiPost("/wcms-masters/pipesize/_create",{},body).then(function(response){
               console.log(response);
               current.setState({
                 open: true
               });
-              current.props.resetObject('createServiceGroup');
+              current.props.resetObject('createPipeSize');
           }, function(err) {
             current.props.toggleSnackbarAndSetText(true, err.message);
             current.props.setLoadingStatus('hide');
@@ -161,6 +168,7 @@ class ServiceGroupCreate extends Component {
 
 
     }
+
     handleClose = () => {
       this.setState({open: false});
     };
@@ -168,7 +176,7 @@ class ServiceGroupCreate extends Component {
     render() {
 
       let {
-        createServiceGroup ,
+        createPipeSize ,
         fieldErrors,
         isFormValid,
         isTableShow,
@@ -181,48 +189,75 @@ class ServiceGroupCreate extends Component {
         buttonText
       } = this.props;
 
-      let {submitForm,handleOpenNClose} = this;
-
-      console.log(isFormValid);
+      let {submitForm,handleOpenNClose,handleChangeState} = this;
+      console.log("createPipeSize",createPipeSize);
 
       return(
-        <div className="createServiceGroup">
+        <div className="createPipeSize">
           <form autoComplete="off" onSubmit={(e) => {submitForm(e)}}>
               <Card style={styles.marginStyle}>
-                  <CardHeader  style={{paddingBottom:0}} title={< div style = {styles.headerStyle} > {this.state.id != '' ? 'Update Category' : 'Create Category'} < /div>} />
+                  <CardHeader  style={{paddingBottom:0}} title={< div style = {styles.headerStyle} > {this.state.id != '' ? 'Update Pipe Size' : 'Create Pipe Size'} < /div>} />
                   <CardText style={{padding:0}}>
                       <Grid>
                           <Row>
                               <Col xs={12} md={3} sm={6}>
                                   <TextField
                                       fullWidth={true}
-                                      floatingLabelText={translate("core.lbl.add.name")+"*"}
-                                      value={createServiceGroup.name? createServiceGroup.name : ""}
-                                      errorText={fieldErrors.name ? fieldErrors.name : ""}
-                                        onChange={(e) => handleChange(e, "name", true, '')}
-                                      id="name"
+                                      floatingLabelText={"H.S.C Pipe Size (mm):"+"*"}
+                                      value={createPipeSize.sizeInMilimeter? createPipeSize.sizeInMilimeter :""}
+                                      errorText={fieldErrors.sizeInMilimeter ? fieldErrors.sizeInMilimeter : ""}
+                                      maxLength={100}
+                                      onChange={(e) => { createPipeSize.active = true;
+                                      handleChangeState(e, "sizeInMilimeter", true, /^\d+(\.\d+)?$/)}}
+                                      id="sizeInMilimeter"
                                   />
                               </Col>
                               <Col xs={12} md={3} sm={6}>
                                   <TextField
                                       fullWidth={true}
-                                      floatingLabelText={translate("core.lbl.code")+"*"}
-                                      value={createServiceGroup.code? createServiceGroup.code : ""}
-                                      errorText={fieldErrors.code ? fieldErrors.code : ""}
-                                      onChange={(e) => handleChange(e, "code", true, '')}
-                                      id="code"
-                                      disabled={this.state.id ? true : false }
+                                      floatingLabelText={"H.S.C Pipe Size (Inches):"+"*"}
+                                      value={createPipeSize.sizeInInch? createPipeSize.sizeInInch : "0.0"}
+                                      errorText={fieldErrors.sizeInInch ? fieldErrors.sizeInInch : ""}
+                                      maxLength={100}
+                                      onChange={(e) => { createPipeSize.active = true;
+                                      handleChange(e, "sizeInInch", true, /^[a-zA-Z0-9 ]*$/g)}}
+                                      id="sizeInInch"
+                                      disabled={true}
                                   />
                               </Col>
+                                <div className="clearfix"></div>
                               <Col xs={12} md={3} sm={6}>
                                   <TextField
                                       fullWidth={true}
+                                      maxLength={250}
                                       floatingLabelText={translate("core.lbl.description")}
-                                      value={createServiceGroup.description? createServiceGroup.description : ""}
+                                      value={createPipeSize.description? createPipeSize.description : ""}
                                       errorText={fieldErrors.description ? fieldErrors.description : ""}
-                                      onChange={(e) => handleChange(e, "description", false, '')}
+                                      onChange={(e) => {
+
+                                        handleChange(e, "description", false, /^[a-zA-Z0-9 ]*$/g)
+                                      }}
                                       multiLine={true}
                                       id="description"
+                                  />
+                              </Col>
+                              <Col xs={12} md={3} sm={6}>
+                              {console.log(createPipeSize.active)}
+                                  <Checkbox
+                                    label={translate("pgr.lbl.active")}
+                                    style={styles.checkbox}
+                                    defaultChecked = {createPipeSize.active || true}
+                                    onCheck = {(e, i, v) => { console.log(createPipeSize.active, i);
+
+                                      var e = {
+                                        target: {
+                                          value:i
+                                        }
+                                      }
+                                      handleChange(e, "active", false, '')
+                                    }}
+
+                                    id="active"
                                   />
                               </Col>
                           </Row>
@@ -231,12 +266,13 @@ class ServiceGroupCreate extends Component {
               </Card>
               <div style={{textAlign:'center'}}>
 
-                <RaisedButton primary={true} style={{margin:'15px 5px'}} type="submit" disabled={!isFormValid} label={this.state.id != '' ? translate("pgr.lbl.update") : translate("pgr.lbl.create")}/>
+                <RaisedButton primary="true" style={{margin:'15px 5px'}} type="submit" disabled={!isFormValid} label={this.state.id != '' ? translate("pgr.lbl.update") : translate("pgr.lbl.create")}/>
 
               </div>
           </form>
+
           <Dialog
-               title={this.state.id != '' ? "Service Group Updated Successfully" : "Service Group Added Successfully"}
+               title={this.state.id != '' ? "Pipe Size "+createPipeSize.sizeInMilimeter+" Updated Successfully" : "Pipe Size "+createPipeSize.sizeInMilimeter+" Created Successfully"}
                actions={<FlatButton
    				        label={translate("core.lbl.close")}
    				        primary={true}
@@ -253,7 +289,7 @@ class ServiceGroupCreate extends Component {
 }
 
 const mapStateToProps = state => {
-  return ({createServiceGroup : state.form.form, files: state.form.files, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
+  return ({createPipeSize : state.form.form, files: state.form.files, fieldErrors: state.form.fieldErrors, isFormValid: state.form.isFormValid,isTableShow:state.form.showTable,buttonText:state.form.buttonText});
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -262,8 +298,8 @@ const mapDispatchToProps = dispatch => ({
       type: "RESET_STATE",
       validationData: {
         required: {
-          current: [],
-          required: ["name","code"]
+          current: ["active"],
+          required: ["sizeInMilimeter","active"]
         },
         pattern: {
           current: [],
@@ -277,12 +313,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: "SET_FORM",
       data,
-      isFormValid:true,
+      isFormValid:false,
       fieldErrors: {},
       validationData: {
         required: {
-          current: ["name","code"],
-          required: ["name","code"]
+          current: ["sizeInMilimeter"],
+          required: ["sizeInMilimeter"]
         },
         pattern: {
           current: [],
@@ -300,6 +336,8 @@ const mapDispatchToProps = dispatch => ({
    })
   },
 
+
+
   handleChange: (e, property, isRequired, pattern) => {
     console.log("handlechange"+e+property+isRequired+pattern);
     dispatch({
@@ -315,7 +353,14 @@ const mapDispatchToProps = dispatch => ({
   },
   toggleSnackbarAndSetText: (snackbarState, toastMsg) => {
     dispatch({type: "TOGGLE_SNACKBAR_AND_SET_TEXT", snackbarState,toastMsg});
+  },
+  setInitalObject : (createPipeSize,object) => {
+    dispatch({
+      type: "EDIT_OBJECT",
+      objectName: createPipeSize,
+      object: object
+    });
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ServiceGroupCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(PipeSizeCreate);
