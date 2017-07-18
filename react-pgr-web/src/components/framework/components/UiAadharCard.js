@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 
-export default class UiEmailField extends Component {
+export default class UiAadharCard extends Component {
 	constructor(props) {
        super(props);
    	}
 
-	renderEmailBox = (item) => {
+	renderAadharCard = (item) => {
 		switch (this.props.ui) {
 			case 'google': 
 				return (
 					<TextField 
 						fullWidth={true} 
-						type="email"
+						type="number"
 						floatingLabelText={item.label + (item.isRequired ? " *" : "")} 
 						value={eval(item.jsonpath)}
 						disabled={item.isDisabled}
 						errorText={this.props.fieldErrors[eval(item.jsonpath)]}
-						onChange={(e) => this.props.handler(e, eval(item.jsonpath), item.isRequired ? true : false, '', item.requiredErrMsg, item.patternErrMsg)} />
+						onChange={(e) => this.props.handler(e, eval(item.jsonpath), item.isRequired ? true : false, '/\d{10}/', item.requiredErrMsg, item.patternErrMsg)} />
 				);
 		}
 	}
@@ -25,7 +25,7 @@ export default class UiEmailField extends Component {
 	render () {
 		return (
 	      <div>
-	        {this.renderEmailBox(this.props.item)}
+	        {this.renderAadharCard(this.props.item)}
 	      </div>
 	    );
 	}
