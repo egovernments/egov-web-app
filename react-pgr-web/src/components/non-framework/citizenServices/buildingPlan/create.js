@@ -9,7 +9,7 @@ import {translate} from '../../../common/common';
 import Api from '../../../../api/api';
 import jp from "jsonpath";
 import UiButton from '../../../framework/components/UiButton';
-import {fileUpload, getInitiatorPosition, getFullDate} from '../../../framework/utility/utility';
+import {fileUpload, getInitiatorPosition} from '../../../framework/utility/utility';
 import Dialog from 'material-ui/Dialog';
 import axios from "axios";
 import {
@@ -20,11 +20,75 @@ import {
 } from 'material-ui/Stepper';
 import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
 import $ from 'jquery'
 
 var specifications={};
 let reqRequired = [];
 let baseUrl="https://raw.githubusercontent.com/abhiegov/test/master/specs/";
+
+let documents=[{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Application on builder Letter head",
+  "remarks":""
+  },{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Application on Architect letter head",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"D.G. Certifiacte",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Rs.100 Stamp paper agreement",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Agency certificate",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Building permission certificate",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Lift certificate",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Architectural plan",
+  "remarks":""
+},
+{
+  "from":"",
+  "timeStamp":"",
+  "filePath":"",
+  "name":"Copy of intials /Ammended NOC issued by fire brigade department",
+  "remarks":""
+}]
 
 class Report extends Component {
   state={
@@ -36,8 +100,7 @@ class Report extends Component {
       open: false,
       serviceRequest: {},
       stepIndex: 0,
-      RequestInfo: {},
-      documents: []
+      RequestInfo: {}
     }
   }
 
@@ -131,13 +194,13 @@ class Report extends Component {
     let self = this;
 
     specifications =typeof(results)=="string" ? JSON.parse(results) : results;
-    let obj = specifications["wc.create"];
+    let obj = specifications["fn.create"];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName("wc");
+    setModuleName("fn");
     setActionName("create");
 
     /*if(hashLocation.split("/").indexOf("update") == 1) {
@@ -165,6 +228,7 @@ class Report extends Component {
       if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
       setFormData(formData);
     //}
+    this.props.handleChange({target:{value:documents}},"Documents");
 
     this.setState({
       pathname:this.props.history.location.pathname
@@ -175,7 +239,7 @@ class Report extends Component {
     var hash = window.location.hash.split("/");
     let endPoint="";
     let self = this;
-    specifications = require("../../../framework/specs/citizenService/wc/NewConnection").default;
+    specifications = require("../../../framework/specs/citizenService/bp/fireNoc").default;
     self.displayUI(specifications);
 
   }
@@ -196,6 +260,7 @@ class Report extends Component {
           "userInfo": JSON.parse(localStorage.userRequest)
         }
       })
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -213,7 +278,7 @@ class Report extends Component {
     var query = {
         [autoObject.autoCompleteUrl.split("?")[1].split("=")[0]]: value
     };
-    Api.commonApiPost(url, query, {}, false, specifications["wc.create"].useTimestamp).then(function(res){
+    Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
         var formData = {...self.props.formData};
         for(var key in autoObject.autoFillFields) {
           _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
@@ -274,30 +339,68 @@ class Report extends Component {
   create=(e) => {
     let self = this, _url;
     e.preventDefault();
-    self.props.setLoadingStatus('loading');
     var formData = {...this.props.formData};
+    // console.log(this.props.formData);
+    var ServiceRequest={
+          "tenantId": localStorage.getItem("tenantId"),
+          "serviceRequestId": null,
+          "serviceCode": "BPA_FIRE_NOC",
+          "lat": 12,
+          "lang": 23,
+          "address": "address",
+          "addressId": "addressId",
+          "email": "email",
+          "deviceId": "deviceId",
+          "accountId": "accountId",
+          "firstName": "",
+          "lastName": "firstName",
+          "phone": "phone",
+          "description": "",
+          "consumerCode": "",
+          "attributeValues": [
+            {
+              "key": "tenantId",
+              "value": localStorage.getItem("tenantId")
+            }
+          ],
+          "status": "CREATED",
+          "assignedTo": "assignedTo",
+          "comments": [],
+          "moduleObject": this.props.formData,
+          "backendServiceDetails": null,
+          "Documents":this.props.formData.Documents
+      }
+
+
+
+    console.log(ServiceRequest);
+
+    self.props.setLoadingStatus("loading");
+
+
+
     if(self.props.moduleName && self.props.actionName && self.props.metaData && self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired) {
-      if(!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
+        if(!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
 
-      if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-        for(var i=0; i< formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]["tenantId"] = localStorage.getItem("tenantId") || "default";
-        }
-      } else
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["tenantId"] = localStorage.getItem("tenantId") || "default";
+        if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+          for(var i=0; i< formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]["tenantId"] = localStorage.getItem("tenantId") || "default";
+          }
+        } else
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["tenantId"] = localStorage.getItem("tenantId") || "default";
     }
 
-    if(/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
-      _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
-      var match = _url.match(/\{.*\}/)[0];
-      var jPath = match.replace(/\{|}/g,"");
-      _url = _url.replace(match, _.get(formData, jPath));
-    }
+      if(/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
+        _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
+        var match = _url.match(/\{.*\}/)[0];
+        var jPath = match.replace(/\{|}/g,"");
+        _url = _url.replace(match, _.get(formData, jPath));
+      }
 
     //Check if documents, upload and get fileStoreId
-    if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] && formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"].length) {
-      let documents = [...formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"]];
+    if(formData["Documents"] && formData["Documents"].length) {
+      let documents = [...formData["Documents"]];
       let _docs = [];
       let counter = documents.length, breakOut = 0;
       for(let i=0; i<documents.length; i++) {
@@ -310,18 +413,34 @@ class Report extends Component {
           } else {
             _docs.push({
               ...documents[i],
-              fileStoreId: res.files[0].fileStoreId
+              filePath: res.files[0].fileStoreId
             })
             counter--;
             if(counter == 0 && breakOut == 0) {
-              formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] = _docs;
-              self.makeAjaxCall(formData, _url);
+              formData["Documents"] = _docs;
+              // self.makeAjaxCall(formData, _url);
+              Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+                // self.generateReceipt(res);
+                self.props.setLoadingStatus("hide");
+
+              }, function(err){
+                self.props.setLoadingStatus("hide");
+                self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+              })
             }
           }
         })
       }
     } else {
-      self.makeAjaxCall(formData, _url);
+      Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+        // self.generateReceipt(res);
+        self.props.setLoadingStatus("hide");
+
+      }, function(err){
+        self.props.setLoadingStatus("hide");
+        self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+      })
+      // self.makeAjaxCall(formData, _url);
     }
 
   }
@@ -608,7 +727,7 @@ class Report extends Component {
       let {getVal} = this;
       let {handleChange,mockData,setDropDownData} = this.props;
       let hashLocation = window.location.hash;
-      let obj = specifications["wc.create"];
+      let obj = specifications["fn.create"];
       // console.log(obj);
       let depedants=jp.query(obj,`$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`);
       this.checkIfHasShowHideFields(property, e.target.value);
@@ -819,14 +938,14 @@ class Report extends Component {
     ServiceRequest.status = "CREATED";
     var BillReceiptObject = [];
     BillReceiptObject[0] = {"Bill":[]};
-    BillReceiptObject[0]["Bill"] = AllResponses[1].response.Bill;
+    BillReceiptObject[0]["Bill"] = AllResponses[2].Receipt.Bill;
     BillReceiptObject[0]["Bill"][0]["paidBy"] = BillReceiptObject[0]["Bill"][0].payeeName;
     BillReceiptObject[0]["tenantId"] = localStorage.getItem("tenantId")
     BillReceiptObject[0]["instrument"] = {"tenantId": localStorage.getItem("tenantId"),"amount": 20,"instrumentType":{"name":"Cash"}}
 
     BillReceiptObject[0]["Bill"][0]["billDetails"][0]["amountPaid"] = 20;
     ServiceRequest.backendServiceDetails = [{
-      "url": "http://collection-services:8080/collection-services/receipts/_create",
+      "url": "http://egov-micro-dev.egovernments.org/collection-services/receipts/_create",
       "request": {
         RequestInfo: self.state.RequestInfo,
         Receipt: BillReceiptObject
@@ -838,7 +957,7 @@ class Report extends Component {
       self.handleClose();
       self.setState({
         stepIndex: 1,
-        Receipt: res.serviceReq.backendServiceDetails[0].response.Receipt
+        Receipt: res.serviceReq.backendServiceDetails[0].Receipt
       });
       $('html, body').animate({ scrollTop: 0 }, 'fast');
     }, function(err){
@@ -847,19 +966,8 @@ class Report extends Component {
     })
   }
 
-  updateRequest = (ServiceRequest) => {
-    let self = this;
-    self.props.setLoadingStatus("loading");
-    Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-      self.generateReceipt(res);
-    }, function(err){
-      self.props.setLoadingStatus("hide");
-      self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-    })
-  }
-
-  pay = () => {
-
+  pay = () =>
+  {
     //Create SR
     //Create new connection
     //Demand search & create if not there
@@ -868,22 +976,21 @@ class Report extends Component {
     //Update SR
     //Update WC
     let self = this;
-
-    var ConnectionObject = {...self.props.formData};
-
+    var {formData}=this.props;
+    var ConnectionObject = {...self.state.formData};
     var DemandBillQuery = `?businessService=CS&tenantId=${localStorage.getItem("tenantId")}&consumerCode=`;
     let DemandRequest = {};
-    DemandRequest["Demands"] = self.props.metaData["wc.create"].feeDetails;
+    DemandRequest["Demands"] = self.props.metaData["fn.create"].feeDetails;
     DemandRequest["Demands"][0].tenantId = localStorage.getItem("tenantId");
     DemandRequest["Demands"][0].consumerCode = "";
     DemandRequest["Demands"][0].owner.id = JSON.parse(localStorage.userRequest).id;
     DemandRequest["Demands"][0].taxPeriodFrom = 1491004800000;
     DemandRequest["Demands"][0].taxPeriodTo = 1522540799000;
-    DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "WC_NO_DUE_CERT_CHAR";
+    DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "FIRE_PROV_FIRE_NOC_FEE";
     var ServiceRequest = {
        "tenantId": localStorage.getItem("tenantId"),
        "serviceRequestId": null,
-       "serviceCode": "WATER_NEWCONN",
+       "serviceCode": "BPA_FIRE_NOC",
        "lat": 12,
        "lang": 23,
        "address": "address",
@@ -905,7 +1012,6 @@ class Report extends Component {
        "status": "CREATED",
        "assignedTo": "assignedTo",
        "comments": [],
-       "moduleObject": ConnectionObject,
        "backendServiceDetails": [{
           "url": "http://billing-service:8080/billing-service/demand/_create?tenantId=" + localStorage.tenantId,
           "request": {
@@ -917,39 +1023,94 @@ class Report extends Component {
           "request": {
             RequestInfo: self.state.RequestInfo
           }
-       }]
+       }],
+       "moduleObject": formData,
+       "Documents":formData.Documents
     };
 
-    if(self.state.documents && self.state.documents.length) {
+
+    //Check if documents, upload and get fileStoreId
+    if(formData["Documents"] && formData["Documents"].length) {
+      let documents = [...formData["Documents"]];
       let _docs = [];
-      let documents = self.state.documents;
       let counter = documents.length, breakOut = 0;
       for(let i=0; i<documents.length; i++) {
-        fileUpload(documents[i], "wc", function(err, res) {
-          if(breakOut == 1) return;
-          if(err) {
-            breakOut = 1;
-            self.props.setLoadingStatus('hide');
-            self.props.toggleSnackbarAndSetText(true, err, false, true);
-          } else {
-            _docs.push({
-              from: JSON.parse(localStorage.userRequest).userName,
-              timeStamp: new Date().getTime(),
-              filePath: res.files[0].fileStoreId,
-              name: documents[i].name
-            })
-            counter--;
-            if(counter == 0 && breakOut == 0) {
-                if(!ServiceRequest.documents) ServiceRequest.documents = [];
-                ServiceRequest.documents = ServiceRequest.documents.concat(_docs);
-                self.updateRequest(ServiceRequest);
+        if (documents[i].filePath && documents[i].filePath.constructor==File )
+        {
+          fileUpload(documents[i].filePath, self.props.moduleName, function(err, res) {
+            if(breakOut == 1) return;
+            if(err) {
+              breakOut = 1;
+              self.props.setLoadingStatus('hide');
+              self.props.toggleSnackbarAndSetText(true, err, false, true);
+            } else {
+              _docs.push({
+                ...documents[i],
+                filePath: res.files[0].fileStoreId
+              })
+              counter--;
+              if(counter == 0 && breakOut == 0) {
+                ServiceRequest.Documents=_docs;
+                formData["Documents"] = _docs;
+                // self.makeAjaxCall(formData, _url);
+                Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+                  self.generateReceipt(res);
+                  self.props.setLoadingStatus("hide");
+
+                }, function(err){
+                  self.props.setLoadingStatus("hide");
+                  self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+                })
+              }
             }
+          })
+        }
+        else {
+          _docs.push(documents[i]);
+          counter--;
+          if(counter == 0 && breakOut == 0) {
+            ServiceRequest.Documents=_docs;
+            formData["Documents"] = _docs;
+            // self.makeAjaxCall(formData, _url);
+            Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+              self.generateReceipt(res);
+              self.props.setLoadingStatus("hide");
+
+            }, function(err){
+              self.props.setLoadingStatus("hide");
+              self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+            })
           }
-        })
+        }
       }
+
     } else {
-      self.updateRequest(ServiceRequest);
+      Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+        self.generateReceipt(res);
+        self.props.setLoadingStatus("hide");
+
+      }, function(err){
+        self.props.setLoadingStatus("hide");
+        self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+      })
+      // self.makeAjaxCall(formData, _url);
     }
+
+    // self.props.setLoadingStatus("loading");
+    // Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+    //   self.generateReceipt(res);
+    // }, function(err){
+    //   self.props.setLoadingStatus("hide");
+    //   self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+    // })
+
+    //Mock Data
+    /*let self = this;
+    self.handleClose();
+    self.setState({
+      stepIndex: 1
+    });
+    $('html, body').animate({ scrollTop: 0 }, 'fast');*/
   }
 
   generatePDF = () => {
@@ -982,43 +1143,94 @@ class Report extends Component {
     let {create, handleChange, getVal, addNewCard, removeCard, autoComHandler, handleClose} = this;
     let {open, stepIndex} = this.state;
     let self = this;
-    
+    console.log(formData);
     const getStepContent = function (stepIndex) {
       switch (stepIndex) {
         case 0:
           return (<form onSubmit={(e) => {
                     create(e)
                   }}>
-                  {!_.isEmpty(mockData) && mockData["wc.create"] && <ShowFields
-                                              groups={mockData["wc.create"].groups}
-                                              noCols={mockData["wc.create"].numCols}
+                  {!_.isEmpty(mockData) && mockData["fn.create"] && <ShowFields
+                                              groups={mockData["fn.create"].groups}
+                                              noCols={mockData["fn.create"].numCols}
                                               ui="google"
                                               handler={handleChange}
                                               getVal={getVal}
                                               fieldErrors={fieldErrors}
-                                              useTimestamp={mockData["wc.create"].useTimestamp || false}
+                                              useTimestamp={mockData["fn.create"].useTimestamp || false}
                                               addNewCard={addNewCard}
                                               removeCard={removeCard}
                                               autoComHandler={autoComHandler}/>}
-                    <Card className="uiCard">
-                      <CardHeader style={{paddingTop:4,paddingBottom:0}} title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>Documents Upload</div>}/>}
-                      <CardText>
-                        <Grid>
-                          <Row>
-                            <Col xs={12} md={4}>
-                              <input multiple type="file" style={{"marginTop":"40px"}} onChange={(e) => {
-                                    self.setState({
-                                      documents: e.target.files || []
-                                    })
-                              }}/>
-                            </Col>
-                          </Row>
-                        </Grid>
-                      </CardText>
+                  <Row>
+                    <Col md={12}>
+                    <Card>
+                        <CardHeader title="Upload Documents"/>
+                        <CardText>
+                          <Table responsive style={{fontSize:"bold"}} bordered condensed>
+                              <thead>
+                                <tr>
+                                  <th>Sr.No</th>
+                                  <th>Documents Name</th>
+                                  <th>Attach Documents</th>
+                                  <th>Remarks</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {documents.length>0 && documents.map((item,key)=>{
+
+
+                                return (
+                                  <tr key={key}>
+                                        <td>{key +1}</td>
+                                        <td>{item.name}</td>
+                                        <td><RaisedButton
+                                            floatingLabelStyle={{"color": "#696969"}}
+                                            containerElement='label'
+                                            fullWidth={true}
+                                            label={"Upload Files"}>
+                                            <input type="file" style={{ display: 'none' }} onChange={(e) => {
+                                              handleChange({target:{value:e.target.files[0]}}, "Documents["+key+"].filePath",false, "^.{0,200}$", "", "")}
+
+                                            }/>
+                                         </RaisedButton></td>
+                                        <td>
+                                         <TextField
+                                          floatingLabelStyle={{"color": "#696969", "fontSize": "20px", "white-space": "nowrap"}}
+                                          inputStyle={{"color": "#5F5C57"}}
+                                          floatingLabelFixed={true}
+                                          style={{"display": 'inline-block'}}
+                                          errorStyle={{"float":"left"}}
+                                          fullWidth={true}
+                                          multiLine={true}
+                                          rows={1}
+                                          maxLength={""}
+                                          value={getVal("")}
+                                          errorText={fieldErrors[""]}
+                                          onChange={(e) => {
+                                            if(e.target.value) {
+                                              e.target.value = e.target.value.replace(/^\s*/, "");
+                                              if(e.target.value[e.target.value.length-1] == " " && e.target.value[e.target.value.length-2] == " ")
+                                                return;
+                                            }
+                                            handleChange(e, "Documents["+key+"].remarks",false, "^.{0,200}$", "", "")}
+                                          } />
+                                        </td>
+                                    </tr>
+                                )
+                              })}
+
+                                </tbody>
+                            </Table>
+                        </CardText>
+
+
                     </Card>
+                      </Col>
+                    </Row>
                     <div style={{"textAlign": "center"}}>
+
                       <br/>
-                      <RaisedButton disabled={!isFormValid} label="Create" primary={true} onClick={() => {self.openPaymentPopup()}}/>
+                        <RaisedButton label="Pay" primary={true} onClick={(e) => {self.openPaymentPopup(e)}}/>
                       <br/>
                     </div>
                   </form>);
@@ -1026,7 +1238,7 @@ class Report extends Component {
           return (
             <Row id="allCertificates">
                 <Col md={6} mdOffset={3}>
-                      {self.state.Receipt && self.state.Receipt[0] ? <Card id="DownloadReceipt">
+                      <Card id="DownloadReceipt">
                         <CardHeader title={<strong>Receipt for: Application Fee</strong>}/>
                         <CardText>
                               <Table responsive style={{fontSize:"bold"}} id="ReceiptForWcAPartOne1" bordered condensed>
@@ -1045,19 +1257,19 @@ class Report extends Component {
                                       </tr>
                                       <tr>
                                           <td style={{textAlign:"left"}}>
-                                            Receipt Number : {self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber ? self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber : "NA"}
+                                            Receipt Number : {1234}
                                           </td>
                                           <td style={{textAlign:"center"}}>
                                             Receipt For : Application Fee
                                           </td>
                                           <td style={{textAlign:"right"}}>
-                                            Receipt Date: {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}
+                                            Receipt Date: 22/11/2018
                                           </td>
                                       </tr>
                                       <tr>
                                           <td colSpan={3} style={{textAlign:"left"}}>
-                                            Service Request Number :{self.state.Receipt[0].Bill[0].billDetails[0].consumerCode}<br/>
-                                            Applicant Name : {self.state.Receipt[0].Bill[0].payeeName}<br/>
+                                            Service Request Number : AX-WC-2020202<br/>
+                                            Applicant Name : 12121212<br/>
                                             Amount : Rs. 20<br/>
 
                                           </td>
@@ -1072,27 +1284,27 @@ class Report extends Component {
                                           <td colSpan={2}>
                                             Bill Reference No.& Date
                                           </td>
-                                          <td colSpan={8}>
+                                          <td colSpan={6}>
                                             Details
                                           </td>
                                       </tr>
                                       <tr>
                                           <td colSpan={2}>
-                                            {self.state.Receipt[0].Bill[0].billDetails[0].billNumber + "-" + getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}
+                                            222222 - 21/12/2013
 
                                           </td>
-                                          <td colSpan={8}>
+                                          <td colSpan={6}>
                                             Application for New Water Connection
                                           </td>
 
                                       </tr>
 
                                       <tr>
-                                          <td colSpan={10}>Amount in words: Rs. Twenty only</td>
+                                          <td colSpan={8}>Amount in words: Rs. Twenty only</td>
 
                                       </tr>
                                       <tr>
-                                        <td colSpan={10}>
+                                        <td colSpan={8}>
                                           Payment Mode
                                         </td>
                                       </tr>
@@ -1109,7 +1321,7 @@ class Report extends Component {
                                           <td>
                                             Transaction Date
                                           </td>
-                                        {true && <td colSpan={6}>
+                                        {true && <td colSpan={4}>
                                                               Bank Name
                                                             </td>}
                                       </tr>
@@ -1118,20 +1330,20 @@ class Report extends Component {
                                           Online
                                         </td>
                                         <td>
-                                          {self.state.Receipt[0].Bill[0].billDetails[0].totalAmount}
+                                          20
                                         </td>
-                                        {self.state.Receipt[0].instrument.instrumentType.name=="Cash" ? <td> NA </td> : <td> {self.state.Receipt[0].transactionId} </td>}
+                                        <td>23232323</td>
 
-                                        {self.state.Receipt[0].instrument.instrumentType.name=="Cash" ? <td> NA </td> : <td> {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}</td>}
+                                        <td>22/11/2018</td>
 
-                                        <td colSpan={6}>
-                                          {self.state.Receipt[0].instrument.instrumentType.name == "Cash" ? "NA" : self.state.Receipt[0].instrument.bank.name}
+                                        <td colSpan={4}>
+                                          IDBI
                                         </td>
                                       </tr>
                                   </tbody>
                               </Table>
                         </CardText>
-                      </Card> : ""}
+                      </Card>
                       <br/>
                       <div style={{"textAlign": "center"}}>
                         <RaisedButton primary={true} label="Download" onClick={self.generatePDF}/>
@@ -1150,7 +1362,7 @@ class Report extends Component {
     return (
       <div className="Report">
         <div style={{textAlign:"center"}}>
-            <h3> New Water Connection </h3>
+            <h3> Fire NOC </h3>
         </div>
         <Stepper linear={false} activeStep={stepIndex}>
            <Step>
@@ -1176,6 +1388,8 @@ class Report extends Component {
             <UiButton handler={this.handleClose} item={{"label": "Cancel", "uiType":"button"}} ui="google"/>{"  "}
             <UiButton handler={this.pay} item={{"label": "Pay & Proceed", "uiType":"button"}} ui="google"/>
         </Dialog>
+
+
       </div>
     );
   }
@@ -1214,7 +1428,7 @@ const mapDispatchToProps = dispatch => ({
   setActionName: (actionName) => {
     dispatch({type:"SET_ACTION_NAME", actionName})
   },
-  handleChange: (e, property, isRequired, pattern, requiredErrMsg, patternErrMsg)=>{
+  handleChange: (e, property, isRequired=false, pattern="", requiredErrMsg="", patternErrMsg="")=>{
     dispatch({type:"HANDLE_CHANGE_FRAMEWORK", property,value: e.target.value, isRequired, pattern, requiredErrMsg, patternErrMsg});
   },
   setLoadingStatus: (loadingStatus) => {

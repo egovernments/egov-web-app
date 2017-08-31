@@ -19,7 +19,6 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import $ from 'jquery'
 import axios from "axios";
-import CommentDoc from '../Components/CommentDoc';
 
 var specifications={};
 
@@ -216,7 +215,7 @@ class Report extends Component {
     var url = specifications["wc.view"].url.split("?")[0];
     var hash = window.location.hash.split("/");
     var query = {
-      acknowledgementNumber: decodeURIComponent(this.props.match.params.ackNo)
+      acknowledgementNumber: this.props.match.params.ackNo
     };
 
     this.setState({
@@ -242,35 +241,34 @@ class Report extends Component {
       }
     });
 
-    /*var params = new URLSearchParams();
+    var params = new URLSearchParams();
     params.append('username', "murali");
     params.append('password', "12345678");
     params.append('grant_type', 'password');
     params.append('scope', 'read');
     params.append('tenantId', window.localStorage.getItem("tenantId"));
+
     instance.post('/user/oauth/token', params).then(function(response) {
       localStorage.setItem("request-temp", JSON.stringify(response.data.UserRequest));
-      localStorage.setItem("auth-token-temp", response.data.access_token);*/
-      /*Api.commonApiPost("/wcms-connection/connection/_search", query, {}, false, specifications["wc.view"].useTimestamp, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+      localStorage.setItem("auth-token-temp", response.data.access_token);
+      Api.commonApiPost("/wcms-connection/connection/_search", query, {}, false, specifications["wc.view"].useTimestamp, false, localStorage.getItem("auth-token-temp")).then(function(res){
         self.props.setFormData(res);
         self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), "wc", "view", specifications["wc.view"].objectName);
       }, function(err){
 
-      })*/
-      //Fetch service request
-      Api.commonApiPost("/citizen-services/v1/requests/_search", {consumerCode: decodeURIComponent(self.props.match.params.ackNo)}, {}, null, true).then(function(res2) {
-        self.setState({
-          ServiceRequest: res2 && res2.serviceReq && res2.serviceReq[0] ? res2.serviceReq[0] : {},
-          status: res2 && res2.serviceReq && res2.serviceReq[0] ? res2.serviceReq[0].status : ""
-        });
-
-        self.props.setFormData(res2 && res2.serviceReq && res2.serviceReq[0] ? res2.serviceReq[0].moduleObject : {});
-        self.setInitialUpdateData((res2 && res2.serviceReq && res2.serviceReq[0] ? res2.serviceReq[0].moduleObject : {}), JSON.parse(JSON.stringify(specifications)), "wc", "view", "Connection");
-      }, function(err) {
       })
-    /*}).catch(function(response) {
 
-    });*/
+      //Fetch service request
+      Api.commonApiPost("/citizen-services/v1/requests/_search", {consumerCode: this.props.match.params.ackNo.id}, {}, null, true).then(function(res2) {
+        self.setState({
+          ServiceRequest: res2.serviceReq[0]
+        })
+      }, function(err) {
+
+      })
+    }).catch(function(response) {
+          
+    });
   }
 
   componentDidMount() {
@@ -282,6 +280,7 @@ class Report extends Component {
 
   getVal = (path) => {
     var val = _.get(this.props.formData, path);
+
     if(val && ((val + "").length == 13 || (val + "").length == 12) && new Date(Number(val)).getTime() > 0) {
       var _date = new Date(Number(val));
       return ('0' + _date.getDate()).slice(-2) + '/'
@@ -308,54 +307,66 @@ class Report extends Component {
     })
   }
 
-  /*addFee = () => {
+  addFee = () => {
     let self = this;
-    if(self.state.feeAmount) {
-      //Update service request with additional fee and create demand
-      var ServiceRequest = {...this.state.ServiceRequest};
-      ServiceRequest.additionalFee = self.state.feeAmount;
-      let DemandRequest = {};
-      DemandRequest["Demands"] = self.props.metaData["wc.create"].feeDetails;
-      DemandRequest["Demands"][0].tenantId = localStorage.getItem("tenantId");
-      DemandRequest["Demands"][0].businessService = "WC";
-      DemandRequest["Demands"][0].consumerCode = self.state.ServiceRequest.serviceRequestId;
-      DemandRequest["Demands"][0].owner.id = JSON.parse(localStorage.userRequest).id;
-      DemandRequest["Demands"][0].taxPeriodFrom = 1301596200000;
-      DemandRequest["Demands"][0].taxPeriodTo = 1317321000000;
-      DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "WATERCHARGE";
-      DemandRequest["Demands"][0].demandDetails[0].taxAmount = self.state.feeAmount;
-      ServiceRequest.backendServiceDetails = [{
-        url: "http://billing-service:8080/billing-service/demand/_create?tenantId=" + localStorage.tenantId,
-        request: {
-          RequestInfo: self.state.RequestInfo,
-          ...DemandRequest
+    if(!self.state.feeAmount)
+      return self.setState({
+        stateFieldErrors: {
+          ...self.state.stateFieldErrors,
+          "feeAmount": "Fee amount cannot be 0."
         }
-      }];
-
-      //self.props.setLoadingStatus("loading");
-      Api.commonApiPost("/citizen-services/v1/requests/_update", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-        //self.props.setLoadingStatus("hide");
-        //self.openAddFeeModal();
-        //self.props.toggleSnackbarAndSetText(true, "Fee added successfully.", true, false);
-        self.setState({
-          ServiceRequest: res.serviceReq
-        });
-      }, function(err){
-        self.props.setLoadingStatus("hide");
-        self.props.toggleSnackbarAndSetText(true, err.message, false, true);
       })
-    }
-  }*/
+
+    self.setState({
+      stateFieldErrors: {
+        ...self.state.stateFieldErrors,
+        "feeAmount": ""
+      }
+    })    
+
+    //Update service request with additional fee and create demand
+    var ServiceRequest = {...this.state.ServiceRequest};
+    ServiceRequest.additionalFee = self.state.feeAmount;
+    let DemandRequest = {};
+    DemandRequest["Demands"] = self.props.metaData["wc.create"].feeDetails;
+    DemandRequest["Demands"][0].tenantId = localStorage.getItem("tenantId");
+    DemandRequest["Demands"][0].consumerCode = "";
+    DemandRequest["Demands"][0].owner.id = JSON.parse(localStorage.userRequest).id;
+    DemandRequest["Demands"][0].taxPeriodFrom = 1491004800000;
+    DemandRequest["Demands"][0].taxPeriodTo = 1522540799000;
+    DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "WC_NO_DUE_CERT_CHAR";
+    DemandRequest["Demands"][0].demandDetails[0].taxAmount = self.state.feeAmount;
+    ServiceRequest.backendServiceDetails = [{
+      url: "/billing-service/demand/_create?tenantId=" + localStorage.tenantId,
+      request: {
+        RequestInfo: self.state.RequestInfo,
+        ...DemandRequest
+      }
+    }];
+
+    self.props.setLoadingStatus("loading");
+    Api.commonApiPost("/citizen-services/v1/requests/_update", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
+      self.props.setLoadingStatus("hide");
+      self.openAddFeeModal();
+      self.props.toggleSnackbarAndSetText(true, "Fee added successfully.", true, false);
+      self.setState({
+        ServiceRequest: res.serviceReq
+      });
+    }, function(err){
+      self.props.setLoadingStatus("hide");
+      self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+    })
+  }
 
   payFee = () => {
     //Update service request and generate bill and create receipt
     let self = this;
     var ServiceRequest = {...this.state.ServiceRequest};
-    var DemandBillQuery = `?businessService=WC&tenantId=${localStorage.getItem("tenantId")}&consumerCode=` + ServiceRequest.serviceRequestId;
+    var DemandBillQuery = `?businessService=CS&tenantId=${localStorage.getItem("tenantId")}&consumerCode=` + ServiceRequest.consumerCode;
     var fee = ServiceRequest.additionalFee;
-    ServiceRequest.additionalFee = 12345;
+    ServiceRequest.additionalFee = 0;
     ServiceRequest.backendServiceDetails = [{
-      url: "http://billing-service:8080/billing-service/bill/_generate" + DemandBillQuery,
+      url: "/billing-service/bill/_generate" + DemandBillQuery,
       request: {
         RequestInfo: self.state.RequestInfo
       }
@@ -363,17 +374,18 @@ class Report extends Component {
 
     self.props.setLoadingStatus("loading");
     Api.commonApiPost("/citizen-services/v1/requests/_update", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-      if(res.serviceReq && res.serviceReq.backendServiceDetails && res.serviceReq.backendServiceDetails[0] && res.serviceReq.backendServiceDetails[0].response.Bill) {
+      ServiceRequest.additionalFee = 0;
+      if(res.serviceReq && res.serviceReq.backendServiceDetails && res.serviceReq.backendServiceDetails[0] && res.serviceReq.backendServiceDetails[0].Bill) {
         let Receipt = [];
         Receipt[0] = {"Bill":[]};
-        Receipt[0]["Bill"] = res.serviceReq.backendServiceDetails[0].response.Bill;
+        Receipt[0]["Bill"] = res.Bill;
         Receipt[0]["Bill"][0]["paidBy"] = Receipt[0]["Bill"][0].payeeName;
         Receipt[0]["tenantId"] = window.localStorage.getItem("tenantId")
         Receipt[0]["instrument"] = {"tenantId":window.localStorage.getItem("tenantId"),"amount": fee,"instrumentType":{"name":"Cash"}}
         Receipt[0]["Bill"][0]["billDetails"][0]["amountPaid"] = fee;
         setTimeout(function(){
           ServiceRequest.backendServiceDetails = [{
-            "url": "http://collection-services:8080/collection-services/receipts/_create",
+            "url": "/collection-services/receipts/_create",
             "request": {
               RequestInfo: self.state.RequestInfo,
               Receipt: Receipt
@@ -385,7 +397,7 @@ class Report extends Component {
             self.openPayFeeModal();
             self.setState({
               showReceipt: true,
-              Receipt: res.serviceReq && res.serviceReq.backendServiceDetails ? res.serviceReq.backendServiceDetails[0].response.Receipt : []
+              Receipt: res.serviceReq && res.serviceReq.backendServiceDetails ? res.serviceReq.backendServiceDetails[0].Receipt : []
             });
             $('html, body').animate({ scrollTop: 0 }, 'fast');
           }, function(err){
@@ -431,8 +443,7 @@ class Report extends Component {
   updateStatusAndComments = (ServiceRequest) => {
     let self = this;
     let formData = {...this.props.formData};
-
-    ServiceRequest.backendServiceDetails = null;
+    let ConnectionObject = formData.Connection[0];
     if(this.state.comments) {
       if(!ServiceRequest.comments) ServiceRequest.comments = [];
       ServiceRequest.comments.push({
@@ -443,29 +454,16 @@ class Report extends Component {
       })
     }
 
-    if(self.state.feeAmount) {
-      ServiceRequest.additionalFee = self.state.feeAmount;
-      let DemandRequest = {};
-      DemandRequest["Demands"] = self.props.metaData["wc.create"].feeDetails;
-      DemandRequest["Demands"][0].tenantId = localStorage.getItem("tenantId");
-      DemandRequest["Demands"][0].businessService = "WC";
-      DemandRequest["Demands"][0].consumerCode = self.state.ServiceRequest.serviceRequestId;
-      DemandRequest["Demands"][0].owner.id = JSON.parse(localStorage.userRequest).id;
-      DemandRequest["Demands"][0].taxPeriodFrom = 1301596200000;
-      DemandRequest["Demands"][0].taxPeriodTo = 1317321000000;
-      DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "WATERCHARGE";
-      DemandRequest["Demands"][0].demandDetails[0].taxAmount = self.state.feeAmount;
-      ServiceRequest.backendServiceDetails = [{
-        url: "http://billing-service:8080/billing-service/demand/_create?tenantId=" + localStorage.tenantId,
-        request: {
-          RequestInfo: self.state.RequestInfo,
-          ...DemandRequest
-        }
-      }];
-    }
-
     if(this.state.status) {
       ServiceRequest.status = this.state.status;
+      ConnectionObject.status = this.state.status;
+      ServiceRequest.backendServiceDetails = [{
+        "url": "/wcms-connection/connection/_update",
+        "request": {
+            RequestInfo: self.state.RequestInfo,
+            Connection: ConnectionObject
+          }
+      }];
     }
 
     //Make Update Service Request Call passing water connection object
@@ -474,9 +472,7 @@ class Report extends Component {
       self.props.setLoadingStatus("hide");
       self.props.toggleSnackbarAndSetText(true, "Updated successfully.", true, false);
       self.setState({
-        ServiceRequest: res.serviceReq,
-        comments: "",
-        feeAmount: ""
+        ServiceRequest: res.serviceReq
       });
     }, function(err){
       self.props.setLoadingStatus("hide");
@@ -487,13 +483,12 @@ class Report extends Component {
   update = () => {
     let self = this, ServiceRequest = {...this.state.ServiceRequest};
     self.props.setLoadingStatus('loading');
-    //return console.log(self.state.documents[0]);
     if(self.state.documents && self.state.documents.length) {
       let _docs = [];
-      let documents = self.state.documents;
+      let documents = JSON.parse(JSON.stringify(self.state.documents));
       let counter = documents.length, breakOut = 0;
       for(let i=0; i<documents.length; i++) {
-        fileUpload(documents[i], "wc", function(err, res) {
+        fileUpload(documents[i].fileStoreId, "wc", function(err, res) {
           if(breakOut == 1) return;
           if(err) {
             breakOut = 1;
@@ -503,20 +498,18 @@ class Report extends Component {
             _docs.push({
               from: JSON.parse(localStorage.userRequest).userName,
               timeStamp: new Date().getTime(),
-              filePath: res.files[0].fileStoreId,
-              name: documents[i].name
+              filePath: res.files[0].fileStoreId
             })
             counter--;
             if(counter == 0 && breakOut == 0) {
                 if(!ServiceRequest.documents) ServiceRequest.documents = [];
                 ServiceRequest.documents = ServiceRequest.documents.concat(_docs);
-                self.updateStatusAndComments(ServiceRequest);
             }
           }
         })
       }
     } else {
-      self.updateStatusAndComments(ServiceRequest);
+
     }
   }
 
@@ -564,11 +557,18 @@ class Report extends Component {
                     </SelectField>
                   </Col> : ""}
                   <Col xs={12} md={6}>
-                    <input multiple type="file" style={{"marginTop":"40px"}} onChange={(e) => {
+                    <RaisedButton
+                      floatingLabelStyle={{"color": "#696969"}}
+                      style={{"marginTop": "26px"}}
+                      containerElement='label'
+                      fullWidth={true} 
+                      label={"Upload Files"}>
+                        <input type="file" style={{ display: 'none' }} onChange={(e) => {
                           self.setState({
                             documents: e.target.files || []
                           })
-                    }}/>
+                        }}/>
+                    </RaisedButton>
                   </Col>
                   <Col xs={12} md={6}>
                     <TextField
@@ -585,37 +585,83 @@ class Report extends Component {
                         })
                       }}/>
                   </Col>
-                  {self.state.role != "CITIZEN" && self.state.ServiceRequest && (!self.state.ServiceRequest.additionalFee || self.state.ServiceRequest.additionalFee == 0) ? <Col xs={12} md={6}>
-                    <TextField
-                      floatingLabelStyle={{"color": "#696969", "fontSize": "20px", "white-space": "nowrap"}}
-                      fullWidth={true}
-                      type="number"
-                      floatingLabelText={"Add Fee"}
-                      floatingLabelFixed={true} 
-                      value={self.state.additionalFee}
-                      inputStyle={{"color": "#5F5C57"}}
-                      errorStyle={{"float":"left"}}
-                      onChange={(e) => {
-                        self.setState({
-                          feeAmount: e.target.value
-                        })
-                      }}/>
-                  </Col> : ""}
                 </Row>
               </Grid>
             </CardText>
           </Card>
           <div style={{"textAlign": "center"}}>
-            <RaisedButton primary={true} label={"Update"} onClick={() => {self.update()}}/>&nbsp;&nbsp;
-            {/*self.state.role != "CITIZEN" && self.state.ServiceRequest && (!self.state.ServiceRequest.additionalFee || self.state.ServiceRequest.additionalFee == 0) ? <RaisedButton primary={true} label={"Add Fee"} onClick={self.openAddFeeModal}/> : ""*/}&nbsp;&nbsp;
-            {self.state.role == "CITIZEN" && self.state.ServiceRequest && (self.state.ServiceRequest.additionalFee > 0 && self.state.ServiceRequest.additionalFee != 12345) ? <RaisedButton primary={true} label={"Pay Fee"} onClick={self.openPayFeeModal}/> : ""}
+            <RaisedButton primary={true} label={"Update"} onClick={() => {}}/>&nbsp;&nbsp;
+            {self.state.role != "CITIZEN" && self.state.ServiceRequest && (!self.state.ServiceRequest.additionalFee || self.state.ServiceRequest.additionalFee == 0) ? <RaisedButton primary={true} label={"Add Fee"} onClick={self.openAddFeeModal}/> : ""}&nbsp;&nbsp;
+            {self.state.role == "CITIZEN" && self.state.ServiceRequest && (self.state.ServiceRequest.additionalFee > 0) ? <RaisedButton primary={true} label={"Pay Fee"} onClick={self.openPayFeeModal}/> : ""}
           </div>
-          <CommentDoc ServiceRequest={self.state.ServiceRequest} getFullDate={getFullDate}/>
+          <Card className="uiCard">
+            <CardHeader style={{paddingTop:4,paddingBottom:0}} title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>Comments & Documents</div>}/>
+              <CardText style={{paddingTop:0,paddingBottom:0}}>
+              <Grid>
+                  <Row>
+                    <Col md={6} xs={12}>
+                      <Table responsive style={{fontSize:"bold"}} bordered condensed>
+                          <thead>
+                            <tr>
+                              <th>By</th>
+                              <th>Date</th>
+                              <th>Comments</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              self.state.ServiceRequest && 
+                              self.state.ServiceRequest.comments && 
+                              self.state.ServiceRequest.comments.length ? 
+                              self.state.ServiceRequest.comments.map(function(v, i) {
+                                return (
+                                  <tr key={i} style={{"backgroundColor": v.from == JSON.parse(localStorage.userRequest).userName ? "#EEE" : "#FFFFFF"}}>
+                                    <td>{v.from}</td>
+                                    <td>{getFullDate(v.timeStamp)}</td>
+                                    <td>{v.text}</td>
+                                  </tr>
+                                )
+                              }) : <tr colSpan={3} style={{"textAlign": "center"}}><td>No comments yet!</td></tr>
+                            }
+                          </tbody>
+                      </Table>
+                    </Col>
+                    <Col md={6} xs={12}>
+                      <Table responsive style={{fontSize:"bold"}} bordered condensed>
+                          <thead>
+                            <tr>
+                              <th>By</th>
+                              <th>Date</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              self.state.ServiceRequest && 
+                              self.state.ServiceRequest.documents && 
+                              self.state.ServiceRequest.documents.length ? 
+                              self.state.ServiceRequest.documents.map(function(v, i) {
+                                return (
+                                  <tr key={i}>
+                                    <td>{v.from + (v.from == JSON.parse(localStorage.userRequest).userName ? " (You)" : "")}</td>
+                                    <td>{getFullDate(v.timeStamp)}</td>
+                                    <td><a href={"/filestore/v1/files/id?tenantId=" + localStorage.getItem("tenantId") + "&fileStoreId=" + v.filePath}>Download</a></td>
+                                  </tr>
+                                )
+                              }) : <tr colSpan={3} style={{"textAlign": "center"}}><td>No comments yet!</td></tr>
+                            }
+                          </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+              </Grid>
+            </CardText>
+          </Card>
           {!_.isEmpty(mockData) && mockData["wc.view"] && <ShowFields groups={mockData["wc.view"].groups} noCols={mockData["wc.view"].numCols} ui="google" handler={""} getVal={getVal} fieldErrors={fieldErrors} useTimestamp={mockData["wc.view"].useTimestamp || false} addNewCard={""} removeCard={""} screen="view"/>}
         </form> : self.state.Receipt && self.state.Receipt[0] ? <Row id="allCertificates">
                 <Col md={10} mdOffset={1}>
                       <Card id="DownloadReceipt">
-                        <CardHeader title={<strong>Receipt for: Water Connection</strong>}/>
+                        <CardHeader title={<strong>Receipt for: Application Fee</strong>}/>
                         <CardText>
                               <Table responsive style={{fontSize:"bold"}} id="ReceiptForWcAPartOne1" bordered condensed>
                                   <tbody>
@@ -636,7 +682,7 @@ class Report extends Component {
                                             Receipt Number : {self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber ? self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber : "NA"}
                                           </td>
                                           <td style={{textAlign:"center"}}>
-                                            Receipt For : Water Connection
+                                            Receipt For : Application Fee
                                           </td>
                                           <td style={{textAlign:"right"}}>
                                             Receipt Date: {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}
@@ -711,7 +757,7 @@ class Report extends Component {
                                         {self.state.Receipt[0].instrument.instrumentType.name=="Cash" ? <td> NA </td> : <td> {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}</td>}
 
                                         <td colSpan={4}>
-                                          {self.state.Receipt[0].instrument.instrumentType.name == "Cash" ? "NA" : self.state.Receipt[0].instrument.bank.name}
+                                          {self.state.Receipt[0].instrument.instrumentType.name == "Cash" ? <td>NA</td> : self.state.Receipt[0].instrument.bank.name}
                                         </td>
                                       </tr>
                                   </tbody>
@@ -775,7 +821,7 @@ class Report extends Component {
                 autoScrollBodyContent={true}
               >
               <div style={{textAlign:"center"}}>
-                <h4>Amount to be paid: Rs {self.state.ServiceRequest.additionalFee || 20}</h4>
+                <h4>Amount to be paid: Rs 20</h4>
                 <br/>
               </div>
 
