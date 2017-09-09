@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 import _ from "lodash";
 import ShowFields from "../../../framework/showFields";
@@ -9,99 +15,18 @@ import {translate} from '../../../common/common';
 import Api from '../../../../api/api';
 import jp from "jsonpath";
 import UiButton from '../../../framework/components/UiButton';
-import {fileUpload, getInitiatorPosition, getFullDate} from '../../../framework/utility/utility';
-import Dialog from 'material-ui/Dialog';
-import axios from "axios";
-import {
-  Step,
-  Stepper,
-  StepButton,
-  StepLabel
-} from 'material-ui/Stepper';
-import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
-import $ from 'jquery'
+import {fileUpload, getInitiatorPosition} from '../../../framework/utility/utility';
+import $ from "jquery";
 
 var specifications={};
 let reqRequired = [];
 let baseUrl="https://raw.githubusercontent.com/abhiegov/test/master/specs/";
-
-let documents=[{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Application on builder Letter head",
-  "remarks":""
-  },{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Application on architect letter head",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"D.G. Certifiacte",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Rs.100 stamp paper agreement",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Agency certificate",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Building permission certificate",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Lift certificate",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Architectural plan",
-  "remarks":""
-},
-{
-  "from":"",
-  "timeStamp": new Date().getTime(),
-  "filePath":"",
-  "name":"Copy of initials/amended NOC issued by fire brigade department",
-  "remarks":""
-}]
-
-class Report extends Component {
+class UpdateSubCategory extends Component {
   state={
     pathname:""
   }
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-      serviceRequest: {},
-      stepIndex: 0,
-      RequestInfo: {}
-    }
   }
 
   setLabelAndReturnRequired(configObject) {
@@ -194,41 +119,40 @@ class Report extends Component {
     let self = this;
 
     specifications =typeof(results)=="string" ? JSON.parse(results) : results;
-    let obj = specifications["fn.create"];
+    let obj = specifications[`tl.update`];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName("fn");
-    setActionName("create");
+    setModuleName("tl");
+    setActionName("update");
 
-    /*if(hashLocation.split("/").indexOf("update") == 1) {
-      var url = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[0];
+  //  if(hashLocation.split("/").indexOf("update") == 1) {
+      var url = specifications[`tl.update`].searchUrl.split("?")[0];
       var id = self.props.match.params.id || self.props.match.params.master;
       var query = {
-        [specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[1].split("=")[0]]: id
+        [specifications[`tl.update`].searchUrl.split("?")[1].split("=")[0]]: id
       };
-      Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
-          if(specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].isResponseArray) {
-            var obj = {};
-            _.set(obj, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName, jp.query(res, "$..[0]")[0]);
-            self.props.setFormData(obj);
-            self.setInitialUpdateData(obj, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
-          } else {
-            self.props.setFormData(res);
-            self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
-          }
+      Api.commonApiPost(url, query, {}, false, specifications[`tl.update`].useTimestamp).then(function(res){
+          // if(specifications[`tl.update`].isResponseArray) {
+          //   var obj = {};
+          //   _.set(obj, specifications[`tl.update`].objectName, jp.query(res, "$..[0]")[0]);
+          //   self.props.setFormData(obj);
+          //   self.setInitialUpdateData(obj, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`tl.update`].objectName);
+          // } else {
+             self.props.setFormData(res);
+          self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), "tl", "update", specifications[`tl.update`].objectName);
+          // }
       }, function(err){
 
       })
 
-    } else {*/
-      var formData = {};
-      if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
-      setFormData(formData);
-    //}
-    this.props.handleChange({target:{value:documents}},"Documents");
+    // } else {
+    //   var formData = {};
+    //   if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
+    //   setFormData(formData);
+    // }
 
     this.setState({
       pathname:this.props.history.location.pathname
@@ -239,47 +163,24 @@ class Report extends Component {
     var hash = window.location.hash.split("/");
     let endPoint="";
     let self = this;
-    specifications = require("../../../framework/specs/citizenService/bp/fireNoc").default;
-    self.displayUI(specifications);
-    if(self.props.match.params.status == "pay") {
-      let metaData=JSON.parse(localStorage.getItem("metaData")),paymentGateWayRes=JSON.parse(localStorage.getItem("paymentGateWayResponse"));
-      self.props.setLoadingStatus("loading");
-      //DO WHATEVER YOU WANT TO DO AFTER PAYMENT & THEN CALL GENERATERECEIPT() FUNCTION
-      let response = JSON.parse(localStorage.response);
-      if (this.props.match.params.paymentGateWayRes=="success")
-      {
-        // paymentGateWayRes["status"]="failed";
-        Api.commonApiPost("/citizen-services/v1/pgresponse/_validate", {}, {PGResponse:paymentGateWayRes}, null, metaData["fn.create"].useTimestamp, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-            self.props.setLoadingStatus('hide');
-            self.generateReceipt(response);
-        }, function(err) {
-            self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-            self.props.setLoadingStatus('hide');
-       })
-     }
-    }
+
+      // try {
+      //   if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
+      //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+      //   } else {
+      //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+      //   }
+      // } catch(e) {
+      //   console.log(e);
+      // }
+
+      specifications = require(`../../../framework/specs/tl/master/CreateLicenseSubCategory`).default;
+      self.displayUI(specifications);
+
   }
 
   componentDidMount() {
       this.initData();
-      this.setState({
-        RequestInfo: {
-          "apiId": "org.egov.pt",
-          "ver": "1.0",
-          "ts": new Date().getTime(),
-          "action": "asd",
-          "did": "4354648646",
-          "key": "xyz",
-          "msgId": "654654",
-          "requesterId": "61",
-          "authToken": localStorage.token,
-          "userInfo": JSON.parse(localStorage.userRequest)
-        }
-      })
-
-      for(var i=0; i<documents.length; i++) {
-        documents[i].from = JSON.parse(localStorage.userRequest).userName;
-      }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -297,7 +198,7 @@ class Report extends Component {
     var query = {
         [autoObject.autoCompleteUrl.split("?")[1].split("=")[0]]: value
     };
-    Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
+    Api.commonApiPost(url, query, {}, false, specifications[`tl.update`].useTimestamp).then(function(res){
         var formData = {...self.props.formData};
         for(var key in autoObject.autoFillFields) {
           _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
@@ -312,7 +213,8 @@ class Report extends Component {
     let self = this;
     delete formData.ResponseInfo;
     //return console.log(formData);
-    Api.commonApiPost((url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url), "", formData, "", true).then(function(response){
+    
+    Api.commonApiPost((url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url), {type: "SUBCATEGORY"}, formData, "", true).then(function(response){
       self.props.setLoadingStatus('hide');
       self.initData();
       self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == "create" ? "wc.create.message.success" : "wc.update.message.success"), true);
@@ -358,68 +260,30 @@ class Report extends Component {
   create=(e) => {
     let self = this, _url;
     e.preventDefault();
+    self.props.setLoadingStatus('loading');
     var formData = {...this.props.formData};
-    // console.log(this.props.formData);
-    var ServiceRequest={
-          "tenantId": localStorage.getItem("tenantId"),
-          "serviceRequestId": null,
-          "serviceCode": "BPA_FIRE_NOC",
-          "lat": 12,
-          "lang": 23,
-          "address": "address",
-          "addressId": "addressId",
-          "email": "email",
-          "deviceId": "deviceId",
-          "accountId": "accountId",
-          "firstName": "",
-          "lastName": "firstName",
-          "phone": "phone",
-          "description": "",
-          "consumerCode": "",
-          "attributeValues": [
-            {
-              "key": "tenantId",
-              "value": localStorage.getItem("tenantId")
-            }
-          ],
-          "status": "CREATED",
-          "assignedTo": "assignedTo",
-          "comments": [],
-          "moduleObject": this.props.formData,
-          "backendServiceDetails": null,
-          "Documents":this.props.formData.Documents
-      }
-
-
-
-    console.log(ServiceRequest);
-
-    self.props.setLoadingStatus("loading");
-
-
-
     if(self.props.moduleName && self.props.actionName && self.props.metaData && self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired) {
-        if(!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
+      if(!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
 
-        if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-          for(var i=0; i< formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]["tenantId"] = localStorage.getItem("tenantId") || "default";
-          }
-        } else
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["tenantId"] = localStorage.getItem("tenantId") || "default";
+      if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+        for(var i=0; i< formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]["tenantId"] = localStorage.getItem("tenantId") || "default";
+        }
+      } else
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["tenantId"] = localStorage.getItem("tenantId") || "default";
     }
 
-      if(/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
-        _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
-        var match = _url.match(/\{.*\}/)[0];
-        var jPath = match.replace(/\{|}/g,"");
-        _url = _url.replace(match, _.get(formData, jPath));
-      }
+    if(/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
+      _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
+      var match = _url.match(/\{.*\}/)[0];
+      var jPath = match.replace(/\{|}/g,"");
+      _url = _url.replace(match, _.get(formData, jPath));
+    }
 
     //Check if documents, upload and get fileStoreId
-    if(formData["Documents"] && formData["Documents"].length) {
-      let documents = [...formData["Documents"]];
+    if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] && formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"].length) {
+      let documents = [...formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"]];
       let _docs = [];
       let counter = documents.length, breakOut = 0;
       for(let i=0; i<documents.length; i++) {
@@ -432,34 +296,18 @@ class Report extends Component {
           } else {
             _docs.push({
               ...documents[i],
-              filePath: res.files[0].fileStoreId
+              fileStoreId: res.files[0].fileStoreId
             })
             counter--;
             if(counter == 0 && breakOut == 0) {
-              formData["Documents"] = _docs;
-              // self.makeAjaxCall(formData, _url);
-              Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-                // self.generateReceipt(res);
-                self.props.setLoadingStatus("hide");
-
-              }, function(err){
-                self.props.setLoadingStatus("hide");
-                self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-              })
+              formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] = _docs;
+              self.makeAjaxCall(formData, _url);
             }
           }
         })
       }
     } else {
-      Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-        // self.generateReceipt(res);
-        self.props.setLoadingStatus("hide");
-
-      }, function(err){
-        self.props.setLoadingStatus("hide");
-        self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-      })
-      // self.makeAjaxCall(formData, _url);
+      self.makeAjaxCall(formData, _url);
     }
 
   }
@@ -744,9 +592,9 @@ class Report extends Component {
 
   handleChange = (e, property, isRequired, pattern, requiredErrMsg="Required", patternErrMsg="Pattern Missmatch") => {
       let {getVal} = this;
-      let {handleChange,mockData,setDropDownData} = this.props;
+      let {handleChange,mockData,setDropDownData, formData} = this.props;
       let hashLocation = window.location.hash;
-      let obj = specifications["fn.create"];
+      let obj = specifications[`tl.update`];
       // console.log(obj);
       let depedants=jp.query(obj,`$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`);
       this.checkIfHasShowHideFields(property, e.target.value);
@@ -777,6 +625,14 @@ class Report extends Component {
                     }
           				}
           			}
+
+                // if(id.categoryId == "" || id.categoryId == null){
+                //   formData.tradeSubCategory = "";
+                //   setDropDownData(value.jsonPath, []);
+                //   console.log(value.jsonPath);
+                //   console.log("helo", formData);
+                //   return false;
+                // }
 
                 Api.commonApiPost(context,id).then(function(response) {
                   if(response) {
@@ -943,582 +799,33 @@ class Report extends Component {
       }
   }
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
-
-  openPaymentPopup = () => {
-    this.setState({open: true});
-  }
-
-  makePayment = (res) => {
-    //DO EVERYTHING FOR MAKING PAYMENT HERE
-    let {serviceRequest,RequestInfo,documents}=this.state;
-   let self=this;
-   let {formData,metaData}=this.props;
-   self.props.setLoadingStatus('loading');
-
-   window.localStorage.setItem("serviceRequest",JSON.stringify(serviceRequest));
-   window.localStorage.setItem("RequestInfo",JSON.stringify(RequestInfo));
-   window.localStorage.setItem("documents",JSON.stringify(documents));
-   window.localStorage.setItem("formData",JSON.stringify(formData));
-   window.localStorage.setItem("moduleName",this.props.match.params.id);
-   window.localStorage.setItem("metaData",JSON.stringify(metaData));
-   window.localStorage.setItem("workflow","fireNoc");
-
-   var PGRequest= {
-         "billNumber": res.serviceReq.serviceRequestId,
-         "returnUrl": window.location.origin+"/citizen-services/v1/pgresponse",
-         "date": new Date().getTime(),
-         "biller": JSON.parse(localStorage.userRequest).name,
-         "amount": 20,
-         "billService": res.serviceReq.serviceCode,
-         "serviceRequestId": res.serviceReq.serviceRequestId,
-         "consumerCode": res.serviceReq.serviceRequestId,
-         "tenantId": localStorage.tenantId,
-         "amountPaid": 20,
-         "uid": JSON.parse(localStorage.userRequest).id
-     }
-
-
-
-   Api.commonApiPost("/citizen-services/v1/pgrequest/_create", {}, {PGRequest}, null, self.props.metaData["fn.create"].useTimestamp, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-       self.props.setLoadingStatus('hide');
-
-         var newForm = $('<form>', {
-             'action': 'http://115.124.122.117:8080/mahaulb/getHashKeyBeforePayment',
-             "methot":"post",
-             'target': '_top'
-         }).append($('<input>', {
-             'name': 'billNumber',
-             'value': res.PGRequest.billNumber,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'billService',
-             'value': res.PGRequest.billService,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'amount',
-             // 'value': 1,
-             'value': res.PGRequest.amountPaid,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'returnUrl',
-             'value': res.PGRequest.retrunUrl,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'date',
-             'value': res.PGRequest.date,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'biller',
-             'value': res.PGRequest.biller,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'serviceRequestId',
-             'value': res.PGRequest.serviceRequestId,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'tenantId',
-             'value': res.PGRequest.tenantId,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'amountPaid',
-             'value': res.PGRequest.amountPaid,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'requestHash',
-             'value': res.PGRequest.requestHash,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'mobileNo',
-             'value': "7795929033",
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'email',
-             'value': res.PGRequest.email,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'consumerCode',
-             'value': res.PGRequest.consumerCode,
-             'type': 'hidden'
-         })).append($('<input>', {
-             'name': 'uid',
-             'value': res.PGRequest.uid,
-             'type': 'hidden'
-         }));
-         $(document.body).append(newForm);
-         newForm.submit();
-     }, function(err) {
-       self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-       self.props.setLoadingStatus('hide');
-   })
-
-  }
-
-  generateReceipt = (response) => {
-    let ServiceRequest = response.serviceReq, self = this;
-    var AllResponses = [...ServiceRequest.backendServiceDetails];
-    ServiceRequest.status = "CREATED";
-    var BillReceiptObject = [];
-    BillReceiptObject[0] = {"Bill":[]};
-    BillReceiptObject[0]["Bill"] = AllResponses[1].response.Bill;
-    BillReceiptObject[0]["Bill"][0]["paidBy"] = BillReceiptObject[0]["Bill"][0].payeeName;
-    BillReceiptObject[0]["tenantId"] = localStorage.getItem("tenantId")
-    BillReceiptObject[0]["instrument"] = {"tenantId": localStorage.getItem("tenantId"),"amount": 20,"instrumentType":{"name":"Cash"}}
-
-    BillReceiptObject[0]["Bill"][0]["billDetails"][0]["amountPaid"] = 20;
-    ServiceRequest.backendServiceDetails = [{
-      "url": "http://collection-services:8080/collection-services/receipts/_create",
-      "request": {
-        RequestInfo: self.state.RequestInfo,
-        Receipt: BillReceiptObject
-      }
-    }];
-
-    Api.commonApiPost("/citizen-services/v1/requests/_update", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-      self.props.setLoadingStatus("hide");
-      self.handleClose();
-      self.setState({
-        stepIndex: 1,
-        Receipt: res.serviceReq.backendServiceDetails[0].response.Receipt
-      });
-      $('html, body').animate({ scrollTop: 0 }, 'fast');
-    }, function(err){
-      self.props.setLoadingStatus("hide");
-      self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-    })
-  }
-
-  pay = () =>
-  {
-    //Create SR
-    //Create new connection
-    //Demand search & create if not there
-    //Bill generate
-    //Create receipt
-    //Update SR
-    //Update WC
-    let self = this;
-    var {formData}=this.props;
-    var ConnectionObject = {...self.state.formData};
-    var DemandBillQuery = `?businessService=CS&tenantId=${localStorage.getItem("tenantId")}&consumerCode=`;
-    let DemandRequest = {};
-    DemandRequest["Demands"] = Object.assign([], self.props.metaData["fn.create"].feeDetails);
-    DemandRequest["Demands"][0].tenantId = localStorage.getItem("tenantId");
-    DemandRequest["Demands"][0].consumerCode = "";
-    DemandRequest["Demands"][0].owner.id = JSON.parse(localStorage.userRequest).id;
-    DemandRequest["Demands"][0].taxPeriodFrom = 1491004800000;
-    DemandRequest["Demands"][0].taxPeriodTo = 1522540799000;
-    DemandRequest["Demands"][0].demandDetails[0].taxHeadMasterCode = "FIRE_PROV_FIRE_NOC_FEE";
-    var ServiceRequest = {
-       "tenantId": localStorage.getItem("tenantId"),
-       "serviceRequestId": null,
-       "serviceCode": "BPA_FIRE_NOC",
-       "lat": 12,
-       "lang": 23,
-       "address": "address",
-       "addressId": "addressId",
-       "email": "email",
-       "deviceId": "deviceId",
-       "accountId": "accountId",
-       "firstName": "",
-       "lastName": "firstName",
-       "phone": "phone",
-       "description": "",
-       "consumerCode" : "",
-       "attributeValues": [
-         {
-           "key": "tenantId",
-           "value": localStorage.getItem("tenantId")
-         }
-       ],
-       "status": "CREATED",
-       "assignedTo": "assignedTo",
-       "comments": [],
-       "backendServiceDetails": [{
-          "url": "http://billing-service:8080/billing-service/demand/_create?tenantId=" + localStorage.tenantId,
-          "request": {
-            RequestInfo: self.state.RequestInfo,
-            ...DemandRequest
-          }
-       }, {
-          "url": "http://billing-service:8080/billing-service/bill/_generate" + DemandBillQuery,
-          "request": {
-            RequestInfo: self.state.RequestInfo
-          }
-       }],
-       "moduleObject": formData,
-       "Documents":formData.Documents
-    };
-
-
-    self.props.setLoadingStatus("loading");
-    //Check if documents, upload and get fileStoreId
-    if(formData["Documents"] && formData["Documents"].length) {
-      let documents = [...formData["Documents"]];
-      let _docs = [];
-      let counter = documents.length, breakOut = 0;
-      for(let i=0; i<documents.length; i++) {
-        if (documents[i].filePath && documents[i].filePath.constructor==File )
-        {
-          fileUpload(documents[i].filePath, self.props.moduleName, function(err, res) {
-            if(breakOut == 1) return;
-            if(err) {
-              breakOut = 1;
-              self.props.setLoadingStatus('hide');
-              self.props.toggleSnackbarAndSetText(true, err, false, true);
-            } else {
-              _docs.push({
-                ...documents[i],
-                filePath: res.files[0].fileStoreId
-              })
-              counter--;
-              if(counter == 0 && breakOut == 0) {
-                ServiceRequest.documents = [];
-                for(var k=0; k<_docs.length; k++) {
-                  if(_docs[k].filePath)
-                    ServiceRequest.documents.push(_docs[k]);
-                }
-                //ServiceRequest.documents=_docs;
-                formData["Documents"] = _docs;
-                Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-                  //self.generateReceipt(res);
-                  localStorage.setItem("response", JSON.stringify(res));
-                  self.props.setLoadingStatus("hide");
-                  self.makePayment(res);
-                }, function(err){
-                  self.props.setLoadingStatus("hide");
-                  self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-                })
-              }
-            }
-          })
-        }
-        else {
-          _docs.push(documents[i]);
-          counter--;
-          if(counter == 0 && breakOut == 0) {
-            ServiceRequest.documents = [];
-            for(var k=0; k<_docs.length; k++) {
-              if(_docs[k].filePath)
-                ServiceRequest.documents.push(_docs[k]);
-            }
-            formData["Documents"] = _docs;
-            Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-              //self.generateReceipt(res);
-              localStorage.setItem("response", JSON.stringify(res));
-              self.props.setLoadingStatus("hide");
-              self.makePayment(res);
-            }, function(err){
-              self.props.setLoadingStatus("hide");
-              self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-            })
-          }
-        }
-      }
-
-    } else {
-      Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-        //self.generateReceipt(res);
-        localStorage.setItem("response", JSON.stringify(res));
-        self.props.setLoadingStatus("hide");
-        self.makePayment(res);
-      }, function(err){
-        self.props.setLoadingStatus("hide");
-        self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-      })
-      // self.makeAjaxCall(formData, _url);
-    }
-
-    // self.props.setLoadingStatus("loading");
-    // Api.commonApiPost("/citizen-services/v1/requests/_create", {}, {"serviceReq": ServiceRequest}, null, true, false, null, JSON.parse(localStorage.userRequest)).then(function(res){
-    //   self.generateReceipt(res);
-    // }, function(err){
-    //   self.props.setLoadingStatus("hide");
-    //   self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-    // })
-
-    //Mock Data
-    /*let self = this;
-    self.handleClose();
-    self.setState({
-      stepIndex: 1
-    });
-    $('html, body').animate({ scrollTop: 0 }, 'fast');*/
-  }
-
-  generatePDF = () => {
-    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-    var cdn = `
-      <!-- Latest compiled and minified CSS -->
-      <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-      <!-- Optional theme -->
-      <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">  `;
-    mywindow.document.write('<html><head><title> </title>');
-    mywindow.document.write(cdn);
-    mywindow.document.write('</head><body>');
-    mywindow.document.write(document.getElementById('DownloadReceipt').innerHTML);
-    mywindow.document.write('</body></html>');
-
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10*/
-
-    setTimeout(function(){
-      mywindow.print();
-      mywindow.close();
-    }, 1000);
-
-    return true;
-  }
-
   render() {
     let {mockData, moduleName, actionName, formData, fieldErrors, isFormValid} = this.props;
-    let {create, handleChange, getVal, addNewCard, removeCard, autoComHandler, handleClose} = this;
-    let {open, stepIndex} = this.state;
-    let self = this;
-    console.log(formData);
-    const getStepContent = function (stepIndex) {
-      switch (stepIndex) {
-        case 0:
-          return (<form onSubmit={(e) => {
-                    create(e)
-                  }}>
-                  {!_.isEmpty(mockData) && mockData["fn.create"] && <ShowFields
-                                              groups={mockData["fn.create"].groups}
-                                              noCols={mockData["fn.create"].numCols}
-                                              ui="google"
-                                              handler={handleChange}
-                                              getVal={getVal}
-                                              fieldErrors={fieldErrors}
-                                              useTimestamp={mockData["fn.create"].useTimestamp || false}
-                                              addNewCard={addNewCard}
-                                              removeCard={removeCard}
-                                              autoComHandler={autoComHandler}/>}
-                  <Row>
-                    <Col md={12}>
-                    <Card className="uiCard">
-                        <CardHeader title="Upload Documents"/>
-                        <CardText>
-                          <Table responsive style={{fontSize:"bold"}} bordered condensed>
-                              <thead>
-                                <tr>
-                                  <th>Sr.No</th>
-                                  <th>Documents Name</th>
-                                  <th>Attach Documents</th>
-                                  <th>Remarks</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                              {documents.length>0 && documents.map((item,key)=>{
-
-
-                                return (
-                                  <tr key={key}>
-                                        <td>{key +1}</td>
-                                        <td>{item.name}</td>
-                                        <td><input type="file" onChange={(e) => {
-                                              handleChange({target:{value:e.target.files[0]}}, "Documents["+key+"].filePath",false, "^.{0,200}$", "", "")}
-                                            }/>
-                                        </td>
-                                        <td>
-                                         <TextField
-                                          floatingLabelStyle={{"color": "#696969", "fontSize": "20px", "white-space": "nowrap"}}
-                                          inputStyle={{"color": "#5F5C57"}}
-                                          floatingLabelFixed={true}
-                                          style={{"display": 'inline-block'}}
-                                          errorStyle={{"float":"left"}}
-                                          fullWidth={true}
-                                          multiLine={true}
-                                          rows={1}
-                                          maxLength={""}
-                                          value={getVal("Documents["+key+"].remarks")}
-                                          errorText={fieldErrors[""]}
-                                          onChange={(e) => {
-                                            if(e.target.value) {
-                                              e.target.value = e.target.value.replace(/^\s*/, "");
-                                              if(e.target.value[e.target.value.length-1] == " " && e.target.value[e.target.value.length-2] == " ")
-                                                return;
-                                            }
-                                            handleChange(e, "Documents["+key+"].remarks",false, "^.{0,200}$", "", "")}
-                                          } />
-                                        </td>
-                                    </tr>
-                                )
-                              })}
-
-                                </tbody>
-                            </Table>
-                        </CardText>
-
-
-                    </Card>
-                      </Col>
-                    </Row>
-                    <div style={{"textAlign": "center"}}>
-
-                      <br/>
-                        <RaisedButton label="Pay" primary={true} onClick={(e) => {self.pay()}}/>
-                      <br/>
-                    </div>
-                  </form>);
-        case 1:
-          return (
-            <Row id="allCertificates">
-                <Col md={6} mdOffset={3}>
-                      {self.state.Receipt && self.state.Receipt[0] ? <Card id="DownloadReceipt">
-                        <CardHeader title={<strong>Receipt for: Application Fee</strong>}/>
-                        <CardText>
-                              <Table responsive style={{fontSize:"bold"}} id="ReceiptForWcAPartOne1" bordered condensed>
-                                  <tbody>
-                                      <tr>
-                                          <td style={{textAlign:"left"}}>
-                                            <img src="./temp/images/headerLogo.png" height="60" width="60"/>
-                                          </td>
-                                          <td style={{textAlign:"center"}}>
-                                              <b>Roha Municipal Council</b><br/>
-                                              Building Plan Department
-                                          </td>
-                                          <td style={{textAlign:"right"}}>
-                                            <img src="./temp/images/AS.png" height="60" width="60"/>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td style={{textAlign:"left"}}>
-                                            Receipt Number : {self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber ? self.state.Receipt[0].Bill[0].billDetails[0].receiptNumber : "NA"}
-                                          </td>
-                                          <td style={{textAlign:"center"}}>
-                                            Receipt For : Application Fee
-                                          </td>
-                                          <td style={{textAlign:"right"}}>
-                                            Receipt Date: {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td colSpan={3} style={{textAlign:"left"}}>
-                                            Service Request Number: {self.state.Receipt[0].Bill[0].billDetails[0].consumerCode}<br/>
-                                            Applicant Name : {self.state.Receipt[0].Bill[0].payeeName}<br/>
-                                            Amount : Rs. 20<br/>
-
-                                          </td>
-                                      </tr>
-
-                                  </tbody>
-                              </Table>
-
-                              <Table id="ReceiptForWcAPartTwo" responsive bordered condensed>
-                                  <tbody>
-                                      <tr>
-                                          <td colSpan={2}>
-                                            Bill Reference No.& Date
-                                          </td>
-                                          <td colSpan={8}>
-                                            Details
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td colSpan={2}>
-                                            {self.state.Receipt[0].Bill[0].billDetails[0].billNumber + "-" + getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}
-
-                                          </td>
-                                          <td colSpan={8}>
-                                            Application for Fire NOC
-                                          </td>
-
-                                      </tr>
-
-                                      <tr>
-                                          <td colSpan={10}>Amount in words: Rs. Twenty only</td>
-
-                                      </tr>
-                                      <tr>
-                                        <td colSpan={10}>
-                                          Payment Mode
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          Mode
-                                        </td>
-                                        <td>
-                                          Amount
-                                        </td>
-                                          <td >
-                                           Transaction No
-                                        </td>
-                                          <td>
-                                            Transaction Date
-                                          </td>
-                                        {true && <td colSpan={6}>
-                                                              Bank Name
-                                                            </td>}
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          Online
-                                        </td>
-                                        <td>
-                                          {self.state.Receipt[0].Bill[0].billDetails[0].totalAmount}
-                                        </td>
-                                        {self.state.Receipt[0].instrument.instrumentType.name=="Cash" ? <td> NA </td> : <td> {self.state.Receipt[0].transactionId} </td>}
-
-                                        {self.state.Receipt[0].instrument.instrumentType.name=="Cash" ? <td> NA </td> : <td> {getFullDate(self.state.Receipt[0].Bill[0].billDetails[0].receiptDate)}</td>}
-
-                                        <td colSpan={6}>
-                                          {self.state.Receipt[0].instrument.instrumentType.name == "Cash" ? "NA" : self.state.Receipt[0].instrument.bank.name}
-                                        </td>
-                                      </tr>
-                                  </tbody>
-                              </Table>
-                        </CardText>
-                      </Card> : ""}
-                      <br/>
-                      <div style={{"textAlign": "center"}}>
-                        <RaisedButton primary={true} label="Download" onClick={self.generatePDF}/>
-                      </div>
-                      </Col>
-                      <div className="page-break"></div>
-            </Row>
-          );
-        case 2:
-          return 'This is the bit I really care about!';
-        default:
-          return 'You\'re a long way from home sonny jim!';
-      }
-    };
+    let {create, handleChange, getVal, addNewCard, removeCard, autoComHandler} = this;
 
     return (
       <div className="Report">
-        <div style={{textAlign:"center"}}>
-            <h3> Fire NOC </h3>
-        </div>
-        <Stepper linear={false} activeStep={stepIndex}>
-           <Step>
-             <StepLabel>Create</StepLabel>
-           </Step>
-           <Step>
-             <StepLabel>Download</StepLabel>
-           </Step>
-        </Stepper>
-        {getStepContent(stepIndex)}
-        <Dialog
-            title="Payment Gateway - Mock"
-            modal={false}
-            open={open}
-            onRequestClose={handleClose}
-            autoScrollBodyContent={true}>
-            <div style={{textAlign:"center"}}>
-
-                <h4>Amount to be paid: Rs 20</h4>
-                <br/>
-
-            </div>
-            <UiButton handler={this.handleClose} item={{"label": "Cancel", "uiType":"button"}} ui="google"/>{"  "}
-            <UiButton handler={this.pay} item={{"label": "Pay & Proceed", "uiType":"button"}} ui="google"/>
-        </Dialog>
-
-
+        <form onSubmit={(e) => {
+          create(e)
+        }}>
+        {!_.isEmpty(mockData) && moduleName && actionName && mockData[`${moduleName}.${actionName}`] && <ShowFields
+                                    groups={mockData[`${moduleName}.${actionName}`].groups}
+                                    noCols={mockData[`${moduleName}.${actionName}`].numCols}
+                                    ui="google"
+                                    handler={handleChange}
+                                    getVal={getVal}
+                                    fieldErrors={fieldErrors}
+                                    useTimestamp={mockData[`${moduleName}.${actionName}`].useTimestamp || false}
+                                    addNewCard={addNewCard}
+                                    removeCard={removeCard}
+                                    autoComHandler={autoComHandler}/>}
+          <div style={{"textAlign": "center"}}>
+            <br/>
+            {actionName == "create" && <UiButton item={{"label": "Create", "uiType":"submit", "isDisabled": isFormValid ? false : true}} ui="google"/>}
+            {actionName == "update" && <UiButton item={{"label": "Update", "uiType":"submit", "isDisabled": isFormValid ? false : true}} ui="google"/>}
+            <br/>
+          </div>
+        </form>
       </div>
     );
   }
@@ -1557,7 +864,7 @@ const mapDispatchToProps = dispatch => ({
   setActionName: (actionName) => {
     dispatch({type:"SET_ACTION_NAME", actionName})
   },
-  handleChange: (e, property, isRequired=false, pattern="", requiredErrMsg="", patternErrMsg="")=>{
+  handleChange: (e, property, isRequired, pattern, requiredErrMsg, patternErrMsg)=>{
     dispatch({type:"HANDLE_CHANGE_FRAMEWORK", property,value: e.target.value, isRequired, pattern, requiredErrMsg, patternErrMsg});
   },
   setLoadingStatus: (loadingStatus) => {
@@ -1581,4 +888,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateSubCategory);
