@@ -1,21 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 import _ from "lodash";
-import ShowFields from "./showFields";
+import ShowFields from "../../../framework/showFields";
 
-import {translate} from '../common/common';
-import Api from '../../api/api';
+import {translate} from '../../../common/common';
+import Api from '../../../../api/api';
 import jp from "jsonpath";
-import UiButton from './components/UiButton';
-import {fileUpload, getInitiatorPosition} from './utility/utility';
+import UiButton from '../../../framework/components/UiButton';
+import {fileUpload, getInitiatorPosition} from '../../../framework/utility/utility';
 import $ from "jquery";
 
 var specifications={};
 let reqRequired = [];
 let baseUrl="https://raw.githubusercontent.com/abhiegov/test/master/specs/";
-class Report extends Component {
+class createSubCategory extends Component {
   state={
     pathname:""
   }
@@ -113,49 +119,40 @@ class Report extends Component {
     let self = this;
 
     specifications =typeof(results)=="string" ? JSON.parse(results) : results;
-    let obj = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`];
+    let obj = specifications[`tl.create`];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName(hashLocation.split("/")[2]);
-    setActionName(hashLocation.split("/")[1]);
+    setModuleName("tl");
+    setActionName("create");
 
-    if(hashLocation.split("/").indexOf("update") == 1) {
-      var url = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[0];
-      var id = self.props.match.params.id || self.props.match.params.master;
-      var query = {
-        [specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[1].split("=")[0]]: id
-      };
-      if(window.location.href.indexOf("?") > -1) {
-       var qs =  window.location.href.split("?")[1];
-       if(qs && qs.indexOf("=") > -1) {
-         qs = qs.indexOf("&") > -1 ? qs.split("&") : [qs];
-         for(var i=0; i<qs.length; i++) {
-           query[qs[i].split("=")[0]] = qs[i].split("=")[1];
-         }
-       }
-     }
-      Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
-          if(specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].isResponseArray) {
-            var obj = {};
-            _.set(obj, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName, jp.query(res, "$..[0]")[0]);
-            self.props.setFormData(obj);
-            self.setInitialUpdateData(obj, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
-          } else {
-            self.props.setFormData(res);
-            self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
-          }
-      }, function(err){
-
-      })
-
-    } else {
-      var formData = {};
-      if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
-      setFormData(formData);
-    }
+    // if(hashLocation.split("/").indexOf("update") == 1) {
+    //   var url = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[0];
+    //   var id = self.props.match.params.id || self.props.match.params.master;
+    //   var query = {
+    //     [specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].searchUrl.split("?")[1].split("=")[0]]: id
+    //   };
+    //   Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
+    //       if(specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].isResponseArray) {
+    //         var obj = {};
+    //         _.set(obj, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName, jp.query(res, "$..[0]")[0]);
+    //         self.props.setFormData(obj);
+    //         self.setInitialUpdateData(obj, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
+    //       } else {
+    //         self.props.setFormData(res);
+    //         self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), hashLocation.split("/")[2], hashLocation.split("/")[1], specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].objectName);
+    //       }
+    //   }, function(err){
+    //
+    //   })
+    //
+    // } else {
+       var formData = {};
+       if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
+       setFormData(formData);
+    // }
 
     this.setState({
       pathname:this.props.history.location.pathname
@@ -167,16 +164,17 @@ class Report extends Component {
     let endPoint="";
     let self = this;
 
-      try {
-        if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
-          specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-        } else {
-          specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-        }
-      } catch(e) {
-        console.log(e);
-      }
+      // try {
+      //   if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
+      //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+      //   } else {
+      //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+      //   }
+      // } catch(e) {
+      //   console.log(e);
+      // }
 
+      specifications = require(`../../../framework/specs/tl/master/CreateLicenseSubCategory`).default;
       self.displayUI(specifications);
 
   }
@@ -200,7 +198,7 @@ class Report extends Component {
     var query = {
         [autoObject.autoCompleteUrl.split("?")[1].split("=")[0]]: value
     };
-    Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`].useTimestamp).then(function(res){
+    Api.commonApiPost(url, query, {}, false, specifications[`tl.create`].useTimestamp).then(function(res){
         var formData = {...self.props.formData};
         for(var key in autoObject.autoFillFields) {
           _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
@@ -215,7 +213,7 @@ class Report extends Component {
     let self = this;
     delete formData.ResponseInfo;
     //return console.log(formData);
-    Api.commonApiPost((url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url), "", formData, "", true).then(function(response){
+    Api.commonApiPost((url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url), {type: "SUBCATEGORY"}, formData, "", true).then(function(response){
       self.props.setLoadingStatus('hide');
       self.initData();
       self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == "create" ? "wc.create.message.success" : "wc.update.message.success"), true);
@@ -231,8 +229,7 @@ class Report extends Component {
             }
           }
 
-
-          self.props.setRoute(hash + (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].queryString || ''));
+          self.props.setRoute(hash);
         }
       }, 1500);
     }, function(err) {
@@ -596,15 +593,22 @@ class Report extends Component {
       let {getVal} = this;
       let {handleChange,mockData,setDropDownData, formData} = this.props;
       let hashLocation = window.location.hash;
-      let obj = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`];
+      let obj = specifications[`tl.create`];
       // console.log(obj);
       let depedants=jp.query(obj,`$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`);
       this.checkIfHasShowHideFields(property, e.target.value);
       this.checkIfHasEnDisFields(property, e.target.value);
       handleChange(e,property, isRequired, pattern, requiredErrMsg, patternErrMsg);
 
+
+      if(property == "categories[0].details[0].feeType"){
+        handleChange({target:{value:null}}, "categories[0].details[0].rateType");
+        handleChange({target:{value:null}}, "categories[0].details[0].uomId");
+      }
+
       _.forEach(depedants, function(value, key) {
             if (value.type=="dropDown") {
+              if (e.target.value) {
                 let splitArray=value.pattern.split("?");
                 let context="";
           			let id={};
@@ -659,7 +663,11 @@ class Report extends Component {
                 });
                 // console.log(id);
                 // console.log(context);
+              } else {
+                setDropDownData(value.jsonPath, []);
+              }
             }
+
 
             else if (value.type=="textField") {
               let object={
@@ -1008,4 +1016,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(createSubCategory);
