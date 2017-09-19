@@ -1,41 +1,41 @@
 var dat = {
 	"wc.create": {
 		"numCols": 12/3,
-		"url":  "/wcms/masters/documenttypes/_create",
+		"url":  "/wcms/masters/usagetypes/_create",
 		"tenantIdRequired": true,
-		"idJsonPath": "DocumentTypes[0].code",
+		"idJsonPath": "UsageTypes[0].code",
 		"useTimestamp": true,
-		"objectName": "DocumentTypes",
+		"objectName": "UsageTypes",
 		"groups": [
 			{
-				"label": "wc.create.documentType.title",
-				"name": "createDocumentType",
+				"label": "wc.create.UsageType.title",
+				"name": "CreateUsageType",
 				"fields": [
 						{
-							"name": "name",
-							"jsonPath": "DocumentTypes[0].name",
-							"label": "wc.create.documentType",
+							"name": "Name",
+							"jsonPath": "UsageTypes[0].name",
+							"label": "wc.create.groups.connectionDetails.usageType",
 							"pattern": "^[\s.]*([^\s.][\s.]*){0,100}$",
 							"type": "text",
 							"isRequired": true,
 							"isDisabled": false,
 							"requiredErrMsg": "",
-							"patternErrMsg": "Length minimum is 3 and maximum is 100"
+							"patternErrMsg": "Length should not more than 100"
 						},
 						{
-							"name": "description",
-							"jsonPath": "DocumentTypes[0].description",
+							"name": "Description",
+							"jsonPath": "UsageTypes[0].description",
 							"label": "wc.create.description",
 							"pattern": "^[\s.]*([^\s.][\s.]*){0,250}$",
 							"type": "text",
 							"isRequired": false,
 							"isDisabled": false,
 							"requiredErrMsg": "",
-							"patternErrMsg": "Length is more than 250"
+							"patternErrMsg": "Length should not more than 250"
 						},
 						{
 							"name": "Active",
-							"jsonPath": "DocumentTypes[0].active",
+							"jsonPath": "UsageTypes[0].active",
 							"label": "wc.create.active",
 							"pattern": "",
 							"type": "checkbox",
@@ -51,26 +51,27 @@ var dat = {
 	},
 	"wc.search": {
 		"numCols": 12/3,
-		"url": "/wcms/masters/documenttypes/_search",
+		"url": "/wcms/masters/usagetypes/_search",
 		"tenantIdRequired": true,
 		"useTimestamp": true,
-		"objectName": "DocumentType",
+		"objectName": "UsageType",
 		"groups": [
 			{
-				"label": "wc.search.documentType.title",
-				"name": "createCategoryType",
+				"label": "wc.search.UsageType.title",
+				"name": "CreateUsageType",
 				"fields": [
-						{
-							"name": "name",
-							"jsonPath": "name",
-							"label": "wc.create.documentType",
-							"pattern": "^[\s.]*([^\s.][\s.]*){0,100}$",
-							"type": "text",
-							"isRequired": false,
-							"isDisabled": false,
-							"requiredErrMsg": "",
-							"patternErrMsg": "Length is more than 100"
-						},
+          {
+            "name": "Name",
+            "jsonPath": "name",
+            "label": "wc.create.groups.connectionDetails.usageType",
+            "pattern": "",
+            "type": "singleValueList",
+            "url": "/wcms/masters/usagetypes/_search?|$..name|$..name",
+            "isRequired": false,
+            "isDisabled": false,
+            "requiredErrMsg": "",
+            "patternErrMsg": ""
+          },
 						{
 							"name": "Active",
 							"jsonPath": "active",
@@ -86,28 +87,28 @@ var dat = {
 			}
 		],
 		"result": {
-			"header": [{label: "wc.search.result.documentType"}, {label: "wc.search.result.description"}, {label: "wc.search.result.active"}],
+			"header": [{label: "wc.create.groups.connectionDetails.usageType"}, {label: "wc.search.result.description"}, {label: "wc.search.result.active"}],
 			"values": ["name", "description", "active"],
-			"resultPath": "DocumentTypes",
-			"rowClickUrlUpdate": "/update/wc/documentType/{id}",
-			"rowClickUrlView": "/view/wc/documentType/{id}"
+			"resultPath": "UsageTypes",
+			"rowClickUrlUpdate": "/update/wc/usageType/{id}",
+			"rowClickUrlView": "/view/wc/usageType/{id}"
 			}
 	},
 	"wc.view": {
 		"numCols": 12/3,
-		"url": "/wcms/masters/documenttypes/_search?ids={id}",
+		"url": "/wcms/masters/usagetypes/_search?ids={id}",
 		"tenantIdRequired": true,
 		"useTimestamp": true,
-		"objectName": "DocumentTypes",
+		"objectName": "UsageTypes",
 		"groups": [
 			{
-				"label": "wc.view.DocumentTypes.title",
-				"name": "DocumentTypes",
+				"label": "wc.view.UsageType.title",
+				"name": "UsageTypes",
 				"fields": [
 						{
 							"name": "name",
-							"jsonPath": "DocumentTypes[0].name",
-							"label": "wc.create.documentType",
+							"jsonPath": "UsageTypes[0].name",
+							"label": "wc.create.groups.connectionDetails.usageType",
 							"pattern": "",
 							"type": "text",
 							"isRequired": true,
@@ -117,7 +118,7 @@ var dat = {
 						},
 						{
 							"name": "description",
-							"jsonPath": "DocumentTypes[0].description",
+							"jsonPath": "UsageTypes[0].description",
 							"label": "wc.create.description",
 							"pattern": "",
 							"type": "text",
@@ -128,7 +129,7 @@ var dat = {
 						},
 						{
 							"name": "Active",
-							"jsonPath": "DocumentTypes[0].active",
+							"jsonPath": "UsageTypes[0].active",
 							"label": "wc.create.active",
 							"pattern": "",
 							"type": "checkbox",
@@ -143,41 +144,41 @@ var dat = {
 	},
 	"wc.update": {
 		"numCols": 12/3,
-		"searchUrl": "/wcms/masters/documenttypes/_search?ids={id}",
-		"url":"/wcms/masters/documenttypes/_update",
+		"searchUrl": "/wcms/masters/usagetypes/_search?ids={id}",
+		"url":"/wcms/masters/usagetypes/_update",
 		"tenantIdRequired": true,
 		"useTimestamp": true,
-		"objectName": "DocumentTypes",
+		"objectName": "UsageTypes",
 		"groups": [
 			{
-				"label": "wc.update.DocumentTypes.title",
-				"name": "UpdateDocumentTypes",
+				"label": "wc.update.UsageType.title",
+				"name": "UsageTypes",
 				"fields": [
 						{
 							"name": "name",
-							"jsonPath": "DocumentTypes[0].name",
-							"label": "wc.create.documentType",
+							"jsonPath": "UsageTypes[0].name",
+							"label": "wc.create.groups.connectionDetails.usageType",
 							"pattern": "^[\s.]*([^\s.][\s.]*){0,100}$",
 							"type": "text",
 							"isRequired": true,
 							"isDisabled": false,
 							"requiredErrMsg": "",
-							"patternErrMsg": "Length is more than 100"
+							"patternErrMsg": "Length more more than 100"
 						},
 						{
 							"name": "description",
-							"jsonPath": "DocumentTypes[0].description",
+							"jsonPath": "UsageTypes[0].description",
 							"label": "wc.create.description",
 							"pattern": "^[\s.]*([^\s.][\s.]*){0,250}$",
 							"type": "text",
 							"isRequired": false,
 							"isDisabled": false,
 							"requiredErrMsg": "",
-							"patternErrMsg": "Length is more than 250"
+							"patternErrMsg": "Length more more than 250"
 						},
 						{
 							"name": "Active",
-							"jsonPath": "DocumentTypes[0].active",
+							"jsonPath": "UsageTypes[0].active",
 							"label": "wc.create.active",
 							"pattern": "",
 							"type": "checkbox",
