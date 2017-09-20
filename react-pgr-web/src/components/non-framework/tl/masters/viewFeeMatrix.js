@@ -1,28 +1,31 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
-import {blue800, red500,white} from 'material-ui/styles/colors';
-import {Grid, Row, Col, DropdownButton,Table, ListGroup, ListGroupItem} from 'react-bootstrap';
-import {List, ListItem} from 'material-ui/List';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
-import SelectField from 'material-ui/SelectField';
+
 import _ from "lodash";
-import ShowFields from "../../framework/showFields";
-import {translate} from '../../common/common';
-import Api from '../../../api/api';
+import ShowFields from "../../../framework/showFields";
+
+import {translate} from '../../../common/common';
+import Api from '../../../../api/api';
 import jp from "jsonpath";
-import UiButton from '../../framework/components/UiButton';
-import UiTable from '../../framework/components/UiTable';
-import {fileUpload, getInitiatorPosition} from '../../framework/utility/utility';
+import UiButton from '../../../framework/components/UiButton';
+import {fileUpload, getInitiatorPosition} from '../../../framework/utility/utility';
 import $ from "jquery";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
+import UiTable from '../../../framework/components/UiTable';
+
 var specifications={};
 const styles = {
-  errorStyle: {
-    color: red500
-  },
+
   underlineStyle: {
 
   },
@@ -92,7 +95,7 @@ chip: {
 
 var CONST_API_GET_FILE = "filestore/v1/files/id";
 let reqRequired = [];
-class Report extends Component {
+class viewFeeMatrix extends Component {
   constructor(props) {
     super(props);
   }
@@ -257,28 +260,52 @@ class Report extends Component {
   }
 
   initData() {
+    // try {
+    //   var hash = window.location.hash.split("/");
+    //   if(hash.length == 4) {
+    //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+    //   } else {
+    //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+    //   }
+    // } catch(e) {
+    //
+    // }
 
-      specifications = require(`../../framework/specs/wc/wc`).default;
+    specifications = require(`../../../framework/specs/tl/master/FeeMatrix`).default;
 
 
     let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+    let hashLocation = window.location.hash;
     let self = this;
-    let obj = specifications["wc.view"];
+    let obj = specifications["tl.view"];
     self.setLabelAndReturnRequired(obj);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName("wc");
+    setModuleName("tl");
     setActionName("view");
     //Get view form data
-    var url = specifications[`wc.view`].url.split("?")[0];
+    var url = specifications["tl.view"].url.split("?")[0];
+    var hash = window.location.hash.split("/");
+    var value = self.props.match.params.id;
     var query = {
-      acknowledgementNumber: decodeURIComponent(this.props.match.params.id)
+      [specifications["tl.view"].url.split("?")[1].split("=")[0]]: value
     };
 
-  Api.commonApiPost(url, query, {}, false, specifications["wc.view"].useTimestamp).then(function(res){
+    if(window.location.href.indexOf("?") > -1) {
+
+     var qs =  window.location.href.split("?")[1];
+     if(qs && qs.indexOf("=") > -1) {
+       qs = qs.indexOf("&") > -1 ? qs.split("&") : [qs];
+       for(var i=0; i<qs.length; i++) {
+         query[qs[i].split("=")[0]] = qs[i].split("=")[1];
+       }
+     }
+   }
+
+  Api.commonApiPost(url, query, {}, false, specifications["tl.view"].useTimestamp).then(function(res){
       self.props.setFormData(res);
       console.log(res);
-      self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)),"wc", "view", specifications["wc.view"].objectName);
+      //self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)),"tl", "view", specifications["tl.view"].objectName);
     }, function(err){
 
     })
@@ -288,123 +315,84 @@ class Report extends Component {
       this.initData();
   }
 
-  getVal = (path,isDate) => {
-    var val = _.get(this.props.formData, path);
 
-    if( isDate && val && ((val + "").length == 13 || (val + "").length == 12) && new Date(Number(val)).getTime() > 0) {
-      var _date = new Date(Number(val));
-      return ('0' + _date.getDate()).slice(-2) + '/'
-               + ('0' + (_date.getMonth()+1)).slice(-2) + '/'
-               + _date.getFullYear();
-    }
+getVal = (path,isDate) => {
+  var val = _.get(this.props.formData, path);
 
-      return  typeof val != "undefined" && (typeof val == "string" || typeof val == "number" || typeof val == "boolean") ? (val + "") : "";
+  if( isDate && val && ((val + "").length == 13 || (val + "").length == 12) && new Date(Number(val)).getTime() > 0) {
+    var _date = new Date(Number(val));
+    return ('0' + _date.getDate()).slice(-2) + '/'
+             + ('0' + (_date.getMonth()+1)).slice(-2) + '/'
+             + _date.getFullYear();
   }
 
-  printer = () => {
-    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-   var cdn = `
-     <!-- Latest compiled and minified CSS -->
-     <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-     <!-- Optional theme -->
-     <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">  `;
-   mywindow.document.write('<html><head><title> </title>');
-   mywindow.document.write(cdn);
-   mywindow.document.write('</head><body>');
-   mywindow.document.write(document.getElementById('printable').innerHTML);
-   mywindow.document.write('</body></html>');
-
-   mywindow.document.close(); // necessary for IE >= 10
-   mywindow.focus(); // necessary for IE >= 10*/
-
-   setTimeout(function(){
-     mywindow.print();
-     mywindow.close();
-   }, 1000);
-
-   return true;
+  return  typeof val != "undefined" && (typeof val == "string" || typeof val == "number" || typeof val == "boolean") ? (val + "") : "";
 }
+
+  printer = () => {
+    window.print();
+  }
 
   render() {
     let {mockData, moduleName, actionName, formData, fieldErrors,date} = this.props;
-    let {handleChange, getVal, addNewCard, removeCard, printer,Connection} = this;
+    let {handleChange, getVal, addNewCard, removeCard, printer,feeMatrices} = this;
 
 
-    const renderFiles = function() {
-      {return formData && formData.Connection && formData.Connection[0] && formData.Connection[0].documents && formData.Connection[0].documents.length && formData.Connection[0].documents.map(function(v, i) {
-        return (
-          <tr key={i}>
-            <td>{i+1}</td>
-            <td>{v.name}</td>
-            <td><a href={window.location.origin + "/" + CONST_API_GET_FILE + "?tenantId=" + localStorage.tenantId + "&fileStoreId=" + v.fileStoreId} target="_blank">{translate("wc.craete.file.Download")}</a></td>
-          </tr>
-        )
-      })}
-    }
+          const renderBody = function() {
+
+            console.log(formData);
+            // console.log(formData && formData.hasOwnProperty("feeMatrices") && formData.feeMatrices[0].hasOwnProperty("feeMatrixDetails"));
+            console.log(formData && formData.hasOwnProperty("feeMatrices"));
+            if(!_.isEmpty(formData) && (formData.feeMatrices.length >0)){
+              // console.log(formData.feeMatrices);
+
+              return (
+                <div>
+                <Card className="uiCard">
+                    <CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>{translate("tl.view.table.title.feeDetails")}</div>}/>
+                    <CardText>
+                    <Table  bordered responsive className="table-striped">
+                    <thead>
+                      <tr>
+                        <th>{translate("tl.view.groups.feeMatrixDetails.uomFrom")}</th>
+                        <th>{translate("tl.view.groups.feeMatrixDetails.uomTo")}</th>
+                        <th>{translate("tl.view.groups.feeMatrixDetails.amount")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      {formData.feeMatrices[0].feeMatixDetails.map(function(item, index) {
+                        return (
+                          <tr key={index}>
+                            <td>{item.uomFrom}</td>
+                            <td>{item.uomTo}</td>
+                            <td>{item.amount}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                    </Table>
+                  </CardText>
+                  </Card>
 
 
-        const renderDocuments = function() {
-            if(formData && formData.hasOwnProperty("Connection") && formData.Connection.length>0 && formData.Connection[0] && formData.Connection[0].documents.length>0  ){
-          {return formData && formData.Connection && formData.Connection[0] && formData.Connection[0].documents && formData.Connection[0].documents.length && formData.Connection.map(function(v, i) {
-            return (
-              <Card className="uiCard">
-                  <CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>{translate("tl.table.title.supportDocuments")}</div>}/>
-                  <CardText>
-                  <Table  bordered responsive className="table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>{translate("tl.create.license.table.documentName")}</th>
-                      <th>{translate("tl.create.license.table.file")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {renderFiles()}
-                  </tbody>
-                  </Table>
-                </CardText>
-                </Card>
-            )
-          })}
-        }
+                </div>
+              )
+
+         }
       }
-
-
-    const renderTable = function() {
-      if(moduleName && actionName && formData && formData[objectName]) {
-        var objectName = mockData["wc.view"].objectName;
-        if(formData[objectName].documents && formData[objectName].documents.length) {
-          var dataList = {
-            resultHeader: ["#", "Name", "File"],
-            resultValues: []
-          };
-
-          for(var i=0; i<formData[objectName].documents.length; i++) {
-            dataList.resultValues.push([i+1, formData[objectName].documents[i].name || "File", "<a href=/filestore/v1/files/id?tenantId=" + localStorage.getItem("tenantId") + "&fileStoreId=" + formData[objectName].documents[i].fileStoreId + ">Download</a>"]);
-          }
-
-          return (
-            <UiTable resultList={dataList}/>
-          );
-        }
-      }
-    }
-
-
 
     return (
       <div className="Report">
         <form id="printable">
-        {!_.isEmpty(mockData) && mockData["wc.view"] && <ShowFields groups={mockData["wc.view"].groups} noCols={mockData["wc.view"].numCols} ui="google" handler={""} getVal={getVal} fieldErrors={fieldErrors} useTimestamp={mockData["wc.view"].useTimestamp || false} addNewCard={""} removeCard={""} screen="view"/>}
-        {renderTable()}
-        {renderDocuments()}
-        <br/>
-      </form>
-      <div style={{"textAlign": "center"}}>
-          <RaisedButton label="Print" primary={true}  onClick={(e)=>{printer()}}/>&nbsp;
-      </div>
+        {!_.isEmpty(mockData) && mockData["tl.view"] && <ShowFields groups={mockData["tl.view"].groups} noCols={mockData["tl.view"].numCols} ui="google" handler={""} getVal={getVal} fieldErrors={fieldErrors} useTimestamp={mockData["tl.view"].useTimestamp || false} addNewCard={""} removeCard={""} screen="view"/>}
+
+
+            {renderBody()}
+
+
+        </form>
+
       </div>
     );
   }
@@ -442,4 +430,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch({type: "TOGGLE_SNACKBAR_AND_SET_TEXT", snackbarState, toastMsg, isSuccess, isError});
   }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(viewFeeMatrix);
