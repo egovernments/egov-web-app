@@ -1,129 +1,37 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Grid, Row, Col, Table, DropdownButton} from 'react-bootstrap';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
-import _ from "lodash";
-import ShowFields from "../../framework/showFields";
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import {translate} from '../../common/common';
-import Api from '../../../api/api';
-import jp from "jsonpath";
-import UiButton from '../../framework/components/UiButton';
-import {fileUpload, getInitiatorPosition} from '../../framework/utility/utility';
-import {Grid, Row, Col, Table} from 'react-bootstrap';
-import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
-import $ from "jquery";
-import jsPDF from 'jspdf';
-import "jspdf-autotable";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
-var CONST_API_GET_FILE = "/filestore/v1/files/id";
+
+import _ from "lodash";
+import ShowFields from "../../../framework/showFields";
+
+import {translate} from '../../../common/common';
+import Api from '../../../../api/api';
+import jp from "jsonpath";
+import UiButton from '../../../framework/components/UiButton';
+import {fileUpload, getInitiatorPosition} from '../../../framework/utility/utility';
+import $ from "jquery";
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
+
 var specifications={};
 let reqRequired = [];
+var FeeMatrixDetails = [];
 let baseUrl="https://raw.githubusercontent.com/abhiegov/test/master/specs/";
-
-const defaultMat = {
-	"name":"",
-	"quantity":"",
-	"size":"",
-	"amountDetails":""
-};
-
-const generateEstNotice = function(connection, tenantInfo) {
-	var doc = new jsPDF();
-
-	doc.setFont("courier");
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(105, 10, (tenantInfo && tenantInfo.city && tenantInfo.city.name ? tenantInfo.city.name : "Roha Municipal Council") , null, null, 'center');
-	doc.setFontSize(15);
-	doc.setFontType("normal");
-	doc.text(105, 20, 'Water Department', null, null, 'center');
-	doc.text(105, 30, 'Letter Of Intimation', null, null, 'center');
-	doc.setFontType("bold");
-	doc.text(200, 40, 'Date: ________', null, null, 'right');
-	doc.text(200, 50, 'No.: ________', null, null, 'right');
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(10, 60, "To,");
-	doc.text(10, 70, "Applicant");
-	doc.setFont("times");
-	doc.setFontType("normal");
-	doc.setFontSize(15);
-	doc.text(10, 82, "Subject: Letter of Intimation for New Water Connection");
-	doc.text(10, 90, "Reference: Application No: " + connection.consumerNumber + " and Application Date " + (connection.executionDate ? new Date(connection.executionDate) : ""));
-	doc.text(10, 98, "Sir/Madam");
-	doc.setFontType("bold");
-	doc.text(35, 98, connection.property.nameOfApplicant + "  has applied for New Water Connection for Water No. ")
-	doc.text(10, 106, "Water No. " + connection.consumerNumber + ". Requested to New Water Connection has been approved. Kindly pay the");
-	doc.text(10, 114, "charges which are mentioned below within __ days.")
-	doc.text(10, 122, "If not paid Application will be rejected or Penalty will be levied.");
-	doc.text(10, 140, "Road Cutting Charges:    " + connection.estimationCharge[0].roadCutCharges);
-	doc.text(10, 148, "Security Charges:             " + connection.estimationCharge[0].specialSecurityCharges);
-	doc.text(10, 156, "Supervision Charges:       " + connection.estimationCharge[0].supervisionCharges);
-	doc.setFontType("normal");
-	doc.text(200, 190, 'Signing Authority', null, null, 'right');
-	//doc.text(182, 198, 'अधिक्', null, null, 'right');
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(163, 210, (tenantInfo && tenantInfo.city && tenantInfo.city.name ? tenantInfo.city.name : "Roha Municipal Council"), null, null, 'center');
-	doc.save("SN" + connection.consumerNumber + ".pdf");
-}
-
-const generateWO = function(connection, tenantInfo) {
-	var doc = new jsPDF();
-
-	doc.setFont("courier");
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(105, 10, (tenantInfo && tenantInfo.city && tenantInfo.city.name ? tenantInfo.city.name : "Roha Municipal Council"), null, null, 'center');
-	doc.setFontSize(15);
-	doc.setFontType("normal");
-	doc.text(105, 20, 'Water Department', null, null, 'center');
-	doc.text(105, 30, 'Letter Of Intimation', null, null, 'center');
-	doc.setFontType("bold");
-	doc.text(200, 40, 'Date: ________', null, null, 'right');
-	doc.text(200, 50, 'No.: ________', null, null, 'right');
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(10, 60, "To,");
-	doc.text(10, 70, "Applicant");
-	doc.setFont("times");
-	doc.setFontType("normal");
-	doc.setFontSize(15);
-	doc.text(10, 82, "Subject: Approval Order");
-	doc.text(10, 90, "Reference: Application No: " + connection.consumerNumber + " and Application Date " + (connection.executionDate ? new Date(connection.executionDate) : ""));
-	doc.text(10, 98, "Sir/Madam");
-	doc.setFontType("bold");
-	doc.text(35, 98, connection.property.nameOfApplicant + " has applied for New <Service name> has been approved.")
-	doc.text(10, 106, connection.plumberName + " assigned for the work.");
-	doc.text(10, 114, "Allotted Water Connection No. " + connection.consumerNumber)
-
-	doc.setFontType("normal");
-	doc.text(200, 190, 'Signing Authority', null, null, 'right');
-	doc.setFontType("bold");
-	doc.setFontSize(20);
-	doc.text(163, 210, ' Roha Muncipal Council', null, null, 'center');
-	doc.save("SN" + connection.consumerNumber + ".pdf");
-}
-
-class Report extends Component {
+class createFeeMatrix extends Component {
   state={
     pathname:""
   }
   constructor(props) {
     super(props);
-    this.state = {
-    	workflow: [],
-    	buttons: [],
-    	departments: [],
-    	designations: [],
-    	employees: [],
-    	initiatorPosition: "",
-    	hide: false,
-    	disable: false,
-      pipeSize: {}
-    };
   }
 
   setLabelAndReturnRequired(configObject) {
@@ -214,215 +122,49 @@ class Report extends Component {
     let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
-    let count = 4;
-    const stopLoader = function() {
-      count--;
-      if(count == 0)
-        self.props.setLoadingStatus('hide');
-    }
 
-    self.props.setLoadingStatus('loading');
     specifications =typeof(results)=="string" ? JSON.parse(results) : results;
-    let obj = specifications["wc.create"];
+    let obj = specifications[`tl.create`];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName("wc");
+    setModuleName("tl");
     setActionName("create");
+
+
+    if(self.props.match.params.id) {
+
+      var url = specifications[`tl.update`].searchUrl.split("?")[0];
+      var id = self.props.match.params.id || self.props.match.params.master;
+      var query = {
+        [specifications[`tl.update`].searchUrl.split("?")[1].split("=")[0]]: id
+      };
+      Api.commonApiPost(url, query, {}, false, specifications[`tl.update`].useTimestamp).then(function(res){
+          if(specifications[`tl.update`].isResponseArray) {
+            var obj = {};
+            _.set(obj, specifications[`tl.update`].objectName, jp.query(res, "$..[0]")[0]);
+            self.props.setFormData(obj);
+            self.setInitialUpdateData(obj, JSON.parse(JSON.stringify(specifications)), 'tl', 'update', specifications[`tl.update`].objectName);
+          } else {
+            self.props.setFormData(res);
+            self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'tl', 'update', specifications[`tl.update`].objectName);
+          }
+      }, function(err){
+
+      })
+
+    } else {
+       var formData = {};
+      if(obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
+      setFormData(formData);
+      self.calculatefeeMatrixDetails();
+   }
 
     this.setState({
       pathname:this.props.history.location.pathname
     })
-
-    //Get connection and set form data
-    Api.commonApiPost("/wcms-connection/connection/_search", {"stateId": self.props.match.params.stateId}, {}, null, true).then(function(res){
-    	if(res && res.Connection && res.Connection[0]) {
-            //Fetch category type
-            Api.commonApiPost("/wcms/masters/usagetypes/_search", {}, {}, null, true).then(function(res23){
-                if(res23) {
-                  let keys=jp.query(res23, "$..code");
-                  let values=jp.query(res23, "$..name");
-                  let dropDownData=[];
-                  for (var k = 0; k < keys.length; k++) {
-                      let obj={};
-                      obj["key"]=keys[k];
-                      obj["value"]=values[k];
-                      dropDownData.push(obj);
-                  }
-                  self.props.setDropDownData("Connection[0].usageType", dropDownData);
-                }
-            }, function(err) {
-
-            })
-
-            Api.commonApiPost("/wcms/masters/pipesizes/_search", {}, {}, null, true).then(function(res24){
-              if(res24) {
-                let keys = jp.query(res24, "$..sizeInMilimeter");
-                let values = jp.query(res24, "$..pipeSizeInInch");
-                let actkeys = jp.query(res24, "$..pipeSize");
-                let pipeSize = {};
-                let dropDownData=[];
-                for (var k = 0; k < keys.length; k++) {
-                    let obj={};
-                    obj["key"]=keys[k].toString();
-                    obj["value"]=values[k];
-                    pipeSize[keys[k]] = pipeSize[actkeys[k]];
-                    dropDownData.push(obj);
-                }
-
-                self.setState({
-                  pipeSize
-                })
-
-                self.props.setDropDownData("Connection[0].hscPipeSizeType", dropDownData);
-              }
-            }, function(err) {
-
-            })
-
-
-
-        if(res.Connection[0].usageType) {
-          Api.commonApiPost("/wcms/masters/usages/_search", {parent: res.Connection[0].usageType}, {}, null, true).then(function(res25){
-            if(res25) {
-              let keys=jp.query(res25, "$..code");
-              let values=jp.query(res25, "$..name");
-              let dropDownData=[];
-              for (var k = 0; k < keys.length; k++) {
-                  let obj={};
-                  obj["key"]=keys[k];
-                  obj["value"]=values[k];
-                  dropDownData.push(obj);
-              }
-              self.props.setDropDownData("Connection[0].subUsageType", dropDownData);
-            }
-          }, function(err) {
-
-          })
-        }
-
-        res.Connection[0].estimationCharge = [{
-            "estimationCharges": 0,
-              "supervisionCharges": 0,
-              "roadCutCharges": 0,
-              "specialSecurityCharges": 0,
-              "existingDistributionPipeline": 0,
-              "pipelineToHomeDistance": 0,
-              "materials":[{...defaultMat}]
-          }
-        ];
-        self.props.setFormData(res);
-        stopLoader();
-      }
-    }, function(err) {
-      stopLoader();
-    })
-
-    //Fetch workflow
-    Api.commonApiPost("egov-common-workflows/history", {workflowId: self.props.match.params.stateId}, {}, null, true).then(function(res) {
-    	self.setState({
-    		workflow: res.tasks
-    	});
-      stopLoader();
-    }, function(err) {
-      stopLoader();
-    })
-
-    //Fetch buttons
-    Api.commonApiPost("egov-common-workflows/process/_search", {id: self.props.match.params.stateId}, {}, null, false).then(function(res) {
-    	if(res && res.processInstance && res.processInstance.attributes && res.processInstance.attributes.validActions && res.processInstance.attributes.validActions.values && res.processInstance.attributes.validActions.values.length) {
-    		var flg = 0;
-    		for(var j=0; j<res.processInstance.attributes.validActions.values.length; j++) {
-    			if(res.processInstance.attributes.validActions.values[j].key.toLowerCase() == "forward" || res.processInstance.attributes.validActions.values[j].key.toLowerCase() == "submit") {
-    				flg = 1;
-    			}
-    		}
-
-    		self.setState({
-    			buttons: res.processInstance.attributes.validActions.values,
-    			hide: flg == 1 ? false : true,
-    			disable: flg == 1 ? false : true
-    		})
-
-    		if(flg == 0) {
-    			for(var i=0; i<specifications["wc.create"].groups.length; i++) {
-    				for(var j=0; j<specifications["wc.create"].groups[i].fields.length; j++) {
-    					specifications["wc.create"].groups[i].fields[j].isDisabled = true;
-    				}
-    			}
-
-    			setMockData(specifications);
-    		}
-    	} else {
-
-    	}
-
-    	if(res && res.processInstance) {
-    		Api.commonApiPost("/egov-common-workflows/designations/_search", {
-    			businessKey: "WaterConnection",
-    			approvalDepartmentName: "",
-    			departmentRule: "",
-    			currentStatus: res.processInstance.status,
-    			additionalRule: "",
-    			pendingAction: "",
-    			designation: "",
-    			amountRule: ""
-    		}, {}, null, false).then(function(res3){
-    			if(res3 && res3.length) {
-    				var count = res3.length;
-    				for(let i=0; i<res3.length; i++) {
-    					Api.commonApiPost("/hr-masters/designations/_search", {
-		    				name: res3[i].name
-		    			}, {}, null, false).then(function(res2){
-		    				res3[i].id = res2.Designation && res2.Designation[0] ? res2.Designation[0].id : "-"
-		    				count--;
-		    				if(count == 0) {
-		    					self.setState({
-				    				designations: res3,
-				    				initiatorPosition: res.processInstance.initiatorPosition,
-				    				status: res.processInstance.status
-				    			})
-		    				}
-		    			}, function(err) {
-
-		    			})
-    				}
-    			}
-		    }, function(err) {
-
-		    })
-    	}
-      stopLoader();
-    }, function(err) {
-      stopLoader();
-    })
-
-    Api.commonApiPost("egov-common-masters/departments/_search", {}, {}, null, false).then(function(res){
-    	self.setState({
-    		departments: res.Department
-    	})
-      stopLoader();
-    }, function(err) {
-      stopLoader();
-    })
-  }
-
-  getEmployee = () => {
-  	let self = this;
-  	if(this.props.formData.Connection[0].workflowDetails.department && this.props.formData.Connection[0].workflowDetails.designation) {
-  		Api.commonApiPost("hr-employee/employees/_search", {
-  			departmentId: this.props.formData.Connection[0].workflowDetails.department,
-  			designationId: this.props.formData.Connection[0].workflowDetails.designation
-  		}, {}, null, false).then(function(res) {
-  			self.setState({
-  				Employee: res.Employee
-  			})
-  		}, function(err) {
-
-  		})
-  	}
   }
 
   initData() {
@@ -430,13 +172,23 @@ class Report extends Component {
     let endPoint="";
     let self = this;
 
-    specifications = require("../../framework/specs/wc/others/workflow").default;
-	self.displayUI(specifications);
-
+      // try {
+      //   if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
+      //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+      //   } else {
+      //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+      //   }
+      // } catch(e) {
+      //   console.log(e);
+      // }
+      specifications = require(`../../../framework/specs/tl/master/FeeMatrix`).default;
+      self.displayUI(specifications);
+      // self.calculatefeeMatrixDetails();
   }
 
   componentDidMount() {
       this.initData();
+      this.calculatefeeMatrixDetails();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -481,7 +233,7 @@ class Report extends Component {
             if(self.props.actionName == "update") {
               var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/");
             } else {
-              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/") + "/" + _.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath);
+              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/") + "/" + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
             }
           }
 
@@ -490,7 +242,7 @@ class Report extends Component {
       }, 1500);
     }, function(err) {
       self.props.setLoadingStatus('hide');
-      self.props.toggleSnackbarAndSetText(true, err.message, false, true);
+      self.props.toggleSnackbarAndSetText(true, err.message);
     })
   }
 
@@ -501,7 +253,7 @@ class Report extends Component {
       var jPath = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].customFields.initiatorPosition;
       getInitiatorPosition(function(err, pos) {
         if(err) {
-          self.toggleSnackbarAndSetText(true, err.message, false, true);
+          self.toggleSnackbarAndSetText(true, err.message);
         } else {
           _.set(formData, jPath, pos);
           cb(formData);
@@ -510,6 +262,61 @@ class Report extends Component {
     } else {
       cb(formData);
     }
+  }
+
+  create=(e) => {
+    let self = this, _url;
+    e.preventDefault();
+    self.props.setLoadingStatus('loading');
+    var formData = {...this.props.formData};
+    if(self.props.moduleName && self.props.actionName && self.props.metaData && self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired) {
+      if(!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
+
+      if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+        for(var i=0; i< formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]["tenantId"] = localStorage.getItem("tenantId") || "default";
+        }
+      } else
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["tenantId"] = localStorage.getItem("tenantId") || "default";
+    }
+
+    if(/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
+      _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
+      var match = _url.match(/\{.*\}/)[0];
+      var jPath = match.replace(/\{|}/g,"");
+      _url = _url.replace(match, _.get(formData, jPath));
+    }
+
+    //Check if documents, upload and get fileStoreId
+    if(formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] && formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"].length) {
+      let documents = [...formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"]];
+      let _docs = [];
+      let counter = documents.length, breakOut = 0;
+      for(let i=0; i<documents.length; i++) {
+        fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
+          if(breakOut == 1) return;
+          if(err) {
+            breakOut = 1;
+            self.props.setLoadingStatus('hide');
+            self.props.toggleSnackbarAndSetText(true, err, false, true);
+          } else {
+            _docs.push({
+              ...documents[i],
+              fileStoreId: res.files[0].fileStoreId
+            })
+            counter--;
+            if(counter == 0 && breakOut == 0) {
+              formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]["documents"] = _docs;
+              self.makeAjaxCall(formData, _url);
+            }
+          }
+        })
+      }
+    } else {
+      self.makeAjaxCall(formData, _url);
+    }
+
   }
 
   getVal = (path, dateBool) => {
@@ -790,23 +597,103 @@ class Report extends Component {
     setMockData(_mockData);
   }
 
+
+    calculatefeeMatrixDetails = (isAdd = false) => {
+        let self = this;
+        var currentData = self.props.formData;
+
+console.log(self.props.formData);
+        if(isAdd){
+          if((currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length - 1].uomTo) && (currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length - 1].amount)){
+            if((currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length - 1].uomTo) > (currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length - 1].uomFrom)){
+              let feeMatrixDetails = {"uomFrom": currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length - 1].uomTo, "uomTo": "", "amount": "", "tenantId": localStorage.tenantId, "disabled": false, "add": false};
+              if(currentData.feeMatrices[0].feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length + 1]){
+                feeMatrixDetails[currentData.feeMatrices[0].feeMatrixDetails.length].disabled = true;
+              }
+              self.props.handleChange({target:{value:feeMatrixDetails}},"feeMatrices[0].feeMatrixDetails[" + (currentData.feeMatrices[0].feeMatrixDetails.length) + "]");
+              console.log(currentData.feeMatrices[0].feeMatrixDetails);
+            }
+            else {
+              self.props.toggleSnackbarAndSetText(true, "UOM To value should be greater than UOM From value", false, true);
+            }
+          }
+          else {
+            self.props.toggleSnackbarAndSetText(true, "Please enter UOM To and Amount", false, true);
+          }
+
+        }
+
+        else if(!self.props.match.params.id){
+          console.log(self.props.formData);
+          let feeMatrixDetails = {"uomFrom": 0, "uomTo": "", "amount": "", "tenantId": localStorage.tenantId, "disabled": false, "add": false};
+
+          self.props.handleChange({target:{value:feeMatrixDetails}},"feeMatrices[0].feeMatrixDetails[0]");
+
+        }
+
+        //self.props.handleChange({target:{value:FeeMatrixDetails}},"feeMatrices[0].feeMatrixDetails");
+
+      }
+
+      removeRow = (index) =>{
+
+        let self = this;
+        var currentData = self.props.formData;
+
+        if(index != 0){
+          if(index == (currentData.feeMatrices[0].feeMatrixDetails.length - 1)){
+            FeeMatrixDetails = currentData.feeMatrices[0].feeMatrixDetails;
+            FeeMatrixDetails.splice(index, 1);
+            self.props.handleChange({target:{value:FeeMatrixDetails}},"feeMatrices[0].feeMatrixDetails");
+            console.log(currentData.feeMatrices[0].feeMatrixDetails);
+        }
+        else {
+          self.props.toggleSnackbarAndSetText(true, "Try deleting from last row", false, true);
+        }
+      }
+      else {
+        self.props.toggleSnackbarAndSetText(true, "First row can not be deleted", false, true);
+      }
+      }
+
+
   handleChange = (e, property, isRequired, pattern, requiredErrMsg="Required", patternErrMsg="Pattern Missmatch") => {
       let {getVal} = this;
-      let {handleChange,mockData,setDropDownData} = this.props;
+      let {handleChange,mockData,setDropDownData, formData} = this.props;
       let hashLocation = window.location.hash;
-      let obj = specifications["wc.create"];
+      let obj = specifications[`tl.create`];
       // console.log(obj);
+
+
+
+
+      if (property == "feeMatrices[0].subCategoryId") {
+        console.log(e.target.value);
+        Api.commonApiPost("/tl-masters/category/v1/_search",{"ids":e.target.value, "type":"subcategory"}).then(function(response)
+       {
+console.log(response);
+          handleChange({target:{value:_.filter(response.categories[0].details)[0].uomName}}, "feeMatrices[0].uomName");
+          handleChange({target:{value:_.filter(response.categories[0].details)[0].rateType}}, "feeMatrices[0].rateType");
+
+        },function(err) {
+            console.log(err);
+
+        });
+      }
+
+
+
+
+
+
       let depedants=jp.query(obj,`$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`);
       this.checkIfHasShowHideFields(property, e.target.value);
       this.checkIfHasEnDisFields(property, e.target.value);
-
       handleChange(e,property, isRequired, pattern, requiredErrMsg, patternErrMsg);
 
-      if(property == "Connection[0].workflowDetails.department" || property == "Connection[0].workflowDetails.designation") {
-      	this.getEmployee();
-      }
       _.forEach(depedants, function(value, key) {
             if (value.type=="dropDown") {
+              if (e.target.value) {
                 let splitArray=value.pattern.split("?");
                 let context="";
           			let id={};
@@ -830,24 +717,42 @@ class Report extends Component {
           				}
           			}
 
-                Api.commonApiPost(context,id).then(function(response)
-                {
-                  let keys=jp.query(response,splitArray[1].split("|")[1]);
-                  let values=jp.query(response,splitArray[1].split("|")[2]);
-                  let dropDownData=[];
-                  for (var k = 0; k < keys.length; k++) {
-                      let obj={};
-                      obj["key"]=keys[k];
-                      obj["value"]=values[k];
-                      dropDownData.push(obj);
+                // if(id.categoryId == "" || id.categoryId == null){
+                //   formData.tradeSubCategory = "";
+                //   setDropDownData(value.jsonPath, []);
+                //   console.log(value.jsonPath);
+                //   console.log("helo", formData);
+                //   return false;
+                // }
+
+                Api.commonApiPost(context,id).then(function(response) {
+                  if(response) {
+                    let keys=jp.query(response,splitArray[1].split("|")[1]);
+                    let values=jp.query(response,splitArray[1].split("|")[2]);
+                    let dropDownData=[];
+                    for (var k = 0; k < keys.length; k++) {
+                        let obj={};
+                        obj["key"]=keys[k];
+                        obj["value"]=values[k];
+                        dropDownData.push(obj);
+                    }
+
+                    dropDownData.sort(function(s1, s2) {
+                      return (s1.value < s2.value) ? -1 : (s1.value > s2.value) ? 1 : 0;
+                    });
+                    dropDownData.unshift({key: null, value: "-- Please Select --"});
+                    setDropDownData(value.jsonPath, dropDownData);
                   }
-                  setDropDownData(value.jsonPath,dropDownData);
                 },function(err) {
                     console.log(err);
                 });
                 // console.log(id);
                 // console.log(context);
+              } else {
+                setDropDownData(value.jsonPath, []);
+              }
             }
+
 
             else if (value.type=="textField") {
               let object={
@@ -898,8 +803,9 @@ class Report extends Component {
 
   addNewCard = (group, jsonPath, groupName) => {
     let self = this;
-    let {setMockData, metaData, moduleName, actionName, setFormData, formData} = this.props;
+    let {setMockData, metaData, moduleName, actionName, setFormData, formData, addRequiredFields} = this.props;
     let mockData = {...this.props.mockData};
+    let reqFields = [];
     if(!jsonPath) {
       for(var i=0; i<metaData[moduleName + "." + actionName].groups.length; i++) {
         if(groupName == metaData[moduleName + "." + actionName].groups[i].name) {
@@ -912,11 +818,20 @@ class Report extends Component {
               //console.log(ind);
               _groupToBeInserted = JSON.parse(stringified.replace(regexp, mockData[moduleName + "." + actionName].groups[i].jsonPath + "[" + (ind+1) + "]"));
               _groupToBeInserted.index = ind+1;
+
+              for(var k=0; k< _groupToBeInserted.fields.length; k++) {
+                if(_groupToBeInserted.fields[k].isRequired) {
+                  reqFields.push(_groupToBeInserted.fields[k].jsonPath);
+                }
+              }
+
+              if(reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + "." + actionName].groups.splice(j+1, 0, _groupToBeInserted);
               //console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = {...formData};
               self.setDefaultValues(mockData[moduleName + "." + actionName].groups, temp);
+              //console.log(temp);
               setFormData(temp);
               break;
             }
@@ -936,12 +851,14 @@ class Report extends Component {
     }
   }
 
+
   removeCard = (jsonPath, index, groupName) => {
     //Remove at that index and update upper array values
-    let {setMockData, moduleName, actionName, setFormData} = this.props;
+    let {setMockData, moduleName, actionName, setFormData, delRequiredFields} = this.props;
     let _formData = {...this.props.formData};
     let self = this;
     let mockData = {...this.props.mockData};
+    let notReqFields = [];
 
     if(!jsonPath) {
       var ind = 0;
@@ -949,6 +866,11 @@ class Report extends Component {
         if(index == i && groupName == mockData[moduleName + "." + actionName].groups[i].name) {
           mockData[moduleName + "." + actionName].groups.splice(i, 1);
           ind = i;
+          for(var k=0; k< mockData[moduleName + "." + actionName].groups[ind].fields.length; k++) {
+            if( mockData[moduleName + "." + actionName].groups[ind].fields[k].isRequired)
+              notReqFields.push( mockData[moduleName + "." + actionName].groups[ind].fields[k].jsonPath);
+          }
+          delRequiredFields(notReqFields);
           break;
         }
       }
@@ -965,11 +887,19 @@ class Report extends Component {
           if(_.get(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath)) {
             var grps = [..._.get(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath)];
             //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+            //console.log(mockData[moduleName + "." + actionName].groups);
             grps.splice((mockData[moduleName + "." + actionName].groups[i].index-1), 1);
-            //console.log(grps);
             _.set(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath, grps);
             //console.log(_formData);
             setFormData(_formData);
+
+            //Reduce index values
+            for(let k=ind; k<mockData[moduleName + "." + actionName].groups.length; k++) {
+              if(mockData[moduleName + "." + actionName].groups[k].name == groupName) {
+                mockData[moduleName + "." + actionName].groups[k].index -= 1;
+              }
+            }
+            break;
           }
         }
       }
@@ -989,189 +919,121 @@ class Report extends Component {
       }
   }
 
-  addMaterial = (e) => {
-  	e.preventDefault();
-  	var formData = {...this.props.formData};
-  	formData.Connection[0].estimationCharge[0].materials.push({...defaultMat});
-  	this.props.setFormData(formData);
-  }
+  // addNewCard = (group, jsonPath, groupName) => {
+  //   let self = this;
+  //   let {setMockData, metaData, moduleName, actionName, setFormData, formData} = this.props;
+  //   let mockData = {...this.props.mockData};
+  //   if(!jsonPath) {
+  //     for(var i=0; i<metaData[moduleName + "." + actionName].groups.length; i++) {
+  //       if(groupName == metaData[moduleName + "." + actionName].groups[i].name) {
+  //         var _groupToBeInserted = {...metaData[moduleName + "." + actionName].groups[i]};
+  //         for(var j=(mockData[moduleName + "." + actionName].groups.length-1); j>=0; j--) {
+  //           if(groupName == mockData[moduleName + "." + actionName].groups[j].name) {
+  //             var regexp = new RegExp(mockData[moduleName + "." + actionName].groups[j].jsonPath.replace(/\[/g, "\\[").replace(/\]/g, "\\]") + "\\[\\d{1}\\]", "g");
+  //             var stringified = JSON.stringify(_groupToBeInserted);
+  //             var ind = mockData[moduleName + "." + actionName].groups[j].index || 0;
+  //             //console.log(ind);
+  //             _groupToBeInserted = JSON.parse(stringified.replace(regexp, mockData[moduleName + "." + actionName].groups[i].jsonPath + "[" + (ind+1) + "]"));
+  //             _groupToBeInserted.index = ind+1;
+  //             mockData[moduleName + "." + actionName].groups.splice(j+1, 0, _groupToBeInserted);
+  //             //console.log(mockData[moduleName + "." + actionName].groups);
+  //             setMockData(mockData);
+  //             var temp = {...formData};
+  //             self.setDefaultValues(mockData[moduleName + "." + actionName].groups, temp);
+  //             setFormData(temp);
+  //             break;
+  //           }
+  //         }
+  //         break;
+  //       }
+  //     }
+  //   } else {
+  //     group = JSON.parse(JSON.stringify(group));
+  //     //Increment the values of indexes
+  //     var grp = _.get(metaData[moduleName + "." + actionName], self.getPath(jsonPath)+ '[0]');
+  //     group = this.incrementIndexValue(grp, jsonPath);
+  //     //Push to the path
+  //     var updatedSpecs = this.getNewSpecs(group, JSON.parse(JSON.stringify(mockData)), self.getPath(jsonPath));
+  //     //Create new mock data
+  //     setMockData(updatedSpecs);
+  //   }
+  // }
 
-  removeMaterial = (e, ind) => {
-  	e.preventDefault();
-  	var formData = {...this.props.formData};
-  	formData.Connection[0].estimationCharge[0].materials.splice(ind, 1);
-  	this.props.setFormData(formData);
-  }
-
-  getPosition = (id) => {
-  	var tempEmploye = {};
-    for (var i = 0; i < this.state.employees.length; i++) {
-        if (this.state.employees[i].id == id) {
-            tempEmploye = this.state.employees[i];
-        }
-    }
-
-    if(tempEmploye && tempEmploye.assignments) {
-        return tempEmploye.assignments[0].position;
-    } else {
-        return "";
-    }
-  }
-
-  initiateWF = (action) => {
-  	let self = this;
-  	var formData = {...this.props.formData};
-
-    if(formData.Connection[0].hscPipeSizeType) {
-      formData.Connection[0].hscPipeSizeType = self.state.pipeSize[formData.Connection[0].hscPipeSizeType] || formData.Connection[0].hscPipeSizeType;
-    }
-
-    if(!self.state.disable && (!formData.Connection[0].estimationCharge[0].materials[0].name || !formData.Connection[0].estimationCharge[0].roadCutCharges || !formData.Connection[0].estimationCharge[0].specialSecurityCharges)) {
-      return self.props.toggleSnackbarAndSetText(true, translate("wc.create.workflow.fields"), false, true);
-    }
-
-    if(!formData.Connection[0].workflowDetails)
-      formData.Connection[0].workflowDetails = {};
-
-    if(!self.state.hide && !formData.Connection[0].workflowDetails.assignee) {
-      return self.props.toggleSnackbarAndSetText(true, translate("wc.create.workflow.fields"), false, true);
-    }
-
-  	if(action.key.toLowerCase() == "reject" && !formData.Connection[0].workflowDetails.comments) {
-  		return self.props.toggleSnackbarAndSetText(true, translate("wc.create.workflow.comment"), false ,true);
-  	}
-
-  	if(!self.state.hide) formData.Connection[0].workflowDetails.assignee = this.getPosition(formData.Connection[0].workflowDetails.assignee);
-  	formData.Connection[0].workflowDetails.action = action.key;
-  	formData.Connection[0].workflowDetails.status = this.state.status;
-
-    self.props.setLoadingStatus('loading');
-  	Api.commonApiPost("/wcms-connection/connection/_update", {}, formData, null, true).then(function(res){
-  		self.props.setLoadingStatus('hide');
-  		if(action.key.toLowerCase() == "generate estimation notice") {
-  			generateEstNotice(res.Connection[0], self.props.tenantInfo ? self.props.tenantInfo[0] : "");
-  		} else if(action.key.toLowerCase() == "generate work order") {
-  			generateWO(res.Connection[0], self.props.tenantInfo ? self.props.tenantInfo[0] : "");
-  		}
-
-  		setTimeout(function(){
-  			self.props.setRoute("/view/wc/" + res.Connection[0].acknowledgementnumber);
-  		}, 5000);
-
-  	}, function(err){
-  		self.props.setLoadingStatus('hide');
-  		self.props.toggleSnackbarAndSetText(true, err.message, false, true);
-  	})
-  }
-
-  calcAmt = (i) => {
-  	if(this.props.formData.Connection[0].estimationCharge[0].materials[i].quantity && this.props.formData.Connection[0].estimationCharge[0].materials[i].size && this.props.formData.Connection[0].estimationCharge[0].materials[i].rate) {
-  		var val = Number(this.props.formData.Connection[0].estimationCharge[0].materials[i].quantity) * Number(this.props.formData.Connection[0].estimationCharge[0].materials[i].size) * Number(this.props.formData.Connection[0].estimationCharge[0].materials[i].rate);
-  		this.handleChange({target:{value: val}}, "Connection[0].estimationCharge[0].materials[" + i + "].amountDetails", false, "");
-  		var sum = 0;
-  		for(var j=0; j<this.props.formData.Connection[0].estimationCharge[0].materials.length; j++) {
-  			if(this.props.formData.Connection[0].estimationCharge[0].materials[j].amountDetails)
-  				sum += Number(this.props.formData.Connection[0].estimationCharge[0].materials[j].amountDetails);
-  		}
-
-  		this.handleChange({target: {value: sum}}, "Connection[0].estimationCharge[0].estimationCharges", false, "");
-  		this.handleChange({target:{value: parseInt(sum*(15/100))}}, "Connection[0].estimationCharge[0].supervisionCharges", false, "");
-  	}
-  }
+  // removeCard = (jsonPath, index, groupName) => {
+  //   //Remove at that index and update upper array values
+  //   let {setMockData, moduleName, actionName, setFormData} = this.props;
+  //   let _formData = {...this.props.formData};
+  //   let self = this;
+  //   let mockData = {...this.props.mockData};
+  //
+  //   if(!jsonPath) {
+  //     var ind = 0;
+  //     for(let i=0; i<mockData[moduleName + "." + actionName].groups.length; i++) {
+  //       if(index == i && groupName == mockData[moduleName + "." + actionName].groups[i].name) {
+  //         mockData[moduleName + "." + actionName].groups.splice(i, 1);
+  //         ind = i;
+  //         break;
+  //       }
+  //     }
+  //
+  //     for(let i=ind; i<mockData[moduleName + "." + actionName].groups.length; i++) {
+  //       if(mockData[moduleName + "." + actionName].groups[i].name == groupName) {
+  //         var regexp = new RegExp(mockData[moduleName + "." + actionName].groups[i].jsonPath.replace(/\[/g, "\\[").replace(/\]/g, "\\]") + "\\[\\d{1}\\]", "g");
+  //         //console.log(regexp);
+  //         //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+  //         //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+  //         var stringified = JSON.stringify(mockData[moduleName + "." + actionName].groups[i]);
+  //         mockData[moduleName + "." + actionName].groups[i] = JSON.parse(stringified.replace(regexp, mockData[moduleName + "." + actionName].groups[i].jsonPath + "[" + (mockData[moduleName + "." + actionName].groups[i].index-1) + "]"));
+  //
+  //         if(_.get(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath)) {
+  //           var grps = [..._.get(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath)];
+  //           //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+  //           grps.splice((mockData[moduleName + "." + actionName].groups[i].index-1), 1);
+  //           //console.log(grps);
+  //           _.set(_formData, mockData[moduleName + "." + actionName].groups[i].jsonPath, grps);
+  //           //console.log(_formData);
+  //           setFormData(_formData);
+  //         }
+  //       }
+  //     }
+  //     //console.log(mockData[moduleName + "." + actionName].groups);
+  //     setMockData(mockData);
+  //   } else {
+  //     var _groups = _.get(mockData[moduleName + "." + actionName], self.getPath(jsonPath));
+  //     _groups.splice(index, 1);
+  //     var regexp = new RegExp("\\[\\d{1}\\]", "g");
+  //     for(var i=index; i<_groups.length; i++) {
+  //       var stringified = JSON.stringify(_groups[i]);
+  //       _groups[i] = JSON.parse(stringified.replace(regexp, "[" + i + "]"));
+  //     }
+  //
+  //     _.set(mockData, self.getPath(jsonPath), _groups);
+  //     setMockData(mockData);
+  //     }
+  // }
 
   render() {
+
+    // const actions = [
+    //       <ContentAdd
+    //         label="No"
+    //         primary={true}
+    //         onClick={this.calculatefeeMatrixDetails}
+    //       />
+    //     ];
+
+    let {resultList, rowClickHandler,showDataTable,showHeader} = this.props;
     let {mockData, moduleName, actionName, formData, fieldErrors, isFormValid} = this.props;
     let {create, handleChange, getVal, addNewCard, removeCard, autoComHandler} = this;
-    let self = this;
-    const renderEstimateBody = function() {
-    	{return formData && formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0].materials && formData.Connection[0].estimationCharge[0].materials.map(function(v, i){
-    		return (
-    			<tr>
-    				<td>
-    					{i+1}
-    				</td>
-    				<td>
-    					<TextField
-    						disabled = {self.state.disable}
-    						value={formData.Connection[0].estimationCharge[0].materials[i].name}
-    						onChange={(e) => {
-    							handleChange(e, "Connection[0].estimationCharge[0].materials[" + i + "].name", false, "")
-    						}}/>
-    				</td>
-    				<td>
-    					<TextField
-    						disabled = {self.state.disable}
-    						value={formData.Connection[0].estimationCharge[0].materials[i].quantity}
-    						onChange={(e) => {
-    							handleChange(e, "Connection[0].estimationCharge[0].materials[" + i + "].quantity", false, "")
-    							self.calcAmt(i);
-    						}}/>
-    				</td>
-    				<td>
-    					<TextField
-    						disabled = {self.state.disable}
-    						value={formData.Connection[0].estimationCharge[0].materials[i].size}
-    						onChange={(e) => {
-    							handleChange(e, "Connection[0].estimationCharge[0].materials[" + i + "].size", false, "")
-    							self.calcAmt(i);
-    						}}/>
-    				</td>
-    				<td>
-    					<TextField
-    						disabled = {self.state.disable}
-    						value={formData.Connection[0].estimationCharge[0].materials[i].rate}
-    						onChange={(e) => {
-    							handleChange(e, "Connection[0].estimationCharge[0].materials[" + i + "].rate", false, "")
-    							self.calcAmt(i);
-    						}}/>
-    				</td>
-    				<td>
-    					<TextField
-    						disabled = {self.state.disable}
-    						value={formData.Connection[0].estimationCharge[0].materials[i].amountDetails}
-    						disabled={true}
-    						onChange={(e) => {
-    							handleChange(e, "Connection[0].estimationCharge[0].materials[" + i + "].amountDetails", false, "")
-    						}}/>
-    				</td>
-    				<td>
-    					{(i == formData.Connection[0].estimationCharge[0].materials.length-1) && <span onClick={(e) => {self.addMaterial(e)}} className="glyphicon glyphicon-plus"></span>}
-    					{(i < formData.Connection[0].estimationCharge[0].materials.length-1) && <span onClick={(e) => {self.removeMaterial(e)}} className="glyphicon glyphicon-trash"></span>}
-    				</td>
-    			</tr>
-    		)
-    	})}
-    }
 
-    const renderWorkflowHistory = function() {
-    	{return self.state.workflow && self.state.workflow.map(function(v, i) {
-    		return (
-    			<tr key={i}>
-    				<td>{v.createdDate}</td>
-    				<td>{v.senderName}</td>
-    				<td>{v.status}</td>
-    				<td>{v.owner.name || "-"}</td>
-    				<td>{v.comments}</td>
-    			</tr>
-    		)
-    	})}
-    }
-
-    const renderFiles = function() {
-    	{return formData && formData.Connection && formData.Connection[0] && formData.Connection[0].documents && formData.Connection[0].documents.length && formData.Connection[0].documents.map(function(v, i) {
-    		return (
-    			<tr key={i}>
-    				<td>{i+1}</td>
-    				<td>{v.name}</td>
-    				<td><a href={window.location.origin + "/" + CONST_API_GET_FILE + "?tenantId=" + localStorage.tenantId + "&fileStoreId=" + v.fileStoreId} target="_blank">Download</a></td>
-    			</tr>
-    		)
-    	})}
-    }
-
+console.log(this.props.formData);
+console.log(formData.hasOwnProperty("feeMatrices"));
     return (
       <div className="Report">
-        {!_.isEmpty(mockData) && moduleName && actionName && <ShowFields
+        <form onSubmit={(e) => {
+          create(e)
+        }}>
+        {!_.isEmpty(mockData) && moduleName && actionName && mockData[`${moduleName}.${actionName}`] && <ShowFields
                                     groups={mockData[`${moduleName}.${actionName}`].groups}
                                     noCols={mockData[`${moduleName}.${actionName}`].numCols}
                                     ui="google"
@@ -1182,211 +1044,50 @@ class Report extends Component {
                                     addNewCard={addNewCard}
                                     removeCard={removeCard}
                                     autoComHandler={autoComHandler}/>}
-         <Card className="uiCard">
-         	<CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>{translate("employee.Employee.fields.documents")}</div>}/>
+          <div style={{"textAlign": "center"}}>
+
+          <Card className="uiCard">
+              <CardHeader title={<strong>{translate("tl.feeMatrix.table.title.feeDetails")}</strong>}/>
               <CardText>
-              	<Table bordered responsive className="table-striped">
-              		<thead>
-              			<tr>
-              				<th>#</th>
-              				<th>{translate("wc.create.name")}</th>
-              				<th>{translate("employee.Assignment.fields.action")}</th>
-              			</tr>
-              		</thead>
-              		<tbody>
-              			{renderFiles()}
-              		</tbody>
-              	</Table>
-              </CardText>
-         </Card>
+              <FloatingActionButton mini={true}><ContentAdd onClick={() => {this.calculatefeeMatrixDetails(true)}} /></FloatingActionButton>
+              <Table id={(showDataTable==undefined)?"searchTable":(showDataTable?"searchTable":"")} bordered responsive className="table-striped">
+              <thead>
+                <tr>
+                  <th>{translate("tl.create.groups.feeMatrixDetails.uomFrom")}</th>
+                  <th>{translate("tl.create.groups.feeMatrixDetails.uomTo")}</th>
+                  <th>{translate("tl.create.groups.feeMatrixDetails.amount")}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
 
-         <Card className="uiCard">
-         	<CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>Field Inspection Details(Estimate)</div>}/>
-         	<CardText>
-         		<Table bordered responsive className="table-striped">
-              		<thead>
-              			<tr>
-              				<th>#</th>
-              				<th>{translate("wc.create.workflow.material")+" *"} </th>
-              				<th>{translate("wc.create.workflow.quantity")}</th>
-              				<th>{translate("tl.create.groups.feematrixtype.unitofmeasurement")}</th>
-              				<th>{translate("wc.create.workflow.rate")}</th>
-              				<th>{translate("tl.create.license.table.amount")}</th>
-              				<th>{translate("employee.Assignment.fields.action")}</th>
-              			</tr>
-              		</thead>
-              		<tbody>
-              			{renderEstimateBody()}
-              		</tbody>
-              	</Table>
-              	<br/>
-              	<Grid>
-              		<Row>
-              			<Col xs="12" md="3">
-              				<TextField
-                        floatingLabelFixed={true}
-                        floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-              					floatingLabelText={translate("wc.create.workflow.distributionPipeline")}
-              					disabled = {self.state.disable}
-              					type="number"
-              					value={formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0] ? formData.Connection[0].estimationCharge[0].existingDistributionPipeline : ""}
-              					onChange={(e) => {
-                          handleChange(e, "Connection[0].estimationCharge[0].existingDistributionPipeline", false, '');
-			                	}}/>
-              			</Col>
-              			<Col xs="12" md="3">
-              				<TextField
-                        floatingLabelFixed={true}
-                        floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-              					floatingLabelText={translate("wc.create.workflow.homeDistance")}
-              					disabled = {self.state.disable}
-              					type="number"
-              					value={formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0] ? formData.Connection[0].estimationCharge[0].pipelineToHomeDistance : ""}
-              					onChange={(e) => {
-                          handleChange(e, "Connection[0].estimationCharge[0].pipelineToHomeDistance", false, '');
-			                	}}/>
-              			</Col>
-              			<Col xs="12" md="3">
-              				<TextField
-                        floatingLabelFixed={true}
-                        floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                        floatingLabelText={translate("wc.create.workflow.supervisionCharge")}
-              					disabled = {true}
-              					type="number"
-              					value={formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0] ? formData.Connection[0].estimationCharge[0].supervisionCharges : ""}
-              					onChange={(e) => {
-                          handleChange(e, "Connection[0].estimationCharge[0].supervisionCharges", false, '');
-			                	}}/>
-              			</Col>
-              			<Col xs="12" md="3">
-              				<TextField
-                        floatingLabelFixed={true}
-                        floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                        floatingLabelText={<span>{translate("wc.create.donation.subtitle")}<span style={{"color": "#FF0000"}}> *</span></span>}
-              					disabled = {self.state.disable}
-              					type="number"
-              					value={formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0] ? formData.Connection[0].estimationCharge[0].specialSecurityCharges : ""}
-              					onChange={(e) => {
-                          handleChange(e, "Connection[0].estimationCharge[0].specialSecurityCharges", false, '');
-			                	}}/>
-              			</Col>
-              		</Row>
-              		<Row>
-              			<Col xs="12" md="3">
-              				<TextField
-                        type="number"
-                        floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                        floatingLabelFixed={true}
-              					floatingLabelText={<span>{translate("wc.create.workflow.roadCutCharges")}<span style={{"color": "#FF0000"}}> *</span></span>}
-              					disabled = {self.state.disable}
-              					value={formData.Connection && formData.Connection[0] && formData.Connection[0].estimationCharge && formData.Connection[0].estimationCharge[0] ? formData.Connection[0].estimationCharge[0].roadCutCharges : ""}
-              					onChange={(e) => {
-                          handleChange(e, "Connection[0].estimationCharge[0].roadCutCharges", false, '');
-			                	}}/>
-              			</Col>
-              		</Row>
-              	</Grid>
-         	</CardText>
-         </Card>
-         <Card className="uiCard">
-         	<CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>{translate("wc.create.workflow.applicationHistory")}</div>}/>
-         	<CardText>
-         		<Table bordered responsive className="table-striped">
-              		<thead>
-                		<tr>
-                			<th>{translate("employee.ServiceHistory.fields.date")}</th>
-                			<th>{translate("wc.create.workflow.UpdatedBy")}</th>
-                			<th>{translate("collection.create.status")}</th>
-                			<th>{translate("wc.create.workflow.currentOwner")}</th>
-                			<th>{translate("reports.common.comments")}</th>
-                		</tr>
-               		</thead>
-               		<tbody>
-               			{renderWorkflowHistory()}
-               		</tbody>
-               </Table>
-         	</CardText>
-         </Card>
-         <Card className="uiCard">
-         	<CardHeader title={<div style={{color:"#354f57", fontSize:18,margin:'8px 0'}}>{translate("wc.create.workflow.workflowDetails")}</div>}/>
-         	<CardText>
-         		{!self.state.hide && <Row>
-         			<Col xs={12} md={3}>
-         				<SelectField dropDownMenuProps={{animated: true, targetOrigin: {horizontal: 'left', vertical: 'bottom'}}}
-                      floatingLabelFixed={true}
-                      floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                      floatingLabelText={<span>{translate("employee.Assignment.fields.department")}<span style={{"color": "#FF0000"}}> *</span></span>}
-		                  value={formData.Connection && formData.Connection[0] && formData.Connection[0].workflowDetails ? formData.Connection[0].workflowDetails.department : ""}
-		                  onChange={(event, key, value) => {
-		                  		handleChange({target: {value}}, "Connection[0].workflowDetails.department", true, "")
-		                  }}>
-		                    {
-		                      self.state.departments && self.state.departments.map(function(v, i){
-		                        return (<MenuItem value={v.id} key={i} primaryText={v.name}/>)
-		                      })
-		                  }
-		                </SelectField>
-         			</Col>
-         			<Col xs={12} md={3}>
-         				<SelectField
-                      floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                      floatingLabelFixed={true}
-                      dropDownMenuProps={{animated: true, targetOrigin: {horizontal: 'left', vertical: 'bottom'}}}
-                      floatingLabelText={<span>{translate("employee.Assignment.fields.designation")}<span style={{"color": "#FF0000"}}> *</span></span>}
-		                  value={formData.Connection && formData.Connection[0] && formData.Connection[0].workflowDetails ? formData.Connection[0].workflowDetails.designation : ""}
-		                  onChange={(event, key, value) => {
-		                  	handleChange({target: {value}}, "Connection[0].workflowDetails.designation", true, "")
-		                  }}>
-		                    {
-		                      self.state.designations && self.state.designations.map(function(v, i){
-		                        return (<MenuItem value={v.id} key={i} primaryText={v.name}/>)
-		                      })
-		                  	}
-		                </SelectField>
-         			</Col>
-         			<Col xs={12} md={3}>
-         				<SelectField
-                      floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                      floatingLabelFixed={true}
-                      dropDownMenuProps={{animated: true, targetOrigin: {horizontal: 'left', vertical: 'bottom'}}}
-		                  floatingLabelText={<span>{translate("wc.create.groups.approvalDetails.fields.approver")}<span style={{"color": "#FF0000"}}> *</span></span>}
-		                  value={formData.Connection && formData.Connection[0] && formData.Connection[0].workflowDetails ? formData.Connection[0].workflowDetails.assignee : ""}
-		                  onChange={(event, key, value) => {
-		                  	handleChange({target: {value}}, "Connection[0].workflowDetails.assignee", true, "")
-		                  }}>
-		                    {
-		                      self.state.employees && self.state.employees.map(function(v, i){
-		                        return (<MenuItem value={v.id} key={i} primaryText={v.name}/>)
-		                      })
-		                  	}
-		                </SelectField>
-         			</Col>
-         		</Row>}
-         		<Row>
-         			<Col xs={12} md={12}>
-         				<TextField
-                    floatingLabelStyle={{"color": "#696969", "fontSize": "20px"}}
-                    floatingLabelFixed={true}
-          					type="text"
-          					multiple={true}
-          					fullWidth={true}
-          					rows={3}
-          					floatingLabelText={translate("wc.create.groups.approvalDetails.fields.comments")}
-          					value={formData.Connection && formData.Connection[0] && formData.Connection[0].workflowDetails ? formData.Connection[0].workflowDetails.comments : ""}
-          					onChange={(e) => {
+                {formData && formData.hasOwnProperty("feeMatrices") && formData.feeMatrices[0].hasOwnProperty("feeMatrixDetails") && formData.feeMatrices[0].feeMatrixDetails.map((item,index)=>{
+                  return (
+                    <tr key={index}>
+                      <td>{item.uomFrom}</td>
+                      <td><TextField value={getVal("feeMatrices[0].feeMatrixDetails["+index+"].uomTo")} errorText={fieldErrors["feeMatrices[0].feeMatrixDetails["+index+"].uomTo"]} onChange= {(e) => handleChange (e, "feeMatrices[0].feeMatrixDetails["+index+"].uomTo", true, "^[0-9]{1,10}?$","","Enter value greater than UOM From (Number only)")}/></td>
+                      <td><TextField  value={getVal("feeMatrices[0].feeMatrixDetails["+index+"].amount")} errorText={fieldErrors["feeMatrices[0].feeMatrixDetails["+index+"].amount"]} onChange= {(e) => handleChange (e, "feeMatrices[0].feeMatrixDetails["+index+"].amount", true, "^[0-9]{1,10}(\\.[0-9]{0,2})?$","","Number max 10 degits with 2 decimal")}/></td>
+                      <td><FloatingActionButton disabled = {index == 0 || (formData.feeMatrices[0].feeMatrixDetails[index + 1])} mini={true}>
+                      <ContentRemove disabled = {index == 0 || (formData.feeMatrices[0].feeMatrixDetails[index + 1])}
+                      onClick={() => {this.removeRow(index)}}
+                       />
+                      </FloatingActionButton></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+              </Table>
 
-		                	}}/>
-         			</Col>
-         		</Row>
-         	</CardText>
-         </Card>
-         <br/>
+            </CardText>
+            </Card>
 
-         <div style={{"textAlign": "center"}}>
-         	{ self.state.buttons && self.state.buttons.map(function(v, i){
-         		return (<span><RaisedButton onClick={(e) => {self.initiateWF(v)}} label={v.name} primary={true}/>&nbsp;&nbsp;</span>)
-         	})}
-         </div>
+
+            <br/>
+            {actionName == "create" && <UiButton item={{"label": "Create", "uiType":"submit", "isDisabled": isFormValid ? false : true}} ui="google"/>}
+            {actionName == "update" && <UiButton item={{"label": "Update", "uiType":"submit", "isDisabled": isFormValid ? false : true}} ui="google"/>}
+            <br/>
+          </div>
+        </form>
       </div>
     );
   }
@@ -1400,8 +1101,7 @@ const mapStateToProps = state => ({
   formData:state.frameworkForm.form,
   fieldErrors: state.frameworkForm.fieldErrors,
   isFormValid: state.frameworkForm.isFormValid,
-  requiredFields: state.frameworkForm.requiredFields,
-  tenantInfo: state.common.tenantInfo
+  requiredFields: state.frameworkForm.requiredFields
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -1450,4 +1150,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(createFeeMatrix);
