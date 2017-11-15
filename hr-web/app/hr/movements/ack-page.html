@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="resources/stylesheet/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="resources/stylesheet/buttons.dataTables.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css"> -->
+
     <style>
         body {
             padding: 0;
@@ -112,6 +113,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.js"></script>
     <script src="resources/javascript/hr/common/tenantId.js"></script>
     <script src="resources/javascript/hr/common/commonAPI.js" charset="utf-8"></script>
+    <script src="/egi/resources/global/js/egov/inbox.js"></script>
+
 </head>
 
 <body class="page-body">
@@ -134,7 +137,7 @@
                 </div>
 
                 <div class="navbar-brand">
-                    <h3 class="horizontal-page-title homepage hidden-xs hidden-sm" id="hp-citizen-title">EIS</h3>
+                    <h3 class="horizontal-page-title homepage hidden-xs" id="hp-citizen-title">Acknoldgement</h3>
                 </div>
 
                 <!-- notifications and other links -->
@@ -226,9 +229,9 @@
                         <div class="body-cont">
                             <div class="body-cont-inner">
                                 <div class="form-section">
-                                    <h3>Employee Leave Report</h3>
+                                  <h3>Leave Application acknowledgement</h3>
                                     <div id="root"></div>
-                                      <script>document.write('<script type="text/babel" type="text/babel" src="resources/javascript/hr/reports/leave-report.js?version=' + getTimestamp() + '"\><\/script>');</script>
+                                      <script>document.write('<script type="text/babel" type="text/babel" src="resources/javascript/hr/movements/ack-page.js?version=' + getTimestamp() + '"\><\/script>');</script>
                                 </div>
                             </div>
                         </div>
