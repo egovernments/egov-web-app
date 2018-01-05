@@ -31,6 +31,13 @@ class UiDynamicTable extends Component {
     super(props);
   }
 
+  //   componentDidMount(){
+  //   const table =  $('#dynamicTable').DataTable();
+  //     table.on( 'draw', function () {
+  //        console.log( 'Redraw occurred at: '+new Date().getTime() );
+  //        $('#dynamicTable').DataTable().page(4).draw( 'page' );
+  //     } );
+  //   }
   // 	componentWillMount() {
   //     $('#dynamicTable').DataTable({
   //        dom: 'lBfrtip',
@@ -41,10 +48,14 @@ class UiDynamicTable extends Component {
   //        }
   //     });
   //  	}
-  //
+  // //
   //  	componentWillUnmount() {
   //   	$('#dynamicTable').DataTable().destroy(true);
   // 	}
+  //
+  //   componentWillReceiveProps(nextProps){
+  //       $('#dynamicTable').DataTable().page(4);
+  //   }
   //
   // 	componentWillUpdate() {
   // 		let {flag} = this.props;
@@ -53,7 +64,7 @@ class UiDynamicTable extends Component {
   //       $('#dynamicTable').dataTable().fnDestroy();
   //     }
   // }
-  //
+  // //
   // componentDidUpdate() {
   //     $('#dynamicTable').DataTable({
   //          dom: 'lBfrtip',
@@ -214,7 +225,6 @@ class UiDynamicTable extends Component {
     let { resultList, getVal } = this.props;
     let { renderFields } = this;
     // console.log(resultList);
-
     // const totalAmount=()=>{
     // 	 let bill=getVal("Receipt[0].Bill");
     // 	 let sum=0;
@@ -227,28 +237,11 @@ class UiDynamicTable extends Component {
     // }
 
     const renderTable = function() {
+    //  console.log(resultList.resultValues);
       return (
         <Card className="uiCard">
           <CardHeader title={<strong> {translate('ui.table.title')} </strong>} />
           <CardText>
-            {/*
-								resultList.hasOwnProperty("resultValues") && resultList.resultValues.map((item, i) => {
-									 return (
-											 <Card className="uiCard">
-												 <CardHeader key={i} title={<strong> {translate(getVal("Receipt[0].Bill[0].billDetails["+i+"].businessService"))} </strong>}/>
-												   <CardText key={i2}>
-															 {
-																 item.map((item2, i2)=>{
-																	 return renderFields(item2)
-															 		})
-														 		}
-													 </CardText>
-												  </CardHeader>
-												 </Card>
-										 )
-
-							})*/}
-
             <Table id="dynamicTable" bordered responsive className="table-striped">
               <thead>
                 <tr>
@@ -270,7 +263,7 @@ class UiDynamicTable extends Component {
                       <tr key={i}>
                         {item.map((item2, i2) => {
                           return (
-                            <td style={{ textAlign: 'center' }} key={i2}>
+                            <td style={{ textAlign: 'center' }} key={getVal(item2.jsonPath)}>
                               {renderFields(item2)}
                             </td>
                           );
