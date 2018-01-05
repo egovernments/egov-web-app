@@ -2206,7 +2206,7 @@ var localization_EN_Data = {
   'swm.create.vendorNos': 'Vendornos',
   'swm.create.vendorNo': 'Vendor No',
   'swm.collectionpoints.name': 'Name',
-  'swm.create.registrationNo': 'Vehicle Registration No.',
+  'swm.create.registrationNo': 'Contract Registration No.',
   'swm.create.vendorregistrationNo': 'Vendor Registration No.',
   'swm.create.supplier': 'Supplier',
   'swm.search.result.vendorNo': 'Vendorno',
