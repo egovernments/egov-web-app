@@ -3176,7 +3176,7 @@ var localization_EN_Data = {
   'MdmsMetadata.masterData.swm.WasteSubType.tenantId': 'WasteSubType TenantID',
   'MdmsMetadata.masterData.swm.WasteSubType.name': 'WasteSubType Name',
   'MdmsMetadata.masterData.swm.WasteSubType.code': 'WasteSubType Code',
-  'MdmsMetadata.masterData.swm.WasteSubType.wasteType': 'WasteSubType Waste Type',
+  'MdmsMetadata.masterData.swm.WasteSubType.wasteType': 'Waste Type',
   'MdmsMetadata.masterData.swm.ShiftType.tenantId': 'ShiftType TenantID',
   'MdmsMetadata.masterData.swm.ShiftType.name': 'ShiftType Name',
   'MdmsMetadata.masterData.swm.ShiftType.code': 'ShiftType Code',
@@ -3227,6 +3227,7 @@ var localization_EN_Data = {
   'swm.collectionpoints.create.complex': 'Location',
   'lcms.create.group.title.courtDetails' : 'Master Data of Court',
   'swm.create.ulbNames' : 'ULB Names',
+  'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Type Code',
 
 
 };
@@ -5190,6 +5191,8 @@ var localization_MR_Data = {
   'swm.processingsite.search.title' : 'Processing Site Search',
   'lcms.create.group.title.courtDetails' : 'Master Data of Court',
   'swm.create.ulbNames' : 'ULB Names',
+  'MdmsMetadata.masterData.swm.WasteSubType.wasteType':'Waste Type',
+  'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Tyoe Code',
 
 
   'referenceEvidence.update.document.title': 'Reference Evidences-marathi',

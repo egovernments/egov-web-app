@@ -359,7 +359,7 @@ var dat = {
           fields: [
             {
               name: 'shiftStartTime',
-              jsonPath: 'MdmsRes.swm.ShiftType[0].shiftStartTime',
+              jsonPath: 'MdmsRes.swm.Shift[0].shiftStartTime',
               label: 'swm.Shift.create.shiftStartTime',
               pattern: '',
               type: 'timePicker',
