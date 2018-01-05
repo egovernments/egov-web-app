@@ -120,7 +120,7 @@ var dat = {
           },
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicleTripSheetDetails[0].ulbOwnedVehicle',
+            dependentJsonPath: 'vehicleTripSheetDetails[0].vendorName',
             label: 'swm.vehiclestripsheet.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
@@ -372,7 +372,7 @@ var dat = {
           },
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicleTripSheetDetails[0].ulbOwnedVehicle',
+            dependentJsonPath: 'vehicleTripSheetDetails[0].vendorName',
             label: 'swm.vehiclestripsheet.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
@@ -586,7 +586,6 @@ var dat = {
             patternErrorMsg: '',
             defaultValue: '',
           },
-
         ],
       },
     ],
@@ -616,7 +615,8 @@ var dat = {
           },
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicleTripSheetDetails[0].ulbOwnedVehicle',
+           // jsonPath: 'vehicleTripSheetDetails[0].ulbOwnedVehicle',
+            dependentJsonPath:'vehicleTripSheetDetails[0].vendorName',
             label: 'swm.vehiclestripsheet.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,

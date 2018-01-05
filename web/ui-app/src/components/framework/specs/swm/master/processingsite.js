@@ -7,7 +7,7 @@ var dat = {
     groups: [
       {
         name: 'ProcessingSite',
-        label: 'swm.dumpingground.search.title',
+        label: 'swm.processingsite.search.title',
         fields: [
           {
             name: 'ProcessingSiteArea',
@@ -222,7 +222,7 @@ var dat = {
             name: 'ProcessingSiteName',
             jsonPath: 'MasterMetaData.masterData[0].name',
             label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
-            type: 'number',
+            type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
@@ -310,7 +310,7 @@ var dat = {
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.processingSite.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',
@@ -474,7 +474,7 @@ var dat = {
       },
       {
         name: 'ProcessingSiteDetails',
-        label: 'swm.dumpingGround.create.group.title.ProcessingPlantDetails',
+        label: 'swm.processingplant.create.group.title.ProcessingSiteDetails',
         fields: [
           {
             name: 'ProcessingSiteName',
@@ -492,7 +492,7 @@ var dat = {
           },
           {
             name: 'ProcessingSiteArea',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.area',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.area',
             label: 'swm.processingplant.create.ProcessingSiteArea',
             pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
             type: 'text',
@@ -506,7 +506,7 @@ var dat = {
           },
           {
             name: 'ProcessingSiteCapacity',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.capacity',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.capacity',
             label: 'swm.processingplant.create.ProcessingSiteCapacity',
             pattern: '^([1-9][0-9]{0,3}|10000|0|[1-4][0-9]{0,4}|50000)$',
             type: 'text',
@@ -531,6 +531,12 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
+        ]
+      },
+      {
+        name: 'geoCoordinates',
+        label: 'swm.dumpingground.search.geoCoordinates',
+        fields: [
           {
             name: 'ProcessingSiteLatitude',
             jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.latitude',
@@ -559,11 +565,12 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
+
         ]
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',
@@ -574,16 +581,9 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             maxLength: 128,
-            url: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             minLength: 1,
             patternErrorMsg: 'may not be null',
-            // mdms: {
-            //   "moduleName": "swm",
-            //   "masterName": "SwmProcess",
-            //   "filter": "",
-            //   "key": "$..code",
-            //   "value": "$..name",
-            // },
             hasATOAATransform: true,
             aATransformInfo: {
               to: 'MdmsRes.swm.ProcessingSite[0].siteDetails.wasteTypes',
@@ -591,7 +591,7 @@ var dat = {
             }
           },
         ]
-      }
+      },
     ],
     tenantIdRequired: true,
     url: '/egov-mdms-service/v1/_search?code={code}',
@@ -754,7 +754,12 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
+        ]
+      },
+      {
+        name: 'geoCoordinates',
+        label: 'swm.dumpingground.search.geoCoordinates',
+        fields: [
           {
             name: 'ProcessingSiteLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
@@ -787,7 +792,7 @@ var dat = {
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',

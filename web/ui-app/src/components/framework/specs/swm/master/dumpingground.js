@@ -526,6 +526,7 @@ var dat = {
             isDisabled: false,
             maxLength: '',
             minLength: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..code|$..name',
             patternErrMsg: '',
             // mdms: {
             //   "moduleName": "swm",
@@ -559,7 +560,6 @@ var dat = {
             maxLength: '',
             minLength: '',
             patternErrMsg: '',
-            defaultValue: false,
             url: '',
             showHideFields: [
               {
@@ -600,37 +600,6 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
-          // {
-          //   name: 'dummy',
-          //   jsonPath: '',
-          //   label: 'swm.dumpingGround.create.dummy',
-          //   pattern: '',
-          //   type: 'textArea',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   defaultValue: '',
-          //   maxLength: 500,
-          //   minLength: 10,
-          //   patternErrMsg: '',
-          //   url: '',
-          // },
-
-          // {
-          //   name: 'dummy',
-          //   jsonPath: '',
-          //   label: 'swm.dumpingGround.create.dummy',
-          //   pattern: '',
-          //   type: 'textArea',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   defaultValue: '',
-          //   maxLength: 500,
-          //   minLength: 10,
-          //   patternErrMsg: '',
-          //   url: '',
-          // },
-
           {
             name: 'bankName',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankName',
@@ -646,7 +615,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityFrom',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankValidityFrom',
@@ -662,7 +630,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityTo',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankValidityTo',
@@ -698,7 +665,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'dumpingGroundArea',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.area',
@@ -711,7 +677,6 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
           {
             name: 'dumpingGroundCapacity',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.capacity',
@@ -726,7 +691,6 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
           {
             name: 'dumpingGroundAddress',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.address',
@@ -742,7 +706,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'dumpingGroundLatitude',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.latitude',
@@ -757,7 +720,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'dumpingGroundLongitude',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.longitude',
@@ -772,7 +734,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'dumpingGroundisProcessingSite',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].isProcessingSite',
@@ -839,7 +800,6 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'dumpingGroundProcessingPlant',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].processingSite.code',
@@ -888,6 +848,7 @@ var dat = {
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             patternErrMsg: 'may not be null',
             hasATOAATransform: true,
             aATransformInfo: {

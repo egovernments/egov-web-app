@@ -18,7 +18,19 @@ export default class UiLabel extends Component {
   setVal = () => {
     let { item, useTimestamp } = this.props;
     let self = this;
-    var val = this.props.getVal(item.jsonPath, item.isDate, item.isTime);
+    var val="";
+       if(item.jsonPath){
+        val = this.props.getVal(item.jsonPath, item.isDate, item.isTime);
+       }
+      if(item.dependentJsonPath){
+          let dependantVal = this.props.getVal(item.dependentJsonPath, item.isDate, item.isTime);
+          if(_.isEmpty(dependantVal)){
+             val = "YES";
+          }else{
+             val="NO"
+          }
+
+      }
     // console.log(item);
     if (item.configUrl && item.url) {
       let _url = item.configUrl.split('?')[0];
@@ -236,7 +248,7 @@ export default class UiLabel extends Component {
         <Row>
           {!item.hasOwnProperty('isLabel') ? (
             <Col
-              id={item.jsonPath.split('.').join('-')}
+              id={item.jsonPath?item.jsonPath.split('.').join('-'):(item.dependentJsonPath && item.dependentJsonPath.split('.').join('-'))}
               style={item.hasOwnProperty('textAlign') ? { textAlign: item.textAlign } : { textAlign: 'left' }}
               xs={12}
             >
@@ -251,7 +263,7 @@ export default class UiLabel extends Component {
             <Col style={{ textAlign: 'left' }} xs={12}>
               <FlatButton label={this.state.value || this.props.getVal(item.jsonPath, item.isDate)} primary={true} />
             </Col>
-          ) : (
+          ) :item.jsonPath? (
             <Col
               id={item.jsonPath.split('.').join('-')}
               style={item.hasOwnProperty('textAlign') ? { textAlign: item.textAlign } : { textAlign: 'left' }}
@@ -259,7 +271,15 @@ export default class UiLabel extends Component {
             >
               {this.state.value || showObjectInTable(this.props.getVal(item.jsonPath, item.isDate)) || 'NA'}
             </Col>
-          )}
+          ):(item.dependentJsonPath?(
+            <Col
+              id={item.dependentJsonPath.split('.').join('-')}
+              style={item.hasOwnProperty('textAlign') ? { textAlign: item.textAlign } : { textAlign: 'left' }}
+              xs={12}
+            >
+              {this.state.value  || 'NA'}
+            </Col>
+          ):"")}
         </Row>
         <br />
       </div>
