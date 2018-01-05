@@ -23,7 +23,7 @@ var dat = {
           type: 'singleValueList',
           isDisabled: false,
           patternErrorMsg: 'swm.create.field.message.name',
-          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..code|$..code',
+          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name'
         },
         // {
         //   name: 'targetNo',
