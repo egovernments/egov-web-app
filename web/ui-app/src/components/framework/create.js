@@ -100,6 +100,7 @@ class Report extends Component {
   }
 
   setDefaultValues(groups, dat) {
+    var self = this;
     for (var i = 0; i < groups.length; i++) {
       for (var j = 0; j < groups[i].fields.length; j++) {
         if (
@@ -108,7 +109,7 @@ class Report extends Component {
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
           //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
-            _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
+          _.set(dat, groups[i].fields[j].jsonPath,self.getVal(groups[i].fields[j].jsonPath) || groups[i].fields[j].defaultValue);
         }
 
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
@@ -1863,11 +1864,11 @@ class Report extends Component {
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              //console.log(mockData[moduleName + "." + actionName].groups);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              //console.log(temp);
+              // console.log(temp);
               setFormData(temp);
               break;
             }
