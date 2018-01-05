@@ -830,14 +830,14 @@ class assetCategoryCreate extends Component {
         function(response) {
           for(var i = 0; i < response.MdmsRes.ASSET.AssetCategory.length ; i++){
             if(self.props.match.params.id){
-              if(response.MdmsRes.ASSET.AssetCategory[i].name == formData.MasterMetaData.masterData[0].name && response.MdmsRes.ASSET.AssetCategory[i].id != formData.MasterMetaData.masterData[0].id){
+              if(response.MdmsRes.ASSET.AssetCategory[i].name.toLowerCase().trim() == formData.MasterMetaData.masterData[0].name.toLowerCase().trim() && response.MdmsRes.ASSET.AssetCategory[i].id != formData.MasterMetaData.masterData[0].id){
                 flagIndicate = 0;
                 break;
               } else {
                 flagIndicate = 1;
               }
             } else {
-              if(response.MdmsRes.ASSET.AssetCategory[i].name == formData.MasterMetaData.masterData[0].name){
+              if(response.MdmsRes.ASSET.AssetCategory[i].name.toLowerCase().trim() == formData.MasterMetaData.masterData[0].name.toLowerCase().trim()){
                 flagIndicate = 0;
                 break;
               } else {
