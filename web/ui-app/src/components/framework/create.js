@@ -228,9 +228,12 @@ class Report extends Component {
                   console.log(err);
                 }
               );
+
             }
           }
         }
+
+        self.checkifHasDependedantMdmsField(groups[i].fields[j].jsonPath,self.getVal(groups[i].fields[j].jsonPath));
 
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
           for (var k = 0; k < groups[i].fields[j].children.length; k++) {
@@ -526,7 +529,7 @@ class Report extends Component {
 
     let self = this;
     let moduleDetails = [];
-    let { setDropDownData } = this.props;
+    let { setDropDownData,setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
     let name, filter;
@@ -593,6 +596,7 @@ class Report extends Component {
                 }
               }
               setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
+              // setDropDownOriginalData(response, dropDownData);
             }
           }
         }
@@ -607,7 +611,7 @@ class Report extends Component {
   checkifHasDependedantMdmsField(path, value) {
     let obj = { ..._mockData };
     let _mockData = { ...this.props.mockData };
-    let { moduleName, actionName, setMockData, setDropDownData } = this.props;
+    let { moduleName, actionName, setMockData, setDropDownData ,setDropDownOriginalData} = this.props;
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
       for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
         if (_mockData[moduleName + '.' + actionName].groups[i].fields[j].mdms) {
@@ -632,6 +636,7 @@ class Report extends Component {
                 }
               });
               setDropDownData(_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, dropdowndata);
+              // setDropDownOriginalData(_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, dropdownValues);
             }
           }
         }

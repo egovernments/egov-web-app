@@ -335,7 +335,7 @@ var dat = {
       {
         name: 'CollectionTypeDetails',
         label: 'swm.create.group.title.CollectionTypeDetails',
-        jsonPath: 'sourceSegregations[0].collectionDetails[0]',
+        jsonPath: 'sourceSegregations[0].collectionDetails',
         multiple: true,
         fields: [
           {
