@@ -32,7 +32,7 @@ var dat = {
             type: 'singleValueList',
             url: '',
             isRequired: false,
-            isDisabled: true,
+            isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
             defaultValue: [
@@ -45,6 +45,13 @@ var dat = {
                 value: 'IMMOVABLE',
               },
             ],
+            depedants: [
+              {
+                jsonPath: 'assetCategory',
+                type: 'dropDown',
+                pattern:"/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28+%40.isAssetAllow+%3D%3D+false+%26%26+%40.assetCategoryType+%3D%3D'{assetCategoryType}'+%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
+              },
+            ],
           },
           {
             name: 'AssetCategory',
@@ -52,8 +59,7 @@ var dat = {
             label: 'ac.create.Asset.Category',
             pattern: '',
             type: 'singleValueList',
-            url:
-              '/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F(%20%40.isAssetAllow%20%3D%3D%20false%20%26%26%20%40)%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name',
+            url:'',
             isRequired: false,
             isDisabled: false,
             requiredErrMsg: '',

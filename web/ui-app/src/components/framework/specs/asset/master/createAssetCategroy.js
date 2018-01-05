@@ -394,7 +394,7 @@ var dat = {
           {
             name: 'AssetCategory',
             jsonPath: 'MdmsRes.ASSET.AssetCategory[0].parentName',
-            label: 'ac.create.asset.sub.categroy',
+            label: 'ac.create.asset.sub.category',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -660,7 +660,7 @@ var dat = {
           {
             name: 'AssetCategory',
             jsonPath: 'MasterMetaData.masterData[0].parent',
-            label: 'ac.create.asset.sub.categroy',
+            label: 'ac.create.asset.sub.category',
             pattern: '',
             type: 'singleValueList',
             isRequired: false,
