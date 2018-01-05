@@ -25,7 +25,7 @@ class UiCheckBox extends Component {
      let checkedValue =false;
      if(getVal){
        if(item.jsonPath){
-        checkedValue= getVal(item.jsonPath);
+         checkedValue= getVal(item.jsonPath) ? getVal(item.jsonPath) : (this.props.getVal ? this.props.getVal(item.jsonPath) :isSelected ) ;
        }else if(item.dependentJsonPath){
          var dependentValue= getVal(item.dependentJsonPath);
          if(_.isEmpty(dependentValue)){
