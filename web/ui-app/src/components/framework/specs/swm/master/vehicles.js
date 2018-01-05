@@ -407,26 +407,27 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicles[0].isulbownedvehicle',
+           // jsonPath: 'vehicles[0].isulbownedvehicle',
+            dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            defaultValue: false,
-            showHideFields: [
-              {
-                ifValue: true,
-                show: [],
-                hide: [
-                  {
-                    name: 'vendorname',
-                    isGroup: false,
-                    isField: true,
-                  },
-                ],
-              },
-            ],
+            // defaultValue: false,
+            // showHideFields: [
+            //   {
+            //     ifValue: true,
+            //     show: [],
+            //     hide: [
+            //       {
+            //         name: 'vendorname',
+            //         isGroup: false,
+            //         isField: true,
+            //       },
+            //     ],
+            //   },
+            // ],
           },
           {
             name: 'vendorname',
@@ -705,19 +706,20 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicles[0].isulbownedvehicle',
+            //jsonPath: 'vehicles[0].isulbownedvehicle',
+            dependentJsonPath:'vehicles[0].vendor.name',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
            // defaultValue: true,
-            valueBasedOn: [
-              {
-                jsonPath: 'vehicles[0].vendor.name',
-                valueIfDataFound: false,
-              },
-            ],
+            // valueBasedOn: [
+            //   {
+            //     jsonPath: 'vehicles[0].vendor.name',
+            //     valueIfDataFound: false,
+            //   },
+            // ],
           },
           {
             name: 'vendor_name',
@@ -992,34 +994,35 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicles[0].isulbownedvehicle',
+           //jsonPath: 'vehicles[0].isulbownedvehicle',
+            dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            defaultValue: false,
-            valueBasedOn: [
-              {
-                jsonPath: 'vehicles[0].vendor.vendorNo',
-                valueIfDataFound: false,
-              },
-            ],
-            showHideFields: [
-              {
-                ifValue: true,
-                hide: [
-                  {
-                    name: 'vendorname',
-                    isGroup: false,
-                    isField: true,
-                  },
-                ],
-                show: [
+           // defaultValue: false,
+            // valueBasedOn: [
+            //   {
+            //     jsonPath: 'vehicles[0].vendor.vendorNo',
+            //     valueIfDataFound: false,
+            //   },
+            // ],
+            // showHideFields: [
+            //   {
+            //     ifValue: true,
+            //     hide: [
+            //       {
+            //         name: 'vendorname',
+            //         isGroup: false,
+            //         isField: true,
+            //       },
+            //     ],
+            //     show: [
                   
-                ],
-              },
-            ],
+            //     ],
+            //   },
+            // ],
           },
           {
             name: 'vendorname',
