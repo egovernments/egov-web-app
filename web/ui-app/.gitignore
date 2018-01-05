@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# add .dstore to gitignore
+.DS_Store
+
 # dependencies
 /node_modules
 /functions/node_modules

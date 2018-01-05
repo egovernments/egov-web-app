@@ -51,28 +51,19 @@ class IframeLoader extends Component {
     const { url } = this.state;
 
     return (
-      <div style={styles.container} className="col-lg-12">
-        {url.indexOf('user-jobs') !== -1 ? (
+      <div id="container" style={styles.container} className="col-lg-12">
+        {
           <iframe
+            key={url}
             style={styles.iframe}
             ref={f => {
               this.ifr = f;
             }}
             frameBorder="0"
-            src="/app/v2/uploader#user-jobs"
+            src={url}
             allowFullScreen
           />
-        ) : (
-          <iframe
-            style={styles.iframe}
-            ref={f => {
-              this.ifr = f;
-            }}
-            frameBorder="0"
-            src="/app/v2/uploader"
-            allowFullScreen
-          />
-        )}
+        }
       </div>
     );
   }
