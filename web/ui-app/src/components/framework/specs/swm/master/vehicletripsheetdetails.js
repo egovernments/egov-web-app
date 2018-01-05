@@ -185,81 +185,81 @@ var dat = {
           },
         ],
       },
-      {
-        name: 'locationsCovered',
-        label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-        {
-          type: 'tableList',
-          actionsNotRequired: true,
-          jsonPath: 'vehiclestripsheet[0].locationdetails',
-          tableList: {
-          actionsNotRequired: true,
-          serialNoNotRequired:true,
-            header: [
-              {
-                label: 'swm.processingplant.create.title.Ward',
-              },
-              {
-                label: 'swm.processingplant.create.Zone',
-              },
-              {
-                label: 'swm.processingplant.create.block',
-              },
-              {
-                label: 'swm.processingplant.create.Colony',
-              },
-              {
-                label: 'swm.processingplant.create.routestop',
-              },
-            ],
-            values: [
-              {
-                name: 'ward',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-                url: '',
-              },
-              {
-                name: 'zone',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-              },
-              {
-                name: 'block',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'colony',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'routestop',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-            ],
-          },
-        },
-        ],
-      },
+      // {
+      //   name: 'locationsCovered',
+      //   label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      //   fields: [
+      //   {
+      //     type: 'tableList',
+      //     actionsNotRequired: true,
+      //     jsonPath: 'vehiclestripsheet[0].locationdetails',
+      //     tableList: {
+      //     actionsNotRequired: true,
+      //     serialNoNotRequired:true,
+      //       header: [
+      //         {
+      //           label: 'swm.processingplant.create.title.Ward',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Zone',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.block',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Colony',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.routestop',
+      //         },
+      //       ],
+      //       values: [
+      //         {
+      //           name: 'ward',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //           url: '',
+      //         },
+      //         {
+      //           name: 'zone',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //         },
+      //         {
+      //           name: 'block',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'colony',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'routestop',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   ],
+      // },
       {
         name: 'tripSheetDetails',
         label: 'swm.vehiclestripsheet.create.group.title.tripSheetDetails',
@@ -437,81 +437,81 @@ var dat = {
           },
         ],
       },
-      {
-        name: 'locationsCovered',
-        label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-        {
-          type: 'tableList',
-          actionsNotRequired: true,
-          jsonPath: 'vehiclestripsheet[0].locationdetails',
-          tableList: {
-          actionsNotRequired: true,
-          serialNoNotRequired:true,
-            header: [
-              {
-                label: 'swm.processingplant.create.title.Ward',
-              },
-              {
-                label: 'swm.processingplant.create.Zone',
-              },
-              {
-                label: 'swm.processingplant.create.block',
-              },
-              {
-                label: 'swm.processingplant.create.Colony',
-              },
-              {
-                label: 'swm.processingplant.create.routestop',
-              },
-            ],
-            values: [
-              {
-                name: 'ward',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-                url: '',
-              },
-              {
-                name: 'zone',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-              },
-              {
-                name: 'block',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'colony',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'routestop',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-            ],
-          },
-        },
-        ],
-      },
+      // {
+      //   name: 'locationsCovered',
+      //   label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      //   fields: [
+      //   {
+      //     type: 'tableList',
+      //     actionsNotRequired: true,
+      //     jsonPath: 'vehiclestripsheet[0].locationdetails',
+      //     tableList: {
+      //     actionsNotRequired: true,
+      //     serialNoNotRequired:true,
+      //       header: [
+      //         {
+      //           label: 'swm.processingplant.create.title.Ward',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Zone',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.block',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Colony',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.routestop',
+      //         },
+      //       ],
+      //       values: [
+      //         {
+      //           name: 'ward',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //           url: '',
+      //         },
+      //         {
+      //           name: 'zone',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //         },
+      //         {
+      //           name: 'block',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'colony',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'routestop',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   ],
+      // },
       {
         name: 'tripSheetDetails',
         label: 'swm.vehiclestripsheet.create.group.title.tripSheetDetails',
@@ -671,81 +671,81 @@ var dat = {
           },
         ],
       },
-      {
-        name: 'locationsCovered',
-        label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-        {
-          type: 'tableList',
-          actionsNotRequired: true,
-          jsonPath: 'vehicleTripSheetDetails[0].locationdetails',
-          tableList: {
-          actionsNotRequired: true,
-          serialNoNotRequired:true,
-            header: [
-              {
-                label: 'swm.processingplant.create.title.Ward',
-              },
-              {
-                label: 'swm.processingplant.create.Zone',
-              },
-              {
-                label: 'swm.processingplant.create.block',
-              },
-              {
-                label: 'swm.processingplant.create.Colony',
-              },
-              {
-                label: 'swm.processingplant.create.routestop',
-              },
-            ],
-            values: [
-              {
-                name: 'ward',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-                url: '',
-              },
-              {
-                name: 'zone',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: false,
-              },
-              {
-                name: 'block',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'colony',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-              {
-                name: 'routestop',
-                pattern: '',
-                type: 'label',
-                jsonPath: '',
-                isRequired: false,
-                isDisabled: true,
-              },
-            ],
-          },
-        },
-        ],
-      },
+      // {
+      //   name: 'locationsCovered',
+      //   label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      //   fields: [
+      //   {
+      //     type: 'tableList',
+      //     actionsNotRequired: true,
+      //     jsonPath: 'vehicleTripSheetDetails[0].locationdetails',
+      //     tableList: {
+      //     actionsNotRequired: true,
+      //     serialNoNotRequired:true,
+      //       header: [
+      //         {
+      //           label: 'swm.processingplant.create.title.Ward',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Zone',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.block',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.Colony',
+      //         },
+      //         {
+      //           label: 'swm.processingplant.create.routestop',
+      //         },
+      //       ],
+      //       values: [
+      //         {
+      //           name: 'ward',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //           url: '',
+      //         },
+      //         {
+      //           name: 'zone',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: false,
+      //         },
+      //         {
+      //           name: 'block',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'colony',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //         {
+      //           name: 'routestop',
+      //           pattern: '',
+      //           type: 'label',
+      //           jsonPath: '',
+      //           isRequired: false,
+      //           isDisabled: true,
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   ],
+      // },
       {
         name: 'tripSheetDetails',
         label: 'swm.vehiclestripsheet.create.group.title.tripSheetDetails',
