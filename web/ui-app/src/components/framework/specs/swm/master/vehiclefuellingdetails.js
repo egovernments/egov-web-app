@@ -81,6 +81,7 @@ var dat = {
         },
         {
           label: 'vehiclefuellingdetails.create.transactionDate',
+          isDate:true
         },
         {
           label: 'vehiclefuellingdetails.create.vehicleType',
@@ -258,7 +259,7 @@ var dat = {
             name: 'transactionNo',
             jsonPath: 'vehicleFuellingDetails[0].transactionNo',
             label: 'vehiclefuellingdetails.create.transactionNo',
-            type: 'datePicker',
+            type: 'number',
             isRequired: true,
             isDisabled: true,
             patternErrorMsg: '',
@@ -387,7 +388,15 @@ var dat = {
         name: 'VehicleDetails1',
         label: '',
         fields: [
-          {
+           {
+            name: 'transactionNo',
+            jsonPath: 'vehicleFuellingDetails[0].transactionNo',
+            label: 'vehiclefuellingdetails.create.transactionNo',
+            type: 'text',
+            isRequired: true,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },{
             name: 'transactionDate',
             jsonPath: 'vehicleFuellingDetails[0].transactionDate',
             label: 'vehiclefuellingdetails.create.transactionDate',
