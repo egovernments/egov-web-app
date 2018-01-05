@@ -54,7 +54,7 @@ var dropDownData = {
     url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$.MdmsRes.swm.WasteType.*.code|$.MdmsRes.swm.WasteType.*.name',
   },
   'MdmsMetadata.masterData[0].sideCode': {
-    url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=side&filter=%5B%3F%28%40.active%3D%3Dtrue%29%5D|$.MdmsRes.lcms.side.*.code|$.MdmsRes.lcms.side.*.name',
+    url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=side|$.MdmsRes.lcms.side.*.code|$.MdmsRes.lcms.side.*.name',
     },
 };
 

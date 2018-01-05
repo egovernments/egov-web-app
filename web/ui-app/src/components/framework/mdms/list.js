@@ -202,7 +202,6 @@ class MdmsComponent extends Component {
             self.getDependencyData(data,temp,depndencyobject,successCallback).then((data)=>{
             successCallback(data);
          });
-          
              }
               
               else{
@@ -223,8 +222,10 @@ class MdmsComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.pathname && this.state.pathname != nextProps.history.location.pathname) {
-      this.initData(nextProps);
+    if (!_.isEqual(nextProps, this.props)) {
+      if (this.state.pathname && this.state.pathname != nextProps.history.location.pathname) {
+        this.initData(nextProps);
+      }
     }
   }
 
