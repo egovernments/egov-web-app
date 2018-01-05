@@ -153,15 +153,25 @@ var dat = {
             minLength: 6,
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
-            autoCompleteDependancy: {
-              autoCompleteUrl: '/swm-services/vehiclemaintenances/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
-              autoFillFields: {
-                'vehicleMaintenanceDetails[0].vehicle.vehicleType.code': 'vehicleMaintenances[0].vehicle.vehicleType.name',
-                'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate':
-                  'vehicleMaintenances[0].vehicle.insuranceDetails.insuranceValidityDate',
-                'vehicleMaintenanceDetails[0].downtimeDefined': 'vehicleMaintenances[0].downtimeforMaintenance',
+            autoCompleteDependancy: [
+              {
+                autoCompleteUrl: '/swm-services/vehiclemaintenances/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
+                autoFillFields: {
+                  'vehicleMaintenanceDetails[0].vehicle.vehicleType.code': 'vehicleMaintenances[0].vehicle.vehicleType.name',
+                  'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate':
+                    'vehicleMaintenances[0].vehicle.insuranceDetails.insuranceValidityDate',
+                  'vehicleMaintenanceDetails[0].downtimeDefined': 'vehicleMaintenances[0].downtimeforMaintenance',
+                },
               },
-            },
+
+              {
+                autoCompleteUrl: '/swm-services/vehiclemaintenancedetails/_getnextscheduleddate?vehicleRegNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
+                autoFillFields: {
+                   'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate': 'scheduledDate' 
+                }
+              },
+            ],
+
             depedants: [
               {
                 jsonPath: 'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate',
@@ -190,8 +200,8 @@ var dat = {
             jsonPath: 'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate',
             label: 'swm.create.vehicleScheduledMaintenanceDate',
             pattern: '',
-            hide: true,
-            type: 'date',
+            type: 'datePicker',
+            isDate: true,
             isRequired: false,
             isDisabled: true,
             defaultValue: '',
