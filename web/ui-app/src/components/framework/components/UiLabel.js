@@ -18,19 +18,7 @@ export default class UiLabel extends Component {
   setVal = () => {
     let { item, useTimestamp } = this.props;
     let self = this;
-    var val="";
-       if(item.jsonPath){
-        val = this.props.getVal(item.jsonPath, item.isDate, item.isTime);
-       }
-      if(item.dependentJsonPath){
-          let dependantVal = this.props.getVal(item.dependentJsonPath, item.isDate, item.isTime);
-          if(_.isEmpty(dependantVal)){
-             val = "YES";
-          }else{
-             val="NO"
-          }
-
-      }
+        var val = this.props.getVal(item.jsonPath, item.isDate, item.isTime);
     // console.log(item);
     if (item.configUrl && item.url) {
       let _url = item.configUrl.split('?')[0];
@@ -277,7 +265,7 @@ export default class UiLabel extends Component {
               style={item.hasOwnProperty('textAlign') ? { textAlign: item.textAlign } : { textAlign: 'left' }}
               xs={12}
             >
-              {this.state.value  || 'NA'}
+              {(this.props.getVal(item.dependentJsonPath)?"NO":"YES")}
             </Col>
           ):"")}
         </Row>
