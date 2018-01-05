@@ -6,8 +6,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Clone the repository
 - Navigate to the folder
 - `npm install`
-- `npm start`
+- `REACT_APP_USERNAME=username REACT_APP_PASSWORD=password npm start`
 
+Note : REACT_APP_USERNAME and REACT_APP_PASSWORD is important for standalone development
+
+`window.addEventListener("message", this.handleFrameTasks)` listens for message from parent DOM when deployed in an Iframe.
 
 ## Folder Structure
 
