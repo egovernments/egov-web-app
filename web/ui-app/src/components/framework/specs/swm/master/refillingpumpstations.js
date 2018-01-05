@@ -36,19 +36,14 @@ var dat = {
           {
             name: 'name',
             jsonPath: 'typeOfFuelCode',
-            label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'multiValueList',
+            label: 'swm.refillingpumpstations.typeOfFuel.code',
+            type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'refillingPumpStations[0].typeOfFuel.code',
-              key: 'code'
-            }
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name'
           },
         ],
       },
@@ -88,76 +83,16 @@ var dat = {
         name: 'LocationDetails',
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
         fields: [
-          {
-            name: 'Ward',
-            jsonPath: 'refillingPumpStations[0].location.ward',
-            label: 'swm.collectionpoints.create.ward',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            url:
-              'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.zone',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.ward}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Zone',
-            jsonPath: 'refillingPumpStations[0].location.zone',
-            label: 'swm.collectionpoints.create.zone',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.block',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.zone}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Road/Street',
-            jsonPath: 'refillingPumpStations[0].location.block',
-            label: 'swm.collectionpoints.create.block',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.code',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.block}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Colony',
-            jsonPath: 'refillingPumpStations[0].location.code',
-            label: 'swm.collectionpoints.create.colony',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+           {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "refillingPumpStations[0].location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
         ],
       },
       {
@@ -208,18 +143,14 @@ var dat = {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].typeOfFuel.code',
             label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'multiValueList',
+            type: 'singleValueList',
             isRequired: true,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'refillingPumpStations[0].typeOfFuel.code',
-              key: 'code'
-            }
+           
           },
           {
             name: 'name',
@@ -314,11 +245,6 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'refillingPumpStations[0].typeOfFuel.code',
-              key: 'code'
-            }
           },
           {
             name: 'name',
@@ -347,76 +273,16 @@ var dat = {
         name: 'LocationDetails',
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
         fields: [
-          {
-            name: 'Ward',
-            jsonPath: 'refillingPumpStations[0].location.ward',
-            label: 'swm.collectionpoints.create.ward',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            url:
-              'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.zone',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.ward}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Zone',
-            jsonPath: 'refillingPumpStations[0].location.zone',
-            label: 'swm.collectionpoints.create.zone',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.block',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.zone}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Road/Street',
-            jsonPath: 'refillingPumpStations[0].location.block',
-            label: 'swm.collectionpoints.create.block',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'refillingPumpStations[0].location.code',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={refillingPumpStations[0].location.block}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Colony',
-            jsonPath: 'refillingPumpStations[0].location.code',
-            label: 'swm.collectionpoints.create.colony',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+           {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "refillingPumpStations[0].location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
         ],
       },
       {
@@ -467,18 +333,13 @@ var dat = {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].typeOfFuel.code',
             label: 'swm.refillingpumpstations.typeOfFuel',
-            type: 'multiValueList',
+            type: 'singleValueList',
             isRequired: true,
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'refillingPumpStations[0].typeOfFuel.code',
-              key: 'code'
-            }
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name'
           },
           {
             name: 'name',
