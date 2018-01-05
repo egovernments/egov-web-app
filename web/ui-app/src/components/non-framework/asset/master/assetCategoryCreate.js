@@ -816,121 +816,167 @@ class assetCategoryCreate extends Component {
     let self = this,
       _url;
     if (e) e.preventDefault();
-    self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
+    var flagIndicate = 0;
     console.log(formData);
-    if (formData.MasterMetaData) {
-      formData.MasterMetaData.masterData[0].id = this.state.createId + "";
-      formData.MasterMetaData.masterData[0].code = this.state.createId + "";
-      //need to work on the logic
-      formData.MasterMetaData.masterData[0].isAssetAllow = true;
-      formData.MasterMetaData.masterData[0].tenantId = localStorage.getItem('tenantId');
-    }
-    if (formData && formData.MasterMetaData && formData.MasterMetaData.masterData && formData.MasterMetaData.masterData[0].isDepreciationApplicable) {
-      if (formData.MasterMetaData.masterData[0].isDepreciationApplicable == 'YES') {
-        formData.MasterMetaData.masterData[0].isDepreciationApplicable = true;
-      } else {
-        formData.MasterMetaData.masterData[0].isDepreciationApplicable = false;
-      }
-    }
 
-    if (
-      self.props.moduleName &&
-      self.props.actionName &&
-      self.props.metaData &&
-      self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired
-    ) {
-      if (!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
+    if(formData.MasterMetaData.masterData[0].name){
+      Api.commonApiPost('/egov-mdms-service/v1/_get', {
+        moduleName: 'ASSET',
+        masterName: 'AssetCategory',
+        filter: '%5B%3F%28+%40.assetCategoryType%3D%3D%27'+ formData.MasterMetaData.masterData[0].assetCategoryType +'%27%29%5D'
 
-      if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-        for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['tenantId'] =
-            localStorage.getItem('tenantId') || 'default';
-        }
-      } else
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['tenantId'] =
-          localStorage.getItem('tenantId') || 'default';
-    }
-
-    if (
-      self.props.moduleName &&
-      self.props.actionName &&
-      self.props.metaData &&
-      self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName
-    ) {
-      if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-        for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['moduleName'] =
-            self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName;
-        }
-      } else
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['moduleName'] =
-          self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName;
-    }
-
-    if (
-      self.props.moduleName &&
-      self.props.actionName &&
-      self.props.metaData &&
-      self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName
-    ) {
-      if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-        for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['masterName'] =
-            self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName;
-        }
-      } else
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['masterName'] =
-          self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName;
-    }
-
-    if (/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
-      _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
-      console.log(_url);
-      var match = _url.match(/\{.*\}/)[0];
-      var jPath = match.replace(/\{|}/g, '');
-      _url = _url.replace(match, _.get(formData, jPath));
-    }
-
-    //Check if documents, upload and get fileStoreId
-    let formdocumentData = formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName];
-    let documentPath = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].documentsPath;
-
-    formdocumentData = (formdocumentData && formdocumentData.length && formdocumentData[0]) || formdocumentData;
-    if (documentPath) {
-      formdocumentData = _.get(formData, documentPath);
-    }
-
-    if (formdocumentData['documents'] && formdocumentData['documents'].length) {
-      let documents = [...formdocumentData['documents']];
-      let _docs = [];
-      let counter = documents.length,
-        breakOut = 0;
-      for (let i = 0; i < documents.length; i++) {
-        fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
-          if (breakOut == 1) return;
-          if (err) {
-            breakOut = 1;
-            self.props.setLoadingStatus('hide');
-            self.props.toggleSnackbarAndSetText(true, err, false, true);
-          } else {
-            _docs.push({
-              ...documents[i],
-              fileStoreId: res.files[0].fileStoreId,
-            });
-            counter--;
-            if (counter == 0 && breakOut == 0) {
-              formdocumentData['documents'] = _docs;
-              self.makeAjaxCall(formData, _url);
+      }).then(
+        function(response) {
+          for(var i = 0; i < response.MdmsRes.ASSET.AssetCategory.length ; i++){
+            if(self.props.match.params.id){
+              if(response.MdmsRes.ASSET.AssetCategory[i].name == formData.MasterMetaData.masterData[0].name && response.MdmsRes.ASSET.AssetCategory[i].id != formData.MasterMetaData.masterData[0].id){
+                flagIndicate = 0;
+                break;
+              } else {
+                flagIndicate = 1;
+              }
+            } else {
+              if(response.MdmsRes.ASSET.AssetCategory[i].name == formData.MasterMetaData.masterData[0].name){
+                flagIndicate = 0;
+                break;
+              } else {
+                flagIndicate = 1;
+              }
             }
           }
-        });
-      }
-    } else {
-      self.makeAjaxCall(formData, _url);
+          self.nameValidationCreate(e, flagIndicate);
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
     }
-  };
+};
+
+  nameValidationCreate = (e, flagIndicate) => {
+    let self = this,
+      _url;
+    if (e) e.preventDefault();
+    var formData = { ...this.props.formData };
+    console.log(flagIndicate);
+      if(flagIndicate == 1){
+      self.props.setLoadingStatus('loading');
+      if (formData.MasterMetaData) {
+        formData.MasterMetaData.masterData[0].id = this.state.createId + "";
+        formData.MasterMetaData.masterData[0].code = this.state.createId + "";
+        //need to work on the logic
+        formData.MasterMetaData.masterData[0].isAssetAllow = true;
+        formData.MasterMetaData.masterData[0].tenantId = localStorage.getItem('tenantId');
+      }
+      if (formData && formData.MasterMetaData && formData.MasterMetaData.masterData && formData.MasterMetaData.masterData[0].isDepreciationApplicable) {
+        if (formData.MasterMetaData.masterData[0].isDepreciationApplicable == 'YES') {
+          formData.MasterMetaData.masterData[0].isDepreciationApplicable = true;
+        } else {
+          formData.MasterMetaData.masterData[0].isDepreciationApplicable = false;
+        }
+      }
+
+      if (
+        self.props.moduleName &&
+        self.props.actionName &&
+        self.props.metaData &&
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired
+      ) {
+        if (!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
+
+        if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+          for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['tenantId'] =
+              localStorage.getItem('tenantId') || 'default';
+          }
+        } else
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['tenantId'] =
+            localStorage.getItem('tenantId') || 'default';
+      }
+
+      if (
+        self.props.moduleName &&
+        self.props.actionName &&
+        self.props.metaData &&
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName
+      ) {
+        if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+          for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['moduleName'] =
+              self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName;
+          }
+        } else
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['moduleName'] =
+            self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].moduleName;
+      }
+
+      if (
+        self.props.moduleName &&
+        self.props.actionName &&
+        self.props.metaData &&
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName
+      ) {
+        if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+          for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['masterName'] =
+              self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName;
+          }
+        } else
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['masterName'] =
+            self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].masterName;
+      }
+
+      if (/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
+        _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
+        console.log(_url);
+        var match = _url.match(/\{.*\}/)[0];
+        var jPath = match.replace(/\{|}/g, '');
+        _url = _url.replace(match, _.get(formData, jPath));
+      }
+
+      //Check if documents, upload and get fileStoreId
+      let formdocumentData = formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName];
+      let documentPath = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].documentsPath;
+
+      formdocumentData = (formdocumentData && formdocumentData.length && formdocumentData[0]) || formdocumentData;
+      if (documentPath) {
+        formdocumentData = _.get(formData, documentPath);
+      }
+
+      if (formdocumentData['documents'] && formdocumentData['documents'].length) {
+        let documents = [...formdocumentData['documents']];
+        let _docs = [];
+        let counter = documents.length,
+          breakOut = 0;
+        for (let i = 0; i < documents.length; i++) {
+          fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
+            if (breakOut == 1) return;
+            if (err) {
+              breakOut = 1;
+              self.props.setLoadingStatus('hide');
+              self.props.toggleSnackbarAndSetText(true, err, false, true);
+            } else {
+              _docs.push({
+                ...documents[i],
+                fileStoreId: res.files[0].fileStoreId,
+              });
+              counter--;
+              if (counter == 0 && breakOut == 0) {
+                formdocumentData['documents'] = _docs;
+                self.makeAjaxCall(formData, _url);
+              }
+            }
+          });
+        }
+      } else {
+        self.makeAjaxCall(formData, _url);
+      }
+    }  else {
+      this.props.toggleSnackbarAndSetText(true, 'Category already exist', false, true);
+    }
+  }
 
   getVal = (path, dateBool) => {
     var _val = _.get(this.props.formData, path);
@@ -1746,6 +1792,7 @@ class assetCategoryCreate extends Component {
       }
 
 
+
       while (pos < str.length) {
         if (str.indexOf('$', pos) > -1) {
           let ind = str.indexOf('$', pos);
@@ -1778,6 +1825,24 @@ class assetCategoryCreate extends Component {
         }
       }
     }
+
+    // if(property == "MasterMetaData.masterData[0].name"){
+    //   var names = [];
+    //   Api.commonApiPost('/egov-mdms-service/v1/_get', {
+    //     moduleName: 'ASSET',
+    //     masterName: 'AssetCategory',
+    //   }).then(
+    //     function(response) {
+    //       for(var i = 0; i < response.MdmsRes.ASSET.AssetCategory.length ; i++){
+    //         names.push(response.MdmsRes.ASSET.AssetCategory[i].name);
+    //       }
+    //     },
+    //     function(err) {
+    //       console.log(err);
+    //     }
+    //   );
+    // }
+
     this.checkifHasValueBasedOn(property, e.target.value);
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
