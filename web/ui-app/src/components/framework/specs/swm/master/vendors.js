@@ -1,5 +1,3 @@
-
-
 // var serviceProvided = {
 //   name: 'serviceProvidedMain',
 //   version: 'v1',
@@ -267,78 +265,90 @@ var dat = {
         multiple:true,
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
         jsonPath: "vendors[0].servicedLocations",
-        fields: [
-              {
-                name: 'Ward',
-                jsonPath: 'vendors[0].servicedLocations[0].ward',
-                label: 'swm.collectionpoints.create.ward',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                url:
-                  'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].zone',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].ward}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Zone',
-                jsonPath: 'vendors[0].servicedLocations[0].zone',
-                label: 'swm.collectionpoints.create.zone',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].block',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].zone}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Road/Street',
-                jsonPath: 'vendors[0].servicedLocations[0].block',
-                label: 'swm.collectionpoints.create.block',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].code',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].block}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Colony',
-                jsonPath: 'vendors[0].servicedLocations[0].code',
-                label: 'swm.collectionpoints.create.colony',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-              },
-          ],
+         "fields": [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "vendors[0].servicedLocations[0].code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
+        ]
+        // fields: [
+        //       {
+        //         name: 'Ward',
+        //         jsonPath: 'vendors[0].servicedLocations[0].ward',
+        //         label: 'swm.collectionpoints.create.ward',
+        //         type: 'singleValueList',
+        //         isRequired: true,
+        //         isDisabled: false,
+        //         maxLength: 128,
+        //         url:
+        //           'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
+        //         minLength: 1,
+        //         patternErrorMsg: '',
+        //         depedants: [
+        //           {
+        //             jsonPath: 'vendors[0].servicedLocations[0].zone',
+        //             type: 'dropDown',
+        //             pattern:
+        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].ward}|$.Boundary.*.id|$.Boundary.*.name',
+        //           },
+        //         ],
+        //       },
+        //       {
+        //         name: 'Zone',
+        //         jsonPath: 'vendors[0].servicedLocations[0].zone',
+        //         label: 'swm.collectionpoints.create.zone',
+        //         type: 'singleValueList',
+        //         isRequired: true,
+        //         isDisabled: false,
+        //         maxLength: 128,
+        //         minLength: 1,
+        //         patternErrorMsg: '',
+        //         depedants: [
+        //           {
+        //             jsonPath: 'vendors[0].servicedLocations[0].block',
+        //             type: 'dropDown',
+        //             pattern:
+        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].zone}|$.Boundary.*.id|$.Boundary.*.name',
+        //           },
+        //         ],
+        //       },
+        //       {
+        //         name: 'Road/Street',
+        //         jsonPath: 'vendors[0].servicedLocations[0].block',
+        //         label: 'swm.collectionpoints.create.block',
+        //         type: 'singleValueList',
+        //         isRequired: true,
+        //         isDisabled: false,
+        //         maxLength: 128,
+        //         minLength: 1,
+        //         patternErrorMsg: '',
+        //         depedants: [
+        //           {
+        //             jsonPath: 'vendors[0].servicedLocations[0].code',
+        //             type: 'dropDown',
+        //             pattern:
+        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].block}|$.Boundary.*.id|$.Boundary.*.name',
+        //           },
+        //         ],
+        //       },
+        //       {
+        //         name: 'Colony',
+        //         jsonPath: 'vendors[0].servicedLocations[0].code',
+        //         label: 'swm.collectionpoints.create.colony',
+        //         type: 'singleValueList',
+        //         isRequired: true,
+        //         isDisabled: false,
+        //         maxLength: 128,
+        //         minLength: 1,
+        //         patternErrorMsg: '',
+        //       },
+        //   ],
       },
       {
         name: 'ServicesOffered',
@@ -552,6 +562,24 @@ var dat = {
         ],
       },
       {
+        name: 'LocationDetails',
+        multiple:true,
+        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        jsonPath: "vendors[0].servicedLocations",
+         "fields": [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "vendors[0].servicedLocations[0].code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
+        ]
+      },
+      {
         name: 'ServicesOffered',
         label: 'swm.create.group.title.ServicesOffered',
         fields: [
@@ -743,82 +771,24 @@ var dat = {
       },
 
       {
+
         name: 'LocationDetails',
         multiple:true,
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
         jsonPath: "vendors[0].servicedLocations",
-        fields: [
-              {
-                name: 'Ward',
-                jsonPath: 'vendors[0].servicedLocations[0].ward',
-                label: 'swm.collectionpoints.create.ward',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                url:
-                  'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].zone',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].ward}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Zone',
-                jsonPath: 'vendors[0].servicedLocations[0].zone',
-                label: 'swm.collectionpoints.create.zone',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].block',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].zone}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Road/Street',
-                jsonPath: 'vendors[0].servicedLocations[0].block',
-                label: 'swm.collectionpoints.create.block',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-                depedants: [
-                  {
-                    jsonPath: 'vendors[0].servicedLocations[0].code',
-                    type: 'dropDown',
-                    pattern:
-                      'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].block}|$.Boundary.*.id|$.Boundary.*.name',
-                  },
-                ],
-              },
-              {
-                name: 'Colony',
-                jsonPath: 'vendors[0].servicedLocations[0].code',
-                label: 'swm.collectionpoints.create.colony',
-                type: 'singleValueList',
-                isRequired: true,
-                isDisabled: false,
-                maxLength: 128,
-                minLength: 1,
-                patternErrorMsg: '',
-              },
-          ],
+         "fields": [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "vendors[0].servicedLocations[0].code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
+        ]
+
       },
       {
         name: 'ServicesOffered',
