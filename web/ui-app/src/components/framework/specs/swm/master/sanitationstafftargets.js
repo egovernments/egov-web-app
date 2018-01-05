@@ -99,7 +99,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'sanitationStaffTargets',
-    idJsonPath: 'sanitationStaffTargets[0].transactionNo',
+    idJsonPath: 'sanitationStaffTargets[0].targetNo',
     groups: [{
         name: 'CardOne',
         label: '',
