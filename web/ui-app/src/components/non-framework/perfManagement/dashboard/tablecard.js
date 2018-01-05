@@ -266,7 +266,6 @@ export default class TableCard extends Component {
     return (
       <div>
         <RaisedButton
-          style={{ marginLeft: '40%' }}
           label={'Previous'}
           primary={true}
           type="button"
@@ -283,8 +282,9 @@ export default class TableCard extends Component {
           onClick={this.processOnClickNextKPIData}
         />
 
+        <br />
         <RaisedButton
-          style={{ marginLeft: '40%' }}
+          style={{ marginLeft: '90%' }}
           label={label}
           primary={true}
           type="button"

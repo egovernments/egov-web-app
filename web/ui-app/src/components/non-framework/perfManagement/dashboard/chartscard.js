@@ -226,7 +226,6 @@ export default class BarChartCard extends Component {
     return (
       <div>
         <RaisedButton
-          style={{ marginLeft: '40%' }}
           label={'Previous'}
           primary={true}
           type="button"
@@ -243,8 +242,9 @@ export default class BarChartCard extends Component {
           onClick={this.processOnClickNextKPIData}
         />
 
+        <br />
         <RaisedButton
-          style={{ marginLeft: '40%' }}
+          style={{ marginLeft: '90%' }}
           label={label}
           primary={true}
           type="button"
