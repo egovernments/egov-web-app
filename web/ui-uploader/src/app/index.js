@@ -17,10 +17,11 @@ class AppContainer extends Component {
     // this listener is setup when the parent application sends a message via postMessage API
     window.addEventListener("message", this.handleFrameTasks);
 
-    // in the developement environment do a login using these credentials. But the username and password are exposed in the source code in the following method
     if (process.env.NODE_ENV === "development") {
-      const username = "narasappa";
-      const password = "demo";
+      const username = process.env.REACT_APP_USERNAME;
+      const password = process.env.REACT_APP_PASSWORD;
+      console.log(username);
+      console.log(password);
       this.props.loginUser(username, password);
     }
   }
