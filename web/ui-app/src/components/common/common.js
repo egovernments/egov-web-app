@@ -3230,6 +3230,7 @@ var localization_EN_Data = {
   'lcms.create.group.title.courtDetails' : 'Master Data of Court',
   'swm.create.ulbNames' : 'ULB Names',
   'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Type Code',
+  'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target'
 
 
 };
@@ -5216,6 +5217,7 @@ var localization_MR_Data = {
   'advocates.create.group.title.agencySearch': 'Agency Search-marathi',
   'advocates.search.document.title.agency': 'Agency Search-marathi',
   'legal.create.advocateFee': 'Advocate Fee-marathi',
+  'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target-marathi'
 };
 export function translate(locale_text) {
   if (locale_text && localStorage.getItem('lang_response')) {

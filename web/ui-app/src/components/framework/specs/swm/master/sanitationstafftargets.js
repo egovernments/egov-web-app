@@ -6,7 +6,7 @@ var dat = {
     url: '/swm-services/sanitationstafftargets/_search',
     groups: [{
       name: 'search',
-      label: 'swm.sanitationstaffschedules.search.title',
+      label: 'swm.sanitationstaffTargets.search.title',
       fields: [{
           name: 'code',
           jsonPath: 'swmProcessCode',
@@ -524,7 +524,13 @@ var dat = {
     groups: [{
         name: 'CardOne',
         label: '',
-        fields: [{
+        fields: [ {
+          name: 'targetNo',
+          jsonPath: 'sanitationStaffTargets[0].targetNo',
+          label: 'swm.create.sanitationStaffTargets.targetNumber',
+          type: 'text',
+          isDisabled: false
+        },{
             name: 'code',
             jsonPath: 'sanitationStaffTargets[0].swmProcess.code',
             label: 'swm.create.sanitationStaffTargets.swmProcess',
