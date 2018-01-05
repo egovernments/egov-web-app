@@ -131,7 +131,22 @@ var dat = {
             patternErrMsg: '',
             defaultValue: false,
             url: '',
-            showHideFields: [
+          },
+
+          {
+            name: 'bankGuarantee',
+            jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
+            label: 'swm.dumpingGround.create.bankGuarantee',
+            pattern: '',
+            type: 'checkbox',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: '',
+            maxLength: '',
+            minLength: '',
+            patternErrorMsg: '',
+            url: '',
+               showHideFields: [
               {
                 ifValue: true,
                 hide: [],
@@ -154,21 +169,6 @@ var dat = {
                 ],
               },
             ],
-          },
-
-          {
-            name: 'bankGuarantee',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
-            pattern: '',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: '',
-            minLength: '',
-            patternErrorMsg: '',
-            url: '',
           },
 
           {
@@ -372,33 +372,31 @@ var dat = {
                     isField: true,
                   },
                 ],
+              },{
+                ifValue: false,
+                hide: [],
+                show: [
+                  {
+                    name: 'dumpingGroundProcessingPlant',
+                    isGroup: false,
+                    isField: true,
+                  },
+                  {
+                    name: 'dumpingGroundDistance',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
               },
             ],
           },
-
-          {
-            name: 'dumpingGroundAddress',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dumpingGroundAddress',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            fullWidth: true,
-            patternErrorMsg: '',
-            url: '',
-          },
-
           {
             name: 'dumpingGroundProcessingPlant',
             jsonPath: 'MasterMetaData.masterData[0].processingSite.code',
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
             type: 'singleValueList',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
@@ -413,7 +411,7 @@ var dat = {
             label: 'swm.dumpingGround.create.distance',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
@@ -561,7 +559,22 @@ var dat = {
             minLength: '',
             patternErrMsg: '',
             url: '',
-            showHideFields: [
+          },
+
+          {
+            name: 'bankGuarantee',
+            jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankGuarantee',
+            label: 'swm.dumpingGround.create.bankGuarantee',
+            pattern: '',
+            type: 'checkbox',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: '',
+            maxLength: '',
+            minLength: '',
+            patternErrorMsg: '',
+            url: '',
+              showHideFields: [
               {
                 ifValue: true,
                 hide: [],
@@ -584,21 +597,6 @@ var dat = {
                 ],
               },
             ],
-          },
-
-          {
-            name: 'bankGuarantee',
-            jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
-            pattern: '',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: '',
-            minLength: '',
-            patternErrorMsg: '',
-            url: '',
           },
           {
             name: 'bankName',
@@ -806,7 +804,7 @@ var dat = {
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             //hide: true,
@@ -822,7 +820,7 @@ var dat = {
             label: 'swm.dumpingGround.create.distance',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             //hide: true,
             defaultValue: '',
@@ -973,8 +971,23 @@ var dat = {
             minLength: '',
             patternErrMsg: '',
             defaultValue: false,
+            url: ''
+          },
+
+          {
+            name: 'bankGuarantee',
+            jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
+            label: 'swm.dumpingGround.create.bankGuarantee',
+            pattern: '',
+            type: 'checkbox',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: '',
+            maxLength: '',
+            minLength: '',
+            patternErrorMsg: '',
             url: '',
-            showHideFields: [
+               showHideFields: [
               {
                 ifValue: true,
                 hide: [],
@@ -997,21 +1010,6 @@ var dat = {
                 ],
               },
             ],
-          },
-
-          {
-            name: 'bankGuarantee',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
-            pattern: '',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: '',
-            minLength: '',
-            patternErrorMsg: '',
-            url: '',
           },
 
           {
@@ -1215,24 +1213,23 @@ var dat = {
                     isField: true,
                   },
                 ],
+              },{
+                ifValue: false,
+                hide: [],
+                show: [
+                  {
+                    name: 'dumpingGroundProcessingPlant',
+                    isGroup: false,
+                    isField: true,
+                  },
+                  {
+                    name: 'dumpingGroundDistance',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
               },
             ],
-          },
-
-          {
-            name: 'dumpingGroundAddress',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dumpingGroundAddress',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            fullWidth: true,
-            patternErrorMsg: '',
-            url: '',
           },
 
           {
@@ -1241,7 +1238,7 @@ var dat = {
             label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
             pattern: '',
             type: 'singleValueList',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
@@ -1256,7 +1253,7 @@ var dat = {
             label: 'swm.dumpingGround.create.distance',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
