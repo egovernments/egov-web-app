@@ -2062,6 +2062,7 @@ var localization_EN_Data = {
   'swm.processingplant.create.routestop' : 'Route Stop Name',
   'swm.processingplant.create.BankGuaranteeDetails':'MPCB AND BANK GUARANTEE',
   'swm.processingplant.create.mpcbAuthorization' : 'MPCB Authorisation ?',
+  'swm.processingplant.create.group.title.ProcessingSiteDetails' : 'PROCESSING SITE DETAILS',
   'swm.processingplant.create.BankGuarantee': 'Bank Guarantee ?',
   'swm.processingplant.create.BankName' : 'Bank Name',
   'swm.processingplant.create.BankGuaranteeFrom' : 'Bank Guarantee From',
@@ -2323,6 +2324,7 @@ var localization_EN_Data = {
   'swm.dumpingground.search.title': 'Search Parameters',
   'swm.create.page.title.bankGuaranteeDetails': 'MPCB AND BANK GUARANTEE DETAILS',
   'swm.create.page.title.wasteType': 'WASTE TYPE TO BE DUMPED/PROCESSED',
+  'swm.processingsite.create.page.title.wasteType': 'WASTE TYPE TO BE PROCESSED',
   "swm.create.page.title.processingsite": "Processing Site Details",
   "swm.create.group.title.ProcessingSiteDetails": "PROCESSING SITE DETAILS",
   "swm.ProcessingSiteDetails.create.ProcessingSitename": "Processing Site Name",
@@ -5184,6 +5186,7 @@ var localization_MR_Data = {
   'swm.shift.create.group.title.SiftDetails': 'SHIFT DETAILS',
   'swm.create.group.title.staffScheduleDetails': 'Staff Schedule',
   'swm.dumpingground.search.title' : 'Dumping Ground Search',
+  'swm.processingsite.search.title' : 'Processing Site Search',
   'lcms.create.group.title.courtDetails' : 'Master Data of Court',
   'swm.create.ulbNames' : 'ULB Names',
 

@@ -7,22 +7,11 @@ var dat = {
     groups: [
       {
         name: 'ProcessingSite',
-        label: 'swm.dumpingground.search.title',
+        label: 'swm.processingsite.search.title',
         fields: [
           {
-            name: 'ProcessingSiteName',
-            jsonPath: 'name',
-            label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
-            pattern: '',
-            type: 'text',
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-            url: ''
-          },
-          {
-            name: 'dumpingGroundArea',
-            jsonPath: 'area',
+            name: 'ProcessingSiteArea',
+            jsonPath: 'siteDetails.area',
             label: 'swm.ProcessingSiteDetails.create.Area',
             pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
             type: 'text',
@@ -34,26 +23,66 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
+          {
+            name: 'capacity',
+            jsonPath: 'siteDetails.capacity',
+            label: 'swm.processingplant.create.capacity',
+            pattern: '',
+            type: 'text',
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+            url: ''
+          },
+          {
+            name: 'address',
+            jsonPath: 'siteDetails.address',
+            label: 'swm.processingplant.create.address',
+            pattern: '',
+            type: 'text',
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+            url: ''
+          },
+          {
+            name: 'ProcessingSiteName',
+            jsonPath: 'name',
+            label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
+            pattern: '',
+            type: 'text',
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+            url: ''
+          },
         ],
       },
     ],
     result: {
       header: [
         {
-          label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
+          label: 'swm.processingplant.create.area',
         },
         {
-          label: 'swm.ProcessingSiteDetails.create.Area',
+          label: 'swm.processingplant.create.capacity',
+        },
+        {
+            label : 'swm.processingplant.create.address',
+        },
+        {
+            label : 'swm.processingplant.create.name',
         },
       ],
       values: [
-        'name',
-        'area',
+        'siteDetails.area',
+        'siteDetails.capacity',
+        'siteDetails.address',
+        'name'
       ],
       resultPath: 'MdmsRes.swm.ProcessingSite',
-      rowClickUrlUpdate: '/update/swm/dumpingground/{code}',
-      rowClickUrlView: '/view/swm/dumpingground/{code}',
+      rowClickUrlUpdate: '/update/swm/processingsite/{code}',
+      rowClickUrlView: '/view/swm/processingsite/{code}',
       isMasterScreen: true
     },
   },
@@ -65,82 +94,21 @@ var dat = {
     idJsonPath: 'MdmsRes.swm.ProcessingSite[0].code',
     title: 'swm.create.page.title.processingsite',
     groups: [
-
       {
         name: 'LocationDetails',
         label: 'swm.create.group.title.LocationDetails',
         jsonPath: "MasterMetaData.masterData[0].siteDetails.location",
         fields: [
           {
-            name: 'Ward',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.ward',
-            label: 'swm.collectionpoints.create.ward',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            url:
-              'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.zone',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.ward}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Zone',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.zone',
-            label: 'swm.collectionpoints.create.zone',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.block',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.zone}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Road/Street',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.block',
-            label: 'swm.collectionpoints.create.block',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.code',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.block}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Colony',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.code',
-            label: 'swm.collectionpoints.create.colony',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "MasterMetaData.masterData[0].siteDetails.location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
         ],
       },
       {
@@ -150,7 +118,7 @@ var dat = {
           {
             name: 'mpcbAuthorisation',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.mpcbAuthorisation',
-            label: 'swm.dumpingGround.create.mpcbAuthorisation',
+            label: 'swm.processingplant.create.mpcbAuthorization',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -165,7 +133,7 @@ var dat = {
           {
             name: 'bankGuarantee',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
+            label: 'swm.processingplant.create.BankGuarantee',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -200,39 +168,9 @@ var dat = {
             ],
           },
           {
-            name: 'dummy',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
-          {
-            name: 'dummy',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
-          {
             name: 'bankName',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankName',
-            label: 'swm.dumpingGround.create.bankName',
+            label: 'swm.processingplant.create.BankName',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -244,11 +182,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityFrom',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankValidityFrom',
-            label: 'swm.dumpingGround.create.bankValidityFrom',
+            label: 'swm.processingplant.create.BankGuaranteeFrom',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
@@ -260,11 +197,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityTo',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankValidityTo',
-            label: 'swm.dumpingGround.create.bankValidityTo',
+            label: 'swm.processingplant.create.BankGuaranteeTo',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
@@ -280,13 +216,13 @@ var dat = {
       },
       {
         name: 'ProcessingSiteDetails',
-        label: 'swm.create.group.title.ProcessingSiteDetails',
+        label: 'swm.processingplant.create.title.ProcessingSiteDeatils',
         fields: [
           {
-            name: 'dumpingGroundName',
+            name: 'ProcessingSiteName',
             jsonPath: 'MasterMetaData.masterData[0].name',
             label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
-            type: 'number',
+            type: 'text',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
@@ -296,7 +232,7 @@ var dat = {
             url: '',
           },
           {
-            name: 'dumpingGroundArea',
+            name: 'ProcessingSiteArea',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.area',
             label: 'swm.ProcessingSiteDetails.create.Area',
             pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
@@ -309,11 +245,10 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
           {
-            name: 'dumpingGroundCapacity',
+            name: 'ProcessingSiteCapacity',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.capacity',
-            label: 'swm.ProcessingSiteDetails.create.Capacity',
+            label: 'swm.processingplant.create.ProcessingSiteCapacity',
             pattern: '^([1-9][0-9]{0,3}|10000|0|[1-4][0-9]{0,4}|50000)$',
             type: 'text',
             isRequired: true,
@@ -323,9 +258,9 @@ var dat = {
             url: '',
           },
           {
-            name: 'dumpingGroundAddress',
+            name: 'ProcessingSiteAddress',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.address',
-            label: 'swm.ProcessingSiteDetails.create.dumpingGroundAddress',
+            label: 'swm.processingplant.create.ProcessingSiteAddress',
             pattern: '',
             type: 'textarea',
             isRequired: true,
@@ -344,9 +279,9 @@ var dat = {
         label: 'swm.dumpingground.search.geoCoordinates',
         fields: [
           {
-            name: 'dumpingGroundLatitude',
+            name: 'ProcessingSiteLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
-            label: 'swm.dumpingGround.create.dumpingGroundLatitude',
+            label: 'swm.processingplant.create.Latitude',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -357,11 +292,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundLongitude',
+            name: 'ProcessingSiteLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
-            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
+            label: 'swm.processingplant.create.Longitude',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -376,7 +310,7 @@ var dat = {
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.processingSite.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',
@@ -446,23 +380,20 @@ var dat = {
     objectName: 'ProcessingSite',
     groups: [
       {
-        name: 'ULBs',
-        label: 'swm.dumpingGround.create.ulbs',
+        name: 'LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationDetails',
         fields: [
           {
-            name: 'ulbs',
-            jsonPath: 'MasterMetaData.masterData[0].ulbs',
-            pattern: '',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: '',
-            minLength: '',
-            patternErrorMsg: '',
-            url: '',
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "MdmsRes.swm.ProcessingSite[0].siteDetails.location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
           }
-        ]
+        ],
       },
       {
         name: 'BankGuaranteeDetails',
@@ -470,8 +401,8 @@ var dat = {
         fields: [
           {
             name: 'mpcbAuthorisation',
-            jsonPath: 'MdmsRes.swm.ProcessingSite[0].mpcbAuthorisation',
-            label: 'swm.dumpingGround.create.mpcbAuthorisation',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.mpcbAuthorisation',
+            label: 'swm.processingplant.create.mpcbAuthorization',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -482,11 +413,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankGuarantee',
-            jsonPath: 'MasterMetaData.masterData[0].bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.bankGuarantee',
+            label: 'swm.processingplant.create.BankGuarantee',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -497,56 +427,25 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
-          {
-            name: 'dummy',
-            jsonPath: 'dummy',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
-          {
-            name: 'dummy',
-            jsonPath: 'dummy',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
           {
             name: 'bankName',
-            jsonPath: 'MasterMetaData.masterData[0].bankName',
-            label: 'swm.dumpingGround.create.bankName',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.bankName',
+            label: 'swm.processingplant.create.BankName',
             pattern: '',
             type: 'text',
             isRequired: false,
             isDisabled: false,
+            fullWidth:true,
             defaultValue: '',
             maxLength: '',
             minLength: '',
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityFrom',
-            jsonPath: 'MasterMetaData.masterData[0].bankValidityFrom',
-            label: 'swm.dumpingGround.create.bankValidityFrom',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.bankValidityFrom',
+            label: 'swm.processingplant.create.BankGuaranteeFrom',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
@@ -557,11 +456,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityTo',
-            jsonPath: 'MasterMetaData.masterData[0].bankValidityTo',
-            label: 'swm.dumpingGround.create.bankValidityTo',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.bankValidityTo',
+            label: 'swm.processingplant.create.BankGuaranteeTo',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
@@ -576,12 +474,12 @@ var dat = {
       },
       {
         name: 'ProcessingSiteDetails',
-        label: 'swm.dumpingGround.create.group.title.ProcessingSiteDetails',
+        label: 'swm.processingplant.create.group.title.ProcessingSiteDetails',
         fields: [
           {
-            name: 'dumpingGroundName',
+            name: 'ProcessingSiteName',
             jsonPath: 'MdmsRes.swm.ProcessingSite[0].name',
-            label: 'swm.dumpingGround.create.dumpingGroundName',
+            label: 'swm.processingplant.create.ProcessingSiteName',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -592,11 +490,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundArea',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.area',
-            label: 'swm.dumpingGround.create.dumpingGroundArea',
+            name: 'ProcessingSiteArea',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.area',
+            label: 'swm.processingplant.create.ProcessingSiteArea',
             pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
             type: 'text',
             isRequired: true,
@@ -607,11 +504,10 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
           {
-            name: 'dumpingGroundCapacity',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.capacity',
-            label: 'swm.dumpingGround.create.dumpingGroundCapacity',
+            name: 'ProcessingSiteCapacity',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.capacity',
+            label: 'swm.processingplant.create.ProcessingSiteCapacity',
             pattern: '^([1-9][0-9]{0,3}|10000|0|[1-4][0-9]{0,4}|50000)$',
             type: 'text',
             isRequired: true,
@@ -620,11 +516,10 @@ var dat = {
             patternErrMsg: 'Invalid Value',
             url: '',
           },
-
           {
-            name: 'dumpingGroundAddress',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.address',
-            label: 'swm.dumpingGround.create.dumpingGroundAddress',
+            name: 'ProcessingSiteAddress',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.address',
+            label: 'swm.processingplant.create.ProcessingSiteAddress',
             pattern: '',
             type: 'textarea',
             isRequired: true,
@@ -636,11 +531,30 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
+        ]
+      },
+      {
+        name: 'geoCoordinates',
+        label: 'swm.dumpingground.search.geoCoordinates',
+        fields: [
           {
-            name: 'dumpingGroundLatitude',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
-            label: 'swm.dumpingGround.create.dumpingGroundLatitude',
+            name: 'ProcessingSiteLatitude',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.latitude',
+            label: 'swm.processingplant.create.Latitude',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: '',
+            maxLength: '',
+            minLength: '',
+            patternErrorMsg: '',
+            url: '',
+          },
+          {
+            name: 'ProcessingSiteLongitude',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.longitude',
+            label: 'swm.processingplant.create.Longitude',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -652,53 +566,32 @@ var dat = {
             url: '',
           },
 
-          {
-            name: 'dumpingGroundLongitude',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
-            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
-            pattern: '',
-            type: 'text',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: '',
-            minLength: '',
-            patternErrorMsg: '',
-            url: '',
-          },
         ]
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',
             label: '',
-            jsonPath: 'vendors[0].servicesOffered[0].code',
+            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
             isRequired: false,
             isDisabled: false,
             maxLength: 128,
-            url: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             minLength: 1,
             patternErrorMsg: 'may not be null',
-            mdms: {
-              "moduleName": "swm",
-              "masterName": "SwmProcess",
-              "filter": "",
-              "key": "$..code",
-              "value": "$..name",
-            },
             hasATOAATransform: true,
             aATransformInfo: {
-              to: 'vendors[0].servicesOffered',
+              to: 'MdmsRes.swm.ProcessingSite[0].siteDetails.wasteTypes',
               key: 'code'
             }
           },
         ]
-      }
+      },
     ],
     tenantIdRequired: true,
     url: '/egov-mdms-service/v1/_search?code={code}',
@@ -711,122 +604,28 @@ var dat = {
     groups: [
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
-        jsonPath: "MasterMetaData.masterData[0].siteDetails.location",
+        label: 'swm.processingplant.create.title.LocationDetails',
         fields: [
           {
-            name: 'Ward',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.ward',
-            label: 'swm.collectionpoints.create.ward',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            url:
-              'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.zone',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.ward}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Zone',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.zone',
-            label: 'swm.collectionpoints.create.zone',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.block',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.zone}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Road/Street',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.block',
-            label: 'swm.collectionpoints.create.block',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-            depedants: [
-              {
-                jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.code',
-                type: 'dropDown',
-                pattern:
-                  'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={MasterMetaData.masterData[0].siteDetails.location.block}|$.Boundary.*.id|$.Boundary.*.name',
-              },
-            ],
-          },
-          {
-            name: 'Colony',
-            jsonPath: 'MasterMetaData.masterData[0].siteDetails.location.code',
-            label: 'swm.collectionpoints.create.colony',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "MasterMetaData.masterData[0].siteDetails.location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
         ],
       },
       {
-        name: 'ULBs',
-        label: 'swm.dumpingGround.create.ulbs',
-        fields: [
-          {
-            name: 'ulbs',
-            label: 'swm.create.servicesOffered',
-            jsonPath: 'MasterMetaData.masterData[0].ulbs',
-            type: 'multiValueList',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..code|$..name',
-            minLength: '',
-            patternErrorMsg: '',
-            // mdms: {
-            //   "moduleName": "swm",
-            //   "masterName": "ProcessingSite",
-            //   "filter": "",
-            //   "key": "$.ulbs.[*].code",
-            //   "value": "$.ulbs.[*].name",
-            // },
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'MasterMetaData.masterData[0].ulbs',
-              key: 'code'
-            }
-          },
-
-        ]
-      },
-
-      {
         name: 'BankGuaranteeDetails',
-        label: 'swm.create.page.title.bankGuaranteeDetails',
+        label: 'swm.processingplant.create.BankGuaranteeDetails',
         fields: [
           {
             name: 'mpcbAuthorisation',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.mpcbAuthorisation',
-            label: 'swm.dumpingGround.create.mpcbAuthorisation',
+            label: 'swm.processingplant.create.mpcbAuthorization',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -841,7 +640,7 @@ var dat = {
           {
             name: 'bankGuarantee',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankGuarantee',
-            label: 'swm.dumpingGround.create.bankGuarantee',
+            label: 'swm.processingplant.create.BankGuarantee',
             pattern: '',
             type: 'checkbox',
             isRequired: false,
@@ -851,102 +650,43 @@ var dat = {
             minLength: '',
             patternErrorMsg: '',
             url: '',
-            showHideFields: [
-              {
-                ifValue: true,
-                hide: [],
-                show: [
-                  {
-                    name: 'bankName',
-                    isGroup: false,
-                    isField: true,
-                  },
-                  {
-                    name: 'bankValidityFrom',
-                    isGroup: false,
-                    isField: true,
-                  },
-                  {
-                    name: 'bankValidityTo',
-                    isGroup: false,
-                    isField: true,
-                  },
-                ],
-              },
-            ],
           },
-
-          {
-            name: 'dummy',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
-          {
-            name: 'dummy',
-            jsonPath: '',
-            label: 'swm.dumpingGround.create.dummy',
-            pattern: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: '',
-            maxLength: 500,
-            minLength: 10,
-            patternErrorMsg: '',
-            url: '',
-          },
-
           {
             name: 'bankName',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankName',
-            label: 'swm.dumpingGround.create.bankName',
+            label: 'swm.processingplant.create.BankName',
             pattern: '',
             type: 'text',
             isRequired: false,
             isDisabled: false,
-            hide: true,
             defaultValue: '',
             maxLength: '',
             minLength: '',
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityFrom',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankValidityFrom',
-            label: 'swm.dumpingGround.create.bankValidityFrom',
+            label: 'swm.processingplant.create.BankGuarantee',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
             isDisabled: false,
-            hide: true,
             defaultValue: '',
             maxLength: '',
             minLength: '',
             patternErrorMsg: '',
             url: '',
           },
-
           {
             name: 'bankValidityTo',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.bankValidityTo',
-            label: 'swm.dumpingGround.create.bankValidityTo',
+            label: 'swm.processingplant.create.BankGuaranteeTo',
             pattern: '',
             type: 'datePicker',
             isRequired: false,
             isDisabled: false,
-            hide: true,
             defaultValue: '',
             maxLength: '',
             minLength: '',
@@ -956,16 +696,16 @@ var dat = {
         ]
       },
       {
-        name: 'ProcessingSiteDetails',
-        label: 'swm.dumpingGround.create.group.title.ProcessingSiteDetails',
+        name: 'ProcessingSiteDeatils',
+        label: 'swm.processingplant.create.title.ProcessingSiteDeatils',
         fields: [
           {
-            name: 'dumpingGroundName',
-            jsonPath: 'MdmsRes.swm.ProcessingSite[0].name',
-            label: 'swm.dumpingGround.create.dumpingGroundName',
+            name: 'ProcessingSiteName',
+            jsonPath: 'MasterMetaData.masterData[0].name',
+            label: 'swm.processingplant.create.ProcessingSiteName',
             pattern: '',
             type: 'text',
-            isRequired: true,
+            isRequired: false,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
@@ -973,42 +713,39 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundArea',
-            jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.area',
-            label: 'swm.dumpingGround.create.dumpingGroundArea',
-            pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
-            type: 'text',
-            isRequired: true,
+            name: 'ProcessingSiteArea',
+            jsonPath: 'MasterMetaData.masterData[0].siteDetails.area',
+            label: 'swm.processingplant.create.ProcessingSiteArea',
+            pattern: '',
+            type: 'number',
+            isRequired: false,
             isDisabled: false,
             defaultValue: '',
             maxLength: '',
             minLength: '',
-            patternErrMsg: 'Invalid Value',
+            patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundCapacity',
+            name: 'ProcessingSiteCapacity',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.capacity',
-            label: 'swm.dumpingGround.create.dumpingGroundCapacity',
-            pattern: '^([1-9][0-9]{0,3}|10000|0|[1-4][0-9]{0,4}|50000)$',
+            label: 'swm.processingplant.create.ProcessingSiteCapacity',
+            pattern: '',
             type: 'text',
-            isRequired: true,
+            isRequired: false,
             isDisabled: false,
             defaultValue: '',
-            patternErrMsg: 'Invalid Value',
+            patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundAddress',
+            name: 'ProcessingSiteAddress',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.address',
-            label: 'swm.dumpingGround.create.dumpingGroundAddress',
+            label: 'swm.processingplant.create.ProcessingSiteAddress',
             pattern: '',
             type: 'textarea',
-            isRequired: true,
+            isRequired: false,
             isDisabled: false,
             defaultValue: '',
             maxLength: 500,
@@ -1017,9 +754,14 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
+        ]
+      },
+      {
+        name: 'geoCoordinates',
+        label: 'swm.dumpingground.search.geoCoordinates',
+        fields: [
           {
-            name: 'dumpingGroundLatitude',
+            name: 'ProcessingSiteLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
             label: 'swm.dumpingGround.create.dumpingGroundLatitude',
             pattern: '',
@@ -1032,11 +774,10 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
-
           {
-            name: 'dumpingGroundLongitude',
+            name: 'ProcessingSiteLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
-            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
+            label: 'swm.processingplant.create.Latitude',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -1046,12 +787,12 @@ var dat = {
             minLength: '',
             patternErrorMsg: '',
             url: '',
-          },
+          }
         ]
       },
       {
         name: 'wasteType',
-        label: 'swm.create.page.title.wasteType',
+        label: 'swm.processingsite.create.page.title.wasteType',
         fields: [
           {
             name: 'WasteType',
@@ -1059,12 +800,12 @@ var dat = {
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
-            isRequired: true,
+            isRequired: false,
             isDisabled: false,
             maxLength: 128,
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             minLength: 1,
-            patternErrMsg: 'may not be null',
+            patternErrorMsg: 'may not be null',
             hasATOAATransform: true,
             aATransformInfo: {
               to: 'MasterMetaData.masterData[0].siteDetails.wasteTypes',
@@ -1073,7 +814,6 @@ var dat = {
           },
         ]
       },
-
       {
         name: 'HideGroup',
         hide: true,
@@ -1115,6 +855,7 @@ var dat = {
     ],
     url: '/egov-mdms-create/v1/_update',
     tenantIdRequired: true,
+    isMDMSScreen: true,
     searchUrl: '/egov-mdms-service/v1/_search?code={code}',
   },
 };
