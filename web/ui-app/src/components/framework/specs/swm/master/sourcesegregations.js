@@ -134,14 +134,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '',
-            mdms: {
-              moduleName: 'swm',
-              masterName: 'CollectionType',
-              filter: '',
-              key: 'code',
-              value: 'name',
-            },
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=CollectionType|$..code|$..name',
           },
           {
             name: 'wetWasteCollected',
@@ -350,14 +343,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '',
-            mdms: {
-              moduleName: 'swm',
-              masterName: 'CollectionType',
-              filter: '',
-              key: 'code',
-              value: 'name',
-            },
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=CollectionType|$..code|$..name'
           },
           {
             name: 'wetWasteCollected',
