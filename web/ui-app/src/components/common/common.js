@@ -14,7 +14,7 @@ var localization_EN_Data = {
   'swm.create.sanitationStaffTargets.swmProcess':'SWM Process',
   'swm.create.sanitationStaffTargets.targetfrom':'Date From',
   'swm.create.sanitationStaffTargets.targetto':'Date To',
-  'swm.create.sanitationStaffTargets.departmentName':'Deparment Name',
+  'swm.create.sanitationStaffTargets.departmentName':'Department Name',
   'swm.create.sanitationStaffTargets.designationName':'Designation Name',
   'swm.create.sanitationStaffTargets.employeeName':'Employee Name',
   'swm.create.sanitationstaffschedules.departmentName':"Department Name",
@@ -5219,7 +5219,8 @@ var localization_MR_Data = {
   'advocates.create.group.title.agencySearch': 'Agency Search-marathi',
   'advocates.search.document.title.agency': 'Agency Search-marathi',
   'legal.create.advocateFee': 'Advocate Fee-marathi',
-  'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target-marathi'
+  'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target-marathi',
+  'swm.create.sanitationStaffTargets.departmentName':'Department Name-marathi'
 };
 export function translate(locale_text) {
   if (locale_text && localStorage.getItem('lang_response')) {
