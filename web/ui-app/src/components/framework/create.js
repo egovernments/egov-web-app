@@ -1418,7 +1418,7 @@ class Report extends Component {
           _mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn.length
         ) {
           for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn.length; k++) {
-            if (this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath)) {
+            if (this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath) || this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath) == false) {
               _.set(
                 formData,
                 _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,

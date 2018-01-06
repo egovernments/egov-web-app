@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 // import TimePicker from 'material-ui/TimePicker';
 import { translate } from '../../common/common';
 var DateTimeField = require('react-bootstrap-datetimepicker');
@@ -17,6 +18,19 @@ export default class UiTimeField extends Component {
     // 	value=new Date('2017','12','1',item.defaultValue.split(':')[0],item.defaultValue.split(':')[1]);
 
     // }
+    var inputProps ={
+                placeholder: 'hh:mm',
+                id: item.jsonPath.split('.').join('-'),
+                disabled: item.isDisabled,
+              };
+              if(_.isEmpty(this.props.getVal(item.jsonPath)) && item.reset){
+                inputProps ={
+                placeholder: 'hh:mm',
+                id: item.jsonPath.split('.').join('-'),
+                disabled: item.isDisabled,
+                value:""
+              };
+              }
     switch (this.props.ui) {
       case 'google':
         return (
@@ -53,11 +67,7 @@ export default class UiTimeField extends Component {
               dateTime={this.props.getVal(item.jsonPath) || undefined}
               size="sm"
               inputFormat="h:mm A"
-              inputProps={{
-                placeholder: 'hh:mm',
-                id: item.jsonPath.split('.').join('-'),
-                disabled: item.isDisabled,
-              }}
+              inputProps={inputProps}
               defaultText=""
               onChange={e => {
                 this.props.handler(
