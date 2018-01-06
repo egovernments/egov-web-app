@@ -157,7 +157,7 @@ var dat = {
               {
                 autoCompleteUrl: '/swm-services/vehiclemaintenances/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
                 autoFillFields: {
-                  'vehicleMaintenanceDetails[0].vehicle.vehicleType.code': 'vehicleMaintenances[0].vehicle.vehicleType.name',
+                  'vehicleMaintenanceDetails[0].vehicle.vehicleType.name': 'vehicleMaintenances[0].vehicle.vehicleType.name',
                   'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate':
                     'vehicleMaintenances[0].vehicle.insuranceDetails.insuranceValidityDate',
                   'vehicleMaintenanceDetails[0].downtimeDefined': 'vehicleMaintenances[0].downtimeforMaintenance',
@@ -183,7 +183,7 @@ var dat = {
           },
           {
             name: 'name',
-            jsonPath: 'vehicleMaintenanceDetails[0].vehicle.vehicleType.code',
+            jsonPath: 'vehicleMaintenanceDetails[0].vehicle.vehicleType.name',
             label: 'vehiclefuellingdetails.create.vehicleType',
             pattern: '',
             type: 'text',
@@ -567,7 +567,7 @@ var dat = {
             autoCompleteDependancy: {
               autoCompleteUrl: '/swm-services/vehiclemaintenances/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
               autoFillFields: {
-                'vehicleMaintenanceDetails[0].vehicle.vehicleType.code': 'vehicleMaintenances[0].vehicle.vehicleType.name',
+                'vehicleMaintenanceDetails[0].vehicle.vehicleType.name': 'vehicleMaintenances[0].vehicle.vehicleType.name',
                 'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate':
                   'vehicleMaintenances[0].vehicle.insuranceDetails.insuranceValidityDate',
                 'vehicleMaintenanceDetails[0].downtimeDefined': 'vehicleMaintenances[0].downtimeforMaintenance',

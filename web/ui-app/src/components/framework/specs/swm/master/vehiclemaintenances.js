@@ -85,13 +85,13 @@ var dat = {
             autoCompleteDependancy: {
               autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
               autoFillFields: {
-                'vehicleMaintenances[0].vehicle.vehicleType.code': 'vehicles[0].vehicleType.name',
+                'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
               },
             },
           },
           {
             name: 'name',
-            jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.code',
+            jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.name',
             label: 'swm.vehicles.create.vehicleType',
             pattern: '',
             type: 'text',
@@ -311,13 +311,13 @@ var dat = {
             autoCompleteDependancy: {
               autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
               autoFillFields: {
-                'vehicleMaintenances[0].vehicle.vehicleType.code': 'vehicles[0].vehicleType.name',
+                'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
               },
             },
           },
           {
             name: 'name',
-            jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.code',
+            jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.name',
             label: 'swm.vehicles.create.vehicleType',
             pattern: '',
             type: 'text',
