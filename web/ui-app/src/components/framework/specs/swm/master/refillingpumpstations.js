@@ -179,17 +179,16 @@ var dat = {
         name: 'LocationDetails',
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
         fields: [
-          {
-            name: 'Colony',
-            jsonPath: 'refillingPumpStations[0].location.name',
-            label: 'swm.collectionpoints.create.colony',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+         {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "refillingPumpStations[0].location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
         ],
       },
       {
