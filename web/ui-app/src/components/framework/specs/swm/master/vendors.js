@@ -372,7 +372,7 @@ var dat = {
           {
             name: 'ServicesOffered',
             label: 'swm.create.servicesOffered',
-            jsonPath: 'vendors[0].servicesOffered[0].code',
+            jsonPath: 'vendors[0].servicesOffered',
             type: 'multiValueList',
             pattern: '',
             isRequired: true,
@@ -832,7 +832,7 @@ var dat = {
           {
             name: 'ServicesOffered',
             label: 'swm.create.servicesOffered',
-            jsonPath: 'vendors[0].servicesOffered[0].code',
+            jsonPath: 'vendors[0].servicesOffered',
             type: 'multiValueList',
             pattern: '',
             isRequired: true,

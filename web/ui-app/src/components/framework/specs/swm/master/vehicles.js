@@ -422,27 +422,37 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-           // jsonPath: 'vehicles[0].isulbownedvehicle',
+            jsonPath: 'vehicles[0].isulbownedvehicle',
             dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            // defaultValue: false,
-            // showHideFields: [
-            //   {
-            //     ifValue: true,
-            //     show: [],
-            //     hide: [
-            //       {
-            //         name: 'vendorname',
-            //         isGroup: false,
-            //         isField: true,
-            //       },
-            //     ],
-            //   },
-            // ],
+            defaultValue: false,
+            showHideFields: [
+              {
+                ifValue: true,
+                show: [],
+                hide: [
+                  {
+                    name: 'vendorname',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
+              },  {
+                ifValue: false,
+                hide: [],
+                show: [
+                  {
+                    name: 'vendorname',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
+              },
+            ],
           },
           {
             name: 'vendorname',
@@ -777,7 +787,7 @@ var dat = {
           {
             name: 'uploadInsuranceDetails',
             jsonPath: 'vehicles[0].insuranceDetails.insuranceDocument.fileStoreId',
-            label: 'swm.vehicles.create.insurance.details',
+            label: 'swm.vehicles.create.insurance.download.details',
             type: 'singleFileUpload',
             readonly:true,
             pathToArray: 'documentTypes',

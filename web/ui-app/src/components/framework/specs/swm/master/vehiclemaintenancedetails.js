@@ -589,7 +589,7 @@ var dat = {
           },
           {
             name: 'name',
-            jsonPath: 'vehicleMaintenanceDetails[0].vehicle.vehicleType.code',
+            jsonPath: 'vehicleMaintenanceDetails[0].vehicle.vehicleType.name',
             label: 'vehiclefuellingdetails.create.vehicleType',
             pattern: '',
             type: 'text',
