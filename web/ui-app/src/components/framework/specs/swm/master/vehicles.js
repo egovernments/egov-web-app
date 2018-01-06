@@ -423,7 +423,6 @@ var dat = {
           {
             name: 'ulbOwnedVehicle',
             jsonPath: 'vehicles[0].isulbownedvehicle',
-            dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
@@ -1034,35 +1033,47 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-           //jsonPath: 'vehicles[0].isulbownedvehicle',
-            dependentJsonPath: 'vehicles[0].vendor.vendorNo',
+           jsonPath: 'vehicles[0].isulbownedvehicle',
+            //dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-           // defaultValue: false,
-            // valueBasedOn: [
-            //   {
-            //     jsonPath: 'vehicles[0].vendor.vendorNo',
-            //     valueIfDataFound: false,
-            //   },
-            // ],
-            // showHideFields: [
-            //   {
-            //     ifValue: true,
-            //     hide: [
-            //       {
-            //         name: 'vendorname',
-            //         isGroup: false,
-            //         isField: true,
-            //       },
-            //     ],
-            //     show: [
+           defaultValue: false,
+            valueBasedOn: [
+              {
+                jsonPath: 'vehicles[0].vendor.vendorNo',
+                valueIfDataFound: false,
+              },
+            ],
+            showHideFields: [
+              {
+                ifValue: true,
+                hide: [
+                  {
+                    name: 'vendorname',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
+                show: [
                   
-            //     ],
-            //   },
-            // ],
+                ],
+              },{
+                ifValue: false,
+                show: [
+                  {
+                    name: 'vendorname',
+                    isGroup: false,
+                    isField: true,
+                  },
+                ],
+                hide: [
+                  
+                ],
+              }
+            ],
           },
           {
             name: 'vendorname',
