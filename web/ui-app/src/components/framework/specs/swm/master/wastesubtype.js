@@ -7,7 +7,7 @@ var dat = {
       groups: [
         {
           name:'wastesubTypeDetails',
-          label: 'lcms.create.group.title.courtDetails',
+          label: 'lcms.search.group.title.wasteSubTypeDetails',
           fields: [
             {
               name: 'wastesubTypeName',
@@ -73,7 +73,7 @@ var dat = {
       groups: [
         {
           name:'wastesubTypeDetails',
-          label: 'lcms.create.group.title.courtDetails',
+          label: 'lcms.create.group.title.wasteSubTypeDetails',
           fields: [
             {
               name: 'wastesubTypeName',
@@ -147,7 +147,7 @@ var dat = {
       groups: [
         {
           name:'wastesubTypeDetails',
-          label: 'lcms.create.group.title.courtDetails',
+          label: 'lcms.view.group.title.wasteSubTypeDetails',
           fields: [
             {
               name: 'wastesubTypeName',
@@ -214,7 +214,7 @@ var dat = {
       groups: [
         {
           name:'wastesubTypeDetails',
-          label: 'lcms.create.group.title.courtDetails',
+          label: 'lcms.update.group.title.wasteSubTypeDetails',
           fields: [
             {
               name: 'wastesubTypeName',
