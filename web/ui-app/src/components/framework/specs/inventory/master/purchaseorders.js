@@ -3,7 +3,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: '',
-    url: '/inventory-services/v110/purchaseorders/_search',
+    url: '/inventory-services/purchaseorders/_search',
     groups: [
       {
         name: 'search',
@@ -452,7 +452,7 @@ var dat = {
         ],
       },
     ],
-    url: '/inventory-services/v110/purchaseorders/_create',
+    url: '/inventory-services/purchaseorders/_create',
     onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents',
     tenantIdRequired: true,
   },
@@ -742,7 +742,7 @@ var dat = {
       },
     ],
     tenantIdRequired: true,
-    url: '/inventory-services/v110/purchaseorders/_search?tenantId={tenantId}',
+    url: '/inventory-services/purchaseorders/_search?tenantId={tenantId}',
   },
   'inventory.update': {
     numCols: 4,
@@ -1029,9 +1029,9 @@ var dat = {
         ],
       },
     ],
-    url: '/inventory-services/v110/purchaseorders/_update',
+    url: '/inventory-services/purchaseorders/_update',
     tenantIdRequired: true,
-    searchUrl: '/inventory-services/v110/purchaseorders/_search?tenantId={tenantId}',
+    searchUrl: '/inventory-services/purchaseorders/_search?tenantId={tenantId}',
   },
 };
 export default dat;

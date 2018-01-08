@@ -410,6 +410,10 @@ const menuConvention = {
   'Inventory.Inventory Transactions.Opening Balance.Opening Balance Update': '/search/inventory/openingbalance/update',
   'Inventory.Inventory Transactions.Opening Balance.Opening Balance Search': '/search/inventory/openingbalance/view',
 
+  'Inventory.Inventory Transactions.Purchase Order.Purchase Order Create': '/create/inventory/purchaseorders',
+  'Inventory.Inventory Transactions.Purchase Order.Purchase Order Update': '/search/inventory/purchaseorders/update',
+  'Inventory.Inventory Transactions.Purchase Order.Purchase Order Search': '/search/inventory/purchaseorders/view',
+
   'Inventory.Inventory Transactions.Material Issue.Material Issues Create':
     '/non-framework/inventory/transaction/materialissue/SearchIndentMaterialIssue',
   'Inventory.Inventory Transactions.Material Issue.Material Issues Update': '/search/inventory/materialissues/update',
