@@ -150,7 +150,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'vendors[0].registrationNo',
-            label: 'swm.create.vendorregistrationNo',
+            label: 'swm.create.registrationNo',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -205,7 +205,7 @@ var dat = {
             label: 'swm.create.supplier.tinNumber',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: 256,
@@ -679,7 +679,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'vendors[0].registrationNo',
-            label: 'swm.create.vendorregistrationNo',
+            label: 'swm.update.registrationNo',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -734,7 +734,7 @@ var dat = {
             label: 'swm.create.supplier.tinNumber',
             pattern: '',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             defaultValue: '',
             maxLength: 256,
@@ -791,7 +791,6 @@ var dat = {
       },
 
       {
-
         name: 'LocationDetails',
         multiple:true,
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
@@ -808,7 +807,6 @@ var dat = {
             "fullWidth": true,
           }
         ]
-
       },
       {
         name: 'ServicesOffered',
