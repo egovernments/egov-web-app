@@ -278,14 +278,14 @@ var dat = {
               patternErrorMsg: '',
               url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
             },
-            {
-              name: 'code',
-              jsonPath: 'MdmsRes.swm.Shift[0].code',
-              defaultValue: 'Shift-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
-            },
+            // {
+            //   name: 'code',
+            //   jsonPath: 'MdmsRes.swm.Shift[0].code',
+            //   defaultValue: 'Shift-' + new Date().getTime(),
+            //   isRequired : true,
+            //   type: 'text',
+            //   hide: true,
+            // },
             /*{
               name: 'tenantId',
               jsonPath: 'MdmsRes.swm.Shift[0].tenantId',
@@ -450,35 +450,35 @@ var dat = {
               patternErrorMsg: '',
               url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
             },
-            {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'Shift-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
-            },
-            {
-              name: 'tenantId',
-              jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              type: 'text',             
-              defaultValue: localStorage.getItem("tenantId"),
-              hide: true
-            },
-            {
-              name: 'moduleName',
-              jsonPath: 'MasterMetaData.moduleName',
-              type: 'text',             
-              defaultValue: 'swm',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',              
-              type: 'text',
-              defaultValue: 'Shift',
-              hide: true
-            },
+            // {
+            //   name: 'code',
+            //   jsonPath: 'MasterMetaData.masterData[0].code',
+            //   defaultValue: 'Shift-' + new Date().getTime(),
+            //   isRequired : true,
+            //   type: 'text',
+            //   hide: true,
+            // },
+            // {
+            //   name: 'tenantId',
+            //   jsonPath: 'MasterMetaData.masterData[0].tenantId',
+            //   type: 'text',             
+            //   defaultValue: localStorage.getItem("tenantId"),
+            //   hide: true
+            // },
+            // {
+            //   name: 'moduleName',
+            //   jsonPath: 'MasterMetaData.moduleName',
+            //   type: 'text',             
+            //   defaultValue: 'swm',
+            //   hide: true
+            // },
+            // {
+            //   name: 'masterName',
+            //   jsonPath: 'MasterMetaData.masterName',              
+            //   type: 'text',
+            //   defaultValue: 'Shift',
+            //   hide: true
+            // },
           ]
         },
         {

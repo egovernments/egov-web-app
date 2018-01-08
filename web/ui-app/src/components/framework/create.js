@@ -1300,7 +1300,6 @@ class Report extends Component {
         }
       }
     }
-
     return _mockData;
   };
 
@@ -1358,7 +1357,6 @@ class Report extends Component {
         }
       }
     }
-
     setMockData(_mockData);
   };
 
@@ -1406,6 +1404,62 @@ class Report extends Component {
     }
     setMockData(_mockData);
   };
+
+
+
+
+// require func.
+
+reqField = (_mockData, enableStr, reset) => {
+  let { moduleName, actionName, setFormData } = this.props;
+  let _formData = { ...this.props.formData };
+  for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
+    for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
+      if (enableStr.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+        _mockData[moduleName + '.' + actionName].groups[i].fields[j].isRequired = reset ? true : false;
+        break;
+      }
+    }
+  }
+  return _mockData;
+};
+
+
+checkIfHasReqFields = (jsonPath, val) => {
+  let {setFormData}=this.props;
+  let _mockData = { ...this.props.mockData };
+  let formData={...this.props.formData}
+  let { moduleName, actionName, setMockData } = this.props;
+  for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
+    for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
+      if (
+        jsonPath == _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath &&
+        _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields &&
+        _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields.length
+      ) {
+        for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields.length; k++) {
+          if(_.isArray(val)){
+            if( _.includes(val,_mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].ifValue )) {
+                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require.length; y++) {
+                  _mockData = this.reqField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require[y],true);
+                }
+            }else{
+              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require.length; y++) {
+                _mockData = this.reqField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require[y],false);
+              }
+            }
+          } 
+        }
+      }
+    }
+  }
+  setMockData(_mockData);
+};
+
+//require func.
+
+
+
 
   checkifHasValueBasedOn = (jsonPath, val) => {
     let _mockData = { ...this.props.mockData };
@@ -1834,7 +1888,9 @@ class Report extends Component {
     this.checkifHasValueBasedOn(property, e.target.value);
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
+    this.checkIfHasReqFields(property, e.target.value);
     this.checkifHasDependedantMdmsField(property, e.target.value);
+    
 
     try {
       handleChange(e, property, isRequired, pattern, requiredErrMsg, patternErrMsg);

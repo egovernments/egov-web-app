@@ -146,53 +146,53 @@ var dat = {
           // },
         ],
       },
-      {
-        name: 'VehicleDetails2',
-        label: 'swm.vehicles.create.group.title.VehicleDetails2',
-        fields: [
-          {
-            name: 'vendor_name',
-            jsonPath: 'vendorName',
-            label: 'swm.vehicles.search.result.vendor',
-            type: 'singleValueList',
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: '',
-            url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
-          },
-        ],
-      },
-      {
-        name: 'insuranceDetails',
-        label: 'swm.vehicles.create.group.title.InsuranceDetails',
-        fields: [
-          {
-            name: 'insuranceNumber',
-            jsonPath: 'insuranceNumber',
-            label: 'swm.vehicles.create.insuranceNumber',
-            type: 'text',
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
-        ],
-      },
-      {
-        name: 'PurchaseDetails',
-        label: 'swm.vehicles.create.group.title.PurchaseDetails',
-        fields: [
-          {
-            name: 'purchaseDate',
-            jsonPath: 'purchaseDate',
-            label: 'swm.vehicles.create.purchaseDate',
-            type: 'datePicker',
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-        ],
-      },
+      // {
+      //   name: 'VehicleDetails2',
+      //   label: 'swm.vehicles.create.group.title.VehicleDetails2',
+      //   fields: [
+      //     {
+      //       name: 'vendor_name',
+      //       jsonPath: 'vendorName',
+      //       label: 'swm.vehicles.search.result.vendor',
+      //       type: 'singleValueList',
+      //       isDisabled: false,
+      //       maxLength: 256,
+      //       minLength: 1,
+      //       patternErrorMsg: '',
+      //       url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'insuranceDetails',
+      //   label: 'swm.vehicles.create.group.title.InsuranceDetails',
+      //   fields: [
+      //     {
+      //       name: 'insuranceNumber',
+      //       jsonPath: 'insuranceNumber',
+      //       label: 'swm.vehicles.create.insuranceNumber',
+      //       type: 'text',
+      //       isDisabled: false,
+      //       maxLength: 256,
+      //       minLength: 1,
+      //       patternErrorMsg: '',
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'PurchaseDetails',
+      //   label: 'swm.vehicles.create.group.title.PurchaseDetails',
+      //   fields: [
+      //     {
+      //       name: 'purchaseDate',
+      //       jsonPath: 'purchaseDate',
+      //       label: 'swm.vehicles.create.purchaseDate',
+      //       type: 'datePicker',
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //     },
+      //   ],
+      // },
     ],
     result: {
       header: [
