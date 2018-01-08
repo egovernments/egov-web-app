@@ -3231,6 +3231,10 @@ var localization_EN_Data = {
   'lcms.create.group.title.courtDetails' : 'Master Data of Court',
   'swm.create.ulbNames' : 'ULB Names',
   'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Type Code',
+  'lcms.search.group.title.wasteSubTypeDetails': 'Search WasteSub Type',
+  'lcms.update.group.title.wasteSubTypeDetails': 'Update WasteSub Type',
+  'lcms.create.group.title.wasteSubTypeDetails': 'Create WasteSub Type',
+  'lcms.view.group.title.wasteSubTypeDetails': 'WasteSub Type',
   'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target',
     'swm.refillingpumpstations.typeOfFuel.code':"Type of Fuel",
 
