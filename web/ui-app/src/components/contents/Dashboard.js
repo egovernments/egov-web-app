@@ -518,10 +518,9 @@ class Dashboard extends Component {
           }
         ).then(
           function(response) {
-            var actions = response.actions;
+            var actions = response.actions || [];
             var roles = JSON.parse(localStorage.userRequest).roles;
-            if (!actions) {
-              actions=[];
+
               actions.unshift({
                 id: 12299,
                 name: 'SearchRequest',
@@ -539,7 +538,7 @@ class Dashboard extends Component {
                 lastModifiedBy: null,
                 path: 'Service Request.Requests.Search',
               });
-            }
+
             localStorage.setItem('actions', JSON.stringify(actions));
             self.props.setActionList(actions);
           },
@@ -547,10 +546,9 @@ class Dashboard extends Component {
             //old menu item api access/v1/actions/_get
             Api.commonApiPost('access/v1/actions/_get', {}, { tenantId: localStorage.tenantId, roleCodes, enabled: true }).then(
               function(response) {
-                var actions = response.actions;
+                var actions = response.actions || [];
                 var roles = JSON.parse(localStorage.userRequest).roles;
-                if (!actions) {
-                  actions=[];
+
                   actions.unshift({
                     id: 12299,
                     name: 'SearchRequest',
@@ -568,7 +566,8 @@ class Dashboard extends Component {
                     lastModifiedBy: null,
                     path: 'Service Request.Requests.Search',
                   });
-                }
+
+
                 localStorage.setItem('actions', JSON.stringify(actions));
                 self.props.setActionList(actions);
               },

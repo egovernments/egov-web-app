@@ -282,7 +282,7 @@ class Login extends Component {
           }
         ).then(
           function(response) {
-            var actions = response.actions;
+            var actions = response.actions || [];
             var roles = JSON.parse(localStorage.userRequest).roles;
             actions.unshift({
               id: 12299,
@@ -337,7 +337,7 @@ class Login extends Component {
               }
             ).then(
               function(response) {
-                var actions = response.actions;
+                var actions = response.actions ||[];
                 var roles = JSON.parse(localStorage.userRequest).roles;
                 actions.unshift({
                   id: 12299,
