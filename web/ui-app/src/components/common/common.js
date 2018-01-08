@@ -3066,10 +3066,10 @@ var localization_EN_Data = {
   'inventory.common.contactNo': 'Contact No',
   'inventory.common.faxno': 'Fax No',
   'inventory.common.email': 'Email Address',
-  'inventory.common.panno': 'Pan No',
-  'inventory.common.tinno': 'Tin No',
-  'inventory.common.cstno': 'C.S.T No',
-  'inventory.common.vatno': 'Vat No',
+  'inventory.common.panno': 'PAN Number',
+  'inventory.common.tinno': 'TIN Number',
+  'inventory.common.cstno': 'C.S.T Number',
+  'inventory.common.vatno': 'VAT Number',
   'inventory.common.gstno': 'GST Number',
   'inventory.common.contactperson': 'Contact Person',
   'inventory.common.contactno': 'Contact No',
@@ -3232,7 +3232,17 @@ var localization_EN_Data = {
   'swm.create.ulbNames' : 'ULB Names',
   'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Type Code',
   'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target',
-    'swm.refillingpumpstations.typeOfFuel.code':"Type of Fuel"
+    'swm.refillingpumpstations.typeOfFuel.code':"Type of Fuel",
+
+      "pattern.error.message.email": ' Email should be in format e.g - abc@abc.com',
+      "pattern.error.message.mobileNumber": 'The Phone number structure is as follows: 999XXXX999',
+      "pattern.error.message.panNumber": '  The PAN structure is as follows: AAAPL1234C .',
+      "pattern.error.message.website": ' please enter in format e.g- www.domainname.com',
+      "pattern.error.message.tinNumber": ' The TIN Number should be in format e.g - 12345678910',
+      "pattern.error.message.cstNumber": 'The C.S.T Number should be in format e.g - 12345678910',
+      "pattern.error.message.vatNumber": '  The VAT Number should be in format e.g - 12345678910 .',
+      "pattern.error.message.gstNumber": ' GST Number should be in format - 22AAAAA0000A1Z5',
+      "pattern.error.message.faxNumber": 'Fax number only contains Number e.g - 123456798012345',
 
 
 };
