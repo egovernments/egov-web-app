@@ -22,25 +22,6 @@ var dat = {
               patternErrorMsg: '',
               url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
             },
-            /*{
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              type: 'text',
-            },*/
-           /* {
-              name: 'moduleName',
-              jsonPath: 'moduleName',
-              type: 'text',             
-              defaultValue: 'swm',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'masterName',              
-              type: 'text',
-              defaultValue: 'Shift',
-              hide: true
-            },*/
           ]
         },
       ],
@@ -54,11 +35,9 @@ var dat = {
           },
           {
             label: 'swm.Shift.create.shiftStartTime',
-            isDate: true
           },
           {
             label: 'swm.Shift.create.shiftEndTime',
-            isDate: true
           },
         ],
         values: [
@@ -192,7 +171,7 @@ var dat = {
               type: 'timePicker',
               reset:true,
               isDisabled: false,
-               isRequired: true,
+              isRequired: true,
               maxLength: 12,
               minLength: 6,
               patternErrorMsg: '',
@@ -206,7 +185,7 @@ var dat = {
               type: 'timePicker',
               reset:true,
               isDisabled: false,
-               isRequired: true,
+              isRequired: true,
               patternErrorMsg: '',
               url: '',
             },
@@ -216,10 +195,9 @@ var dat = {
               label: 'swm.Shift.create.graceTimeFrom',
               pattern: '',
               type: 'timePicker',
+              reset:true,
               isDisabled: false,
-               isRequired: true,
-              maxLength: 12,
-              minLength: 6,
+              isRequired: true,
               patternErrorMsg: '',
               url: '',
             },
@@ -554,7 +532,7 @@ var dat = {
               pattern: '',
               type: 'timePicker',
               reset:true,
-               isRequired: true,
+              isRequired: true,
               isDisabled: false,
               patternErrorMsg: '',
               url: '',
@@ -567,7 +545,7 @@ var dat = {
               type: 'timePicker',
               reset:true,
               isDisabled: false,
-               isRequired: true,
+              isRequired: true,
               maxLength: 12,
               minLength: 6,
               patternErrorMsg: '',
@@ -580,7 +558,7 @@ var dat = {
               pattern: '',
               type: 'timePicker',
               reset:true,
-               isRequired: true,
+              isRequired: true,
               isDisabled: false,
               patternErrorMsg: '',
               url: '',
