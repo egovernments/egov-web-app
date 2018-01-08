@@ -509,7 +509,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
     // }
     let formData ={};
      _.set(formData, this.props.item.jsonPath + '[0]', list[index]);
-      if(dependecyDropdownData&& formData.MdmsMetadata.masterData[0]){
+      if(dependecyDropdownData && formData.MdmsMetadata.masterData[0]){
       let filterdData =_.find(dependecyDropdownData, function (obj) { return obj[`${dependencyKey}`]==( formData.MdmsMetadata.masterData[0][`${propertyName}`]) });
       formData.MdmsMetadata.masterData[0][`${propertyName}`]=filterdData[`${filterKey}`];
    }
@@ -537,7 +537,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
     let  filterKey=this.props.dependencyDropdown[0].filterKey;
     let dependencyKey =this.props.dependencyDropdown[0].dependencykey;
     _.set(formData, this.props.item.jsonPath + '[0]', list[index]);
-    if(dependecyDropdownData){
+    if(dependecyDropdownData && formData.MdmsMetadata.masterData[0]){
       let filterdData =_.find(dependecyDropdownData, function (obj) { return obj[`${dependencyKey}`]==( formData.MdmsMetadata.masterData[0][`${propertyName}`]) });
       formData.MdmsMetadata.masterData[0][`${propertyName}`]=filterdData[`${filterKey}`];
    }
@@ -648,7 +648,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
   };
 
   renderArrayField = item => {
-    console.log(this.state);
+   // console.log(this.state);
     // if(this.state.index === 0){
     //   this.props.item.values.map((property, index) => {
     //     property.isDisabled = property.isUnique;

@@ -192,7 +192,7 @@ class MdmsComponent extends Component {
                 });
 
               formData.MasterMetaData.masterData = _valueList;
-            console.log(formData);
+           // console.log(formData);
             props.setFormData(formData);
             props.setLoadingStatus('hide');
             };
@@ -224,6 +224,9 @@ class MdmsComponent extends Component {
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(nextProps, this.props)) {
       if (this.state.pathname && this.state.pathname != nextProps.history.location.pathname) {
+        this.setState({
+          dependencyDropdownData: null
+        })
         this.initData(nextProps);
       }
     }
@@ -249,7 +252,7 @@ class MdmsComponent extends Component {
     self.props.setLoadingStatus('loading');
     Api.commonApiPost('/egov-mdms-create/v1/_create', {}, { MasterMetaData: formData.MasterMetaData }, false, true)
       .then(function(res) {
-        console.log(res);
+       // console.log(res);
         self.props.setLoadingStatus('hide');
       })
       .catch(function(err) {
@@ -270,7 +273,7 @@ class MdmsComponent extends Component {
            for (let i = 0; i < temp.length; i++) {
                 if(isDependency){
                   let value=temp[i][`${depndencyobject.propertyName}`];
-                  console.log('value  is'+value);
+               //   console.log('value  is'+value);
                 let filterdData =_.find(dropdownData, function (obj) { return obj[`${depndencyobject.filterKey}`]===value });
                 if(filterdData){
                 temp[i][`${depndencyobject.propertyName}`]=filterdData[`${depndencyobject.dependencykey}`];
@@ -293,7 +296,7 @@ class MdmsComponent extends Component {
     let { item, isBtnDisabled, valueList,dependencyDropdownData} = this.state;
     let { handleChange, setDisabled, addOrUpdate } = this;
     // console.log(item);
-     console.log("test",valueList);
+    // console.log("test",valueList);
     return (
       <div style={{ margin: '20px' }}>
         {item && (Object.keys(item).length && item.values && item.values.length) ? (
