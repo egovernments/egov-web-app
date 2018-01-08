@@ -1,4 +1,4 @@
-const actions = JSON.parse(window.localStorage.getItem('actions')) || [];
+// const actions = JSON.parse(window.localStorage.getItem('actions')) || [];
 
 const defaultState = {
   appName: 'common',
@@ -8,7 +8,8 @@ const defaultState = {
   complaintsLength: 0,
   pleaseWait: false,
   showMenu: false,
-  actionList: actions,
+  actionList:[],
+  // actionList: actions,
   showHome: false,
   tenantInfo: [],
 };
