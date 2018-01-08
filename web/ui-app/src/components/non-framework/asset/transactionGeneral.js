@@ -780,8 +780,8 @@ class Transaction extends Component {
     var formData = { ...this.props.formData };
     var amountValidation = true;
     var amountValidationMsg = '';
-
-    formData.Depreciation.toDate = toDateCheck;
+    console.log(formData);
+    formData.Depreciation.toDate = formData.toDate;
     var mainAssetIds = [];
     for (var i = 0; i < formData.Depreciation.Assets.length; i++) {
       if (formData.Depreciation.Assets[i].isChecked && formData.Depreciation.Assets[i].isChecked == true) {
