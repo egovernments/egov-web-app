@@ -520,23 +520,26 @@ class Dashboard extends Component {
           function(response) {
             var actions = response.actions;
             var roles = JSON.parse(localStorage.userRequest).roles;
-            actions.unshift({
-              id: 12299,
-              name: 'SearchRequest',
-              url: '/search/service/requests',
-              displayName: 'Search Service Requests',
-              orderNumber: 35,
-              queryParams: '',
-              parentModule: 75,
-              enabled: true,
-              serviceCode: '',
-              tenantId: null,
-              createdDate: null,
-              createdBy: null,
-              lastModifiedDate: null,
-              lastModifiedBy: null,
-              path: 'Service Request.Requests.Search',
-            });
+            if (!actions) {
+              actions=[];
+              actions.unshift({
+                id: 12299,
+                name: 'SearchRequest',
+                url: '/search/service/requests',
+                displayName: 'Search Service Requests',
+                orderNumber: 35,
+                queryParams: '',
+                parentModule: 75,
+                enabled: true,
+                serviceCode: '',
+                tenantId: null,
+                createdDate: null,
+                createdBy: null,
+                lastModifiedDate: null,
+                lastModifiedBy: null,
+                path: 'Service Request.Requests.Search',
+              });
+            }
             localStorage.setItem('actions', JSON.stringify(actions));
             self.props.setActionList(actions);
           },
@@ -546,23 +549,26 @@ class Dashboard extends Component {
               function(response) {
                 var actions = response.actions;
                 var roles = JSON.parse(localStorage.userRequest).roles;
-                actions.unshift({
-                  id: 12299,
-                  name: 'SearchRequest',
-                  url: '/search/service/requests',
-                  displayName: 'Search Service Requests',
-                  orderNumber: 35,
-                  queryParams: '',
-                  parentModule: 75,
-                  enabled: true,
-                  serviceCode: '',
-                  tenantId: null,
-                  createdDate: null,
-                  createdBy: null,
-                  lastModifiedDate: null,
-                  lastModifiedBy: null,
-                  path: 'Service Request.Requests.Search',
-                });
+                if (!actions) {
+                  actions=[];
+                  actions.unshift({
+                    id: 12299,
+                    name: 'SearchRequest',
+                    url: '/search/service/requests',
+                    displayName: 'Search Service Requests',
+                    orderNumber: 35,
+                    queryParams: '',
+                    parentModule: 75,
+                    enabled: true,
+                    serviceCode: '',
+                    tenantId: null,
+                    createdDate: null,
+                    createdBy: null,
+                    lastModifiedDate: null,
+                    lastModifiedBy: null,
+                    path: 'Service Request.Requests.Search',
+                  });
+                }
                 localStorage.setItem('actions', JSON.stringify(actions));
                 self.props.setActionList(actions);
               },
