@@ -299,7 +299,6 @@ var dat = {
             type: 'tableList',
             jsonPath: 'materialReceipt[0].receiptDetails',
             tableList: {
-              actionsNotRequired: true,
               header: [
                 {
                   label: 'inventory.materialName',
