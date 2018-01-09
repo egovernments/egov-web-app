@@ -49,11 +49,12 @@ class Report extends Component {
       str = "";
     }
 
-    // console.log(field);
+    console.log(field);
 
     if (Array.isArray(field)) {
       field.forEach(function (item, index) {
         if (typeof (item) == "object") {
+          console.log(item);
           if (inArrayFormat) {
             str[index] = item[property] ? item[property] : item["code"];
           }
@@ -108,9 +109,9 @@ class Report extends Component {
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
           //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
-          _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
-          //,self.getVal(groups[i].fields[j].jsonPath)
+          _.set(dat, groups[i].fields[j].jsonPath, self.getVal(groups[i].fields[j].jsonPath) || groups[i].fields[j].defaultValue);
         }
+
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
           for (var k = 0; k < groups[i].fields[j].children.length; k++) {
             this.setDefaultValues(groups[i].fields[j].children[k].groups);
@@ -410,11 +411,11 @@ class Report extends Component {
           if (specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isMDMSScreen) {
             var masterName = "";
             var moduleName = "";
+            console.log(res);
             if (Object.keys(res.MdmsRes).length === 1) {
               moduleName = Object.keys(res.MdmsRes)[0];
               masterName = Object.keys(res.MdmsRes[Object.keys(res.MdmsRes)[0]])[0]
             }
-          
             let mdmsReq = {};
             mdmsReq.MasterMetaData = {};
             mdmsReq.MasterMetaData.masterData = [];
@@ -422,6 +423,7 @@ class Report extends Component {
             mdmsReq.MasterMetaData.masterName = masterName
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem('tenantId');
             mdmsReq.MasterMetaData.masterData[0] = res.MdmsRes[moduleName][masterName][0];
+            console.log(mdmsReq);
             res = mdmsReq;
           }
           //
@@ -448,11 +450,14 @@ class Report extends Component {
             // var hashLocation = window.location.hash;
             let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
             let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
+            console.log(fields);
             for (var i = 0; i < fields.length; i++) {
               let values = _.get(res, fields[i].jsonPath);
+              console.log(values);
               res = _.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
             }
 
+            console.log(res);
             self.props.setFormData(res);
           }
           let obj1 = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
@@ -674,95 +679,41 @@ class Report extends Component {
     let self = this;
     var value = this.getVal(path);
     if (!value) return;
-
-    if(Array.isArray(autoObject)){
-      autoObject.forEach(function(item, index){
-        var url = item.autoCompleteUrl.split('?')[0];
-        var hashLocation = window.location.hash;
-        var parameters = item.autoCompleteUrl.substr(item.autoCompleteUrl.indexOf('?') + 1);
-        if (parameters.split('&').length > 1) {
-          var params = parameters.split('&');
-          var query = {};
-          for (var i = 0; i < params.length; i++) {
-            if (params[i].indexOf('{') > 0) {
-              params[i] = params[i].replace(params[i].substr(params[i].indexOf('{'), params[i].indexOf('}') + 1 - params[i].indexOf('{')), value);
-            }
-            var index = params[i].indexOf('=');
-            var id = params[i].substr(0, index);
-            var val = params[i].substr(index + 1);
-            query[id] = val;
-          }
-        } else {
-          var param = parameters.replace(parameters.substr(parameters.indexOf('{'), parameters.indexOf('}') + 1 - parameters.indexOf('{')), value);
-          var index = param.indexOf('=');
-          var query = {
-            [param.substr(0, index)]: param.substr(index + 1),
-          };
+    var url = autoObject.autoCompleteUrl.split('?')[0];
+    var hashLocation = window.location.hash;
+    var parameters = autoObject.autoCompleteUrl.substr(autoObject.autoCompleteUrl.indexOf('?') + 1);
+    if (parameters.split('&').length > 1) {
+      var params = parameters.split('&');
+      var query = {};
+      for (var i = 0; i < params.length; i++) {
+        if (params[i].indexOf('{') > 0) {
+          params[i] = params[i].replace(params[i].substr(params[i].indexOf('{'), params[i].indexOf('}') + 1 - params[i].indexOf('{')), value);
         }
-        self.props.setLoadingStatus('loading');
-        Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
-          function(res) {
-            self.props.setLoadingStatus('hide');
-            var formData = { ...self.props.formData };
-            for (var key in item.autoFillFields) {
-              _.set(formData, key, _.get(res, item.autoFillFields[key]));
-            }
-            self.props.setFormData(formData);
-          },
-          function(err) {
-            console.log(err);
-            self.props.setLoadingStatus('hide');
-            var formData = { ...self.props.formData };
-            for (var key in item.autoFillFields) {
-              _.set(formData, key, _.get(err, item.autoFillFields[key]));
-            }
-            self.props.setFormData(formData);
-            self.props.toggleSnackbarAndSetText(true, err.message);
-          }
-        );
-      });
-    }
-
-    else {
-      
-      var url = autoObject.autoCompleteUrl.split('?')[0];
-      var hashLocation = window.location.hash;
-      var parameters = autoObject.autoCompleteUrl.substr(autoObject.autoCompleteUrl.indexOf('?') + 1);
-      if (parameters.split('&').length > 1) {
-        var params = parameters.split('&');
-        var query = {};
-        for (var i = 0; i < params.length; i++) {
-          if (params[i].indexOf('{') > 0) {
-            params[i] = params[i].replace(params[i].substr(params[i].indexOf('{'), params[i].indexOf('}') + 1 - params[i].indexOf('{')), value);
-          }
-          var index = params[i].indexOf('=');
-          var id = params[i].substr(0, index);
-          var val = params[i].substr(index + 1);
-          query[id] = val;
-        }
-      } else {
-        var param = parameters.replace(parameters.substr(parameters.indexOf('{'), parameters.indexOf('}') + 1 - parameters.indexOf('{')), value);
-        var index = param.indexOf('=');
-        var query = {
-          [param.substr(0, index)]: param.substr(index + 1),
-        };
+        var index = params[i].indexOf('=');
+        var id = params[i].substr(0, index);
+        var val = params[i].substr(index + 1);
+        query[id] = val;
       }
-  
-      Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
-        function(res) {
-          var formData = { ...self.props.formData };
-          for (var key in autoObject.autoFillFields) {
-            _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
-          }
-          self.props.setFormData(formData);
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
+    } else {
+      var param = parameters.replace(parameters.substr(parameters.indexOf('{'), parameters.indexOf('}') + 1 - parameters.indexOf('{')), value);
+      var index = param.indexOf('=');
+      var query = {
+        [param.substr(0, index)]: param.substr(index + 1),
+      };
     }
-   
-    
+
+    Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
+      function (res) {
+        var formData = { ...self.props.formData };
+        for (var key in autoObject.autoFillFields) {
+          _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
+        }
+        self.props.setFormData(formData);
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
   };
 
   makeAjaxCall = (formData, url) => {
@@ -780,15 +731,20 @@ class Report extends Component {
     // console.log(formData);
     delete formData.ResponseInfo;
     //return console.log(formData);
+    console.log(obj);
     if (obj.hasOwnProperty('omittableFields')) {
       this.generateSpecificForm(formData, obj['omittableFields']);
     }
+    console.log(formData);
+
 
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
       function (response) {
 
         self.props.setLoadingStatus('hide');
         self.initData();
+        console.log('Back response');
+        console.log(response);
 
         if (response.summons) {
           if (response.summons.length > 0) {
@@ -823,7 +779,6 @@ class Report extends Component {
         setTimeout(function () {
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
             if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
-          
               var hash =
                 self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl +
                 '/' +
@@ -1194,12 +1149,15 @@ class Report extends Component {
   };
 
   showField = (_mockData, showObject, jsonPath,  reset) => {
+    console.log(showObject, _mockData, jsonPath, reset)
+
     if(jsonPath != null) {
       var pathArr = jsonPath.split('.');
       pathArr.pop();
       pathArr.push(showObject.name);
       jsonPath = pathArr.join('.');
     }
+
     let { moduleName, actionName, setFormData, delRequiredFields, removeFieldErrors, addRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
     if (showObject.isField) {
@@ -1303,6 +1261,7 @@ class Report extends Component {
         }
       }
     }
+
     return _mockData;
   };
 
@@ -1360,10 +1319,14 @@ class Report extends Component {
         }
       }
     }
+
     setMockData(_mockData);
   };
 
   checkIfHasShowHideFields = (jsonPath, val) => {
+    // alert("hello")
+    // console.log(jsonPath, val)
+    // console.log(this.props.formData)
     let _mockData = { ...this.props.mockData };
     let { moduleName, actionName, setMockData } = this.props;
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
@@ -1403,68 +1366,13 @@ class Report extends Component {
                   _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
                 }
               }
+           
           }
         }
       }
     }
     setMockData(_mockData);
   };
-
-
-
-
-// require func.
-
-reqField = (_mockData, enableStr, reset) => {
-  let { moduleName, actionName, setFormData } = this.props;
-  let _formData = { ...this.props.formData };
-  for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
-    for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-      if (enableStr.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
-        _mockData[moduleName + '.' + actionName].groups[i].fields[j].isRequired = reset ? true : false;
-        break;
-      }
-    }
-  }
-  return _mockData;
-};
-
-
-checkIfHasReqFields = (jsonPath, val) => {
-  let {setFormData}=this.props;
-  let _mockData = { ...this.props.mockData };
-  let formData={...this.props.formData}
-  let { moduleName, actionName, setMockData } = this.props;
-  for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
-    for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-      if (
-        jsonPath == _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath &&
-        _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields &&
-        _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields.length
-      ) {
-        for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields.length; k++) {
-          if(_.isArray(val)){
-            if( _.includes(val,_mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].ifValue )) {
-                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require.length; y++) {
-                  _mockData = this.reqField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require[y],true);
-                }
-            }else{
-              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require.length; y++) {
-                _mockData = this.reqField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require[y],false);
-              }
-            }
-          } 
-        }
-      }
-    }
-  }
-  setMockData(_mockData);
-};
-
-//require func.
-
-
-
 
   checkifHasValueBasedOn = (jsonPath, val) => {
     let _mockData = { ...this.props.mockData };
@@ -1477,7 +1385,7 @@ checkIfHasReqFields = (jsonPath, val) => {
           _mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn.length
         ) {
           for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn.length; k++) {
-            if (this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath) || this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath) == false) {
+            if (this.getVal(_mockData[moduleName + '.' + actionName].groups[i].fields[j].valueBasedOn[k].jsonPath)) {
               _.set(
                 formData,
                 _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
@@ -1890,13 +1798,11 @@ checkIfHasReqFields = (jsonPath, val) => {
         }
       }
     }
-    // console.log(property, e.target.value)
+    console.log(property, e.target.value)
     this.checkifHasValueBasedOn(property, e.target.value);
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
-    this.checkIfHasReqFields(property, e.target.value);
     this.checkifHasDependedantMdmsField(property, e.target.value);
-    
 
     try {
       handleChange(e, property, isRequired, pattern, requiredErrMsg, patternErrMsg);
@@ -1976,13 +1882,18 @@ checkIfHasReqFields = (jsonPath, val) => {
                 if (_groupToBeInserted.fields[k].isRequired) {
                   reqFields.push(_groupToBeInserted.fields[k].jsonPath);
                 }
+                console.log(_groupToBeInserted)
+                // this.checkIfHasShowHideFields(_groupToBeInserted.jsonPath, _groupToBeInserted.fields.defaultValue, _groupToBeInserted.fields.index);
+
               }
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
+              // console.log(temp);
               setFormData(temp);
               break;
             }
