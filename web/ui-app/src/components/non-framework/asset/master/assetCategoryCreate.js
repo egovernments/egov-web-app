@@ -232,6 +232,7 @@ class assetCategoryCreate extends Component {
       if (specs[moduleName + '.' + actionName].groups[i].multiple) {
         if (_form.MasterMetaData.masterData[0].assetFieldsDefination != null) {
           var arr = _.get(_form, specs[moduleName + '.' + actionName].groups[i].jsonPath);
+          console.log(arr);
           ind = i;
           var _stringifiedGroup = JSON.stringify(specs[moduleName + '.' + actionName].groups[i]);
           var regex = new RegExp(
@@ -689,15 +690,11 @@ class assetCategoryCreate extends Component {
           translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'),
           true
         );
-        console.log(response);
-        console.log(self.props.actionName);
         setTimeout(function() {
           if (self.props.actionName == 'update') {
-            console.log('update');
-            var hash = '/non-framework/asset/master/assetCategoryView/' + response.ASSET.AssetCategory[0].id;
+            var hash = '/non-framework/asset/master/assetCategoryView/' + response.MdmsRes.ASSET.AssetCategory[0].id;
           }else {
-            console.log(formData);
-            var hash = '/non-framework/asset/master/assetCategoryView/' + response.ASSET.AssetCategory[0].id;
+            var hash = '/non-framework/asset/master/assetCategoryView/' + response.MdmsRes.ASSET.AssetCategory[0].id;
           }
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
             if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
@@ -705,15 +702,11 @@ class assetCategoryCreate extends Component {
                 self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl +
                 '/' +
                 encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
-              console.log('check');
             } else {
-              console.log('check1');
               if (self.props.actionName == 'update') {
-                console.log('update');
-                var hash = '/non-framework/asset/master/assetCategoryView/' + response.ASSET.AssetCategory[0].id;
+                var hash = '/non-framework/asset/master/assetCategoryView/' + response.MdmsRes.ASSET.AssetCategory[0].id;
               } else {
-                console.log(formData);
-                var hash = '/non-framework/asset/master/assetCategoryView/' + response.ASSET.AssetCategory[0].id;
+                var hash = '/non-framework/asset/master/assetCategoryView/' + response.MdmsRes.ASSET.AssetCategory[0].id;
               }
             }
 
@@ -818,8 +811,9 @@ class assetCategoryCreate extends Component {
     if (e) e.preventDefault();
     var formData = { ...this.props.formData };
     var flagIndicate = 0;
-    console.log(formData);
-
+    if(!formData.MasterMetaData.masterData[0].parent || formData.MasterMetaData.masterData[0].parent == ""){
+      formData.MasterMetaData.masterData[0].parent = null;
+    }
     if(formData.MasterMetaData.masterData[0].name){
       Api.commonApiPost('/egov-mdms-service/v1/_get', {
         moduleName: 'ASSET',
@@ -1926,11 +1920,11 @@ class assetCategoryCreate extends Component {
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              //console.log(mockData[moduleName + "." + actionName].groups);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              //console.log(temp);
+              // console.log(temp);
               setFormData(temp);
               break;
             }
