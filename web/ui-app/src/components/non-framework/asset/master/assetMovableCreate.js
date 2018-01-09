@@ -245,35 +245,42 @@ class assetMovableCreate extends Component {
 
   modifyData(urlId) {
     let self = this;
-    let assetCheck = {};
-    let specifications = require(`../../../framework/specs/asset/master/assetMovable`).default;
 
     Api.commonApiPost('asset-services-maha/assets/_search', { id: urlId }, {}, false, false, false, '', '', false).then(
       function(response) {
-        for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
-          assetCheck[response.Assets[0].assetAttributes[i].key] = {
-            [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
-          };
-        }
-        if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
-          response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
-        }
-        response.Assets[0].assetAttributesCheck = assetCheck;
-        self.props.setFormData({ Asset: response.Assets[0] });
-        self.setInitialUpdateData(
-          { Asset: response.Assets[0] },
-          JSON.parse(JSON.stringify(specifications)),
-          'asset',
-          'update',
-          specifications[`asset.update`].objectName
-        );
-        self.customFieldDataFun(self.state.customFieldsGen[response.Assets[0].assetCategory.id]);
-        self.warrantyFunction(response.Assets[0].warrantyAvailable);
+        self.searchMapUpdate(response);
       },
       function(err) {
         console.log(err);
       }
     );
+  }
+
+  searchMapUpdate = (response) =>{
+    let self = this;
+    let assetCheck = {};
+    let specifications = require(`../../../framework/specs/asset/master/assetMovable`).default;
+    if(response.Assets[0].assetAttributes){
+      for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
+        assetCheck[response.Assets[0].assetAttributes[i].key] = {
+          [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
+        };
+      }
+    }
+    if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
+      response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
+    }
+    response.Assets[0].assetAttributesCheck = assetCheck;
+    self.props.setFormData({ Asset: response.Assets[0] });
+    self.setInitialUpdateData(
+      { Asset: response.Assets[0] },
+      JSON.parse(JSON.stringify(specifications)),
+      'asset',
+      'update',
+      specifications[`asset.update`].objectName
+    );
+    self.customFieldDataFun(self.state.customFieldsGen[response.Assets[0].assetCategory.id]);
+    self.warrantyFunction(response.Assets[0].warrantyAvailable);
   }
 
   displayUI(results) {
@@ -567,7 +574,7 @@ class assetMovableCreate extends Component {
               //
               // }
               if (customTemp.type == 'singleValueList') {
-                if (response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values.length) {
+                if (response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values && response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values.length) {
                   var handleDropdown = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values;
                   var dropdownSplit = handleDropdown.split(',');
                   var valueHolder = [];
@@ -597,14 +604,17 @@ class assetMovableCreate extends Component {
               customFieldsGen: customSpecs,
               depericiationValue,
               cateoryObject,
-            },
-            () => {
-              if (self.props.match.params.id) {
-                self.modifyData(self.props.match.params.id);
-              }
             }
           );
         }
+        self.setState(
+
+          () => {
+            if (self.props.match.params.id) {
+              self.modifyData(self.props.match.params.id);
+            }
+          }
+        );
       },
       function(err) {
         console.log(err);

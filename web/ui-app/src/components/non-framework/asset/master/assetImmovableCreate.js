@@ -654,14 +654,17 @@ class assetImmovableCreate extends Component {
               customFieldsGen: customSpecs,
               depericiationValue,
               cateoryObject,
-            },
-            () => {
-              if (self.props.match.params.id) {
-                self.modifyData(self.props.match.params.id);
-              }
             }
           );
         }
+        self.setState(
+
+          () => {
+            if (self.props.match.params.id) {
+              self.modifyData(self.props.match.params.id);
+            }
+          }
+        );
       },
       function(err) {
         console.log(err);
