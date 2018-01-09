@@ -159,7 +159,7 @@ var dat = {
               {
                 jsonPath: 'cases[0].departmentPerson',
                 type: 'dropDown',
-                pattern: '/hr-employee/employees/_search?tenantId=default&departmentId={cases[0].summon.departmentName.id}|$..name|$..name',
+                pattern: '/hr-employee/employees/_search?tenantId=default&departmentCode={cases[0].summon.departmentName.code}|$..name|$..name',
               },
             ],
           },
