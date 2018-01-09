@@ -109,9 +109,9 @@ class Report extends Component {
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
           //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
-          _.set(dat, groups[i].fields[j].jsonPath,self.getVal(groups[i].fields[j].jsonPath) || groups[i].fields[j].defaultValue);
+          _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
+          //,self.getVal(groups[i].fields[j].jsonPath)
         }
-
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
           for (var k = 0; k < groups[i].fields[j].children.length; k++) {
             this.setDefaultValues(groups[i].fields[j].children[k].groups);
