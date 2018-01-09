@@ -3155,6 +3155,18 @@ var localization_EN_Data = {
   'inventory.usedQuantity': 'Used Quantity',
   'inventory.orderqty': 'Order Quantity',
   'inventory.totalindent.quantity': 'total indent quantity',
+
+  'inventory.materialType.title':'Material Type Master',
+  'inventory.create.group.title.addmaterialType':'Add Material Type',
+  'inventory.materialType.code':'Material Type code',
+  'inventory.materialType.description': 'Material Type Description',
+  'inventory.materialType.name': 'Material Type Name',
+   'inventory.materialType.parentName' :'Parent Material Type Name',
+  'inventory.materialType.parentType': 'Parent Type',
+  'inventory.materialType.isActive': 'Active',
+  'inventory.create.group.title.viewmaterialType':'View Material Type',
+  'inventory.create.group.title.updatematerialType': 'Update Material Type',
+
   'legal.vakalatnama.create.primaryAdvocate': 'Primary Advocate',
   'legal.advocates.create.additionalOwnerWindow': 'Additional Owner',
   'legal.create.additionalAdvocateName': 'Added Advocate Name',

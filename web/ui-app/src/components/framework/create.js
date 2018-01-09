@@ -416,6 +416,7 @@ class Report extends Component {
               moduleName = Object.keys(res.MdmsRes)[0];
               masterName = Object.keys(res.MdmsRes[Object.keys(res.MdmsRes)[0]])[0]
             }
+          
             let mdmsReq = {};
             mdmsReq.MasterMetaData = {};
             mdmsReq.MasterMetaData.masterData = [];
@@ -829,10 +830,11 @@ class Report extends Component {
             true
           );
         }
-
+  
         setTimeout(function() {
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
             if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
+          
               var hash =
                 self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl +
                 '/' +

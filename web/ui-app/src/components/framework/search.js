@@ -194,12 +194,13 @@ class Search extends Component {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
+    
     if (hasDefaultSearch) {
       formData = window.localStorage.getItem('formData') && JSON.parse(window.localStorage.getItem('formData')) || {};
       this.props.setFormData(formData);
     }
     for (var key in formData) {
-      if (formData[key] == '' || typeof formData[key] == 'undefined') delete formData[key];
+      if (formData[key] === '' || typeof formData[key] == 'undefined') delete formData[key];
     }
 
     var specifications = JSON.parse(window.localStorage.getItem('specifications'));
@@ -233,7 +234,13 @@ class Search extends Component {
             }
           }
           else{
+            if (typeof (Object.values(formData)[i]) == 'boolean') {
+              str.push(`@.${Object.keys(formData)[i]}==${Object.values(formData)[i]}`);
+            }
+            else
+            {
             str.push(`@.${Object.keys(formData)[i]}=='${Object.values(formData)[i]}'`);
+                }
           }
         }
         str = str.join('&&');

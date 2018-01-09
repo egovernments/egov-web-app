@@ -386,9 +386,11 @@ const menuConvention = {
   'Inventory.Inventory Masters.Supplier Master.Supplier Update': '/search/inventory/supplier/update',
 
   'Inventory.Inventory Masters.Material Master.Material Create': '/create/inventory/material',
-  // "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
-  'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
-  'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
+
+  'Inventory.Inventory Masters.MaterialType Master.MaterialType.MaterialType': '/search/inventory/materialtype/view',
+   "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
+ // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
+ // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
 
   'Inventory.Inventory Masters.Store Master.Store Create': '/create/inventory/stores',
   // "Inventory.Inventory Masters.Store Master.Store Create":"/search/inventory/stores/view",
