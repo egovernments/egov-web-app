@@ -34,51 +34,50 @@ class Report extends Component {
 
   //TODO generate Specific FormData
   generateSpecificForm = (formData, omitPropertiesJPath) => {
-    omitPropertiesJPath.forEach(function(item, index){
-        eval(item);
+    omitPropertiesJPath.forEach(function (item, index) {
+      eval(item);
     });
     return formData;
   }
 
-  showObjectInTable = (field, inArrayFormat=false, property="name") => {
+  showObjectInTable = (field, inArrayFormat = false, property = "name") => {
     var str;
-    if(inArrayFormat){
+    if (inArrayFormat) {
       str = [];
     }
-    else{
+    else {
       str = "";
     }
 
-    console.log(field);
+    // console.log(field);
 
-    if(Array.isArray(field)){
-      field.forEach(function(item, index){
-        if(typeof(item) == "object"){
-          console.log(item);
-          if(inArrayFormat){
-            str[index] = item[property]?item[property]:item["code"];
+    if (Array.isArray(field)) {
+      field.forEach(function (item, index) {
+        if (typeof (item) == "object") {
+          if (inArrayFormat) {
+            str[index] = item[property] ? item[property] : item["code"];
           }
-          else{
-            str += ((item[property]?item[property]:item["code"]) + ",");
+          else {
+            str += ((item[property] ? item[property] : item["code"]) + ",");
           }
 
         }
-        else{
+        else {
           str += (item + ",");
         }
       })
-      if(inArrayFormat){
+      if (inArrayFormat) {
         return str;
       }
-      else{
-        return str.slice(0,-1);
+      else {
+        return str.slice(0, -1);
       }
 
     }
-    else{
+    else {
       return field;
     }
-}
+  }
 
   setLabelAndReturnRequired(configObject) {
     if (configObject && configObject.groups) {
@@ -162,14 +161,14 @@ class Report extends Component {
               for (let m = 0; m < queryStringObject.length; m++) {
                 if (m) {
                   if (queryStringObject[m].split('=')[1].search('{') > -1) {
-                   let value = self.getVal(
+                    let value = self.getVal(
                       queryStringObject[m]
                         .split('=')[1]
                         .split('{')[1]
                         .split('}')[0]
                     );
-                    id[queryStringObject[m].split('=')[0]]=queryStringObject[m]
-                        .split('=')[1].split('{')[0]+value+queryStringObject[m]
+                    id[queryStringObject[m].split('=')[0]] = queryStringObject[m]
+                      .split('=')[1].split('{')[0] + value + queryStringObject[m]
                         .split('=')[1].split('{')[1].split('}')[1];
                   } else {
                     id[queryStringObject[m].split('=')[0]] = queryStringObject[m].split('=')[1];
@@ -185,7 +184,7 @@ class Report extends Component {
               //   return false;
               // }
               Api.commonApiPost(context, id).then(
-                function(response) {
+                function (response) {
                   if (response) {
                     let queries = splitArray[1].split('|');
                     let keys = jp.query(response, queries[1]);
@@ -214,7 +213,7 @@ class Report extends Component {
 
                       dropDownData.push(obj);
                     }
-                    dropDownData.sort(function(s1, s2) {
+                    dropDownData.sort(function (s1, s2) {
                       return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
                     });
                     dropDownData.unshift({
@@ -225,7 +224,7 @@ class Report extends Component {
                     self.props.setDropDownOriginalData(response, dropDownData);
                   }
                 },
-                function(err) {
+                function (err) {
                   console.log(err);
                 }
               );
@@ -234,7 +233,7 @@ class Report extends Component {
           }
         }
 
-        self.checkifHasDependedantMdmsField(groups[i].fields[j].jsonPath,self.getVal(groups[i].fields[j].jsonPath));
+        self.checkifHasDependedantMdmsField(groups[i].fields[j].jsonPath, self.getVal(groups[i].fields[j].jsonPath));
 
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
           for (var k = 0; k < groups[i].fields[j].children.length; k++) {
@@ -382,14 +381,14 @@ class Report extends Component {
 
       self.props.setLoadingStatus('loading');
       var _body = {};
-      if(url.includes("/egov-mdms-service/v1/_search")) {
+      if (url.includes("/egov-mdms-service/v1/_search")) {
         var moduleDetails = [];
         var masterDetails = [];
         let data = { moduleName: '', masterDetails: [] };
         let k = 0;
         var masterDetail = {};
         data.moduleName = hashLocation.split('/')[2];
-        var filterData = `[?(@.${specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].searchUrl.split('?')[1].split('={')[0]}=='${hashLocation.split('/')[hashLocation.split('/').length-1]}')]`;
+        var filterData = `[?(@.${specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].searchUrl.split('?')[1].split('={')[0]}=='${hashLocation.split('/')[hashLocation.split('/').length - 1]}')]`;
         masterDetail.filter = filterData;
         masterDetail.name = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName;
         data.masterDetails[0] = _.cloneDeep(masterDetail);
@@ -406,13 +405,12 @@ class Report extends Component {
       }
 
       Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
-        function(res) {
+        function (res) {
 
-          if(specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isMDMSScreen){
+          if (specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isMDMSScreen) {
             var masterName = "";
             var moduleName = "";
-            console.log(res);
-            if(Object.keys(res.MdmsRes).length === 1){
+            if (Object.keys(res.MdmsRes).length === 1) {
               moduleName = Object.keys(res.MdmsRes)[0];
               masterName = Object.keys(res.MdmsRes[Object.keys(res.MdmsRes)[0]])[0]
             }
@@ -424,7 +422,6 @@ class Report extends Component {
             mdmsReq.MasterMetaData.masterName = masterName
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem('tenantId');
             mdmsReq.MasterMetaData.masterData[0] = res.MdmsRes[moduleName][masterName][0];
-            console.log(mdmsReq);
             res = mdmsReq;
           }
           //
@@ -451,20 +448,17 @@ class Report extends Component {
             // var hashLocation = window.location.hash;
             let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
             let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
-            console.log(fields);
             for (var i = 0; i < fields.length; i++) {
-              let values=_.get(res, fields[i].jsonPath);
-              console.log(values);
-              res=_.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
+              let values = _.get(res, fields[i].jsonPath);
+              res = _.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
             }
 
-            console.log(res);
             self.props.setFormData(res);
           }
           let obj1 = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
           self.depedantValue(obj1.groups);
         },
-        function(err) {
+        function (err) {
           self.props.setLoadingStatus('hide');
         }
       );
@@ -485,7 +479,7 @@ class Report extends Component {
             _.set(requestBody, key, params[key]);
           });
           Api.commonApiPost(mockObj.onloadFetchUrl, {}, requestBody, false, mockObj.useTimestamp).then(
-            function(res) {
+            function (res) {
 
               self.props.setLoadingStatus('hide');
               if (specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isResponseArray) {
@@ -513,7 +507,7 @@ class Report extends Component {
 
               self.depedantValue(obj1.groups);
             },
-            function(err) {
+            function (err) {
               self.props.setLoadingStatus('hide');
             }
           );
@@ -531,7 +525,7 @@ class Report extends Component {
 
     let self = this;
     let moduleDetails = [];
-    let { setDropDownData,setDropDownOriginalData } = this.props;
+    let { setDropDownData, setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
     let name, filter;
@@ -558,54 +552,54 @@ class Report extends Component {
       },
     };
 
-    if(jp.query(obj, `$.groups..fields..mdms`) != '') {
+    if (jp.query(obj, `$.groups..fields..mdms`) != '') {
       Api.commonApiPost('/egov-mdms-service/v1/_search', '', _body, {}, true, true)
-      .then(res => {
-        this.setState({
-          mdmsData: res.MdmsRes,
-        });
+        .then(res => {
+          this.setState({
+            mdmsData: res.MdmsRes,
+          });
 
-        //set dropdowndata
-        for (let i = 0; i < obj.groups.length; i++) {
-          for (let j = 0; j < obj.groups[i].fields.length; j++) {
-            if (obj.groups[i].fields[j].mdms) {
-              let dropDownData = [];
-              if (Object.keys(res.MdmsRes).includes(obj.groups[i].fields[j].mdms.moduleName)) {
-                for (var prop in res.MdmsRes) {
-                  if (obj.groups[i].fields[j].mdms.dependant) continue;
-                  if (res.MdmsRes.hasOwnProperty(prop)) {
-                    if (prop == obj.groups[i].fields[j].mdms.moduleName)
-                      for (var master in res.MdmsRes[prop]) {
-                        if (res.MdmsRes[prop].hasOwnProperty(master)) {
-                          var moduleObj = res.MdmsRes[prop];
-                          if (master == obj.groups[i].fields[j].mdms.masterName) {
-                            moduleObj[master].forEach(function(item) {
-                              let key = [];
-                              let value = [];
-                              key = jp.query(item, obj.groups[i].fields[j].mdms.key);
-                              value = jp.query(item, obj.groups[i].fields[j].mdms.value);
-                              for (let r = 0; r < key.length; r++) {
-                                let masterObj = {};
-                                masterObj.key = key[r];
-                                masterObj.value = value[r];
-                                dropDownData.push(masterObj);
-                              }
-                            });
+          //set dropdowndata
+          for (let i = 0; i < obj.groups.length; i++) {
+            for (let j = 0; j < obj.groups[i].fields.length; j++) {
+              if (obj.groups[i].fields[j].mdms) {
+                let dropDownData = [];
+                if (Object.keys(res.MdmsRes).includes(obj.groups[i].fields[j].mdms.moduleName)) {
+                  for (var prop in res.MdmsRes) {
+                    if (obj.groups[i].fields[j].mdms.dependant) continue;
+                    if (res.MdmsRes.hasOwnProperty(prop)) {
+                      if (prop == obj.groups[i].fields[j].mdms.moduleName)
+                        for (var master in res.MdmsRes[prop]) {
+                          if (res.MdmsRes[prop].hasOwnProperty(master)) {
+                            var moduleObj = res.MdmsRes[prop];
+                            if (master == obj.groups[i].fields[j].mdms.masterName) {
+                              moduleObj[master].forEach(function (item) {
+                                let key = [];
+                                let value = [];
+                                key = jp.query(item, obj.groups[i].fields[j].mdms.key);
+                                value = jp.query(item, obj.groups[i].fields[j].mdms.value);
+                                for (let r = 0; r < key.length; r++) {
+                                  let masterObj = {};
+                                  masterObj.key = key[r];
+                                  masterObj.value = value[r];
+                                  dropDownData.push(masterObj);
+                                }
+                              });
+                            }
                           }
                         }
-                      }
+                    }
                   }
                 }
+                setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
+                // setDropDownOriginalData(response, dropDownData);
               }
-              setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
-              // setDropDownOriginalData(response, dropDownData);
             }
           }
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
 
   }
@@ -613,7 +607,7 @@ class Report extends Component {
   checkifHasDependedantMdmsField(path, value) {
     let obj = { ..._mockData };
     let _mockData = { ...this.props.mockData };
-    let { moduleName, actionName, setMockData, setDropDownData ,setDropDownOriginalData} = this.props;
+    let { moduleName, actionName, setMockData, setDropDownData, setDropDownOriginalData } = this.props;
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
       for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
         if (_mockData[moduleName + '.' + actionName].groups[i].fields[j].mdms) {
@@ -625,7 +619,7 @@ class Report extends Component {
               exp = exp.replace(path, value);
               var dropdownValues = jp.query(this.state.mdmsData, exp);
               let dropdowndata = [];
-              dropdownValues.forEach(function(item) {
+              dropdownValues.forEach(function (item) {
                 let key = [];
                 let value = [];
                 key = jp.query(item, _mockData[moduleName + '.' + actionName].groups[i].fields[j].mdms.key);
@@ -778,28 +772,23 @@ class Report extends Component {
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
     let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
     for (var i = 0; i < fields.length; i++) {
-      let values=_.get(formData, fields[i].jsonPath);
-      if (values && values.length>0) {
-        formData=_.set(formData, fields[i]["aATransformInfo"].to,values.map(item=>{return {[fields[i]["aATransformInfo"].key]:item}}));
+      let values = _.get(formData, fields[i].jsonPath);
+      if (values && values.length > 0) {
+        formData = _.set(formData, fields[i]["aATransformInfo"].to, values.map(item => { return { [fields[i]["aATransformInfo"].key]: item } }));
       }
     }
     // console.log(formData);
     delete formData.ResponseInfo;
     //return console.log(formData);
-    console.log(obj);
-    if(obj.hasOwnProperty('omittableFields')){
+    if (obj.hasOwnProperty('omittableFields')) {
       this.generateSpecificForm(formData, obj['omittableFields']);
     }
-    console.log(formData);
-
 
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
-      function(response) {
+      function (response) {
 
         self.props.setLoadingStatus('hide');
         self.initData();
-        console.log('Back response');
-        console.log(response);
 
         if (response.summons) {
           if (response.summons.length > 0) {
@@ -821,7 +810,7 @@ class Report extends Component {
           }
         } else {
           let hashLocation = window.location.hash;
-          if(hashLocation == "#/create/lcms/advocatepayment"){
+          if (hashLocation == "#/create/lcms/advocatepayment") {
             $('input[type=file]').val('');
           }
           self.props.toggleSnackbarAndSetText(
@@ -830,8 +819,8 @@ class Report extends Component {
             true
           );
         }
-  
-        setTimeout(function() {
+
+        setTimeout(function () {
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
             if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
           
@@ -866,7 +855,7 @@ class Report extends Component {
           }
         }, 1500);
       },
-      function(err) {
+      function (err) {
         self.props.setLoadingStatus('hide');
         self.props.toggleSnackbarAndSetText(true, err.message);
       }
@@ -881,7 +870,7 @@ class Report extends Component {
       self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].customFields.initiatorPosition
     ) {
       var jPath = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].customFields.initiatorPosition;
-      getInitiatorPosition(function(err, pos) {
+      getInitiatorPosition(function (err, pos) {
         if (err) {
           self.toggleSnackbarAndSetText(true, err.message);
         } else {
@@ -936,7 +925,7 @@ class Report extends Component {
     } else {
       let breakOut = 0;
       for (let key in fileList) {
-        fileUpload(fileList[key], moduleName, function(err, res) {
+        fileUpload(fileList[key], moduleName, function (err, res) {
           if (breakOut == 1) return;
           if (err) {
             breakOut = 1;
@@ -1018,7 +1007,7 @@ class Report extends Component {
       let counter = documents.length,
         breakOut = 0;
       for (let i = 0; i < documents.length; i++) {
-        fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
+        fileUpload(documents[i].fileStoreId, self.props.moduleName, function (err, res) {
           if (breakOut == 1) return;
           if (err) {
             breakOut = 1;
@@ -1033,7 +1022,7 @@ class Report extends Component {
             });
             counter--;
             if (counter == 0 && breakOut == 0) {
-              let sortedDocs = _.sortBy(_docs, 'index', function(n) {
+              let sortedDocs = _.sortBy(_docs, 'index', function (n) {
                 return Math.sin(n);
               });
               sortedDocs = sortedDocs.map(({ index, ...sortedDocs }) => sortedDocs);
@@ -1071,16 +1060,22 @@ class Report extends Component {
     return typeof _val != 'undefined' ? _val : '';
   };
 
-  hideField = (_mockData, hideObject, reset, val) => {
+  hideField = (_mockData, hideObject, jsonPath, reset, val) => {
     let { moduleName, actionName, setFormData, delRequiredFields, removeFieldErrors, addRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
+    if(jsonPath !=null) {
+      var pathArr = jsonPath.split('.');
+      pathArr.pop();
+      pathArr.push(hideObject.name);
+      jsonPath = pathArr.join('.');
+    }
     if (hideObject.isField) {
       for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
         for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-          if (hideObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+          if (hideObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name && jsonPath == _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath) {
             reset = this.resetCheck(_mockData, hideObject.name, val);
             _mockData[moduleName + '.' + actionName].groups[i].fields[j].hide = reset ? false : true;
-            if (!reset) {
+            if (!reset || !_.isUndefined(reset)) {
               _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
               setFormData(_formData);
               //Check if required is true, if yes remove from required fields
@@ -1198,15 +1193,21 @@ class Report extends Component {
     }
   };
 
-  showField = (_mockData, showObject, reset) => {
+  showField = (_mockData, showObject, jsonPath,  reset) => {
+    if(jsonPath != null) {
+      var pathArr = jsonPath.split('.');
+      pathArr.pop();
+      pathArr.push(showObject.name);
+      jsonPath = pathArr.join('.');
+    }
     let { moduleName, actionName, setFormData, delRequiredFields, removeFieldErrors, addRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
     if (showObject.isField) {
       for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
         for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-          if (showObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+          if (showObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name && jsonPath == _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath) {
             _mockData[moduleName + '.' + actionName].groups[i].fields[j].hide = reset ? true : false;
-            if (!reset) {
+            if (!reset || !_.isUndefined(reset)) {
               _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
               setFormData(_formData);
               if (_mockData[moduleName + '.' + actionName].groups[i].fields[j].isRequired) {
@@ -1373,33 +1374,35 @@ class Report extends Component {
           _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields.length
         ) {
           for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields.length; k++) {
-            if (val == _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].ifValue) {
-              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
-                _mockData = this.hideField(
-                  _mockData,
-                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
-                  false,
-                  val
-                );
+              if (val == _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].ifValue) {
+                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
+                  _mockData = this.hideField(
+                    _mockData,
+                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
+                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
+                    false,
+                    val
+                  );
+                }
+  
+                for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
+                  _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath);
+                }
+              } else {
+                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
+                  _mockData = this.hideField(
+                    _mockData,
+                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
+                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
+                    true,
+                    val
+                  );
+                }
+  
+                for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
+                  _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
+                }
               }
-
-              for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
-                _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z]);
-              }
-            } else {
-              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
-                _mockData = this.hideField(
-                  _mockData,
-                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
-                  true,
-                  val
-                );
-              }
-
-              for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
-                _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], true);
-              }
-            }
           }
         }
       }
@@ -1501,16 +1504,16 @@ checkIfHasReqFields = (jsonPath, val) => {
 
     for (let i = 0; i < params.length; i++) urlResults[0] = urlResults[0].replace(params[i], this.getVal(params[i].replace(/(\}?)(\{?)/, '')));
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       Api.commonApiPost(urlResults[0], {}, {}, false, false, false, '', '', isStateLevel).then(
-        function(response) {
+        function (response) {
           if (response) {
             resolve(jp.query(response, urlResults[1]));
           } else {
             reject('Error');
           }
         },
-        function(error) {
+        function (error) {
           reject('Error');
         }
       );
@@ -1599,7 +1602,7 @@ checkIfHasReqFields = (jsonPath, val) => {
       }
     }
 
-    _.forEach(depedants, function(value, key) {
+    _.forEach(depedants, function (value, key) {
       //console.log(value.type);
       if (value.type == 'dropDown') {
         let splitArray = value.pattern.split('?');
@@ -1640,7 +1643,7 @@ checkIfHasReqFields = (jsonPath, val) => {
         }
 
         Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
-          function(response) {
+          function (response) {
             if (response) {
               let keys = jp.query(response, splitArray[1].split('|')[1]);
               let values = jp.query(response, splitArray[1].split('|')[2]);
@@ -1652,7 +1655,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                 dropDownData.push(obj);
               }
 
-              dropDownData.sort(function(s1, s2) {
+              dropDownData.sort(function (s1, s2) {
                 return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
               });
               dropDownData.unshift({ key: null, value: '-- Please Select --' });
@@ -1660,7 +1663,7 @@ checkIfHasReqFields = (jsonPath, val) => {
               setDropDownOriginalData(value.jsonPath, response);
             }
           },
-          function(err) {
+          function (err) {
             console.log(err);
           }
         );
@@ -1731,7 +1734,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                   replaceLastIdxOnJsonPath(queryStringObject[1]
                     .split('=')[1]
                     .split('{')[1]
-                    .split('}')[0],dependantIdx)
+                    .split('}')[0], dependantIdx)
                 );
               }
             } else {
@@ -1741,7 +1744,7 @@ checkIfHasReqFields = (jsonPath, val) => {
         }
 
         Api.commonApiPost(context, id).then(
-          function(response) {
+          function (response) {
             if (response) {
               for (var key in value.autoFillFields) {
                 var keyField = key.substr(0, key.lastIndexOf('['));
@@ -1762,7 +1765,7 @@ checkIfHasReqFields = (jsonPath, val) => {
               }
             }
           },
-          function(err) {
+          function (err) {
             console.log(err);
           }
         );
@@ -1847,7 +1850,7 @@ checkIfHasReqFields = (jsonPath, val) => {
 
   handleChange = (e, property, isRequired, pattern, requiredErrMsg = 'Required', patternErrMsg = 'Pattern Missmatch', expression, expErr, isDate) => {
     let { getVal } = this.props;
-    let { handleChange, mockData, setDropDownData, formData, changeFormStatus} = this.props;
+    let { handleChange, mockData, setDropDownData, formData, changeFormStatus } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
 
@@ -1887,6 +1890,7 @@ checkIfHasReqFields = (jsonPath, val) => {
         }
       }
     }
+    // console.log(property, e.target.value)
     this.checkifHasValueBasedOn(property, e.target.value);
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
@@ -1901,7 +1905,7 @@ checkIfHasReqFields = (jsonPath, val) => {
       console.log(e);
     }
     this.affectDependants(obj, e, property);
-    if((property == "agencies[0].status" || property == "agencies[0].advocates[0].status") && e.target.value == 'active' ){
+    if ((property == "agencies[0].status" || property == "agencies[0].advocates[0].status") && e.target.value == 'active') {
       changeFormStatus(true);
     }
 
@@ -1926,7 +1930,7 @@ checkIfHasReqFields = (jsonPath, val) => {
 
   getPath = value => {
     let { mockData, moduleName, actionName } = this.props;
-    const getFromGroup = function(groups) {
+    const getFromGroup = function (groups) {
       for (var i = 0; i < groups.length; i++) {
         if (groups[i].children) {
           for (var j = 0; j < groups[i].children.length; i++) {
@@ -1976,11 +1980,9 @@ checkIfHasReqFields = (jsonPath, val) => {
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              // console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              // console.log(temp);
               setFormData(temp);
               break;
             }
@@ -2084,23 +2086,23 @@ checkIfHasReqFields = (jsonPath, val) => {
       !_.isEmpty(mockData[`${moduleName}.${actionName}`]) && mockData[`${moduleName}.${actionName}`].hasOwnProperty('customActionsAndUrl')
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
         : '';
-         let customBtnLabel = 'Update';
-        if(!_.isEmpty(mockData[`${moduleName}.${actionName}`]) && (mockData[`${moduleName}.${actionName}`].customDoc === "parawisecomments" || mockData[`${moduleName}.${actionName}`].customDoc === "hearingdetails")){
-          customBtnLabel = 'Create';
-        }
+    let customBtnLabel = 'Update';
+    if (!_.isEmpty(mockData[`${moduleName}.${actionName}`]) && (mockData[`${moduleName}.${actionName}`].customDoc === "parawisecomments" || mockData[`${moduleName}.${actionName}`].customDoc === "hearingdetails")) {
+      customBtnLabel = 'Create';
+    }
 
     //let isUpdateDataFetched = actionName==='update'? !_.isEmpty(formData) : true;
-     console.log({...this.props.formData})
+    console.log({ ...this.props.formData })
     return (
       <div className="Report">
         <Row>
           <Col xs={6} md={6}>
             <h3 style={{ paddingLeft: 15, marginBottom: '0' }}>
               {!_.isEmpty(mockData) &&
-              moduleName &&
-              actionName &&
-              mockData[`${moduleName}.${actionName}`] &&
-              mockData[`${moduleName}.${actionName}`].title
+                moduleName &&
+                actionName &&
+                mockData[`${moduleName}.${actionName}`] &&
+                mockData[`${moduleName}.${actionName}`].title
                 ? translate(mockData[`${moduleName}.${actionName}`].title)
                 : ''}
             </h3>
@@ -2208,7 +2210,7 @@ checkIfHasReqFields = (jsonPath, val) => {
               paddingTop: '8px',
             }}
           >
-            <i>( * ) {translate('framework.required.note')}</i><br/><br/>
+            <i>( * ) {translate('framework.required.note')}</i><br /><br />
             {/*<UiLogo src={require("../../images/logo.png")} alt="logo"/>*/}
           </div>
         </form>

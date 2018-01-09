@@ -139,21 +139,25 @@ class UiBoundary extends Component {
   }
 
   fetchLabels = (cityBdry) => {
-    var depth = this.getDepth(cityBdry);
+    var depth ;
     var labelArr = [];  
     var str = '';
+    var bdryArr = [];
 
-    var bdryArr = jp.query(cityBdry, `$.children..label`);
-    for(var i=0; i<bdryArr.length-1; i++) {
-      if(bdryArr[i] !== "") {
-        labelArr.push(bdryArr[i]);
+    if(cityBdry != null) { 
+      depth = this.getDepth(cityBdry);
+      bdryArr = jp.query(cityBdry, `$.children..label`);
+      for(var i=0; i<bdryArr.length-1; i++) {
+        if(bdryArr[i] !== "") {
+          labelArr.push(bdryArr[i]);
+        }
       }
+      function onlyUnique(value, index, self) { 
+        return self.indexOf(value) === index;
+      }
+      
+      labelArr = labelArr.filter( onlyUnique );
     }
-    function onlyUnique(value, index, self) { 
-      return self.indexOf(value) === index;
-    }
-    
-    labelArr = labelArr.filter( onlyUnique );
     return labelArr;
   }
 
