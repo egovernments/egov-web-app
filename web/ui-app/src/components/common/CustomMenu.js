@@ -325,6 +325,7 @@ const menuConvention = {
   'Solid Waste Management.SWM Masters.Toilet.Toilet': '/mdms/swm/Toilet',
   'Solid Waste Management.SWM Masters.Shift.Shift': '/search/swm/shiftmasters/view',
   'Solid Waste Management.SWM Masters.Dumping Ground.Dumping Ground': '/search/swm/dumpingground/view',
+  'Solid Waste Management.SWM Masters.Processing Site.Processing Site': '/search/swm/processingsite/view',
 
   //legal case
   'Legal Case Management.Legal Case Transactions.Case.Legacy Case Create': '/create/lcms/legacycase',
