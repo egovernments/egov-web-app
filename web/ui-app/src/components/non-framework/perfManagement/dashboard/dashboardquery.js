@@ -11,7 +11,7 @@ import {
   fetchFinancialYearsAPI,
   fetchCompareSearchAPI,
   parseULBResponse,
-  parseFinancialYearResponse,
+  parseFinancialYearCurrentPlusNextResponse,
   parseDepartmentKPIsAsPerKPIType,
 } from '../apis/apis';
 import LoadingIndicator from '../../../common/LoadingIndicator';
@@ -179,7 +179,7 @@ export default class KPIDashboardQuery extends Component {
   }
 
   processViewReport = (isConsolidated) => {
-    let finYears = this.state.fyIndices.map((item, index) => parseFinancialYearResponse(this.fyRes)[item]['finYearRange']).join(',');
+    let finYears = this.state.fyIndices.map((item, index) => parseFinancialYearCurrentPlusNextResponse(this.fyRes)[item]['finYearRange']).join(',');
     let ulbs = this.state.ulbIndices.map((item, index) => jp.query(this.ulbRes, `$.MdmsRes.tenant.tenants[${item}].code`)).join(',');
     let kpis = parseDepartmentKPIsAsPerKPIType(this.kpiRes, kpiTypes[this.state.kpiTypeIndex].name)[this.state.kpiIndices]['code'];
 
@@ -312,7 +312,7 @@ export default class KPIDashboardQuery extends Component {
                   disabled={false}
                   displayKey={'name'}
                   value={this.state.fyIndices}
-                  items={parseFinancialYearResponse(this.fyRes)}
+                  items={parseFinancialYearCurrentPlusNextResponse(this.fyRes)}
                   onItemsSelected={this.processSelectOnKPISelectField}
                 />
               </Col>

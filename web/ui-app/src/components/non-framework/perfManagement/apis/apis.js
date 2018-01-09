@@ -119,13 +119,33 @@ export const parseULBResponse = res => {
   });
 };
 
+export const parseFinancialYearCurrentPlusNextResponse = res => {
+  var d       = new Date();
+  var year    = d.getFullYear();
+  var month   = d.getMonth();
+  var day     = d.getDate();
+  var c       = new Date(year + 1, month, day);
+
+  console.log(c)
+  return jp
+    .query(res, '$.MdmsRes["egf-master"].FinancialYear[*]')
+    .filter(el => {
+      if (new Date(el.startingDate) <= c) {
+        return el;
+      }
+    })
+    .map((item, index) => {
+      return {
+        id: item.id,
+        startingDate: item.startingDate,
+        endingDate: item.endingDate,
+        finYearRange: item.finYearRange,
+        name: item.finYearRange,
+      };
+    });
+};
+
 export const parseFinancialYearResponse = res => {
-  // return jp.query(res, '$.financialYears[*]').map((finYear, index) => {
-  //     return {
-  //         code: finYear.finYearRange,
-  //         name: finYear.finYearRange
-  //     }
-  // });
   return jp
     .query(res, '$.MdmsRes["egf-master"].FinancialYear[*]')
     .filter(el => {
