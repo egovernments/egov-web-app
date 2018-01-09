@@ -664,7 +664,7 @@ class assetImmovableCreate extends Component {
               self.modifyData(self.props.match.params.id);
             }
           }
-        );
+        ); 
       },
       function(err) {
         console.log(err);
