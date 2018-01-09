@@ -109,7 +109,7 @@ class Report extends Component {
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
           //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
-          _.set(dat, groups[i].fields[j].jsonPath, self.getVal(groups[i].fields[j].jsonPath) || groups[i].fields[j].defaultValue);
+          _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
         }
 
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
