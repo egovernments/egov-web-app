@@ -385,7 +385,7 @@ const menuConvention = {
   'Inventory.Inventory Masters.Supplier Master.Supplier Search': '/search/inventory/supplier/view',
   'Inventory.Inventory Masters.Supplier Master.Supplier Update': '/search/inventory/supplier/update',
 
-  'Inventory.Inventory Masters.Material Master.Material Create': '/create/inventory/material',
+  'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
 
   'Inventory.Inventory Masters.MaterialType Master.MaterialType.MaterialType': '/search/inventory/materialtype/view',
    "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
