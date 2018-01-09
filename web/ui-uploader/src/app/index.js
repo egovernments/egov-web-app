@@ -20,8 +20,6 @@ class AppContainer extends Component {
     if (process.env.NODE_ENV === "development") {
       const username = process.env.REACT_APP_USERNAME;
       const password = process.env.REACT_APP_PASSWORD;
-      console.log(username);
-      console.log(password);
       this.props.loginUser(username, password);
     }
   }
