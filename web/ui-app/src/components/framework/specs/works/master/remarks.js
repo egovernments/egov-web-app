@@ -156,7 +156,7 @@ var dat = {
                         type: 'checkbox',
                         jsonPath: 'remarks[0].remarksDetails[0].editable',
                         displayJsonPath: 'remarks[0].remarksDetails[0].editable',
-                        isRequired: true,
+                        isRequired: false,
                         isDisabled: false,
                     },
                   ],
