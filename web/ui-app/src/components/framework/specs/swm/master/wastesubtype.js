@@ -177,7 +177,7 @@ var dat = {
             {
               name: 'wasteType',
               label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
-              jsonPath: 'MdmsRes.swm.WasteSubType[0].wasteType.name',
+              jsonPath: 'MdmsRes.swm.WasteSubType[0].wasteType.code',
               type: 'text',
               pattern: '^null|$',
               isRequired: true,
