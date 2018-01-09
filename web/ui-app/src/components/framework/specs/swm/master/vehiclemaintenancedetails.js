@@ -200,7 +200,7 @@ var dat = {
             jsonPath: 'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate',
             label: 'swm.create.vehicleScheduledMaintenanceDate',
             pattern: '',
-            type: 'datePicker',
+            type: 'date',
             isDate: true,
             isRequired: false,
             isDisabled: true,

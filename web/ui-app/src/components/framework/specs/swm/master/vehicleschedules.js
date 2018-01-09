@@ -145,7 +145,6 @@ var dat = {
                   "type": "autoCompelete",
                   "isRequired": true,
                   "isDisabled": false,
-                  "defaultValue": "",
                   "maxLength": 12,
                   "minLength": 6,
                   "patternErrorMsg": '',

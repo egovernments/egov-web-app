@@ -20,8 +20,8 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
-            },
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
+            }
           ]
         },
       ],
@@ -35,9 +35,11 @@ var dat = {
           },
           {
             label: 'swm.Shift.create.shiftStartTime',
+            isTime:true
           },
           {
             label: 'swm.Shift.create.shiftEndTime',
+            isTime:true
           },
         ],
         values: [

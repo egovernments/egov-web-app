@@ -252,6 +252,17 @@ class UiTable extends Component {
     });
   }
 
+  formatAMPM = date => {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  };
+
   render() {
     let {
       resultList,
@@ -320,6 +331,8 @@ class UiTable extends Component {
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isDate) {
         var _date = new Date(Number(item2));
         return ('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear();
+      }else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isTime) {
+        return  self.formatAMPM(new Date(parseInt(item2)));
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isComma) {
         let _commaVal = item2.toString();
         var y = _commaVal.split('.')[1];
