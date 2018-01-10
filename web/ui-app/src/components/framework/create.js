@@ -1877,6 +1877,7 @@ class Report extends Component {
           var _groupToBeInserted = {
             ...metaData[moduleName + '.' + actionName].groups[i],
           };
+
           for (var j = mockData[moduleName + '.' + actionName].groups.length - 1; j >= 0; j--) {
             if (groupName == mockData[moduleName + '.' + actionName].groups[j].name) {
               var regexp = new RegExp(
@@ -1889,7 +1890,6 @@ class Report extends Component {
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
               _groupToBeInserted.index = ind + 1;
-
               for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
                 if (_groupToBeInserted.fields[k].isRequired) {
                   reqFields.push(_groupToBeInserted.fields[k].jsonPath);
@@ -1900,7 +1900,6 @@ class Report extends Component {
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
               setMockData(mockData);
               var temp = { ...formData };
-
               if(_groupToBeInserted.multiple == true && _groupToBeInserted.index) {
                 self.setDefaultForMultiple(_groupToBeInserted, temp);
               }
@@ -1944,15 +1943,15 @@ class Report extends Component {
           console.log(mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1)
           /* Check for last card --> Set Form Data --> Splice the groups array. */
           if(mockData[moduleName + '.' + actionName].groups[i].index === mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1){
-            console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
-            console.log(_formData);
+            // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
+            // console.log(_formData);
             if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
               var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
               //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-              console.log(mockData[moduleName + "." + actionName].groups);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               grps.splice(mockData[moduleName + '.' + actionName].groups[i].index, 1);
               _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
-              console.log(_formData);
+              // console.log(_formData);
               setFormData(_formData);
 
               for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
@@ -1967,6 +1966,11 @@ class Report extends Component {
               /* And then splice at the end */
               mockData[moduleName + '.' + actionName].groups.splice(i, 1);
               
+              break;
+            }
+            /* Check for no json path in formData --> Splice mockData to remove the card */
+            else{
+              mockData[moduleName + '.' + actionName].groups.splice(i, 1);
               break;
             }
             
