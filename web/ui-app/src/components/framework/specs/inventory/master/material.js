@@ -20,7 +20,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             isKeyValuePair: true,
-            url: '/egov-mdms-service/materials/_search?|$..code|$..name',
+            url: '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=Material|$..code|$..name',
           },
           {
             name: 'code',
