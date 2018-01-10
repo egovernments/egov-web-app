@@ -600,7 +600,7 @@ class Search extends Component {
                   key: null,
                   value: '-- Please Select --',
                 });
-
+                setDropDownData(value.jsonPath, dropDownData);
 
               }
             },
