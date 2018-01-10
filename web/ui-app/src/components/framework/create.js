@@ -49,8 +49,6 @@ class Report extends Component {
       str = "";
     }
 
-    console.log(field);
-
     if (Array.isArray(field)) {
       field.forEach(function (item, index) {
         if (typeof (item) == "object") {
@@ -99,6 +97,19 @@ class Report extends Component {
     }
   }
 
+  setDefaultForMultiple(group, dat) {
+    var self = this;
+    for (var j = 0; j < group.fields.length; j++) {
+      if (
+        typeof group.fields[j].defaultValue == 'string' ||
+        typeof group.fields[j].defaultValue == 'number' ||
+        typeof group.fields[j].defaultValue == 'boolean'
+      ) {
+        _.set(dat, group.fields[j].jsonPath, group.fields[j].defaultValue);
+      }
+    }
+  }
+  
   setDefaultValues(groups, dat) {
     var self = this;
     for (var i = 0; i < groups.length; i++) {
@@ -108,7 +119,6 @@ class Report extends Component {
           typeof groups[i].fields[j].defaultValue == 'number' ||
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
-          //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
         }
 
@@ -597,7 +607,6 @@ class Report extends Component {
                   }
                 }
                 setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
-                // setDropDownOriginalData(response, dropDownData);
               }
             }
           }
@@ -735,7 +744,7 @@ class Report extends Component {
     if (obj.hasOwnProperty('omittableFields')) {
       this.generateSpecificForm(formData, obj['omittableFields']);
     }
-    console.log(formData);
+    // console.log(formData);
 
 
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
@@ -743,9 +752,6 @@ class Report extends Component {
 
         self.props.setLoadingStatus('hide');
         self.initData();
-        console.log('Back response');
-        console.log(response);
-
         if (response.summons) {
           if (response.summons.length > 0) {
             self.props.toggleSnackbarAndSetText(
@@ -1149,7 +1155,6 @@ class Report extends Component {
   };
 
   showField = (_mockData, showObject, jsonPath,  reset) => {
-    console.log(showObject, _mockData, jsonPath, reset)
 
     if(jsonPath != null) {
       var pathArr = jsonPath.split('.');
@@ -1163,6 +1168,7 @@ class Report extends Component {
     if (showObject.isField) {
       for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
         for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
+          //extra check required on jsonPath for duplicate fields in multiple true
           if (showObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name && jsonPath == _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath) {
             _mockData[moduleName + '.' + actionName].groups[i].fields[j].hide = reset ? true : false;
             if (!reset || !_.isUndefined(reset)) {
@@ -1324,9 +1330,6 @@ class Report extends Component {
   };
 
   checkIfHasShowHideFields = (jsonPath, val) => {
-    // alert("hello")
-    // console.log(jsonPath, val)
-    // console.log(this.props.formData)
     let _mockData = { ...this.props.mockData };
     let { moduleName, actionName, setMockData } = this.props;
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
@@ -1798,7 +1801,6 @@ class Report extends Component {
         }
       }
     }
-    console.log(property, e.target.value)
     this.checkifHasValueBasedOn(property, e.target.value);
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
@@ -1872,28 +1874,28 @@ class Report extends Component {
               );
               var stringified = JSON.stringify(_groupToBeInserted);
               var ind = mockData[moduleName + '.' + actionName].groups[j].index || 0;
-              //console.log(ind);
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
               _groupToBeInserted.index = ind + 1;
-
+              
               for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
                 if (_groupToBeInserted.fields[k].isRequired) {
                   reqFields.push(_groupToBeInserted.fields[k].jsonPath);
                 }
-                console.log(_groupToBeInserted)
-                // this.checkIfHasShowHideFields(_groupToBeInserted.jsonPath, _groupToBeInserted.fields.defaultValue, _groupToBeInserted.fields.index);
-
               }
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              // console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
-              self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              // console.log(temp);
+
+              if(_groupToBeInserted.multiple == true && _groupToBeInserted.index) {
+                self.setDefaultForMultiple(_groupToBeInserted, temp);
+              }
+              else {
+                self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
+              }
               setFormData(temp);
               break;
             }
@@ -1942,9 +1944,6 @@ class Report extends Component {
             mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
             'g'
           );
-          //console.log(regexp);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
           var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
           mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
             stringified.replace(
@@ -1955,8 +1954,6 @@ class Report extends Component {
 
           if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
             var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
-            //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-            //console.log(mockData[moduleName + "." + actionName].groups);
             grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
             _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
             //console.log(_formData);
