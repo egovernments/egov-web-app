@@ -65,6 +65,10 @@ export default class ShowFields extends Component {
     });
   };
 
+  getCountForGroupName = (array,groupName) => {
+    return array.filter(group => group.name === groupName).length;
+  }
+
   renderCard = (group, groupIndex, noCols, jsonPath, uiFramework, groups, isMultiple) => {
     let self = this;
     let { addNewCard, removeCard } = this.props;
@@ -137,39 +141,71 @@ export default class ShowFields extends Component {
                 }
               })}
             </Row>
-            {self.props.screen != 'view' &&
-              group.multiple &&
-              (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name)) && (
-                <Row>
-                  <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
-                    <FloatingActionButton
-                      mini={true}
-                      onClick={() => {
-                        addNewCard(group, jsonPath, group.name);
-                      }}
-                    >
+            <Row>
+            <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right'}}>
+              {self.props.screen != 'view' &&
+                group.multiple &&
+                (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name)) && (
+                  // <Row>
+                    // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
+                      <FloatingActionButton
+                        style={{ display: 'inline-block'}}
+                        mini={true}
+                        onClick={() => {
+                          addNewCard(group, jsonPath, group.name);
+                        }}
+                      >
                       <span className="glyphicon glyphicon-plus" />
-                    </FloatingActionButton>
-                  </Col>
-                </Row>
-              )}
-            {self.props.screen != 'view' &&
-              group.multiple &&
-              (groups[groupIndex + 1] && groups[groupIndex + 1].name == group.name) && (
-                <Row>
-                  <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
-                    <FloatingActionButton
-                      mini={true}
-                      secondary={true}
-                      onClick={() => {
-                        removeCard(jsonPath, groupIndex, group.name);
-                      }}
-                    >
-                      <span className="glyphicon glyphicon-minus" />
-                    </FloatingActionButton>
-                  </Col>
-                </Row>
-              )}
+                      </FloatingActionButton>
+                    // </Col>
+                  // </Row>
+                )}
+              {
+                self.props.screen != 'view' &&
+                group.multiple &&
+                (groups[groupIndex + 1] && groups[groupIndex + 1].name == group.name)
+                && (
+                  // <Row>
+                    // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
+                      <FloatingActionButton
+                        style={{ display: 'inline-block'}}
+                        mini={true}
+                        secondary={true}
+                        onClick={() => {
+                          removeCard(jsonPath, groupIndex, group.name);
+                        }}
+                      >
+                        <span className="glyphicon glyphicon-minus" />
+                      </FloatingActionButton>
+                    // </Col>
+                  // </Row>
+                )
+              }
+
+              {
+                self.props.screen != 'view' &&
+                group.multiple &&
+                (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name))
+                && (self.getCountForGroupName(groups, group.name) > 1)
+                && (
+                  // <Row>
+                    // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'left', float: 'left' }}>
+                      <FloatingActionButton
+                        style={{ display: 'inline-block', marginLeft: '15px' }}
+                        mini={true}
+                        secondary={true}
+                        onClick={() => {
+                          removeCard(jsonPath, groupIndex, group.name);
+                        }}
+                      >
+                        <span className="glyphicon glyphicon-minus" />
+                      </FloatingActionButton>
+                    // </Col>
+                  // </Row>
+                )
+              }
+            </Col>
+            </Row>
           </Grid>
           <div style={{ marginLeft: '15px', marginRight: '15px' }}>
             {group.children && group.children.length
@@ -248,6 +284,7 @@ export default class ShowFields extends Component {
                   })}
                 </CardText>
               </Card>
+              
             );
           } else {
             return self.renderCard(listArr[key].object, listArr[key].index, noCols, jsonPath, uiFramework, groups);
