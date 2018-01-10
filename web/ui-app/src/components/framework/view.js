@@ -9,7 +9,7 @@ import { translate } from '../common/common';
 import Api from '../../api/api';
 import jp from 'jsonpath';
 import UiButton from './components/UiButton';
-import { fileUpload } from './utility/utility';
+import { fileUpload ,callApi,parseKeyAndValueForDD} from './utility/utility';
 import UiTable from './components/UiTable';
 import UiBackButton from './components/UiBackButton';
 import UiEditButton from './components/UiEditButton';
@@ -238,7 +238,7 @@ class Report extends Component {
       }
     } catch (e) {}
 
-    let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+    let { setMetaData, setModuleName, setActionName, setMockData,setDropDownData,setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
@@ -303,6 +303,16 @@ class Report extends Component {
       };
       query = '';
     }
+    self.props.setLoadingStatus('loading');
+    if (obj && obj.preApiCalls) {
+      obj.preApiCalls.forEach(async (item)=>{
+        let res=await callApi(item);
+        let orgRes=Object.assign({},res);
+        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
+        setDropDownOriginalData(item.jsonPath,res);
+      })
+    }
+    self.props.setLoadingStatus('hide');
 
     Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
       function(res) {
@@ -317,6 +327,8 @@ class Report extends Component {
       },
       function(err) {}
     );
+
+
   }
 
   componentDidMount() {
@@ -523,6 +535,12 @@ const mapDispatchToProps = dispatch => ({
   },
   setActionName: actionName => {
     dispatch({ type: 'SET_ACTION_NAME', actionName });
+  },
+  setDropDownData: (fieldName, dropDownData) => {
+    dispatch({ type: 'SET_DROPDWON_DATA', fieldName, dropDownData });
+  },
+  setDropDownOriginalData: (fieldName, dropDownData) => {
+    dispatch({ type: 'SET_ORIGINAL_DROPDWON_DATA', fieldName, dropDownData });
   },
   setLoadingStatus: loadingStatus => {
     dispatch({ type: 'SET_LOADING_STATUS', loadingStatus });
