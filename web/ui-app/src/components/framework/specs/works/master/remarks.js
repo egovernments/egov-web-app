@@ -309,9 +309,7 @@ var dat = {
                 jsonPath: 'remarks[0].remarksDetails[0]',
                 tableList: {
                   header: [
-                    {
-                      label: 'works.rate.details.label.remark',
-                    },
+                    
                     {
                         label: 'works.rate.details.label.remarksDescription',
                     },
@@ -320,15 +318,7 @@ var dat = {
                     },
                   ],
                   values: [
-                    {
-                      name: 'remarks',
-                      pattern: '',
-                      type: 'text',
-                      jsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      displayJsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      isRequired: true,
-                      isDisabled: false,
-                    },
+                    
                     {
                         name: 'remarksDescription',
                         pattern: '',
