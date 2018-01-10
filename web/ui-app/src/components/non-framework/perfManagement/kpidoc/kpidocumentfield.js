@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { translate } from '../../../common/common';
 import { fileUpload } from '../../../framework/utility/utility';
 
 class KPIDocumentField extends Component {
@@ -26,7 +27,8 @@ class KPIDocumentField extends Component {
     this.state.cell;
     console.log(this.state.cell);
     console.log(this.state.documents[this.state.cell.valueid]);
-    this.state.documents[this.state.cell.valueid][this.state.cell.period].map((fileInfo, id) => {
+    if (this.state.documents[this.state.cell.valueid]) {
+      this.state.documents[this.state.cell.valueid][this.state.cell.period].map((fileInfo, id) => {
       let valueid = this.state.cell.valueid;
       let period = this.state.cell.period;
       let code = fileInfo.code;
@@ -47,6 +49,9 @@ class KPIDocumentField extends Component {
     });
 
     this.props.switchDialog(false);
+
+    }
+    
   };
 
   handleClose = () => {
@@ -189,62 +194,78 @@ class KPIDocumentField extends Component {
     console.log(code, 'code ---');
     console.log(display, 'display');
     return (
-      <div>
-        {display && (
-          <span>
-            <a
-              href={
-                window.location.origin + '/filestore/v1/files/id?tenantId=' + localStorage.tenantId + '&fileStoreId=' + this.state.currentFileStoreID
-              }
-              target="_blank"
-            >
-              {display}{' '}
-            </a>
-          </span>
-        )}
-        {!display && (
+      <Row>
+        <Col xs={4} md={4}>
           <input
             id={'file_' + self.props.cell.valueid + self.props.cell.period}
             type="file"
             accept=".xls,.xlsx,.txt,.doc,.docx"
             onChange={e => self.handleFile(e, self.props.cell.valueid, self.props.cell.period, item.name, i, self.props.data, code)}
           />
-        )}
-      </div>
+        </Col>
+        <Col xs={2} md={2} />
+        <Col xs={4} md={4}>
+          {display && (
+            <span ClassName="pull-right">
+              <a
+                href={
+                  window.location.origin +
+                  '/filestore/v1/files/id?tenantId=' +
+                  localStorage.tenantId +
+                  '&fileStoreId=' +
+                  this.state.currentFileStoreID
+                }
+                target="_blank"
+              >
+                {display}{' '}
+              </a>
+            </span>
+          )}
+        </Col>
+      </Row>
     );
   }
 
   render() {
     const actions = [
       <FlatButton label="Cancel" primary={true} onClick={this.handleClose.bind(this)} />,
-      <RaisedButton label="Upload" primary={true} keyboardFocused={true} onClick={this.docUpload.bind(this)} />,
+      <RaisedButton label="Upload" primary={true} disabled={(this.props.data.length == 0)?true:false} keyboardFocused={true} onClick={this.docUpload.bind(this)} />,
     ];
     //this.setState({fileAttrList:this.props.data});
+    console.log(this.props.data.length, 'data array');
     return (
-      <Dialog title="KPIs Documents" actions={actions} modal={true} open={this.props.open}>
-        {this.props.data.map((item, i) => {
-          console.log(item, 'render panel');
-          return [
-            <Row>
-              <Col xs={6} md={6}>
-                <strong>{item.name}</strong>
-                {item.active && (
-                  <span
-                    style={{
-                      color: '#FF0000',
-                    }}
-                  >
-                    *
-                  </span>
-                )}
-              </Col>
-              <Col xs={6} md={6}>
-                {this.renderFilePanel(this, item, i, item.code)}
-              </Col>
-            </Row>,
-            <br />,
-          ];
-        })}
+      <Dialog title={translate('perfManagement.create.KPIs.groups.kpidoc')} actions={actions} modal={true} open={this.props.open}>
+        {this.props.data.length > 0 &&
+          this.props.data.map((item, i) => {
+            //console.log(item, 'render panel');
+            return [
+              <Row>
+                <Col xs={4} md={4}>
+                  <strong>{item.name}</strong>
+                  {item.active && (
+                    <span
+                      style={{
+                        color: '#FF0000',
+                      }}
+                    >
+                      *
+                    </span>
+                  )}
+                </Col>
+                <Col xs={8} md={8}>
+                  {this.renderFilePanel(this, item, i, item.code)}
+                </Col>
+              </Row>,
+              <br />,
+            ];
+          })}
+        {!this.props.data.length && (
+          <Row>
+            <Col xs={12} md={12}>
+              {translate('perfManagement.create.KPIs.groups.nokpidoc')}
+            </Col>
+          </Row>
+        )}
       </Dialog>
     );
   }
@@ -261,5 +282,4 @@ const mapStateToProps = state => ({
   requiredFields: state.frameworkForm.requiredFields,
   dropDownData: state.framework.dropDownData,
 });
-
 export default connect(mapStateToProps)(KPIDocumentField);

@@ -2948,6 +2948,8 @@ var localization_EN_Data = {
   'perfManagement.update.KPIs.groups.updatekpidoc': 'Document Name',
   'perfManagement.update.KPIs.groups.updatekpidocMandatory': 'Document Mandatory',
   'perfManagement.update.KPIs.groups.updatekpivalue': 'KPI values submitted successfully',
+  'perfManagement.create.KPIs.groups.kpidoc':'KPIs Documents',
+  'perfManagement.create.KPIs.groups.nokpidoc':'NO KPI Document fields',
   'referenceEvidence.update.document.title': 'Reference Evidences',
   'referenceEvidence.create.group.title.addReferenceEvidences': 'Add Reference Evidences',
   'referenceEvidence.create.typeOfReference': 'Type Of Reference',
