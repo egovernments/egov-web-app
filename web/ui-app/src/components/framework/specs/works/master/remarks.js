@@ -6,7 +6,7 @@ var dat = {
       url: '/works-masters/v1/remarks/_search',
       groups: [
         {
-          name: 'search',
+          name: 'remarkMasterSearch',
           label: 'works.remarks.search.title',
           fields: [
             {
@@ -16,7 +16,7 @@ var dat = {
               type: 'singleValueList',
               isRequired: false,
               isDisabled: false,
-              url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..code',
+              url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..name',
               patternErrorMsg: 'works.remarks.error.message.typeOfDocument',
             },
             {
@@ -26,7 +26,7 @@ var dat = {
                 type: 'singleValueList',
                 isRequired: false,
                 isDisabled: false,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.remarksType',
             },
             {
@@ -81,7 +81,7 @@ var dat = {
       groups: [
         {
           name: 'remarkMasterCreate',
-          label: 'works.create.group.title.createRemarkMaster',
+          label: 'works.remarks.create.title',
           fields: [
             {
                 name: 'typeOfDocument',
@@ -93,7 +93,7 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.typeOfDocument',
             },
             
@@ -107,14 +107,14 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.remarksType',
             },
           ],
         },
         {
-            name: 'Rate Details',
-            label: 'works.rate.details.label.title',
+            name: 'Remarks Details',
+            label: 'works.remarks.details.label.title',
             fields: [
               {
                 type: 'tableList',
@@ -122,10 +122,10 @@ var dat = {
                 tableList: {
                   header: [
                     {
-                        label: 'works.rate.details.label.remarksDescription',
+                        label: 'works.remarks.details.label.remarksDescription',
                     },
                     {
-                        label: 'works.rate.details.label.editable',
+                        label: 'works.remarks.details.label.editable',
                     },
                   ],
                   values: [
@@ -174,8 +174,8 @@ var dat = {
       ],
       groups: [
         {
-          name: 'remarkMasterCreate',
-          label: 'works.create.group.title.createRemarkMaster',
+          name: 'remarkMasterView',
+          label: 'works.remarks.view.title',
           fields: [
             {
                 name: 'code',
@@ -187,7 +187,7 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.typeOfDocument',
             },
             
@@ -201,14 +201,14 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.remarksType',
             },
           ],
         },
         {
-            name: 'Rate Details',
-            label: 'works.rate.details.label.title',
+            name: 'Remarks Details',
+            label: 'works.remarks.details.label.title',
             fields: [
               {
                 type: 'tableList',
@@ -217,10 +217,10 @@ var dat = {
                   header: [
                     
                     {
-                        label: 'works.rate.details.label.remarksDescription',
+                        label: 'works.remarks.details.label.remarksDescription',
                     },
                     {
-                        label: 'works.rate.details.label.editable',
+                        label: 'works.remarks.details.label.editable',
                     },
                   ],
                   values: [
@@ -268,8 +268,8 @@ var dat = {
       ],
       groups: [
         {
-          name: 'remarkMasterCreate',
-          label: 'works.create.group.title.createRemarkMaster',
+          name: 'remarkMasterUpdate',
+          label: 'works.remarks.update.title',
           fields: [
             {
                 name: 'typeOfDocument',
@@ -281,7 +281,7 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=TypeOfDocument|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.typeOfDocument',
             },
             
@@ -295,14 +295,14 @@ var dat = {
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
-                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..code',
+                url: '/egov-mdms-service/v1/_get?&moduleName=Works&masterName=RemarksType|$..code|$..name',
                 patternErrorMsg: 'works.remarks.error.message.remarksType',
             },
           ],
         },
         {
-            name: 'Rate Details',
-            label: 'works.rate.details.label.title',
+            name: 'Remarks Details',
+            label: 'works.remarks.details.label.title',
             fields: [
               {
                 type: 'tableList',
@@ -311,10 +311,10 @@ var dat = {
                   header: [
                     
                     {
-                        label: 'works.rate.details.label.remarksDescription',
+                        label: 'works.remarks.details.label.remarksDescription',
                     },
                     {
-                        label: 'works.rate.details.label.editable',
+                        label: 'works.remarks.details.label.editable',
                     },
                   ],
                   values: [
