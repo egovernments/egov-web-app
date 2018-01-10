@@ -262,7 +262,7 @@ export default class TableCard extends Component {
    * render next/prev button to navigate when report is not consolidated
    */
   renderReportNavigationButton = (label) => {
-    if (this.props.isReportConsolidated) {
+    if (this.props.isReportConsolidated || this.getModifiedChartData(this.getChartData()).length > 1) {
       return (
         <RaisedButton
           style={{ marginLeft: '90%' }}
