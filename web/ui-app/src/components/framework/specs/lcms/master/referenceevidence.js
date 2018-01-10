@@ -43,10 +43,11 @@ var dat = {
             name: 'referenceCaseNo',
             jsonPath: 'cases[0].referenceEvidences[0].referenceCaseNo',
             label: 'referenceEvidence.create.referenceCaseNo',
-            type: 'text',
+            type: 'autocompletemultiselect',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+             url: '/lcms-services/legalcase/caseno/_search?|$..caseNo|$..caseNo',
           },
           {
             name: 'description',

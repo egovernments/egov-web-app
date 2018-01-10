@@ -43,6 +43,7 @@ import UiWindowSelectField from './components/UiWindowSelectField';
 import UiCheckBoxGrp from './components/UiCheckBoxGrp';
 import UiBoundary from './components/UiBoundary';
 import UiCollectionRoute from './components/UiCollectionRoute';
+import UiAutocompleteMultiselect from './components/UiAutocompleteMultiselect';
 
 let styles = {
   reducePadding: {
@@ -773,6 +774,18 @@ export default class ShowFields extends Component {
             item={item}
             fieldErrors={this.props.fieldErrors}
             handler={this.props.handler}
+          />
+        );
+         case 'autocompletemultiselect' :
+        return (
+         <UiAutocompleteMultiselect
+            tabIndex={index}
+            ui={this.props.ui}
+            getVal={this.props.getVal}
+            item={item}
+            fieldErrors={this.props.fieldErrors}
+            handler={this.props.handler}
+            autoComHandler={this.props.autoComHandler || ''}
           />
         );
     }

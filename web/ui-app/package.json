@@ -49,7 +49,8 @@
     "redux": "^3.6.0",
     "redux-persist": "^4.8.0",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^2.2.4"
+    "styled-components": "^2.2.4",
+     "material-ui-superselectfield": "^1.8.5"
   },
   "devDependencies": {
     "@jdcrensh/react-scripts": "1.0.17",
