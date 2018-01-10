@@ -10,28 +10,32 @@ var dat = {
         label: 'works.measurementbook.search.title',
         fields: [
             {
-                name: 'mbRefNumber',
+                name: 'mbRefNo',
                 jsonPath: 'measurementbooks[0].mbRefNo',
                 label: 'works.measurementbook.label.mbRefNumberLike',
                 type: 'autoCompelete',
                 isRequired: false,
                 isDisabled: false,
-                patternErrorMsg: 'works.measurementbook.error.message.mbRefNumberLike',
-                url: "/measurementbooks/_search?mbRefNumberLike=|$.measurementBooks.*.mbRefNo|$.measurementBooks.*.mbRefNo",
+                url: "/works-measurementbook/v1/measurementbooks/_search?|$.measurementBooks.*.mbRefNo|$.measurementBooks.*.mbRefNo",
                 autoCompleteDependancy: {
-                    autoCompleteUrl: "/measurementbooks/_search?mbRefNumberLike=|$.measurementBooks.*.mbRefNo|$.measurementBooks.*.mbRefNo",
+                    autoCompleteUrl: "/works-measurementbook/v1/measurementbooks/_search?mbRefNumberLike={measurementbooks[0].mbRefNo}",
                     autoFillFields: {
                     },
                 },
             },
             {
-                name: 'loaNumberLike',
-                jsonPath: 'loaNumberLike',
-                label: 'works.measurementbook.label.loaNumberLike',
+                name: 'loaNumbers',
+                jsonPath: 'LetterOfAcceptance[0].loaNumbers',
+                label: 'works.measurementbook.label.loaNumbers',
                 type: 'autoCompelete',
                 isRequired: false,
                 isDisabled: false,
-                patternErrorMsg: 'works.measurementbook.error.message.loaNumberLike',
+                url: "/works-measurementbook/v1/letterofacceptances/_search?|$.measurementBooks.*.mbRefNo|$.measurementBooks.*.mbRefNo",
+                autoCompleteDependancy: {
+                    autoCompleteUrl: "/works-measurementbook/v1/letterofacceptances/_search?loaNumberLike={LetterOfAcceptance[0].loaNumbers}",
+                    autoFillFields: {
+                    },
+                },
             },
             {
                 name: 'fromDate',
