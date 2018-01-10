@@ -61,7 +61,6 @@ class Transaction extends Component {
     for (var i = 0; i < groups.length; i++) {
       for (var j = 0; j < groups[i].fields.length; j++) {
         console.log(typeof groups[i].fields[j].defaultValue);
-        debugger;
         if (
           typeof groups[i].fields[j].defaultValue == 'string' ||
           typeof groups[i].fields[j].defaultValue == 'number' ||

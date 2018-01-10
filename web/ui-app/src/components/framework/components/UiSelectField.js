@@ -24,7 +24,7 @@ class UiSelectField extends Component {
     document.addEventListener('click', this.handleClick, false);
   }
 
- 
+
   initData(props) {
     //console.log("UiSelectField, initData() called", props);
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
@@ -111,7 +111,7 @@ class UiSelectField extends Component {
               return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
             });
 
-            dropDownData.unshift({ key: '', value: '-- Please Select --' });
+            dropDownData.unshift({ key: null, value: '-- Please Select --' });
             setDropDownData(item.jsonPath, dropDownData);
             setDropDownOriginalData(item.jsonPath, response);
             // props.handler(
@@ -158,20 +158,20 @@ class UiSelectField extends Component {
           item.expression,
           item.expressionMsg
         );
-    } 
-   
+    }
+
     if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData === undefined) {
       this.initData(nextProps);
     }
   }
- 
+
   renderSelect = item => {
    let  {getDisplayValue, filter} = this.state;
     let { dropDownData, value , name } = this.props;
     // if(item.jsonPath == 'abstractEstimates[0].natureOfWork.code' || item.jsonPath == 'abstractEstimates[0].pmcName' || item.jsonPath == 'abstractEstimates[0].department.code')
     // console.log(item.jsonPath, '<--->', value, typeof(value) );
     let dropDownDataArray = dropDownData;
-         
+
        if(item.filterMenu && filter){
         dropDownDataArray = [{
           key:value,
@@ -181,6 +181,7 @@ class UiSelectField extends Component {
 
     switch (this.props.ui) {
       case 'google':
+        console.log(item);
         let labelProperty = !item.isHideLabel && {
           floatingLabelFixed: true,
           floatingLabelText: (
@@ -270,7 +271,7 @@ const mapStateToProps = (state, props) => {
   let value = _.get(state.frameworkForm.form, item.jsonPath);
 
   let name = (item.filterMenu) ? _.get(state.frameworkForm.form, _.replace(item.jsonPath, 'code', 'name')) : '';
-  
+
   // console.log(item.jsonPath , '---->', _.get(state.frameworkForm.form, item.jsonPath));
   if (item.convertToString && value) value = value.toString();
   else if (item.convertToNumber && value) {

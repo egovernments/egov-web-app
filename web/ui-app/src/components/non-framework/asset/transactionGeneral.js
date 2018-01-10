@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
+import { Card, CardHeader, CardText, CardTitle } from 'material-ui/Card';
+import Checkbox from 'material-ui/Checkbox';
+
 import _ from 'lodash';
 import ShowFields from '../../framework/showFields';
 import { translate } from '../../common/common';
@@ -574,6 +578,15 @@ class Transaction extends Component {
     setMockData(_mockData);
   };
 
+  selectAllFunction = (bln) => {
+    let self = this;
+    console.log("yes");
+    for (var i = 0; i < this.props.formData.Depreciation.Assets.length; i++) {
+      // this.props.formData.Depreciation.Assets[i].isChecked = bln;
+       self.handleChange({ target: { value: bln } }, 'Depreciation.Assets[' + i + '].isChecked', false, '');
+    }
+  }
+
   handleChange = (e, property, isRequired, pattern, requiredErrMsg = 'Required', patternErrMsg = 'Pattern Missmatch', expression, expErr, isDate) => {
     let { getVal, getValFromDropdownData } = this;
     let self = this;
@@ -781,25 +794,13 @@ class Transaction extends Component {
     var amountValidation = true;
     var amountValidationMsg = '';
     console.log(formData);
-    formData.Depreciation.toDate = formData.toDate;
-    var mainAssetIds = [];
-    for (var i = 0; i < formData.Depreciation.Assets.length; i++) {
-      if (formData.Depreciation.Assets[i].isChecked && formData.Depreciation.Assets[i].isChecked == true) {
-        var collectAssetId = {};
-        collectAssetId = formData.Depreciation.Assets[i].id;
-        mainAssetIds += collectAssetId + ',';
-      }
-    }
-    console.log(mainAssetIds == '');
-    if (mainAssetIds != '') {
-      var mainAssetIdssplice = mainAssetIds.slice(0, -1);
-      formData.Depreciation.assetIds = mainAssetIdssplice.split(',');
-    }
-    if (formData.Depreciation.assetIds) {
-      self.props.setLoadingStatus('loading');
-      delete formData.Depreciation.Assets;
+    //formData.Depreciation.toDate = formData.toDate;
+    const assetsSelected = formData.Depreciation.Assets.filter((asset) => asset.isChecked).map((asset) => asset.id);
 
-      Api.commonApiPost('/asset-services-maha/assets/depreciations/_create', '', formData, '', true).then(
+    if (assetsSelected.length) {
+      self.props.setLoadingStatus('loading');
+      const data = {'Depreciation' : { 'assetId' : assetsSelected } }
+      Api.commonApiPost('/asset-services-maha/assets/depreciations/_create', '', data, '', true).then(
         function(response) {
           self.props.setLoadingStatus('hide');
           self.initData();
@@ -878,6 +879,29 @@ class Transaction extends Component {
     let { mockData, moduleName, actionName, formData, fieldErrors, isFormValid, match } = this.props;
     let { search, handleChange, getVal, addNewCard, removeCard, rowClickHandler, create } = this;
     let { showResult, resultList } = this.state;
+    let self = this;
+
+    console.log(formData);
+
+    const renderSelect = function() {
+
+      return (
+        <div>
+          <Card className="uiCard">
+              <Row>
+              <Checkbox
+                label="Select All"
+                disabled={false}
+                onCheck={(obj, bol) => {
+                  console.log(bol);
+                  self.selectAllFunction(bol);
+                }}
+              />
+              </Row>
+          </Card>
+        </div>
+      );
+    }
 
     return (
       <div className="SearchResult">
@@ -918,7 +942,7 @@ class Transaction extends Component {
           {/*showResult && <UiTable resultList={resultList} rowClickHandler={rowClickHandler}/>*/}
         </form>
 
-        {showResult && <UiDynamicTable resultList={resultList} ui="google" handler={handleChange} getVal={getVal} fieldErrors={fieldErrors} />}
+        {showResult && <div>  <UiDynamicTable resultList={resultList} ui="google" handler={handleChange} getVal={getVal} fieldErrors={fieldErrors} /></div>}
 
         <br />
         {showResult &&
