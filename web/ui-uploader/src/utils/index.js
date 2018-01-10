@@ -36,7 +36,7 @@ export const getDateFromEpoch = epoch => {
   const dateObj = new Date(epoch);
   const year = dateObj.getFullYear();
   const month = dateObj.getMonth() + 1;
-  const day = dateObj.getDay();
+  const day = dateObj.getDate();
   return day + "-" + month + "-" + year;
 };
 
