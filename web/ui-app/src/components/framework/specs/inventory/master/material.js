@@ -20,7 +20,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             isKeyValuePair: true,
-            url: '/inventory-services/materials/_search?|$.materials[*].code|$.materials[*].name',
+            url: '/egov-mdms-service/materials/_search?|$..code|$..name',
           },
           {
             name: 'code',
