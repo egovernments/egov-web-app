@@ -17,7 +17,7 @@ var dat = {
           url:"/hr-masters/designations/_search",
           jsonPath:"designation.code",
           jsExpForDD:{
-            key:"$..id",
+            key:"$..code",
             value:"$..name",
           }
         }
