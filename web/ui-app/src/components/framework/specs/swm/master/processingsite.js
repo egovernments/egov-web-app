@@ -375,6 +375,29 @@ var dat = {
     tenantIdRequired: true,
   },
   'swm.view': {
+    preApiCalls:[
+      
+            {
+              url:"/tenant/v1/tenant/_search",
+              jsonPath:"sourceSegregations[0]-ulb-code",
+              jsExpForDD:{
+                key:"$..tenant.*.code",
+                value:"$..tenant.*.name",
+              }
+            },
+            {
+              url:"egov-mdms-service/v1/_get",
+              jsonPath:"sourceSegregations[0]-ulb-wasteType",
+              qs:{
+                moduleName:"swm",
+                masterName:"WasteType"
+              },
+              jsExpForDD:{
+                key:"$..code",
+                value:"$..name",
+              }
+            }
+          ],
     numCols: 3,
     useTimestamp: true,
     objectName: 'ProcessingSite',
@@ -588,7 +611,9 @@ var dat = {
             aATransformInfo: {
               to: 'MdmsRes.swm.ProcessingSite[0].siteDetails.wasteTypes',
               key: 'code'
-            }
+            },
+            reduxObject:"sourceSegregations[0]-ulb-wasteType",
+            cToN:true
           },
         ]
       },
