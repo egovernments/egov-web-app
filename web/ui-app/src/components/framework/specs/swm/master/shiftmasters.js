@@ -58,7 +58,7 @@ var dat = {
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
-      idJsonPath: 'MasterMetaData.masterData[0].code',
+      idJsonPath: 'MdmsRes.swm.Shift[0].code',
       title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
