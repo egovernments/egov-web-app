@@ -844,6 +844,9 @@ var dat = {
                 {
                   label: 'referenceEvidence.create.description',
                 },
+                {
+                  label:  'caseRegistration.create.referenceCaseNo',
+                },
               ],
               values: [
                 {
@@ -865,6 +868,15 @@ var dat = {
                 {
                   name: 'description',
                   jsonPath: 'cases[0].referenceEvidences[0].description',
+                  type: 'textarea',
+                  fullWidth: true,
+                  isRequired: true,
+                  isDisabled: true,
+                  patternErrorMsg: '',
+                },
+                {
+                  name: 'referenceCaseNo',
+                  jsonPath: 'cases[0].referenceEvidences[0].referenceCaseNo',
                   type: 'textarea',
                   fullWidth: true,
                   isRequired: true,
