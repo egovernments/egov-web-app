@@ -121,7 +121,13 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
-      
+
+            depedants:[{
+              jsonPath:'stores[0].storeInCharge.code',
+              type:'dropDown',
+              pattern: '/hr-employee/employees/_search?tenantId=default&departmentCode={stores[0].department.code}|$..code|$..name',
+            }]
+            
           },
           {
             name: 'description',
@@ -187,8 +193,8 @@ var dat = {
             jsonPath: 'stores[0].storeInCharge.code',
             label: 'inventory.store.incharge',
             pattern: '',
-            type: 'autoCompelete',
-            url: '/hr-employee/employees/_search?|$..code|$..name',
+            type: 'singleValueList',
+            url: '',
             isRequired: true,
             isDisabled: false,
             isKeyValuePair: true,
@@ -462,6 +468,11 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
+            depedants: [{
+              jsonPath: 'stores[0].storeInCharge.code',
+              type: 'dropDown',
+              pattern: '/hr-employee/employees/_search?tenantId=default&departmentCode={stores[0].department.code}|$..code|$..name',
+            }]
           },
           {
             name: 'description',
@@ -529,7 +540,7 @@ var dat = {
             label: 'inventory.store.incharge',
             pattern: '',
             type: 'singleValueList',
-            url: '/hr-employee/employees/_search?|$..code|$..name',
+            url: '',
             isRequired: true,
             isDisabled: false,
             isKeyValuePair: true,
