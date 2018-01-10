@@ -366,13 +366,13 @@ var dat = {
                   "autoCompleteDependancy": {
                     "autoCompleteUrl": "/swm-services/vehicles/_search?regNumber={vehicleSchedules[0].vehicle.regNumber}",
                     "autoFillFields": {
-                       "vehicleSchedules[0].vehicle.vehicleType.code": "vehicles[0].vehicleType.name",
+                       "vehicleSchedules[0].vehicle.vehicleType.name": "vehicles[0].vehicleType.name",
                      },
                   },
                },
                {
                   'name': 'vehicleType',
-                  'jsonPath': 'vehicleSchedules[0].vehicle.vehicleType.code',
+                  'jsonPath': 'vehicleSchedules[0].vehicle.vehicleType.name',
                   'label': 'swm.vehicles.create.vehicleType',
                   'pattern': '',
                   'type': 'text',
