@@ -69,7 +69,6 @@ class assetMovableCreate extends Component {
           typeof groups[i].fields[j].defaultValue == 'number' ||
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
-          //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
         }
 
@@ -227,7 +226,7 @@ class assetMovableCreate extends Component {
         for (var j = 1; j < arr.length; j++) {
           i++;
           specs[moduleName + '.' + actionName].groups.splice(
-            ind + 1,
+            j + 1,
             0,
             JSON.parse(_stringifiedGroup.replace(regex, specs[moduleName + '.' + actionName].groups[ind].jsonPath + '[' + j + ']'))
           );
@@ -323,16 +322,6 @@ class assetMovableCreate extends Component {
     var hash = window.location.hash.split('/');
     let endPoint = '';
     let self = this;
-
-    // try {
-    //   if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
-    //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-    //   } else {
-    //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-    //   }
-    // } catch(e) {
-    //   console.log(e);
-    // }
 
     specifications = require(`../../../framework/specs/asset/master/assetMovable`).default;
     self.displayUI(specifications);
@@ -665,7 +654,6 @@ class assetMovableCreate extends Component {
   makeAjaxCall = (formData, url) => {
     let self = this;
     //delete formData.ResponseInfo;
-    //return console.log(formData);
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
       function(response) {
         self.props.setLoadingStatus('hide');
@@ -675,10 +663,8 @@ class assetMovableCreate extends Component {
           translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'),
           true
         );
-        console.log(response);
         setTimeout(function() {
           if (self.props.actionName == 'update') {
-            console.log('update');
             var hash = '/non-framework/asset/master/assetMovableView/' + response.Assets[0].id;
           }
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
@@ -687,14 +673,10 @@ class assetMovableCreate extends Component {
                 self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl +
                 '/' +
                 encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
-              console.log('check');
             } else {
-              console.log('check1');
               if (self.props.actionName == 'update') {
-                console.log('update');
                 var hash = '/non-framework/asset/master/assetMovableView/' + response.Assets[0].id;
               } else {
-                console.log(formData);
                 var hash = '/non-framework/asset/master/assetMovableView/' + response.Assets[0].id;
               }
             }
@@ -738,7 +720,6 @@ class assetMovableCreate extends Component {
     self.props.setLoadingStatus('loading');
     var formData = JSON.parse(JSON.stringify(this.props.formData));
     if (formData.Asset.titleDocumentsAvailable) {
-      console.log(formData.Asset.titleDocumentsAvailable);
       formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
     } else {
       formData.Asset.titleDocumentsAvailable = [];
@@ -791,11 +772,9 @@ class assetMovableCreate extends Component {
     });
 
     if (formData && formData.Asset && formData.Asset.fundSource) {
-      console.log(formData.Asset.fundSource.code);
       if (formData.Asset.fundSource.code == null || formData.Asset.fundSource.code == '') {
         delete formData.Asset.fundSource;
       }
-      console.log(formData.Asset);
     }
 
     formData.Asset.assetAttributes = assetAttributes;
@@ -1285,8 +1264,6 @@ class assetMovableCreate extends Component {
             console.log(err);
           }
         );
-        // console.log(id);
-        // console.log(context);
       } else if (value.type == 'textField') {
         let object = {
           target: {
@@ -1407,8 +1384,7 @@ class assetMovableCreate extends Component {
                 'g'
               );
               var stringified = JSON.stringify(_groupToBeInserted);
-              var ind = mockData[moduleName + '.' + actionName].groups[j].index || 0;
-              //console.log(ind);
+              var ind = (j - 1) || 0;
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
@@ -1422,11 +1398,9 @@ class assetMovableCreate extends Component {
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              //console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              //console.log(temp);
               setFormData(temp);
               break;
             }
@@ -1475,9 +1449,6 @@ class assetMovableCreate extends Component {
             mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
             'g'
           );
-          //console.log(regexp);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
           var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
           mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
             stringified.replace(
@@ -1488,11 +1459,8 @@ class assetMovableCreate extends Component {
 
           if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
             var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
-            //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-            //console.log(mockData[moduleName + "." + actionName].groups);
             grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
             _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
-            //console.log(_formData);
             setFormData(_formData);
 
             //Reduce index values
@@ -1505,7 +1473,6 @@ class assetMovableCreate extends Component {
           }
         }
       }
-      //console.log(mockData[moduleName + "." + actionName].groups);
       setMockData(mockData);
     } else {
       var _groups = _.get(mockData[moduleName + '.' + actionName], self.getPath(jsonPath));
@@ -1529,11 +1496,6 @@ class assetMovableCreate extends Component {
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
         : '';
     let self = this;
-    console.log(formData);
-
-    //  {formData && formData.hasOwnProperty("Asset") && formData.Asset.hasOwnProperty("assetAttributes") && formData.Asset.assetAttributes.map((item,index)=>{
-
-    // })}
 
     return (
       <div className="Report">

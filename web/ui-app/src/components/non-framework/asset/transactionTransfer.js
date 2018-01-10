@@ -60,13 +60,11 @@ class Transaction extends Component {
   setDefaultValues(groups, dat) {
     for (var i = 0; i < groups.length; i++) {
       for (var j = 0; j < groups[i].fields.length; j++) {
-        console.log(typeof groups[i].fields[j].defaultValue);
         if (
           typeof groups[i].fields[j].defaultValue == 'string' ||
           typeof groups[i].fields[j].defaultValue == 'number' ||
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
-          //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
         }
 
@@ -78,60 +76,6 @@ class Transaction extends Component {
       }
     }
   }
-
-  // initData() {
-  //   let hashLocation = window.location.hash;
-  //   try {
-  //     var hash = window.location.hash.split("/");
-  //     if(hash.length == 4 && hashLocation.split("/")[1]!="transaction") {
-  //       specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-  //     } else if(hashLocation.split("/")[1]!="transaction"){
-  //       specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-  //     } else {
-  //       specifications = require(`./specs/${hash[2]}/transaction/${hash[3]}`).default;
-  //     }
-  //   } catch(e) {}
-  //   let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData } = this.props;
-  //   let obj = specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`];
-  //   var formData = {};
-  //   if(obj && obj.groups && obj.groups.length) this.setDefaultValues(obj.groups, formData);
-  //   reqRequired = [];
-  //   this.setLabelAndReturnRequired(obj);
-  //   initForm(reqRequired);
-  //   setMetaData(specifications);
-  //   for (var i = 0; i < specifications["asset.transaction"].groups[0].fields.length; i++) {
-  //         specifications["asset.transaction"].groups[0].fields[i].isDisabled=false;
-  //   }
-  //   setMockData(JSON.parse(JSON.stringify(specifications)));
-  //   setModuleName(hashLocation.split("/")[2]);
-  //   setActionName(hashLocation.split("/")[1]);
-  //   setFormData(formData);
-  //   this.setState({
-  //     pathname:this.props.history.location.pathname,
-  //     showResult:false
-  //   })
-
-  // console.log(this.props.match);
-  // if (this.props.match.params.businessService && decodeURIComponent(this.props.match.params.consumerCode)) {
-  //   // count++;
-  //   // if (count==1) {
-  //     // alert("hai")
-  //
-  //     for (var i = 0; i < specifications["asset.transaction"].groups[0].fields.length; i++) {
-  //       specifications["asset.transaction"].groups[0].fields[i].isDisabled=true;
-  //     }
-  //     setMockData(JSON.parse(JSON.stringify(specifications)));
-  //
-  //     this.props.handleChange({target:{value:this.props.match.params.businessService}},"businessService",true,false);
-  //     this.props.handleChange({target:{value:decodeURIComponent(this.props.match.params.consumerCode)}},"consumerCode",true,false);
-  //     this.search(null,this.props.match.params.businessService,decodeURIComponent(this.props.match.params.consumerCode));
-  //     // console.log($("#payTax").length);
-  //     // $("#payTax").submit();
-  //
-  //   // }
-  //   // console.log(this.props.match.params.businessService + "- "+decodeURIComponent(this.props.match.params.consumerCode));
-  // }
-  // }
 
   initData() {
     let self = this;
@@ -727,18 +671,13 @@ class Transaction extends Component {
     let self = this;
     e.preventDefault();
     var formData = { ...this.props.formData };
-    console.log(formData.Disposal.Assets);
 
     for (var i = 0; i < formData.Disposal.Assets.length; i++) {
-      console.log(formData.Disposal.Assets[i]);
       if (formData.Disposal.Assets[i].isRadio == true) {
-        console.log('hit');
         formData.Disposal['assetId'] = formData.Disposal.Assets[i].id;
-        console.log(formData.Disposal['assetId']);
       }
     }
     if (formData.Disposal['assetId']) {
-      console.log(formData.Disposal['assetId']);
 
       if (!formData.Disposal.remarks || formData.Disposal.remarks == null || formData.Disposal.remarks == '') {
         self.props.toggleSnackbarAndSetText(true, 'Please enter Remarks', false, true);

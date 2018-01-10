@@ -233,7 +233,7 @@ class assetImmovableView extends Component {
           for (var j = 1; j < arr.length; j++) {
             i++;
             specs[moduleName + '.' + actionName].groups.splice(
-              ind + 1,
+              j + 1,
               0,
               JSON.parse(_stringifiedGroup.replace(regex, specs[moduleName + '.' + actionName].groups[ind].jsonPath + '[' + j + ']'))
             );
@@ -325,7 +325,6 @@ class assetImmovableView extends Component {
 
     Api.commonApiPost(url, query, {}, false, specifications['asset.view'].useTimestamp).then(
       function(res) {
-        console.log(res);
         self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications['asset.view'].objectName);
         self.props.setFormData(res);
       },
@@ -401,20 +400,16 @@ class assetImmovableView extends Component {
   render() {
     let { mockData, moduleName, actionName, formData, fieldErrors, date, match } = this.props;
     let { handleChange, getVal, addNewCard, removeCard, printer } = this;
-    // console.log(match);
     let self = this;
     var mappingObject;
 
     const renderOpeningValues = function() {
       let self = this;
       if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('openingDate')) {
-        console.log(formData.Assets[0].openingDate);
         var varopeningDate = new Date(formData.Assets[0].openingDate);
         var vargrossValue = formData.Assets[0].grossValue;
-        console.log(varopeningDate);
         let finOpeningDate =
           ('0' + varopeningDate.getDate()).slice(-2) + '/' + ('0' + (varopeningDate.getMonth() + 1)).slice(-2) + '/' + varopeningDate.getFullYear();
-        console.log(finOpeningDate);
         return (
           <CardText>
             <Col xs={12} md={3}>
@@ -454,7 +449,6 @@ class assetImmovableView extends Component {
             isTransactionHistoryRequired: true,
           }).then(
             function(response) {
-              console.log(response);
               if (
                 response &&
                 response.hasOwnProperty('Assets') &&
@@ -471,7 +465,6 @@ class assetImmovableView extends Component {
             }
           );
         mappingObject = self.state.responseHolder;
-        console.log(mappingObject);
         if (mappingObject != null) {
           return (
             <div>
@@ -513,12 +506,10 @@ class assetImmovableView extends Component {
     };
     const renderBody = function() {
       if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('assetAttributes')) {
-        // console.log(formData.Assets[0].assetAttributes);
         var createCustomObject = formData.Assets[0].assetAttributes;
         var disArray = [];
         _.forEach(createCustomObject, function(value, key) {
           var temp = {};
-          console.log(value);
           if(value.type == "Image"){
             temp.imagePath = value.value;
           } else {
@@ -527,7 +518,6 @@ class assetImmovableView extends Component {
           temp.label = value.key;
           disArray.push(temp);
         });
-        console.log(disArray);
         return (
           <div>
             <Card className="uiCard">

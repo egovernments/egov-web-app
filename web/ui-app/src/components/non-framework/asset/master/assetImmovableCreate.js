@@ -73,7 +73,6 @@ class assetImmovableCreate extends Component {
           typeof groups[i].fields[j].defaultValue == 'number' ||
           typeof groups[i].fields[j].defaultValue == 'boolean'
         ) {
-          //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
         }
 
@@ -231,7 +230,7 @@ class assetImmovableCreate extends Component {
           for (var j = 1; j < arr.length; j++) {
             i++;
             specs[moduleName + '.' + actionName].groups.splice(
-              ind + 1,
+              j + 1,
               0,
               JSON.parse(_stringifiedGroup.replace(regex, specs[moduleName + '.' + actionName].groups[ind].jsonPath + '[' + j + ']'))
             );
@@ -273,7 +272,6 @@ class assetImmovableCreate extends Component {
           'update',
           specifications['asset.update'].objectName
         );
-        console.log(self.props.formData);
         // if(self.props.formData && self.props.formData.Asset && self.props.formData.Asset.assetAttributes){
         //   for (var i = 0; i < self.props.formData.Asset.assetAttributes.length; i++) {
         //     if(self.props.formData.Asset.assetAttributes[i].)
@@ -328,16 +326,6 @@ class assetImmovableCreate extends Component {
     var hash = window.location.hash.split('/');
     let endPoint = '';
     let self = this;
-
-    // try {
-    //   if(hash.length == 3 || (hash.length == 4 && hash.indexOf("update") > -1)) {
-    //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-    //   } else {
-    //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-    //   }
-    // } catch(e) {
-    //   console.log(e);
-    // }
 
     specifications = require(`../../../framework/specs/asset/master/assetImmovable`).default;
     self.displayUI(specifications);
@@ -554,7 +542,6 @@ class assetImmovableCreate extends Component {
               customTemp.type = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type;
               customTemp.isRequired = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isMandatory;
               customTemp.isDisabled = !response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isActive;
-              console.log(response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type , response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].name);
               switch (customTemp.type) {
                 case 'Text':
                   customTemp.type = 'text';
@@ -623,10 +610,7 @@ class assetImmovableCreate extends Component {
                         holder.key = keys[l];
                         holder.value = values[l];
                         valueHolder.push(holder);
-                        console.log(holder.key);
-                        console.log(holder.value);
                         layerData[keys[l]] = others[l];
-                        console.log(layerData[keys[l]] = others[l]);
                       }
 
                       for (var m = 0; m < customSpecs[cId].length; m++) {
@@ -716,7 +700,6 @@ class assetImmovableCreate extends Component {
   makeAjaxCall = (formData, url) => {
     let self = this;
     //delete formData.ResponseInfo;
-    //return console.log(formData);
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
       function(response) {
         self.props.setLoadingStatus('hide');
@@ -726,10 +709,8 @@ class assetImmovableCreate extends Component {
           translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'),
           true
         );
-        console.log(response);
         setTimeout(function() {
           if (self.props.actionName == 'update') {
-            console.log('update');
             var hash = '/non-framework/asset/master/assetImmovableView/' + response.Assets[0].id;
           }
           if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
@@ -738,14 +719,10 @@ class assetImmovableCreate extends Component {
                 self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl +
                 '/' +
                 encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
-              console.log('check');
             } else {
-              console.log('check1');
               if (self.props.actionName == 'update') {
-                console.log('update');
                 var hash = '/non-framework/asset/master/assetImmovableView/' + response.Assets[0].id;
               } else {
-                console.log(formData);
                 var hash = '/non-framework/asset/master/assetImmovableView/' + response.Assets[0].id;
               }
             }
@@ -794,8 +771,6 @@ class assetImmovableCreate extends Component {
       for(var x = 0; x < formData.Asset.landDetails.length; x++){
           var AutoCompleteData = _.get(formData, 'Asset.landDetails[' + x + '].code');
           var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + x + '].code'], { 'key': AutoCompleteData } );
-          console.log(CheckAutoCompleteData.length);
-          console.log(x);
           if(CheckAutoCompleteData.length || formData.Asset.landDetails[x].code == "" || formData.Asset.landDetails[x].code == null){
             if(formData.Asset.landDetails[x].code == ""){
                formData.Asset.landDetails.splice(x, 1);
@@ -803,7 +778,6 @@ class assetImmovableCreate extends Component {
             flag = 1;
           } else if(!CheckAutoCompleteData.length){
             flag = 0;
-            console.log("h");
             formData.Asset.landDetails[x].code = null;
             formData.Asset.landDetails[x] = null;
             self.props.toggleSnackbarAndSetText(true, 'Please Enter Valid Land Details', false, true);
@@ -814,7 +788,6 @@ class assetImmovableCreate extends Component {
         flag = 1;
         formData.Asset.landDetails = null;
       }
-    console.log(flag);
     if(flag == 1){
       self.props.setLoadingStatus('loading');
 
@@ -1476,7 +1449,6 @@ class assetImmovableCreate extends Component {
       for(var i = 0; i < formData.Asset.landDetails.length; i++){
         if(property == 'Asset.landDetails['+ i +'].code'){
           var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails['+ i +'].code'], { 'key': e.target.value });
-          console.log(e.target.value);
           if(e.target.value == null || e.target.value == "" || !CheckAutoCompleteData.length){
             self.handleChange({ target: { value: null } }, 'Asset.landDetails['+ i +'].surveyNo');
             self.handleChange({ target: { value: null } }, 'Asset.landDetails['+ i +'].area');
@@ -1484,22 +1456,6 @@ class assetImmovableCreate extends Component {
         }
       }
     }
-
-    //  if(property == 'Asset.landDetails[0].code'){
-    //   var AutoCompleteData = _.get(formData, 'Asset.landDetails[0].code');
-    //   var x;
-    //   console.log(e.target.value);
-    //   console.log(self.props.dropDownData['Asset.landDetails[0].code']);
-    //   var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[0].code'], { 'key': e.target.value });
-    //   //var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[0].code'], {e.target.value});
-    //   console.log(CheckAutoCompleteData);
-    //   CheckAutoCompleteData.length ? x = 0 : x = 1;
-    //   console.log(x);
-    //   if(e.target.value == null || e.target.value == "" || !CheckAutoCompleteData.length){
-    //     self.handleChange({ target: { value: null } }, 'Asset.landDetails[0].surveyNo');
-    //     self.handleChange({ target: { value: null } }, 'Asset.landDetails[0].area');
-    //   }
-    // }
 
     if (property == 'Asset.assetCategory.id') {
       if (self.state.depericiationValue[e.target.value]) {
@@ -1512,9 +1468,7 @@ class assetImmovableCreate extends Component {
     if (property == 'Asset.assetAttributesCheck.Layer Type.Select') {
       for (var i = 0; i < groups[0].fields.length; i++) {
         if ('Asset.assetAttributesCheck.Layer description(Graphical Representation Of Layers).image' == groups[0].fields[i].jsonPath) {
-          console.log(e.target.value);
           groups[0].fields[i].imagePath = this.state.layerData[e.target.value].description;
-          console.log(groups[0].fields[i].imagePath);
           self.setState({
             hide: false,
           });
@@ -1688,8 +1642,7 @@ class assetImmovableCreate extends Component {
                 'g'
               );
               var stringified = JSON.stringify(_groupToBeInserted);
-              var ind = mockData[moduleName + '.' + actionName].groups[j].index || 0;
-              //console.log(ind);
+              var ind = (j - 1) || 0;
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
@@ -1703,11 +1656,9 @@ class assetImmovableCreate extends Component {
 
               if (reqFields.length) addRequiredFields(reqFields);
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
-              //console.log(mockData[moduleName + "." + actionName].groups);
               setMockData(mockData);
               var temp = { ...formData };
               self.setDefaultValues(mockData[moduleName + '.' + actionName].groups, temp);
-              //console.log(temp);
               setFormData(temp);
               break;
             }
@@ -1756,9 +1707,6 @@ class assetImmovableCreate extends Component {
             mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
             'g'
           );
-          //console.log(regexp);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
           var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
           mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
             stringified.replace(
@@ -1769,11 +1717,8 @@ class assetImmovableCreate extends Component {
 
           if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
             var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
-            //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-            //console.log(mockData[moduleName + "." + actionName].groups);
             grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
             _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
-            //console.log(_formData);
             setFormData(_formData);
 
             //Reduce index values
@@ -1786,7 +1731,6 @@ class assetImmovableCreate extends Component {
           }
         }
       }
-      //console.log(mockData[moduleName + "." + actionName].groups);
       setMockData(mockData);
     } else {
       var _groups = _.get(mockData[moduleName + '.' + actionName], self.getPath(jsonPath));
