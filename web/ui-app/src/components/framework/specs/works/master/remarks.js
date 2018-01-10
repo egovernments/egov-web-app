@@ -44,23 +44,23 @@ var dat = {
       result: {
         header: [
           {
-            label: 'works.search.result.code',
-          },
-          {
             label: 'works.search.result.documenttype',
           },
           {
-            label: 'works.search.result.description',
+            label: 'works.search.result.remarkstype',
           },
           {
-            label: 'works.search.result.type',
+            label: 'works.search.result.remarksDescription',
+          },
+          {
+            label: 'works.search.result.editable',
           },
         ],
-        values: ['code', 'description', 'scheduleCategory.code', 'uom.code'],
-        resultIdKey: 'code',
+        values: ['typeOfDocument', 'remarksType', 'remarksDetails[0].remarksDescription', 'remarksDetails[0].editable'],
+        resultIdKey: 'id',
         resultPath: 'remarks',
-        rowClickUrlUpdate: '/update/works/remarks/{code}',
-        rowClickUrlView: '/view/works/remarks/{code}',
+        rowClickUrlUpdate: '/update/works/remarks/{id}',
+        rowClickUrlView: '/view/works/remarks/{id}',
       },
     },
     'works.create': {
@@ -118,12 +118,9 @@ var dat = {
             fields: [
               {
                 type: 'tableList',
-                jsonPath: 'remarks[0].remarksDetails[0]',
+                jsonPath: 'remarks[0].remarksDetails',
                 tableList: {
                   header: [
-                    {
-                      label: 'works.rate.details.label.remark',
-                    },
                     {
                         label: 'works.rate.details.label.remarksDescription',
                     },
@@ -132,15 +129,6 @@ var dat = {
                     },
                   ],
                   values: [
-                    {
-                      name: 'remarks',
-                      pattern: '',
-                      type: 'text',
-                      jsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      displayJsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      isRequired: true,
-                      isDisabled: false,
-                    },
                     {
                         name: 'remarksDescription',
                         pattern: '',
@@ -154,6 +142,7 @@ var dat = {
                         name: 'editable',
                         pattern: '',
                         type: 'checkbox',
+                        defaultValue: false,
                         jsonPath: 'remarks[0].remarksDetails[0].editable',
                         displayJsonPath: 'remarks[0].remarksDetails[0].editable',
                         isRequired: false,
@@ -194,7 +183,7 @@ var dat = {
                 label: 'works.remarks.label.typeOfDocument',
                 type: 'singleValueList',
                 isRequired: true,
-                isDisabled: false,
+                isDisabled: true,
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
@@ -208,7 +197,7 @@ var dat = {
                 label: 'works.remarks.label.remarksType',
                 type: 'singleValueList',
                 isRequired: true,
-                isDisabled: false,
+                isDisabled: true,
                 defaultValue: '',
                 maxLength: 100,
                 minLength: 1,
@@ -226,9 +215,7 @@ var dat = {
                 jsonPath: 'remarks[0].remarksDetails[0]',
                 tableList: {
                   header: [
-                    {
-                      label: 'works.rate.details.label.remark',
-                    },
+                    
                     {
                         label: 'works.rate.details.label.remarksDescription',
                     },
@@ -238,22 +225,13 @@ var dat = {
                   ],
                   values: [
                     {
-                      name: 'remarks',
-                      pattern: '',
-                      type: 'text',
-                      jsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      displayJsonPath: 'remarks[0].remarksDetails[0].remarks',
-                      isRequired: true,
-                      isDisabled: false,
-                    },
-                    {
                         name: 'remarksDescription',
                         pattern: '',
                         type: 'text',
                         jsonPath: 'remarks[0].remarksDetails[0].remarksDescription',
                         displayJsonPath: 'remarks[0].remarksDetails[0].remarksDescription',
                         isRequired: true,
-                        isDisabled: false,
+                        isDisabled: true,
                     },
                     {
                         name: 'editable',
@@ -262,7 +240,7 @@ var dat = {
                         jsonPath: 'remarks[0].remarksDetails[0].editable',
                         displayJsonPath: 'remarks[0].remarksDetails[0].editable',
                         isRequired: false,
-                        isDisabled: false,
+                        isDisabled: true,
                     },
                   ],
                 },
@@ -270,7 +248,7 @@ var dat = {
             ],
         },
       ],
-      url: '/works-masters/v1/remarks/_search?typeOfDocument={code}',
+      url: '/works-masters/v1/remarks/_search?ids={id}',
       tenantIdRequired: true,
     },
     'works.update': {
@@ -375,8 +353,9 @@ var dat = {
             ],
         },
       ],
-      url: '/works-masters/v1/remarks/_create',
+      url: '/works-masters/v1/remarks/_update',
       tenantIdRequired: true,
+      searchUrl: '/works-masters/v1/remarks/_search?ids={ids}',
     },
   };
   export default dat;
