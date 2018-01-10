@@ -49,14 +49,11 @@ class Report extends Component {
       str = "";
     }
 
-    console.log(field);
-
-    if(Array.isArray(field)){
-      field.forEach(function(item, index){
-        if(typeof(item) == "object"){
-          console.log(item);
-          if(inArrayFormat){
-            str[index] = item[property]?item[property]:item["code"];
+    if (Array.isArray(field)) {
+      field.forEach(function (item, index) {
+        if (typeof (item) == "object") {
+          if (inArrayFormat) {
+            str[index] = item[property] ? item[property] : item["code"];
           }
           else{
             str += ((item[property]?item[property]:item["code"]) + ",");
@@ -423,7 +420,7 @@ class Report extends Component {
             mdmsReq.MasterMetaData.masterName = masterName
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem('tenantId');
             mdmsReq.MasterMetaData.masterData[0] = res.MdmsRes[moduleName][masterName][0];
-            console.log(mdmsReq);
+            // console.log(mdmsReq);
             res = mdmsReq;
           }
           //
@@ -452,12 +449,11 @@ class Report extends Component {
             let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
             console.log(fields);
             for (var i = 0; i < fields.length; i++) {
-              let values=_.get(res, fields[i].jsonPath);
-              console.log(values);
-              res=_.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
+              let values = _.get(res, fields[i].jsonPath);
+              res = _.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
             }
 
-            console.log(res);
+            // console.log(res);
             self.props.setFormData(res);
           }
           let obj1 = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
