@@ -100,10 +100,24 @@ var dat = {
     useTimestamp: true,
     objectName: 'sanitationStaffTargets',
     idJsonPath: 'sanitationStaffTargets[0].targetNo',
-    groups: [{
+    groups: [
+      {
+      name: 'filtercollectionpoint',
+      hide:true,
+      fields: [
+        {
+          name: 'code',
+          jsonPath: 'sanitationStaffTargets[0].filtercollectionpoints',
+          type:"text",
+          defaultValue:true
+        }
+       ]
+      },
+      {
         name: 'CardOne',
         label: '',
-        fields: [{
+        fields: [
+          {
             name: 'code',
             jsonPath: 'sanitationStaffTargets[0].swmProcess.code',
             label: 'swm.create.sanitationStaffTargets.swmProcess',

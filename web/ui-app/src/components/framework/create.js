@@ -939,6 +939,13 @@ class Report extends Component {
     self.props.setLoadingStatus('loading');
     self.checkifHasInjectData(this.props.mockData);
     var formData = { ...this.props.formData };
+   
+ if(_.isArray(formData.sanitationStaffTargets) && formData.sanitationStaffTargets[0].filtercollectionpoints === true){
+  formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(function(obj) {
+        return (obj.isSelected !== undefined && obj.isSelected !== false);
+    });
+      }
+
     if (
       self.props.moduleName &&
       self.props.actionName &&
