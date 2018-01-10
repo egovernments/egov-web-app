@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+ import _ from 'lodash';
 
 const defaultState = {
   showTable: false,
@@ -25,11 +25,23 @@ export default (state = defaultState, action) => {
         mockData: action.mockData,
       };
     case 'SET_DROPDWON_DATA':
+      let dropDownData=action.dropDownData;
+      if (state.dropDownData.hasOwnProperty(action.fieldName.split(".").join("-"))) {
+        if (action.dropDownData.length>0) {
+          let temp=dropDownData.map((item,key)=>{
+            if (item.key) {
+              return {...item,value:item.value || _.filter(state.dropDownData[action.fieldName.split(".").join("-")],{key:item.key}).length>0?_.filter(state.dropDownData[action.fieldName.split(".").join("-")],{key:item.key})[0].value:""}
+            }
+            return item;
+          });
+          dropDownData=temp;
+        }
+      }
       return {
         ...state,
         dropDownData: {
           ...state.dropDownData,
-          [action.fieldName]: action.dropDownData,
+          [action.fieldName]: dropDownData,
         },
       };
     case 'SET_ORIGINAL_DROPDWON_DATA':

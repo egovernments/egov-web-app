@@ -9,7 +9,7 @@ import { translate } from '../common/common';
 import Api from '../../api/api';
 import jp from 'jsonpath';
 import UiButton from './components/UiButton';
-import { fileUpload, getInitiatorPosition } from './utility/utility';
+import { fileUpload, getInitiatorPosition ,callApi,parseKeyAndValueForDD} from './utility/utility';
 import $ from 'jquery';
 
 import UiBackButton from './components/UiBackButton';
@@ -109,7 +109,7 @@ class Report extends Component {
       }
     }
   }
-  
+
   setDefaultValues(groups, dat) {
     var self = this;
     for (var i = 0; i < groups.length; i++) {
@@ -347,7 +347,7 @@ class Report extends Component {
   }
 
   displayUI(results) {
-    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData } = this.props;
+    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData,setDropDownData,setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
 
@@ -534,6 +534,17 @@ class Report extends Component {
     this.setState({
       pathname: this.props.history.location.pathname,
     });
+
+    self.props.setLoadingStatus('loading');
+    if (obj && obj.preApiCalls) {
+      obj.preApiCalls.forEach(async (item)=>{
+        let res=await callApi(item);
+        let orgRes=Object.assign({},res);
+        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
+        setDropDownOriginalData(item.jsonPath,res);
+      })
+    }
+    self.props.setLoadingStatus('hide');
   }
 
   handleMasterData(specifications) {
@@ -1350,7 +1361,7 @@ class Report extends Component {
                     val
                   );
                 }
-  
+
                 for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
                   _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath);
                 }
@@ -1364,12 +1375,12 @@ class Report extends Component {
                     val
                   );
                 }
-  
+
                 for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
                   _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
                 }
               }
-           
+
           }
         }
       }
@@ -1878,7 +1889,7 @@ class Report extends Component {
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
               _groupToBeInserted.index = ind + 1;
-              
+
               for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
                 if (_groupToBeInserted.fields[k].isRequired) {
                   reqFields.push(_groupToBeInserted.fields[k].jsonPath);

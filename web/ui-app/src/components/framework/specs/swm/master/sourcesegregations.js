@@ -49,6 +49,16 @@ var dat = {
     },
   },
   'swm.create': {
+    preApiCalls:[
+      {
+        url:"/tenant/v1/tenant/_search",
+        jsonPath:"sourceSegregations[0]-ulb-code",
+        jsExpForDD:{
+          key:"$..tenant.*.code",
+          value:"$..tenant.*.name",
+        }
+      }
+    ],
     numCols: 4,
     useTimestamp: true,
     objectName: 'sourceSegregations',
@@ -258,6 +268,16 @@ var dat = {
     url: '/swm-services/sourcesegregations/_search?code={code}',
   },
   'swm.update': {
+    preApiCalls:[
+      {
+        url:"/tenant/v1/tenant/_search",
+        jsonPath:"sourceSegregations[0]-ulb-code",
+        jsExpForDD:{
+          key:"$..tenant.*.code",
+          value:"$..tenant.*.name",
+        }
+      }
+    ],
     numCols: 4,
     useTimestamp: true,
     objectName: 'sourceSegregations',
