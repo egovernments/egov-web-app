@@ -1,5 +1,19 @@
 var dat = {
     'swm.search': {
+      preApiCalls:[
+        {
+          url:"/egov-mdms-service/v1/_get",
+          jsonPath:"wasteType.codeTwo",
+          qs:{
+            moduleName:"swm",
+            masterName:"WasteType"
+          },
+          jsExpForDD:{
+            key:"$..code",
+            value:"$..name",
+          }
+        },
+      ],
       numCols: 3,
       useTimestamp: true,
       objectName: 'WasteSubType',
@@ -55,7 +69,7 @@ var dat = {
         values: [
           'name',
           'code',
-          'wasteType.name',
+          {jsonPath:'wasteType.code',reduxObject:"wasteType.codeTwo",isObj:true,cToN:true},
           'wasteType.code'
         ],
         resultPath: 'MdmsRes.swm.WasteSubType',
