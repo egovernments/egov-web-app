@@ -210,7 +210,9 @@ export default class BarChartCard extends Component {
    * render next/prev button to navigate when report is not consolidated
    */
   renderReportNavigationButton = (label) => {
-    if (this.props.isReportConsolidated || this.getModifiedChartData(this.getChartData()).length === 1) {
+    console.log(this.state.maxChartData)
+
+    if (this.props.isReportConsolidated || this.state.maxChartData === 1) {
       return (
         <RaisedButton
           style={{ marginLeft: '90%' }}
