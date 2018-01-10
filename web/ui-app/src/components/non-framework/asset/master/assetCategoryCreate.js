@@ -242,7 +242,7 @@ class assetCategoryCreate extends Component {
           for (var j = 1; j < arr.length; j++) {
             i++;
             specs[moduleName + '.' + actionName].groups.splice(
-              ind + 1,
+              j + 1,
               0,
               JSON.parse(_stringifiedGroup.replace(regex, specs[moduleName + '.' + actionName].groups[ind].jsonPath + '[' + j + ']'))
             );
@@ -1904,8 +1904,11 @@ class assetCategoryCreate extends Component {
                 mockData[moduleName + '.' + actionName].groups[j].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
                 'g'
               );
+              console.log(regexp);
               var stringified = JSON.stringify(_groupToBeInserted);
-              var ind = mockData[moduleName + '.' + actionName].groups[j].index || 0;
+              console.log(j);
+              console.log(mockData[moduleName + '.' + actionName].groups[j]);
+              var ind = (j - 1) || 0;
               //console.log(ind);
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')

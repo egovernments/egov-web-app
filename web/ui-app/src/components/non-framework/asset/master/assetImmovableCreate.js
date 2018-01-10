@@ -664,7 +664,7 @@ class assetImmovableCreate extends Component {
               self.modifyData(self.props.match.params.id);
             }
           }
-        ); 
+        );
       },
       function(err) {
         console.log(err);
@@ -1467,6 +1467,10 @@ class assetImmovableCreate extends Component {
     let { handleChange, mockData, setDropDownData, formData } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`asset.create`];
+
+    if(property == 'Asset.location'){
+      self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
+    }
 
     if(formData && formData.Asset && formData.Asset.landDetails){
       for(var i = 0; i < formData.Asset.landDetails.length; i++){

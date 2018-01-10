@@ -160,14 +160,17 @@ class assetCategoryView extends Component {
           var arr = _.get(_form, specs[moduleName + '.' + actionName].groups[i].jsonPath);
           ind = i;
           var _stringifiedGroup = JSON.stringify(specs[moduleName + '.' + actionName].groups[i]);
+          console.log(_stringifiedGroup);
           var regex = new RegExp(
             specs[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
             'g'
           );
           for (var j = 1; j < arr.length; j++) {
             i++;
+            console.log(ind);
+            console.log(j);
             specs[moduleName + '.' + actionName].groups.splice(
-              ind + 1,
+              j + 1,
               0,
               JSON.parse(_stringifiedGroup.replace(regex, specs[moduleName + '.' + actionName].groups[ind].jsonPath + '[' + j + ']'))
             );
@@ -175,7 +178,6 @@ class assetCategoryView extends Component {
           }
         }
       }
-
       for (var j = 0; j < specs[moduleName + '.' + actionName].groups[i].fields.length; j++) {
         if (
           specs[moduleName + '.' + actionName].groups[i].fields[j].showHideFields &&
@@ -325,6 +327,8 @@ class assetCategoryView extends Component {
         } else{
           self.props.setFormData(resHolder);
         }
+        console.log(resHolder);
+        console.log(JSON.parse(JSON.stringify(specifications)));
     self.setInitialUpdateData(resHolder, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
       },
       function(err) {}
