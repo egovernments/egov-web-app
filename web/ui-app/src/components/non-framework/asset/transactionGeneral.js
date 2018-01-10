@@ -795,11 +795,15 @@ class Transaction extends Component {
     var amountValidationMsg = '';
     console.log(formData);
     //formData.Depreciation.toDate = formData.toDate;
-    const assetsSelected = formData.Depreciation.Assets.filter((asset) => asset.isChecked).map((asset) => asset.id);
-
+    const assetsSelected = formData.Depreciation.Assets.filter((asset) => {
+      return asset.isChecked;
+    }).map((asset) => asset.id);
+    // formData.Depreciation.assetId
+    console.log(localStorage.getItem('tenantId'));
+    var toDate = formData.toDate;
     if (assetsSelected.length) {
       self.props.setLoadingStatus('loading');
-      const data = {'Depreciation' : { 'assetId' : assetsSelected } }
+      const data = {'Depreciation' : { 'assetId' : assetsSelected, 'tenantId': localStorage.getItem('tenantId'), 'toDate': toDate } }
       Api.commonApiPost('/asset-services-maha/assets/depreciations/_create', '', data, '', true).then(
         function(response) {
           self.props.setLoadingStatus('hide');
