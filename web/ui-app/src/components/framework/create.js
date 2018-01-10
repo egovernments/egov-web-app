@@ -1927,35 +1927,126 @@ class Report extends Component {
   };
 
   removeCard = (jsonPath, index, groupName) => {
+    console.log('remove called!!!');
     //Remove at that index and update upper array values
     let { setMockData, moduleName, actionName, setFormData, delRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
     let self = this;
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
-
+    console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
+      
       for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
         if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
-          mockData[moduleName + '.' + actionName].groups.splice(i, 1);
-          ind = i;
-          for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
-            if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
-              notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
-          }
-          delRequiredFields(notReqFields);
-          break;
-        }
-      }
+          console.log(mockData[moduleName + '.' + actionName].groups[i].index);
+          console.log(mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1)
+          /* Check for last card --> Set Form Data --> Splice the groups array. */
+          if(mockData[moduleName + '.' + actionName].groups[i].index === mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1){
+            console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
+            console.log(_formData);
+            if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
+              var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
+              //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+              console.log(mockData[moduleName + "." + actionName].groups);
+              grps.splice(mockData[moduleName + '.' + actionName].groups[i].index, 1);
+              _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
+              console.log(_formData);
+              setFormData(_formData);
 
-      for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired)
+                  notReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
+              }
+
+              delRequiredFields(notReqFields);
+
+              /* Reduce Index Value */
+              mockData[moduleName + '.' + actionName].groups[i].index -= 1;
+              /* And then splice at the end */
+              mockData[moduleName + '.' + actionName].groups.splice(i, 1);
+              
+              break;
+            }
+            
+
+          }
+          /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
+          else{
+            mockData[moduleName + '.' + actionName].groups.splice(i, 1);
+            ind = i;
+            console.log(ind);
+            console.log(mockData[moduleName + '.' + actionName].groups);
+            
+            for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
+              if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
+                notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
+            }
+            // console.log(notReqFields);
+            // mockData[moduleName + '.' + actionName].groups.splice(i, 1);
+            delRequiredFields(notReqFields);
+            // break;
+
+            for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
+                console.log(i);
+                var regexp = new RegExp(
+                  mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
+                  'g'
+                );
+                //console.log(regexp);
+                //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+                //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+                var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
+                console.log(stringified);
+                mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
+                  stringified.replace(
+                    regexp,
+                    mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (mockData[moduleName + '.' + actionName].groups[i].index - 1) + ']'
+                  )
+                );
+      
+                if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
+                  var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
+                  //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+                  //console.log(mockData[moduleName + "." + actionName].groups);
+                  grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
+                  _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
+                  console.log(_formData);
+                  setFormData(_formData);
+      
+                  //Reduce index values
+                  for (let k = ind; k < mockData[moduleName + '.' + actionName].groups.length; k++) {
+                    if (mockData[moduleName + '.' + actionName].groups[k].name == groupName) {
+                      mockData[moduleName + '.' + actionName].groups[k].index -= 1;
+                    }
+                  }
+                  console.log(mockData[moduleName + '.' + actionName].groups);
+                  break;
+                }
+              }
+            }
+          }
+          
+        }
+        
+      }
+      
+      console.log(notReqFields);
+      console.log(mockData);
+      /*for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
         if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
+          console.log(i);
           var regexp = new RegExp(
             mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
             'g'
           );
+          //console.log(regexp);
+          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
           var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
+          console.log(stringified);
           mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
             stringified.replace(
               regexp,
@@ -1965,9 +2056,11 @@ class Report extends Component {
 
           if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
             var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
+            //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+            //console.log(mockData[moduleName + "." + actionName].groups);
             grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
             _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
-            //console.log(_formData);
+            console.log(_formData);
             setFormData(_formData);
 
             //Reduce index values
@@ -1979,7 +2072,7 @@ class Report extends Component {
             break;
           }
         }
-      }
+      }*/
       //console.log(mockData[moduleName + "." + actionName].groups);
       setMockData(mockData);
     } else {
