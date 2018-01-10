@@ -1,5 +1,27 @@
 var dat = {
     'swm.search': {
+      preApiCalls:[
+        {
+          url:"/egov-mdms-service/v1/_get",
+          jsonPath:"shiftType.codeTwo",
+          qs:{
+            moduleName:"swm",
+            masterName:"ShiftType"
+          },
+          jsExpForDD:{
+            key:"$..code",
+            value:"$..name",
+          }
+        },
+        {
+          url:"/hr-masters/designations/_search",
+          jsonPath:"designation.code",
+          jsExpForDD:{
+            key:"$..id",
+            value:"$..name",
+          }
+        }
+      ],
       numCols: 4,
       useTimestamp: true,
       objectName: 'Shift',
@@ -43,8 +65,8 @@ var dat = {
           },
         ],
         values: [
-          'shiftType.name',
-          'designation.name',
+          {jsonPath:'shiftType.code',reduxObject:"shiftType.codeTwo",isObj:true,cToN:true},
+          {jsonPath:'designation.code',reduxObject:"designation.code",isObj:true,cToN:true},
           'shiftStartTime',
           'shiftEndTime',
         ],
@@ -58,7 +80,7 @@ var dat = {
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
-      idJsonPath: 'MdmsRes.swm.Shift[0].code',
+      idJsonPath: 'MasterMetaData.masterData[0].code',
       title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
@@ -115,20 +137,20 @@ var dat = {
             {
               name: 'tenantId',
               jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              type: 'text',             
+              type: 'text',
               defaultValue: localStorage.getItem("tenantId"),
               hide: true
             },
             {
               name: 'moduleName',
               jsonPath: 'MasterMetaData.moduleName',
-              type: 'text',             
+              type: 'text',
               defaultValue: 'swm',
               hide: true
             },
             {
               name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',              
+              jsonPath: 'MasterMetaData.masterName',
               type: 'text',
               defaultValue: 'Shift',
               hide: true
@@ -291,20 +313,20 @@ var dat = {
             /*{
               name: 'tenantId',
               jsonPath: 'MdmsRes.swm.Shift[0].tenantId',
-              type: 'text',             
+              type: 'text',
               defaultValue: localStorage.getItem("tenantId"),
               hide: true
             },
             {
               name: 'moduleName',
               jsonPath: 'MasterMetaData.moduleName',
-              type: 'text',             
+              type: 'text',
               defaultValue: 'swm',
               hide: true
             },
             {
               name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',              
+              jsonPath: 'MasterMetaData.masterName',
               type: 'text',
               defaultValue: 'Shift',
               hide: true
@@ -463,20 +485,20 @@ var dat = {
             // {
             //   name: 'tenantId',
             //   jsonPath: 'MasterMetaData.masterData[0].tenantId',
-            //   type: 'text',             
+            //   type: 'text',
             //   defaultValue: localStorage.getItem("tenantId"),
             //   hide: true
             // },
             // {
             //   name: 'moduleName',
             //   jsonPath: 'MasterMetaData.moduleName',
-            //   type: 'text',             
+            //   type: 'text',
             //   defaultValue: 'swm',
             //   hide: true
             // },
             // {
             //   name: 'masterName',
-            //   jsonPath: 'MasterMetaData.masterName',              
+            //   jsonPath: 'MasterMetaData.masterName',
             //   type: 'text',
             //   defaultValue: 'Shift',
             //   hide: true

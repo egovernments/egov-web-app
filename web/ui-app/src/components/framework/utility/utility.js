@@ -1,4 +1,6 @@
 import Api from '../../../api/api';
+import _ from 'lodash';
+import jp from 'jsonpath';
 
 export function int_to_words(int) {
   if (int === 0) return 'zero';
@@ -133,6 +135,57 @@ export function getInitiatorPosition(cb) {
   } else {
     cb(null, '');
   }
+}
+
+
+export const callApi=async obj=> {
+  if (!_.isEmpty(obj) && obj.hasOwnProperty("url") && obj.url) {
+    let {url,qs,body}=obj
+    try {
+      var res=await Api.commonApiPost(url,qs ||{},body|| {});
+      return res;
+      // console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+}
+
+export const parseKeyAndValueForDD=(response,key,value)=>{
+  let dropDownData = [];
+  if (response) {
+
+    let keys = jp.query(response, key);
+    let values = jp.query(response, value);
+    for (var k = 0; k < keys.length; k++) {
+      let obj = {};
+      obj['key'] = keys[k];
+      obj['value'] = values[k];
+      dropDownData.push(obj);
+    }
+
+    dropDownData.sort(function(s1, s2) {
+      return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
+    });
+    dropDownData.unshift({
+      key: null,
+      value: '-- Please Select --',
+    });
+    return dropDownData;
+  }
+  else {
+    dropDownData.unshift({
+      key: null,
+      value: '-- Please Select --',
+    });
+    return dropDownData;
+  }
+}
+
+export const cToN=(object,key)=>{
+  let filteredObject=_.filter(object,{key});
+  return filteredObject.length>0?filteredObject[0].value:"";
 }
 
 export function getTitleCase(field) {

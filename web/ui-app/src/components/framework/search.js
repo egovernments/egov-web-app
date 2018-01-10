@@ -10,7 +10,7 @@ import Api from '../../api/api';
 import UiButton from './components/UiButton';
 import UiAddButton from './components/UiAddButton';
 import UiDynamicTable from './components/UiDynamicTable';
-import { fileUpload } from './utility/utility';
+import { fileUpload ,callApi,parseKeyAndValueForDD,cToN} from './utility/utility';
 import UiTable from './components/UiTable';
 //import UiLogo from './components/UiLogo';
 import jp from 'jsonpath';
@@ -92,7 +92,7 @@ class Search extends Component {
         specifications = require(`./specs/${hash[2]}/transaction/${hash[3]}`).default;
       }
     } catch (e) {}
-    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData } = this.props;
+    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData ,setDropDownData,setDropDownOriginalData,setLoadingStatus} = this.props;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
     reqRequired = [];
     this.setLabelAndReturnRequired(obj);
@@ -110,6 +110,16 @@ class Search extends Component {
       pathname: this.props.history.location.pathname,
       showResult: false,
     });
+    setLoadingStatus('loading');
+    if (obj && obj.preApiCalls) {
+      obj.preApiCalls.forEach(async (item)=>{
+        let res=await callApi(item);
+        let orgRes=Object.assign({},res);
+        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
+        setDropDownOriginalData(item.jsonPath,res);
+      })
+    }
+    setLoadingStatus('hide');
   }
 
   componentDidMount() {
@@ -132,6 +142,7 @@ class Search extends Component {
   }
 
   tableDataBuilder = (res, currentSpecification, self) => {
+    let {dropDownData}=this.props;
     self.props.setLoadingStatus('hide');
     var result = currentSpecification.result;
     var resultList = {
@@ -152,13 +163,18 @@ class Search extends Component {
             continue;
           }
           if (typeof valuePath === 'object' && valuePath.isObj) {
+
             var childArray = [];
-            if (valuePath.childArray && valuePath.childArray.length > 0) {
-              for (var k = 0; k < valuePath.childArray.length; k++) {
-                childArray.push(_.get(values[i], valuePath.childArray[k]));
+            if (valuePath.cToN) {
+              tmp.push(cToN(dropDownData[valuePath.reduxObject],_.get(values[i], valuePath.jsonPath)));
+              continue
+            } else {
+              if (valuePath.childArray && valuePath.childArray.length > 0) {
+                for (var k = 0; k < valuePath.childArray.length; k++) {
+                  childArray.push(_.get(values[i], valuePath.childArray[k]));
+                }
               }
             }
-
             tmp.push(childArray);
             continue;
           }
@@ -194,13 +210,12 @@ class Search extends Component {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
-    
     if (hasDefaultSearch) {
       formData = window.localStorage.getItem('formData') && JSON.parse(window.localStorage.getItem('formData')) || {};
       this.props.setFormData(formData);
     }
     for (var key in formData) {
-      if (formData[key] === '' || typeof formData[key] == 'undefined') delete formData[key];
+      if (formData[key] == '' || typeof formData[key] == 'undefined') delete formData[key];
     }
 
     var specifications = JSON.parse(window.localStorage.getItem('specifications'));
@@ -215,7 +230,7 @@ class Search extends Component {
       let k = 0;
       var masterDetail = {};
       data.moduleName = self.props.match.params.moduleName;
-      console.log(formData)
+      // console.log(formData)
       var filterData
       if(_.isEmpty(formData)) {
         filterData = null;
@@ -234,13 +249,7 @@ class Search extends Component {
             }
           }
           else{
-            if (typeof (Object.values(formData)[i]) == 'boolean') {
-              str.push(`@.${Object.keys(formData)[i]}==${Object.values(formData)[i]}`);
-            }
-            else
-            {
             str.push(`@.${Object.keys(formData)[i]}=='${Object.values(formData)[i]}'`);
-                }
           }
         }
         str = str.join('&&');
@@ -591,7 +600,8 @@ class Search extends Component {
                   key: null,
                   value: '-- Please Select --',
                 });
-                setDropDownData(value.jsonPath, dropDownData);
+
+
               }
             },
             function(err) {
@@ -972,6 +982,9 @@ const mapDispatchToProps = dispatch => ({
   setDropDownData: (fieldName, dropDownData) => {
     // console.log(fieldName,dropDownData)
     dispatch({ type: 'SET_DROPDWON_DATA', fieldName, dropDownData });
+  },
+  setDropDownOriginalData: (fieldName, dropDownData) => {
+    dispatch({ type: 'SET_ORIGINAL_DROPDWON_DATA', fieldName, dropDownData });
   },
   resetDropdownData: () => {
     dispatch({ type: 'RESET_DROPDOWN_DATA' });
