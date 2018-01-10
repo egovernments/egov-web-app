@@ -67,7 +67,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'registrationNo',
-            label: 'swm.create.registrationNo',
+            label: 'swm.create.vendorregistrationNo',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -84,7 +84,7 @@ var dat = {
       header: [
         {label: 'swm.create.supplier.name'},
         {label: 'swm.create.vendorNo'},
-        {label: 'swm.create.registrationNo'}
+        {label: 'swm.create.vendorregistrationNoHeader'}
       ],
       values: ['name', 'vendorNo', 'registrationNo'/*, 'servicesOffered.name'*/],
       resultPath: 'vendors',
@@ -150,7 +150,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'vendors[0].registrationNo',
-            label: 'swm.create.registrationNo',
+            label: 'swm.create.vendorregistrationNo',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -481,7 +481,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'vendors[0].registrationNo',
-            label: 'swm.create.registrationNo',
+            label: 'swm.create.vendorregistrationNo',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -688,7 +688,7 @@ var dat = {
           {
             name: 'registrationNo',
             jsonPath: 'vendors[0].registrationNo',
-            label: 'swm.update.registrationNo',
+            label: 'swm.create.vendorregistrationNo',
             pattern: '',
             type: 'text',
             isRequired: true,
