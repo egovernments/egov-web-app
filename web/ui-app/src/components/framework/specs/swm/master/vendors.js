@@ -614,6 +614,24 @@ var dat = {
         label: 'swm.create.group.title.ServicesOffered',
         fields: [
           {
+            name: 'ServicesOffered',
+            label: 'swm.create.servicesOffered',
+            jsonPath: 'vendors[0].servicesOffered',
+            type: 'multiValueList',
+            pattern: '',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=SwmProcess|$..code|$..name',
+            minLength: 1,
+            patternErrorMsg: '',
+            hasATOAATransform:true,
+            aATransformInfo:{
+              to:'vendors[0].servicesOffered',
+              key:'code'
+            }
+          },
+          {
             name: 'details',
             jsonPath: 'vendors[0].details',
             label: 'swm.create.details',
