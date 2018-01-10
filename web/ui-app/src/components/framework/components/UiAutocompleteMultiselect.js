@@ -116,7 +116,7 @@ initData(props) {
   }
 
 
-  handleSelection = (values, name) =>{ debugger;
+  handleSelection = (values, name) =>{ 
         let item = this.props.item;
                 this.setState({ [name]: values })
         let itemvalue=[];        
@@ -142,7 +142,7 @@ initData(props) {
 
   handleAutoCompleteTyping = (searchText) => console.debug('You typed in AutoComplete :', searchText) // eslint-disable-line no-console
 
-  renderAutomultiselect = (item) => {debugger;
+  renderAutomultiselect = (item) => {
     const { multiselect,dataSource } = this.state;
     const {dropDownData} =this.props;
     const dataSourceNodes = dataSource.map(({ key, value }) => (
