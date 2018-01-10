@@ -168,6 +168,18 @@ export default class TableCard extends Component {
     return `Monthly performance of KPI ${this.props.kpis} for ULB ${ulbName} in FinancialYear ${data.finYear}`
   }
 
+  getColumnName = (name) => {
+    if (name === 'FINYEAR') return 'FINANCIAL YEAR'
+    if (name === 'KPINAME') return 'KPI NAME'
+    if (name === 'TARGET') return 'KPI TARGET'
+    if (name === 'NAME') return 'KPI VALUE MONTH'
+    if (name === 'MONTHLYVALUE') return 'KPI ACHIEVED'
+    if (name === 'VALUE') return 'KPI ACHIEVED'
+    if (name === 'ULBNAME') return 'ULB NAME'
+
+    return name
+  }
+
   render() {
     return <div>{this.renderKPIData()}</div>;
   }
@@ -233,7 +245,7 @@ export default class TableCard extends Component {
     return (
       <Table style={{ color: 'black', fontWeight: 'normal', marginTop: '10px' }} bordered responsive className="table-striped">
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>{headers.map((item, index) => <TableHeaderColumn key={index}>{item.toUpperCase()}</TableHeaderColumn>)}</TableRow>
+              <TableRow>{headers.map((item, index) => <TableHeaderColumn key={index}>{this.getColumnName(item.toUpperCase())}</TableHeaderColumn>)}</TableRow>
             </TableHeader>
 
             <TableBody displayRowCheckbox={false}>
