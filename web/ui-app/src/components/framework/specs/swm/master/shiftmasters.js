@@ -33,7 +33,7 @@ var dat = {
           fields: [
             {
               name: 'shift',
-              jsonPath: 'shift',
+              jsonPath: 'name',
               label: 'swm.Shift.create.shift',
               pattern: '',
               type: 'autoCompelete',
@@ -97,7 +97,7 @@ var dat = {
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
-      idJsonPath: 'MasterMetaData.masterData[0].code',
+      idJsonPath: 'MdmsRes.swm.Shift[0].code',
       title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
@@ -317,7 +317,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             // {
             //   name: 'code',
@@ -489,7 +489,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             // {
             //   name: 'code',
