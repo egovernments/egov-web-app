@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -52,7 +53,7 @@ let styles = {
   },
 };
 
-export default class ShowFields extends Component {
+class ShowFields extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -223,18 +224,18 @@ export default class ShowFields extends Component {
   fieldInsideField = (numCols,fields) => {
     return (<div>
       {fields.map((field, fieldIndex)=>{
-        return ( 
+        return (
           <Col
           key={fieldIndex}
           md={numCols} style={{padding:'0px'}}>
          {this.renderField(field, this.props.screen, fieldIndex, field.screenView)}
            </Col>
-         
-        ); 
+
+        );
       })}
       </div>);
   }
-  
+
   renderGroups = (groups, noCols, uiFramework = 'google', jsonPath) => {
     let self = this;
     switch (uiFramework) {
@@ -285,7 +286,7 @@ export default class ShowFields extends Component {
                   })}
                 </CardText>
               </Card>
-              
+
             );
           } else {
             return self.renderCard(listArr[key].object, listArr[key].index, noCols, jsonPath, uiFramework, groups);
@@ -797,3 +798,11 @@ export default class ShowFields extends Component {
     return <div>{this.renderGroups(groups, noCols, uiFramework)}</div>;
   }
 }
+
+export default ShowFields;
+// const mapStateToProps=state=>({
+//     formData:state.frameworkForm.form
+//   })
+//
+//
+// export default connect(mapStateToProps)(ShowFields);

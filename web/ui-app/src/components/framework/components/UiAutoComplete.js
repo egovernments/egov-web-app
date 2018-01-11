@@ -6,6 +6,8 @@ import MenuItem from 'material-ui/MenuItem';
 import Api from '../../../api/api';
 import jp from 'jsonpath';
 import _ from 'lodash';
+import { withRouter } from 'react-router';
+let tracker = [];
 
 let searchTextCom = '';
 class UiAutoComplete extends Component {
@@ -22,13 +24,13 @@ class UiAutoComplete extends Component {
     // });
   };
 
-  initData() {
-    let { item, setDropDownData } = this.props;
+  initData(props) {
+    let { item, setDropDownData } = props;
 
     if (item.onLoad == false) {
       setDropDownData(item.jsonPath, []);
     } else {
-      this.callAPI('');
+      this.callAPI('',props);
     }
 
     // this.setState({
@@ -37,10 +39,17 @@ class UiAutoComplete extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
+    let {dropDownData,item}=this.props;
     // console.log(nextProps);
     // alert(nextProps)
     // 	console.log(nextProps.item.jsonPath, this.props.getVal(nextProps.item.jsonPath));
     //  this.setState({ searchText: this.props.getVal(nextProps.item.jsonPath) });
+    if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData[item.jsonPath] === undefined ||item.url!=nextProps.item.url) {
+      this.initData(nextProps);
+      if (this.props.location.pathname != nextProps.history.location.pathname) {
+        tracker=[];
+      }
+    }
   }
 
   getNameById=(id,jsonPath)=>
@@ -50,14 +59,15 @@ class UiAutoComplete extends Component {
   }
 
   componentDidMount() {
-    this.initData();
+    this.initData(this.props);
   }
 
-  callAPI = keyUpValue => {
+  callAPI = (keyUpValue,props) => {
     // console.log(keyUpValue);
-    let { item, setDropDownData, useTimestamp } = this.props;
+    let { item, setDropDownData, useTimestamp } = props;
     // console.log('API called:', item.hasOwnProperty("url"), item.url.search("\\|"), item.url.search("{"));
-    if (item.hasOwnProperty('url') && item.url && item.url.search('\\|') > -1 && item.url.search('{') == -1) {
+    if (item.type=="autoCompelete" && item.hasOwnProperty('url') && item.url && item.url.search('\\|') > -1 && item.url.search('{') == -1 && !_.some(tracker, { jsonPath: item.jsonPath })) {
+      tracker.push({ jsonPath: item.jsonPath });
       let splitArray = item.url.split('?');
       // console.log(splitArray);
       let context = '';
@@ -178,7 +188,7 @@ class UiAutoComplete extends Component {
                 if (!e.target.value) {
                   this.handleUpdateInput('');
                 } else {
-                  item.onLoad == false ? this.callAPI(e.target.value) : '';
+                  item.onLoad == false ? this.callAPI(e.target.value,this.props) : '';
                 }
                 this.props.handler(
                   { target: { value: e.target.value } },
@@ -247,4 +257,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: 'SET_DROPDWON_DATA', fieldName, dropDownData });
   },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(UiAutoComplete);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UiAutoComplete));
