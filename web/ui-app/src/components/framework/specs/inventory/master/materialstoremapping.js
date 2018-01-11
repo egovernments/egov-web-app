@@ -37,6 +37,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'materialStoreMappings',
+    title:'inventory.materialStoreMap.master.title',
     url: '/inventory-services/materialstoremapping/_search',
     customActionsAndUrl: [
       {
@@ -47,7 +48,7 @@ var dat = {
     groups: [
       {
         name: 'search',
-        label: 'inventory.search.title.materialStoreMapping',
+        label: 'inventory.common.searchcriteria',
         fields: [
           {
             name: 'code',
@@ -120,7 +121,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'materials',
     url: '/inventory-services/materials/_update',
-    title: 'inventory.material.title',
+    title: 'inventory.materialStoreMap.master.title',
     searchUrl: '/inventory-services/materials/_search?code={code}',
 
     groups: [
@@ -551,13 +552,13 @@ var dat = {
     useTimestamp: true,
     objectName: 'materials',
 
-    title: 'inventory.material.title',
+    title: 'inventory.materialStoreMap.master.title',
     url: '/inventory-services/materials/_search?code={code}',
 
     groups: [
       {
-        name: 'Update Material',
-        label: 'inventory.create.group.title.updatematerial',
+        name: 'View Material',
+        label: 'inventory.create.group.title.viewmaterial',
         fields: [
           {
             name: 'code',
@@ -696,7 +697,7 @@ var dat = {
       },
       {
         name: 'Material Map To Store',
-        label: '',
+        label: 'inventory.material.maptostore',
         fields: [
           
 
