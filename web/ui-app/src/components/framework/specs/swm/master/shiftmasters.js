@@ -15,12 +15,12 @@ var dat = {
         },
         {
           url:"/hr-masters/designations/_search",
-          jsonPath:"designation.code",
+          jsonPath:"designation.codeDes",
           jsExpForDD:{
             key:"$..code",
             value:"$..name",
           }
-        }
+        },
       ],
       numCols: 4,
       useTimestamp: true,
@@ -32,9 +32,9 @@ var dat = {
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
             {
-              name: 'shiftType',
-              jsonPath: 'shiftType.code',
-              label: 'swm.Shift.create.shiftType',
+              name: 'shift',
+              jsonPath: 'shift',
+              label: 'swm.Shift.create.shift',
               pattern: '',
               type: 'autoCompelete',
               isRequired: false,
@@ -42,13 +42,29 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
-            }
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
+            },
+            // {
+            //   name: 'shiftType',
+            //   jsonPath: 'shiftType',
+            //   label: 'swm.Shift.create.shiftType',
+            //   pattern: '',
+            //   type: 'autoCompelete',
+            //   isRequired: false,
+            //   isDisabled: false,
+            //   maxLength: 128,
+            //   minLength: 1,
+            //   patternErrorMsg: '',
+            //   url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
+            // }
           ]
         },
       ],
       result: {
         header: [
+          {
+            label: 'swm.Shift.create.shift',
+          },
           {
             label: 'swm.Shift.create.shiftType',
           },
@@ -65,8 +81,9 @@ var dat = {
           },
         ],
         values: [
+          'name',
           {jsonPath:'shiftType.code',reduxObject:"shiftType.codeTwo",isObj:true,cToN:true},
-          {jsonPath:'designation.code',reduxObject:"designation.code",isObj:true,cToN:true},
+          {jsonPath:'designation.code',reduxObject:"designation.codeDes",isObj:true,cToN:true},
           'shiftStartTime',
           'shiftEndTime',
         ],
