@@ -58,7 +58,7 @@ var dat = {
           label: 'inventory.status',
         },
       ],
-      values: ['financialYear',   { jsonPath: 'receivingStore.code', reduxObject: "store.code", isObj: true, cToN: true },, 'mrnNumber', 'mrnStatus'],
+      values: ['financialYear',   { jsonPath: 'receivingStore.code', reduxObject: "store.code", isObj: true, cToN: true }, 'mrnNumber', 'mrnStatus'],
       resultPath: 'materialReceipt',
       rowClickUrlUpdate: '/update/inventory/openingbalance/{id}',
       rowClickUrlView: '/view/inventory/openingbalance/{id}',
