@@ -16,7 +16,7 @@ var dat = {
             label: 'inventory.material.name',
             type: 'autoCompelete',
             jsonPath: 'code',
-            displayJsonPath: 'materialName',
+     
             isRequired: false,
             isDisabled: false,
             url: '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=Material|$..code|$..name',
