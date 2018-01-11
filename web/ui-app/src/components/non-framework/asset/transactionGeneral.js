@@ -946,7 +946,7 @@ class Transaction extends Component {
           {/*showResult && <UiTable resultList={resultList} rowClickHandler={rowClickHandler}/>*/}
         </form>
 
-        {showResult && <div>  <UiDynamicTable resultList={resultList} ui="google" handler={handleChange} getVal={getVal} fieldErrors={fieldErrors} /></div>}
+        {showResult && <div>{renderSelect()}  <UiDynamicTable resultList={resultList} ui="google" handler={handleChange} getVal={getVal} fieldErrors={fieldErrors} /></div>}
 
         <br />
         {showResult &&
