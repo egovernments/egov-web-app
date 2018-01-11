@@ -3,7 +3,6 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'DumpingGround',
-    //url: '/swm-services/dumpingground/_search',
     url: '/egov-mdms-service/v1/_search',
     groups: [
       {
@@ -66,7 +65,6 @@ var dat = {
     numCols: 3,
     useTimestamp: true,
     objectName: 'MasterMetaData',
-    //idJsonPath: 'MasterMetaData.masterData[0].code',
     idJsonPath: 'MdmsRes.swm.DumpingGround[0].code',
     title: 'swm.create.page.title.dumpingGround',
     groups: [
@@ -924,45 +922,6 @@ var dat = {
           },
         ]
       },
-
-      /*{
-        name: 'HideGroup',
-        hide: true,
-        fields: [
-            {
-              name: 'tenantId',
-              jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              defaultValue: localStorage.getItem("tenantId"),
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'moduleName',
-              jsonPath: 'MasterMetaData.moduleName',
-              defaultValue: 'swm',
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',
-              defaultValue: 'DumpingGround',
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-            {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'DumpingGround-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true
-            },
-        ]
-      }*/
     ],
     tenantIdRequired: true,
     url: '/egov-mdms-service/v1/_search?code={code}',
