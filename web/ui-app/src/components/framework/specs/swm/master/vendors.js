@@ -821,7 +821,7 @@ var dat = {
             "label": "",
             "hierarchyType": "REVENUE",
             "jsonPath": "vendors[0].servicedLocations[0].code",
-            "isRequired": false,
+            "isRequired": true,
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
