@@ -277,7 +277,7 @@ class UiTable extends Component {
     } = this.props;
     let self = this;
 
-    const getNameById = function(item2, i2) {debugger;
+    const getNameById = function(item2, i2) {
       if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isChecked) {
         var selected = false;
         if(selectedValues.length>0){
