@@ -1116,8 +1116,9 @@ var dat = {
           {
             name: 'uploadInsuranceDetails',
             jsonPath: 'vehicles[0].insuranceDetails.insuranceDocument.fileStoreId',
-            label: 'swm.vehicles.create.insurance.details',
+            label: 'swm.vehicles.create.insurance.download.details',
             type: 'singleFileUpload',
+            readonly:true,
             pathToArray: 'documentTypes',
             displayNameJsonPath: 'name',
             isRequired: true,
