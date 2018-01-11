@@ -803,7 +803,7 @@ class Transaction extends Component {
     var toDate = formData.toDate;
     if (assetsSelected.length) {
       self.props.setLoadingStatus('loading');
-      const data = {'Depreciation' : { 'assetId' : assetsSelected, 'tenantId': localStorage.getItem('tenantId'), 'toDate': toDate } }
+      const data = {'Depreciation' : { 'assetIds' : assetsSelected, 'tenantId': localStorage.getItem('tenantId'), 'toDate': toDate } }
       Api.commonApiPost('/asset-services-maha/assets/depreciations/_create', '', data, '', true).then(
         function(response) {
           self.props.setLoadingStatus('hide');

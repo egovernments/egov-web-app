@@ -30,7 +30,12 @@ export default (state = defaultState, action) => {
         if (action.dropDownData.length>0) {
           let temp=dropDownData.map((item,key)=>{
             if (item.key) {
-              return {...item,value:item.value || _.filter(state.dropDownData[action.fieldName.split(".").join("-")],{key:item.key}).length>0?_.filter(state.dropDownData[action.fieldName.split(".").join("-")],{key:item.key})[0].value:""}
+              const filteredValues =  _.filter(state.dropDownData[action.fieldName.split(".").join("-")], {
+                  key: item.key
+             });
+             const value = filteredValues.length > 0 && filteredValues[0].hasOwnProperty("value")  ?  filteredValues[0].value : "";
+             return {...item,value:item.value || value };
+
             }
             return item;
           });
