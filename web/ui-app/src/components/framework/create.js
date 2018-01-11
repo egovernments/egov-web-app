@@ -9,7 +9,7 @@ import { translate } from '../common/common';
 import Api from '../../api/api';
 import jp from 'jsonpath';
 import UiButton from './components/UiButton';
-import { fileUpload, getInitiatorPosition ,callApi,parseKeyAndValueForDD} from './utility/utility';
+import { fileUpload, getInitiatorPosition, callApi, parseKeyAndValueForDD } from './utility/utility';
 import $ from 'jquery';
 
 import UiBackButton from './components/UiBackButton';
@@ -347,7 +347,7 @@ class Report extends Component {
   }
 
   displayUI(results) {
-    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData,setDropDownData,setDropDownOriginalData } = this.props;
+    let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData, setDropDownData, setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
 
@@ -537,11 +537,11 @@ class Report extends Component {
 
     self.props.setLoadingStatus('loading');
     if (obj && obj.preApiCalls) {
-      obj.preApiCalls.forEach(async (item)=>{
-        let res=await callApi(item);
-        let orgRes=Object.assign({},res);
-        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
-        setDropDownOriginalData(item.jsonPath,res);
+      obj.preApiCalls.forEach(async (item) => {
+        let res = await callApi(item);
+        let orgRes = Object.assign({}, res);
+        setDropDownData(item.jsonPath, parseKeyAndValueForDD(res, item.jsExpForDD.key, item.jsExpForDD.value));
+        setDropDownOriginalData(item.jsonPath, res);
       })
     }
     self.props.setLoadingStatus('hide');
@@ -939,12 +939,12 @@ class Report extends Component {
     self.props.setLoadingStatus('loading');
     self.checkifHasInjectData(this.props.mockData);
     var formData = { ...this.props.formData };
-   
- if(_.isArray(formData.sanitationStaffTargets) && formData.sanitationStaffTargets[0].filtercollectionpoints === true){
-  formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(function(obj) {
+
+    if (_.isArray(formData.sanitationStaffTargets) && formData.sanitationStaffTargets[0].filtercollectionpoints === true) {
+      formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(function (obj) {
         return (obj.isSelected !== undefined && obj.isSelected !== false);
-    });
-      }
+      });
+    }
 
     if (
       self.props.moduleName &&
@@ -1042,7 +1042,7 @@ class Report extends Component {
   hideField = (_mockData, hideObject, jsonPath, reset, val) => {
     let { moduleName, actionName, setFormData, delRequiredFields, removeFieldErrors, addRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
-    if(jsonPath !=null) {
+    if (jsonPath != null) {
       var pathArr = jsonPath.split('.');
       pathArr.pop();
       pathArr.push(hideObject.name);
@@ -1172,9 +1172,9 @@ class Report extends Component {
     }
   };
 
-  showField = (_mockData, showObject, jsonPath,  reset) => {
+  showField = (_mockData, showObject, jsonPath, reset) => {
 
-    if(jsonPath != null) {
+    if (jsonPath != null) {
       var pathArr = jsonPath.split('.');
       pathArr.pop();
       pathArr.push(showObject.name);
@@ -1314,30 +1314,30 @@ class Report extends Component {
     let _formData = { ...this.props.formData };
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
       for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-        if(_mockData[moduleName + '.' + actionName].groups[i].fields[j].type =='tableList'){
-            for (let k = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values.length; k++) {
-                 if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].name) {
-                     _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isDisabled = reset ? true : false;
-                      if(required){
-                       _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isRequired = reset ? false : true;
-                     }
-                      if (!reset) {
-                         _.set(_formData,  _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].jsonPath, '');
-                         setFormData(_formData);
-                        }
-                       break;
-                  }        
-         }
-        }
-        else{
-        if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
-          _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? true : false;
-          if (!reset) {
-            _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
-            setFormData(_formData);
+        if (_mockData[moduleName + '.' + actionName].groups[i].fields[j].type == 'tableList') {
+          for (let k = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values.length; k++) {
+            if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].name) {
+              _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isDisabled = reset ? true : false;
+              if (required) {
+                _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isRequired = reset ? false : true;
+              }
+              if (!reset) {
+                _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].jsonPath, '');
+                setFormData(_formData);
+              }
+              break;
+            }
           }
-          break;
         }
+        else {
+          if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+            _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? true : false;
+            if (!reset) {
+              _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
+              setFormData(_formData);
+            }
+            break;
+          }
         }
       }
     }
@@ -1349,30 +1349,30 @@ class Report extends Component {
     let _formData = { ...this.props.formData };
     for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
       for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-       if(_mockData[moduleName + '.' + actionName].groups[i].fields[j].type =='tableList'){
-            for (let k = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values.length; k++) {
-                 if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].name) {
-                     _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isDisabled = reset ? false : true;
-                     if(required){
-                       _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isRequired = reset ? true : false;
-                     }
-                      if (!reset) {
-                         _.set(_formData,  _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].jsonPath, '');
-                         setFormData(_formData);
-                        }
-                        break;
-                  }        
-         }
-        }
-        else{
-        if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
-          _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? false : true;
-          if (!reset) {
-            _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
-            setFormData(_formData);
+        if (_mockData[moduleName + '.' + actionName].groups[i].fields[j].type == 'tableList') {
+          for (let k = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values.length; k++) {
+            if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].name) {
+              _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isDisabled = reset ? false : true;
+              if (required) {
+                _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].isRequired = reset ? true : false;
+              }
+              if (!reset) {
+                _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].tableList.values[k].jsonPath, '');
+                setFormData(_formData);
+              }
+              break;
+            }
           }
-      break;
         }
+        else {
+          if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+            _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? false : true;
+            if (!reset) {
+              _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
+              setFormData(_formData);
+            }
+            break;
+          }
         }
       }
     }
@@ -1429,35 +1429,35 @@ class Report extends Component {
           _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields.length
         ) {
           for (let k = 0; k < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields.length; k++) {
-              if (val == _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].ifValue) {
-                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
-                  _mockData = this.hideField(
-                    _mockData,
-                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
-                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
-                    false,
-                    val
-                  );
-                }
-
-                for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
-                  _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath);
-                }
-              } else {
-                for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
-                  _mockData = this.hideField(
-                    _mockData,
-                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
-                    _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
-                    true,
-                    val
-                  );
-                }
-
-                for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
-                  _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
-                }
+            if (val == _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].ifValue) {
+              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
+                _mockData = this.hideField(
+                  _mockData,
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
+                  false,
+                  val
+                );
               }
+
+              for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
+                _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath);
+              }
+            } else {
+              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
+                _mockData = this.hideField(
+                  _mockData,
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
+                  true,
+                  val
+                );
+              }
+
+              for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
+                _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
+              }
+            }
 
           }
         }
@@ -1555,8 +1555,8 @@ class Report extends Component {
       dependantIdx = findLastIdxOnJsonPath(property);
       if (dependantIdx !== undefined) currentProperty = replaceLastIdxOnJsonPath(property, 0); //RESET INDEX 0 TO FIND DEPENDANT FIELDS FROM TEMPLATE JSON
       depedants = jp.query(obj, `$.groups..fields[?(@.type=="tableList")].tableList.values[?(@.jsonPath == "${currentProperty}")].depedants.*`);
-      }
-    if(property){
+    }
+    if (property) {
       //Changes to handle table sum
       var jpathname = property.substr(0, property.lastIndexOf('[') + 1) + '0' + property.substr(property.lastIndexOf('[') + 2);
 
@@ -1566,27 +1566,26 @@ class Report extends Component {
           ...this.props.formData,
         };
         if (_formData) {
-          let impactField ='' ;
+          let impactField = '';
           let dfieldname, cfieldname;
-          if(dependency[0].indexOf(':') >0)
-            {
-              let fields = dependency[0].split(':');
-              let dfield = fields[0];
-              let cfield = fields[1];
-               impactField = dfield;
-                if(dfield)
-                  dfieldname = dfield.substr(dfield.lastIndexOf(']') + 2);
-                if(cfield)
-                  cfieldname = cfield.substr(cfield.lastIndexOf(']') + 2);
+          if (dependency[0].indexOf(':') > 0) {
+            let fields = dependency[0].split(':');
+            let dfield = fields[0];
+            let cfield = fields[1];
+            impactField = dfield;
+            if (dfield)
+              dfieldname = dfield.substr(dfield.lastIndexOf(']') + 2);
+            if (cfield)
+              cfieldname = cfield.substr(cfield.lastIndexOf(']') + 2);
 
-            } else{
-              impactField= dependency[0];
-            }
-               let field = property.substr(0, property.lastIndexOf('['));
-                let last = property.substr(property.lastIndexOf(']') + 2);
-                let curIndex = property.substr(property.lastIndexOf('[') + 1, 1);
-            
-       
+          } else {
+            impactField = dependency[0];
+          }
+          let field = property.substr(0, property.lastIndexOf('['));
+          let last = property.substr(property.lastIndexOf(']') + 2);
+          let curIndex = property.substr(property.lastIndexOf('[') + 1, 1);
+
+
           let arrval = _.get(_formData, field);
           if (arrval) {
             let len = _.get(_formData, field).length;
@@ -1597,17 +1596,17 @@ class Report extends Component {
               let ifield = field + '[' + i + ']' + '.' + last;
               let multiplier = 1;
               let product = 1;
-              if(cfieldname){
-                 let ifield2 = field + '[' + i + ']' + '.' + cfieldname;
-                 let pmultiplier = _.get(_formData, ifield2);
-                 if (pmultiplier)
-                  multiplier= parseInt(pmultiplier);
-                 else
-                  multiplier =0;
+              if (cfieldname) {
+                let ifield2 = field + '[' + i + ']' + '.' + cfieldname;
+                let pmultiplier = _.get(_formData, ifield2);
+                if (pmultiplier)
+                  multiplier = parseInt(pmultiplier);
+                else
+                  multiplier = 0;
               }
               if (i == curIndex) {
                 svalue = e.target.value;
-                
+
               } else {
                 svalue = _.get(_formData, ifield);
               }
@@ -1692,37 +1691,36 @@ class Report extends Component {
               dropDownData.sort(function (s1, s2) {
                 return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
               });
-              if(value.autoSelect){
+              if (value.autoSelect) {
                 //First value to be selected
               } else {
-              dropDownData.unshift({ key: null, value: '-- Please Select --' });
+                dropDownData.unshift({ key: null, value: '-- Please Select --' });
               }
-            
+
               //to handle tableList dropdown
               let currProperty = value.jsonPath;
               let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
               let numberOfRowsArray = _.get(formData, rootProperty);
-              if(numberOfRowsArray && numberOfRowsArray.length>0){
+              if (numberOfRowsArray && numberOfRowsArray.length > 0) {
 
-                 for(let i=0; i<numberOfRowsArray.length; i++)
-                    { 
-                         value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                          setDropDownData(value.jsonPath, dropDownData);
-                          setDropDownOriginalData(value.jsonPath, dropDownData);
-                           if(value.autoSelect){
-                          setVal(value.jsonPath,dropDownData[0]);
-                          }
-
-                    }
-              }
-              else{
+                for (let i = 0; i < numberOfRowsArray.length; i++) {
+                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
                   setDropDownData(value.jsonPath, dropDownData);
                   setDropDownOriginalData(value.jsonPath, dropDownData);
-                  if(value.autoSelect){
-                  setVal(value.jsonPath,dropDownData[0]);
+                  if (value.autoSelect) {
+                    setVal(value.jsonPath, dropDownData[0]);
                   }
+
+                }
               }
-              
+              else {
+                setDropDownData(value.jsonPath, dropDownData);
+                setDropDownOriginalData(value.jsonPath, dropDownData);
+                if (value.autoSelect) {
+                  setVal(value.jsonPath, dropDownData[0]);
+                }
+              }
+
             }
           },
           function (err) {
@@ -1848,50 +1846,47 @@ class Report extends Component {
           }
 
           handleChange(object, value.jsonPath, '', '', '', '');
-     }  
-    }
-    else if (value.type == 'tableList') { //handle grid dependency
-    //  console.log(value);
-          let object = {
-            target: {
-              value: '',
-            },
-          };
+        }
+      }
+      else if (value.type == 'tableList') { //handle grid dependency
+        //  console.log(value);
+        let object = {
+          target: {
+            value: '',
+          },
+        };
         let currProperty = value.jsonPath;
         let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
         var numberOfRowsArray = _.get(formData, rootProperty);
-       
-                 if(e.target.value == value.pattern)
-                {
-                  disField(mockData, value.name, true, true);
-                  addRequiredFields([currProperty]);
-                  
-                }
-              else
-                {
-                  enField(mockData, value.name, true, true);
-                  
 
-                  if(numberOfRowsArray){
-                         if (numberOfRowsArray.length>0) {
-                   for(let i=0; i<numberOfRowsArray.length; i++)
-                    { 
-                         value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                         handleChange(object, value.jsonPath , '', '', '', '');
+        if (e.target.value == value.pattern) {
+          disField(mockData, value.name, true, true);
+          addRequiredFields([currProperty]);
 
-                    }
-                        }
-                  else{
-                        handleChange(object, currProperty , '', '', '', '');
+        }
+        else {
+          enField(mockData, value.name, true, true);
 
-                  }
-                      delRequiredFields([currProperty]);
-                  }
-                
 
-                }
+          if (numberOfRowsArray) {
+            if (numberOfRowsArray.length > 0) {
+              for (let i = 0; i < numberOfRowsArray.length; i++) {
+                value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
+                handleChange(object, value.jsonPath, '', '', '', '');
+
+              }
             }
-    else if (value.type == 'griddropDown') {
+            else {
+              handleChange(object, currProperty, '', '', '', '');
+
+            }
+            delRequiredFields([currProperty]);
+          }
+
+
+        }
+      }
+      else if (value.type == 'griddropDown') {
         let splitArray = value.pattern.split('?');
         let context = '';
         let id = {};
@@ -1900,126 +1895,125 @@ class Report extends Component {
         }
 
         let level = value.gridjsonPath;
-       if(level == undefined){
-        let queryStringObject = splitArray[1].split('|')[0].split('&');
-        for (var i = 0; i < queryStringObject.length; i++) {
-          if (i) {
-            if (queryStringObject[i].split('=')[1].search('{') > -1) {
-              if (
-                queryStringObject[i]
-                  .split('=')[1]
-                  .split('{')[1]
-                  .split('}')[0] == property
-              ) {
-                //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
-                id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1].replace(/\{(.*?)\}/, e.target.value) || '';
+        if (level == undefined) {
+          let queryStringObject = splitArray[1].split('|')[0].split('&');
+          for (var i = 0; i < queryStringObject.length; i++) {
+            if (i) {
+              if (queryStringObject[i].split('=')[1].search('{') > -1) {
+                if (
+                  queryStringObject[i]
+                    .split('=')[1]
+                    .split('{')[1]
+                    .split('}')[0] == property
+                ) {
+                  //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
+                  id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1].replace(/\{(.*?)\}/, e.target.value) || '';
+                } else {
+                  id[queryStringObject[i].split('=')[0]] =
+                    queryStringObject[i].split('=')[1].replace(
+                      /\{(.*?)\}/,
+                      getVal(
+                        queryStringObject[i]
+                          .split('=')[1]
+                          .split('{')[1]
+                          .split('}')[0]
+                      )
+                    ) || '';
+                }
               } else {
-                id[queryStringObject[i].split('=')[0]] =
-                  queryStringObject[i].split('=')[1].replace(
-                    /\{(.*?)\}/,
-                    getVal(
-                      queryStringObject[i]
-                        .split('=')[1]
-                        .split('{')[1]
-                        .split('}')[0]
-                    )
-                  ) || '';
+                id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
               }
-            } else {
-              id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
+            }
+          }
+          dependantIdx = findLastIdxOnJsonPath(property);
+          Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
+            function (response) {
+              if (response) {
+                console.log('In dropdown');
+                console.log(response);
+                let keys = jp.query(response, splitArray[1].split('|')[1]);
+                let values = jp.query(response, splitArray[1].split('|')[2]);
+                let others = value.others;
+                let otherData = [];
+                for (let x = 0; x < others.length; x++) {
+                  let values = jp.query(response, value.others[x].key);
+                  console.log(values);
+                  otherData.push(values);
+                  let currentProperty = value.others[x].value;
+                  if (dependantIdx !== undefined)
+                    currentProperty = replaceLastIdxOnJsonPath(currentProperty, dependantIdx);
+
+                  handleChange(
+                    {
+                      target: {
+                        value: values[0],
+                      },
+                    },
+                    currentProperty,
+                    '',
+                    '',
+                    ''
+                  );
+                }
+
+                console.log(otherData);
+                let dropDownData = [];
+                for (var k = 0; k < keys.length; k++) {
+                  let obj = {};
+                  obj['key'] = keys[k];
+                  obj['value'] = values[k];
+                  dropDownData.push(obj);
+                }
+                if (dropDownData.length > 0) {
+                  if (dependantIdx !== undefined)
+                    value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
+
+                  setDropDownData(value.jsonPath, dropDownData);
+                  setDropDownOriginalData(value.jsonPath, dropDownData);
+                  if (value.autoSelect) {
+                    // setVal(value.jsonPath,dropDownData[0]);
+
+                    handleChange(
+                      {
+                        target: {
+                          value: dropDownData[0].value,
+                        },
+                      },
+                      value.jsonPath,
+                      '',
+                      '',
+                      ''
+                    );
+                  }
+                }
+              }
+            },
+            function (err) {
+              console.log(err);
+            }
+          );
+        }
+        else {
+          //to handle tableList dropdown
+          let currProperty = value.gridjsonPath;
+          let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
+          let numberOfRowsArray = _.get(formData, rootProperty);
+          if (numberOfRowsArray && numberOfRowsArray.length > 0) {
+            for (let i = 0; i < numberOfRowsArray.length; i++) {
+              value.gridjsonPath = replaceLastIdxOnJsonPath(value.gridjsonPath, i);
+              let currVal = _.get(formData, value.gridjsonPath);
+
+              let cVal = {
+                target: {
+                  value: currVal,
+                },
+              };
+              console.log(self);
+              self.affectDependants(obj, cVal, value.gridjsonPath);
+
             }
           }
         }
-        dependantIdx = findLastIdxOnJsonPath(property);
-        Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
-          function(response) {
-            if (response) {
-              console.log('In dropdown');
-              console.log(response);
-              let keys = jp.query(response, splitArray[1].split('|')[1]);
-              let values = jp.query(response, splitArray[1].split('|')[2]);
-              let others= value.others;
-              let otherData=[];
-              for(let x=0; x< others.length;x++){
-                let values = jp.query(response, value.others[x].key);
-                console.log(values);
-                otherData.push(values);
-                let currentProperty= value.others[x].value;
-                 if (dependantIdx !== undefined) 
-                  currentProperty = replaceLastIdxOnJsonPath(currentProperty, dependantIdx);
-        
-                 handleChange(
-                            {
-                              target: {
-                                value:values[0],
-                              },
-                            },
-                            currentProperty,
-                            '',
-                            '',
-                            ''
-                          );
-                        }
-              
-              console.log(otherData);
-              let dropDownData = [];
-              for (var k = 0; k < keys.length; k++) {
-                let obj = {};
-                obj['key'] = keys[k];
-                obj['value'] = values[k];
-                dropDownData.push(obj);
-              }
-             if(dropDownData.length>0){
-                  if (dependantIdx !== undefined) 
-                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
-        
-              setDropDownData(value.jsonPath, dropDownData);
-                  setDropDownOriginalData(value.jsonPath, dropDownData);
-                  if(value.autoSelect){
-                  // setVal(value.jsonPath,dropDownData[0]);
-                  
-                        handleChange(
-                            {
-                              target: {
-                                value: dropDownData[0].value,
-                              },
-                            },
-                             value.jsonPath,
-                            '',
-                            '',
-                            ''
-                          );
-                    }
-                  }
-               }         
-            } ,
-          function(err) {
-            console.log(err);
-          }
-                 );
-          }
-            else{ 
-              //to handle tableList dropdown
-              let currProperty = value.gridjsonPath;
-              let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
-              let numberOfRowsArray = _.get(formData, rootProperty);
-              if(numberOfRowsArray && numberOfRowsArray.length>0){
-                 for(let i=0; i<numberOfRowsArray.length; i++)
-                    { 
-                         value.gridjsonPath = replaceLastIdxOnJsonPath(value.gridjsonPath, i);
-                         let currVal = _.get(formData, value.gridjsonPath);
-                     
-                          let cVal= {
-                              target: {
-                                value: currVal,
-                              },
-                            };
-                            console.log(self);
-                             self.affectDependants(obj,cVal,value.gridjsonPath);
-
-                        }
-             }              
-      }
       }
       // else if (value.type == "documentList") {
       //
@@ -2108,10 +2102,10 @@ class Report extends Component {
 
       let _flag = 0;
       for (var i = 0; i < values.length; i++) {
-        let tempVal= getVal("'"+values[i]+"'");
+        let tempVal = getVal("'" + values[i] + "'");
         console.log(tempVal);
-        
-        if (!getVal("'"+values[i]+"'")) {
+
+        if (!getVal("'" + values[i] + "'")) {
           _flag = 1;
         }
       }
@@ -2214,7 +2208,7 @@ class Report extends Component {
               mockData[moduleName + '.' + actionName].groups.splice(j + 1, 0, _groupToBeInserted);
               setMockData(mockData);
               var temp = { ...formData };
-              if(_groupToBeInserted.multiple == true && _groupToBeInserted.index) {
+              if (_groupToBeInserted.multiple == true && _groupToBeInserted.index) {
                 self.setDefaultForMultiple(_groupToBeInserted, temp);
               }
               else {
@@ -2250,13 +2244,13 @@ class Report extends Component {
     console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
-      
+
       for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
         if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
           console.log(mockData[moduleName + '.' + actionName].groups[i].index);
           console.log(mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1)
           /* Check for last card --> Set Form Data --> Splice the groups array. */
-          if(mockData[moduleName + '.' + actionName].groups[i].index === mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1){
+          if (mockData[moduleName + '.' + actionName].groups[i].index === mockData[moduleName + '.' + actionName].groups.filter(group => group.name === groupName).length - 1) {
             // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
             // console.log(_formData);
             if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
@@ -2279,24 +2273,24 @@ class Report extends Component {
               mockData[moduleName + '.' + actionName].groups[i].index -= 1;
               /* And then splice at the end */
               mockData[moduleName + '.' + actionName].groups.splice(i, 1);
-              
+
               break;
             }
             /* Check for no json path in formData --> Splice mockData to remove the card */
-            else{
+            else {
               mockData[moduleName + '.' + actionName].groups.splice(i, 1);
               break;
             }
-            
+
 
           }
           /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
-          else{
+          else {
             mockData[moduleName + '.' + actionName].groups.splice(i, 1);
             ind = i;
             console.log(ind);
             console.log(mockData[moduleName + '.' + actionName].groups);
-            
+
             for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
               if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
                 notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
@@ -2324,7 +2318,7 @@ class Report extends Component {
                     mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (mockData[moduleName + '.' + actionName].groups[i].index - 1) + ']'
                   )
                 );
-      
+
                 if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
                   var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
                   //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
@@ -2333,7 +2327,7 @@ class Report extends Component {
                   _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
                   console.log(_formData);
                   setFormData(_formData);
-      
+
                   //Reduce index values
                   for (let k = ind; k < mockData[moduleName + '.' + actionName].groups.length; k++) {
                     if (mockData[moduleName + '.' + actionName].groups[k].name == groupName) {
@@ -2346,11 +2340,11 @@ class Report extends Component {
               }
             }
           }
-          
+
         }
-        
+
       }
-      
+
       console.log(notReqFields);
       console.log(mockData);
       /*for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
