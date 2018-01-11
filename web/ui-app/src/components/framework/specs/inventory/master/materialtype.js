@@ -20,7 +20,7 @@ var dat = {
                         defaultValue: '',
                         maxLength: 100,
                         minLength: 1,
-                    url: "/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType|$..code|$..name",
+                        url: "/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType|$..code|$..name",
 
                     },
                     {
@@ -52,7 +52,24 @@ var dat = {
             },
         ],
         result: {
+            disableRowClick: true,
+            isAction: true,
+            actionItems: [
+                {
+                    label: 'Map to Store',
+                    url: '/update/inventory/materialtypestoremapping/',
+                }
+            ],
+
             header: [
+                {
+                    label: 'legal.search.result.actionLabels',
+                    isChecked: true,
+                    checkedItem: {
+                        jsonPath: 'checkedRow',
+                        label: '',
+                    },
+                },
                 {
                     label: 'inventory.materialType.name',
                 },
@@ -67,6 +84,7 @@ var dat = {
                 },
             ],
             values: [
+                'code',
                 'name',
                 
                 'description',
@@ -76,6 +94,7 @@ var dat = {
                 'active',
             ],
             resultPath: 'MdmsRes.inventory.MaterialType',
+            resultIdKey: 'code',
             rowClickUrlUpdate: '/update/inventory/materialtype/{code}',
             rowClickUrlView: '/view/inventory/materialtype/{code}',
             isMasterScreen: true,
