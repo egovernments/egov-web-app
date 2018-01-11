@@ -813,6 +813,10 @@ class assetCategoryCreate extends Component {
     var flagIndicate = 0;
     if(!formData.MasterMetaData.masterData[0].parent || formData.MasterMetaData.masterData[0].parent == ""){
       formData.MasterMetaData.masterData[0].parent = null;
+      //setting value isAssetAllow based on parent or subcategory
+      formData.MasterMetaData.masterData[0].isAssetAllow = false;
+    }else {
+      formData.MasterMetaData.masterData[0].isAssetAllow = true;
     }
     if(formData.MasterMetaData.masterData[0].name){
       Api.commonApiPost('/egov-mdms-service/v1/_get', {
@@ -860,7 +864,7 @@ class assetCategoryCreate extends Component {
         formData.MasterMetaData.masterData[0].id = this.state.createId + "";
         formData.MasterMetaData.masterData[0].code = this.state.createId + "";
         //need to work on the logic
-        formData.MasterMetaData.masterData[0].isAssetAllow = true;
+        //formData.MasterMetaData.masterData[0].isAssetAllow = true;
         formData.MasterMetaData.masterData[0].tenantId = localStorage.getItem('tenantId');
       }
       if (formData && formData.MasterMetaData && formData.MasterMetaData.masterData && formData.MasterMetaData.masterData[0].isDepreciationApplicable) {
