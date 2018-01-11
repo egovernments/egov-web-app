@@ -1,4 +1,22 @@
 var localization_EN_Data = {
+//Works report labels Starts
+'reports.works.workorderdate':"Work Order Date",
+'reports.works.nameofwork':"Name of the Work",
+'reports.works.workordernumber':"Work Order Nnumber",
+'reports.works.referencenoofwip':"Reference number of work in progress",
+'reports.works.estimateamount':"Estimates Amount",
+'reports.works.tenderamount':"Tender Amount",
+'reports.works.contractorname':"Agency /Firm Name",
+'reports.works.approvedattherateof':"Approved at the Rate of",
+'reports.works.totalvalueofthework':"Total value of the work",
+'reports.works.emdamount':"EMD Amount",
+'reports.works.sanctionedfinyear':"Sanctioned in Financial Year",
+'reports.works.securitydepositamount':"Security Deposit Amount",
+'reports.works.wofromDate':"Work Order From Date",
+'reports.works.wotoDate':"Work Order To Date",
+'reports.works.woamountfrom':"Work order Amount from",
+'reports.works.woamountupto':"Work order Amount To",
+//Works report labels Ends
   'swm.create.sanitationStaffTargets.targetNumber':"Target Number",
   'swm.create.sanitationStaffTargets.employeeName':"Employee Name",
   'swm.create.sanitationstaffschedules.colletionPoint.isSelected':"Is Checked",
