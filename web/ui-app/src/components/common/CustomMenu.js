@@ -389,6 +389,9 @@ const menuConvention = {
   'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
 
   'Inventory.Inventory Masters.MaterialType Master.MaterialType.MaterialType': '/search/inventory/materialtype/view',
+  'Inventory.Inventory Masters.Material Store Mapping.Material Store Mapping Search':'/search/inventory/materialstoremapping/view',
+  //'Inventory.Inventory Masters.Material Type Store Mapping.Material Store Mapping Search':'/search/inventory/materialtypestoremapping/view' ,
+
    "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
  // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
  // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',

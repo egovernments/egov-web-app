@@ -19,7 +19,6 @@ var dat = {
             displayJsonPath: 'materialName',
             isRequired: false,
             isDisabled: false,
-            isKeyValuePair: true,
             url: '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=Material|$..code|$..name',
           },
           {
@@ -58,7 +57,23 @@ var dat = {
       },
     ],
     result: {
+      disableRowClick: true,
+      isAction: true,
+      actionItems: [
+        {
+          label: 'Map to Store',
+          url: '/update/inventory/materialstoremapping/',
+        },],
       header: [ 
+
+        {
+          label: 'legal.search.result.actionLabels',
+          isChecked: true,
+          checkedItem: {
+            jsonPath: 'checkedRow',
+            label: '',
+          },
+        },
 
       {
         label :'Material Code',
@@ -74,6 +89,8 @@ var dat = {
         },
       ],
       values: [
+
+        'code',
         'code',
         'name',
         'materialType.code',
