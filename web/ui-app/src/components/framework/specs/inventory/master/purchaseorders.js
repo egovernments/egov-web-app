@@ -7,16 +7,16 @@ var dat = {
     groups: [
       {
         name: 'search',
-        label: 'nventory.purchaseorder.search.group.title',
+        label: 'inventory.purchaseorder.search.group.title',
         fields: [
-          {
-            name: 'ids',
-            jsonPath: 'ids',
-            label: 'purchaseorder.create.ids',
-            type: '',
-            isDisabled: false,
-            patternErrorMsg: 'purchaseorder.create.field.message.ids',
-          },
+          // {
+          //   name: 'ids',
+          //   jsonPath: 'ids',
+          //   label: 'purchaseorder.create.ids',
+          //   type: '',
+          //   isDisabled: false,
+          //   patternErrorMsg: 'purchaseorder.create.field.message.ids',
+          // },
           {
             name: 'store',
             jsonPath: 'store',
@@ -60,7 +60,7 @@ var dat = {
           {
             name: 'status',
             jsonPath: 'status',
-            label: 'inventory.purchaseorder.status',
+            label: 'inventory.status',
             type: 'text',
             isDisabled: false,
             patternErrorMsg: 'purchaseorder.create.field.message.status',
@@ -107,7 +107,7 @@ var dat = {
             maxLength: 50,
             minLength: 5,
             patternErrorMsg: 'purchaseorder.create.field.message.code',
-            url: '/inventory-services/stores/_search?|$..code|$..name',
+            url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name',
           },
           {
             name: 'purchaseOrderNumber',
@@ -132,6 +132,14 @@ var dat = {
             isDisabled: false,
             defaultValue: '',
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
+                type: 'griddropDown',
+                gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
+              },
+            ],
           },
           {
             name: 'rateType',
@@ -161,6 +169,14 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
+                 type: 'griddropDown',
+                gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
+               },
+            ],
           },
           {
             name: 'code',
@@ -175,6 +191,14 @@ var dat = {
             minLength: 5,
             patternErrorMsg: 'purchaseorder.create.field.message.code',
             url: '/inventory-services/suppliers/_search?|$..code|$..name',
+            depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
+                type: 'griddropDown',
+                gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
+              },
+            ],
           },
           {
             name: 'advanceAmount',
@@ -187,6 +211,16 @@ var dat = {
             defaultValue: '',
             maxLength: 10,
             patternErrorMsg: '',
+             depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].advancePercentage',
+                type: 'textField',
+                pattern: "`${getVal('purchaseOrders[0].advanceAmount')!=''?getVal('purchaseOrders[0].advanceAmount'):0} / ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?getVal('purchaseOrders[0].totalAdvancePaidAmount'):1} *  ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?100:0} `",/// getVal('purchaseOrders.totalAdvancePaidAmount') 
+                rg: '',
+                isRequired: false,
+                requiredErrMsg: '',
+                patternErrMsg: '',
+              }],
           },
           {
             name: 'advancePercentage',
@@ -199,6 +233,16 @@ var dat = {
             defaultValue: '',
             maxLength: 3,
             patternErrorMsg: '',
+             depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].advanceAmount',
+                type: 'textField',
+                pattern: "`${getVal('purchaseOrders[0].advancePercentage')!=''?getVal('purchaseOrders[0].advancePercentage'):0} * ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?getVal('purchaseOrders[0].totalAdvancePaidAmount'):0} / 100 `",/// getVal('purchaseOrders.totalAdvancePaidAmount') 
+                rg: '',
+                isRequired: false,
+                requiredErrMsg: '',
+                patternErrMsg: '',
+              }],
           },
           {
             name: 'expectedDeliveryDate',
@@ -210,6 +254,8 @@ var dat = {
             isDisabled: false,
             defaultValue: '',
             patternErrorMsg: '',
+             expression: '$purchaseOrders[0].expectedDeliveryDate >= $purchaseOrders[0].purchaseOrderDate',
+            expressionMsg: 'Expected Delivery Date should be greater than or equal to Purchase Order Date',
           },
           {
             name: 'deliveryTerms',
@@ -324,6 +370,16 @@ var dat = {
                       valExp:
                         "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].material.code', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[1]')",
                     },
+                    {
+                      jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
+                      type: 'griddropDown',
+                      autoSelect: true,
+                      others:[
+                      { key: 'priceLists[0].priceListDetails[0].ratePerUnit', value: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice'},
+                      { key: 'priceLists[0].priceListDetails[0].quantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity' }
+                      ],
+                      pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit||$..quantity',              
+                    },
                     // {
                     //   "jsonPath": "purchaseOrders[0].purchaseOrderDetails[0].uom.conversionFactor",
                     //   "type": "textField",
@@ -388,8 +444,40 @@ var dat = {
                   type: 'singleValueList',
                   isRequired: false,
                   isDisabled: false,
-                  defaultValue: '',
+                  defaultValue: [],
+                  url: '/inventory-services/pricelists/_search?tenantId=default&rateContractNumber={purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit|$..quantity',
                   patternErrorMsg: '',
+                  //  depedants: [
+                  //   {
+                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice',
+                  //     type: 'textField',
+                  //     valExp:
+                  //       "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[0]')",
+                  //   },
+                  //   {
+                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].usedQuantity',
+                  //     type: 'textField',
+                  //     valExp:
+                  //       "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[1]')",
+                  //   },
+                  // depedants: [
+                  //   {
+                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice',
+                  //     type: 'autoFill',
+                  //     pattern: '/inventory-services/pricelists/_search?tenantId=default&rateContractNumber={purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..ratePerUnit|$..ratePerUnit', 
+                  //     autoFillFields: {
+                  //       'purchaseOrders[0].purchaseOrderDetails[0].unitPrice': 'priceLists[0].priceListDetails[0].ratePerUnit',
+                  //     }
+                  //   },
+                  //   {
+                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].usedQuantity',
+                  //     type: 'autoFill',
+                  //     pattern: '/inventory-services/pricelists/_search?tenantId=default&rateContractNumber={purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..quantity|$..quantity', 
+                  //     autoFillFields: {
+                  //       'purchaseOrders[0].purchaseOrderDetails[0].usedQuantity': 'priceLists[0].priceListDetails[0].quantity',
+                  //     }
+                  //   }
+                  // ]
                 },
                 {
                   name: 'orderQuantity',
@@ -401,6 +489,17 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  dependency: 'purchaseOrders[0].totalAdvancePaidAmount:purchaseOrders[0].purchaseOrderDetails[0].unitPrice' ,
+                   depedants: [
+                    {
+                      jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].totalAmount',
+                      type: 'textField',
+                      pattern: "`${getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice'):0} * ${getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity'):0}`", 
+                      rg: '',
+                      isRequired: false,
+                      requiredErrMsg: '',
+                      patternErrMsg: '',
+                    }],
                 },
                 {
                   name: 'unitPrice',
@@ -412,6 +511,8 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  dependency: 'purchaseOrders[0].totalAdvancePaidAmount:purchaseOrders[0].purchaseOrderDetails[0].userQuantity' ,
+
                 },
                 {
                   name: 'TotalAmount',
@@ -449,11 +550,23 @@ var dat = {
               ],
             },
           },
+          {
+            name: 'totalPoValue',
+            jsonPath: 'purchaseOrders[0].totalAdvancePaidAmount',
+            label: 'inventory.totalPoValue',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: true,
+            defaultValue: '',
+            maxLength: 128,
+            patternErrorMsg: '',
+          },
         ],
       },
     ],
     url: '/inventory-services/purchaseorders/_create',
-    onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents',
+    // onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents',
     tenantIdRequired: true,
   },
   'inventory.view': {

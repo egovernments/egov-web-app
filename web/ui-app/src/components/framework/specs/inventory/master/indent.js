@@ -183,6 +183,20 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'indents[0].indentDetails[0].asset.code',
+                type: 'tableList',
+                name: 'asset',
+                pattern: 'Repairs and Maintenance'
+              },
+              {
+                jsonPath: 'indents[0].indentDetails[0].projectCode.code',
+                type: 'tableList',
+                name: 'projectcode',
+                pattern: 'Capital'
+              }
+            ],
           },
 
           {
@@ -228,6 +242,17 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
+            patternErrorMsg: '',
+          },
+          {
+            name: 'indentStatus',
+            jsonPath: 'indents[0].indentStatus',
+            label: 'inventory.indent.status',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: 'Created',
             patternErrorMsg: '',
           },
           {
@@ -308,7 +333,10 @@ var dat = {
                   label: 'Project Code',
                 },
                 {
-                  label: 'Quantity Reqd.',
+                  label: 'Qty Required',
+                },
+                 {
+                  label: 'Qty Received',
                 },
               ],
               values: [
@@ -379,16 +407,26 @@ var dat = {
                   name: 'projectcode',
                   jsonPath: 'indents[0].indentDetails[0].projectCode.code',
                   pattern: '[a-zA-Z0-9-\\\\]+',
-                  type: 'autoCompelete',
+                  type: 'text',
                   isRequired: false,
                   isDisabled: false,
                   defaultValue: '',
                   maxLength: 100,
                   patternErrorMsg: 'inventory.create.field.message.code',
-                  url: '/works-estimate/v1/projectcodes/_search?&|$..code|$..name',
+                  // url: '/works-estimate/v1/projectcodes/_search?&|$..code|$..name',
                 },
                 {
                   name: 'indentQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },
+                {
+                  name: 'recvQuantity',
                   jsonPath: 'indents[0].indentDetails[0].userQuantity',
                   pattern: '',
                   type: 'number',
@@ -473,6 +511,20 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'indents[0].indentDetails[0].asset.code',
+                type: 'tableList',
+                name: 'asset',
+                pattern: 'Repairs and Maintenance'
+              },
+              {
+                jsonPath: 'indents[0].indentDetails[0].projectCode.code',
+                type: 'tableList',
+                name: 'projectcode',
+                pattern: 'Capital'
+              }
+            ],
           },
 
           {
@@ -506,6 +558,17 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
+            patternErrorMsg: '',
+          },
+           {
+            name: 'indentStatus',
+            jsonPath: 'indents[0].indentStatus',
+            label: 'inventory.indent.status',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: 'Created',
             patternErrorMsg: '',
           },
           {
@@ -573,7 +636,10 @@ var dat = {
                   label: 'Project Code',
                 },
                 {
-                  label: 'Quantity Reqd.',
+                  label: 'Qty Required',
+                },
+                 {
+                  label: 'Qty Received',
                 },
               ],
               values: [
@@ -650,8 +716,18 @@ var dat = {
                   maxLength: 100,
                   patternErrorMsg: 'inventory.create.field.message.code',
                 },
-                {
+                 {
                   name: 'indentQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },
+                {
+                  name: 'recvQuantity',
                   jsonPath: 'indents[0].indentDetails[0].userQuantity',
                   pattern: '',
                   type: 'number',
@@ -736,9 +812,22 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'indents[0].indentDetails[0].asset.code',
+                type: 'tableList',
+                name: 'asset',
+                pattern: 'Repairs and Maintenance'
+              },
+              {
+                jsonPath: 'indents[0].indentDetails[0].projectCode.code',
+                type: 'tableList',
+                name: 'projectcode',
+                pattern: 'Capital'
+              }
+            ],
           },
-
-          {
+       {
             name: 'indentType',
             jsonPath: 'indents[0].indentType',
             label: 'inventory.indent.type',
@@ -779,6 +868,17 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
+            patternErrorMsg: '',
+          },
+           {
+            name: 'indentStatus',
+            jsonPath: 'indents[0].indentStatus',
+            label: 'inventory.indent.status',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: 'Created',
             patternErrorMsg: '',
           },
           {
@@ -845,7 +945,10 @@ var dat = {
                   label: 'Project Code',
                 },
                 {
-                  label: 'Quantity Reqd.',
+                  label: 'Qty Required',
+                },
+                 {
+                  label: 'Qty Received',
                 },
               ],
               values: [
@@ -935,6 +1038,16 @@ var dat = {
                 },
                 {
                   name: 'indentQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },
+                {
+                  name: 'recvQuantity',
                   jsonPath: 'indents[0].indentDetails[0].userQuantity',
                   pattern: '',
                   type: 'number',

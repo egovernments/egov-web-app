@@ -416,6 +416,8 @@ const menuConvention = {
   'Inventory.Inventory Transactions.Purchase Order.Purchase Order Create': '/create/inventory/purchaseorders',
   'Inventory.Inventory Transactions.Purchase Order.Purchase Order Update': '/search/inventory/purchaseorders/update',
   'Inventory.Inventory Transactions.Purchase Order.Purchase Order Search': '/search/inventory/purchaseorders/view',
+  'Inventory.Inventory Transactions.Purchase Order.Create Indent Purchase Order': '/search/inventory/indentpo/view',
+  'Inventory.Inventory Transactions.Purchase Order.Create Non Indent Purchase Order': '/create/inventory/purchaseorders',
 
   'Inventory.Inventory Transactions.Material Issue.Material Issues Create':
     '/non-framework/inventory/transaction/materialissue/SearchIndentMaterialIssue',

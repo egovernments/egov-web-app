@@ -24,9 +24,9 @@ class UiSelectField extends Component {
     document.addEventListener('click', this.handleClick, false);
   }
 
-
-  initData(props) {
-    //console.log("UiSelectField, initData() called", props);
+ 
+  initData(props) {//debugger;
+    // console.log("UiSelectField, initData() called", props);
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
     if (
       item.hasOwnProperty('url') &&
@@ -132,6 +132,8 @@ class UiSelectField extends Component {
       );
     } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
       setDropDownData(item.jsonPath, item.defaultValue);
+    } else {
+      console.log(this.props);
     }
   }
 
@@ -140,7 +142,7 @@ class UiSelectField extends Component {
     this.initData(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {//debugger;
     //console.log("UiSelectField, componentWillReceiveProps() called,  nextProps = ", nextProps, "currentProps", this.props);
     let { dropDownData, dropDownOringalData, value } = this.props;
 
@@ -181,8 +183,7 @@ class UiSelectField extends Component {
 
     switch (this.props.ui) {
       case 'google':
-        console.log(item);
-        let labelProperty = !item.isHideLabel && {
+         let labelProperty = !item.isHideLabel && {
           floatingLabelFixed: true,
           floatingLabelText: (
             <span>
@@ -208,7 +209,7 @@ class UiSelectField extends Component {
             style={{ display: item.hide ? 'none' : 'inline-block' }}
             errorStyle={{ float: 'left' }}
             fullWidth={true}
-            value={item.fromProps ? this.props.getVal(this.props.item.jsonPath) : (item.hasOwnProperty("hasIdConverion")?(item.hasIdConverion && value?value.toString():value):value)}
+            value={item.fromProps ? ((typeof this.props.getVal(this.props.item.jsonPath) == 'object')?(this.props.getVal(this.props.item.jsonPath)).value :this.props.getVal(this.props.item.jsonPath))  : (item.hasOwnProperty("hasIdConverion")?(item.hasIdConverion && value?value.toString():value):value)}
             underlineDisabledStyle={{ backgroundColor: '#eee!important' }}
             {...labelProperty}
             onChange={(event, key, value) => {

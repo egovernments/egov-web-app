@@ -33,6 +33,7 @@ class Search extends Component {
       },
       values: [],
       selectedRecordId: '',
+      selectedRecords:[]
     };
   }
 
@@ -625,23 +626,64 @@ class Search extends Component {
   };
   rowButtonClickHandler = (buttonUrl, id) => {
     let { formData } = this.props;
+    let { resultList } = this.state;
+    console.log(resultList);
     if (id) {
       localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
       localStorage.setItem('formData', JSON.stringify(formData));
       this.props.setRoute(buttonUrl + id);
     } else {
-      let { selectedRecordId } = this.state;
+      if(resultList.actionItems[0].multiSelect){
+          let tableSelectionData = [...this.state.selectedRecords] || [];
+          let selectedIds='';
+          if(tableSelectionData.length>0){
+            // for(let i=0;i<tableSelectionData.length;i++)
+            // {
+            //   selectedIds+=tableSelectionData[i]+',';
+            // }
+        //  if (selectedIds!='') {
+            localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
+            localStorage.setItem('formData', JSON.stringify(formData));
+            this.props.setRoute(buttonUrl + tableSelectionData);
+          // }
+          }
+          
+      }
+      else{
+         let { selectedRecordId } = this.state;
       if (selectedRecordId) {
         localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
         localStorage.setItem('formData', JSON.stringify(formData));
         this.props.setRoute(buttonUrl + selectedRecordId);
       }
+      }
+     
     }
   };
   rowCheckboxClickHandler = code => {
+    // let multi = this.state.actionItems.multiSelect;
+    //  if(multi){
+        let { resultList } = this.state;
+        if(resultList.actionItems[0].multiSelect){
+      let tableSelectionData = [...this.state.selectedRecords] || [];
+      let idx = tableSelectionData.indexOf(code);
+  
+      if (idx > -1) tableSelectionData.splice(idx, 1);
+      else {
+       // if (this.props.resultList.isMultipleSelection) 
+       tableSelectionData.push(code);
+        // else tableSelectionData[0] = code;
+      }
+      // this.props.setTableSelectionData(tableSelectionData);
+       this.setState({
+      selectedRecords: tableSelectionData,
+    });
+   }
+   else{
     this.setState({
       selectedRecordId: code,
     });
+   }
   };
 
   rowClickHandler = index => {
@@ -795,7 +837,7 @@ class Search extends Component {
       rowCheckboxClickHandler,
       rowIconClickHandler,
     } = this;
-    let { showResult, resultList, selectedRecordId } = this.state;
+    let { showResult, resultList, selectedRecordId, selectedRecords } = this.state;
     let customActionsAndUrl =
       !_.isEmpty(mockData[`${moduleName}.${actionName}`]) && mockData[`${moduleName}.${actionName}`].hasOwnProperty('customActionsAndUrl')
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
@@ -909,6 +951,7 @@ class Search extends Component {
                 rowCheckboxClickHandler={rowCheckboxClickHandler}
                 rowIconClickHandler={rowIconClickHandler}
                 selectedValue={selectedRecordId}
+                selectedValues={selectedRecords}
               />
             )}
           </div>

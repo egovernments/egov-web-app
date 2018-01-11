@@ -272,14 +272,19 @@ class UiTable extends Component {
       rowButtonClickHandler,
       rowCheckboxClickHandler,
       rowIconClickHandler,
-      selectedValue
+      selectedValue,
+      selectedValues
     } = this.props;
     let self = this;
 
-    const getNameById = function(item2, i2) {
+    const getNameById = function(item2, i2) {debugger;
       if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isChecked) {
         var selected = false;
-        if (selectedValue == item2) {
+        if(selectedValues.length>0){
+          let idx = selectedValues.indexOf(item2);
+          if(idx>-1)
+             selected = true;
+        } else if (selectedValue == item2) {
           selected = true;
         }
         return (

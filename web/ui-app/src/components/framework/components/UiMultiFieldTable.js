@@ -66,7 +66,7 @@ class UiMultiFieldTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('will receive props:', this.props.item.jsonPath);
+    // console.log('will next props:', nextProps.item.tableList.values);
     // console.log(this.props, nextProps, !_.isEqual(this.props, nextProps));
     if (!_.isEqual(this.props, nextProps)) {
       // console.log('receive props condition succeeded', nextProps.item.jsonPath);
@@ -87,7 +87,7 @@ class UiMultiFieldTable extends Component {
     // console.log(formData, JSON.stringify(formData));
     // console.log(numberOfRowsArray, numberOfRowsArray ? numberOfRowsArray.length - 1 : 0,  props.item.jsonPath, isintialLoad);
     // console.log('render load', props.item.jsonPath, _.get(formData,props.item.jsonPath), props.item.tableList.values);
-    if (numberOfRowsArray && numberOfRowsArray.length > 0 && !isintialLoad) {
+    if (numberOfRowsArray && numberOfRowsArray.length > 0){  // && !isintialLoad) {
       // console.log('render load true succeeded');
       var regexp = new RegExp(`${this.escapeRegExp(props.item.jsonPath)}\\[\\d+\\]`);
       for (var i = 0; i < numberOfRowsArray.length; i++) {
@@ -314,12 +314,13 @@ class UiMultiFieldTable extends Component {
           />
         );
       case 'singleValueList':
-        // console.log(item.jsonPath, this.props.getVal(item.jsonPath));
+         item.fromProps = true;
         return (
           <UiSelectField
             ui={this.props.ui}
             useTimestamp={this.props.useTimestamp}
             getVal={this.props.getVal}
+            setVal={this.props.setVal}
             item={item}
             fieldErrors={this.props.fieldErrors}
             handler={this.props.handler}
