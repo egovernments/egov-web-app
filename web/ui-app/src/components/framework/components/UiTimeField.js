@@ -11,13 +11,7 @@ export default class UiTimeField extends Component {
   }
 
   renderTimePicker = item => {
-    // let value ="";
-    // if(this.props.getVal(item.jsonPath).split(':').length==2){
-    // 	value=new Date('2017','12','1',this.props.getVal(item.jsonPath).split(':')[0],this.props.getVal(item.jsonPath).split(':')[1]);
-    // }else if(item.defaultValue){
-    // 	value=new Date('2017','12','1',item.defaultValue.split(':')[0],item.defaultValue.split(':')[1]);
-
-    // }
+  
     var inputProps ={
                 placeholder: 'hh:mm',
                 id: item.jsonPath.split('.').join('-'),
@@ -31,26 +25,11 @@ export default class UiTimeField extends Component {
                 value:""
               };
               }
+              var time = this.props.getVal(item.jsonPath) || undefined;
     switch (this.props.ui) {
       case 'google':
         return (
-          // <TimePicker
-          // 	id={item.jsonPath.split(".").join("-")}
-          // 	className="custom-form-control-for-textfield"
-          // 	style={{"display": (item.hide ? 'none' : 'inline-block')}}
-          // 	floatingLabelStyle={{"color": item.isDisabled ? "#A9A9A9" : "#696969", "fontSize": "20px", "white-space": "nowrap"}}
-          // 	inputStyle={{"color": "#5F5C57"}}
-          // 	floatingLabelFixed={true}
-          // 	disabled={item.isDisabled}
-          // 	hintText="12hr Format"
-          // 	format="ampm"
-          // 	floatingLabelText={<span>{item.label} <span style={{"color": "#FF0000"}}>{item.isRequired ? " *" : ""}</span></span>}
-          // 	errorText={this.props.fieldErrors[item.jsonPath]}
-          //     value={value}//this.props.getVal(item.jsonPath)}
-          // 	onChange={(e,time) => {debugger;
-          //      var val = time.getHours()+":"+time.getMinutes();
-          //         this.props.handler({target: {value: val}}, item.jsonPath, item.isRequired ? true : false, item.pattern, item.requiredErrMsg, item.patternErrMsg)
-          //     }}/>
+      
           <div
             style={{
               marginTop: '17px',
@@ -64,7 +43,7 @@ export default class UiTimeField extends Component {
             <br />
             <DateTimeField
               mode="time"
-              dateTime={this.props.getVal(item.jsonPath) || undefined}
+              dateTime={time}
               size="sm"
               inputFormat="h:mm A"
               inputProps={inputProps}
