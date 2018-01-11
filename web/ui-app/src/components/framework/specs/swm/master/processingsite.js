@@ -373,6 +373,7 @@ var dat = {
     ],
     url: 'egov-mdms-create/v1/_create',
     tenantIdRequired: true,
+    isMDMSScreen:true
   },
   'swm.view': {
     preApiCalls:[

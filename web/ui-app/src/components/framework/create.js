@@ -426,16 +426,18 @@ class Report extends Component {
               moduleName = Object.keys(res.MdmsRes)[0];
               masterName = Object.keys(res.MdmsRes[Object.keys(res.MdmsRes)[0]])[0]
             }
+            console.log(res);
             let mdmsReq = {};
             mdmsReq.MasterMetaData = {};
             mdmsReq.MasterMetaData.masterData = [];
             mdmsReq.MasterMetaData.moduleName = moduleName;
-            mdmsReq.MasterMetaData.masterName = masterName
+            mdmsReq.MasterMetaData.masterName = masterName;
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem('tenantId');
             mdmsReq.MasterMetaData.masterData[0] = res.MdmsRes[moduleName][masterName][0];
             console.log(mdmsReq);
             res = mdmsReq;
           }
+          console.log(res);
           //
           self.props.setLoadingStatus('hide');
           if (specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isResponseArray) {
@@ -457,6 +459,7 @@ class Report extends Component {
               hashLocation.split('/')[1],
               specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName
             );
+            console.log(res);
             // var hashLocation = window.location.hash;
             let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
             let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
@@ -478,6 +481,31 @@ class Report extends Component {
         }
       );
     } else {
+      if((hashLocation.split('/').indexOf('create') == 1) && specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isMDMSScreen) {
+        
+        
+        // let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+        console.log(obj);
+        var masterName = "";
+        for(var i = 0; i < obj.groups.length; i++){
+          
+          if(obj.groups[i].hide){
+            
+            for(var j = 0; j < obj.groups[i].fields.length; j++){
+              if(obj.groups[i].fields[j].jsonPath === "MasterMetaData.masterName"){
+                masterName = obj.groups[i].fields[j].defaultValue;
+              }
+              if(obj.groups[i].fields[j].jsonPath === "MasterMetaData.masterData[0].code"){
+                obj.groups[i].fields[j].defaultValue = masterName+"-"+ new Date().getTime();
+              }
+            }
+          }
+          else{
+            continue;
+          }
+        }
+        console.log(obj);
+      }
       var formData = {};
       if (obj && obj.groups && obj.groups.length) self.setDefaultValues(obj.groups, formData);
       setFormData(formData);

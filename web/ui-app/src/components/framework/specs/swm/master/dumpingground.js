@@ -375,22 +375,6 @@ var dat = {
             showHideFields: [
               {
                 ifValue: true,
-                show: [],
-                hide: [
-                  {
-                    name: 'dumpingGroundProcessingPlant',
-                    isGroup: false,
-                    isField: true,
-                  },
-                  {
-                    name: 'dumpingGroundDistance',
-                    isGroup: false,
-                    isField: true,
-                  },
-                ],
-              },{
-                ifValue: false,
-                hide: [],
                 show: [
                   {
                     name: 'dumpingGroundProcessingPlant',
@@ -403,8 +387,30 @@ var dat = {
                     isField: true,
                   },
                 ],
-              },
-            ],
+                hide: []
+              }
+            ]
+                // hide: [
+                  
+                // ],
+              // },{
+              //   ifValue: false,
+              //   hide: [],
+              //   show: [
+              //     {
+              //       name: 'dumpingGroundProcessingPlant',
+              //       isGroup: false,
+              //       isField: true,
+              //     },
+              //     {
+              //       name: 'dumpingGroundDistance',
+              //       isGroup: false,
+              //       isField: true,
+              //     },
+              //   ],
+              // },
+            // ],
+            
           },
           {
             name: 'dummy',
@@ -543,6 +549,7 @@ var dat = {
       }
     ],
     url: 'egov-mdms-create/v1/_create',
+    isMDMSScreen: true,
     tenantIdRequired: true,
   },
   'swm.view': {
