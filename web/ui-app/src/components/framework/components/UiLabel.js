@@ -342,6 +342,7 @@ class UiLabel extends Component {
 
 
 const mapStateToProps = state => ({
+  formData:state.frameworkForm.form,
   dropDownData: state.framework.dropDownData,
   dropDownOringalData: state.framework.dropDownOringalData,
 });
