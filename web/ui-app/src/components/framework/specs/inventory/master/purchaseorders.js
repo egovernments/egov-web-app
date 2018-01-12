@@ -378,8 +378,9 @@ var dat = {
                       autoSelect: true,
                       others:[
                       { key: 'priceLists[0].priceListDetails[0].ratePerUnit', value: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice'},
-                      { key: 'priceLists[0].priceListDetails[0].quantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity' }
-                      ],
+                      { key: 'priceLists[0].priceListDetails[0].quantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity' },
+                      { key: 'priceLists[0].priceListDetails[0].usedQuantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderUsedQuantity' }
+                        ],
                       pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}&materialCode={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit||$..quantity',              
                     },
                     // {
@@ -515,7 +516,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                   dependency: 'purchaseOrders[0].totalAdvancePaidAmount:purchaseOrders[0].purchaseOrderDetails[0].userQuantity' ,
-
+                   depedants: [
+                    {
+                      jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].totalAmount',
+                      type: 'textField',
+                      pattern: "`${getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice'):0} * ${getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity'):0}`", 
+                      rg: '',
+                      isRequired: false,
+                      requiredErrMsg: '',
+                      patternErrMsg: '',
+                    }],
                 },
                 {
                   name: 'TotalAmount',
@@ -527,7 +537,7 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
-                  dependency: 'purchaseOrders[0].totalAdvancePaidAmount' ,
+                  dependency: 'purchaseOrders[0].totalAdvancePaidAmount',
                },
                 {
                   name: 'tenderQuantity',
