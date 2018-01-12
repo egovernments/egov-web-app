@@ -98,6 +98,9 @@ var dat = {
           label: 'inventory.store.name',
 
         },
+        {
+          label:'inventory.active'
+        }
       ],
       values: [
         //{ jsonPath: 'material.code', reduxObject: "material.code", isObj: true, cToN: true },
@@ -106,6 +109,7 @@ var dat = {
         // { jsonPath: 'materials.materialType.code', reduxObject: "materialType.codeTwo", isObj: true, cToN: true },
         { jsonPath: 'store.code', reduxObject: "store.code", isObj: true, cToN: true },
         // 'storeMapping[0].store.code'
+        'active'
 
       ],
       resultPath: 'materialStoreMappings',
