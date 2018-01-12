@@ -28,6 +28,8 @@ class ShowField extends Component {
       ck: {},
       rows: {},
       showPrintBtn: false,
+      logopath:"",
+      ulbname :""
     };
   }
 
@@ -50,11 +52,33 @@ class ShowField extends Component {
 
   componentDidMount() {
     // console.log('Did Mount');
-    this.setState({
-      reportName: this.props.match.params.reportName,
-      moduleName: this.props.match.params.moduleName,
+    let _this =this
+    _this.setState({
+      reportName: _this.props.match.params.reportName,
+      moduleName: _this.props.match.params.moduleName,
     });
-    this.subHeader(this.props.match.params.moduleName);
+    _this.subHeader(_this.props.match.params.moduleName);
+
+    var tenantId = localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : '';
+    Api.commonApiPost("/tenant/v1/tenant/_search?tenantId="+tenantId+"&code="+tenantId+"&pageSize=200").then(
+      function(response) {debugger;
+        //console.log(moduleName, reportName);
+     //let hello =response.tenant[0].logoId;
+     if(response.tenant && response.tenant[0].logoId){
+     _this.setState({
+          logopath:response.tenant[0].logoId,
+          ulbname :response.tenant[0].name,
+     })
+       } // console.log('hide the loader');
+        // setForm();
+      },
+      function(err) {
+        // console.log(err);
+        alert('Try again later');
+        //_this.props.setLoadingStatus('hide');
+        // _this.props.toggleDailogAndSetText(true, 'Try again later');
+      }
+    );
   }
 
   componentWillReceiveProps(nextprops) {
@@ -71,8 +95,10 @@ class ShowField extends Component {
 
   getExportOptions() {
     let flag = false;
-    for (let key in this.state.ck) {
-      if (this.state.ck[key]) {
+    let _this =this;
+
+    for (let key in _this.state.ck) {
+      if (_this.state.ck[key]) {
         flag = true;
         break;
       }
@@ -103,11 +129,15 @@ class ShowField extends Component {
           exportOptions: {
             rows: '.selected',
           },
-          filename: this.state.reportName,
-          title: this.state.reportSubTitle,
+          filename: _this.state.reportName,
+          title: _this.state.reportSubTitle,
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
+          customize: function ( doc ) {
+                _this.PrintingCutomize(doc)
+                
+              }
         },
         {
           extend: 'print',
@@ -123,16 +153,64 @@ class ShowField extends Component {
         'excel',
         {
           extend: 'pdf',
-          filename: this.state.reportName,
-          title: this.state.reportSubTitle,
+          filename: _this.state.reportName,
+          title: _this.state.reportSubTitle,
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
+          customize: function ( doc ) {
+                _this.PrintingCutomize(doc)
+              }
         },
         'print',
       ];
     }
   }
+
+  PrintingCutomize(doc){
+    let _this = this;
+   if(_this.state.moduleName =='lcms' && doc && doc.content){
+          doc.content.map((item)=>{
+               if(item.style=='title'){
+                 return  doc.content[0].text =_this.state.ulbname
+               }
+             });
+              doc.content.splice( 1, 0, 
+                    {
+             table: {
+                 widths: ['auto','*','auto'],
+                 body: [
+                     [ 
+                     {
+                       image: _this.state.logopath,
+                     },{
+                         alignment: 'center',
+                         stack: [
+                             {
+                                 margin: [0, 10, 0, 0],
+                                 fontSize: 16,
+                                 bold: true,
+                                 text: _this.state.reportSubTitle,
+                             },
+                            
+                         ]
+                     }, 
+                     {
+                         alignment:'right',
+                         image:_this.state.logopath                     
+                      }
+                     ]
+                 ]
+             },
+             layout: {
+                 hLineWidth: function(line) { return 0; },
+                 vLineWidth: function() { return 0; },
+                 paddingBottom: function() { return 5; }
+             }
+        } );
+     }           
+ 
+ }
 
   componentDidUpdate() {
     let self = this;
