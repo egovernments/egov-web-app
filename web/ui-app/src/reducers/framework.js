@@ -26,7 +26,7 @@ export default (state = defaultState, action) => {
       };
     case 'SET_DROPDWON_DATA':
       let dropDownData=action.dropDownData;
-      if (state.dropDownData.hasOwnProperty(action.fieldName.split(".")).length>1 && state.dropDownData.hasOwnProperty(action.fieldName.split(".").join("-"))) {
+      if (action.fieldName.split(".").length>1 && state.dropDownData.hasOwnProperty(action.fieldName.split(".").join("-"))) {
         if (action.dropDownData.length>0) {
           let temp=dropDownData.map((item,key)=>{
             if (item.key) {
