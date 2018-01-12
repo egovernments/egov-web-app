@@ -151,7 +151,7 @@ var dat = {
               maxLength: 128,
               minLength: 1,
               patternErrorMsg: '',
-              url: '/hr-masters/designations/_search?tenantId=default|$..id|$..name',
+              url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             {
               name: 'code',
