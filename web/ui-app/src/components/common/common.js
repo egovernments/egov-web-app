@@ -3155,7 +3155,7 @@ var localization_EN_Data = {
   'inventory.supplierDetail': 'Supplier Details',
   'inventory.active': 'Active',
   'inventory.materialName': 'Material Name',
-  'inventory.materialDesc': 'Mateiral Description',
+  'inventory.materialDesc': 'Material Description',
   'inventory.receiptType': 'Receipt Type',
   'inventory.Uom': 'Unit of Measure',
   'inventory.Rate': 'Rate',
@@ -3195,13 +3195,13 @@ var localization_EN_Data = {
   'inventory.quotation': 'Quotation',
   'inventory.usedQuantity': 'Used Quantity',
   'inventory.orderqty': 'Order Quantity',
-  'inventory.totalindent.quantity': 'total indent quantity',
   'inventory.materialstoremapping.title': 'Material Store Mapping',
   'inventory.materialtypestoremapping.title': 'Material Type Store Mapping',
 
   'inventory.materialType.title': 'Material Type',
   'inventory.materialType.master.title':'Material Type Master',
   'inventory.materialStoreMap.master.title': 'Material Store Map Master',
+  'inventory.totalindent.quantity': 'Total Indent Quantity',
 
   'inventory.create.group.title.addmaterialType':'Add Material Type',
   'inventory.materialType.code':'Material Type code',

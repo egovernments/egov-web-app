@@ -90,6 +90,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'purchaseOrders',
+    extraParams: true,
     groups: [
       {
         name: 'Group1',
@@ -137,7 +138,7 @@ var dat = {
                 jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
                 type: 'griddropDown',
                 gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
-                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
               },
             ],
           },
@@ -174,8 +175,7 @@ var dat = {
                 jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
                  type: 'griddropDown',
                 gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
-                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
-               },
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',                             },
             ],
           },
           {
@@ -196,8 +196,7 @@ var dat = {
                 jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
                 type: 'griddropDown',
                 gridjsonPath:  'purchaseOrders[0].purchaseOrderDetails[0].material.code', 
-                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              
-              },
+                pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}|$..rateContractNumber|$..rateContractNumber',              },
             ],
           },
           {
@@ -333,6 +332,9 @@ var dat = {
                 },
                 {
                   label: 'inventory.unitRate',
+                  style: {
+                    width: '80px',
+                  },
                 },
                 {
                   label: 'reports.inventory.openbal.TotalAmount',
@@ -378,7 +380,7 @@ var dat = {
                       { key: 'priceLists[0].priceListDetails[0].ratePerUnit', value: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice'},
                       { key: 'priceLists[0].priceListDetails[0].quantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity' }
                       ],
-                      pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit||$..quantity',              
+                      pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}&materialCode={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit||$..quantity',              
                     },
                     // {
                     //   "jsonPath": "purchaseOrders[0].purchaseOrderDetails[0].uom.conversionFactor",
@@ -430,7 +432,7 @@ var dat = {
                   label: '',
                   pattern: '',
                   type: 'singleValueList',
-                  isRequired: false,
+                  isRequired: true,
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
@@ -442,7 +444,7 @@ var dat = {
                   label: '',
                   pattern: '',
                   type: 'singleValueList',
-                  isRequired: false,
+                  isRequired: true,
                   isDisabled: false,
                   defaultValue: [],
                   url: '/inventory-services/pricelists/_search?tenantId=default&rateContractNumber={purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit|$..quantity',
@@ -485,7 +487,7 @@ var dat = {
                   label: '',
                   pattern: '',
                   type: 'number',
-                  isRequired: false,
+                  isRequired: true,
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',

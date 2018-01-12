@@ -335,9 +335,9 @@ var dat = {
                 {
                   label: 'Qty Required',
                 },
-                 {
-                  label: 'Qty Received',
-                },
+                //  {
+                //   label: 'Qty Received',
+                // },
               ],
               values: [
                 {
@@ -425,16 +425,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                 },
-                {
-                  name: 'recvQuantity',
-                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
-                  pattern: '',
-                  type: 'number',
-                  isRequired: true,
-                  isDisabled: false,
-                  defaultValue: '',
-                  patternErrorMsg: '',
-                },
+                // {
+                //   name: 'recvQuantity',
+                //   jsonPath: 'indents[0].indentDetails[0].userQuantity',
+                //   pattern: '',
+                //   type: 'number',
+                //   isRequired: true,
+                //   isDisabled: false,
+                //   defaultValue: '',
+                //   patternErrorMsg: '',
+                // },
               ],
             },
           },
@@ -638,9 +638,9 @@ var dat = {
                 {
                   label: 'Qty Required',
                 },
-                 {
-                  label: 'Qty Received',
-                },
+                //  {
+                //   label: 'Qty Received',
+                // },
               ],
               values: [
                 {
@@ -726,16 +726,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                 },
-                {
-                  name: 'recvQuantity',
-                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
-                  pattern: '',
-                  type: 'number',
-                  isRequired: true,
-                  isDisabled: false,
-                  defaultValue: '',
-                  patternErrorMsg: '',
-                },
+                // {
+                //   name: 'recvQuantity',
+                //   jsonPath: 'indents[0].indentDetails[0].userQuantity',
+                //   pattern: '',
+                //   type: 'number',
+                //   isRequired: true,
+                //   isDisabled: false,
+                //   defaultValue: '',
+                //   patternErrorMsg: '',
+                // },
               ],
             },
           },

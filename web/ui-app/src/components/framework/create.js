@@ -10,6 +10,9 @@ import Api from '../../api/api';
 import jp from 'jsonpath';
 import UiButton from './components/UiButton';
 import { fileUpload, getInitiatorPosition, callApi, parseKeyAndValueForDD } from './utility/utility';
+import UiConfirm from './components/UiConfirm/index.js';
+import { createConfirmation } from 'react-confirm';
+
 import $ from 'jquery';
 
 import UiBackButton from './components/UiBackButton';
@@ -21,6 +24,7 @@ let reqRequired = [];
 let baseUrl = 'https://raw.githubusercontent.com/abhiegov/test/master/specs/';
 
 const REGEXP_FIND_IDX = /\[(.*?)\]+/g;
+const defaultConfirmation = createConfirmation(UiConfirm);
 
 class Report extends Component {
   state = {
@@ -38,6 +42,10 @@ class Report extends Component {
       eval(item);
     });
     return formData;
+  }
+
+  confirm(confirmation, options = {}) {
+  return defaultConfirmation({ confirmation, ...options });
   }
 
   showObjectInTable = (field, inArrayFormat = false, property = "name") => {
@@ -707,8 +715,6 @@ class Report extends Component {
     } catch (e) {
       console.log(e);
     }
-
-
 
     self.displayUI(specifications);
   }
@@ -1603,7 +1609,7 @@ checkIfHasReqFields = (jsonPath, val) => {
   affectDependants = (obj, e, property) => {
     let self = this;
     let { handleChange, setDropDownData, setDropDownOriginalData, dropDownOringalData, delRequiredFields, removeFieldErrors, addRequiredFields, formData, mockData } = this.props;
-    let { getVal, setVal, getValFromDropdownData, returnPathValueFunction, enField, disField } = this;
+    let { getVal, setVal, getValFromDropdownData, returnPathValueFunction, enField, disField, confirm } = this;
 
     const findLastIdxOnJsonPath = jsonPath => {
       var str = jsonPath.split(REGEXP_FIND_IDX);
@@ -2065,35 +2071,57 @@ checkIfHasReqFields = (jsonPath, val) => {
                       ''
                     );
                   }
+               }         
                 }
-              }
-            },
-            function (err) {
-              console.log(err);
-            }
-          );
-        }
-        else {
-          //to handle tableList dropdown
-          let currProperty = value.gridjsonPath;
-          let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
-          let numberOfRowsArray = _.get(formData, rootProperty);
-          if (numberOfRowsArray && numberOfRowsArray.length > 0) {
-            for (let i = 0; i < numberOfRowsArray.length; i++) {
-              value.gridjsonPath = replaceLastIdxOnJsonPath(value.gridjsonPath, i);
-              let currVal = _.get(formData, value.gridjsonPath);
-
-              let cVal = {
-                target: {
-                  value: currVal,
-                },
-              };
-              console.log(self);
-              self.affectDependants(obj, cVal, value.gridjsonPath);
-
-            }
+            } ,
+          function(err) {
+            console.log(err);
           }
-        }
+                 );
+          }
+            else{ 
+              //to handle tableList dropdown
+                let currProperty = value.gridjsonPath;
+                 let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
+                 let origValue = _.get(formData,property);
+              let numberOfRowsArray = _.get(formData, rootProperty);
+              if(numberOfRowsArray && numberOfRowsArray.length>0){
+                 confirm('This will reset all rates. Do you wish to Continue?').then(() => {
+                  console.log('proceed!') ;
+                 for(let i=0; i<numberOfRowsArray.length; i++)
+                    { 
+                         value.gridjsonPath = replaceLastIdxOnJsonPath(value.gridjsonPath, i);
+                         let currVal = _.get(formData, value.gridjsonPath);
+                     
+                          let cVal= {
+                              target: {
+                                value: currVal,
+                              },
+                            };
+                            console.log(self);
+                             self.affectDependants(obj,cVal,value.gridjsonPath);
+
+                        }
+                
+       
+
+                }, () => {
+                  console.log('cancel!');
+                    handleChange(
+                            {
+                              target: {
+                                value: origValue,
+                              },
+                            },
+                             property,//need to get old value
+                            '',
+                            '',
+                            ''
+                          );
+                });
+              } 
+                     
+      }
       }
       // else if (value.type == "documentList") {
       //
