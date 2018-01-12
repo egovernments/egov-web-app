@@ -535,6 +535,10 @@ class assetMovableCreate extends Component {
               customTemp.type = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type;
               customTemp.isRequired = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isMandatory;
               customTemp.isDisabled = !response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isActive;
+              // if(response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].order){
+              //   customTemp.order = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].order;
+              //   console.log(customTemp.order);
+              // }
               switch (customTemp.type) {
                 case 'Text':
                   customTemp.type = 'text';
@@ -1152,6 +1156,10 @@ class assetMovableCreate extends Component {
     let { handleChange, mockData, setDropDownData, formData } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`asset.create`];
+
+    if(property == 'Asset.location'){
+      self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
+    }
 
     if (property == 'Asset.assetCategory.id') {
       if (self.state.depericiationValue[e.target.value]) {
