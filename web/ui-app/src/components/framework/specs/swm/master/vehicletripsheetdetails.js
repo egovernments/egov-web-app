@@ -107,16 +107,12 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
-            depedants: [
-              {
-                jsonPath: 'vehicleTripSheetDetails[0].vendorName',
-                type: 'autoFill',
-                pattern: '/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}',
-                autoFillFields: {
-                  'vehicleTripSheetDetails[0].vendorName': 'vehicles[0].vendor.name',
-                },
+            autoCompleteDependancy: {
+              autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}',
+              autoFillFields: {
+                'vehicleTripSheetDetails[0].vendorName': 'vehicles[0].vendor.name'
               }
-            ],
+            }
           },
           {
             name: 'ulbOwnedVehicle',
@@ -359,16 +355,12 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
-            depedants: [
-              {
-                jsonPath: 'vehicleTripSheetDetails[0].vendorName',
-                type: 'autoFill',
-                pattern: '/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}',
-                autoFillFields: {
-                  'vehicleTripSheetDetails[0].vendorName': 'vehicles[0].vendor.name',
-                },
+            autoCompleteDependancy: {
+              autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}',
+              autoFillFields: {
+                'vehicleTripSheetDetails[0].vendorName': 'vehicles[0].vendor.name'
               }
-            ],
+            }
           },
           {
             name: 'ulbOwnedVehicle',
