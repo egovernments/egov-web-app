@@ -33,7 +33,7 @@ var dat = {
           fields: [
             {
               name: 'shift',
-              jsonPath: 'name',
+              jsonPath: 'code',
               label: 'swm.Shift.create.shift',
               pattern: '',
               type: 'autoCompelete',
@@ -43,6 +43,18 @@ var dat = {
               minLength: 1,
               patternErrorMsg: '',
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
+            },
+            {
+              name: 'shiftType',
+              jsonPath: 'shiftType.code',
+              label: 'swm.Shift.create.shiftType',
+              pattern: '',
+              type: 'singleValueList',
+              isRequired: false,
+              isDisabled: false,
+              maxLength: 12,
+              minLength: 6,
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
             },
           ]
         },
@@ -91,6 +103,17 @@ var dat = {
           name:'ShiftSelection',
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
+            {
+              name: 'shiftName',
+              jsonPath: 'MasterMetaData.masterData[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
             {
               name: 'shiftType',
               jsonPath: 'MasterMetaData.masterData[0].shiftType.code',
@@ -268,6 +291,17 @@ var dat = {
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
             {
+              name: 'shiftName',
+              jsonPath: 'MdmsRes.swm.Shift[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
+            {
               name: 'shiftType',
               jsonPath: 'MdmsRes.swm.Shift[0].shiftType.code',
               label: 'swm.Shift.create.shiftType',
@@ -439,6 +473,17 @@ var dat = {
           name:'ShiftSelection',
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
+            {
+              name: 'shiftName',
+              jsonPath: 'MasterMetaData.masterData[0].name',
+              label: 'swm.Shift.create.shift',
+              pattern: '',
+              type: 'text',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 100,
+              minLength: 1,
+            },
             {
               name: 'shiftType',
               jsonPath: 'MasterMetaData.masterData[0].shiftType.code',
