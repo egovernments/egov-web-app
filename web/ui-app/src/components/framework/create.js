@@ -451,6 +451,8 @@ class Report extends Component {
           if (specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isResponseArray) {
             var obj = {};
             _.set(obj, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName, jp.query(res, '$..[0]')[0]);
+            var spec = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+            if(spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(obj);
             self.setInitialUpdateData(
               obj,
@@ -473,12 +475,17 @@ class Report extends Component {
             let fields = jp.query(obj, `$.groups..fields[?(@.hasATOAATransform==true)]`);
             console.log(fields);
             for (var i = 0; i < fields.length; i++) {
-              let values = _.get(res, fields[i].jsonPath);
-              console.log(values);
-              res = _.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
+              if(!fields[i].hasPreTransform)
+              {
+                let values = _.get(res, fields[i].jsonPath);
+                console.log(values);
+                res = _.set(res, fields[i]["aATransformInfo"].to, self.showObjectInTable(values, true, "code"));
+              }
             }
 
             console.log(res);
+            var spec = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+            if(spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(res);
           }
           let obj1 = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
@@ -490,15 +497,15 @@ class Report extends Component {
       );
     } else {
       if((hashLocation.split('/').indexOf('create') == 1) && specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].isMDMSScreen) {
-        
-        
+
+
         // let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
         console.log(obj);
         var masterName = "";
         for(var i = 0; i < obj.groups.length; i++){
-          
+
           if(obj.groups[i].hide){
-            
+
             for(var j = 0; j < obj.groups[i].fields.length; j++){
               if(obj.groups[i].fields[j].jsonPath === "MasterMetaData.masterName"){
                 masterName = obj.groups[i].fields[j].defaultValue;
@@ -783,7 +790,7 @@ class Report extends Component {
     }
 
     else {
-      
+
       var url = autoObject.autoCompleteUrl.split('?')[0];
       var hashLocation = window.location.hash;
       var parameters = autoObject.autoCompleteUrl.substr(autoObject.autoCompleteUrl.indexOf('?') + 1);
@@ -806,7 +813,7 @@ class Report extends Component {
           [param.substr(0, index)]: param.substr(index + 1),
         };
       }
-  
+
       Api.commonApiPost(url, query, {}, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
         function(res) {
           var formData = { ...self.props.formData };
@@ -831,7 +838,7 @@ class Report extends Component {
     for (var i = 0; i < fields.length; i++) {
       let values = _.get(formData, fields[i].jsonPath);
       if (values && values.length > 0) {
-        formData = _.set(formData, fields[i]["aATransformInfo"].to, values.map(item => { return { [fields[i]["aATransformInfo"].key]: item } }));
+        formData = _.set(formData, fields[i]["aATransformInfo"].to, values.map(item => { return { [fields[i]["aATransformInfo"].key]: fields[i]["aATransformInfo"].from?_.get(item, fields[i]["aATransformInfo"].from):item } }));
       }
     }
     // console.log(formData);
@@ -1138,7 +1145,7 @@ class Report extends Component {
       for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
         for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
           //Extra check for multiple true
-          if (hideObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name 
+          if (hideObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name
           && (_mockData[moduleName + '.' + actionName].groups[i].multiple ? (jsonPath === _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath) : true )) {
             reset = this.resetCheck(_mockData, hideObject.name, val);
             _mockData[moduleName + '.' + actionName].groups[i].fields[j].hide = reset ? false : true;
@@ -1274,8 +1281,8 @@ class Report extends Component {
       for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
         for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
           //extra check required on jsonPath for duplicate fields in multiple true
-          
-          if (showObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name 
+
+          if (showObject.name == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name
           && (_mockData[moduleName + '.' + actionName].groups[i].multiple ? (jsonPath === _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath) : true )) {
             _mockData[moduleName + '.' + actionName].groups[i].fields[j].hide = reset ? true : false;
             if (!reset || !_.isUndefined(reset)) {
@@ -1629,7 +1636,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                 _mockData = this.reqField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].reqNotReqFields[k].require[y],false);
               }
             }
-          } 
+          }
         }
       }
     }
@@ -2132,7 +2139,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                       ''
                     );
                   }
-               }         
+               }
                 }
             } ,
           function(err) {
@@ -2141,7 +2148,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                  );
         }
           }
-            else{ 
+            else{
               //to handle tableList dropdown
                 let currProperty = value.gridjsonPath;
                  let rootProperty = currProperty.substr(0, currProperty.lastIndexOf('['));
@@ -2151,10 +2158,10 @@ checkIfHasReqFields = (jsonPath, val) => {
                  confirm('This will reset all rates. Do you wish to Continue?').then(() => {
                   console.log('proceed!') ;
                  for(let i=0; i<numberOfRowsArray.length; i++)
-                    { 
+                    {
                          value.gridjsonPath = replaceLastIdxOnJsonPath(value.gridjsonPath, i);
                          let currVal = _.get(formData, value.gridjsonPath);
-                     
+
                           let cVal= {
                               target: {
                                 value: currVal,
@@ -2164,8 +2171,8 @@ checkIfHasReqFields = (jsonPath, val) => {
                              self.affectDependants(obj,cVal,value.gridjsonPath);
 
                         }
-                
-       
+
+
 
                 }, () => {
                   console.log('cancel!');
@@ -2181,8 +2188,8 @@ checkIfHasReqFields = (jsonPath, val) => {
                             ''
                           );
                 });
-              } 
-                     
+              }
+
       }
       }
       // else if (value.type == "documentList") {
@@ -2295,7 +2302,7 @@ checkIfHasReqFields = (jsonPath, val) => {
     this.checkIfHasEnDisFields(property, e.target.value);
     this.checkifHasDependedantMdmsField(property, e.target.value);
     this.checkIfHasReqFields(property, e.target.value);
-    
+
     try {
       handleChange(e, property, isRequired, pattern, requiredErrMsg, patternErrMsg);
     } catch (e) {

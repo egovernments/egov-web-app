@@ -68,7 +68,7 @@ class UiMultiFieldTable extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('will next props:', nextProps.item.tableList.values);
     // console.log(this.props, nextProps, !_.isEqual(this.props, nextProps));
-    if (!_.isEqual(this.props, nextProps)) {
+    if ((nextProps.item.type=="tableList" && _.get(this.props.formData,this.props.item.jsonPath))) {
       // console.log('receive props condition succeeded', nextProps.item.jsonPath);
       this.renderOnLoad(nextProps);
     }
@@ -463,6 +463,8 @@ class UiMultiFieldTable extends Component {
         }
       }
     }
+
+
 
     // console.log(footerArray);
 
