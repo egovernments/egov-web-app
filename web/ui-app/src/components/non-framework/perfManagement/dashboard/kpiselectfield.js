@@ -3,11 +3,19 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
 export default class KPISelectField extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      values: [this.props.value]
+    }
+  }
   handleChange = (event, index, values) => {
+    this.setState({values});
     this.props.onItemsSelected(index, values, this.props.label);
   };
 
   render() {
+    const {values} = this.state;
     return (
       <SelectField
         className="custom-form-control-for-select"
@@ -38,7 +46,10 @@ export default class KPISelectField extends Component {
         maxHeight={200}
       >
         {this.props.items.map((item, i) => {
-          return <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} />;
+          return (this.props.multiple) ? 
+            <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} insetChildren={true} checked={values && values.indexOf(i) > -1} /> :
+            <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} />
+          ;
         })}
       </SelectField>
     );

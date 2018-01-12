@@ -126,7 +126,6 @@ export const parseFinancialYearCurrentPlusNextResponse = res => {
   var day     = d.getDate();
   var c       = new Date(year + 1, month, day);
 
-  console.log(c)
   return jp
     .query(res, '$.MdmsRes["egf-master"].FinancialYear[*]')
     .filter(el => {
