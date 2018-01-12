@@ -516,12 +516,12 @@ var dat = {
                     isField: true,
                   },
                   {
-                    name: 'insuranceValidityDate',
+                    name: 'vehicle.insuranceDetails.insuranceValidityDate',
                     isGroup: false,
                     isField: true,
                   },
                   {
-                    name: 'Downtimedefined',
+                    name: 'downtimeDefined',
                     isGroup: false,
                     isField: true,
                   },
@@ -644,7 +644,7 @@ var dat = {
             patternErrorMsg: '',
           },
           {
-            name: 'insuranceValidityDate',
+            name: 'vehicle.insuranceDetails.insuranceValidityDate',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate',
             label: 'swm.create.insuranceDetails.insuranceValidityDate',
             pattern: '',
@@ -655,30 +655,7 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: '',
           },
-          {
-            name: 'Downtimedefined',
-            jsonPath: 'vehicleMaintenanceDetails[0].downtimeDefined',
-            label: 'swm.create.DowntimeDefined',
-            pattern: '',
-            type: 'text',
-            hide: true,
-            isRequired: false,
-            isDisabled: true,
-            defaultValue: '',
-            patternErrorMsg: '',
-            url: '',
-          },
-          {
-            name: 'vehicleReadingDuringMaintenance',
-            jsonPath: 'vehicleMaintenanceDetails[0].vehicleReadingDuringMaintenance',
-            label: 'swm.create.vehicleReadingDuringMaintenance',
-            pattern: '',
-            type: 'number',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-          },
+
           {
             name: 'vehicleDowntimeActual',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicleDowntimeActual',
@@ -690,6 +667,34 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: '',
           },
+
+          
+          {
+            name: 'vehicleReadingDuringMaintenance',
+            jsonPath: 'vehicleMaintenanceDetails[0].vehicleReadingDuringMaintenance',
+            label: 'swm.create.vehicleReadingDuringMaintenance',
+            pattern: '',
+            type: 'number',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+          },
+
+          {
+            name: 'downtimeDefined',
+            jsonPath: 'vehicleMaintenanceDetails[0].downtimeDefined',
+            label: 'swm.create.DowntimeDefined',
+            pattern: '',
+            type: 'text',
+            hide: true,
+            isRequired: false,
+            isDisabled: true,
+            defaultValue: '',
+            patternErrorMsg: '',
+            url: '',
+          },
+          
           {
             name: 'vehicleDownTimeActualUom',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicleDownTimeActualUom',
