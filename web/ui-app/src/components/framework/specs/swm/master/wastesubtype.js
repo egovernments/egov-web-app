@@ -120,7 +120,7 @@ var dat = {
               jsonPath: 'MasterMetaData.masterData[0].wasteType.code',
               type: 'singleValueList',
               pattern: '^null|$',
-              isRequired: false,
+              isRequired: true,
               isDisabled: false,
               maxLength: 128,
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
