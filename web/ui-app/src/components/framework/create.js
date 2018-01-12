@@ -2356,7 +2356,6 @@ checkIfHasReqFields = (jsonPath, val) => {
           var _groupToBeInserted = {
             ...metaData[moduleName + '.' + actionName].groups[i],
           };
-
           for (var j = mockData[moduleName + '.' + actionName].groups.length - 1; j >= 0; j--) {
             if (groupName == mockData[moduleName + '.' + actionName].groups[j].name) {
               var regexp = new RegExp(
@@ -2366,7 +2365,7 @@ checkIfHasReqFields = (jsonPath, val) => {
               var stringified = JSON.stringify(_groupToBeInserted);
               var ind = mockData[moduleName + '.' + actionName].groups[j].index || 0;
               _groupToBeInserted = JSON.parse(
-                stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
+                stringified.replace(regexp, metaData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
               _groupToBeInserted.index = ind + 1;
               for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
@@ -2405,7 +2404,7 @@ checkIfHasReqFields = (jsonPath, val) => {
   };
 
   removeCard = (jsonPath, index, groupName) => {
-    console.log('remove called!!!');
+    // console.log('remove called!!!');
     //Remove at that index and update upper array values
     let { setMockData, moduleName, actionName, setFormData, delRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
@@ -2482,7 +2481,7 @@ checkIfHasReqFields = (jsonPath, val) => {
                 //console.log(mockData[moduleName + "." + actionName].groups[i].index);
                 //console.log(mockData[moduleName + "." + actionName].groups[i].index);
                 var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
-                console.log(stringified);
+                // console.log(stringified);
                 mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
                   stringified.replace(
                     regexp,
