@@ -3,40 +3,41 @@ var dat = {
 
         preApiCalls: [
             {
-              url: "/egov-mdms-service/v1/_get",
-              jsonPath: "materialType.codeTwo",
-              qs: {
-                moduleName: "inventory",
-                masterName: "MaterialType"
-              },
-              jsExpForDD: {
-                key: "$..code",
-                value: "$..name",
-              }
-            }, 
+                url: "/egov-mdms-service/v1/_get",
+                jsonPath: "materialType.codeTwo",
+                qs: {
+                    moduleName: "inventory",
+                    masterName: "MaterialType"
+                },
+                jsExpForDD: {
+                    key: "$..code",
+                    value: "$..name",
+                }
+            },
             {
                 url: "/inventory-services/stores/_search",
                 jsonPath: "store.code",
-                jsExpForDD: 
-                 {   key: "$..code",
-                    value: "$..name",
-                },
-                  
+                jsExpForDD:
+                    {
+                        key: "$..code",
+                        value: "$..name",
+                    },
+
             },
             {
                 url: "/egf-master/chartofaccounts/_search",
                 jsonPath: "chartOfAccount.codeThr",
-                jsExpForDD: 
+                jsExpForDD:
                     {
                         key: "$..glcode",
                         value: "$..name",
                     }
-                
-                
+
+
             },
 
-            
-            
+
+
 
             /*  {
                url: "/inventory-services/materials/_search",
@@ -107,7 +108,7 @@ var dat = {
                 {
                     label: 'inventory.materialType.name',
                 },
-               
+
                 {
                     label: 'inventory.store.name',
                 },
@@ -118,7 +119,7 @@ var dat = {
                     label: 'inventory.stock.stockInHand'
                 },
                 {
-                    label:'active'
+                    label: 'active'
 
                 }
             ],
@@ -129,7 +130,7 @@ var dat = {
                 //  'store.department',
                 { jsonPath: 'chartOfAccount.glcode', reduxObject: "chartOfAccount.codeThr", isObj: true, cToN: true },
                 //  'chartofAccount.glcode', 
-                 'active'],
+                'active'],
             resultPath: 'materialTypeStores',
             resultIdKey: 'id',
             rowClickUrlUpdate: '/update/inventory/materialtypestoremapping/{materialType.code}',
@@ -145,108 +146,108 @@ var dat = {
         groups: [{
 
         },
-            {
-                name: 'Material Map To Store',
-                label: 'inventory.create.group.title.MaterialType Map To Store',
-                fields: [
-                    {
-                        name: 'department',
-                        pattern: '',
-                        type: 'singleValueList',
-                        jsonPath: 'departmentMaster',
-                        isRequired: false,
-                        isDisabled: false,
-                        hide: true,
-                        url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
-                    },
+        {
+            name: 'Material Map To Store',
+            label: 'inventory.create.group.title.MaterialType Map To Store',
+            fields: [
+                {
+                    name: 'department',
+                    pattern: '',
+                    type: 'singleValueList',
+                    jsonPath: 'departmentMaster',
+                    isRequired: false,
+                    isDisabled: false,
+                    hide: true,
+                    url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
+                },
 
-                    {
-                        type: 'tableList',
-                        jsonPath: '',
-                        tableList: {
-                            header: [
-                                {
-                                    label: 'Material',
-                                },
-                                {
-                                    label: 'Store Name',
-                                },
-                                {
-                                    label: 'Department Name',
-                                },
-                                {
-                                    label: 'Account Code',
-                                },
-                                {
-                                    label: 'Active',
-                                },
-                            ],
-                            values: [
-                                {
-                                    name: 'material',
-                                    pattern: '',
-                                    type: 'autoCompelete',
-                                    jsonPath: 'materialType.code',
-                                    displayJsonPath: 'materialStoreMappings[0].material.name',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url:
-                                        '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=Material|$.MdmsRes.inventory.Material[*].code|$.MdmsRes.inventory.Material[*].name',
-                                },
-                                {
-                                    name: 'store',
-                                    pattern: '',
-                                    type: 'singleValueList',
-                                    jsonPath: 'store.code',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name|$.stores[*].department',
-                                    depedants: [
-                                        {
-                                            jsonPath: 'materialStoreMappings[0].department.code',
-                                            type: 'textField',
-                                            valExp:
-                                                "getValFromDropdownData('materialStoreMappings[*].store.code', getVal('materialStoreMappings[*].store.code'), 'others[0].code')",
-                                        },
-                                        {
-                                            jsonPath: 'materialStoreMappings[0].department.name',
-                                            type: 'textField',
-                                            valExp: "getValFromDropdownData('departmentMaster', getVal('materialStoreMappings[*].department.code'), 'value')",
-                                        },
-                                    ],
-                                },
-                                {
-                                    name: 'department',
-                                    pattern: '',
-                                    type: 'text',
-                                    jsonPath: 'department.name',
-                                    isRequired: true,
-                                    isDisabled: true,
-                                },
-                                {
-                                    name: 'accountcode',
-                                    pattern: '',
-                                    type: 'singleValueList',
-                                    jsonPath: 'chartofAccount.glCode',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url: '/egf-master/chartofaccounts/_search?|$.chartOfAccounts[*].glcode|$.chartOfAccounts[*].name',
-                                },
-                                {
-                                    name: 'active',
-                                    pattern: '',
-                                    type: 'checkbox',
-                                    defaultValue: true,
-                                    label: '',
-                                    jsonPath: 'active',
-                                    isRequired: false,
-                                    isDisabled: false,
-                                },
-                            ],
-                        },
+                {
+                    type: 'tableList',
+                    jsonPath: '',
+                    tableList: {
+                        header: [
+                            {
+                                label: 'Material',
+                            },
+                            {
+                                label: 'Store Name',
+                            },
+                            {
+                                label: 'Department Name',
+                            },
+                            {
+                                label: 'Account Code',
+                            },
+                            {
+                                label: 'Active',
+                            },
+                        ],
+                        values: [
+                            {
+                                name: 'material',
+                                pattern: '',
+                                type: 'autoCompelete',
+                                jsonPath: 'materialType.code',
+                                displayJsonPath: 'materialStoreMappings[0].material.name',
+                                isRequired: true,
+                                isDisabled: false,
+                                url:
+                                    '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=Material|$.MdmsRes.inventory.Material[*].code|$.MdmsRes.inventory.Material[*].name',
+                            },
+                            {
+                                name: 'store',
+                                pattern: '',
+                                type: 'singleValueList',
+                                jsonPath: 'store.code',
+                                isRequired: true,
+                                isDisabled: false,
+                                url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name|$.stores[*].department',
+                                depedants: [
+                                    {
+                                        jsonPath: 'materialStoreMappings[0].department.code',
+                                        type: 'textField',
+                                        valExp:
+                                            "getValFromDropdownData('materialStoreMappings[*].store.code', getVal('materialStoreMappings[*].store.code'), 'others[0].code')",
+                                    },
+                                    {
+                                        jsonPath: 'materialStoreMappings[0].department.name',
+                                        type: 'textField',
+                                        valExp: "getValFromDropdownData('departmentMaster', getVal('materialStoreMappings[*].department.code'), 'value')",
+                                    },
+                                ],
+                            },
+                            {
+                                name: 'department',
+                                pattern: '',
+                                type: 'text',
+                                jsonPath: 'department.name',
+                                isRequired: true,
+                                isDisabled: true,
+                            },
+                            {
+                                name: 'accountcode',
+                                pattern: '',
+                                type: 'singleValueList',
+                                jsonPath: 'chartofAccount.glCode',
+                                isRequired: true,
+                                isDisabled: false,
+                                url: '/egf-master/chartofaccounts/_search?|$.chartOfAccounts[*].glcode|$.chartOfAccounts[*].name',
+                            },
+                            {
+                                name: 'active',
+                                pattern: '',
+                                type: 'checkbox',
+                                defaultValue: true,
+                                label: '',
+                                jsonPath: 'active',
+                                isRequired: false,
+                                isDisabled: false,
+                            },
+                        ],
                     },
-                ],
-            },
+                },
+            ],
+        },
         ],
         url: '/inventory-services/materials/_create',
         tenantIdRequired: true,
@@ -342,7 +343,7 @@ var dat = {
                         url: '/egov-mdms-service/v1/_get?&moduleName=inventory&masterName=MaterialType|$..code|$..name',
                         patternErrorMsg: '',
                     },
-                
+
 
 
                 ],
@@ -351,10 +352,10 @@ var dat = {
                 name: 'MaterialType Map To Store',
                 label: 'inventory.material.maptostore',
                 fields: [
-              
+
                     {
                         type: 'tableList',
-                        jsonPath: 'materialtypes[0].storeMapping',
+                        jsonPath: 'materialTypes[0].storeMapping',
                         tableList: {
                             header: [
                                 {
@@ -381,14 +382,14 @@ var dat = {
                                     url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name',
                                     depedants: [
                                         {
-                                            jsonPath: 'materialtypes[0].storeMapping[0].store.department.code',
+                                            jsonPath: 'materialTypes[0].storeMapping[0].store.department.code',
                                             type: 'autoFill',
-                                            pattern: "inventory-services/stores/_search?&codes={materialtypes[0].storeMapping[0].store.code}",
+                                            pattern: "inventory-services/stores/_search?&codes={materialTypes[0].storeMapping[0].store.code}",
                                             autoFillFields: {
-                                                'materialtypes[0].storeMapping[0].store.department.code': 'stores[0].department.code',
-                                            }    
-                                          },
-                                    
+                                                'materialTypes[0].storeMapping[0].store.department.code': 'stores[0].department.code',
+                                            }
+                                        },
+
                                     ],
                                 },
                                 {
@@ -424,11 +425,11 @@ var dat = {
                     },
                 ],
             },
-          
+
         ],
-        
+
         tenantIdRequired: true,
-        },
+    },
 
     'inventory.view': {
         numCols: 4,
@@ -560,19 +561,14 @@ var dat = {
                                     url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name',
                                     depedants: [
                                         {
-                                            jsonPath: 'materialtypes[0].storeMapping[0].store.department.code',
+                                            jsonPath: 'materialTypes[0].storeMapping[0].store.department.code',
                                             type: 'autoFill',
-                                            pattern: "inventory-services/stores/_search?&codes={materialtypes[0].storeMapping[0].store.code}",
+                                            pattern: "inventory-services/stores/_search?&codes={materialTypes[0].storeMapping[0].store.code}",
                                             autoFillFields: {
-                                                'materialtypes[0].storeMapping[0].store.department.code': 'stores[0].department.code',
-                                            }       // "getValFromDropdownData('materials[0].storeMapping[*].store.code', getVal('materials[0].storeMapping[*].store.code'), 'others[0].code')",
+                                                'materialTypes[0].storeMapping[0].store.department.code': 'stores[0].department.code',
+                                            }
                                         },
-                                        //  ,
-                                        //  {
-                                        //     "jsonPath":"materials[0].storeMapping[0].department.name",
-                                        //     "type":"textField",
-                                        //     "valExp":"getValFromDropdownData('departmentMaster', getVal('materials[0].storeMapping[*].department.code'), 'value')"
-                                        //  }
+                                  
                                     ],
                                 },
                                 {
@@ -608,96 +604,7 @@ var dat = {
                     },
                 ],
             },
-           /*  {
-                name: 'MaterialType Map To Store',
-                label: 'inventory.material.maptostore',
-                fields: [
-                    {
-                        name: 'department',
-                        pattern: '',
-                        type: 'singleValueList',
-                        jsonPath: 'departmentMaster',
-                        isRequired: false,
-                        isDisabled: false,
-                        hide: true,
-                        url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
-                    },
-
-                    {
-                        type: 'tableList',
-                        jsonPath: 'materialtypes[0].storeMapping',
-                        tableList: {
-                            header: [
-                                {
-                                    label: 'Store Name',
-                                },
-                                {
-                                    label: 'Department Name',
-                                },
-                                {
-                                    label: 'Account Code',
-                                },
-                                {
-                                    label: 'Active',
-                                },
-                            ],
-                            values: [
-                                {
-                                    name: 'store',
-                                    pattern: '',
-                                    type: 'singleValueList',
-                                    jsonPath: 'materialtypes[0].storeMapping[0].store.code',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name|$.stores[*].department',
-                                    depedants: [
-                                        {
-                                            jsonPath: 'materials[0].storeMapping[0].department.code',
-                                            type: 'textField',
-                                            valExp:
-                                                "getValFromDropdownData('materials[0].storeMapping[*].store.code', getVal('materials[0].storeMapping[*].store.code'), 'others[0].code')",
-                                        },
-                                        //  ,
-                                        //  {
-                                        //     "jsonPath":"materials[0].storeMapping[0].department.name",
-                                        //     "type":"textField",
-                                        //     "valExp":"getValFromDropdownData('departmentMaster', getVal('materials[0].storeMapping[*].department.code'), 'value')"
-                                        //  }
-                                    ],
-                                },
-                                {
-                                    name: 'department',
-                                    pattern: '',
-                                    type: 'singleValueList',
-                                    jsonPath: 'materialtypes[0].storeMapping[0].store.department',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Department|$..code|$..name',
-                                },
-                                {
-                                    name: 'accountcode',
-                                    pattern: '',
-                                    type: 'singleValueList',
-                                    jsonPath: 'materialtypes[0].storeMapping[0].chartofAccount.glCode',
-                                    isRequired: true,
-                                    isDisabled: false,
-                                    url: '/egf-master/chartofaccounts/_search?|$.chartOfAccounts[*].glcode|$.chartOfAccounts[*].name',
-                                },
-                                {
-                                    name: 'active',
-                                    pattern: '',
-                                    type: 'checkbox',
-                                    defaultValue: true,
-                                    label: '',
-                                    jsonPath: 'materialtypes[0].storeMapping[0].active',
-                                    isRequired: false,
-                                    isDisabled: false,
-                                },
-                            ],
-                        },
-                    },
-                ],
-            }, */
+   
 
         ],
 
