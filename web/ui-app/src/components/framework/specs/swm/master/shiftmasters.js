@@ -154,14 +154,6 @@ var dat = {
               url: '/hr-masters/designations/_search?tenantId=default|$..code|$..name',
             },
             {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'Shift-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
-            },
-            {
               name: 'tenantId',
               jsonPath: 'MasterMetaData.masterData[0].tenantId',
               type: 'text',
@@ -182,6 +174,21 @@ var dat = {
               defaultValue: 'Shift',
               hide: true
             },
+            
+          ]
+        },
+        {
+          name: 'HideGroup',
+          hide: true,
+          fields: [
+            {
+              name: 'code',
+              jsonPath: 'MasterMetaData.masterData[0].code',
+              defaultValue: 'Shift-' + new Date().getTime(),
+              isRequired : true,
+              type: 'text',
+              hide: true,
+            }
           ]
         },
         {
@@ -553,6 +560,22 @@ var dat = {
             //   defaultValue: 'Shift',
             //   hide: true
             // },
+
+           
+          ]
+        },
+        {
+          name: 'HideGroup',
+          hide: true,
+          fields: [
+            {
+              name: 'code',
+              jsonPath: 'MasterMetaData.masterData[0].code',
+              defaultValue: 'Shift-' + new Date().getTime(),
+              isRequired : true,
+              type: 'text',
+              hide: true,
+            }
           ]
         },
         {
