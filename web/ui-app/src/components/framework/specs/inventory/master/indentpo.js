@@ -16,6 +16,8 @@ var dat = {
             type: 'number',
             isDisabled: false,
             patternErrorMsg: 'inventory.create.field.message.issueStore',
+            url: 'inventory-services/stores/_search?|$.stores[*].code|$.stores[*].name',
+
           },
           {
             name: 'indentDate',
@@ -24,6 +26,8 @@ var dat = {
             type: 'datePicker',
             isDisabled: false,
             patternErrorMsg: 'inventory.create.field.message.indentDate',
+            maxDate: 'today',
+            minDate: 'today-365',
           },
           {
             name: 'indentNumber',
@@ -40,6 +44,22 @@ var dat = {
             type: 'singleValueList',
             isDisabled: false,
             patternErrorMsg: 'inventory.create.field.message.indentPurpose',
+             patternErrorMsg: 'inventory.create.field.message.indentPurpose',
+            defaultValue: [
+              { key: null, value: '-- Please Select --' },
+              {
+                key: 'Consumption',
+                value: 'Consumption',
+              },
+              {
+                key: 'Repairs and Maintenance',
+                value: 'Repairs and Maintenance',
+              },
+              {
+                key: 'Capital',
+                value: 'Capital',
+              },
+            ],
           },
           {
             name: 'indentStatus',
@@ -48,6 +68,34 @@ var dat = {
             type: 'singleValueList',
             isDisabled: false,
             patternErrorMsg: 'inventory.create.field.message.indentStatus',
+             defaultValue: [
+              { key: null, value: '-- Please Select --' },
+              {
+                key: 'CREATED',
+                value: 'CREATED',
+              },
+              {
+                key: 'APPROVED',
+                value: 'APPROVED',
+              },
+              {
+                key: 'REJECTED',
+                value: 'REJECTED',
+              },
+              {
+                key: 'CANCELED',
+                value: 'CANCELED',
+              },
+            ],
+          },
+          {
+            name: 'searchPurpose',
+            jsonPath: 'searchPurpose',
+            label: 'inventory.indent.status',
+            type: 'text',
+            isDisabled: false,
+            isHidden: true,
+            defaultValue: 'PurchaseOrder',
           },
         ],
       },
@@ -218,6 +266,16 @@ var dat = {
             defaultValue: '',
             maxLength: 10,
             patternErrorMsg: '',
+             depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].advancePercentage',
+                type: 'textField',
+                pattern: "`${getVal('purchaseOrders[0].advanceAmount')!=''?getVal('purchaseOrders[0].advanceAmount'):0} / ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?getVal('purchaseOrders[0].totalAdvancePaidAmount'):1} *  ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?100:0} `",/// getVal('purchaseOrders.totalAdvancePaidAmount') 
+                rg: '',
+                isRequired: false,
+                requiredErrMsg: '',
+                patternErrMsg: '',
+              }],
           },
           {
             name: 'advancePercentage',
@@ -230,6 +288,16 @@ var dat = {
             defaultValue: '',
             maxLength: 3,
             patternErrorMsg: '',
+             depedants: [
+              {
+                jsonPath: 'purchaseOrders[0].advanceAmount',
+                type: 'textField',
+                pattern: "`${getVal('purchaseOrders[0].advancePercentage')!=''?getVal('purchaseOrders[0].advancePercentage'):0} * ${getVal('purchaseOrders[0].totalAdvancePaidAmount')!=''?getVal('purchaseOrders[0].totalAdvancePaidAmount'):0} / 100 `",/// getVal('purchaseOrders.totalAdvancePaidAmount') 
+                rg: '',
+                isRequired: false,
+                requiredErrMsg: '',
+                patternErrMsg: '',
+              }],
           },
           {
             name: 'expectedDeliveryDate',
@@ -359,9 +427,13 @@ var dat = {
                     },
                     {
                       jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
-                      type: 'dropDown',
+                      type: 'griddropDown',
                       autoSelect: true,
-                      pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&agreementStartDate<={purchaseOrders[0].purchaseOrderDate}&agreementEndDate>={purchaseOrders[0].purchaseOrderDate}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber',              
+                      others:[
+                      { key: 'priceLists[0].priceListDetails[0].ratePerUnit', value: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice'},
+                      { key: 'priceLists[0].priceListDetails[0].quantity', value : 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity' }
+                      ],
+                      pattern: '/inventory-services/pricelists/_search?tenantId=default&supplierName={purchaseOrders[0].supplier.code}&rateType={purchaseOrders[0].rateType}&active=true&asOnDate={purchaseOrders[0].purchaseOrderDate}&materialCode={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit||$..quantity',              
                     },
                     // {
                     //   "jsonPath": "purchaseOrders[0].purchaseOrderDetails[0].uom.conversionFactor",

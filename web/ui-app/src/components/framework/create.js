@@ -1979,7 +1979,7 @@ checkIfHasReqFields = (jsonPath, val) => {
         for (var j = 0; j < splitArray[0].split('/').length; j++) {
           context += splitArray[0].split('/')[j] + '/';
         }
-
+        let dataFlag =0;
         let level = value.gridjsonPath;
         if (level == undefined) {
           let queryStringObject = splitArray[1].split('|')[0].split('&');
@@ -2005,6 +2005,11 @@ checkIfHasReqFields = (jsonPath, val) => {
                           .split('}')[0]
                       )
                     ) || '';
+                    if(id[queryStringObject[i].split('=')[0]]=='')
+                      {
+                      dataFlag=1;
+                      break;
+                      }
                 }
               } else {
                 id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
@@ -2012,6 +2017,7 @@ checkIfHasReqFields = (jsonPath, val) => {
             }
           }
           dependantIdx = findLastIdxOnJsonPath(property);
+          if(dataFlag==0){
           Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
             function (response) {
               if (response) {
@@ -2078,6 +2084,7 @@ checkIfHasReqFields = (jsonPath, val) => {
             console.log(err);
           }
                  );
+        }
           }
             else{ 
               //to handle tableList dropdown

@@ -449,19 +449,20 @@ var dat = {
                   defaultValue: [],
                   url: '/inventory-services/pricelists/_search?tenantId=default&rateContractNumber={purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber}&priceListDetails.material.code={purchaseOrders[0].purchaseOrderDetails[0].material.code}|$..rateContractNumber|$..rateContractNumber|$..ratePerUnit|$..quantity',
                   patternErrorMsg: '',
-                  //  depedants: [
-                  //   {
-                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice',
-                  //     type: 'textField',
-                  //     valExp:
-                  //       "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[0]')",
-                  //   },
-                  //   {
-                  //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].usedQuantity',
-                  //     type: 'textField',
-                  //     valExp:
-                  //       "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[1]')",
-                  //   },
+                   depedants: [
+                    {
+                      jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice',
+                      type: 'textField',
+                      valExp:
+                        "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[0]')",
+                    },
+                    {
+                      jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].usedQuantity',
+                      type: 'textField',
+                      valExp:
+                        "getValFromDropdownData('purchaseOrders[0].purchaseOrderDetails[*].rateContractNumber', getVal('purchaseOrders[0].purchaseOrderDetails[*].material.code'), 'others[1]')",
+                    },
+                   ],
                   // depedants: [
                   //   {
                   //     jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].unitPrice',
@@ -526,7 +527,8 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
-                },
+                  dependency: 'purchaseOrders[0].totalAdvancePaidAmount' ,
+               },
                 {
                   name: 'tenderQuantity',
                   jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity',
