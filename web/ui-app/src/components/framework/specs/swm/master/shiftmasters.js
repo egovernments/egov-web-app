@@ -44,19 +44,6 @@ var dat = {
               patternErrorMsg: '',
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
             },
-            // {
-            //   name: 'shiftType',
-            //   jsonPath: 'shiftType',
-            //   label: 'swm.Shift.create.shiftType',
-            //   pattern: '',
-            //   type: 'autoCompelete',
-            //   isRequired: false,
-            //   isDisabled: false,
-            //   maxLength: 128,
-            //   minLength: 1,
-            //   patternErrorMsg: '',
-            //   url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
-            // }
           ]
         },
       ],
@@ -593,7 +580,7 @@ var dat = {
               jsonPath: 'MasterMetaData.masterData[0].graceTimeTo',
               label: 'swm.Shift.create.graceTimeTo',
               pattern: '',
-              type: 'timePicker',
+              type: 'timePicker', 
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: '',
