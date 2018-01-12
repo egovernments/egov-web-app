@@ -343,21 +343,9 @@ var dat = {
         name: 'FuelDetails',
         label: 'swm.refillingpumpstations.create.group.title.FuelDetails',
         fields: [
-          // {
-          //   name: 'name',
-          //   jsonPath: 'refillingPumpStations[0].typeOfFuel.code',
-          //   label: 'swm.refillingpumpstations.typeOfFuel',
-          //   type: 'singleValueList',
-          //   isRequired: true,
-          //   isDisabled: false,
-          //   maxLength: 128,
-          //   minLength: 1,
-          //   patternErrorMsg: '',
-          //   url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name'
-          // },
           {
             name: 'name',
-            jsonPath: 'refillingPumpStations[0].fuelTypes[0].code',
+            jsonPath: 'refillingPumpStations[0].fuelTypes',
             label: 'swm.refillingpumpstations.typeOfFuel',
             type: 'multiValueList',
             isRequired: true,
