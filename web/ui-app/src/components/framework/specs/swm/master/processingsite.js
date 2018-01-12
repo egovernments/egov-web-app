@@ -295,7 +295,7 @@ var dat = {
           {
             name: 'ProcessingSiteLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
-            label: 'swm.processingplant.create.Longitude',
+            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
             pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
@@ -578,7 +578,7 @@ var dat = {
           {
             name: 'ProcessingSiteLongitude',
             jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.longitude',
-            label: 'swm.processingplant.create.Longitude',
+            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
             pattern: '',
             type: 'text',
             isRequired: false,
@@ -803,7 +803,7 @@ var dat = {
           {
             name: 'ProcessingSiteLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
-            label: 'swm.processingplant.create.Latitude',
+            label: 'swm.dumpingGround.create.dumpingGroundLongitude',
             pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
             type: 'text',
             isRequired: true,
