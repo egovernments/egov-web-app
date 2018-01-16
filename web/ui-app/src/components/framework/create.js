@@ -3541,6 +3541,28 @@ class Report extends Component {
       eval(obj.beforeHandleChange)
     }
 
+    if (!!obj) {
+      obj.groups.map((d) => {
+        d.fields.map((innerData) => {
+          if (innerData.type == 'tableList') {
+            innerData.tableList.values.map((dn) => {
+              if (dn.hasOwnProperty('dependantOn')) {
+                dn.dependantOn.map((fData) => {
+                  if (getVal(`${fData.jsonPath}`) == `${fData.key}`) {
+                    expression = expression;
+                  }
+                  else {
+                    expression = '';
+                  }
+
+                })
+              }
+            })
+          }
+        })
+      })
+    }
+
     if (expression && e.target.value) {
       let str = expression;
       let pos = 0;

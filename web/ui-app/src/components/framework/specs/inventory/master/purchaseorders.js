@@ -84,7 +84,7 @@ var dat = {
     },
   },
   'inventory.create': {
-    numCols: 4,
+   numCols: 4,
     useTimestamp: true,
     objectName: 'purchaseOrders',
     preApiCalls:[
@@ -99,7 +99,15 @@ var dat = {
             key:"$.Employee[0].assignments[0].designation",
             value:"$.Employee[0].assignments[0].designation",
           }
+        },
+         {
+        url: '/inventory-services/pricelists/_search',
+        jsonPath: "pricelists",
+        jsExpForDD: {
+          key: "$..tenant.*.code",
+          value: "$..tenant.*.name",
         }
+      }
       ],
     groups: [{
       name: 'Group1',
@@ -514,6 +522,13 @@ var dat = {
                   requiredErrMsg: '',
                   patternErrMsg: '',
                 }],
+                  dependantOn:[{
+                  jsonPath: 'purchaseOrders[0].rateType',
+                  key: 'One Time Tender',
+                }] ,
+
+                expression: '$purchaseOrders[0].purchaseOrderDetails[0].userQuantity <= $purchaseOrders[0].purchaseOrderDetails[0].tenderQuantity',
+                expressionMsg: 'Order Quantity must be Less Than Tender Quantity',
               },
               {
                 name: 'unitPrice',
@@ -521,7 +536,7 @@ var dat = {
                 label: '',
                 pattern: '',
                 type: 'number',
-                isRequired: false,
+                isRequired: true,
                 isDisabled: false,
                 defaultValue: '',
                 patternErrorMsg: '',
@@ -536,6 +551,8 @@ var dat = {
                   requiredErrMsg: '',
                   patternErrMsg: '',
                 }],
+
+            
               },
               {
                 name: 'TotalAmount',
@@ -634,6 +651,22 @@ var dat = {
             ],
           },
         },
+        {
+          name: 'dummy',
+          jsonPath: '',
+          type: 'textArea',
+          defaultValue: '',
+          maxLength: 500,
+         
+        },
+        {
+          name: 'dummy',
+          jsonPath: '',
+          type: 'textArea',
+          defaultValue: '',
+          maxLength: 500,
+
+        },
        {
           name: 'totalPoValue',
           jsonPath: 'purchaseOrders[0].totalAdvancePaidAmount',
@@ -671,6 +704,7 @@ var dat = {
                 isDisabled: true,
                 requiredErrMsg: '',
                 patternErrMsg: '',
+                hideAddButton:true
               },
       ],
     }, ],
@@ -1556,6 +1590,23 @@ var dat = {
               },
             ],
           },
+        },
+        {
+          name: 'totalPoValue',
+          jsonPath: 'purchaseOrders[0].totalAdvancePaidAmount',
+          label: 'inventory.totalPoValue',
+          pattern: '',
+          type: 'text',
+          hide:true
+        },
+        {
+          name: 'totalPoValue',
+          jsonPath: 'purchaseOrders[0].totalAdvancePaidAmount',
+          label: 'inventory.totalPoValue',
+          pattern: '',
+          type: 'text',
+          hide:true
+
         },
        {
           name: 'totalPoValue',

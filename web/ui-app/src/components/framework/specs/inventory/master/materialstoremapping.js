@@ -23,15 +23,19 @@ var dat = {
         }
       },
 
-      /*  {
+      {
          url: "/inventory-services/materials/_search",
-         jsonPath: "material.code",
+         jsonPath: "material.value",
+        qs: {
+          moduleName: "inventory",
+          masterName: "Material"
+        },
          jsExpForDD: {
            key: "$..code",
            value: "$..name",
          } 
  
-       }*/
+       }
     ],
 
     numCols: 4,
@@ -103,9 +107,9 @@ var dat = {
         }
       ],
       values: [
-        //{ jsonPath: 'material.code', reduxObject: "material.code", isObj: true, cToN: true },
+       { jsonPath: 'material.code', reduxObject: "material", isObj: true, cToN: true },
 
-        'material.code',
+        //'material.code',
         // { jsonPath: 'materials.materialType.code', reduxObject: "materialType.codeTwo", isObj: true, cToN: true },
         { jsonPath: 'store.code', reduxObject: "store.code", isObj: true, cToN: true },
         // 'storeMapping[0].store.code'

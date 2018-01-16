@@ -400,6 +400,8 @@ class UiWindowForm extends Component {
           {this.renderTable(item, val)}
 
           <Col xs={12} md={6}>
+
+            {!!item.hideAddButton ? '':
             <FloatingActionButton
               style={{ marginTop: 39 }}
               mini={true}
@@ -409,6 +411,7 @@ class UiWindowForm extends Component {
             >
               <i className="material-icons">add</i>
             </FloatingActionButton>
+          }
           </Col>
         </Row>
       );
@@ -465,7 +468,9 @@ class UiWindowForm extends Component {
                   }}
                 />,
                 <FlatButton label={translate('pt.create.button.viewdcb.close')} primary={true} onClick={this.handleClose} />,
-              ]}
+              ]
+            
+            }
               modal={false}
               open={this.state.open}
               contentStyle={{ width: '80%', 'max-width': '80%' }}
