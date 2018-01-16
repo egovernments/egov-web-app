@@ -92,18 +92,63 @@ var dat = {
       },
       {
         name: 'startingCollectionPoint',
-        label: 'swm.routes.create.group.title.starting',
+        label: 'swm.routes.create.group.title',
         jsonPath: "routes[0].routeCollectionPointMaps",
+        multiple: true,
         fields: [
           {
-            "type": "collectionRoute",
+            "type": "boundary",
             "label": "",
             "hierarchyType": "REVENUE",
-            "jsonPath": "routes[0].routeCollectionPointMaps[0].collectionPoint.code",
-            "isRequired": false,
+            "jsonPath": "routes[0].routeCollectionPointMaps[0].location.code",
+            "isRequired": true,
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
+            depedants: [
+              {
+                jsonPath: 'routes[0].routeCollectionPointMaps[0].collectionPoint.code',
+                type: 'dropDown',
+                pattern:
+                  '/swm-services/collectionpoints/_search?&locationCode={routes[0].routeCollectionPointMaps[0].location.code}|$..code|$..name',
+              },
+            ]
+          },
+          {
+            name: 'typeOfPoint',
+            jsonPath: 'routes[0].routeCollectionPointMaps[0].isStartingCollectionPoint',
+            label: 'Type Of Point',
+            type: 'singleValueList',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: [
+              {
+                key: 'Starting Point',
+                value: 'Starting Point',
+              },
+              {
+                key: 'Route Stop',
+                value: 'Route Stop',
+              },
+              {
+                key: 'Ending Dumping Ground point',
+                value: 'Ending Dumping Ground point',
+              },
+              {
+                key: 'Ending Collection Point',
+                value: 'Ending Collection Point',
+              }
+            ],
+            patternErrorMsg: ''
+          },
+          {
+            name: 'collectionPoint',
+            jsonPath: 'routes[0].routeCollectionPointMaps[0].collectionPoint.code',
+            label: 'Collection Points',
+            type: 'singleValueList',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: ''
           },
           {
             name: 'startingCollectionPointDistance',
@@ -123,132 +168,122 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-          {
-            name: 'isStartingCollectionPoint',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].isStartingCollectionPoint',
-            label: 'start point',
-            type: 'checkbox',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue:true,
-            patternErrorMsg: ''
-          },
+          }
         ],
       },
-      {
-        name: 'collectionPoints',
-        multiple:true,
-        label: 'swm.routes.create.group.title.routestops',
-        jsonPath: "routes[0].routeCollectionPointMaps",
-        fields: [
-          {
-            "type": "collectionRoute",
-            "label": "",
-            "hierarchyType": "REVENUE",
-            "jsonPath": "routes[0].routeCollectionPointMaps[0].collectionPoint.code",
-            "isRequired": false,
-            "patternErrorMsg": "",
-            "multiple": true,
-            "fullWidth": true,
-          },
-          {
-            name: 'collectionPointsDistance',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].distance',
-            label: 'Distance From Last Stop(KMS)',
-            type: 'number',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-          {
-            name: 'collectionPointsGarbageEstimate',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].garbageEstimate',
-            label: 'Expected Garbage Collection(TONS)',
-            type: 'number',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-        ],
-      },
-      {
-        name: 'endingDumpingGroundPoint',
-        label: 'swm.routes.create.group.title.end',
-        fields: [
-          {
-            name: 'endingDumpingGroundPointDistance',
-            jsonPath: 'routes[0].endingDumpingGroundPoint.isProcessingSite',
-            label: 'swm.routes.create.collectionPoint',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-          // {
-          //   name: 'customtext',
-          //   jsonPath: '',
-          //   label: '',
-          //   type: 'label',
-          //   defaultValue:'OR',
-          //   patternErrorMsg: '',
-          // },
-          {
-            name: 'endingDumpingGroundPointName',
-            jsonPath: 'routes[0].endingDumpingGroundPoint.name',
-            label: 'swm.routes.create.dumping',
-            type: 'text',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-        ],
-      },
-      {
-        name: 'endingCollectionPoint',
-        label: '',
-        jsonPath: "routes[0].routeCollectionPointMaps",
-        fields: [
-          {
-            "type": "collectionRoute",
-            "label": "",
-            "hierarchyType": "REVENUE",
-            "jsonPath": "routes[0].routeCollectionPointMaps[0].collectionPoint.code",
-            "isRequired": false,
-            "patternErrorMsg": "",
-            "multiple": true,
-            "fullWidth": true
-          },
-          {
-            name: 'endingCollectionPointDistance',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].distance',
-            label: 'Distance From Last Stop(KMS)',
-            type: 'number',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: ''
-          },
-          {
-            name: 'endingCollectionPointGarbageEstimate',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].garbageEstimate',
-            label: 'Expected Garbage Collection(TONS)',
-            type: 'number',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: ''
-          },
-          {
-            name: 'isEndingCollectionPoint',
-            jsonPath: 'routes[0].routeCollectionPointMaps[0].isEndingCollectionPoint',
-            label: 'end point',
-            type: 'checkbox',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue:true,
-            patternErrorMsg: ''
-          },
-        ],
-      },
+      // {
+      //   name: 'collectionPoints',
+      //   multiple:true,
+      //   label: 'swm.routes.create.group.title.routestops',
+      //   jsonPath: "routes[0].routeCollectionPointMaps",
+      //   fields: [
+      //     {
+      //       "type": "collectionRoute",
+      //       "label": "",
+      //       "hierarchyType": "REVENUE",
+      //       "jsonPath": "routes[0].routeCollectionPointMaps[0].collectionPoint.code",
+      //       "isRequired": false,
+      //       "patternErrorMsg": "",
+      //       "multiple": true,
+      //       "fullWidth": true,
+      //     },
+      //     {
+      //       name: 'collectionPointsDistance',
+      //       jsonPath: 'routes[0].routeCollectionPointMaps[0].distance',
+      //       label: 'Distance From Last Stop(KMS)',
+      //       type: 'number',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //     },
+      //     {
+      //       name: 'collectionPointsGarbageEstimate',
+      //       jsonPath: 'routes[0].routeCollectionPointMaps[0].garbageEstimate',
+      //       label: 'Expected Garbage Collection(TONS)',
+      //       type: 'number',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'endingDumpingGroundPoint',
+      //   label: 'swm.routes.create.group.title.end',
+      //   fields: [
+      //     {
+      //       name: 'endingDumpingGroundPointDistance',
+      //       jsonPath: 'routes[0].endingDumpingGroundPoint.isProcessingSite',
+      //       label: 'swm.routes.create.collectionPoint',
+      //       type: 'checkbox',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //     },
+      //     // {
+      //     //   name: 'customtext',
+      //     //   jsonPath: '',
+      //     //   label: '',
+      //     //   type: 'label',
+      //     //   defaultValue:'OR',
+      //     //   patternErrorMsg: '',
+      //     // },
+      //     {
+      //       name: 'endingDumpingGroundPointName',
+      //       jsonPath: 'routes[0].endingDumpingGroundPoint.name',
+      //       label: 'swm.routes.create.dumping',
+      //       type: 'text',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'endingCollectionPoint',
+      //   label: '',
+      //   jsonPath: "routes[0].routeCollectionPointMaps",
+      //   fields: [
+      //     {
+      //       "type": "collectionRoute",
+      //       "label": "",
+      //       "hierarchyType": "REVENUE",
+      //       "jsonPath": "routes[0].routeCollectionPointMaps[0].collectionPoint.code",
+      //       "isRequired": false,
+      //       "patternErrorMsg": "",
+      //       "multiple": true,
+      //       "fullWidth": true
+      //     },
+      //     {
+      //       name: 'endingCollectionPointDistance',
+      //       jsonPath: 'routes[0].routeCollectionPointMaps[0].distance',
+      //       label: 'Distance From Last Stop(KMS)',
+      //       type: 'number',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: ''
+      //     },
+      //     {
+      //       name: 'endingCollectionPointGarbageEstimate',
+      //       jsonPath: 'routes[0].routeCollectionPointMaps[0].garbageEstimate',
+      //       label: 'Expected Garbage Collection(TONS)',
+      //       type: 'number',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       patternErrorMsg: ''
+      //     },
+      //     {
+      //       name: 'isEndingCollectionPoint',
+      //       jsonPath: 'routes[0].routeCollectionPointMaps[0].isEndingCollectionPoint',
+      //       label: 'end point',
+      //       type: 'checkbox',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       defaultValue:true,
+      //       patternErrorMsg: ''
+      //     },
+      //   ],
+      // },
       {
         name: 'totalDistanceGarbageEstimate',
         label: '',

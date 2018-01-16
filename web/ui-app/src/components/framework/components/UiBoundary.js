@@ -170,14 +170,20 @@ class UiBoundary extends Component {
     })
     //below runs for create & update only
     this.populateNextDropDown(key,property);
-    // console.log(key, property)
-    // console.log(this.state.labelArr);
 
     if(property == this.state.labelArr[this.state.labelArr.length-1]) {
-      let formData = _.cloneDeep(this.props.formData);
-      _.set(formData, this.props.item.jsonPath, key);
-      this.props.setFormData(formData);
-      
+      this.props.handler(
+        {
+          target: {
+            value: key,
+          },
+        },
+        this.props.item.jsonPath,
+        this.props.item.isRequired ? true : false,
+        '',
+        this.props.item.requiredErrMsg,
+        this.props.item.patternErrMsg
+      );
     }
     
   }
