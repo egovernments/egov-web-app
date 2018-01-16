@@ -119,6 +119,20 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'indents',
+      preApiCalls:[
+      {
+        url:"/hr-employee/employees/_search?&id={}&isPrimary=true",
+        jsonPath:"indents[0].designation",
+        defaultValue: JSON.parse(localStorage.getItem('userRequest')).id,
+        dependentUrl:'/hr-masters/designations/_search',
+        dependantPath:'Designation',
+        dependentKey:'id',
+        jsExpForDD:{
+          key:"$.Employee[0].assignments[0].designation",
+          value:"$.Employee[0].assignments[0].designation",
+        }
+      }
+    ],
     groups: [
       {
         name: 'indent',
@@ -279,9 +293,20 @@ var dat = {
             defaultValue: JSON.parse(localStorage.getItem('userRequest')).name,
             maxLength: 128,
             patternErrorMsg: '',
+            /*depedants:[
+            {
+              jsonPath:'indents[0].designation',
+              type: 'autoCompelete',
+              pattern:"/hr-employee/employees/_search?tenantId=default&id={localStorage.getItem('id')}&isPrimary=true",
+              autoFillFields:{
+                'indents[0].designation':'Employee[0].assignments[0].designation',
+              },
+            },
+            ],*/
+
           },
 
-          {
+         /* {
             name: 'name',
             jsonPath: 'indents[0].desig.code',
             label: 'inventory.store.name',
@@ -292,7 +317,7 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: 'inventory.create.field.message.store.name',
             url: '/hr-masters/designations/_search?&|$.Designation[*].code|$.Designation[*].name',
-          },
+          },*/
 
           {
             name: 'designation',
@@ -304,6 +329,7 @@ var dat = {
             isDisabled: false,
             defaultValue: '',
             patternErrorMsg: '',
+           // url: '/hr-masters/designations/_search?&|$.Designation[*].code|$.Designation[*].name',
           },
         ],
       },

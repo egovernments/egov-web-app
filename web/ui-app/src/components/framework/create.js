@@ -580,14 +580,27 @@ class Report extends Component {
 
     self.props.setLoadingStatus('loading');
     if (obj && obj.preApiCalls) {
+      self.props.setLoadingStatus('loading');
       obj.preApiCalls.forEach(async (item) => {
         let res = await callApi(item);
         let orgRes = Object.assign({}, res);
-        setDropDownData(item.jsonPath, parseKeyAndValueForDD(res, item.jsExpForDD.key, item.jsExpForDD.value));
-        setDropDownOriginalData(item.jsonPath, res);
-      })
-    }
-    self.props.setLoadingStatus('hide');
+         if(item.dependentUrl){
+Api.commonApiPost(item.dependentUrl).then(
+      function (response) {
+        let keyValue=jp.query(res, item.jsExpForDD.key)[0];
+        let filterObject=      _.filter(response[`${item.dependantPath}`], function(o) {
+    if (o[`${item.dependentKey}`] == keyValue) return o
+  });
+       
+ self.setVal(item.jsonPath,filterObject[0].name);
+  self.props.setLoadingStatus('hide');
+        });
+}
+else{
+ setDropDownData(item.jsonPath, parseKeyAndValueForDD(res, item.jsExpForDD.key, item.jsExpForDD.value));
+ setDropDownOriginalData(item.jsonPath, res); 
+ self.props.setLoadingStatus('hide');
+}
   }
 
   handleMasterData(specifications) {

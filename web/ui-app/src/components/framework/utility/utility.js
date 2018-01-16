@@ -141,6 +141,9 @@ export function getInitiatorPosition(cb) {
 export const callApi=async obj=> {
   if (!_.isEmpty(obj) && obj.hasOwnProperty("url") && obj.url) {
     let {url,qs,body}=obj
+    if(obj.defaultValue && url.search('{')>-1){
+url=url.replace(url.substr(url.indexOf('{'), url.indexOf('}')), obj.defaultValue);
+    }
     try {
       var res=await Api.commonApiPost(url,qs ||{},body|| {});
       return res;
