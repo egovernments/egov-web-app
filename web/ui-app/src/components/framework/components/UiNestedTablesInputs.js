@@ -116,7 +116,6 @@ export default class UiNestedTablesInputs extends Component {
 
   addMultipleRow = (tableJsonPath, rowLength, values) => {
     //console.log('jsonPath --->', tableJsonPath);
-    debugger;
     let list = (this.state.list && [...this.state.list]) || [];
     let idx = list.length;
     let len = idx + rowLength;

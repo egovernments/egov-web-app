@@ -76,7 +76,7 @@ class UiMultiFieldTable extends Component {
 
   renderOnLoad = props => {
     var valuesArray = [];
-    let { isintialLoad } = this.state;
+    let { isintialLoad, index, values } = this.state;
     var numberOfRowsArray = _.get(props.formData, props.item.jsonPath);
     // console.log(numberOfRowsArray, props.item.jsonPath, isintialLoad);
     // console.log(this.state.values, numberOfRowsArray, props.item.tableList.values);
@@ -87,7 +87,7 @@ class UiMultiFieldTable extends Component {
     // console.log(formData, JSON.stringify(formData));
     // console.log(numberOfRowsArray, numberOfRowsArray ? numberOfRowsArray.length - 1 : 0,  props.item.jsonPath, isintialLoad);
     // console.log('render load', props.item.jsonPath, _.get(formData,props.item.jsonPath), props.item.tableList.values);
-    if (numberOfRowsArray && numberOfRowsArray.length > 0){  // && !isintialLoad) {
+    if (numberOfRowsArray && numberOfRowsArray.length > 0 && numberOfRowsArray< (index+1)){  // && !isintialLoad) {
       // console.log('render load true succeeded');
       var regexp = new RegExp(`${this.escapeRegExp(props.item.jsonPath)}\\[\\d+\\]`);
       for (var i = 0; i < numberOfRowsArray.length; i++) {
@@ -168,18 +168,18 @@ class UiMultiFieldTable extends Component {
   addNewRow() {
     var val = JSON.parse(JSON.stringify(this.state.list));
     var regexp = new RegExp(`${this.escapeRegExp(this.props.item.jsonPath)}\\[\\d+\\]`);
+    var idx= this.state.index + 1;
     this.setState(
       {
-        index: this.state.index + 1,
+        index: idx,//this.state.index + 1,
       },
       () => {
         for (var i = 0; i < val.length; i++) {
-          val[i].jsonPath = val[i].jsonPath.replace(regexp, `${this.props.item.jsonPath}[${this.state.index}]`);
+          val[i].jsonPath = val[i].jsonPath.replace(regexp, `${this.props.item.jsonPath}[${idx}]`); //this.state.index}]`);
         }
         this.addMandatoryforAdd(val);
         let values = [...this.state.values];
         values.push(val);
-        // console.log(values);
         this.setState({
           values,
         });

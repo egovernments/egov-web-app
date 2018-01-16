@@ -1824,8 +1824,8 @@ checkIfHasReqFields = (jsonPath, val) => {
         Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
           function (response) {
             if (response) {
-              console.log('In dropdown');
-              console.log(response);
+              // console.log('In dropdown');
+              // console.log(response);
               let keys = jp.query(response, splitArray[1].split('|')[1]);
               let values = jp.query(response, splitArray[1].split('|')[2]);
               let dropDownData = [];
@@ -1880,21 +1880,25 @@ checkIfHasReqFields = (jsonPath, val) => {
           let object = {};
           if (!value.hasFromDropDownOriginalData || value.url) {
             let exp = value.valExp;
+            
             if (dependantIdx) {
               value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
-              exp = exp && exp.replace(/\*/g, dependantIdx);
+              exp = exp && exp.replace(/\[\*\]/g, '['+dependantIdx+']');
+              value.pattern =  value.pattern && value.pattern.replace(/\[\*\]/g, '['+dependantIdx+']');
             }
-
+            
             let ajaxResult;
             if (value.url) {
               ajaxResult = this.makeAPICallGetResponse(value.url);
             }
-
+            let xt= eval(value.pattern);
+            
             object = {
               target: {
                 value: (ajaxResult && ajaxResult) || (exp && eval(exp)) || eval(eval(value.pattern)),
               },
             };
+            console.log(object);
           } else {
             // console.log(dropDownOringalData);
             // console.log(value.pattern);
@@ -1915,6 +1919,8 @@ checkIfHasReqFields = (jsonPath, val) => {
           }
 
           handleChange(object, value.jsonPath, '', '', '', '');
+          if(value.dependentFlag)
+            self.affectDependants(obj,object,value.jsonPath);
         } catch (ex) {
           console.log('ex', ex);
         }
@@ -2035,15 +2041,15 @@ checkIfHasReqFields = (jsonPath, val) => {
         }
       }
       else if (value.type == 'griddropDown') {
-        let splitArray = value.pattern.split('?');
-        let context = '';
-        let id = {};
-        for (var j = 0; j < splitArray[0].split('/').length; j++) {
-          context += splitArray[0].split('/')[j] + '/';
-        }
-        let dataFlag =0;
         let level = value.gridjsonPath;
         if (level == undefined) {
+          let splitArray = value.pattern.split('?');
+          let context = '';
+          let id = {};
+          for (var j = 0; j < splitArray[0].split('/').length; j++) {
+            context += splitArray[0].split('/')[j] + '/';
+          }
+          let dataFlag =0;
           let queryStringObject = splitArray[1].split('|')[0].split('&');
           for (var i = 0; i < queryStringObject.length; i++) {
             if (i) {
@@ -2083,41 +2089,33 @@ checkIfHasReqFields = (jsonPath, val) => {
           Api.commonApiPost(context, id, {}, false, false, false, '', '', value.isStateLevel).then(
             function (response) {
               if (response) {
-                console.log('In dropdown');
-                console.log(response);
+                let queries = splitArray[1].split('|');
                 let keys = jp.query(response, splitArray[1].split('|')[1]);
                 let values = jp.query(response, splitArray[1].split('|')[2]);
-                let others = value.others;
-                let otherData = [];
-                for (let x = 0; x < others.length; x++) {
-                  let values = jp.query(response, value.others[x].key);
-                  console.log(values);
-                  otherData.push(values);
-                  let currentProperty = value.others[x].value;
-                  if (dependantIdx !== undefined)
-                    currentProperty = replaceLastIdxOnJsonPath(currentProperty, dependantIdx);
+                 let others = [];
+                    if (queries.length > 3) {
+                      for (let i = 3; i < queries.length; i++) {
+                        let oVal = jp.query(response, splitArray[1].split('|')[i]);
+                        others.push(oVal);
+                      }
+                    }
+                
+                    let dropDownData = [];
+                    for (let t = 0; t < keys.length; t++) {
+                      let obj = {};
+                      obj['key'] = keys[t];
+                      obj['value'] = values[t];
 
-                  handleChange(
-                    {
-                      target: {
-                        value: values[0],
-                      },
-                    },
-                    currentProperty,
-                    '',
-                    '',
-                    ''
-                  );
-                }
-
-                console.log(otherData);
-                let dropDownData = [];
-                for (var k = 0; k < keys.length; k++) {
-                  let obj = {};
-                  obj['key'] = keys[k];
-                  obj['value'] = values[k];
-                  dropDownData.push(obj);
-                }
+                      if (others && others.length > 0) {
+                        let otherItemDatas = [];
+                        for (let i = 0; i < others.length; i++) {
+                          otherItemDatas.push(others[i][t] || undefined);
+                        }
+                        obj['others'] = otherItemDatas;
+                          dropDownData.push(obj);
+                      }
+                      }
+               
                 if (dropDownData.length > 0) {
                   if (dependantIdx !== undefined)
                     value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
@@ -2126,22 +2124,23 @@ checkIfHasReqFields = (jsonPath, val) => {
                   setDropDownOriginalData(value.jsonPath, dropDownData);
                   if (value.autoSelect) {
                     // setVal(value.jsonPath,dropDownData[0]);
-
-                    handleChange(
-                      {
+                    let cVal=  {
                         target: {
                           value: dropDownData[0].value,
                         },
-                      },
+                      };
+                    handleChange(cVal,
                       value.jsonPath,
                       '',
                       '',
                       ''
                     );
+                     self.affectDependants(obj,cVal,value.jsonPath);
                   }
                }
-                }
-            } ,
+                
+            }
+              },
           function(err) {
             console.log(err);
           }
@@ -2253,7 +2252,7 @@ checkIfHasReqFields = (jsonPath, val) => {
   };
 
   handleChange = (e, property, isRequired, pattern, requiredErrMsg = 'Required', patternErrMsg = 'Pattern Missmatch', expression, expErr, isDate) => {
-    let { getVal } = this.props;
+    let { getVal } = this;//.props;
     let { handleChange, mockData, setDropDownData, formData, changeFormStatus } = this.props;
     let hashLocation = window.location.hash;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
@@ -2279,10 +2278,7 @@ checkIfHasReqFields = (jsonPath, val) => {
 
       let _flag = 0;
       for (var i = 0; i < values.length; i++) {
-        let tempVal = getVal("'" + values[i] + "'");
-        console.log(tempVal);
-
-        if (!getVal("'" + values[i] + "'")) {
+         if (!getVal(values[i])) {
           _flag = 1;
         }
       }
