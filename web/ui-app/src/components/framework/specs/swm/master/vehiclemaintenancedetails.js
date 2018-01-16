@@ -58,12 +58,18 @@ var dat = {
         },
         {
           label: 'swm.create.vehicleScheduledMaintenanceDate',
+          isDate: true,
         },
         {
           label: 'swm.create.costIncurred',
         },
       ],
-      values: ['vehicle.regNumber', 'vehicle.vehicleType.name', 'vehicleScheduledMaintenanceDate', 'costIncurred'],
+      values: [
+        'vehicle.regNumber',
+        'vehicle.vehicleType.name', 
+        'vehicleScheduledMaintenanceDate', 
+        'costIncurred'
+      ],
       resultPath: 'vehicleMaintenanceDetails',
       rowClickUrlUpdate: '/update/swm/vehiclemaintenancedetails/{code}',
       rowClickUrlView: '/view/swm/vehiclemaintenancedetails/{code}',
