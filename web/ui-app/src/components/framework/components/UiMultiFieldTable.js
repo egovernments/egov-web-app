@@ -474,6 +474,7 @@ class UiMultiFieldTable extends Component {
           <thead>
             <tr>
             {!item.tableList.serialNoNotRequired ?   <th>#</th>  : ''}
+            {item.tableList.selectedfilter ?   <th>{"Is Checked"}</th>  : ''}
               {item.tableList.header.map((v, i) => {
                 var style = {};
                 if (v.style) {
@@ -508,9 +509,14 @@ class UiMultiFieldTable extends Component {
             {(!item.tableList.actionsNotRequired || _.get(formData,item.jsonPath)) && this.state.values.map((v, i) => {
               let startIndex = item.startIndex || 0;
               if (i >= startIndex)
+              var customItem = {
+                "type":"checkbox",
+                "jsonPath": item.jsonPath+"["+ i +"]"+".isselected"
+                }; 
                 return (
                   <tr key={i}>
                     {!item.tableList.serialNoNotRequired ? <td>{i - startIndex + 1}</td> : ''}
+                    {item.tableList.selectedfilter ? <td>{this.renderFields(customItem, this.props.screen)}</td>  : ''}
                     {v.map((v2, i2) => {
                       if (v2.isHidden) {
                         if (v2.checkjPath && _.get(formData, v2.checkjPath)) {

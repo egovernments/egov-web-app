@@ -1212,6 +1212,29 @@ class Report extends Component {
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
+      var newObj = obj.groups;
+      var objName = obj.objectName;
+      var tablist =  newObj.map((item)=>{
+        var table =  _.find(item.fields, 'tableList');
+        if(table !== undefined){
+          return table;
+        }
+      });
+      tablist = _.remove(tablist, function(n) {
+          return n != undefined;
+        });
+      if (_.isArray(formData[objName])) {
+        tablist.map((item)=>{
+          if(item.tableList.selectedfilter){
+            var jspath = item.jsonPath;
+            jspath = jspath.split("].")[1];
+            formData[objName][0][jspath] = formData[objName][0][jspath].filter(function (obj) {
+              return (obj.isselected !== undefined && obj.isselected !== false);
+            });
+          }
+        });
+    }
+
     if (obj && obj.beforeSubmit) {
         eval(obj.beforeSubmit);
     }
@@ -1226,12 +1249,16 @@ class Report extends Component {
           formData,
           fields[i]["aATransformInfo"].to,
           values.map(item => {
-            return {
-              [fields[i]["aATransformInfo"].key]: fields[i]["aATransformInfo"]
-                .from
-                ? _.get(item, fields[i]["aATransformInfo"].from)
-                : item
-            };
+            if(_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)){
+              return item;
+            }else{
+              return {
+                [fields[i]["aATransformInfo"].key]: fields[i]["aATransformInfo"]
+                  .from
+                  ? _.get(item, fields[i]["aATransformInfo"].from)
+                  : item
+              };
+            }
           })
         );
       }
@@ -1537,17 +1564,6 @@ class Report extends Component {
     self.props.setLoadingStatus("loading");
     self.checkifHasInjectData(this.props.mockData);
     var formData = { ...this.props.formData };
-
-    if (
-      _.isArray(formData.sanitationStaffTargets) &&
-      formData.sanitationStaffTargets[0].filtercollectionpoints === true && formData.sanitationStaffTargets[0].collectionPoints
-    ) {
-      formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(
-        function(obj) {
-          return obj.isSelected !== undefined && obj.isSelected !== false;
-        }
-      );
-    }
 
     if (
       self.props.moduleName &&
@@ -2694,7 +2710,7 @@ class Report extends Component {
   // require func.
 
   reqField = (_mockData, enableStr, reset) => {
-    let { moduleName, actionName, setFormData } = this.props;
+    let { moduleName, actionName, setFormData, addRequiredFields, delRequiredFields } = this.props;
     let _formData = { ...this.props.formData };
     for (
       let i = 0;
@@ -2713,6 +2729,11 @@ class Report extends Component {
           _mockData[moduleName + "." + actionName].groups[i].fields[
             j
           ].isRequired = reset ? true : false;
+          if(reset){
+            addRequiredFields([_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath]);
+          }else{
+            delRequiredFields([_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath]);
+          }
           break;
         }
       }

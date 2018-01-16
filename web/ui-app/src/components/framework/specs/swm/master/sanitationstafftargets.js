@@ -113,18 +113,6 @@ var dat = {
     idJsonPath: "sanitationStaffTargets[0].targetNo",
     groups: [
       {
-        name: "filtercollectionpoint",
-        hide: true,
-        fields: [
-          {
-            name: "code",
-            jsonPath: "sanitationStaffTargets[0].filtercollectionpoints",
-            type: "text",
-            defaultValue: true
-          }
-        ]
-      },
-      {
         name: "CardOne",
         label: "",
         fields: [
@@ -354,11 +342,8 @@ var dat = {
             type: "tableList",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
+              selectedfilter: true,
               header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
-                },
                 {
                   label:
                     "swm.create.sanitationstaffschedules.colletionPoint.location"
@@ -369,17 +354,6 @@ var dat = {
                 }
               ],
               values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
-                  // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
-                  pattern: "",
-                  type: "checkbox",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
-                  isRequired: false,
-                  isDisabled: false
-                },
                 {
                   name:
                     "swm.create.sanitationstaffschedules.colletionPoint.location",
