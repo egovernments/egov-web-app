@@ -551,7 +551,19 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: "",
-            patternErrorMsg: ""
+            patternErrorMsg: "",
+            depedants: [
+              {
+                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+                type: "textField",
+                pattern:
+                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+                rg: "",
+                isRequired: false,
+                requiredErrMsg: "",
+                patternErrMsg: ""
+              }
+            ]
           },
           {
             name: "dryWaste",
@@ -1517,7 +1529,19 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: "",
-            patternErrorMsg: ""
+            patternErrorMsg: "",
+            depedants: [
+              {
+                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+                type: "textField",
+                pattern:
+                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+                rg: "",
+                isRequired: false,
+                requiredErrMsg: "",
+                patternErrMsg: ""
+              }
+            ]
           },
           {
             name: "dryWaste",
@@ -1534,7 +1558,7 @@ var dat = {
                 jsonPath: "sanitationStaffTargets[0].targetedGarbage",
                 type: "textField",
                 pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseInt(getVal('sanitationStaffTargets[0].wetWaste')) + parseInt(getVal('sanitationStaffTargets[0].dryWaste'))):0}`",
+                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
                 rg: "",
                 isRequired: false,
                 requiredErrMsg: "",
