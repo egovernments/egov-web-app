@@ -101,6 +101,12 @@ var dat = {
     }
   },
   "swm.create": {
+    beforeSubmit:
+    `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
+    ) {
+      delete formData.sanitationStaffTargets[0].collectionPoints;
+    }`,
+    
     numCols: 4,
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
@@ -1061,13 +1067,18 @@ var dat = {
   },
   "swm.update": {
     beforeSetForm:
-    `if (res && _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
+    `if (res &&
+      _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
         res.sanitationStaffTargets[0].collectionPoints = res.sanitationStaffTargets[0].collectionPoints.map(function (item) {
             return {...item,["isSelected"]:true,["collectionPoint"]:item}
         });
     }`,
     beforeSubmit:
-    `if (
+    `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
+    ) {
+      delete formData.sanitationStaffTargets[0].collectionPoints;
+    }
+    if (
       _.isArray(formData.sanitationStaffTargets) &&
        formData.sanitationStaffTargets[0].collectionPoints
     ) {
