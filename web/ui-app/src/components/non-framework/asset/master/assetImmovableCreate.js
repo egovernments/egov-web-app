@@ -253,7 +253,7 @@ class assetImmovableCreate extends Component {
     let specifications = require(`../../../framework/specs/asset/master/assetImmovable`).default;
 
     Api.commonApiPost('asset-services-maha/assets/_search', { id: urlId }, {}, false, false, false, '', '', false).then(
-      function(response.Assets[0].assetAttributes) {
+      function(response) {
         for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
           assetCheck[response.Assets[0].assetAttributes[i].key] = {
             [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
