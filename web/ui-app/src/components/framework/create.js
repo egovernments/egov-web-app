@@ -1211,6 +1211,10 @@ class Report extends Component {
       specifications[
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
+
+    if (obj && obj.beforeSubmit) {
+        eval(obj.beforeSubmit);
+    }
     let fields = jp.query(
       obj,
       `$.groups..fields[?(@.hasATOAATransform==true)]`
@@ -1241,9 +1245,7 @@ class Report extends Component {
     }
     // console.log(formData);
 
-    if (obj && obj.beforeSubmit) {
-      eval(obj.beforeSubmit);
-    }
+
 
     Api.commonApiPost(
       url ||
@@ -4079,6 +4081,7 @@ class Report extends Component {
             create(e);
           }}
         >
+        {/*<div style={{position:"fixed",zIndex:1000,width:"100%"}}>*/}
           <Row>
             <Col xs={6} md={6}>
               <div
@@ -4137,6 +4140,7 @@ class Report extends Component {
               </div>
             </Col>
           </Row>
+        {/*  </div>*/}
           {!_.isEmpty(mockData) &&
             moduleName &&
             actionName &&
