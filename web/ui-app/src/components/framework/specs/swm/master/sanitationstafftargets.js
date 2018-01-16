@@ -1054,6 +1054,17 @@ var dat = {
             return {...item,["isSelected"]:true,["collectionPoint"]:item}
         });
     }`,
+    beforeSubmit:
+    `if (
+      _.isArray(formData.sanitationStaffTargets) &&
+       formData.sanitationStaffTargets[0].collectionPoints
+    ) {
+      formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(
+        function(obj) {
+          return obj.isSelected !== undefined && obj.isSelected !== false;
+        }
+      );
+    }`,
     numCols: 4,
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
