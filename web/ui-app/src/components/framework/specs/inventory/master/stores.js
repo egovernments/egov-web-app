@@ -233,7 +233,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
-            maxLength: 100,
+            maxLength: 30,
             patternErrorMsg: 'inventory.create.field.message.email',
           },
           {
@@ -403,7 +403,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
-            maxLength: 100,
+            maxLength: 50,
             patternErrorMsg: 'inventory.create.field.message.email',
           },
           {
