@@ -3062,6 +3062,7 @@ var localization_EN_Data = {
   'inventory.narration': 'Narration',//Description',
   'inventory.balance.quantity': 'Balance Qty',
   'inventory.totalPoValue': 'Total PO Value',
+  'inventory.poCreatedBy': 'PO Created By',
   'inventory.materialhandoverto': 'Material Hand Over To',
   'inventory.designation': 'Designation',
   'inventory.create.group.title.indentdetails': 'Indent Details',

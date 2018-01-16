@@ -87,7 +87,20 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'purchaseOrders',
-    extraParams: true,
+    preApiCalls:[
+        {
+          url:"/hr-employee/employees/_search?&id={}&isPrimary=true",
+          jsonPath:"purchaseOrders[0].designation",
+          defaultValue: JSON.parse(localStorage.getItem('userRequest')).id,
+          dependentUrl:'/hr-masters/designations/_search',
+          dependantPath:'Designation',
+          dependentKey:'id',
+          jsExpForDD:{
+            key:"$.Employee[0].assignments[0].designation",
+            value:"$.Employee[0].assignments[0].designation",
+          }
+        }
+      ],
     groups: [{
       name: 'Group1',
       label: 'inventory.purchaseorder.create.group.title',
@@ -283,6 +296,18 @@ var dat = {
           maxLength: 1000,
           patternErrorMsg: '',
         },
+         {
+            name: 'poCreatedBy',
+            jsonPath: 'purchaseOrders[0].auditDetails.createdBy',
+            label: 'inventory.poCreatedBy',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: JSON.parse(localStorage.getItem('userRequest')).name,
+            maxLength: 128,
+            patternErrorMsg: '',
+         },
         {
           name: 'designation',
           jsonPath: 'purchaseOrders[0].designation',

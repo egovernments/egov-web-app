@@ -148,6 +148,20 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'purchaseOrders',
+     preApiCalls:[
+        {
+          url:"/hr-employee/employees/_search?&id={}&isPrimary=true",
+          jsonPath:"purchaseOrders[0].designation",
+          defaultValue: JSON.parse(localStorage.getItem('userRequest')).id,
+          dependentUrl:'/hr-masters/designations/_search',
+          dependantPath:'Designation',
+          dependentKey:'id',
+          jsExpForDD:{
+            key:"$.Employee[0].assignments[0].designation",
+            value:"$.Employee[0].assignments[0].designation",
+          }
+        }
+      ],
     groups: [
       {
         name: 'Group1',
@@ -344,17 +358,29 @@ var dat = {
             patternErrorMsg: '',
           },
           {
-            name: 'designation',
-            jsonPath: 'purchaseOrders[0].designation',
-            label: 'inventory.designation',
+            name: 'poCreatedBy',
+            jsonPath: 'purchaseOrders[0].auditDetails.createdBy',
+            label: 'inventory.poCreatedBy',
             pattern: '',
             type: 'text',
             isRequired: false,
-            isDisabled: true,
-            defaultValue: '',
+            isDisabled: false,
+            defaultValue: JSON.parse(localStorage.getItem('userRequest')).name,
             maxLength: 128,
             patternErrorMsg: '',
-          },
+         },
+        {
+          name: 'designation',
+          jsonPath: 'purchaseOrders[0].designation',
+          label: 'inventory.designation',
+          pattern: '',
+          type: 'text',
+          isRequired: false,
+          isDisabled: true,
+          defaultValue: '',
+          maxLength: 128,
+          patternErrorMsg: '',
+        },
           {
             type: 'tableList',
             jsonPath: 'purchaseOrders[0].purchaseOrderDetails',
@@ -711,7 +737,7 @@ var dat = {
     ],
     url: '/inventory-services/purchaseorders/_create',
     // onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents',
-    searchUrl: '/inventory-services/purchaseorders/_preparepofromindents?inedentNumbers={id}', //indents/_search?ids={id}',
+    searchUrl: '/inventory-services/purchaseorders/_preparepofromindents?indentNumbers={id}', //indents/_search?ids={id}',
     tenantIdRequired: true,
   },
 };
