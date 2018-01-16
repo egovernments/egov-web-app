@@ -14,6 +14,7 @@ var axios = require('axios');
 var _this;
 var addressHolder;
 
+
 const INPUT_STYLE = {
   boxSizing: `border-box`,
   MozBoxSizing: `border-box`,
@@ -35,7 +36,7 @@ const INPUT_STYLE = {
  * Loaded using async loader.
  */
 const AsyncGettingStartedExampleGoogleMap = _.flowRight(withScriptjs, withGoogleMap)(props => (
-  <GoogleMap options={{ scrollwheel: false }} ref={props.onMapMounted} defaultZoom={11} center={props.center} onBoundsChanged={props.onBoundsChanged}>
+  <GoogleMap options={{ scrollwheel: false }} ref={props.onMapMounted} defaultZoom={11} center={props.center}  onBoundsChanged={props.onBoundsChanged}>
     <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
@@ -53,7 +54,7 @@ class SimpleMap extends Component {
     super(props);
     this.state = {
       zoom: 10,
-      center: { lat: 19.076, lng: 72.8777 },
+      center: { lat: 19.076 , lng: 72.8777 },
       markers: [
         {
           position: { lat: 19.076, lng: 72.8777 },
@@ -69,6 +70,10 @@ class SimpleMap extends Component {
         markers: [{ position: { lat: nextProps.lat, lng: nextProps.lng } }],
       });
     }
+    if(!this.props.select && nextProps.select){
+      console.log("select props");
+      this.props.handler(this.state.center.lat(), this.state.center.lng());
+      }
   }
 
   handleMapMounted = this.handleMapMounted.bind(this);
@@ -129,14 +134,15 @@ class SimpleMap extends Component {
         center={this.state.center}
         onMapMounted={this.handleMapMounted}
         onBoundsChanged={() => {
+          console.log("Bounds Changed");
           this.handleBoundsChanged();
-          this.props.handler(this.state.center.lat(), this.state.center.lng());
+          //this.props.handler(this.state.center.lat(), this.state.center.lng());
         }}
         onSearchBoxMounted={this.handleSearchBoxMounted}
         bounds={this.state.bounds}
         onPlacesChanged={() => {
           this.handlePlacesChanged();
-          this.props.handler(this.state.center.lat(), this.state.center.lng());
+          //this.props.handler(this.state.center.lat(), this.state.center.lng());
         }}
         markers={this.state.markers}
       />
@@ -145,35 +151,78 @@ class SimpleMap extends Component {
 }
 
 export default class UigoogleMaps extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-    };
 
-    this.handleOpen = () => {
+   state = {
+    open: false,
+    select:false,
+  };
+
+    handleOpen = () => {
       this.setState({ open: true });
     };
 
-    this.handleClose = () => {
+   handleClose = () => {
       this.setState({ open: false });
     };
-  }
 
-  getAddress = (lat, lng) => {
-    console.log(addressHolder);
+    handleSelect = () => {
+      console.log("handle select");
+        this.setState({ select: true });
+       };
+
+  getAddress = (lat, lng,item) => {
+    console.log("getaddress");
     let self = this;
-    axios.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true').then(function(response) {
-      addressHolder = response.data.results[0] ? response.data.results[0].formatted_address : '';
-      console.log(addressHolder);
-    });
-    console.log(addressHolder);
-  };
+    axios
+      .post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
+      .then(function(response) {
+        addressHolder = response.data.results[0] ? response.data.results[0].formatted_address : '';
+        console.log(addressHolder);
+        self.props.handler(
+          { target: { value: addressHolder } },
+          item.jsonPathAddress,
+          item.isRequired ? true : false,
+          '',
+          item.requiredErrMsg,
+          item.patternErrMsg
+        );
+      });
+      this.setState({select:false,open:false});
+      };
 
   renderMaps = item => {
     switch (this.props.ui) {
       case 'google':
-        const actions = [<FlatButton label="Select" primary={true} onClick={this.handleClose} />];
+        const actions = [<FlatButton label="Select" primary={true} onClick={this.handleSelect}/>,
+                        <FlatButton label="Close" primary={true} onClick={this.handleClose} />,
+                        <FlatButton label="Clear" primary={true} onClick={()=>{
+                          console.log(item);
+                          let self = this;
+                          this.props.handler(
+                            { target: { value: null } },
+                            item.jsonPathLng,
+                          item.isRequired ? true : false,
+                            '',
+                            item.requiredErrMsg,
+                            item.patternErrMsg
+                          );
+                          this.props.handler(
+                            { target: { value: null } },
+                            item.jsonPathLat,
+                            item.isRequired ? true : false,
+                            '',
+                            item.requiredErrMsg,
+                            item.patternErrMsg
+                          );
+                          self.props.handler(
+                            { target: { value: null } },
+                            item.jsonPathAddress,
+                            item.isRequired ? true : false,
+                            '',
+                            item.requiredErrMsg,
+                            item.patternErrMsg
+                          );
+                        } }/>];
         return (
           <div>
             <TextField
@@ -204,8 +253,8 @@ export default class UigoogleMaps extends Component {
               <div style={{ width: '100%', height: 400 }}>
                 <SimpleMap
                   markers={[]}
+                  select={this.state.select}
                   handler={(lat, lng) => {
-                    this.getAddress(lat, lng);
                     let self = this;
                     this.props.handler(
                       { target: { value: lng } },
@@ -223,21 +272,8 @@ export default class UigoogleMaps extends Component {
                       item.requiredErrMsg,
                       item.patternErrMsg
                     );
-                    console.log(item);
-                    axios
-                      .post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
-                      .then(function(response) {
-                        addressHolder = response.data.results[0] ? response.data.results[0].formatted_address : '';
-                        console.log(addressHolder);
-                        self.props.handler(
-                          { target: { value: addressHolder } },
-                          item.jsonPathAddress,
-                          item.isRequired ? true : false,
-                          '',
-                          item.requiredErrMsg,
-                          item.patternErrMsg
-                        );
-                      });
+
+                    this.getAddress(lat, lng, item);
                   }}
                 />
               </div>
