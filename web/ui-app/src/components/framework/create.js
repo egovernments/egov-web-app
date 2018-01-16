@@ -1538,7 +1538,7 @@ class Report extends Component {
 
     if (
       _.isArray(formData.sanitationStaffTargets) &&
-      formData.sanitationStaffTargets[0].filtercollectionpoints === true
+      formData.sanitationStaffTargets[0].filtercollectionpoints === true && formData.sanitationStaffTargets[0].collectionPoints
     ) {
       formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(
         function(obj) {

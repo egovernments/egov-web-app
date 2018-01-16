@@ -535,7 +535,7 @@ var dat = {
                   pattern: "",
                   type: "text",
                   jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].name",
+                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
                   isDisabled: true
                 }
               ],
