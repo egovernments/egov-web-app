@@ -117,6 +117,9 @@ var dat = {
                 },
                 {
                   label: 'inventory.Uom',
+                  style: {
+                    width: '180px',
+                  },
                 },
                 {
                   label: 'inventory.quantity',
@@ -129,12 +132,14 @@ var dat = {
                 },
                 {
                   label: 'inventory.receiptDate',
+               
                 },
                 {
                   label: 'inventory.lotNumber',
                 },
                 {
                   label: 'inventory.expiryDate',
+                 
                 },
               ],
               values: [
@@ -222,6 +227,10 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style:{
+                    height:'6px'
+                  }
+                
                 },
                 {
                   name: 'lotNo',
@@ -242,6 +251,9 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
               ],
             },
@@ -422,6 +434,9 @@ var dat = {
                   isDisabled: true,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
                 {
                   name: 'lotNo',
@@ -442,6 +457,9 @@ var dat = {
                   isDisabled: false,
                   defaultValue: '',
                   patternErrorMsg: '',
+                  style: {
+                    height: '6px'
+                  }
                 },
               ],
             },

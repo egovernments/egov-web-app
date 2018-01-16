@@ -91,6 +91,7 @@ class UiDatePicker extends Component {
   };
 
   renderDatePicker = item => {
+    console.log("time manag", !!item.height ? `${item.height}!important` : '23px',)
     /*<TextField
                       id={item.jsonPath.split(".").join("-")}
                       className="custom-form-control-for-textfield"
@@ -205,7 +206,7 @@ class UiDatePicker extends Component {
             />
             <div
               style={{
-                height: '23px',
+                height: !!item.style && !!item.style.height ? `${item.style.height}!important`:'23px',
                 visibility: this.props.fieldErrors && this.props.fieldErrors[item.jsonPath] ? 'visible' : 'hidden',
                 position: 'relative',
                 fontSize: '12px',

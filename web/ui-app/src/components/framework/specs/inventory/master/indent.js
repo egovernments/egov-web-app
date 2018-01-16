@@ -351,6 +351,9 @@ var dat = {
                 },
                 {
                   label: 'Uom',
+                  style: {
+                    width: '180px',
+                  },
                 },
                 {
                   label: 'Asset Code',
