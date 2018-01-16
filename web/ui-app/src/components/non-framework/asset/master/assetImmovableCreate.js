@@ -254,11 +254,13 @@ class assetImmovableCreate extends Component {
 
     Api.commonApiPost('asset-services-maha/assets/_search', { id: urlId }, {}, false, false, false, '', '', false).then(
       function(response) {
-        for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
-          assetCheck[response.Assets[0].assetAttributes[i].key] = {
-            [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
-          };
-        }
+	if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
+        	for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
+         	 assetCheck[response.Assets[0].assetAttributes[i].key] = {
+            	[response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
+          	};
+        	}
+	}
         if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
           response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
         }
