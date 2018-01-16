@@ -578,13 +578,13 @@ class Report extends Component {
       pathname: this.props.history.location.pathname,
     });
 
-    self.props.setLoadingStatus('loading');
+    
     if (obj && obj.preApiCalls) {
       self.props.setLoadingStatus('loading');
       obj.preApiCalls.forEach(async (item) => {
         let res = await callApi(item);
         let orgRes = Object.assign({}, res);
-         if(item.dependentUrl){
+        if(item.dependentUrl){
 Api.commonApiPost(item.dependentUrl).then(
       function (response) {
         let keyValue=jp.query(res, item.jsExpForDD.key)[0];
@@ -601,6 +601,9 @@ else{
  setDropDownOriginalData(item.jsonPath, res); 
  self.props.setLoadingStatus('hide');
 }
+      })
+    }
+    self.props.setLoadingStatus('hide');
   }
 
   handleMasterData(specifications) {
