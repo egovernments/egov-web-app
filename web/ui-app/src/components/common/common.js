@@ -1863,7 +1863,7 @@ var localization_EN_Data = {
   'wc.serviceCharge.table.title': 'Service Charge Details',
   'reports.wcms.size ': 'Size',
   'reports.wcms.size': 'Sub Usage',
-  'ac.create.title': 'Create Asset Category',
+  'ac.create.title': 'Create Asset Sub Category',
   'ac.create.asset.sub.category': 'Asset Category Name',
   'ac.create.asset.category.name': 'Asset Sub-Category Name',
   'ac.create.asset.asset.category.type': 'Asset Category Type',
@@ -2084,7 +2084,7 @@ var localization_EN_Data = {
   "swm.routes.create.collectionType": 'Collection Type',
   "swm.routes.create.collectionPoint": 'Collection Point',
   "swm.routes.create.dumping": 'Dumping Ground',
-  'swm.routes.create.group.title.starting': 'SELECT STARTING POINT',
+  'swm.routes.create.group.title': 'Define Route',
   'swm.routes.create.group.title.end': 'SELECT END POINT',
   'swm.routes.create.group.title.routestops': 'SELECT ROUTE STOPS',
 

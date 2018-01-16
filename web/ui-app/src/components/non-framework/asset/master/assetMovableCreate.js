@@ -1158,7 +1158,9 @@ class assetMovableCreate extends Component {
     let obj = specifications[`asset.create`];
 
     if(property == 'Asset.location'){
+      if(e.target.value !=null){
       self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
+    }
     }
 
     if (property == 'Asset.assetCategory.id') {
