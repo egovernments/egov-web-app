@@ -201,7 +201,7 @@ var dat = {
           label: 'swm.vehicles.search.result.vehicleType',
         },
         {
-          label: 'swm.vehicles.search.result.regNumber',
+          label: 'swm.vehicles.create.regNumber',
         },
         {
           label: 'swm.vehicles.search.result.driver',

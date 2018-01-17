@@ -64,7 +64,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicleMaintenances',
     idJsonPath: 'vehicleMaintenances[0].code',
-    title: 'swm.create.page.title.VehicleMaintenanceDetails',
+    title: 'swm.create.group.title.VehicleMaintenanceDetails',
     groups: [
       {
         name: 'VehicleMaintenanceDetails',

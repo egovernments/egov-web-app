@@ -133,7 +133,8 @@ var dat = {
           label: 'vehicles.search.result.vehicleType',
         },
         {
-          label: 'vehicles.search.result.regNumber',
+          label: 'vehicles.create.regNumber',
+            
         },
         {
           label: 'vehicles.search.result.vehicleCapacity',
