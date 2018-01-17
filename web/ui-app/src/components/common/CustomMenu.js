@@ -377,7 +377,7 @@ const menuConvention = {
   'Performance Assessment.Performance Assessment Actuals.PerfAssmtKpiValueSearch': '/non-framework/perfManagement/master/kpivalues',
 
   'Performance Assessment.KPI Targets.PerfAssmtKpiTargetSearch': '/search/perfManagement/kpiTarget/view',
-  'Performance Assessment.Category Masters.PerfAssmtKpiCategoryMasterSearch' : '/mdms/PM/KpiCategory',
+  'Performance Assessment.Category Masters.PerfAssmtKpiCategoryMasterSearch': '/mdms/PM/KpiCategory',
 
   //Inventoy Service
 
@@ -389,12 +389,12 @@ const menuConvention = {
   'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
 
   'Inventory.Inventory Masters.MaterialType Master.MaterialType.MaterialType': '/search/inventory/materialtype/view',
-  'Inventory.Inventory Masters.Material Store Mapping.Material Store Mapping Search':'/search/inventory/materialstoremapping/view',
-'Inventory.Inventory Masters.Material Type Store Mapping.Material Store Mapping Search':'/search/inventory/materialtypestoremapping/view' ,
+  'Inventory.Inventory Masters.Material Store Mapping.Material Store Mapping Search': '/search/inventory/materialstoremapping/view',
+  'Inventory.Inventory Masters.Material Type Store Mapping.Material Store Mapping Search': '/search/inventory/materialtypestoremapping/view',
 
-   "Inventory.Inventory Masters.Material Master.Material Create":"/search/inventory/material/view",
- // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
- // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
+  'Inventory.Inventory Masters.Material Master.Material Create': '/search/inventory/material/view',
+  // 'Inventory.Inventory Masters.Material Master.Material Search': '/search/inventory/material/view',
+  // 'Inventory.Inventory Masters.Material Master.Material Update': '/search/inventory/material/update',
 
   'Inventory.Inventory Masters.Store Master.Store Create': '/create/inventory/stores',
   // "Inventory.Inventory Masters.Store Master.Store Create":"/search/inventory/stores/view",
@@ -438,7 +438,7 @@ const menuConvention = {
   //Works
   'Works Management.Abstract Estimate.Estimate Create': '/non-framework/works/transaction/create/abstractEstimate',
   'Works Management.Abstract Estimate.Estimate Search': '/search/works/abstractEstimate/view',
-  'Works Management.Abstract Estimate.Spillover Abstract Estimate':'/non-framework/works/transaction/create/spilloverAE',
+  'Works Management.Abstract Estimate.Spillover Abstract Estimate': '/non-framework/works/transaction/create/spilloverAE',
 
   'Works Management.Works Masters.Create SOR': '/search/works/scheduleofrate/view',
 
@@ -446,8 +446,7 @@ const menuConvention = {
 
   //upload
   'Upload.Upload': '/iframeLoader?url=/app/v2/uploader',
-  'Upload.User Jobs':'/iframeLoader?url=/app/v2/uploader/#user-jobs'
-
+  'Upload.User Jobs': '/iframeLoader?url=/app/v2/uploader/user-jobs',
 };
 
 const style = {
