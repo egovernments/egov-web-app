@@ -9,42 +9,7 @@ var dat = {
         name: 'ProcessingSite',
         label: 'swm.processingsite.search.title',
         fields: [
-          {
-            name: 'ProcessingSiteArea',
-            jsonPath: 'siteDetails.area',
-            label: 'swm.ProcessingSiteDetails.create.Area',
-            pattern: '^\\b[0-9]\\b|\\b([1-4][0-9])\\b|\\b50\\b$',
-            type: 'text',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: '5',
-            minLength: '1',
-            defaultValue: '',
-            patternErrMsg: 'Invalid Value',
-            url: '',
-          },
-          {
-            name: 'capacity',
-            jsonPath: 'siteDetails.capacity',
-            label: 'swm.processingplant.create.capacity',
-            pattern: '',
-            type: 'text',
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-            url: ''
-          },
-          {
-            name: 'address',
-            jsonPath: 'siteDetails.address',
-            label: 'swm.processingplant.create.address',
-            pattern: '',
-            type: 'text',
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-            url: ''
-          },
+
           {
             name: 'ProcessingSiteName',
             jsonPath: 'name',
@@ -55,9 +20,9 @@ var dat = {
             defaultValue: '',
             patternErrorMsg: '',
             url: ''
-          },
-        ],
-      },
+          }
+        ]
+      }
     ],
     result: {
       header: [
@@ -75,10 +40,10 @@ var dat = {
         }
       ],
       values: [
-        'siteDetails.area',
-        'siteDetails.capacity',
+        'name',
         'siteDetails.address',
-        'name'
+        'siteDetails.area',
+        'siteDetails.capacity'
       ],
       resultPath: 'MdmsRes.swm.ProcessingSite',
       rowClickUrlUpdate: '/update/swm/processingsite/{code}',
