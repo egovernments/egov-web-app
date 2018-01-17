@@ -67,7 +67,7 @@ export default class UiTextField extends Component {
             floatingLabelStyle: {
               color: item.isDisabled ? '#A9A9A9' : '#696969',
               fontSize: '20px',
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             },
             floatingLabelText: (
               <span>

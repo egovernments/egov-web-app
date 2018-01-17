@@ -1129,7 +1129,7 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['assignments.department']}
@@ -1161,7 +1161,7 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['assignments.designation']}
@@ -1235,7 +1235,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.grade')}
@@ -1259,7 +1259,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('wc.create.groups.fields.Funtion')}
@@ -1285,7 +1285,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.functionary')}
@@ -1309,7 +1309,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.fund')}
@@ -1352,7 +1352,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     errorText={self.state.errorText['assignments.mainDepartments']}
@@ -1412,7 +1412,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['jurisdictions.jurisdictionsType']}
@@ -1443,7 +1443,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['jurisdictions.boundary']}
@@ -1562,7 +1562,7 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelStyle={{
@@ -1687,7 +1687,7 @@ class Employee extends Component {
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['regularisation.designation']}
@@ -2574,7 +2574,7 @@ class Employee extends Component {
                       }}
                       floatingLabelFixed={true}
                       dropDownMenuProps={{
-                        animated: false,
+                        animation: false,
                         targetOrigin: {
                           horizontal: 'left',
                           vertical: 'bottom',
@@ -2618,7 +2618,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -2661,7 +2661,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.group')}
@@ -2728,7 +2728,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -2768,7 +2768,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -3004,7 +3004,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.User.bloodGroup')}
@@ -3039,7 +3039,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.motherTongue')}
@@ -3077,7 +3077,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.religion')}
@@ -3112,7 +3112,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.community')}
@@ -3147,7 +3147,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.category')}
@@ -3379,7 +3379,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.bank')}
@@ -3415,7 +3415,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.bankBranch')}
@@ -3679,7 +3679,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.languagesKnown')}
@@ -3715,7 +3715,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentMode')}
@@ -3750,7 +3750,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentType')}
@@ -3785,7 +3785,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animated: false,
+                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentQuota')}

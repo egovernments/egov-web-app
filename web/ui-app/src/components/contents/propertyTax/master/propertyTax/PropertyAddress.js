@@ -330,7 +330,7 @@ class PropertyAddress extends Component {
                   id="appComplexName"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -382,7 +382,7 @@ class PropertyAddress extends Component {
                   id="locality"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -411,7 +411,7 @@ class PropertyAddress extends Component {
                   id="electionWard"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -445,7 +445,7 @@ class PropertyAddress extends Component {
                   id="zoneNo"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -479,7 +479,7 @@ class PropertyAddress extends Component {
                   id="wardNo"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -508,7 +508,7 @@ class PropertyAddress extends Component {
                   id="blockNo"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -537,7 +537,7 @@ class PropertyAddress extends Component {
                   id="street"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >
@@ -566,7 +566,7 @@ class PropertyAddress extends Component {
                   id="revenueCircle"
                   floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                 >

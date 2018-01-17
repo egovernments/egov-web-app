@@ -4,18 +4,18 @@ import SelectField from 'material-ui/SelectField';
 
 export default class KPISelectField extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      values: [this.props.value]
-    }
+      values: [this.props.value],
+    };
   }
   handleChange = (event, index, values) => {
-    this.setState({values});
+    this.setState({ values });
     this.props.onItemsSelected(index, values, this.props.label);
   };
 
   render() {
-    const {values} = this.state;
+    const { values } = this.state;
     return (
       <SelectField
         className="custom-form-control-for-select"
@@ -27,7 +27,7 @@ export default class KPISelectField extends Component {
         labelStyle={{ color: '#5F5C57' }}
         floatingLabelFixed={true}
         dropDownMenuProps={{
-          animated: false,
+          animation: false,
           targetOrigin: { horizontal: 'left', vertical: 'bottom' },
         }}
         style={{ display: 'inline-block' }}
@@ -46,10 +46,11 @@ export default class KPISelectField extends Component {
         maxHeight={200}
       >
         {this.props.items.map((item, i) => {
-          return (this.props.multiple) ? 
-            <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} insetChildren={true} checked={values && values.indexOf(i) > -1} /> :
+          return this.props.multiple ? (
+            <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} insetChildren={true} checked={values && values.indexOf(i) > -1} />
+          ) : (
             <MenuItem key={i} value={i} primaryText={item[this.props.displayKey]} />
-          ;
+          );
         })}
       </SelectField>
     );

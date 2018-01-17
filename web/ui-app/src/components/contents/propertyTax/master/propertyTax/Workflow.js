@@ -265,7 +265,7 @@ class Workflow extends Component {
                   }
                   value={workflow.workflowDepartment ? workflow.workflowDepartment : ''}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -306,7 +306,7 @@ class Workflow extends Component {
                   }
                   value={workflow.workflowDesignation ? workflow.workflowDesignation : ''}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -341,7 +341,7 @@ class Workflow extends Component {
                   errorText={fieldErrors.approver ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.approver}</span> : ''}
                   value={workflow.approver ? workflow.approver : ''}
                   dropDownMenuProps={{
-                    animated: false,
+                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {

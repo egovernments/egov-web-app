@@ -13,10 +13,10 @@ let tracker = [];
 class UiSelectField extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      filter:true,
-      getDisplayValue:''
-    }
+    this.state = {
+      filter: true,
+      getDisplayValue: '',
+    };
   }
 
   componentWillMount() {
@@ -24,8 +24,8 @@ class UiSelectField extends Component {
     document.addEventListener('click', this.handleClick, false);
   }
 
- 
-  initData(props) {//debugger;
+  initData(props) {
+    //debugger;
     // console.log("UiSelectField, initData() called", props);
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
     if (
@@ -142,7 +142,8 @@ class UiSelectField extends Component {
     this.initData(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {//debugger;
+  componentWillReceiveProps(nextProps) {
+    //debugger;
     //console.log("UiSelectField, componentWillReceiveProps() called,  nextProps = ", nextProps, "currentProps", this.props);
     let { dropDownData, dropDownOringalData, value } = this.props;
 
@@ -168,22 +169,24 @@ class UiSelectField extends Component {
   }
 
   renderSelect = item => {
-   let  {getDisplayValue, filter} = this.state;
-    let { dropDownData, value , name } = this.props;
+    let { getDisplayValue, filter } = this.state;
+    let { dropDownData, value, name } = this.props;
     // if(item.jsonPath == 'abstractEstimates[0].natureOfWork.code' || item.jsonPath == 'abstractEstimates[0].pmcName' || item.jsonPath == 'abstractEstimates[0].department.code')
     // console.log(item.jsonPath, '<--->', value, typeof(value) );
     let dropDownDataArray = dropDownData;
 
-       if(item.filterMenu && filter){
-        dropDownDataArray = [{
-          key:value,
-          value:name
-        }]
-       }
+    if (item.filterMenu && filter) {
+      dropDownDataArray = [
+        {
+          key: value,
+          value: name,
+        },
+      ];
+    }
 
     switch (this.props.ui) {
       case 'google':
-         let labelProperty = !item.isHideLabel && {
+        let labelProperty = !item.isHideLabel && {
           floatingLabelFixed: true,
           floatingLabelText: (
             <span>
@@ -203,19 +206,25 @@ class UiSelectField extends Component {
             }}
             labelStyle={{ color: '#5F5C57' }}
             dropDownMenuProps={{
-              animated: false,
+              animation: false,
               targetOrigin: { horizontal: 'left', vertical: 'bottom' },
             }}
             style={{ display: item.hide ? 'none' : 'inline-block' }}
             errorStyle={{ float: 'left' }}
             fullWidth={true}
-            value={item.fromProps ? ((typeof this.props.getVal(this.props.item.jsonPath) == 'object')?(this.props.getVal(this.props.item.jsonPath)).value :this.props.getVal(this.props.item.jsonPath))  : (item.hasOwnProperty("hasIdConverion")?(item.hasIdConverion && value?value.toString():value):value)}
+            value={
+              item.fromProps
+                ? typeof this.props.getVal(this.props.item.jsonPath) == 'object'
+                  ? this.props.getVal(this.props.item.jsonPath).value
+                  : this.props.getVal(this.props.item.jsonPath)
+                : item.hasOwnProperty('hasIdConverion') ? (item.hasIdConverion && value ? value.toString() : value) : value
+            }
             underlineDisabledStyle={{ backgroundColor: '#eee!important' }}
             {...labelProperty}
             onChange={(event, key, value) => {
               this.setState({
-                getDisplayValue : value
-              })
+                getDisplayValue: value,
+              });
               this.props.handler(
                 { target: { value: value } },
                 item.jsonPath,
@@ -227,14 +236,14 @@ class UiSelectField extends Component {
                 item.expressionMsg
               );
             }}
-            onClick={
-              (event)=>{
-                event.stopPropagation();
-               (this.state.filter)?this.setState({
-                filter:false
-              }):''
-              }
-            }
+            onClick={event => {
+              event.stopPropagation();
+              this.state.filter
+                ? this.setState({
+                    filter: false,
+                  })
+                : '';
+            }}
             disabled={item.isDisabled}
             errorText={this.props.fieldErrors[item.jsonPath]}
             maxHeight={200}
@@ -255,23 +264,22 @@ class UiSelectField extends Component {
   }
 
   handleClick = e => {
-    if(this.state.getDisplayValue == ''){
-      if(!ReactDOM.findDOMNode(this).contains(e.target)) {
+    if (this.state.getDisplayValue == '') {
+      if (!ReactDOM.findDOMNode(this).contains(e.target)) {
         // the click was outside your component, so handle closing here
         this.setState({
-          filter:true
+          filter: true,
         });
       }
     }
-  }
-
+  };
 }
 
 const mapStateToProps = (state, props) => {
   let { item } = props;
   let value = _.get(state.frameworkForm.form, item.jsonPath);
 
-  let name = (item.filterMenu) ? _.get(state.frameworkForm.form, _.replace(item.jsonPath, 'code', 'name')) : '';
+  let name = item.filterMenu ? _.get(state.frameworkForm.form, _.replace(item.jsonPath, 'code', 'name')) : '';
 
   // console.log(item.jsonPath , '---->', _.get(state.frameworkForm.form, item.jsonPath));
   if (item.convertToString && value) value = value.toString();
@@ -283,7 +291,7 @@ const mapStateToProps = (state, props) => {
     dropDownData: state.framework.dropDownData[item.jsonPath],
     dropDownOringalData: state.framework.dropDownOringalData,
     value: value,
-    name: name
+    name: name,
   };
 };
 

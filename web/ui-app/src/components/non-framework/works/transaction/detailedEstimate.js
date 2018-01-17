@@ -1264,7 +1264,7 @@ class DetailedEstimate extends Component {
                 floatingLabelStyle={{ top: 0 }}
                 floatingLabelFixed={true}
                 dropDownMenuProps={{
-                  animated: false,
+                  animation: false,
                   targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                 }}
                 floatingLabelText={<span>{translate('works.create.scheduleCategory')} </span>}

@@ -254,13 +254,13 @@ class assetImmovableCreate extends Component {
 
     Api.commonApiPost('asset-services-maha/assets/_search', { id: urlId }, {}, false, false, false, '', '', false).then(
       function(response) {
-	if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
-        	for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
-         	 assetCheck[response.Assets[0].assetAttributes[i].key] = {
-            	[response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
-          	};
-        	}
-	}
+        if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
+          for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
+            assetCheck[response.Assets[0].assetAttributes[i].key] = {
+              [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
+            };
+          }
+        }
         if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
           response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
         }
@@ -498,7 +498,8 @@ class assetImmovableCreate extends Component {
       {
         moduleName: 'ASSET',
         masterName: 'AssetCategory',
-        filter: '%5B%3F%28+%40.isAssetAllowFromUi+%3D%3D+true+%26%26+%40.isAssetAllow+%3D%3D+true+%26%26+%40.assetCategoryType+%3D%3D+%22IMMOVABLE%22%29%5D',
+        filter:
+          '%5B%3F%28+%40.isAssetAllowFromUi+%3D%3D+true+%26%26+%40.isAssetAllow+%3D%3D+true+%26%26+%40.assetCategoryType+%3D%3D+%22IMMOVABLE%22%29%5D',
       },
       {},
       false,
@@ -635,22 +636,17 @@ class assetImmovableCreate extends Component {
           }
           depericiationValue[catId] = response.MdmsRes.ASSET.AssetCategory[i].depreciationRate;
           cateoryObject[catId] = response.MdmsRes.ASSET.AssetCategory[i];
-          self.setState(
-            {
-              customFieldsGen: customSpecs,
-              depericiationValue,
-              cateoryObject,
-            }
-          );
+          self.setState({
+            customFieldsGen: customSpecs,
+            depericiationValue,
+            cateoryObject,
+          });
         }
-        self.setState(
-
-          () => {
-            if (self.props.match.params.id) {
-              self.modifyData(self.props.match.params.id);
-            }
+        self.setState(() => {
+          if (self.props.match.params.id) {
+            self.modifyData(self.props.match.params.id);
           }
-        );
+        });
       },
       function(err) {
         console.log(err);
@@ -762,132 +758,133 @@ class assetImmovableCreate extends Component {
   };
 
   create = e => {
-    let self = this,_url;
+    let self = this,
+      _url;
     e.preventDefault();
     var flag = 0;
     var formData = JSON.parse(JSON.stringify(this.props.formData));
-    if(formData.Asset && formData.Asset.landDetails){
-      for(var y = 0; y < formData.Asset.landDetails.length; y++){
+    if (formData.Asset && formData.Asset.landDetails) {
+      for (var y = 0; y < formData.Asset.landDetails.length; y++) {
         formData.Asset.landDetails[y].tenantId = localStorage.getItem('tenantId');
       }
-      for(var x = 0; x < formData.Asset.landDetails.length; x++){
-          var AutoCompleteData = _.get(formData, 'Asset.landDetails[' + x + '].code');
-          var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + x + '].code'], { 'key': AutoCompleteData } );
-          if(CheckAutoCompleteData.length || formData.Asset.landDetails[x].code == "" || formData.Asset.landDetails[x].code == null){
-            if(formData.Asset.landDetails[x].code == ""){
-               formData.Asset.landDetails.splice(x, 1);
-            }
-            flag = 1;
-          } else if(!CheckAutoCompleteData.length){
-            flag = 0;
-            formData.Asset.landDetails[x].code = null;
-            formData.Asset.landDetails[x] = null;
-            self.props.toggleSnackbarAndSetText(true, 'Please Enter Valid Land Details', false, true);
-            return;
+      for (var x = 0; x < formData.Asset.landDetails.length; x++) {
+        var AutoCompleteData = _.get(formData, 'Asset.landDetails[' + x + '].code');
+        var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + x + '].code'], { key: AutoCompleteData });
+        if (CheckAutoCompleteData.length || formData.Asset.landDetails[x].code == '' || formData.Asset.landDetails[x].code == null) {
+          if (formData.Asset.landDetails[x].code == '') {
+            formData.Asset.landDetails.splice(x, 1);
           }
+          flag = 1;
+        } else if (!CheckAutoCompleteData.length) {
+          flag = 0;
+          formData.Asset.landDetails[x].code = null;
+          formData.Asset.landDetails[x] = null;
+          self.props.toggleSnackbarAndSetText(true, 'Please Enter Valid Land Details', false, true);
+          return;
         }
-      } else if(formData.Asset && !formData.Asset.landDetails){
-        flag = 1;
-        formData.Asset.landDetails = null;
       }
-    if(flag == 1){
+    } else if (formData.Asset && !formData.Asset.landDetails) {
+      flag = 1;
+      formData.Asset.landDetails = null;
+    }
+    if (flag == 1) {
       self.props.setLoadingStatus('loading');
 
-    if (formData.Asset.titleDocumentsAvailable) {
-      formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
-    } else {
-      formData.Asset.titleDocumentsAvailable = [];
-    }
-    if (formData.Asset.assetCategory.id) {
-      formData.Asset.assetCategory = self.state.cateoryObject[formData.Asset.assetCategory.id];
-    }
-
-    if (
-      self.props.moduleName &&
-      self.props.actionName &&
-      self.props.metaData &&
-      self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired
-    ) {
-      if (!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
-
-      if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
-        for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
-          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['tenantId'] =
-            localStorage.getItem('tenantId') || 'default';
-        }
-      } else
-        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['tenantId'] =
-          localStorage.getItem('tenantId') || 'default';
-    }
-
-    if (/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
-      _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
-      var match = _url.match(/\{.*\}/)[0];
-      var jPath = match.replace(/\{|}/g, '');
-      _url = _url.replace(match, _.get(formData, jPath));
-    }
-
-    //  var createCustomObject = [];
-    var createCustomObject = this.props.formData.Asset.assetAttributesCheck;
-    var assetAttributes = [];
-    _.forEach(createCustomObject, function(value, key) {
-      var tempFinObj = {};
-      tempFinObj.key = key;
-      var splitObject = value;
-      _.forEach(splitObject, function(value, key) {
-        tempFinObj.type = key;
-        tempFinObj.value = value;
-
-        // if(tempFinObj.type == "Select"){
-        // }
-      });
-      assetAttributes.push(tempFinObj);
-    });
-    if (formData && formData.Asset && formData.Asset.fundSource) {
-      if (formData.Asset.fundSource.code == null || formData.Asset.fundSource.code == '') {
-        delete formData.Asset.fundSource;
+      if (formData.Asset.titleDocumentsAvailable) {
+        formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
+      } else {
+        formData.Asset.titleDocumentsAvailable = [];
       }
-    }
+      if (formData.Asset.assetCategory.id) {
+        formData.Asset.assetCategory = self.state.cateoryObject[formData.Asset.assetCategory.id];
+      }
 
-    formData.Asset.assetAttributes = assetAttributes;
-    delete formData.Asset.assetAttributesCheck;
+      if (
+        self.props.moduleName &&
+        self.props.actionName &&
+        self.props.metaData &&
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].tenantIdRequired
+      ) {
+        if (!formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName])
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName] = {};
 
-    //Check if documents, upload and get fileStoreId
-    if (
-      formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'] &&
-      formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'].length
-    ) {
-      let documents = [...formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents']];
-      let _docs = [];
-      let counter = documents.length,
-        breakOut = 0;
-      for (let i = 0; i < documents.length; i++) {
-        fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
-          if (breakOut == 1) return;
-          if (err) {
-            breakOut = 1;
-            self.props.setLoadingStatus('hide');
-            self.props.toggleSnackbarAndSetText(true, err, false, true);
-          } else {
-            _docs.push({
-              ...documents[i],
-              fileStoreId: res.files[0].fileStoreId,
-            });
-            counter--;
-            if (counter == 0 && breakOut == 0) {
-              formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'] = _docs;
-              self.makeAjaxCall(formData, _url);
-            }
+        if (formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].constructor == Array) {
+          for (var i = 0; i < formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName].length; i++) {
+            formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName][i]['tenantId'] =
+              localStorage.getItem('tenantId') || 'default';
           }
+        } else
+          formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['tenantId'] =
+            localStorage.getItem('tenantId') || 'default';
+      }
+
+      if (/\{.*\}/.test(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url)) {
+        _url = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url;
+        var match = _url.match(/\{.*\}/)[0];
+        var jPath = match.replace(/\{|}/g, '');
+        _url = _url.replace(match, _.get(formData, jPath));
+      }
+
+      //  var createCustomObject = [];
+      var createCustomObject = this.props.formData.Asset.assetAttributesCheck;
+      var assetAttributes = [];
+      _.forEach(createCustomObject, function(value, key) {
+        var tempFinObj = {};
+        tempFinObj.key = key;
+        var splitObject = value;
+        _.forEach(splitObject, function(value, key) {
+          tempFinObj.type = key;
+          tempFinObj.value = value;
+
+          // if(tempFinObj.type == "Select"){
+          // }
         });
+        assetAttributes.push(tempFinObj);
+      });
+      if (formData && formData.Asset && formData.Asset.fundSource) {
+        if (formData.Asset.fundSource.code == null || formData.Asset.fundSource.code == '') {
+          delete formData.Asset.fundSource;
+        }
+      }
+
+      formData.Asset.assetAttributes = assetAttributes;
+      delete formData.Asset.assetAttributesCheck;
+
+      //Check if documents, upload and get fileStoreId
+      if (
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'] &&
+        formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'].length
+      ) {
+        let documents = [...formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents']];
+        let _docs = [];
+        let counter = documents.length,
+          breakOut = 0;
+        for (let i = 0; i < documents.length; i++) {
+          fileUpload(documents[i].fileStoreId, self.props.moduleName, function(err, res) {
+            if (breakOut == 1) return;
+            if (err) {
+              breakOut = 1;
+              self.props.setLoadingStatus('hide');
+              self.props.toggleSnackbarAndSetText(true, err, false, true);
+            } else {
+              _docs.push({
+                ...documents[i],
+                fileStoreId: res.files[0].fileStoreId,
+              });
+              counter--;
+              if (counter == 0 && breakOut == 0) {
+                formData[self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].objectName]['documents'] = _docs;
+                self.makeAjaxCall(formData, _url);
+              }
+            }
+          });
+        }
+      } else {
+        self.makeAjaxCall(formData, _url);
       }
     } else {
-      self.makeAjaxCall(formData, _url);
+      self.props.toggleSnackbarAndSetText(true, 'Please Enter Valid Land Details', false, true);
     }
-  } else{
-    self.props.toggleSnackbarAndSetText(true, 'Please Enter Valid Land Details', false, true);
-  }
   };
 
   getVal = (path, dateBool) => {
@@ -1443,19 +1440,19 @@ class assetImmovableCreate extends Component {
     let hashLocation = window.location.hash;
     let obj = specifications[`asset.create`];
 
-    if(property == 'Asset.location'){
-      if(e.target.value !=null){
-      self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
-    }
+    if (property == 'Asset.location') {
+      if (e.target.value != null) {
+        self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
+      }
     }
 
-    if(formData && formData.Asset && formData.Asset.landDetails){
-      for(var i = 0; i < formData.Asset.landDetails.length; i++){
-        if(property == 'Asset.landDetails['+ i +'].code'){
-          var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails['+ i +'].code'], { 'key': e.target.value });
-          if(e.target.value == null || e.target.value == "" || !CheckAutoCompleteData.length){
-            self.handleChange({ target: { value: null } }, 'Asset.landDetails['+ i +'].surveyNo');
-            self.handleChange({ target: { value: null } }, 'Asset.landDetails['+ i +'].area');
+    if (formData && formData.Asset && formData.Asset.landDetails) {
+      for (var i = 0; i < formData.Asset.landDetails.length; i++) {
+        if (property == 'Asset.landDetails[' + i + '].code') {
+          var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + i + '].code'], { key: e.target.value });
+          if (e.target.value == null || e.target.value == '' || !CheckAutoCompleteData.length) {
+            self.handleChange({ target: { value: null } }, 'Asset.landDetails[' + i + '].surveyNo');
+            self.handleChange({ target: { value: null } }, 'Asset.landDetails[' + i + '].area');
           }
         }
       }
@@ -1514,35 +1511,34 @@ class assetImmovableCreate extends Component {
       SubProperty.pop();
       SubProperty = SubProperty.join('.');
       var _val = e.target.value;
-        Api.commonApiPost('/asset-services-maha/assets/_search', { name: _val }, {}, false, false, false, '', '', false).then(
-          function(response) {
-            if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
-              for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
-                if (response.Assets[0].assetAttributes[i].key == 'Survey Number') {
-                  var _surveyNo = response.Assets[0].assetAttributes[i].value;
-                  self.props.handleChange({ target: { value: _surveyNo } }, SubProperty + '.surveyNo', false, '', '', '');
-                } else if (response.Assets[0].assetAttributes[i].key == 'Area of Land') {
-                  var _area = response.Assets[0].assetAttributes[i].value;
-                  self.props.handleChange({ target: { value: _area } }, SubProperty + '.area', false, '', '', '');
-                }
+      Api.commonApiPost('/asset-services-maha/assets/_search', { name: _val }, {}, false, false, false, '', '', false).then(
+        function(response) {
+          if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
+            for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
+              if (response.Assets[0].assetAttributes[i].key == 'Survey Number') {
+                var _surveyNo = response.Assets[0].assetAttributes[i].value;
+                self.props.handleChange({ target: { value: _surveyNo } }, SubProperty + '.surveyNo', false, '', '', '');
+              } else if (response.Assets[0].assetAttributes[i].key == 'Area of Land') {
+                var _area = response.Assets[0].assetAttributes[i].value;
+                self.props.handleChange({ target: { value: _area } }, SubProperty + '.area', false, '', '', '');
               }
-
-              setTimeout(function() {
-                if (self.props.formData.Asset.landDetails && self.props.formData.Asset.landDetails.length) {
-                  let area = 0;
-                  for (let i = 0; i < self.props.formData.Asset.landDetails.length; i++) {
-                    area += Number(self.props.formData.Asset.landDetails[i].area || 0);
-                  }
-                  self.props.handleChange({ target: { value: area } }, 'Asset.totalArea', false, '', '', '');
-                }
-              }, 500);
             }
-          },
-          function(err) {
-            console.log(err);
-          }
-        );
 
+            setTimeout(function() {
+              if (self.props.formData.Asset.landDetails && self.props.formData.Asset.landDetails.length) {
+                let area = 0;
+                for (let i = 0; i < self.props.formData.Asset.landDetails.length; i++) {
+                  area += Number(self.props.formData.Asset.landDetails[i].area || 0);
+                }
+                self.props.handleChange({ target: { value: area } }, 'Asset.totalArea', false, '', '', '');
+              }
+            }, 500);
+          }
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
     }
 
     if (property == 'Asset.warrantyAvailable') {
@@ -1646,7 +1642,7 @@ class assetImmovableCreate extends Component {
                 'g'
               );
               var stringified = JSON.stringify(_groupToBeInserted);
-              var ind = (j - 1) || 0;
+              var ind = j - 1 || 0;
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
@@ -1873,7 +1869,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1922,7 +1918,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1972,7 +1968,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -2023,7 +2019,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',

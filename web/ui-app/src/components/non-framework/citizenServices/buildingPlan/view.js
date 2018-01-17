@@ -893,7 +893,7 @@ class Report extends Component {
                           labelStyle={{ color: '#5F5C57' }}
                           floatingLabelFixed={true}
                           dropDownMenuProps={{
-                            animated: false,
+                            animation: false,
                             targetOrigin: {
                               horizontal: 'left',
                               vertical: 'bottom',

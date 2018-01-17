@@ -786,7 +786,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.floorNo : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -834,7 +834,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.unitType : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -885,7 +885,7 @@ class FloorDetails extends Component {
                           }
                           value={floorDetails.floor ? floorDetails.floor.roomInFlat : ''}
                           dropDownMenuProps={{
-                            animated: false,
+                            animation: false,
                             targetOrigin: {
                               horizontal: 'left',
                               vertical: 'bottom',
@@ -1019,7 +1019,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.structure : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1066,7 +1066,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.usage : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1109,7 +1109,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.usageSubType : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1184,7 +1184,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.occupancyType : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1581,7 +1581,7 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.isStructured : ''}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',

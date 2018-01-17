@@ -255,11 +255,11 @@ class assetMovableCreate extends Component {
     );
   }
 
-  searchMapUpdate = (response) =>{
+  searchMapUpdate = response => {
     let self = this;
     let assetCheck = {};
     let specifications = require(`../../../framework/specs/asset/master/assetMovable`).default;
-    if(response.Assets[0].assetAttributes){
+    if (response.Assets[0].assetAttributes) {
       for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
         assetCheck[response.Assets[0].assetAttributes[i].key] = {
           [response.Assets[0].assetAttributes[i].type]: response.Assets[0].assetAttributes[i].value,
@@ -280,7 +280,7 @@ class assetMovableCreate extends Component {
     );
     self.customFieldDataFun(self.state.customFieldsGen[response.Assets[0].assetCategory.id]);
     self.warrantyFunction(response.Assets[0].warrantyAvailable);
-  }
+  };
 
   displayUI(results) {
     let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData } = this.props;
@@ -490,7 +490,8 @@ class assetMovableCreate extends Component {
       {
         moduleName: 'ASSET',
         masterName: 'AssetCategory',
-        filter: '%5B%3F%28+%40.isAssetAllowFromUi+%3D%3D+true+%26%26+%40.isAssetAllow+%3D%3D+true+%26%26+%40.assetCategoryType+%3D%3D+%22MOVABLE%22%29%5D',
+        filter:
+          '%5B%3F%28+%40.isAssetAllowFromUi+%3D%3D+true+%26%26+%40.isAssetAllow+%3D%3D+true+%26%26+%40.assetCategoryType+%3D%3D+%22MOVABLE%22%29%5D',
       },
       {},
       false,
@@ -567,7 +568,10 @@ class assetMovableCreate extends Component {
               //
               // }
               if (customTemp.type == 'singleValueList') {
-                if (response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values && response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values.length) {
+                if (
+                  response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values &&
+                  response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values.length
+                ) {
                   var handleDropdown = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].values;
                   var dropdownSplit = handleDropdown.split(',');
                   var valueHolder = [];
@@ -592,22 +596,17 @@ class assetMovableCreate extends Component {
           }
           cateoryObject[catId] = response.MdmsRes.ASSET.AssetCategory[i];
           depericiationValue[catId] = response.MdmsRes.ASSET.AssetCategory[i].depreciationRate;
-          self.setState(
-            {
-              customFieldsGen: customSpecs,
-              depericiationValue,
-              cateoryObject,
-            }
-          );
+          self.setState({
+            customFieldsGen: customSpecs,
+            depericiationValue,
+            cateoryObject,
+          });
         }
-        self.setState(
-
-          () => {
-            if (self.props.match.params.id) {
-              self.modifyData(self.props.match.params.id);
-            }
+        self.setState(() => {
+          if (self.props.match.params.id) {
+            self.modifyData(self.props.match.params.id);
           }
-        );
+        });
       },
       function(err) {
         console.log(err);
@@ -1157,10 +1156,10 @@ class assetMovableCreate extends Component {
     let hashLocation = window.location.hash;
     let obj = specifications[`asset.create`];
 
-    if(property == 'Asset.location'){
-      if(e.target.value !=null){
-      self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
-    }
+    if (property == 'Asset.location') {
+      if (e.target.value != null) {
+        self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
+      }
     }
 
     if (property == 'Asset.assetCategory.id') {
@@ -1394,7 +1393,7 @@ class assetMovableCreate extends Component {
                 'g'
               );
               var stringified = JSON.stringify(_groupToBeInserted);
-              var ind = (j - 1) || 0;
+              var ind = j - 1 || 0;
               _groupToBeInserted = JSON.parse(
                 stringified.replace(regexp, mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (ind + 1) + ']')
               );
@@ -1619,7 +1618,7 @@ class assetMovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1668,7 +1667,7 @@ class assetMovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1718,7 +1717,7 @@ class assetMovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1769,7 +1768,7 @@ class assetMovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animated: false,
+                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',

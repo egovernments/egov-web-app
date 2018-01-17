@@ -16,13 +16,13 @@ export default class ShowField extends Component {
     maxDate.setHours(0, 0, 0, 0);
 
     this.state = {
-      maxDate: maxDate
+      maxDate: maxDate,
     };
   }
 
   renderFields = obj => {
     let des = translate(obj.label);
-    let {maxDate}=this.state;
+    let { maxDate } = this.state;
     console.log(maxDate);
     // let mandatory = obj.isMandatory ? " *" : "";
     // let description = des + mandatory;
@@ -167,7 +167,7 @@ export default class ShowField extends Component {
               id={obj.label.split('.').join('-')}
               fullWidth={true}
               dropDownMenuProps={{
-                animated: false,
+                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}
@@ -190,7 +190,6 @@ export default class ShowField extends Component {
               }}
               maxHeight={200}
             >
-              
               {dropDownData.map((dd, index) => <MenuItem value={translate(dd.key)} key={index} primaryText={translate(dd.value)} />)}
             </SelectField>
           </Col>
@@ -205,7 +204,7 @@ export default class ShowField extends Component {
               id={obj.label.split('.').join('-')}
               fullWidth={true}
               dropDownMenuProps={{
-                animated: false,
+                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}
@@ -228,7 +227,6 @@ export default class ShowField extends Component {
               }}
               maxHeight={200}
             >
-
               {dropDownData.map((dd, index) => <MenuItem value={translate(dd.key)} key={index} primaryText={translate(dd.value)} />)}
             </SelectField>
           </Col>
@@ -244,7 +242,7 @@ export default class ShowField extends Component {
               fullWidth={true}
               multiple={true}
               dropDownMenuProps={{
-                animated: false,
+                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}

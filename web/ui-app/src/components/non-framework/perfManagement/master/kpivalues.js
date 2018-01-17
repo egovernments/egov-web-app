@@ -111,7 +111,7 @@ class kpivalues extends Component {
     var url = 'egov-mdms-service/v1/_get?moduleName=common-masters&masterName=Department';
     var query = [];
     let self = this;
-    Api.commonApiPost(url,[], {}, false, true, false, null, null, true).then(
+    Api.commonApiPost(url, [], {}, false, true, false, null, null, true).then(
       function(res) {
         if (res.MdmsRes) {
           //res.MdmsRes.`common-masters
@@ -516,7 +516,7 @@ class kpivalues extends Component {
                 {item.kpi.targetType == 'OBJECTIVE' && (
                   <SelectField
                     value={itemValue.value}
-                    dropDownMenuProps={{ animated: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                    dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                     style={{ display: 'inline-block', width: 153 }}
                     errorStyle={{ float: 'left' }}
                     fullWidth={true}
@@ -832,7 +832,7 @@ class kpivalues extends Component {
 
     let query = [];
 
-    Api.commonApiPost(url, query, data, false, true ).then(
+    Api.commonApiPost(url, query, data, false, true).then(
       function(res) {
         self.props.setLoadingStatus('hide');
         if (res) {
@@ -928,7 +928,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animated: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
@@ -955,7 +955,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animated: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
@@ -977,7 +977,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animated: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}

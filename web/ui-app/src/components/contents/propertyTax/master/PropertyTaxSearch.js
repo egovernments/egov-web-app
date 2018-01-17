@@ -642,7 +642,7 @@ class PropertyTaxSearch extends Component {
                       }}
                       floatingLabelText={translate('pt.create.groups.assessmentDetails.fields.usageType')}
                       dropDownMenuProps={{
-                        animated: false,
+                        animation: false,
                         targetOrigin: {
                           horizontal: 'left',
                           vertical: 'bottom',
@@ -679,7 +679,7 @@ class PropertyTaxSearch extends Component {
                             <SelectField
                               errorText={fieldErrors.revenueZone ? fieldErrors.revenueZone : ''}
                               dropDownMenuProps={{
-                                animated: false,
+                                animation: false,
                                 targetOrigin: {
                                   horizontal: 'left',
                                   vertical: 'bottom',
@@ -707,7 +707,7 @@ class PropertyTaxSearch extends Component {
                             <SelectField
                               errorText={fieldErrors.revenueWard ? fieldErrors.revenueWard : ''}
                               dropDownMenuProps={{
-                                animated: false,
+                                animation: false,
                                 targetOrigin: {
                                   horizontal: 'left',
                                   vertical: 'bottom',
@@ -737,7 +737,7 @@ class PropertyTaxSearch extends Component {
                             <SelectField
                               errorText={fieldErrors.locality ? fieldErrors.locality : ''}
                               dropDownMenuProps={{
-                                animated: false,
+                                animation: false,
                                 targetOrigin: {
                                   horizontal: 'left',
                                   vertical: 'bottom',
