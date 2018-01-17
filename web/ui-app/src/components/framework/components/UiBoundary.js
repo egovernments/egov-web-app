@@ -46,6 +46,7 @@ class UiBoundary extends Component {
             ? Object.keys(labelData).map((key, index) => {
                 return (
                   <Col
+                    key={index}
                     id={key + index}
                     // style={}
                     xs={3}
@@ -69,7 +70,7 @@ class UiBoundary extends Component {
     var ddArr = [];
     var jPath = '';
     var viewLabels = {};
-    // console.log(bdryCode)
+
     var pathArr = jp.paths(boundaryData, `$..[?(@.code=='${bdryCode}')]`);
     pathArr = pathArr[0];
     for (var i = 0; i < pathArr.length; ) {
@@ -109,7 +110,6 @@ class UiBoundary extends Component {
       });
       self.setFirstDropDownData(cityBdry);
       if (window.location.hash.split('/')[1] != 'create') {
-        console.log(self.props.formData, self.props.item.jsonPath);
         if (!_.isEmpty(self.props.formData)) {
           if (typeof _.get(self.props.formData, self.props.item.jsonPath) != 'undefined') {
             self.initDropdownValues(cityBdry, _.get(self.props.formData, self.props.item.jsonPath));
@@ -264,7 +264,6 @@ class UiBoundary extends Component {
         }}
         labelStyle={{ color: '#5F5C57' }}
         dropDownMenuProps={{
-          animation: false,
           targetOrigin: { horizontal: 'left', vertical: 'bottom' },
         }}
         style={{ display: 'inline-block' }}

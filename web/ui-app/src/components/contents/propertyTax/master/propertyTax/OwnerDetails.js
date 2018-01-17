@@ -304,7 +304,6 @@ class OwnerDetails extends Component {
                         id="gender"
                         floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -410,7 +409,6 @@ class OwnerDetails extends Component {
                         floatingLabelStyle={{ color: 'rgba(0,0,0,0.5)' }}
                         id="gaurdianRelation"
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',

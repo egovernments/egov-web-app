@@ -516,7 +516,7 @@ class kpivalues extends Component {
                 {item.kpi.targetType == 'OBJECTIVE' && (
                   <SelectField
                     value={itemValue.value}
-                    dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                    dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                     style={{ display: 'inline-block', width: 153 }}
                     errorStyle={{ float: 'left' }}
                     fullWidth={true}
@@ -928,7 +928,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
@@ -955,7 +955,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
@@ -977,7 +977,7 @@ class kpivalues extends Component {
                   className="custom-form-control-for-select"
                   floatingLabelStyle={{ color: '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
                   floatingLabelFixed={true}
-                  dropDownMenuProps={{ animation: false, targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
+                  dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
                   style={{ display: 'inline-block' }}
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}

@@ -358,7 +358,6 @@ class VacantLand extends Component {
                     }
                     value={vacantLand.layoutApprovalAuthority ? vacantLand.layoutApprovalAuthority : ''}
                     dropDownMenuProps={{
-                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     onChange={(event, index, value) => {

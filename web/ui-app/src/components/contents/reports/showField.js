@@ -167,7 +167,6 @@ export default class ShowField extends Component {
               id={obj.label.split('.').join('-')}
               fullWidth={true}
               dropDownMenuProps={{
-                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}
@@ -204,7 +203,6 @@ export default class ShowField extends Component {
               id={obj.label.split('.').join('-')}
               fullWidth={true}
               dropDownMenuProps={{
-                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}
@@ -242,7 +240,6 @@ export default class ShowField extends Component {
               fullWidth={true}
               multiple={true}
               dropDownMenuProps={{
-                animation: false,
                 targetOrigin: { horizontal: 'left', vertical: 'bottom' },
               }}
               floatingLabelFixed={true}

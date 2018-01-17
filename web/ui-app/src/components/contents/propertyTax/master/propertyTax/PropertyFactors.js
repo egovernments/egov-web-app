@@ -157,7 +157,6 @@ class PropertyFactors extends Component {
                   errorText={fieldErrors.toiletFactor ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.toiletFactor}</span> : ''}
                   value={propertyFactors.toiletFactor ? propertyFactors.toiletFactor : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -186,7 +185,6 @@ class PropertyFactors extends Component {
                   errorText={fieldErrors.roadFactor ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.roadFactor}</span> : ''}
                   value={propertyFactors.roadFactor ? propertyFactors.roadFactor : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -215,7 +213,6 @@ class PropertyFactors extends Component {
                   errorText={fieldErrors.liftFactor ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.liftFactor}</span> : ''}
                   value={propertyFactors.liftFactor ? propertyFactors.liftFactor : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -244,7 +241,6 @@ class PropertyFactors extends Component {
                   errorText={fieldErrors.parkingFactor ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.parkingFactor}</span> : ''}
                   value={propertyFactors.parkingFactor ? propertyFactors.parkingFactor : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {

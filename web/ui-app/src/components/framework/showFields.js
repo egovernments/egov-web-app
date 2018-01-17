@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -67,9 +67,9 @@ class ShowFields extends Component {
     });
   };
 
-  getCountForGroupName = (array,groupName) => {
+  getCountForGroupName = (array, groupName) => {
     return array.filter(group => group.name === groupName).length;
-  }
+  };
 
   renderCard = (group, groupIndex, noCols, jsonPath, uiFramework, groups, isMultiple) => {
     let self = this;
@@ -113,10 +113,10 @@ class ShowFields extends Component {
                         field.type === 'nestedTableList' ||
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'workflow' ||
-                        field.type === 'multiFieldAddToTable'||
-                        field.type === "checkBoxGroup"||
-                        field.type === "boundary"||
-                        field.type === "collectionRoute"
+                        field.type === 'multiFieldAddToTable' ||
+                        field.type === 'checkBoxGroup' ||
+                        field.type === 'boundary' ||
+                        field.type === 'collectionRoute'
                           ? 12
                           : noCols
                       }
@@ -129,10 +129,10 @@ class ShowFields extends Component {
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'window' ||
                         field.type === 'workflow' ||
-                        field.type === 'multiFieldAddToTable'||
-                        field.type === "checkBoxGroup"||
-                        field.type === "boundary"||
-                        field.type === "collectionRoute"
+                        field.type === 'multiFieldAddToTable' ||
+                        field.type === 'checkBoxGroup' ||
+                        field.type === 'boundary' ||
+                        field.type === 'collectionRoute'
                           ? 12
                           : noCols
                       }
@@ -144,69 +144,63 @@ class ShowFields extends Component {
               })}
             </Row>
             <Row>
-            <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right'}}>
-              {self.props.screen != 'view' &&
-                group.multiple &&
-                (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name)) && (
-                  // <Row>
+              <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
+                {self.props.screen != 'view' &&
+                  group.multiple &&
+                  (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name)) && (
+                    // <Row>
                     // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
-                      <FloatingActionButton
-                        style={{ display: 'inline-block'}}
-                        mini={true}
-                        onClick={() => {
-                          addNewCard(group, jsonPath, group.name);
-                        }}
-                      >
+                    <FloatingActionButton
+                      style={{ display: 'inline-block' }}
+                      mini={true}
+                      onClick={() => {
+                        addNewCard(group, jsonPath, group.name);
+                      }}
+                    >
                       <span className="glyphicon glyphicon-plus" />
-                      </FloatingActionButton>
+                    </FloatingActionButton>
                     // </Col>
-                  // </Row>
-                )}
-              {
-                self.props.screen != 'view' &&
-                group.multiple &&
-                (groups[groupIndex + 1] && groups[groupIndex + 1].name == group.name)
-                && (
-                  // <Row>
+                    // </Row>
+                  )}
+                {self.props.screen != 'view' &&
+                  group.multiple &&
+                  (groups[groupIndex + 1] && groups[groupIndex + 1].name == group.name) && (
+                    // <Row>
                     // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'right' }}>
-                      <FloatingActionButton
-                        style={{ display: 'inline-block'}}
-                        mini={true}
-                        secondary={true}
-                        onClick={() => {
-                          removeCard(jsonPath, groupIndex, group.name);
-                        }}
-                      >
-                        <span className="glyphicon glyphicon-minus" />
-                      </FloatingActionButton>
+                    <FloatingActionButton
+                      style={{ display: 'inline-block' }}
+                      mini={true}
+                      secondary={true}
+                      onClick={() => {
+                        removeCard(jsonPath, groupIndex, group.name);
+                      }}
+                    >
+                      <span className="glyphicon glyphicon-minus" />
+                    </FloatingActionButton>
                     // </Col>
-                  // </Row>
-                )
-              }
+                    // </Row>
+                  )}
 
-              {
-                self.props.screen != 'view' &&
-                group.multiple &&
-                (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name))
-                && (self.getCountForGroupName(groups, group.name) > 1)
-                && (
-                  // <Row>
+                {self.props.screen != 'view' &&
+                  group.multiple &&
+                  (!groups[groupIndex + 1] || (groups[groupIndex + 1] && groups[groupIndex + 1].name != group.name)) &&
+                  self.getCountForGroupName(groups, group.name) > 1 && (
+                    // <Row>
                     // <Col xsOffset={8} mdOffset={10} xs={4} md={2} style={{ textAlign: 'left', float: 'left' }}>
-                      <FloatingActionButton
-                        style={{ display: 'inline-block', marginLeft: '15px' }}
-                        mini={true}
-                        secondary={true}
-                        onClick={() => {
-                          removeCard(jsonPath, groupIndex, group.name);
-                        }}
-                      >
-                        <span className="glyphicon glyphicon-minus" />
-                      </FloatingActionButton>
+                    <FloatingActionButton
+                      style={{ display: 'inline-block', marginLeft: '15px' }}
+                      mini={true}
+                      secondary={true}
+                      onClick={() => {
+                        removeCard(jsonPath, groupIndex, group.name);
+                      }}
+                    >
+                      <span className="glyphicon glyphicon-minus" />
+                    </FloatingActionButton>
                     // </Col>
-                  // </Row>
-                )
-              }
-            </Col>
+                    // </Row>
+                  )}
+              </Col>
             </Row>
           </Grid>
           <div style={{ marginLeft: '15px', marginRight: '15px' }}>
@@ -221,20 +215,19 @@ class ShowFields extends Component {
     );
   };
 
-  fieldInsideField = (numCols,fields) => {
-    return (<div>
-      {fields.map((field, fieldIndex)=>{
-        return (
-          <Col
-          key={fieldIndex}
-          md={numCols} style={{padding:'0px'}}>
-         {this.renderField(field, this.props.screen, fieldIndex, field.screenView)}
-           </Col>
-
-        );
-      })}
-      </div>);
-  }
+  fieldInsideField = (numCols, fields) => {
+    return (
+      <div>
+        {fields.map((field, fieldIndex) => {
+          return (
+            <Col key={fieldIndex} md={numCols} style={{ padding: '0px' }}>
+              {this.renderField(field, this.props.screen, fieldIndex, field.screenView)}
+            </Col>
+          );
+        })}
+      </div>
+    );
+  };
 
   renderGroups = (groups, noCols, uiFramework = 'google', jsonPath) => {
     let self = this;
@@ -262,7 +255,7 @@ class ShowFields extends Component {
         return Object.keys(listArr).map((key, groupIndex) => {
           if (listArr[key].objects) {
             return (
-              <Card className={'uiCard '} expanded={true}>
+              <Card key={groupIndex} className={'uiCard '} expanded={true}>
                 <CardHeader
                   style={{ paddingTop: 4, paddingBottom: 0 }}
                   title={
@@ -286,7 +279,6 @@ class ShowFields extends Component {
                   })}
                 </CardText>
               </Card>
-
             );
           } else {
             return self.renderCard(listArr[key].object, listArr[key].index, noCols, jsonPath, uiFramework, groups);
@@ -300,7 +292,7 @@ class ShowFields extends Component {
     // console.log(item.type, item.jsonPath);
     if (
       screen == 'view' &&
-      ['viewDocuments', 'documentList', 'fileTable', 'arrayText', 'arrayNumber', 'tableList', 'workflow','singleFileUpload'].indexOf(item.type) == -1
+      ['viewDocuments', 'documentList', 'fileTable', 'arrayText', 'arrayNumber', 'tableList', 'workflow', 'singleFileUpload'].indexOf(item.type) == -1
     ) {
       if (item.type == 'datePicker') {
         item.isDate = true;
@@ -312,7 +304,7 @@ class ShowFields extends Component {
     }
     switch (item.type) {
       case 'custom':
-      return ( this.fieldInsideField(item.numCols,item.fields));
+        return this.fieldInsideField(item.numCols, item.fields);
 
       case 'text':
         return (
@@ -777,9 +769,9 @@ class ShowFields extends Component {
             handler={this.props.handler}
           />
         );
-         case 'autocompletemultiselect' :
+      case 'autocompletemultiselect':
         return (
-         <UiAutocompleteMultiselect
+          <UiAutocompleteMultiselect
             tabIndex={index}
             ui={this.props.ui}
             getVal={this.props.getVal}

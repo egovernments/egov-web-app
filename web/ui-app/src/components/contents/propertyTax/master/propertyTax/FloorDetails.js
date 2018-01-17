@@ -786,7 +786,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.floorNo : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -834,7 +833,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.unitType : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -885,7 +883,6 @@ class FloorDetails extends Component {
                           }
                           value={floorDetails.floor ? floorDetails.floor.roomInFlat : ''}
                           dropDownMenuProps={{
-                            animation: false,
                             targetOrigin: {
                               horizontal: 'left',
                               vertical: 'bottom',
@@ -1019,7 +1016,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.structure : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1066,7 +1062,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.usage : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1109,7 +1104,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.usageSubType : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1184,7 +1178,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.occupancyType : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1581,7 +1574,6 @@ class FloorDetails extends Component {
                         }
                         value={floorDetails.floor ? floorDetails.floor.isStructured : ''}
                         dropDownMenuProps={{
-                          animation: false,
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',

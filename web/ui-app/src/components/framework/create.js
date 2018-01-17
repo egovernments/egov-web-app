@@ -152,28 +152,6 @@ class Report extends Component {
     }
   }
 
-  // setDefaultValues(groups, dat) {
-  //   let formData = this.props.formData;
-  //   for (var i = 0; i < groups.length; i++) {
-  //     for (var j = 0; j < groups[i].fields.length; j++) {
-  //       if (
-  //         typeof groups[i].fields[j].defaultValue == 'string' ||
-  //         typeof groups[i].fields[j].defaultValue == 'number' ||
-  //         typeof groups[i].fields[j].defaultValue == 'boolean'
-  //       ) {
-  //         if (!_.get(formData, groups[i].fields[j].jsonPath)) {
-  //           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
-  //         }
-  //       }
-  //       if (groups[i].children && groups[i].children.length) {
-  //         for (var k = 0; k < groups[i].children.length; k++) {
-  //           this.setDefaultValues(groups[i].children[k].groups, dat);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
   depedantValue(groups) {
     let self = this;
     for (let i = 0; i < groups.length; i++) {
@@ -482,11 +460,13 @@ class Report extends Component {
     } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
+    const moduleName = hashLocation.split("/")[2];
+    const actionName = hashLocation.split("/")[1];
 
     specifications = typeof results == "string" ? JSON.parse(results) : results;
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${moduleName}.${actionName}`
       ];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
@@ -496,12 +476,12 @@ class Report extends Component {
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName(hashLocation.split("/")[2]);
-    setActionName(hashLocation.split("/")[1]);
+    setModuleName(moduleName);
+    setActionName(actionName);
 
     if (hashLocation.split("/").indexOf("update") == 1) {
       var url = specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${moduleName}.${actionName}`
       ].searchUrl.split("?")[0];
       var id =
         (self.props.match.params.id &&
@@ -509,7 +489,7 @@ class Report extends Component {
         self.props.match.params.master;
       var query = {
         [specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].searchUrl
           .split("?")[1]
           .split("=")[0]]: id
@@ -517,18 +497,18 @@ class Report extends Component {
       //handle 2nd parameter
       if (
         specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].searchUrl
           .split("?")[1]
           .split("=")[2]
       ) {
         var pval = specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].searchUrl
           .split("?")[1]
           .split("=")[2];
         var pname = specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].searchUrl
           .split("?")[1]
           .split("=")[1]
@@ -536,7 +516,7 @@ class Report extends Component {
 
         query = {
           [specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${moduleName}.${actionName}`
           ].searchUrl
             .split("?")[1]
             .split("=")[0]]: id,
@@ -561,10 +541,10 @@ class Report extends Component {
         let data = { moduleName: "", masterDetails: [] };
         let k = 0;
         var masterDetail = {};
-        data.moduleName = hashLocation.split("/")[2];
+        data.moduleName = moduleName;
         var filterData = `[?(@.${
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${moduleName}.${actionName}`
           ].searchUrl
             .split("?")[1]
             .split("={")[0]
@@ -572,10 +552,10 @@ class Report extends Component {
         masterDetail.filter = filterData;
         masterDetail.name =
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${moduleName}.${actionName}`
           ].objectName;
         data.masterDetails[0] = _.cloneDeep(masterDetail);
-        // console.log(data);
+       
         moduleDetails.push(data);
 
         _body = {
@@ -593,13 +573,13 @@ class Report extends Component {
         _body,
         false,
         specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].useTimestamp
       ).then(
         function(res) {
           if (
             specifications[
-              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${moduleName}.${actionName}`
             ].isMDMSScreen
           ) {
             var masterName = "";
@@ -620,61 +600,59 @@ class Report extends Component {
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem("tenantId");
             mdmsReq.MasterMetaData.masterData[0] =
               res.MdmsRes[moduleName][masterName][0];
-            console.log(mdmsReq);
+          
             res = mdmsReq;
           }
-          console.log(res);
+         
           //
           self.props.setLoadingStatus("hide");
           if (
             specifications[
-              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${moduleName}.${actionName}`
             ].isResponseArray
           ) {
             var obj = {};
             _.set(
               obj,
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ].objectName,
               jp.query(res, "$..[0]")[0]
             );
             var spec =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ];
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(obj);
             self.setInitialUpdateData(
               obj,
               JSON.parse(JSON.stringify(specifications)),
-              hashLocation.split("/")[2],
-              hashLocation.split("/")[1],
+              moduleName,
+              actionName,
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ].objectName
             );
           } else {
             self.setInitialUpdateData(
               res,
               JSON.parse(JSON.stringify(specifications)),
-              hashLocation.split("/")[2],
-              hashLocation.split("/")[1],
+              moduleName,
+              actionName,
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ].objectName
             );
-            console.log(res);
-            // var hashLocation = window.location.hash;
             let obj =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ];
             let fields = jp.query(
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
             );
-            console.log(fields);
+           
             for (var i = 0; i < fields.length; i++) {
               if (!fields[i].hasPreTransform) {
                 let values = _.get(res, fields[i].jsonPath);
@@ -687,17 +665,17 @@ class Report extends Component {
               }
             }
 
-            console.log(res);
+
             var spec =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${moduleName}.${actionName}`
               ];
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(res);
           }
           let obj1 =
             specifications[
-              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${moduleName}.${actionName}`
             ];
           self.depedantValue(obj1.groups);
         },
@@ -709,11 +687,10 @@ class Report extends Component {
       if (
         hashLocation.split("/").indexOf("create") == 1 &&
         specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].isMDMSScreen
       ) {
-        // let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
-        console.log(obj);
+      
         var masterName = "";
         for (var i = 0; i < obj.groups.length; i++) {
           if (obj.groups[i].hide) {
@@ -748,7 +725,7 @@ class Report extends Component {
         //console.log('id', id);
         let mockObj =
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${moduleName}.${actionName}`
           ];
         if (mockObj.onloadFetchUrl) {
           let params = JSON.parse(id);
@@ -769,15 +746,15 @@ class Report extends Component {
               self.props.setLoadingStatus("hide");
               if (
                 specifications[
-                  `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                  `${moduleName}.${actionName}`
                 ].isResponseArray
               ) {
                 var obj = {};
                 _.set(
                   obj,
                   specifications[
-                    `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    `${moduleName}.${
+                      actionName
                     }`
                   ].objectName,
                   jp.query(res, "$..[0]")[0]
@@ -786,11 +763,11 @@ class Report extends Component {
                 self.setInitialUpdateData(
                   obj,
                   JSON.parse(JSON.stringify(specifications)),
-                  hashLocation.split("/")[2],
-                  hashLocation.split("/")[1],
+                  moduleName,
+                  actionName,
                   specifications[
-                    `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    `${moduleName}.${
+                      actionName
                     }`
                   ].objectName
                 );
@@ -798,11 +775,11 @@ class Report extends Component {
                 self.setInitialUpdateData(
                   res,
                   JSON.parse(JSON.stringify(specifications)),
-                  hashLocation.split("/")[2],
-                  hashLocation.split("/")[1],
+                  moduleName,
+                  actionName,
                   specifications[
-                    `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    `${moduleName}.${
+                      actionName
                     }`
                   ].objectName
                 );
@@ -810,7 +787,7 @@ class Report extends Component {
               }
               let obj1 =
                 specifications[
-                  `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                  `${moduleName}.${actionName}`
                 ];
 
               self.depedantValue(obj1.groups);
@@ -868,9 +845,11 @@ class Report extends Component {
     let moduleDetails = [];
     let { setDropDownData, setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
+    const moduleName = hashLocation.split("/")[2];
+    const actionName = hashLocation.split("/")[1];
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${moduleName}.${actionName}`
       ];
     let name, filter;
     // let {moduleName, actionName, setMockData} = this.props;
@@ -1074,6 +1053,9 @@ class Report extends Component {
     let self = this;
     var value = this.getVal(path);
     if (!value) return;
+    const moduleName = hashLocation.split("/")[2];
+    const actionName = hashLocation.split("/")[1];
+
 
     if (Array.isArray(autoObject)) {
       autoObject.forEach(function(item, index) {
@@ -1120,7 +1102,7 @@ class Report extends Component {
           {},
           false,
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${moduleName}.${actionName}`
           ].useTimestamp
         ).then(
           function(res) {
@@ -1132,7 +1114,7 @@ class Report extends Component {
             self.props.setFormData(formData);
           },
           function(err) {
-            console.log(err);
+            
             self.props.setLoadingStatus("hide");
             var formData = { ...self.props.formData };
             for (var key in item.autoFillFields) {
@@ -1187,7 +1169,7 @@ class Report extends Component {
         {},
         false,
         specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${moduleName}.${actionName}`
         ].useTimestamp
       ).then(
         function(res) {
@@ -1207,9 +1189,12 @@ class Report extends Component {
   makeAjaxCall = (formData, url) => {
     let self = this;
     var hashLocation = window.location.hash;
+    const moduleName = hashLocation.split("/")[2];
+    const actionName = hashLocation.split("/")[1];
+
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${moduleName}.${actionName}`
       ];
 
       var newObj = obj.groups;
@@ -1266,7 +1251,6 @@ class Report extends Component {
     // console.log(formData);
     delete formData.ResponseInfo;
     //return console.log(formData);
-    console.log(obj);
     if (obj.hasOwnProperty("omittableFields")) {
       this.generateSpecificForm(formData, obj["omittableFields"]);
     }
@@ -3471,63 +3455,7 @@ class Report extends Component {
           }
         }
       }
-      // else if (value.type == "documentList") {
-      //
-      //   let splitArray = value.pattern.split("?");
-      //   let context = "";
-      //   let id = {};
-      //   for (var j = 0; j < splitArray[0].split("/").length; j++) {
-      //     context+=splitArray[0].split("/")[j]+"/";
-      //   }
-      //
-      //
-      //   let queryStringObject=splitArray[1].split("|")[0].split("&");
-      //   for (var i = 0; i < queryStringObject.length; i++) {
-      //     if (i) {
-      //       if (queryStringObject[i].split("=")[1].search("{")>-1) {
-      //         if (queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]==property) {
-      //           id[queryStringObject[i].split("=")[0]] = e.target.value || "";
-      //         } else {
-      //           console.log(queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]);
-      //           id[queryStringObject[i].split("=")[0]] = e.target.value;//getVal(queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]);
-      //         }
-      //       } else {
-      //         id[queryStringObject[i].split("=")[0]] = queryStringObject[i].split("=")[1];
-      //       }
-      //     }
-      //   }
-      //
-      //
-      //   Api.commonApiPost(context, id).then(function(response) {
-      //     if(response) {
-      //       //console.log(item);
-      //       var documents = [];
-      // 			//console.log(this.props);
-      //       //let {documentList, useTimestamp, handler} = props;
-      //       for (var k = 0; k < response.length; k++) {
-      //
-      //         var temp = {
-      // 					"fileStoreId": "",
-      // 					"displayName": response[k].name,
-      // 					"name": ""
-      // 				};
-      //
-      //         documents.push(temp);
-      //       }
-      //       handleChange({target: {value: documents}}, value.jsonPath, false, '');
-      //
-      //       //handleChange({target: {value: temp}}, value.jsonPath, false, '', '');
-      //     }
-      //   },function(err) {
-      //       console.log(err);
-      //   });
-      //   // var arr=dropDownOringalData[value.pattern.split("|")[0]][value.pattern.split("|")[1]];
-      //   // var searchPropery=value.pattern.split("|")[2];
-      //   // var property=value.pattern.split("|")[3];
-      //   //console.log(props,'here');
-      //
-      // }
-      //console.log(value.type);
+     
     });
   };
 
@@ -3551,9 +3479,12 @@ class Report extends Component {
       changeFormStatus
     } = this.props;
     let hashLocation = window.location.hash;
+    const moduleName = hashLocation.split("/")[2];
+    const actionName = hashLocation.split("/")[1];
+
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${moduleName}.${actionName}`
       ];
 
     if (obj && obj.beforeHandleChange) {

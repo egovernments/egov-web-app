@@ -325,7 +325,6 @@ class AssessmentDetails extends Component {
                   underlineStyle={styles.underlineStyle}
                   underlineFocusStyle={styles.underlineFocusStyle}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   id="creationReason"
@@ -375,7 +374,6 @@ class AssessmentDetails extends Component {
                   value={assessmentDetails.propertyType ? assessmentDetails.propertyType : ''}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -430,7 +428,6 @@ class AssessmentDetails extends Component {
                   }
                   value={assessmentDetails.propertySubType ? assessmentDetails.propertySubType : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelFixed={true}
@@ -465,7 +462,6 @@ class AssessmentDetails extends Component {
                   errorText={fieldErrors.usage ? <span style={{ position: 'absolute', bottom: -41 }}>{fieldErrors.usage}</span> : ''}
                   value={assessmentDetails.usage ? assessmentDetails.usage : ''}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelFixed={true}
@@ -497,7 +493,6 @@ class AssessmentDetails extends Component {
                   value={assessmentDetails.usageSubType ? assessmentDetails.usageSubType : ''}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    animation: false,
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   onChange={(event, index, value) => {
@@ -529,7 +524,6 @@ class AssessmentDetails extends Component {
                     value={assessmentDetails.department ? assessmentDetails.department : ''}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      animation: false,
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     onChange={(event, index, value) => {

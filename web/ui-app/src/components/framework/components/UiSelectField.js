@@ -206,7 +206,6 @@ class UiSelectField extends Component {
             }}
             labelStyle={{ color: '#5F5C57' }}
             dropDownMenuProps={{
-              animation: false,
               targetOrigin: { horizontal: 'left', vertical: 'bottom' },
             }}
             style={{ display: item.hide ? 'none' : 'inline-block' }}

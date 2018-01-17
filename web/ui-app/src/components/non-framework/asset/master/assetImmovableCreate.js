@@ -1869,7 +1869,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animation: false,
+                          
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1918,7 +1918,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animation: false,
+                          
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1968,7 +1968,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animation: false,
+                          
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -2019,7 +2019,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          animation: false,
+                          
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
