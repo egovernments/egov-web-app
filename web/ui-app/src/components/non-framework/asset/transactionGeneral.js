@@ -798,9 +798,12 @@ class Transaction extends Component {
     const assetsSelected = formData.Depreciation.Assets.filter((asset) => {
       return asset.isChecked;
     }).map((asset) => asset.id);
-    // formData.Depreciation.assetId
-    console.log(localStorage.getItem('tenantId'));
-    var toDate = formData.toDate;
+    var dateCn = new Date(formData.toDate);
+    dateCn.setMinutes(59);
+    dateCn.setHours(23);
+    dateCn.setSeconds(59);
+    var toDate = new Date(dateCn).getTime();
+    //var toDate = formData.toDate;
     if (assetsSelected.length) {
       self.props.setLoadingStatus('loading');
       const data = {'Depreciation' : { 'assetIds' : assetsSelected, 'tenantId': localStorage.getItem('tenantId'), 'toDate': toDate } }
