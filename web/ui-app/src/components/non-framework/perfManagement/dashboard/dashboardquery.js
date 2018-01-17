@@ -58,7 +58,7 @@ export default class KPIDashboardQuery extends Component {
     this.kpiTypeLabel = 'KPI Type';
     this.kpiLabel = 'KPIs';
     this.ulbLabel = 'ULB(s)';
-    this.fyLabel = 'Financial Years';
+    this.fyLabel = 'Target Financial Years';
     this.ulbRes = null;
     this.fyRes = null;
     this.kpiRes = null;
