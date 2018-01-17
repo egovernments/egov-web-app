@@ -32,19 +32,17 @@ class IframeLoader extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.hash !== this.props.location.hash) {
+    if (nextProps.location.search !== this.props.location.search) {
       const url = this.getIframeUrl(nextProps);
       this.setState({ url });
     }
   }
 
-  // very hacky method
   getIframeUrl = props => {
     const paramsString = props.location.search;
-    const hash = props.location.hash;
     const params = new URLSearchParams(paramsString);
     const url = params.get('url');
-    return url + hash;
+    return url;
   };
 
   render() {
@@ -52,18 +50,16 @@ class IframeLoader extends Component {
 
     return (
       <div id="container" style={styles.container} className="col-lg-12">
-        {
-          <iframe
-            key={url}
-            style={styles.iframe}
-            ref={f => {
-              this.ifr = f;
-            }}
-            frameBorder="0"
-            src={url}
-            allowFullScreen
-          />
-        }
+        <iframe
+          key={url}
+          style={styles.iframe}
+          ref={f => {
+            this.ifr = f;
+          }}
+          frameBorder="0"
+          src={url}
+          allowFullScreen
+        />
       </div>
     );
   }
