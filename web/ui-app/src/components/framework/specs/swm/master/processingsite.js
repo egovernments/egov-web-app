@@ -62,17 +62,17 @@ var dat = {
     result: {
       header: [
         {
-          label: 'swm.processingplant.create.area',
-        },
-        {
-          label: 'swm.processingplant.create.capacity',
+            label : 'swm.processingplant.create.name',
         },
         {
             label : 'swm.processingplant.create.address',
         },
         {
-            label : 'swm.processingplant.create.name',
+          label: 'swm.processingplant.create.area',
         },
+        {
+          label: 'swm.processingplant.create.capacity',
+        }
       ],
       values: [
         'siteDetails.area',
