@@ -961,7 +961,7 @@ class kpivalues extends Component {
                   fullWidth={true}
                   hintText="Please Select"
                   labelStyle={{ color: '#5F5C57' }}
-                  floatingLabelText={<span>Financial Year</span>}
+                  floatingLabelText={<span>Target Financial Year</span>}
                   onChange={(event, key, value) => this.searchKPIValues(event, key, value, 'FINYEAR')}
                 >
                   {this.state.FinantialYear &&
