@@ -12,29 +12,29 @@ export const flattenArray = (array) => {
 export const getMonth = (month) => {
     switch(month) {
         case '1':
-            return 'JANUNARY'
+            return 'JAN'
         case '2':
-            return 'FEBRUARY'
+            return 'FEB'
         case '3':
-            return 'MARCH'
+            return 'MAR'
         case '4':
-            return 'APRIL'
+            return 'APR'
         case '5':
             return 'MAY'
         case '6':
-            return 'JUNE'
+            return 'JUN'
         case '7':
-            return 'JULY'
+            return 'JUL'
         case '8':
-            return 'AUGUST'
+            return 'AUG'
         case '9':
-            return 'SEPTEMBER'
+            return 'SEP'
         case '10':
-            return 'OCTOBER'
+            return 'OCT'
         case '11':
-            return 'NOVEMBER'
+            return 'NOV'
         case '12':
-            return 'DECEMBER'
+            return 'DEC'
     }
 }
 
