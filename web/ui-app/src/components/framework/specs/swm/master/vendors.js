@@ -870,7 +870,19 @@ var dat = {
             aATransformInfo:{
               to:'vendors[0].servicesOffered',
               key:'code'
-            }
+            },
+            reqNotReqFields: [{
+              ifValue: 'Process 6',
+              require: [{
+                     name: 'details',
+                     jsonPath:'vendors[0].details',
+                     isGroup: false,
+                     isField: true,
+                   
+                    }
+                   ],
+                   notrequire: [ ]
+            }]
           },
 
           {

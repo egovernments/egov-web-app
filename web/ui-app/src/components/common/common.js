@@ -2266,7 +2266,7 @@ var localization_EN_Data = {
   'swm.vendor.create.agreement.details': 'Upload Agreement Copy',
   'swm.vendor.create.downloadagreement.details': 'Download Agreement Copy',
   'swm.create.servicesOffered': 'Services Offered',
-  'swm.create.details': 'Details',
+  'swm.create.details': 'If Other, mention details',
   'swm.create.group.title.vendors': 'Vendors',
   'swm.create.group.title.VendorDetails': 'Vendor Details',
   'swm.create.group.title.ServicesOffered': 'Services Offered',
