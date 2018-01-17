@@ -1212,29 +1212,6 @@ class Report extends Component {
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
-      var newObj = obj.groups;
-      var objName = obj.objectName;
-      var tablist =  newObj.map((item)=>{
-        var table =  _.find(item.fields, 'tableList');
-        if(table !== undefined){
-          return table;
-        }
-      });
-      tablist = _.remove(tablist, function(n) {
-          return n != undefined;
-        });
-      if (_.isArray(formData[objName])) {
-        tablist.map((item)=>{
-          if(item.tableList.selectedfilter){
-            var jspath = item.jsonPath;
-            jspath = jspath.split("].")[1];
-            formData[objName][0][jspath] = formData[objName][0][jspath].filter(function (obj) {
-              return (obj.isselected !== undefined && obj.isselected !== false);
-            });
-          }
-        });
-    }
-
     if (obj && obj.beforeSubmit) {
         eval(obj.beforeSubmit);
     }
