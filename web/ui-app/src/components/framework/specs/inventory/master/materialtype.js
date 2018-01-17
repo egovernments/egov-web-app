@@ -107,7 +107,7 @@ var dat = {
         useTimestamp: true,
         url: '/egov-mdms-create/v1/_create',
         title: 'inventory.materialType.master.title',
-        idJsonPath: 'inventory.MaterialType[0].code',
+        idJsonPath: 'MdmsRes.inventory.MaterialType[0].code',
         moduleName: 'inventory',
         masterName: 'MaterialType',
         objectName: 'MasterMetaData',
