@@ -5,7 +5,7 @@ import "./styles/app.css";
 import App from "./app";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { grey300 } from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
