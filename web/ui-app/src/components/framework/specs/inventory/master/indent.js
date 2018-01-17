@@ -364,9 +364,9 @@ var dat = {
                 {
                   label: 'Qty Required',
                 },
-                //  {
-                //   label: 'Qty Received',
-                // },
+                /* {
+                  label: 'Qty Received',
+                },*/
               ],
               values: [
                 {
@@ -389,6 +389,7 @@ var dat = {
                     {
                       jsonPath: 'indents[0].indentDetails[0].material.baseUom.uomCategory',
                       type: 'textField',
+
                       valExp:
                         "getValFromDropdownData('indents[0].indentDetails[*].material.code', getVal('indents[0].indentDetails[*].material.code'), 'others[1]')",
                     },
@@ -396,11 +397,16 @@ var dat = {
                     {
                       jsonPath: 'indents[0].indentDetails[0].uom.code',
                       type: 'dropDown',
+                      indexReplace:true,
                       pattern:
                         '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Uom&filter=+%5B%3F%28%40.uomCategory%3D%3D%27{indents[0].indentDetails[0].material.baseUom.uomCategory}%27%29%5D|$..code|$..description',
                     },
                   ],
                 },
+
+
+
+
                 {
                   name: 'materialDescription',
                   jsonPath: 'indents[0].indentDetails[0].material.description',
@@ -418,7 +424,7 @@ var dat = {
                   type: 'singleValueList',
                   isRequired: true,
                   isDisabled: false,
-                  url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=Uom|$..code|$..description',
+                  url: '',
                 },
 
                 {
@@ -445,8 +451,8 @@ var dat = {
                   // url: '/works-estimate/v1/projectcodes/_search?&|$..code|$..name',
                 },
                 {
-                  name: 'indentQuantity',
-                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
+                  name: 'userQuantity ',
+                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
                   pattern: '',
                   type: 'number',
                   isRequired: true,
@@ -454,16 +460,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                 },
-                // {
-                //   name: 'recvQuantity',
-                //   jsonPath: 'indents[0].indentDetails[0].userQuantity',
-                //   pattern: '',
-                //   type: 'number',
-                //   isRequired: true,
-                //   isDisabled: false,
-                //   defaultValue: '',
-                //   patternErrorMsg: '',
-                // },
+                /*{
+                  name: 'recvQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },*/
               ],
             },
           },
@@ -667,9 +673,9 @@ var dat = {
                 {
                   label: 'Qty Required',
                 },
-                //  {
-                //   label: 'Qty Received',
-                // },
+                 {
+                  label: 'Qty Received',
+                },
               ],
               values: [
                 {
@@ -715,6 +721,16 @@ var dat = {
                   patternErrorMsg: '',
                 },
                 {
+                  name: 'materialDescription',
+                  jsonPath: 'indents[0].indentDetails[0].material.description',
+                  pattern: '',
+                  type: 'text',
+                  isRequired: false,
+                  isDisabled: true,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },
+                {
                   name: 'uom',
                   jsonPath: 'indents[0].indentDetails[0].uom.code',
                   pattern: '',
@@ -746,8 +762,8 @@ var dat = {
                   patternErrorMsg: 'inventory.create.field.message.code',
                 },
                  {
-                  name: 'indentQuantity',
-                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
+                  name: 'userQuantity ',
+                  jsonPath: 'indents[0].indentDetails[0].userQuantity ',
                   pattern: '',
                   type: 'number',
                   isRequired: true,
@@ -755,16 +771,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                 },
-                // {
-                //   name: 'recvQuantity',
-                //   jsonPath: 'indents[0].indentDetails[0].userQuantity',
-                //   pattern: '',
-                //   type: 'number',
-                //   isRequired: true,
-                //   isDisabled: false,
-                //   defaultValue: '',
-                //   patternErrorMsg: '',
-                // },
+                /*{
+                  name: 'recvQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },*/
               ],
             },
           },
@@ -976,9 +992,9 @@ var dat = {
                 {
                   label: 'Qty Required',
                 },
-                 {
+                 /*{
                   label: 'Qty Received',
-                },
+                },*/
               ],
               values: [
                 {
@@ -1066,17 +1082,7 @@ var dat = {
                   patternErrorMsg: 'inventory.create.field.message.code',
                 },
                 {
-                  name: 'indentQuantity',
-                  jsonPath: 'indents[0].indentDetails[0].indentQuantity',
-                  pattern: '',
-                  type: 'number',
-                  isRequired: true,
-                  isDisabled: false,
-                  defaultValue: '',
-                  patternErrorMsg: '',
-                },
-                {
-                  name: 'recvQuantity',
+                  name: 'userQuantity',
                   jsonPath: 'indents[0].indentDetails[0].userQuantity',
                   pattern: '',
                   type: 'number',
@@ -1085,6 +1091,16 @@ var dat = {
                   defaultValue: '',
                   patternErrorMsg: '',
                 },
+               /* {
+                  name: 'recvQuantity',
+                  jsonPath: 'indents[0].indentDetails[0].userQuantity',
+                  pattern: '',
+                  type: 'number',
+                  isRequired: true,
+                  isDisabled: false,
+                  defaultValue: '',
+                  patternErrorMsg: '',
+                },*/
               ],
             },
           },

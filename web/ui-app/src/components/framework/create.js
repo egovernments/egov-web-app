@@ -2305,7 +2305,7 @@ class Report extends Component {
   // };
 
   enField = (_mockData, enableStr, reset, required = false) => {
-    //debugger;
+   
     let { moduleName, actionName, setFormData } = this.props;
     let _formData = { ...this.props.formData };
     for (
@@ -2380,7 +2380,7 @@ class Report extends Component {
   };
 
   disField = (_mockData, disableStr, reset, required = false) => {
-    //debugger;
+    
     let { moduleName, actionName, setFormData } = this.props;
     let _formData = { ...this.props.formData };
     for (
@@ -3019,18 +3019,28 @@ class Report extends Component {
                     .split("=")[1]
                     .replace(/\{(.*?)\}/, e.target.value) || "";
               } else {
+
+                  let filterParameter=queryStringObject[i]
+                        .split('=')[1]
+                        .split('{')[1]
+                        .split('}')[0];
+        if(value.indexReplace){
+          if(dependantIdx&&dependantIdx!=0){
+        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+      }
+      }
                 id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
                     /\{(.*?)\}/,
                     getVal(
-                      queryStringObject[i]
-                        .split("=")[1]
-                        .split("{")[1]
-                        .split("}")[0]
+                      filterParameter
                     )
                   ) || "";
               }
-            } else {
+            }
+            
+             else {
               id[queryStringObject[i].split("=")[0]] = queryStringObject[
                 i
               ].split("=")[1];
@@ -3075,6 +3085,15 @@ class Report extends Component {
                 });
               }
 
+               const updateDropDownData=(value,i)=>{
+                value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
+                  setDropDownData(value.jsonPath, dropDownData);
+                  setDropDownOriginalData(value.jsonPath, dropDownData);
+                  if (value.autoSelect) {
+                    setVal(value.jsonPath, dropDownData[0]);
+                  }
+              }
+
               //to handle tableList dropdown
               let currProperty = value.jsonPath;
               let rootProperty = currProperty.substr(
@@ -3083,14 +3102,14 @@ class Report extends Component {
               );
               let numberOfRowsArray = _.get(formData, rootProperty);
               if (numberOfRowsArray && numberOfRowsArray.length > 0) {
+                if(value.indexReplace){
+                 updateDropDownData(value,dependantIdx);
+                }else{
                 for (let i = 0; i < numberOfRowsArray.length; i++) {
-                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                  setDropDownData(value.jsonPath, dropDownData);
-                  setDropDownOriginalData(value.jsonPath, dropDownData);
-                  if (value.autoSelect) {
-                    setVal(value.jsonPath, dropDownData[0]);
-                  }
+                  
+                   updateDropDownData(value,i);
                 }
+              }
               } else {
                 setDropDownData(value.jsonPath, dropDownData);
                 setDropDownOriginalData(value.jsonPath, dropDownData);
