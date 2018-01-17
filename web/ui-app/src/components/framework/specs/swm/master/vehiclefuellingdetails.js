@@ -385,7 +385,7 @@ var dat = {
             label: 'vehiclefuellingdetails.create.transactionDate',
             type: 'datePicker',
             isRequired: true,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
         ],
