@@ -21,11 +21,11 @@ import { createConfirmation } from "react-confirm";
 import $ from "jquery";
 
 import UiBackButton from "./components/UiBackButton";
-// import UiLogo from './components/UiLogo';
+
 
 var specifications = {};
 let reqRequired = [];
-let baseUrl = "https://raw.githubusercontent.com/abhiegov/test/master/specs/";
+
 
 const REGEXP_FIND_IDX = /\[(.*?)\]+/g;
 const defaultConfirmation = createConfirmation(UiConfirm);
@@ -2248,45 +2248,6 @@ class Create extends Component {
     return _mockData;
   };
 
-  // enField = (_mockData, enableStr, reset) => {
-  //   let { moduleName, actionName, setFormData } = this.props;
-  //   let _formData = { ...this.props.formData };
-  //   for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
-  //     for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-  //       if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
-  //         _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? true : false;
-  //         if (!reset) {
-  //           _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
-  //           setFormData(_formData);
-  //         }
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  //   return _mockData;
-  // };
-
-  // disField = (_mockData, disableStr, reset) => {
-  //   let { moduleName, actionName, setFormData } = this.props;
-  //   let _formData = { ...this.props.formData };
-  //   for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
-  //     for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
-  //       if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
-  //         _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? false : true;
-  //         if (!reset) {
-  //           _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
-  //           setFormData(_formData);
-  //         }
-
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  //   return _mockData;
-  // };
-
   enField = (_mockData, enableStr, reset, required = false) => {
    
     let { moduleName, actionName, setFormData } = this.props;
@@ -2500,16 +2461,6 @@ class Create extends Component {
                 );
               }
             }
-            //  else {
-            //   console.log(_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable)
-            //   for(let y=0; y<_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable.length; y++) {
-            //     _mockData = this.disField(_mockData, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable[y], true);
-            //   }
-
-            //   for(let z=0; z<_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable.length; z++) {
-            //     _mockData = this.enField(_mockData, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable[z], true);
-            //   }
-            // }
           }
         }
       }
@@ -3139,9 +3090,6 @@ class Create extends Component {
             };
             console.log(object);
           } else {
-            // console.log(dropDownOringalData);
-            // console.log(value.pattern);
-            // console.log(dropDownOringalData[value.pattern.split("|")[0]][value.pattern.split("|")[1]]);
             var arr =
               dropDownOringalData[value.pattern.split("|")[0]][
                 value.pattern.split("|")[1]
@@ -3745,8 +3693,6 @@ class Create extends Component {
   };
 
   removeCard = (jsonPath, index, groupName) => {
-    // console.log('remove called!!!');
-    //Remove at that index and update upper array values
     let {
       setMockData,
       moduleName,
@@ -3758,7 +3704,7 @@ class Create extends Component {
     let self = this;
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
-    console.log(jsonPath);
+    
     if (!jsonPath) {
       var ind = 0;
 
@@ -3785,8 +3731,6 @@ class Create extends Component {
             ).length -
               1
           ) {
-            // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
-            // console.log(_formData);
             if (
               _.get(
                 _formData,
@@ -3799,8 +3743,6 @@ class Create extends Component {
                   mockData[moduleName + "." + actionName].groups[i].jsonPath
                 )
               ];
-              //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-              // console.log(mockData[moduleName + "." + actionName].groups);
               grps.splice(
                 mockData[moduleName + "." + actionName].groups[i].index,
                 1
@@ -3915,8 +3857,6 @@ class Create extends Component {
                       mockData[moduleName + "." + actionName].groups[i].jsonPath
                     )
                   ];
-                  //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-                  //console.log(mockData[moduleName + "." + actionName].groups);
                   grps.splice(
                     mockData[moduleName + "." + actionName].groups[i].index - 1,
                     1
@@ -3952,48 +3892,6 @@ class Create extends Component {
           }
         }
       }
-
-      console.log(notReqFields);
-      console.log(mockData);
-      /*for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
-        if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
-          console.log(i);
-          var regexp = new RegExp(
-            mockData[moduleName + '.' + actionName].groups[i].jsonPath.replace(/\[/g, '\\[').replace(/\]/g, '\\]') + '\\[\\d{1}\\]',
-            'g'
-          );
-          //console.log(regexp);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
-          console.log(stringified);
-          mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
-            stringified.replace(
-              regexp,
-              mockData[moduleName + '.' + actionName].groups[i].jsonPath + '[' + (mockData[moduleName + '.' + actionName].groups[i].index - 1) + ']'
-            )
-          );
-
-          if (_.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)) {
-            var grps = [..._.get(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath)];
-            //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
-            //console.log(mockData[moduleName + "." + actionName].groups);
-            grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
-            _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
-            console.log(_formData);
-            setFormData(_formData);
-
-            //Reduce index values
-            for (let k = ind; k < mockData[moduleName + '.' + actionName].groups.length; k++) {
-              if (mockData[moduleName + '.' + actionName].groups[k].name == groupName) {
-                mockData[moduleName + '.' + actionName].groups[k].index -= 1;
-              }
-            }
-            break;
-          }
-        }
-      }*/
-      //console.log(mockData[moduleName + "." + actionName].groups);
       setMockData(mockData);
     } else {
       var _groups = _.get(

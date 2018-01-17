@@ -33,17 +33,10 @@ class UiAutoComplete extends Component {
       this.callAPI('',props);
     }
 
-    // this.setState({
-    //   searchText: this.props.getVal(this.props.item.jsonPath),
-    // });
   }
 
   componentWillReceiveProps(nextProps, nextState) {
     let {dropDownData,item}=this.props;
-    // console.log(nextProps);
-    // alert(nextProps)
-    // 	console.log(nextProps.item.jsonPath, this.props.getVal(nextProps.item.jsonPath));
-    //  this.setState({ searchText: this.props.getVal(nextProps.item.jsonPath) });
     if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData[item.jsonPath] === undefined ||item.url!=nextProps.item.url) {
       this.initData(nextProps);
       if (this.props.location.pathname != nextProps.history.location.pathname) {
@@ -200,7 +193,7 @@ class UiAutoComplete extends Component {
                 );
               }}
               onNewRequest={(value, index) => {
-                // 	console.log(value);
+              
                 this.props.handler(
                   { target: { value: value.key } },
                   item.jsonPath,
@@ -215,34 +208,12 @@ class UiAutoComplete extends Component {
                 }
               }}
             />
-            {/*
-          <SelectField
-   						style={{"display": (item.hide ? 'none' : 'inline-block')}}
-   						errorStyle={{"float":"left"}}
-   						fullWidth={true}
-   						floatingLabelText={item.label + (item.isRequired ? " *" : "")}
-   						value={this.props.getVal(item.jsonPath)}
-   						onChange={(event, key, value) =>{
-   							this.props.handler({target: {value: value}}, item.jsonPath, item.isRequired ? true : false, '', item.requiredErrMsg, item.patternErrMsg)
-   						}}
-   						disabled={item.isDisabled}
-   						errorText={this.props.fieldErrors[item.jsonPath]}
-   						maxHeight={200}>
-   				            {dropDownData.hasOwnProperty(item.jsonPath) && dropDownData[item.jsonPath].map((dd, index) => (
-   				                <MenuItem value={dd.key} key={index} primaryText={dd.value} />
-   				            ))}
-   		            </SelectField>
-          */}
           </div>
         );
     }
   };
 
   render() {
-    // searchTextCom = this.props.getVal(this.props.item.jsonPath);
-    // console.log(this.props.item.jsonPath, this.state.searchText);
-    // console.log(this.props);
-    // alert(this.props)
     return <div>{this.renderAutoComplete(this.props.item)}</div>;
   }
 }
