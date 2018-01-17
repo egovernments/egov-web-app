@@ -2164,7 +2164,7 @@ var localization_EN_Data = {
 
   'swm.vehicles.create.driver': 'Driver',
   'swm.vehicles.create.fuelType': 'Type of Fuel',
-  'swm.vehicles.create.regNumber': 'Registration Number',
+  'swm.vehicles.create.regNumber': 'Vehicle Reg. No.',
   'swm.vehicles.create.engineSrNumber': 'Engine Serial Number',
   'swm.vehicles.create.chassisSrNumber': 'Chassis Serial Number',
   'swm.vehicles.create.model': 'Make/Model/Manufacturer',
