@@ -103,10 +103,19 @@ var dat = {
   "swm.create": {
     beforeSubmit:
     `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
+    ){
+       delete formData.sanitationStaffTargets[0].collectionPoints;
+    }
+    if (
+      _.isArray(formData.sanitationStaffTargets) &&
+       formData.sanitationStaffTargets[0].collectionPoints
     ) {
-      delete formData.sanitationStaffTargets[0].collectionPoints;
+      formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.filter(
+        function(obj) {
+          return obj.isSelected !== undefined && obj.isSelected !== false;
+        }
+      );
     }`,
-    
     numCols: 4,
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
@@ -342,8 +351,11 @@ var dat = {
             type: "tableList",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              selectedfilter: true,
               header: [
+                {
+                  label:
+                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
+                },
                 {
                   label:
                     "swm.create.sanitationstaffschedules.colletionPoint.location"
@@ -354,6 +366,17 @@ var dat = {
                 }
               ],
               values: [
+                {
+                  name:
+                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
+                  // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
+                  pattern: "",
+                  type: "checkbox",
+                  jsonPath:
+                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
+                  isRequired: false,
+                  isDisabled: false
+                },
                 {
                   name:
                     "swm.create.sanitationstaffschedules.colletionPoint.location",
@@ -1048,9 +1071,10 @@ var dat = {
         });
     }`,
     beforeSubmit:
+   
     `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
-    ) {
-      delete formData.sanitationStaffTargets[0].collectionPoints;
+    ){
+       delete formData.sanitationStaffTargets[0].collectionPoints;
     }
     if (
       _.isArray(formData.sanitationStaffTargets) &&
