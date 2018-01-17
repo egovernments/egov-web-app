@@ -12,6 +12,19 @@ var dat = {
         name: 'createCategoryType',
         fields: [
           {
+            name: 'dateOfDepreciation',
+            jsonPath: 'toDate',
+            label: 'Date of Depreciation',
+            pattern: '',
+            type: 'datePicker',
+            url: '',
+            isRequired: true,
+            isDisabled: false,
+            requiredErrMsg: '',
+            patternErrMsg: '',
+            maxDate: 'today',
+          },
+          {
             name: 'AssetSearchCode',
             jsonPath: 'assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
@@ -154,19 +167,7 @@ var dat = {
             requiredErrMsg: '',
             patternErrMsg: '',
           },
-          {
-            name: 'dateOfDepreciation',
-            jsonPath: 'toDate',
-            label: 'Date of Depreciation',
-            pattern: '',
-            type: 'datePicker',
-            url: '',
-            isRequired: true,
-            isDisabled: false,
-            requiredErrMsg: '',
-            patternErrMsg: '',
-            maxDate: 'today',
-          },
+
           {
             name: 'transactionType',
             jsonPath: 'transaction',
