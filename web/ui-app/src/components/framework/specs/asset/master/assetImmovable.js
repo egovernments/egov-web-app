@@ -930,7 +930,7 @@ var dat = {
     ],
     result: {
       header: [
-        { label: 'Asset Code' },
+        { label: 'Asset ID No' },
         { label: 'ac.create.Asset.Name' },
         { label: 'ac.create.Asset.SubCategory.Name' },
         { label: 'ac.create.Department' },

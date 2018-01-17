@@ -673,6 +673,19 @@ var dat = {
             isStateLevel: true,
           },
           {
+            name: 'Department',
+            jsonPath: 'department',
+            label: 'ac.create.Department',
+            pattern: '',
+            type: 'singleValueList',
+            url: '/egov-mdms-service/v1/_get?&masterName=Department&moduleName=common-masters|$..code|$..name',
+            isRequired: false,
+            isDisabled: false,
+            requiredErrMsg: '',
+            patternErrMsg: '',
+            isStateLevel: true,
+          },
+          {
             name: 'AssetSearchCode',
             jsonPath: 'code',
             label: 'ac.search.asset.code',
@@ -695,19 +708,6 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
-          },
-          {
-            name: 'Department',
-            jsonPath: 'department',
-            label: 'ac.create.Department',
-            pattern: '',
-            type: 'singleValueList',
-            url: '/egov-mdms-service/v1/_get?&masterName=Department&moduleName=common-masters|$..code|$..name',
-            isRequired: false,
-            isDisabled: false,
-            requiredErrMsg: '',
-            patternErrMsg: '',
-            isStateLevel: true,
           },
           {
             name: 'fromOriginalValue',
@@ -771,7 +771,7 @@ var dat = {
     ],
     result: {
       header: [
-        { label: 'Asset Code' },
+        { label: 'Asset ID No' },
         { label: 'ac.create.Asset.Name' },
         { label: 'ac.create.Asset.SubCategory.Name' },
         { label: 'ac.create.Department' },
