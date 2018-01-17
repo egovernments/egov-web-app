@@ -1047,6 +1047,9 @@ class Report extends Component {
       ) {
         specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
       } else {
+        if ($("input[type=file]")) {
+            $("input[type=file]").val("");
+          }
         specifications = require(`./specs/${hash[2]}/master/${hash[3]}`)
           .default;
       }
@@ -1288,7 +1291,7 @@ class Report extends Component {
           }
         } else {
           let hashLocation = window.location.hash;
-          if (hashLocation == "#/create/lcms/advocatepayment") {
+          if ($("input[type=file]")) {
             $("input[type=file]").val("");
           }
           self.props.toggleSnackbarAndSetText(
