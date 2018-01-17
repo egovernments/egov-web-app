@@ -1053,6 +1053,7 @@ class Create extends Component {
     let self = this;
     var value = this.getVal(path);
     if (!value) return;
+    const hashLocation = window.location.hash;
     const moduleName = hashLocation.split("/")[2];
     const actionName = hashLocation.split("/")[1];
 
@@ -1060,7 +1061,6 @@ class Create extends Component {
     if (Array.isArray(autoObject)) {
       autoObject.forEach(function(item, index) {
         var url = item.autoCompleteUrl.split("?")[0];
-        var hashLocation = window.location.hash;
         var parameters = item.autoCompleteUrl.substr(
           item.autoCompleteUrl.indexOf("?") + 1
         );
@@ -1127,7 +1127,6 @@ class Create extends Component {
       });
     } else {
       var url = autoObject.autoCompleteUrl.split("?")[0];
-      var hashLocation = window.location.hash;
       var parameters = autoObject.autoCompleteUrl.substr(
         autoObject.autoCompleteUrl.indexOf("?") + 1
       );
