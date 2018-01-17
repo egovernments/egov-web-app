@@ -30,7 +30,7 @@ let baseUrl = "https://raw.githubusercontent.com/abhiegov/test/master/specs/";
 const REGEXP_FIND_IDX = /\[(.*?)\]+/g;
 const defaultConfirmation = createConfirmation(UiConfirm);
 
-class Report extends Component {
+class Create extends Component {
   state = {
     pathname: "",
     mdmsData: {}
@@ -4279,4 +4279,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);
