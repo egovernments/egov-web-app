@@ -231,7 +231,7 @@ export default class BarChartCard extends Component {
           label={'Previous'}
           primary={true}
           type="button"
-          disabled={false}
+          disabled={this.state.chartDataIndex === 1 ? true : false}
           onClick={this.processOnClickPreviousKPIData}
         />
 
@@ -240,7 +240,7 @@ export default class BarChartCard extends Component {
           label={'Next'}
           primary={true}
           type="button"
-          disabled={false}
+          disabled={this.state.chartDataIndex === this.state.maxChartData ? true : false}
           onClick={this.processOnClickNextKPIData}
         />
 
