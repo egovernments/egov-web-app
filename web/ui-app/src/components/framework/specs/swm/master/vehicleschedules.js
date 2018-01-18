@@ -335,7 +335,7 @@ var dat = {
                },
                {
                   "name": "route",
-                  "jsonPath": "vehicleSchedules[0].route.name",
+                  "jsonPath": "vehicleSchedules[0].route.code",
                   "label": "swm.create.route",
                   "type": "autoCompelete",
                   "isRequired": false,
