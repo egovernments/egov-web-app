@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import DropDown from "../components/DropDownUi";
+import FlatButton from "material-ui/FlatButton";
 import {
   fetchUploadDefinitions,
   moduleSelected,
@@ -35,6 +36,7 @@ class UploadDefinitionsContainer extends Component {
     const {
       selectedModule,
       selectedModuleDefinition,
+      selectedModuleTemplate,
       moduleItems,
       moduleDefinitons
     } = this.props;
@@ -56,6 +58,13 @@ class UploadDefinitionsContainer extends Component {
           selected={selectedModuleDefinition}
           handleChange={handleFileTypeDropDownChange}
         />
+        <FlatButton
+          primary={true}
+          style={{ height: "60px" }}
+          label="Download Template"
+          target="_blank"
+          href={selectedModuleTemplate}
+        />
       </div>
     );
   }
@@ -67,23 +76,12 @@ const getModuleItems = uploadDefinitions => {
 
 const getModuleDefinitions = (uploadDefinitions, selectedModule) => {
   const moduleDefinitons =
-    selectedModule === null ? [] : uploadDefinitions[selectedModule];
+    selectedModule === null
+      ? []
+      : uploadDefinitions[selectedModule].map(
+          moduleDefiniton => moduleDefiniton.definition
+        );
   return moduleDefinitons;
-};
-
-const setSelectedModule = (moduleItems, selectedModule) => {
-  return selectedModule === null
-    ? moduleItems.length ? moduleItems[0] : null
-    : selectedModule;
-};
-
-const setSelectedModuleDefinition = (
-  moduleDefinitons = [],
-  selectedModuleDefinition
-) => {
-  return selectedModuleDefinition === null
-    ? moduleDefinitons.length > 0 ? moduleDefinitons[0] : null
-    : selectedModuleDefinition;
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -97,6 +95,7 @@ const mapStateToProps = (state, ownProps) => {
   const selectedModule = state.uploadDefinitions.selectedModule;
   const selectedModuleDefinition =
     state.uploadDefinitions.selectedModuleDefinition;
+  const selectedModuleTemplate = state.uploadDefinitions.selectedModuleTemplate;
   const uploadDefinitions = state.uploadDefinitions.items;
 
   //module Items
@@ -110,11 +109,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     moduleItems,
     moduleDefinitons,
-    selectedModule: setSelectedModule(moduleItems, selectedModule),
-    selectedModuleDefinition: setSelectedModuleDefinition(
-      moduleDefinitons,
-      selectedModuleDefinition
-    )
+    selectedModule,
+    selectedModuleDefinition,
+    selectedModuleTemplate
   };
 };
 

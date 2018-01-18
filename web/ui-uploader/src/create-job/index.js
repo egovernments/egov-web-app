@@ -32,8 +32,8 @@ class CreateJob extends Component {
     const nextJobId = nextProps.jobId;
     const nextFileInput = nextProps.file;
 
-    if (currentJobId == null && nextJobId) {
-      const message = `Job Code - ${nextJobId}`;
+    if (currentJobId !== nextJobId) {
+      const message = `Job Code : ${nextJobId}`;
       this.setState({ message });
     }
 

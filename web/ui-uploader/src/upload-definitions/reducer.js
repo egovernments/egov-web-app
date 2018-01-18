@@ -4,6 +4,7 @@ const initialState = {
   isFetching: false,
   error: false,
   selectedModule: null,
+  selectedModuleTemplate: null,
   selectedModuleDefinition: null,
   items: {}
 };
@@ -12,7 +13,9 @@ const transformUploadDefinitions = uploadDefinitions => {
   return uploadDefinitions.reduce((transformedDefinition, moduleDefinition) => {
     transformedDefinition[
       moduleDefinition.name
-    ] = moduleDefinition.Definitions.map(definition => definition.name);
+    ] = moduleDefinition.Definitions.map(definition => {
+      return { definition: definition.name, template: definition.templatePath };
+    });
     return transformedDefinition;
   }, {});
 };
@@ -27,12 +30,17 @@ const uploadDefinitions = (state = initialState, action) => {
         action.uploadDefinitions
       );
       const selectedModule = Object.keys(uploadDefinitions)[0];
-      const selectedModuleDefinition = uploadDefinitions[selectedModule][0];
+      const selectedModuleDefinition =
+        uploadDefinitions[selectedModule][0].definition;
+      const selectedModuleTemplate =
+        uploadDefinitions[selectedModule][0].template;
+
       return {
         ...state,
         items: uploadDefinitions,
         selectedModule,
         selectedModuleDefinition,
+        selectedModuleTemplate,
         isFetching: false,
         error: false
       };
@@ -43,13 +51,18 @@ const uploadDefinitions = (state = initialState, action) => {
     case actionTypes.MODULE_SELECTED:
       return {
         ...state,
-        selectedModule: action.moduleName
+        selectedModule: action.moduleName,
+        selectedModuleDefinition: state.items[action.moduleName][0].definition,
+        selectedModuleTemplate: state.items[action.moduleName][0].template
       };
 
     case actionTypes.MOUDULE_DEFINITION_SELECTED:
       return {
         ...state,
-        selectedModuleDefinition: action.moduleDefinition
+        selectedModuleDefinition: action.moduleDefinition,
+        selectedModuleTemplate: state.items[state.selectedModule].filter(
+          definition => definition.definition == action.moduleDefinition
+        )[0].template
       };
 
     default:
