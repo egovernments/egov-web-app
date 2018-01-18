@@ -10,20 +10,38 @@ var dat = {
           label: 'swm.vendorpayment.search.vendorPaymentSearch',
           fields: [
             {
+              name: 'vendorName',
+              jsonPath: 'vendorNo',
+              label: 'swm.vendorpayment.create.vendorName',
+              type: 'singleValueList',
+              isRequired: false,
+              isDisabled: false,
+              patternErrorMsg: '',
+              url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+              depedants: [
+                {
+                  jsonPath: 'contractNo',
+                  type: 'dropDown',
+                  pattern:
+                    "swm-services/vendorcontracts/_search?&vendorNo={vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
+                }
+              ]
+            },
+            {
               name: ' contractno',
               jsonPath: 'contractNo',
               label: 'swm.vendorpayment.create.contractno',
               pattern: '',
-              type: 'text',
+              type: 'singleValueList',
               isRequired: false,
               isDisabled: false,
               defaultValue: '',
               url: '',
             },
             {
-              name: 'paymentNo',
-              jsonPath: 'paymentNos',
-              label: 'swm.vendorpayment.create.paymentNo',
+              name: 'invoiceNo',
+              jsonPath: 'invoiceNo',
+              label: 'swm.vendorpayment.create.invoiceNo',
               pattern: '',
               type: 'text',
               isRequired: false,
@@ -32,6 +50,18 @@ var dat = {
               patternErrorMsg: '',
               url: '',
             },
+            // {
+            //   name: 'paymentNo',
+            //   jsonPath: 'paymentNos',
+            //   label: 'swm.vendorpayment.create.paymentNo',
+            //   pattern: '',
+            //   type: 'text',
+            //   isRequired: false,
+            //   isDisabled: false,
+            //   defaultValue: '',
+            //   patternErrorMsg: '',
+            //   url: '',
+            // },
             {
               name: 'dateRange',
               jsonPath: 'fromDate',
@@ -57,9 +87,21 @@ var dat = {
               url: '',
             },
             {
-              name: 'invoiceNo',
-              jsonPath: 'invoiceNo',
-              label: 'swm.vendorpayment.create.invoiceNo',
+              name: 'fromAmt',
+              jsonPath: 'fromAmount',
+              label: 'swm.vendorpayment.create.fromAmt',
+              pattern: '',
+              type: 'text',
+              isRequired: false,
+              isDisabled: false,
+              defaultValue: '',
+              patternErrorMsg: '',
+              url: '',
+            },
+            {
+              name: 'toAmt',
+              jsonPath: 'fromAmount',
+              label: 'swm.vendorpayment.create.toAmt',
               pattern: '',
               type: 'text',
               isRequired: false,
@@ -74,22 +116,26 @@ var dat = {
       result: {
         header: [
           {
-            label: 'swm.vendorpayment.create.paymentNo',
-          },
-          {
             label: 'swm.vendorpayment.create.vendorName',
           },
           {
-            label: 'swm.vendorpayment.search.vendorContractNo',
+            label: 'swm.vendorpayment.create.contractno',
           },
           {
-            label:  'swm.vendorpayment.create.vendorInvoiceAmount',
+            label: 'swm.vendorpayment.create.invoiceNo',
+          },
+          {
+            label: 'swm.vendorpayment.create.invoiceDate',
+          },
+          {
+            label:  'swm.vendorpayment.create.invoiceAmt',
           }
         ],
         values: [
-          'paymentNo',
           'vendorContract.vendor.name',
           'vendorContract.contractNo',
+          'invoiceNo',
+          'paymentNo',
           'vendorInvoiceAmount',
         ],
         resultPath: 'vendorPaymentDetails',
@@ -101,6 +147,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: 'vendorPaymentDetails',
+    idJsonPath: 'vendorPaymentDetails[0].paymentNo',
     title: 'swm.vendorpayment.create.title',
     groups: [
       {
@@ -123,7 +170,7 @@ var dat = {
                 pattern:
                   "swm-services/vendorcontracts/_search?&vendorNo={vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
               }
-            ]
+            ],
           },
           {
             name: 'contractno',
@@ -132,8 +179,18 @@ var dat = {
             type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: ''
-           // url: 'swm-services/vendorcontracts/_search?|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo',
+            patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+                type: 'autoFill',
+                pattern:
+                  "swm-services/vendorcontracts/_search?&contractNo={vendorPaymentDetails[0].vendorContract.contractNo}",
+                  autoFillFields: {
+                    'vendorPaymentDetails[0].approvalAmmount':'vendorContracts[0].paymentAmount',
+                  }
+                }
+            ],
           },
           {
             name: 'approvalAmmount',
@@ -141,19 +198,9 @@ var dat = {
             label: 'swm.vendorpayment.create.approvalAmmount',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
-          {
-            name: 'vendorInvoiceAmount',
-            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
-            label: 'swm.vendorpayment.create.vendorInvoiceAmount',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url:'',
-          }
         ],
       },
       {
@@ -170,7 +217,27 @@ var dat = {
             patternErrorMsg: '',
             url:'',
           },
-           {
+          {
+            name: 'invoiceDate',
+            jsonPath: 'swm.vendorpayment.create.invoiceDate',
+            label: 'swm.vendorpayment.create.invoiceDate',
+            type: 'datePicker',
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: '',
+            url:'',
+          },
+          {
+            name: 'invoiceAmt',
+            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
+            label: 'swm.vendorpayment.create.invoiceAmt',
+            type: 'text',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+            url:'',
+          },
+          {
             name: 'fromDate',
             jsonPath: 'vendorPaymentDetails[0].fromDate',
             label: 'swm.vendorpayment.create.fromDate',
@@ -180,7 +247,7 @@ var dat = {
             patternErrorMsg: '',
             url:'',
           },
-           {
+          {
             name: 'toDate',
             jsonPath: 'vendorPaymentDetails[0].toDate',
             label: 'swm.vendorpayment.create.toDate',
@@ -189,7 +256,7 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url:'',
-          }
+          },
         ],
       },
       {
@@ -197,40 +264,24 @@ var dat = {
         label: 'swm.vendorpayment.create.group.title.documentsUpload',
         fields: [
           {
-            name: 'billInvoice',
-            jsonPath: 'vendorPaymentDetails[0].documents[0].fileStoreId',
-            label: 'swm.billInvoice.create.billInvoice',
-            type: 'singleFileUpload',
-            pattern: '',
+            name: 'UploadDocument',
+            jsonPath: 'vendorPaymentDetails[0].documents',
+            label: 'legal.create.sectionApplied',
+            type: 'fileTable',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: ''
-          },
-          {
-            name: 'document1',
-            jsonPath: 'vendorPaymentDetails[0].documents[1].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: ''
-          },
-          {
-            name: 'document2',
-            jsonPath: 'vendorPaymentDetails[0].documents[2].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: ''
+            patternErrMsg: '',
+            fileList: {
+              name: 'documentName',
+              id: 'fileStoreId',
+            },
+            fileCount: 3
           }
         ]
-      },
+      }
     ],
     url: '/swm-services/vendorpaymentdetails/_create',
-    tenantIdRequired: true,
+    tenantIdRequired: true
   },
   'swm.update': {
     numCols: 4,
@@ -244,7 +295,7 @@ var dat = {
         fields: [
           {
             name: 'vendorName',
-            jsonPath: 'vendorPaymentDetails[0].vendorContract.vendors[0].vendorNo',
+            jsonPath: 'vendorPaymentDetails[0].vendorContract.vendor.vendorNo',
             label: 'swm.vendorpayment.create.vendorName',
             type: 'singleValueList',
             isRequired: true,
@@ -256,48 +307,70 @@ var dat = {
                 jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
                 type: 'dropDown',
                 pattern:
-                  "swm-services/vendorcontracts/_search?&vendorNo={vendorPaymentDetails[0].vendorContract.vendors[0].vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
+                  "swm-services/vendorcontracts/_search?&vendorNo={vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
               }
-            ]
+            ],
           },
           {
             name: 'contractno',
             jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
             label: 'swm.vendorpayment.create.contractno',
-            type: 'text',
+            type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            url: 'swm-services/vendorcontracts/_search?|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo',
+            depedants: [
+              {
+                jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+                type: 'autoFill',
+                pattern:
+                  "swm-services/vendorcontracts/_search?&contractNo={vendorPaymentDetails[0].vendorContract.contractNo}",
+                  autoFillFields: {
+                    'vendorPaymentDetails[0].approvalAmmount':'vendorContracts[0].paymentAmount',
+                  }
+                }
+            ],
           },
           {
             name: 'approvalAmmount',
-            jsonPath: 'vendorPaymentDetails[0].vendorContract.paymentAmount',
+            jsonPath: 'vendorPaymentDetails[0].approvalAmmount',
             label: 'swm.vendorpayment.create.approvalAmmount',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
-          },
-          {
-            name: 'vendorInvoiceAmount',
-            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
-            label: 'swm.vendorpayment.create.vendorInvoiceAmount',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url:'',
           },
         ],
       },
       {
         name: 'invoiceDetails',
         label: 'swm.vendorpayment.create.group.title.invoiceDetails',
-      fields: [
+        fields: [
           {
             name: 'invoiceNo',
             jsonPath: 'vendorPaymentDetails[0].invoiceNo',
             label: 'swm.vendorpayment.create.invoiceNo',
+            type: 'text',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+            url:'',
+          },
+          {
+            name: 'invoiceDate',
+            jsonPath: 'swm.vendorpayment.create.invoiceDate',
+            label: 'swm.vendorpayment.create.invoiceDate',
+            type: 'datePicker',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+            url:'',
+          },
+          {
+            name: 'invoiceAmt',
+            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
+            label: 'swm.vendorpayment.create.invoiceAmt',
             type: 'text',
             isRequired: true,
             isDisabled: false,
@@ -323,56 +396,176 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url:'',
-          }
-        ]
-
+          },
+         
+        ],
       },
       {
         name: 'documentsUpload',
         label: 'swm.vendorpayment.create.group.title.documentsUpload',
         fields: [
           {
-            name: 'billInvoice',
-            jsonPath: 'vendorPaymentDetails[0].documents[0].fileStoreId',
-            label: 'swm.billInvoice.create.billInvoice',
-            type: 'singleFileUpload',
-            pattern: '',
+            name: 'UploadDocument',
+            jsonPath: 'vendorPaymentDetails[0].documents',
+            label: 'legal.create.sectionApplied',
+            type: 'fileTable',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
-          },
-          {
-            name: 'document1',
-            jsonPath: 'vendorPaymentDetails[0].documents[1].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
-          },
-          {
-            name: 'document2',
-            jsonPath: 'vendorPaymentDetails[0].documents[2].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
+            patternErrMsg: '',
+            fileList: {
+              name: 'documentName',
+              id: 'fileStoreId',
+            },
+            fileCount: 3,
           },
         ]
       },
     ],
-
     url: '/swm-services/vendorpaymentdetails/_update',
     tenantIdRequired: true,
     searchUrl: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentNo}',
   },
- 'swm.view': {
+  // 'swm.update': {
+  //   numCols: 4,
+  //   useTimestamp: true,
+  //   objectName: 'vendorPaymentDetails',
+  //   title: 'swm.vendorpayment.create.title',
+  //   groups: [
+  //     {
+  //       name: 'vendorPayment',
+  //       label: '',
+  //       fields: [
+  //         {
+  //           name: 'vendorName',
+  //           jsonPath: 'vendorPaymentDetails[0].vendorContract.vendors[0].vendorNo',
+  //           label: 'swm.vendorpayment.create.vendorName',
+  //           type: 'singleValueList',
+  //           isRequired: true,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+  //           depedants: [
+  //             {
+  //               jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+  //               type: 'dropDown',
+  //               pattern:
+  //                 "swm-services/vendorcontracts/_search?&vendorNo={vendorPaymentDetails[0].vendorContract.vendors[0].vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           name: 'contractno',
+  //           jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+  //           label: 'swm.vendorpayment.create.contractno',
+  //           type: 'text',
+  //           isRequired: false,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //         },
+  //         {
+  //           name: 'approvalAmmount',
+  //           jsonPath: 'vendorPaymentDetails[0].vendorContract.paymentAmount',
+  //           label: 'swm.vendorpayment.create.approvalAmmount',
+  //           type: 'text',
+  //           isRequired: false,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //         },
+  //         {
+  //           name: 'vendorInvoiceAmount',
+  //           jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
+  //           label: 'swm.vendorpayment.create.vendorInvoiceAmount',
+  //           type: 'text',
+  //           isRequired: true,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           url:'',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: 'invoiceDetails',
+  //       label: 'swm.vendorpayment.create.group.title.invoiceDetails',
+  //       fields: [
+  //         {
+  //           name: 'invoiceNo',
+  //           jsonPath: 'vendorPaymentDetails[0].invoiceNo',
+  //           label: 'swm.vendorpayment.create.invoiceNo',
+  //           type: 'text',
+  //           isRequired: true,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           url:'',
+  //         },
+  //          {
+  //           name: 'fromDate',
+  //           jsonPath: 'vendorPaymentDetails[0].fromDate',
+  //           label: 'swm.vendorpayment.create.fromDate',
+  //           type: 'datePicker',
+  //           isRequired: true,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           url:'',
+  //         },
+  //          {
+  //           name: 'toDate',
+  //           jsonPath: 'vendorPaymentDetails[0].toDate',
+  //           label: 'swm.vendorpayment.create.toDate',
+  //           type: 'datePicker',
+  //           isRequired: true,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           url:'',
+  //         }
+  //       ]
+
+  //     },
+  //     {
+  //       name: 'documentsUpload',
+  //       label: 'swm.vendorpayment.create.group.title.documentsUpload',
+  //       fields: [
+  //         {
+  //           name: 'billInvoice',
+  //           jsonPath: 'vendorPaymentDetails[0].documents[0].fileStoreId',
+  //           label: 'swm.billInvoice.create.billInvoice',
+  //           type: 'singleFileUpload',
+  //           pattern: '',
+  //           isRequired: false,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           readonly: true,
+  //         },
+  //         {
+  //           name: 'document1',
+  //           jsonPath: 'vendorPaymentDetails[0].documents[1].fileStoreId',
+  //           label: 'swm.vendorpayment.create.document1',
+  //           type: 'singleFileUpload',
+  //           pattern: '',
+  //           isRequired: false,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           readonly: true,
+  //         },
+  //         {
+  //           name: 'document2',
+  //           jsonPath: 'vendorPaymentDetails[0].documents[2].fileStoreId',
+  //           label: 'swm.vendorpayment.create.document1',
+  //           type: 'singleFileUpload',
+  //           pattern: '',
+  //           isRequired: false,
+  //           isDisabled: false,
+  //           patternErrorMsg: '',
+  //           readonly: true,
+  //         },
+  //       ]
+  //     },
+  //   ],
+
+  //   url: '/swm-services/vendorpaymentdetails/_update',
+  //   tenantIdRequired: true,
+  //   searchUrl: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentNo}',
+  // },
+  'swm.view': {
     numCols: 4,
     useTimestamp: true,
     objectName: 'vendorPaymentDetails',
@@ -384,18 +577,19 @@ var dat = {
         fields: [
           {
             name: 'vendorName',
-            jsonPath: 'vendorPaymentDetails[0].vendorContract.vendors.name',
+            jsonPath: 'vendorPaymentDetails[0].vendorContract.vendor.name',
             label: 'swm.vendorpayment.create.vendorName',
-            type: 'text',
+            type: 'singleValueList',
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
           },
           {
             name: 'contractno',
             jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
             label: 'swm.vendorpayment.create.contractno',
-            type: 'text',
+            type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -406,29 +600,39 @@ var dat = {
             label: 'swm.vendorpayment.create.approvalAmmount',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
+        ],
+      },
+      {
+        name: 'invoiceDetails',
+        label: 'swm.vendorpayment.create.group.title.invoiceDetails',
+        fields: [
           {
-            name: 'vendorInvoiceAmount',
-            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
-            label: 'swm.vendorpayment.create.vendorInvoiceAmount',
+            name: 'invoiceNo',
+            jsonPath: 'vendorPaymentDetails[0].invoiceNo',
+            label: 'swm.vendorpayment.create.invoiceNo',
             type: 'text',
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
             url:'',
-          }
-        ]
-      },
-      {
-        name: 'invoiceDetails',
-        label: 'swm.vendorpayment.create.group.title.invoiceDetails',
-      fields: [
+          },
           {
-            name: 'invoiceNo',
-            jsonPath: 'vendorPaymentDetails[0].invoiceNo',
-            label: 'swm.vendorpayment.create.invoiceNo',
+            name: 'invoiceDate',
+            jsonPath: 'swm.vendorpayment.create.invoiceDate',
+            label: 'swm.vendorpayment.create.invoiceDate',
+            type: 'datePicker',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+            url:'',
+          },
+          {
+            name: 'invoiceAmt',
+            jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
+            label: 'swm.vendorpayment.create.invoiceAmt',
             type: 'text',
             isRequired: true,
             isDisabled: false,
@@ -454,47 +658,27 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url:'',
-          }
-
-        ]
-
+          },
+         
+        ],
       },
       {
         name: 'documentsUpload',
         label: 'swm.vendorpayment.create.group.title.documentsUpload',
         fields: [
           {
-            name: 'billInvoice',
-            jsonPath: 'vendorPaymentDetails[0].documents[0].fileStoreId',
-            label: 'swm.billInvoice.create.billInvoice',
-            type: 'singleFileUpload',
-            pattern: '',
+            name: 'UploadDocument',
+            jsonPath: 'vendorPaymentDetails[0].documents',
+            label: 'legal.create.sectionApplied',
+            type: 'fileTable',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
-          },
-          {
-            name: 'document1',
-            jsonPath: 'vendorPaymentDetails[0].documents[1].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
-          },
-          {
-            name: 'document2',
-            jsonPath: 'vendorPaymentDetails[0].documents[2].fileStoreId',
-            label: 'swm.vendorpayment.create.document1',
-            type: 'singleFileUpload',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            readonly: true,
+            patternErrMsg: '',
+            fileList: {
+              name: 'documentName',
+              id: 'fileStoreId',
+            },
+            fileCount: 3,
           },
         ]
       },
@@ -502,5 +686,133 @@ var dat = {
     tenantIdRequired: true,
     url: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentNo}',
   },
+//  'swm.view': {
+//     numCols: 4,
+//     useTimestamp: true,
+//     objectName: 'vendorPaymentDetails',
+//     title: 'swm.vendorpayment.create.title',
+//     groups: [
+//       {
+//         name: 'vendorPayment',
+//         label: '',
+//         fields: [
+//           {
+//             name: 'vendorName',
+//             jsonPath: 'vendorPaymentDetails[0].vendorContract.vendors.name',
+//             label: 'swm.vendorpayment.create.vendorName',
+//             type: 'text',
+//             isRequired: true,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//           },
+//           {
+//             name: 'contractno',
+//             jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+//             label: 'swm.vendorpayment.create.contractno',
+//             type: 'text',
+//             isRequired: false,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//           },
+//           {
+//             name: 'approvalAmmount',
+//             jsonPath: 'vendorPaymentDetails[0].vendorContract.paymentAmount',
+//             label: 'swm.vendorpayment.create.approvalAmmount',
+//             type: 'text',
+//             isRequired: false,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//           },
+//           {
+//             name: 'vendorInvoiceAmount',
+//             jsonPath: 'vendorPaymentDetails[0].vendorInvoiceAmount',
+//             label: 'swm.vendorpayment.create.vendorInvoiceAmount',
+//             type: 'text',
+//             isRequired: true,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             url:'',
+//           }
+//         ]
+//       },
+//       {
+//         name: 'invoiceDetails',
+//         label: 'swm.vendorpayment.create.group.title.invoiceDetails',
+//         fields: [
+//           {
+//             name: 'invoiceNo',
+//             jsonPath: 'vendorPaymentDetails[0].invoiceNo',
+//             label: 'swm.vendorpayment.create.invoiceNo',
+//             type: 'text',
+//             isRequired: true,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             url:'',
+//           },
+//            {
+//             name: 'fromDate',
+//             jsonPath: 'vendorPaymentDetails[0].fromDate',
+//             label: 'swm.vendorpayment.create.fromDate',
+//             type: 'datePicker',
+//             isRequired: true,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             url:'',
+//           },
+//            {
+//             name: 'toDate',
+//             jsonPath: 'vendorPaymentDetails[0].toDate',
+//             label: 'swm.vendorpayment.create.toDate',
+//             type: 'datePicker',
+//             isRequired: true,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             url:'',
+//           }
+//         ]
+//       },
+//       {
+//         name: 'documentsUpload',
+//         label: 'swm.vendorpayment.create.group.title.documentsUpload',
+//         fields: [
+//           {
+//             name: 'billInvoice',
+//             jsonPath: 'vendorPaymentDetails[0].documents[0].fileStoreId',
+//             label: 'swm.billInvoice.create.billInvoice',
+//             type: 'singleFileUpload',
+//             pattern: '',
+//             isRequired: false,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             readonly: true,
+//           },
+//           {
+//             name: 'document1',
+//             jsonPath: 'vendorPaymentDetails[0].documents[1].fileStoreId',
+//             label: 'swm.vendorpayment.create.document1',
+//             type: 'singleFileUpload',
+//             pattern: '',
+//             isRequired: false,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             readonly: true,
+//           },
+//           {
+//             name: 'document2',
+//             jsonPath: 'vendorPaymentDetails[0].documents[2].fileStoreId',
+//             label: 'swm.vendorpayment.create.document1',
+//             type: 'singleFileUpload',
+//             pattern: '',
+//             isRequired: false,
+//             isDisabled: false,
+//             patternErrorMsg: '',
+//             readonly: true,
+//           },
+//         ]
+//       },
+//     ],
+//     tenantIdRequired: true,
+//     url: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentNo}',
+//   },
 };
 export default dat;
