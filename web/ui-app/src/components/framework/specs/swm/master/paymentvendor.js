@@ -3,54 +3,69 @@ var dat ={
     numCols: 4,
     useTimestamp: true,
     objectName: 'paymentDetails',
-    title: 'swm.paymentvendor.search.title',
+    title: 'swm.vendorpayment.create.searchcapturetitle',
     url: '/swm-services/paymentdetails/_search',
     groups: [
     {
         fields:[
-        {
-            name : 'paymentNumber',
-            label : 'swm.paymentvendor.create.paymentNumber',
-            jsonPath: "",
-            type : 'text',
-            isRequired: false,
-            isDisabled: false,
-            defaultValue:'',
-            url :'',
-            patternErrorMsg: '',
-        },
-        {
-            name: 'voucherNumber', 
-            label: 'swm.paymentvendor.create.VoucherNumber',
-            type: 'text',
-            jsonPath: "",
+          {
+            name: 'vendorName',
+            jsonPath: 'vendorNo',
+            label: 'swm.vendorpayment.create.vendorName',
+            type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+            depedants: [
+              {
+                jsonPath: 'contractNo',
+                type: 'dropDown',
+                pattern:
+                  "swm-services/vendorcontracts/_search?&vendorNo={vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
+              }
+            ]
           },
           {
-            name: 'instrumentNumber',
-            label: 'swm.paymentvendor.create.InstrumentNumber',
-            type: 'text',
-            jsonPath: "",
+            name: 'contractno',
+            jsonPath: 'contractNo',
+            label: 'swm.vendorpayment.create.contractno',
+            type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            depedants: [
+              {
+                jsonPath: 'paymentNo',
+                type: 'dropDown',
+                pattern:
+                  "swm-services/vendorpaymentdetails/_search?&contractNo={contractNo}|$.vendorPaymentDetails.*.paymentNo|$.vendorPaymentDetails.*.invoiceNo",
+              }
+            ],
           },
           {
-            name: 'fromDate',
-            label: 'swm.paymentvendor.create.FromDate',
-            type: 'datePicker',
-            jsonPath: "",
+            name: 'InvoiceNumber',
+            label: 'swm.paymentvendor.create.InvoiceNumber',
+            type: 'singleValueList',
+            jsonPath: "paymentNo",
             isRequired: false,
             isDisabled: false, 
             patternErrorMsg: '',
           },
           {
-            name: 'toDate',
-            label: 'swm.paymentvendor.create.ToDate',
+            name: 'voucherNumber', 
+            label: 'swm.paymentvendor.create.VoucherNumber',
+            type: 'text',
+            jsonPath: "voucherNumber",
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'vocherDate',
+            label: 'swm.paymentvendor.create.VoucherDate',
             type: 'datePicker',
-            jsonPath: "",
+            jsonPath: "voucherDate",
             isRequired: false,
             isDisabled: false, 
             patternErrorMsg: '',
@@ -61,6 +76,18 @@ var dat ={
     result: {
       header: [
         {
+          label: 'swm.paymentvendor.create.VendorName',
+        },
+        {
+          label: 'swm.paymentvendor.create.ContractNumber',
+        },
+        {
+          label: 'swm.paymentvendor.create.InvoiceNumber',
+        },
+        {
+          label: 'swm.paymentvendor.create.InvoiceAmount',
+        },
+        {
           label: 'swm.paymentvendor.create.VoucherNumber',
         },
         {
@@ -68,21 +95,16 @@ var dat ={
           isDate:true
         },
         {
-            label: 'swm.paymentvendor.create.InstrumentNumber',
-        },
-        {
-            label: 'swm.paymentvendor.create.InstrumentDate',
-            isDate:true
-        },
-        {
-            label: 'swm.paymentvendor.create.AmountPaid',
+        label: 'swm.paymentvendor.create.AmountPaid',
         },
       ],
       values: [
+        'vendorPaymentDetails.vendorContract.vendor.name',
+        'vendorPaymentDetails.vendorContract.contractNo',
+        'vendorPaymentDetails.invoiceNo',
+        'vendorPaymentDetails.vendorInvoiceAmount',
         'voucherNumber',
         'voucherDate',
-        'instrumentNumber',
-        'instrumentDate',
         'amount'
       ],
       resultPath: 'paymentDetails',
@@ -94,7 +116,7 @@ var dat ={
     numCols: 3,
     useTimestamp: true,
     objectName: 'paymentDetails',
-    title: 'swm.paymentvendor.create.title',
+    title: 'swm.vendorpayment.create.capturetitle',
     groups:[
       {
         name: 'vendorPayment',
@@ -102,7 +124,7 @@ var dat ={
         fields: [
           {
             name: 'vendorName',
-            jsonPath: 'vendorNo',
+            jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.name',
             label: 'swm.vendorpayment.create.vendorName',
             type: 'singleValueList',
             isRequired: true,
@@ -120,7 +142,7 @@ var dat ={
           },
           {
             name: 'contractno',
-            jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+            jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo',
             label: 'swm.vendorpayment.create.contractno',
             type: 'singleValueList',
             isRequired: false,
@@ -138,7 +160,7 @@ var dat ={
             name: 'InvoiceNumber',
             label: 'swm.paymentvendor.create.InvoiceNumber',
             type: 'text',
-            jsonPath: "paymentDetails[0].invoiceNumber",
+            jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceNo",
             isRequired: false,
             isDisabled: false, 
             patternErrorMsg: '',
@@ -148,37 +170,6 @@ var dat ={
     {
         fields:[
         {
-            name : 'TransactionNumber',
-            label : 'swm.paymentvendor.create.TransactionNumber',
-            jsonPath: "paymentDetails[0].vendorPaymentDetails.paymentNo",
-            type : 'text',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue:'Autocomplete',
-            url :'',
-            patternErrorMsg: '',
-        },
-        {
-            name: 'ContractNumber',
-            label: 'swm.paymentvendor.create.ContractNumber',
-            jsonPath: "paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo",
-            type: 'text',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            
-          },
-          {
-            name: 'VendorName', 
-            label: 'swm.paymentvendor.create.VendorName',
-            type: 'text',
-            jsonPath: "paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.name",
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            
-          },
-          {
             name: 'InvoiceAmount',
             label: 'swm.paymentvendor.create.InvoiceAmount',
             type: 'number',
@@ -186,17 +177,17 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-           {
-            name: 'InvoiceNumber',
-            label: 'swm.paymentvendor.create.InvoiceNumber',
-            type: 'text',
-            jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceNo",
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-          {
+        },
+        {
+          name: 'InvoiceDate',
+          label: 'swm.vendorpayment.create.invoiceDate',
+          type: 'datePicker',
+          jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceDate",
+          isRequired: false,
+          isDisabled: false,
+          patternErrorMsg: '',
+        },
+        {
             name: 'FromDate',
             label: 'swm.paymentvendor.create.FromDate',
             type: 'datePicker',
@@ -204,8 +195,8 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-          {
+        },
+        {
             name: 'ToDate',
             label: 'swm.paymentvendor.create.ToDate',
             type: 'datePicker',
@@ -213,9 +204,17 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-          
-        ],  
+        },
+        {
+          name: 'InvoiceAmount',
+          label: 'swm.vendorpayment.create.amountalreadypaid',
+          type: 'text',
+          jsonPath: "paymentDetails[0].vendorInvoiceAmount",
+          isRequired: false,
+          isDisabled: false,
+          patternErrorMsg: '',
+        },
+      ],  
     },
     {
         name: 'PaymentDeatails',
@@ -333,7 +332,8 @@ var dat ={
     numCols: 3,
     useTimestamp: true,
     objectName: 'paymentDetails',
-    title: 'swm.paymentvendor.create.title',
+    idJsonPath: 'vendorPaymentDetails[0].code',
+    title: 'swm.vendorpayment.create.capturetitle',
     groups:[
       {
         name: 'vendorPayment',
@@ -370,11 +370,11 @@ var dat ={
                 jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
                 type: 'dropDown',
                 pattern:
-                  "swm-services/vendorpaymentdetails/_search?&contractNo={vendorPaymentDetails[0].vendorContract.contractNo}|$.vendorPaymentDetails.*.paymentNo|$.vendorPaymentDetails.*.paymentNo",
+                  "swm-services/vendorpaymentdetails/_search?&contractNo={vendorPaymentDetails[0].vendorContract.contractNo}|$.vendorPaymentDetails.*.paymentNo|$.vendorPaymentDetails.*.invoiceNo",
               }
             ],
           },
-             {
+          {
             name : 'TransactionNumber',
             label : 'swm.paymentvendor.create.InvoiceNumber',
             jsonPath: "paymentDetails[0].vendorPaymentDetails.paymentNo",
@@ -385,17 +385,19 @@ var dat ={
             patternErrorMsg: '',
             depedants: [
               {
-                jsonPath: 'paymentDetails[0].invoiceAmount',
+                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
                 type: 'autoFill',
-                pattern: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
+                pattern: '/swm-services/vendorpaymentdetails/_search?&paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
                 autoFillFields: {
                   'paymentDetails[0].invoiceAmount':'vendorPaymentDetails[0].vendorContract.paymentAmount',
+                  'paymentDetails[0].invoiceDate':'vendorPaymentDetails[0].invoiceDate',
                   'paymentDetails[0].fromDate':'vendorPaymentDetails[0].fromDate',
                   'paymentDetails[0].toDate':'vendorPaymentDetails[0].toDate',
+                  'paymentDetails[0].vendorInvoiceAmount':'vendorPaymentDetails[0].vendorInvoiceAmount',
                 },
               },
             ],
-        },
+          },
         ],
       },
     {
@@ -412,7 +414,7 @@ var dat ={
           patternErrorMsg: '',
         },
         {
-          name: 'InvoiceAmount',
+          name: 'InvoiceDate',
           label: 'swm.vendorpayment.create.invoiceDate',
           type: 'datePicker',
           jsonPath: "paymentDetails[0].invoiceDate",
@@ -420,8 +422,7 @@ var dat ={
           isDisabled: false,
           patternErrorMsg: '',
         },
-        
-          {
+        {
             name: 'FromDate',
             label: 'swm.paymentvendor.create.FromDate',
             type: 'datePicker',
@@ -429,8 +430,8 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-          {
+        },
+        {
             name: 'ToDate',
             label: 'swm.paymentvendor.create.ToDate',
             type: 'datePicker',
@@ -438,16 +439,16 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
-          {
+        },
+        {
             name: 'InvoiceAmount',
             label: 'swm.vendorpayment.create.amountalreadypaid',
             type: 'text',
-            jsonPath: "paymentDetails[0].invoiceAmountAlreadyPaid",
+            jsonPath: "paymentDetails[0].vendorInvoiceAmount",
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-          },
+        },
         ],  
     }, 
     {
@@ -566,7 +567,8 @@ var dat ={
   numCols: 3,
   useTimestamp: true,
   objectName: 'paymentDetails',
-  title: 'swm.paymentvendor.create.title',
+  idJsonPath: 'paymentDetails[0].code',
+  title: 'swm.vendorpayment.create.capturetitle',
   groups:[
     {
       name: 'vendorPayment',
@@ -574,7 +576,7 @@ var dat ={
       fields: [
         {
           name: 'vendorName',
-          jsonPath: 'vendorNo',
+          jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.vendorNo',
           label: 'swm.vendorpayment.create.vendorName',
           type: 'singleValueList',
           isRequired: true,
@@ -583,83 +585,59 @@ var dat ={
           url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
           depedants: [
             {
-              jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+              jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo',
               type: 'dropDown',
               pattern:
-                "swm-services/vendorcontracts/_search?&vendorNo={vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
+                "swm-services/vendorcontracts/_search?&vendorNo={paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.vendorNo}|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo",
             }
           ]
         },
         {
           name: 'contractno',
-          jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
+          jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo',
           label: 'swm.vendorpayment.create.contractno',
           type: 'singleValueList',
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
-          url: 'swm-services/vendorcontracts/_search?|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo',
-          autoCompleteDependancy: {
-            autoCompleteUrl: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
-            autoFillFields: {
-              'vendorPaymentDetails[0].approvalAmmount': 'vendorPaymentDetails[0].vendorContract.contractNo',
-            },
-          },
+          depedants: [
+            {
+              jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+              type: 'dropDown',
+              pattern:
+                "swm-services/vendorpaymentdetails/_search?&contractNo={paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo}|$.vendorPaymentDetails.*.paymentNo|$.vendorPaymentDetails.*.invoiceNo",
+            }
+          ],
         },
         {
-          name: 'InvoiceNumber',
-          label: 'swm.paymentvendor.create.InvoiceNumber',
-          type: 'text',
-          jsonPath: "paymentDetails[0].invoiceNumber",
-          isRequired: false,
-          isDisabled: false, 
+          name : 'TransactionNumber',
+          label : 'swm.paymentvendor.create.InvoiceNumber',
+          jsonPath: "paymentDetails[0].vendorPaymentDetails.paymentNo",
+          type : 'singleValueList',
+          isRequired: true,
+          isDisabled: false,
+          defaultValue:'',
           patternErrorMsg: '',
-        }
+          depedants: [
+            {
+              jsonPath: 'paymentDetails[0].vendorPaymentDetails.vendorContract.paymentNo',
+              type: 'autoFill',
+              pattern: '/swm-services/vendorpaymentdetails/_search?&paymentNo={paymentDetails[0].vendorPaymentDetails.vendorContract.paymentNo}',
+              autoFillFields: {
+                'paymentDetails[0].invoiceAmount':'vendorPaymentDetails[0].vendorContract.paymentAmount',
+                'paymentDetails[0].invoiceDate':'vendorPaymentDetails[0].invoiceDate',
+                'paymentDetails[0].fromDate':'vendorPaymentDetails[0].fromDate',
+                'paymentDetails[0].toDate':'vendorPaymentDetails[0].toDate',
+                'paymentDetails[0].vendorInvoiceAmount':'vendorPaymentDetails[0].vendorInvoiceAmount',
+              },
+            },
+          ],
+        },
       ],
     },
   {
       fields:[
       {
-          name : 'TransactionNumber',
-          label : 'swm.paymentvendor.create.TransactionNumber',
-          jsonPath: "paymentDetails[0].vendorPaymentDetails.paymentNo",
-          type : 'autoCompelete',
-          isRequired: true,
-          isDisabled: false,
-          defaultValue:'',
-          patternErrorMsg: '',
-          url: '/swm-services/vendorpaymentdetails/_search?|$..vendorPaymentDetails.*.paymentNo|$..vendorPaymentDetails.*.paymentNo',
-          autoCompleteDependancy: {
-            autoCompleteUrl: '/swm-services/vendorpaymentdetails/_search?paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
-            autoFillFields: {
-              'paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo': 'vendorPaymentDetails[0].vendorContract.contractNo',
-              'paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.name':'vendorPaymentDetails[0].vendorContract.vendor.name',
-              'paymentDetails[0].vendorPaymentDetails.vendorInvoiceAmount':'vendorPaymentDetails[0].vendorInvoiceAmount',
-              'paymentDetails[0].vendorPaymentDetails.invoiceNo':'vendorPaymentDetails[0].invoiceNo',
-              'paymentDetails[0].vendorPaymentDetails.fromDate':'vendorPaymentDetails[0].fromDate',
-              'paymentDetails[0].vendorPaymentDetails.toDate':'vendorPaymentDetails[0].toDate',
-            },
-          },
-      },
-      {
-          name: 'ContractNumber',
-          label: 'swm.paymentvendor.create.ContractNumber',
-          jsonPath: "paymentDetails[0].vendorPaymentDetails.vendorContract.contractNo",
-          type: 'text',
-          isRequired: false,
-          isDisabled: false,
-          patternErrorMsg: '',
-        },
-        {
-          name: 'VendorName', 
-          label: 'swm.paymentvendor.create.VendorName',
-          type: 'text',
-          jsonPath: "paymentDetails[0].vendorPaymentDetails.vendorContract.vendor.name",
-          isRequired: false,
-          isDisabled: false,
-          patternErrorMsg: '',
-        },
-        {
           name: 'InvoiceAmount',
           label: 'swm.paymentvendor.create.InvoiceAmount',
           type: 'text',
@@ -667,17 +645,17 @@ var dat ={
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
-        },
-         {
-          name: 'InvoiceNumber',
-          label: 'swm.paymentvendor.create.InvoiceNumber',
-          type: 'text',
-          jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceNo",
-          isRequired: false,
-          isDisabled: false, 
-          patternErrorMsg: '',
-        },
-        {
+      },
+      {
+        name: 'InvoiceDate',
+        label: 'swm.vendorpayment.create.invoiceDate',
+        type: 'datePicker',
+        jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceDate",
+        isRequired: false,
+        isDisabled: false,
+        patternErrorMsg: '',
+      },
+      {
           name: 'FromDate',
           label: 'swm.paymentvendor.create.FromDate',
           type: 'datePicker',
@@ -685,8 +663,8 @@ var dat ={
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
-        },
-        {
+      },
+      {
           name: 'ToDate',
           label: 'swm.paymentvendor.create.ToDate',
           type: 'datePicker',
@@ -694,8 +672,16 @@ var dat ={
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
-        },
-        
+      },
+      {
+        name: 'InvoiceAmount',
+        label: 'swm.vendorpayment.create.amountalreadypaid',
+        type: 'text',
+        jsonPath: "paymentDetails[0].vendorInvoiceAmount",
+        isRequired: false,
+        isDisabled: false,
+        patternErrorMsg: '',
+      },
       ],  
   }, 
   {
@@ -740,11 +726,25 @@ var dat ={
           jsonPath: 'paymentDetails[0].instrumentType',
           label: 'swm.paymentvendor.create.PaymentInstrument',
           pattern: '',
-          type: 'text',
+          type: 'singleValueList',
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
           url: '',
+          defaultValue: [
+            {
+              key: 'Cash',
+              value: 'Cash',
+            },
+            {
+              key: 'Cheque',
+              value: 'Cheque',
+            },
+            {
+              key: 'DD',
+              value: 'DD',
+            },
+          ]
         },
          {
           name: 'InstrumentNumber',
@@ -797,6 +797,5 @@ var dat ={
   tenantIdRequired: true,
   searchUrl: '/swm-services/paymentdetails/_search?code={code}',
 },
-
 };
 export default dat;

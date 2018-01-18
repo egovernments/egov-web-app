@@ -311,6 +311,13 @@ const menuConvention = {
   'Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Search': '/search/swm/vendorpaymentdetails/view',
   'Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Update': '/search/swm/vendorpaymentdetails/update',
 
+  'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails Create': '/search/swm/paymentvendor/view',
+  'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails Search': '/search/swm/paymentvendor/view',
+  'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails  Update': '/search/swm/paymentvendor/update',
+
+ 
+
+
   //SWM Reports
   'Solid Waste Management.SWM Reports.Dumping Ground Detail Report': '/report/swm/DumpingGroundDetailReport',
   'Solid Waste Management.SWM Reports.Expenditure Incurred On Transportation Report': '/report/swm/ExpenditureIncurredReport',
