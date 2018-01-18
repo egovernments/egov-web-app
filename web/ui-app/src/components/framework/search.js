@@ -179,12 +179,10 @@ class Search extends Component {
             tmp.push(childArray);
             continue;
           }
-          // if ((resultList.resultHeader[j].label.search("Date")>-1 || resultList.resultHeader[j].label.search("date")>-1)  && !(specsValuesList[j].search("-")>-1)) {
-          //   tmp.push(new Date(_.get(values[i],specsValuesList[j])).getDate()+"/"+new Date(_.get(values[i],specsValuesList[j])).getMonth()+"/"+new Date(_.get(values[i],specsValuesList[j])).getFullYear());
-          // } else {
           tmp.push(_.get(values[i], valuePath));
-          // }
         }
+        //Replacing all empty strings by "NA"
+        tmp = tmp.map(item =>  (typeof item === "string" ? ((item.trim().length) ? item : "NA") : (item  === null) ? "NA" : item  ))
         resultList.resultValues.push(tmp);
       }
     }
