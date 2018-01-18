@@ -1,4 +1,4 @@
-asseimport React, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Grid, Row, Col, Table, DropdownButton } from 'react-bootstrap';
