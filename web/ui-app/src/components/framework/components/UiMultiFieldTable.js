@@ -68,13 +68,15 @@ class UiMultiFieldTable extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('will next props:', nextProps.item.tableList.values);
     // console.log(this.props, nextProps, !_.isEqual(this.props, nextProps));
-    if ((nextProps.item.type=="tableList" && _.get(this.props.formData,this.props.item.jsonPath))) {
+    // && _.get(this.props.formData,this.props.item.jsonPath)
+    // && this.props.formData && nextProps.formData && !_.isEqual(_.get(this.props.formData,this.props.item.jsonPath),
+    if ((nextProps.item.type=="tableList" && _.get(nextProps.formData,nextProps.item.jsonPath))) {
       // console.log('receive props condition succeeded', nextProps.item.jsonPath);
       this.renderOnLoad(nextProps);
     }
   }
 
-  renderOnLoad = props => {
+  renderOnLoad = (props) => {
     var valuesArray = [];
     let { isintialLoad, index, values } = this.state;
     var numberOfRowsArray = _.get(props.formData, props.item.jsonPath);
@@ -87,7 +89,7 @@ class UiMultiFieldTable extends Component {
     // console.log(formData, JSON.stringify(formData));
     // console.log(numberOfRowsArray, numberOfRowsArray ? numberOfRowsArray.length - 1 : 0,  props.item.jsonPath, isintialLoad);
     // console.log('render load', props.item.jsonPath, _.get(formData,props.item.jsonPath), props.item.tableList.values);
-    if (numberOfRowsArray && numberOfRowsArray.length > 0  && !isintialLoad) {
+    if (numberOfRowsArray && numberOfRowsArray.length > 0) {
       // console.log('render load true succeeded');
       var regexp = new RegExp(`${this.escapeRegExp(props.item.jsonPath)}\\[\\d+\\]`);
       for (var i = 0; i < numberOfRowsArray.length; i++) {
@@ -108,7 +110,7 @@ class UiMultiFieldTable extends Component {
       this.setState({
         isintialLoad: false,
       });
-    } else if (numberOfRowsArray == undefined && !isintialLoad) {
+    } else if (numberOfRowsArray == undefined) {
       let values = [props.item.tableList.values];
       this.setState({
         values,
@@ -512,7 +514,7 @@ class UiMultiFieldTable extends Component {
               var customItem = {
                 "type":"checkbox",
                 "jsonPath": item.jsonPath+"["+ i +"]"+".isselected"
-                }; 
+                };
                 return (
                   <tr key={i}>
                     {!item.tableList.serialNoNotRequired ? <td>{i - startIndex + 1}</td> : ''}
