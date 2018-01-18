@@ -18,12 +18,6 @@ class UiAutoComplete extends Component {
     };
   }
 
-  handleUpdateInput = searchText => {
-    // this.setState({
-    //   searchText: searchText,
-    // });
-  };
-
   initData(props) {
     let { item, setDropDownData } = props;
 
@@ -62,9 +56,8 @@ class UiAutoComplete extends Component {
   }
 
   callAPI = (keyUpValue, props) => {
-    // console.log(keyUpValue);
     let { item, setDropDownData, useTimestamp } = props;
-    // console.log('API called:', item.hasOwnProperty("url"), item.url.search("\\|"), item.url.search("{"));
+
     if (
       item.type == 'autoCompelete' &&
       item.hasOwnProperty('url') &&
@@ -75,10 +68,10 @@ class UiAutoComplete extends Component {
     ) {
       tracker.push({ jsonPath: item.jsonPath });
       let splitArray = item.url.split('?');
-      // console.log(splitArray);
+
       let context = '';
       let id = {};
-      // id[splitArray[1].split("&")[1].split("=")[0]]=e.target.value;
+
       for (var j = 0; j < splitArray[0].split('/').length; j++) {
         if (j == splitArray[0].split('/').length - 1) {
           context += splitArray[0].split('/')[j];
@@ -91,17 +84,11 @@ class UiAutoComplete extends Component {
       queryStringObject = queryStringObject.filter(n => {
         return n;
       });
-      // console.log(splitArray[1], queryStringObject);
+
       for (var i = 0; i < queryStringObject.length; i++) {
-        // console.log(queryStringObject[i],'<-->', queryStringObject[i].split("=")[0],'<-->', queryStringObject[i].split("=")[1]);
-        // console.log(i, keyUpValue);
-        // if (i) {
         if (keyUpValue) id[queryStringObject[i].split('=')[0]] = keyUpValue;
         else id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
-        // }
       }
-
-      // console.log(id);
 
       var response = Api.commonApiPost(context, id, {}, '', useTimestamp || false).then(
         function(response) {
@@ -155,14 +142,8 @@ class UiAutoComplete extends Component {
       text: 'value',
       value: 'key',
     };
-    // debugger;
-    // console.log(dropDownData.hasOwnProperty(item.jsonpath) && dropDownData[item.jsonpath].replace(".", "\."));
-    // console.log(dropDownData);
-    // console.log(dropDownData.hasOwnProperty(item.jsonPath));
-    // console.log(searchTextCom);
     switch (this.props.ui) {
       case 'google':
-        // let {dropDownData}=this.state;
         return (
           <div>
             <AutoComplete
@@ -195,7 +176,6 @@ class UiAutoComplete extends Component {
               disabled={item.isDisabled}
               errorText={this.props.fieldErrors[item.jsonPath]}
               onKeyUp={e => {
-                //  console.log('keyup:',e.target.value);
                 if (!e.target.value) {
                   this.handleUpdateInput('');
                 } else {

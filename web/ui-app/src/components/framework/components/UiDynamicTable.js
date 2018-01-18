@@ -31,48 +31,13 @@ class UiDynamicTable extends Component {
     super(props);
   }
 
-  // 	componentWillMount() {
-  //     $('#dynamicTable').DataTable({
-  //        dom: 'lBfrtip',
-  //        buttons: [],
-  //        bDestroy: true,
-  //        language: {
-  //            "emptyTable": "No Records"
-  //        }
-  //     });
-  //  	}
-  //
-  //  	componentWillUnmount() {
-  //   	$('#dynamicTable').DataTable().destroy(true);
-  // 	}
-  //
-  // 	componentWillUpdate() {
-  // 		let {flag} = this.props;
-  //     if(flag == 1) {
-  //       flag = 0;
-  //       $('#dynamicTable').dataTable().fnDestroy();
-  //     }
-  // }
-  //
-  // componentDidUpdate() {
-  //     $('#dynamicTable').DataTable({
-  //          dom: 'lBfrtip',
-  //          buttons: [],
-  //           ordering: false,
-  //           bDestroy: true,
-  //           language: {
-  //              "emptyTable": "No Records"
-  //           }
-  //     });
-  // 	}
-
   renderFields = item => {
     switch (item.type) {
       case 'text':
         return (
           <UiTextField ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'singleValueList':
         return (
           <UiSelectField
@@ -84,7 +49,7 @@ class UiDynamicTable extends Component {
             handler={this.props.handler}
           />
         );
-        break;
+
       case 'multiValueList':
         return (
           <UiSingleFileUpload
@@ -95,7 +60,7 @@ class UiDynamicTable extends Component {
             handler={this.props.handler}
           />
         );
-        break;
+
       case 'number':
         return (
           <UiNumberField
@@ -106,12 +71,12 @@ class UiDynamicTable extends Component {
             handler={this.props.handler}
           />
         );
-        break;
+
       case 'textarea':
         return (
           <UiTextArea ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'mobileNumber':
         return (
           <UiMobileNumber
@@ -122,27 +87,27 @@ class UiDynamicTable extends Component {
             handler={this.props.handler}
           />
         );
-        break;
+
       case 'checkbox':
         return (
           <UiCheckBox ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'email':
         return (
           <UiEmailField ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'button':
         return (
           <UiButton ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'datePicker':
         return (
           <UiDatePicker ui={this.props.ui} getVal={this.props.getVal} item={item} fieldErrors={this.props.fieldErrors} handler={this.props.handler} />
         );
-        break;
+
       case 'singleFileUpload':
         return (
           <UiSingleFileUpload
@@ -153,7 +118,6 @@ class UiDynamicTable extends Component {
             handler={this.props.handler}
           />
         );
-        break;
 
       case 'multiFileUpload':
         return (
@@ -213,42 +177,12 @@ class UiDynamicTable extends Component {
     let self = this;
     let { resultList, getVal } = this.props;
     let { renderFields } = this;
-    // console.log(resultList);
-
-    // const totalAmount=()=>{
-    // 	 let bill=getVal("Receipt[0].Bill");
-    // 	 let sum=0;
-    // 	 for (var i = 0; i < bill.length; i++) {
-    // 		 	if (bill[i].hasOwnProperty("amountPaid")) {
-    // 		 		sum+=bill[i].amountPaid;
-    // 		 	}
-    // 	 }
-    // 	 return sum;
-    // }
 
     const renderTable = function() {
       return (
         <Card className="uiCard">
           <CardHeader title={<strong> {translate('ui.table.title')} </strong>} />
           <CardText>
-            {/*
-								resultList.hasOwnProperty("resultValues") && resultList.resultValues.map((item, i) => {
-									 return (
-											 <Card className="uiCard">
-												 <CardHeader key={i} title={<strong> {translate(getVal("Receipt[0].Bill[0].billDetails["+i+"].businessService"))} </strong>}/>
-												   <CardText key={i2}>
-															 {
-																 item.map((item2, i2)=>{
-																	 return renderFields(item2)
-															 		})
-														 		}
-													 </CardText>
-												  </CardHeader>
-												 </Card>
-										 )
-
-							})*/}
-
             <Table id="dynamicTable" bordered responsive className="table-striped">
               <thead>
                 <tr>

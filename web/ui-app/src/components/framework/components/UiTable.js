@@ -34,13 +34,11 @@ class UiTable extends Component {
     if (Array.isArray(field)) {
       field.forEach(function(item, index) {
         if (typeof item == 'object') {
-          console.log(item);
           str += (item.name ? item.name : item.code) + ',';
         } else {
           str += item + ',';
         }
       });
-      console.log(str);
       return str.slice(0, -1);
     } else {
       return field;

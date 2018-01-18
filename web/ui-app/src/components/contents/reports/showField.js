@@ -23,38 +23,19 @@ export default class ShowField extends Component {
   renderFields = obj => {
     let des = translate(obj.label);
     let { maxDate } = this.state;
-    console.log(maxDate);
-    // let mandatory = obj.isMandatory ? " *" : "";
-    // let description = des + mandatory;
     let description = des;
 
     let dropDownData = [];
 
-    // obj.defaultValue=typeof(obj.defaultValue)=="object"?obj.defaultValue:{};
     if (typeof obj.defaultValue == 'object') {
       for (var variable in obj.defaultValue) {
-        // console.log(variable);
-
         dropDownData.push({
           key: variable,
-          // value:typeof(searchForm[variable])=="object"?new Date(searchForm[variable]).getTime():searchForm[variable]
           value: obj.defaultValue[variable],
         });
       }
     }
 
-    // if (obj.type=="checkbox") {
-    //   this.props.handler({target: {value: obj.defaultValue}}, obj.name, obj.isMandatory ? true : false, "");
-    // }
-
-    // console.log(obj);
-    //console.log('came to renderfields',obj.code);
-
-    // console.log(dropDownData);
-    // let DateTimeFormat;
-    // if (areIntlLocalesSupported(['fr', 'fa-IR'])) {
-    //   DateTimeFormat = global.Intl.DateTimeFormat;
-    // }
     switch (obj.type) {
       case 'string':
         return (
@@ -117,7 +98,6 @@ export default class ShowField extends Component {
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
             />
-            {/*<DatePicker fullWidth={true} DateTimeFormat={DateTimeFormat} locale="fr" floatingLabelText={<span>{description} <span style={{"color": "#FF0000"}}>{obj.isMandatory ? " *" : ""}</span></span>}  />*/}
           </Col>
         );
       case 'epoch':
@@ -155,7 +135,6 @@ export default class ShowField extends Component {
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
             />
-            {/*<DatePicker fullWidth={true} DateTimeFormat={DateTimeFormat} locale="fr" floatingLabelText={<span>{description} <span style={{"color": "#FF0000"}}>{obj.isMandatory ? " *" : ""}</span></span>}  />*/}
           </Col>
         );
       case 'singlevaluelist':
@@ -177,9 +156,6 @@ export default class ShowField extends Component {
               }
               value={typeof obj.value == 'undefined' ? '' : obj.value}
               onChange={(event, key, value) => {
-                // this.setState({
-                //   value
-                // })
                 let e = {
                   target: {
                     value,
@@ -213,9 +189,6 @@ export default class ShowField extends Component {
               }
               value={typeof obj.value == 'undefined' ? '' : obj.value}
               onChange={(event, key, value) => {
-                // this.setState({
-                //   value
-                // })
                 let e = {
                   target: {
                     value,
@@ -250,9 +223,6 @@ export default class ShowField extends Component {
               }
               value={typeof obj.value == 'undefined' ? '' : obj.value}
               onChange={(event, key, value) => {
-                // this.setState({
-                //   value
-                // })
                 let e = {
                   target: {
                     value,
@@ -299,10 +269,3 @@ export default class ShowField extends Component {
     return this.renderFields(this.props.obj);
   }
 }
-
-// case "multivaluelist":
-//   return(
-//     <Col xs={12} md={3}>
-//       <SelectField fullWidth={true} multiple={true} floatingLabelText={<span>{description} <span style={{"color": "#FF0000"}}>{obj.isMandatory ? " *" : ""}</span></span>}  />
-//     </Col>
-//   );
