@@ -1,5 +1,19 @@
 var dat = {
   'swm.search': {
+    preApiCalls:[
+      {
+        url:"/egov-mdms-service/v1/_get",
+        jsonPath:"processingSite.codeTwo",
+        qs:{
+          moduleName:"swm",
+          masterName:"ProcessingSite"
+        },
+        jsExpForDD:{
+          key:"$.MdmsRes.swm.ProcessingSite[*].code",
+          value:"$..name",
+        }
+      },
+    ],
     numCols: 4,
     useTimestamp: true,
     objectName: 'DumpingGround',
@@ -53,7 +67,8 @@ var dat = {
         'name',
         'isProcessingSite',
         'distanceFromProcessingSite',
-        'siteDetails.location.name',
+        {jsonPath:'processingSite.code', reduxObject:"processingSite.codeTwo", isObj:true, cToN:true},
+
       ],
       resultPath: 'MdmsRes.swm.DumpingGround',
       rowClickUrlUpdate: '/update/swm/dumpingground/{code}',
@@ -366,7 +381,7 @@ var dat = {
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
-            defaultValue: '',
+            defaultValue: false,
             maxLength: '',
             minLength: '',
             patternErrMsg: '',
@@ -813,7 +828,7 @@ var dat = {
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
-            defaultValue: '',
+            defaultValue: 'No',
             maxLength: '',
             minLength: '',
             patternErrMsg: '',
@@ -864,7 +879,6 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
-            //hide: true,
             maxLength: '',
             minLength: '',
             patternErrMsg: '',
@@ -957,13 +971,6 @@ var dat = {
             url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
             minLength: '',
             patternErrMsg: '',
-            // mdms: {
-            //   "moduleName": "swm",
-            //   "masterName": "DumpingGround",
-            //   "filter": "",
-            //   "key": "$.ulbs.[*].code",
-            //   "value": "$.ulbs.[*].name",
-            // },
             hasATOAATransform: true,
             aATransformInfo: {
               to: 'MasterMetaData.masterData[0].ulbs',
@@ -1219,7 +1226,7 @@ var dat = {
             type: 'checkbox',
             isRequired: false,
             isDisabled: false,
-            defaultValue: '',
+            defaultValue: false,
             maxLength: '',
             minLength: '',
             patternErrMsg: '',
