@@ -16,6 +16,7 @@ var localization_EN_Data = {
 'reports.works.wotoDate':"Work Order To Date",
 'reports.works.woamountfrom':"Work order Amount from",
 'reports.works.woamountupto':"Work order Amount To",
+'reports.works.expectedcompletiondate':"Expected Completion Date",
 //Works report labels Ends
   'swm.create.sanitationStaffTargets.targetNumber':"Target Number",
   'swm.create.sanitationStaffTargets.employeeName':"Employee Name",
