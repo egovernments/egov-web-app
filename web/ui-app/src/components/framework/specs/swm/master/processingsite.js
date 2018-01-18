@@ -127,10 +127,10 @@ var dat = {
                     name: 'bankValidityTo',
                     isGroup: false,
                     isField: true,
-                  },
+                  }
                 ],
               },
-            ],
+            ]
           },
           {
             name: 'dummy',
@@ -669,6 +669,29 @@ var dat = {
             minLength: '',
             patternErrMsg: '',
             url: '',
+            showHideFields: [
+              {
+                ifValue: true,
+                hide: [],
+                show: [
+                  {
+                    name: 'bankName',
+                    isGroup: false,
+                    isField: true
+                  },
+                  {
+                    name: 'bankValidityFrom',
+                    isGroup: false,
+                    isField: true
+                  },
+                  {
+                    name: 'bankValidityTo',
+                    isGroup: false,
+                    isField: true
+                  }
+                ]
+              }
+            ]
           },
           {
             name: 'bankName',
@@ -676,6 +699,7 @@ var dat = {
             label: 'swm.processingplant.create.BankName',
             pattern: '',
             type: 'text',
+            hide: true,
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
@@ -690,6 +714,7 @@ var dat = {
             label: 'swm.processingplant.create.BankGuarantee',
             pattern: '',
             type: 'datePicker',
+            hide: true,
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
@@ -704,6 +729,7 @@ var dat = {
             label: 'swm.processingplant.create.BankGuaranteeTo',
             pattern: '',
             type: 'datePicker',
+            hide: true,
             isRequired: false,
             isDisabled: false,
             defaultValue: '',
