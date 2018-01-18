@@ -69,8 +69,8 @@ class UiTable extends Component {
 
   initTable = () => {
     const { resultList } = this.props;
-    let hidesearch = resultList.hidesearch;
-    const resultHeader = resultList.resultHeader;
+    let hidesearch = resultList ? resultList.hidesearch : false;
+    const resultHeader = resultList ? resultList.resultHeader : [];
     const columns = resultHeader.length
       ? resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1)
       : ':visible';
@@ -102,7 +102,7 @@ class UiTable extends Component {
                 doc.defaultStyle.fontSize = 10;
               },
             },
-            'copy',
+            { extend: 'copy', text: 'Copy', exportOptions: { columns } },
             {
               extend: 'csv',
               text: 'CSV',

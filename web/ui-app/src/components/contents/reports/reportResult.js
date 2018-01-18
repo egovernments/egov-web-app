@@ -49,7 +49,6 @@ class ShowField extends Component {
   }
 
   componentDidMount() {
-    // console.log('Did Mount');
     this.setState({
       reportName: this.props.match.params.reportName,
       moduleName: this.props.match.params.moduleName,
@@ -58,8 +57,6 @@ class ShowField extends Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    // if((this.props.match.params.moduleName !== nextprops.match.params.moduleName) || (this.props.match.params.reportName !== nextprops.match.params.reportName)){
-    // console.log('nextprops');
     this.setState({
       reportName: nextprops.match.params.reportName,
       moduleName: nextprops.match.params.moduleName,
@@ -69,8 +66,9 @@ class ShowField extends Component {
     // }
   }
 
-  getExportOptions() {
+  getExportOptions = () => {
     let flag = false;
+
     for (let key in this.state.ck) {
       if (this.state.ck[key]) {
         flag = true;
@@ -78,30 +76,40 @@ class ShowField extends Component {
       }
     }
 
+    const { resultList } = this.props;
+    const resultHeader = resultList ? resultList.resultHeader : [];
+    const columns = resultHeader.length
+      ? resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1)
+      : ':visible';
+
     if (flag) {
       return [
         {
           extend: 'copy',
           exportOptions: {
             rows: '.selected',
+            columns,
           },
         },
         {
           extend: 'csv',
           exportOptions: {
             rows: '.selected',
+            columns,
           },
         },
         {
           extend: 'excel',
           exportOptions: {
             rows: '.selected',
+            columns,
           },
         },
         {
           extend: 'pdf',
           exportOptions: {
             rows: '.selected',
+            columns,
           },
           filename: this.state.reportName,
           title: this.state.reportSubTitle,
@@ -113,26 +121,28 @@ class ShowField extends Component {
           extend: 'print',
           exportOptions: {
             rows: '.selected',
+            columns,
           },
         },
       ];
     } else {
       return [
-        'copy',
-        'csv',
-        'excel',
+        { extend: 'copy', text: 'Copy', exportOptions: { columns } },
+        { extend: 'csv', filename: this.state.reportName, text: 'CSV', exportOptions: { columns } },
+        { extend: 'excel', filename: this.state.reportName, text: 'Excel', exportOptions: { columns } },
         {
           extend: 'pdf',
           filename: this.state.reportName,
           title: this.state.reportSubTitle,
+          exportOptions: { columns },
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
         },
-        'print',
+        { extend: 'print', text: 'Print', exportOptions: { columns } },
       ];
     }
-  }
+  };
 
   componentDidUpdate() {
     let self = this;
@@ -501,7 +511,6 @@ class ShowField extends Component {
         if (headerObj.total) {
           footerexist = true;
         }
-        // console.log(headerObj.showColumn, headerObj.total);
       });
     }
 
@@ -524,45 +533,9 @@ class ShowField extends Component {
     if (_.isEmpty(metaData)) {
       return;
     }
-    // let responseSearchParams = metaData.reportDetails.searchParams;
+
     let result = metaData && metaData.reportDetails && metaData.reportDetails.summary ? metaData.reportDetails.summary : '';
-    // searchParams.map((search, index) => {
-    //   let idx = index+1;
-    //   let lastText = (idx == paramsLength);
-    //   let obj = metaData.reportDetails.searchParams.find((obj)=>{ return search.name === obj.name});
-    //   if(moduleName === 'pgr'){
-    //     if(obj.name === 'fromDate' || obj.name === 'toDate'){//split date and time
-    //       let date = `${search.input}`.split(' ')[0];
-    //       let customDate = date.split('-');
-    //       // result +=  obj.name === 'toDate' ? ' - ' : '';
-    //       result += `${customDate[2]}/${customDate[1]}/${customDate[0]} (${translate(obj.label)})`;
-    //       // result +=  lastText ? '' : obj.name === 'toDate' ? ', ' : '';
-    //     }else{
-    //       let responsevalue = responseSearchParams.find((sp)=> {return sp.name === obj.name});
-    //       if(!_.isEmpty(responsevalue.defaultValue)){
-    //         result += `${responsevalue.defaultValue[search.input]} (${translate(obj.label)})`;
-    //       }else{
-    //         result += `${search.input} (${translate(obj.label)})`;
-    //       }
-    //       // result += !lastText ? ', ' : '';
-    //     }
-    //   }else{
-    //     if(obj.name === 'fromDate' || obj.name === 'toDate'){//epoch to date
-    //       // result +=  obj.name === 'toDate' ? ' - ' : '';
-    //       result += `${epochToDate(search.input)} (${translate(obj.label)})`;
-    //       // result +=  lastText ? '' : obj.name === 'toDate' ? ', ' : '';
-    //     }else{
-    //       let responsevalue = responseSearchParams.find((sp)=> {return sp.name === obj.name});
-    //       if(!_.isEmpty(responsevalue.defaultValue)){
-    //         result += `${responsevalue.defaultValue[search.input]} (${translate(obj.label)})`;
-    //       }else{
-    //         result += `${search.input} (${translate(obj.label)})`;
-    //       }
-    //         // result += !lastText ? ', ' : '';
-    //     }
-    //   }
-    //   result += !lastText ? ', ' : '';
-    // });
+
     this.setState({ reportSubTitle: result });
   };
 
