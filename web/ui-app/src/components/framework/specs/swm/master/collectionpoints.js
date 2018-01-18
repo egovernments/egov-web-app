@@ -455,29 +455,17 @@ var dat = {
             defaultValue: false,
             showHideFields: [
               {
-                ifValue: false,
-                hide: [
-                  {
-                    name: 'rfid',
-                    isGroup: false,
-                    isField: true,
-                  }
-                ],
-                show: []
-              },
-              {
                 ifValue: true,
-                hide: [
-                  
-                ],
+                hide: [],
                 show: [
                   {
                     name: 'rfid',
                     isGroup: false,
                     isField: true,
-                  }
-                ]
+                  },
+                ],
               },
+             
             ],
             valueBasedOn: [
               {
@@ -488,6 +476,7 @@ var dat = {
           },
           {
             name: 'rfid',
+            hide: true,
             jsonPath: 'collectionPoints[0].binDetails[0].rfid',
             label: 'swm.collectionpoints.create.rfid',
             type: 'text',
