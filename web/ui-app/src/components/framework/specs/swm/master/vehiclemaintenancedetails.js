@@ -666,17 +666,7 @@ var dat = {
             patternErrorMsg: '',
           },
 
-          {
-            name: 'vehicleDowntimeActual',
-            jsonPath: 'vehicleMaintenanceDetails[0].vehicleDowntimeActual',
-            label: 'swm.create.vehicleDowntimeActual',
-            pattern: '',
-            type: 'number',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-          },
+          
 
           
           {
@@ -704,6 +694,22 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
+          
+
+          {
+            name: 'vehicleDowntimeActual',
+            jsonPath: 'vehicleMaintenanceDetails[0].vehicleDowntimeActual',
+            label: 'swm.create.vehicleDowntimeActual',
+            pattern: '',
+            type: 'number',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+          },
+
+
+
           
           {
             name: 'vehicleDownTimeActualUom',

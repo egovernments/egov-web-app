@@ -104,18 +104,8 @@ var dat = {
         name: 'RefillingPumpName',
         label: 'swm.refillingpumpstations.create.group.title.RefillingPumpName',
         fields: [
-          {
-            name: 'name',
-            jsonPath: 'refillingPumpStations[0].name',
-            label: 'swm.refillingpumpstations.create.name',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
-          {
+
+         {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].typeOfPump.code',
             label: 'swm.refillingpumpstations.typeOfPump.name',
@@ -127,6 +117,18 @@ var dat = {
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=OilCompany|$..code|$..name',
           },
+          {
+            name: 'name',
+            jsonPath: 'refillingPumpStations[0].name',
+            label: 'swm.refillingpumpstations.create.name',
+            type: 'text',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+          },
+         
           {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].remarks',
@@ -206,17 +208,6 @@ var dat = {
         fields: [
           {
             name: 'name',
-            jsonPath: 'refillingPumpStations[0].name',
-            label: 'swm.refillingpumpstations.create.name',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
-          {
-            name: 'name',
             jsonPath: 'refillingPumpStations[0].typeOfPump.name',
             label: 'swm.refillingpumpstations.typeOfPump.name',
             type: 'text',
@@ -226,6 +217,19 @@ var dat = {
             minLength: 1,
             patternErrorMsg: '',
           },
+
+          {
+            name: 'name',
+            jsonPath: 'refillingPumpStations[0].name',
+            label: 'swm.refillingpumpstations.create.name',
+            type: 'text',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+          },
+          
           {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].remarks',
@@ -303,18 +307,8 @@ var dat = {
         name: 'RefillingPumpName',
         label: 'swm.refillingpumpstations.create.group.title.RefillingPumpName',
         fields: [
-          {
-            name: 'name',
-            jsonPath: 'refillingPumpStations[0].name',
-            label: 'swm.refillingpumpstations.create.name',
-            type: 'text',
-            isRequired: true,
-            isDisabled: true,
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
-          {
+
+        {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].typeOfPump.code',
             label: 'swm.refillingpumpstations.typeOfPump.name',
@@ -326,6 +320,18 @@ var dat = {
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=OilCompany|$..code|$..name',
           },
+          {
+            name: 'name',
+            jsonPath: 'refillingPumpStations[0].name',
+            label: 'swm.refillingpumpstations.create.name',
+            type: 'text',
+            isRequired: true,
+            isDisabled: true,
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+          },
+          
           {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].remarks',
