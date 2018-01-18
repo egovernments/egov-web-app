@@ -102,7 +102,13 @@ var dat = {
   },
   "swm.create": {
     beforeSubmit:
-    `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
+    `
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
+    {
+      shouldSubmit=false;
+      alert("Please fill the mandatory fields");
+    }
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
     ){
        delete formData.sanitationStaffTargets[0].collectionPoints;
     }
@@ -1071,8 +1077,13 @@ var dat = {
         });
     }`,
     beforeSubmit:
-   
-    `if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
+    `
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
+    {
+      shouldSubmit=false;
+      alert("Please fill the mandatory fields");
+    }
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
     ){
        delete formData.sanitationStaffTargets[0].collectionPoints;
     }
