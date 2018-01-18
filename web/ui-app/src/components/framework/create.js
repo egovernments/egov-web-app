@@ -21,16 +21,16 @@ import { createConfirmation } from "react-confirm";
 import $ from "jquery";
 
 import UiBackButton from "./components/UiBackButton";
-
+// import UiLogo from './components/UiLogo';
 
 var specifications = {};
 let reqRequired = [];
-
+let baseUrl = "https://raw.githubusercontent.com/abhiegov/test/master/specs/";
 
 const REGEXP_FIND_IDX = /\[(.*?)\]+/g;
 const defaultConfirmation = createConfirmation(UiConfirm);
 
-class Create extends Component {
+class Report extends Component {
   state = {
     pathname: "",
     mdmsData: {}
@@ -151,6 +151,28 @@ class Create extends Component {
       }
     }
   }
+
+  // setDefaultValues(groups, dat) {
+  //   let formData = this.props.formData;
+  //   for (var i = 0; i < groups.length; i++) {
+  //     for (var j = 0; j < groups[i].fields.length; j++) {
+  //       if (
+  //         typeof groups[i].fields[j].defaultValue == 'string' ||
+  //         typeof groups[i].fields[j].defaultValue == 'number' ||
+  //         typeof groups[i].fields[j].defaultValue == 'boolean'
+  //       ) {
+  //         if (!_.get(formData, groups[i].fields[j].jsonPath)) {
+  //           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
+  //         }
+  //       }
+  //       if (groups[i].children && groups[i].children.length) {
+  //         for (var k = 0; k < groups[i].children.length; k++) {
+  //           this.setDefaultValues(groups[i].children[k].groups, dat);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   depedantValue(groups) {
     let self = this;
@@ -460,13 +482,11 @@ class Create extends Component {
     } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
-    const moduleName = hashLocation.split("/")[2];
-    const actionName = hashLocation.split("/")[1];
 
     specifications = typeof results == "string" ? JSON.parse(results) : results;
     let obj =
       specifications[
-        `${moduleName}.${actionName}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
@@ -476,12 +496,12 @@ class Create extends Component {
     initForm(reqRequired);
     setMetaData(specifications);
     setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName(moduleName);
-    setActionName(actionName);
+    setModuleName(hashLocation.split("/")[2]);
+    setActionName(hashLocation.split("/")[1]);
 
     if (hashLocation.split("/").indexOf("update") == 1) {
       var url = specifications[
-        `${moduleName}.${actionName}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ].searchUrl.split("?")[0];
       var id =
         (self.props.match.params.id &&
@@ -489,7 +509,7 @@ class Create extends Component {
         self.props.match.params.master;
       var query = {
         [specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].searchUrl
           .split("?")[1]
           .split("=")[0]]: id
@@ -497,18 +517,18 @@ class Create extends Component {
       //handle 2nd parameter
       if (
         specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].searchUrl
           .split("?")[1]
           .split("=")[2]
       ) {
         var pval = specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].searchUrl
           .split("?")[1]
           .split("=")[2];
         var pname = specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].searchUrl
           .split("?")[1]
           .split("=")[1]
@@ -516,7 +536,7 @@ class Create extends Component {
 
         query = {
           [specifications[
-            `${moduleName}.${actionName}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ].searchUrl
             .split("?")[1]
             .split("=")[0]]: id,
@@ -541,10 +561,10 @@ class Create extends Component {
         let data = { moduleName: "", masterDetails: [] };
         let k = 0;
         var masterDetail = {};
-        data.moduleName = moduleName;
+        data.moduleName = hashLocation.split("/")[2];
         var filterData = `[?(@.${
           specifications[
-            `${moduleName}.${actionName}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ].searchUrl
             .split("?")[1]
             .split("={")[0]
@@ -552,10 +572,10 @@ class Create extends Component {
         masterDetail.filter = filterData;
         masterDetail.name =
           specifications[
-            `${moduleName}.${actionName}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ].objectName;
         data.masterDetails[0] = _.cloneDeep(masterDetail);
-       
+        // console.log(data);
         moduleDetails.push(data);
 
         _body = {
@@ -573,13 +593,13 @@ class Create extends Component {
         _body,
         false,
         specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].useTimestamp
       ).then(
         function(res) {
           if (
             specifications[
-              `${moduleName}.${actionName}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
             ].isMDMSScreen
           ) {
             var masterName = "";
@@ -600,59 +620,61 @@ class Create extends Component {
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem("tenantId");
             mdmsReq.MasterMetaData.masterData[0] =
               res.MdmsRes[moduleName][masterName][0];
-          
+            console.log(mdmsReq);
             res = mdmsReq;
           }
-         
+          console.log(res);
           //
           self.props.setLoadingStatus("hide");
           if (
             specifications[
-              `${moduleName}.${actionName}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
             ].isResponseArray
           ) {
             var obj = {};
             _.set(
               obj,
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ].objectName,
               jp.query(res, "$..[0]")[0]
             );
             var spec =
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(obj);
             self.setInitialUpdateData(
               obj,
               JSON.parse(JSON.stringify(specifications)),
-              moduleName,
-              actionName,
+              hashLocation.split("/")[2],
+              hashLocation.split("/")[1],
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ].objectName
             );
           } else {
             self.setInitialUpdateData(
               res,
               JSON.parse(JSON.stringify(specifications)),
-              moduleName,
-              actionName,
+              hashLocation.split("/")[2],
+              hashLocation.split("/")[1],
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ].objectName
             );
+            console.log(res);
+            // var hashLocation = window.location.hash;
             let obj =
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
             let fields = jp.query(
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
             );
-           
+            console.log(fields);
             for (var i = 0; i < fields.length; i++) {
               if (!fields[i].hasPreTransform) {
                 let values = _.get(res, fields[i].jsonPath);
@@ -665,17 +687,17 @@ class Create extends Component {
               }
             }
 
-
+            console.log(res);
             var spec =
               specifications[
-                `${moduleName}.${actionName}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(res);
           }
           let obj1 =
             specifications[
-              `${moduleName}.${actionName}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
             ];
           self.depedantValue(obj1.groups);
         },
@@ -687,10 +709,11 @@ class Create extends Component {
       if (
         hashLocation.split("/").indexOf("create") == 1 &&
         specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].isMDMSScreen
       ) {
-      
+        // let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+        console.log(obj);
         var masterName = "";
         for (var i = 0; i < obj.groups.length; i++) {
           if (obj.groups[i].hide) {
@@ -725,7 +748,7 @@ class Create extends Component {
         //console.log('id', id);
         let mockObj =
           specifications[
-            `${moduleName}.${actionName}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ];
         if (mockObj.onloadFetchUrl) {
           let params = JSON.parse(id);
@@ -746,15 +769,15 @@ class Create extends Component {
               self.props.setLoadingStatus("hide");
               if (
                 specifications[
-                  `${moduleName}.${actionName}`
+                  `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
                 ].isResponseArray
               ) {
                 var obj = {};
                 _.set(
                   obj,
                   specifications[
-                    `${moduleName}.${
-                      actionName
+                    `${hashLocation.split("/")[2]}.${
+                      hashLocation.split("/")[1]
                     }`
                   ].objectName,
                   jp.query(res, "$..[0]")[0]
@@ -763,11 +786,11 @@ class Create extends Component {
                 self.setInitialUpdateData(
                   obj,
                   JSON.parse(JSON.stringify(specifications)),
-                  moduleName,
-                  actionName,
+                  hashLocation.split("/")[2],
+                  hashLocation.split("/")[1],
                   specifications[
-                    `${moduleName}.${
-                      actionName
+                    `${hashLocation.split("/")[2]}.${
+                      hashLocation.split("/")[1]
                     }`
                   ].objectName
                 );
@@ -775,11 +798,11 @@ class Create extends Component {
                 self.setInitialUpdateData(
                   res,
                   JSON.parse(JSON.stringify(specifications)),
-                  moduleName,
-                  actionName,
+                  hashLocation.split("/")[2],
+                  hashLocation.split("/")[1],
                   specifications[
-                    `${moduleName}.${
-                      actionName
+                    `${hashLocation.split("/")[2]}.${
+                      hashLocation.split("/")[1]
                     }`
                   ].objectName
                 );
@@ -787,7 +810,7 @@ class Create extends Component {
               }
               let obj1 =
                 specifications[
-                  `${moduleName}.${actionName}`
+                  `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
                 ];
 
               self.depedantValue(obj1.groups);
@@ -845,11 +868,9 @@ class Create extends Component {
     let moduleDetails = [];
     let { setDropDownData, setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
-    const moduleName = hashLocation.split("/")[2];
-    const actionName = hashLocation.split("/")[1];
     let obj =
       specifications[
-        `${moduleName}.${actionName}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     let name, filter;
     // let {moduleName, actionName, setMockData} = this.props;
@@ -1026,6 +1047,9 @@ class Create extends Component {
       ) {
         specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
       } else {
+        if ($("input[type=file]")) {
+            $("input[type=file]").val("");
+          }
         specifications = require(`./specs/${hash[2]}/master/${hash[3]}`)
           .default;
       }
@@ -1053,14 +1077,11 @@ class Create extends Component {
     let self = this;
     var value = this.getVal(path);
     if (!value) return;
-    const hashLocation = window.location.hash;
-    const moduleName = hashLocation.split("/")[2];
-    const actionName = hashLocation.split("/")[1];
-
 
     if (Array.isArray(autoObject)) {
       autoObject.forEach(function(item, index) {
         var url = item.autoCompleteUrl.split("?")[0];
+        var hashLocation = window.location.hash;
         var parameters = item.autoCompleteUrl.substr(
           item.autoCompleteUrl.indexOf("?") + 1
         );
@@ -1102,7 +1123,7 @@ class Create extends Component {
           {},
           false,
           specifications[
-            `${moduleName}.${actionName}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ].useTimestamp
         ).then(
           function(res) {
@@ -1114,7 +1135,7 @@ class Create extends Component {
             self.props.setFormData(formData);
           },
           function(err) {
-            
+            console.log(err);
             self.props.setLoadingStatus("hide");
             var formData = { ...self.props.formData };
             for (var key in item.autoFillFields) {
@@ -1127,6 +1148,7 @@ class Create extends Component {
       });
     } else {
       var url = autoObject.autoCompleteUrl.split("?")[0];
+      var hashLocation = window.location.hash;
       var parameters = autoObject.autoCompleteUrl.substr(
         autoObject.autoCompleteUrl.indexOf("?") + 1
       );
@@ -1168,7 +1190,7 @@ class Create extends Component {
         {},
         false,
         specifications[
-          `${moduleName}.${actionName}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].useTimestamp
       ).then(
         function(res) {
@@ -1185,39 +1207,15 @@ class Create extends Component {
     }
   };
 
+
+
   makeAjaxCall = (formData, url) => {
     let self = this;
     var hashLocation = window.location.hash;
-    const moduleName = hashLocation.split("/")[2];
-    const actionName = hashLocation.split("/")[1];
-
     let obj =
       specifications[
-        `${moduleName}.${actionName}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
-
-      var newObj = obj.groups;
-      var objName = obj.objectName;
-      var tablist =  newObj.map((item)=>{
-        var table =  _.find(item.fields, 'tableList');
-        if(table !== undefined){
-          return table;
-        }
-      });
-      tablist = _.remove(tablist, function(n) {
-          return n != undefined;
-        });
-      if (_.isArray(formData[objName])) {
-        tablist.map((item)=>{
-          if(item.tableList.selectedfilter){
-            var jspath = item.jsonPath;
-            jspath = jspath.split("].")[1];
-            formData[objName][0][jspath] = formData[objName][0][jspath].filter(function (obj) {
-              return (obj.isselected !== undefined && obj.isselected !== false);
-            });
-          }
-        });
-    }
 
     if (obj && obj.beforeSubmit) {
         eval(obj.beforeSubmit);
@@ -1233,7 +1231,7 @@ class Create extends Component {
           formData,
           fields[i]["aATransformInfo"].to,
           values.map(item => {
-            if(_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)){
+            if(_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)){
               return item;
             }else{
               return {
@@ -1250,6 +1248,7 @@ class Create extends Component {
     // console.log(formData);
     delete formData.ResponseInfo;
     //return console.log(formData);
+    console.log(obj);
     if (obj.hasOwnProperty("omittableFields")) {
       this.generateSpecificForm(formData, obj["omittableFields"]);
     }
@@ -1294,7 +1293,7 @@ class Create extends Component {
           }
         } else {
           let hashLocation = window.location.hash;
-          if (hashLocation == "#/create/lcms/advocatepayment") {
+          if ($("input[type=file]")) {
             $("input[type=file]").val("");
           }
           self.props.toggleSnackbarAndSetText(
@@ -2248,6 +2247,45 @@ class Create extends Component {
     return _mockData;
   };
 
+  // enField = (_mockData, enableStr, reset) => {
+  //   let { moduleName, actionName, setFormData } = this.props;
+  //   let _formData = { ...this.props.formData };
+  //   for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
+  //     for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
+  //       if (enableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+  //         _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? true : false;
+  //         if (!reset) {
+  //           _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
+  //           setFormData(_formData);
+  //         }
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   return _mockData;
+  // };
+
+  // disField = (_mockData, disableStr, reset) => {
+  //   let { moduleName, actionName, setFormData } = this.props;
+  //   let _formData = { ...this.props.formData };
+  //   for (let i = 0; i < _mockData[moduleName + '.' + actionName].groups.length; i++) {
+  //     for (let j = 0; j < _mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
+  //       if (disableStr == _mockData[moduleName + '.' + actionName].groups[i].fields[j].name) {
+  //         _mockData[moduleName + '.' + actionName].groups[i].fields[j].isDisabled = reset ? false : true;
+  //         if (!reset) {
+  //           _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
+  //           setFormData(_formData);
+  //         }
+
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   return _mockData;
+  // };
+
   enField = (_mockData, enableStr, reset, required = false) => {
    
     let { moduleName, actionName, setFormData } = this.props;
@@ -2461,6 +2499,16 @@ class Create extends Component {
                 );
               }
             }
+            //  else {
+            //   console.log(_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable)
+            //   for(let y=0; y<_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable.length; y++) {
+            //     _mockData = this.disField(_mockData, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].disable[y], true);
+            //   }
+
+            //   for(let z=0; z<_mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable.length; z++) {
+            //     _mockData = this.enField(_mockData, _mockData[moduleName + "." + actionName].groups[i].fields[j].enableDisableFields[k].enable[z], true);
+            //   }
+            // }
           }
         }
       }
@@ -2537,39 +2585,16 @@ class Create extends Component {
                 );
               }
             } else {
-              for (
-                let y = 0;
-                y <
-                _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                  .showHideFields[k].hide.length;
-                y++
-              ) {
-                _mockData = this.hideField(
+              for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
+                _mockData = this.showField(
                   _mockData,
-                  _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                    .showHideFields[k].hide[y],
-                  _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                    .jsonPath,
-                  true,
-                  val
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
+                  _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
                 );
               }
 
-              for (
-                let z = 0;
-                z <
-                _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                  .showHideFields[k].show.length;
-                z++
-              ) {
-                _mockData = this.showField(
-                  _mockData,
-                  _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                    .showHideFields[k].show[z],
-                  _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                    .jsonPath,
-                  true
-                );
+              for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
+                _mockData = this.hideField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true, val);
               }
             }
           }
@@ -3090,6 +3115,9 @@ class Create extends Component {
             };
             console.log(object);
           } else {
+            // console.log(dropDownOringalData);
+            // console.log(value.pattern);
+            // console.log(dropDownOringalData[value.pattern.split("|")[0]][value.pattern.split("|")[1]]);
             var arr =
               dropDownOringalData[value.pattern.split("|")[0]][
                 value.pattern.split("|")[1]
@@ -3402,7 +3430,63 @@ class Create extends Component {
           }
         }
       }
-     
+      // else if (value.type == "documentList") {
+      //
+      //   let splitArray = value.pattern.split("?");
+      //   let context = "";
+      //   let id = {};
+      //   for (var j = 0; j < splitArray[0].split("/").length; j++) {
+      //     context+=splitArray[0].split("/")[j]+"/";
+      //   }
+      //
+      //
+      //   let queryStringObject=splitArray[1].split("|")[0].split("&");
+      //   for (var i = 0; i < queryStringObject.length; i++) {
+      //     if (i) {
+      //       if (queryStringObject[i].split("=")[1].search("{")>-1) {
+      //         if (queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]==property) {
+      //           id[queryStringObject[i].split("=")[0]] = e.target.value || "";
+      //         } else {
+      //           console.log(queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]);
+      //           id[queryStringObject[i].split("=")[0]] = e.target.value;//getVal(queryStringObject[i].split("=")[1].split("{")[1].split("}")[0]);
+      //         }
+      //       } else {
+      //         id[queryStringObject[i].split("=")[0]] = queryStringObject[i].split("=")[1];
+      //       }
+      //     }
+      //   }
+      //
+      //
+      //   Api.commonApiPost(context, id).then(function(response) {
+      //     if(response) {
+      //       //console.log(item);
+      //       var documents = [];
+      // 			//console.log(this.props);
+      //       //let {documentList, useTimestamp, handler} = props;
+      //       for (var k = 0; k < response.length; k++) {
+      //
+      //         var temp = {
+      // 					"fileStoreId": "",
+      // 					"displayName": response[k].name,
+      // 					"name": ""
+      // 				};
+      //
+      //         documents.push(temp);
+      //       }
+      //       handleChange({target: {value: documents}}, value.jsonPath, false, '');
+      //
+      //       //handleChange({target: {value: temp}}, value.jsonPath, false, '', '');
+      //     }
+      //   },function(err) {
+      //       console.log(err);
+      //   });
+      //   // var arr=dropDownOringalData[value.pattern.split("|")[0]][value.pattern.split("|")[1]];
+      //   // var searchPropery=value.pattern.split("|")[2];
+      //   // var property=value.pattern.split("|")[3];
+      //   //console.log(props,'here');
+      //
+      // }
+      //console.log(value.type);
     });
   };
 
@@ -3426,12 +3510,9 @@ class Create extends Component {
       changeFormStatus
     } = this.props;
     let hashLocation = window.location.hash;
-    const moduleName = hashLocation.split("/")[2];
-    const actionName = hashLocation.split("/")[1];
-
     let obj =
       specifications[
-        `${moduleName}.${actionName}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
     if (obj && obj.beforeHandleChange) {
@@ -3693,6 +3774,7 @@ class Create extends Component {
   };
 
   removeCard = (jsonPath, index, groupName) => {
+    //Remove at that index and update upper array values
     let {
       setMockData,
       moduleName,
@@ -3704,7 +3786,7 @@ class Create extends Component {
     let self = this;
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
-    
+    console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
 
@@ -3731,6 +3813,8 @@ class Create extends Component {
             ).length -
               1
           ) {
+            // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
+            // console.log(_formData);
             if (
               _.get(
                 _formData,
@@ -3743,6 +3827,8 @@ class Create extends Component {
                   mockData[moduleName + "." + actionName].groups[i].jsonPath
                 )
               ];
+              //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               grps.splice(
                 mockData[moduleName + "." + actionName].groups[i].index,
                 1
@@ -3784,43 +3870,24 @@ class Create extends Component {
               mockData[moduleName + "." + actionName].groups.splice(i, 1);
               break;
             }
-          } else {
-            /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
-            mockData[moduleName + "." + actionName].groups.splice(i, 1);
-            ind = i;
-            console.log(ind);
-            console.log(mockData[moduleName + "." + actionName].groups);
-
-            for (
-              var k = 0;
-              k <
-              mockData[moduleName + "." + actionName].groups[ind].fields.length;
-              k++
-            ) {
-              if (
-                mockData[moduleName + "." + actionName].groups[ind].fields[k]
-                  .isRequired
-              )
-                notReqFields.push(
-                  mockData[moduleName + "." + actionName].groups[ind].fields[k]
-                    .jsonPath
-                );
+          }
+          /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
+          else {
+            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
+                mockData[moduleName + '.' + actionName].groups.splice(i, 1);
+                ind = i;
+                for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
+                  if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
+                    notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
+                }
+                delRequiredFields(notReqFields);
+                break;
+              }
             }
-            // console.log(notReqFields);
-            // mockData[moduleName + '.' + actionName].groups.splice(i, 1);
-            delRequiredFields(notReqFields);
-            // break;
 
-            for (
-              let i = ind;
-              i < mockData[moduleName + "." + actionName].groups.length;
-              i++
-            ) {
-              if (
-                mockData[moduleName + "." + actionName].groups[i].name ==
-                groupName
-              ) {
-                console.log(i);
+            for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
                 var regexp = new RegExp(
                   mockData[moduleName + "." + actionName].groups[i].jsonPath
                     .replace(/\[/g, "\\[")
@@ -3830,11 +3897,8 @@ class Create extends Component {
                 //console.log(regexp);
                 //console.log(mockData[moduleName + "." + actionName].groups[i].index);
                 //console.log(mockData[moduleName + "." + actionName].groups[i].index);
-                var stringified = JSON.stringify(
-                  mockData[moduleName + "." + actionName].groups[i]
-                );
-                // console.log(stringified);
-                mockData[moduleName + "." + actionName].groups[i] = JSON.parse(
+                var stringified = JSON.stringify(mockData[moduleName + '.' + actionName].groups[i]);
+                mockData[moduleName + '.' + actionName].groups[i] = JSON.parse(
                   stringified.replace(
                     regexp,
                     mockData[moduleName + "." + actionName].groups[i].jsonPath +
@@ -3844,6 +3908,13 @@ class Create extends Component {
                       "]"
                   )
                 );
+              }
+            }
+                
+            console.log(mockData[moduleName + '.' + actionName].groups);
+
+            for (let i = index; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
 
                 if (
                   _.get(
@@ -3857,34 +3928,20 @@ class Create extends Component {
                       mockData[moduleName + "." + actionName].groups[i].jsonPath
                     )
                   ];
-                  grps.splice(
-                    mockData[moduleName + "." + actionName].groups[i].index - 1,
-                    1
-                  );
-                  _.set(
-                    _formData,
-                    mockData[moduleName + "." + actionName].groups[i].jsonPath,
-                    grps
-                  );
-                  console.log(_formData);
+                  //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+                  //console.log(mockData[moduleName + "." + actionName].groups);
+                  grps.splice(mockData[moduleName + '.' + actionName].groups[i].index - 1, 1);
+                  
+                  _.set(_formData, mockData[moduleName + '.' + actionName].groups[i].jsonPath, grps);
+                  //console.log(_formData);
                   setFormData(_formData);
-
-                  //Reduce index values
-                  for (
-                    let k = ind;
-                    k < mockData[moduleName + "." + actionName].groups.length;
-                    k++
-                  ) {
-                    if (
-                      mockData[moduleName + "." + actionName].groups[k].name ==
-                      groupName
-                    ) {
-                      mockData[moduleName + "." + actionName].groups[
-                        k
-                      ].index -= 1;
+                  
+                  // Reduce index values
+                  for (let k = ind; k < mockData[moduleName + '.' + actionName].groups.length; k++) {
+                    if (mockData[moduleName + '.' + actionName].groups[k].name == groupName) {
+                      mockData[moduleName + '.' + actionName].groups[k].index -= 1;
                     }
                   }
-                  console.log(mockData[moduleName + "." + actionName].groups);
                   break;
                 }
               }
@@ -3892,6 +3949,9 @@ class Create extends Component {
           }
         }
       }
+
+      console.log(notReqFields);
+      console.log(mockData);
       setMockData(mockData);
     } else {
       var _groups = _.get(
@@ -4176,4 +4236,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+export default connect(mapStateToProps, mapDispatchToProps)(Report);

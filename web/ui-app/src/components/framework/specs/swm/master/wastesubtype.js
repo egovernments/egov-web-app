@@ -89,6 +89,19 @@ var dat = {
           name:'wastesubTypeDetails',
           label: 'lcms.create.group.title.wasteSubTypeDetails',
           fields: [
+          {
+              name: 'wasteType',
+              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
+              jsonPath: 'MasterMetaData.masterData[0].wasteType.code',
+              type: 'singleValueList',
+              pattern: '^null|$',
+              isRequired: true,
+              isDisabled: false,
+              maxLength: 128,
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
+              minLength: 1,
+              patternErrMsg: 'may not be null',
+            },
             {
               name: 'wastesubTypeName',
               jsonPath: 'MasterMetaData.masterData[0].name',
@@ -114,19 +127,7 @@ var dat = {
               minLength: 1,
               patternErrorMsg: '',
             },
-            {
-              name: 'wasteType',
-              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
-              jsonPath: 'MasterMetaData.masterData[0].wasteType.code',
-              type: 'singleValueList',
-              pattern: '^null|$',
-              isRequired: true,
-              isDisabled: false,
-              maxLength: 128,
-              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
-              minLength: 1,
-              patternErrMsg: 'may not be null',
-            },
+            
             {
               name: 'tenantId',
               jsonPath: 'MasterMetaData.masterData[0].tenantId',
