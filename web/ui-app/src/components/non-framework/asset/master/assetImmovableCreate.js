@@ -773,6 +773,7 @@ class assetImmovableCreate extends Component {
         if (CheckAutoCompleteData.length || formData.Asset.landDetails[x].code == '' || formData.Asset.landDetails[x].code == null) {
           if (formData.Asset.landDetails[x].code == '') {
             formData.Asset.landDetails.splice(x, 1);
+            x--;
           }
           flag = 1;
         } else if (!CheckAutoCompleteData.length) {

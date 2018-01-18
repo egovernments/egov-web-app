@@ -102,7 +102,7 @@ class UiSelectField extends Component {
             floatingLabelStyle={{
               color: item.isDisabled ? '#A9A9A9' : '#696969',
               fontSize: '20px',
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
             labelStyle={{ color: '#5F5C57' }}
             floatingLabelFixed={true}

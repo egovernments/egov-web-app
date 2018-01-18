@@ -13,7 +13,7 @@ var dat = {
           {
             name: 'VehicleRegs',
             jsonPath: 'regNumber',
-            label: 'swm.vehiclefuellingdetails.create.VehicleRegs',
+            label: 'swm.vehicles.create.regNumber',
             type: 'autoCompelete',
             isDisabled: false,
             patternErrorMsg: '',
@@ -28,7 +28,7 @@ var dat = {
           //   patternErrorMsg: '',
           //  // url: 'swm-services/vehiclefuellingdetails/_search?|$.vehicleFuellingDetails.*.transactionNo|$.vehicleFuellingDetails.*.transactionNo',
           // },
-          {
+        /*  {
             name: 'transactionNo',
             jsonPath: 'transactionNo',
             label: 'swm.vehiclefuellingdetails.create.transactionNo',
@@ -36,7 +36,7 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url: 'swm-services/vehiclefuellingdetails/_search?|$.vehicleFuellingDetails.*.transactionNo|$.vehicleFuellingDetails.*.transactionNo',
-          },
+          },*/
           {
             name: 'transactionFromDate',
             jsonPath: 'transactionFromDate',
@@ -69,7 +69,7 @@ var dat = {
           label: 'vehiclefuellingdetails.create.vehicleType',
         },
         {
-          label: 'vehiclefuellingdetails.create.regNumber',
+          label: 'swm.vehicles.create.regNumber',
         },
         {
           label: 'vehiclefuellingdetails.search.result.refuellingStation',
@@ -110,7 +110,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleFuellingDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'autoCompelete',
             isRequired: true,
@@ -270,7 +270,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleFuellingDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             type: 'text',
             isRequired: true,
             isDisabled: false,
@@ -397,7 +397,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleFuellingDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'autoCompelete',
             isRequired: true,

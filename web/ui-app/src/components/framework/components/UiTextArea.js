@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TextField from 'material-ui/TextField';
 
-export default class UiTextArea extends Component {
-  constructor(props) {
-    super(props);
-  }
+const UiTextArea = props => {
+  const renderTextArea = () => {
+    const item = props.item;
 
-  renderTextArea = item => {
-    switch (this.props.ui) {
+    switch (props.ui) {
       case 'google':
         let labelProperty = !item.isHideLabel && {
           floatingLabelFixed: true,
@@ -19,7 +17,7 @@ export default class UiTextArea extends Component {
           floatingLabelStyle: {
             color: item.isDisabled ? '#A9A9A9' : '#696969',
             fontSize: '20px',
-            'white-space': 'nowrap',
+            whiteSpace: 'nowrap',
           },
         };
 
@@ -35,15 +33,15 @@ export default class UiTextArea extends Component {
             rows={2}
             maxLength={item.maxLength || ''}
             {...labelProperty}
-            value={this.props.getVal(item.jsonPath)}
+            value={props.getVal(item.jsonPath)}
             disabled={item.isDisabled}
-            errorText={this.props.fieldErrors[item.jsonPath]}
+            errorText={props.fieldErrors[item.jsonPath]}
             onChange={e => {
               if (e.target.value) {
                 e.target.value = e.target.value.replace(/^\s*/, '');
                 if (e.target.value[e.target.value.length - 1] == ' ' && e.target.value[e.target.value.length - 2] == ' ') return;
               }
-              this.props.handler(
+              props.handler(
                 e,
                 item.jsonPath,
                 item.isRequired ? true : false,
@@ -59,7 +57,7 @@ export default class UiTextArea extends Component {
     }
   };
 
-  render() {
-    return <div>{this.renderTextArea(this.props.item)}</div>;
-  }
-}
+  return <div>{renderTextArea()}</div>;
+};
+
+export default UiTextArea;

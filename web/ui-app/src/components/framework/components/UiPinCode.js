@@ -16,7 +16,7 @@ export default class UiPinCode extends Component {
             floatingLabelStyle={{
               color: item.isDisabled ? '#A9A9A9' : '#696969',
               fontSize: '20px',
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
             inputStyle={{ color: '#5F5C57' }}
             floatingLabelFixed={true}

@@ -18,54 +18,60 @@ class UiAutoComplete extends Component {
     };
   }
 
-  handleUpdateInput = searchText => {
-    // this.setState({
-    //   searchText: searchText,
-    // });
-  };
-
   initData(props) {
     let { item, setDropDownData } = props;
 
     if (item.onLoad == false) {
       setDropDownData(item.jsonPath, []);
     } else {
-      this.callAPI('',props);
+      this.callAPI('', props);
     }
-
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    let {dropDownData,item}=this.props;
-    if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData[item.jsonPath] === undefined ||item.url!=nextProps.item.url) {
+    let { dropDownData, item } = this.props;
+    if (
+      this.props.location.pathname != nextProps.history.location.pathname ||
+      dropDownData[item.jsonPath] === undefined ||
+      item.url != nextProps.item.url
+    ) {
       this.initData(nextProps);
       if (this.props.location.pathname != nextProps.history.location.pathname) {
-        tracker=[];
+        tracker = [];
       }
     }
   }
 
-  getNameById=(id,jsonPath)=>
-  {
-    let {dropDownData}=this.props;
-    return dropDownData[jsonPath] && _.filter(dropDownData[jsonPath], { 'key': id}).length>0 && _.filter(dropDownData[jsonPath], { 'key': id})[0].value?_.filter(dropDownData[jsonPath], { 'key': id})[0].value:id;
-  }
+  getNameById = (id, jsonPath) => {
+    let { dropDownData } = this.props;
+    return dropDownData[jsonPath] &&
+      _.filter(dropDownData[jsonPath], { key: id }).length > 0 &&
+      _.filter(dropDownData[jsonPath], { key: id })[0].value
+      ? _.filter(dropDownData[jsonPath], { key: id })[0].value
+      : id;
+  };
 
   componentDidMount() {
     this.initData(this.props);
   }
 
-  callAPI = (keyUpValue,props) => {
-    // console.log(keyUpValue);
+  callAPI = (keyUpValue, props) => {
     let { item, setDropDownData, useTimestamp } = props;
-    // console.log('API called:', item.hasOwnProperty("url"), item.url.search("\\|"), item.url.search("{"));
-    if (item.type=="autoCompelete" && item.hasOwnProperty('url') && item.url && item.url.search('\\|') > -1 && item.url.search('{') == -1 && !_.some(tracker, { jsonPath: item.jsonPath })) {
+
+    if (
+      item.type == 'autoCompelete' &&
+      item.hasOwnProperty('url') &&
+      item.url &&
+      item.url.search('\\|') > -1 &&
+      item.url.search('{') == -1 &&
+      !_.some(tracker, { jsonPath: item.jsonPath })
+    ) {
       tracker.push({ jsonPath: item.jsonPath });
       let splitArray = item.url.split('?');
-      // console.log(splitArray);
+
       let context = '';
       let id = {};
-      // id[splitArray[1].split("&")[1].split("=")[0]]=e.target.value;
+
       for (var j = 0; j < splitArray[0].split('/').length; j++) {
         if (j == splitArray[0].split('/').length - 1) {
           context += splitArray[0].split('/')[j];
@@ -78,17 +84,11 @@ class UiAutoComplete extends Component {
       queryStringObject = queryStringObject.filter(n => {
         return n;
       });
-      // console.log(splitArray[1], queryStringObject);
+
       for (var i = 0; i < queryStringObject.length; i++) {
-        // console.log(queryStringObject[i],'<-->', queryStringObject[i].split("=")[0],'<-->', queryStringObject[i].split("=")[1]);
-        // console.log(i, keyUpValue);
-        // if (i) {
         if (keyUpValue) id[queryStringObject[i].split('=')[0]] = keyUpValue;
         else id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
-        // }
       }
-
-      // console.log(id);
 
       var response = Api.commonApiPost(context, id, {}, '', useTimestamp || false).then(
         function(response) {
@@ -137,19 +137,13 @@ class UiAutoComplete extends Component {
 
   renderAutoComplete = item => {
     let { dropDownData } = this.props;
-    let {getNameById}=this;
+    let { getNameById } = this;
     const dataSourceConfig = {
       text: 'value',
       value: 'key',
     };
-    // debugger;
-    // console.log(dropDownData.hasOwnProperty(item.jsonpath) && dropDownData[item.jsonpath].replace(".", "\."));
-    // console.log(dropDownData);
-    // console.log(dropDownData.hasOwnProperty(item.jsonPath));
-    // console.log(searchTextCom);
     switch (this.props.ui) {
       case 'google':
-        // let {dropDownData}=this.state;
         return (
           <div>
             <AutoComplete
@@ -158,9 +152,14 @@ class UiAutoComplete extends Component {
               listStyle={{ maxHeight: 100, overflow: 'auto' }}
               onUpdateInput={this.handleUpdateInput}
               filter={(searchText, key) => {
-                return key.toLowerCase().includes(getNameById(this.props.getVal(item.jsonPath),item.jsonPath) && getNameById(this.props.getVal(item.jsonPath),item.jsonPath).toLowerCase());
+                return key
+                  .toLowerCase()
+                  .includes(
+                    getNameById(this.props.getVal(item.jsonPath), item.jsonPath) &&
+                      getNameById(this.props.getVal(item.jsonPath), item.jsonPath).toLowerCase()
+                  );
               }}
-              floatingLabelStyle={{ color: item.isDisabled ? '#A9A9A9' : '#696969', fontSize: '20px', 'white-space': 'nowrap' }}
+              floatingLabelStyle={{ color: item.isDisabled ? '#A9A9A9' : '#696969', fontSize: '20px', whiteSpace: 'nowrap' }}
               inputStyle={{ color: '#5F5C57' }}
               floatingLabelFixed={true}
               style={{ display: item.hide ? 'none' : 'inline-block' }}
@@ -173,15 +172,14 @@ class UiAutoComplete extends Component {
                 </span>
               }
               fullWidth={true}
-              searchText={getNameById(this.props.getVal(item.jsonPath),item.jsonPath)}
+              searchText={getNameById(this.props.getVal(item.jsonPath), item.jsonPath)}
               disabled={item.isDisabled}
               errorText={this.props.fieldErrors[item.jsonPath]}
               onKeyUp={e => {
-                //  console.log('keyup:',e.target.value);
                 if (!e.target.value) {
                   this.handleUpdateInput('');
                 } else {
-                  item.onLoad == false ? this.callAPI(e.target.value,this.props) : '';
+                  item.onLoad == false ? this.callAPI(e.target.value, this.props) : '';
                 }
                 this.props.handler(
                   { target: { value: e.target.value } },
@@ -193,7 +191,6 @@ class UiAutoComplete extends Component {
                 );
               }}
               onNewRequest={(value, index) => {
-              
                 this.props.handler(
                   { target: { value: value.key } },
                   item.jsonPath,
@@ -220,7 +217,7 @@ class UiAutoComplete extends Component {
 
 const mapStateToProps = state => ({
   dropDownData: state.framework.dropDownData,
-  form:state.frameworkForm.form
+  form: state.frameworkForm.form,
 });
 
 const mapDispatchToProps = dispatch => ({

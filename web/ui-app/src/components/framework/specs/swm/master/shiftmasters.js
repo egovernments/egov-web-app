@@ -31,6 +31,18 @@ var dat = {
           name:'ShiftSelection',
           label: 'swm.shift.create.group.title.ShiftSelection',
           fields: [
+          {
+              name: 'shiftType',
+              jsonPath: 'shiftType.code',
+              label: 'swm.Shift.create.shiftType',
+              pattern: '',
+              type: 'singleValueList',
+              isRequired: false,
+              isDisabled: false,
+              maxLength: 12,
+              minLength: 6,
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
+            },
             {
               name: 'shift',
               jsonPath: 'code',
@@ -44,18 +56,7 @@ var dat = {
               patternErrorMsg: '',
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
             },
-            {
-              name: 'shiftType',
-              jsonPath: 'shiftType.code',
-              label: 'swm.Shift.create.shiftType',
-              pattern: '',
-              type: 'singleValueList',
-              isRequired: false,
-              isDisabled: false,
-              maxLength: 12,
-              minLength: 6,
-              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ShiftType|$..ShiftType.*.code|$..ShiftType.*.name',
-            },
+            
           ]
         },
       ],

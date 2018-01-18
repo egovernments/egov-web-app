@@ -8,16 +8,6 @@ import _ from 'lodash';
 import jp from 'jsonpath';
 import Button from './UiButton';
 import UiCheckBox from './UiCheckBox';
-// const $ = require('jquery');
-// $.DataTable = require('datatables.net');
-// const dt = require('datatables.net-bs');
-//
-// const buttons = require('datatables.net-buttons-bs');
-//
-// require('datatables.net-buttons/js/buttons.colVis.js'); // Column visibility
-// require('datatables.net-buttons/js/buttons.html5.js'); // HTML 5 file export
-// require('datatables.net-buttons/js/buttons.flash.js'); // Flash file export
-// require('datatables.net-buttons/js/buttons.print.js'); // Print view button
 
 import $ from 'jquery';
 import 'datatables.net-buttons/js/buttons.html5.js'; // HTML 5 file export
@@ -37,79 +27,23 @@ var enumWithUnderscore = [
 ];
 
 class UiTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  showObjectInTable = (field) => {
+  state = {};
+  showObjectInTable = field => {
     var flag = false;
-    var str = "";
-    if(Array.isArray(field)){
-      field.forEach(function(item, index){
-        if(typeof(item) == "object"){
-          console.log(item);
-          str += ((item.name?item.name:item.code) + ",");
+    var str = '';
+    if (Array.isArray(field)) {
+      field.forEach(function(item, index) {
+        if (typeof item == 'object') {
+          str += (item.name ? item.name : item.code) + ',';
+        } else {
+          str += item + ',';
         }
-        else{
-          str += (item + ",");
-        }
-    })
-    console.log(str);
-    return str.slice(0,-1);
-    }
-    else{
+      });
+      return str.slice(0, -1);
+    } else {
       return field;
     }
-  }
-
-  componentWillMount() {
-    let hidesearch = this.props.resultList.hidesearch;
-    $('#searchTable').DataTable({
-      dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
-      order: [],
-      searching: hidesearch,
-      lengthChange: hidesearch,
-      buttons: hidesearch ? [
-        'excel',
-        {
-          extend: 'pdf',
-          orientation: 'landscape',
-          pageSize: 'LEGAL',
-          exportOptions: {
-            modifier: {
-              page: 'current',
-            },
-          },
-          customize: function(doc) {
-            doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
-            // doc.style.tableBorder=5;
-          },
-          text: 'Pdf/Print',
-        },
-        'copy',
-        'csv',
-        // , {
-        //     extend: 'print',
-        //     customize: function ( win ) {
-        //         $(win.document.body)
-        //             .css( 'font-size', '6pt' )
-        //             // .prepend(
-        //             //     '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-        //             // );
-        //
-        //         // $(win.document.body).find( 'table' )
-        //         //     .addClass( 'compact' )
-        //         //     .css( 'font-size', 'inherit' );
-        //     }
-        // }
-      ] :[],
-      bDestroy: true,
-      language: {
-        emptyTable: 'No Records',
-      },
-    });
-  }
+  };
 
   componentWillUnmount() {
     $('#searchTable')
@@ -128,54 +62,61 @@ class UiTable extends Component {
   }
 
   componentDidUpdate() {
-    let hidesearch = this.props.resultList.hidesearch;
+    this.initTable();
+  }
+
+  initTable = () => {
+    const { resultList } = this.props;
+    let hidesearch = resultList ? resultList.hidesearch : false;
+    const resultHeader = resultList ? resultList.resultHeader : [];
+    const columns = resultHeader.length
+      ? resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1)
+      : ':visible';
+
     $('#searchTable').DataTable({
       dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
       order: [],
       searching: hidesearch,
       lengthChange: hidesearch,
-      buttons:hidesearch ? [
-        'excel',
-        {
-          extend: 'pdf',
-          orientation: 'landscape',
-          pageSize: 'LEGAL',
-          exportOptions: {
-            modifier: {
-              page: 'current',
+      buttons: hidesearch
+        ? [
+            {
+              extend: 'excel',
+              text: 'Excel',
+              exportOptions: {
+                columns,
+              },
             },
-          },
-          customize: function(doc) {
-            doc.defaultStyle.fontSize = 10; //<-- set fontsize to 16 instead of 10
-            // var myTable = document.getElementById('searchTable');
-            // myTable.style.border="1px solid black";
-          },
-          text: 'Pdf/Print',
-        },
-        'copy',
-        'csv',
-        // ,  {
-        //   extend: 'print',
-        //   customize: function ( win ) {
-        //       $(win.document.body)
-        //           .css( 'font-size', '8pt' )
-        //       //     .prepend(
-        //       //         '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-        //       //     );
-        // 			//
-        //       // $(win.document.body).find( 'table' )
-        //       //     .addClass( 'compact' )
-        //       //     .css( 'font-size', 'inherit' );
-        //   }
-        // }
-      ] : [],
+            {
+              extend: 'pdfHtml5',
+              orientation: 'landscape',
+              text: 'Print/PDF',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                columns,
+                order: 'applied',
+              },
+              customize: function(doc) {
+                doc.defaultStyle.fontSize = 10;
+              },
+            },
+            { extend: 'copy', text: 'Copy', exportOptions: { columns } },
+            {
+              extend: 'csv',
+              text: 'CSV',
+              exportOptions: {
+                columns,
+              },
+            },
+          ]
+        : [],
       ordering: false,
       bDestroy: true,
       language: {
         emptyTable: 'No Records',
       },
     });
-  }
+  };
 
   componentDidMount() {
     let hidesearch = this.props.resultList.hidesearch;
@@ -220,36 +161,8 @@ class UiTable extends Component {
         }
       }
     }
-    $('#searchTable').DataTable({
-      dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
-      order: [],
-      searching: hidesearch,
-      lengthChange: hidesearch,
-      buttons: hidesearch ? [
-        'excel',
-        {
-          extend: 'pdf',
-          orientation: 'landscape',
-          pageSize: 'LEGAL',
-          exportOptions: {
-            modifier: {
-              page: 'current',
-            },
-          },
-          customize: function(doc) {
-            doc.defaultStyle.fontSize = 10;
-          },
-          text: 'Pdf/Print',
-        },
-        'copy',
-        'csv',
 
-      ] : [],
-      bDestroy: true,
-      language: {
-        emptyTable: 'No Records',
-      },
-    });
+    this.initTable();
   }
 
   formatAMPM = date => {
@@ -273,17 +186,16 @@ class UiTable extends Component {
       rowCheckboxClickHandler,
       rowIconClickHandler,
       selectedValue,
-      selectedValues
+      selectedValues,
     } = this.props;
     let self = this;
 
     const getNameById = function(item2, i2) {
       if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isChecked) {
         var selected = false;
-        if(selectedValues.length>0){
+        if (selectedValues.length > 0) {
           let idx = selectedValues.indexOf(item2);
-          if(idx>-1)
-             selected = true;
+          if (idx > -1) selected = true;
         } else if (selectedValue == item2) {
           selected = true;
         }
@@ -313,8 +225,6 @@ class UiTable extends Component {
                 </a>
               </span>
             );
-
-            //		return 	(<span style={{"margin-right":"20px"}}><Button item={{"label": item2[0], "uiType":"primary"}} ui="google" handler={()=>{rowButtonClickHandler(actionitem.url,item2[1])}}/></span>)
           });
         } else {
           return resultList.resultHeader[i2].actionItems.map((actionitem, index) => {
@@ -336,8 +246,8 @@ class UiTable extends Component {
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isDate) {
         var _date = new Date(Number(item2));
         return ('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear();
-      }else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isTime) {
-        return  self.formatAMPM(new Date(parseInt(item2)));
+      } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isTime) {
+        return self.formatAMPM(new Date(parseInt(item2)));
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isComma) {
         let _commaVal = item2.toString();
         var y = _commaVal.split('.')[1];
@@ -390,11 +300,10 @@ class UiTable extends Component {
                     return (
                       <tr key={i}>
                         {item.map((item2, i2) => {
-                          return <td key={i2}>{typeof item2 != 'undefined' ? getNameById(self.showObjectInTable(item2),i2) : ''}</td>;
+                          return <td key={i2}>{typeof item2 != 'undefined' ? getNameById(self.showObjectInTable(item2), i2) : ''}</td>;
                         })}
 
                         <td style={{ textAlign: 'center', marginRight: '10px' }}>
-
                           <i
                             style={{ marginRight: '10px' }}
                             onClick={() => {
@@ -436,5 +345,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UiTable);
-
-// onClick={() => { if(!resultList.disableRowClick){rowClickHandler(i)}}}

@@ -425,7 +425,8 @@ class Report extends Component {
                   this.hideField(
                     specs,
                     specs[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].hide[a]
+                      .showHideFields[k].hide[a],
+                      specs[moduleName + "." + actionName].groups[i].fields[j].jsonPath
                   );
                 }
               }
@@ -446,7 +447,8 @@ class Report extends Component {
                   this.showField(
                     specs,
                     specs[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].show[a]
+                      .showHideFields[k].show[a],
+                    specs[moduleName + "." + actionName].groups[i].fields[j].jsonPath
                   );
                 }
               }
@@ -1735,7 +1737,7 @@ class Report extends Component {
             _mockData[moduleName + "." + actionName].groups[i].fields[
               j
             ].hide = reset ? false : true;
-            if (!reset || !_.isUndefined(reset)) {
+            if (!reset) {
               _.set(
                 _formData,
                 _mockData[moduleName + "." + actionName].groups[i].fields[j]
@@ -2051,7 +2053,7 @@ class Report extends Component {
             _mockData[moduleName + "." + actionName].groups[i].fields[
               j
             ].hide = reset ? true : false;
-            if (!reset || !_.isUndefined(reset)) {
+            if (!reset) {
               _.set(
                 _formData,
                 _mockData[moduleName + "." + actionName].groups[i].fields[j]
@@ -2586,15 +2588,17 @@ class Report extends Component {
               }
             } else {
               for (let y = 0; y < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide.length; y++) {
-                _mockData = this.showField(
+                _mockData = this.hideField(
                   _mockData,
                   _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].hide[y],
                   _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath,
+                  true,
+                  val
                 );
               }
 
               for (let z = 0; z < _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show.length; z++) {
-                _mockData = this.hideField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true, val);
+                _mockData = this.showField(_mockData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].showHideFields[k].show[z], _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, true);
               }
             }
           }
@@ -3722,13 +3726,7 @@ class Report extends Component {
                 )
               );
               _groupToBeInserted.index = ind + 1;
-              for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
-                if (_groupToBeInserted.fields[k].isRequired) {
-                  reqFields.push(_groupToBeInserted.fields[k].jsonPath);
-                }
-              }
-
-              if (reqFields.length) addRequiredFields(reqFields);
+              
               mockData[moduleName + "." + actionName].groups.splice(
                 j + 1,
                 0,
@@ -3747,6 +3745,22 @@ class Report extends Component {
                   temp
                 );
               }
+
+              for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
+                
+                if (_groupToBeInserted.fields[k].isRequired) {
+                  reqFields.push(_groupToBeInserted.fields[k].jsonPath);
+                }
+              }
+              if (reqFields.length) addRequiredFields(reqFields);
+
+              // Check for showHideFields in multiple --> Delete/Add required fields as per default value
+              for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
+                if(_groupToBeInserted.fields[k].showHideFields && _groupToBeInserted.fields[k].showHideFields.length){
+                  self.checkIfHasShowHideFields(_groupToBeInserted.fields[k].jsonPath, _groupToBeInserted.fields[k].defaultValue)
+                }
+              }
+              
               setFormData(temp);
               break;
             }

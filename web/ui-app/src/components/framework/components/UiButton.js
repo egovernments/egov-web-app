@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
   margin: '0 4px',
 };
 
-export default class UiButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  renderBtn = (item, icon) => {
-    switch (this.props.ui) {
+const UiButton = props => {
+  const renderBtn = () => {
+    const { item, icon, ui } = props;
+    switch (ui) {
       case 'google':
         return (
           <RaisedButton
@@ -22,14 +19,14 @@ export default class UiButton extends Component {
             label={item.label}
             primary={typeof item.primary != 'undefined' ? item.primary : true}
             secondary={item.secondary || false}
-            onClick={this.props.handler || function() {}}
+            onClick={props.handler || function() {}}
             disabled={item.isDisabled ? true : false}
           />
         );
     }
   };
 
-  render() {
-    return this.renderBtn(this.props.item, this.props.icon);
-  }
-}
+  return renderBtn();
+};
+
+export default UiButton;

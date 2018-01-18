@@ -46,7 +46,7 @@ var dat = {
                {
                  "name": "regNumber",
                  "jsonPath": "regNumber",
-                  "label": "swm.create.regNumber",
+                  "label": "swm.vehicles.create.regNumber",
                   "type": "autoCompelete",
                   "isRequired": false,
                   "isDisabled": false,
@@ -74,7 +74,7 @@ var dat = {
                "label": "swm.create.route"
             },
             {
-               "label": "swm.create.regNumber"
+               "label": "swm.vehicles.create.regNumber"
             }
          ],
          "values":[
@@ -141,7 +141,7 @@ var dat = {
                {
                  "name": "regNumber",
                  "jsonPath": "vehicleSchedules[0].vehicle.regNumber",
-                  "label": "swm.create.regNumber",
+                  "label": "swm.vehicles.create.regNumber",
                   "type": "autoCompelete",
                   "isRequired": true,
                   "isDisabled": false,
@@ -248,7 +248,7 @@ var dat = {
                {
                   "name": "regNumber",
                   "jsonPath": "vehicleSchedules[0].vehicle.regNumber",
-                  "label": "swm.create.regNumber",
+                  "label": "swm.vehicles.create.regNumber",
                   "type": "autoCompelete",
                   "isRequired": false,
                   "isDisabled": false,
@@ -354,7 +354,7 @@ var dat = {
                {
                   "name": "regNumber",
                   "jsonPath": "vehicleSchedules[0].vehicle.regNumber",
-                  "label": "swm.create.regNumber",
+                  "label": "swm.vehicles.create.regNumber",
                   "type": "autoCompelete",
                   "isRequired": false,
                   "isDisabled": false,
