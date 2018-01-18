@@ -50,6 +50,20 @@ var dat = {
               minLength: 1,
               patternErrorMsg: '',
             },
+
+            {
+              name: 'wasteType',
+              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
+              jsonPath: 'wasteType.code',
+              type: 'singleValueList',
+              pattern: '^null|$',
+              isRequired: false,
+              isDisabled: false,
+              maxLength: 128,
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
+              minLength: 1,
+              patternErrMsg: '',
+            },
           ]
         },
       ],
