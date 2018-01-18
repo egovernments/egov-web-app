@@ -18,6 +18,12 @@ class UiAutoComplete extends Component {
     };
   }
 
+  handleUpdateInput = searchText => {
+    // this.setState({
+    //   searchText: searchText,
+    // });
+  };
+
   initData(props) {
     let { item, setDropDownData } = props;
 
