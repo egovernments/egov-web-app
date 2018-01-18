@@ -2046,7 +2046,8 @@ var localization_EN_Data = {
   'swm.vehiclestripsheet.search.tripEndDate' : 'Trip End Date',
   'swm.vehiclestripsheet.search.routeName' : 'Route Name',
    'swm.vehiclestripsheet.search.vehicleTripEntrySearch' : 'Vehicle Trip Entry Search',
-
+   'swm.vehiclestripsheet.create.totalGarbageEstimate':'Total Garbage Estimate',
+   'swm.vehiclestripsheet.search.wieght':'Wieght',
    'swm.vendorpayment.create.title' : 'Enter Vendor Payment Details',
    'swm.vendorpayment.create.capturetitle' : 'Capture Payment Details',
    'swm.vendorpayment.create.searchcapturetitle' : 'Capture Payment Search',
