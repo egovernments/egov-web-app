@@ -10,12 +10,16 @@ var dat = {
         label: 'vendorcontracts.search.title',
         fields: [
           {
-            name: 'contractNo',
+            name: 'contractNumber',
             jsonPath: 'contractNo',
             label: 'vendorcontracts.create.contractNo',
+            pattern: '',
             type: 'autoCompelete',
+            isRequired: false,
             isDisabled: false,
-            patternErrorMsg: 'vendorcontracts.create.field.message.contractNo',
+            defaultValue: '',
+            patternErrMsg: '',
+            requiredErrMsg: '',
             url: 'swm-services/vendorcontracts/_search?|$.vendorContracts.*.contractNo|$.vendorContracts.*.contractNo',
           },
           {
@@ -24,7 +28,7 @@ var dat = {
             label: 'vendorcontracts.create.vendorNo',
             type: 'singleValueList',
             isDisabled: false,
-            patternErrorMsg: 'vendorcontracts.create.field.message.vendorNo',
+            patternErrorMsg: '',
             url: '/swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
           },
           {
@@ -33,7 +37,7 @@ var dat = {
             label: 'vendorcontracts.create.contractPeriodFrom',
             type: 'datePicker',
             isDisabled: false,
-            patternErrorMsg: 'vendorcontracts.create.field.message.contractPeriodFrom',
+            patternErrorMsg: '',
           },
           {
             name: 'contractPeriodto',
@@ -41,7 +45,7 @@ var dat = {
             label: 'vendorcontracts.create.contractPeriodto',
             type: 'datePicker',
             isDisabled: false,
-            patternErrorMsg: 'vendorcontracts.create.field.message.contractPeriodto',
+            patternErrorMsg: '',
           },
           {
             name: 'contractDate',
@@ -49,7 +53,7 @@ var dat = {
             label: 'vendorcontracts.create.contractDate',
             type: 'datePicker',
             isDisabled: false,
-            patternErrorMsg: 'vendorcontracts.create.field.message.contractDate',
+            patternErrorMsg: '',
           },
         ],
       },

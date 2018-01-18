@@ -544,7 +544,16 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '',
+            url:''
+            // url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=bank|$..name|$..name',
+            // depedants: [
+            //   {
+            //     jsonPath: 'paymentDetails[0].branchName',
+            //     type: 'dropDown',
+            //     pattern:
+            //       "/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=bankBranch&filter=%5B%3F%28%40.bankName%3D%3D'{paymentDetails[0].bankName}'%29%5D|$..branch|$..branch",
+            //   },
+            // ],
           },
           {
             name: 'BranchName',

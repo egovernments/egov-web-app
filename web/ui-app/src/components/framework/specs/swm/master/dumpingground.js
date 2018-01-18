@@ -333,12 +333,6 @@ var dat = {
             patternErrMsg: 'Address shall be of minimum 15 Characters',
             url: '',
           },
-        ]
-      },
-      {
-        name: 'geocoordinates',
-        label: 'swm.dumpingground.search.geoCoordinates',
-        fields: [
           {
             name: 'dumpingGroundLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
@@ -353,7 +347,6 @@ var dat = {
             patternErrMsg: 'Latitude measurements range from -90° to +90°',
             url: '',
           },
-
           {
             name: 'dumpingGroundLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
@@ -370,6 +363,40 @@ var dat = {
           },
         ]
       },
+      // {
+      //   name: 'geocoordinates',
+      //   label: 'swm.dumpingground.search.geoCoordinates',
+      //   fields: [
+      //     {
+      //       name: 'dumpingGroundLatitude',
+      //       jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
+      //       label: 'swm.dumpingGround.create.dumpingGroundLatitude',
+      //       pattern: '^-{0,1}((90|90.[0]{1,20}|[0-9]|[1-8][0-9])|(89|[0-9]|[1-8][0-9])[.]{1}[0-9]{1,20}){1}$',
+      //       type: 'text',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       defaultValue: '',
+      //       maxLength: '',
+      //       minLength: '',
+      //       patternErrMsg: 'Latitude measurements range from -90° to +90°',
+      //       url: '',
+      //     },
+      //     {
+      //       name: 'dumpingGroundLongitude',
+      //       jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
+      //       label: 'swm.dumpingGround.create.dumpingGroundLongitude',
+      //       pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
+      //       type: 'text',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       defaultValue: '',
+      //       maxLength: '',
+      //       minLength: '',
+      //       patternErrMsg: 'Longitude measurements range from -180° to +180°',
+      //       url: '',
+      //     },
+      //   ]
+      // },
       {
         name: 'isprocessingsitetoo',
         fields: [
@@ -471,7 +498,7 @@ var dat = {
           {
             name: 'processingSite.code',
             jsonPath: 'MasterMetaData.masterData[0].processingSite.code',
-            label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
+            label: 'swm.dumpingGround.create.dumpingGroundProcessingSite',
             pattern: '',
             type: 'singleValueList',
             isRequired: true,
@@ -664,7 +691,6 @@ var dat = {
             patternErrMsg: '',
             url: '',
           },
-
           {
             name: 'bankGuarantee',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.bankGuarantee',
@@ -889,7 +915,7 @@ var dat = {
           {
             name: 'processingSite.code',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].processingSite.code',
-            label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
+            label: 'swm.dumpingGround.create.dumpingGroundProcessingSite',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -1194,12 +1220,6 @@ var dat = {
             patternErrMsg: 'Address shall be of minimum 15 Characters',
             url: '',
           },
-        ]
-      },
-      {
-        name: 'geocoordinates',
-        label: 'swm.dumpingground.search.geoCoordinates',
-        fields: [
           {
             name: 'dumpingGroundLatitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
@@ -1214,7 +1234,6 @@ var dat = {
             patternErrMsg: 'Latitude measurements range from -90° to +90°',
             url: '',
           },
-
           {
             name: 'dumpingGroundLongitude',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
@@ -1231,6 +1250,40 @@ var dat = {
           },
         ]
       },
+      // {
+      //   name: 'geocoordinates',
+      //   label: 'swm.dumpingground.search.geoCoordinates',
+      //   fields: [
+      //     {
+      //       name: 'dumpingGroundLatitude',
+      //       jsonPath: 'MasterMetaData.masterData[0].siteDetails.latitude',
+      //       label: 'swm.dumpingGround.create.dumpingGroundLatitude',
+      //       pattern: '^-{0,1}((90|90.[0]{1,20}|[0-9]|[1-8][0-9])|(89|[0-9]|[1-8][0-9])[.]{1}[0-9]{1,20}){1}$',
+      //       type: 'text',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       defaultValue: '',
+      //       maxLength: '',
+      //       minLength: '',
+      //       patternErrMsg: 'Latitude measurements range from -90° to +90°',
+      //       url: '',
+      //     },
+      //     {
+      //       name: 'dumpingGroundLongitude',
+      //       jsonPath: 'MasterMetaData.masterData[0].siteDetails.longitude',
+      //       label: 'swm.dumpingGround.create.dumpingGroundLongitude',
+      //       pattern: '^-{0,1}((180|180.[0]{1,20}|[0-9]|([0-9][0-9])|([1][0-7][0-9]))|(179|[0-9]|([0-9][0-9])|([1][0-7][0-9]))[.]{1}[0-9]{1,20}){1}$',
+      //       type: 'text',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       defaultValue: '',
+      //       maxLength: '',
+      //       minLength: '',
+      //       patternErrMsg: 'Longitude measurements range from -180° to +180°',
+      //       url: '',
+      //     },
+      //   ]
+      // },
       {
         name: 'isprocessingsitetoo',
         fields: [
@@ -1311,7 +1364,7 @@ var dat = {
           {
             name: 'processingSite.code',
             jsonPath: 'MasterMetaData.masterData[0].processingSite.code',
-            label: 'swm.dumpingGround.create.dumpingGroundProcessingPlant',
+            label: 'swm.dumpingGround.create.dumpingGroundProcessingSite',
             pattern: '',
             type: 'singleValueList',
             isRequired: true,

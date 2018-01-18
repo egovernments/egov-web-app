@@ -155,13 +155,7 @@ function validate(fieldErrors, property, value, isRequired, form, requiredFields
   let isFormValid = true;
   // console.log(requiredFields);
   for (var i = 0; i < requiredFields.length; i++) {
-    if( requiredFields[i] == "agencies[0].reasonOfTermination" && ( _.get(form, requiredFields[i]) == '' || _.get(form, requiredFields[i]) == null) && _.get(form, "agencies[0].status") == 'active' ){
-      continue;
-    }
-    if( requiredFields[i] == "agencies[0].advocates[0].reasonOfTermination" && ( _.get(form, requiredFields[i]) == '' || _.get(form, requiredFields[i]) == null) && _.get(form, "agencies[0].advocates[0].status") == 'active' ){
-      continue;
-    }
-
+    
     if (typeof _.get(form, requiredFields[i]) == 'undefined' || _.get(form, requiredFields[i]) === '' || _.get(form, requiredFields[i]) === 0 || _.get(form, requiredFields[i]) == null ) {
       isFormValid = false;
       break;

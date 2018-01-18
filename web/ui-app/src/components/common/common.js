@@ -2341,7 +2341,7 @@ var localization_EN_Data = {
   'swm.processingplant.create.DistanceFrom' : 'Distance from this Dumping Ground(Km)',
 
   'swm.dumpingGround.create.isProcessingSite': 'Is this dumping ground a processing site too?',
-  'swm.dumpingGround.create.dumpingGroundProcessingPlant': 'Processing Plant',
+  'swm.dumpingGround.create.dumpingGroundProcessingSite': 'Processing Site',
   'swm.dumpingGround.create.distance': 'Distance from the Dumping Ground(km)',
   'swm.dumpingGround.create.group.title.DumpingGroundDetails': 'Dumping Ground Details',
 

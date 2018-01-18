@@ -93,7 +93,7 @@ var dat = {
             },
             {
               name: 'toAmt',
-              jsonPath: 'fromAmount',
+              jsonPath: 'toAmount',
               label: 'swm.vendorpayment.create.toAmt',
               pattern: '',
               type: 'text',
