@@ -34,7 +34,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'autoCompelete',
             isRequired: false,
@@ -51,7 +51,7 @@ var dat = {
     result: {
       header: [
         {
-          label: 'vehiclefuellingdetails.create.regNumber',
+          label: 'swm.vehicles.create.regNumber',
         },
         {
           label: 'vehiclefuellingdetails.create.vehicleType',
@@ -149,7 +149,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'autoCompelete',
             isRequired: true,
@@ -369,7 +369,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'text',
             isRequired: true,
@@ -566,7 +566,7 @@ var dat = {
           {
             name: 'regNumber',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.regNumber',
-            label: 'vehiclefuellingdetails.create.regNumber',
+            label: 'swm.vehicles.create.regNumber',
             pattern: '',
             type: 'autoCompelete',
             isRequired: true,
