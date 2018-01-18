@@ -206,7 +206,7 @@ var dat = {
             jsonPath: 'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate',
             label: 'swm.create.vehicleScheduledMaintenanceDate',
             pattern: '',
-            type: 'date',
+            type: 'datePicker',
             isDate: true,
             isRequired: false,
             isDisabled: true,
@@ -243,7 +243,7 @@ var dat = {
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate',
             label: 'swm.create.insuranceDetails.insuranceValidityDate',
             pattern: '',
-            type: 'date',
+            type: 'datePicker',
             isDate: true,
             hide: true,
             isRequired: false,
@@ -252,17 +252,7 @@ var dat = {
             patternErrorMsg: '',
           },
 
-          {
-            name: 'vehicleDowntimeActual',
-            jsonPath: 'vehicleMaintenanceDetails[0].vehicleDowntimeActual',
-            label: 'swm.create.vehicleDowntimeActual',
-            pattern: '',
-            type: 'number',
-            isRequired: true,
-            isDisabled: false,
-            defaultValue: '',
-            patternErrorMsg: '',
-          },
+          
           
           {
             name: 'vehicleReadingDuringMaintenance',
@@ -276,7 +266,7 @@ var dat = {
             patternErrorMsg: '',
           },
 
-          {
+           {
             name: 'downtimeDefined',
             jsonPath: 'vehicleMaintenanceDetails[0].downtimeDefined',
             label: 'swm.create.DowntimeDefined',
@@ -289,6 +279,20 @@ var dat = {
             patternErrorMsg: '',
             url: '',
           },
+
+          {
+            name: 'vehicleDowntimeActual',
+            jsonPath: 'vehicleMaintenanceDetails[0].vehicleDowntimeActual',
+            label: 'swm.create.vehicleDowntimeActual',
+            pattern: '',
+            type: 'number',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+          },
+
+         
           
           {
             name: 'vehicleDownTimeActualUom',
