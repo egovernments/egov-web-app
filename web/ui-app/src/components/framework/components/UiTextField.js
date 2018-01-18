@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TextField from 'material-ui/TextField';
 import { orange500, blue500 } from 'material-ui/styles/colors';
 
@@ -17,24 +17,16 @@ const styles = {
   },
 };
 
-export default class UiTextField extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    if (this.props.item.url && this.props.makeAjaxCall) console.log('ajaxCall', this.props.makeAjaxCall);
-    //console.log('result', this.props.makeAjaxCall(this.props.item.url));
-  }
-
-  renderTextBox = item => {
+const UiTextField = props => {
+  const renderTextBox = () => {
+    const item = props.item;
     var disabledValue = false;
-    if (item.isDisablePath && typeof this.props.getVal(item.isDisablePath) == 'boolean') {
-      disabledValue = !this.props.getVal(item.isDisablePath);
+    if (item.isDisablePath && typeof props.getVal(item.isDisablePath) == 'boolean') {
+      disabledValue = !props.getVal(item.isDisablePath);
     } else {
       disabledValue = item.isDisabled;
     }
-    switch (this.props.ui) {
+    switch (props.ui) {
       case 'google':
         if (item.hasOwnProperty('isLabel') && !item.isLabel) {
           return (
@@ -49,15 +41,15 @@ export default class UiTextField extends Component {
               errorStyle={{ float: 'left' }}
               fullWidth={false}
               maxLength={item.maxLength || ''}
-              value={this.props.getVal(item.jsonPath)}
+              value={props.getVal(item.jsonPath)}
               disabled={disabledValue}
-              errorText={this.props.fieldErrors[item.jsonPath]}
+              errorText={props.fieldErrors[item.jsonPath]}
               onChange={e => {
                 if (e.target.value) {
                   e.target.value = e.target.value.replace(/^\s*/, '');
                   if (e.target.value[e.target.value.length - 1] == ' ' && e.target.value[e.target.value.length - 2] == ' ') return;
                 }
-                this.props.handler(e, item.jsonPath, item.isRequired ? true : false, item.pattern, item.requiredErrMsg, item.patternErrMsg);
+                props.handler(e, item.jsonPath, item.isRequired ? true : false, item.pattern, item.requiredErrMsg, item.patternErrMsg);
               }}
             />
           );
@@ -88,16 +80,16 @@ export default class UiTextField extends Component {
               style={{ display: item.hide ? 'none' : 'inline-block' }}
               errorStyle={{ float: 'left' }}
               fullWidth={true}
-              value={this.props.getVal(item.jsonPath)}
+              value={props.getVal(item.jsonPath)}
               disabled={disabledValue}
-              errorText={this.props.fieldErrors[item.jsonPath]}
+              errorText={props.fieldErrors[item.jsonPath]}
               {...labelProperty}
               onChange={e => {
                 if (e.target.value) {
                   e.target.value = e.target.value.replace(/^\s*/, '');
                   if (e.target.value[e.target.value.length - 1] == ' ' && e.target.value[e.target.value.length - 2] == ' ') return;
                 }
-                this.props.handler(
+                props.handler(
                   e,
                   item.jsonPath,
                   item.isRequired ? true : false,
@@ -114,7 +106,7 @@ export default class UiTextField extends Component {
     }
   };
 
-  render() {
-    return this.renderTextBox(this.props.item);
-  }
-}
+  return renderTextBox();
+};
+
+export default UiTextField;

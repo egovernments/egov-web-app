@@ -128,13 +128,12 @@ class UiWindowForm extends Component {
     }
   };
 
-
   enField = (_mockData, enableStr, reset) => {
     let { moduleName, actionName, setFormData } = this.props;
     let _formData = { ...this.props.formData };
     for (let i = 0; i < _mockData[moduleName + '.create'].groups.length; i++) {
       for (let j = 0; j < _mockData[moduleName + '.create'].groups[i].fields.length; j++) {
-        if (enableStr == _mockData[moduleName  + '.create'].groups[i].fields[j].name) {
+        if (enableStr == _mockData[moduleName + '.create'].groups[i].fields[j].name) {
           _mockData[moduleName + '.create'].groups[i].fields[j].isDisabled = reset ? true : false;
           // if (!reset) {
           //   _.set(_formData, _mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath, '');
@@ -169,34 +168,31 @@ class UiWindowForm extends Component {
   };
 
   checkIfHasEnDisFields = (jsonPath, val) => {
-  //  let _mockData = { ...this.props.mockData };
-  let { mockData } = this.state;
+    //  let _mockData = { ...this.props.mockData };
+    let { mockData } = this.state;
     let { moduleName, actionName, setMockData } = this.props;
-     for (let i = 0; i < mockData[moduleName + '.create'].groups.length; i++) {
+    for (let i = 0; i < mockData[moduleName + '.create'].groups.length; i++) {
       for (let j = 0; j < mockData[moduleName + '.create'].groups[i].fields.length; j++) {
-         if ( jsonPath == mockData[moduleName + '.create'].groups[i].fields[j].jsonPath && 
-              mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields &&
-              mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length
-              ){
-                console.log("Condition 1 satisfied");
-                for (let k = 0; k < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length; k++){
-                  if (val == mockData[moduleName  + '.create'].groups[i].fields[j].enableDisableFields[k].ifValue) {
-                    console.log("Value matched is:", val);
-                    for (let y = 0; y < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable.length; y++) {
-                        mockData = this.disField(mockData, mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable[y]);
-                    }
-                    for (let z = 0; z < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].enable.length; z++) {
-                                  mockData = this.enField(mockData, mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].enable[z]);
-                                }
-
-                  }
-
-                }
-               
+        if (
+          jsonPath == mockData[moduleName + '.create'].groups[i].fields[j].jsonPath &&
+          mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields &&
+          mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length
+        ) {
+          console.log('Condition 1 satisfied');
+          for (let k = 0; k < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length; k++) {
+            if (val == mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].ifValue) {
+              console.log('Value matched is:', val);
+              for (let y = 0; y < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable.length; y++) {
+                mockData = this.disField(mockData, mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable[y]);
               }
-
+              for (let z = 0; z < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].enable.length; z++) {
+                mockData = this.enField(mockData, mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].enable[z]);
+              }
+            }
+          }
+        }
       }
-     }
+    }
     // for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
     //   for (let j = 0; j < mockData[moduleName + '.' + actionName].groups[i].fields.length; j++) {
     //     if (
@@ -214,7 +210,7 @@ class UiWindowForm extends Component {
     //             mockData = this.enField(mockData, mockData[moduleName + '.' + actionName].groups[i].fields[j].enableDisableFields[k].enable[z]);
     //           }
     //         }
-           
+
     //       }
     //     }
     //   }
@@ -353,7 +349,7 @@ class UiWindowForm extends Component {
             floatingLabelStyle={{
               color: '#A9A9A9',
               fontSize: '20px',
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
             inputStyle={{ color: '#5F5C57' }}
             floatingLabelFixed={true}
@@ -400,18 +396,19 @@ class UiWindowForm extends Component {
           {this.renderTable(item, val)}
 
           <Col xs={12} md={6}>
-
-            {!!item.hideAddButton ? '':
-            <FloatingActionButton
-              style={{ marginTop: 39 }}
-              mini={true}
-              onClick={() => {
-                this.handleOpen();
-              }}
-            >
-              <i className="material-icons">add</i>
-            </FloatingActionButton>
-          }
+            {!!item.hideAddButton ? (
+              ''
+            ) : (
+              <FloatingActionButton
+                style={{ marginTop: 39 }}
+                mini={true}
+                onClick={() => {
+                  this.handleOpen();
+                }}
+              >
+                <i className="material-icons">add</i>
+              </FloatingActionButton>
+            )}
           </Col>
         </Row>
       );
@@ -468,9 +465,7 @@ class UiWindowForm extends Component {
                   }}
                 />,
                 <FlatButton label={translate('pt.create.button.viewdcb.close')} primary={true} onClick={this.handleClose} />,
-              ]
-            
-            }
+              ]}
               modal={false}
               open={this.state.open}
               contentStyle={{ width: '80%', 'max-width': '80%' }}
@@ -741,7 +736,7 @@ class UiWindowForm extends Component {
   };
   handleOpen = () => {
     //console.log("Popup states",this.state);
-   // console.log("Popup Props",this.props);
+    // console.log("Popup Props",this.props);
     this.setState({
       valuesObj: {},
       open: true,

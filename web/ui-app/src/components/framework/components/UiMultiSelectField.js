@@ -73,7 +73,7 @@ class UiMultiSelectField extends Component {
     switch (this.props.ui) {
       case 'google':
         return (
-          <div style={{ display: 'flex', 'flex-direction': 'column-reverse' }}>
+          <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
             <SelectField
               className="custom-form-control-for-select"
               id={item.jsonPath.split('.').join('-')}

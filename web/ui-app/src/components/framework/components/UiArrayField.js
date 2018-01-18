@@ -49,7 +49,7 @@ export default class UiArrayField extends Component {
               floatingLabelStyle={{
                 color: '#A9A9A9',
                 fontSize: '20px',
-                'white-space': 'nowrap',
+                whiteSpace: 'nowrap',
               }}
               inputStyle={{ color: '#5F5C57' }}
               floatingLabelFixed={true}
@@ -103,7 +103,7 @@ export default class UiArrayField extends Component {
                     floatingLabelStyle={{
                       color: '#696969',
                       fontSize: '20px',
-                      'white-space': 'nowrap',
+                      whiteSpace: 'nowrap',
                     }}
                     inputStyle={{ color: '#5F5C57' }}
                     floatingLabelFixed={true}
@@ -161,36 +161,36 @@ export default class UiArrayField extends Component {
                 </Col>
               </Row>
               <br />
-              <Col xs={12} md={12}  style={this.props.item.style}>
-              <Table className="table table-striped table-bordered" responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>{translate('collection.pay.value')}</th>
-                    <th>{translate('reports.common.action')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.valueList.map((v, i) => {
-                    return (
-                      <tr key={i}>
-                        <td>{i + 1}</td>
-                        <td>{v}</td>
-                        <td>
-                          <div
-                            className="material-icons"
-                            onClick={() => {
-                              this.valueFromList(i);
-                            }}
-                          >
-                            delete
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
+              <Col xs={12} md={12} style={this.props.item.style}>
+                <Table className="table table-striped table-bordered" responsive>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>{translate('collection.pay.value')}</th>
+                      <th>{translate('reports.common.action')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.valueList.map((v, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{i + 1}</td>
+                          <td>{v}</td>
+                          <td>
+                            <div
+                              className="material-icons"
+                              onClick={() => {
+                                this.valueFromList(i);
+                              }}
+                            >
+                              delete
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
               </Col>
             </Dialog>
           </div>

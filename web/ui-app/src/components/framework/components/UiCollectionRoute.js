@@ -87,7 +87,7 @@ class UiCollectionRoute extends Component {
             floatingLabelStyle={{
               color: '#696969',
               fontSize: '20px',
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
             }}
             labelStyle={{ color: '#5F5C57' }}
             dropDownMenuProps={{
