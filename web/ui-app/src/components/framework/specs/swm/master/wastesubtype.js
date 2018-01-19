@@ -28,7 +28,7 @@ var dat = {
               name: 'wasteType',
               label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
               jsonPath: 'wasteType.code',
-              type: 'autoCompelete',
+              type: 'singleValueList',
               pattern: '',
               isRequired: false,
               isDisabled: false,
