@@ -10,6 +10,17 @@ var dat = {
         label: 'swm.vehiclemaintenance.search.title',
         fields: [
           {
+            name: 'vehicleTypeCode',
+            jsonPath: 'vehicleTypeCode',
+            label: 'swm.vehicles.create.vehicleType',
+            type: 'singleValueList',
+            isDisabled: false,
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=VehicleType|$..code|$..name',
+          },
+          {
             name: 'regNumber',
             jsonPath: 'regNumber',
             label: 'swm.vehicles.create.regNumber',

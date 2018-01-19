@@ -56,9 +56,9 @@ var dat = {
               patternErrorMsg: '',
             },
             {
-              name: 'dateRange',
+              name: 'invoicefromdate',
               jsonPath: 'fromDate',
-              label: 'FromDate',
+              label: 'swm.vendorpayment.create.invoiveFromDate',
               pattern: '',
               type: 'datePicker',
               isRequired: false,
@@ -68,9 +68,9 @@ var dat = {
               url: '',
             },
             {
-              name: 'dateRange',
+              name: 'invoicetodate',
               jsonPath: 'toDate',
-              label: 'ToDate',
+              label: 'swm.vendorpayment.create.invoiceToDate',
               pattern: '',
               type: 'datePicker',
               isRequired: false,

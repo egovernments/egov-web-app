@@ -2157,6 +2157,8 @@ var localization_EN_Data = {
   'swm.paymentvendor.create.InstrumentDate':'Instrument Date',
   'swm.paymentvendor.create.BankName': 'Bank Name',
   'swm.paymentvendor.create.BranchName': 'Branch Name',
+  'swm.vendorpayment.create.invoiveFromDate':'From Invoice Date',
+  'swm.vendorpayment.create.invoiceToDate': 'To Invoice Date',
   'swm.vendorpayment.search.title': 'Payment Vendor Search',
   'swm.vendorpayment.create.paymentNumber' : 'Payment Number',
   'swm.vendorpayment.create.VoucherNumber':'Voucher Number',
