@@ -23,6 +23,20 @@ var dat = {
           name:'wastesubTypeDetails',
           label: 'lcms.search.group.title.wasteSubTypeDetails',
           fields: [
+
+           {
+              name: 'wasteType',
+              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
+              jsonPath: 'wasteType.code',
+              type: 'autoCompelete',
+              pattern: '',
+              isRequired: false,
+              isDisabled: false,
+              maxLength: 128,
+              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
+              minLength: 1,
+              patternErrMsg: '',
+            },
             {
               name: 'wastesubTypeName',
               jsonPath: 'name',
@@ -51,19 +65,7 @@ var dat = {
               patternErrorMsg: '',
             },
 
-            {
-              name: 'wasteType',
-              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
-              jsonPath: 'wasteType.code',
-              type: 'autoCompelete',
-              pattern: '',
-              isRequired: false,
-              isDisabled: false,
-              maxLength: 128,
-              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
-              minLength: 1,
-              patternErrMsg: '',
-            },
+           
           ]
         },
       ],
