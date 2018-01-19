@@ -94,6 +94,21 @@ var dat = {
       },
     },
     'swm.create': {
+      beforeSubmit:
+      `
+      var path = formData.MasterMetaData.masterData[0];
+      if(path.shiftEndTime < path.shiftStartTime ){
+        alert("End time should be greater than start time");
+        shouldSubmit=false;
+      }
+      if(path.lunchEndTime < path.lunchStartTime){
+        alert("Lunch End time should be greater than Lunch Start time");
+        shouldSubmit=false;
+      }
+      if(path.graceTimeTo < path.graceTimeFrom){
+        alert("Grace Time To should be greater than Grace Time From");
+        shouldSubmit=false;
+      }`,
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
@@ -473,6 +488,21 @@ var dat = {
       url: '/egov-mdms-service/v1/_search?code={code}',
     },
     'swm.update': {
+      beforeSubmit:
+      `
+      var path = formData.MasterMetaData.masterData[0];
+      if(path.shiftEndTime < path.shiftStartTime ){
+        alert("End time should be greater than start time");
+        shouldSubmit=false;
+      }
+      if(path.lunchEndTime < path.lunchStartTime){
+        alert("Lunch End time should be greater than Lunch Start time");
+        shouldSubmit=false;
+      }
+      if(path.graceTimeTo < path.graceTimeFrom){
+        alert("Grace Time To should be greater than Grace Time From");
+        shouldSubmit=false;
+      }`,
       numCols: 3,
       useTimestamp: true,
       objectName: 'Shift',
