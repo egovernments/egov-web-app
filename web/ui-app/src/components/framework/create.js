@@ -353,6 +353,7 @@ class Report extends Component {
     let { setMockData, formData, setFormData } = this.props;
     let _form = JSON.parse(JSON.stringify(form));
     var ind;
+    /* -- Create the modified specs for multiple cards -- */
     for (
       var i = 0;
       i < specs[moduleName + "." + actionName].groups.length;
@@ -393,7 +394,7 @@ class Report extends Component {
       }
     } 
 
-    //for valueBasedOn feature
+    /* -- Check for valueBasedOn feature -- */
     for (
       var i = 0;
       i < specs[moduleName + "." + actionName].groups.length;
@@ -434,6 +435,7 @@ class Report extends Component {
         }
       }
 
+      /* -- Logic for show/hide feature -- */
       for (
         var j = 0;
         j < specs[moduleName + "." + actionName].groups[i].fields.length;
@@ -520,7 +522,7 @@ class Report extends Component {
         );
       }
     }
-    // setFormData(form);
+    /* -- Logic for sorting the specs on index value for multiple cards -- */
     var count = 0;
     var tempArr = [];
     for (
@@ -544,7 +546,6 @@ class Report extends Component {
         tempArr = [];
       }
     }
-    console.log(specs);
     setMockData(specs);
   }
 
@@ -3803,7 +3804,7 @@ class Report extends Component {
         }
       }
     }
-    this.checkifHasValueBasedOn(property, e.target.value);
+    // this.checkifHasValueBasedOn(property, e.target.value); --> Not Required on HandleChange
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
     this.checkifHasDependedantMdmsField(property, e.target.value);

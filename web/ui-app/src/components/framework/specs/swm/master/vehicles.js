@@ -246,7 +246,7 @@ var dat = {
         label: 'swm.vehicles.create.group.title.WarrantyDetails',
         fields: [
           {
-            name: 'isUnderWarranty',
+            name: 'isVehicleUnderWarranty',
             jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
@@ -563,7 +563,7 @@ var dat = {
         label: 'swm.vehicles.create.group.title.WarrantyDetails',
         fields: [
           {
-            name: 'isUnderWarranty',
+            name: 'isVehicleUnderWarranty',
             jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
@@ -624,7 +624,7 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-            //jsonPath: 'vehicles[0].isulbownedvehicle',
+            //jsonPath: 'vehicles[0].isUlbOwned',
             dependentJsonPath:'vehicles[0].vendor.name',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
@@ -857,7 +857,7 @@ var dat = {
         label: 'swm.vehicles.create.group.title.WarrantyDetails',
         fields: [
           {
-            name: 'isUnderWarranty',
+            name: 'isVehicleUnderWarranty',
             jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
