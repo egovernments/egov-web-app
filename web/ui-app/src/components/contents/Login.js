@@ -337,7 +337,7 @@ class Login extends Component {
               }
             ).then(
               function(response) {
-                var actions = response.actions ||[];
+                var actions = response.actions || [];
                 var roles = JSON.parse(localStorage.userRequest).roles;
                 actions.unshift({
                   id: 12299,
@@ -930,7 +930,7 @@ class Login extends Component {
                 <Col xs={12} md={6} mdPull={6}>
                   <Row>
                     <Col xs={12} md={12} onClick={handleSignUpModalOpen}>
-                      <IconButton style={styles.floatingIconButton} primary={true}>
+                      <IconButton style={styles.floatingIconButton}>
                         <i className="material-icons">person</i>
                       </IconButton>
                       <div style={{ float: 'left', cursor: 'pointer' }}>
