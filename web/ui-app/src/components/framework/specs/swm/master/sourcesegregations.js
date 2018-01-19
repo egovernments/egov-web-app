@@ -128,6 +128,23 @@ var dat = {
         ],
       },
       {
+        name: 'LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        jsonPath: "sourceSegregations[0].siteDetails.location",
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sourceSegregations[0].siteDetails.location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          }
+        ],
+      },
+      {
         name: 'CollectionTypeDetails',
         label: 'swm.create.group.title.CollectionTypeDetails',
         jsonPath: 'sourceSegregations[0].collectionDetails',

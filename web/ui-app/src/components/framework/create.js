@@ -392,7 +392,7 @@ class Report extends Component {
           specs[moduleName + "." + actionName].groups[ind + 1].index = j;
         }
       }
-    } 
+    }
 
     /* -- Check for valueBasedOn feature -- */
     for (
@@ -417,7 +417,7 @@ class Report extends Component {
                 specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
                 specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
               );
-              
+
             } else {
               // _.set(
               //   formData,
@@ -429,7 +429,7 @@ class Report extends Component {
                 specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
                 !specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
               );
-            
+
             }
           }
         }
@@ -549,7 +549,7 @@ class Report extends Component {
     setMockData(specs);
   }
 
-  displayUI(results) { 
+  displayUI(results) {
     let {
       setMetaData,
       setModuleName,
@@ -634,7 +634,7 @@ class Report extends Component {
       }
 
       self.props.setLoadingStatus("loading");
-    
+
 
       var _body = {};
       if (url.includes("/egov-mdms-service/v1/_search")) {
@@ -666,7 +666,7 @@ class Report extends Component {
             moduleDetails: moduleDetails
           }
         };
-       
+
         query = "";
       }
 
@@ -797,7 +797,7 @@ class Report extends Component {
         }
 
       if (
-        hashLocation.split("/").indexOf("create") == 1 && 
+        hashLocation.split("/").indexOf("create") == 1 &&
         specifications[
           `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ] &&
@@ -849,7 +849,7 @@ class Report extends Component {
           let params = JSON.parse(id);
           self.props.setLoadingStatus("loading");
           // console.log('query', query);
-         
+
           Object.keys(params).map(key => {
             _.set(requestBody, key, params[key]);
           });
@@ -877,7 +877,7 @@ class Report extends Component {
             false,
             mockObj.useTimestamp
           ).then(
-              function(res) { 
+              function(res) {
                self.props.setLoadingStatus("hide");
               if (
                 specifications[
@@ -1147,7 +1147,7 @@ class Report extends Component {
     }
   }
 
-  initData() { 
+  initData() {
     var hash = window.location.hash.split("/");
 
     let endPoint = "";
@@ -3073,7 +3073,7 @@ class Report extends Component {
       }
     }
 
-    _.forEach(depedants, function(value, key) { 
+    _.forEach(depedants, function(value, key) {
       //console.log(value.type);
       if (value.type == "dropDown") {
         let splitArray = value.pattern.split("?");
@@ -3218,13 +3218,13 @@ class Report extends Component {
                 value.pattern =
                 value.pattern &&
                 value.pattern.replace(/\[\*\]/g, "[" + dependantIdx + "]");
- 
+
               if(exp.indexOf('getValFromDropdownData') <0){
-                value.pattern = exp;  
+                value.pattern = exp;
                 exp= '';
 
               }
-            
+
             }
 
             let ajaxResult;
@@ -3270,7 +3270,7 @@ class Report extends Component {
         } catch (ex) {
           console.log("ex", ex);
         }
-      } else if (value.type == "autoFill") { 
+      } else if (value.type == "autoFill") {
         let splitArray = value.pattern.split("?");
         let context = "";
         let id = {};
@@ -3303,12 +3303,12 @@ class Report extends Component {
                         .split('=')[1]
                         .split('{')[1]
                         .split('}')[0];
-                  
+
           if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
         filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
         value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
       }
-      
+
                 id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
                     /\{(.*?)\}/,
@@ -3436,17 +3436,17 @@ class Report extends Component {
                       .split("=")[1]
                       .replace(/\{(.*?)\}/, e.target.value) || "";
                 } else {
-                     
+
                 let filterParameter=queryStringObject[i]
                         .split('=')[1]
                         .split('{')[1]
                         .split('}')[0];
-                  
+
           if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
         filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
         value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
       }
-      
+
                 id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
                     /\{(.*?)\}/,
@@ -3454,7 +3454,7 @@ class Report extends Component {
                       filterParameter
                     )
                   ) || "";
-            
+
                   if (id[queryStringObject[i].split("=")[0]] == "") {
                     dataFlag = 1;
                     break;
@@ -3467,7 +3467,7 @@ class Report extends Component {
               }
             }
           }
-         
+
           if (dataFlag == 0) {
             Api.commonApiPost(
               context,
@@ -3586,9 +3586,9 @@ class Report extends Component {
               }
             );
           }
-        } 
-        } 
-      // else if (value.type == "autoFillBody") { 
+        }
+        }
+      // else if (value.type == "autoFillBody") {
       //   let context = value.pattern;
       //   let requestName = value.paramName;
       //   let requestBody = {};
@@ -3608,7 +3608,7 @@ class Report extends Component {
       //         }
       //          console.log("in body");
       //         console.log(temp);
-      //       _.set(requestBody,requestName,temp);     
+      //       _.set(requestBody,requestName,temp);
       //  Api.commonApiPost(
       //       context,
       //       {},
@@ -3729,6 +3729,17 @@ class Report extends Component {
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
+    // if (property=="sourceSegregations[0].dumpingGround.code") {
+    //   this.props.dropDownOringalData
+    //   handleChange(
+    //     {targer:{value}},
+    //     "sourceSegregations[0].siteDetails.location",
+    //     false,
+    //     "",
+    //     "",
+    //     "patternErrMsg"
+    //   );
+    // }
     if (obj && obj.beforeHandleChange) {
       eval(obj.beforeHandleChange)
     }

@@ -316,6 +316,11 @@ class Report extends Component {
 
     Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
       function(res) {
+        var spec =
+          specifications[
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          ];
+        if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
         self.props.setFormData(res);
         self.setInitialUpdateData(
           res,
