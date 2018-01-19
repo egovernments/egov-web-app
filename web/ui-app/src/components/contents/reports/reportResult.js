@@ -15,6 +15,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import 'datatables.net-buttons/js/buttons.html5.js'; // HTML 5 file export
 import 'datatables.net-buttons/js/buttons.flash.js'; // Flash file export
 import { fonts } from '../../common/pdf-generation/PdfConfig';
+import headerLogo from '../../../images/headerLogo.png';
 pdfMake.fonts = fonts;
 window.JSZip = JSZip;
 
@@ -28,6 +29,9 @@ class ShowField extends Component {
       ck: {},
       rows: {},
       showPrintBtn: false,
+        // logopath:""
+        logoBase64:"",
+      ulbname :"",
     };
   }
 
@@ -49,11 +53,39 @@ class ShowField extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      reportName: this.props.match.params.reportName,
-      moduleName: this.props.match.params.moduleName,
+    let _this =this;
+    _this.setState({
+      reportName: _this.props.match.params.reportName,
+      moduleName: _this.props.match.params.moduleName,
     });
-    this.subHeader(this.props.match.params.moduleName);
+    _this.subHeader(_this.props.match.params.moduleName);
+    var tenantId = localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : '';
+    Api.commonApiPost("/tenant/v1/tenant/_search?tenantId="+tenantId+"&code="+tenantId+"&pageSize=200").then(
+      function(response) {
+        //console.log(moduleName, reportName);
+     //let hello =response.tenant[0].logoId;
+     let imgpath =response.tenant[0].logoId.substr(1);
+     if(response.tenant && response.tenant[0].logoId){
+      _this.convertImgToBase64URL('https://raw.githubusercontent.com/egovernments/egov-web-app/master/web/ui-app/public/'+imgpath,(data)=>{
+        _this.setState({
+            logoBase64 : data
+        });
+      });
+
+     _this.setState({
+         // logopath:response.tenant[0].logoId,
+          ulbname :response.tenant[0].name,
+     })
+       } // console.log('hide the loader');
+        // setForm();
+      },
+      function(err) {
+        // console.log(err);
+        alert('Try again later');
+        //_this.props.setLoadingStatus('hide');
+        // _this.props.toggleDailogAndSetText(true, 'Try again later');
+      }
+    );
   }
 
   componentWillReceiveProps(nextprops) {
@@ -66,17 +98,89 @@ class ShowField extends Component {
     // }
   }
 
+
+PrintingCutomize(doc){
+   let _this = this;
+  if(_this.state.moduleName =='lcms' && doc && doc.content){
+         doc.content.map((item)=>{
+              if(item.style=='title'){
+                return  doc.content[0].text =_this.state.ulbname
+              }
+            });
+             doc.content.splice( 1, 0, 
+                   {
+            table: {
+                widths: ['auto','*','auto'],
+                body: [
+                    [ 
+                    {
+                      image: _this.state.logoBase64,
+                      height: 100,
+                      width: 100,
+                    },{
+                        alignment: 'center',
+                        stack: [
+                            {
+                                margin: [0, 10, 0, 0],
+                                fontSize: 16,
+                                bold: true,
+                                text: _this.state.reportSubTitle,
+                            },
+                           
+                        ]
+                    }, 
+                    {
+                        alignment:'right',
+                        image:headerLogo,
+                         height: 100,
+                         width: 100,                     
+                     }
+                    ]
+                ]
+            },
+            layout: {
+                hLineWidth: function(line) { return 0; },
+                vLineWidth: function() { return 0; },
+                paddingBottom: function() { return 5; }
+            }
+       } );
+    }           
+
+}
+
+convertImgToBase64URL =(url,callback) => {
+    var img = new Image();
+    var dar
+    img.crossOrigin = 'Anonymous';
+    img.onload = function(){
+        var canvas = document.createElement('CANVAS'),
+        ctx = canvas.getContext('2d'), dataURL;
+        canvas.height = this.height;
+        canvas.width = this.width;
+        ctx.drawImage(this, 0, 0);
+        dataURL = canvas.toDataURL();
+       callback(dataURL);
+        //console.log(dataURL);
+        canvas = null; 
+        dar =dataURL
+    };
+    img.src = url;
+
+
+}
+
   getExportOptions = () => {
+    let _this=this;
     let flag = false;
 
-    for (let key in this.state.ck) {
-      if (this.state.ck[key]) {
+    for (let key in _this.state.ck) {
+      if (_this.state.ck[key]) {
         flag = true;
         break;
       }
     }
 
-    const { resultList } = this.props;
+    const { resultList } = _this.props;
     const resultHeader = resultList ? resultList.resultHeader : [];
     const columns = resultHeader.length
       ? resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1)
@@ -111,11 +215,17 @@ class ShowField extends Component {
             rows: '.selected',
             columns,
           },
-          filename: this.state.reportName,
-          title: this.state.reportSubTitle,
+          filename: _this.state.reportName,
+          title: _this.state.reportSubTitle,
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
+           customize: function ( doc ) {
+          
+              _this.PrintingCutomize(doc)
+              
+              
+            }
         },
         {
           extend: 'print',
@@ -128,16 +238,22 @@ class ShowField extends Component {
     } else {
       return [
         { extend: 'copy', text: 'Copy', exportOptions: { columns } },
-        { extend: 'csv', filename: this.state.reportName, text: 'CSV', exportOptions: { columns } },
-        { extend: 'excel', filename: this.state.reportName, text: 'Excel', exportOptions: { columns } },
+        { extend: 'csv', filename: _this.state.reportName, text: 'CSV', exportOptions: { columns } },
+        { extend: 'excel', filename: _this.state.reportName, text: 'Excel', exportOptions: { columns } },
         {
           extend: 'pdf',
-          filename: this.state.reportName,
-          title: this.state.reportSubTitle,
+          filename: _this.state.reportName,
+          title: _this.state.reportSubTitle,
           exportOptions: { columns },
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
+           customize: function ( doc ) {
+          
+              _this.PrintingCutomize(doc)
+              
+              
+            }
         },
         { extend: 'print', text: 'Print', exportOptions: { columns } },
       ];

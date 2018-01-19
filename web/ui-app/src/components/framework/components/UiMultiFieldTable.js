@@ -73,6 +73,8 @@ class UiMultiFieldTable extends Component {
     if ((nextProps.item.type=="tableList" && _.get(nextProps.formData,nextProps.item.jsonPath))) {
       // console.log('receive props condition succeeded', nextProps.item.jsonPath);
       this.renderOnLoad(nextProps);
+      this.setState({isintialLoad: false,});
+
     }
   }
 
@@ -173,7 +175,9 @@ class UiMultiFieldTable extends Component {
     var idx= this.state.index + 1;
     this.setState(
       {
-        index: idx,//this.state.index + 1,
+        index: idx,
+        //this.state.index + 1,
+        isintialLoad:true,
       },
       () => {
         for (var i = 0; i < val.length; i++) {

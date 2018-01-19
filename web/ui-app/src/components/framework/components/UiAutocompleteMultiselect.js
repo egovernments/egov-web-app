@@ -142,14 +142,35 @@ initData(props) {
 
   handleAutoCompleteTyping = (searchText) => console.debug('You typed in AutoComplete :', searchText) // eslint-disable-line no-console
 
+getVal = (path, dateBool) => {
+    var _val = _.get(this.props.formData, path);
+    if (dateBool && typeof _val == 'string' && _val && _val.indexOf('-') > -1) {
+      var _date = _val.split('-');
+      return new Date(_date[0], Number(_date[1]) - 1, _date[2]);
+    }
+
+    return typeof _val != 'undefined' ? _val : '';
+  };
+
   renderAutomultiselect = (item) => {
     const { multiselect,dataSource } = this.state;
     const {dropDownData} =this.props;
+    let value =this.getVal(item.jsonPath);
+    value = value && value.split(',');
+  let displayVal =[]
+{value && value.map((value)=>{
+                     let obj={};
+                     obj['label']=value
+                     obj['value'] =value
+                return  displayVal.push(obj)
+                  })}
     const dataSourceNodes = dataSource.map(({ key, value }) => (
       <div key={key} value={key} label={value}>
         {value}
       </div>
     ))
+    switch (this.props.ui) {
+      case 'google':
     return (
 
     <div> 
@@ -157,7 +178,7 @@ initData(props) {
               {item.label} <span style={{ color: '#FF0000' }}>{item.isRequired ? ' *' : ''}</span>
         </span>
 
-      <div className="hello" style={{ display: 'flex', 'flex-direction': 'column-reverse' }}>
+      <div style={{ display: 'flex', 'flex-direction': 'column-reverse' }}>
          
           <SuperSelectField
            className="custom-form-control-for-select"
@@ -174,8 +195,8 @@ initData(props) {
             autocompleteUnderlineFocusStyle={{ borderColor: '#5f5c62' }}
             hintText='-- Please Select --'
             onChange={this.handleSelection}
-            onAutoCompleteTyping={this.handleAutoCompleteTyping}
-            value={multiselect}
+            //onAutoCompleteTyping={this.handleAutoCompleteTyping}
+            value={displayVal}
             hoverColor='rgba(3, 169, 244, 0.15)'
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             menuStyle ={{overflow: 'hidden' }}
@@ -194,7 +215,9 @@ initData(props) {
         </div>
       </div>  
 
+    
     )
+   }
   }
   render() {
     return <div>{this.renderAutomultiselect(this.props.item)}</div>;
@@ -205,6 +228,8 @@ initData(props) {
 
 const mapStateToProps = state => ({
   dropDownData: state.framework.dropDownData,
+    formData: state.frameworkForm.form,
+
 });
 
 const mapDispatchToProps = dispatch => ({
