@@ -28,7 +28,7 @@ class UiSelectField extends Component {
     //debugger;
     // console.log("UiSelectField, initData() called", props);
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
-    if (
+        if (
       item.hasOwnProperty('url') &&
       item.url &&
       item.url.search('\\|') > -1 &&
@@ -125,7 +125,7 @@ class UiSelectField extends Component {
             //   item.expressionMsg
             // );
           }
-        },
+            },
         function(err) {
           console.log(err);
         }
@@ -149,6 +149,7 @@ class UiSelectField extends Component {
 
     //load dependant field values on update/view screen
     if (dropDownData == undefined && value && nextProps.dropDownData) {
+
       let { item, handler } = this.props;
       if (handler)
         handler(
@@ -163,8 +164,30 @@ class UiSelectField extends Component {
         );
     }
 
-    if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData === undefined) {
+    if (this.props.location.pathname != nextProps.history.location.pathname){
+      // if(nextProps.item.jsonPath == 'assetSubCategory'){
+      //   console.log(nextProps);
+      //   nextProps.setDropDownData('','');
+      // }
+      console.log(nextProps);
+      if(this.props.item.url != nextProps.item.url){
+
+      if(tracker.length && _.some(tracker, { jsonPath: nextProps.item.jsonPath })){
+      for(let x=0;x<tracker.length;x++){
+        if(tracker[x].jsonPath == nextProps.item.jsonPath){
+          tracker.splice(x,1);
+          x--;
+        }
+      }
+
+          }
       this.initData(nextProps);
+    }
+
+    }
+    if( dropDownData === undefined) {
+      this.initData(nextProps);
+
     }
   }
 
