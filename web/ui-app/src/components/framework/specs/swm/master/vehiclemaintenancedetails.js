@@ -163,7 +163,7 @@ var dat = {
               {
                 autoCompleteUrl: '/swm-services/vehiclemaintenances/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
                 autoFillFields: {
-                  'vehicleMaintenanceDetails[0].vehicle.vehicleType.name': 'vehicleMaintenances[0].vehicle.vehicleType.name',
+                  //'vehicleMaintenanceDetails[0].vehicle.vehicleType.name': 'vehicleMaintenances[0].vehicle.vehicleType.name',
                   'vehicleMaintenanceDetails[0].vehicle.insuranceDetails.insuranceValidityDate':
                     'vehicleMaintenances[0].vehicle.insuranceDetails.insuranceValidityDate',
                   'vehicleMaintenanceDetails[0].downtimeDefined': 'vehicleMaintenances[0].downtimeforMaintenance',
@@ -174,6 +174,13 @@ var dat = {
                 autoCompleteUrl: '/swm-services/vehiclemaintenancedetails/_getnextscheduleddate?vehicleRegNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
                 autoFillFields: {
                    'vehicleMaintenanceDetails[0].vehicleScheduledMaintenanceDate': 'scheduledDate' 
+                }
+              },
+
+              {
+                autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenanceDetails[0].vehicle.regNumber}',
+                autoFillFields: {
+                  'vehicleMaintenanceDetails[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name'
                 }
               },
             ],
