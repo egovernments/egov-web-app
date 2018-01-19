@@ -1,9 +1,25 @@
 ## Running the app
-    +  Clone the repository
-    +  Navigate to ui-app folder.
-    + `npm install` - Install the dependencies
-    + `npm start` - To run the dev server.
-    + `npm run build` - To get a production build.
+    + Clone the repository
+    + Navigate to ui-app folder.
+    + npm install - Install the dependencies
+    + npm start - To run the dev server.
+    + npm run build - To get a production build.
+
+## Folder Structure
+   Some of the important folders which a developer should be aware is listed down here.Please remember that this is not the exhaustive list of files/folders but only the ones the developer needs to be aware of.
+   + api - This contains the file which is responsible for making the api calls.
+   + components  
+        + framework 
+            + specs - Contains the specs files.
+            + components - Contains the UI components. 
+            + utility
+            + mdms
+            + create.js - Code for create screens
+            + view.js - View Screens
+            + search.js - Search Screens
+        + non-framework - Any screen which as a developer feels the framework does not support can be included here.
+   + reducers - All the reducers can be found here.
+
 ## Redux State of the App
 Since bulk of the business logic resides with redux, the developer should be aware of the redux state.
 
