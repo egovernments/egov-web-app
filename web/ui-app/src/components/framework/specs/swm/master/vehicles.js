@@ -247,7 +247,7 @@ var dat = {
         fields: [
           {
             name: 'isUnderWarranty',
-            jsonPath: 'vehicles[0].isUnderWarranty',
+            jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
             isRequired: false,
@@ -316,7 +316,7 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-            jsonPath: 'vehicles[0].isulbownedvehicle',
+            jsonPath: 'vehicles[0].isUlbOwned',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
             isRequired: false,
@@ -564,7 +564,7 @@ var dat = {
         fields: [
           {
             name: 'isUnderWarranty',
-            jsonPath: 'vehicles[0].isUnderWarranty',
+            jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
             isRequired: false,
@@ -858,7 +858,7 @@ var dat = {
         fields: [
           {
             name: 'isUnderWarranty',
-            jsonPath: 'vehicles[0].isUnderWarranty',
+            jsonPath: 'vehicles[0].isVehicleUnderWarranty',
             label: 'swm.vehicles.create.isUnderWarranty',
             type: 'checkbox',
             isRequired: false,
@@ -935,7 +935,7 @@ var dat = {
         fields: [
           {
             name: 'ulbOwnedVehicle',
-           jsonPath: 'vehicles[0].isulbownedvehicle',
+           jsonPath: 'vehicles[0].isUlbOwned',
             //dependentJsonPath: 'vehicles[0].vendor.vendorNo',
             label: 'swm.vehicles.create.ulbOwnedVehicle',
             type: 'checkbox',
