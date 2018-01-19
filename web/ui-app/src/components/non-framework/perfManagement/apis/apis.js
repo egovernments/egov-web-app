@@ -129,13 +129,13 @@ export const fetchCompareSearchAPI = (finYears, kpis, ulbs, cb) => {
   // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2016-17&kpiCodes=PCSOW&ulbs=default,mh.rohatest,mh.aliba&tenantId=default`, [], {}, false, true).then(function(res) {
   
   // VALUE TYPE TEST WITH DOCUMENTS
-  Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2017-18&kpiCodes=DOD&ulbs=mh.roha&tenantId=mh.aliba`, [], {}, false, true).then(function(res) {
+  // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2017-18&kpiCodes=DOD&ulbs=mh.roha&tenantId=mh.aliba`, [], {}, false, true).then(function(res) {
 
   // TEXT TYPE TEST
   // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2017-18&kpiCodes=EWOF&ulbs=default&tenantId=default`, [], {}, false, true).then(function(res) {
 
   // ACTUAL API CALLING
-  // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=${finYears}&kpiCodes=${kpis}&ulbs=${ulbs}`, [], {}, false, true).then(function(res) {
+  Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=${finYears}&kpiCodes=${kpis}&ulbs=${ulbs}`, [], {}, false, true).then(function(res) {
       if (res && res.ulbs) {
         cb(null, res);
       } else {
@@ -151,8 +151,8 @@ export const fetchCompareSearchAPI = (finYears, kpis, ulbs, cb) => {
 export const fetchFileByFileStoreId = (fileStoreId) => {
   let baseURL   = window.location.origin;
   let tenantId  = (localStorage.getItem('tenantId') || 'default') 
-  let fileURL   = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6`
-  // let fileURL = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=${fileStoreId}`
+  // let fileURL   = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6`
+  let fileURL = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=${fileStoreId}`
   console.log(fileURL)
   window.open(fileURL)
 }
