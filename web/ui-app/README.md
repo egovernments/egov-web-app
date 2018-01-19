@@ -1,3 +1,9 @@
+## Running the app
+    +  Clone the repository
+    +  Navigate to ui-app folder.
+    + `npm install` - Install the dependencies
+    + `npm start` - To run the dev server.
+    + `npm run build` - To get a production build.
 ## Redux State of the App
 Since bulk of the business logic resides with redux, the developer should be aware of the redux state.
 
@@ -35,4 +41,7 @@ Since bulk of the business logic resides with redux, the developer should be awa
     + snackbarOpen
     + toastMsg - If one needs to show a toast message an action can be dispatched to set the toastMsg.
 
+## Routing
+
+All the routes can be found in the **router.js**, which maps the path to a component.
 
