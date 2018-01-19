@@ -339,8 +339,18 @@ class Report extends Component {
     }
   }
 
+  getValNew = (form, path, dateBool) => {
+    var _val = _.get(form, path);
+    if (dateBool && typeof _val == "string" && _val && _val.indexOf("-") > -1) {
+      var _date = _val.split("-");
+      return new Date(_date[0], Number(_date[1]) - 1, _date[2]);
+    }
+
+    return typeof _val != "undefined" ? _val : "";
+  };
+
   setInitialUpdateData(form, specs, moduleName, actionName, objectName) {
-    let { setMockData } = this.props;
+    let { setMockData, formData, setFormData } = this.props;
     let _form = JSON.parse(JSON.stringify(form));
     var ind;
     for (
@@ -379,6 +389,48 @@ class Report extends Component {
             )
           );
           specs[moduleName + "." + actionName].groups[ind + 1].index = j;
+        }
+      }
+    } 
+
+    //for valueBasedOn feature
+    for (
+      var i = 0;
+      i < specs[moduleName + "." + actionName].groups.length;
+      i++
+    ) {
+      for (var s = 0; s < specs[moduleName + '.' + actionName].groups[i].fields.length; s++) {
+        if (
+          specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn &&
+          specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn.length
+        ) {
+          for (let k = 0; k < specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn.length; k++) {
+            if (this.getValNew(form, specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].jsonPath)) {
+              // _.set(
+              //   formData,
+              //   specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
+              //   specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
+              // );
+              _.set(
+                form,
+                specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
+                specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
+              );
+              
+            } else {
+              // _.set(
+              //   formData,
+              //   specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
+              //   !specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
+              // );
+              _.set(
+                form,
+                specs[moduleName + '.' + actionName].groups[i].fields[s].jsonPath,
+                !specs[moduleName + '.' + actionName].groups[i].fields[s].valueBasedOn[k].valueIfDataFound
+              );
+            
+            }
+          }
         }
       }
 
@@ -457,6 +509,7 @@ class Report extends Component {
         }
       }
 
+
       if (
         specs[moduleName + "." + actionName].groups[ind || i].children &&
         specs[moduleName + "." + actionName].groups[ind || i].children.length
@@ -467,7 +520,31 @@ class Report extends Component {
         );
       }
     }
-
+    // setFormData(form);
+    var count = 0;
+    var tempArr = [];
+    for (
+      var i = 0;
+      i < specs[moduleName + "." + actionName].groups.length;
+      i++
+    ) {
+      if (specs[moduleName + "." + actionName].groups[i].multiple && !specs[moduleName + "." + actionName].groups[i].index) {
+        var flag = 0;
+        count = i;
+        while(count < specs[moduleName + "." + actionName].groups.length &&
+        specs[moduleName + "." + actionName].groups[i].name == specs[moduleName + "." + actionName].groups[count].name){
+          tempArr.push(specs[moduleName + "." + actionName].groups[count]);
+          count++;
+          flag++;
+        }
+        tempArr.sort( function(obj1, obj2) {
+          return obj1.index - obj2.index;
+        })
+        specs[moduleName + "." + actionName].groups.splice(i, flag, ...tempArr);
+        tempArr = [];
+      }
+    }
+    console.log(specs);
     setMockData(specs);
   }
 

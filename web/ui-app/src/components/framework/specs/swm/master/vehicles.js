@@ -865,6 +865,12 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             defaultValue: '',
+            valueBasedOn: [
+              {
+                jsonPath: 'vehicles[0].kilometers',
+                valueIfDataFound: true,
+              },
+            ],
             showHideFields: [
               {
                 ifValue: true,
@@ -881,7 +887,8 @@ var dat = {
                     isField: true,
                   },
                 ],
-              }, {
+              },
+              {
                 ifValue: false,
                 show: [],
                 hide: [
@@ -898,6 +905,7 @@ var dat = {
                 ],
               },
             ],
+            
           },
           {
             name: 'kilometers',
@@ -934,7 +942,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-           defaultValue: false,
+            defaultValue: false,
             valueBasedOn: [
               {
                 jsonPath: 'vehicles[0].vendor.vendorNo',

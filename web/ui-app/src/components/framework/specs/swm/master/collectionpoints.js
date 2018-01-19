@@ -154,6 +154,16 @@ var dat = {
                     isGroup: false,
                     isField: true,
                   },
+                  {
+                    name: 'latitude',
+                    isGroup: false,
+                    isField: true,
+                  },
+                  {
+                    name: 'longitude',
+                    isGroup: false,
+                    isField: true,
+                  }
                 ],
               },
             ],
@@ -176,6 +186,7 @@ var dat = {
             label: 'ac.create.Latitude',
             type: 'number',
             isRequired: false,
+            hide: true,
             isDisabled: false,
             patternErrorMsg: '',
           },
@@ -185,6 +196,7 @@ var dat = {
             label: 'ac.create.Longitude',
             type: 'number',
             isRequired: false,
+            hide: true,
             isDisabled: false,
             patternErrorMsg: '',
           },
@@ -463,16 +475,26 @@ var dat = {
                     isGroup: false,
                     isField: true,
                   },
+                  {
+                    name: 'latitude',
+                    isGroup: false,
+                    isField: true,
+                  },
+                  {
+                    name: 'longitude',
+                    isGroup: false,
+                    isField: true,
+                  }
                 ],
               },
              
             ],
-            valueBasedOn: [
-              {
-                jsonPath: 'collectionPoints[0].binDetails[0].rfid',
-                valueIfDataFound: true,
-              },
-            ],
+            // valueBasedOn: [
+            //   {
+            //     jsonPath: 'collectionPoints[0].binDetails[0].rfid',
+            //     valueIfDataFound: true,
+            //   },
+            // ],
           },
           {
             name: 'rfid',
@@ -490,6 +512,7 @@ var dat = {
             name: 'latitude',
             jsonPath: 'collectionPoints[0].binDetails[0].latitude',
             label: 'ac.create.Latitude',
+            hide: true,
             type: 'number',
             isRequired: false,
             isDisabled: false,
@@ -500,6 +523,7 @@ var dat = {
             jsonPath: 'collectionPoints[0].binDetails[0].longitude',
             label: 'ac.create.Longitude',
             type: 'number',
+            hide: true,
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
