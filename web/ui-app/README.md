@@ -5,8 +5,7 @@ Since bulk of the business logic resides with redux, the developer should be awa
   + actionList - List of menu items. Visible once the user logs in.
   + token
   + tenantInfo
-+ form 
-This section of the state is deprecated. **This will be removed in the future versions.**
++ form - This section of the state is deprecated. **This will be removed in the future versions.**
 + framework
   + actionName - Suggests if the current screen is a create/update/view/search screen.
   + moduleName
