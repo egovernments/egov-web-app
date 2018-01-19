@@ -354,7 +354,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [
@@ -500,7 +500,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [
@@ -855,7 +855,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [
@@ -980,7 +980,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [
@@ -1342,7 +1342,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [
@@ -1489,7 +1489,7 @@ var dat = {
             }
           },
           {
-            type: "tableList",
+            type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
               header: [

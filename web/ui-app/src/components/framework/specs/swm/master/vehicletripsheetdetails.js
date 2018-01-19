@@ -215,7 +215,7 @@ var dat = {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
         fields: [{
-          type: "tableList",
+          type: "tableListTemp",
           jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
           tableList: {
             header: [{
@@ -472,7 +472,7 @@ var dat = {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
         fields: [{
-          type: "tableList",
+          type: "tableListTemp",
           jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
           tableList: {
             header: [{
@@ -717,7 +717,7 @@ var dat = {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
         fields: [{
-          type: "tableList",
+          type: "tableListTemp",
           jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
           tableList: {
             header: [{

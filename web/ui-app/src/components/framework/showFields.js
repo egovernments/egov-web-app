@@ -31,6 +31,7 @@ import UiPinCode from './components/UiPinCode';
 import UiArrayField from './components/UiArrayField';
 import UiFileTable from './components/UiFileTable';
 import UiMultiFieldTable from './components/UiMultiFieldTable';
+import UiMultiFieldTableTemp from './components/UiMultiFieldTableTemp';
 import UiHyperLink from './components/UiHyperLink';
 import UigoogleMaps from './components/UigoogleMaps';
 import UiWorkflow from './components/UiWorkflow';
@@ -110,6 +111,7 @@ class ShowFields extends Component {
                         field.type === 'viewDocuments' ||
                         field.type === 'fileTable' ||
                         field.type === 'tableList' ||
+                        field.type === 'tableListTemp'  ||
                         field.type === 'nestedTableList' ||
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'workflow' ||
@@ -125,6 +127,7 @@ class ShowFields extends Component {
                         field.type === 'viewDocuments' ||
                         field.type === 'fileTable' ||
                         field.type === 'tableList' ||
+                        field.type === 'tableListTemp'  ||
                         field.type === 'nestedTableList' ||
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'window' ||
@@ -292,7 +295,7 @@ class ShowFields extends Component {
     // console.log(item.type, item.jsonPath);
     if (
       screen == 'view' &&
-      ['viewDocuments', 'documentList', 'fileTable', 'arrayText', 'arrayNumber', 'tableList', 'workflow', 'singleFileUpload'].indexOf(item.type) == -1
+      ['viewDocuments', 'documentList', 'fileTable', 'arrayText', 'arrayNumber', 'tableList','tableListTemp', 'workflow', 'singleFileUpload'].indexOf(item.type) == -1
     ) {
       if (item.type == 'datePicker') {
         item.isDate = true;
@@ -607,6 +610,19 @@ class ShowFields extends Component {
             screen={screen}
           />
         );
+
+        case 'tableListTemp':
+          return (
+            <UiMultiFieldTableTemp
+              tabIndex={index}
+              ui={this.props.ui}
+              getVal={this.props.getVal}
+              item={item}
+              fieldErrors={this.props.fieldErrors}
+              handler={this.props.handler}
+              screen={screen}
+            />
+          );
       case 'nestedTableList':
         return (
           <UiNestedTablesInputs
