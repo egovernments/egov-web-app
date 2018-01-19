@@ -4,65 +4,60 @@ var dat = {
     useTimestamp: true,
     objectName: "vehicleTripSheetDetails",
     url: "/swm-services/vehicletripsheetdetails/_search",
-    groups: [
-      {
-        name: "vehicleTripEntrySearch",
-        label: "swm.vehiclestripsheet.search.vehicleTripEntrySearch",
-        fields: [
-          {
-            name: "regNumber",
-            jsonPath: "regNumber",
-            label: "swm.vehiclestripsheet.create.regNumber",
-            pattern: "",
-            type: "autoCompelete",
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: "",
-            patternErrorMsg: "",
-            url:
-              "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber"
-          },
-          {
-            name: "routeName",
-            jsonPath: "routeCode",
-            label: "swm.vehiclestripsheet.search.routeName",
-            pattern: "",
-            type: "autoCompelete",
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: "",
-            patternErrorMsg: "",
-            url: "/swm-services/routes/_search?|$.routes.*.code|$.routes.*.name"
-          },
-          {
-            name: " tripStartdate",
-            jsonPath: "tripStartDate",
-            label: "swm.vehiclestripsheet.search.tripStartDate",
-            pattern: "",
-            type: "datePicker",
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: "",
-            url: ""
-          },
-          {
-            name: "tripEndDate",
-            jsonPath: "tripEndDate",
-            label: "swm.vehiclestripsheet.search.tripEndDate",
-            pattern: "",
-            type: "datePicker",
-            isRequired: false,
-            isDisabled: false,
-            defaultValue: "",
-            patternErrorMsg: "",
-            url: ""
-          }
-        ]
-      }
-    ],
-    result: {
-      header: [
+    groups: [{
+      name: "vehicleTripEntrySearch",
+      label: "swm.vehiclestripsheet.search.vehicleTripEntrySearch",
+      fields: [{
+          name: "regNumber",
+          jsonPath: "regNumber",
+          label: "swm.vehiclestripsheet.create.regNumber",
+          pattern: "",
+          type: "autoCompelete",
+          isRequired: false,
+          isDisabled: false,
+          defaultValue: "",
+          patternErrorMsg: "",
+          url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber"
+        },
         {
+          name: "routeName",
+          jsonPath: "routeCode",
+          label: "swm.vehiclestripsheet.search.routeName",
+          pattern: "",
+          type: "autoCompelete",
+          isRequired: false,
+          isDisabled: false,
+          defaultValue: "",
+          patternErrorMsg: "",
+          url: "/swm-services/routes/_search?|$.routes.*.code|$.routes.*.name"
+        },
+        {
+          name: " tripStartdate",
+          jsonPath: "tripStartDate",
+          label: "swm.vehiclestripsheet.search.tripStartDate",
+          pattern: "",
+          type: "datePicker",
+          isRequired: false,
+          isDisabled: false,
+          defaultValue: "",
+          url: ""
+        },
+        {
+          name: "tripEndDate",
+          jsonPath: "tripEndDate",
+          label: "swm.vehiclestripsheet.search.tripEndDate",
+          pattern: "",
+          type: "datePicker",
+          isRequired: false,
+          isDisabled: false,
+          defaultValue: "",
+          patternErrorMsg: "",
+          url: ""
+        }
+      ]
+    }],
+    result: {
+      header: [{
           label: "swm.vehiclestripsheet.create.regNumber"
         },
         {
@@ -94,7 +89,7 @@ var dat = {
     }
   },
   "swm.create": {
-    beforeSubmit:`var oneDay = 24*60*60*1000;
+    beforeSubmit: `var oneDay = 24*60*60*1000;
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
@@ -111,12 +106,10 @@ var dat = {
     objectName: "vehicleTripSheetDetails",
     idJsonPath: "vehicleTripSheetDetails[0].tripNo",
     title: "swm.vehiclestripsheet.create.title",
-    groups: [
-      {
+    groups: [{
         name: "VehicleDetails",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "regNumber",
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
@@ -124,14 +117,11 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: "",
-            url:
-              "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
+            url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
+              autoCompleteUrl: "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].vehicle.vendor.name":
-                  "vehicles[0].vendor.name"
+                "vehicleTripSheetDetails[0].vehicle.vendor.name": "vehicles[0].vendor.name"
               }
             }
           },
@@ -163,14 +153,13 @@ var dat = {
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+              autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].route.collectionType.name":"routes[0].collectionType.name",
-                "vehicleTripSheetDetails[0].route.collectionPoints":"routes[0].collectionPoints",
-                "vehicleTripSheetDetails[0].route.totalDistance":"routes[0].totalDistance",
-                "vehicleTripSheetDetails[0].totalGarbageEstimate":"routes[0].totalGarbageEstimate",
-                "vehicleTripSheetDetails[0].route.dumpingGround.name":"routes[0].dumpingGround.name"
+                "vehicleTripSheetDetails[0].route.collectionType.name": "routes[0].collectionType.name",
+                "vehicleTripSheetDetails[0].route.collectionPoints": "routes[0].collectionPoints",
+                "vehicleTripSheetDetails[0].route.totalDistance": "routes[0].totalDistance",
+                "vehicleTripSheetDetails[0].route.totalGarbageEstimate": "routes[0].totalGarbageEstimate",
+                "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].dumpingGround.name"
               }
             }
             // url:'swm-services/routes/_search?|$.routes.*.code|$.routes.*.name',
@@ -225,57 +214,46 @@ var dat = {
       {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-          {
-            type: "tableList",
-            jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
-            tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
-                },
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
-                }
-              ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
-                },
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
-                  isDisabled: true
-                }
-              ],
-              actionsNotRequired: true
-            },
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'vehicleTripSheetDetails[0].collectionPoints',
-              key: 'code',
-              from:'collectionPoint.code'
-            }
+        fields: [{
+          type: "tableList",
+          jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
+          tableList: {
+            header: [{
+                label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+              },
+              {
+                label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+              }
+            ],
+            values: [{
+                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+                isDisabled: true
+              },
+              {
+                name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
+                isDisabled: true
+              }
+            ],
+            actionsNotRequired: true
+          },
+          hasATOAATransform: true,
+          aATransformInfo: {
+            to: 'vehicleTripSheetDetails[0].collectionPoints',
+            key: 'code',
+            from: 'collectionPoint.code'
           }
-        ],
+        }],
       },
       {
         name: "tripSheetDetails",
         label: "swm.vehiclestripsheet.create.group.title.tripSheetDetails",
-        fields: [
-          {
+        fields: [{
             name: "scheduledDateFrom",
             jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
             label: "swm.vehiclestripsheet.create.scheduledDateFrom",
@@ -322,18 +300,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "exitWeight",
@@ -344,18 +319,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "garbageWeight",
@@ -374,7 +346,7 @@ var dat = {
     tenantIdRequired: true
   },
   "swm.update": {
-    beforeSubmit:`var oneDay = 24*60*60*1000;
+    beforeSubmit: `var oneDay = 24*60*60*1000;
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
@@ -391,12 +363,10 @@ var dat = {
     objectName: "vehicleTripSheetDetails",
     title: "swm.vehiclestripsheet.create.title",
     idJsonPath: "vehicleTripSheetDetails[0].tripNo",
-    groups: [
-      {
+    groups: [{
         name: "VehicleDetails",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "regNumber",
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
@@ -404,14 +374,11 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: "",
-            url:
-              "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
+            url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
+              autoCompleteUrl: "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].vehicle.vendor.name":
-                  "vehicles[0].vendor.name"
+                "vehicleTripSheetDetails[0].vehicle.vendor.name": "vehicles[0].vendor.name"
               }
             }
           },
@@ -443,14 +410,13 @@ var dat = {
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+              autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].route.collectionType.name":"routes[0].collectionType.name",
-                "vehicleTripSheetDetails[0].route.collectionPoints":"routes[0].collectionPoints",
-                "vehicleTripSheetDetails[0].route.totalDistance":"routes[0].totalDistance",
-                "vehicleTripSheetDetails[0].totalGarbageEstimate":"routes[0].totalGarbageEstimate",
-                "vehicleTripSheetDetails[0].route.dumpingGround.name":"routes[0].dumpingGround.name"
+                "vehicleTripSheetDetails[0].route.collectionType.name": "routes[0].collectionType.name",
+                "vehicleTripSheetDetails[0].route.collectionPoints": "routes[0].collectionPoints",
+                "vehicleTripSheetDetails[0].route.totalDistance": "routes[0].totalDistance",
+                "vehicleTripSheetDetails[0].route.totalGarbageEstimate": "routes[0].totalGarbageEstimate",
+                "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].dumpingGround.name"
               }
             }
             // url:'swm-services/routes/_search?|$.routes.*.code|$.routes.*.name',
@@ -505,57 +471,46 @@ var dat = {
       {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-          {
-            type: "tableList",
-            jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
-            tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
-                },
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
-                }
-              ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
-                },
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
-                  isDisabled: true
-                }
-              ],
-              actionsNotRequired: true
-            },
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'vehicleTripSheetDetails[0].collectionPoints',
-              key: 'code',
-              from:'collectionPoint.code'
-            }
+        fields: [{
+          type: "tableList",
+          jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
+          tableList: {
+            header: [{
+                label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+              },
+              {
+                label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+              }
+            ],
+            values: [{
+                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+                isDisabled: true
+              },
+              {
+                name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
+                isDisabled: true
+              }
+            ],
+            actionsNotRequired: true
+          },
+          hasATOAATransform: true,
+          aATransformInfo: {
+            to: 'vehicleTripSheetDetails[0].collectionPoints',
+            key: 'code',
+            from: 'collectionPoint.code'
           }
-        ],
+        }],
       },
       {
         name: "tripSheetDetails",
         label: "swm.vehiclestripsheet.create.group.title.tripSheetDetails",
-        fields: [
-          {
+        fields: [{
             name: "scheduledDateFrom",
             jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
             label: "swm.vehiclestripsheet.create.scheduledDateFrom",
@@ -602,18 +557,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "exitWeight",
@@ -624,18 +576,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "garbageWeight",
@@ -660,12 +609,10 @@ var dat = {
     objectName: "vehicleTripSheetDetails",
     title: "swm.vehiclestripsheet.create.title",
     searchUrl: "/swm-services/vehicletripsheetdetails/_search?tripNo={tripNo}",
-    groups: [
-      {
+    groups: [{
         name: "VehicleDetails",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "regNumber",
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
@@ -673,14 +620,11 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: "",
-            url:
-              "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
+            url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
+              autoCompleteUrl: "/swm-services/vehicles/_search?regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].vendorName":
-                  "vehicles[0].vendor.name"
+                "vehicleTripSheetDetails[0].vendorName": "vehicles[0].vendor.name"
               }
             }
           },
@@ -712,13 +656,12 @@ var dat = {
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+              autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
               autoFillFields: {
-                "vehicleTripSheetDetails[0].collectionType":"routes[0].collectionType.name",
-                "vehicleTripSheetDetails[0].collectionPoints":"routes[0].collectionPoints",
-                "vehicleTripSheetDetails[0].totalDistanceCovered":"routes[0].totalDistance",
-                "vehicleTripSheetDetails[0].totalGarbageEstimate":"routes[0].totalGarbageEstimate"
+                "vehicleTripSheetDetails[0].collectionType": "routes[0].collectionType.name",
+                "vehicleTripSheetDetails[0].collectionPoints": "routes[0].collectionPoints",
+                "vehicleTripSheetDetails[0].totalDistanceCovered": "routes[0].totalDistance",
+                "vehicleTripSheetDetails[0].totalGarbageEstimate": "routes[0].totalGarbageEstimate"
               }
             }
             // url:'swm-services/routes/_search?|$.routes.*.code|$.routes.*.name',
@@ -773,57 +716,46 @@ var dat = {
       {
         name: 'locationsCovered',
         label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
-        fields: [
-          {
-            type: "tableList",
-            jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
-            tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
-                },
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
-                }
-              ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
-                },
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
-                  pattern: "",
-                  type: "label",
-                  jsonPath:
-                    "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
-                  isDisabled: true
-                }
-              ],
-              actionsNotRequired: true
-            },
-            hasATOAATransform: true,
-            aATransformInfo: {
-              to: 'vehicleTripSheetDetails[0].collectionPoints',
-              key: 'code',
-              from:'collectionPoint.code'
-            }
+        fields: [{
+          type: "tableList",
+          jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints",
+          tableList: {
+            header: [{
+                label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+              },
+              {
+                label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+              }
+            ],
+            values: [{
+                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+                isDisabled: true
+              },
+              {
+                name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                pattern: "",
+                type: "label",
+                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.name",
+                isDisabled: true
+              }
+            ],
+            actionsNotRequired: true
+          },
+          hasATOAATransform: true,
+          aATransformInfo: {
+            to: 'vehicleTripSheetDetails[0].collectionPoints',
+            key: 'code',
+            from: 'collectionPoint.code'
           }
-        ],
+        }],
       },
       {
         name: "tripSheetDetails",
         label: "swm.vehiclestripsheet.create.group.title.tripSheetDetails",
-        fields: [
-          {
+        fields: [{
             name: "scheduledDateFrom",
             jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
             label: "swm.vehiclestripsheet.create.scheduledDateFrom",
@@ -870,18 +802,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "exitWeight",
@@ -892,18 +821,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [
-              {
-                jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-                type: "textField",
-                pattern:
-                  "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+              type: "textField",
+              pattern: "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "garbageWeight",
