@@ -5,7 +5,52 @@ import {
 } from './helpers';
 
 var jp = require('jsonpath');
+var axios = require('axios');
 
+var instance = axios.create({
+  baseURL: window.location.origin,
+  // timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+function ApiGet(context, queryObject = {}, doNotOverride = false, noPageSize = false) {
+  var url = context;
+  if (!doNotOverride) url += '?tenantId=' + (localStorage.getItem('tenantId') || 'default');
+  else url += '?';
+  for (var variable in queryObject) {
+    if (typeof queryObject[variable] !== 'undefined') {
+      url += '&' + variable + '=' + queryObject[variable];
+    }
+  }
+
+  console.log(url)
+  return instance
+    .get(url)
+    .then(function(response) {
+      return response;
+    })
+    .catch(function(response) {
+      if (
+        response &&
+        response.response &&
+        response.response.data &&
+        response.response.data[0] &&
+        (response.response.data[0].error || response.response.data[0].Errors[0])
+      ) {
+        var _err = response.response.data[0].error.message || '';
+        if (response.response.data[0].error.errorFields && Object.keys(response.response.data[0].error.errorFields).length) {
+          for (var i = 0; i < response.response.data[0].error.errorFields.length; i++) {
+            _err += '\n ' + response.response.data[0].error.errorFields[i].message + ' ';
+          }
+          throw new Error(_err);
+        }
+      } else {
+        throw new Error('Something went wrong, please try again later.');
+      }
+    });
+}
 /**
  * defines all the api required to achieve functionality for
  * PMS module
@@ -82,12 +127,15 @@ export const fetchCompareSearchAPI = (finYears, kpis, ulbs, cb) => {
   
   // VALUE TYPE TEST
   // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2016-17&kpiCodes=PCSOW&ulbs=default,mh.rohatest,mh.aliba&tenantId=default`, [], {}, false, true).then(function(res) {
+  
+  // VALUE TYPE TEST WITH DOCUMENTS
+  Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2017-18&kpiCodes=DOD&ulbs=mh.roha&tenantId=mh.aliba`, [], {}, false, true).then(function(res) {
 
   // TEXT TYPE TEST
   // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=2017-18&kpiCodes=EWOF&ulbs=default&tenantId=default`, [], {}, false, true).then(function(res) {
 
   // ACTUAL API CALLING
-  Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=${finYears}&kpiCodes=${kpis}&ulbs=${ulbs}`, [], {}, false, true).then(function(res) {
+  // Api.commonApiPost(`perfmanagement/v1/kpivalue/_comparesearch?finYear=${finYears}&kpiCodes=${kpis}&ulbs=${ulbs}`, [], {}, false, true).then(function(res) {
       if (res && res.ulbs) {
         cb(null, res);
       } else {
@@ -99,6 +147,15 @@ export const fetchCompareSearchAPI = (finYears, kpis, ulbs, cb) => {
     }
   );
 };
+
+export const fetchFileByFileStoreId = (fileStoreId) => {
+  let baseURL   = window.location.origin;
+  let tenantId  = (localStorage.getItem('tenantId') || 'default') 
+  let fileURL   = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6`
+  // let fileURL = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=${fileStoreId}`
+  console.log(fileURL)
+  window.open(fileURL)
+}
 
 export const parseDepartmentResponse = res => {
   return jp.query(res, '$.MdmsRes["common-masters"].Department[*]').map((department, index) => {
@@ -204,6 +261,7 @@ export const parseCompareSearchResponse = (res, isText = false) => {
                     period: jp.query(values, '$.period').join('') || 0,
                     name: getMonth(jp.query(values, '$.period').join('') || '1'),
                     monthlyValue: parseInt(jp.query(values, '$.value').join('')) || 0,
+                    documentIds: jp.query(values, '$.documents[*].fileStoreId'),
                   }
                 }
               })

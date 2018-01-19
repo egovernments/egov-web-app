@@ -5,7 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {
   parseCompareSearchResponse,
   parseCompareSearchConsolidatedResponse,
-  parseTenantName
+  parseTenantName,
+  fetchFileByFileStoreId,
 } from '../apis/apis';
 import {
   formatChartData,
@@ -78,6 +79,13 @@ export default class TableCard extends Component {
         chartDataIndex: 1
       })
     }
+  }
+
+  processOnClickDownloadAttachments = (fileStoreIds) => {
+    fileStoreIds.forEach((fileStoreId) => {
+      console.log(fileStoreId)
+      fetchFileByFileStoreId(fileStoreId)
+    })
   }
 
   getTableHeaders = () => {
@@ -176,7 +184,7 @@ export default class TableCard extends Component {
     if (name === 'MONTHLYVALUE') return 'KPI ACHIEVED'
     if (name === 'VALUE') return 'KPI ACHIEVED'
     if (name === 'ULBNAME') return 'ULB NAME'
-
+    if (name === 'DOCUMENTIDS') return 'DOCUMENTS'
     return name
   }
 
@@ -250,7 +258,14 @@ export default class TableCard extends Component {
 
             <TableBody displayRowCheckbox={false}>
               {data.map((item, index) => (
-                  <TableRow key={index}> {headers.map((el, index) => <TableRowColumn style={{whiteSpace: 'normal', wordWrap: 'break-word'}} key={index}>{item[el]} </TableRowColumn>)} </TableRow>
+                  <TableRow key={index}>  {
+                                              headers.map((el, index) => <TableRowColumn style={{whiteSpace: 'normal', wordWrap: 'break-word'}} 
+                                                                                      key={index}>{ (el === 'documentIds' && item[el].length > 0) ? 
+                                                                                                this.renderAttachmentDownloadButton('Download', item[el]) : 
+                                                                                                item[el] } 
+                                                                        </TableRowColumn>)
+                                          } 
+                  </TableRow>
               ))}
             </TableBody>
       </Table>
@@ -302,6 +317,25 @@ export default class TableCard extends Component {
           type="button"
           disabled={false}
           onClick={this.processOnClickKPIDataRepresentation}
+        />
+      </div>
+    )
+  }
+
+  /**
+   * render
+   * render download files button
+   */
+  renderAttachmentDownloadButton = (label, fileStoreIds) => {
+    console.log(fileStoreIds)
+    return (
+      <div>
+        <RaisedButton
+          label={label}
+          primary={true}
+          type="button"
+          disabled={false}
+          onClick={() => {this.processOnClickDownloadAttachments(fileStoreIds)}}
         />
       </div>
     )
