@@ -169,7 +169,7 @@ export default class TableCard extends Component {
 
   getReportTitle = () => {
     if (this.props.isReportConsolidated) {
-      return `Consolidated performance of KPI  ${this.props.kpis}`
+      return `Consolidated performance of KPI ${this.props.kpis} based upon latest submitted KPI values`
     }
     let data = this.state.data[this.state.chartDataIndex - 1]
     let ulbName = this.getULBName(data['ulbName']); 
