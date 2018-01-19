@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { translate } from '../../common/common';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
@@ -7,28 +7,43 @@ import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
 
-export default class UiCalendar extends Component {
-  constructor(props) {
-    super(props);
-  }
+const Event = ({ event }) => {
+  return (
+    <span>
+      <strong>{event.title}</strong>
+      {event.desc && ':  ' + event.desc}
+    </span>
+  );
+};
 
-  renderCalendar = item => {
+const EventAgenda = ({ event }) => {
+  return (
+    <span>
+      <em style={{ color: 'blue' }}>{event.title}</em>
+      <p>{event.desc}</p>
+    </span>
+  );
+};
+
+const UiCalendar = props => {
+  const renderCalendar = () => {
+    const { item } = props;
     let allViews = Object.keys(BigCalendar.Views).map(k => {
       return BigCalendar.Views[k];
     });
-    switch (this.props.ui) {
+    switch (props.ui) {
       case 'google':
         return (
           <div>
             <BigCalendar
-              events={this.getValue(item.jsonPath)}
+              events={getValue(item.jsonPath)}
               views={allViews}
               step={60}
               defaultDate={new Date()}
               components={{
-                event: this.Event,
+                event: Event,
                 agenda: {
-                  event: this.EventAgenda,
+                  event: EventAgenda,
                 },
               }}
             />
@@ -37,27 +52,9 @@ export default class UiCalendar extends Component {
     }
   };
 
-  Event({ event }) {
-    return (
-      <span>
-        <strong>{event.title}</strong>
-        {event.desc && ':  ' + event.desc}
-      </span>
-    );
-  }
-
-  EventAgenda({ event }) {
-    return (
-      <span>
-        <em style={{ color: 'blue' }}>{event.title}</em>
-        <p>{event.desc}</p>
-      </span>
-    );
-  }
-
-  getValue(item) {
+  const getValue = item => {
     var eventsObj = [];
-    var edata = this.props.getVal(item);
+    var edata = props.getVal(item);
     if (edata && edata.length > 0) {
       edata.map((v, i) => {
         var hearingTimeDate = new Date();
@@ -78,9 +75,9 @@ export default class UiCalendar extends Component {
     }
 
     return eventsObj;
-  }
+  };
 
-  render() {
-    return this.renderCalendar(this.props.item);
-  }
-}
+  return renderCalendar();
+};
+
+export default UiCalendar;

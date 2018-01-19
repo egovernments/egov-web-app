@@ -18,11 +18,8 @@ class UiAutoComplete extends Component {
     };
   }
 
-  handleUpdateInput = searchText => {
-    // this.setState({
-    //   searchText: searchText,
-    // });
-  };
+  // what is this doing here? Empty method!
+  handleUpdateInput = searchText => {};
 
   initData(props) {
     let { item, setDropDownData } = props;

@@ -782,7 +782,6 @@ class ShowFields extends Component {
           />
         );
     }
-    // return <div></div>
   };
 
   render() {
@@ -792,9 +791,3 @@ class ShowFields extends Component {
 }
 
 export default ShowFields;
-// const mapStateToProps=state=>({
-//     formData:state.frameworkForm.form
-//   })
-//
-//
-// export default connect(mapStateToProps)(ShowFields);
