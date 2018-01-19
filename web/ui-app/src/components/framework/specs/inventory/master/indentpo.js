@@ -105,7 +105,7 @@ var dat = {
       actionItems: [
         {
           label: 'Create Indent PO',
-          url: '/update/inventory/indentpo/',
+          url: '/create/inventory/indentpo?indentNumbers',
           multiSelect : true
         },
       ],
@@ -144,11 +144,13 @@ var dat = {
       rowClickUrlAdd: '/create/inventory/indent',
     }
   },
-  'inventory.update': {
+  'inventory.create': {
     numCols: 4,
     useTimestamp: true,
     objectName: 'purchaseOrders',
-     preApiCalls:[
+    bodyParams:[{ key: 'purchaseType', value: 'Indent' },
+                { key: 'indentNumbers', value: '?' }],
+    preApiCalls:[
         {
           url:"/hr-employee/employees/_search?&id={}&isPrimary=true",
           jsonPath:"purchaseOrders[0].designation",
@@ -204,7 +206,9 @@ var dat = {
             isDisabled: false,
             defaultValue: '',
             patternErrorMsg: '',
-             depedants: [{
+            expression: '$purchaseOrders[0].expectedDeliveryDate >= $purchaseOrders[0].purchaseOrderDate',
+            expressionMsg: 'Expected Delivery Date should be greater than or equal to Purchase Order Date',
+            depedants: [{
             jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].priceList.rateContractNumber',
             type: 'griddropDown',
             gridjsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].material.code',
@@ -384,8 +388,9 @@ var dat = {
           {
             type: 'tableList',
             jsonPath: 'purchaseOrders[0].purchaseOrderDetails',
-            displayJsonPath:'indents[0].indentDetails',
+            // displayJsonPath:'indents[0].indentDetails',
             tableList: {
+              noAddOnly: true,
               header: [
                 {
                   label: 'inventory.materialName',
@@ -455,7 +460,7 @@ var dat = {
                 },
                 {
                   name: 'indentNumber',
-                  jsonPath: 'purchaseOrders[0].purchaseIndentDetails[0].purchaseIndentDetails[0].indentDetail[0].indentNumber',
+                  jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].indentNumber', // purchaseIndentDetails[0].purchaseIndentDetails[0].indentDetail[0].indentNumber',
                   label: '',
                   pattern: '',
                   type: 'text',
@@ -481,7 +486,7 @@ var dat = {
                 },
                 {
                   name: 'totalIndentQuantity',
-                  jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].purchaseIndentDetails[0].quantity',
+                  jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].indentQuantity',
                   label: '',
                   pattern: '',
                   type: 'number',
@@ -695,6 +700,22 @@ var dat = {
             },
           },
            {
+        name: 'dummy',
+        jsonPath: '',
+        type: 'textArea',
+        defaultValue: '',
+        maxLength: 500,
+
+      },
+      {
+        name: 'dummy',
+        jsonPath: '',
+        type: 'textArea',
+        defaultValue: '',
+        maxLength: 500,
+
+      },
+           {
           name: 'totalPoValue',
           jsonPath: 'purchaseOrders[0].totalAdvancePaidAmount',
           label: 'inventory.totalPoValue',
@@ -737,7 +758,7 @@ var dat = {
     ],
     url: '/inventory-services/purchaseorders/_create',
     // onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents',
-    searchUrl: '/inventory-services/purchaseorders/_preparepofromindents?indentNumbers={id}', //indents/_search?ids={id}',
+    onloadFetchUrl: '/inventory-services/purchaseorders/_preparepofromindents', //indents/_search?ids={id}',
     tenantIdRequired: true,
   },
 };

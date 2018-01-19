@@ -642,7 +642,14 @@ class Search extends Component {
         //  if (selectedIds!='') {
             localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
             localStorage.setItem('formData', JSON.stringify(formData));
-            this.props.setRoute(buttonUrl + tableSelectionData);
+            if(buttonUrl.indexOf('?')>-1){
+              localStorage.setItem('bodyParams',tableSelectionData);
+                buttonUrl = buttonUrl.split('?')[0];
+                 this.props.setRoute(buttonUrl);
+            }else{
+              this.props.setRoute(buttonUrl + tableSelectionData);
+            }
+            
           // }
           }
           

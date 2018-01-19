@@ -548,7 +548,7 @@ class Report extends Component {
     setMockData(specs);
   }
 
-  displayUI(results) {
+  displayUI(results) { 
     let {
       setMetaData,
       setModuleName,
@@ -633,6 +633,8 @@ class Report extends Component {
       }
 
       self.props.setLoadingStatus("loading");
+    
+
       var _body = {};
       if (url.includes("/egov-mdms-service/v1/_search")) {
         var moduleDetails = [];
@@ -663,6 +665,7 @@ class Report extends Component {
             moduleDetails: moduleDetails
           }
         };
+       
         query = "";
       }
 
@@ -785,8 +788,18 @@ class Report extends Component {
         }
       );
     } else {
+
+        let bodyParams= '';
+        bodyParams = localStorage.getItem("bodyParams");
+      if (bodyParams != '' && bodyParams != null){
+         localStorage.setItem('bodyParams','');
+        }
+
       if (
-        hashLocation.split("/").indexOf("create") == 1 &&
+        hashLocation.split("/").indexOf("create") == 1 && 
+        specifications[
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        ] &&
         specifications[
           `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].isMDMSScreen
@@ -823,20 +836,39 @@ class Report extends Component {
       var id =
         self.props.match.params.id &&
         decodeURIComponent(self.props.match.params.id);
-      if (id) {
+      if (id || (bodyParams !='' && bodyParams != null) ){
         //console.log('id', id);
         let mockObj =
           specifications[
             `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ];
         if (mockObj.onloadFetchUrl) {
+           let requestBody = {};
+          if(id){
           let params = JSON.parse(id);
           self.props.setLoadingStatus("loading");
           // console.log('query', query);
-          let requestBody = {};
+         
           Object.keys(params).map(key => {
             _.set(requestBody, key, params[key]);
           });
+        }
+          else
+            {
+              let temp  = {};
+              let bParams=[];
+              bodyParams= bodyParams.split(',');
+              for(let i=0;i<bodyParams.length;i++){
+                bParams.push(bodyParams[i]);
+              }
+              mockObj.bodyParams.map(x=>{
+                if(x.value == '?'){
+                  x.value= bParams;
+                }
+                _.set(temp,x.key,x.value );
+              });
+              _.set(requestBody,mockObj.objectName, [temp]);
+              }
           Api.commonApiPost(
             mockObj.onloadFetchUrl,
             {},
@@ -844,8 +876,8 @@ class Report extends Component {
             false,
             mockObj.useTimestamp
           ).then(
-            function(res) {
-              self.props.setLoadingStatus("hide");
+              function(res) { 
+               self.props.setLoadingStatus("hide");
               if (
                 specifications[
                   `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
@@ -1114,7 +1146,7 @@ class Report extends Component {
     }
   }
 
-  initData() {
+  initData() { 
     var hash = window.location.hash.split("/");
 
     let endPoint = "";
@@ -3040,7 +3072,7 @@ class Report extends Component {
       }
     }
 
-    _.forEach(depedants, function(value, key) {
+    _.forEach(depedants, function(value, key) { 
       //console.log(value.type);
       if (value.type == "dropDown") {
         let splitArray = value.pattern.split("?");
@@ -3182,9 +3214,16 @@ class Report extends Component {
                 dependantIdx
               );
               exp = exp && exp.replace(/\[\*\]/g, "[" + dependantIdx + "]");
-              value.pattern =
+                value.pattern =
                 value.pattern &&
                 value.pattern.replace(/\[\*\]/g, "[" + dependantIdx + "]");
+ 
+              if(exp.indexOf('getValFromDropdownData') <0){
+                value.pattern = exp;  
+                exp= '';
+
+              }
+            
             }
 
             let ajaxResult;
@@ -3230,7 +3269,7 @@ class Report extends Component {
         } catch (ex) {
           console.log("ex", ex);
         }
-      } else if (value.type == "autoFill") {
+      } else if (value.type == "autoFill") { 
         let splitArray = value.pattern.split("?");
         let context = "";
         let id = {};
@@ -3250,15 +3289,32 @@ class Report extends Component {
               ) {
                 id[queryStringObject[i].split("=")[0]] = e.target.value || "";
               } else {
-                id[queryStringObject[i].split("=")[0]] = getVal(
-                  replaceLastIdxOnJsonPath(
-                    queryStringObject[1]
-                      .split("=")[1]
-                      .split("{")[1]
-                      .split("}")[0],
-                    dependantIdx
-                  )
-                );
+                // id[queryStringObject[i].split("=")[0]] = getVal(
+                //   replaceLastIdxOnJsonPath(
+                //     queryStringObject[1]
+                //       .split("=")[1]
+                //       .split("{")[1]
+                //       .split("}")[0],
+                //     dependantIdx
+                //   )
+                // );
+                   let filterParameter=queryStringObject[i]
+                        .split('=')[1]
+                        .split('{')[1]
+                        .split('}')[0];
+                  
+          if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
+        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+      }
+      
+                id[queryStringObject[i].split("=")[0]] =
+                  queryStringObject[i].split("=")[1].replace(
+                    /\{(.*?)\}/,
+                    getVal(
+                      filterParameter
+                    )
+                  ) || "";
               }
             } else {
               id[queryStringObject[i].split("=")[0]] = queryStringObject[
@@ -3267,7 +3323,8 @@ class Report extends Component {
             }
           }
         }
-
+     console.log(context);
+     console.log(id);
         Api.commonApiPost(context, id).then(
           function(response) {
             if (response) {
@@ -3353,6 +3410,7 @@ class Report extends Component {
         }
       } else if (value.type == "griddropDown") {
         let level = value.gridjsonPath;
+         dependantIdx = findLastIdxOnJsonPath(property);
         if (level == undefined) {
           let splitArray = value.pattern.split("?");
           let context = "";
@@ -3377,16 +3435,25 @@ class Report extends Component {
                       .split("=")[1]
                       .replace(/\{(.*?)\}/, e.target.value) || "";
                 } else {
-                  id[queryStringObject[i].split("=")[0]] =
-                    queryStringObject[i].split("=")[1].replace(
-                      /\{(.*?)\}/,
-                      getVal(
-                        queryStringObject[i]
-                          .split("=")[1]
-                          .split("{")[1]
-                          .split("}")[0]
-                      )
-                    ) || "";
+                     
+                let filterParameter=queryStringObject[i]
+                        .split('=')[1]
+                        .split('{')[1]
+                        .split('}')[0];
+                  
+          if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
+        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+      }
+      
+                id[queryStringObject[i].split("=")[0]] =
+                  queryStringObject[i].split("=")[1].replace(
+                    /\{(.*?)\}/,
+                    getVal(
+                      filterParameter
+                    )
+                  ) || "";
+            
                   if (id[queryStringObject[i].split("=")[0]] == "") {
                     dataFlag = 1;
                     break;
@@ -3399,7 +3466,7 @@ class Report extends Component {
               }
             }
           }
-          dependantIdx = findLastIdxOnJsonPath(property);
+         
           if (dataFlag == 0) {
             Api.commonApiPost(
               context,
@@ -3414,6 +3481,8 @@ class Report extends Component {
             ).then(
               function(response) {
                 if (response) {
+                  console.log('In dropdown');
+                  console.log(response);
                   let queries = splitArray[1].split("|");
                   let keys = jp.query(response, splitArray[1].split("|")[1]);
                   let values = jp.query(response, splitArray[1].split("|")[2]);
@@ -3473,18 +3542,18 @@ class Report extends Component {
           }
         } else {
           //to handle tableList dropdown
-          let currProperty = value.gridjsonPath;
-          let rootProperty = currProperty.substr(
+          let _currProperty = value.gridjsonPath;
+          let _rootProperty = _currProperty.substr(
             0,
-            currProperty.lastIndexOf("[")
+            _currProperty.lastIndexOf("[")
           );
           let origValue = _.get(formData, property);
-          let numberOfRowsArray = _.get(formData, rootProperty);
-          if (numberOfRowsArray && numberOfRowsArray.length > 0) {
+          let _numberOfRowsArray = _.get(formData, _rootProperty);
+          if (_numberOfRowsArray && _numberOfRowsArray.length > 0) {
             confirm("This will reset all rates. Do you wish to Continue?").then(
               () => {
                 console.log("proceed!");
-                for (let i = 0; i < numberOfRowsArray.length; i++) {
+                for (let i = 0; i < _numberOfRowsArray.length; i++) {
                   value.gridjsonPath = replaceLastIdxOnJsonPath(
                     value.gridjsonPath,
                     i
@@ -3516,8 +3585,64 @@ class Report extends Component {
               }
             );
           }
-        }
-      }
+        } 
+        } 
+      // else if (value.type == "autoFillBody") { 
+      //   let context = value.pattern;
+      //   let requestName = value.paramName;
+      //   let requestBody = {};
+      //   let temp = {};
+      //   let x= value.bodyParams;
+      //   dependantIdx = findLastIdxOnJsonPath(property);
+      //   for(let i=0;i<x.length;i++){
+      //           if(x[i].value.indexOf("[") > -1){
+      //             let filterParameter= x[i].value;
+      //              if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
+      //               filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+      //               value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+      //             }
+      //             x[i].value= getVal(filterParameter);
+      //           }
+      //           _.set(temp,x[i].key,x[i].value);
+      //         }
+      //          console.log("in body");
+      //         console.log(temp);
+      //       _.set(requestBody,requestName,temp);     
+      //  Api.commonApiPost(
+      //       context,
+      //       {},
+      //       requestBody,
+      //       false
+      //     ).then(
+      //     function(response) {
+      //       if (response) {
+      //         for (var key in value.autoFillFields) {
+      //           var keyField = key.substr(0, key.lastIndexOf("["));
+      //           var keyLast = key.substr(key.lastIndexOf("]") + 2);
+      //           var propertyCurIndex = property.substr(
+      //             property.lastIndexOf("[") + 1,
+      //             1
+      //           );
+      //           var newKey = keyField + "[" + propertyCurIndex + "]." + keyLast;
+      //           handleChange(
+      //             {
+      //               target: {
+      //                 value: _.get(response, value.autoFillFields[key])
+      //               }
+      //             },
+      //             newKey,
+      //             false,
+      //             "",
+      //             ""
+      //           );
+      //         }
+      //       }
+      //     },
+      //     function(err) {
+      //       console.log(err);
+      //     }
+      //   );
+      // }
       // else if (value.type == "documentList") {
       //
       //   let splitArray = value.pattern.split("?");
@@ -3612,7 +3737,7 @@ class Report extends Component {
         d.fields.map((innerData) => {
           if (innerData.type == 'tableList') {
             innerData.tableList.values.map((dn) => {
-              if (dn.hasOwnProperty('dependantOn')) {
+              if (dn.hasOwnProperty('dependantOn') && dn.jsonPath ==  property) {
                 dn.dependantOn.map((fData) => {
                   if (getVal(`${fData.jsonPath}`) == `${fData.key}`) {
                     expression = expression;
