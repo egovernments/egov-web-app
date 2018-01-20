@@ -291,11 +291,11 @@ var dat = {
               name: 'remarks',
               jsonPath: 'MasterMetaData.masterData[0].remarks',
               label: 'swm.Shift.create.remarks',
-              pattern: '',
+              pattern: '^.[a-zA-Z. ]{15,300}$',
               type: 'textarea',
               isDisabled: false,
-              patternErrorMsg: '',
-              url: '',
+              patternErrMsg: 'pattern.error.message.Shift.remarks'
+
             },
           ],
         },
@@ -690,11 +690,10 @@ var dat = {
               name: 'remarks',
               jsonPath: 'MasterMetaData.masterData[0].remarks',
               label: 'swm.Shift.create.remarks',
-              pattern: '',
+              pattern: '^.[a-zA-Z. ]{15,300}$',
               type: 'textarea',
               isDisabled: false,
-              patternErrorMsg: '',
-              url: '',
+              patternErrMsg: 'pattern.error.message.Shift.remarks'
             },
           ],
         },
