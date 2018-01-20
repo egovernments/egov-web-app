@@ -85,8 +85,14 @@ var dat = {
           label: 'vendorcontracts.search.result.paymentAmount',
         },
         {
+          label: 'vendorcontracts.search.result.servicesOffered',
+        },
+        {
           label: 'vendorcontracts.search.result.paymentTerms',
         },
+        {
+          label: 'vendorcontracts.search.result.remarks',
+        }
       ],
       values: [
         'vendor.name',
@@ -96,7 +102,9 @@ var dat = {
         'contractPeriodTo',
         'securityDeposit',
         'paymentAmount',
+        'servicesOffered',
         'paymentTerms.label',
+        'remarks'
       ],
       resultPath: 'vendorContracts',
       rowClickUrlUpdate: '/update/swm/vendorcontracts/{contractNo}',
