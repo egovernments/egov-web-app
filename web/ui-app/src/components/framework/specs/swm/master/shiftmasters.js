@@ -108,7 +108,20 @@ var dat = {
       if(path.graceTimeTo < path.graceTimeFrom){
         alert("Grace Time To should be greater than Grace Time From");
         shouldSubmit=false;
-      }`,
+      }
+      
+      if( !(path.lunchStartTime > path.shiftStartTime && path.lunchStartTime < path.shiftEndTime && path.lunchEndTime > path.shiftStartTime && path.lunchEndTime < path.shiftEndTime) ){
+        alert("Lunch Start Time and Lunch End Time should be between Shift Start Time and Shift End Time..");
+        shouldSubmit=false;
+      }
+
+      if( !(path.graceTimeFrom > path.shiftStartTime && path.graceTimeFrom < path.shiftEndTime && path.graceTimeTo > path.shiftStartTime && path.graceTimeTo < path.shiftEndTime) ){
+        alert("Grace Time From and Grace Time To should be between Shift Start Time and Shift End Time..");
+        shouldSubmit=false;
+      }
+
+      
+      `,
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
@@ -502,7 +515,18 @@ var dat = {
       if(path.graceTimeTo < path.graceTimeFrom){
         alert("Grace Time To should be greater than Grace Time From");
         shouldSubmit=false;
-      }`,
+      }
+      
+      if( !(path.lunchStartTime > path.shiftStartTime && path.lunchStartTime < path.shiftEndTime && path.lunchEndTime > path.shiftStartTime && path.lunchEndTime < path.shiftEndTime) ){
+        alert("Lunch Start Time and Lunch End Time should be between Shift Start Time and Shift End Time..");
+        shouldSubmit=false;
+      }
+      
+      if( !(path.graceTimeFrom > path.shiftStartTime && path.graceTimeFrom < path.shiftEndTime && path.graceTimeTo > path.shiftStartTime && path.graceTimeTo < path.shiftEndTime) ){
+        alert("Grace Time From and Grace Time To should be between Shift Start Time and Shift End Time..");
+        shouldSubmit=false;
+      }
+      `,
       numCols: 3,
       useTimestamp: true,
       objectName: 'Shift',
