@@ -18,9 +18,6 @@ class UiAutoComplete extends Component {
     };
   }
 
-  // what is this doing here? Empty method!
-  handleUpdateInput = searchText => {};
-
   initData(props) {
     let { item, setDropDownData } = props;
 
@@ -153,7 +150,6 @@ class UiAutoComplete extends Component {
               className="custom-form-control-for-textfield"
               id={item.jsonPath.split('.').join('-')}
               listStyle={{ maxHeight: 100, overflow: 'auto' }}
-              onUpdateInput={this.handleUpdateInput}
               filter={(searchText, key) => {
                 return key
                   .toLowerCase()
@@ -180,7 +176,6 @@ class UiAutoComplete extends Component {
               errorText={this.props.fieldErrors[item.jsonPath]}
               onKeyUp={e => {
                 if (!e.target.value) {
-                  this.handleUpdateInput('');
                 } else {
                   item.onLoad == false ? this.callAPI(e.target.value, this.props) : '';
                 }
@@ -202,7 +197,7 @@ class UiAutoComplete extends Component {
                   item.requiredErrMsg,
                   item.patternErrMsg
                 );
-                this.handleUpdateInput(value.value);
+
                 if (this.props.autoComHandler && item.autoCompleteDependancy) {
                   this.props.autoComHandler(item.autoCompleteDependancy, item.jsonPath);
                 }

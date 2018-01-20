@@ -68,7 +68,6 @@ function validate(isRequired, pattern, name, value, validationData, fielderrorMs
         errorText = fielderrorMsg ? fielderrorMsg : 'Invalid field data';
       }
     } else {
-      //console.log('pattern value came as empty');
       validationData.pattern.current = _.remove(validationData.pattern.current, item => {
         return item != name;
       });
@@ -77,11 +76,6 @@ function validate(isRequired, pattern, name, value, validationData, fielderrorMs
   if (!isRequired && value === '') {
     errorText = '';
   }
-  /*console.log(validationData.required.required)
-  console.log(validationData.required.current)
-  console.log(validationData.pattern.required);
-  console.log(validationData.pattern.current);
-  console.log(validationData.required.required.length, validationData.required.current.length);*/
   return {
     errorText: errorText,
     validationData: validationData,
@@ -369,13 +363,11 @@ export default (state = defaultState, action) => {
       return {
         ...state,
       };
-      break;
 
     case 'REMOVE_REQUIRED':
       var a = state.validationData.required.required.indexOf(action.property);
       var b = state.validationData.required.current.indexOf(action.property);
 
-      console.log('isthere', a);
       if (a != -1) {
         state.validationData.required.required.splice(a, 1);
       }
@@ -387,15 +379,12 @@ export default (state = defaultState, action) => {
       return {
         ...state,
       };
-      break;
 
     case 'FLOOR_NUMBERS':
       return {
         ...state,
         noOfFloors: action.noOfFloors,
       };
-
-      break;
 
     case 'ADD_FLOOR_REQUIRED':
       var b = state.validatePropertyFloor.required.required.indexOf(action.property);
@@ -406,7 +395,6 @@ export default (state = defaultState, action) => {
       return {
         ...state,
       };
-      break;
 
     case 'REMOVE_FLOOR_REQUIRED':
       var a = state.validatePropertyFloor.required.required.indexOf(action.property);
@@ -424,7 +412,6 @@ export default (state = defaultState, action) => {
       return {
         ...state,
       };
-      break;
 
     case 'PUSH_ONE':
       if (!state.form.hasOwnProperty(action.formArray)) {
@@ -438,7 +425,6 @@ export default (state = defaultState, action) => {
           [action.formArray]: [...state.form[action.formArray], state.form[action.formData]],
         },
       };
-      break;
 
     case 'RESET_FORM':
       return {
@@ -469,7 +455,6 @@ export default (state = defaultState, action) => {
         validatePropertyOwner: action.validatePropertyOwner,
         validatePropertyFloor: action.validatePropertyFloor,
       };
-      break;
 
     case 'EMPTY_PROPERTY':
       return {
@@ -481,7 +466,6 @@ export default (state = defaultState, action) => {
         validationData: action.validationData,
         isFormValid: action.isFormValid,
       };
-      break;
 
     case 'UPDATE_OBJECT':
       state.form[action.objectName][state.editIndex] = state.form[action.object];
@@ -493,7 +477,6 @@ export default (state = defaultState, action) => {
           [action.objectName]: state.form[action.objectName].map((e, i) => e),
         },
       };
-      break;
 
     case 'EDIT_OBJECT':
       return {
@@ -505,14 +488,12 @@ export default (state = defaultState, action) => {
         isOwnerValid: action.isSectionValid,
         isFloorValid: action.isSectionValid,
       };
-      break;
 
     case 'EDIT_INDEX':
       return {
         ...state,
         editIndex: action.index,
       };
-      break;
 
     case 'DELETE_OBJECT':
       return {
@@ -522,7 +503,6 @@ export default (state = defaultState, action) => {
           [action.property]: [...state.form[action.property].slice(0, action.index), ...state.form[action.property].slice(action.index + 1)],
         },
       };
-      break;
 
     case 'SET_FORM':
       return {
@@ -533,7 +513,7 @@ export default (state = defaultState, action) => {
         validationData: action.validationData,
         isFormValid: action.isFormValid,
       };
-      break;
+
     case 'SET_FORM_DATA':
       return {
         ...state,
@@ -550,7 +530,6 @@ export default (state = defaultState, action) => {
         ...state,
         validatePropertyFloor: action.validatePropertyFloor,
       };
-      break;
 
     case 'SET_FLOOR_NUMBER':
       console.log('noOfFloors', action.noOfFloors);
@@ -575,7 +554,6 @@ export default (state = defaultState, action) => {
         validationData: validationData.validationData,
         isFormValid: validationData.isFormValid,
       };
-      break;
 
     case 'FILE_UPLOAD':
       var filearray = [];
@@ -591,7 +569,6 @@ export default (state = defaultState, action) => {
         ...state,
         files: [],
       };
-      break;
 
     case 'FILE_REMOVE':
       filearray = [];
@@ -611,7 +588,6 @@ export default (state = defaultState, action) => {
         ...state,
         files: filearray,
       };
-      break;
 
     case 'FILE_UPLOAD_BY_CODE': //this is used add file for particular field
       var filesArray = [];
@@ -710,7 +686,6 @@ export default (state = defaultState, action) => {
         validationData: validationData.validationData,
         isFormValid: validationData.isFormValid,
       };
-      break;
 
     case 'HANDLE_CHANGE_OWNER':
       let validatePropertyOwner;
@@ -736,7 +711,6 @@ export default (state = defaultState, action) => {
         validatePropertyOwner: validatePropertyOwner.validatePropertyOwner,
         isOwnerValid: validatePropertyOwner.isOwnerValid,
       };
-      break;
 
     case 'HANDLE_CHANGE_FLOOR':
       let validatePropertyFloor;
@@ -762,7 +736,6 @@ export default (state = defaultState, action) => {
         validatePropertyFloor: validatePropertyFloor.validatePropertyFloor,
         isFloorValid: validatePropertyFloor.isFloorValid,
       };
-      break;
 
     case 'HANDLE_CHANGE_NEXT_TWO':
       let validationData = undefined;
@@ -786,7 +759,6 @@ export default (state = defaultState, action) => {
         validationData: validationData.validationData,
         isFormValid: validationData.isFormValid,
       };
-      break;
 
     case 'ADD_MANDATORY':
       var obj = state.validationData;
@@ -802,7 +774,6 @@ export default (state = defaultState, action) => {
           ...state,
         };
       }
-      break;
 
     case 'ADD_MANDATORY_FIELDS':
       var obj = { ...state.validationData };
@@ -825,7 +796,6 @@ export default (state = defaultState, action) => {
         validationData: validationData.validationData,
         isFormValid: validationData.isFormValid,
       };
-      break;
 
     case 'ADD_MANDATORY_LATEST':
       var obj = state.validationData;
@@ -847,7 +817,6 @@ export default (state = defaultState, action) => {
           ...state,
         };
       }
-      break;
 
     case 'REMOVE_MANDATORY':
       var obj = state.validationData;
@@ -871,7 +840,6 @@ export default (state = defaultState, action) => {
           ...state,
         };
       }
-      break;
 
     case 'REMOVE_MANDATORY_LATEST':
       var obj = state.validationData;
@@ -901,7 +869,6 @@ export default (state = defaultState, action) => {
           ...state,
         };
       }
-      break;
 
     case 'PUSH_ONE_ARRAY':
       if (!state.form.hasOwnProperty(action.formObject)) {
@@ -926,7 +893,6 @@ export default (state = defaultState, action) => {
           },
         },
       };
-      break;
 
     case 'RESET_STATE':
       return {
@@ -949,28 +915,24 @@ export default (state = defaultState, action) => {
         },
         isPrimaryOwner: action.isPrimaryOwner,
       };
-      break;
 
     case 'FIELD_ERRORS':
       return {
         ...state,
         fieldErrors: action.errors,
       };
-      break;
 
     case 'SHOW_TABLE':
       return {
         ...state,
         showTable: action.state,
       };
-      break;
 
     case 'BUTTON_TEXT':
       return {
         ...state,
         buttonText: action.text,
       };
-      break;
 
     case 'TOGGLE_DAILOG_AND_SET_TEXT':
       return {
@@ -978,7 +940,6 @@ export default (state = defaultState, action) => {
         msg: action.msg,
         dialogOpen: action.dailogState,
       };
-      break;
 
     case 'TOGGLE_SNACKBAR_AND_SET_TEXT':
       return {
@@ -988,14 +949,12 @@ export default (state = defaultState, action) => {
         isSuccess: action.isSuccess || false,
         isError: action.isError || false,
       };
-      break;
 
     case 'SET_LOADING_STATUS':
       return {
         ...state,
         loadingStatus: action.loadingStatus,
       };
-      break;
 
     default:
       return state;

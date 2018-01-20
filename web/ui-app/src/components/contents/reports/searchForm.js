@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
 import { brown500, red500, white, orange800 } from 'material-ui/styles/colors';
-import DatePicker from 'material-ui/DatePicker';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Api from '../../../api/api';
 import ShowField from './showField';
@@ -16,83 +12,95 @@ import _ from 'lodash';
 import styles from '../../../styles/material-ui';
 
 class ShowForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchBtnText: 'Generate Report',
-    };
-    this.search = this.search.bind(this);
-  }
+  state = {
+    searchBtnText: 'Generate Report',
+  };
 
-  handleChange = (e, property, isRequired, pattern) => {
-    // console.log(e);
-    let { metaData, setMetaData } = this.props;
-    // console.log(e, property, isRequired, pattern);
-    if (property === 'fromDate' || property === 'toDate') {
-      this.checkDate(e.target.value, property, isRequired, pattern);
-    } else {
-      this.props.handleChange(e, property, isRequired, pattern);
+  checkForDependentSource = async (field, selectedProperty, selectedValue) => {
+    const { pattern: fieldPattern, mapping, type: fieldType, name: targetProperty, isMandatory } = field;
+    const { metaData, setMetaData, handleChange } = this.props;
+    let splitArray = fieldPattern.split('?');
+    let url = splitArray[0];
+    let queryString = splitArray[1].split('|')[0].split('&');
+    let queryJSON = {};
+
+    for (var key in queryString) {
+      let dat = queryString[key].split('=');
+      if (dat[0] == 'tenantId') continue;
+      if (dat[1].indexOf('{') > -1) {
+        var path = dat[1].split('{')[1].split('}')[0];
+        var pat = new RegExp('{' + path + '}', 'g');
+        queryJSON[dat[0]] = dat[1].replace(pat, selectedValue);
+      } else {
+        queryJSON[dat[0]] = dat[1];
+      }
     }
 
-    // console.log(metaData);
+    try {
+      const response = await Api.commonApiPost(url, queryJSON);
+      let keys = jp.query(response, splitArray[1].split('|')[1]);
+      let values = jp.query(response, splitArray[1].split('|')[2]);
+      let defaultValue = {};
+      for (var k = 0; k < keys.length; k++) {
+        defaultValue[keys[k]] = values[k];
+      }
+
+      for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
+        if (
+          metaData.reportDetails.searchParams[l].type == 'url' &&
+          metaData.reportDetails.searchParams[l].pattern.search('{' + selectedProperty + '}') > -1
+        ) {
+          metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
+        }
+      }
+      setMetaData(metaData);
+
+      if (mapping && mapping == 'one-to-one') {
+        const value = Object.keys(defaultValue)[0];
+        const e = { target: { value } };
+        handleChange(e, targetProperty, isMandatory ? true : false, '');
+      }
+    } catch (error) {
+      alert('Something went wrong while loading depedent');
+    }
+  };
+
+  handleChange = (e, property, isRequired, pattern) => {
+    const { metaData, setMetaData, handleChange } = this.props;
+    const selectedValue = e.target.value;
+
+    if (property === 'fromDate' || property === 'toDate') {
+      this.checkDate(selectedValue, property, isRequired, pattern);
+    } else {
+      handleChange(e, property, isRequired, pattern);
+    }
+
     if (metaData.hasOwnProperty('reportDetails') && metaData.reportDetails.searchParams.length > 0) {
-      if (!e.target.value) {
+      if (!selectedValue) {
         for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
           if (metaData.reportDetails.searchParams[l].type == 'url' && metaData.reportDetails.searchParams[l].pattern.search(property) > -1) {
             metaData.reportDetails.searchParams[l].defaultValue = {};
           }
         }
-        return setMetaData(metaData);
-      }
+        setMetaData(metaData);
+      } else {
+        for (var i = 0; i < metaData.reportDetails.searchParams.length; i++) {
+          const field = metaData.reportDetails.searchParams[i];
+          const defaultValue = field.defaultValue;
+          const fieldType = field.type;
 
-      for (var i = 0; i < metaData.reportDetails.searchParams.length; i++) {
-        if (
-          metaData.reportDetails.searchParams[i].type == 'url' &&
-          (typeof metaData.reportDetails.searchParams[i].defaultValue != 'object' || metaData.reportDetails.searchParams[i].hasOwnProperty('pattern'))
-        ) {
-          if (!metaData.reportDetails.searchParams[i].hasOwnProperty('pattern')) {
-            metaData.reportDetails.searchParams[i]['pattern'] = metaData.reportDetails.searchParams[i].defaultValue;
-          }
-
-          if (metaData.reportDetails.searchParams[i].pattern.indexOf('{' + property + '}') == -1) continue;
-
-          if (metaData.reportDetails.searchParams[i].pattern.search('{' + property + '}') > -1) {
-            let splitArray = metaData.reportDetails.searchParams[i].pattern.split('?');
-            let url = splitArray[0];
-            let queryString = splitArray[1].split('|')[0].split('&');
-            let queryJSON = {};
-
-            for (var key in queryString) {
-              let dat = queryString[key].split('=');
-              if (dat[0] == 'tenantId') continue;
-              if (dat[1].indexOf('{') > -1) {
-                var path = dat[1].split('{')[1].split('}')[0];
-                var pat = new RegExp('{' + path + '}', 'g');
-                queryJSON[dat[0]] = dat[1].replace(pat, e.target.value);
-              } else {
-                queryJSON[dat[0]] = dat[1];
-              }
+          if (fieldType == 'url' && (typeof defaultValue != 'object' || field.hasOwnProperty('pattern'))) {
+            if (!field.hasOwnProperty('pattern')) {
+              field['pattern'] = defaultValue;
             }
 
-            var response = Api.commonApiPost(url, queryJSON).then(
-              function(response) {
-                let keys = jp.query(response, splitArray[1].split('|')[1]);
-                let values = jp.query(response, splitArray[1].split('|')[2]);
-                let defaultValue = {};
-                for (var k = 0; k < keys.length; k++) {
-                  defaultValue[keys[k]] = values[k];
-                }
-                for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
-                  if (metaData.reportDetails.searchParams[l].type == 'url' && metaData.reportDetails.searchParams[l].pattern.search('{' + property + '}') > -1) {
-                    metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
-                  }
-                }
-                setMetaData(metaData);
-              },
-              function(err) {
-                alert('Somthing went wrong while loading depedant dropdown');
-              }
-            );
+            const fieldPattern = field.pattern;
+
+            if (fieldPattern.indexOf('{' + property + '}') == -1) continue;
+
+            if (fieldPattern.search('{' + property + '}') > -1) {
+              this.checkForDependentSource(field, property, selectedValue);
+            }
           }
         }
       }
@@ -148,10 +156,10 @@ class ShowForm extends Component {
     }
   };
 
+  // set the value here, introduce the disabled
   handleFormFields = () => {
     let { currentThis } = this;
     let { metaData, searchForm } = this.props;
-    // console.log(metaData);
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
         item['value'] = _.isEmpty(searchForm) ? '' : searchForm[item.name];
@@ -177,7 +185,7 @@ class ShowForm extends Component {
         reportName: nextProps.metaData.reportDetails.reportName,
       });
       this.setState({ moduleName: this.props.match.params.moduleName });
-      let { initForm, setForm } = this.props;
+      let { setForm } = this.props;
       let { searchParams } = !_.isEmpty(nextProps.metaData) ? nextProps.metaData.reportDetails : { searchParams: [] };
       let required = [];
       for (var i = 0; i < searchParams.length; i++) {
@@ -191,7 +199,7 @@ class ShowForm extends Component {
   }
 
   componentDidMount() {
-    let { initForm, metaData, setForm, changeButtonText, clearReportHistory } = this.props;
+    let { metaData, setForm, changeButtonText, clearReportHistory } = this.props;
     changeButtonText('Generate Report');
     let searchParams = !_.isEmpty(metaData) ? metaData.reportDetails : { searchParams: [] };
     let required = [];
@@ -207,10 +215,9 @@ class ShowForm extends Component {
 
     setForm(required);
     clearReportHistory();
-    //setForm(required);
   }
 
-  search(e, isDrilldown = false) {
+  search = (e, isDrilldown = false) => {
     e.preventDefault();
     let {
       showTable,
@@ -231,18 +238,8 @@ class ShowForm extends Component {
     let self = this;
 
     if (!isDrilldown) {
-      // (variable=="fromDate"?new Date(Date(searchForm[variable]).getFullYear()+"-"+Date(searchForm[variable]).getMonth()+"-"+Date(searchForm[variable]).getDate()+" "+"00:00:00").getTime():new Date(Date(searchForm[variable]).getFullYear()+"-"+Date(searchForm[variable]).getMonth()+"-"+Date(searchForm[variable]).getDate()+" "+"23:59:00").getTime())
-
       for (var variable in searchForm) {
-        // console.log(variable);
         let input;
-        //  = this.state.moduleName=="pgr"
-        //       ?
-        // (((typeof(searchForm[variable])=="object") && (variable=="fromDate" || variable=="toDate"))?variable=="fromDate"?(new Date(searchForm[variable]).getFullYear() + "-" + (new Date(searchForm[variable]).getMonth()>8?(new Date(searchForm[variable]).getMonth()+1):("0"+(new Date(searchForm[variable]).getMonth()+1))) + "-" +(new Date(searchForm[variable]).getDate()>9?new Date(searchForm[variable]).getDate():"0"+new Date(searchForm[variable]).getDate())+" "+"00:00:00"):(new Date(searchForm[variable]).getFullYear() + "-" + (new Date(searchForm[variable]).getMonth()>8?(new Date(searchForm[variable]).getMonth()+1):("0"+(new Date(searchForm[variable]).getMonth()+1))) + "-" +(new Date(searchForm[variable]).getDate()>9?new Date(searchForm[variable]).getDate():"0"+new Date(searchForm[variable]).getDate())+" "+"23:59:59")
-        //       :
-        // searchForm[variable]):(((typeof(searchForm[variable])=="object")&& (variable=="fromDate" || variable=="toDate"))?new Date(searchForm[variable]).getTime():searchForm[variable])
-
-        // console.log(variable , input);
 
         if (this.state.moduleName == 'pgr') {
           if (variable == 'fromDate') {
@@ -286,12 +283,6 @@ class ShowForm extends Component {
         }
       }
 
-      // searchParams.push(
-      //   {
-      //       "name": "complainttype",
-      //       "value": "BRKNB"
-      //   })
-
       setSearchParams(searchParams);
 
       clearReportHistory();
@@ -301,19 +292,16 @@ class ShowForm extends Component {
         { tenantId: tenantId, reportName: this.state.reportName, searchParams }
       ).then(
         function(response) {
-          // console.log(response)
           pushReportHistory({
             tenantId: tenantId,
             reportName: self.state.reportName,
             searchParams,
           });
           setReportResult(response);
-          // console.log("Show Table");
           showTable(true);
           setFlag(1);
         },
         function(err) {
-          // console.log(err);
           showTable(false);
           alert('Something went wrong or try again later');
         }
@@ -322,15 +310,12 @@ class ShowForm extends Component {
       let reportData = reportHistory[reportIndex - 1 - 1];
       let response = Api.commonApiPost('/report/' + this.state.moduleName + '/_get', {}, { ...reportData }).then(
         function(response) {
-          // console.log(response)
           decreaseReportIndex();
           setReportResult(response);
-          // console.log("Show Table");
           showTable(true);
           setFlag(1);
         },
         function(err) {
-          // console.log(err);
           showTable(false);
           alert('Something went wrong or try again later');
         }
@@ -338,31 +323,11 @@ class ShowForm extends Component {
     }
 
     changeButtonText('Generate Report');
-    // this.setState({searchBtnText:'Search Again'})
-
-    //call api
-    // setReportResult(resForm);
-  }
+  };
 
   render() {
-    let {
-      searchForm,
-      fieldErrors,
-      isFormValid,
-      isTableShow,
-      handleChange,
-      handleChangeNextOne,
-      handleChangeNextTwo,
-      buttonText,
-      metaData,
-      reportHistory,
-      reportIndex,
-    } = this.props;
+    let { searchForm, fieldErrors, isFormValid, isTableShow, handleChange, buttonText, metaData, reportHistory, reportIndex } = this.props;
     let { search } = this;
-    //console.log(metaData);
-    // console.log(searchForm);
-    console.log(reportHistory);
-    console.log(reportIndex);
     return (
       <div className="">
         <form
@@ -411,7 +376,6 @@ class ShowForm extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state.form.buttonText);
   return {
     searchForm: state.form.form,
     fieldErrors: state.form.fieldErrors,
@@ -443,46 +407,10 @@ const mapDispatchToProps = dispatch => ({
       },
     });
   },
-  initForm: (required = []) => {
-    dispatch({
-      type: 'RESET_STATE',
-      validationData: {
-        required: {
-          current: [],
-          required: required,
-        },
-        pattern: {
-          current: [],
-          required: [],
-        },
-      },
-    });
-  },
   handleChange: (e, property, isRequired, pattern) => {
     dispatch({
       type: 'HANDLE_CHANGE',
       property,
-      value: e.target.value,
-      isRequired,
-      pattern,
-    });
-  },
-  handleChangeNextOne: (e, property, propertyOne, isRequired, pattern) => {
-    dispatch({
-      type: 'HANDLE_CHANGE_NEXT_ONE',
-      property,
-      propertyOne,
-      value: e.target.value,
-      isRequired,
-      pattern,
-    });
-  },
-  handleChangeNextTwo: (e, property, propertyOne, propertyTwo, isRequired, pattern) => {
-    dispatch({
-      type: 'HANDLE_CHANGE_NEXT_ONE',
-      property,
-      propertyOne,
-      propertyTwo,
       value: e.target.value,
       isRequired,
       pattern,
@@ -493,9 +421,6 @@ const mapDispatchToProps = dispatch => ({
   },
   changeButtonText: text => {
     dispatch({ type: 'BUTTON_TEXT', text });
-  },
-  toggleDailogAndSetText: (dailogState, msg) => {
-    dispatch({ type: 'TOGGLE_DAILOG_AND_SET_TEXT', dailogState, msg });
   },
   setReportResult: reportResult => {
     dispatch({ type: 'SET_REPORT_RESULT', reportResult });
@@ -521,175 +446,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowForm);
-
-// <Card>
-//     <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Search Property < /strong>}/>
-//
-//     <CardText>
-//       <Card>
-//         <CardText>
-//           <Grid>
-//             <Row>
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.doorNo
-//                   ? fieldErrors.doorNo
-//                   : ""} id="doorNo" value={propertyTaxSearch.doorNo?propertyTaxSearch.doorNo:""} onChange={(e) => handleChange(e, "doorNo", false, /^([\d,/.\-]){6,10}$/g)} hintText="eg:-3233312323" floatingLabelText="Door number" />
-//               </Col>
-//
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.assessmentNo
-//                   ? fieldErrors.assessmentNo
-//                   : ""} value={propertyTaxSearch.assessmentNo?propertyTaxSearch.assessmentNo:""} onChange={(e) => handleChange(e, "assessmentNo", false, /^\d{3,15}$/g)} hintText="eg:-123456789123456" floatingLabelText="Assessment number"/>
-//               </Col>
-//             </Row>
-//
-//             <Row>
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.mobileNo
-//                   ? fieldErrors.mobileNo
-//                   : ""} value={propertyTaxSearch.mobileNo?propertyTaxSearch.mobileNo:""} onChange={(e) => handleChange(e, "mobileNo", false, /^\d{10}$/g)} hintText="Mobile number" floatingLabelText="Mobile number" />
-//               </Col>
-//
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.aadharNo
-//                   ? fieldErrors.aadharNo
-//                   : ""} value={propertyTaxSearch.aadharNo?propertyTaxSearch.aadharNo:""} onChange={(e) => handleChange(e, "aadharNo", false, /^\d{12}$/g)} hintText="Aadhar number " floatingLabelText="Aadhar number " />
-//               </Col>
-//             </Row>
-//           </Grid>
-//
-//         </CardText>
-//       </Card>
-//
-//       <Card>
-//         <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Advance Search < /strong>} actAsExpander={true} showExpandableButton={true}/>
-//
-//         <CardText expandable={true}>
-//           <Grid>
-//             <Row>
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.ownerName
-//                   ? fieldErrors.ownerName
-//                   : ""} value={propertyTaxSearch.ownerName?propertyTaxSearch.ownerName:""} onChange={(e) => handleChange(e, "ownerName", false, "")} hintText="Owner Name" floatingLabelText="Owner Name" />
-//               </Col>
-//
-//               <Col xs={12} md={6}>
-//                 <TextField errorText={fieldErrors.oldAssessmentNo
-//                   ? fieldErrors.oldAssessmentNo
-//                   : ""} value={propertyTaxSearch.oldAssessmentNo?propertyTaxSearch.oldAssessmentNo:""} onChange={(e) => handleChange(e, "oldAssessmentNo", false, /^\d{3,15}$/g)} hintText="Old Assessment Number" floatingLabelText="Old Assessment Number" />
-//               </Col>
-//             </Row>
-//
-//             <Row>
-//
-//               <Card>
-//                 <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Boundary < /strong>}/>
-//
-//                 <CardText>
-//                   <Grid>
-//                     <Row>
-//                       <Col xs={12} md={6}>
-//
-//                         <SelectField errorText={fieldErrors.zone
-//                           ? fieldErrors.zone
-//                           : ""} value={propertyTaxSearch.zone?propertyTaxSearch.zone:""} onChange={(event, index, value) => {
-//                             var e = {
-//                               target: {
-//                                 value: value
-//                               }
-//                             };
-//                             handleChange(e, "zone", false, "")}} floatingLabelText="Zone	Drop " >
-//                           <MenuItem value={1} primaryText="Never"/>
-//                           <MenuItem value={2} primaryText="Every Night"/>
-//                           <MenuItem value={3} primaryText="Weeknights"/>
-//                           <MenuItem value={4} primaryText="Weekends"/>
-//                           <MenuItem value={5} primaryText="Weekly"/>
-//                         </SelectField>
-//
-//                       </Col>
-//
-//                       <Col xs={12} md={6}>
-//                         <SelectField errorText={fieldErrors.ward
-//                           ? fieldErrors.ward
-//                           : ""} value={propertyTaxSearch.ward?propertyTaxSearch.ward:""} onChange={(event, index, value) =>{
-//                             var e = {
-//                               target: {
-//                                 value: value
-//                               }
-//                             };
-//                             handleChange(e, "ward", false, "")}
-//                           } floatingLabelText="Ward" >
-//                           <MenuItem value={1} primaryText="Never"/>
-//                           <MenuItem value={2} primaryText="Every Night"/>
-//                           <MenuItem value={3} primaryText="Weeknights"/>
-//                           <MenuItem value={4} primaryText="Weekends"/>
-//                           <MenuItem value={5} primaryText="Weekly"/>
-//                         </SelectField>
-//                       </Col>
-//                     </Row>
-//
-//                     <Row>
-//                       <Col xs={12} md={6}>
-//                         <SelectField errorText={fieldErrors.location
-//                           ? fieldErrors.location
-//                           : ""} value={propertyTaxSearch.location?propertyTaxSearch.location:""} onChange={(event, index, value) => {
-//                             var e = {
-//                               target: {
-//                                 value: value
-//                               }
-//                             };
-//                             handleChange(e, "location", false, "")}} floatingLabelText="Location" >
-//                           <MenuItem value={1} primaryText="Never"/>
-//                           <MenuItem value={2} primaryText="Every Night"/>
-//                           <MenuItem value={3} primaryText="Weeknights"/>
-//                           <MenuItem value={4} primaryText="Weekends"/>
-//                           <MenuItem value={5} primaryText="Weekly"/>
-//                         </SelectField>
-//                       </Col>
-//
-//                     </Row>
-//                   </Grid>
-//
-//                 </CardText>
-//               </Card>
-//
-//             </Row>
-//
-//             <Row>
-//               <Card>
-//                 <CardHeader title={< strong style = {{color:"#5a3e1b"}} > Search Property by Demand < /strong>}/>
-//                 <CardText>
-//                   <Grid>
-//                     <Row>
-//                       <Col xs={12} md={6}>
-//                       <TextField errorText={fieldErrors.demandFrom
-//                         ? fieldErrors.demandFrom
-//                         : ""} value={propertyTaxSearch.demandFrom?propertyTaxSearch.demandFrom:""} onChange={(e) => handleChange(e, "demandFrom", false, /^\d$/g)} hintText="Demand From" floatingLabelText="Demand From" />
-//
-//
-//                       </Col>
-//
-//                       <Col xs={12} md={6}>
-//                       <TextField errorText={fieldErrors.demandTo
-//                         ? fieldErrors.demandTo
-//                         : ""} value={propertyTaxSearch.demandTo?propertyTaxSearch.demandTo:""} onChange={(e) => handleChange(e, "demandTo", false, /^\d$/g)} hintText="Demand To" floatingLabelText="Demand To" />
-//
-//
-//                       </Col>
-//                     </Row>
-//                   </Grid>
-//                 </CardText>
-//               </Card>
-//             </Row>
-//
-//           </Grid>
-//         </CardText>
-//       </Card>
-//       <div style={{
-//         float: "center"
-//       }}>
-//         <RaisedButton type="submit" disabled={!isFormValid} label={buttonText} backgroundColor={"#5a3e1b"} labelColor={white}/>
-//         <RaisedButton label="Close"/>
-//       </div>
-//     </CardText>
-//   </Card>

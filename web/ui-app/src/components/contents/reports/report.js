@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Api from '../../../api/api';
 import SearchForm from './searchForm';
 import ReportResult from './reportResult';
-import $ from 'jquery';
+import mockData from './mockData';
 
 class Report extends Component {
   componentWillReceiveProps(nextProps) {
