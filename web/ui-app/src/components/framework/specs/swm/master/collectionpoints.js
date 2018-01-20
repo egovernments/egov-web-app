@@ -114,9 +114,10 @@ var dat = {
             isDisabled: false,
             maxLength: 300,
             minLength: 15,
-            patternErrorMsg: '',
-          },
-        ],
+            pattern: '^.[a-zA-Z. ]{15,300}$',
+            patternErrMsg: 'swm.collectionpoints.create.description.errormsg'
+          }
+        ]
       },
       {
         name: 'BinDetails',
@@ -414,7 +415,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=CollectionType|$..code|$..name',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=CollectionType|$..code|$..name'
           },
           {
             name: 'garbageEstimate',
@@ -423,7 +424,7 @@ var dat = {
             type: 'number',
             isRequired: true,
             isDisabled: false,
-            patternErrorMsg: '',
+            patternErrorMsg: ''
           },
           {
             name: 'description',
@@ -435,8 +436,10 @@ var dat = {
             maxLength: 300,
             minLength: 15,
             patternErrorMsg: '',
-          },
-        ],
+            pattern: '^.[a-zA-Z. ]{15,300}$',
+            patternErrMsg: 'swm.collectionpoints.create.description.errormsg'
+          }
+        ]
       },
       {
         name: 'BinDetails',

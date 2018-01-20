@@ -3331,6 +3331,7 @@ var localization_EN_Data = {
       "pattern.error.message.vatNumber": '  The VAT Number should be in format e.g - 12345678910 .',
       "pattern.error.message.gstNumber": ' GST Number should be in format - 22AAAAA0000A1Z5',
       "pattern.error.message.faxNumber": 'Fax number only contains Number e.g - 123456798012345',
+      'swm.collectionpoints.create.description.errormsg':'Character should be between 15 to 300 characters.',
 
 
 };
@@ -5323,7 +5324,8 @@ var localization_MR_Data = {
   'legal.create.advocateFee': 'Advocate Fee-marathi',
   'swm.sanitationstaffTargets.search.title':'Sanitation Staff Target-marathi',
   'swm.create.sanitationStaffTargets.departmentName':'Department Name-marathi',
-  'swm.refillingpumpstations.typeOfFuel.code':"Type of fuel -marathi"
+  'swm.refillingpumpstations.typeOfFuel.code':"Type of fuel -marathi",
+  'swm.collectionpoints.create.description.errormsg':'Character should be between 15 to 300 characters. - Marathi',
 };
 export function translate(locale_text) {
   if (locale_text && localStorage.getItem('lang_response')) {
