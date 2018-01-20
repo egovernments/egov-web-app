@@ -171,7 +171,7 @@ var dat = {
             jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
             label: 'swm.vendorpayment.create.contractno',
             type: 'singleValueList',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
             depedants: [
@@ -311,7 +311,7 @@ var dat = {
             jsonPath: 'vendorPaymentDetails[0].vendorContract.contractNo',
             label: 'swm.vendorpayment.create.contractno',
             type: 'singleValueList',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
             depedants: [
@@ -403,14 +403,16 @@ var dat = {
             jsonPath: 'vendorPaymentDetails[0].documents',
             label: 'legal.create.sectionApplied',
             type: 'fileTable',
+            configlabel: true,
             isRequired: false,
             isDisabled: false,
+            screenView: true,
             patternErrMsg: '',
             fileList: {
               name: 'documentName',
               id: 'fileStoreId',
             },
-            fileCount: 3,
+           // fileCount: 3,
           },
         ]
       },

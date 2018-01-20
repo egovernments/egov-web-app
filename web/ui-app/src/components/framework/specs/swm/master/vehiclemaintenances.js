@@ -85,7 +85,7 @@ var dat = {
             jsonPath: 'vehicleMaintenances[0].vehicle.regNumber',
             label: 'swm.vehicles.create.regNumber',
             pattern: '',
-            type: 'autoCompelete',
+            type: 'singleValueList',
             isRequired: true,
             isDisabled: false,
             defaultValue: '',
@@ -93,12 +93,22 @@ var dat = {
             minLength: 6,
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
-            autoCompleteDependancy: {
-              autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
-              autoFillFields: {
-                'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+            depedants: [
+              {
+                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+                type: 'autoFill',
+                pattern: '/swm-services/vehicles/_search?&regNumber={vehicleMaintenances[0].vehicle.regNumber}',
+                autoFillFields: {
+                  'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+                },
               },
-            },
+            ],
+            // autoCompleteDependancy: {
+            //   autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
+            //   autoFillFields: {
+            //     'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+            //   },
+            // },
           },
           {
             name: 'name',
@@ -311,7 +321,7 @@ var dat = {
             jsonPath: 'vehicleMaintenances[0].vehicle.regNumber',
             label: 'swm.vehicles.create.regNumber',
             pattern: '',
-            type: 'autoCompelete',
+            type: 'singleValueList',
             isRequired: true,
             isDisabled: true,
             defaultValue: '',
@@ -319,12 +329,22 @@ var dat = {
             minLength: 6,
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
-            autoCompleteDependancy: {
-              autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
-              autoFillFields: {
-                'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+            depedants: [
+              {
+                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+                type: 'autoFill',
+                pattern: '/swm-services/vehicles/_search?&regNumber={vehicleMaintenances[0].vehicle.regNumber}',
+                autoFillFields: {
+                  'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+                },
               },
-            },
+            ],
+            // autoCompleteDependancy: {
+            //   autoCompleteUrl: '/swm-services/vehicles/_search?regNumber={vehicleMaintenances[0].vehicle.regNumber}',
+            //   autoFillFields: {
+            //     'vehicleMaintenances[0].vehicle.vehicleType.name': 'vehicles[0].vehicleType.name',
+            //   },
+            // },
           },
           {
             name: 'name',
