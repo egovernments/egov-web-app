@@ -403,16 +403,14 @@ var dat = {
             jsonPath: 'vendorPaymentDetails[0].documents',
             label: 'legal.create.sectionApplied',
             type: 'fileTable',
-            configlabel: true,
             isRequired: false,
             isDisabled: false,
-            screenView: true,
             patternErrMsg: '',
             fileList: {
               name: 'documentName',
               id: 'fileStoreId',
             },
-           // fileCount: 3,
+            fileCount: 3,
           },
         ]
       },

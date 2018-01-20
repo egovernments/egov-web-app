@@ -22,6 +22,20 @@ class UiFileTable extends Component {
   componentWillReceiveProps(nextProps) {
     let { fileRowCount, isintialLoad } = this.state;
     let { item } = nextProps;
+    if(!_.isEmpty(nextProps.formData)){
+     if (!!_.get(nextProps.formData, item.jsonPath)){
+        fileRowCount = _.get(nextProps.formData, item.jsonPath).length
+    
+    
+       let actionCheck =  window.location.hash.split("/").indexOf("update") 
+       if (actionCheck==1){
+              this.setState({
+               fileRowCount: fileRowCount
+             })
+           }
+      }
+    }
+ 
     var rowCount = fileRowCount;
     if (!isintialLoad && item.fileCount && item.fileCount > fileRowCount) {
       this.setState({
@@ -75,7 +89,7 @@ class UiFileTable extends Component {
   renderRowList = item => {
     let { fileRowCount } = this.state;
     var fileRowCountValue = fileRowCount;
-    console.log('testval:', this.props.readonly);
+    //console.log('testval:', this.props.readonly);
     let documentListArray = this.props.getVal(item.jsonPath);
     if (_.isArray(documentListArray) && documentListArray.length > 0) {
       var documentsLenth = 0;
@@ -93,7 +107,6 @@ class UiFileTable extends Component {
     }
 
     let arr = [...Array(fileRowCountValue).keys()];
-    //console.log("2222222",arr.length)
     let value = '';
     let readOnly = false;
 

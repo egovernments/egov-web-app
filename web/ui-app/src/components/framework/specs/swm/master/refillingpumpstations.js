@@ -86,7 +86,7 @@ var dat = {
     groups: [
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.refillingpumpstations.create.group.title.RefillingPumpLocation',
         fields: [
            {
             "type": "boundary",
@@ -188,7 +188,7 @@ var dat = {
     groups: [
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.refillingpumpstations.create.group.title.RefillingPumpLocation',
         fields: [
          {
             "type": "boundary",
@@ -289,7 +289,7 @@ var dat = {
     groups: [
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.refillingpumpstations.create.group.title.RefillingPumpLocation',
         fields: [
            {
             "type": "boundary",
