@@ -958,7 +958,26 @@ class Report extends Component {
             self.setVal(item.jsonPath, filterObject[0].name);
             self.props.setLoadingStatus("hide");
           });
-        } else {
+        } 
+
+        
+  else if(item.type&&item.type=='text'){
+let filteredresponse= self.filterDataFromArray(res,item);
+let jsonpaths=item.jsonPath.split(',');
+if(jsonpaths&&filteredresponse){
+for(var i=0;i<item.responsePaths.length;i++){
+  if(filteredresponse[0]){
+  var value=_.get(filteredresponse[0],item.responsePaths[i])
+if(value){
+self.setVal(jsonpaths[i], value);
+}
+}
+}
+}
+self.props.setLoadingStatus("hide");
+ }
+
+        else {
           setDropDownData(
             item.jsonPath,
             parseKeyAndValueForDD(
@@ -1518,6 +1537,26 @@ class Report extends Component {
 
   };
 
+filterDataFromArray=(res,item)=>{
+ if(res){
+  let value=this.getVal(item.queryParameter);
+  if(value){
+ var filterdObject= _.filter(
+              res[`${item.responseArray}`],
+              function(o) {
+               // let jsonObject=Json.stringify()
+               var currentValue=  _.get(o,item.primaryKey);
+                if (currentValue== value) 
+                  {return o};
+              });
+              return filterdObject;
+            }
+            return null;
+            }
+
+            return null;
+
+}
   //Needs to be changed later for more customfields
   checkCustomFields = (formData, cb) => {
     var self = this;
@@ -1791,6 +1830,7 @@ class Report extends Component {
   };
 
   getVal = (path, dateBool) => {
+
     var _val = _.get(this.props.formData, path);
     if (dateBool && typeof _val == "string" && _val && _val.indexOf("-") > -1) {
       var _date = _val.split("-");

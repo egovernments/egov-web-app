@@ -228,6 +228,34 @@ class Report extends Component {
     setMockData(specs);
   }
 
+filterDataFromArray=(res,item)=>{
+ if(res){
+  let value=this.getVal(item.queryParameter);
+  if(value){
+ var filterdObject= _.filter(
+              res[`${item.responseArray}`],
+              function(o) {
+               // let jsonObject=Json.stringify()
+               var currentValue=  _.get(o,item.primaryKey);
+                if (currentValue== value) 
+                  {return o};
+              });
+              return filterdObject;
+            }
+            return null;
+            }
+
+            return null;
+
+}
+
+ setVal = (jsonPath, value) => {
+    let formData = { ...this.props.formData };
+    _.set(formData, jsonPath, value);
+    this.props.setFormData(formData);
+  };
+
+
   initData() {
     try {
       var hash = window.location.hash.split('/');
@@ -308,8 +336,25 @@ class Report extends Component {
       obj.preApiCalls.forEach(async (item)=>{
         let res=await callApi(item);
         let orgRes=Object.assign({},res);
+       if(item.type&&item.type=='text'){
+let filteredresponse= self.filterDataFromArray(res,item);
+let jsonpaths=item.jsonPath.split(',');
+if(jsonpaths&&filteredresponse){
+for(var i=0;i<item.responsePaths.length;i++){
+  if(filteredresponse[0]){
+  var value=_.get(filteredresponse[0],item.responsePaths[i])
+if(value){
+self.setVal(jsonpaths[i], value);
+}
+}
+}
+}
+self.props.setLoadingStatus('hide');
+ }else{
         setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
         setDropDownOriginalData(item.jsonPath,res);
+       self.props.setLoadingStatus('hide');
+     }
       })
     }
     self.props.setLoadingStatus('hide');
