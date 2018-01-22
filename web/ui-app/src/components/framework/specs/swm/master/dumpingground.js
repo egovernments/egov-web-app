@@ -25,27 +25,27 @@ var dat = {
         fields: [
           {
             name: 'DumpingGroundName',
-            jsonPath: 'name',
+            jsonPath: 'code',
             label: 'swm.dumpingGround.create.dumpingGroundName',
             pattern: '',
-            type: 'text',
+            type: 'autoCompelete',
             isDisabled: false,
             defaultValue: '',
             patternErrMsg: '',
-            url: ''
-          },
-          {
-            name: 'DumpingGroundULB',
-            jsonPath: 'ulbs',
-            label: 'swm.create.ulbNames',
-            pattern: '',
-            type: 'text',
-            isDisabled: false,
-            defaultValue: '',
-            patternErrMsg: '',
-            url: ''
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$..DumpingGround.*.code|$..DumpingGround.*.name'
           }
-        ],
+          // {
+          //   name: 'DumpingGroundULB',
+          //   jsonPath: 'ulbs',
+          //   label: 'swm.create.ulbNames',
+          //   pattern: '',
+          //   type: 'text',
+          //   isDisabled: false,
+          //   defaultValue: '',
+          //   patternErrMsg: '',
+          //   url: ''
+          // }
+        ]
       },
     ],
     result: {
