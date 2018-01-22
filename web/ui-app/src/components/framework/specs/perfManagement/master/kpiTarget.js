@@ -304,7 +304,7 @@ var dat = {
           {
             name: 'kpiCategory',
             jsonPath: 'categoryId',
-            label: 'KPI Category',
+            label: 'perfManagement.create.KPIs.groups.kpiCategory',
             pattern: '',
             type: 'singleValueList',
             url: '/egov-mdms-service/v1/_get?&moduleName=PM&masterName=KpiCategory|$..code|$..name',

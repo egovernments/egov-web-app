@@ -3025,6 +3025,7 @@ var localization_EN_Data = {
   'perfManagement.dashboard.table.header.VALUE': 'KPI ACHIEVED',
   'perfManagement.dashboard.table.header.ULBNAME': 'ULB NAME',
   'perfManagement.dashboard.table.header.DOCUMENTIDS': 'DOCUMENTS',
+  'perfManagement.create.KPIs.groups.kpiCategory': 'KPI Category',
 
   'referenceEvidence.update.document.title': 'Reference Evidences',
   'referenceEvidence.create.group.title.addReferenceEvidences': 'Add Reference Evidences',
@@ -5478,6 +5479,9 @@ var localization_MR_Data = {
   'perfManagement.dashboard.table.header.VALUE': 'केपीआई प्राप्त',
   'perfManagement.dashboard.table.header.ULBNAME': 'शहरी स्थानिक बॉडी नाव',
   'perfManagement.dashboard.table.header.DOCUMENTIDS': 'दस्तऐवज',
+  'perfManagement.create.KPIs.groups.kpiCategory' : "केपीआई श्रेणी",
+  'MdmsMetadata.masterData.PM.KpiCategory.name' : "वर्ग नाव",
+  'MdmsMetadata.masterData.PM.KpiCategory.code' : "वर्ग कोड",
   /** marathi localization for PA module -- ends */
 };
 export function translate(locale_text) {
