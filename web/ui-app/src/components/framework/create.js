@@ -925,6 +925,7 @@ class Report extends Component {
                   `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
                 ];
 
+
               self.depedantValue(obj1.groups);
             },
             function(err) {
@@ -3364,11 +3365,42 @@ filterDataFromArray=(res,item)=>{
             }
           }
         }
-     console.log(context);
-     console.log(id);
         Api.commonApiPost(context, id).then(
           function(response) {
+            let fields = jp.query(
+              obj,
+              `$.groups..fields[?(@.hasATOAATransform==true)]`
+            );
+           
             if (response) {
+              if(fields) {
+        let splitArray = value.pattern.split('?');
+            for (var i = 0; i < fields.length; i++) {
+              if (!fields[i].hasPreTransform) {
+                var keys = Object.keys( value.autoFillFields );
+                let values = _.get(response, value.autoFillFields[keys[0]]);
+                console.log(values);
+        let keysArray = jp.query(values, splitArray[1].split('|')[1]);
+            let valuesArray = jp.query(values, splitArray[1].split('|')[2]);
+            let dropDownData = [];
+            for (var k = 0; k < keysArray.length; k++) {
+              let dropdownObject = {};
+              dropdownObject['key'] = value.convertToString ? keysArray[k].toString() : value.convertToNumber ? Number(keysArray[k]) : keysArray[k];
+              dropdownObject['value'] = valuesArray[k];
+              dropDownData.push(dropdownObject);
+            }
+
+            dropDownData.sort(function(s1, s2) {
+              return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
+            });
+        
+            setDropDownData(value.jsonPath, dropDownData);
+            
+              }
+            }
+           
+              }
+              else {
               for (var key in value.autoFillFields) {
                 var keyField = key.substr(0, key.lastIndexOf("["));
                 var keyLast = key.substr(key.lastIndexOf("]") + 2);
@@ -3389,6 +3421,7 @@ filterDataFromArray=(res,item)=>{
                   ""
                 );
               }
+            }
             }
           },
           function(err) {

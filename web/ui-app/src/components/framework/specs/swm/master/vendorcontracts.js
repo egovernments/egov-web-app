@@ -132,6 +132,16 @@ var dat = {
             minLength: 1,
             patternErrorMsg: '',
             url: '/swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+             depedants:[
+            {
+            "jsonPath":"vendorContracts[0].servicesOffered",
+            "type":"autoFill",
+            "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
+"autoFillFields":{
+"vendorContracts[0].servicesOffered":"vendors[0].servicesOffered",
+},
+},
+],
           },
           {
             name: 'contractDate',
@@ -224,9 +234,45 @@ var dat = {
             maxLength: 500,
             minLength: 0,
             patternErrorMsg: '',
-          }
+          },
+
         ],
       },
+
+{
+        name: 'ServicesOffered',
+        label: 'swm.create.servicesOffered',
+        fields: [
+          {
+            
+            name: 'ServicesOffered',
+            label: 'swm.create.servicesOffered',
+            jsonPath: 'vendorContracts[0].servicesOffered',
+            type: 'multiValueList',
+            pattern: '',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            url:'',
+            minLength: 1,
+            patternErrorMsg: '',
+            mdms: {
+              "moduleName": "swm",
+              "masterName": "SwmProcess",
+              "filter": "",
+              "key": "$..code",
+              "value": "$..name",
+            },
+            hasATOAATransform:true,
+            aATransformInfo:{
+              to:'vendorContracts[0].servicesOffered',
+              key:'code'
+            },
+           
+          },
+          ],
+        },
+
     ],
     url: '/swm-services/vendorcontracts/_create',
     tenantIdRequired: true,
@@ -343,8 +389,34 @@ var dat = {
             minLength: 15,
             patternErrorMsg: '',
           },
+          
         ],
       },
+ {
+        name: 'ServicesOffered',
+        label: 'swm.create.group.title.ServicesOffered',
+        fields: [
+          {
+            name: 'ServicesOffered',
+            label: 'swm.create.servicesOffered',
+            jsonPath: 'vendorContracts[0].servicesOffered',
+            type: 'multiValueList',
+            pattern: '',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=SwmProcess|$..code|$..name',
+            minLength: 1,
+            patternErrorMsg: '',
+            hasATOAATransform:true,
+            aATransformInfo:{
+              to:'vendors[0].servicesOffered',
+              key:'code'
+            }
+          },
+        ],
+      },
+
     ],
     tenantIdRequired: true,
     url: '/swm-services/vendorcontracts/_search?contractNo={contractNo}',
@@ -383,6 +455,16 @@ var dat = {
             minLength: 1,
             patternErrorMsg: '',
             url: '/swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
+             depedants:[
+            {
+            "jsonPath":"vendorContracts[0].servicesOffered",
+            "type":"autoFill",
+            "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
+"autoFillFields":{
+"vendorContracts[0].servicesOffered":"vendors[0].servicesOffered",
+},
+},
+],
           },
           {
             name: 'contractDate',
@@ -487,7 +569,40 @@ var dat = {
             patternErrorMsg: '',
           },
         ],
-      },
+         },
+         {
+        name: 'ServicesOffered',
+        label: 'swm.create.servicesOffered',
+        fields: [
+          {
+            
+            name: 'ServicesOffered',
+            label: 'swm.create.servicesOffered',
+            jsonPath: 'vendorContracts[0].servicesOffered',
+            type: 'multiValueList',
+            pattern: '',
+            isRequired: true,
+            isDisabled: false,
+            maxLength: 128,
+            url:'',
+            minLength: 1,
+            patternErrorMsg: '',
+            mdms: {
+              "moduleName": "swm",
+              "masterName": "SwmProcess",
+              "filter": "",
+              "key": "$..code",
+              "value": "$..name",
+            },
+            hasATOAATransform:true,
+            aATransformInfo:{
+              to:'vendorContracts[0].servicesOffered',
+              key:'code'
+            },
+           
+          },
+          ],
+        },
     ],
     url: '/swm-services/vendorcontracts/_update',
     tenantIdRequired: true,
