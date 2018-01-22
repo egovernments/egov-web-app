@@ -367,6 +367,8 @@ self.props.setLoadingStatus('hide');
           ];
         if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
         self.props.setFormData(res);
+      // console.log(this.props.mockData[moduleName+'.'+actionName])
+        
         self.setInitialUpdateData(
           res,
           JSON.parse(JSON.stringify(specifications)),
@@ -374,11 +376,19 @@ self.props.setLoadingStatus('hide');
           hashLocation.split('/')[1],
           specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName
         );
+        // self.setTypeOfPoint(res);
+        
       },
       function(err) {}
     );
 
 
+  }
+
+  //To find last index in jsonPath for multiple cards
+  indexFinder = (jsonPath) => {
+    let matches = jsonPath.match(/(\[\d+\])/g);
+    return  matches.length ? parseInt(matches[matches.length-1].replace(/[^\d]/g,"")) : -1;
   }
 
   componentDidMount() {

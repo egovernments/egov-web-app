@@ -78,6 +78,14 @@ export default (state = defaultState, action) => {
         ...state,
         fieldErrors: _fieldErrors,
       };
+    
+    case 'DISPLAY_ERROR' : 
+     return {
+      ...state,
+      fieldErrors : {...state.fieldErrors, [action.property] :  action.errorMessage },
+    };
+   
+    return;
     case 'HANDLE_CHANGE_FRAMEWORK':
       var currentState = { ...state };
       action.value = typeof action.value == 'undefined' || action.value == null ? '' : action.value;

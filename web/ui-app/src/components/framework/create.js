@@ -63,7 +63,7 @@ class Report extends Component {
     if (Array.isArray(field)) {
       field.forEach(function(item, index) {
         if (typeof item == "object") {
-          console.log(item);
+          // console.log(item);
           if (inArrayFormat) {
             str[index] = item[property] ? item[property] : item["code"];
           } else {
@@ -549,6 +549,7 @@ class Report extends Component {
     setMockData(specs);
   }
 
+
   displayUI(results) {
     let {
       setMetaData,
@@ -558,7 +559,9 @@ class Report extends Component {
       setMockData,
       setFormData,
       setDropDownData,
-      setDropDownOriginalData
+      setDropDownOriginalData,
+      mockData,
+      moduleName, actionName
     } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
@@ -747,7 +750,6 @@ class Report extends Component {
                 `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ].objectName
             );
-            console.log(res);
             // var hashLocation = window.location.hash;
             let obj =
               specifications[
@@ -757,11 +759,9 @@ class Report extends Component {
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
             );
-            console.log(fields);
             for (var i = 0; i < fields.length; i++) {
               if (!fields[i].hasPreTransform) {
                 let values = _.get(res, fields[i].jsonPath);
-                console.log(values);
                 res = _.set(
                   res,
                   fields[i]["aATransformInfo"].to,
@@ -769,12 +769,11 @@ class Report extends Component {
                 );
               }
             }
-
-            console.log(res);
             var spec =
               specifications[
                 `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
+            const JP = jp;
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(res);
           }
@@ -806,7 +805,7 @@ class Report extends Component {
         ].isMDMSScreen
       ) {
         // let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
-        console.log(obj);
+        // console.log(obj);
         var masterName = "";
         for (var i = 0; i < obj.groups.length; i++) {
           if (obj.groups[i].hide) {
@@ -1338,7 +1337,6 @@ self.props.setLoadingStatus("hide");
       );
     }
   };
-
 
 
   makeAjaxCall = (formData, url) => {
@@ -2988,7 +2986,9 @@ filterDataFromArray=(res,item)=>{
       removeFieldErrors,
       addRequiredFields,
       formData,
-      mockData
+      mockData,
+      moduleName,
+      actionName
     } = this.props;
     let {
       getVal,
@@ -3023,8 +3023,9 @@ filterDataFromArray=(res,item)=>{
       }
       return str.join("");
     };
+
     let depedants = jp.query(
-      obj,
+      mockData[moduleName+"."+actionName],
       `$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`
     );
     let dependantIdx;
@@ -3168,7 +3169,6 @@ filterDataFromArray=(res,item)=>{
             }
           }
         }
-
         Api.commonApiPost(
           context,
           id,
@@ -3788,13 +3788,18 @@ filterDataFromArray=(res,item)=>{
     expErr,
     isDate
   ) => {
+    const self = this;
     let { getVal } = this; //.props;
     let {
       handleChange,
       mockData,
       setDropDownData,
       formData,
-      changeFormStatus
+      setMockData,
+      moduleName,
+      actionName,
+      changeFormStatus,
+      delRequiredFields
     } = this.props;
     let hashLocation = window.location.hash;
     let obj =
@@ -3917,9 +3922,12 @@ filterDataFromArray=(res,item)=>{
       changeFormStatus(true);
     }
 
+    const JP = jp;
     if (obj && obj.afterHandleChange) {
       eval(obj.afterHandleChange)
     }
+
+    
   };
 
   incrementIndexValue = (group, jsonPath) => {
@@ -3932,6 +3940,11 @@ filterDataFromArray=(res,item)=>{
     _group = _group.replace(regexp, jsonPath + "[" + length + "]");
     return JSON.parse(_group);
   };
+
+  indexFinder = (jsonPath) => {
+    let matches = jsonPath.match(/(\[\d+\])/g);
+    return  matches.length ? parseInt(matches[matches.length-1].replace(/[^\d]/g,"")) : -1;
+  }
 
   getNewSpecs = (group, updatedSpecs, path) => {
     let { moduleName, actionName } = this.props;
@@ -4477,6 +4490,9 @@ const mapDispatchToProps = dispatch => ({
       requiredFields
     });
   },
+  displayError : (property,errorMessage )=>  dispatch({
+    type : 'DISPLAY_ERROR', property, errorMessage
+  }),
   setMetaData: metaData => {
     dispatch({ type: "SET_META_DATA", metaData });
   },
