@@ -170,22 +170,22 @@ export default class TableCard extends Component {
 
   getReportTitle = () => {
     if (this.props.isReportConsolidated) {
-      return `Consolidated performance of KPI ${this.props.kpis} based upon latest submitted KPI values`
+      return `${translate('perfManagement.dashboard.chart.consolidated.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.consolidated.msg2')}`
     }
     let data = this.state.data[this.state.chartDataIndex - 1]
     let ulbName = this.getULBName(data['ulbName']); 
-    return `Monthly performance of KPI ${this.props.kpis} for ULB ${ulbName} in FinancialYear ${data.finYear}`
+    return `${translate('perfManagement.dashboard.chart.monthly.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${ulbName} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${data.finYear}`
   }
 
   getColumnName = (name) => {
-    if (name === 'FINYEAR') return 'FINANCIAL YEAR'
-    if (name === 'KPINAME') return 'KPI NAME'
-    if (name === 'TARGET') return 'KPI TARGET'
-    if (name === 'NAME') return 'KPI VALUE MONTH'
-    if (name === 'MONTHLYVALUE') return 'KPI ACHIEVED'
-    if (name === 'VALUE') return 'KPI ACHIEVED'
-    if (name === 'ULBNAME') return 'ULB NAME'
-    if (name === 'DOCUMENTIDS') return 'DOCUMENTS'
+    if (name === 'FINYEAR') return translate('perfManagement.dashboard.table.header.FINYEAR')
+    if (name === 'KPINAME') return translate('perfManagement.dashboard.table.header.KPINAME')
+    if (name === 'TARGET') return translate('perfManagement.dashboard.table.header.TARGET')
+    if (name === 'NAME') return translate('perfManagement.dashboard.table.header.NAME')
+    if (name === 'MONTHLYVALUE') return translate('perfManagement.dashboard.table.header.MONTHLYVALUE')
+    if (name === 'VALUE') return translate('perfManagement.dashboard.table.header.VALUE')
+    if (name === 'ULBNAME') return translate('perfManagement.dashboard.table.header.ULBNAME')
+    if (name === 'DOCUMENTIDS') return translate('perfManagement.dashboard.table.header.DOCUMENTIDS')
     return name
   }
 
@@ -213,7 +213,7 @@ export default class TableCard extends Component {
           <br />
           <br />
           <Card className="uiCard">
-            <CardHeader title={<div style={{ fontSize: '16px' }}> insufficient data to draw the chart </div>} />
+            <CardHeader title={<div style={{ fontSize: '16px' }}> {translate('perfManagement.dashboard.query.user.error.insufficientdata')} </div>} />
           </Card>
         </div>
     );
@@ -237,7 +237,7 @@ export default class TableCard extends Component {
         <br />
         <Card className="uiCard" style={{ textAlign: 'center' }}>
           <CardHeader style={{ paddingBottom: 0 }} title={<div style={{ fontSize: 16, marginBottom: '25px' }}> {this.getReportTitle()} </div>} />
-          {this.renderReportNavigationButton('Charts')}
+          {this.renderReportNavigationButton(translate('perfManagement.dashboard.chart.type.chart'))}
           {this.renderTable()}
         </Card>
       </div>
@@ -262,7 +262,7 @@ export default class TableCard extends Component {
                   <TableRow key={index}>  {
                                               headers.map((el, index) => <TableRowColumn style={{whiteSpace: 'normal', wordWrap: 'break-word'}} 
                                                                                       key={index}>{ (el === 'documentIds' && item[el].length > 0) ? 
-                                                                                                this.renderAttachmentDownloadButton('Download', item[el]) : 
+                                                                                                this.renderAttachmentDownloadButton(translate('perfManagement.dashboard.common.nav.download'), item[el]) : 
                                                                                                 item[el] } 
                                                                         </TableRowColumn>)
                                           } 
@@ -294,7 +294,7 @@ export default class TableCard extends Component {
     return (
       <div>
         <RaisedButton
-          label={'Previous'}
+          label={translate('perfManagement.dashboard.common.prev')}
           primary={true}
           type="button"
           disabled={this.state.chartDataIndex === 1 ? true : false}
@@ -303,7 +303,7 @@ export default class TableCard extends Component {
 
         <RaisedButton
           style={{ marginLeft: '10px' }}
-          label={'Next'}
+          label={translate('perfManagement.dashboard.common.next')}
           primary={true}
           type="button"
           disabled={this.state.chartDataIndex === this.state.maxChartData ? true : false}
@@ -328,7 +328,6 @@ export default class TableCard extends Component {
    * render download files button
    */
   renderAttachmentDownloadButton = (label, fileStoreIds) => {
-    console.log(fileStoreIds)
     return (
       <div>
         <RaisedButton

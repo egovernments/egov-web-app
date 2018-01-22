@@ -176,7 +176,7 @@ export default class BarChartCard extends Component {
           <br />
           <br />
           <Card className="uiCard">
-            <CardHeader title={<div style={{ fontSize: '16px' }}> insufficient data to draw the chart </div>} />
+          <CardHeader title={<div style={{ fontSize: '16px' }}> {translate('perfManagement.dashboard.query.user.error.insufficientdata')} </div>} />
           </Card>
         </div>
     );
