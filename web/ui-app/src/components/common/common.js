@@ -2986,6 +2986,25 @@ var localization_EN_Data = {
   'perfManagement.update.KPIs.groups.updatekpivalue': 'KPI values submitted successfully',
   'perfManagement.create.KPIs.groups.kpidoc':'KPIs Documents',
   'perfManagement.create.KPIs.groups.nokpidoc':'NO KPI Document fields',
+  'perfManagement.dashboard.chart.consolidated.msg1': 'Consolidated performance of KPI',
+  'perfManagement.dashboard.chart.consolidated.msg2': 'based upon latest submitted KPI values',
+  'perfManagement.dashboard.chart.monthly.msg1': 'Monthly performance of KPI',
+  'perfManagement.dashboard.chart.monthly.msg2': 'for ULB',
+  'perfManagement.dashboard.chart.monthly.msg3': 'in FinancialYear',
+  
+  'perfManagement.dashboard.chart.targetValue': 'Target Value',
+  'perfManagement.dashboard.chart.actualValue': 'Actual Value',
+  
+  'perfManagement.dashboard.common.nav.next': 'Next',
+  'perfManagement.dashboard.common.nav.prev': 'Previous',
+
+  'perfManagement.dashboard.chart.pie.yes': 'YES',
+  'perfManagement.dashboard.chart.pie.no': 'NO',
+  'perfManagement.dashboard.chart.pie.inprogress': 'IN PROGRESS',
+
+  'perfManagement.dashboard.chart.type.table': 'Tabluar',
+  'perfManagement.dashboard.chart.type.chart': 'Charts',
+
   'referenceEvidence.update.document.title': 'Reference Evidences',
   'referenceEvidence.create.group.title.addReferenceEvidences': 'Add Reference Evidences',
   'referenceEvidence.create.typeOfReference': 'Type Of Reference',

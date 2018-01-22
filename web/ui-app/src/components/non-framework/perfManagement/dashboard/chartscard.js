@@ -145,11 +145,11 @@ export default class BarChartCard extends Component {
 
   getReportTitle = () => {
     if (this.props.isReportConsolidated) {
-      return `Consolidated performance of KPI ${this.props.kpis} based upon latest submitted KPI values`
+      return `${translate('perfManagement.dashboard.chart.consolidated.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.consolidated.msg2')}`
     }
     let data = this.state.data[this.state.chartDataIndex - 1]
     let ulbName = this.getULBName(data['ulbName']); 
-    return `Monthly performance of KPI ${this.props.kpis} for ULB ${ulbName} in FinancialYear ${data.finYear}`
+    return `${translate('perfManagement.dashboard.chart.monthly.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${ulbName} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${data.finYear}`
   }
 
   render() {
@@ -199,7 +199,7 @@ export default class BarChartCard extends Component {
         <br />
         <Card className="uiCard" style={{ textAlign: 'center' }}>
           <CardHeader style={{ paddingBottom: 0 }} title={<div style={{ fontSize: 16, marginBottom: '25px' }}> {this.getReportTitle()} </div>} />
-          {this.renderReportNavigationButton('Tabular')}
+          {this.renderReportNavigationButton(translate('perfManagement.dashboard.chart.type.table'))}
           {this.renderChartType()}
         </Card>
       </div>
@@ -229,7 +229,7 @@ export default class BarChartCard extends Component {
     return (
       <div>
         <RaisedButton
-          label={'Previous'}
+          label={translate('perfManagement.dashboard.common.prev')}
           primary={true}
           type="button"
           disabled={this.state.chartDataIndex === 1 ? true : false}
@@ -238,7 +238,7 @@ export default class BarChartCard extends Component {
 
         <RaisedButton
           style={{ marginLeft: '10px' }}
-          label={'Next'}
+          label={translate('perfManagement.dashboard.common.next')}
           primary={true}
           type="button"
           disabled={this.state.chartDataIndex === this.state.maxChartData ? true : false}
@@ -292,8 +292,8 @@ export default class BarChartCard extends Component {
           <Tooltip />
           <Legend />
 
-          <Bar name="Target Value" dataKey="target" fill="#0088FE" />
-          <Bar name="Actual Value" dataKey="monthlyValue" fill="#00C49F" />
+          <Bar name={translate('perfManagement.dashboard.chart.targetValue')}  dataKey="target" fill="#0088FE" />
+          <Bar name={translate('perfManagement.dashboard.chart.actualValue')} dataKey="monthlyValue" fill="#00C49F" />
         </BarChart>
       </div>
     );
@@ -309,15 +309,15 @@ export default class BarChartCard extends Component {
 
     let data = [
       {
-        name: 'YES',
+        name: translate('perfManagement.dashboard.chart.pie.yes'),
         value: cdata.filter(el => el.monthlyValue === 'YES').length,
       },
       {
-        name: 'NO',
+        name: translate('perfManagement.dashboard.chart.pie.no'),
         value: cdata.filter(el => el.monthlyValue === 'NO').length,
       },
       {
-        name: 'IN PROGRESS',
+        name: translate('perfManagement.dashboard.chart.pie.inprogress'),
         value: cdata.filter(el => el.monthlyValue === 'IN PROGRESS').length,
       },
     ];
@@ -352,8 +352,8 @@ export default class BarChartCard extends Component {
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
-          <Bar name="KPI Target" dataKey="target" fill="#0088FE" />
-          <Bar name="Actual Value" dataKey="value" fill="#00C49F" />
+          <Bar name={translate('perfManagement.dashboard.chart.targetValue')} dataKey="target" fill="#0088FE" />
+          <Bar name={translate('perfManagement.dashboard.chart.actualValue')} dataKey="value" fill="#00C49F" />
         </BarChart>
       </div>
     );
@@ -367,15 +367,15 @@ export default class BarChartCard extends Component {
     let cdata    = this.getModifiedChartData(this.getChartData())
     let data = [
       {
-        name: 'YES',
+        name: translate('perfManagement.dashboard.chart.pie.yes'),
         value: cdata.filter(el => el.value === 'YES').length,
       },
       {
-        name: 'NO',
+        name: translate('perfManagement.dashboard.chart.pie.no'),
         value: cdata.filter(el => el.value === 'NO').length,
       },
       {
-        name: 'IN PROGRESS',
+        name: translate('perfManagement.dashboard.chart.pie.inprogress'),
         value: cdata.filter(el => el.value === 'IN PROGRESS').length,
       },
     ];
