@@ -44,6 +44,7 @@ class ShowForm extends Component {
       for (var k = 0; k < keys.length; k++) {
         defaultValue[keys[k]] = values[k];
       }
+      const defaultValuesLength = Object.keys(defaultValue).length;
 
       for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
         if (
@@ -51,11 +52,15 @@ class ShowForm extends Component {
           metaData.reportDetails.searchParams[l].pattern.search('{' + selectedProperty + '}') > -1
         ) {
           metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
+          if (defaultValuesLength < 2) {
+            metaData.reportDetails.searchParams[l].disabled = true;
+          }
         }
       }
       setMetaData(metaData);
 
-      if (mapping && mapping == 'one-to-one') {
+      // if there is only one value there is no need for user to select
+      if (defaultValuesLength && defaultValuesLength < 2) {
         const value = Object.keys(defaultValue)[0];
         const e = { target: { value } };
         handleChange(e, targetProperty, isMandatory ? true : false, '');
