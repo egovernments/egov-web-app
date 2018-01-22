@@ -108,8 +108,8 @@ var dat ={
         'amount'
       ],
       resultPath: 'paymentDetails',
-      rowClickUrlUpdate: '/update/swm/paymentvendor/{voucherNumber}',
-      rowClickUrlView: '/view/swm/paymentvendor/{voucherNumber}',
+      rowClickUrlUpdate: '/update/swm/paymentvendor/{code}',
+      rowClickUrlView: '/view/swm/paymentvendor/{code}',
     },
 },
 'swm.view': {
@@ -326,13 +326,13 @@ var dat ={
       },
     ], 
     tenantIdRequired: true,
-    url: '/swm-services/paymentdetails/_search?voucherNumber={voucherNumber}',
+    url: '/swm-services/paymentdetails/_search?codes={code}',
 },
 'swm.create': {
     numCols: 3,
     useTimestamp: true,
     objectName: 'paymentDetails',
-    idJsonPath: 'paymentDetails[0].voucherNumber',
+    idJsonPath: 'paymentDetails[0].code',
     title: 'swm.vendorpayment.create.capturetitle',
     groups:[
       {
@@ -576,7 +576,7 @@ var dat ={
   numCols: 3,
   useTimestamp: true,
   objectName: 'paymentDetails',
-  idJsonPath: 'paymentDetails[0].voucherNumber',
+  idJsonPath: 'paymentDetails[0].code',
   title: 'swm.vendorpayment.create.capturetitle',
   groups:[
     {
@@ -804,7 +804,7 @@ var dat ={
   ], 
   url: '/swm-services/paymentdetails/_update',
   tenantIdRequired: true,
-  searchUrl: '/swm-services/paymentdetails/_search?voucherNumber={voucherNumber}',
+  searchUrl: '/swm-services/paymentdetails/_search?codes={code}',
 },
 };
 export default dat;

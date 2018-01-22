@@ -196,6 +196,7 @@ var dat = {
             type: 'radio',
             styleObj: {
               display: '-webkit-box',
+              width:'30%'
             },
             url: '',
             isRequired: false,
@@ -456,6 +457,7 @@ var dat = {
             type: 'radio',
             styleObj: {
               display: '-webkit-box',
+              width:'30%'
             },
             url: '',
             isRequired: false,
