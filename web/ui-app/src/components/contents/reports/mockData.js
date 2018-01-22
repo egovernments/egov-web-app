@@ -89,7 +89,7 @@ const response = {
       {
         name: 'vehicle',
         label: 'reports.swm.vehicle',
-        type: 'autocomplete',
+        type: 'singlevaluelistac',
         defaultValue: {
           '0MOjkuqXwaY2R11WQ5': '0MOjkuqXwaY2R11WQ5',
           'regNumber 9258': 'regNumber 9258',
