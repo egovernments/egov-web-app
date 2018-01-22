@@ -3373,7 +3373,7 @@ filterDataFromArray=(res,item)=>{
             );
            
             if (response) {
-              if(fields) {
+              if(fields && fields.length>0 ) {
         let splitArray = value.pattern.split('?');
             for (var i = 0; i < fields.length; i++) {
               if (!fields[i].hasPreTransform) {
