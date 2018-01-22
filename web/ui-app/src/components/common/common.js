@@ -2048,7 +2048,7 @@ var localization_EN_Data = {
    'swm.vehiclestripsheet.search.vehicleTripEntrySearch' : 'Vehicle Trip Entry Search',
    'swm.vehiclestripsheet.create.totalGarbageEstimate':'Total Garbage Estimate',
    'swm.vehiclestripsheet.search.wieght':'Wieght',
-   'swm.vendorpayment.create.title' : 'Enter Vendor Payment Details',
+   'swm.vendorpayment.create.title' : 'Enter Vendor Invoice Details',
    'swm.vendorpayment.create.capturetitle' : 'Capture Payment Details',
    'swm.vendorpayment.create.searchcapturetitle' : 'Capture Payment Search',
    'swm.vendorpayment.create.invoicetitle' : 'Invoice Details',
@@ -2072,7 +2072,7 @@ var localization_EN_Data = {
    'swm.vendorpayment.create.document2' : 'Document 2',
    'swm.vendorpayment.search.dateRange' : 'Date Range',
    'swm.vendorpayment.create.paymentNo' : 'Payment No',
-   'swm.vendorpayment.search.vendorPaymentSearch' : 'Vendor Payment Search',
+   'swm.vendorpayment.search.vendorPaymentSearch' : 'Vendor Invoice Search',
    'swm.vendorpayment.search.vendorContractNo' : 'Vendor Contract No',
 
 
@@ -2138,8 +2138,8 @@ var localization_EN_Data = {
   'swm.processingplant.create.name': 'Name',
 
   //vendor payment
-  'swm.paymentvendor.create.title' :'Enter Vendor Payment Details',
-  'swm.paymentvendor.search.title' : 'Vendor Payment Search',
+  'swm.paymentvendor.create.title' :'Enter Vendor Invoice Details',
+  'swm.paymentvendor.search.title' : 'Vendor Invoice Search',
   'swm.paymentvendor.create.paymentNumber' : 'Payment Number',
   'swm.paymentvendor.create.TransactionNumber': 'Transaction Number',
   'swm.paymentvendor.create.ContractNumber': 'Contract Number',
