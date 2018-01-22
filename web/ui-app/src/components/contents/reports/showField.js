@@ -90,11 +90,7 @@ export default class ShowField extends Component {
               maxDate={maxDate}
               value={typeof obj.value == 'object' ? obj.value : {}}
               onChange={(first, object) => {
-                let e = {
-                  target: {
-                    value: object,
-                  },
-                };
+                let e = { target: { value: object } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
             />
@@ -127,11 +123,7 @@ export default class ShowField extends Component {
                 return dt + '-' + month + '-' + year;
               }}
               onChange={(first, object) => {
-                let e = {
-                  target: {
-                    value: object,
-                  },
-                };
+                let e = { target: { value: object } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
             />
@@ -165,7 +157,7 @@ export default class ShowField extends Component {
           </Col>
         );
 
-      case 'autocomplete':
+      case 'singlevaluelistac':
         const dataSourceConfig = { text: 'value', value: 'key' };
         return (
           <Col xs={12} sm={4} md={3} lg={3}>
@@ -201,12 +193,11 @@ export default class ShowField extends Component {
             <SelectField
               className="custom-form-control-for-select"
               hintText="Select"
+              underlineDisabledStyle={{ background: 'blue' }}
               disabled={obj.disabled ? true : false}
               id={obj.label.split('.').join('-')}
               fullWidth={true}
-              dropDownMenuProps={{
-                targetOrigin: { horizontal: 'left', vertical: 'bottom' },
-              }}
+              dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
               floatingLabelFixed={true}
               floatingLabelText={
                 <span>
@@ -215,11 +206,7 @@ export default class ShowField extends Component {
               }
               value={typeof obj.value == 'undefined' ? '' : obj.value}
               onChange={(event, key, value) => {
-                let e = {
-                  target: {
-                    value,
-                  },
-                };
+                let e = { target: { value } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
               maxHeight={200}
@@ -238,9 +225,7 @@ export default class ShowField extends Component {
               id={obj.label.split('.').join('-')}
               fullWidth={true}
               multiple={true}
-              dropDownMenuProps={{
-                targetOrigin: { horizontal: 'left', vertical: 'bottom' },
-              }}
+              dropDownMenuProps={{ targetOrigin: { horizontal: 'left', vertical: 'bottom' } }}
               floatingLabelFixed={true}
               floatingLabelText={
                 <span>
@@ -249,11 +234,7 @@ export default class ShowField extends Component {
               }
               value={typeof obj.value == 'undefined' ? '' : obj.value}
               onChange={(event, key, value) => {
-                let e = {
-                  target: {
-                    value,
-                  },
-                };
+                let e = { target: { value } };
                 this.props.handler(e, obj.name, obj.isMandatory ? true : false, '');
               }}
               maxHeight={200}
