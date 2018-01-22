@@ -39,7 +39,7 @@ export default class Dashboard extends Component {
         this.setState({
           showDepartmentView: true,
         });
-        this.toast('unable to fetch departments');
+        this.toast(translate('perfManagement.dashboard.query.api.error.department'));
       } else {
         this.departments = res;
         this.setState({
