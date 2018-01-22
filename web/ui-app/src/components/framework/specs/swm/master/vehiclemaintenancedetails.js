@@ -302,7 +302,7 @@ var dat = {
             label: 'swm.create.downtimeforMaintenanceUom',
             pattern: '',
             type: 'text',
-            isRequired: true,
+            isRequired: false,
             isDisabled: true,
             hide: true,
            /* defaultValue: [
@@ -845,7 +845,7 @@ var dat = {
             label: 'swm.create.downtimeforMaintenanceUom',
             pattern: '',
             type: 'text',
-            isRequired: true,
+            isRequired: false,
             isDisabled: true,
             hide: true,
            /* defaultValue: [
