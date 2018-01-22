@@ -56,10 +56,10 @@ export default class KPIDashboardQuery extends Component {
       toastMsg: '',
       isReportConsolidated: false
     };
-    this.kpiTypeLabel = 'KPI Type';
-    this.kpiLabel = 'KPIs';
-    this.ulbLabel = 'ULB(s)';
-    this.fyLabel = 'Target Financial Years';
+    this.kpiTypeLabel = translate('perfManagement.dashboard.query.label.kpiType');
+    this.kpiLabel = translate('perfManagement.dashboard.query.label.kpis');
+    this.ulbLabel = translate('perfManagement.dashboard.query.label.ULBs');
+    this.fyLabel = translate('perfManagement.dashboard.query.label.targetFinancialYears');
     this.ulbRes = null;
     this.fyRes = null;
     this.kpiRes = null;
@@ -71,19 +71,19 @@ export default class KPIDashboardQuery extends Component {
     fetchDepartmentKPIsAPI(this.props.department.id, (err, res) => {
       if (err || !res) {
         this.busyUI(false);
-        this.toast('unable to fetch kpi for the selected department');
+        this.toast(translate('perfManagement.dashboard.query.api.error.department'));
       } else {
         this.kpiRes = res;
         fetchULBsAPI((err, res) => {
           if (err || !res) {
             this.busyUI(false);
-            this.toast('unable to fetch ulbs');
+            this.toast(translate('perfManagement.dashboard.query.api.error.ulbs'));
           } else {
             this.ulbRes = res;
             fetchFinancialYearsAPI((err, res) => {
               if (err || !res) {
                 this.busyUI(false);
-                this.toast('unable to fetch financial years');
+                this.toast(translate('perfManagement.dashboard.query.api.error.financialyears'));
               } else {
                 this.fyRes = res;
                 this.busyUI(false);
@@ -133,7 +133,7 @@ export default class KPIDashboardQuery extends Component {
     if (label === this.ulbLabel) {
       if (values.length > 1) {
         if (this.state.fyIndices.length > 1) {
-          this.toast('You have already selected multiple Financial Years values');
+          this.toast(translate('perfManagement.dashboard.query.user.error.multiplefinancialyears'));
         } else {
           this.setState({
             ulbIndices: values,
@@ -148,7 +148,7 @@ export default class KPIDashboardQuery extends Component {
     if (label === this.fyLabel) {
       if (values.length > 1) {
         if (this.state.ulbIndices.length > 1) {
-          this.toast('You have already selected multiple ULBs values');
+          this.toast(translate('perfManagement.dashboard.query.user.error.multipleulbs'));
         } else {
           this.setState({
             fyIndices: values,
@@ -193,7 +193,7 @@ export default class KPIDashboardQuery extends Component {
     fetchCompareSearchAPI(finYears, kpis, ulbs, (err, res) => {
       this.busyUI(false);
       if (err || !res) {
-        this.toast('Unable to get report data');
+        this.toast(translate('perfManagement.dashboard.query.api.error.reportdata'));
       } else {
         this.chartRes = res;
 
@@ -252,7 +252,7 @@ export default class KPIDashboardQuery extends Component {
       <div>
         <br />
         <RaisedButton
-          label="Back"
+          label={translate('perfManagement.dashboard.common.nav.back')}
           style={{ margin: '15px' }}
           primary={true}
           type="button"
@@ -266,7 +266,7 @@ export default class KPIDashboardQuery extends Component {
         <br />
         <br />
         <Card className="uiCard">
-          <CardHeader title={<strong style={{ fontSize: '18px' }}>{'Key Performance Indicator Dashboard'}</strong>} />
+          <CardHeader title={<strong style={{ fontSize: '18px' }}>{translate('perfManagement.dashboard.query.label.kpidashboard')}</strong>} />
           <Grid fluid>
             <Row>
               <Col xs={12} sm={3} md={3}>
@@ -324,7 +324,7 @@ export default class KPIDashboardQuery extends Component {
         <div style={{ textAlign: 'center' }}>
           <br />
           <RaisedButton
-            label="View Monthly"
+            label={translate('perfManagement.dashboard.common.nav.monthlyView')}
             style={style}
             primary={true}
             type="button"
@@ -332,7 +332,7 @@ export default class KPIDashboardQuery extends Component {
             disabled={this.state.disableViewButton}
           />
           <RaisedButton
-            label="View Consolidated"
+            label={translate('perfManagement.dashboard.common.nav.consolidatedView')}
             style={style}
             primary={true}
             type="button"
@@ -356,7 +356,7 @@ export default class KPIDashboardQuery extends Component {
       });
     } else {
       if (kpiTypes[this.state.kpiTypeIndex].name === 'TEXT') {
-        this.toast('chart cannot be rendered for TEXT type of KPIs');
+        translate('perfManagement.dashboard.query.user.error.noChartForTextType')
       } else {
         this.setState({
           showChartView: true,
