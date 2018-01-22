@@ -617,7 +617,34 @@ class assetImmovableCreate extends Component {
                       }
 
                       for (var m = 0; m < customSpecs[cId].length; m++) {
-                        if (customSpecs[cId][m].jsonPath == temp.jsonPath) {
+                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Layer Type.Select") {
+                          customSpecs[cId][m].defaultValue = valueHolder;
+                          self.setState({
+                            customFieldsGen: customSpecs,
+                            layerData,
+                          });
+                          break;
+                        }
+                      }
+                    }
+                    if (resp) {
+                      let keys = jp.query(resp, '$..description');
+                      let values = jp.query(resp, '$..description');
+                      let others = jp.query(resp, '$..*');
+                      var valueHolder = [];
+                      var layerData = {};
+                      for (var l = 0; l < keys.length; l++) {
+                        var holder = {};
+                        holder.key = keys[l];
+                        holder.value = values[l];
+                        valueHolder.push(holder);
+                        layerData[keys[l]] = others[l];
+                      }
+
+                      for (var m = 0; m < customSpecs[cId].length; m++) {
+                        console.log("temp.jsonPath"+temp.jsonPath);
+                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Unit of Measurement.Select") {
+
                           customSpecs[cId][m].defaultValue = valueHolder;
                           self.setState({
                             customFieldsGen: customSpecs,
@@ -1870,7 +1897,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          
+
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1919,7 +1946,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          
+
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -1969,7 +1996,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          
+
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
@@ -2020,7 +2047,7 @@ class assetImmovableCreate extends Component {
                         labelStyle={{ color: '#5F5C57' }}
                         floatingLabelFixed={true}
                         dropDownMenuProps={{
-                          
+
                           targetOrigin: {
                             horizontal: 'left',
                             vertical: 'bottom',
