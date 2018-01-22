@@ -217,18 +217,12 @@ class ShowField extends Component {
           },
           filename: _this.state.reportName,
           title: _this.state.reportSubTitle,
+          text: 'PDF/Print',
           orientation: 'landscape',
           pageSize: 'TABLOID',
           footer: true,
           customize: function(doc) {
             _this.PrintingCutomize(doc);
-          },
-        },
-        {
-          extend: 'print',
-          exportOptions: {
-            rows: '.selected',
-            columns,
           },
         },
       ];
@@ -240,6 +234,7 @@ class ShowField extends Component {
         {
           extend: 'pdf',
           filename: _this.state.reportName,
+          text: 'PDF/Print',
           title: _this.state.reportSubTitle,
           exportOptions: { columns },
           orientation: 'landscape',
@@ -249,7 +244,6 @@ class ShowField extends Component {
             _this.PrintingCutomize(doc);
           },
         },
-        { extend: 'print', text: 'Print', exportOptions: { columns } },
       ];
     }
   };

@@ -95,7 +95,7 @@ class UiTable extends Component {
             {
               extend: 'pdfHtml5',
               orientation: 'landscape',
-              text: 'PDF',
+              text: 'PDF/Print',
               pageSize: 'LEGAL',
               exportOptions: {
                 columns,
@@ -103,12 +103,6 @@ class UiTable extends Component {
               },
               customize: function(doc) {
                 doc.defaultStyle.fontSize = 10;
-              },
-            },
-            {
-              extend: 'print',
-              exportOptions: {
-                columns,
               },
             },
             { extend: 'copy', text: 'Copy', exportOptions: { columns } },
