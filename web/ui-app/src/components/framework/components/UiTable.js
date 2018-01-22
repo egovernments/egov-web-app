@@ -67,11 +67,9 @@ class UiTable extends Component {
 
   initTable = () => {
     const { resultList } = this.props;
-    let hidesearch = resultList ? resultList.hidesearch : false;
-    const resultHeader = resultList ? resultList.resultHeader : [];
-    const columns = resultHeader.length
-      ? resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1)
-      : ':visible';
+    let hidesearch = resultList.hasOwnProperty('hidesearch') ? resultList.hidesearch : false;
+    const resultHeader = resultList.hasOwnProperty('resultHeader') ? resultList.resultHeader : [];
+    const columns = resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1);
 
     $('#searchTable').DataTable({
       dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
@@ -88,9 +86,16 @@ class UiTable extends Component {
               },
             },
             {
+              extend: 'csv',
+              text: 'CSV',
+              exportOptions: {
+                columns,
+              },
+            },
+            {
               extend: 'pdfHtml5',
               orientation: 'landscape',
-              text: 'Print/PDF',
+              text: 'PDF',
               pageSize: 'LEGAL',
               exportOptions: {
                 columns,
@@ -100,14 +105,13 @@ class UiTable extends Component {
                 doc.defaultStyle.fontSize = 10;
               },
             },
-            { extend: 'copy', text: 'Copy', exportOptions: { columns } },
             {
-              extend: 'csv',
-              text: 'CSV',
+              extend: 'print',
               exportOptions: {
                 columns,
               },
             },
+            { extend: 'copy', text: 'Copy', exportOptions: { columns } },
           ]
         : [],
       ordering: false,
