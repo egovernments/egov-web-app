@@ -410,7 +410,7 @@ var dat ={
           type: 'text',
           jsonPath: "paymentDetails[0].invoiceAmount",
           isRequired: false,
-          isDisabled: false,
+          isDisabled: true,
           patternErrorMsg: '',
         },
         {
@@ -419,7 +419,7 @@ var dat ={
           type: 'datePicker',
           jsonPath: "paymentDetails[0].invoiceDate",
           isRequired: false,
-          isDisabled: false,
+          isDisabled: true,
           patternErrorMsg: '',
         },
         {
@@ -428,7 +428,7 @@ var dat ={
             type: 'datePicker',
             jsonPath: "paymentDetails[0].fromDate",
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
         },
         {
@@ -437,7 +437,7 @@ var dat ={
             type: 'datePicker',
             jsonPath: "paymentDetails[0].toDate",
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
         },
         {
@@ -446,7 +446,7 @@ var dat ={
             type: 'text',
             jsonPath: "paymentDetails[0].vendorInvoiceAmount",
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
         },
         ],  
@@ -652,7 +652,7 @@ var dat ={
           type: 'text',
           jsonPath: "paymentDetails[0].vendorPaymentDetails.vendorInvoiceAmount",
           isRequired: false,
-          isDisabled: false,
+          isDisabled: true,
           patternErrorMsg: '',
       },
       {
@@ -661,7 +661,7 @@ var dat ={
         type: 'datePicker',
         jsonPath: "paymentDetails[0].vendorPaymentDetails.invoiceDate",
         isRequired: false,
-        isDisabled: false,
+        isDisabled: true,
         patternErrorMsg: '',
       },
       {
@@ -670,7 +670,7 @@ var dat ={
           type: 'datePicker',
           jsonPath: "paymentDetails[0].vendorPaymentDetails.fromDate",
           isRequired: false,
-          isDisabled: false,
+          isDisabled: true,
           patternErrorMsg: '',
       },
       {
@@ -679,7 +679,7 @@ var dat ={
           type: 'datePicker',
           jsonPath: "paymentDetails[0].vendorPaymentDetails.toDate",
           isRequired: false,
-          isDisabled: false,
+          isDisabled: true,
           patternErrorMsg: '',
       },
       {
@@ -688,7 +688,7 @@ var dat ={
         type: 'text',
         jsonPath: "paymentDetails[0].vendorInvoiceAmount",
         isRequired: false,
-        isDisabled: false,
+        isDisabled: true,
         patternErrorMsg: '',
       },
       ],  
