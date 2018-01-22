@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
 import { fetchDepartmentAPI, parseDepartmentResponse } from '../apis/apis';
+import { translate } from '../../../common/common';
 
 import LoadingIndicator from '../../../common/LoadingIndicator';
 import DashboardCard from './dashboardcard';

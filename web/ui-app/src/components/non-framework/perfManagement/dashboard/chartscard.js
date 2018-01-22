@@ -11,6 +11,7 @@ import {
   formatChartData,
   formatConsolidatedChartData,
 } from '../apis/helpers';
+import { translate } from '../../../common/common';
 
 
 export default class BarChartCard extends Component {

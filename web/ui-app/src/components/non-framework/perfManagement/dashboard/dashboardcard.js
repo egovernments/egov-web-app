@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardText, CardMedia, CardHeader } from 'material-ui/Card';
+import { translate } from '../../../common/common';
 
 const style = {
   card: {

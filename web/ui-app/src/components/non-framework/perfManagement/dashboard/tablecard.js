@@ -12,6 +12,7 @@ import {
   formatChartData,
   formatConsolidatedChartData,
 } from '../apis/helpers';
+import { translate } from '../../../common/common';
 
 export default class TableCard extends Component {
   constructor(props) {

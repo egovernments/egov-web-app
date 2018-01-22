@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Snackbar from 'material-ui/Snackbar';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { translate } from '../../../common/common';
 
 import {
   fetchDepartmentKPIsAPI,
