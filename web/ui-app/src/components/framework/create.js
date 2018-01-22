@@ -4407,6 +4407,7 @@ filterDataFromArray=(res,item)=>{
                 groups={mockData[`${moduleName}.${actionName}`].groups}
                 noCols={mockData[`${moduleName}.${actionName}`].numCols}
                 ui="google"
+                actionName={actionName}
                 handler={handleChange}
                 makeAjaxCall={this.makeAPICallGetResponse}
                 addRequiredFields={this.props.addRequiredFields}
