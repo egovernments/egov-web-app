@@ -627,33 +627,252 @@ class assetImmovableCreate extends Component {
                         }
                       }
                     }
+
+
                     if (resp) {
-                      let keys = jp.query(resp, '$..description');
-                      let values = jp.query(resp, '$..description');
-                      let others = jp.query(resp, '$..*');
-                      var valueHolder = [];
-                      var layerData = {};
-                      for (var l = 0; l < keys.length; l++) {
-                        var holder = {};
-                        holder.key = keys[l];
-                        holder.value = values[l];
-                        valueHolder.push(holder);
-                        layerData[keys[l]] = others[l];
-                      }
+                              let keys = jp.query(resp, '$..description');
+                              let values = jp.query(resp, '$..description');
+                              let others = jp.query(resp, '$..*');
+                              var valueHolder = [];
+                              var areaUOM = {};
+                              for (var l = 0; l < keys.length; l++) {
+                                var holder = {};
+                                holder.key = keys[l];
+                                holder.value = values[l];
+                                valueHolder.push(holder);
+                                areaUOM[keys[l]] = others[l];
+                              }
 
-                      for (var m = 0; m < customSpecs[cId].length; m++) {
-                        console.log("temp.jsonPath"+temp.jsonPath);
-                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Unit of Measurement.Select") {
+                              for (var m = 0; m < customSpecs[cId].length; m++) {
+                                console.log("temp.jsonPath"+temp.jsonPath);
+                                if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Area UOM.Select") {
+                                  customSpecs[cId][m].defaultValue = valueHolder;
+                                  self.setState({
+                                    customFieldsGen: customSpecs,
+                                    areaUOM,
+                                  });
+                                  break;
+                                }
+                              }
+                            }
 
-                          customSpecs[cId][m].defaultValue = valueHolder;
-                          self.setState({
-                            customFieldsGen: customSpecs,
-                            layerData,
-                          });
-                          break;
-                        }
-                      }
-                    }
+                            if (resp) {
+                                      let keys = jp.query(resp, '$..description');
+                                      let values = jp.query(resp, '$..description');
+                                      let others = jp.query(resp, '$..*');
+                                      var valueHolder = [];
+                                      var minUOM = {};
+                                      for (var l = 0; l < keys.length; l++) {
+                                        var holder = {};
+                                        holder.key = keys[l];
+                                        holder.value = values[l];
+                                        valueHolder.push(holder);
+                                        minUOM[keys[l]] = others[l];
+                                      }
+
+                                      for (var m = 0; m < customSpecs[cId].length; m++) {
+                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Minimum Width UOM.Select") {
+                                          customSpecs[cId][m].defaultValue = valueHolder;
+                                          self.setState({
+                                            customFieldsGen: customSpecs,
+                                            minUOM,
+                                          });
+                                          break;
+                                        }
+                                      }
+                                    }
+
+                                    if (resp) {
+                                              let keys = jp.query(resp, '$..description');
+                                              let values = jp.query(resp, '$..description');
+                                              let others = jp.query(resp, '$..*');
+                                              var valueHolder = [];
+                                              var maxUOM = {};
+                                              for (var l = 0; l < keys.length; l++) {
+                                                var holder = {};
+                                                holder.key = keys[l];
+                                                holder.value = values[l];
+                                                valueHolder.push(holder);
+                                                maxUOM[keys[l]] = others[l];
+                                              }
+
+                                              for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Maximum Width UOM.Select") {
+                                                  customSpecs[cId][m].defaultValue = valueHolder;
+                                                  self.setState({
+                                                    customFieldsGen: customSpecs,
+                                                    maxUOM,
+                                                  });
+                                                  break;
+                                                }
+                                              }
+                                            }
+
+                                            if (resp) {
+                                                      let keys = jp.query(resp, '$..description');
+                                                      let values = jp.query(resp, '$..description');
+                                                      let others = jp.query(resp, '$..*');
+                                                      var valueHolder = [];
+                                                      var layerUOM = {};
+                                                      for (var l = 0; l < keys.length; l++) {
+                                                        var holder = {};
+                                                        holder.key = keys[l];
+                                                        holder.value = values[l];
+                                                        valueHolder.push(holder);
+                                                        layerUOM[keys[l]] = others[l];
+                                                      }
+
+                                                      for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Layer Size UOM.Select") {
+                                                          customSpecs[cId][m].defaultValue = valueHolder;
+                                                          self.setState({
+                                                            customFieldsGen: customSpecs,
+                                                            layerUOM,
+                                                          });
+                                                          break;
+                                                        }
+                                                      }
+                                                    }
+                                                    if (resp) {
+                                                              let keys = jp.query(resp, '$..description');
+                                                              let values = jp.query(resp, '$..description');
+                                                              let others = jp.query(resp, '$..*');
+                                                              var valueHolder = [];
+                                                              var diameterUOM = {};
+                                                              for (var l = 0; l < keys.length; l++) {
+                                                                var holder = {};
+                                                                holder.key = keys[l];
+                                                                holder.value = values[l];
+                                                                valueHolder.push(holder);
+                                                                diameterUOM[keys[l]] = others[l];
+                                                              }
+
+                                                              for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                                  console.log("customSpecs[cId][m].jsonPath"+customSpecs[cId][m].jsonPath);
+                                                                if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Diameter UOM.Select") {
+                                                                  customSpecs[cId][m].defaultValue = valueHolder;
+                                                                  self.setState({
+                                                                    customFieldsGen: customSpecs,
+                                                                    diameterUOM,
+                                                                  });
+                                                                  break;
+                                                                }
+                                                              }
+                                                            }
+                                                            if (resp) {
+                                                                      let keys = jp.query(resp, '$..description');
+                                                                      let values = jp.query(resp, '$..description');
+                                                                      let others = jp.query(resp, '$..*');
+                                                                      var valueHolder = [];
+                                                                      var lengthUOM = {};
+                                                                      for (var l = 0; l < keys.length; l++) {
+                                                                        var holder = {};
+                                                                        holder.key = keys[l];
+                                                                        holder.value = values[l];
+                                                                        valueHolder.push(holder);
+                                                                        lengthUOM[keys[l]] = others[l];
+                                                                      }
+
+                                                                      for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                                                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Length UOM.Select") {
+                                                                          customSpecs[cId][m].defaultValue = valueHolder;
+                                                                          self.setState({
+                                                                            customFieldsGen: customSpecs,
+                                                                            lengthUOM,
+                                                                          });
+                                                                          break;
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                    if (resp) {
+                                                                              let keys = jp.query(resp, '$..description');
+                                                                              let values = jp.query(resp, '$..description');
+                                                                              let others = jp.query(resp, '$..*');
+                                                                              var valueHolder = [];
+                                                                              var capacityUOM = {};
+                                                                              for (var l = 0; l < keys.length; l++) {
+                                                                                var holder = {};
+                                                                                holder.key = keys[l];
+                                                                                holder.value = values[l];
+                                                                                valueHolder.push(holder);
+                                                                                capacityUOM[keys[l]] = others[l];
+                                                                              }
+
+                                                                              for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                                                if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Capacity UOM.Select") {
+                                                                                  customSpecs[cId][m].defaultValue = valueHolder;
+                                                                                  self.setState({
+                                                                                    customFieldsGen: customSpecs,
+                                                                                    capacityUOM,
+                                                                                  });
+                                                                                  break;
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                            if (resp) {
+                                                                                      let keys = jp.query(resp, '$..description');
+                                                                                      let values = jp.query(resp, '$..description');
+                                                                                      let others = jp.query(resp, '$..*');
+                                                                                      var valueHolder = [];
+                                                                                      var floorWiseAreaUOM = {};
+                                                                                      for (var l = 0; l < keys.length; l++) {
+                                                                                        var holder = {};
+                                                                                        holder.key = keys[l];
+                                                                                        holder.value = values[l];
+                                                                                        valueHolder.push(holder);
+                                                                                        floorWiseAreaUOM[keys[l]] = others[l];
+                                                                                      }
+
+                                                                                      for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                                                                        console.log("customSpecs[cId][m].jsonPath"+customSpecs[cId][m].jsonPath);
+
+                                                                                        if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Floor Wise Area UOM.Select") {
+                                                                                            console.log("temp.jsonPath"+temp.jsonPath);
+                                                                                          customSpecs[cId][m].defaultValue = valueHolder;
+                                                                                          self.setState({
+                                                                                            customFieldsGen: customSpecs,
+                                                                                            floorWiseAreaUOM,
+                                                                                          });
+                                                                                          break;
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                    if (resp) {
+                                                                                              let keys = jp.query(resp, '$..description');
+                                                                                              let values = jp.query(resp, '$..description');
+                                                                                              let others = jp.query(resp, '$..*');
+                                                                                              var valueHolder = [];
+                                                                                              var intakeWaterUOM = {};
+                                                                                              for (var l = 0; l < keys.length; l++) {
+                                                                                                var holder = {};
+                                                                                                holder.key = keys[l];
+                                                                                                holder.value = values[l];
+                                                                                                valueHolder.push(holder);
+                                                                                                intakeWaterUOM[keys[l]] = others[l];
+                                                                                              }
+
+                                                                                              for (var m = 0; m < customSpecs[cId].length; m++) {
+                                                                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                                                                if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Intake Water UOM.Select") {
+                                                                                                  customSpecs[cId][m].defaultValue = valueHolder;
+                                                                                                  self.setState({
+                                                                                                    customFieldsGen: customSpecs,
+                                                                                                    intakeWaterUOM,
+                                                                                                  });
+                                                                                                  break;
+                                                                                                }
+                                                                                              }
+                                                                                            }
+
+
+
                   });
                 }
               }
