@@ -283,7 +283,7 @@ export default class BarChartCard extends Component {
     let data = this.getModifiedChartData(this.getChartData())
 
     return (
-      <div style={{ marginLeft: '15%', marginTop: '10px' }}>
+      <div style={{ marginLeft: '5%', marginTop: '10px' }}>
         <BarChart width={1200} height={500} data={data} margin={{ top: 20, right: 30, left: 30, bottom: 5 }}>
           <XAxis dataKey="name"/>
           <YAxis />
