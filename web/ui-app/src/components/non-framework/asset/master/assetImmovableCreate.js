@@ -1473,15 +1473,15 @@ class assetImmovableCreate extends Component {
         self.handleChange({ target: { value: e.target.value } }, 'Asset.address');
       }
     }
-
+var CheckAutoCompleteData=[];
     if (formData && formData.Asset && formData.Asset.landDetails) {
       for (var i = 0; i < formData.Asset.landDetails.length; i++) {
         if (property == 'Asset.landDetails[' + i + '].code') {
-          var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + i + '].code'], { key: e.target.value });
+        CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + i + '].code'], { key: e.target.value });
           if (e.target.value == null || e.target.value == '' || !CheckAutoCompleteData.length) {
             self.handleChange({ target: { value: null } }, 'Asset.landDetails[' + i + '].surveyNo');
             self.handleChange({ target: { value: null } }, 'Asset.landDetails[' + i + '].area');
-          }
+            }
         }
       }
     }
@@ -1542,6 +1542,7 @@ class assetImmovableCreate extends Component {
       Api.commonApiPost('/asset-services-maha/assets/_search', { name: _val }, {}, false, false, false, '', '', false).then(
         function(response) {
           if (response && response.Assets && response.Assets[0] && response.Assets[0].assetAttributes) {
+            if(CheckAutoCompleteData.length){
             for (var i = 0; i < response.Assets[0].assetAttributes.length; i++) {
               if (response.Assets[0].assetAttributes[i].key == 'Survey Number') {
                 var _surveyNo = response.Assets[0].assetAttributes[i].value;
@@ -1551,6 +1552,7 @@ class assetImmovableCreate extends Component {
                 self.props.handleChange({ target: { value: _area } }, SubProperty + '.area', false, '', '', '');
               }
             }
+          }
 
             setTimeout(function() {
               if (self.props.formData.Asset.landDetails && self.props.formData.Asset.landDetails.length) {
