@@ -184,7 +184,7 @@ class ShowField extends Component {
 
     const { reportResult } = _this.props;
     const reportHeader = reportResult.hasOwnProperty('reportHeader') ? reportResult.reportHeader : [];
-    const columns = reportHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1);
+    const columns = ':visible';
 
     if (flag) {
       return [
