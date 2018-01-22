@@ -365,6 +365,7 @@ self.props.setLoadingStatus('hide');
           specifications[
             `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ];
+        const JP = jp;
         if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
         self.props.setFormData(res);
       // console.log(this.props.mockData[moduleName+'.'+actionName])
