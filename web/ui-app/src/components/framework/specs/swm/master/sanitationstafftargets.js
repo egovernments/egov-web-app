@@ -346,7 +346,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
@@ -492,7 +492,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
@@ -847,7 +847,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
@@ -972,7 +972,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
@@ -1334,7 +1334,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
@@ -1481,7 +1481,7 @@ var dat = {
               "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
               autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}",
+                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "sanitationStaffTargets[0].collectionPoints":
                   "routes[0].collectionPoints"
