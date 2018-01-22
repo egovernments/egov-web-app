@@ -307,9 +307,9 @@ const menuConvention = {
   'Solid Waste Management.SWM Transactions.Sanitation Staff Schedule.SanitationStaffSchedule Update': '/search/swm/sanitationstaffschedules/update',
 
   // "Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Create": "/create/swm/vendorpaymentdetails",
-  'Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Create': '/search/swm/vendorpaymentdetails/view',
-  'Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Search': '/search/swm/vendorpaymentdetails/view',
-  'Solid Waste Management.SWM Transactions.Vendor Payment Details.VendorPaymentDetails Update': '/search/swm/vendorpaymentdetails/update',
+  'Solid Waste Management.SWM Transactions.Vendor Invoice.Vendor Invoice Create': '/search/swm/vendorpaymentdetails/view',
+  'Solid Waste Management.SWM Transactions.Vendor Invoice.Vendor Invoice Search': '/search/swm/vendorpaymentdetails/view',
+  'Solid Waste Management.SWM Transactions.Vendor Invoice.Vendor Invoice Update': '/search/swm/vendorpaymentdetails/update',
 
   'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails Create': '/search/swm/paymentvendor/view',
   'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails Search': '/search/swm/paymentvendor/view',
