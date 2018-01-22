@@ -79,16 +79,12 @@ var dat = {
           },
           {
               label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
-          },
-          {
-            label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteCode',
-          },
+          }
         ],
         values: [
           'name',
           'code',
-          {jsonPath:'wasteType.code',reduxObject:"wasteType.codeTwo",isObj:true,cToN:true},
-          'wasteType.code'
+          {jsonPath:'wasteType.code',reduxObject:"wasteType.codeTwo",isObj:true,cToN:true}
         ],
         resultPath: 'MdmsRes.swm.WasteSubType',
         rowClickUrlUpdate: '/update/swm/wastesubtype/{code}',
@@ -220,20 +216,7 @@ var dat = {
               url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
               minLength: 1,
               patternErrMsg: 'may not be null',
-            },  
-            {
-              name: 'wasteTypeCode',
-              label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteCode',
-              jsonPath: 'MdmsRes.swm.WasteSubType[0].wasteType.code',
-              type: 'text',
-              pattern: '^null|$',
-              isRequired: true,
-              isDisabled: false,
-              maxLength: 128,
-              url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..name|$..code',
-              minLength: 1,
-              patternErrMsg: 'may not be null',
-            },  
+            }  
           ]
         }, 
       ],
