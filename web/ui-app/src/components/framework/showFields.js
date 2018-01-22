@@ -655,6 +655,7 @@ class ShowFields extends Component {
       case 'timePicker':
         return (
           <UiTimeField
+            actionName={this.props.actionName}
             tabIndex={index}
             ui={this.props.ui}
             getVal={this.props.getVal}
