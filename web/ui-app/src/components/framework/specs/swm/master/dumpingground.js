@@ -1316,6 +1316,22 @@ var dat = {
                     isField: true,
                   },
                 ],
+              },
+               {
+                ifValue: false,
+                hide: [],
+                show: [
+                  {
+                    name: 'processingSite.code',
+                    isGroup: false,
+                    isField: true,
+                  },
+                  {
+                    name: 'distanceFromProcessingSite',
+                    isGroup: false,
+                    isField: true,
+                  }
+                ],
               }
             ],
           },
