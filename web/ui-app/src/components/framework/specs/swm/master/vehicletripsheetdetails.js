@@ -95,9 +95,9 @@ var dat = {
       alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
-    if(formData.vehicleTripSheetDetails[0].entryWeight>formData.vehicleTripSheetDetails[0].exitWeight)
+    if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
-      alert("Entry wieght should be greatet than exit wieght");
+      alert("Entry weight should be greatet than exit weight");
       shouldSubmit=false;
     }
     `,
@@ -114,7 +114,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
             type: "autoCompelete",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
             url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
@@ -139,7 +139,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.vendor.name",
             label: "swm.vehiclestripsheet.create.vendorName",
             type: "text",
-            isRequired: true,
+            isRequired: false,
             isDisabled: true,
             patternErrorMsg: ""
           },
@@ -148,12 +148,12 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].route.code",
             label: "swm.vehiclestripsheet.create.route",
             type: "autoCompelete",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: [{
-                autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+                autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&excludeDumpingGround=true",
                 autoFillFields: {
                   "vehicleTripSheetDetails[0].route.collectionType.name": "routes[0].collectionType.name",
                   "vehicleTripSheetDetails[0].route.collectionPoints": "routes[0].collectionPoints",
@@ -359,6 +359,7 @@ var dat = {
           if(res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround){
             res.vehicleTripSheetDetails[0].route.dumpingGround={};
             res.vehicleTripSheetDetails[0].route.dumpingGround.name=res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround.name;
+            res.vehicleTripSheetDetails[0].route.collectionPoints.splice(i,1)
           }
         }
     }`,
@@ -368,7 +369,7 @@ var dat = {
       alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
-    if(formData.vehicleTripSheetDetails[0].entryWeight<formData.vehicleTripSheetDetails[0].exitWeight)
+    if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
       alert("Entry wieght should be greatet than exit wieght");
       shouldSubmit=false;
@@ -387,7 +388,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
             type: "autoCompelete",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
             url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
@@ -412,7 +413,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.vendor.name",
             label: "swm.vehiclestripsheet.create.vendorName",
             type: "text",
-            isRequired: true,
+            isRequired: false,
             isDisabled: true,
             patternErrorMsg: ""
           },
@@ -421,12 +422,12 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].route.code",
             label: "swm.vehiclestripsheet.create.route",
             type: "autoCompelete",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: [{
-                autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+                autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&excludeDumpingGround=true",
                 autoFillFields: {
                   "vehicleTripSheetDetails[0].route.collectionType.name": "routes[0].collectionType.name",
                   "vehicleTripSheetDetails[0].route.collectionPoints": "routes[0].collectionPoints",
@@ -633,6 +634,7 @@ var dat = {
           if(res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround){
             res.vehicleTripSheetDetails[0].route.dumpingGround={};
             res.vehicleTripSheetDetails[0].route.dumpingGround.name=res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround.name;
+            res.vehicleTripSheetDetails[0].route.collectionPoints.splice(i,1);
           }
         }
     }`,
@@ -649,7 +651,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
             type: "autoCompelete",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
             url: "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber",
@@ -674,7 +676,7 @@ var dat = {
             jsonPath: "vehicleTripSheetDetails[0].vehicle.vendor.name",
             label: "swm.vehiclestripsheet.create.vendorName",
             type: "text",
-            isRequired: true,
+            isRequired: false,
             isDisabled: true,
             patternErrorMsg: ""
           },
@@ -688,7 +690,7 @@ var dat = {
             patternErrorMsg: "",
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: {
-              autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}",
+              autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
                 "vehicleTripSheetDetails[0].collectionType": "routes[0].collectionType.name",
                 "vehicleTripSheetDetails[0].collectionPoints": "routes[0].collectionPoints",

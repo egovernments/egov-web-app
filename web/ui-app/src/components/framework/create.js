@@ -959,9 +959,9 @@ class Report extends Component {
             self.setVal(item.jsonPath, filterObject[0].name);
             self.props.setLoadingStatus("hide");
           });
-        } 
+        }
 
-        
+
   else if(item.type&&item.type=='text'){
 let filteredresponse= self.filterDataFromArray(res,item);
 let jsonpaths=item.jsonPath.split(',');
@@ -1547,7 +1547,7 @@ filterDataFromArray=(res,item)=>{
               function(o) {
                // let jsonObject=Json.stringify()
                var currentValue=  _.get(o,item.primaryKey);
-                if (currentValue== value) 
+                if (currentValue== value)
                   {return o};
               });
               return filterdObject;
@@ -3371,7 +3371,7 @@ filterDataFromArray=(res,item)=>{
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
             );
-           
+
             if (response) {
               if(fields && fields.length>0 ) {
         let splitArray = value.pattern.split('?');
@@ -3393,12 +3393,12 @@ filterDataFromArray=(res,item)=>{
             dropDownData.sort(function(s1, s2) {
               return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
             });
-        
+
             setDropDownData(value.jsonPath, dropDownData);
-            
+
               }
             }
-           
+
               }
               else {
               for (var key in value.autoFillFields) {
@@ -3813,6 +3813,7 @@ filterDataFromArray=(res,item)=>{
     //     "patternErrMsg"
     //   );
     // }
+
     if (obj && obj.beforeHandleChange) {
       eval(obj.beforeHandleChange)
     }
