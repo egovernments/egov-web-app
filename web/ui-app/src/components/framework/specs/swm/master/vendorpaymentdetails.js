@@ -234,7 +234,7 @@ var dat = {
           {
             name: 'fromDate',
             jsonPath: 'vendorPaymentDetails[0].fromDate',
-            label: 'swm.vendorpayment.create.fromDate',
+            label: 'swm.vendorpayment.create.serviceFromDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
@@ -244,7 +244,7 @@ var dat = {
           {
             name: 'toDate',
             jsonPath: 'vendorPaymentDetails[0].toDate',
-            label: 'swm.vendorpayment.create.toDate',
+            label: 'swm.vendorpayment.create.serviceToDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
@@ -374,7 +374,7 @@ var dat = {
            {
             name: 'fromDate',
             jsonPath: 'vendorPaymentDetails[0].fromDate',
-            label: 'swm.vendorpayment.create.fromDate',
+            label: 'swm.vendorpayment.create.serviceFromDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
@@ -384,7 +384,7 @@ var dat = {
            {
             name: 'toDate',
             jsonPath: 'vendorPaymentDetails[0].toDate',
-            label: 'swm.vendorpayment.create.toDate',
+            label: 'swm.vendorpayment.create.serviceToDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
@@ -496,7 +496,7 @@ var dat = {
            {
             name: 'fromDate',
             jsonPath: 'vendorPaymentDetails[0].fromDate',
-            label: 'swm.vendorpayment.create.fromDate',
+            label: 'swm.vendorpayment.create.serviceFromDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
@@ -506,7 +506,7 @@ var dat = {
            {
             name: 'toDate',
             jsonPath: 'vendorPaymentDetails[0].toDate',
-            label: 'swm.vendorpayment.create.toDate',
+            label: 'swm.vendorpayment.create.serviceToDate',
             type: 'datePicker',
             isRequired: true,
             isDisabled: false,
