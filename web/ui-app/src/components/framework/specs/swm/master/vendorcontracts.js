@@ -410,7 +410,7 @@ var dat = {
             patternErrorMsg: '',
             hasATOAATransform:true,
             aATransformInfo:{
-              to:'vendors[0].servicesOffered',
+              to:'vendorContracts[0].servicesOffered',
               key:'code'
             }
           },
