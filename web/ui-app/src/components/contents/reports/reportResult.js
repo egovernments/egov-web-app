@@ -318,6 +318,7 @@ class ShowField extends Component {
       pushReportHistory,
     } = this.props;
     let object = reportResult.reportHeader[i2];
+    let copySearchParams=_.clone(searchParams);
 
     if (object.defaultValue && object.defaultValue.search('_parent') > -1) {
       let splitArray = object.defaultValue.split('&');
@@ -358,6 +359,13 @@ class ShowField extends Component {
           if (response.viewPath && response.reportData && response.reportData[0]) {
             localStorage.reportData = JSON.stringify(response.reportData);
             localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
+            localStorage.setItem('moduleName',match.params.moduleName)
+            localStorage.setItem('searchCriteria',JSON.stringify({
+              tenantId: tenantId,
+              reportName: match.params.reportName,
+              searchParams:copySearchParams,
+            }));
+            localStorage.setItem('searchForm',JSON.stringify(searchForm));
             setRoute('/print/report/' + response.viewPath);
           } else {
             pushReportHistory({

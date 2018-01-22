@@ -200,6 +200,9 @@ class ShowForm extends Component {
       }
       setForm(required);
       clearReportHistory();
+      if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
+        this.search(null, true);
+      }
     }
   }
 
@@ -220,10 +223,16 @@ class ShowForm extends Component {
 
     setForm(required);
     clearReportHistory();
+
+
+    //setForm(required);
   }
 
-  search = (e, isDrilldown = false) => {
-    e.preventDefault();
+  search(e=null, isDrilldown = false) {
+    if (e) {
+      e.preventDefault();
+    }
+
     let {
       showTable,
       changeButtonText,
@@ -312,19 +321,49 @@ class ShowForm extends Component {
         }
       );
     } else {
-      let reportData = reportHistory[reportIndex - 1 - 1];
-      let response = Api.commonApiPost('/report/' + this.state.moduleName + '/_get', {}, { ...reportData }).then(
-        function(response) {
-          decreaseReportIndex();
-          setReportResult(response);
-          showTable(true);
-          setFlag(1);
-        },
-        function(err) {
-          showTable(false);
-          alert('Something went wrong or try again later');
-        }
-      );
+      if (_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
+        let reportData = reportHistory[reportIndex - 1 - 1];
+        let response = Api.commonApiPost('/report/' + this.state.moduleName + '/_get', {}, { ...reportData }).then(
+          function(response) {
+            // console.log(response)
+            decreaseReportIndex();
+            setReportResult(response);
+            // console.log("Show Table");
+            showTable(true);
+            setFlag(1);
+          },
+          function(err) {
+            // console.log(err);
+            showTable(false);
+            alert('Something went wrong or try again later');
+          }
+        );
+      } else {
+        var reportData = JSON.parse(localStorage.getItem("searchCriteria"));
+        let response = Api.commonApiPost('/report/' + localStorage.getItem("moduleName") + '/_get', {}, { ...reportData }).then(
+          function(response) {
+            // console.log(response)
+            // decreaseReportIndex();
+            localStorage.setItem('returnUrl', "");
+            localStorage.setItem('searchCriteria',JSON.stringify({}));
+            localStorage.setItem('moduleName',"");
+            for (var i = 0; i < reportData.searchParams.length; i++) {
+              self.handleChange({target:{value:reportData.searchParams[i].name}},reportData.searchParams[i].input,false,false)
+            }
+            setSearchParams(reportData.searchParams);
+            setReportResult(response);
+            // console.log("Show Table");
+            showTable(true);
+            setFlag(1);
+          },
+          function(err) {
+            // console.log(err);
+            showTable(false);
+            alert('Something went wrong or try again later');
+          }
+        );
+      }
+
     }
 
     changeButtonText('Generate Report');
