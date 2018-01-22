@@ -10,7 +10,54 @@ export default class UiSingleFileUpload extends Component {
   renderSingleFileUpload = item => {
     switch (this.props.ui) {
       case 'google':
-        if (item.readonly) {
+      if (item.readonly && item.optionForNew) {
+       return (
+         <div>
+         
+       <div>  <a
+             href={
+               window.location.origin +
+               '/filestore/v1/files/id?tenantId=' +
+               localStorage.tenantId +
+               '&fileStoreId=' +
+               this.props.getVal(item.jsonPath)
+             }
+             target="_blank"
+           >
+             {translate(item.label)}
+             
+           </a>
+           <p style={{margin:'5px 0px 5px 20%'}}>{"OR"}</p>
+           </div>
+          
+
+           <div
+             style={{
+               marginTop: '0px',
+               display: item.hide ? 'none' : 'inline-block',
+             }}
+           >
+             <input
+               id={item.jsonPath.split('.').join('-')}
+               disabled={item.isDisabled}
+               type="file"
+               style={{ marginTop: '0px' }}
+               onChange={e =>
+                 this.props.handler(
+                   { target: { value: e.target.files[0] } },
+                   item.jsonPath,
+                   item.isRequired ? true : false,
+                   '',
+                   item.requiredErrMsg,
+                   item.patternErrMsg,
+                   item.hidePrevious=true
+                 )
+               }
+             />
+           </div>
+         </div>
+       );
+     }else if (item.readonly) {
           return (
             <a
               href={
