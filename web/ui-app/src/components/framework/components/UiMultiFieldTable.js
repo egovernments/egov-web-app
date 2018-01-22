@@ -514,7 +514,7 @@ class UiMultiFieldTable extends Component {
           <tbody>
             {(!item.tableList.actionsNotRequired || _.get(formData,item.jsonPath)) && this.state.values.map((v, i) => {
               let startIndex = item.startIndex || 0;
-              if (i >= startIndex)
+              if (i >= startIndex){
               var customItem = {
                 "type":"checkbox",
                 "jsonPath": item.jsonPath+"["+ i +"]"+".isselected"
@@ -549,7 +549,7 @@ class UiMultiFieldTable extends Component {
                       ''
                     )}
                   </tr>
-                );
+                );}
             })}
           </tbody>
           {item.tableList.hasFooter ? (
