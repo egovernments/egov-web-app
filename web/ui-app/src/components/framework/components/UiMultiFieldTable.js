@@ -52,7 +52,11 @@ class UiMultiFieldTable extends Component {
     // console.log(_.get(this.props.formData,this.props.item.jsonPath));
     // console.log(values);
     if (_.get(this.props.formData, this.props.item.jsonPath)) {
-      // console.log('did mount load if loop:',this.props.item.jsonPath);
+      this.setState({
+        
+        list: Object.assign([], this.props.item.tableList.values),
+        
+      });
       this.renderOnLoad(this.props);
     } else {
       // console.log('did mount load else loop:',this.props.item.jsonPath);
