@@ -48,10 +48,12 @@ class ShowForm extends Component {
 
       for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
         if (
-          metaData.reportDetails.searchParams[l].type == 'url' &&
+          metaData.reportDetails.searchParams[l].hasOwnProperty('pattern') &&
           metaData.reportDetails.searchParams[l].pattern.search('{' + selectedProperty + '}') > -1
         ) {
-          metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
+          if (metaData.reportDetails.searchParams[l].type == 'url') {
+            metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
+          }
           if (defaultValuesLength < 2) {
             metaData.reportDetails.searchParams[l].disabled = true;
           }
@@ -59,13 +61,13 @@ class ShowForm extends Component {
       }
       setMetaData(metaData);
 
-      // if there is only one value there is no need for user to select
       if (defaultValuesLength && defaultValuesLength < 2) {
         const value = Object.keys(defaultValue)[0];
         const e = { target: { value } };
         handleChange(e, targetProperty, isMandatory ? true : false, '');
       }
     } catch (error) {
+      console.log(error);
       alert('Something went wrong while loading depedent');
     }
   };
@@ -94,7 +96,7 @@ class ShowForm extends Component {
           const defaultValue = field.defaultValue;
           const fieldType = field.type;
 
-          if (fieldType == 'url' && (typeof defaultValue != 'object' || field.hasOwnProperty('pattern'))) {
+          if (typeof defaultValue != 'object' || field.hasOwnProperty('pattern')) {
             if (!field.hasOwnProperty('pattern')) {
               field['pattern'] = defaultValue;
             }
@@ -103,7 +105,7 @@ class ShowForm extends Component {
 
             if (fieldPattern.indexOf('{' + property + '}') == -1) continue;
 
-            if (fieldPattern.search('{' + property + '}') > -1) {
+            if (fieldPattern && fieldPattern.search('{' + property + '}') > -1) {
               this.checkForDependentSource(field, property, selectedValue);
             }
           }

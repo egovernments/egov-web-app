@@ -45,6 +45,7 @@ export default class ShowField extends Component {
               className="custom-form-control-for-textfield"
               id={obj.label.split('.').join('-')}
               fullWidth={true}
+              disabled={obj.disabled ? true : false}
               floatingLabelFixed={true}
               floatingLabelText={
                 <span>
@@ -188,6 +189,8 @@ export default class ShowField extends Component {
         );
 
       case 'url':
+        console.log(`Is object mandatory ${obj.isMandatory}`);
+
         return (
           <Col xs={12} sm={4} md={3} lg={3}>
             <SelectField
