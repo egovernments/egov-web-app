@@ -179,6 +179,35 @@ const setTypeOfPoint = `
   }
   setTypeOfPoint(obj, res);
 `
+const setTypeOfPointView = `
+  const setTypeOfPointView = (res) => {
+    let _mockData = {...self.props.mockData};
+    let {moduleName, actionName} = self.props;
+    if(res.routes && res.routes.length) {
+      var jsonPathArr = JP.query((_mockData[moduleName+'.'+actionName]), "$.groups..fields[?(@.name=='typeOfPoint')].jsonPath");
+      for(var i=0; i<res.routes[0].collectionPoints.length; i++) {
+        jsonPathArr.forEach((jP) => {
+          let index = self.indexFinder(jP);
+          if(index == i) {
+            if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint) {
+              self.setVal(jP, "Starting Point");
+            }
+            else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == true && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false) {
+              self.setVal(jP, "Ending Collection Point");
+            }
+            else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false && res.routes[0].collectionPoints[i].dumpingGround && res.routes[0].collectionPoints[i].dumpingGround.code) {
+              self.setVal(jP, "Ending Dumping Ground point");
+            }
+            else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false) {
+              self.setVal( jP, "Route Stop");
+            }
+          }
+        });
+      }
+    }
+  }
+  setTypeOfPointView(res);`
+
 var dat = {
   'swm.create': {
     afterHandleChange: routeValidation,
@@ -548,7 +577,7 @@ var dat = {
 
   'swm.view': {
     numCols: 3,
-    beforeSetForm: setTypeOfPoint,
+    afterSetForm: setTypeOfPointView,
     useTimestamp: true,
     objectName: 'routes',
     title: 'swm.routes.create.title',

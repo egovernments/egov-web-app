@@ -9,7 +9,7 @@ import { translate } from '../common/common';
 import Api from '../../api/api';
 import jp from 'jsonpath';
 import UiButton from './components/UiButton';
-import { fileUpload ,callApi,parseKeyAndValueForDD} from './utility/utility';
+import { fileUpload, callApi, parseKeyAndValueForDD } from './utility/utility';
 import UiTable from './components/UiTable';
 import UiBackButton from './components/UiBackButton';
 import UiEditButton from './components/UiEditButton';
@@ -228,28 +228,27 @@ class Report extends Component {
     setMockData(specs);
   }
 
-filterDataFromArray=(res,item)=>{
- if(res){
-  let value=this.getVal(item.queryParameter);
-  if(value){
- var filterdObject= _.filter(
-              res[`${item.responseArray}`],
-              function(o) {
-               // let jsonObject=Json.stringify()
-               var currentValue=  _.get(o,item.primaryKey);
-                if (currentValue== value) 
-                  {return o};
-              });
-              return filterdObject;
-            }
-            return null;
-            }
+  filterDataFromArray = (res, item) => {
+    if (res) {
+      let value = this.getVal(item.queryParameter);
+      if (value) {
+        var filterdObject = _.filter(
+          res[`${item.responseArray}`],
+          function (o) {
+            // let jsonObject=Json.stringify()
+            var currentValue = _.get(o, item.primaryKey);
+            if (currentValue == value) { return o };
+          });
+        return filterdObject;
+      }
+      return null;
+    }
 
-            return null;
+    return null;
 
-}
+  }
 
- setVal = (jsonPath, value) => {
+  setVal = (jsonPath, value) => {
     let formData = { ...this.props.formData };
     _.set(formData, jsonPath, value);
     this.props.setFormData(formData);
@@ -264,9 +263,9 @@ filterDataFromArray=(res,item)=>{
       } else {
         specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
       }
-    } catch (e) {}
+    } catch (e) { }
 
-    let { setMetaData, setModuleName, setActionName, setMockData,setDropDownData,setDropDownOriginalData } = this.props;
+    let { mockData, moduleName, actionName, setMetaData, setModuleName, setActionName, setMockData, setDropDownData, setDropDownOriginalData } = this.props;
     let hashLocation = window.location.hash;
     let self = this;
     let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
@@ -307,20 +306,19 @@ filterDataFromArray=(res,item)=>{
     }
 
     var _body = {};
-    if(url.includes("/egov-mdms-service/v1/_search")) {
+    if (url.includes("/egov-mdms-service/v1/_search")) {
       var moduleDetails = [];
       var masterDetails = [];
       let data = { moduleName: '', masterDetails: [] };
       let k = 0;
       var masterDetail = {};
       data.moduleName = hashLocation.split('/')[2];
-      console.log(data, masterDetail)
+      // console.log(data, masterDetail)
       // console.log(url.split('?')[1].split('={')[0]);
-      var filterData = `[?(@.${specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].url.split('?')[1].split('={')[0]}=='${hashLocation.split('/')[hashLocation.split('/').length-1]}')]`;
+      var filterData = `[?(@.${specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].url.split('?')[1].split('={')[0]}=='${hashLocation.split('/')[hashLocation.split('/').length - 1]}')]`;
       masterDetail.filter = filterData;
       masterDetail.name = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName;
       data.masterDetails[0] = _.cloneDeep(masterDetail);
-      console.log(data);
       moduleDetails.push(data);
 
       _body = {
@@ -333,43 +331,42 @@ filterDataFromArray=(res,item)=>{
     }
     self.props.setLoadingStatus('loading');
     if (obj && obj.preApiCalls) {
-      obj.preApiCalls.forEach(async (item)=>{
-        let res=await callApi(item);
-        let orgRes=Object.assign({},res);
-       if(item.type&&item.type=='text'){
-let filteredresponse= self.filterDataFromArray(res,item);
-let jsonpaths=item.jsonPath.split(',');
-if(jsonpaths&&filteredresponse){
-for(var i=0;i<item.responsePaths.length;i++){
-  if(filteredresponse[0]){
-  var value=_.get(filteredresponse[0],item.responsePaths[i])
-if(value){
-self.setVal(jsonpaths[i], value);
-}
-}
-}
-}
-self.props.setLoadingStatus('hide');
- }else{
-        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
-        setDropDownOriginalData(item.jsonPath,res);
-       self.props.setLoadingStatus('hide');
-     }
+      obj.preApiCalls.forEach(async (item) => {
+        let res = await callApi(item);
+        let orgRes = Object.assign({}, res);
+        if (item.type && item.type == 'text') {
+          let filteredresponse = self.filterDataFromArray(res, item);
+          let jsonpaths = item.jsonPath.split(',');
+          if (jsonpaths && filteredresponse) {
+            for (var i = 0; i < item.responsePaths.length; i++) {
+              if (filteredresponse[0]) {
+                var value = _.get(filteredresponse[0], item.responsePaths[i])
+                if (value) {
+                  self.setVal(jsonpaths[i], value);
+                }
+              }
+            }
+          }
+          self.props.setLoadingStatus('hide');
+        } else {
+          setDropDownData(item.jsonPath, parseKeyAndValueForDD(res, item.jsExpForDD.key, item.jsExpForDD.value));
+          setDropDownOriginalData(item.jsonPath, res);
+          self.props.setLoadingStatus('hide');
+        }
       })
     }
     self.props.setLoadingStatus('hide');
 
     Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
-      function(res) {
+       (res)  => {
         var spec =
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ];
         const JP = jp;
         if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
         self.props.setFormData(res);
-      // console.log(this.props.mockData[moduleName+'.'+actionName])
-        
+
         self.setInitialUpdateData(
           res,
           JSON.parse(JSON.stringify(specifications)),
@@ -377,10 +374,12 @@ self.props.setLoadingStatus('hide');
           hashLocation.split('/')[1],
           specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName
         );
-        // self.setTypeOfPoint(res);
         
+      
+        if (spec && spec.afterSetForm) eval(spec.afterSetForm);
+
       },
-      function(err) {}
+      function (err) { }
     );
 
 
@@ -389,7 +388,7 @@ self.props.setLoadingStatus('hide');
   //To find last index in jsonPath for multiple cards
   indexFinder = (jsonPath) => {
     let matches = jsonPath.match(/(\[\d+\])/g);
-    return  matches.length ? parseInt(matches[matches.length-1].replace(/[^\d]/g,"")) : -1;
+    return matches.length ? parseInt(matches[matches.length - 1].replace(/[^\d]/g, "")) : -1;
   }
 
   componentDidMount() {
@@ -440,7 +439,7 @@ self.props.setLoadingStatus('hide');
     mywindow.document.close(); // necessary for IE >= 10
     mywindow.focus(); // necessary for IE >= 10*/
 
-    setTimeout(function() {
+    setTimeout(function () {
       mywindow.print();
       mywindow.close();
     }, 1000);
@@ -452,7 +451,7 @@ self.props.setLoadingStatus('hide');
     let { mockData, moduleName, actionName, formData, fieldErrors } = this.props;
     let { handleChange, getVal, addNewCard, removeCard, printer } = this;
 
-    const renderTable = function() {
+    const renderTable = function () {
       if (moduleName && actionName && formData && formData[objectName]) {
         var objectName = mockData[`${moduleName}.${actionName}`].objectName;
         let flag = 0;
@@ -486,10 +485,10 @@ self.props.setLoadingStatus('hide');
               i + 1,
               formData[objectName].documents[i].name || 'File',
               '<a href=/filestore/v1/files/id?tenantId=' +
-                localStorage.getItem('tenantId') +
-                '&fileStoreId=' +
-                formData[objectName].documents[i].fileStoreId +
-                '>Download</a>',
+              localStorage.getItem('tenantId') +
+              '&fileStoreId=' +
+              formData[objectName].documents[i].fileStoreId +
+              '>Download</a>',
             ]);
           }
         }
@@ -506,10 +505,10 @@ self.props.setLoadingStatus('hide');
           <Col xs={6} md={6}>
             <h3 style={{ paddingLeft: 15, marginBottom: '0' }}>
               {!_.isEmpty(mockData) &&
-              moduleName &&
-              actionName &&
-              mockData[`${moduleName}.${actionName}`] &&
-              mockData[`${moduleName}.${actionName}`].title
+                moduleName &&
+                actionName &&
+                mockData[`${moduleName}.${actionName}`] &&
+                mockData[`${moduleName}.${actionName}`].title
                 ? translate(mockData[`${moduleName}.${actionName}`].title)
                 : ''}
             </h3>
