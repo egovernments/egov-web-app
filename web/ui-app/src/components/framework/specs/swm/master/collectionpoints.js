@@ -4,6 +4,15 @@ var dat = {
     useTimestamp: true,
     objectName: 'collectionPoints',
     url: '/swm-services/collectionpoints/_search',
+    preApiCallsBoundary:[
+      {
+        url:"/egov-location/location/v11/boundarys/_search?",
+        qs:{
+          hierarchyTypeCode:"REVENUE"
+        }
+      },
+      
+    ],
     groups: [
       {
         name: 'search',
@@ -18,24 +27,84 @@ var dat = {
             maxLength: 256,
             patternErrorMsg: 'swm.create.field.message.name',
             url: 'swm-services/collectionpoints/_search?|$..collectionPoints.*.name|$..collectionPoints.*.name',
-          },
+          }
         ],
       },
     ],
     result: {
       header: [
+        
         {
-          label: 'swm.collectionpoints.create.name',
+          label: 'swm.collectionPoint.search.ward',
+        },
+        {
+          label: 'swm.collectionPoint.search.zone',
+        },
+        {
+          label: 'swm.collectionPoint.search.road',
         },
         {
           label: 'swm.collectionpoints.create.colony',
         },
+        {
+          label: 'swm.collectionpoints.create.assetOrBinId',
+        },
+        {
+          label: 'swm.collectionpoints.create.rfid',
+        },
+        {
+          label: 'swm.collectionpoints.create.group.title.BinDetails',
+        }
       ],
-      values: ['name', 'location.name'],
+      values: 
+      [
+        {
+          jsonPath: 'collectionPoints[0].location.code',
+          isBoundary: true,
+          name: 'Ward',
+          hierarchyType: "REVENUE",
+        },
+        {
+          jsonPath: 'collectionPoints[0].location.code',
+          isBoundary: true,
+          name: 'Zone',
+          hierarchyType: "REVENUE",
+        },
+        {
+          jsonPath: 'collectionPoints[0].location.code',
+          isBoundary: true,
+          name: 'Road/Street',
+          hierarchyType: "REVENUE",
+        },
+        {
+          jsonPath: 'collectionPoints[0].location.code',
+          isBoundary: true,
+          name: 'Colony/Society/Complex',
+          hierarchyType: "REVENUE",
+        },
+        {
+          jsonPath: 'binDetails',
+          isMultiple: true,
+          name: 'assetOrBinId' 
+        },
+        {
+          jsonPath: 'binDetails',
+          isMultiple: true,
+          name: 'rfid' 
+        },
+        {
+          jsonPath: 'binDetails',
+          isMultiple: true,
+          name: ['latitude', 'longitude']
+        }
+      ],
       resultPath: 'collectionPoints',
       rowClickUrlUpdate: '/update/swm/collectionpoints/{code}',
       rowClickUrlView: '/view/swm/collectionpoints/{code}',
     },
+    isBoundary: true,
+    hierarchyType: "REVENUE",
+    jPathBoundary: 'location.code'
   },
   'swm.create': {
     numCols: 3,

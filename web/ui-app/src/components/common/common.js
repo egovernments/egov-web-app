@@ -2342,6 +2342,10 @@ var localization_EN_Data = {
   'swm.create.collectionType.name': 'Collection Type',
   'swm.search.vendor.title': 'Vendor Search',
 
+  'swm.collectionPoint.search.ward': 'Ward',
+  'swm.collectionPoint.search.zone': 'Zone',
+  'swm.collectionPoint.search.road': 'Road/Street',
+
   'swm.dumpingGround.create.dumpingGroundAddress': 'Dumping Ground Address',
   'swm.processingplant.create.title.Geo' : 'GEO-COORDINATES',
   'swm.processingplant.create.Latitude': 'Latitude',
@@ -5415,6 +5419,10 @@ var localization_MR_Data = {
   'MdmsMetadata.masterData.swm.WasteSubType.wasteType':'Waste Type',
   'MdmsMetadata.masterData.swm.WasteSubType.wasteCode':'Waste Tyoe Code',
   'swm.Shift.create.shift' : 'Shift Name',
+
+  'swm.collectionPoint.search.ward': 'Ward',
+  'swm.collectionPoint.search.zone': 'Zone',
+  'swm.collectionPoint.search.road': 'Road/Street',
 
 
   'referenceEvidence.update.document.title': 'Reference Evidences-marathi',

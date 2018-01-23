@@ -16,7 +16,8 @@ import UiTable from './components/UiTable';
 import jp from 'jsonpath';
 
 var specifications = {};
-
+var boundaryDataOrg = [];
+var boundaryDataOrgQuery = {};
 let reqRequired = [];
 class Search extends Component {
   state = {
@@ -120,6 +121,13 @@ class Search extends Component {
         setDropDownOriginalData(item.jsonPath,res);
       })
     }
+    
+    else if(obj && obj.preApiCallsBoundary){
+      obj.preApiCallsBoundary.forEach(async (item)=>{
+        let res=await callApi(item);
+        this.buildBoundaryData(res, item.qs, "", false);
+      })
+    }
     setLoadingStatus('hide');
   }
 
@@ -142,6 +150,64 @@ class Search extends Component {
     }
   }
 
+  showArrayInTable = (arr) => {
+    var str = '';
+    if(Array.isArray(arr)){
+      arr.forEach(function(elem, index){
+        if(typeof elem === "object"){
+          str += JSON.stringify(elem) + ', '
+          // for(let obj in elem){
+          //   str += obj + ': ' + elem[obj]  + ', '
+          // }
+        }
+        else{
+          str += (index+1) + '. ' + elem + ', ';
+        }
+        
+      })
+      return str.slice(0, -2);
+    }
+  }
+
+  buildBoundaryData = (res, query, bdryCode, isBuild) => {
+    boundaryDataOrg = res;
+    boundaryDataOrgQuery = query;
+    var jpath = '';
+    var cityBdry = jp.query(boundaryDataOrg, `$.TenantBoundary[?(@.hierarchyType.name=="${query.hierarchyTypeCode}")].boundary[?(@.label=='City')]`);
+    if(isBuild){
+      var viewLabels = {};
+      // var bdryCode = _.get(values[i], currentSpecification.jPathBoundary);
+      var ddArr = [];
+      var jPath = '';
+      var code = bdryCode; 
+  
+      var pathArr = jp.paths(cityBdry, `$..[?(@.code=='${code}')]`);
+      //console.log(pathArr);
+      pathArr = pathArr[0];
+      
+      
+      for (var j = 0; j < pathArr.length; ) {
+        ddArr.push(pathArr[j] + '[' + pathArr[j + 1] + ']');
+        jPath = ddArr.join('.');
+        if (j > 1) {
+          var code = jp.query(cityBdry, jPath + '.code');
+          var label = jp.query(cityBdry, jPath + '.label');
+          var name = jp.query(cityBdry, jPath + '.name');
+          viewLabels[label] = name[0];
+        }
+        j += 2;
+      }
+      
+      return viewLabels;
+      this.setLoadingStatus('hide');
+    }
+    else{
+      return;
+      this.setLoadingStatus('hide');
+    }
+  
+  }
+
   tableDataBuilder = (res, currentSpecification, self) => {
     let {dropDownData}=this.props;
     self.props.setLoadingStatus('hide');
@@ -154,7 +220,24 @@ class Search extends Component {
     };
     var specsValuesList = currentSpecification.result.values;
     var values = _.get(res, currentSpecification.result.resultPath);
+    var boundaryData = [];
+    var boundaryCount = 0;
     if (values && values.length) {
+      if(currentSpecification.isBoundary){
+        for(var i = 0; i < values.length; i++){
+          // if (typeof _.get(values[i], currentSpecification.jPathBoundary) != 'undefined') {
+            if(values[i].location == null || values[i].location.code == null){
+              boundaryData.push("NA");
+            }
+            else{
+              let tempBoundary = self.buildBoundaryData(boundaryDataOrg, boundaryDataOrgQuery, _.get(values[i], currentSpecification.jPathBoundary), true)
+              boundaryData.push(tempBoundary);
+            }
+            
+          // }
+        }
+      }
+
       for (var i = 0; i < values.length; i++) {
         var tmp = [i + 1];
         for (var j = 0; j < specsValuesList.length; j++) {
@@ -179,13 +262,42 @@ class Search extends Component {
             tmp.push(childArray);
             continue;
           }
+          if(typeof valuePath === "object" && valuePath.isMultiple){
+            var dataMultiple = _.get(values[i], valuePath.jsonPath);
+            var tempMultiple = [];
+            var tempMultipleObj = {};
+            for(var s = 0; s < dataMultiple.length; s++){
+              if(Array.isArray(valuePath.name)){
+                valuePath.name.forEach(function(elem, ind){
+                  (dataMultiple[s][elem] === null || dataMultiple[s][elem] === "") ? tempMultipleObj[elem] = "NA" : tempMultipleObj[elem] = dataMultiple[s][elem];
+                })
+                tempMultiple.push(tempMultipleObj);
+              }
+              else{
+                dataMultiple[s][valuePath.name] === null || dataMultiple[s][valuePath.name] === "" ? tempMultiple.push("NA") : tempMultiple.push(dataMultiple[s][valuePath.name]);
+              }
+            }
+            // console.log(tempMultiple);
+            var arrToStr = self.showArrayInTable(tempMultiple);
+            tmp.push(arrToStr);
+            continue;
+          }
+          if(typeof valuePath === "object" && valuePath.isBoundary){
+            // console.log(boundaryData);
+            typeof _.get(boundaryData[i], valuePath.name) === 'undefined' ?
+            tmp.push("NA"):
+            tmp.push(_.get(boundaryData[i], valuePath.name));
+            continue;
+          }
           tmp.push(_.get(values[i], valuePath));
         }
+        
         //Replacing all empty strings by "NA"
         tmp = tmp.map(item =>  (typeof item === "string" ? ((item.trim().length) ? item : "NA") : (item  === null) ? "NA" : item  ))
         resultList.resultValues.push(tmp);
       }
     }
+    
     if (result.isAction) {
       resultList.actionItems = result.actionItems;
     }
@@ -199,6 +311,7 @@ class Search extends Component {
 
     window.localStorage.setItem('formData', '');
     window.localStorage.setItem('returnUrl', '');
+   
   }
 
   search = (e = null, hasDefaultSearch = false) => {
@@ -284,7 +397,7 @@ class Search extends Component {
       }
       Api.commonApiPost(currentSpecification.url, formData, {}, null, currentSpecification.useTimestamp).then(
         (res) => {
-
+          // localStorage.setItem('searchRes', JSON.stringify(res));
           this.tableDataBuilder(res, currentSpecification, self);
 
         },
