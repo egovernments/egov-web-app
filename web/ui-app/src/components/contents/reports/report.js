@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Api from '../../../api/api';
 import SearchForm from './searchForm';
 import ReportResult from './reportResult';
+// import mockData from './mockData';
 
 class Report extends Component {
   componentWillReceiveProps(nextProps) {
@@ -27,6 +28,11 @@ class Report extends Component {
     let { setMetaData, setFlag, showTable, setForm, setReportResult } = this.props;
 
     var tenantId = localStorage.getItem('tenantId') ? localStorage.getItem('tenantId') : '';
+
+    // setFlag(1);
+    // showTable(false);
+    // setReportResult({});
+    // setMetaData(mockData);
 
     Api.commonApiPost('/report/' + moduleName + '/metadata/_get', {}, { tenantId: tenantId, reportName: reportName }).then(
       function(response) {

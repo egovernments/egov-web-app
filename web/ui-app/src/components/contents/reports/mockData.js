@@ -284,6 +284,8 @@ const response = {
         label: 'reports.swm.vehicletype',
         type: 'string',
         defaultValue: '/swm-services/vehicles/_search?tenantId=$tenantid&regNumbers={vehicle}|$..vehicleType.code|$..vehicleType.name',
+        displayOnly: true,
+        disabled: true,
         showColumn: true,
         isMandatory: false,
         total: false,

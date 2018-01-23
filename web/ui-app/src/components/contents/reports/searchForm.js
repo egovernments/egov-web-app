@@ -17,7 +17,7 @@ class ShowForm extends Component {
   };
 
   checkForDependentSource = async (fieldIndex, field, selectedValue) => {
-    const { pattern: fieldPattern, mapping, type: fieldType, name: targetProperty, isMandatory } = field;
+    const { pattern: fieldPattern, mapping, type: fieldType, name: targetProperty, isMandatory, displayOnly } = field;
     const { metaData, setMetaData, handleChange } = this.props;
     let splitArray = fieldPattern.split('?');
     let url = splitArray[0];
@@ -57,12 +57,12 @@ class ShowForm extends Component {
       setMetaData(metaData);
 
       if (defaultValuesLength && defaultValuesLength < 2) {
-        const value = Object.keys(defaultValue)[0];
+        const key = Object.keys(defaultValue)[0];
+        const value = displayOnly ? defaultValue[key] : key;
         const e = { target: { value } };
         handleChange(e, targetProperty, isMandatory ? true : false, '');
       }
     } catch (error) {
-      console.log(error);
       alert('Something went wrong while loading depedent');
     }
   };
@@ -229,6 +229,10 @@ class ShowForm extends Component {
     //setForm(required);
   }
 
+  getDisplayOnlyFields = metaData => {
+    return metaData.reportDetails.searchParams.filter(field => field.displayOnly).map(field => field.name);
+  };
+
   search = (e = null, isDrilldown = false) => {
     if (e) {
       e.preventDefault();
@@ -253,6 +257,14 @@ class ShowForm extends Component {
     let self = this;
 
     if (!isDrilldown) {
+      const displayOnlyFields = this.getDisplayOnlyFields(metaData);
+      searchForm = Object.keys(searchForm)
+        .filter(param => !_.includes(displayOnlyFields, param))
+        .reduce((acc, param) => {
+          acc[param] = searchForm[param];
+          return acc;
+        }, {});
+
       for (var variable in searchForm) {
         let input;
 
@@ -290,11 +302,11 @@ class ShowForm extends Component {
           }
         }
 
-        if (input) {
-          searchParams.push({
-            name: variable,
-            input,
-          });
+        if (variable !== 'typeofvehicle') {
+          if (input) {
+            // if the variable is
+            searchParams.push({ name: variable, input });
+          }
         }
       }
 
@@ -307,11 +319,7 @@ class ShowForm extends Component {
         { tenantId: tenantId, reportName: this.state.reportName, searchParams }
       ).then(
         function(response) {
-          pushReportHistory({
-            tenantId: tenantId,
-            reportName: self.state.reportName,
-            searchParams,
-          });
+          pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
           setReportResult(response);
           showTable(true);
           setFlag(1);
