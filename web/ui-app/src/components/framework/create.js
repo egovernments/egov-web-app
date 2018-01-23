@@ -548,7 +548,8 @@ class Report extends Component {
     }
     setMockData(specs);
   }
-
+  
+  
 
   displayUI(results) {
     let {
@@ -690,14 +691,12 @@ class Report extends Component {
           ) {
             var masterName = "";
             var moduleName = "";
-            console.log(res);
             if (Object.keys(res.MdmsRes).length === 1) {
               moduleName = Object.keys(res.MdmsRes)[0];
               masterName = Object.keys(
                 res.MdmsRes[Object.keys(res.MdmsRes)[0]]
               )[0];
             }
-            console.log(res);
             let mdmsReq = {};
             mdmsReq.MasterMetaData = {};
             mdmsReq.MasterMetaData.masterData = [];
@@ -708,7 +707,6 @@ class Report extends Component {
             console.log(mdmsReq);
             res = mdmsReq;
           }
-          console.log(res);
           //
           self.props.setLoadingStatus("hide");
           if (
@@ -728,6 +726,7 @@ class Report extends Component {
               specifications[
                 `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
+              
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(obj);
             self.setInitialUpdateData(
@@ -775,6 +774,7 @@ class Report extends Component {
             const JP = jp;
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(res);
+            if (spec && spec.afterSetForm) eval(spec.afterSetForm);
           }
           let obj1 =
             specifications[
@@ -787,7 +787,7 @@ class Report extends Component {
         }
       );
     } else {
-
+        
         let bodyParams= '';
         bodyParams = localStorage.getItem("bodyParams");
       if (bodyParams != '' && bodyParams != null){
