@@ -57,7 +57,7 @@ var dat = {
             },
             {
               name: 'invoicefromdate',
-              jsonPath: 'fromDate',
+              jsonPath: 'invoiceFromDate',
               label: 'swm.vendorpayment.create.invoiveFromDate',
               pattern: '',
               type: 'datePicker',
@@ -69,7 +69,7 @@ var dat = {
             },
             {
               name: 'invoicetodate',
-              jsonPath: 'toDate',
+              jsonPath: 'invoiceToDate',
               label: 'swm.vendorpayment.create.invoiceToDate',
               pattern: '',
               type: 'datePicker',
