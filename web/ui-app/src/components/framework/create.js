@@ -1358,7 +1358,7 @@ self.props.setLoadingStatus("hide");
       );
       for (var i = 0; i < fields.length; i++) {
         let values = _.get(formData, fields[i].jsonPath);
-        if (values && values.length > 0) {
+        if (values && _.isArray(values) && values.length > 0) {
           formData = _.set(
             formData,
             fields[i]["aATransformInfo"].to,

@@ -74,17 +74,18 @@ var dat = {
           {
             label: 'MdmsMetadata.masterData.swm.WasteSubType.name',
           },
-          {
+      /*     {
             label: 'MdmsMetadata.masterData.swm.WasteSubType.code',
-          },
+          }, */
           {
               label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
-          }
+          } 
         ],
         values: [
           'name',
-          'code',
+         /*  'code', */
           {jsonPath:'wasteType.code',reduxObject:"wasteType.codeTwo",isObj:true,cToN:true}
+      
         ],
         resultPath: 'MdmsRes.swm.WasteSubType',
         rowClickUrlUpdate: '/update/swm/wastesubtype/{code}',
