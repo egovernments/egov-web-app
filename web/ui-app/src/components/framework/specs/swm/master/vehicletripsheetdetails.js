@@ -95,6 +95,11 @@ var dat = {
       alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
+    if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
+    {
+      alert("Please enter values for In Time, Out Time, Entry Weight and Exit Weight");
+      shouldSubmit=false;
+    }
     if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
       alert("Entry weight should be greatet than exit weight");
@@ -106,7 +111,8 @@ var dat = {
     objectName: "vehicleTripSheetDetails",
     idJsonPath: "vehicleTripSheetDetails[0].tripNo",
     title: "swm.vehiclestripsheet.create.title",
-    groups: [{
+    groups: [
+      {
         name: "VehicleDetails",
         label: "",
         fields: [{
@@ -369,9 +375,14 @@ var dat = {
       alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
+    if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
+    {
+      alert("Please enter values for In Time, Out Time, Entry Weight and Exit Weight");
+      shouldSubmit=false;
+    }
     if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
-      alert("Entry wieght should be greatet than exit wieght");
+      alert("Entry weight should be greatet than exit weight");
       shouldSubmit=false;
     }
     `,

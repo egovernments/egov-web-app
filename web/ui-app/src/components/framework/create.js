@@ -271,7 +271,7 @@ class Report extends Component {
                       groups[i].fields[j].depedants[k].jsonPath,
                       dropDownData
                     );
-                    self.props.setDropDownOriginalData(response, dropDownData);
+                    self.props.setDropDownOriginalData(groups[i].fields[j].depedants[k].jsonPath, response);
                   }
                 },
                 function(err) {
@@ -704,8 +704,7 @@ class Report extends Component {
             mdmsReq.MasterMetaData.moduleName = moduleName;
             mdmsReq.MasterMetaData.masterName = masterName;
             mdmsReq.MasterMetaData.tenantId = localStorage.getItem("tenantId");
-            mdmsReq.MasterMetaData.masterData[0] =
-              res.MdmsRes[moduleName][masterName][0];
+            mdmsReq.MasterMetaData.masterData[0] = res.MdmsRes[moduleName][masterName][0];
             console.log(mdmsReq);
             res = mdmsReq;
           }
@@ -1089,6 +1088,7 @@ self.props.setLoadingStatus("hide");
                   }
                 }
                 setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
+                setDropDownOriginalData(obj.groups[i].fields[j].jsonPath.split('.').join('-'), res);
               }
             }
           }
@@ -3209,7 +3209,7 @@ filterDataFromArray=(res,item)=>{
                const updateDropDownData=(value,i)=>{
                 value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
                   setDropDownData(value.jsonPath, dropDownData);
-                  setDropDownOriginalData(value.jsonPath, dropDownData);
+                  setDropDownOriginalData(value.jsonPath, response);
                   if (value.autoSelect) {
                     setVal(value.jsonPath, dropDownData[0]);
                   }
@@ -3233,7 +3233,7 @@ filterDataFromArray=(res,item)=>{
               }
               } else {
                 setDropDownData(value.jsonPath, dropDownData);
-                setDropDownOriginalData(value.jsonPath, dropDownData);
+                setDropDownOriginalData(value.jsonPath, response);
                 if (value.autoSelect) {
                   setVal(value.jsonPath, dropDownData[0]);
                 }
@@ -3595,7 +3595,7 @@ filterDataFromArray=(res,item)=>{
                       );
 
                     setDropDownData(value.jsonPath, dropDownData);
-                    setDropDownOriginalData(value.jsonPath, dropDownData);
+                    setDropDownOriginalData(value.jsonPath, response);
                     if (value.autoSelect) {
                       // setVal(value.jsonPath,dropDownData[0]);
                       let cVal = {
@@ -3927,7 +3927,7 @@ filterDataFromArray=(res,item)=>{
       eval(obj.afterHandleChange)
     }
 
-    
+
   };
 
   incrementIndexValue = (group, jsonPath) => {
