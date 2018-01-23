@@ -86,7 +86,7 @@ export function getFullDate(dat, needTime = false) {
 }
 
 export function fileUpload(file, module, cb) {
-  if (file.constructor == File) {
+  if (file && file.constructor == File) {
     let formData = new FormData();
     formData.append('tenantId', localStorage.getItem('tenantId'));
     formData.append('module', module);
