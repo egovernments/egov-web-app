@@ -16,7 +16,7 @@ class ShowForm extends Component {
     searchBtnText: 'Generate Report',
   };
 
-  checkForDependentSource = async (field, selectedProperty, selectedValue) => {
+  checkForDependentSource = async (fieldIndex, field, selectedValue) => {
     const { pattern: fieldPattern, mapping, type: fieldType, name: targetProperty, isMandatory } = field;
     const { metaData, setMetaData, handleChange } = this.props;
     let splitArray = fieldPattern.split('?');
@@ -46,19 +46,14 @@ class ShowForm extends Component {
       }
       const defaultValuesLength = Object.keys(defaultValue).length;
 
-      for (var l = 0; l < metaData.reportDetails.searchParams.length; l++) {
-        if (
-          metaData.reportDetails.searchParams[l].hasOwnProperty('pattern') &&
-          metaData.reportDetails.searchParams[l].pattern.search('{' + selectedProperty + '}') > -1
-        ) {
-          if (metaData.reportDetails.searchParams[l].type == 'url') {
-            metaData.reportDetails.searchParams[l].defaultValue = defaultValue;
-          }
-          if (defaultValuesLength < 2) {
-            metaData.reportDetails.searchParams[l].disabled = true;
-          }
-        }
+      if (fieldType == 'url') {
+        metaData.reportDetails.searchParams[fieldIndex].defaultValue = defaultValue;
       }
+
+      if (defaultValuesLength < 2) {
+        metaData.reportDetails.searchParams[fieldIndex].disabled = true;
+      }
+
       setMetaData(metaData);
 
       if (defaultValuesLength && defaultValuesLength < 2) {
@@ -95,6 +90,11 @@ class ShowForm extends Component {
           const field = metaData.reportDetails.searchParams[i];
           const defaultValue = field.defaultValue;
           const fieldType = field.type;
+          const dependantProperty = field.name;
+
+          if (dependantProperty === property) {
+            continue;
+          }
 
           if (typeof defaultValue != 'object' || field.hasOwnProperty('pattern')) {
             if (!field.hasOwnProperty('pattern')) {
@@ -106,7 +106,7 @@ class ShowForm extends Component {
             if (fieldPattern.indexOf('{' + property + '}') == -1) continue;
 
             if (fieldPattern && fieldPattern.search('{' + property + '}') > -1) {
-              this.checkForDependentSource(field, property, selectedValue);
+              this.checkForDependentSource(i, field, selectedValue);
             }
           }
         }
