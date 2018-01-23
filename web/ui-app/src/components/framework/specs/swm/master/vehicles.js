@@ -131,6 +131,14 @@ var dat = {
     },
   },
   'swm.create': {
+    beforeSubmit:
+    `
+    if(formData.vehicles[0].regNumber.length < 6  || formData.vehicles[0].regNumber.length > 22)
+    {
+      shouldSubmit=false;
+      alert("Registration Number length should be between 6 and 22");
+    }
+    `,
     numCols: 3,
     useTimestamp: true,
     objectName: 'vehicles',
@@ -158,13 +166,12 @@ var dat = {
             jsonPath: 'vehicles[0].regNumber',
             label: 'swm.vehicles.create.regNumber',
             type: 'text',
-            pattern: '^[A-Z]{2}[ ][0-9]{1,2}[ ][A-Z]{1,2}[ ][0-9]{3,4}$',
-            //pattern: '^[A-Z]{2}[ ][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$',
+            pattern: '([A-z]+[ ]*[^A-z0-9]*[ ]*[0-9]+[ ]*|[0-9]+[ ]*[^A-z0-9]*[ ]*[A-z]+[ ]*)',
             isRequired: true,
             isDisabled: false,
-            maxLength: 13,
-            minLength: 9,
-            patternErrMsg: 'Please Enter a Valid Registration Number',
+            maxLength: 22,
+            minLength: 6,
+            patternErrMsg: 'Registration Number should be Alphanumeric',
           },
           {
             name: 'driver',
@@ -772,12 +779,12 @@ var dat = {
             jsonPath: 'vehicles[0].regNumber',
             label: 'swm.vehicles.create.regNumber',
             type: 'text',
-            pattern: '^[A-Z]{2}[ ][0-9]{1,2}[ ][A-Z]{1,2}[ ][0-9]{3,4}$',
+            pattern: '([A-z]+[ ]*[^A-z0-9]*[ ]*[0-9]+[ ]*|[0-9]+[ ]*[^A-z0-9]*[ ]*[A-z]+[ ]*)',
             isRequired: true,
             isDisabled: false,
-            maxLength: 13,
-            minLength: 9,
-            patternErrMsg: 'Please Enter a Valid Registration Number',
+            maxLength: 22,
+            minLength: 6,
+            patternErrMsg: 'Registration Number should be Alphanumeric',
           },
           {
             name: 'driverCode',
