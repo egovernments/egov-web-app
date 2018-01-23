@@ -790,7 +790,7 @@ class Transaction extends Component {
           }
         }
 
-        delete formData.Revaluation.Assets;
+        //delete formData.Revaluation.Assets;
 
         console.log(formData);
 
