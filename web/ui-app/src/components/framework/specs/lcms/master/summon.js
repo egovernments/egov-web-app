@@ -382,6 +382,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            reset: true,
           },
           {
             name: 'courtName',
@@ -836,6 +837,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            reset: true,
           },
           {
             name: 'bench',

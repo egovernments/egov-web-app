@@ -182,6 +182,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            reset: true,
           },
           {
             name: 'hearingDate',

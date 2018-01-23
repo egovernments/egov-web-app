@@ -157,6 +157,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            reset: true,
           },
         ],
       },
