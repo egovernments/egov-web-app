@@ -548,8 +548,8 @@ class Report extends Component {
     }
     setMockData(specs);
   }
-  
-  
+
+
 
   displayUI(results) {
     let {
@@ -726,7 +726,7 @@ class Report extends Component {
               specifications[
                 `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
-              
+
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
             self.props.setFormData(obj);
             self.setInitialUpdateData(
@@ -787,7 +787,7 @@ class Report extends Component {
         }
       );
     } else {
-        
+
         let bodyParams= '';
         bodyParams = localStorage.getItem("bodyParams");
       if (bodyParams != '' && bodyParams != null){
@@ -3819,17 +3819,7 @@ filterDataFromArray=(res,item)=>{
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
-    // if (property=="sourceSegregations[0].dumpingGround.code") {
-    //   this.props.dropDownOringalData
-    //   handleChange(
-    //     {targer:{value}},
-    //     "sourceSegregations[0].siteDetails.location",
-    //     false,
-    //     "",
-    //     "",
-    //     "patternErrMsg"
-    //   );
-    // }
+    
 
     if (obj && obj.beforeHandleChange) {
       eval(obj.beforeHandleChange)
