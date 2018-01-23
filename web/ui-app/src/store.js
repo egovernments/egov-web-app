@@ -1,7 +1,9 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { persistStore, autoRehydrate } from 'redux-persist';
 import reducers from './reducer';
+
+const composeEnhancers =
+  process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
 const middlewares = [];
 
@@ -12,6 +14,5 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
-const store = createStore(reducers, {}, compose(applyMiddleware(...middlewares), autoRehydrate()));
-
+const store = createStore(reducers, {}, composeEnhancers(applyMiddleware(...middlewares)));
 export default store;
