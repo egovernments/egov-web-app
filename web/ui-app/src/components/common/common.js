@@ -5488,6 +5488,22 @@ var localization_MR_Data = {
   'perfManagement.create.KPIs.groups.kpiCategory' : "केपीआई श्रेणी",
   'MdmsMetadata.masterData.PM.KpiCategory.name' : "वर्ग नाव",
   'MdmsMetadata.masterData.PM.KpiCategory.code' : "वर्ग कोड",
+'perfManagement.create.KPIs.groups.kpivaluevalidationmsg':  'जतन करण्यासाठी केपीआई मूल्ये सबमिट करा',
+'perfManagement.create.KPIs.months.JAN':'जानेवारी',
+'perfManagement.create.KPIs.months.FEB':'फेब्रुवारी',
+'perfManagement.create.KPIs.months.MAR':'मार्च',
+'perfManagement.create.KPIs.months.APR':'एप्रिल',
+'perfManagement.create.KPIs.months.MAY':'मे',
+'perfManagement.create.KPIs.months.JUN':'जून',
+'perfManagement.create.KPIs.months.JUL':'जुलै',
+'perfManagement.create.KPIs.months.AUG':'ऑगस्ट',
+'perfManagement.create.KPIs.months.SEP':'सप्टेंबर',
+'perfManagement.create.KPIs.months.OCT':'ऑक्टोबर',
+'perfManagement.create.KPIs.months.NOV':'नोव्हेंबर',
+'perfManagement.create.KPIs.months.DEC':'डिसेंबर',
+
+'perfManagement.create.KPIs.groups.CANCEL': 'रद्द करा',
+'perfManagement.create.KPIs.groups.UPLOAD': 'अपलोड करा',
   /** marathi localization for PA module -- ends */
 };
 export function translate(locale_text) {
