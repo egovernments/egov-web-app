@@ -1805,7 +1805,7 @@ filterDataFromArray=(res,item)=>{
             self.props.setLoadingStatus("hide");
             self.props.toggleSnackbarAndSetText(true, err, false, true);
           } else {
-            
+
             _docs.push({
               index: i,
               ...documents[i],
@@ -3196,10 +3196,13 @@ filterDataFromArray=(res,item)=>{
               let values = jp.query(response, splitArray[1].split("|")[2]);
               let dropDownData = [];
               for (var k = 0; k < keys.length; k++) {
-                let obj = {};
-                obj["key"] = keys[k];
-                obj["value"] = values[k];
-                dropDownData.push(obj);
+                 if(keys[k])
+                 {
+                   let obj = {};
+                   obj["key"] = keys[k];
+                   obj["value"] = values[k];
+                   dropDownData.push(obj);
+                 }
               }
 
               dropDownData.sort(function(s1, s2) {
@@ -3216,7 +3219,7 @@ filterDataFromArray=(res,item)=>{
 
                const updateDropDownData=(value,i)=>{
                 value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                  setDropDownData(value.jsonPath, dropDownData);
+                  dropDownData.length>0 && setDropDownData(value.jsonPath, dropDownData);
                   setDropDownOriginalData(value.jsonPath, response);
                   if (value.autoSelect) {
                     setVal(value.jsonPath, dropDownData[0]);
@@ -3240,7 +3243,7 @@ filterDataFromArray=(res,item)=>{
                 }
               }
               } else {
-                setDropDownData(value.jsonPath, dropDownData);
+                dropDownData.length>1 && setDropDownData(value.jsonPath, dropDownData);
                 setDropDownOriginalData(value.jsonPath, response);
                 if (value.autoSelect) {
                   setVal(value.jsonPath, dropDownData[0]);
@@ -3798,6 +3801,7 @@ filterDataFromArray=(res,item)=>{
   ) => {
     const self = this;
     let { getVal } = this; //.props;
+    var shouldHandleChange=true;
     let {
       handleChange,
       mockData,
@@ -3831,109 +3835,112 @@ filterDataFromArray=(res,item)=>{
       eval(obj.beforeHandleChange)
     }
 
-    if (!!obj) {
-      obj.groups.map((d) => {
-        d.fields.map((innerData) => {
-          if (innerData.type == 'tableList') {
-            innerData.tableList.values.map((dn) => {
-              if (dn.hasOwnProperty('dependantOn') && dn.jsonPath ==  property) {
-                dn.dependantOn.map((fData) => {
-                  if (getVal(`${fData.jsonPath}`) == `${fData.key}`) {
-                    expression = expression;
-                  }
-                  else {
-                    expression = '';
-                  }
+    if (shouldHandleChange) {
+      if (!!obj) {
+        obj.groups.map((d) => {
+          d.fields.map((innerData) => {
+            if (innerData.type == 'tableList') {
+              innerData.tableList.values.map((dn) => {
+                if (dn.hasOwnProperty('dependantOn') && dn.jsonPath ==  property) {
+                  dn.dependantOn.map((fData) => {
+                    if (getVal(`${fData.jsonPath}`) == `${fData.key}`) {
+                      expression = expression;
+                    }
+                    else {
+                      expression = '';
+                    }
 
-                })
-              }
-            })
-          }
+                  })
+                }
+              })
+            }
+          })
         })
-      })
-    }
-
-    if (expression && e.target.value) {
-      let str = expression;
-      let pos = 0;
-      let values = [];
-      while (pos < str.length) {
-        if (str.indexOf("$", pos) > -1) {
-          let ind = str.indexOf("$", pos);
-          let spaceInd =
-            str.indexOf(" ", ind) > -1 ? str.indexOf(" ", ind) : str.length - 1;
-          let value = str.substr(ind, spaceInd);
-          if (value != "$" + property) {
-            values.push(value.substr(1));
-            str = str.replace(
-              value,
-              "getVal('" + value.substr(1, value.length) + "')"
-            );
-          } else str = str.replace(value, "e.target.value");
-          pos++;
-        } else {
-          pos++;
-        }
       }
 
-      let _flag = 0;
-      for (var i = 0; i < values.length; i++) {
-        if (!getVal(values[i])) {
+      if (expression && e.target.value) {
+        let str = expression;
+        let pos = 0;
+        let values = [];
+        while (pos < str.length) {
+          if (str.indexOf("$", pos) > -1) {
+            let ind = str.indexOf("$", pos);
+            let spaceInd =
+              str.indexOf(" ", ind) > -1 ? str.indexOf(" ", ind) : str.length - 1;
+            let value = str.substr(ind, spaceInd);
+            if (value != "$" + property) {
+              values.push(value.substr(1));
+              str = str.replace(
+                value,
+                "getVal('" + value.substr(1, value.length) + "')"
+              );
+            } else str = str.replace(value, "e.target.value");
+            pos++;
+          } else {
+            pos++;
+          }
+        }
+
+        let _flag = 0;
+        for (var i = 0; i < values.length; i++) {
+          if (!getVal(values[i])) {
+            _flag = 1;
+          }
+        }
+
+        if (
+          isDate &&
+          e.target.value &&
+          [12, 13].indexOf((e.target.value + "").length) == -1
+        ) {
           _flag = 1;
         }
-      }
 
-      if (
-        isDate &&
-        e.target.value &&
-        [12, 13].indexOf((e.target.value + "").length) == -1
-      ) {
-        _flag = 1;
-      }
-
-      if (_flag == 0) {
-        if (!eval(str)) {
-          return this.props.toggleSnackbarAndSetText(
-            true,
-            translate(expErr),
-            false,
-            true
-          );
+        if (_flag == 0) {
+          if (!eval(str)) {
+            return this.props.toggleSnackbarAndSetText(
+              true,
+              translate(expErr),
+              false,
+              true
+            );
+          }
         }
       }
-    }
-    // this.checkifHasValueBasedOn(property, e.target.value); --> Not Required on HandleChange
-    this.checkIfHasShowHideFields(property, e.target.value);
-    this.checkIfHasEnDisFields(property, e.target.value);
-    this.checkifHasDependedantMdmsField(property, e.target.value);
-    this.checkIfHasReqFields(property, e.target.value);
+      // this.checkifHasValueBasedOn(property, e.target.value); --> Not Required on HandleChange
+      this.checkIfHasShowHideFields(property, e.target.value);
+      this.checkIfHasEnDisFields(property, e.target.value);
+      this.checkifHasDependedantMdmsField(property, e.target.value);
+      this.checkIfHasReqFields(property, e.target.value);
 
-    try {
-      handleChange(
-        e,
-        property,
-        isRequired,
-        pattern,
-        requiredErrMsg,
-        patternErrMsg
-      );
-    } catch (e) {
-      console.log("error in autocomplete . It is version issue");
-      console.log(e);
-    }
-    this.affectDependants(obj, e, property);
-    if (
-      (property == "agencies[0].status" ||
-        property == "agencies[0].advocates[0].status") &&
-      e.target.value == "active"
-    ) {
-      changeFormStatus(true);
+      try {
+        handleChange(
+          e,
+          property,
+          isRequired,
+          pattern,
+          requiredErrMsg,
+          patternErrMsg
+        );
+      } catch (e) {
+        console.log("error in autocomplete . It is version issue");
+        console.log(e);
+      }
+      this.affectDependants(obj, e, property);
+      if (
+        (property == "agencies[0].status" ||
+          property == "agencies[0].advocates[0].status") &&
+        e.target.value == "active"
+      ) {
+        changeFormStatus(true);
+      }
+
+      const JP = jp;
+      if (obj && obj.afterHandleChange) {
+        eval(obj.afterHandleChange)
+      }
     }
 
-    const JP = jp;
-    if (obj && obj.afterHandleChange) {
-      eval(obj.afterHandleChange)
-    }
 
 
   };

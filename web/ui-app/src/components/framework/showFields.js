@@ -343,6 +343,7 @@ class ShowFields extends Component {
             item={item}
             fieldErrors={this.props.fieldErrors}
             handler={this.props.handler}
+            autoComHandler={this.props.autoComHandler || ''}
           />
         );
       case 'multiValueList':

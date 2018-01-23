@@ -53,7 +53,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         dropDownOringalData: {
-          ...state.dropDownData,
+          ...state.dropDownOringalData,
           [action.fieldName]: action.dropDownData,
         },
       };

@@ -257,6 +257,10 @@ class UiSelectField extends Component {
                 item.expression,
                 item.expressionMsg
               );
+
+              if (this.props.autoComHandler && item.autoCompleteDependancy) {
+                this.props.autoComHandler(item.autoCompleteDependancy, item.jsonPath);
+              }
             }}
             onClick={event => {
               event.stopPropagation();

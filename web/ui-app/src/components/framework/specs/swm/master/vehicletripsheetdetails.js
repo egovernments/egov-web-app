@@ -89,10 +89,20 @@ var dat = {
     }
   },
   "swm.create": {
-    beforeSubmit: `var oneDay = 24*60*60*1000;
+    beforeHandleChange:`if((property=="vehicleTripSheetDetails[0].route.code") && ((formData.vehicleTripSheetDetails[0].vehicle && !formData.vehicleTripSheetDetails[0].vehicle.regNumber) || !formData.vehicleTripSheetDetails[0].tripStartDate ||  !formData.vehicleTripSheetDetails[0].tripEndDate))
+    {
+      alert("Please enter values for Vehicle Registration No, Scheduled Date From and Scheduled Date To before selecting route");
+      shouldHandleChange=false;
+    }
+    `,
+    beforeSubmit: `
+    var oneDay = 24*60*60*1000;
+    // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    // var curDate=new Date();
+    // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
-      alert("The difference between from date and to date should be less than 1 day");
+      alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
@@ -103,6 +113,11 @@ var dat = {
     if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
       alert("Entry weight should be greatet than exit weight");
+      shouldSubmit=false;
+    }
+    if(parseFloat(formData.vehicleTripSheetDetails[0].garbageWeight)>parseFloat(formData.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo))
+    {
+      alert("Total weight of garbage should equal or lessthan dumping ground capacity");
       shouldSubmit=false;
     }
     `,
@@ -129,7 +144,17 @@ var dat = {
               autoFillFields: {
                 "vehicleTripSheetDetails[0].vehicle.vendor.name": "vehicles[0].vendor.name"
               }
-            }
+            },
+            defaultValue: "",
+            depedants: [
+              {
+                jsonPath: "vehicleTripSheetDetails[0].route.code",
+                type: "dropDown",
+                pattern:
+                  "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                autoSelect:true
+              }
+            ]
           },
           {
             name: "ulbOwnedVehicle",
@@ -150,14 +175,50 @@ var dat = {
             patternErrorMsg: ""
           },
           {
+              name: "scheduledDateFrom",
+              jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
+              label: "swm.vehiclestripsheet.create.scheduledDateFrom",
+              type: "datePicker",
+              isRequired: true,
+              isDisabled: false,
+              patternErrorMsg: "",
+              depedants: [
+                {
+                  jsonPath: "vehicleTripSheetDetails[0].route.code",
+                  type: "dropDown",
+                  pattern:
+                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  autoSelect:true
+                }
+              ]
+            },
+            {
+              name: "scheduledDateTo",
+              jsonPath: "vehicleTripSheetDetails[0].tripEndDate",
+              label: "swm.vehiclestripsheet.create.scheduledDateTo",
+              type: "datePicker",
+              isRequired: true,
+              isDisabled: false,
+              patternErrorMsg: "",
+              depedants: [
+                {
+                  jsonPath: "vehicleTripSheetDetails[0].route.code",
+                  type: "dropDown",
+                  pattern:
+                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  autoSelect:true
+                }
+              ]
+            },
+          {
             name: "route",
             jsonPath: "vehicleTripSheetDetails[0].route.code",
             label: "swm.vehiclestripsheet.create.route",
-            type: "autoCompelete",
+            type: "singleValueList",
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
-            url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
+            url: "",//swm-services/routes/_search?|$.routes.*.code|$.routes.*.name
             autoCompleteDependancy: [{
                 autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&excludeDumpingGround=true",
                 autoFillFields: {
@@ -170,7 +231,8 @@ var dat = {
               {
                 autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&isEndingDumpingGround=true",
                 autoFillFields: {
-                  "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].collectionPoints[0].dumpingGround.name"
+                  "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].collectionPoints[0].dumpingGround.name",
+                  "vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo": "routes[0].collectionPoints[0].dumpingGround.siteDetails.capacity"
                 }
               }
             ]
@@ -221,6 +283,18 @@ var dat = {
             patternErrorMsg: "",
             defaultValue: ""
           },
+          {
+            name: "totalGarbageEstimateTwo",
+            jsonPath: "vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo",
+            label: "swm.vehiclestripsheet.create.totalGarbageEstimateTwo",
+            type: "text",
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: "",
+            defaultValue: "",
+            isHidden:true,
+            hide:true
+          }
         ]
       },
       {
@@ -265,24 +339,7 @@ var dat = {
       {
         name: "tripSheetDetails",
         label: "swm.vehiclestripsheet.create.group.title.tripSheetDetails",
-        fields: [{
-            name: "scheduledDateFrom",
-            jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
-            label: "swm.vehiclestripsheet.create.scheduledDateFrom",
-            type: "datePicker",
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: ""
-          },
-          {
-            name: "scheduledDateTo",
-            jsonPath: "vehicleTripSheetDetails[0].tripEndDate",
-            label: "swm.vehiclestripsheet.create.scheduledDateTo",
-            type: "datePicker",
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: ""
-          },
+        fields: [
           {
             name: "inTime",
             jsonPath: "vehicleTripSheetDetails[0].inTime",
@@ -358,6 +415,12 @@ var dat = {
     tenantIdRequired: true
   },
   "swm.update": {
+    beforeHandleChange:`if((property=="vehicleTripSheetDetails[0].route.code") && (!formData.vehicleTripSheetDetails[0].vehicle.regNumber || !formData.vehicleTripSheetDetails[0].tripStartDate ||  !formData.vehicleTripSheetDetails[0].tripEndDate))
+    {
+      alert("Please enter values for Vehicle Registration No, Scheduled Date From and Scheduled Date To before selecting route");
+      shouldHandleChange=false;
+    }
+    `,
     beforeSetForm:`if (res &&
       _.isArray(res.vehicleTripSheetDetails) && res.vehicleTripSheetDetails[0].route.collectionPoints && res.vehicleTripSheetDetails[0].route.collectionPoints.length>0) {
         for(var i=0;i<res.vehicleTripSheetDetails[0].route.collectionPoints.length;i++)
@@ -365,14 +428,18 @@ var dat = {
           if(res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround){
             res.vehicleTripSheetDetails[0].route.dumpingGround={};
             res.vehicleTripSheetDetails[0].route.dumpingGround.name=res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround.name;
+            res.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo=res.vehicleTripSheetDetails[0].route.collectionPoints[i].dumpingGround.siteDetails.capacity;
             res.vehicleTripSheetDetails[0].route.collectionPoints.splice(i,1)
           }
         }
     }`,
     beforeSubmit: `var oneDay = 24*60*60*1000;
+    // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    // var curDate=new Date();
+    // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
-      alert("The difference between from date and to date should be less than 1 day");
+      alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
@@ -383,6 +450,11 @@ var dat = {
     if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
       alert("Entry weight should be greatet than exit weight");
+      shouldSubmit=false;
+    }
+    if(parseFloat(formData.vehicleTripSheetDetails[0].garbageWeight)>parseFloat(formData.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo))
+    {
+      alert("Total weight of garbage should equal or lessthan dumping ground capacity");
       shouldSubmit=false;
     }
     `,
@@ -408,7 +480,16 @@ var dat = {
               autoFillFields: {
                 "vehicleTripSheetDetails[0].vehicle.vendor.name": "vehicles[0].vendor.name"
               }
-            }
+            },
+            depedants: [
+              {
+                jsonPath: "vehicleTripSheetDetails[0].route.code",
+                type: "dropDown",
+                pattern:
+                  "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                autoSelect:true
+              }
+            ]
           },
           {
             name: "ulbOwnedVehicle",
@@ -429,10 +510,46 @@ var dat = {
             patternErrorMsg: ""
           },
           {
+              name: "scheduledDateFrom",
+              jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
+              label: "swm.vehiclestripsheet.create.scheduledDateFrom",
+              type: "datePicker",
+              isRequired: true,
+              isDisabled: false,
+              patternErrorMsg: "",
+              depedants: [
+                {
+                  jsonPath: "vehicleTripSheetDetails[0].route.code",
+                  type: "dropDown",
+                  pattern:
+                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  autoSelect:true
+                }
+              ]
+            },
+            {
+              name: "scheduledDateTo",
+              jsonPath: "vehicleTripSheetDetails[0].tripEndDate",
+              label: "swm.vehiclestripsheet.create.scheduledDateTo",
+              type: "datePicker",
+              isRequired: true,
+              isDisabled: false,
+              patternErrorMsg: "",
+              depedants: [
+                {
+                  jsonPath: "vehicleTripSheetDetails[0].route.code",
+                  type: "dropDown",
+                  pattern:
+                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  autoSelect:true
+                }
+              ]
+            },
+          {
             name: "route",
             jsonPath: "vehicleTripSheetDetails[0].route.code",
             label: "swm.vehiclestripsheet.create.route",
-            type: "autoCompelete",
+            type: "singleValueList",
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
@@ -449,7 +566,8 @@ var dat = {
               {
                 autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&isEndingDumpingGround=true",
                 autoFillFields: {
-                  "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].collectionPoints[0].dumpingGround.name"
+                  "vehicleTripSheetDetails[0].route.dumpingGround.name": "routes[0].collectionPoints[0].dumpingGround.name",
+                  "vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo": "routes[0].collectionPoints[0].dumpingGround.siteDetails.capacity"
                 }
               }
             ]
@@ -500,6 +618,18 @@ var dat = {
             patternErrorMsg: "",
             defaultValue: ""
           },
+          {
+            name: "totalGarbageEstimateTwo",
+            jsonPath: "vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo",
+            label: "swm.vehiclestripsheet.create.totalGarbageEstimateTwo",
+            type: "text",
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: "",
+            defaultValue: "",
+            isHidden:true,
+            hide:true
+          }
         ]
       },
       {
