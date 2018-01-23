@@ -2062,7 +2062,7 @@ var localization_EN_Data = {
    'swm.vendorpayment.create.group.title.invoiceDetails' : 'INVOICE DETAILS',
    'swm.vendorpayment.create.fromAmt' : 'From Amount (₹)',
    'swm.vendorpayment.create.toAmt' : 'To Amount (₹)',
-   'swm.vendorpayment.create.amountalreadypaid' : 'Amount Already Paid (₹)',
+   'swm.vendorpayment.create.amountalreadypaid' : 'To Be Paid Amount (₹)',
    'swm.vendorpayment.create.invoiceNo' : 'Invoice No',
    'swm.vendorpayment.create.invoiceAmt' : 'Invoice Amount (₹)',
    'swm.vendorpayment.create.invoiceDate' : 'Invoice Date',

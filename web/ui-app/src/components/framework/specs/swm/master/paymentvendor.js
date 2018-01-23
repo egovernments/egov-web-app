@@ -209,7 +209,7 @@ var dat ={
           name: 'InvoiceAmount',
           label: 'swm.vendorpayment.create.amountalreadypaid',
           type: 'text',
-          jsonPath: "paymentDetails[0].vendorInvoiceAmount",
+          jsonPath: "paymentDetails[0].pendingAmount",
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
@@ -217,7 +217,7 @@ var dat ={
       ],  
     },
     {
-        name: 'PaymentDeatails',
+        name: 'PaymentDetails',
         label: 'swm.paymentvendor.create.PaymentDeatails',
         fields: [
         {
@@ -393,7 +393,14 @@ var dat ={
                   'paymentDetails[0].invoiceDate':'vendorPaymentDetails[0].invoiceDate',
                   'paymentDetails[0].fromDate':'vendorPaymentDetails[0].fromDate',
                   'paymentDetails[0].toDate':'vendorPaymentDetails[0].toDate',
-                  'paymentDetails[0].vendorInvoiceAmount':'',
+                },
+              },
+              {
+                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+                type: 'autoFill',
+                pattern: '/swm-services/paymentdetails/_search?&paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
+                autoFillFields: {
+                  'paymentDetails[0].vendorInvoiceAmount':'paymentDetails[0].pendingAmount',
                 },
               },
             ],
@@ -412,6 +419,16 @@ var dat ={
           isRequired: false,
           isDisabled: true,
           patternErrorMsg: '',
+          depedants: [{
+            jsonPath: 'purchaseOrders[0].purchaseOrderDetails[0].totalAmount',
+            type: 'textField',
+            dependentFlag: true,
+            valExp: "`${getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].unitPrice'):0} * ${getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity')!=''?getVal('purchaseOrders[0].purchaseOrderDetails[*].userQuantity'):0}`",
+            rg: '',
+            isRequired: false,
+            requiredErrMsg: '',
+            patternErrMsg: '',
+            }],
         },
         {
           name: 'InvoiceDate',
@@ -637,7 +654,14 @@ var dat ={
                 'paymentDetails[0].vendorPaymentDetails.invoiceDate':'vendorPaymentDetails[0].invoiceDate',
                 'paymentDetails[0].vendorPaymentDetails.fromDate':'vendorPaymentDetails[0].fromDate',
                 'paymentDetails[0].vendorPaymentDetails.toDate':'vendorPaymentDetails[0].toDate',
-                'paymentDetails[0].vendorInvoiceAmount':'',
+              },
+            },
+            {
+              jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+              type: 'autoFill',
+              pattern: '/swm-services/paymentdetails/_search?&paymentNo={paymentDetails[0].vendorPaymentDetails.paymentNo}',
+              autoFillFields: {
+                'paymentDetails[0].pendingAmount':'paymentDetails[0].pendingAmount',
               },
             },
           ],
@@ -686,7 +710,7 @@ var dat ={
         name: 'InvoiceAmount',
         label: 'swm.vendorpayment.create.amountalreadypaid',
         type: 'text',
-        jsonPath: "paymentDetails[0].vendorInvoiceAmount",
+        jsonPath: "paymentDetails[0].pendingAmount",
         isRequired: false,
         isDisabled: true,
         patternErrorMsg: '',
