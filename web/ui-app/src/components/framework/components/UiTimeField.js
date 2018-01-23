@@ -17,17 +17,15 @@ export default class UiTimeField extends Component {
                 id: item.jsonPath.split('.').join('-'),
                 disabled: item.isDisabled,
               };
-
+              var action = this.props.actionName;
               var time = this.props.getVal(item.jsonPath) || undefined;
             
               if(_.isEmpty(this.props.getVal(item.jsonPath)) &&  item.reset){
                 inputProps["value"] = "";
               }
-              else{
-                if(this.props.actionName === "update" && time && !(/date/.test(time))){
+              else if((action === "update" || action === "create") && time && !(/date/.test(time))){
                   time = parseInt(time);
                   inputProps["value"] = moment(time).format("h:mm A");
-                }
               };
               
              
