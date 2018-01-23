@@ -34,7 +34,7 @@ var dat = {
           },
           {
             name: 'referenceCaseNumber',
-            jsonPath: 'cases[0].summon.summonReferenceNo',
+            jsonPath: 'cases[0].caseRefernceNo',
             label: 'legal.vakalatnama.create.referenceCaseNumber',
             pattern: '',
             type: 'text',
