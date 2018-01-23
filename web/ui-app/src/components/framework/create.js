@@ -1793,6 +1793,8 @@ filterDataFromArray=(res,item)=>{
       let counter = documents.length,
         breakOut = 0;
       for (let i = 0; i < documents.length; i++) {
+        if(documents[i])
+        {
         fileUpload(documents[i].fileStoreId, self.props.moduleName, function(
           err,
           res
@@ -1803,6 +1805,9 @@ filterDataFromArray=(res,item)=>{
             self.props.setLoadingStatus("hide");
             self.props.toggleSnackbarAndSetText(true, err, false, true);
           } else {
+            if(!res.files[0].fileStoreId){
+               counter--;
+            }
             _docs.push({
               index: i,
               ...documents[i],
@@ -1823,6 +1828,7 @@ filterDataFromArray=(res,item)=>{
           }
         });
       }
+    }
     } else {
       self.checkForOtherFiles(formData, _url);
     }
