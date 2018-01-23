@@ -25,8 +25,8 @@ class KPIDocumentField extends Component {
   docUpload = () => {
     let { actionName, moduleName } = this.props;
     this.state.cell;
-    console.log(this.state.cell);
-    console.log(this.state.documents[this.state.cell.valueid]);
+    //console.log(this.state.cell);
+    //console.log(this.state.documents[this.state.cell.valueid]);
     if (this.state.documents[this.state.cell.valueid]) {
       this.state.documents[this.state.cell.valueid][this.state.cell.period].map((fileInfo, id) => {
       let valueid = this.state.cell.valueid;
@@ -51,7 +51,10 @@ class KPIDocumentField extends Component {
     this.props.switchDialog(false);
 
     }
-    
+    else{
+      this.props.switchDialog(false);
+    }
+
   };
 
   handleClose = () => {
@@ -114,11 +117,18 @@ class KPIDocumentField extends Component {
       if (!fileDetails[valueid][period]) {
         fileDetails[valueid][period] = [];
       }
-      fileDetails[valueid][period][code] = filename.currentFileName;
-      console.log(fileDetails, 'setting values');
+
+      if (!fileDetails[valueid][period][code]) {
+        fileDetails[valueid][period][code] = [];
+      }
+      fileDetails[valueid][period][code]['name'] = filename.currentFileName;
+      fileDetails[valueid][period][code]['fileStoreId'] = filename.currentFileStoreID;
+      //console.log(filename.currentFileStoreID, 'setting values');
       self.setState({ currentFileName: fileDetails, currentFileStoreID: filename.currentFileStoreID });
     });
   }
+
+
 
   renderFilePanel(self, item, i, code) {
     let displayFile = false;
@@ -130,7 +140,7 @@ class KPIDocumentField extends Component {
         //console.log(kpi.kpiValue.valueList,' Value list');
 
         kpiValue.documents.map(kpidoc => {
-          console.log(kpidoc, 'elements :');
+          //console.log(kpidoc, 'elements :');
 
           let valueid = kpiValue.valueid;
           let period = kpiValue.period;
@@ -144,7 +154,7 @@ class KPIDocumentField extends Component {
               fileNameArr[valueid][period] = [];
             }
 
-            if (kpidoc.code) {
+            if (kpidoc.code == code) {
               fileNameArr[valueid][period][kpidoc.code] = kpidoc.fileStoreId;
             }
           }
@@ -164,14 +174,28 @@ class KPIDocumentField extends Component {
         // }
       });
     });
-    //console.log(code,'--code--',fileNameArr[self.props.cell.valueid][self.props.cell.period][code]['code']);
-    //console.log(fileNameArr[self.props.cell.valueid]);
+
+    //console.log('file details',self.state.currentFileName);
+   
+    let filestoreId = '';
+    if (self.state.currentFileName &&
+      self.state.currentFileName[self.props.cell.valueid] && 
+      self.state.currentFileName[self.props.cell.valueid][self.props.cell.period] &&
+      self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]
+      ) {
+      filestoreId = self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]['fileStoreId'];
+
+      //console.log(code,'--filestore id map--',self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]);
+      //console.log('--check equality--',(self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]['fileStoreId'] == fileNameArr[self.props.cell.valueid][self.props.cell.period][code]) );
+    }
     if (
       fileNameArr[self.props.cell.valueid] &&
       fileNameArr[self.props.cell.valueid][self.props.cell.period] &&
       fileNameArr[self.props.cell.valueid][self.props.cell.period][code] &&
-      this.state.currentFileStoreID !== fileNameArr[self.props.cell.valueid][self.props.cell.period][code]
+      filestoreId != fileNameArr[self.props.cell.valueid][self.props.cell.period][code]
     ) {
+      //console.log('file id fetched',filestoreId);
+      //console.log('file id',fileNameArr[self.props.cell.valueid][self.props.cell.period][code]);
       self.getFileDetails(
         fileNameArr[self.props.cell.valueid][self.props.cell.period][code],
         self,
@@ -187,49 +211,76 @@ class KPIDocumentField extends Component {
       self.state.currentFileName[self.props.cell.valueid][self.props.cell.period] &&
       self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]
     ) {
-      display = self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code];
+      display = self.state.currentFileName[self.props.cell.valueid][self.props.cell.period][code]['name'];
     }
-    console.log(self.state.currentFileName, 'current file details ---');
-    console.log(self.props.cell.period, 'period ---');
-    console.log(code, 'code ---');
-    console.log(display, 'display');
-    return (
-      <Row>
+
+    // console.log(self.state.currentFileName, 'current file details ---');
+    // console.log(self.props.cell.period, 'period ---');
+    // console.log(code, 'code ---');
+    // console.log(display, 'display');
+    return [
         <Col xs={4} md={4}>
-          <input
-            id={'file_' + self.props.cell.valueid + self.props.cell.period}
-            type="file"
-            accept=".xls,.xlsx,.txt,.doc,.docx"
-            onChange={e => self.handleFile(e, self.props.cell.valueid, self.props.cell.period, item.name, i, self.props.data, code)}
-          />
-        </Col>
-        <Col xs={2} md={2} />
+          <div ClassName="pull-left">
+            <input
+              id={'file_' + self.props.cell.valueid + self.props.cell.period}
+              type="file"
+              accept=".xls,.xlsx,.txt,.doc,.docx"
+              onChange={e => self.handleFile(e, self.props.cell.valueid, self.props.cell.period, item.name, i, self.props.data, code)}
+            />
+          </div>
+        </Col>,
         <Col xs={4} md={4}>
           {display && (
-            <span ClassName="pull-right">
+            <div ClassName="pull-right">
               <a
                 href={
                   window.location.origin +
                   '/filestore/v1/files/id?tenantId=' +
                   localStorage.tenantId +
                   '&fileStoreId=' +
-                  this.state.currentFileStoreID
+                  filestoreId
                 }
                 target="_blank"
               >
                 {display}{' '}
               </a>
-            </span>
+            </div>
           )}
-        </Col>
-      </Row>
-    );
+        </Col>,
+          <Col xs={2} md={2} >
+            {display && (
+              <FlatButton label="Delete" primary={true} onClick={(e) => this.unlinkKpiDoc(filestoreId,this,self.props.cell.valueid, self.props.cell.period,code)} />
+            )}
+          </Col>
+        ];
+  }
+
+
+  unlinkKpiDoc(filestoreID,self, valueid, period, code)
+  {
+
+    //console.log('delete operation'+code);
+    self.props.unlinkKpiDoc(filestoreID,valueid, period, code);
+
+    let currentFileClone = self.state.currentFileName.slice();
+     if (
+      currentFileClone[valueid] &&
+      currentFileClone[valueid][period] &&
+      currentFileClone[valueid][period][code]
+    ) {
+      //currentFileClone[valueid][period][code];
+      //console.log(currentFileClone[valueid][period],'file details');
+      delete currentFileClone[valueid][period][code];
+      //currentFileClone[valueid][period].splice(code, 1);
+    }
+    //console.log(currentFileClone,'currentFileClone');
+    self.setState({ currentFileName: currentFileClone });
   }
 
   render() {
     const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleClose.bind(this)} />,
-      <RaisedButton label="Upload" primary={true} disabled={(this.props.data.length == 0)?true:false} keyboardFocused={true} onClick={this.docUpload.bind(this)} />,
+      <FlatButton label={translate('perfManagement.create.KPIs.groups.CANCEL')} primary={true} onClick={this.handleClose.bind(this)} />,
+      <RaisedButton label={translate('perfManagement.create.KPIs.groups.UPLOAD')} primary={true} disabled={(this.props.data.length == 0)?true:false} keyboardFocused={true} onClick={this.docUpload.bind(this)} />,
     ];
     //this.setState({fileAttrList:this.props.data});
     console.log(this.props.data.length, 'data array');
@@ -240,7 +291,7 @@ class KPIDocumentField extends Component {
             //console.log(item, 'render panel');
             return [
               <Row>
-                <Col xs={4} md={4}>
+                <Col xs={2} md={2}>
                   <strong>{item.name}</strong>
                   {item.active && (
                     <span
@@ -252,9 +303,7 @@ class KPIDocumentField extends Component {
                     </span>
                   )}
                 </Col>
-                <Col xs={8} md={8}>
-                  {this.renderFilePanel(this, item, i, item.code)}
-                </Col>
+                {this.renderFilePanel(this, item, i, item.code)}
               </Row>,
               <br />,
             ];

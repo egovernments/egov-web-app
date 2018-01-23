@@ -105,6 +105,7 @@ class kpivalues extends Component {
     this.clearSearch = this.clearSearch.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
     this.setUploadedFiles = this.setUploadedFiles.bind(this);
+    this.unlinkKpiDoc = this.unlinkKpiDoc.bind(this);
   }
 
   componentDidMount() {
@@ -218,18 +219,18 @@ class kpivalues extends Component {
 
   header() {
     let header = [
-      { 4: 'April' },
-      { 5: 'May' },
-      { 6: 'June' },
-      { 7: 'July' },
-      { 8: 'August' },
-      { 9: 'September' },
-      { 10: 'October' },
-      { 11: 'November' },
-      { 12: 'December' },
-      { 1: 'January' },
-      { 2: 'February' },
-      { 3: 'March' },
+      { 4: translate('perfManagement.create.KPIs.months.APR') },
+      { 5: translate('perfManagement.create.KPIs.months.MAY')},
+      { 6: translate('perfManagement.create.KPIs.months.JUN') },
+      { 7: translate('perfManagement.create.KPIs.months.JUL') },
+      { 8: translate('perfManagement.create.KPIs.months.AUG') },
+      { 9: translate('perfManagement.create.KPIs.months.SEP') },
+      { 10: translate('perfManagement.create.KPIs.months.OCT') },
+      { 11: translate('perfManagement.create.KPIs.months.NOV') },
+      { 12: translate('perfManagement.create.KPIs.months.DEC') },
+      { 1: translate('perfManagement.create.KPIs.months.JAN') },
+      { 2: translate('perfManagement.create.KPIs.months.FEB') },
+      { 3: translate('perfManagement.create.KPIs.months.MAR') },
     ];
 
     return header.map((headerItem, k) => {
@@ -369,7 +370,7 @@ class kpivalues extends Component {
                           className={`${this.state.showingAlert ? '' : 'hidden'}`}
                           style={{ backgroundColor: '#4CAF50', color: 'white', opacity: 2, width: 248, marginLeft: 24 }}
                         >
-                          {'Please Submit KPI Values to save.'}
+                          {translate('perfManagement.create.KPIs.groups.kpivaluevalidationmsg')}
                         </div>
                       </span>
                     )}
@@ -392,7 +393,7 @@ class kpivalues extends Component {
     //self.state.open = true;
     if (item.documents) {
       let filelistClone = self.state.filelist.slice();
-      console.log(item.documents);
+      //console.log(item.documents);
       item.documents.map(filedetails => {
         console.log('file api call');
         let result = new Promise(function(resolve, reject) {
@@ -540,7 +541,7 @@ class kpivalues extends Component {
                   </span>
 
                   <br />
-                </div>
+                </div> 
               </td>
             );
           })}
@@ -644,6 +645,37 @@ class kpivalues extends Component {
     console.log('final set', resultClone);
   }
 
+  unlinkKpiDoc(filestoreID,valueid, period, code)
+  {
+    //console.log('reset here');
+    let resultClone = this.state.KPIResult.slice();
+
+    resultClone.map(kpi => {
+      kpi.kpiValue.valueList.map((kpiValue,parentIndex) => {
+
+        if (kpiValue.valueid == valueid && kpiValue.period == period) {
+
+           kpiValue.documents.map((doc,index) => {
+              if (doc.code == code) {
+                  //console.log(doc,'document delete');
+                  //console.log(index,'index delete');
+                  //console.log(kpi.kpiValue.valueList[parentIndex],'document from parent delete');
+                  //kpiValue.documents[index] = [];
+                  kpi.kpiValue.valueList[parentIndex].documents.splice(index, 1);
+                  //doc = undefined;
+              }
+              //return doc;
+          });
+
+        }
+         
+      });
+    });
+
+    this.setState({ KPIResult: resultClone });
+    //console.log(resultClone, 'deleted from the set');
+  }
+
   uploadFile(valueid, period, e) {
     let { actionName, moduleName } = this.props;
     let fileList = this.state.documents;
@@ -686,8 +718,8 @@ class kpivalues extends Component {
     let url = '/filestore/v1/files/id?tenantId=' + localStorage.getItem('tenantId') + '&fileStoreId=' + filestoreID;
 
     let filelistClone = self.state.currentFileList.slice();
-    console.log(filelistClone);
-    console.log(valueid, period);
+    //console.log(filelistClone);
+    //console.log(valueid, period);
 
     var oReq = new XMLHttpRequest();
     oReq.open('GET', url, true);
@@ -728,7 +760,7 @@ class kpivalues extends Component {
             });
           }, 2000);
           //console.log(filelistClone);
-          console.log(self.state.currentFileList);
+          //console.log(self.state.currentFileList);
         }
       }
     };
@@ -743,7 +775,7 @@ class kpivalues extends Component {
     }
 
     files[valueid][period] = event.target.files[0];
-    console.log(files);
+    //console.log(files);
     this.setState({ documents: files });
   }
 
@@ -754,8 +786,8 @@ class kpivalues extends Component {
     let url = 'perfmanagement/v1/kpivalue/_create';
     let fileStorId = [];
     let self = this;
-    console.log(fileList, 'fileslist');
-    console.log(fileList.length, 'counter');
+    //console.log(fileList, 'fileslist');
+    //console.log(fileList.length, 'counter');
     let breakOut = 0;
     //this.props.setLoadingStatus('loading');
 
@@ -936,7 +968,7 @@ class kpivalues extends Component {
                   labelStyle={{ color: '#5F5C57' }}
                   floatingLabelText={
                     <span>
-                      Department{' '}
+                      {translate('perfManagement.update.KPIs.groups.updatekpiDepartment')}{' '}
                       <span style={{ color: '#FF0000' }}>
                         <i>*</i>
                       </span>
@@ -960,8 +992,8 @@ class kpivalues extends Component {
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
                   hintText="Please Select"
-                  labelStyle={{ color: '#5F5C57' }}
-                  floatingLabelText={<span>Target Financial Year</span>}
+                  labelStyle={{ color: '#5F5C57' }}                  
+                  floatingLabelText={<span>{translate('perfManagement.view.KPIs.groups.viewkpiTargetFinancialYear')}</span>}
                   onChange={(event, key, value) => this.searchKPIValues(event, key, value, 'FINYEAR')}
                 >
                   {this.state.FinantialYear &&
@@ -982,8 +1014,8 @@ class kpivalues extends Component {
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
                   hintText="Please Select"
-                  labelStyle={{ color: '#5F5C57' }}
-                  floatingLabelText={<span>KPI Code</span>}
+                  labelStyle={{ color: '#5F5C57' }}                  
+                  floatingLabelText={<span>{translate('perfManagement.create.KPIs.groups.kpiCode')}</span>}
                   onChange={(event, key, value) => this.searchKPIValues(event, key, value, 'KPI')}
                 >
                   {this.state.KPIs &&
@@ -1050,7 +1082,7 @@ class kpivalues extends Component {
                     responsive
                   >
                     <thead>
-                      <th>KPI</th>
+                      <th>{translate('perfManagement.dashboard.query.label.kpis')}</th>
 
                       <th>
                         {this.state.prev && (
@@ -1099,6 +1131,7 @@ class kpivalues extends Component {
           open={this.state.open}
           switchDialog={this.switchDialog}
           setUploadedFiles={this.setUploadedFiles}
+          unlinkKpiDoc={this.unlinkKpiDoc}
         />
       </div>
     );
