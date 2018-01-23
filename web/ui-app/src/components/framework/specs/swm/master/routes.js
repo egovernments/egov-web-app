@@ -226,7 +226,7 @@ var dat = {
             name: 'name',
             jsonPath: 'routes[0].name',
             label: 'swm.routes.create.name',
-            type: 'singleValueList',
+            type: 'text',
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
@@ -265,6 +265,12 @@ var dat = {
                 pattern:
                 '/swm-services/collectionpoints/_search?&locationCode={routes[0].collectionPoints[0].collectionPoint.location.code}|$..collectionPoints.*.code|$..collectionPoints.*.name',
               },
+              {
+                jsonPath: 'routes[0].collectionPoints[0].dumpingGround.code',
+                type: 'dropDown',
+                pattern:
+                '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround&filter%3D%5B%3F(%40.siteDetails.location.code%3D={routes[0].collectionPoints[0].collectionPoint.location.code})]|$..DumpingGround.*.code|$..DumpingGround.*.name',
+              }
             ]
           },
           {
@@ -310,7 +316,6 @@ var dat = {
             isRequired: false,
             isDisabled: true,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$..DumpingGround.*.code|$..DumpingGround.*.name',
           },
           {
             name: 'startingCollectionPointDistance',
@@ -343,8 +348,8 @@ var dat = {
             label: 'Total Distance Covered(KMS)',
             type: 'number',
             total:true,
-            isRequired: true,
-            isDisabled: false,
+            isRequired: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
           {
@@ -352,8 +357,8 @@ var dat = {
             jsonPath: 'routes[0].totalGarbageEstimate',
             label: 'Total Expected Garbage(TONS)',
             type: 'number',
-            isRequired: true,
-            isDisabled: false,
+            isRequired: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
         ],
@@ -393,64 +398,6 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url:'/egov-mdms-service/v1/_get?&moduleName=swm&masterName=CollectionType|$..code|$..name',
-            depedants: [
-              {
-                jsonPath: 'routes[0].startingCollectionPoint.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}|$..code|$..name',
-                autoFillFields: {
-                  'routes[0].startingCollectionPoint.name': 'startingCollectionPoint.name',
-                },
-              },
-              {
-                jsonPath: 'routes[0].startingCollectionPoint.location.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'routes[0].startingCollectionPoint.location.name': 'location.name',
-                },
-              },
-              {
-                jsonPath: 'routes[0].collectionPoints[0].name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'routes[0].collectionPoints[0].name': 'collectionPoints[0].name',
-                },
-              },
-              {
-                jsonPath: 'routes[0].collectionPoints[0].location.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'routes[0].collectionPoints[0].location.name': 'location.name',
-                },
-              },
-              {
-                jsonPath: 'routes[0].endingDumpingGroundPoint.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'routes[0].endingDumpingGroundPoint.name': 'endingDumpingGroundPoint.name',
-                },
-              },
-              {
-                jsonPath: 'route[0].endingCollectionPoint.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'route[0].endingCollectionPoint.name': 'endingCollectionPoint.name',
-                },
-              },
-              {
-                jsonPath: 'route[0].endingCollectionPoint.location.name',
-                type: 'autoFill',
-                pattern: '/swm-services/routes/_search?tenantId=default&code={routes[0].collectionType.code}',
-                autoFillFields: {
-                  'route[0].endingCollectionPoint.location.name': 'location.name',
-                },
-              },
-            ]
           },
         ]
       },
@@ -476,6 +423,12 @@ var dat = {
                 pattern:
                   '/swm-services/collectionpoints/_search?&locationCode={routes[0].collectionPoints[0].collectionPoint.location.code}|$..collectionPoints.*.code|$..collectionPoints.*.name',
               },
+              {
+                jsonPath: 'routes[0].collectionPoints[0].dumpingGround.code',
+                type: 'dropDown',
+                pattern:
+                '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround&filter%3D%5B%3F(%40.siteDetails.location.code%3D={routes[0].collectionPoints[0].collectionPoint.location.code})]|$..DumpingGround.*.code|$..DumpingGround.*.name',
+              }
             ]
           },
           {
@@ -521,7 +474,6 @@ var dat = {
             isRequired: false,
             isDisabled: true,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$..DumpingGround.*.code|$..DumpingGround.*.name',
           },
           {
             name: 'startingCollectionPointDistance',
@@ -554,8 +506,8 @@ var dat = {
             label: 'Total Distance Covered(KMS)',
             type: 'number',
             total:true,
-            isRequired: true,
-            isDisabled: false,
+            isRequired: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
           {
@@ -563,8 +515,8 @@ var dat = {
             jsonPath: 'routes[0].totalGarbageEstimate',
             label: 'Total Expected Garbage(TONS)',
             type: 'number',
-            isRequired: true,
-            isDisabled: false,
+            isRequired: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
         ],
@@ -819,7 +771,7 @@ var dat = {
           {
             name: 'collectionPointCode',
             jsonPath: 'collectionPointCode',
-            label: 'swm.routes.create.dumping',
+            label: 'swm.routes.create.collectionPoint',
             type: 'text',
             isRequired: false,
             isDisabled: false,
