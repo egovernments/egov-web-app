@@ -181,7 +181,7 @@ var dat = {
                 pattern:
                   "swm-services/vendorcontracts/_search?&contractNo={vendorPaymentDetails[0].vendorContract.contractNo}",
                   autoFillFields: {
-                    'vendorPaymentDetails[0].approvalAmmount':'vendorContracts[0].paymentAmount',
+                  'vendorPaymentDetails[0].approvalAmmount':'vendorContracts[0].paymentAmount',
                   }
                 }
             ],
@@ -266,7 +266,7 @@ var dat = {
             isDisabled: false,
             patternErrMsg: '',
             fileList: {
-              name: 'documentName',
+              name: 'name',
               id: 'fileStoreId',
             },
             fileCount: 3
@@ -391,7 +391,6 @@ var dat = {
             patternErrorMsg: '',
             url:'',
           },
-         
         ],
       },
       {
@@ -407,7 +406,7 @@ var dat = {
             isDisabled: false,
             patternErrMsg: '',
             fileList: {
-              name: 'documentName',
+              name: 'name',
               id: 'fileStoreId',
             },
             fileCount: 3,
@@ -513,7 +512,6 @@ var dat = {
             patternErrorMsg: '',
             url:'',
           },
-         
         ],
       },
       {
@@ -529,7 +527,7 @@ var dat = {
             isDisabled: false,
             patternErrMsg: '',
             fileList: {
-              name: 'documentName',
+              name: 'name',
               id: 'fileStoreId',
             },
             fileCount: 3,
