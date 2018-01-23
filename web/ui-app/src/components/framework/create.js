@@ -1805,9 +1805,7 @@ filterDataFromArray=(res,item)=>{
             self.props.setLoadingStatus("hide");
             self.props.toggleSnackbarAndSetText(true, err, false, true);
           } else {
-            if(!res.files[0].fileStoreId){
-               counter--;
-            }
+            
             _docs.push({
               index: i,
               ...documents[i],
@@ -1827,6 +1825,10 @@ filterDataFromArray=(res,item)=>{
             }
           }
         });
+      }
+      else{
+
+               counter--;
       }
     }
     } else {
