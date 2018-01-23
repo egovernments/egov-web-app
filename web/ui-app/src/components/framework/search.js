@@ -279,6 +279,9 @@ class Search extends Component {
       );
     }
     else {
+      if (currentSpecification && currentSpecification.beforeSubmit) {
+        eval(currentSpecification.beforeSubmit)
+      }
       Api.commonApiPost(currentSpecification.url, formData, {}, null, currentSpecification.useTimestamp).then(
         (res) => {
 
@@ -649,10 +652,10 @@ class Search extends Component {
             }else{
               this.props.setRoute(buttonUrl + tableSelectionData);
             }
-            
+
           // }
           }
-          
+
       }
       else{
          let { selectedRecordId } = this.state;
@@ -662,7 +665,7 @@ class Search extends Component {
         this.props.setRoute(buttonUrl + selectedRecordId);
       }
       }
-     
+
     }
   };
   rowCheckboxClickHandler = code => {
@@ -672,10 +675,10 @@ class Search extends Component {
         if(resultList.actionItems[0].multiSelect){
       let tableSelectionData = [...this.state.selectedRecords] || [];
       let idx = tableSelectionData.indexOf(code);
-  
+
       if (idx > -1) tableSelectionData.splice(idx, 1);
       else {
-       // if (this.props.resultList.isMultipleSelection) 
+       // if (this.props.resultList.isMultipleSelection)
        tableSelectionData.push(code);
         // else tableSelectionData[0] = code;
       }
