@@ -692,7 +692,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
             </Dialog>
             <div className="row">
               <div className="col-md-6">
-                <h4>Master Data of {this.props.item && this.props.item.header[0].label.split('.')[3]}</h4>
+                <h4>{this.props.item && this.props.item.header[0].label.split('.')[3]} Master</h4>
               </div>
               <div className="col-md-6 text-right">
                 <RaisedButton
