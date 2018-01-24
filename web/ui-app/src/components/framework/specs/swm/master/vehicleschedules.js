@@ -56,7 +56,7 @@ var dat = {
                   "patternErrorMsg": '',
                   "url": "swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber"
                },
-               
+
             ]
          }
       ],
@@ -132,9 +132,10 @@ var dat = {
                   "patternErrorMsg": "",
                   "url": "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
                   "autoCompleteDependancy": {
-                    "autoCompleteUrl": "swm-services/routes/_search?code={vehicleSchedules[0].route.code}",
+                    "autoCompleteUrl": "swm-services/routes/_search?code={vehicleSchedules[0].route.code}&excludeDumpingGround=true",
                     "autoFillFields": {
                        "vehicleSchedules[0].route.collectionType.name": "routes[0].collectionType.name",
+                       "vehicleSchedules[0].route.collectionPoints": "routes[0].collectionPoints"
                      },
                   },
           	   },
@@ -196,6 +197,58 @@ var dat = {
                   "patternErrorMsg":""
                }
             ]
+         },
+         {
+           name: 'locationsCovered',
+           label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+           fields: [{
+             type: "tableListTemp",
+             jsonPath: "vehicleSchedules[0].route.collectionPoints",
+             tableList: {
+               header: [{
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+                 },
+                 {
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+                 }
+               ],
+               values: [
+                 {
+                   "type": "boundary",
+                   "label": "",
+                   "hierarchyType": "REVENUE",
+                   "jsonPath": "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.code",
+                   "isRequired": true,
+                   "patternErrorMsg": "",
+                   "multiple": true,
+                   "fullWidth": true,
+                   "isDisabled":true
+                 },
+
+                 // {
+                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                 //   pattern: "",
+                 //   type: "label",
+                 //   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.name",
+                 //   isDisabled: true
+                 // },
+                 {
+                   name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                   pattern: "",
+                   type: "text",
+                   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.name",
+                   isDisabled: true
+                 }
+               ],
+               actionsNotRequired: true
+             },
+             hasATOAATransform: true,
+             aATransformInfo: {
+               to: 'vehicleSchedules[0].route.collectionPoints',
+               key: 'code',
+               from: 'collectionPoint.code'
+             }
+           }],
          }
       ],
       "url":"/swm-services/vehicleschedules/_create",
@@ -296,6 +349,58 @@ var dat = {
                   "patternErrorMsg":""
                }
             ]
+         },
+         {
+           name: 'locationsCovered',
+           label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+           fields: [{
+             type: "tableListTemp",
+             jsonPath: "vehicleSchedules[0].route.collectionPoints",
+             tableList: {
+               header: [{
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+                 },
+                 {
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+                 }
+               ],
+               values: [
+                 {
+                   "type": "boundary",
+                   "label": "",
+                   "hierarchyType": "REVENUE",
+                   "jsonPath": "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.code",
+                   "isRequired": true,
+                   "patternErrorMsg": "",
+                   "multiple": true,
+                   "fullWidth": true,
+                   "isDisabled":true
+                 },
+
+                 // {
+                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                 //   pattern: "",
+                 //   type: "label",
+                 //   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.name",
+                 //   isDisabled: true
+                 // },
+                 {
+                   name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                   pattern: "",
+                   type: "text",
+                   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.name",
+                   isDisabled: true
+                 }
+               ],
+               actionsNotRequired: true
+             },
+             hasATOAATransform: true,
+             aATransformInfo: {
+               to: 'vehicleSchedules[0].route.collectionPoints',
+               key: 'code',
+               from: 'collectionPoint.code'
+             }
+           }],
          }
       ],
       "tenantIdRequired":true,
@@ -345,9 +450,10 @@ var dat = {
                   "patternErrorMsg": "",
                   "url": "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
                   "autoCompleteDependancy": {
-                    "autoCompleteUrl": "swm-services/routes/_search?code={vehicleSchedules[0].route.code}",
+                    "autoCompleteUrl": "swm-services/routes/_search?code={vehicleSchedules[0].route.code}&excludeDumpingGround=true",
                     "autoFillFields": {
                        "vehicleSchedules[0].route.collectionType.name": "routes[0].collectionType.name",
+                       "vehicleSchedules[0].route.collectionPoints": "routes[0].collectionPoints"
                      },
                   },
                },
@@ -408,6 +514,58 @@ var dat = {
                   "patternErrorMsg":""
                }
             ]
+         },
+         {
+           name: 'locationsCovered',
+           label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+           fields: [{
+             type: "tableListTemp",
+             jsonPath: "vehicleSchedules[0].route.collectionPoints",
+             tableList: {
+               header: [{
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+                 },
+                 {
+                   label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+                 }
+               ],
+               values: [
+                 {
+                   "type": "boundary",
+                   "label": "",
+                   "hierarchyType": "REVENUE",
+                   "jsonPath": "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.code",
+                   "isRequired": true,
+                   "patternErrorMsg": "",
+                   "multiple": true,
+                   "fullWidth": true,
+                   "isDisabled":true
+                 },
+
+                 // {
+                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                 //   pattern: "",
+                 //   type: "label",
+                 //   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.name",
+                 //   isDisabled: true
+                 // },
+                 {
+                   name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                   pattern: "",
+                   type: "text",
+                   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.name",
+                   isDisabled: true
+                 }
+               ],
+               actionsNotRequired: true
+             },
+             hasATOAATransform: true,
+             aATransformInfo: {
+               to: 'vehicleSchedules[0].route.collectionPoints',
+               key: 'code',
+               from: 'collectionPoint.code'
+             }
+           }],
          }
       ],
       "url":"/swm-services/vehicleschedules/_update",

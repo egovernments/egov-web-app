@@ -3232,7 +3232,7 @@ filterDataFromArray=(res,item)=>{
 
               const updateDropDownData=(value,i)=>{
                 value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                  dropDownData.length>0 && setDropDownData(value.jsonPath, dropDownData);
+                  setDropDownData(value.jsonPath, dropDownData);
                   setDropDownOriginalData(value.jsonPath, response);
                   if (value.autoSelect) {
                     setVal(value.jsonPath, dropDownData[0]);
@@ -3255,7 +3255,7 @@ filterDataFromArray=(res,item)=>{
                 }
               }
               } else {
-                dropDownData.length>1 && setDropDownData(value.jsonPath, dropDownData);
+                setDropDownData(value.jsonPath, dropDownData);
                 setDropDownOriginalData(value.jsonPath, response);
                 if (value.autoSelect) {
                   setVal(value.jsonPath, dropDownData[0]);
@@ -3831,7 +3831,7 @@ filterDataFromArray=(res,item)=>{
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
-    
+
 
     if (obj && obj.beforeHandleChange) {
       eval(obj.beforeHandleChange)

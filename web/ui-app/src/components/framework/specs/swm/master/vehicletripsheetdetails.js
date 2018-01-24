@@ -105,7 +105,7 @@ var dat = {
       alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
-    if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
+    if(formData.vehicleTripSheetDetails[0].route.dumpingGround && formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
     {
       alert("Please enter values for In Time, Out Time, Entry Weight and Exit Weight");
       shouldSubmit=false;
@@ -151,8 +151,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                autoSelect:true
+                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
               }
             ]
           },
@@ -188,7 +187,7 @@ var dat = {
                   type: "dropDown",
                   pattern:
                     "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                  autoSelect:true
+
                 }
               ]
             },
@@ -205,8 +204,8 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                  autoSelect:true
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+
                 }
               ]
             },
@@ -312,12 +311,24 @@ var dat = {
               }
             ],
             values: [{
-                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
-                pattern: "",
-                type: "text",
-                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                isDisabled: true
-              },
+              "type": "boundary",
+              "label": "",
+              "hierarchyType": "REVENUE",
+              "jsonPath": "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.code",
+              "isRequired": true,
+              "patternErrorMsg": "",
+              "multiple": true,
+              "fullWidth": true,
+              "isDisabled":true
+            },
+
+          // {
+          //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+          //   pattern: "",
+          //   type: "text",
+          //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+          //   isDisabled: true
+          // },
               {
                 name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                 pattern: "",
@@ -442,7 +453,7 @@ var dat = {
       alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
-    if(formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
+    if(formData.vehicleTripSheetDetails[0].route.dumpingGround && formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
     {
       alert("Please enter values for In Time, Out Time, Entry Weight and Exit Weight");
       shouldSubmit=false;
@@ -486,8 +497,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                autoSelect:true
+                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
               }
             ]
           },
@@ -522,8 +532,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                  autoSelect:true
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
                 }
               ]
             },
@@ -540,8 +549,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
-                  autoSelect:true
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
                 }
               ]
             },
@@ -646,13 +654,26 @@ var dat = {
                 label: "swm.create.sanitationstaffschedules.colletionPoint.name"
               }
             ],
-            values: [{
-                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
-                pattern: "",
-                type: "text",
-                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                isDisabled: true
+            values: [
+              {
+                "type": "boundary",
+                "label": "",
+                "hierarchyType": "REVENUE",
+                "jsonPath": "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.code",
+                "isRequired": true,
+                "patternErrorMsg": "",
+                "multiple": true,
+                "fullWidth": true,
+                "isDisabled":true
               },
+
+              // {
+              //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+              //   pattern: "",
+              //   type: "text",
+              //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+              //   isDisabled: true
+              // },
               {
                 name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                 pattern: "",
@@ -885,13 +906,26 @@ var dat = {
                 label: "swm.create.sanitationstaffschedules.colletionPoint.name"
               }
             ],
-            values: [{
-                name: "swm.create.sanitationstaffschedules.colletionPoint.location",
-                pattern: "",
-                type: "label",
-                jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
-                isDisabled: true
+            values: [
+              {
+                "type": "boundary",
+                "label": "",
+                "hierarchyType": "REVENUE",
+                "jsonPath": "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.code",
+                "isRequired": true,
+                "patternErrorMsg": "",
+                "multiple": true,
+                "fullWidth": true,
+                "isDisabled":true
               },
+
+              // {
+              //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+              //   pattern: "",
+              //   type: "label",
+              //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+              //   isDisabled: true
+              // },
               {
                 name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                 pattern: "",
