@@ -8,7 +8,7 @@ const routeValidation =   `
       totalDist = totalDist + parseFloat(i);
     });
     garbageArr.forEach((i) => {
-      totalGarbage = totalGarbage+ parseInt(i);
+      totalGarbage = totalGarbage+ parseFloat(i);
     });
 
     self.setVal("routes[0].totalDistance", totalDist);
