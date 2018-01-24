@@ -116,6 +116,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vendorContracts',
     idJsonPath: 'vendorContracts[0].contractNo',
+    title: 'vendorcontracts.create.group.title.vendorContract',
     groups: [
       {
         name: 'VendorContractDetails',
