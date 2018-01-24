@@ -18,6 +18,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'WasteSubType',
       url: '/egov-mdms-service/v1/_search',
+      title: 'lcms.create.group.title.wasteSubTypeDetails',
       groups: [
         {
           name:'wastesubTypeDetails',
@@ -97,12 +98,11 @@ var dat = {
       numCols: 3,
       useTimestamp: true,
       objectName: 'MasterMetaData',
-      //idJsonPath : 'MasterMetaData.masterData[0].code',
       idJsonPath: 'MdmsRes.swm.WasteSubType[0].code',
+      title: 'lcms.create.group.title.wasteSubTypeDetails',
       groups: [
         {
           name:'wastesubTypeDetails',
-          label: 'lcms.create.group.title.wasteSubTypeDetails',
           fields: [
             {
               name: 'wasteType',
@@ -175,6 +175,7 @@ var dat = {
       numCols: 4,
       useTimestamp: true,
       objectName: 'WasteSubType',
+      title: 'lcms.create.group.title.wasteSubTypeDetails',
       groups: [
         {
           name:'wastesubTypeDetails',
@@ -229,6 +230,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'WasteSubType',
       idJsonPath : 'MasterMetaData.masterData[0].code',
+      title: 'lcms.create.group.title.wasteSubTypeDetails',
       groups: [
         {
           name:'wastesubTypeDetails',
