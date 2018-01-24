@@ -52,9 +52,9 @@ var dat = {
         {
           label: 'swm.collectionpoints.create.rfid',
         },
-        {
-          label: 'swm.collectionpoints.create.group.title.BinDetails',
-        }
+        // {
+        //   label: 'swm.collectionpoints.create.group.title.BinDetails',
+        // }
       ],
       values: 
       [
@@ -92,11 +92,11 @@ var dat = {
           isMultiple: true,
           name: 'rfid' 
         },
-        {
-          jsonPath: 'binDetails',
-          isMultiple: true,
-          name: ['latitude', 'longitude']
-        }
+        // {
+        //   jsonPath: 'binDetails',
+        //   isMultiple: true,
+        //   name: ['latitude', 'longitude']
+        // }
       ],
       resultPath: 'collectionPoints',
       rowClickUrlUpdate: '/update/swm/collectionpoints/{code}',
