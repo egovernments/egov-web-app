@@ -100,7 +100,7 @@ var dat = {
     // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
     // var curDate=new Date();
     // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
-    if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
+    if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
@@ -151,7 +151,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                 autoSelect:true
               }
             ]
@@ -187,7 +187,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                   autoSelect:true
                 }
               ]
@@ -205,7 +205,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                   autoSelect:true
                 }
               ]
@@ -437,7 +437,7 @@ var dat = {
     // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
     // var curDate=new Date();
     // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
-    if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartdate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
+    if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
@@ -486,7 +486,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                 autoSelect:true
               }
             ]
@@ -522,7 +522,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                   autoSelect:true
                 }
               ]
@@ -540,7 +540,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services//vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartdate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
                   autoSelect:true
                 }
               ]
@@ -674,24 +674,7 @@ var dat = {
       {
         name: "tripSheetDetails",
         label: "swm.vehiclestripsheet.create.group.title.tripSheetDetails",
-        fields: [{
-            name: "scheduledDateFrom",
-            jsonPath: "vehicleTripSheetDetails[0].tripStartDate",
-            label: "swm.vehiclestripsheet.create.scheduledDateFrom",
-            type: "datePicker",
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: ""
-          },
-          {
-            name: "scheduledDateTo",
-            jsonPath: "vehicleTripSheetDetails[0].tripEndDate",
-            label: "swm.vehiclestripsheet.create.scheduledDateTo",
-            type: "datePicker",
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: ""
-          },
+        fields: [
           {
             name: "inTime",
             jsonPath: "vehicleTripSheetDetails[0].inTime",
