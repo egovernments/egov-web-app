@@ -93,6 +93,15 @@ var dat = {
         label: '',
         fields: [
           {
+            name: 'transactionNo',
+            jsonPath: '',
+            label: 'vehiclefuellingdetails.create.transactionNo',
+            type: 'text',
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },
+          {
             name: 'transactionDate',
             jsonPath: 'vehicleFuellingDetails[0].transactionDate',
             label: 'vehiclefuellingdetails.create.transactionDate',

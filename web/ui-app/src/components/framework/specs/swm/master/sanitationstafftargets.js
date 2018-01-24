@@ -1119,6 +1119,13 @@ var dat = {
         label: "",
         fields: [
           {
+            name: "targetNo",
+            jsonPath: "sanitationStaffTargets[0].targetNo",
+            label: "swm.create.sanitationStaffTargets.targetNumber",
+            type: "text",
+            isDisabled: true
+          },
+          {
             name: "code",
             jsonPath: "sanitationStaffTargets[0].swmProcess.code",
             label: "swm.create.sanitationStaffTargets.swmProcess",
