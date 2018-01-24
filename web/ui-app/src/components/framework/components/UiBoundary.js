@@ -70,7 +70,6 @@ class UiBoundary extends Component {
     var ddArr = [];
     var jPath = '';
     var viewLabels = {};
-
     var pathArr = jp.paths(boundaryData, `$..[?(@.code=='${bdryCode}')]`);
     pathArr = pathArr[0];
     if(pathArr) {
@@ -276,6 +275,7 @@ class UiBoundary extends Component {
         // {...labelProperty}
         maxHeight={200}
         {...labelProperty}
+        disabled={this.props.item.isDisabled}
         value={!_.isEmpty(dropDownDataVal) && dropDownDataVal.hasOwnProperty(level) && dropDownDataVal[level]}
         onChange={(event, key, value) => {
           this.handler(value, level);
