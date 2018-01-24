@@ -161,7 +161,7 @@ class Search extends Component {
           // }
         }
         else{
-          str += (index+1) + '. ' + elem + ', ';
+          str += /*(index+1) + '. ' + */elem + ', ';
         }
 
       })

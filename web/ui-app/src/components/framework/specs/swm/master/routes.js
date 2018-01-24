@@ -166,9 +166,27 @@ const setTypeOfPoint = `
             }
             else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false && res.routes[0].collectionPoints[i].dumpingGround && res.routes[0].collectionPoints[i].dumpingGround.code) {
               _.set(res, jP, "Ending Dumping Ground point");
-              // self.setVal(mockData[moduleName+'.'+actionName],"routes[0].collectionPoints[i].collectionPoint.code".split(".",3).join(".")+".isDisabled",true);
-              // self.props.setMockData(mockData);
-              // console.log(mockData);
+              let jPathToSplit1 = "routes[0].collectionPoints[" +i+ "].collectionPoint.code";
+              let jPathToSplit2 = "routes[0].collectionPoints[" +i+ "].dumpingGround.code";
+              // var jPath = JP.paths(self.props.mockData[self.props.moduleName+"."+self.props.actionName], "$..fields[?(@.jsonPath=='routes[0].collectionPoints["+i+"].collectionPoint.code')]");
+              // var jsonPath = "";
+              // var temp = [];
+              // var tempJpath = jPath;
+              // tempJpath.splice(0,1);
+              
+              // for(var j = 0; j < tempJpath.length;){
+              //   temp.push(tempJpath[j] + "[" + tempJpath[j + 1] + "]");
+              //   j+=2;
+              // }
+              
+              // jsonPath = temp.join(".");
+              
+              // console.log("ss",jsonPath);
+              
+              self.setPropertyInMockData(mockData[moduleName+'.'+actionName], jPathToSplit1, "isDisabled",true);
+              self.setPropertyInMockData(mockData[moduleName+'.'+actionName], jPathToSplit2, "isDisabled",false);
+              self.props.setMockData(mockData);
+              console.log(mockData);
             }
             else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false) {
               _.set(res, jP, "Route Stop");

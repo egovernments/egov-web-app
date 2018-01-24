@@ -1853,6 +1853,20 @@ filterDataFromArray=(res,item)=>{
     this.props.setFormData(formData);
   };
 
+  setPropertyInMockData = (obj, jsonPath, property, value) => {
+    if(obj && obj.groups){
+      obj.groups.forEach(function(groupElem, groupInd){
+        if(groupElem.fields && groupElem.fields.length){
+          groupElem.fields.forEach(function(fieldElem, fieldInd){
+            if(jsonPath === fieldElem.jsonPath){
+              fieldElem[property] = value;
+            }
+          })
+        }
+      })
+    }
+  }
+
   getValFromDropdownData = (fieldJsonPath, key, path) => {
     let dropdownData = this.props.dropDownData[fieldJsonPath] || [];
     let _val = _.get(dropdownData.find(data => data.key == key) || [], path);

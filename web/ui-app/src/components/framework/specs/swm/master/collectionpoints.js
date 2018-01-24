@@ -27,13 +27,24 @@ var dat = {
             maxLength: 256,
             patternErrorMsg: 'swm.create.field.message.name',
             url: 'swm-services/collectionpoints/_search?|$..collectionPoints.*.name|$..collectionPoints.*.name',
-          }
+          },
+          /*{
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "locationCode",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "fullWidth": true,
+          }*/
         ],
       },
     ],
     result: {
       header: [
-        
+        {
+          label: 'swm.collectionpoints.create.name',
+        },
         {
           label: 'swm.collectionPoint.search.ward',
         },
@@ -58,6 +69,7 @@ var dat = {
       ],
       values: 
       [
+        'name',
         {
           jsonPath: 'collectionPoints[0].location.code',
           isBoundary: true,
