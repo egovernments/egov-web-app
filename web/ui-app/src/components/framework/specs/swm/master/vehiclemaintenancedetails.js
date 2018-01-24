@@ -357,7 +357,7 @@ var dat = {
           {
             name: 'remarks',
             jsonPath: 'vehicleMaintenanceDetails[0].remarks',
-            label: 'swm.create.remarks',
+            label: 'swm.Shift.create.remarks',
             pattern: '',
             type: 'textarea',
             isRequired: false,
@@ -599,7 +599,7 @@ var dat = {
           {
             name: 'remarks',
             jsonPath: 'vehicleMaintenanceDetails[0].remarks',
-            label: 'swm.create.remarks',
+            label: 'swm.Shift.create.remarks',
             pattern: '',
             type: 'textarea',
             isRequired: false,
@@ -901,7 +901,7 @@ var dat = {
           {
             name: 'remarks',
             jsonPath: 'vehicleMaintenanceDetails[0].remarks',
-            label: 'swm.create.remarks',
+            label: 'swm.Shift.create.remarks',
             pattern: '',
             type: 'textarea',
             isRequired: false,
