@@ -231,7 +231,6 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-            defaultValue: [],
             url: '',
           },
           {
