@@ -26,6 +26,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'Shift',
       url: '/egov-mdms-service/v1/_search',
+      title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
           name:'ShiftSelection',
@@ -323,6 +324,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'Shift',
       searchUrl: '/egov-mdms-service/v1/_search?code={code}',
+      title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
           name:'ShiftSelection',
@@ -532,6 +534,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'Shift',
       idJsonPath: 'MasterMetaData.masterData[0].code',
+      title: 'swm.create.page.title.shiftmasters',
       groups: [
         {
           name:'ShiftSelection',
