@@ -3405,6 +3405,7 @@ var localization_EN_Data = {
       "pattern.error.message.faxNumber": 'Fax number only contains Number e.g - 123456798012345',
       'swm.collectionpoints.create.description.errormsg':'Character should be between 15 to 300 characters.',
       "pattern.error.message.Shift.remarks": 'Remarks should be between 15 to 300 characters.',
+      "swm.vehicles.remarks.errormsg": 'Remarks should be between 15 to 300 characters.',
 
 
       'works.create.page.title.createContrator':'Create Contractor',
@@ -5450,6 +5451,7 @@ var localization_MR_Data = {
   'swm.refillingpumpstations.typeOfFuel.code':"Type of fuel -marathi",
   'swm.collectionpoints.create.description.errormsg':'Character should be between 15 to 300 characters. - Marathi',
   "pattern.error.message.Shift.remarks": 'Remarks should be between 15 to 300 characters.',
+  "swm.vehicles.remarks.errormsg": 'Remarks should be between 15 to 300 characters.- Marathi',
 
   /** marathi localization for PA module -- starts */
   'perfManagement.create.KPIs.groups.type': 'प्रकार',

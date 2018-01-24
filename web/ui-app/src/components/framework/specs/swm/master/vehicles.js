@@ -452,8 +452,8 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             maxLength: 300,
-            minLength: 15,
-            patternErrorMsg: '',
+            pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+            patternErrMsg:'swm.vehicles.remarks.errormsg'
           },
         ],
       },
@@ -1082,8 +1082,8 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             maxLength: 300,
-            minLength: 15,
-            patternErrorMsg: '',
+            pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+            patternErrMsg:'swm.vehicles.remarks.errormsg'
           },
         ],
       },
