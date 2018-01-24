@@ -307,7 +307,13 @@ const mapStateToProps = (state, props) => {
 
   let name = item.filterMenu ? _.get(state.frameworkForm.form, _.replace(item.jsonPath, 'code', 'name')) : '';
 
-  // console.log(item.jsonPath , '---->', _.get(state.frameworkForm.form, item.jsonPath));
+  if(item.isKeyOtherPair&&value&&name){
+  let otherPairValue=_.get(state.frameworkForm.form, _.replace(item.jsonPath, 'code', item.isKeyOtherPair));
+   if(otherPairValue){
+  name=name+"-"+otherPairValue;
+   }
+}
+  
   if (item.convertToString && value) value = value.toString();
   else if (item.convertToNumber && value) {
     value = parseInt(value);
