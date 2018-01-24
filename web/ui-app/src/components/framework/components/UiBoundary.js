@@ -111,7 +111,7 @@ class UiBoundary extends Component {
         labelArr: labelArr,
       });
       self.setFirstDropDownData(cityBdry);
-      if(window.location.hash.split('/')[1] != 'create') {
+      if(window.location.hash.split('/')[1] != 'create' || item.setResponseData) {
         if(!_.isEmpty(self.props.formData)) {
           if(typeof(_.get(self.props.formData, self.props.item.jsonPath)) != 'undefined') {
             self.initDropdownValues(cityBdry, _.get(self.props.formData, self.props.item.jsonPath));
@@ -311,7 +311,7 @@ class UiBoundary extends Component {
 
   render() {
     return (
-      <div style={{overflowY: "scroll"}}>
+      <div>
         {this.props.match.url.split('/')[1] == 'view' && typeof _.get(this.props.formData, this.props.item.jsonPath) != 'undefined'
           ? this.renderView(this.state.viewLabels)
           : this.renderBoundary(this.props.item)}
