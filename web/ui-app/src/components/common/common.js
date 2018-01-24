@@ -3398,7 +3398,7 @@ var localization_EN_Data = {
       "pattern.error.message.mobileNumber": 'The Phone number structure is as follows: 999XXXX999',
       "pattern.error.message.panNumber": '  The PAN structure is as follows: AAAPL1234C .',
       "pattern.error.message.website": ' please enter in format e.g- www.domainname.com',
-      "pattern.error.message.tinNumber": ' The TIN Number should be in format e.g - 12345678910',
+      "pattern.error.message.tinNumber": ' The TIN Number should be 11 digit',
       "pattern.error.message.cstNumber": 'The C.S.T Number should be in format e.g - 12345678910',
       "pattern.error.message.vatNumber": '  The VAT Number should be in format e.g - 12345678910 .',
       "pattern.error.message.gstNumber": ' GST Number should be in format - 22AAAAA0000A1Z5',
