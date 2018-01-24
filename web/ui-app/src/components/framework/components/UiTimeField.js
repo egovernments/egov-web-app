@@ -1,38 +1,32 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-// import TimePicker from 'material-ui/TimePicker';
+
 import { translate } from '../../common/common';
 var DateTimeField = require('react-bootstrap-datetimepicker');
 var moment = require('moment');
 
-export default class UiTimeField extends Component {
-  constructor(props) {
-    super(props);
-  }
+const UiTimeField = props => {
+  const renderTimePicker = () => {
+    const { item } = props;
 
-  renderTimePicker = item => {
-  
-    var inputProps ={
-                placeholder: 'hh:mm',
-                id: item.jsonPath.split('.').join('-'),
-                disabled: item.isDisabled,
-              };
-              var action = this.props.actionName;
-              var time = this.props.getVal(item.jsonPath) || undefined;
-            
-              if(_.isEmpty(this.props.getVal(item.jsonPath)) &&  item.reset){
-                inputProps["value"] = "";
-              }
-              else if((action === "update" || action === "create") && time && !(/date/.test(time))){
-                  time = parseInt(time);
-                  inputProps["value"] = moment(time).format("h:mm A");
-              };
-              
-             
-    switch (this.props.ui) {
+    var inputProps = {
+      placeholder: 'hh:mm',
+      id: item.jsonPath.split('.').join('-'),
+      disabled: item.isDisabled,
+    };
+    var action = props.actionName;
+    var time = props.getVal(item.jsonPath) || undefined;
+
+    if (_.isEmpty(props.getVal(item.jsonPath)) && item.reset) {
+      inputProps['value'] = '';
+    } else if ((action === 'update' || action === 'create') && time && !/date/.test(time)) {
+      time = parseInt(time);
+      inputProps['value'] = moment(time).format('h:mm A');
+    }
+
+    switch (props.ui) {
       case 'google':
         return (
-      
           <div
             style={{
               marginTop: '17px',
@@ -52,7 +46,7 @@ export default class UiTimeField extends Component {
               inputProps={inputProps}
               defaultText=""
               onChange={e => {
-                this.props.handler(
+                props.handler(
                   { target: { value: e } },
                   item.jsonPath,
                   item.isRequired ? true : false,
@@ -68,7 +62,7 @@ export default class UiTimeField extends Component {
             <div
               style={{
                 height: '23px',
-                visibility: this.props.fieldErrors && this.props.fieldErrors[item.jsonPath] ? 'visible' : 'hidden',
+                visibility: props.fieldErrors && props.fieldErrors[item.jsonPath] ? 'visible' : 'hidden',
                 position: 'relative',
                 fontSize: '12px',
                 lineHeight: '23px',
@@ -77,14 +71,14 @@ export default class UiTimeField extends Component {
                 float: 'left',
               }}
             >
-              {this.props.fieldErrors && this.props.fieldErrors[item.jsonPath] ? this.props.fieldErrors[item.jsonPath] : ' '}
+              {props.fieldErrors && props.fieldErrors[item.jsonPath] ? props.fieldErrors[item.jsonPath] : ' '}
             </div>
           </div>
         );
     }
   };
 
-  render() {
-    return this.renderTimePicker(this.props.item);
-  }
-}
+  return renderTimePicker();
+};
+
+export default UiTimeField;
