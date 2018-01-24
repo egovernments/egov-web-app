@@ -27,6 +27,7 @@ import UiDate from './UiDate';
 import UiPinCode from './UiPinCode';
 import UiArrayField from './UiArrayField';
 import UiFileTable from './UiFileTable';
+import UiBoundary from './UiBoundary';
 import jp from 'jsonpath';
 import _ from 'lodash';
 
@@ -436,6 +437,16 @@ class UiMultiFieldTable extends Component {
             autoComHandler={this.props.autoComHandler}
           />
         );
+        case 'boundary':
+          return (
+            <UiBoundary
+              ui={this.props.ui}
+              getVal={this.props.getVal}
+              item={item}
+              fieldErrors={this.props.fieldErrors}
+              handler={this.props.handler}
+            />
+          );
     }
   };
 
