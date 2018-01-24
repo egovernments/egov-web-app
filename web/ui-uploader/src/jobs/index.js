@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchUserJobs } from "./actions";
-import UserJobFilters from "../job-filters";
-import TableUi from "../components/TableUi";
-import LoadingIndicator from "../components/LoadingIndicator";
+import View from "./view";
 
 // todo map the header fields with the data keys
 class UserJobsContainer extends Component {
@@ -96,23 +94,7 @@ class UserJobsContainer extends Component {
 
   render() {
     const { tableSchema } = this;
-    const { userJobs, isFetching } = this.props;
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <UserJobFilters />
-          </div>
-          <div className="col-lg-12">
-            {isFetching ? (
-              <LoadingIndicator />
-            ) : (
-              <TableUi tableSchema={tableSchema} tableBody={userJobs} />
-            )}
-          </div>
-        </div>
-      </div>
-    );
+    return <View {...this.props} tableSchema={tableSchema} />;
   }
 }
 

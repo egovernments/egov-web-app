@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import DropDown from "../components/DropDownUi";
-import FlatButton from "material-ui/FlatButton";
 import {
   fetchUploadDefinitions,
   moduleSelected,
   moduleDefinitionSelected
 } from "./actions";
+import View from "./view";
 
 class UploadDefinitionsContainer extends Component {
   static propTypes = {
@@ -33,39 +32,20 @@ class UploadDefinitionsContainer extends Component {
   };
 
   render() {
-    const {
-      selectedModule,
-      selectedModuleDefinition,
-      selectedModuleTemplate,
-      moduleItems,
-      moduleDefinitons
-    } = this.props;
-
+    const { selectedModuleTemplate } = this.props;
     const { handleFileTypeDropDownChange, handleModuleDropDownChange } = this;
+    const templateDisabled =
+      selectedModuleTemplate && selectedModuleTemplate.endsWith("/null")
+        ? true
+        : false;
 
     return (
-      <div>
-        <DropDown
-          style={{ marginRight: "15px" }}
-          options={moduleItems}
-          label="Module Name"
-          selected={selectedModule}
-          handleChange={handleModuleDropDownChange}
-        />
-        <DropDown
-          options={moduleDefinitons}
-          label="Module Definition"
-          selected={selectedModuleDefinition}
-          handleChange={handleFileTypeDropDownChange}
-        />
-        <FlatButton
-          primary={true}
-          style={{ height: "60px" }}
-          label="Download Template"
-          target="_blank"
-          href={selectedModuleTemplate}
-        />
-      </div>
+      <View
+        {...this.props}
+        templateDisabled={templateDisabled}
+        handleModuleDropDownChange={handleModuleDropDownChange}
+        handleFileTypeDropDownChange={handleFileTypeDropDownChange}
+      />
     );
   }
 }
