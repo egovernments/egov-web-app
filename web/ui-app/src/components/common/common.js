@@ -2404,7 +2404,7 @@ var localization_EN_Data = {
   "swm.ProcessingSiteDetails.create.Capacity": "Processing Site Capacity (Tons)",
   "swm.ProcessingSiteDetails.create.Address": "Processing Site Address",
   'vendorcontracts.search.title': 'Vendor Contract Search',
-  'reports.swm.dumpingground': 'Dumping Ground',
+  'reports.swm.dumpingground': 'Dumping Ground Name',
   'reports.swm.collectiontype': 'Collection Type',
   'reports.swm.datefrom': 'From Date',
   'reports.swm.dateto': 'To Date',
