@@ -86,6 +86,10 @@ const routeValidation =   `
                 groupArr[i].fields[j].isDisabled = true;
                 self.setVal('routes[0].collectionPoints['+index+'].collectionPoint', null);
               }
+              if(groupArr[i].fields[j].type == 'boundary') {
+                groupArr[i].fields[j].isRequired = false;
+                delRequiredFields(groupArr[i].fields[j].jsonPath);
+              }
             }
           }
         }
@@ -101,6 +105,9 @@ const routeValidation =   `
               }
               if(groupArr[i].fields[j].jsonPath == 'routes[0].collectionPoints['+index+'].collectionPoint.code') {
                 groupArr[i].fields[j].isDisabled = false;
+              }
+              if(groupArr[i].fields[j].type == 'boundary') {
+                groupArr[i].fields[j].isRequired = true;
               }
             }
           }
@@ -159,6 +166,9 @@ const setTypeOfPoint = `
             }
             else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false && res.routes[0].collectionPoints[i].dumpingGround && res.routes[0].collectionPoints[i].dumpingGround.code) {
               _.set(res, jP, "Ending Dumping Ground point");
+              // self.setVal(mockData[moduleName+'.'+actionName],"routes[0].collectionPoints[i].collectionPoint.code".split(".",3).join(".")+".isDisabled",true);
+              // self.props.setMockData(mockData);
+              // console.log(mockData);
             }
             else if(res.routes[0].collectionPoints[i].isEndingCollectionPoint == false && res.routes[0].collectionPoints[i].isStartingCollectionPoint == false) {
               _.set(res, jP, "Route Stop");
@@ -216,8 +226,8 @@ const getDumpingLocationUpdate= `
     jsonPathArr.forEach((item) => {
       if(_.get(res, item)) {
         var ind = self.indexFinder(item);
-        let jPath = "routes[0].collectionPoints["+ind+"].dumpingGround.siteDetails.location.code"
-        self.setVal("routes[0].collectionPoints["+ind+"].collectionPoint.location.code", _.get(res, jPath));
+        self.setVal("routes[0].collectionPoints["+ind+"].collectionPoint.location.code", _.get(res, "routes[0].collectionPoints["+ind+"].dumpingGround.siteDetails.location.code"));
+        console.log(self.props.formData);
       }
     })
   }

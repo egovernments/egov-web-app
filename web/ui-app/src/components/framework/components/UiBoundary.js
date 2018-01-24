@@ -73,22 +73,25 @@ class UiBoundary extends Component {
 
     var pathArr = jp.paths(boundaryData, `$..[?(@.code=='${bdryCode}')]`);
     pathArr = pathArr[0];
-    for (var i = 0; i < pathArr.length; ) {
-      ddArr.push(pathArr[i] + '[' + pathArr[i + 1] + ']');
-      jPath = ddArr.join('.');
-      if (i > 1) {
-        var code = jp.query(boundaryData, jPath + '.code');
-        var label = jp.query(boundaryData, jPath + '.label');
-        var name = jp.query(boundaryData, jPath + '.name');
-        viewLabels[label] = name[0];
-
-        //for update screen
-        if (this.props.match.url.split('/')[1] != 'view') {
-          this.handler(code[0], label[0]);
+    if(pathArr) {
+      for (var i = 0; i < pathArr.length; ) {
+        ddArr.push(pathArr[i] + '[' + pathArr[i + 1] + ']');
+        jPath = ddArr.join('.');
+        if (i > 1) {
+          var code = jp.query(boundaryData, jPath + '.code');
+          var label = jp.query(boundaryData, jPath + '.label');
+          var name = jp.query(boundaryData, jPath + '.name');
+          viewLabels[label] = name[0];
+  
+          //for update screen
+          if (this.props.match.url.split('/')[1] != 'view') {
+            this.handler(code[0], label[0]);
+          }
         }
+        i += 2;
       }
-      i += 2;
     }
+    
     this.setState({
       viewLabels: viewLabels,
     });
@@ -109,9 +112,9 @@ class UiBoundary extends Component {
         labelArr: labelArr,
       });
       self.setFirstDropDownData(cityBdry);
-      if (window.location.hash.split('/')[1] != 'create') {
-        if (!_.isEmpty(self.props.formData)) {
-          if (typeof _.get(self.props.formData, self.props.item.jsonPath) != 'undefined') {
+      if(window.location.hash.split('/')[1] != 'create') {
+        if(!_.isEmpty(self.props.formData)) {
+          if(typeof(_.get(self.props.formData, self.props.item.jsonPath)) != 'undefined') {
             self.initDropdownValues(cityBdry, _.get(self.props.formData, self.props.item.jsonPath));
           }
         }
