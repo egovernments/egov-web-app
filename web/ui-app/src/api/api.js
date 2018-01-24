@@ -81,6 +81,8 @@ module.exports = {
 
     if (/_search/.test(context) && !noPageSize) {
       url += '&pageSize=200';
+    } else {
+      url += '&pageSize=' + noPageSize;
     }
 
     requestInfo.authToken = localStorage.getItem('token');

@@ -90,7 +90,8 @@ class UiAutoComplete extends Component {
         else id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
       }
 
-      var response = Api.commonApiPost(context, id, {}, '', useTimestamp || false).then(
+      //setting page size to a large number,quick fix, should be changed later!!
+      Api.commonApiPost(context, id, {}, '', useTimestamp || false, 1000).then(
         function(response) {
           if (response) {
             let queries = splitArray[1].split('|');
