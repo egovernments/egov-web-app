@@ -3153,44 +3153,43 @@ filterDataFromArray=(res,item)=>{
             if (queryStringObject[i].split("=")[1].search("{") > -1) {
               if (
                 queryStringObject[i]
-                  .split("=")[1]
-                  .split("{")[1]
-                  .split("}")[0] == property
+                .split("=")[1]
+                .split("{")[1]
+                .split("}")[0] == property
               ) {
                 //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
                 id[queryStringObject[i].split("=")[0]] =
-                  queryStringObject[i]
-                    .split("=")[1]
-                    .replace(/\{(.*?)\}/, e.target.value) || "";
+                queryStringObject[i]
+                .split("=")[1]
+                .replace(/\{(.*?)\}/, e.target.value) || "";
               } else {
-
-                  let filterParameter=queryStringObject[i]
-                        .split('=')[1]
-                        .split('{')[1]
-                        .split('}')[0];
-        if(value.indexReplace){
-          if(dependantIdx&&dependantIdx!=0){
-        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
-      }
-      }
+                let filterParameter=queryStringObject[i]
+                .split('=')[1]
+                .split('{')[1]
+                .split('}')[0];
+                if(value.indexReplace){
+                  if(dependantIdx&&dependantIdx!=0){
+                    filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+                    value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+                  }
+                }
                 id[queryStringObject[i].split("=")[0]] =
-                  queryStringObject[i].split("=")[1].replace(
-                    /\{(.*?)\}/,
-                    getVal(
-                      filterParameter
-                    )
-                  ) || "";
+                queryStringObject[i].split("=")[1].replace(
+                  /\{(.*?)\}/,
+                  getVal(
+                    filterParameter
+                  )
+                ) || "";
               }
             }
-
-             else {
+            else {
               id[queryStringObject[i].split("=")[0]] = queryStringObject[
                 i
               ].split("=")[1];
             }
           }
         }
+
         Api.commonApiPost(
           context,
           id,
@@ -3231,7 +3230,7 @@ filterDataFromArray=(res,item)=>{
                 });
               }
 
-               const updateDropDownData=(value,i)=>{
+              const updateDropDownData=(value,i)=>{
                 value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
                   dropDownData.length>0 && setDropDownData(value.jsonPath, dropDownData);
                   setDropDownOriginalData(value.jsonPath, response);
@@ -3246,13 +3245,12 @@ filterDataFromArray=(res,item)=>{
                 0,
                 currProperty.lastIndexOf("[")
               );
-              let numberOfRowsArray = _.get(formData, rootProperty);
+              let numberOfRowsArray = _.get(formData, currProperty);
               if (numberOfRowsArray && numberOfRowsArray.length > 0) {
                 if(value.indexReplace){
                  updateDropDownData(value,dependantIdx);
                 }else{
                 for (let i = 0; i < numberOfRowsArray.length; i++) {
-
                    updateDropDownData(value,i);
                 }
               }
@@ -3371,9 +3369,9 @@ filterDataFromArray=(res,item)=>{
                         .split('}')[0];
 
           if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
-        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
-      }
+            filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+            value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+          }
 
                 id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
@@ -3509,7 +3507,7 @@ filterDataFromArray=(res,item)=>{
         }
       } else if (value.type == "griddropDown") {
         let level = value.gridjsonPath;
-         dependantIdx = findLastIdxOnJsonPath(property);
+        dependantIdx = findLastIdxOnJsonPath(property);
         if (level == undefined) {
           let splitArray = value.pattern.split("?");
           let context = "";
@@ -3530,22 +3528,22 @@ filterDataFromArray=(res,item)=>{
                 ) {
                   //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
                   id[queryStringObject[i].split("=")[0]] =
-                    queryStringObject[i]
-                      .split("=")[1]
-                      .replace(/\{(.*?)\}/, e.target.value) || "";
+                  queryStringObject[i]
+                  .split("=")[1]
+                  .replace(/\{(.*?)\}/, e.target.value) || "";
                 } else {
 
-                let filterParameter=queryStringObject[i]
-                        .split('=')[1]
-                        .split('{')[1]
-                        .split('}')[0];
+                  let filterParameter=queryStringObject[i]
+                  .split('=')[1]
+                  .split('{')[1]
+                  .split('}')[0];
 
-          if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
-        filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-        value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
-      }
+                  if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
+                    filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
+                    value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+                  }
 
-                id[queryStringObject[i].split("=")[0]] =
+                  id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
                     /\{(.*?)\}/,
                     getVal(
@@ -3685,7 +3683,7 @@ filterDataFromArray=(res,item)=>{
             );
           }
         }
-        }
+      }
       // else if (value.type == "autoFillBody") {
       //   let context = value.pattern;
       //   let requestName = value.paramName;
