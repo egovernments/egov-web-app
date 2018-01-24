@@ -481,8 +481,8 @@ class UiMultiFieldAddToTableForMDMS extends Component {
     let propertyName=this.props.dependencyDropdown[0].propertyName;
     let  filterKey=this.props.dependencyDropdown[0].filterKey;
     let dependencyKey =this.props.dependencyDropdown[0].dependencykey;
-    
-   
+
+
     this.handler(
       {
         target: {
@@ -715,7 +715,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
             <Table className="table table-striped table-bordered" id="mdmsTable" responsive>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>{"Sr. No."}</th>
                   {this.props.item.header.map((v, i) => {
                     return (
                       <th className={'HideIt_' + v.label.split('.')[v.label.split('.').length - 1]} key={i}>
