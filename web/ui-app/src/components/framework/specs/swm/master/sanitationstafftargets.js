@@ -4,84 +4,77 @@ var dat = {
     useTimestamp: true,
     objectName: "",
     url: "/swm-services/sanitationstafftargets/_search",
-    groups: [
-      {
-        name: "search",
-        label: "swm.sanitationstaffTargets.search.title",
-        fields: [
-          {
-            name: "code",
-            jsonPath: "swmProcessCode",
-            label: "swm.create.sanitationStaffTargets.swmProcess",
-            pattern: "",
-            type: "singleValueList",
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: "",
-            url: "",
-            defaultValue: [
-              {
-                key: null,
-                value: "-- Please Select --"
-              },
-              {
-                key: "Process 1",
-                value: "Collection"
-              },
-              {
-                key: "Process 4",
-                value: "Disposal"
-              },
-              {
-                key: "Process 2",
-                value: "Segregation"
-              }
-            ]
-          },
-          {
-            name: "targetNo",
-            jsonPath: "targetNo",
-            label: "swm.create.sanitationStaffTargets.targetNumber",
-            type: "text",
-            isDisabled: false
-          },
-          {
-            name: "routeCode",
-            jsonPath: "routeCode",
-            label: "swm.create.sanitationstaffschedules.route.code",
-            pattern: "",
-            type: "autoCompelete",
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name"
-          },
-          {
-            name: "employeeName",
-            jsonPath: "employeeCode",
-            label: "swm.create.sanitationStaffTargets.employeeName",
-            pattern: "",
-            type: "singleValueList",
-            isRequired: false,
-            isDisabled: false,
-
-            maxLength: 128,
-            minLength: 1,
-            patternErrorMsg: "",
-            url:
-              "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
-          }
-        ]
-      }
-    ],
-    result: {
-      header: [
+    groups: [{
+      name: "search",
+      label: "swm.sanitationstaffTargets.search.title",
+      fields: [{
+          name: "code",
+          jsonPath: "swmProcessCode",
+          label: "swm.create.sanitationStaffTargets.swmProcess",
+          pattern: "",
+          type: "singleValueList",
+          isRequired: false,
+          isDisabled: false,
+          maxLength: 256,
+          minLength: 1,
+          patternErrorMsg: "",
+          url: "",
+          defaultValue: [{
+              key: null,
+              value: "-- Please Select --"
+            },
+            {
+              key: "Process 1",
+              value: "Collection"
+            },
+            {
+              key: "Process 4",
+              value: "Disposal"
+            },
+            {
+              key: "Process 2",
+              value: "Segregation"
+            }
+          ]
+        },
         {
+          name: "targetNo",
+          jsonPath: "targetNo",
+          label: "swm.create.sanitationStaffTargets.targetNumber",
+          type: "text",
+          isDisabled: false
+        },
+        {
+          name: "routeCode",
+          jsonPath: "routeCode",
+          label: "swm.create.sanitationstaffschedules.route.code",
+          pattern: "",
+          type: "autoCompelete",
+          isRequired: false,
+          isDisabled: false,
+          maxLength: 256,
+          minLength: 1,
+          patternErrorMsg: "",
+          url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name"
+        },
+        {
+          name: "employeeName",
+          jsonPath: "employeeCode",
+          label: "swm.create.sanitationStaffTargets.employeeName",
+          pattern: "",
+          type: "singleValueList",
+          isRequired: false,
+          isDisabled: false,
+
+          maxLength: 128,
+          minLength: 1,
+          patternErrorMsg: "",
+          url: "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
+        }
+      ]
+    }],
+    result: {
+      header: [{
           label: "swm.create.sanitationStaffTargets.swmProcess"
         },
         {
@@ -101,8 +94,7 @@ var dat = {
     }
   },
   "swm.create": {
-    beforeSubmit:
-    `
+    beforeSubmit: `
     if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
     {
       shouldSubmit=false;
@@ -126,12 +118,10 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].targetNo",
-    groups: [
-      {
+    groups: [{
         name: "CardOne",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "code",
             jsonPath: "sanitationStaffTargets[0].swmProcess.code",
             label: "swm.create.sanitationStaffTargets.swmProcess",
@@ -144,8 +134,7 @@ var dat = {
             minLength: 1,
             patternErrorMsg: "",
             url: "",
-            defaultValue: [
-              {
+            defaultValue: [{
                 key: null,
                 value: "-- Please Select --"
               },
@@ -162,12 +151,10 @@ var dat = {
                 value: "Segregation"
               }
             ],
-            showHideFields: [
-              {
+            showHideFields: [{
                 ifValue: "Process 1",
 
-                hide: [
-                  {
+                hide: [{
                     name: "CardFour",
                     isGroup: true,
                     isField: false
@@ -178,18 +165,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardThree",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardThree",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 4",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -200,18 +184,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFour",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFour",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 2",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -222,13 +203,11 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFive",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFive",
+                  isGroup: true,
+                  isField: false
+                }]
               }
             ]
           },
@@ -259,11 +238,9 @@ var dat = {
       {
         name: "CardTwo",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "departmentName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].department",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",
             label: "swm.create.sanitationStaffTargets.departmentName",
             pattern: "",
             type: "singleValueList",
@@ -273,22 +250,17 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
+            url: "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
             hasIdConverion: true,
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "designationName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].designation",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].designation",
             label: "swm.create.sanitationStaffTargets.designationName",
             pattern: "",
             type: "singleValueList",
@@ -298,16 +270,12 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            url: "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "employeeName",
@@ -321,8 +289,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
+            url: "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },
@@ -330,8 +297,7 @@ var dat = {
         name: "CardThree",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: false,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -342,14 +308,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -357,48 +320,50 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
+              values: [{
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
                   // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
                   pattern: "",
                   type: "checkbox",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].isSelected",
                   isRequired: false,
                   isDisabled: false
                 },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled": true
                 },
+                // {
+                //   name:
+                //     "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath:
+                //     "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
                   isDisabled: true
                 }
               ],
@@ -406,9 +371,9 @@ var dat = {
             },
             hasATOAATransform: true,
             aATransformInfo: {
-              to: 'sanitationStaffTargets[0].collectionPoints',
-              key: 'code',
-              from:'collectionPoint.code'
+              to: "sanitationStaffTargets[0].collectionPoints",
+              key: "code",
+              from: "collectionPoint.code"
             }
           },
           //   {
@@ -444,8 +409,7 @@ var dat = {
         name: "CardFour",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "dumpingGroundCode",
             jsonPath: "sanitationStaffTargets[0].dumpingGround.code",
             label: "swm.create.sanitationstaffschedules.dumpingGround.code",
@@ -456,8 +420,7 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
+            url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
           },
           {
             name: "targetedGarbage",
@@ -475,8 +438,7 @@ var dat = {
         name: "CardFive",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -488,14 +450,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -503,48 +462,50 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
+              values: [{
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
                   // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
                   pattern: "",
                   type: "checkbox",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].isSelected",
                   isRequired: false,
                   isDisabled: false
                 },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled": true
                 },
+                // {
+                //   name:
+                //     "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath:
+                //     "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.collectionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.collectionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
                   isDisabled: true
                 }
               ],
@@ -561,18 +522,15 @@ var dat = {
             isDisabled: false,
             defaultValue: "",
             patternErrorMsg: "",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
-                type: "textField",
-                pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+              type: "textField",
+              pattern: "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "dryWaste",
@@ -584,18 +542,15 @@ var dat = {
             isDisabled: false,
             defaultValue: "",
             patternErrorMsg: "",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
-                type: "textField",
-                pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+              type: "textField",
+              pattern: "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "targetedGarbage",
@@ -619,8 +574,7 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
-    groups: [
-      {
+    groups: [{
         name: "CardOne",
         label: "",
         fields: [
@@ -644,8 +598,7 @@ var dat = {
             minLength: 1,
             patternErrorMsg: "",
             url: "",
-            defaultValue: [
-              {
+            defaultValue: [{
                 key: null,
                 value: "-- Please Select --"
               },
@@ -662,12 +615,10 @@ var dat = {
                 value: "Segregation"
               }
             ],
-            showHideFields: [
-              {
+            showHideFields: [{
                 ifValue: "Process 1",
 
-                hide: [
-                  {
+                hide: [{
                     name: "CardFour",
                     isGroup: true,
                     isField: false
@@ -678,18 +629,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardThree",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardThree",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 4",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -700,18 +648,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFour",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFour",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 2",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -722,13 +667,11 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFive",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFive",
+                  isGroup: true,
+                  isField: false
+                }]
               }
             ]
           },
@@ -759,11 +702,9 @@ var dat = {
       {
         name: "CardTwo",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "departmentName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].department",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",
             label: "swm.create.sanitationStaffTargets.departmentName",
             pattern: "",
             type: "singleValueList",
@@ -773,22 +714,17 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
+            url: "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
             hasIdConverion: true,
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "designationName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].designation",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].designation",
             label: "swm.create.sanitationStaffTargets.designationName",
             pattern: "",
             type: "singleValueList",
@@ -798,16 +734,12 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            url: "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "employeeName",
@@ -821,8 +753,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
+            url: "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },
@@ -830,8 +761,7 @@ var dat = {
         name: "CardThree",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: false,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -843,14 +773,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -858,33 +785,37 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
               values: [
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled":true
                 },
+                // {
+                //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath: "sanitationStaffTargets[0].collectionPoints[0].location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].name",
                   isDisabled: true
                 }
               ],
@@ -924,8 +855,7 @@ var dat = {
         name: "CardFour",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "dumpingGroundCode",
             jsonPath: "sanitationStaffTargets[0].dumpingGround.code",
             label: "swm.create.sanitationstaffschedules.dumpingGround.code",
@@ -936,8 +866,7 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
+            url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
           },
           {
             name: "targetedGarbage",
@@ -955,8 +884,7 @@ var dat = {
         name: "CardFive",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -968,14 +896,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -983,33 +908,37 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
               values: [
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled":true
                 },
+                // {
+                //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath: "sanitationStaffTargets[0].collectionPoints[0].location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].name",
                   isDisabled: true
                 }
               ],
@@ -1037,18 +966,15 @@ var dat = {
             isDisabled: false,
             defaultValue: "",
             patternErrorMsg: "",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
-                type: "textField",
-                pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+              type: "textField",
+              pattern: "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "targetedGarbage",
@@ -1069,15 +995,13 @@ var dat = {
     // searchUrl: '/swm-services/sanitationstafftargets/_search?targetNo={targetNo}'
   },
   "swm.update": {
-    beforeSetForm:
-    `if (res &&
+    beforeSetForm: `if (res &&
       _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
         res.sanitationStaffTargets[0].collectionPoints = res.sanitationStaffTargets[0].collectionPoints.map(function (item) {
             return {...item,["isSelected"]:true,["collectionPoint"]:item}
         });
     }`,
-    beforeSubmit:
-    `
+    beforeSubmit: `
     if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
     {
       shouldSubmit=false;
@@ -1101,18 +1025,15 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
-    groups: [
-      {
+    groups: [{
         name: "filtercollectionpoint",
         hide: true,
-        fields: [
-          {
-            name: "code",
-            jsonPath: "sanitationStaffTargets[0].filtercollectionpoints",
-            type: "text",
-            defaultValue: true
-          }
-        ]
+        fields: [{
+          name: "code",
+          jsonPath: "sanitationStaffTargets[0].filtercollectionpoints",
+          type: "text",
+          defaultValue: true
+        }]
       },
       {
         name: "CardOne",
@@ -1138,8 +1059,7 @@ var dat = {
             minLength: 1,
             patternErrorMsg: "",
             url: "",
-            defaultValue: [
-              {
+            defaultValue: [{
                 key: null,
                 value: "-- Please Select --"
               },
@@ -1156,12 +1076,10 @@ var dat = {
                 value: "Segregation"
               }
             ],
-            showHideFields: [
-              {
+            showHideFields: [{
                 ifValue: "Process 1",
 
-                hide: [
-                  {
+                hide: [{
                     name: "CardFour",
                     isGroup: true,
                     isField: false
@@ -1172,18 +1090,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardThree",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardThree",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 4",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -1194,18 +1109,15 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFour",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFour",
+                  isGroup: true,
+                  isField: false
+                }]
               },
               {
                 ifValue: "Process 2",
-                hide: [
-                  {
+                hide: [{
                     name: "CardThree",
                     isGroup: true,
                     isField: false
@@ -1216,13 +1128,11 @@ var dat = {
                     isField: false
                   }
                 ],
-                show: [
-                  {
-                    name: "CardFive",
-                    isGroup: true,
-                    isField: false
-                  }
-                ]
+                show: [{
+                  name: "CardFive",
+                  isGroup: true,
+                  isField: false
+                }]
               }
             ]
           },
@@ -1253,11 +1163,9 @@ var dat = {
       {
         name: "CardTwo",
         label: "",
-        fields: [
-          {
+        fields: [{
             name: "departmentName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].department",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",
             label: "swm.create.sanitationStaffTargets.departmentName",
             pattern: "",
             type: "singleValueList",
@@ -1267,22 +1175,17 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
+            url: "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department|$..id|$..name",
             hasIdConverion: true,
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "designationName",
-            jsonPath:
-              "sanitationStaffTargets[0].employee.assignments[0].designation",
+            jsonPath: "sanitationStaffTargets[0].employee.assignments[0].designation",
             label: "swm.create.sanitationStaffTargets.designationName",
             pattern: "",
             type: "singleValueList",
@@ -1292,16 +1195,12 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].employee.code",
-                type: "dropDown",
-                pattern:
-                  "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
-              }
-            ]
+            url: "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].employee.code",
+              type: "dropDown",
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+            }]
           },
           {
             name: "employeeName",
@@ -1315,8 +1214,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
+            url: "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },
@@ -1324,8 +1222,7 @@ var dat = {
         name: "CardThree",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: false,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -1337,14 +1234,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -1352,59 +1246,61 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
+              values: [{
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
                   // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
                   pattern: "",
                   type: "checkbox",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].isSelected",
                   isRequired: false,
                   isDisabled: false
                 },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled": true
                 },
+                // {
+                //   name:
+                //     "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath:
+                //     "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
                   isDisabled: true
                 }
               ],
               actionsNotRequired: true
             },
-            hasPreTransform:true,
+            hasPreTransform: true,
             hasATOAATransform: true,
             aATransformInfo: {
-              to: 'sanitationStaffTargets[0].collectionPoints',
-              key: 'code',
-              from:'collectionPoint.code'
+              to: "sanitationStaffTargets[0].collectionPoints",
+              key: "code",
+              from: "collectionPoint.code"
             }
           },
           //   {
@@ -1440,8 +1336,7 @@ var dat = {
         name: "CardFour",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "dumpingGroundCode",
             jsonPath: "sanitationStaffTargets[0].dumpingGround.code",
             label: "swm.create.sanitationstaffschedules.dumpingGround.code",
@@ -1452,8 +1347,7 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
+            url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name"
           },
           {
             name: "targetedGarbage",
@@ -1471,8 +1365,7 @@ var dat = {
         name: "CardFive",
         label: "swm.create.sanitationStaffTarget.cardThree.header",
         hide: true,
-        fields: [
-          {
+        fields: [{
             name: "routeCode",
             jsonPath: "sanitationStaffTargets[0].route.code",
             label: "swm.create.sanitationstaffschedules.route.code",
@@ -1484,14 +1377,11 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: "",
-            url:
-              "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
+            url: "/swm-services/routes/_search?|$.routes[*].code|$.routes[*].name",
             autoCompleteDependancy: {
-              autoCompleteUrl:
-                "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
+              autoCompleteUrl: "/swm-services/routes/_search?code={sanitationStaffTargets[0].route.code}&excludeDumpingGround=true",
               autoFillFields: {
-                "sanitationStaffTargets[0].collectionPoints":
-                  "routes[0].collectionPoints"
+                "sanitationStaffTargets[0].collectionPoints": "routes[0].collectionPoints"
               }
             }
           },
@@ -1499,48 +1389,48 @@ var dat = {
             type: "tableListTemp",
             jsonPath: "sanitationStaffTargets[0].collectionPoints",
             tableList: {
-              header: [
-                {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
+              header: [{
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.isSelected"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.location"
                 },
                 {
-                  label:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name"
+                  label: "swm.create.sanitationstaffschedules.colletionPoint.name"
                 }
               ],
-              values: [
-                {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
+              values: [{
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.isSelected",
                   // label:'swm.create.sanitationstaffschedules.colletionPoint.isSelected',
                   pattern: "",
                   type: "checkbox",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].isSelected",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].isSelected",
                   isRequired: false,
                   isDisabled: false
                 },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.location",
-                  pattern: "",
-                  type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
-                  isDisabled: true
+                  "type": "boundary",
+                  "label": "",
+                  "hierarchyType": "REVENUE",
+                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": true,
+                  "patternErrorMsg": "",
+                  "multiple": true,
+                  "fullWidth": true,
+                  "isDisabled":true
                 },
+                // {
+                //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "text",
+                //   jsonPath: "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.name",
+                //   isDisabled: true
+                // },
                 {
-                  name:
-                    "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
                   pattern: "",
                   type: "text",
-                  jsonPath:
-                    "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
+                  jsonPath: "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.name",
                   isDisabled: true
                 }
               ],
@@ -1557,18 +1447,15 @@ var dat = {
             isDisabled: false,
             defaultValue: "",
             patternErrorMsg: "",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
-                type: "textField",
-                pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+              type: "textField",
+              pattern: "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "dryWaste",
@@ -1580,18 +1467,15 @@ var dat = {
             isDisabled: false,
             defaultValue: "",
             patternErrorMsg: "",
-            depedants: [
-              {
-                jsonPath: "sanitationStaffTargets[0].targetedGarbage",
-                type: "textField",
-                pattern:
-                  "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
-                rg: "",
-                isRequired: false,
-                requiredErrMsg: "",
-                patternErrMsg: ""
-              }
-            ]
+            depedants: [{
+              jsonPath: "sanitationStaffTargets[0].targetedGarbage",
+              type: "textField",
+              pattern: "`${getVal('sanitationStaffTargets[0].wetWaste') && getVal('sanitationStaffTargets[0].dryWaste') ? (parseFloat(getVal('sanitationStaffTargets[0].wetWaste')) + parseFloat(getVal('sanitationStaffTargets[0].dryWaste'))).toFixed(2):0}`",
+              rg: "",
+              isRequired: false,
+              requiredErrMsg: "",
+              patternErrMsg: ""
+            }]
           },
           {
             name: "targetedGarbage",
@@ -1609,8 +1493,7 @@ var dat = {
     ],
     url: "/swm-services/sanitationstafftargets/_update",
     tenantIdRequired: true,
-    searchUrl:
-      "/swm-services/sanitationstafftargets/_search?targetNo={targetNo}"
+    searchUrl: "/swm-services/sanitationstafftargets/_search?targetNo={targetNo}"
   }
 };
 export default dat;

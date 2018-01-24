@@ -81,7 +81,7 @@ class UiBoundary extends Component {
           var label = jp.query(boundaryData, jPath + '.label');
           var name = jp.query(boundaryData, jPath + '.name');
           viewLabels[label] = name[0];
-  
+
           //for update screen
           if (this.props.match.url.split('/')[1] != 'view') {
             this.handler(code[0], label[0]);
@@ -90,7 +90,7 @@ class UiBoundary extends Component {
         i += 2;
       }
     }
-    
+
     this.setState({
       viewLabels: viewLabels,
     });
@@ -311,7 +311,7 @@ class UiBoundary extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{overflowY: "scroll"}}>
         {this.props.match.url.split('/')[1] == 'view' && typeof _.get(this.props.formData, this.props.item.jsonPath) != 'undefined'
           ? this.renderView(this.state.viewLabels)
           : this.renderBoundary(this.props.item)}
