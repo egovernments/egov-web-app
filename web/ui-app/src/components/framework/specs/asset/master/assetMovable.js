@@ -626,7 +626,7 @@ var dat = {
         fields: [
           {
             name: 'AssetSearchCode',
-            jsonPath: 'assetCategoryType',
+            jsonPath: 'movable..assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'text',
@@ -639,7 +639,7 @@ var dat = {
           },
           {
             name: 'AssetCategoryType',
-            jsonPath: 'assetCategoryType',
+            jsonPath: 'movable.assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'text',
@@ -653,7 +653,7 @@ var dat = {
           },
           {
             name: 'AssetCategory',
-            jsonPath: 'assetCategory',
+            jsonPath: 'movable.assetCategory',
             label: 'ac.create.Asset.Category',
             pattern: '',
             type: 'singleValueList',
@@ -666,16 +666,16 @@ var dat = {
             isStateLevel: true,
             depedants: [
               {
-                jsonPath: 'assetSubCategory',
+                jsonPath: 'movable.assetSubCategory',
                 type: 'dropDown',
                 pattern:
-                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
+                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{movable.assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
               },
             ],
           },
           {
             name: 'AssetSearchAssetSubCategory',
-            jsonPath: 'assetSubCategory',
+            jsonPath: 'movable.assetSubCategory',
             label: 'ac.create.Asset.SubCategory.Name',
             pattern: '',
             type: 'singleValueList',
@@ -796,6 +796,12 @@ var dat = {
       rowClickUrlUpdate: '/non-framework/asset/master/assetMovableCreate/{id}',
       rowClickUrlView: '/non-framework/asset/master/assetMovableView/{id}',
     },
+    beforeSubmit: `
+     formData['assetCategoryType']=formData.movable.assetCategoryType;
+     formData['assetCategory']=formData.movable.assetCategory;
+     formData['assetSubCategory']=formData.movable.assetSubCategory;
+     delete formData.movable;
+    `
   },
   'asset.view': {
     numCols: 12 / 3,

@@ -737,6 +737,7 @@ class Search extends Component {
         handleChange(object, value.jsonPath, value.isRequired, value.rg, value.requiredErrMsg, value.patternErrMsg);
       }
     });
+  //  call function  to clear dependent dropdown
   };
   rowButtonClickHandler = (buttonUrl, id) => {
     let { formData } = this.props;

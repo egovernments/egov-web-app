@@ -171,10 +171,18 @@ class Transaction extends Component {
     self.props.handleChange({ target: { value: n } }, 'Revaluation.revaluationDate');
   }
 
+
   search = () => {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
+
+    formData['assetCategoryType']=formData.revaluation.assetCategoryType;
+    formData['assetCategory']=formData.revaluation.assetCategory;
+    formData['assetSubCategory']=formData.revaluation.assetSubCategory;
+    delete formData.revaluation;
+
+    debugger
 
     Api.commonApiPost('/asset-services-maha/assets/_search', formData, {}, null, true).then(
       function(res) {
@@ -739,7 +747,11 @@ class Transaction extends Component {
     let self = this;
     e.preventDefault();
     var formData = { ...this.props.formData };
-
+    formData['assetCategoryType']=formData.revaluation.assetCategoryType;
+    formData['assetCategory']=formData.revaluation.assetCategory;
+    formData['assetSubCategory']=formData.revaluation.assetSubCategory;
+    delete formData.revaluation;
+    // delete formData.Assets;
     for (var i = 0; i < formData.Revaluation.Assets.length; i++) {
       if (formData.Revaluation.Assets[i].isRadio == true) {
         formData.Revaluation.assetId = formData.Revaluation.Assets[i].id;

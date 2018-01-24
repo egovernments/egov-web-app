@@ -145,7 +145,26 @@ class UiSelectField extends Component {
   componentWillReceiveProps(nextProps) {
     //debugger;
     //console.log("UiSelectField, componentWillReceiveProps() called,  nextProps = ", nextProps, "currentProps", this.props);
-    let { dropDownData, dropDownOringalData, value } = this.props;
+    let { dropDownData, dropDownOringalData, value ,item, handler} = this.props;
+
+    // on change of dropdown value reseting the 3rd level  dependant dropdown values 
+
+    if(value && nextProps.value && value != nextProps.value && item.depedants){
+      console.log(item);
+       item.depedants.map((depedants)=>{if (handler)
+       handler(
+         { target: { value: undefined } },
+         depedants.jsonPath,
+         item.isRequired ? true : false,
+         '',
+         item.requiredErrMsg,
+         item.patternErrMsg,
+         item.expression,
+         item.expressionMsg
+       );
+     })
+
+    }
 
     //load dependant field values on update/view screen
     if (dropDownData == undefined && value && nextProps.dropDownData) {
@@ -164,31 +183,31 @@ class UiSelectField extends Component {
         );
     }
 
-    if (this.props.location.pathname != nextProps.history.location.pathname){
+    if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData === undefined){
       // if(nextProps.item.jsonPath == 'assetSubCategory'){
       //   console.log(nextProps);
       //   nextProps.setDropDownData('','');
       // }
       console.log(nextProps);
-      if(this.props.item.url != nextProps.item.url){
-
-      if(tracker.length && _.some(tracker, { jsonPath: nextProps.item.jsonPath })){
-      for(let x=0;x<tracker.length;x++){
-        if(tracker[x].jsonPath == nextProps.item.jsonPath){
-          tracker.splice(x,1);
-          x--;
-        }
-      }
-
-          }
+    //   if(this.props.item.url != nextProps.item.url){
+    //
+    //   if(tracker.length && _.some(tracker, { jsonPath: nextProps.item.jsonPath })){
+    //   for(let x=0;x<tracker.length;x++){
+    //     if(tracker[x].jsonPath == nextProps.item.jsonPath){
+    //       tracker.splice(x,1);
+    //       x--;
+    //     }
+    //   }
+    //
+    //       }
+    //   this.initData(nextProps);
+    // }
       this.initData(nextProps);
     }
-
-    }
-    if( dropDownData === undefined) {
-      this.initData(nextProps);
-
-    }
+    // if( dropDownData === undefined) {
+    //   this.initData(nextProps);
+    //
+    // }
   }
 
   renderSelect = item => {
@@ -313,7 +332,7 @@ const mapStateToProps = (state, props) => {
   name=name+"-"+otherPairValue;
    }
 }
-  
+
   if (item.convertToString && value) value = value.toString();
   else if (item.convertToNumber && value) {
     value = parseInt(value);

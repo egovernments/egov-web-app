@@ -121,7 +121,10 @@ class Transaction extends Component {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
-
+    formData['assetCategoryType']=formData.transfer.assetCategoryType;
+         formData['assetCategory']=formData.transfer.assetCategory;
+         formData['assetSubCategory']=formData.transfer.assetSubCategory;
+         delete formData.transfer;
     Api.commonApiPost('/asset-services-maha/assets/_search', formData, {}, null, true).then(
       function(res) {
         self.props.setLoadingStatus('hide');
@@ -671,6 +674,10 @@ class Transaction extends Component {
     let self = this;
     e.preventDefault();
     var formData = { ...this.props.formData };
+    formData['assetCategoryType']=formData.transfer.assetCategoryType;
+         formData['assetCategory']=formData.transfer.assetCategory;
+         formData['assetSubCategory']=formData.transfer.assetSubCategory;
+         delete formData.transfer;
 
     for (var i = 0; i < formData.Disposal.Assets.length; i++) {
       if (formData.Disposal.Assets[i].isRadio == true) {

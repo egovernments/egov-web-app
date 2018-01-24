@@ -12,7 +12,7 @@ var dat = {
         fields: [
           {
             name: 'AssetSearchCode',
-            jsonPath: 'assetCategoryType',
+            jsonPath: 'transfer.assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'singleValueList',
@@ -33,15 +33,15 @@ var dat = {
             ],
             depedants: [
               {
-                jsonPath: 'assetCategory',
+                jsonPath: 'transfer.assetCategory',
                 type: 'dropDown',
-                pattern:"/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28+%40.isAssetAllow+%3D%3D+false+%26%26+%40.assetCategoryType+%3D%3D'{assetCategoryType}'+%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
+                pattern:"/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28+%40.isAssetAllow+%3D%3D+false+%26%26+%40.assetCategoryType+%3D%3D'{transfer.assetCategoryType}'+%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
               },
             ],
           },
           {
             name: 'AssetCategory',
-            jsonPath: 'assetCategory',
+            jsonPath: 'transfer.assetCategory',
             label: 'ac.create.Asset.Category',
             pattern: '',
             type: 'singleValueList',
@@ -53,16 +53,16 @@ var dat = {
             isStateLevel: true,
             depedants: [
               {
-                jsonPath: 'assetSubCategory',
+                jsonPath: 'transfer.assetSubCategory',
                 type: 'dropDown',
                 pattern:
-                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
+                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{transfer.assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
               },
             ],
           },
           {
             name: 'AssetSearchAssetSubCategory',
-            jsonPath: 'assetSubCategory',
+            jsonPath: 'transfer.assetSubCategory',
             label: 'ac.create.Asset.SubCategory.Name',
             pattern: '',
             type: 'singleValueList',
@@ -241,6 +241,7 @@ var dat = {
       // "rowClickUrlUpdate": "/update/wc/pipeSize/{id}",
       // "rowClickUrlView": "/view/wc/pipeSize/{id}"
     },
+
     transaction: [
       {
         label: '',
@@ -351,7 +352,11 @@ var dat = {
         ],
       },
     ],
+
   },
+
+
+
 };
 
 export default dat;

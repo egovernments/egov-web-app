@@ -792,7 +792,7 @@ var dat = {
         fields: [
           {
             name: 'AssetSearchCode',
-            jsonPath: 'assetCategoryType',
+            jsonPath: 'immovable.assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'singleValueList',
@@ -810,7 +810,7 @@ var dat = {
           },
           {
             name: 'AssetCategoryType',
-            jsonPath: 'assetCategoryType',
+            jsonPath: 'immovable.assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'text',
@@ -824,7 +824,7 @@ var dat = {
           },
           {
             name: 'AssetCategory',
-            jsonPath: 'assetCategory',
+            jsonPath: 'immovable.assetCategory',
             label: 'ac.create.Asset.Category',
             pattern: '',
             type: 'singleValueList',
@@ -837,16 +837,16 @@ var dat = {
             isStateLevel: true,
             depedants: [
               {
-                jsonPath: 'assetSubCategory',
+                jsonPath: 'immovable.assetSubCategory',
                 type: 'dropDown',
                 pattern:
-                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
+                  "/egov-mdms-service/v1/_get?&moduleName=ASSET&masterName=AssetCategory&filter=%5B%3F%28%40.parent%3D%3D'{immovable.assetCategory}'%29%5D|$.MdmsRes.ASSET.AssetCategory.*.id|$.MdmsRes.ASSET.AssetCategory.*.name",
               },
             ],
           },
           {
             name: 'AssetSearchAssetSubCategory',
-            jsonPath: 'assetSubCategory',
+            jsonPath: 'immovable.assetSubCategory',
             label: 'ac.create.Asset.SubCategory.Name',
             pattern: '',
             type: 'singleValueList',
@@ -955,6 +955,14 @@ var dat = {
       rowClickUrlUpdate: '/non-framework/asset/master/assetImmovableCreate/{id}',
       rowClickUrlView: '/non-framework/asset/master/assetImmovableView/{id}',
     },
+
+     beforeSubmit: `
+      formData['assetCategoryType']=formData.immovable.assetCategoryType;
+      formData['assetCategory']=formData.immovable.assetCategory;
+      formData['assetSubCategory']=formData.immovable.assetSubCategory;
+      delete formData.immovable;
+     `
+
   },
   'asset.view': {
     numCols: 12 / 3,
@@ -2365,5 +2373,6 @@ var dat = {
     ],
   },
 };
+
 
 export default dat;

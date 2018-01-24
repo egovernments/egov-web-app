@@ -228,6 +228,10 @@ class Transaction extends Component {
   search = () => {
     let self = this;
     var formData = { ...this.props.formData };
+    formData['assetCategoryType']=formData.depreciate.assetCategoryType;
+     formData['assetCategory']=formData.depreciate.assetCategory;
+     formData['assetSubCategory']=formData.depreciate.assetSubCategory;
+     delete formData.depreciate;
     if (!formData.toDate || formData.toDate == null || formData.toDate == '') {
       self.props.toggleSnackbarAndSetText(true, 'Please enter Date of Depreciation', false, true);
     } else {
@@ -791,6 +795,10 @@ class Transaction extends Component {
       _url;
     e.preventDefault();
     var formData = { ...this.props.formData };
+    formData['assetCategoryType']=formData.depreciate.assetCategoryType;
+     formData['assetCategory']=formData.depreciate.assetCategory;
+     formData['assetSubCategory']=formData.depreciate.assetSubCategory;
+     delete formData.depreciate;
     var amountValidation = true;
     var amountValidationMsg = '';
     console.log(formData);
@@ -802,7 +810,8 @@ class Transaction extends Component {
     dateCn.setMinutes(59);
     dateCn.setHours(23);
     dateCn.setSeconds(59);
-    var toDate = new Date(dateCn).getTime();
+    dateCn.setMilliseconds(755)
+   var toDate = new Date(dateCn).getTime();
     //var toDate = formData.toDate;
     if (assetsSelected.length) {
       self.props.setLoadingStatus('loading');
