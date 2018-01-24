@@ -179,14 +179,14 @@ class UiAutoComplete extends Component {
                 } else {
                   item.onLoad == false ? this.callAPI(e.target.value, this.props) : '';
                 }
-                // this.props.handler(
-                //   { target: { value: e.target.value } },
-                //   item.jsonPath,
-                //   item.isRequired ? true : false,
-                //   '',
-                //   item.requiredErrMsg,
-                //   item.patternErrMsg
-                // );
+                this.props.handler(
+                  { target: { value: e.target.value } },
+                  item.jsonPath,
+                  item.isRequired ? true : false,
+                  '',
+                  item.requiredErrMsg,
+                  item.patternErrMsg
+                );
               }}
               onNewRequest={(value, index) => {
                 this.props.handler(
