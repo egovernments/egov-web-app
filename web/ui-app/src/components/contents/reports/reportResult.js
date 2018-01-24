@@ -442,6 +442,9 @@ class ShowField extends Component {
     return (
       <thead style={{ backgroundColor: '#f2851f', color: 'white' }}>
         <tr>
+          <th key={'Sr. No. '}>
+            {"Sr. No." }
+          </th>
           {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
             <th key={'testKey'}>
               <input type="checkbox" onChange={checkAllRows} />
@@ -541,6 +544,9 @@ class ShowField extends Component {
             let reportHeaderObj = reportResult.reportHeader;
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? 'selected' : ''}>
+                <td>
+                  {dataIndex+1}
+                </td>
                 {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
                   <td>
                     <input

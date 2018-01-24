@@ -121,7 +121,7 @@ class Search extends Component {
         setDropDownOriginalData(item.jsonPath,res);
       })
     }
-    
+
     else if(obj && obj.preApiCallsBoundary){
       obj.preApiCallsBoundary.forEach(async (item)=>{
         let res=await callApi(item);
@@ -163,7 +163,7 @@ class Search extends Component {
         else{
           str += (index+1) + '. ' + elem + ', ';
         }
-        
+
       })
       return str.slice(0, -2);
     }
@@ -179,13 +179,13 @@ class Search extends Component {
       // var bdryCode = _.get(values[i], currentSpecification.jPathBoundary);
       var ddArr = [];
       var jPath = '';
-      var code = bdryCode; 
-  
+      var code = bdryCode;
+
       var pathArr = jp.paths(cityBdry, `$..[?(@.code=='${code}')]`);
       //console.log(pathArr);
       pathArr = pathArr[0];
-      
-      
+
+
       for (var j = 0; j < pathArr.length; ) {
         ddArr.push(pathArr[j] + '[' + pathArr[j + 1] + ']');
         jPath = ddArr.join('.');
@@ -197,7 +197,7 @@ class Search extends Component {
         }
         j += 2;
       }
-      
+
       return viewLabels;
       this.setLoadingStatus('hide');
     }
@@ -205,7 +205,7 @@ class Search extends Component {
       return;
       this.setLoadingStatus('hide');
     }
-  
+
   }
 
   tableDataBuilder = (res, currentSpecification, self) => {
@@ -213,7 +213,7 @@ class Search extends Component {
     self.props.setLoadingStatus('hide');
     var result = currentSpecification.result;
     var resultList = {
-      resultHeader: [{ label: '#' }, ...result.header],
+      resultHeader: [{ label: "Sr. No." }, ...result.header],
       resultValues: [],
       disableRowClick: result.disableRowClick || false,
       hidesearch: currentSpecification.hidesearch ? false : true
@@ -233,7 +233,7 @@ class Search extends Component {
               let tempBoundary = self.buildBoundaryData(boundaryDataOrg, boundaryDataOrgQuery, _.get(values[i], currentSpecification.jPathBoundary), true)
               boundaryData.push(tempBoundary);
             }
-            
+
           // }
         }
       }
@@ -291,13 +291,13 @@ class Search extends Component {
           }
           tmp.push(_.get(values[i], valuePath));
         }
-        
+
         //Replacing all empty strings by "NA"
         tmp = tmp.map(item =>  (typeof item === "string" ? ((item.trim().length) ? item : "NA") : (item  === null) ? "NA" : item  ))
         resultList.resultValues.push(tmp);
       }
     }
-    
+
     if (result.isAction) {
       resultList.actionItems = result.actionItems;
     }
@@ -311,7 +311,7 @@ class Search extends Component {
 
     window.localStorage.setItem('formData', '');
     window.localStorage.setItem('returnUrl', '');
-   
+
   }
 
   search = (e = null, hasDefaultSearch = false) => {
