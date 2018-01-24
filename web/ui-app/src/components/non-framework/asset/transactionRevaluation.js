@@ -182,8 +182,6 @@ class Transaction extends Component {
     formData['assetSubCategory']=formData.revaluation.assetSubCategory;
     delete formData.revaluation;
 
-    debugger
-
     Api.commonApiPost('/asset-services-maha/assets/_search', formData, {}, null, true).then(
       function(res) {
         self.props.setLoadingStatus('hide');
