@@ -1864,6 +1864,8 @@ var localization_EN_Data = {
   'wc.serviceCharge.table.title': 'Service Charge Details',
   'reports.wcms.size ': 'Size',
   'reports.wcms.size': 'Sub Usage',
+  //label for serial number in search result
+  '#' : 'Sr.No.',
   'ac.create.title': 'Create Asset Sub Category',
   'ac.create.asset.sub.category': 'Asset Category Name',
   'ac.create.asset.category.name': 'Asset Sub-Category Name',
@@ -3037,7 +3039,7 @@ var localization_EN_Data = {
   'perfManagement.dashboard.table.header.VALUE': 'KPI ACHIEVED',
   'perfManagement.dashboard.table.header.ULBNAME': 'ULB NAME',
   'perfManagement.dashboard.table.header.DOCUMENTIDS': 'DOCUMENTS',
-  'perfManagement.dashboard.common.prev' : 'Previous', 
+  'perfManagement.dashboard.common.prev' : 'Previous',
   'perfManagement.dashboard.common.next' : 'Next',
   'perfManagement.create.KPIs.groups.kpiCategory': 'KPI Category',
   'perfManagement.create.KPIs.groups.kpivaluevalidationmsg':  'Please Submit KPI Values to save.',
