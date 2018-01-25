@@ -50,13 +50,13 @@ var dat = {
   },
   'swm.create': {
     beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
-      if (this.dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
-        var dG=this.dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
+      if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
+        var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
         for (var i = 0; i < dG.length; i++) {
           if (dG[i].code==e.target.value) {
             handleChange(
               {target:{value:dG[i].siteDetails.location}},
-              "sourceSegregations[0].siteDetails.location",
+              "sourceSegregations[0].dumpingGround.siteDetails.location",
               false,
               "",
               "",
@@ -147,17 +147,18 @@ var dat = {
       {
         name: 'LocationDetails',
         label: 'swm.collectionpoints.create.group.title.LocationDetails',
-        jsonPath: "sourceSegregations[0].siteDetails.location",
         fields: [
           {
             "type": "boundary",
             "label": "",
             "hierarchyType": "REVENUE",
-            "jsonPath": "sourceSegregations[0].siteDetails.location.code",
-            "isRequired": true,
+            "jsonPath": "sourceSegregations[0].dumpingGround.siteDetails.location.code",
+            "isRequired": false,
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true
           }
         ],
       },
@@ -255,6 +256,24 @@ var dat = {
         ],
       },
       {
+        name: 'LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sourceSegregations[0].dumpingGround.siteDetails.location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true
+          }
+        ],
+      },
+      {
         name: 'CollectionTypeDetails',
         label: 'swm.create.group.title.CollectionTypeDetails',
         jsonPath: 'sourceSegregations[0].collectionDetails',
@@ -312,6 +331,23 @@ var dat = {
         }
       }
     ],
+    beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
+      if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
+        var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
+        for (var i = 0; i < dG.length; i++) {
+          if (dG[i].code==e.target.value) {
+            handleChange(
+              {target:{value:dG[i].siteDetails.location}},
+              "sourceSegregations[0].dumpingGround.siteDetails.location",
+              false,
+              "",
+              "",
+              "patternErrMsg"
+            );
+          }
+        }
+      }
+    }`,
     numCols: 4,
     useTimestamp: true,
     objectName: 'sourceSegregations',
@@ -377,6 +413,24 @@ var dat = {
               },
             },
           },
+        ],
+      },
+      {
+        name: 'LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sourceSegregations[0].dumpingGround.siteDetails.location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true
+          }
         ],
       },
       {

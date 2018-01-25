@@ -1337,7 +1337,7 @@ self.props.setLoadingStatus("hide");
       );
     }
   };
-  
+
 
   makeAjaxCall = (formData, url) => {
     let shouldSubmit=true;
@@ -3825,7 +3825,8 @@ filterDataFromArray=(res,item)=>{
       moduleName,
       actionName,
       changeFormStatus,
-      delRequiredFields
+      delRequiredFields,
+      dropDownOringalData
     } = this.props;
     let hashLocation = window.location.hash;
     let obj =
