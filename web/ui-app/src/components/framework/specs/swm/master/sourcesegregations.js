@@ -50,8 +50,8 @@ var dat = {
   },
   'swm.create': {
     beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
-      if (this.props.dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
-        var dG=this.props.dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
+      if (this.dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
+        var dG=this.dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
         for (var i = 0; i < dG.length; i++) {
           if (dG[i].code==e.target.value) {
             handleChange(
