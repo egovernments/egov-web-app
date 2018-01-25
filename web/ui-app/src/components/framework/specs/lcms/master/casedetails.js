@@ -83,6 +83,17 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=side|$..code|$..name',
+          depedants:[
+              {
+                      jsonPath: 'cases[0].summon.caseType.code',
+                      type: 'dropDown',
+                      pattern:
+                        "/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=caseType&filter=%5B%3F%28%40.sideCode%3D%3D'{cases[0].summon.side.code}'%29%5D|$..code|$..name",
+            
+                    },
+
+           ],
+
           },
           {
             name: 'caseType',
@@ -92,7 +103,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=caseType|$..code|$..name',
+           // url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=caseType|$..code|$..name',
           },
           {
             name: 'plantiffName',
