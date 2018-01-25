@@ -311,7 +311,7 @@ class UiBoundary extends Component {
 
   render() {
     return (
-      <div>
+      <div style={this.props.item.style && this.props.item.style}>
         {this.props.match.url.split('/')[1] == 'view' && typeof _.get(this.props.formData, this.props.item.jsonPath) != 'undefined'
           ? this.renderView(this.state.viewLabels)
           : this.renderBoundary(this.props.item)}

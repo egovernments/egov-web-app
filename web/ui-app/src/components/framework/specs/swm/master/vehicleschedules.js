@@ -223,7 +223,10 @@ var dat = {
                    "multiple": true,
                    "fullWidth": true,
                    "isDisabled":true,
-                   "setResponseData": true
+                   "setResponseData": true,
+                   "style":{
+                     overflowX:"scroll"
+                   }
                  },
 
                  // {
@@ -256,6 +259,15 @@ var dat = {
       "tenantIdRequired":true
    },
    "swm.view":{
+       beforeSetForm:`if (res &&
+         _.isArray(res.vehicleSchedules) && res.vehicleSchedules[0].route.collectionPoints && res.vehicleSchedules[0].route.collectionPoints.length>0) {
+           for(var i=0;i<res.vehicleSchedules[0].route.collectionPoints.length;i++)
+           {
+             if(res.vehicleSchedules[0].route.collectionPoints[i].dumpingGround){
+                   res.vehicleSchedules[0].route.collectionPoints.splice(i,1);
+             }
+           }
+       }`,
       "numCols":4,
       "useTimestamp":true,
       "objectName":"vehicleSchedules",
@@ -408,6 +420,15 @@ var dat = {
       "url":"/swm-services/vehicleschedules/_search?transactionNo={transactionNo}",
    },
    "swm.update":{
+       beforeSetForm:`if (res &&
+         _.isArray(res.vehicleSchedules) && res.vehicleSchedules[0].route.collectionPoints && res.vehicleSchedules[0].route.collectionPoints.length>0) {
+           for(var i=0;i<res.vehicleSchedules[0].route.collectionPoints.length;i++)
+           {
+             if(res.vehicleSchedules[0].route.collectionPoints[i].dumpingGround){
+                   res.vehicleSchedules[0].route.collectionPoints.splice(i,1);
+             }
+           }
+       }`,
       "numCols":4,
       "useTimestamp":true,
       "objectName":"vehicleSchedules",
@@ -540,7 +561,10 @@ var dat = {
                    "patternErrorMsg": "",
                    "multiple": true,
                    "fullWidth": true,
-                   "isDisabled":true
+                   "isDisabled":true,
+                   "style":{
+                     overflowX:"scroll"
+                   }
                  },
 
                  // {
