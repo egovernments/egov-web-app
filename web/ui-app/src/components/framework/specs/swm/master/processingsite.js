@@ -591,7 +591,7 @@ var dat = {
         fields: [
           {
             name: 'WasteType',
-            label: '',
+            label: 'swm.processingsite.create.page.title.wasteType',
             jsonPath: 'MdmsRes.swm.ProcessingSite[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
@@ -841,7 +841,7 @@ var dat = {
         fields: [
           {
             name: 'WasteType',
-            label: '',
+              label: 'swm.processingsite.create.page.title.wasteType',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
