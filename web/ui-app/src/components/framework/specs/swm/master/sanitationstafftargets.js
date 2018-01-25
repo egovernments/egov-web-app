@@ -348,7 +348,8 @@ var dat = {
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
-                  "isDisabled": true
+                  "isDisabled": true,
+                  "setResponseData": true
                 },
                 // {
                 //   name:
@@ -925,7 +926,7 @@ var dat = {
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
-                  "isDisabled":true
+                  "isDisabled":true,
                 },
                 // {
                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",

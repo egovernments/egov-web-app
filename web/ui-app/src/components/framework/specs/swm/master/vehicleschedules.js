@@ -222,7 +222,8 @@ var dat = {
                    "patternErrorMsg": "",
                    "multiple": true,
                    "fullWidth": true,
-                   "isDisabled":true
+                   "isDisabled":true,
+                   "setResponseData": true
                  },
 
                  // {
