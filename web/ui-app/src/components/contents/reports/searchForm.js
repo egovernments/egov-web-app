@@ -258,12 +258,14 @@ class ShowForm extends Component {
 
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
-      searchForm = Object.keys(searchForm)
-        .filter(param => !_.includes(displayOnlyFields, param))
-        .reduce((acc, param) => {
-          acc[param] = searchForm[param];
-          return acc;
-        }, {});
+      searchForm = searchForm
+        ? Object.keys(searchForm)
+            .filter(param => !_.includes(displayOnlyFields, param))
+            .reduce((acc, param) => {
+              acc[param] = searchForm[param];
+              return acc;
+            }, {})
+        : searchForm;
 
       for (var variable in searchForm) {
         let input;
