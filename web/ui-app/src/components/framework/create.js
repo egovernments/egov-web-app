@@ -1337,17 +1337,19 @@ self.props.setLoadingStatus("hide");
       );
     }
   };
-
+  
 
   makeAjaxCall = (formData, url) => {
     let shouldSubmit=true;
     let self = this;
+    let _formData = {...this.props.formData}
+    let {setVal} = this.props;
     var hashLocation = window.location.hash;
     let obj =
       specifications[
         `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
-
+    const JP = jp;
     if (obj && obj.beforeSubmit) {
         eval(obj.beforeSubmit);
     }

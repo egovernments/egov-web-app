@@ -79,16 +79,16 @@ const routeValidation =   `
         for(var i=0; i<groupArr.length; i++) {
           if(groupArr[i].name == 'defineRoute') {
             for(var j=0; j<groupArr[i].fields.length; j++) {
-              if(groupArr[i].fields[j].jsonPath == 'routes[0].collectionPoints['+index+'].dumpingGround.code') {
+              if(groupArr[i].fields[j].jsonPath.replace("endPoint.","") == 'routes[0].collectionPoints['+index+'].dumpingGround.code') {
                 groupArr[i].fields[j].isDisabled = false;
               }
-              if(groupArr[i].fields[j].jsonPath == 'routes[0].collectionPoints['+index+'].collectionPoint.code') {
+              if(groupArr[i].fields[j].jsonPath.replace("endPoint.","") == 'routes[0].collectionPoints['+index+'].collectionPoint.code') {
                 groupArr[i].fields[j].isDisabled = true;
                 self.setVal('routes[0].collectionPoints['+index+'].collectionPoint', null);
               }
               if(groupArr[i].fields[j].type == 'boundary') {
                 groupArr[i].fields[j].isRequired = false;
-                delRequiredFields(groupArr[i].fields[j].jsonPath);
+                delRequiredFields(groupArr[i].fields[j].jsonPath.replace("endPoint.",""));
               }
             }
           }
@@ -99,11 +99,11 @@ const routeValidation =   `
         for(var i=0; i<groupArr.length; i++) {
           if(groupArr[i].name == 'defineRoute') {
             for(var j=0; j<groupArr[i].fields.length; j++) {
-              if(groupArr[i].fields[j].jsonPath == 'routes[0].collectionPoints['+index+'].dumpingGround.code') {
+              if(groupArr[i].fields[j].jsonPath.replace("endPoint.","") == 'routes[0].collectionPoints['+index+'].dumpingGround.code') {
                 groupArr[i].fields[j].isDisabled = true;
-                self.setVal('routes[0].collectionPoints['+index+'].dumpingGround', null);
+                // self.setVal('endPOint.routes[0].collectionPoints['+index+'].dumpingGround', null);
               }
-              if(groupArr[i].fields[j].jsonPath == 'routes[0].collectionPoints['+index+'].collectionPoint.code') {
+              if(groupArr[i].fields[j].jsonPath.replace("endPoint.","") == 'routes[0].collectionPoints['+index+'].collectionPoint.code') {
                 groupArr[i].fields[j].isDisabled = false;
               }
               if(groupArr[i].fields[j].type == 'boundary') {
@@ -147,7 +147,43 @@ const modifyFormData = `
       }
     }
   }
-  modifyFormData();`
+
+  const setStartEndPoint = () => {
+    // let _formData = {..._formData};
+    let indArr = [];
+    for(var i=0; i<_formData.routes[0].collectionPoints.length; i++) {
+      if((_formData.routes[0].collectionPoints[i].typeOfPoint == "Starting Point") 
+      || _formData.routes[0].collectionPoints[i].typeOfPoint == "Ending Collection Point"
+      || _formData.routes[0].collectionPoints[i].typeOfPoint == "Ending Dumping Ground point") {
+        indArr.push(i);
+      }
+    }
+    indArr.sort(function(a,b){ return b - a; });
+    for(var i=0; i<indArr.length; i++) {
+      _formData.routes[0].collectionPoints.splice(indArr[i],1);
+    }
+    _formData.routes[0].collectionPoints.push(_formData.startPoint.routes[0].collectionPoints[0]);
+    _formData.routes[0].collectionPoints.push(_formData.endPoint.routes[0].collectionPoints[0]);
+    delete _formData["startPoint"];
+    delete _formData["endPoint"];
+    this.props.setFormData(_formData);
+  }
+
+  const calculateTotal = () => {
+    const distArr = JP.query(_formData, '$..collectionPoints.*.distance');
+    const garbageArr = JP.query(_formData, '$..collectionPoints.*.garbageEstimate');
+    let totalDist = 0, totalGarbage=0;
+    distArr.forEach((i) => {
+      totalDist = totalDist + parseFloat(i);
+    });
+    garbageArr.forEach((i) => {
+      totalGarbage = totalGarbage+ parseFloat(i);
+    });
+
+    self.setVal("routes[0].totalDistance", totalDist);
+    self.setVal("routes[0].totalGarbageEstimate", totalGarbage);
+  }
+  setStartEndPoint();calculateTotal();modifyFormData();`
 
 const setTypeOfPoint = `
   const setTypeOfPoint = (obj, res) => {
@@ -288,7 +324,76 @@ var dat = {
         ]
       },
       {
-        name: 'defineRoute',
+        name: 'defineRoute1',
+        label: 'swm.routes.create.startPointgroup.title',
+        jsonPath: "startPoint.routes[0].collectionPoints",
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "startPoint.routes[0].collectionPoints[0].collectionPoint.location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "isDisabled": false,
+            "fullWidth": true,
+            depedants: [
+              {
+                jsonPath: 'startPoint.routes[0].collectionPoints[0].collectionPoint.code',
+                type: 'dropDown',
+                pattern:
+                '/swm-services/collectionpoints/_search?&locationCode={startPoint.routes[0].collectionPoints[0].collectionPoint.location.code}|$..collectionPoints.*.code|$..collectionPoints.*.name',
+              },
+              {
+                jsonPath: 'startPoint.routes[0].collectionPoints[0].dumpingGround.code',
+                type: 'dropDown',
+                pattern:
+                '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround&filter%3D%5B%3F(%40.siteDetails.location.code%3D={startPoint.routes[0].collectionPoints[0].collectionPoint.location.code})]|$..DumpingGround.*.code|$..DumpingGround.*.name',
+              }
+            ]
+          },
+          {
+            name: 'typeOfPoint',
+            jsonPath: 'startPoint.routes[0].collectionPoints[0].typeOfPoint',
+            label: 'Type Of Point',
+            type: 'text',
+            defaultValue: 'Starting Point',
+            isRequired: true,
+            isDisabled: true,
+          },
+          {
+            name: 'collectionPoint',
+            jsonPath: 'startPoint.routes[0].collectionPoints[0].collectionPoint.code',
+            label: 'Collection Points',
+            type: 'singleValueList',
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: ''
+          },
+          {
+            name: 'startingCollectionPointDistance',
+            jsonPath: 'startPoint.routes[0].collectionPoints[0].distance',
+            label: 'swm.routes.create.distance',
+            type: 'text',
+            defaultValue: 0,
+            add: true,
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'startingCollectionPointGarbageEstimate',
+            jsonPath: 'startPoint.routes[0].collectionPoints[0].garbageEstimate',
+            label: 'swm.routes.create.garbagecollection',
+            type: 'number',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+          }
+        ],
+      },
+      {
+        name: 'defineRoute2',
         label: 'swm.routes.create.group.title',
         jsonPath: "routes[0].collectionPoints",
         multiple: true,
@@ -300,6 +405,7 @@ var dat = {
             "jsonPath": "routes[0].collectionPoints[0].collectionPoint.location.code",
             "isRequired": true,
             "patternErrorMsg": "",
+            "isDisabled": false,
             "fullWidth": true,
             depedants: [
               {
@@ -320,27 +426,16 @@ var dat = {
             name: 'typeOfPoint',
             jsonPath: 'routes[0].collectionPoints[0].typeOfPoint',
             label: 'Type Of Point',
-            type: 'singleValueList',
+            type: 'text',
             isRequired: true,
-            isDisabled: false,
-            defaultValue: [
-              {
-                key: 'Starting Point',
-                value: 'Starting Point',
-              },
-              {
-                key: 'Route Stop',
-                value: 'Route Stop',
-              },
-              {
-                key: 'Ending Dumping Ground point',
-                value: 'Ending Dumping Ground point',
-              },
-              {
-                key: 'Ending Collection Point',
-                value: 'Ending Collection Point',
-              }
-            ],
+            isDisabled: true,
+            defaultValue: 'Route Stop',
+            // defaultValue: [
+            //   {
+            //     key: 'Route Stop',
+            //     value: 'Route Stop',
+            //   }
+            // ],
           },
           {
             name: 'collectionPoint',
@@ -350,15 +445,6 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: ''
-          },
-          {
-            name: 'dumpingGround',
-            jsonPath: 'routes[0].collectionPoints[0].dumpingGround.code',
-            label: 'Dumping ground',
-            type: 'singleValueList',
-            isRequired: false,
-            isDisabled: true,
-            patternErrorMsg: '',
           },
           {
             name: 'startingCollectionPointDistance',
@@ -373,6 +459,92 @@ var dat = {
           {
             name: 'startingCollectionPointGarbageEstimate',
             jsonPath: 'routes[0].collectionPoints[0].garbageEstimate',
+            label: 'swm.routes.create.garbagecollection',
+            type: 'number',
+            isRequired: true,
+            isDisabled: false,
+            patternErrorMsg: '',
+          }
+        ],
+      },
+      {
+        name: 'defineRoute',
+        label: 'swm.routes.create.endPointgroup.title',
+        jsonPath: "endPoint.routes[0].collectionPoints",
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "endPoint.routes[0].collectionPoints[0].collectionPoint.location.code",
+            "isRequired": true,
+            "patternErrorMsg": "",
+            "isDisabled": false,
+            "fullWidth": true,
+            depedants: [
+              {
+                jsonPath: 'endPoint.routes[0].collectionPoints[0].collectionPoint.code',
+                type: 'dropDown',
+                pattern:
+                '/swm-services/collectionpoints/_search?&locationCode={endPoint.routes[0].collectionPoints[0].collectionPoint.location.code}|$..collectionPoints.*.code|$..collectionPoints.*.name',
+              },
+              {
+                jsonPath: 'endPoint.routes[0].collectionPoints[0].dumpingGround.code',
+                type: 'dropDown',
+                pattern:
+                '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround&filter%3D%5B%3F(%40.siteDetails.location.code%3D={endPoint.routes[0].collectionPoints[0].collectionPoint.location.code})]|$..DumpingGround.*.code|$..DumpingGround.*.name',
+              }
+            ]
+          },
+          {
+            name: 'typeOfPoint',
+            jsonPath: 'endPoint.routes[0].collectionPoints[0].typeOfPoint',
+            label: 'Type Of Point',
+            type: 'singleValueList',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: [
+              {
+                key: 'Ending Dumping Ground point',
+                value: 'Ending Dumping Ground point',
+              },
+              {
+                key: 'Ending Collection Point',
+                value: 'Ending Collection Point',
+              }
+            ],
+          },
+          {
+            name: 'collectionPoint',
+            jsonPath: 'endPoint.routes[0].collectionPoints[0].collectionPoint.code',
+            label: 'Collection Points',
+            type: 'singleValueList',
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: ''
+          },
+          {
+            name: 'dumpingGround',
+            jsonPath: 'endPoint.routes[0].collectionPoints[0].dumpingGround.code',
+            label: 'Dumping ground',
+            type: 'singleValueList',
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'startingCollectionPointDistance',
+            jsonPath: 'endPoint.routes[0].collectionPoints[0].distance',
+            label: 'swm.routes.create.distance',
+            type: 'number',
+            add: true,
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'startingCollectionPointGarbageEstimate',
+            jsonPath: 'endPoint.routes[0].collectionPoints[0].garbageEstimate',
             label: 'swm.routes.create.garbagecollection',
             type: 'number',
             isRequired: true,
