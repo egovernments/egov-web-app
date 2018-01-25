@@ -9,6 +9,23 @@ var dat={
 
     groups: [
       {
+
+        name: 'populationLocation',
+        label: 'swm.toiletmaster.create.populationLocation',
+        fields: [
+          {
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": 'location.code',
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+          },
+        ],
+      },
+      {
         name: 'ToiletName',
         fields: [
           {
@@ -22,7 +39,7 @@ var dat={
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Toilet|$..Toilet.*.code|$..Toilet.*.name',
             patternErrorMsg: '',
           },
-         
+        /*  
           {
             name: 'ToiletLocations',
             label: 'swm.toiletmaster.create.ToiletLocations',
@@ -33,7 +50,7 @@ var dat={
             defaultValue: '',
            // url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Toilet|$..Toilet.*.location.code|$..Toilet.*.name',
             patternErrorMsg: '',
-          },
+          }, */
 
           {
             name: 'isPublictoilet',
@@ -58,6 +75,9 @@ var dat={
           label: 'swm.toiletmaster.create.SeatsCount',
         },
         {
+          label: 'swm.toiletmaster.create.toiletAddress',
+        },
+        {
           label: 'swm.create.PublicsToilet',
         },
 
@@ -65,6 +85,7 @@ var dat={
       values: [
         'name',
         'seatCount',
+        'address',
         'publicToilet'
 
       ],
@@ -554,36 +575,7 @@ tenantIdRequired: true
         //     patternErrorMsg: '',
         //     url: '',
         //   },
-        {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'Toilet-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
-            },
-            {
-              name: 'tenantId',
-              jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              type: 'text',             
-              defaultValue: localStorage.getItem("tenantId"),
-              hide: true
-            },
-            {
-              name: 'moduleName',
-              jsonPath: 'MasterMetaData.moduleName',
-              type: 'text',             
-              defaultValue: 'swm',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',              
-              type: 'text',
-              defaultValue: 'Toilet',
-              hide: true
-            },
-   
+     
           ],
       },
       {

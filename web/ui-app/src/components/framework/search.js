@@ -345,7 +345,7 @@ class Search extends Component {
       // console.log(formData)
       var filterData
       if(_.isEmpty(formData)) {
-        filterData = null;
+               filterData = null;
       }
       else {
         var str = [];
@@ -361,7 +361,8 @@ class Search extends Component {
             }
           }
           else{
-            str.push(`@.${Object.keys(formData)[i]}=='${Object.values(formData)[i]}'`);
+           
+            str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
           }
         }
         str = str.join('&&');
