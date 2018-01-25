@@ -294,7 +294,7 @@ class UiMultiFieldTable extends Component {
       if (item.type == 'datePicker') {
         item.isDate = true;
       }
-      item.type = 'label';
+      item.type != 'boundary' && (item.type = 'label');
     }
     switch (item.type) {
       case 'text':
