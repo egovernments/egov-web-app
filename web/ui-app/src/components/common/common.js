@@ -2104,7 +2104,9 @@ var localization_EN_Data = {
   "swm.routes.create.collectionPoint": 'Collection Point',
   "swm.routes.create.dumping": 'Dumping Ground',
   "swm.routes.search.dumpingGroundCode": "Dumping Ground",
-  'swm.routes.create.group.title': 'Route Stop Details',
+  'swm.routes.create.group.title': 'Route Stops',
+  'swm.routes.create.startPointgroup.title': 'Start Point',
+  'swm.routes.create.endPointgroup.title': 'End Point',
   'swm.routes.create.group.title.end': 'SELECT END POINT',
   'swm.routes.create.group.title.routestops': 'SELECT ROUTE STOPS',
 
