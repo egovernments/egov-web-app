@@ -855,7 +855,7 @@ console.log("depedent dropdown");
 
   render() {
     let { mockData, moduleName, actionName, formData, fieldErrors, isFormValid, match } = this.props;
-    -    let { search, handleChange, getVal, addNewCard, removeCard, rowClickHandler, create } = this;
+    let { search, handleChange, getVal, addNewCard, removeCard, rowClickHandler, create } = this;
     let { showResult, resultList } = this.state;
 
     return (
