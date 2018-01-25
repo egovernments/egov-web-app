@@ -95,13 +95,16 @@ var dat = {
   },
   "swm.create": {
     beforeSubmit: `
-    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && (!formData.sanitationStaffTargets[0].route.code || !formData.sanitationStaffTargets[0].targetedGarbage))
     {
       shouldSubmit=false;
       alert("Please fill the mandatory fields");
     }
-    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"
-    ){
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4" && !formData.sanitationStaffTargets[0].targetedGarbage){
+      shouldSubmit=false;
+      alert("Please fill the mandatory fields");
+    }
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4"){
        delete formData.sanitationStaffTargets[0].collectionPoints;
     }
     if (
@@ -118,7 +121,8 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].targetNo",
-    groups: [{
+    groups: [
+      {
         name: "CardOne",
         label: "",
         fields: [{
@@ -344,12 +348,15 @@ var dat = {
                   "label": "",
                   "hierarchyType": "REVENUE",
                   "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
                   "isDisabled": true,
-                  "setResponseData": true
+                  "setResponseData": true,
+                  "style":{
+                    overflowX:"scroll"
+                  }
                 },
                 // {
                 //   name:
@@ -487,11 +494,15 @@ var dat = {
                   "label": "",
                   "hierarchyType": "REVENUE",
                   "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
-                  "isDisabled": true
+                  "isDisabled": true,
+                  "setResponseData": true,
+                  "style":{
+                    overflowX:"scroll"
+                  }
                 },
                 // {
                 //   name:
@@ -575,7 +586,8 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
-    groups: [{
+    groups: [
+      {
         name: "CardOne",
         label: "",
         fields: [
@@ -798,8 +810,8 @@ var dat = {
                   "type": "boundary",
                   "label": "",
                   "hierarchyType": "REVENUE",
-                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "jsonPath": "sanitationStaffTargets[0].route.collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
@@ -921,8 +933,8 @@ var dat = {
                   "type": "boundary",
                   "label": "",
                   "hierarchyType": "REVENUE",
-                  "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "jsonPath": "sanitationStaffTargets[0].route.collectionPoints[0].collectionPoint.location.code",
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
@@ -1003,8 +1015,12 @@ var dat = {
         });
     }`,
     beforeSubmit: `
-    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && !formData.sanitationStaffTargets[0].route.code && !formData.sanitationStaffTargets[0].targetedGarbage)
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 1" && (!formData.sanitationStaffTargets[0].route.code || !formData.sanitationStaffTargets[0].targetedGarbage))
     {
+      shouldSubmit=false;
+      alert("Please fill the mandatory fields");
+    }
+    if(formData.sanitationStaffTargets[0].swmProcess.code == "Process 4" && !formData.sanitationStaffTargets[0].targetedGarbage){
       shouldSubmit=false;
       alert("Please fill the mandatory fields");
     }
@@ -1026,7 +1042,8 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
-    groups: [{
+    groups: [
+      {
         name: "filtercollectionpoint",
         hide: true,
         fields: [{
@@ -1271,11 +1288,15 @@ var dat = {
                   "label": "",
                   "hierarchyType": "REVENUE",
                   "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
-                  "isDisabled": true
+                  "isDisabled": true,
+                  "setResponseData": true,
+                  "style":{
+                    overflowX:"scroll"
+                  }
                 },
                 // {
                 //   name:
@@ -1414,11 +1435,15 @@ var dat = {
                   "label": "",
                   "hierarchyType": "REVENUE",
                   "jsonPath": "sanitationStaffTargets[0].collectionPoints[0].collectionPoint.location.code",
-                  "isRequired": true,
+                  "isRequired": false,
                   "patternErrorMsg": "",
                   "multiple": true,
                   "fullWidth": true,
-                  "isDisabled":true
+                  "isDisabled":true,
+                  "setResponseData": true,
+                  "style":{
+                    overflowX:"scroll"
+                  }
                 },
                 // {
                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
