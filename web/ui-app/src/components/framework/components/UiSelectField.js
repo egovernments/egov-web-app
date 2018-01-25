@@ -147,12 +147,12 @@ class UiSelectField extends Component {
     //console.log("UiSelectField, componentWillReceiveProps() called,  nextProps = ", nextProps, "currentProps", this.props);
     let { dropDownData, dropDownOringalData, value ,item, handler} = this.props;
 
-    // on change of dropdown value reseting the 3rd level  dependant dropdown values 
+    // on change of dropdown value reseting the 3rd level  dependant dropdown values
 
     if(value && (nextProps.value||nextProps.value=="") && value != nextProps.value && item.depedants){
        item.depedants.map((depedants)=>{if (handler)
        handler(
-         { target: { value: undefined } },
+         { target: { value: "" } },
          depedants.jsonPath,
          item.isRequired ? true : false,
          '',

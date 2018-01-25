@@ -10,6 +10,7 @@ import Api from '../../../api/api';
 import UiButton from '../../framework/components/UiButton';
 import { fileUpload, getInitiatorPosition } from '../../framework/utility/utility';
 import UiDynamicTable from '../../framework/components/uiDynamicTable2';
+import UiTable from '../../framework/components/UiTable';
 
 import jp from 'jsonpath';
 import $ from 'jquery';
@@ -176,12 +177,21 @@ class Transaction extends Component {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
-
+    console.log(formData);
+     if(formData && formData.hasOwnProperty("revaluation")){
+       console.log(formData['assetCategoryType']);
     formData['assetCategoryType']=formData.revaluation.assetCategoryType;
     formData['assetCategory']=formData.revaluation.assetCategory;
     formData['assetSubCategory']=formData.revaluation.assetSubCategory;
     delete formData.revaluation;
 
+   }
+
+    if(formData && formData.hasOwnProperty("assetCategory") && formData.hasOwnProperty("assetSubCategory") && formData.assetCategory==""){
+    delete formData.assetCategory;
+    delete formData.assetSubCategory;
+  }
+  console.log(formData);
     Api.commonApiPost('/asset-services-maha/assets/_search', formData, {}, null, true).then(
       function(res) {
         self.props.setLoadingStatus('hide');
@@ -601,9 +611,10 @@ class Transaction extends Component {
     this.checkIfHasShowHideFields(property, e.target.value);
     this.checkIfHasEnDisFields(property, e.target.value);
     handleChange(e, property, isRequired, pattern, requiredErrMsg, patternErrMsg);
-
+console.log("depedent dropdown");
     _.forEach(depedants, function(value, key) {
       if (value.type == 'dropDown') {
+        console.log(value.jsonPath);
         let splitArray = value.pattern.split('?');
         let context = '';
         let id = {};
@@ -740,15 +751,32 @@ class Transaction extends Component {
     _url = _url.replace('{' + key + '}', _.get(value, key));
     this.props.setRoute(_url);
   };
+  // rowButtonClickHandler = (buttonUrl, id) => {
+  //   let { formData } = this.props;
+  //   if (id) {
+  //     localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
+  //     localStorage.setItem('formData', JSON.stringify(formData));
+  //     this.props.setRoute(buttonUrl + id);
+  //   } else {
+  //     let { selectedRecordId } = this.state;
+  //     if (selectedRecordId) {
+  //       localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
+  //       localStorage.setItem('formData', JSON.stringify(formData));
+  //       this.props.setRoute(buttonUrl + selectedRecordId);
+  //     }
+  //   }
+  // };
 
   create = e => {
     let self = this;
     e.preventDefault();
     var formData = { ...this.props.formData };
+     if(formData && formData.hasOwnProperty("revaluation")){
     formData['assetCategoryType']=formData.revaluation.assetCategoryType;
     formData['assetCategory']=formData.revaluation.assetCategory;
     formData['assetSubCategory']=formData.revaluation.assetSubCategory;
     delete formData.revaluation;
+  }
     // delete formData.Assets;
     for (var i = 0; i < formData.Revaluation.Assets.length; i++) {
       if (formData.Revaluation.Assets[i].isRadio == true) {
@@ -827,7 +855,7 @@ class Transaction extends Component {
 
   render() {
     let { mockData, moduleName, actionName, formData, fieldErrors, isFormValid, match } = this.props;
-    let { search, handleChange, getVal, addNewCard, removeCard, rowClickHandler, create } = this;
+    -    let { search, handleChange, getVal, addNewCard, removeCard, rowClickHandler, create } = this;
     let { showResult, resultList } = this.state;
 
     return (
@@ -866,7 +894,7 @@ class Transaction extends Component {
             />
             <br />
           </div>
-          {/*showResult && <UiTable resultList={resultList} rowClickHandler={rowClickHandler}/>*/}
+
         </form>
 
         {showResult && <UiDynamicTable resultList={resultList} ui="google" handler={handleChange} getVal={getVal} fieldErrors={fieldErrors} />}

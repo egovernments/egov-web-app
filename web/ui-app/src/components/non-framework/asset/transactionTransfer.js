@@ -121,10 +121,16 @@ class Transaction extends Component {
     let self = this;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
+    if(formData && formData.hasOwnProperty("transfer")){
     formData['assetCategoryType']=formData.transfer.assetCategoryType;
          formData['assetCategory']=formData.transfer.assetCategory;
          formData['assetSubCategory']=formData.transfer.assetSubCategory;
          delete formData.transfer;
+       }
+         if(formData && formData.hasOwnProperty("assetCategory") && formData.assetCategory==""){
+         delete formData.assetCategory;
+         delete formData.assetSubCategory;
+       }
     Api.commonApiPost('/asset-services-maha/assets/_search', formData, {}, null, true).then(
       function(res) {
         self.props.setLoadingStatus('hide');
@@ -674,11 +680,12 @@ class Transaction extends Component {
     let self = this;
     e.preventDefault();
     var formData = { ...this.props.formData };
+    if(formData && formData.hasOwnProperty("transfer")){
     formData['assetCategoryType']=formData.transfer.assetCategoryType;
          formData['assetCategory']=formData.transfer.assetCategory;
          formData['assetSubCategory']=formData.transfer.assetSubCategory;
          delete formData.transfer;
-
+      }
     for (var i = 0; i < formData.Disposal.Assets.length; i++) {
       if (formData.Disposal.Assets[i].isRadio == true) {
         formData.Disposal['assetId'] = formData.Disposal.Assets[i].id;
@@ -713,7 +720,7 @@ class Transaction extends Component {
         var amountValidation = true;
         var amountValidationMsg = '';
 
-        delete formData.Disposal.Assets;
+        //delete formData.Disposal.Assets;
 
         Api.commonApiPost('/asset-services-maha/assets/dispose/_create', '', formData, '', true).then(
           function(response) {

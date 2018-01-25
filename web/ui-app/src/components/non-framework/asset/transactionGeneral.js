@@ -228,10 +228,16 @@ class Transaction extends Component {
   search = () => {
     let self = this;
     var formData = { ...this.props.formData };
+    if(formData && formData.hasOwnProperty("depreciate")){
     formData['assetCategoryType']=formData.depreciate.assetCategoryType;
      formData['assetCategory']=formData.depreciate.assetCategory;
      formData['assetSubCategory']=formData.depreciate.assetSubCategory;
-     delete formData.depreciate;
+     delete formData.depreciate; 
+   }
+     if(formData && formData.hasOwnProperty("assetCategory") && formData.assetCategory==""){
+     delete formData.assetCategory;
+     delete formData.assetSubCategory;
+   }
     if (!formData.toDate || formData.toDate == null || formData.toDate == '') {
       self.props.toggleSnackbarAndSetText(true, 'Please enter Date of Depreciation', false, true);
     } else {
@@ -795,10 +801,12 @@ class Transaction extends Component {
       _url;
     e.preventDefault();
     var formData = { ...this.props.formData };
+    if(formData && formData.hasOwnProperty("depreciate")){
     formData['assetCategoryType']=formData.depreciate.assetCategoryType;
      formData['assetCategory']=formData.depreciate.assetCategory;
      formData['assetSubCategory']=formData.depreciate.assetSubCategory;
      delete formData.depreciate;
+   }
     var amountValidation = true;
     var amountValidationMsg = '';
     console.log(formData);
