@@ -149,8 +149,9 @@ class UiSelectField extends Component {
 
     // on change of dropdown value reseting the 3rd level  dependant dropdown values 
 
-    if(value && nextProps.value && value != nextProps.value && item.depedants){
+    if(value && (nextProps.value||nextProps.value=="") && value != nextProps.value && item.depedants){
       console.log(item);
+      debugger;
        item.depedants.map((depedants)=>{if (handler)
        handler(
          { target: { value: undefined } },
