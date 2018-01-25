@@ -325,7 +325,10 @@ var dat = {
               "multiple": true,
               "fullWidth": true,
               "isDisabled":true,
-              "setResponseData": true
+              "setResponseData": true,
+              "style":{
+                overflowX:"scroll"
+              }
             },
 
           // {
@@ -675,7 +678,11 @@ var dat = {
                 "patternErrorMsg": "",
                 "multiple": true,
                 "fullWidth": true,
-                "isDisabled":true
+                "isDisabled":true,
+                "setResponseData": true,
+                "style":{
+                  overflowX:"scroll"
+                }
               },
 
               // {
