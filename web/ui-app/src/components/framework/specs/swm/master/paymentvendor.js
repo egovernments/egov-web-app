@@ -510,10 +510,10 @@ var dat ={
             patternErrorMsg: '',
             url: '',
             defaultValue: [
-              {
-                key: 'Cash',
-                value: 'Cash',
-              },
+              // {
+              //   key: 'Cash',
+              //   value: 'Cash',
+              // },
               {
                 key: 'Cheque',
                 value: 'Cheque',
@@ -752,10 +752,10 @@ var dat ={
           patternErrorMsg: '',
           url: '',
           defaultValue: [
-            {
-              key: 'Cash',
-              value: 'Cash',
-            },
+            // {
+            //   key: 'Cash',
+            //   value: 'Cash',
+            // },
             {
               key: 'Cheque',
               value: 'Cheque',
