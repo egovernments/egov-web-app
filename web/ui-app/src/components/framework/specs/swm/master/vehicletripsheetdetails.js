@@ -97,12 +97,17 @@ var dat = {
     `,
     beforeSubmit: `
     var oneDay = 24*60*60*1000;
-    // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
-    // var curDate=new Date();
-    // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
+    var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    var curDate=new Date();
+    var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
+    if(result)
+    {
+      alert("The from date should be future or current date");
+      shouldSubmit=false;
+    }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
-      alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
+      alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].route.dumpingGround && formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
@@ -445,12 +450,17 @@ var dat = {
         }
     }`,
     beforeSubmit: `var oneDay = 24*60*60*1000;
-    // var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
-    // var curDate=new Date();
-    // !(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear()) &&
+    var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    var curDate=new Date();
+    var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
+    if(result)
+    {
+      alert("The from date should be future or current date");
+      shouldSubmit=false;
+    }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
-      alert("The from date should not be future date and difference between from date and to date should be less than 1 day");
+      alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].route.dumpingGround && formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
