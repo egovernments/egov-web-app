@@ -48,10 +48,10 @@ class ShowForm extends Component {
 
       if (fieldType == 'url') {
         metaData.reportDetails.searchParams[fieldIndex].defaultValue = defaultValue;
-      }
-
-      if (defaultValuesLength < 2) {
-        metaData.reportDetails.searchParams[fieldIndex].disabled = true;
+      } else {
+        if (defaultValuesLength < 2) {
+          metaData.reportDetails.searchParams[fieldIndex].disabled = true;
+        }
       }
 
       setMetaData(metaData);
