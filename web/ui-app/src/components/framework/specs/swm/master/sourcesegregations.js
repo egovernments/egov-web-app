@@ -146,7 +146,7 @@ var dat = {
       },
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationTwo',
         fields: [
           {
             "type": "boundary",
@@ -257,7 +257,7 @@ var dat = {
       },
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationTwo',
         fields: [
           {
             "type": "boundary",
@@ -417,7 +417,7 @@ var dat = {
       },
       {
         name: 'LocationDetails',
-        label: 'swm.collectionpoints.create.group.title.LocationDetails',
+        label: 'swm.collectionpoints.create.group.title.LocationTwo',
         fields: [
           {
             "type": "boundary",

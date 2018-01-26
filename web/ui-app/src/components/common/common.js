@@ -2248,6 +2248,7 @@ var localization_EN_Data = {
   'swm.collectionpoints.create.name': 'Collection Point Name',
   'swm.collectionpoints.create.locationCode': 'Locationcode',
   'swm.collectionpoints.create.group.title.LocationDetails': 'Location Selection',
+  'swm.collectionpoints.create.group.title.LocationTwo': 'Location Details',
   'swm.collectionpoints.create.offSet': 'Offset',
   'swm.collectionpoints.create.sortBy': 'Sortby',
   'swm.collectionpoints.create.code': 'Code',
