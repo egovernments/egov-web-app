@@ -156,7 +156,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+                  "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
               }
             ]
           },
@@ -191,7 +191,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
+                    "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name",
 
                 }
               ]
@@ -209,7 +209,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+                    "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
 
                 }
               ]
@@ -511,7 +511,7 @@ var dat = {
                 jsonPath: "vehicleTripSheetDetails[0].route.code",
                 type: "dropDown",
                 pattern:
-                  "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+                  "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
               }
             ]
           },
@@ -546,7 +546,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+                    "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
                 }
               ]
             },
@@ -563,7 +563,7 @@ var dat = {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
                   type: "dropDown",
                   pattern:
-                    "/swm-services/vehicleschedules/_search?tenantId=default&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
+                    "/swm-services/vehicleschedules/_search?tenantId=default&fromTripSheet=true&regNumber={vehicleTripSheetDetails[0].vehicle.regNumber}&scheduledFrom={vehicleTripSheetDetails[0].tripStartDate}&scheduledTo={vehicleTripSheetDetails[0].tripEndDate}|$.vehicleSchedules[*].route.code|$.vehicleSchedules[*].route.name"
                 }
               ]
             },
