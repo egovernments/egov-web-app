@@ -36,7 +36,7 @@ var dat = {
         },
       ],
       values: [
-        'sanitationStaffTarget.targetNo', 
+        'sanitationStaffTarget.targetNo',
         'shift.name'
       ],
       resultPath: 'sanitationStaffSchedules',
@@ -52,7 +52,8 @@ var dat = {
     groups: [{
       name: 'staffScheduleDetails',
       label: 'swm.create.group.title.staffScheduleDetails',
-      fields: [{
+      fields: [
+        {
           name: 'targetNo',
           jsonPath: 'sanitationStaffSchedules[0].sanitationStaffTarget.targetNo',
           label: 'swm.create.sanitationstaffschedules.targetNo',
@@ -73,7 +74,8 @@ var dat = {
               'sanitationStaffSchedules[0].sanitationStaffTarget.route.name': 'sanitationStaffTargets[0].route.name',
               'sanitationStaffSchedules[0].sanitationStaffTarget.dumpingGround.name': 'sanitationStaffTargets[0].dumpingGround.name',
               'sanitationStaffSchedules[0].sanitationStaffTarget.employeeName': 'sanitationStaffTargets[0].employee.name',
-              'sanitationStaffSchedules[0].sanitationStaffTarget.departmentName': 'sanitationStaffTargets[0].employee.assignments[0].department'
+              'sanitationStaffSchedules[0].sanitationStaffTarget.departmentName': 'sanitationStaffTargets[0].employee.assignments[0].department',
+              'sanitationStaffSchedules[0].collectionPoints':"sanitationStaffTargets[0].collectionPoints"
             },
           },
         },
@@ -168,7 +170,62 @@ var dat = {
           patternErrorMsg: '',
         },
       ],
-    }, ],
+    },
+    {
+      name: 'locationsCovered',
+      label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      fields: [{
+        type: "tableListTemp",
+        jsonPath: "sanitationStaffSchedules[0].collectionPoints",
+        tableList: {
+          header: [{
+              label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+            },
+            {
+              label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+            }
+          ],
+          values: [{
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sanitationStaffSchedules[0].collectionPoints[0].location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true,
+            "style":{
+              overflowX:"scroll"
+            }
+          },
+
+        // {
+        //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+        //   pattern: "",
+        //   type: "text",
+        //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+        //   isDisabled: true
+        // },
+            {
+              name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+              pattern: "",
+              type: "text",
+              jsonPath: "sanitationStaffSchedules[0].collectionPoints[0].name",
+              isDisabled: true
+            }
+          ],
+          actionsNotRequired: true
+        },
+        hasATOAATransform: true,
+        aATransformInfo: {
+          to: 'vehicleTripSheetDetails[0].collectionPoints',
+          key: 'code',
+          from: 'collectionPoint.code'
+        }
+      }],
+    }],
     url: '/swm-services/sanitationstaffschedules/_create',
     tenantIdRequired: true,
   },
@@ -284,7 +341,63 @@ var dat = {
         }
 
       ],
-    }, ],
+    },
+    {
+      name: 'locationsCovered',
+      label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      fields: [{
+        type: "tableListTemp",
+        jsonPath: "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints",
+        tableList: {
+          header: [{
+              label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+            },
+            {
+              label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+            }
+          ],
+          values: [{
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints[0].location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true,
+            "style":{
+              overflowX:"scroll"
+            }
+          },
+
+        // {
+        //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+        //   pattern: "",
+        //   type: "text",
+        //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+        //   isDisabled: true
+        // },
+            {
+              name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+              pattern: "",
+              type: "text",
+              jsonPath: "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints[0].name",
+              isDisabled: true
+            }
+          ],
+          actionsNotRequired: true
+        },
+        hasATOAATransform: true,
+        aATransformInfo: {
+          to: 'vehicleTripSheetDetails[0].collectionPoints',
+          key: 'code',
+          from: 'collectionPoint.code'
+        }
+      }],
+    }
+    ],
     tenantIdRequired: true,
     url: '/swm-services/sanitationstaffschedules/_search?transactionNo={transactionNo}',
   },
@@ -317,7 +430,9 @@ var dat = {
               'sanitationStaffSchedules[0].sanitationStaffTarget.route.name': 'sanitationStaffTargets[0].route.name',
               'sanitationStaffSchedules[0].sanitationStaffTarget.dumpingGround.name': 'sanitationStaffTargets[0].dumpingGround.name',
               'sanitationStaffSchedules[0].sanitationStaffTarget.employeeName': 'sanitationStaffTargets[0].employee.name',
-              'sanitationStaffSchedules[0].sanitationStaffTarget.departmentName': 'sanitationStaffTargets[0].employee.assignments[0].department'
+              'sanitationStaffSchedules[0].sanitationStaffTarget.departmentName': 'sanitationStaffTargets[0].employee.assignments[0].department',
+              'sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints':"sanitationStaffTargets[0].collectionPoints"
+
             },
           },
         },
@@ -412,7 +527,63 @@ var dat = {
           patternErrorMsg: '',
         },
       ],
-    }, ],
+    },
+    {
+      name: 'locationsCovered',
+      label: 'swm.vehiclestripsheet.create.group.title.locationsCovered',
+      fields: [{
+        type: "tableListTemp",
+        jsonPath: "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints",
+        tableList: {
+          header: [{
+              label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+            },
+            {
+              label: "swm.create.sanitationstaffschedules.colletionPoint.name"
+            }
+          ],
+          values: [{
+            "type": "boundary",
+            "label": "",
+            "hierarchyType": "REVENUE",
+            "jsonPath": "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints[0].location.code",
+            "isRequired": false,
+            "patternErrorMsg": "",
+            "multiple": true,
+            "fullWidth": true,
+            "isDisabled":true,
+            "setResponseData": true,
+            "style":{
+              overflowX:"scroll"
+            }
+          },
+
+        // {
+        //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+        //   pattern: "",
+        //   type: "text",
+        //   jsonPath: "vehicleTripSheetDetails[0].route.collectionPoints[0].collectionPoint.location.name",
+        //   isDisabled: true
+        // },
+            {
+              name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+              pattern: "",
+              type: "text",
+              jsonPath: "sanitationStaffSchedules[0].sanitationStaffTarget.collectionPoints[0].name",
+              isDisabled: true
+            }
+          ],
+          actionsNotRequired: true
+        },
+        hasATOAATransform: true,
+        aATransformInfo: {
+          to: 'vehicleTripSheetDetails[0].collectionPoints',
+          key: 'code',
+          from: 'collectionPoint.code'
+        }
+      }],
+    }
+    ],
     url: '/swm-services/sanitationstaffschedules/_update',
     tenantIdRequired: true,
     searchUrl: '/swm-services/sanitationstaffschedules/_search?transactionNo={transactionNo}',
