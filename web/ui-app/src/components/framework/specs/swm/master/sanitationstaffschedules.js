@@ -18,7 +18,7 @@ var dat = {
         },
         {
           name: 'name',
-          jsonPath: 'shift.code',
+          jsonPath: 'shiftCode',
           label: 'swm.create.sanitationstaffschedules.shift',
           type: 'singleValueList',
           isDisabled: false,
