@@ -133,10 +133,10 @@ var dat = {
   'swm.create': {
     beforeSubmit:
     `
-    if(formData.vehicles[0].regNumber.length < 6  || formData.vehicles[0].regNumber.length > 22)
+    if(formData.vehicles[0].regNumber.length < 1  || formData.vehicles[0].regNumber.length > 22)
     {
       shouldSubmit=false;
-      alert("Registration Number length should be between 6 and 22");
+      alert("Registration Number length should be between 1 and 22");
     }
     `,
     numCols: 3,
