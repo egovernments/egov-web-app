@@ -170,7 +170,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             maxLength: 22,
-            minLength: 6,
+            minLength: 1,
             patternErrMsg: 'Registration Number should be Alphanumeric',
           },
           {
@@ -489,7 +489,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             maxLength: 12,
-            minLength: 6,
+            minLength: 1,
             patternErrorMsg: '',
           },
           {
@@ -783,7 +783,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             maxLength: 22,
-            minLength: 6,
+            minLength: 1,
             patternErrMsg: 'Registration Number should be Alphanumeric',
           },
           {
