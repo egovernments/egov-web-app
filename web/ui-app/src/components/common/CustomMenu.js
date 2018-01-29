@@ -450,6 +450,7 @@ const menuConvention = {
   'Works Management.Works Masters.Create SOR': '/search/works/scheduleofrate/view',
 
   'Works Management.Reports.Work Order Register': '/report/works/WorkOrderRegister',
+  'Works Management.Reports.ReportsWork In Progress Register': '/report/works/WorkInProgressRegister',
 
   //upload
   'Upload.Upload': '/iframeLoader?url=/app/v2/uploader',
