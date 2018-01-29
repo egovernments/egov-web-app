@@ -92,6 +92,7 @@ class ShowFields extends Component {
       >
         {!isMultiple && (
           <CardHeader
+            className="uiCardHeader"
             style={{ paddingTop: 4, paddingBottom: 0 }}
             title={<div style={{ color: '#354f57', fontSize: 18, margin: '8px 0' }}>{group.label}</div>}
             actAsExpander={true}
@@ -111,7 +112,7 @@ class ShowFields extends Component {
                         field.type === 'viewDocuments' ||
                         field.type === 'fileTable' ||
                         field.type === 'tableList' ||
-                        field.type === 'tableListTemp'  ||
+                        field.type === 'tableListTemp' ||
                         field.type === 'nestedTableList' ||
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'workflow' ||
@@ -127,7 +128,7 @@ class ShowFields extends Component {
                         field.type === 'viewDocuments' ||
                         field.type === 'fileTable' ||
                         field.type === 'tableList' ||
-                        field.type === 'tableListTemp'  ||
+                        field.type === 'tableListTemp' ||
                         field.type === 'nestedTableList' ||
                         (field.type === 'textarea' && field.fullWidth === true) ||
                         field.type === 'window' ||
@@ -295,7 +296,17 @@ class ShowFields extends Component {
     // console.log(item.type, item.jsonPath);
     if (
       screen == 'view' &&
-      ['viewDocuments', 'documentList', 'fileTable', 'arrayText', 'arrayNumber', 'tableList','tableListTemp', 'workflow', 'singleFileUpload'].indexOf(item.type) == -1
+      [
+        'viewDocuments',
+        'documentList',
+        'fileTable',
+        'arrayText',
+        'arrayNumber',
+        'tableList',
+        'tableListTemp',
+        'workflow',
+        'singleFileUpload',
+      ].indexOf(item.type) == -1
     ) {
       if (item.type == 'datePicker') {
         item.isDate = true;
@@ -612,18 +623,18 @@ class ShowFields extends Component {
           />
         );
 
-        case 'tableListTemp':
-          return (
-            <UiMultiFieldTableTemp
-              tabIndex={index}
-              ui={this.props.ui}
-              getVal={this.props.getVal}
-              item={item}
-              fieldErrors={this.props.fieldErrors}
-              handler={this.props.handler}
-              screen={screen}
-            />
-          );
+      case 'tableListTemp':
+        return (
+          <UiMultiFieldTableTemp
+            tabIndex={index}
+            ui={this.props.ui}
+            getVal={this.props.getVal}
+            item={item}
+            fieldErrors={this.props.fieldErrors}
+            handler={this.props.handler}
+            screen={screen}
+          />
+        );
       case 'nestedTableList':
         return (
           <UiNestedTablesInputs
