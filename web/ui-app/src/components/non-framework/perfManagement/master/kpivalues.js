@@ -7,9 +7,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
 
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 
 import { Collapse, Grid, Row, Col, Table, DropdownButton, Button, OverlayTrigger, Popover, Glyphicon } from 'react-bootstrap';
 
@@ -38,6 +38,7 @@ class kpivalues extends Component {
       Department: [],
       FinantialYear: [],
       collapse: [],
+      showFooter:true,
 
       selectedDeptId: '',
       selectedFinYear: '',
@@ -203,10 +204,10 @@ class kpivalues extends Component {
             periodItem.documents.map(files => {
               console.log(files);
               self.getFileDetails(files['fileStoreId'],self);
-            }); 
+            });
           }
-          
-        });      
+
+        });
       });*/
 
         self.setState({ data: res.kpiValues, header: header, showResult: showResult, KPIResult: response });
@@ -485,7 +486,7 @@ class kpivalues extends Component {
           <td />
           {item.kpiValue.valueList.map((itemValue, k) => {
             var className = this.panelVisiblity(k);
-
+            console.log(item.kpi.documentsReq.length);
             return (
               <td className={className}>
                 {item.kpi.targetType == 'TEXT' && (
@@ -531,21 +532,22 @@ class kpivalues extends Component {
                     <MenuItem value="3" primaryText="WIP" />
                   </SelectField>
                 )}
-
-                <div>
-                  <span style={{ color: 'orange' }}>
-                    <span className="glyphicon glyphicon-upload" aria-hidden="true" /> &nbsp;&nbsp;
-                    <span id={itemValue.valueid + '' + itemValue.period} onClick={e => this.getDialog(item.kpi, itemValue, this, e)}>
-                      <strong>{translate('perfManagement.create.KPIs.groups.Uploads')}</strong>
+                {
+                  item.kpi.documentsReq.length != 0 &&
+                  <div>
+                    <span style={{ color: 'orange' }}>
+                      <span className="glyphicon glyphicon-upload" aria-hidden="true" /> &nbsp;&nbsp;
+                      <span id={itemValue.valueid + '' + itemValue.period} onClick={e => this.getDialog(item.kpi, itemValue, this, e)}>
+                        <strong>{translate('perfManagement.create.KPIs.groups.Uploads')}</strong>
+                      </span>
                     </span>
-                  </span>
-
-                  <br />
-                </div> 
+                    <br/>
+                  </div>
+                }
               </td>
             );
           })}
-          <td />
+          <td/>
         </tr>
       );
     });
@@ -668,7 +670,7 @@ class kpivalues extends Component {
           });
 
         }
-         
+
       });
     });
 
@@ -819,16 +821,16 @@ class kpivalues extends Component {
 
                   if (kpiValue.valueid == key && kpiValue.period == index) {
                     kpiValue.documents.push({"fileStoreId":res.files[0].fileStoreId})
-                    console.log(res.files[0].fileStoreId,'file store id'); 
-                    console.log(kpiValue.period,'result clone'); 
+                    console.log(res.files[0].fileStoreId,'file store id');
+                    console.log(kpiValue.period,'result clone');
                   }
 
                 });
               });
-                           
+
 
               self.setState({KPIResult:resultClone});
-              
+
 
               if(counter == 0 && breakOut == 0)
                 {
@@ -840,12 +842,12 @@ class kpivalues extends Component {
               //
               //console.log(res.files[0].fileStoreId);
               //_.set(formData, key, res.files[0].fileStoreId);
-              
-                
+
+
                 //self.makeAjaxCall(formData, _url);
             }
         });
-          
+
         }
         counter--;
 
@@ -992,7 +994,7 @@ class kpivalues extends Component {
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
                   hintText="Please Select"
-                  labelStyle={{ color: '#5F5C57' }}                  
+                  labelStyle={{ color: '#5F5C57' }}
                   floatingLabelText={<span>{translate('perfManagement.view.KPIs.groups.viewkpiTargetFinancialYear')}</span>}
                   onChange={(event, key, value) => this.searchKPIValues(event, key, value, 'FINYEAR')}
                 >
@@ -1014,7 +1016,7 @@ class kpivalues extends Component {
                   errorStyle={{ float: 'left' }}
                   fullWidth={true}
                   hintText="Please Select"
-                  labelStyle={{ color: '#5F5C57' }}                  
+                  labelStyle={{ color: '#5F5C57' }}
                   floatingLabelText={<span>{translate('perfManagement.create.KPIs.groups.kpiCode')}</span>}
                   onChange={(event, key, value) => this.searchKPIValues(event, key, value, 'KPI')}
                 >
@@ -1080,7 +1082,7 @@ class kpivalues extends Component {
                     width="100%"
                     style={tableStyle}
                     responsive
-                  >
+                   >
                     <thead>
                       <th>{translate('perfManagement.dashboard.query.label.kpis')}</th>
 
