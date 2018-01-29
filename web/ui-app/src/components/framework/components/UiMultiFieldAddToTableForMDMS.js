@@ -692,7 +692,7 @@ class UiMultiFieldAddToTableForMDMS extends Component {
             </Dialog>
             <div className="row">
               <div className="col-md-6">
-                <h4>{this.props.item && this.props.item.header[0].label.split('.')[3]} Master</h4>
+                <h4>{this.props.item && this.props.item.header[0].label.split('.')[3].replace(/([A-Z])/g, ' $1')} Master</h4>
               </div>
               <div className="col-md-6 text-right">
                 <RaisedButton
