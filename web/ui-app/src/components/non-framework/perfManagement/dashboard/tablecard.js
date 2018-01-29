@@ -205,6 +205,23 @@ export default class TableCard extends Component {
 
   /**
    * render
+   * render footnote for consolidated data
+   */
+  renderConsolidatedFootnote = () => {
+    if (!this.props.isReportConsolidated) {
+      return (
+        <div />
+      )
+    }
+    return (
+      <CardText>
+        <span style={{ color: '#FF0000' }}> *</span> {translate('perfManagement.dashboard.chart.monthly.msg4')}
+      </CardText>
+    )
+  }
+
+  /**
+   * render
    * render insufficient data to draw the chart
    */
   renderInsufficientDataForChart = () => {
@@ -239,6 +256,7 @@ export default class TableCard extends Component {
           <CardHeader style={{ paddingBottom: 0 }} title={<div style={{ fontSize: 16, marginBottom: '25px' }}> {this.getReportTitle()} </div>} />
           {this.renderReportNavigationButton(translate('perfManagement.dashboard.chart.type.chart'))}
           {this.renderTable()}
+          {this.renderConsolidatedFootnote()}
         </Card>
       </div>
     );

@@ -3046,6 +3046,7 @@ var localization_EN_Data = {
   'perfManagement.dashboard.chart.monthly.msg1': 'Monthly performance of KPI',
   'perfManagement.dashboard.chart.monthly.msg2': 'for ULB',
   'perfManagement.dashboard.chart.monthly.msg3': 'in FinancialYear',
+  'perfManagement.dashboard.chart.monthly.msg4': 'Data shown in generated graph on basis of last submitted value',
   'perfManagement.dashboard.chart.targetValue': 'Target Value',
   'perfManagement.dashboard.chart.actualValue': 'Actual Value',
   'perfManagement.dashboard.common.nav.next': 'Next',
@@ -3083,7 +3084,6 @@ var localization_EN_Data = {
   'perfManagement.create.KPIs.months.OCT':'October',
   'perfManagement.create.KPIs.months.NOV':'November',
   'perfManagement.create.KPIs.months.DEC':'December',
-
   'perfManagement.create.KPIs.groups.CANCEL': 'Cancel',
   'perfManagement.create.KPIs.groups.UPLOAD': "Upload",
 
@@ -5609,6 +5609,7 @@ var localization_MR_Data = {
   'perfManagement.dashboard.chart.monthly.msg1': 'केपीआईचे मासिक कामगिरी',
   'perfManagement.dashboard.chart.monthly.msg2': 'शहरी लोकल बॉडीसाठी',
   'perfManagement.dashboard.chart.monthly.msg3': 'वित्तीय वर्षांत',
+  'perfManagement.dashboard.chart.monthly.msg4': 'अंतिम सबमिट केलेल्या मूल्याच्या आधारे तयार केलेल्या ग्राफमध्ये दर्शविलेला डेटा',
   'perfManagement.dashboard.chart.targetValue': 'लक्ष्य मूल्य',
   'perfManagement.dashboard.chart.actualValue': 'वास्तविक मूल्य',
   'perfManagement.dashboard.common.nav.next': 'पुढे',
