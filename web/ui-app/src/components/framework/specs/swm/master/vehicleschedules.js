@@ -567,30 +567,30 @@ var dat = {
                    }
                  },
 
-                 // {
-                 //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
-                 //   pattern: "",
-                 //   type: "label",
-                 //   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.name",
-                 //   isDisabled: true
-                 // },
-                 {
-                   name: "swm.create.sanitationstaffschedules.colletionPoint.name",
-                   pattern: "",
-                   type: "text",
-                   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.name",
-                   isDisabled: true
-                 }
-               ],
-               actionsNotRequired: true
-             },
-             hasATOAATransform: true,
-             aATransformInfo: {
-               to: 'vehicleSchedules[0].route.collectionPoints',
-               key: 'code',
-               from: 'collectionPoint.code'
-             }
-           }],
+                // {
+                //   name: "swm.create.sanitationstaffschedules.colletionPoint.location",
+                //   pattern: "",
+                //   type: "label",
+                //   jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.location.name",
+                //   isDisabled: true
+                // },
+                {
+                  name: "swm.create.sanitationstaffschedules.colletionPoint.name",
+                  pattern: "",
+                  type: "text",
+                  jsonPath: "vehicleSchedules[0].route.collectionPoints[0].collectionPoint.name",
+                  isDisabled: true
+                }
+              ],
+              actionsNotRequired: true
+            },
+            hasATOAATransform: true,
+            aATransformInfo: {
+              to: 'vehicleSchedules[0].route.collectionPoints',
+              key: 'code',
+              from: 'collectionPoint.code'
+            }
+          }],
          }
       ],
       "url":"/swm-services/vehicleschedules/_update",

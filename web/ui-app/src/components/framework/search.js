@@ -347,13 +347,19 @@ class Search extends Component {
       // console.log(formData)
       var filterData
       if(_.isEmpty(formData)) {
-               filterData = null;
+        filterData = null;
       }
       else {
         var str = [];
         for(var i=0; i<Object.keys(formData).length; i++) {
-
-          if(typeof(formData[Object.keys(formData)[i]]) === "object"){      //Nested feature for single level - Enhancement required
+          if(_.isArray(formData[Object.keys(formData)[i]])){
+            formData[Object.keys(formData)[i]].forEach(function(elem, ind){
+              if(typeof elem === "object"){
+                str.push(`('${formData[Object.keys(formData)[i]][ind][Object.keys(elem)[0]]}' in @.${Object.keys(formData)[i]}[*].${Object.keys(elem)[0]})`);
+              }
+            })
+          }
+          else if(typeof(formData[Object.keys(formData)[i]]) === "object"){      //Nested feature for single level - Enhancement required
             var level_1 = Object.keys(formData)[i];
             for(let item in formData[level_1]){
               if(_.isEmpty(formData[level_1][item])) {
@@ -362,8 +368,8 @@ class Search extends Component {
               str.push(`@.${level_1}.${item}=='${formData[level_1][item]}'`);
             }
           }
+          
           else{
-           
             str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
           }
         }

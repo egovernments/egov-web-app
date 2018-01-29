@@ -33,18 +33,18 @@ var dat = {
             defaultValue: '',
             patternErrMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$..DumpingGround.*.code|$..DumpingGround.*.name'
+          },
+          {
+            name: 'DumpingGroundULB',
+            jsonPath: 'ulbs[0].code',
+            label: 'swm.create.ulbNames',
+            pattern: '',
+            type: 'singleValueList',
+            isDisabled: false,
+            defaultValue: '',
+            patternErrMsg: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
           }
-          // {
-          //   name: 'DumpingGroundULB',
-          //   jsonPath: 'ulbs',
-          //   label: 'swm.create.ulbNames',
-          //   pattern: '',
-          //   type: 'text',
-          //   isDisabled: false,
-          //   defaultValue: '',
-          //   patternErrMsg: '',
-          //   url: ''
-          // }
         ]
       },
     ],
