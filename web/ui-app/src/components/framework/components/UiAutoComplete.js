@@ -64,7 +64,7 @@ class UiAutoComplete extends Component {
     const response = await Api.commonApiPost(url, id, {}, '', useTimestamp || false, resultsPerPage,'','',false,offset);
   
     if (response) {
-      totalNumberOfResults = parseInt(response.page.totalResults);
+      totalNumberOfResults = response.hasOwnProperty("page") && response.page.hasOwnProperty("totalResults") ? parseInt(response.page.totalResults) : 0;
       const queries = responseJsonPaths.split('|');
       const keys = jp.query(response, queries[1]);
       const values = jp.query(response, queries[2]);
