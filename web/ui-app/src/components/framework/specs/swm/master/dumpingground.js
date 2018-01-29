@@ -533,7 +533,7 @@ var dat = {
         fields: [
           {
             name: 'WasteType',
-            label: '',
+            label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
@@ -950,7 +950,7 @@ var dat = {
         fields: [
           {
             name: 'WasteType',
-            label: '',
+            label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
             jsonPath: 'MdmsRes.swm.DumpingGround[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
@@ -1414,7 +1414,7 @@ var dat = {
         fields: [
           {
             name: 'WasteType',
-            label: '',
+            label: 'MdmsMetadata.masterData.swm.WasteSubType.wasteType',
             jsonPath: 'MasterMetaData.masterData[0].siteDetails.wasteTypes',
             type: 'multiValueList',
             pattern: '^null|$',
