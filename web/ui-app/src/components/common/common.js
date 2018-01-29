@@ -1889,8 +1889,6 @@ var localization_EN_Data = {
   'wc.serviceCharge.table.title': 'Service Charge Details',
   'reports.wcms.size ': 'Size',
   'reports.wcms.size': 'Sub Usage',
-  //label for serial number in search result
-  '#' : 'Sr.No.',
   'ac.create.title': 'Create Asset Sub Category',
   'ac.create.asset.sub.category': 'Asset Category Name',
   'ac.create.asset.category.name': 'Asset Sub-Category Name',

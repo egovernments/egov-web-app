@@ -800,7 +800,6 @@ var dat = {
      formData['assetCategoryType']=formData.movable.assetCategoryType;
      formData['assetCategory']=formData.movable.assetCategory;
      formData['assetSubCategory']=formData.movable.assetSubCategory;
-     delete formData.movable;
      if(formData && formData.hasOwnProperty("assetCategory")  && (formData.assetCategory=="" || formData.assetCategory==null)){
      delete formData.assetCategory;
      }

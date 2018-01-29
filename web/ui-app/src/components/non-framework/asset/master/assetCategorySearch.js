@@ -214,7 +214,7 @@ class assetCategorySearch extends Component {
         var result = result2;
 
         var resultList = {
-          resultHeader: [{ label: '#' }, ...result.header],
+          resultHeader: [{ label: 'Sr.No.' }, ...result.header],
           resultValues: [],
           disableRowClick: result.disableRowClick || false,
         };
