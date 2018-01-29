@@ -549,7 +549,7 @@ class Report extends Component {
     setMockData(specs);
   }
 
-
+  
 
   displayUI(results) {
     let {
@@ -739,6 +739,11 @@ class Report extends Component {
               ].objectName
             );
           } else {
+            let obj =
+              specifications[
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              ];
+            if (obj && obj.beforeSetUpdateData) eval(obj.beforeSetUpdateData);
             self.setInitialUpdateData(
               res,
               JSON.parse(JSON.stringify(specifications)),
@@ -748,11 +753,6 @@ class Report extends Component {
                 `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ].objectName
             );
-            // var hashLocation = window.location.hash;
-            let obj =
-              specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
-              ];
             let fields = jp.query(
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
@@ -826,7 +826,7 @@ class Report extends Component {
             continue;
           }
         }
-        console.log(obj);
+        // console.log(obj);
       }
       var formData = {};
       if (obj && obj.groups && obj.groups.length)
@@ -1337,7 +1337,6 @@ self.props.setLoadingStatus("hide");
       );
     }
   };
-
 
   makeAjaxCall = (formData, url) => {
     let shouldSubmit=true;
@@ -3950,6 +3949,7 @@ filterDataFromArray=(res,item)=>{
 
   };
 
+
   incrementIndexValue = (group, jsonPath) => {
     let { formData } = this.props;
     var length = _.get(formData, jsonPath)
@@ -4350,7 +4350,7 @@ filterDataFromArray=(res,item)=>{
     }
 
     //let isUpdateDataFetched = actionName==='update'? !_.isEmpty(formData) : true;
-    console.log({ ...this.props.formData });
+    // console.log({ ...this.props.formData });
     return (
       <div className="Report">
         <Row>

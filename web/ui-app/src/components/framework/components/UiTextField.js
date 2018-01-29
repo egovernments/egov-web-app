@@ -41,7 +41,7 @@ const UiTextField = props => {
               errorStyle={{ float: 'left' }}
               fullWidth={false}
               maxLength={item.maxLength || ''}
-              value={props.getVal(item.jsonPath)}
+              value={props.getVal(item.jsonPath) ? props.getVal(item.jsonPath) : item.defaultValue}
               disabled={disabledValue}
               errorText={props.fieldErrors[item.jsonPath]}
               onChange={e => {
@@ -80,7 +80,8 @@ const UiTextField = props => {
               style={{ display: item.hide ? 'none' : 'inline-block' }}
               errorStyle={{ float: 'left' }}
               fullWidth={true}
-              value={props.getVal(item.jsonPath)}
+              value={props.getVal(item.jsonPath) ? props.getVal(item.jsonPath) : item.defaultValue}
+              // value={props.getVal(item.jsonPath)}
               disabled={disabledValue}
               errorText={props.fieldErrors[item.jsonPath]}
               {...labelProperty}
