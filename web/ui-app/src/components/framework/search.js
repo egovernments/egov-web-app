@@ -185,18 +185,20 @@ class Search extends Component {
       //console.log(pathArr);
       pathArr = pathArr[0];
 
-
-      for (var j = 0; j < pathArr.length; ) {
-        ddArr.push(pathArr[j] + '[' + pathArr[j + 1] + ']');
-        jPath = ddArr.join('.');
-        if (j > 1) {
-          var code = jp.query(cityBdry, jPath + '.code');
-          var label = jp.query(cityBdry, jPath + '.label');
-          var name = jp.query(cityBdry, jPath + '.name');
-          viewLabels[label] = name[0];
+      if(pathArr){
+        for (var j = 0; j < pathArr.length; ) {
+          ddArr.push(pathArr[j] + '[' + pathArr[j + 1] + ']');
+          jPath = ddArr.join('.');
+          if (j > 1) {
+            var code = jp.query(cityBdry, jPath + '.code');
+            var label = jp.query(cityBdry, jPath + '.label');
+            var name = jp.query(cityBdry, jPath + '.name');
+            viewLabels[label] = name[0];
+          }
+          j += 2;
         }
-        j += 2;
       }
+      
 
       return viewLabels;
       this.setLoadingStatus('hide');
@@ -225,14 +227,14 @@ class Search extends Component {
     if (values && values.length) {
       if(currentSpecification.isBoundary){
         for(var i = 0; i < values.length; i++){
-          // if (typeof _.get(values[i], currentSpecification.jPathBoundary) != 'undefined') {
-            if(values[i].location == null || values[i].location.code == null){
-              boundaryData.push("NA");
-            }
-            else{
-              let tempBoundary = self.buildBoundaryData(boundaryDataOrg, boundaryDataOrgQuery, _.get(values[i], currentSpecification.jPathBoundary), true)
-              boundaryData.push(tempBoundary);
-            }
+          if (typeof _.get(values[i], currentSpecification.jPathBoundary) != 'undefined') {
+          // if(values[i].location == null || values[i].location.code == null){
+            let tempBoundary = self.buildBoundaryData(boundaryDataOrg, boundaryDataOrgQuery, _.get(values[i], currentSpecification.jPathBoundary), true)
+            boundaryData.push(tempBoundary);
+          }
+          else{
+            boundaryData.push("NA");
+          }
 
           // }
         }
