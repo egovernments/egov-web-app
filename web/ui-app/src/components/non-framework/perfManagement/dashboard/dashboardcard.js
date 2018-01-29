@@ -5,9 +5,9 @@ import { translate } from '../../../common/common';
 const style = {
   card: {
     position: 'relative',
-    margin: '40px',
-    height: '300px',
-    width: '300px',
+    margin: '20px',
+    height: '200px',
+    width: '200px',
     float: 'left',
   },
   cardheader: {
@@ -19,16 +19,17 @@ const style = {
   },
   cardmedia: {
     position: 'relative',
-    height: '100px',
-    width: '100px',
-    margin: '100px',
+    height: '80px',
+    width: '80px',
+    marginLeft: '60px',
+    marginTop: '20px',
   },
   cardtext: {
     position: 'absolute',
-    fontSize: '20px',
-    height: '60px',
+    fontSize: '18px',
+    height: '80px',
     textAlign: 'center',
-    bottom: '15px',
+    marginTop: '10px',
     width: '100%',
   },
 };
