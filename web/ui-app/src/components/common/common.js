@@ -2447,6 +2447,7 @@ var localization_EN_Data = {
   'reports.swm.fuellingcost': 'Cost Incurred on Fuelling',
   'reports.swm.maintenancecost': 'Cost Incurred on Maintenance/Repair',
   'reports.swm.totalcost': 'Total Cost Incurred',
+  'reports.swm.salary': 'Cost on vehicle driver salary',
   'vendorcontracts.create.contractNos': 'Contractnos',
   'vendorcontracts.create.contractNo': 'Contract No',
   'vendorcontracts.create.vendorNo': 'Vendor Name',
