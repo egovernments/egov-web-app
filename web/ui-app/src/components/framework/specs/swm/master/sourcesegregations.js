@@ -1,5 +1,14 @@
 var dat = {
   'swm.search': {
+    preApiCallsBoundary:[
+      {
+        url:"/egov-location/location/v11/boundarys/_search?",
+        qs:{
+          hierarchyTypeCode:"REVENUE"
+        }
+      },
+
+    ],
     numCols: 4,
     useTimestamp: true,
     objectName: 'sourceSegregations',
@@ -31,22 +40,62 @@ var dat = {
     ],
     result: {
       header: [
-        {
-          label: 'swm.create.ulb',
-        },
+        // {
+        //   label: 'swm.create.ulb',
+        // },
         {
           label: 'swm.search.result.dumpingGround',
+        },
+        {
+          label: 'swm.collectionPoint.search.ward',
+        },
+        {
+          label: 'swm.collectionPoint.search.zone',
+        },
+        {
+          label: 'swm.collectionPoint.search.road',
+        },
+        {
+          label: 'swm.collectionpoints.create.colony',
         },
         {
           label: 'swm.search.result.sourceSegregationDate',
           isDate: true,
         },
       ],
-      values: ['ulb.name', 'dumpingGround.name', 'sourceSegregationDate'],
+      values: ['dumpingGround.name',
+      {
+        jsonPath: 'sourceSegregations[0].dumpingGround.siteDetails.location.code',
+        isBoundary: true,
+        name: 'Ward',
+        hierarchyType: "REVENUE",
+      },
+      {
+        jsonPath: 'sourceSegregations[0].dumpingGround.siteDetails.location.code',
+        isBoundary: true,
+        name: 'Zone',
+        hierarchyType: "REVENUE",
+      },
+      {
+        jsonPath: 'sourceSegregations[0].dumpingGround.siteDetails.location.code',
+        isBoundary: true,
+        name: 'Road/Street',
+        hierarchyType: "REVENUE",
+      },
+      {
+        jsonPath: 'sourceSegregations[0].dumpingGround.siteDetails.location.code',
+        isBoundary: true,
+        name: 'Colony/Society/Complex',
+        hierarchyType: "REVENUE",
+      },
+       'sourceSegregationDate'],
       resultPath: 'sourceSegregations',
       rowClickUrlUpdate: '/update/swm/sourcesegregations/{code}',
       rowClickUrlView: '/view/swm/sourcesegregations/{code}',
     },
+    isBoundary: true,
+    hierarchyType: "REVENUE",
+    jPathBoundary: 'dumpingGround.siteDetails.location.code'
   },
   'swm.create': {
     beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
