@@ -961,6 +961,12 @@ var dat = {
       formData['assetCategory']=formData.immovable.assetCategory;
       formData['assetSubCategory']=formData.immovable.assetSubCategory;
       delete formData.immovable;
+      if(formData && formData.hasOwnProperty("assetCategory")  && (formData.assetCategory=="" || formData.assetCategory==null)){
+      delete formData.assetCategory;
+      }
+      if(formData && formData.hasOwnProperty("assetSubCategory")  && (formData.assetSubCategory=="" || formData.assetSubCategory==null)){
+      delete formData.assetSubCategory;
+      }
      `
 
   },

@@ -626,7 +626,7 @@ var dat = {
         fields: [
           {
             name: 'AssetSearchCode',
-            jsonPath: 'movable..assetCategoryType',
+            jsonPath: 'movable.assetCategoryType',
             label: 'ac.create.asset.asset.category.type',
             pattern: '',
             type: 'text',
@@ -801,6 +801,12 @@ var dat = {
      formData['assetCategory']=formData.movable.assetCategory;
      formData['assetSubCategory']=formData.movable.assetSubCategory;
      delete formData.movable;
+     if(formData && formData.hasOwnProperty("assetCategory")  && (formData.assetCategory=="" || formData.assetCategory==null)){
+     delete formData.assetCategory;
+     }
+     if(formData && formData.hasOwnProperty("assetSubCategory")  && (formData.assetSubCategory=="" || formData.assetSubCategory==null)){
+     delete formData.assetSubCategory;
+     }
     `
   },
   'asset.view': {
