@@ -28,7 +28,7 @@ var dat = {
             patternErrorMsg: 'swm.create.field.message.name',
             url: 'swm-services/collectionpoints/_search?|$..collectionPoints.*.name|$..collectionPoints.*.name',
           },
-          /*{
+          {
             "type": "boundary",
             "label": "",
             "hierarchyType": "REVENUE",
@@ -36,7 +36,7 @@ var dat = {
             "isRequired": false,
             "patternErrorMsg": "",
             "fullWidth": true,
-          }*/
+          }
         ],
       },
     ],
