@@ -88,6 +88,7 @@ class UiFileTable extends Component {
 
   renderRowList = item => {
     let { fileRowCount } = this.state;
+   
     var fileRowCountValue = fileRowCount;
     //console.log('testval:', this.props.readonly);
     let documentListArray = this.props.getVal(item.jsonPath);
@@ -111,7 +112,10 @@ class UiFileTable extends Component {
     let readOnly = false;
 
     return (
+       (fileRowCount > 0) ? 
+      
       <tbody>
+
         {arr &&
           arr.length &&
           arr.map((v, i) => {
@@ -164,6 +168,7 @@ class UiFileTable extends Component {
             }
           })}
       </tbody>
+      : ''
     );
   };
 
