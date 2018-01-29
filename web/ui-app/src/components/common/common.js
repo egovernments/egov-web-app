@@ -3458,6 +3458,7 @@ var localization_EN_Data = {
   'swm.toiletmaster.search.title': 'Toilet Search Master',
   'swm.toiletmaster.create.Address': 'Address',
   'swm.create.PublicsToilet': 'Is Public Toilet?',
+  'swm.routes.search.result.totalNoOfStops': 'Total Stops',
 
 
       "pattern.error.message.email": ' Email should be in format e.g - abc@abc.com',
@@ -5522,6 +5523,7 @@ var localization_MR_Data = {
   "pattern.error.message.Shift.remarks": 'Remarks should be between 15 to 300 characters.',
   "swm.vehicles.remarks.errormsg": 'Remarks should be between 15 to 300 characters.- Marathi',
   'vendorcontracts.create.group.title.vendorContract': 'Vendor Contract Master',
+  'swm.routes.search.result.totalNoOfStops': 'Total Stops',
 
   /** marathi localization for PA module -- starts */
   'perfManagement.create.KPIs.groups.type': 'प्रकार',

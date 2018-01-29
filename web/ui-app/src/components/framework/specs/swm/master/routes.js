@@ -950,6 +950,9 @@ var dat = {
           label: 'swm.routes.search.result.collectionPoint',
         },
         {
+          label: 'swm.routes.search.result.totalNoOfStops',
+        },
+        {
           label: 'swm.routes.search.result.distance',
         },
         {
@@ -959,6 +962,7 @@ var dat = {
       values: [
         'name',
         'collectionType.name',
+        'totalNoOfStops',
         'totalDistance',
         'totalGarbageEstimate'
       ],
