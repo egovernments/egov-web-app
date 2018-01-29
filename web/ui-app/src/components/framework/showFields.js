@@ -288,7 +288,6 @@ class ShowFields extends Component {
             return self.renderCard(listArr[key].object, listArr[key].index, noCols, jsonPath, uiFramework, groups);
           }
         });
-        break;
     }
   };
 

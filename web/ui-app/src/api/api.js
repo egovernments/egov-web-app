@@ -52,7 +52,8 @@ module.exports = {
     noPageSize = false,
     authToken = '',
     userInfo = '',
-    isStateLevel = false
+    isStateLevel = false,
+    offset = 0
   ) => {
     var url = context;
     if (url && url[url.length - 1] === '/') url = url.substring(0, url.length - 1);
@@ -84,6 +85,8 @@ module.exports = {
     } else {
       url += '&pageSize=' + noPageSize;
     }
+
+    url += '&offset=' + offset;
 
     requestInfo.authToken = localStorage.getItem('token');
     if (isTimeLong) {
@@ -159,9 +162,6 @@ module.exports = {
               alert('Session expired. Please login again.');
               //localStorage.reload = true;
               throw new Error('');
-              window.location.href = window.location.href.split('#/')[0] + '#/' + _tntId;
-
-              counter++;
             }
           } else if (response) {
             throw new Error("Oops! Something isn't right. Please try again later.");

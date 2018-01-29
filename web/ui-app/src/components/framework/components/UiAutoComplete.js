@@ -55,8 +55,63 @@ class UiAutoComplete extends Component {
     this.initData(this.props);
   }
 
-  callAPI = (keyUpValue, props) => {
+  networkCall = async (url, id, useTimestamp, isKeyValuePair, responseJsonPaths, resultsPerPage, offset, totalNumberOfResults, data) => {
+
+    if(totalNumberOfResults > -1 && offset*resultsPerPage >= totalNumberOfResults){
+      return data;    
+    }
+
+    const response = await Api.commonApiPost(url, id, {}, '', useTimestamp || false, resultsPerPage,'','',false,offset);
+  
+    if (response) {
+      totalNumberOfResults = parseInt(response.page.totalResults);
+      const queries = responseJsonPaths.split('|');
+      const keys = jp.query(response, queries[1]);
+      const values = jp.query(response, queries[2]);
+
+      const others = [];
+      if (queries.length > 3) {
+        for (let i = 3; i < queries.length; i++) {
+          others.push(jp.query(response, queries[i]) || undefined);
+        }
+      }
+
+     const dropDownData = Object.keys(keys).reduce((dropDownData, index) => {
+        const obj = {};
+        obj['key'] = keys[index] && keys[index].toString();
+
+        if (isKeyValuePair) {
+          obj['value'] = keys[index] + '-' + values[index];
+        } else {
+          obj['value'] = values[index];
+        }
+
+        if (others && others.length > 0) {
+          let otherItemDatas = [];
+
+          for (let i = 0; i < others.length; i++) {
+            otherItemDatas.push(others[i][index] || undefined);
+          }
+
+          obj['others'] = otherItemDatas;
+        }
+
+        dropDownData.push(obj);
+
+        return dropDownData;
+      }, []);
+      
+      data = data.concat(dropDownData);
+     
+   }
+
+    return await this.networkCall(url, id, useTimestamp, isKeyValuePair, responseJsonPaths, resultsPerPage, offset+1, totalNumberOfResults, data)
+   
+  };
+
+  callAPI = async (keyUpValue, props) => {
     let { item, setDropDownData, useTimestamp } = props;
+    let dropDownData = [];
 
     if (
       item.type == 'autoCompelete' &&
@@ -67,73 +122,29 @@ class UiAutoComplete extends Component {
       !_.some(tracker, { jsonPath: item.jsonPath })
     ) {
       tracker.push({ jsonPath: item.jsonPath });
-      let splitArray = item.url.split('?');
 
-      let context = '';
+      let splitArray = item.url.split('?');
+      const url = splitArray[0];
+      const responseJsonPaths = splitArray[1];
+
       let id = {};
 
-      for (var j = 0; j < splitArray[0].split('/').length; j++) {
-        if (j == splitArray[0].split('/').length - 1) {
-          context += splitArray[0].split('/')[j];
-        } else {
-          context += splitArray[0].split('/')[j] + '/';
-        }
-      }
-
       let queryStringObject = splitArray[1].split('|')[0].split('&');
-      queryStringObject = queryStringObject.filter(n => {
-        return n;
-      });
 
       for (var i = 0; i < queryStringObject.length; i++) {
         if (keyUpValue) id[queryStringObject[i].split('=')[0]] = keyUpValue;
         else id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
       }
 
-      //setting page size to a large number,quick fix, should be changed later!!
-      Api.commonApiPost(context, id, {}, '', useTimestamp || false, 1000).then(
-        function(response) {
-          if (response) {
-            let queries = splitArray[1].split('|');
-            let keys = jp.query(response, queries[1]);
-            let values = jp.query(response, queries[2]);
-
-            let others = [];
-            if (queries.length > 3) {
-              for (let i = 3; i < queries.length; i++) {
-                others.push(jp.query(response, queries[i]) || undefined);
-              }
-            }
-
-            let dropDownData = [];
-            for (var k = 0; k < keys.length; k++) {
-              let obj = {};
-              obj['key'] = keys[k] && keys[k].toString();
-              obj['value'] = values[k];
-
-              if (others && others.length > 0) {
-                let otherItemDatas = [];
-                for (let i = 0; i < others.length; i++) {
-                  otherItemDatas.push(others[i][k] || undefined);
-                }
-                obj['others'] = otherItemDatas;
-              }
-
-              if (item.hasOwnProperty('isKeyValuePair') && item.isKeyValuePair) {
-                obj['value'] = keys[k] + '-' + values[k];
-              }
-              dropDownData.push(obj);
-            }
-            setDropDownData(item.jsonPath, dropDownData);
-          }
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
-    } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
-      setDropDownData(item.jsonPath, item.defaultValue);
+      const resultsPerPage = 500;
+      const offset = 0;
+      const isKeyValuePair = item.hasOwnProperty('isKeyValuePair') && item.isKeyValuePair ? true : false;
+      dropDownData =  await this.networkCall(url, id, useTimestamp, item.isKeyValuePair, responseJsonPaths, resultsPerPage, offset,-1,dropDownData);
+      dropDownData = dropDownData ? dropDownData : []; 
+   } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
+      dropDownData = item.defaultValue;
     }
+    setDropDownData(item.jsonPath, dropDownData);
   };
 
   renderAutoComplete = item => {
