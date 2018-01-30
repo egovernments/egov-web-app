@@ -34,7 +34,8 @@ class Search extends Component {
       },
       values: [],
       selectedRecordId: '',
-      selectedRecords:[]
+      selectedRecords:[],
+      orientation:"landscape"
     };
   }
 
@@ -198,7 +199,7 @@ class Search extends Component {
           j += 2;
         }
       }
-      
+
 
       return viewLabels;
       this.setLoadingStatus('hide');
@@ -212,6 +213,10 @@ class Search extends Component {
 
   tableDataBuilder = (res, currentSpecification, self) => {
     let {dropDownData}=this.props;
+    if(currentSpecification && currentSpecification.beforeSetSearchResult)
+    {
+      eval(currentSpecification.beforeSetSearchResult);
+    }
     self.props.setLoadingStatus('hide');
     var result = currentSpecification.result;
     var resultList = {
@@ -307,6 +312,7 @@ class Search extends Component {
       resultList,
       values,
       showResult: true,
+      orientation:currentSpecification && currentSpecification.result && currentSpecification.result.orientation?currentSpecification.result.orientation:"landscape"
     });
 
     self.props.setFlag(1);
@@ -377,8 +383,9 @@ class Search extends Component {
               str.push(`@.${level_1}.${item}=='${formData[level_1][item]}'`);
             }
           }
-          
+
           else{
+
             str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
           }
         }
@@ -977,7 +984,7 @@ class Search extends Component {
       rowCheckboxClickHandler,
       rowIconClickHandler,
     } = this;
-    let { showResult, resultList, selectedRecordId, selectedRecords } = this.state;
+    let { showResult, resultList, selectedRecordId, selectedRecords,orientation } = this.state;
     let customActionsAndUrl =
       !_.isEmpty(mockData[`${moduleName}.${actionName}`]) && mockData[`${moduleName}.${actionName}`].hasOwnProperty('customActionsAndUrl')
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
@@ -1092,6 +1099,7 @@ class Search extends Component {
                 rowIconClickHandler={rowIconClickHandler}
                 selectedValue={selectedRecordId}
                 selectedValues={selectedRecords}
+                orientation={orientation}
               />
             )}
           </div>

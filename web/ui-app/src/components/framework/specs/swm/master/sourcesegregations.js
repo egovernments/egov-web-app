@@ -1,13 +1,24 @@
 var dat = {
   'swm.search': {
+    beforeSetSearchResult:`for (var i = 0; i < res.sourceSegregations.length; i++) {
+      var totalWetWaste=0,totalDryWaste=0;
+      if (res.sourceSegregations[i].collectionDetails) {
+        for (var j = 0; j < res.sourceSegregations[i].collectionDetails.length; j++) {
+          totalDryWaste=+res.sourceSegregations[i].collectionDetails[j].dryWasteCollected;
+          totalWetWaste=+res.sourceSegregations[i].collectionDetails[j].wetWasteCollected;
+        }
+        res.sourceSegregations[i]['totalDryWasteCollected']=totalDryWaste;
+        res.sourceSegregations[i]['totalWetWasteCollected']=totalWetWaste;
+        res.sourceSegregations[i]['totalWasteCollected']=totalDryWaste+totalWetWaste;
+      }
+    }`,
     preApiCallsBoundary:[
       {
         url:"/egov-location/location/v11/boundarys/_search?",
         qs:{
           hierarchyTypeCode:"REVENUE"
         }
-      },
-
+      }
     ],
     numCols: 4,
     useTimestamp: true,
@@ -62,6 +73,15 @@ var dat = {
           label: 'swm.search.result.sourceSegregationDate',
           isDate: true,
         },
+        {
+          label: 'swm.collectionPoint.search.totalWetWaste',
+        },
+        {
+          label: 'swm.collectionPoint.search.totalDryWaste',
+        },
+        {
+          label: 'swm.collectionpoints.create.totalWaste',
+        }
       ],
       values: ['dumpingGround.name',
       {
@@ -88,10 +108,11 @@ var dat = {
         name: 'Colony/Society/Complex',
         hierarchyType: "REVENUE",
       },
-       'sourceSegregationDate'],
+       'sourceSegregationDate','totalDryWasteCollected','totalWetWasteCollected','totalWasteCollected'],
       resultPath: 'sourceSegregations',
       rowClickUrlUpdate: '/update/swm/sourcesegregations/{code}',
       rowClickUrlView: '/view/swm/sourcesegregations/{code}',
+      orientation:"portrait"
     },
     isBoundary: true,
     hierarchyType: "REVENUE",

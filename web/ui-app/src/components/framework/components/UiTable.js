@@ -66,7 +66,7 @@ class UiTable extends Component {
   }
 
   initTable = () => {
-    const { resultList } = this.props;
+    const { resultList,orientation } = this.props;
     let hidesearch = resultList.hasOwnProperty('hidesearch') ? resultList.hidesearch : false;
     const resultHeader = resultList.hasOwnProperty('resultHeader') ? resultList.resultHeader : [];
     const columns = resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1);
@@ -94,8 +94,8 @@ class UiTable extends Component {
             },
             {
               extend: 'pdfHtml5',
-              orientation: 'landscape',
-              text: 'PDF/Print',
+              orientation: orientation,
+              text: 'PDF',
               pageSize: 'LEGAL',
               exportOptions: {
                 columns,
@@ -104,6 +104,9 @@ class UiTable extends Component {
               customize: function(doc) {
                 doc.defaultStyle.fontSize = 10;
               },
+            },
+            {
+              extend: 'print',orientation: orientation, text: 'Print', exportOptions: { columns }
             },
             { extend: 'copy', text: 'Copy', exportOptions: { columns } },
           ]
