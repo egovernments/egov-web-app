@@ -21,7 +21,7 @@ var localization_EN_Data = {
 'reports.works.subtypeofwork':'Sub-type of work',
 'reports.works.status':'Status',
 'reports.works.typeOfWork':'Type of work',
-'reports.works.statusAsOn':'Status as on',
+'reports.works.statusason':'Status as on',
 'reports.works.distributedforfinyear':'Distributed for Financial year',
 'reports.works.accountcode':'Account code',
 'reports.works.estimatevalue':'Estimate Value',
