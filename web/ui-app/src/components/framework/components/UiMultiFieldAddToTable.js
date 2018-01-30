@@ -218,7 +218,7 @@ class UiMultiFieldAddToTable extends Component {
             self.props.handler({ target: { value: myTableInParent } }, self.props.item.jsonPath);
           }
           self.props.setLoadingStatus('hide');
-          self.props.toggleSnackbarAndSetText(true, 'Data Saved Successfully', true);
+          self.props.toggleSnackbarAndSetText(true, 'Created Successfully . . . !', true);
           //need to clean this code
           let list = _.get(self.props.formData, self.props.item.jsonPath);
 
