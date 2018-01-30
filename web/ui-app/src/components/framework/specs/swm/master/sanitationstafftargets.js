@@ -3,6 +3,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: "",
+    title: 'swm.search.page.title.sanitationStaffTargets',
     url: "/swm-services/sanitationstafftargets/_search",
     groups: [{
       name: "search",
@@ -242,7 +243,7 @@ var dat = {
       },
       {
         name: "CardTwo",
-        label: "",
+        label: "swm.create.sanitationstafftargets.CardTwo",
         fields: [{
             name: "departmentName",
             jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",
@@ -716,7 +717,7 @@ var dat = {
       },
       {
         name: "CardTwo",
-        label: "",
+        label: "swm.create.sanitationstafftargets.CardTwo",
         fields: [{
             name: "departmentName",
             jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",
@@ -1183,7 +1184,7 @@ var dat = {
       },
       {
         name: "CardTwo",
-        label: "",
+        label: "swm.create.sanitationstafftargets.CardTwo",
         fields: [{
             name: "departmentName",
             jsonPath: "sanitationStaffTargets[0].employee.assignments[0].department",

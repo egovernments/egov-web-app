@@ -53,7 +53,8 @@ var localization_EN_Data = {
   'swm.create.sanitationStaffTargets.wetWaste':'Wet Waste (tons)',
   'swm.create.sanitationStaffTargets.dryWaste':'Dry Waste (tons)',
   'swm.create.sanitationStaffTargets.targetedGarbage':'Targeted Garbage (tons)',
-  'swm.create.sanitationStaffTarget.cardThree.header':'Assign Target',
+  'swm.create.sanitationstafftargets.CardTwo':'Employee Details',
+  'swm.create.sanitationStaffTarget.cardThree.header':'Location Details',
   'swm.create.sanitationstaffschedules.route.code':'Route',
   'swm.create.sanitationStaffTargets.swmProcess':'SWM Process',
   'swm.create.sanitationStaffTargets.targetfrom':'Target From  Date',
@@ -3466,6 +3467,7 @@ var localization_EN_Data = {
   'swm.routes.search.result.totalNoOfStops': 'Total No of Stops',
   'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
   'swm.update.page.title.sanitationStaffTargets': 'Update Sanitation Staff Target',
+   'swm.search.page.title.sanitationStaffTargets':'Search Sanitation Staff Target ',
 
 
       "pattern.error.message.email": ' Email should be in format e.g - abc@abc.com',
@@ -3480,6 +3482,7 @@ var localization_EN_Data = {
       'swm.collectionpoints.create.description.errormsg':'Character should be between 15 to 300 characters.',
       "pattern.error.message.Shift.remarks": 'Remarks should be between 15 to 300 characters.',
       "swm.vehicles.remarks.errormsg": 'Remarks should be between 15 to 300 characters.',
+      'swm.vendorcontracts.create.description.errormsg' :'Character should be between 15 to 300 characters.',
 
 
       'works.create.page.title.createContrator':'Create Contractor',
@@ -5504,6 +5507,8 @@ var localization_MR_Data = {
   'swm.collectionPoint.search.zone': 'Zone',
   'swm.collectionPoint.search.road': 'Road/Street',
   'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
+  'swm.create.sanitationstafftargets.CardTwo': 'Employee Details -marathi',
+  'swm.search.page.title.sanitationStaffTargets': 'Search Sanitation Staff Target -marathi ',
   'swm.update.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
 
 

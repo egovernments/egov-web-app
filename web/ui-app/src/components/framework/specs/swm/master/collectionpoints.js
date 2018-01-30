@@ -195,7 +195,7 @@ var dat = {
             isDisabled: false,
             maxLength: 300,
             minLength: 15,
-            pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+            pattern:'.{15,300}',
             patternErrMsg: 'swm.collectionpoints.create.description.errormsg'
           }
         ]
@@ -517,7 +517,7 @@ var dat = {
             maxLength: 300,
             minLength: 15,
             patternErrorMsg: '',
-            pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+            pattern:'.{15,300}',
             patternErrMsg: 'swm.collectionpoints.create.description.errormsg'
           }
         ]
