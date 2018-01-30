@@ -322,6 +322,7 @@ class Search extends Component {
     }
 
     let self = this;
+    var {dropDownData,dropDownOriginalData}= this.props;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };
     if (hasDefaultSearch) {
@@ -338,6 +339,9 @@ class Search extends Component {
 
     //Master Screen search
     if(currentSpecification.result.hasOwnProperty("isMasterScreen")) {
+      if (currentSpecification && currentSpecification.beforeSubmit) {
+        eval(currentSpecification.beforeSubmit)
+      }
       var moduleDetails = [];
       var masterDetails = [];
       let data = { moduleName: '', masterDetails: [] };
@@ -1102,6 +1106,7 @@ const mapStateToProps = state => ({
   flag: state.report.flag,
   isFormValid: state.frameworkForm.isFormValid,
   dropDownData: state.framework.dropDownData,
+  dropDownOriginalData: state.framework.dropDownOriginalData,
 });
 
 const mapDispatchToProps = dispatch => ({

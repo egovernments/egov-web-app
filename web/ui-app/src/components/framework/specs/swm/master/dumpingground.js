@@ -1,5 +1,19 @@
 var dat = {
   'swm.search': {
+    beforeSubmit:
+    `
+    if(formData.code !== undefined){
+      for(var i=0; i<dropDownData.code.length; i++){
+        if(!(formData.code == dropDownData.code[i].key)){
+          if(formData.code.toUpperCase() === dropDownData.code[i].value.toUpperCase()){
+            formData.code = dropDownData.code[i].key;
+            break;
+          }
+        }
+      }
+    }
+    
+    `,
     preApiCalls:[
       {
         url:"/egov-mdms-service/v1/_get",
