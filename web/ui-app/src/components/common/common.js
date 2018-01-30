@@ -2450,6 +2450,8 @@ var localization_EN_Data = {
   'reports.swm.maintenancecost': 'Cost Incurred on Maintenance/Repair',
   'reports.swm.totalcost': 'Total Cost Incurred',
   'reports.swm.salary': 'Cost on vehicle driver salary',
+  'reports.swm.wasteprocess': 'Waste Dump/Process',
+ 'reports.swm.wastetype': 'Waste Types',
   'vendorcontracts.create.contractNos': 'Contractnos',
   'vendorcontracts.create.contractNo': 'Contract No',
   'vendorcontracts.create.vendorNo': 'Vendor Name',
