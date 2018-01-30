@@ -1,5 +1,18 @@
 var dat = {
   'swm.search': {
+    beforeSubmit:
+    `
+    if(formData.code !== undefined){
+      for(var i=0; i<dropDownData.code.length; i++){
+        if(!(formData.code == dropDownData.code[i].key)){
+          if(formData.code.toUpperCase() === dropDownData.code[i].value.toUpperCase()){
+            formData.code = dropDownData.code[i].key;
+            break;
+          }
+        }
+      }
+    }
+    `,
     numCols: 4,
     useTimestamp: true,
     objectName: 'ProcessingSite',
@@ -12,14 +25,14 @@ var dat = {
 
           {
             name: 'ProcessingSiteName',
-            jsonPath: 'name',
+            jsonPath: 'code',
             label: 'swm.ProcessingSiteDetails.create.ProcessingSitename',
             pattern: '',
-            type: 'text',
+            type: 'autoCompelete',
             isDisabled: false,
             defaultValue: '',
             patternErrorMsg: '',
-            url: ''
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ProcessingSite|$..ProcessingSite.*.code|$..ProcessingSite.*.name',
           }
         ]
       }
