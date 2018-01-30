@@ -3461,6 +3461,8 @@ var localization_EN_Data = {
   'swm.toiletmaster.create.Address': 'Address',
   'swm.create.PublicsToilet': 'Is Public Toilet?',
   'swm.routes.search.result.totalNoOfStops': 'Total No of Stops',
+  'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
+  'swm.update.page.title.sanitationStaffTargets': 'Update Sanitation Staff Target',
 
 
       "pattern.error.message.email": ' Email should be in format e.g - abc@abc.com',
@@ -5498,6 +5500,8 @@ var localization_MR_Data = {
   'swm.collectionPoint.search.ward': 'Ward',
   'swm.collectionPoint.search.zone': 'Zone',
   'swm.collectionPoint.search.road': 'Road/Street',
+  'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
+  'swm.update.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
 
 
   'referenceEvidence.update.document.title': 'Reference Evidences-marathi',

@@ -121,6 +121,7 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].targetNo",
+    title: 'swm.create.page.title.sanitationStaffTargets',
     groups: [
       {
         name: "CardOne",
@@ -586,6 +587,7 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
+    title: 'swm.sanitationstaffTargets.search.title',
     groups: [
       {
         name: "CardOne",
@@ -1042,6 +1044,7 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].transactionNo",
+    title: 'swm.update.page.title.sanitationStaffTargets',
     groups: [
       {
         name: "filtercollectionpoint",
