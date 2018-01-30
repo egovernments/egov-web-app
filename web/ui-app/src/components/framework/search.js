@@ -359,7 +359,12 @@ class Search extends Component {
           if(_.isArray(formData[Object.keys(formData)[i]])){
             formData[Object.keys(formData)[i]].forEach(function(elem, ind){
               if(typeof elem === "object"){
-                str.push(`('${formData[Object.keys(formData)[i]][ind][Object.keys(elem)[0]]}' in @.${Object.keys(formData)[i]}[*].${Object.keys(elem)[0]})`);
+                if(!elem[Object.keys(elem)[0]]){
+                  filterData = null;
+                }
+                else{
+                  str.push(`('${formData[Object.keys(formData)[i]][ind][Object.keys(elem)[0]]}' in @.${Object.keys(formData)[i]}[*].${Object.keys(elem)[0]})`);
+                }
               }
             })
           }
