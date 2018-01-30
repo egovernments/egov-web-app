@@ -41,6 +41,7 @@ export default class UiSingleFileUpload extends Component {
                id={item.jsonPath.split('.').join('-')}
                disabled={item.isDisabled}
                type="file"
+               accept=".doc,.docx,.xls,.xlsx,.csv,.pdf,.jpeg,.jpg,.png"
                style={{ marginTop: '0px' }}
                onChange={e =>
                  this.props.handler(
@@ -100,6 +101,7 @@ export default class UiSingleFileUpload extends Component {
                 id={item.jsonPath.split('.').join('-')}
                 disabled={item.isDisabled}
                 type="file"
+                accept=".doc,.docx,.xls,.xlsx,.csv,.pdf,.jpeg,.jpg,.png"
                 style={{ marginTop: '10px' }}
                 onChange={e =>
                   this.props.handler(
