@@ -3439,7 +3439,10 @@ var localization_EN_Data = {
   'swm.populationmaster.create.populationEstimate': 'Population Estimate (millions)',
   'swm.populationmaster.create.GarbageToCollect': 'Garbage  to be  Collected (Tons/Day)',
   'swm.populationmaster.search.title': 'Search Population Master',
-
+  'swm.populationmaster.search.populationfrom': 'Population From',
+  'swm.populationmaster.search.populationto': 'Population To',
+  'swm.populationmaster.search.garbagefrom': 'Garbage From',
+  'swm.populationmaster.search.garbageto': 'Garbage To',
 
   'swm.toiletmaster.create.title': 'Public Toilet Master',
   'swm.toiletmaster.create.group.title.PublicToilet': 'Is Public Toilet?',
