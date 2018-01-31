@@ -444,8 +444,9 @@ var dat ={
           {
             name: 'Census',
             label: 'swm.populationmaster.create.Census',
-           type: 'singleValueList',
-          //  type:'text',
+            type: 'singleValueList',
+            //  type:'text',
+            isCurrentYear: true,
             jsonPath: "MasterMetaData.masterData[0].censusYear",
             isRequired: false,
             isDisabled: false,
