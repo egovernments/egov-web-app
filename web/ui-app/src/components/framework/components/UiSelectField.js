@@ -133,7 +133,7 @@ class UiSelectField extends Component {
     } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
       setDropDownData(item.jsonPath, item.defaultValue);
     } else {
-      console.log(this.props);
+      // console.log(this.props);
     }
   }
 
@@ -187,7 +187,7 @@ class UiSelectField extends Component {
       //   console.log(nextProps);
       //   nextProps.setDropDownData('','');
       // }
-      console.log(nextProps);
+      // console.log(nextProps);
     //   if(this.props.item.url != nextProps.item.url){
     //
     //   if(tracker.length && _.some(tracker, { jsonPath: nextProps.item.jsonPath })){
