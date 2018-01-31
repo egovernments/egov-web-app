@@ -328,7 +328,7 @@ const menuConvention = {
   'Solid Waste Management.SWM Masters.Waste Subtype.Waste Subtype': '/search/swm/wastesubtype/view',
   'Solid Waste Management.SWM Masters.Shift Type.Shift Type': '/mdms/swm/ShiftType',
   'Solid Waste Management.SWM Masters.Collection type.Collection type': '/mdms/swm/CollectionType',
-  'Solid Waste Management.SWM Masters.Population.Population': '/mdms/swm/Population',
+  'Solid Waste Management.SWM Masters.Population.Population': '/search/swm/population/view',
   //'Solid Waste Management.SWM Masters.Toilet.Toilet': '/mdms/swm/Toilet',
   'Solid Waste Management.SWM Masters.Toilet.Toilet': '/search/swm/toilet/view',
   'Solid Waste Management.SWM Masters.Shift.Shift': '/search/swm/shiftmasters/view',
