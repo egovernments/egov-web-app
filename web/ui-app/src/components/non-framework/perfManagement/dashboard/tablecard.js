@@ -82,10 +82,9 @@ export default class TableCard extends Component {
     }
   }
 
-  processOnClickDownloadAttachments = (fileStoreIds) => {
+  processOnClickDownloadAttachments = (fileStoreIds, ulbName) => {
     fileStoreIds.forEach((fileStoreId) => {
-      console.log(fileStoreId)
-      fetchFileByFileStoreId(fileStoreId)
+      fetchFileByFileStoreId(fileStoreId, ulbName)
     })
   }
 
@@ -346,6 +345,8 @@ export default class TableCard extends Component {
    * render download files button
    */
   renderAttachmentDownloadButton = (label, fileStoreIds) => {
+    let data = this.state.data[this.state.chartDataIndex - 1]
+    console.log(data.ulbName)
     return (
       <div>
         <RaisedButton
@@ -353,7 +354,7 @@ export default class TableCard extends Component {
           primary={true}
           type="button"
           disabled={false}
-          onClick={() => {this.processOnClickDownloadAttachments(fileStoreIds)}}
+          onClick={() => {this.processOnClickDownloadAttachments(fileStoreIds, data.ulbName)}}
         />
       </div>
     )

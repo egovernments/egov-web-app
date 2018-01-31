@@ -148,12 +148,10 @@ export const fetchCompareSearchAPI = (finYears, kpis, ulbs, cb) => {
   );
 };
 
-export const fetchFileByFileStoreId = (fileStoreId) => {
+export const fetchFileByFileStoreId = (fileStoreId, ulbName) => {
   let baseURL   = window.location.origin;
   let tenantId  = (localStorage.getItem('tenantId') || 'default') 
-  // let fileURL   = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6`
-  let fileURL = `${baseURL}/filestore/v1/files/id?tenantId=${tenantId}&fileStoreId=${fileStoreId}`
-  console.log(fileURL)
+  let fileURL = `${baseURL}/filestore/v1/files/id?tenantId=${ulbName}&fileStoreId=${fileStoreId}`
   window.open(fileURL)
 }
 

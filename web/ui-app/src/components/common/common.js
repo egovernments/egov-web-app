@@ -3063,7 +3063,7 @@ var localization_EN_Data = {
   'perfManagement.dashboard.chart.pie.yes': 'YES',
   'perfManagement.dashboard.chart.pie.no': 'NO',
   'perfManagement.dashboard.chart.pie.inprogress': 'IN PROGRESS',
-  'perfManagement.dashboard.chart.type.table': 'Tabluar',
+  'perfManagement.dashboard.chart.type.table': 'Tabular',
   'perfManagement.dashboard.chart.type.chart': 'Charts',
   'perfManagement.dashboard.table.header.FINYEAR': 'FINANCIAL YEAR',
   'perfManagement.dashboard.table.header.KPINAME': 'KPI NAME',

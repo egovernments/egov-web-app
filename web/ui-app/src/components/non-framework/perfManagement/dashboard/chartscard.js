@@ -229,8 +229,6 @@ export default class BarChartCard extends Component {
    * render next/prev button to navigate when report is not consolidated
    */
   renderReportNavigationButton = (label) => {
-    console.log(this.state.maxChartData)
-
     if (this.props.isReportConsolidated || this.state.maxChartData === 1) {
       return (
         <RaisedButton
