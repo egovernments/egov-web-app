@@ -750,7 +750,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url: "/hr-masters/designations/_search?tenantId=default|$..id|$..name",
+            url: "/hr-masters/designations/_search?&id=sanitationStaffTargets[0].employee.assignments[0].designation|$..id|$..name",
             depedants: [{
               jsonPath: "sanitationStaffTargets[0].employee.code",
               type: "dropDown",
@@ -759,7 +759,7 @@ var dat = {
           },
           {
             name: "employeeName",
-            jsonPath: "sanitationStaffTargets[0].employee.code",
+            jsonPath: "sanitationStaffTargets[0].employee.name",
             label: "swm.create.sanitationStaffTargets.employeeName",
             pattern: "",
             type: "singleValueList",
@@ -769,7 +769,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url: "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
+            //url: "/hr-employee/employees/_search?&|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },

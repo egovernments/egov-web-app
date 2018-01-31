@@ -86,8 +86,14 @@ class UiLabel extends Component {
 
       let queryStringObject = splitArray[1].split('|')[0].split('&');
       for (var i = 0; i < queryStringObject.length; i++) {
+        var string = "";
         if (i) {
-          id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
+          if(queryStringObject[i].split('=')[1].includes(".")){
+            string  = this.props.getVal(queryStringObject[i].split('=')[1]);
+            id[queryStringObject[i].split('=')[0]] = string;
+          }else{
+            id[queryStringObject[i].split('=')[0]] = queryStringObject[i].split('=')[1];
+          }
         }
       }
 
