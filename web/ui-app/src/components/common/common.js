@@ -3459,7 +3459,7 @@ var localization_EN_Data = {
   'swm.populationmaster.search.garbageto': 'Garbage To',
 
   'swm.toiletmaster.create.title': 'Public Toilet Master',
-  'swm.toiletmaster.create.group.title.PublicToilet': 'Is Public Toilet?',
+  'swm.toiletmaster.create.group.title.PublicToilet': 'Toilet Type',
   'swm.toiletmaster.create.toiletName': 'Toilet Name',
   'swm.toiletmaster.create.toiletAddress': 'Toilet Address',
   'swm.toiletmaster.create.toiletLocation': 'Public Toilet Location Details',
@@ -3476,7 +3476,7 @@ var localization_EN_Data = {
   'swm.toiletmaster.create.toiletType': 'Toilet Type',
   'swm.toiletmaster.search.title': 'Toilet Search Master',
   'swm.toiletmaster.create.Address': 'Address',
-  'swm.create.PublicsToilet': 'Is Public Toilet?',
+  'swm.create.PublicsToilet': 'Toilet Type',
   'swm.routes.search.result.totalNoOfStops': 'Total No of Stops',
   'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
   'swm.update.page.title.sanitationStaffTargets': 'Update Sanitation Staff Target',

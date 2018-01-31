@@ -54,12 +54,14 @@ var dat={
 
           {
             name: 'isPublictoilet',
-            jsonPath: 'publicToilet',
-            type: 'checkbox',
+            jsonPath: 'toiletType.code',
+            type: 'singleValueList',
             label: 'swm.create.PublicsToilet',
             styleObj: { display: '-webkit-box' },
             isDisabled: false,
             patternErrorMsg: '',
+            url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
+
           },
 
         ],
@@ -86,7 +88,7 @@ var dat={
         'name',
         'seatCount',
         'address',
-        'publicToilet'
+        'toiletType.code'
 
       ],
       resultPath: 'MdmsRes.swm.Toilet',
@@ -110,17 +112,18 @@ var dat={
     name: 'PublicToilet',
       
     fields:[
-    {
-            name: 'isPublictoilet',
-            jsonPath: 'MasterMetaData.masterData[0].publicToilet',
-            type: 'checkbox',
-            label:'swm.create.PublicsToilet',
-            styleObj: { display: '-webkit-box' },
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            defaultValue: false,
-          },
+
+      {
+        name: 'isPublictoilet',
+        jsonPath: 'MasterMetaData.masterData[0].toiletType.code',
+        type: 'singleValueList',
+        label: 'swm.create.PublicsToilet',
+        styleObj: { display: '-webkit-box' },
+        isDisabled: false,
+        patternErrorMsg: '',
+        url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
+
+      },
 
 
         {
@@ -342,14 +345,28 @@ tenantIdRequired: true
 
         {
           name: 'isPublictoilet',
-          jsonPath: 'MasterMetaData.masterData[0].publicToilet',
-          type: 'checkbox',
+          jsonPath: 'MasterMetaData.masterData[0].toiletType.code',
+          type: 'singleValueList',
           label: 'swm.create.PublicsToilet',
           styleObj: { display: '-webkit-box' },
           isRequired: false,
           isDisabled: false,
           patternErrorMsg: '',
           defaultValue: false,
+          url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
+        },
+
+        {
+          name: 'toiletName',
+          label: 'swm.toiletmaster.create.toiletName',
+          jsonPath: 'MasterMetaData.masterData[0].name',
+          type: 'text',
+          isRequired: true,
+          isDisabled: false,
+          defaultValue: '',
+          url: '',
+          patternErrorMsg: '',
+
         },
 
         {
@@ -506,8 +523,8 @@ tenantIdRequired: true
     fields:[
       {
         name: 'isPublictoilet',
-        jsonPath: 'MdmsRes.swm.Toilet["0"].publicToilet',
-        type: 'checkbox',
+        jsonPath: 'MdmsRes.swm.Toilet[0].toiletType.code',
+        type: 'label',
         label: 'swm.create.PublicsToilet',
         styleObj: { display: '-webkit-box' },
         isRequired: false,
