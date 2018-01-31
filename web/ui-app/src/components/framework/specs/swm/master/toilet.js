@@ -102,8 +102,8 @@ var dat={
 'swm.create': {
     numCols: 4,
     useTimestamp: true,
-  objectName: 'MasterMetaData',
-  idJsonPath: 'MdmsRes.swm.Toilet[0].code',
+    objectName: 'MasterMetaData',
+    idJsonPath: 'MdmsRes.swm.Toilet[0].code',
     title: 'swm.toiletmaster.create.title',
     groups:[
     {
@@ -138,7 +138,7 @@ var dat={
         {
             name: 'toiletAddress',
             label: 'swm.toiletmaster.create.toiletAddress',
-          jsonPath: 'MasterMetaData.masterData[0].address',
+            jsonPath: 'MasterMetaData.masterData[0].address',
             type: 'text',
             isRequired: false,
             isDisabled: false,
@@ -151,7 +151,7 @@ var dat={
     {
 
         name: 'toiletLocation',
-      label: 'swm.create.group.title.LocationDetails',
+        label: 'swm.create.group.title.LocationDetails',
         fields: [
         {
             "type": "boundary",
@@ -245,12 +245,26 @@ var dat={
         label: 'swm.toiletmaster.create.title.GeoCordinates',
         fields: [
           {
+            name: 'searchLocation',
+            jsonPathAddress: '',
+            jsonPathLng: 'MasterMetaData.masterData[0].longitude',
+            jsonPathLat: 'MasterMetaData.masterData[0].latitude',
+            label: 'ac.create.Location',
+            pattern: '',
+            type: 'googleMaps',
+            url: '',
+            isRequired: false,
+            isDisabled: false,
+            requiredErrMsg: '',
+            patternErrMsg: '',
+          },
+          {
             name: 'Latitude',
             label: 'swm.toiletmaster.create.Latitude',
             type: 'text',
             jsonPath: "MasterMetaData.masterData[0].latitude",
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
             url: '',
           },
@@ -261,7 +275,7 @@ var dat={
             pattern: '',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
             jsonPath: "MasterMetaData.masterData[0].longitude",
             url: '',
@@ -353,7 +367,7 @@ tenantIdRequired: true
         {
             name: 'toiletAddress',
             label: 'swm.toiletmaster.create.toiletAddress',
-          jsonPath: "MasterMetaData.masterData[0].address",
+            jsonPath: "MasterMetaData.masterData[0].address",
             type: 'text',
             isRequired: false,
             isDisabled: false,
@@ -366,7 +380,7 @@ tenantIdRequired: true
     {
 
         name: 'toiletLocation',
-      label: 'swm.create.group.title.LocationDetails',
+        label: 'swm.create.group.title.LocationDetails',
         fields: [
           {
             "type": "boundary",
@@ -420,12 +434,26 @@ tenantIdRequired: true
         label: 'swm.toiletmaster.create.title.GeoCordinates',
         fields: [
           {
+            name: 'searchLocation',
+            jsonPathAddress: '',
+            jsonPathLng: 'MasterMetaData.masterData[0].longitude',
+            jsonPathLat: 'MasterMetaData.masterData[0].latitude',
+            label: 'ac.create.Location',
+            pattern: '',
+            type: 'googleMaps',
+            url: '',
+            isRequired: false,
+            isDisabled: false,
+            requiredErrMsg: '',
+            patternErrMsg: '',
+          },
+          {
             name: 'Latitude',
             label: 'swm.toiletmaster.create.Latitude',
             type: 'text',
             jsonPath: "MasterMetaData.masterData[0].latitude",
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
             url: '',
           },
@@ -436,14 +464,12 @@ tenantIdRequired: true
             pattern: '',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
             jsonPath: "MasterMetaData.masterData[0].longitude",
             url: '',
           },
-     
         ],
-
       },
       {
         name: 'toiletmaster',
@@ -467,7 +493,6 @@ tenantIdRequired: true
  tenantIdRequired: true,
  isMDMSScreen: true,
 },
-
 'swm.view': {
     numCols: 3,
     useTimestamp: true,
