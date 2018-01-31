@@ -133,7 +133,7 @@ var dat = {
             name: 'name',
             jsonPath: 'refillingPumpStations[0].remarks',
             label: 'legacylegal.create.remarks',
-            type: 'text',
+            type: 'textarea',
             isRequired: false,
             isDisabled: false,
             maxLength: 300,

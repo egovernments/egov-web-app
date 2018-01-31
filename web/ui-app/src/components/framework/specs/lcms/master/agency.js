@@ -27,6 +27,7 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            defaultValue:'',
           },
         ],
       },

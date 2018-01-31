@@ -319,10 +319,10 @@ var dat = {
               jsonPath: 'MasterMetaData.masterData[0].remarks',
               label: 'swm.Shift.create.remarks',
               maxLength: 300,
-              pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+              pattern:'.{15,300}$',
               type: 'textarea',
               isDisabled: false,
-              patternErrMsg: 'pattern.error.message.Shift.remarks'
+              patternErrMsg: 'pattern.error.message.Shift.remarks',
 
             },
           ],
@@ -732,10 +732,10 @@ var dat = {
               jsonPath: 'MasterMetaData.masterData[0].remarks',
               label: 'swm.Shift.create.remarks',
               maxLength: 300,
-              pattern:'^.[a-zA-Z0-9. ]{14,300}$',
+              pattern:'.{15,300}$',
               type: 'textarea',
               isDisabled: false,
-              patternErrMsg: 'pattern.error.message.Shift.remarks'
+              patternErrMsg: 'pattern.error.message.Shift.remarks',
             },
           ],
         },
