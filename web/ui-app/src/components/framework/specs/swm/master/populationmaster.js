@@ -21,8 +21,6 @@ var dat ={
     title: 'swm.populationmaster.search.title',
     url: '/egov-mdms-service/v1/_get?tenantId=default&moduleName=swm&masterName=Population',
 
-
-
     groups: [
 
       {
@@ -43,7 +41,7 @@ var dat ={
            {
             name: 'Ward',
             label: 'swm.populationmaster.create.ward',
-            jsonPath: 'population.ward',
+            jsonPath: 'ward',
             type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
@@ -54,7 +52,7 @@ var dat ={
             name: 'Zone', 
             label: 'swm.populationmaster.create.Zone',
             type: 'singleValueList',
-            jsonPath: 'population.zone',
+            jsonPath: 'zone',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -67,7 +65,6 @@ var dat ={
     label: 'swm.populationmaster.create.group.title.PopulationDetails',
     jsonPath: '',
     fields:[
-          
           {
             name : 'ulb',
             label : 'swm.populationmaster.create.ulb',
@@ -77,8 +74,7 @@ var dat ={
             isDisabled: false,
             //defaultValue:'Autocomplete',
             patternErrorMsg: '',
-        url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
-
+            url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
         },
           {
             name: 'Census',
