@@ -260,7 +260,7 @@ var dat ={
            {
             name: 'Ward',
             label: 'swm.populationmaster.create.ward',
-            jsonPath: 'MdmsRes.swm.Population["0"].ward.code',
+            jsonPath: 'MdmsRes.swm.Population["0"].ward',
             type: 'label',
             isRequired: false,
             isDisabled: false,
@@ -272,44 +272,14 @@ var dat ={
             name: 'Zone', 
             label: 'swm.populationmaster.create.Zone',
             type: 'label',
-            jsonPath: 'MdmsRes.swm.Population["0"].zone.code',
+            jsonPath: 'MdmsRes.swm.Population["0"].zone',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
             defaultValue:'Autocomplete',
             url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
           },
-          {
-            name: 'code',
-            jsonPath: 'MasterMetaData.masterData[0].code',
-            defaultValue: 'Population-' + new Date().getTime(),
-            isRequired: true,
-            type: 'text',
-            hide: true,
-          },
-          {
-            name: 'tenantId',
-            jsonPath: 'MasterMetaData.masterData[0].tenantId',
-            type: 'text',
-            defaultValue: localStorage.getItem("tenantId"),
-            hide: true
-          },
-          {
-            name: 'moduleName',
-            jsonPath: 'MasterMetaData.moduleName',
-            type: 'text',
-            defaultValue: 'swm',
-            hide: true
-          },
-          {
-            name: 'masterName',
-            jsonPath: 'MasterMetaData.masterName',
-            type: 'text',
-            defaultValue: 'Population',
-            hide: true
-          },
-
-
+          
         ],
       },
 
@@ -541,39 +511,47 @@ var dat ={
             patternErrorMsg: '',
             url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
           },
+        ],
+      },
+
+      {
+        name: 'HideGroup',
+        hide: true,
+        fields: [
+          {
+            name: 'tenantId',
+            jsonPath: 'MasterMetaData.masterData[0].tenantId',
+            defaultValue: localStorage.getItem("tenantId"),
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+          {
+            name: 'moduleName',
+            jsonPath: 'MasterMetaData.moduleName',
+            defaultValue: 'swm',
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+          {
+            name: 'masterName',
+            jsonPath: 'MasterMetaData.masterName',
+            defaultValue: 'Population',
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
           {
             name: 'code',
             jsonPath: 'MasterMetaData.masterData[0].code',
             defaultValue: 'Population-' + new Date().getTime(),
             isRequired: true,
             type: 'text',
-            hide: true,
-          },
-          {
-            name: 'tenantId',
-            jsonPath: 'MasterMetaData.masterData[0].tenantId',
-            type: 'text',
-            defaultValue: localStorage.getItem("tenantId"),
             hide: true
           },
-          {
-            name: 'moduleName',
-            jsonPath: 'MasterMetaData.moduleName',
-            type: 'text',
-            defaultValue: 'swm',
-            hide: true
-          },
-          {
-            name: 'masterName',
-            jsonPath: 'MasterMetaData.masterName',
-            type: 'text',
-            defaultValue: 'Population',
-            hide: true
-          },
-
-
-        ],
-      },
+        ]
+      }
 
       
     ],

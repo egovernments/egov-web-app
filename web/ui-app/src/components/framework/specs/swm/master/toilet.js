@@ -210,35 +210,35 @@ var dat={
           //   patternErrorMsg: '',
           //   url: '',
           // },
-          {
-              name: 'code',
-              jsonPath: 'MasterMetaData.masterData[0].code',
-              defaultValue: 'Toilet-' + new Date().getTime(),
-              isRequired : true,
-              type: 'text',
-              hide: true,
-            },
-            {
-              name: 'tenantId',
-              jsonPath: 'MasterMetaData.masterData[0].tenantId',
-              type: 'text',             
-              defaultValue: localStorage.getItem("tenantId"),
-              hide: true
-            },
-            {
-              name: 'moduleName',
-              jsonPath: 'MasterMetaData.moduleName',
-              type: 'text',             
-              defaultValue: 'swm',
-              hide: true
-            },
-            {
-              name: 'masterName',
-              jsonPath: 'MasterMetaData.masterName',              
-              type: 'text',
-              defaultValue: 'Toilet',
-              hide: true
-            },
+          // {
+          //     name: 'code',
+          //     jsonPath: 'MasterMetaData.masterData[0].code',
+          //     defaultValue: 'Toilet-' + new Date().getTime(),
+          //     isRequired : true,
+          //     type: 'text',
+          //     hide: true,
+          //   },
+          //   {
+          //     name: 'tenantId',
+          //     jsonPath: 'MasterMetaData.masterData[0].tenantId',
+          //     type: 'text',             
+          //     defaultValue: localStorage.getItem("tenantId"),
+          //     hide: true
+          //   },
+          //   {
+          //     name: 'moduleName',
+          //     jsonPath: 'MasterMetaData.moduleName',
+          //     type: 'text',             
+          //     defaultValue: 'swm',
+          //     hide: true
+          //   },
+          //   {
+          //     name: 'masterName',
+          //     jsonPath: 'MasterMetaData.masterName',              
+          //     type: 'text',
+          //     defaultValue: 'Toilet',
+          //     hide: true
+          //   },
 
    
           ],
@@ -306,10 +306,48 @@ var dat={
           },
         ],
       },
-      
+      {
+        name: 'HideGroup',
+        hide: true,
+        fields: [
+          {
+            name: 'tenantId',
+            jsonPath: 'MasterMetaData.masterData[0].tenantId',
+            defaultValue: localStorage.getItem("tenantId"),
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+          {
+            name: 'moduleName',
+            jsonPath: 'MasterMetaData.moduleName',
+            defaultValue: 'swm',
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+          {
+            name: 'masterName',
+            jsonPath: 'MasterMetaData.masterName',
+            defaultValue: 'Toilet',
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+          {
+            name: 'code',
+            jsonPath: 'MasterMetaData.masterData[0].code',
+            defaultValue: 'Toilet-' + new Date().getTime(),
+            isRequired: true,
+            type: 'text',
+            hide: true
+          },
+        ]
+      }
     ], 
-url: '/egov-mdms-create/v1/_create',
-tenantIdRequired: true
+  url: 'egov-mdms-create/v1/_create',
+  isMDMSScreen: true,
+  tenantIdRequired: true,
 },
 'swm.update': {
     numCols: 3,
