@@ -957,9 +957,11 @@ var dat = {
     },
 
      beforeSubmit: `
+     if(formData && formData.immovable){
       formData['assetCategoryType']=formData.immovable.assetCategoryType;
       formData['assetCategory']=formData.immovable.assetCategory;
       formData['assetSubCategory']=formData.immovable.assetSubCategory;
+      }
       if(formData && formData.hasOwnProperty("assetCategory")  && (formData.assetCategory=="" || formData.assetCategory==null)){
       delete formData.assetCategory;
       }

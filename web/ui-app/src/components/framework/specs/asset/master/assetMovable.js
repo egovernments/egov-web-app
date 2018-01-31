@@ -797,9 +797,11 @@ var dat = {
       rowClickUrlView: '/non-framework/asset/master/assetMovableView/{id}',
     },
     beforeSubmit: `
+    if(formData && formData.movable){
      formData['assetCategoryType']=formData.movable.assetCategoryType;
      formData['assetCategory']=formData.movable.assetCategory;
      formData['assetSubCategory']=formData.movable.assetSubCategory;
+    }
      if(formData && formData.hasOwnProperty("assetCategory")  && (formData.assetCategory=="" || formData.assetCategory==null)){
      delete formData.assetCategory;
      }
