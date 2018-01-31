@@ -104,7 +104,7 @@ var dat ={
             name: 'PopulationFrom',
             label: 'swm.populationmaster.search.populationfrom',
             type: 'number',
-            jsonPath: 'population',
+            jsonPath: 'population >',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -113,7 +113,7 @@ var dat ={
             name: 'PopulationTo',
             label: 'swm.populationmaster.search.populationto',
             type: 'number',
-            jsonPath: 'population',
+            jsonPath: 'population <',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -122,7 +122,7 @@ var dat ={
             name: 'GarbageFrom',
             label: 'swm.populationmaster.search.garbagefrom',
             type: 'number',
-            jsonPath: 'garbageToBeCollected',
+            jsonPath: 'garbageToBeCollected >',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -131,7 +131,7 @@ var dat ={
             name: 'GarbageTo',
             label: 'swm.populationmaster.search.garbageto',
             type: 'number',
-            jsonPath: 'garbageToBeCollected',
+            jsonPath: 'garbageToBeCollected <',
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
@@ -325,7 +325,6 @@ var dat ={
     url: '/egov-mdms-create/v1/_update',
     searchUrl: '/egov-mdms-service/v1/_search?code={code}',
     idJsonPath: 'MasterMetaData.masterData[0].code',
-
     groups:[
     {
         name: 'PopulationDetails',
@@ -341,9 +340,7 @@ var dat ={
             isDisabled: false,
            // defaultValue:'Autocomplete',
             url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
-
             patternErrorMsg: '',
-
         },
         {
             name: 'Census',
@@ -374,11 +371,9 @@ var dat ={
             isDisabled: false,
             patternErrorMsg: '',
           },
-          
         ],  
     }, 
       {
-
         name: 'populationLocation',
         label: 'swm.toiletmaster.create.populationLocation',
         fields: [

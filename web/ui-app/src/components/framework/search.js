@@ -48,7 +48,6 @@ class Search extends Component {
           if (configObject.groups[i].fields[j].isRequired && !configObject.groups[i].fields[j].hide && !configObject.groups[i].hide)
             reqRequired.push(configObject.groups[i].fields[j].jsonPath);
         }
-
         if (configObject.groups[i].children && configObject.groups[i].children.length) {
           for (var k = 0; k < configObject.groups[i].children.length; k++) {
             this.setLabelAndReturnRequired(configObject.groups[i].children[k]);
@@ -382,18 +381,23 @@ class Search extends Component {
               if(_.isEmpty(formData[level_1][item])) {
                 continue;
               }
+
               str.push(`@.${level_1}.${item}=='${formData[level_1][item]}'`);
             }
           }
           /* Normal Search */
           else{
-
-            str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
+              if(Object.keys(formData)[i].includes("<") || Object.keys(formData)[i].includes(">") ){
+                str.push(`@.${Object.keys(formData)[i]}=${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
+              }else{
+                str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
+              }
+            
           }
         }
-        str = str.join('&&');
+        str = str.join(' && ');
         if(str != '') {
-          filterData = `[?(${str})]`;
+         filterData = `[?(${str})]`;
         }
       }
       masterDetail.filter = filterData;
