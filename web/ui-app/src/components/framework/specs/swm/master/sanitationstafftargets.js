@@ -1,3 +1,9 @@
+var date=new Date();
+var dd=date.getDate()>9?date.getDate():"0"+date.getDate();
+var mm=date.getMonth()>9?(date.getMonth()+1):"0"+(date.getMonth()+1);
+var yy=date.getFullYear();
+var fullDate=dd+"/"+mm+"/"+yy;
+
 var dat = {
   "swm.search": {
     numCols: 4,
@@ -262,7 +268,7 @@ var dat = {
             depedants: [{
               jsonPath: "sanitationStaffTargets[0].employee.code",
               type: "dropDown",
-              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
             }]
           },
           {
@@ -281,7 +287,7 @@ var dat = {
             depedants: [{
               jsonPath: "sanitationStaffTargets[0].employee.code",
               type: "dropDown",
-              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
             }]
           },
           {
@@ -296,7 +302,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url: "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
+            url: "/hr-employee/employees/_search?departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },
@@ -587,9 +593,15 @@ var dat = {
   "swm.view": {
     beforeSetForm: `if (res &&
       _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
-        res.sanitationStaffTargets[0].collectionPoints = res.sanitationStaffTargets[0].collectionPoints.map(function (item) {
-            return item.isSelected && {...item,["collectionPoint"]:item}
-        });
+        var array=[];
+        res.sanitationStaffTargets[0].collectionPoints.forEach(function(element)
+        {
+          if(element.isSelected)
+          {
+            array.push({...element,["collectionPoint"]:element})
+          }
+        })
+        res.sanitationStaffTargets[0].collectionPoints=array;
     }`,
     numCols: 4,
     useTimestamp: true,
@@ -1209,7 +1221,7 @@ var dat = {
             depedants: [{
               jsonPath: "sanitationStaffTargets[0].employee.code",
               type: "dropDown",
-              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
             }]
           },
           {
@@ -1228,7 +1240,7 @@ var dat = {
             depedants: [{
               jsonPath: "sanitationStaffTargets[0].employee.code",
               type: "dropDown",
-              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}|$.Employee.*.code|$.Employee.*.name"
+              pattern: "/hr-employee/employees/_search?tenantId=default&departmentId={sanitationStaffTargets[0].employee.assignments[0].department}&designationId={sanitationStaffTargets[0].employee.assignments[0].designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
             }]
           },
           {
@@ -1243,7 +1255,7 @@ var dat = {
             maxLength: 128,
             minLength: 1,
             patternErrorMsg: "",
-            url: "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}|$.Employee.*.code|$.Employee.*.name"
+            url: "/hr-employee/employees/_search?&departmentId={Connection.workflowDetails.department}&designationId={Connection.workflowDetails.designation}&asOnDate="+fullDate+"|$.Employee.*.code|$.Employee.*.name"
           }
         ]
       },

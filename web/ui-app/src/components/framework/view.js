@@ -364,7 +364,7 @@ class Report extends Component {
         }
       });
     }
-    self.props.setLoadingStatus('hide');
+    self.props.setLoadingStatus('loading');
 
     Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
       res => {
@@ -382,6 +382,8 @@ class Report extends Component {
         );
 
         if (spec && spec.afterSetForm) eval(spec.afterSetForm);
+        self.props.setLoadingStatus('hide');
+
       },
       function(err) {}
     );
