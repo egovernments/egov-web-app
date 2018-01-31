@@ -229,15 +229,15 @@ var dat = {
             "autoCompleteDependancy": {
               "autoCompleteUrl": "asset-services-maha/assets/_search?code={collectionPoints[0].binDetails[0].asset.code}",
               "autoFillFields": {
-                "collectionPoints[0].binDetails[0].latitude": "Assets[0].latitude",
-                "collectionPoints[0].binDetails[0].longitude": "Assets[0].longitude",
+                "collectionPoints[0].binDetails[0].asset.latitude": "Assets[0].latitude",
+                "collectionPoints[0].binDetails[0].asset.longitude": "Assets[0].longitude",
               },
             },
           },
           
           {
             name: 'latitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].latitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.latitude',
             label: 'ac.create.Latitude',
             type: 'number',
             isRequired: false,
@@ -246,7 +246,7 @@ var dat = {
           },
           {
             name: 'longitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].longitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.longitude',
             label: 'ac.create.Longitude',
             type: 'number',
             isRequired: false,
@@ -284,6 +284,17 @@ var dat = {
                   
                 ],
               },
+              {
+                ifValue: false,
+                show: [],
+                hide: [
+                  {
+                    name: 'rfid',
+                    isGroup: false,
+                    isField: true,
+                  }
+                ],
+              },
             ],
           },
           {
@@ -291,6 +302,7 @@ var dat = {
             hide: true,
             jsonPath: 'collectionPoints[0].binDetails[0].rfid',
             label: 'swm.collectionpoints.create.rfid',
+            defaultValue : '',
             type: 'text',
             isRequired: true,
             isDisabled: false,
@@ -390,13 +402,49 @@ var dat = {
         fields: [
           {
             name: 'assetOrBinId',
-            jsonPath: 'collectionPoints[0].binDetails[0].assetOrBinId',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.code',
             label: 'swm.collectionpoints.create.assetOrBinId',
-            type: 'text',
+            type: 'autoCompelete',
             isRequired: true,
             isDisabled: false,
             maxLength: 256,
             minLength: 5,
+            patternErrorMsg: '',
+            url: '/asset-services-maha/assets/_search?&categoryName=Bin|$.Assets.*.code|$.Assets.*.name',
+            "autoCompleteDependancy": {
+              "autoCompleteUrl": "asset-services-maha/assets/_search?code={collectionPoints[0].binDetails[0].asset.code}",
+              "autoFillFields": {
+                "collectionPoints[0].binDetails[0].latitude": "Assets[0].latitude",
+                "collectionPoints[0].binDetails[0].longitude": "Assets[0].longitude",
+              },
+            },
+          },
+          
+          {
+            name: 'latitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.latitude',
+            label: 'ac.create.Latitude',
+            type: 'number',
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'longitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.longitude',
+            label: 'ac.create.Longitude',
+            type: 'number',
+            isRequired: false,
+            isDisabled: true,
+            patternErrorMsg: '',
+          },
+          {
+            name: 'dummy',
+            jsonPath: '',
+            label: '',
+            type: 'textArea',
+            isRequired: false,
+            isDisabled: false,
             patternErrorMsg: '',
           },
           {
@@ -407,7 +455,7 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-           // defaultValue: false,
+            defaultValue: false,
             showHideFields: [
               {
                 ifValue: true,
@@ -417,7 +465,8 @@ var dat = {
                     name: 'rfid',
                     isGroup: false,
                     isField: true,
-                  },
+                  }
+                  
                 ],
               },
             ],
@@ -428,28 +477,10 @@ var dat = {
             jsonPath: 'collectionPoints[0].binDetails[0].rfid',
             label: 'swm.collectionpoints.create.rfid',
             type: 'text',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             maxLength: 256,
             minLength: 1,
-            patternErrorMsg: '',
-          },
-          {
-            name: 'latitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].latitude',
-            label: 'ac.create.Latitude',
-            type: 'number',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-          {
-            name: 'longitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].longitude',
-            label: 'ac.create.Longitude',
-            type: 'number',
-            isRequired: false,
-            isDisabled: false,
             patternErrorMsg: '',
           },
         ],
@@ -547,34 +578,42 @@ var dat = {
         fields: [
           {
             name: 'assetOrBinId',
-            jsonPath: 'collectionPoints[0].binDetails[0].assetOrBinId',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.code',
             label: 'swm.collectionpoints.create.assetOrBinId',
-            type: 'text',
+            type: 'autoCompelete',
             isRequired: true,
             isDisabled: false,
             maxLength: 256,
             minLength: 5,
             patternErrorMsg: '',
+            url: '/asset-services-maha/assets/_search?&categoryName=Bin|$.Assets.*.code|$.Assets.*.name',
+            "autoCompleteDependancy": {
+              "autoCompleteUrl": "asset-services-maha/assets/_search?code={collectionPoints[0].binDetails[0].asset.code}",
+              "autoFillFields": {
+                "collectionPoints[0].binDetails[0].asset.latitude": "Assets[0].latitude",
+                "collectionPoints[0].binDetails[0].asset.longitude": "Assets[0].longitude",
+              },
+            },
           },
+          
           {
             name: 'latitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].latitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.latitude',
             label: 'ac.create.Latitude',
             type: 'number',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
           {
             name: 'longitude',
-            jsonPath: 'collectionPoints[0].binDetails[0].longitude',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.longitude',
             label: 'ac.create.Longitude',
             type: 'number',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
-
           {
             name: 'dummy',
             jsonPath: '',
@@ -584,7 +623,6 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
           },
-
           {
             name: 'rfidAssigned',
             jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
@@ -604,16 +642,10 @@ var dat = {
                     isGroup: false,
                     isField: true,
                   }
+                  
                 ],
               },
-             
             ],
-            // valueBasedOn: [
-            //   {
-            //     jsonPath: 'collectionPoints[0].binDetails[0].rfid',
-            //     valueIfDataFound: true,
-            //   },
-            // ],
           },
           {
             name: 'rfid',

@@ -4118,12 +4118,14 @@ class Report extends Component {
       moduleName,
       actionName,
       setFormData,
-      delRequiredFields
+      delRequiredFields,
+      addRequiredFields
     } = this.props;
     let _formData = { ...this.props.formData };
     let self = this;
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
+    let ReqFields = [];
     console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
@@ -4211,18 +4213,24 @@ class Report extends Component {
           }
           /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
           else {
+            
+            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired)
+                  notReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
+              }
+              delRequiredFields(notReqFields);
+            }
+            
             for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
-                mockData[moduleName + '.' + actionName].groups.splice(i, 1);
                 ind = i;
-                for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
-                  if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
-                    notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
-                }
-                delRequiredFields(notReqFields);
+                mockData[moduleName + '.' + actionName].groups.splice(i, 1);
                 break;
               }
             }
+
+            
 
             for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
@@ -4283,6 +4291,15 @@ class Report extends Component {
                   break;
                 }
               }
+            }
+            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired && 
+                !mockData[moduleName + '.' + actionName].groups[i].fields[k].hide){
+                  ReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
+                }
+              }
+              addRequiredFields(ReqFields);
             }
           }
         }

@@ -80,7 +80,7 @@ const UiTextField = props => {
               style={{ display: item.hide ? 'none' : 'inline-block' }}
               errorStyle={{ float: 'left' }}
               fullWidth={true}
-              value={props.getVal(item.jsonPath) ? props.getVal(item.jsonPath) : item.defaultValue}
+              value={props.getVal(item.jsonPath) ? props.getVal(item.jsonPath) : (item.defaultValue ? item.defaultValue : '')}
               // value={props.getVal(item.jsonPath)}
               disabled={disabledValue}
               errorText={props.fieldErrors[item.jsonPath]}
