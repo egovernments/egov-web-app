@@ -95,7 +95,7 @@ class UiDatePicker extends Component {
             <DateTime
               value={this.props.getVal(item.jsonPath)}
               dateFormat="DD/MM/YYYY"
-              // defaultValue={defaultdate}
+              defaultValue={item.defaultDate ? new Date() : ''}
               timeFormat={false}
               inputProps={{
                 placeholder: 'DD/MM/YYYY',

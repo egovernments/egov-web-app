@@ -109,6 +109,8 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
+            defaultDate:true,
+            maxDate: 'today',
           },
         ],
       },

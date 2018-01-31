@@ -9,11 +9,24 @@ var dat ={
         key: "$..tenant.*.code",
         value: "$..tenant.*.name",
       }
+    },
+    {
+      url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE",
+      jsonPath: "ward",
+      jsExpForDD: {
+        key: "$..id",
+        value: "$..name",
+      }
+    },
+        {
+          url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE",
+         jsonPath: "zone",
+        jsExpForDD: {
+          key: "$..id",
+          value: "$..name",
+      }
     }
-
   ],
-
-
 
     numCols: 4,
     useTimestamp: true,
@@ -164,8 +177,8 @@ var dat ={
         'population',
       'garbageToBeCollected',
         { jsonPath: 'ulb.code', reduxObject: "ulbs", isObj: true, cToN: true },
-        'ward',
-        'zone',
+        { jsonPath: 'ward', reduxObject: "ward", isObj: true, cToN: true },
+        { jsonPath: 'zone', reduxObject: "zone", isObj: true, cToN: true },
       //'ulb.code',
       ],
       resultPath: 'MdmsRes.swm.Population',
