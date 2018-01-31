@@ -4,8 +4,8 @@ var dat = {
       var totalWetWaste=0,totalDryWaste=0;
       if (res.sourceSegregations[i].collectionDetails) {
         for (var j = 0; j < res.sourceSegregations[i].collectionDetails.length; j++) {
-          totalDryWaste=+res.sourceSegregations[i].collectionDetails[j].dryWasteCollected;
-          totalWetWaste=+res.sourceSegregations[i].collectionDetails[j].wetWasteCollected;
+          totalDryWaste+=res.sourceSegregations[i].collectionDetails[j].dryWasteCollected;
+          totalWetWaste+=res.sourceSegregations[i].collectionDetails[j].wetWasteCollected;
         }
         res.sourceSegregations[i]['totalDryWasteCollected']=totalDryWaste;
         res.sourceSegregations[i]['totalWetWasteCollected']=totalWetWaste;

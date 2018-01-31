@@ -376,7 +376,7 @@ class Search extends Component {
             })
           }
           /* Nested feature for single level - Enhancement required */
-          else if(typeof(formData[Object.keys(formData)[i]]) === "object"){      
+          else if(typeof(formData[Object.keys(formData)[i]]) === "object"){
             var level_1 = Object.keys(formData)[i];
             for(let item in formData[level_1]){
               if(_.isEmpty(formData[level_1][item])) {

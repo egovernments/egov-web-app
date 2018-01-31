@@ -2377,9 +2377,9 @@ var localization_EN_Data = {
   'swm.collectionPoint.search.ward': 'Ward',
   'swm.collectionPoint.search.zone': 'Zone',
   'swm.collectionPoint.search.road': 'Road/Street',
-  'swm.collectionPoint.search.totalWetWaste': 'Wet Waste Collected(tonnes)',
-  'swm.collectionPoint.search.totalDryWaste': 'Dry Waste Collected(tonnes)',
-  'swm.collectionpoints.create.totalWaste': 'Total Waste Collected(tonnes)',
+  'swm.collectionPoint.search.totalWetWaste': 'Wet Waste Collected(Tonnes)',
+  'swm.collectionPoint.search.totalDryWaste': 'Dry Waste Collected(Tonnes)',
+  'swm.collectionpoints.create.totalWaste': 'Total Waste Collected(Tonnes)',
 
   'swm.dumpingGround.create.dumpingGroundAddress': 'Dumping Ground Address',
   'swm.processingplant.create.title.Geo' : 'GEO-COORDINATES',
