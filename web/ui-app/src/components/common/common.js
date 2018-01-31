@@ -2076,6 +2076,7 @@ var localization_EN_Data = {
   'swm.vehiclestripsheet.create.entryWeight' : 'Entry Weight (Tons)',
   'swm.vehiclestripsheet.create.exitWeight' : 'Exit Weight (Tons)',
   'swm.vehiclestripsheet.create.garbageWeight' : 'Garbage Weight (Tons)',
+  "swm.vehiclestripsheet.create.tripNo": "Trip No.",
   'swm.vehiclestripsheet.search.tripStartDate' : ' Trip From',
   'swm.vehiclestripsheet.search.tripEndDate' : 'Trip To',
   'swm.vehiclestripsheet.search.routeName' : 'Route Name',

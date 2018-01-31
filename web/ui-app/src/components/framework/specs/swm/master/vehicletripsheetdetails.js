@@ -809,7 +809,17 @@ var dat = {
     groups: [{
         name: "VehicleDetails",
         label: "",
-        fields: [{
+        fields: [
+          {
+            name: "tripNo",
+            label: "swm.vehiclestripsheet.create.tripNo",
+            type: "text",
+            jsonPath: "vehicleTripSheetDetails[0].tripNo",
+            isRequired: false,
+            isDisabled: false,
+            patternErrorMsg: ""
+          },
+          {
             name: "regNumber",
             jsonPath: "vehicleTripSheetDetails[0].vehicle.regNumber",
             label: "swm.vehiclestripsheet.create.regNumber",
