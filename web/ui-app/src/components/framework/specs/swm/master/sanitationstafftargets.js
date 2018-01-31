@@ -5,7 +5,8 @@ var dat = {
     objectName: "",
     title: 'swm.search.page.title.sanitationStaffTargets',
     url: "/swm-services/sanitationstafftargets/_search",
-    groups: [{
+    groups: [
+    {
       name: "search",
       label: "swm.sanitationstaffTargets.search.title",
       fields: [{
@@ -584,6 +585,12 @@ var dat = {
     tenantIdRequired: true
   },
   "swm.view": {
+    beforeSetForm: `if (res &&
+      _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
+        res.sanitationStaffTargets[0].collectionPoints = res.sanitationStaffTargets[0].collectionPoints.map(function (item) {
+            return item.isSelected && {...item,["collectionPoint"]:item}
+        });
+    }`,
     numCols: 4,
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
@@ -1014,7 +1021,7 @@ var dat = {
     beforeSetForm: `if (res &&
       _.isArray(res.sanitationStaffTargets) && res.sanitationStaffTargets[0].collectionPoints && res.sanitationStaffTargets[0].collectionPoints.length>0) {
         res.sanitationStaffTargets[0].collectionPoints = res.sanitationStaffTargets[0].collectionPoints.map(function (item) {
-            return {...item,["isSelected"]:true,["collectionPoint"]:item}
+            return {...item,["collectionPoint"]:item}
         });
     }`,
     beforeSubmit: `
