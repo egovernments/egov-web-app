@@ -2113,6 +2113,7 @@ var localization_EN_Data = {
 
 
   'swm.routes.search.title': 'Route Search',
+  'swm.routes.view.group.title': 'Route Details',
   'swm.routes.search.result.name': 'Route Name',
   'swm.routes.search.result.collectionPoint': 'Collection Type',
   'swm.routes.search.result.startingCollectionPoint': 'Starting Collection Point',

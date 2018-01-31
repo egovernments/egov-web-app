@@ -44,7 +44,6 @@ import UiNestedTablesInputs from './components/UiNestedTablesInputs';
 import UiWindowSelectField from './components/UiWindowSelectField';
 import UiCheckBoxGrp from './components/UiCheckBoxGrp';
 import UiBoundary from './components/UiBoundary';
-import UiCollectionRoute from './components/UiCollectionRoute';
 import UiAutocompleteMultiselect from './components/UiAutocompleteMultiselect';
 
 let styles = {
@@ -118,8 +117,7 @@ class ShowFields extends Component {
                         field.type === 'workflow' ||
                         field.type === 'multiFieldAddToTable' ||
                         field.type === 'checkBoxGroup' ||
-                        field.type === 'boundary' ||
-                        field.type === 'collectionRoute'
+                        field.type === 'boundary'
                           ? 12
                           : noCols
                       }
@@ -135,8 +133,7 @@ class ShowFields extends Component {
                         field.type === 'workflow' ||
                         field.type === 'multiFieldAddToTable' ||
                         field.type === 'checkBoxGroup' ||
-                        field.type === 'boundary' ||
-                        field.type === 'collectionRoute'
+                        field.type === 'boundary'
                           ? 12
                           : noCols
                       }
@@ -778,17 +775,6 @@ class ShowFields extends Component {
       case 'boundary':
         return (
           <UiBoundary
-            tabIndex={index}
-            ui={this.props.ui}
-            getVal={this.props.getVal}
-            item={item}
-            fieldErrors={this.props.fieldErrors}
-            handler={this.props.handler}
-          />
-        );
-      case 'collectionRoute':
-        return (
-          <UiCollectionRoute
             tabIndex={index}
             ui={this.props.ui}
             getVal={this.props.getVal}

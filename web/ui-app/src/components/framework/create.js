@@ -42,7 +42,7 @@ class Report extends Component {
 
   //TODO generate Specific FormData
   generateSpecificForm = (formData, omitPropertiesJPath) => {
-    omitPropertiesJPath.forEach(function(item, index) {
+    omitPropertiesJPath.forEach(function (item, index) {
       eval(item);
     });
     return formData;
@@ -61,7 +61,7 @@ class Report extends Component {
     }
 
     if (Array.isArray(field)) {
-      field.forEach(function(item, index) {
+      field.forEach(function (item, index) {
         if (typeof item == "object") {
           // console.log(item);
           if (inArrayFormat) {
@@ -227,7 +227,7 @@ class Report extends Component {
               //   return false;
               // }
               Api.commonApiPost(context, id).then(
-                function(response) {
+                function (response) {
                   if (response) {
                     let queries = splitArray[1].split("|");
                     let keys = jp.query(response, queries[1]);
@@ -258,7 +258,7 @@ class Report extends Component {
 
                       dropDownData.push(obj);
                     }
-                    dropDownData.sort(function(s1, s2) {
+                    dropDownData.sort(function (s1, s2) {
                       return s1.value < s2.value
                         ? -1
                         : s1.value > s2.value ? 1 : 0;
@@ -274,7 +274,7 @@ class Report extends Component {
                     self.props.setDropDownOriginalData(groups[i].fields[j].depedants[k].jsonPath, response);
                   }
                 },
-                function(err) {
+                function (err) {
                   console.log(err);
                 }
               );
@@ -383,9 +383,9 @@ class Report extends Component {
               _stringifiedGroup.replace(
                 regex,
                 specs[moduleName + "." + actionName].groups[ind].jsonPath +
-                  "[" +
-                  j +
-                  "]"
+                "[" +
+                j +
+                "]"
               )
             )
           );
@@ -480,7 +480,7 @@ class Report extends Component {
                     specs,
                     specs[moduleName + "." + actionName].groups[i].fields[j]
                       .showHideFields[k].hide[a],
-                      specs[moduleName + "." + actionName].groups[i].fields[j].jsonPath
+                    specs[moduleName + "." + actionName].groups[i].fields[j].jsonPath
                   );
                 }
               }
@@ -533,13 +533,13 @@ class Report extends Component {
       if (specs[moduleName + "." + actionName].groups[i].multiple && !specs[moduleName + "." + actionName].groups[i].index) {
         var flag = 0;
         count = i;
-        while(count < specs[moduleName + "." + actionName].groups.length &&
-        specs[moduleName + "." + actionName].groups[i].name == specs[moduleName + "." + actionName].groups[count].name){
+        while (count < specs[moduleName + "." + actionName].groups.length &&
+          specs[moduleName + "." + actionName].groups[i].name == specs[moduleName + "." + actionName].groups[count].name) {
           tempArr.push(specs[moduleName + "." + actionName].groups[count]);
           count++;
           flag++;
         }
-        tempArr.sort( function(obj1, obj2) {
+        tempArr.sort(function (obj1, obj2) {
           return obj1.index - obj2.index;
         })
         specs[moduleName + "." + actionName].groups.splice(i, flag, ...tempArr);
@@ -549,7 +549,7 @@ class Report extends Component {
     setMockData(specs);
   }
 
-  
+
 
   displayUI(results) {
     let {
@@ -570,7 +570,7 @@ class Report extends Component {
     specifications = typeof results == "string" ? JSON.parse(results) : results;
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+      `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     reqRequired = [];
     self.setLabelAndReturnRequired(obj);
@@ -654,7 +654,7 @@ class Report extends Component {
           ].searchUrl
             .split("?")[1]
             .split("={")[0]
-        }=='${hashLocation.split("/")[hashLocation.split("/").length - 1]}')]`;
+          }=='${hashLocation.split("/")[hashLocation.split("/").length - 1]}')]`;
         masterDetail.filter = filterData;
         masterDetail.name =
           specifications[
@@ -683,7 +683,7 @@ class Report extends Component {
           `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].useTimestamp
       ).then(
-        function(res) {
+        function (res) {
           if (
             specifications[
               `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
@@ -724,7 +724,7 @@ class Report extends Component {
             );
             var spec =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
 
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
@@ -741,7 +741,7 @@ class Report extends Component {
           } else {
             let obj =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
             if (obj && obj.beforeSetUpdateData) eval(obj.beforeSetUpdateData);
             self.setInitialUpdateData(
@@ -769,7 +769,7 @@ class Report extends Component {
             }
             var spec =
               specifications[
-                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
               ];
             const JP = jp;
             if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
@@ -778,26 +778,26 @@ class Report extends Component {
           }
           let obj1 =
             specifications[
-              `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
             ];
           self.depedantValue(obj1.groups);
         },
-        function(err) {
+        function (err) {
           self.props.setLoadingStatus("hide");
         }
-      );
+        );
     } else {
 
-        let bodyParams= '';
-        bodyParams = localStorage.getItem("bodyParams");
-      if (bodyParams != '' && bodyParams != null){
-         localStorage.setItem('bodyParams','');
-        }
+      let bodyParams = '';
+      bodyParams = localStorage.getItem("bodyParams");
+      if (bodyParams != '' && bodyParams != null) {
+        localStorage.setItem('bodyParams', '');
+      }
 
       if (
         hashLocation.split("/").indexOf("create") == 1 &&
         specifications[
-          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ] &&
         specifications[
           `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
@@ -835,39 +835,38 @@ class Report extends Component {
       var id =
         self.props.match.params.id &&
         decodeURIComponent(self.props.match.params.id);
-      if (id || (bodyParams !='' && bodyParams != null) ){
+      if (id || (bodyParams != '' && bodyParams != null)) {
         //console.log('id', id);
         let mockObj =
           specifications[
-            `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+          `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ];
         if (mockObj.onloadFetchUrl) {
-           let requestBody = {};
-          if(id){
-          let params = JSON.parse(id);
-          self.props.setLoadingStatus("loading");
-          // console.log('query', query);
+          let requestBody = {};
+          if (id) {
+            let params = JSON.parse(id);
+            self.props.setLoadingStatus("loading");
+            // console.log('query', query);
 
-          Object.keys(params).map(key => {
-            _.set(requestBody, key, params[key]);
-          });
-        }
-          else
-            {
-              let temp  = {};
-              let bParams=[];
-              bodyParams= bodyParams.split(',');
-              for(let i=0;i<bodyParams.length;i++){
-                bParams.push(bodyParams[i]);
+            Object.keys(params).map(key => {
+              _.set(requestBody, key, params[key]);
+            });
+          }
+          else {
+            let temp = {};
+            let bParams = [];
+            bodyParams = bodyParams.split(',');
+            for (let i = 0; i < bodyParams.length; i++) {
+              bParams.push(bodyParams[i]);
+            }
+            mockObj.bodyParams.map(x => {
+              if (x.value == '?') {
+                x.value = bParams;
               }
-              mockObj.bodyParams.map(x=>{
-                if(x.value == '?'){
-                  x.value= bParams;
-                }
-                _.set(temp,x.key,x.value );
-              });
-              _.set(requestBody,mockObj.objectName, [temp]);
-              }
+              _.set(temp, x.key, x.value);
+            });
+            _.set(requestBody, mockObj.objectName, [temp]);
+          }
           Api.commonApiPost(
             mockObj.onloadFetchUrl,
             {},
@@ -875,8 +874,8 @@ class Report extends Component {
             false,
             mockObj.useTimestamp
           ).then(
-              function(res) {
-               self.props.setLoadingStatus("hide");
+            function (res) {
+              self.props.setLoadingStatus("hide");
               if (
                 specifications[
                   `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
@@ -887,7 +886,7 @@ class Report extends Component {
                   obj,
                   specifications[
                     `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    hashLocation.split("/")[1]
                     }`
                   ].objectName,
                   jp.query(res, "$..[0]")[0]
@@ -900,7 +899,7 @@ class Report extends Component {
                   hashLocation.split("/")[1],
                   specifications[
                     `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    hashLocation.split("/")[1]
                     }`
                   ].objectName
                 );
@@ -912,7 +911,7 @@ class Report extends Component {
                   hashLocation.split("/")[1],
                   specifications[
                     `${hashLocation.split("/")[2]}.${
-                      hashLocation.split("/")[1]
+                    hashLocation.split("/")[1]
                     }`
                   ].objectName
                 );
@@ -920,16 +919,16 @@ class Report extends Component {
               }
               let obj1 =
                 specifications[
-                  `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+                `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
                 ];
 
 
               self.depedantValue(obj1.groups);
             },
-            function(err) {
+            function (err) {
               self.props.setLoadingStatus("hide");
             }
-          );
+            );
         }
       }
     }
@@ -945,11 +944,11 @@ class Report extends Component {
         let res = await callApi(item);
         let orgRes = Object.assign({}, res);
         if (item.dependentUrl) {
-          Api.commonApiPost(item.dependentUrl).then(function(response) {
+          Api.commonApiPost(item.dependentUrl).then(function (response) {
             let keyValue = jp.query(res, item.jsExpForDD.key)[0];
             let filterObject = _.filter(
               response[`${item.dependantPath}`],
-              function(o) {
+              function (o) {
                 if (o[`${item.dependentKey}`] == keyValue) return o;
               }
             );
@@ -960,21 +959,21 @@ class Report extends Component {
         }
 
 
-  else if(item.type&&item.type=='text'){
-let filteredresponse= self.filterDataFromArray(res,item);
-let jsonpaths=item.jsonPath.split(',');
-if(jsonpaths&&filteredresponse){
-for(var i=0;i<item.responsePaths.length;i++){
-  if(filteredresponse[0]){
-  var value=_.get(filteredresponse[0],item.responsePaths[i])
-if(value){
-self.setVal(jsonpaths[i], value);
-}
-}
-}
-}
-self.props.setLoadingStatus("hide");
- }
+        else if (item.type && item.type == 'text') {
+          let filteredresponse = self.filterDataFromArray(res, item);
+          let jsonpaths = item.jsonPath.split(',');
+          if (jsonpaths && filteredresponse) {
+            for (var i = 0; i < item.responsePaths.length; i++) {
+              if (filteredresponse[0]) {
+                var value = _.get(filteredresponse[0], item.responsePaths[i])
+                if (value) {
+                  self.setVal(jsonpaths[i], value);
+                }
+              }
+            }
+          }
+          self.props.setLoadingStatus("hide");
+        }
 
         else {
           setDropDownData(
@@ -1000,7 +999,7 @@ self.props.setLoadingStatus("hide");
     let hashLocation = window.location.hash;
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+      `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     let name, filter;
     // let {moduleName, actionName, setMockData} = this.props;
@@ -1063,7 +1062,7 @@ self.props.setLoadingStatus("hide");
                             if (
                               master == obj.groups[i].fields[j].mdms.masterName
                             ) {
-                              moduleObj[master].forEach(function(item) {
+                              moduleObj[master].forEach(function (item) {
                                 let key = [];
                                 let value = [];
                                 key = jp.query(
@@ -1133,7 +1132,7 @@ self.props.setLoadingStatus("hide");
               exp = exp.replace(path, value);
               var dropdownValues = jp.query(this.state.mdmsData, exp);
               let dropdowndata = [];
-              dropdownValues.forEach(function(item) {
+              dropdownValues.forEach(function (item) {
                 let key = [];
                 let value = [];
                 key = jp.query(
@@ -1179,8 +1178,8 @@ self.props.setLoadingStatus("hide");
         specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
       } else {
         if ($("input[type=file]")) {
-            $("input[type=file]").val("");
-          }
+          $("input[type=file]").val("");
+        }
         specifications = require(`./specs/${hash[2]}/master/${hash[3]}`)
           .default;
       }
@@ -1210,7 +1209,7 @@ self.props.setLoadingStatus("hide");
     if (!value) return;
 
     if (Array.isArray(autoObject)) {
-      autoObject.forEach(function(item, index) {
+      autoObject.forEach(function (item, index) {
         var url = item.autoCompleteUrl.split("?")[0];
         var hashLocation = window.location.hash;
         var parameters = item.autoCompleteUrl.substr(
@@ -1257,7 +1256,7 @@ self.props.setLoadingStatus("hide");
             `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
           ].useTimestamp
         ).then(
-          function(res) {
+          function (res) {
             self.props.setLoadingStatus("hide");
             var formData = { ...self.props.formData };
             for (var key in item.autoFillFields) {
@@ -1265,7 +1264,7 @@ self.props.setLoadingStatus("hide");
             }
             self.props.setFormData(formData);
           },
-          function(err) {
+          function (err) {
             console.log(err);
             self.props.setLoadingStatus("hide");
             var formData = { ...self.props.formData };
@@ -1275,7 +1274,7 @@ self.props.setLoadingStatus("hide");
             self.props.setFormData(formData);
             self.props.toggleSnackbarAndSetText(true, err.message);
           }
-        );
+          );
       });
     } else {
       var url = autoObject.autoCompleteUrl.split("?")[0];
@@ -1324,33 +1323,33 @@ self.props.setLoadingStatus("hide");
           `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
         ].useTimestamp
       ).then(
-        function(res) {
+        function (res) {
           var formData = { ...self.props.formData };
           for (var key in autoObject.autoFillFields) {
             _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
           }
           self.props.setFormData(formData);
         },
-        function(err) {
+        function (err) {
           console.log(err);
         }
-      );
+        );
     }
   };
 
   makeAjaxCall = (formData, url) => {
-    let shouldSubmit=true;
+    let shouldSubmit = true;
     let self = this;
-    let _formData = {...this.props.formData}
-    let {setVal} = this.props;
+    let _formData = { ...this.props.formData }
+    let { setVal } = this.props;
     var hashLocation = window.location.hash;
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+      `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     const JP = jp;
     if (obj && obj.beforeSubmit) {
-        eval(obj.beforeSubmit);
+      eval(obj.beforeSubmit);
     }
     if (shouldSubmit) {
       let fields = jp.query(
@@ -1364,9 +1363,9 @@ self.props.setLoadingStatus("hide");
             formData,
             fields[i]["aATransformInfo"].to,
             values.map(item => {
-              if(_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)){
+              if (_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)) {
                 return item;
-              }else{
+              } else {
                 return {
                   [fields[i]["aATransformInfo"].key]: fields[i]["aATransformInfo"]
                     .from
@@ -1391,14 +1390,14 @@ self.props.setLoadingStatus("hide");
 
       Api.commonApiPost(
         url ||
-          self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
-            .url,
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
+          .url,
         "",
         formData,
         "",
         true
       ).then(
-        function(response) {
+        function (response) {
           self.props.setLoadingStatus("hide");
           self.initData();
           if (response.summons) {
@@ -1408,7 +1407,7 @@ self.props.setLoadingStatus("hide");
                 translate(
                   self.props.actionName == "create"
                     ? "Created Successfully Ref No. is " +
-                      response.summons[0].summonReferenceNo
+                    response.summons[0].summonReferenceNo
                     : "wc.update.message.success"
                 ),
                 true
@@ -1440,7 +1439,7 @@ self.props.setLoadingStatus("hide");
             );
           }
 
-          setTimeout(function() {
+          setTimeout(function () {
             if (
               self.props.metaData[
                 `${self.props.moduleName}.${self.props.actionName}`
@@ -1490,9 +1489,9 @@ self.props.setLoadingStatus("hide");
 
               self.props.setRoute(
                 hash +
-                  (self.props.metaData[
-                    `${self.props.moduleName}.${self.props.actionName}`
-                  ].queryString || "")
+                (self.props.metaData[
+                  `${self.props.moduleName}.${self.props.actionName}`
+                ].queryString || "")
               );
             } else if (
               self.props.metaData[
@@ -1525,11 +1524,11 @@ self.props.setLoadingStatus("hide");
             }
           }, 1500);
         },
-        function(err) {
+        function (err) {
           self.props.setLoadingStatus("hide");
           self.props.toggleSnackbarAndSetText(true, err.message);
         }
-      );
+        );
     }
     else {
       self.props.setLoadingStatus("hide");
@@ -1537,26 +1536,25 @@ self.props.setLoadingStatus("hide");
 
   };
 
-filterDataFromArray=(res,item)=>{
- if(res){
-  let value=this.getVal(item.queryParameter);
-  if(value){
- var filterdObject= _.filter(
-              res[`${item.responseArray}`],
-              function(o) {
-               // let jsonObject=Json.stringify()
-               var currentValue=  _.get(o,item.primaryKey);
-                if (currentValue== value)
-                  {return o};
-              });
-              return filterdObject;
-            }
-            return null;
-            }
+  filterDataFromArray = (res, item) => {
+    if (res) {
+      let value = this.getVal(item.queryParameter);
+      if (value) {
+        var filterdObject = _.filter(
+          res[`${item.responseArray}`],
+          function (o) {
+            // let jsonObject=Json.stringify()
+            var currentValue = _.get(o, item.primaryKey);
+            if (currentValue == value) { return o };
+          });
+        return filterdObject;
+      }
+      return null;
+    }
 
-            return null;
+    return null;
 
-}
+  }
   //Needs to be changed later for more customfields
   checkCustomFields = (formData, cb) => {
     var self = this;
@@ -1569,7 +1567,7 @@ filterDataFromArray=(res,item)=>{
       var jPath =
         self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
           .customFields.initiatorPosition;
-      getInitiatorPosition(function(err, pos) {
+      getInitiatorPosition(function (err, pos) {
         if (err) {
           self.toggleSnackbarAndSetText(true, err.message);
         } else {
@@ -1648,7 +1646,7 @@ filterDataFromArray=(res,item)=>{
     } else {
       let breakOut = 0;
       for (let key in fileList) {
-        fileUpload(fileList[key], moduleName, function(err, res) {
+        fileUpload(fileList[key], moduleName, function (err, res) {
           if (breakOut == 1) return;
           if (err) {
             breakOut = 1;
@@ -1714,9 +1712,9 @@ filterDataFromArray=(res,item)=>{
     ) {
       if (
         !formData[
-          self.props.metaData[
-            `${self.props.moduleName}.${self.props.actionName}`
-          ].objectName
+        self.props.metaData[
+          `${self.props.moduleName}.${self.props.actionName}`
+        ].objectName
         ]
       )
         formData[
@@ -1775,8 +1773,8 @@ filterDataFromArray=(res,item)=>{
     //Check if documents, upload and get fileStoreId
     let formdocumentData =
       formData[
-        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
-          .objectName
+      self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
+        .objectName
       ];
     let documentPath =
       self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
@@ -1794,44 +1792,43 @@ filterDataFromArray=(res,item)=>{
       let counter = documents.length,
         breakOut = 0;
       for (let i = 0; i < documents.length; i++) {
-        if(documents[i])
-        {
-        fileUpload(documents[i].fileStoreId, self.props.moduleName, function(
-          err,
-          res
-        ) {
-          if (breakOut == 1) return;
-          if (err) {
-            breakOut = 1;
-            self.props.setLoadingStatus("hide");
-            self.props.toggleSnackbarAndSetText(true, err, false, true);
-          } else {
+        if (documents[i]) {
+          fileUpload(documents[i].fileStoreId, self.props.moduleName, function (
+            err,
+            res
+          ) {
+            if (breakOut == 1) return;
+            if (err) {
+              breakOut = 1;
+              self.props.setLoadingStatus("hide");
+              self.props.toggleSnackbarAndSetText(true, err, false, true);
+            } else {
 
-            _docs.push({
-              index: i,
-              ...documents[i],
-              fileStoreId: res.files[0].fileStoreId
-            });
-            counter--;
-            if (counter == 0 && breakOut == 0) {
-              let sortedDocs = _.sortBy(_docs, "index", function(n) {
-                return Math.sin(n);
+              _docs.push({
+                index: i,
+                ...documents[i],
+                fileStoreId: res.files[0].fileStoreId
               });
-              sortedDocs = sortedDocs.map(
-                ({ index, ...sortedDocs }) => sortedDocs
-              );
-              _docs = sortedDocs;
-              formdocumentData["documents"] = _docs;
-              self.checkForOtherFiles(formData, _url);
+              counter--;
+              if (counter == 0 && breakOut == 0) {
+                let sortedDocs = _.sortBy(_docs, "index", function (n) {
+                  return Math.sin(n);
+                });
+                sortedDocs = sortedDocs.map(
+                  ({ index, ...sortedDocs }) => sortedDocs
+                );
+                _docs = sortedDocs;
+                formdocumentData["documents"] = _docs;
+                self.checkForOtherFiles(formData, _url);
+              }
             }
-          }
-        });
-      }
-      else{
+          });
+        }
+        else {
 
-               counter--;
+          counter--;
+        }
       }
-    }
     } else {
       self.checkForOtherFiles(formData, _url);
     }
@@ -1855,11 +1852,11 @@ filterDataFromArray=(res,item)=>{
   };
 
   setPropertyInMockData = (obj, jsonPath, property, value) => {
-    if(obj && obj.groups){
-      obj.groups.forEach(function(groupElem, groupInd){
-        if(groupElem.fields && groupElem.fields.length){
-          groupElem.fields.forEach(function(fieldElem, fieldInd){
-            if(jsonPath === fieldElem.jsonPath){
+    if (obj && obj.groups) {
+      obj.groups.forEach(function (groupElem, groupInd) {
+        if (groupElem.fields && groupElem.fields.length) {
+          groupElem.fields.forEach(function (fieldElem, fieldInd) {
+            if (jsonPath === fieldElem.jsonPath) {
               fieldElem[property] = value;
             }
           })
@@ -1904,12 +1901,12 @@ filterDataFromArray=(res,item)=>{
           //Extra check for multiple true
           if (
             hideObject.name ==
-              _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                .name &&
+            _mockData[moduleName + "." + actionName].groups[i].fields[j]
+              .name &&
             (_mockData[moduleName + "." + actionName].groups[i].multiple
               ? jsonPath ===
-                _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                  .jsonPath
+              _mockData[moduleName + "." + actionName].groups[i].fields[j]
+                .jsonPath
               : true)
           ) {
             reset = this.resetCheck(_mockData, hideObject.name, val);
@@ -2156,11 +2153,11 @@ filterDataFromArray=(res,item)=>{
               ) {
                 if (
                   val ==
-                    mockData[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].ifValue &&
+                  mockData[moduleName + "." + actionName].groups[i].fields[j]
+                    .showHideFields[k].ifValue &&
                   element ==
-                    mockData[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].hide[l].name
+                  mockData[moduleName + "." + actionName].groups[i].fields[j]
+                    .showHideFields[k].hide[l].name
                 ) {
                   return false;
                 }
@@ -2174,11 +2171,11 @@ filterDataFromArray=(res,item)=>{
               ) {
                 if (
                   val ==
-                    mockData[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].ifValue &&
+                  mockData[moduleName + "." + actionName].groups[i].fields[j]
+                    .showHideFields[k].ifValue &&
                   element ==
-                    mockData[moduleName + "." + actionName].groups[i].fields[j]
-                      .showHideFields[k].show[l].name
+                  mockData[moduleName + "." + actionName].groups[i].fields[j]
+                    .showHideFields[k].show[l].name
                 ) {
                   return true;
                 }
@@ -2221,12 +2218,12 @@ filterDataFromArray=(res,item)=>{
 
           if (
             showObject.name ==
-              _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                .name &&
+            _mockData[moduleName + "." + actionName].groups[i].fields[j]
+              .name &&
             (_mockData[moduleName + "." + actionName].groups[i].multiple
               ? jsonPath ===
-                _mockData[moduleName + "." + actionName].groups[i].fields[j]
-                  .jsonPath
+              _mockData[moduleName + "." + actionName].groups[i].fields[j]
+                .jsonPath
               : true)
           ) {
             _mockData[moduleName + "." + actionName].groups[i].fields[
@@ -2633,8 +2630,8 @@ filterDataFromArray=(res,item)=>{
       ) {
         if (
           jsonPath ==
-            _mockData[moduleName + "." + actionName].groups[i].fields[j]
-              .jsonPath &&
+          _mockData[moduleName + "." + actionName].groups[i].fields[j]
+            .jsonPath &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
             .enableDisableFields &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
@@ -2713,8 +2710,8 @@ filterDataFromArray=(res,item)=>{
       ) {
         if (
           jsonPath ==
-            _mockData[moduleName + "." + actionName].groups[i].fields[j]
-              .jsonPath &&
+          _mockData[moduleName + "." + actionName].groups[i].fields[j]
+            .jsonPath &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
             .showHideFields &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
@@ -2871,9 +2868,9 @@ filterDataFromArray=(res,item)=>{
           _mockData[moduleName + "." + actionName].groups[i].fields[
             j
           ].isRequired = reset ? true : false;
-          if(reset){
+          if (reset) {
             addRequiredFields([_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath]);
-          }else{
+          } else {
             delRequiredFields([_mockData[moduleName + '.' + actionName].groups[i].fields[j].jsonPath]);
           }
           break;
@@ -2900,8 +2897,8 @@ filterDataFromArray=(res,item)=>{
       ) {
         if (
           jsonPath ==
-            _mockData[moduleName + "." + actionName].groups[i].fields[j]
-              .jsonPath &&
+          _mockData[moduleName + "." + actionName].groups[i].fields[j]
+            .jsonPath &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
             .reqNotReqFields &&
           _mockData[moduleName + "." + actionName].groups[i].fields[j]
@@ -2972,7 +2969,7 @@ filterDataFromArray=(res,item)=>{
         this.getVal(params[i].replace(/(\}?)(\{?)/, ""))
       );
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       Api.commonApiPost(
         urlResults[0],
         {},
@@ -2984,17 +2981,17 @@ filterDataFromArray=(res,item)=>{
         "",
         isStateLevel
       ).then(
-        function(response) {
+        function (response) {
           if (response) {
             resolve(jp.query(response, urlResults[1]));
           } else {
             reject("Error");
           }
         },
-        function(error) {
+        function (error) {
           reject("Error");
         }
-      );
+        );
     });
   };
 
@@ -3048,7 +3045,7 @@ filterDataFromArray=(res,item)=>{
     };
 
     let depedants = jp.query(
-      mockData[moduleName+"."+actionName],
+      mockData[moduleName + "." + actionName],
       `$.groups..fields[?(@.jsonPath=="${property}")].depedants.*`
     );
     let dependantIdx;
@@ -3138,7 +3135,7 @@ filterDataFromArray=(res,item)=>{
       }
     }
 
-    _.forEach(depedants, function(value, key) {
+    _.forEach(depedants, function (value, key) {
       //console.log(value.type);
       if (value.type == "dropDown") {
         let splitArray = value.pattern.split("?");
@@ -3154,33 +3151,33 @@ filterDataFromArray=(res,item)=>{
             if (queryStringObject[i].split("=")[1].search("{") > -1) {
               if (
                 queryStringObject[i]
-                .split("=")[1]
-                .split("{")[1]
-                .split("}")[0] == property
+                  .split("=")[1]
+                  .split("{")[1]
+                  .split("}")[0] == property
               ) {
                 //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
                 id[queryStringObject[i].split("=")[0]] =
-                queryStringObject[i]
-                .split("=")[1]
-                .replace(/\{(.*?)\}/, e.target.value) || "";
+                  queryStringObject[i]
+                    .split("=")[1]
+                    .replace(/\{(.*?)\}/, e.target.value) || "";
               } else {
-                let filterParameter=queryStringObject[i]
-                .split('=')[1]
-                .split('{')[1]
-                .split('}')[0];
-                if(value.indexReplace){
-                  if(dependantIdx&&dependantIdx!=0){
-                    filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-                    value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+                let filterParameter = queryStringObject[i]
+                  .split('=')[1]
+                  .split('{')[1]
+                  .split('}')[0];
+                if (value.indexReplace) {
+                  if (dependantIdx && dependantIdx != 0) {
+                    filterParameter = replaceLastIdxOnJsonPath(filterParameter, dependantIdx);
+                    value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
                   }
                 }
                 id[queryStringObject[i].split("=")[0]] =
-                queryStringObject[i].split("=")[1].replace(
-                  /\{(.*?)\}/,
-                  getVal(
-                    filterParameter
-                  )
-                ) || "";
+                  queryStringObject[i].split("=")[1].replace(
+                    /\{(.*?)\}/,
+                    getVal(
+                      filterParameter
+                    )
+                  ) || "";
               }
             }
             else {
@@ -3202,7 +3199,7 @@ filterDataFromArray=(res,item)=>{
           "",
           value.isStateLevel
         ).then(
-          function(response) {
+          function (response) {
             if (response) {
               // console.log('In dropdown');
               // console.log(response);
@@ -3210,34 +3207,33 @@ filterDataFromArray=(res,item)=>{
               let values = jp.query(response, splitArray[1].split("|")[2]);
               let dropDownData = [];
               for (var k = 0; k < keys.length; k++) {
-                 if(keys[k])
-                 {
-                   let obj = {};
-                   obj["key"] = keys[k];
-                   obj["value"] = values[k];
-                   dropDownData.push(obj);
-                 }
+                if (keys[k]) {
+                  let obj = {};
+                  obj["key"] = keys[k];
+                  obj["value"] = values[k];
+                  dropDownData.push(obj);
+                }
               }
 
-              dropDownData.sort(function(s1, s2) {
+              dropDownData.sort(function (s1, s2) {
                 return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
               });
-              if (value.autoSelect) {
-                //First value to be selected
-              } else {
-                dropDownData.unshift({
-                  key: null,
-                  value: "-- Please Select --"
-                });
-              }
+              // if (value.autoSelect) {
+              //   //First value to be selected
+              // } else {
+              //   dropDownData.unshift({
+              //     key: null,
+              //     value: "-- Please Select --"
+              //   });
+              // }
 
-              const updateDropDownData=(value,i)=>{
+              const updateDropDownData = (value, i) => {
                 value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                  setDropDownData(value.jsonPath, dropDownData);
-                  setDropDownOriginalData(value.jsonPath, response);
-                  if (value.autoSelect) {
-                    setVal(value.jsonPath, dropDownData[0]);
-                  }
+                setDropDownData(value.jsonPath, dropDownData);
+                setDropDownOriginalData(value.jsonPath, response);
+                if (value.autoSelect) {
+                  setVal(value.jsonPath, dropDownData[0]);
+                }
               }
 
               //to handle tableList dropdown
@@ -3248,13 +3244,13 @@ filterDataFromArray=(res,item)=>{
               );
               let numberOfRowsArray = _.get(formData, currProperty);
               if (numberOfRowsArray && numberOfRowsArray.length > 0) {
-                if(value.indexReplace){
-                 updateDropDownData(value,dependantIdx);
-                }else{
-                for (let i = 0; i < numberOfRowsArray.length; i++) {
-                   updateDropDownData(value,i);
+                if (value.indexReplace) {
+                  updateDropDownData(value, dependantIdx);
+                } else {
+                  for (let i = 0; i < numberOfRowsArray.length; i++) {
+                    updateDropDownData(value, i);
+                  }
                 }
-              }
               } else {
                 setDropDownData(value.jsonPath, dropDownData);
                 setDropDownOriginalData(value.jsonPath, response);
@@ -3264,10 +3260,10 @@ filterDataFromArray=(res,item)=>{
               }
             }
           },
-          function(err) {
+          function (err) {
             console.log(err);
           }
-        );
+          );
       } else if (value.type == "textField") {
         try {
           let object = {};
@@ -3280,13 +3276,13 @@ filterDataFromArray=(res,item)=>{
                 dependantIdx
               );
               exp = exp && exp.replace(/\[\*\]/g, "[" + dependantIdx + "]");
-                value.pattern =
+              value.pattern =
                 value.pattern &&
                 value.pattern.replace(/\[\*\]/g, "[" + dependantIdx + "]");
 
-              if(exp.indexOf('getValFromDropdownData') <0){
+              if (exp.indexOf('getValFromDropdownData') < 0) {
                 value.pattern = exp;
-                exp= '';
+                exp = '';
 
               }
 
@@ -3313,7 +3309,7 @@ filterDataFromArray=(res,item)=>{
             // console.log(dropDownOringalData[value.pattern.split("|")[0]][value.pattern.split("|")[1]]);
             var arr =
               dropDownOringalData[value.pattern.split("|")[0]][
-                value.pattern.split("|")[1]
+              value.pattern.split("|")[1]
               ];
             var searchPropery = value.pattern.split("|")[2];
             var propertyRelToDepedant = value.pattern.split("|")[3];
@@ -3364,15 +3360,15 @@ filterDataFromArray=(res,item)=>{
                 //     dependantIdx
                 //   )
                 // );
-                   let filterParameter=queryStringObject[i]
-                        .split('=')[1]
-                        .split('{')[1]
-                        .split('}')[0];
+                let filterParameter = queryStringObject[i]
+                  .split('=')[1]
+                  .split('{')[1]
+                  .split('}')[0];
 
-          if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
-            filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-            value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
-          }
+                if (dependantIdx && dependantIdx != 0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')) {
+                  filterParameter = replaceLastIdxOnJsonPath(filterParameter, dependantIdx);
+                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
+                }
 
                 id[queryStringObject[i].split("=")[0]] =
                   queryStringObject[i].split("=")[1].replace(
@@ -3390,65 +3386,65 @@ filterDataFromArray=(res,item)=>{
           }
         }
         Api.commonApiPost(context, id).then(
-          function(response) {
+          function (response) {
             let fields = jp.query(
               obj,
               `$.groups..fields[?(@.hasATOAATransform==true)]`
             );
 
             if (response) {
-              if(fields && fields.length>0 ) {
-        let splitArray = value.pattern.split('?');
-            for (var i = 0; i < fields.length; i++) {
-              if (!fields[i].hasPreTransform) {
-                var keys = Object.keys( value.autoFillFields );
-                let values = _.get(response, value.autoFillFields[keys[0]]);
-                console.log(values);
-        let keysArray = jp.query(values, splitArray[1].split('|')[1]);
-            let valuesArray = jp.query(values, splitArray[1].split('|')[2]);
-            let dropDownData = [];
-            for (var k = 0; k < keysArray.length; k++) {
-              let dropdownObject = {};
-              dropdownObject['key'] = value.convertToString ? keysArray[k].toString() : value.convertToNumber ? Number(keysArray[k]) : keysArray[k];
-              dropdownObject['value'] = valuesArray[k];
-              dropDownData.push(dropdownObject);
-            }
+              if (fields && fields.length > 0) {
+                let splitArray = value.pattern.split('?');
+                for (var i = 0; i < fields.length; i++) {
+                  if (!fields[i].hasPreTransform) {
+                    var keys = Object.keys(value.autoFillFields);
+                    let values = _.get(response, value.autoFillFields[keys[0]]);
+                    console.log(values);
+                    let keysArray = jp.query(values, splitArray[1].split('|')[1]);
+                    let valuesArray = jp.query(values, splitArray[1].split('|')[2]);
+                    let dropDownData = [];
+                    for (var k = 0; k < keysArray.length; k++) {
+                      let dropdownObject = {};
+                      dropdownObject['key'] = value.convertToString ? keysArray[k].toString() : value.convertToNumber ? Number(keysArray[k]) : keysArray[k];
+                      dropdownObject['value'] = valuesArray[k];
+                      dropDownData.push(dropdownObject);
+                    }
 
-            dropDownData.sort(function(s1, s2) {
-              return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
-            });
+                    dropDownData.sort(function (s1, s2) {
+                      return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
+                    });
 
-            setDropDownData(value.jsonPath, dropDownData);
+                    setDropDownData(value.jsonPath, dropDownData);
 
-              }
-            }
+                  }
+                }
 
               }
               else {
-              for (var key in value.autoFillFields) {
-                var keyField = key.substr(0, key.lastIndexOf("["));
-                var keyLast = key.substr(key.lastIndexOf("]") + 2);
-                var propertyCurIndex = property.substr(
-                  property.lastIndexOf("[") + 1,
-                  1
-                );
-                var newKey = keyField + "[" + propertyCurIndex + "]." + keyLast;
-                handleChange(
-                  {
-                    target: {
-                      value: _.get(response, value.autoFillFields[key])
-                    }
-                  },
-                  newKey,
-                  false,
-                  "",
-                  ""
-                );
+                for (var key in value.autoFillFields) {
+                  var keyField = key.substr(0, key.lastIndexOf("["));
+                  var keyLast = key.substr(key.lastIndexOf("]") + 2);
+                  var propertyCurIndex = property.substr(
+                    property.lastIndexOf("[") + 1,
+                    1
+                  );
+                  var newKey = keyField + "[" + propertyCurIndex + "]." + keyLast;
+                  handleChange(
+                    {
+                      target: {
+                        value: _.get(response, value.autoFillFields[key])
+                      }
+                    },
+                    newKey,
+                    false,
+                    "",
+                    ""
+                  );
+                }
               }
             }
-            }
           },
-          function(err) {
+          function (err) {
             console.log(err);
           }
         );
@@ -3456,7 +3452,7 @@ filterDataFromArray=(res,item)=>{
         if (value.hasFromDropDownOriginalData) {
           var arr =
             dropDownOringalData[value.pattern.split("|")[0]][
-              value.pattern.split("|")[1]
+            value.pattern.split("|")[1]
             ];
           var searchPropery = value.pattern.split("|")[2];
           var propertyRelToDepedant = value.pattern.split("|")[3];
@@ -3529,28 +3525,28 @@ filterDataFromArray=(res,item)=>{
                 ) {
                   //console.log("replacing!!!", queryStringObject[i].split("=")[1], queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/, e.target.value))
                   id[queryStringObject[i].split("=")[0]] =
-                  queryStringObject[i]
-                  .split("=")[1]
-                  .replace(/\{(.*?)\}/, e.target.value) || "";
+                    queryStringObject[i]
+                      .split("=")[1]
+                      .replace(/\{(.*?)\}/, e.target.value) || "";
                 } else {
 
-                  let filterParameter=queryStringObject[i]
-                  .split('=')[1]
-                  .split('{')[1]
-                  .split('}')[0];
+                  let filterParameter = queryStringObject[i]
+                    .split('=')[1]
+                    .split('{')[1]
+                    .split('}')[0];
 
-                  if(dependantIdx&&dependantIdx!=0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')){
-                    filterParameter=replaceLastIdxOnJsonPath(filterParameter,dependantIdx);
-                    value.jsonPath=replaceLastIdxOnJsonPath(value.jsonPath,dependantIdx);
+                  if (dependantIdx && dependantIdx != 0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')) {
+                    filterParameter = replaceLastIdxOnJsonPath(filterParameter, dependantIdx);
+                    value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
                   }
 
                   id[queryStringObject[i].split("=")[0]] =
-                  queryStringObject[i].split("=")[1].replace(
-                    /\{(.*?)\}/,
-                    getVal(
-                      filterParameter
-                    )
-                  ) || "";
+                    queryStringObject[i].split("=")[1].replace(
+                      /\{(.*?)\}/,
+                      getVal(
+                        filterParameter
+                      )
+                    ) || "";
 
                   if (id[queryStringObject[i].split("=")[0]] == "") {
                     dataFlag = 1;
@@ -3577,7 +3573,7 @@ filterDataFromArray=(res,item)=>{
               "",
               value.isStateLevel
             ).then(
-              function(response) {
+              function (response) {
                 if (response) {
                   console.log('In dropdown');
                   console.log(response);
@@ -3633,10 +3629,10 @@ filterDataFromArray=(res,item)=>{
                   }
                 }
               },
-              function(err) {
+              function (err) {
                 console.log(err);
               }
-            );
+              );
           }
         } else {
           //to handle tableList dropdown
@@ -3814,7 +3810,7 @@ filterDataFromArray=(res,item)=>{
   ) => {
     const self = this;
     let { getVal } = this; //.props;
-    var shouldHandleChange=true;
+    var shouldHandleChange = true;
     let {
       handleChange,
       mockData,
@@ -3830,7 +3826,7 @@ filterDataFromArray=(res,item)=>{
     let hashLocation = window.location.hash;
     let obj =
       specifications[
-        `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
+      `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
 
 
@@ -3845,7 +3841,7 @@ filterDataFromArray=(res,item)=>{
           d.fields.map((innerData) => {
             if (innerData.type == 'tableList') {
               innerData.tableList.values.map((dn) => {
-                if (dn.hasOwnProperty('dependantOn') && dn.jsonPath ==  property) {
+                if (dn.hasOwnProperty('dependantOn') && dn.jsonPath == property) {
                   dn.dependantOn.map((fData) => {
                     if (getVal(`${fData.jsonPath}`) == `${fData.key}`) {
                       expression = expression;
@@ -3963,7 +3959,7 @@ filterDataFromArray=(res,item)=>{
 
   indexFinder = (jsonPath) => {
     let matches = jsonPath.match(/(\[\d+\])/g);
-    return  matches.length ? parseInt(matches[matches.length-1].replace(/[^\d]/g,"")) : -1;
+    return matches.length ? parseInt(matches[matches.length - 1].replace(/[^\d]/g, "")) : -1;
   }
 
   getNewSpecs = (group, updatedSpecs, path) => {
@@ -3976,7 +3972,7 @@ filterDataFromArray=(res,item)=>{
 
   getPath = value => {
     let { mockData, moduleName, actionName } = this.props;
-    const getFromGroup = function(groups) {
+    const getFromGroup = function (groups) {
       for (var i = 0; i < groups.length; i++) {
         if (groups[i].children) {
           for (var j = 0; j < groups[i].children.length; i++) {
@@ -4048,9 +4044,9 @@ filterDataFromArray=(res,item)=>{
                 stringified.replace(
                   regexp,
                   metaData[moduleName + "." + actionName].groups[i].jsonPath +
-                    "[" +
-                    (ind + 1) +
-                    "]"
+                  "[" +
+                  (ind + 1) +
+                  "]"
                 )
               );
               _groupToBeInserted.index = ind + 1;
@@ -4084,7 +4080,7 @@ filterDataFromArray=(res,item)=>{
 
               // Check for showHideFields in multiple --> Delete/Add required fields as per default value
               for (var k = 0; k < _groupToBeInserted.fields.length; k++) {
-                if(_groupToBeInserted.fields[k].showHideFields && _groupToBeInserted.fields[k].showHideFields.length){
+                if (_groupToBeInserted.fields[k].showHideFields && _groupToBeInserted.fields[k].showHideFields.length) {
                   self.checkIfHasShowHideFields(_groupToBeInserted.fields[k].jsonPath, _groupToBeInserted.fields[k].defaultValue)
                 }
               }
@@ -4153,7 +4149,7 @@ filterDataFromArray=(res,item)=>{
             mockData[moduleName + "." + actionName].groups.filter(
               group => group.name === groupName
             ).length -
-              1
+            1
           ) {
             // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
             // console.log(_formData);
@@ -4244,10 +4240,10 @@ filterDataFromArray=(res,item)=>{
                   stringified.replace(
                     regexp,
                     mockData[moduleName + "." + actionName].groups[i].jsonPath +
-                      "[" +
-                      (mockData[moduleName + "." + actionName].groups[i].index -
-                        1) +
-                      "]"
+                    "[" +
+                    (mockData[moduleName + "." + actionName].groups[i].index -
+                      1) +
+                    "]"
                   )
                 );
               }
@@ -4334,9 +4330,9 @@ filterDataFromArray=(res,item)=>{
     } = this;
     let customActionsAndUrl =
       !_.isEmpty(mockData[`${moduleName}.${actionName}`]) &&
-      mockData[`${moduleName}.${actionName}`].hasOwnProperty(
-        "customActionsAndUrl"
-      )
+        mockData[`${moduleName}.${actionName}`].hasOwnProperty(
+          "customActionsAndUrl"
+        )
         ? mockData[`${moduleName}.${actionName}`]["customActionsAndUrl"][0].url
         : "";
     let customBtnLabel = "Update";
@@ -4357,10 +4353,10 @@ filterDataFromArray=(res,item)=>{
           <Col xs={6} md={6}>
             <h3 style={{ paddingLeft: 15, marginBottom: "0" }}>
               {!_.isEmpty(mockData) &&
-              moduleName &&
-              actionName &&
-              mockData[`${moduleName}.${actionName}`] &&
-              mockData[`${moduleName}.${actionName}`].title
+                moduleName &&
+                actionName &&
+                mockData[`${moduleName}.${actionName}`] &&
+                mockData[`${moduleName}.${actionName}`].title
                 ? translate(mockData[`${moduleName}.${actionName}`].title)
                 : ""}
             </h3>
@@ -4373,7 +4369,7 @@ filterDataFromArray=(res,item)=>{
             create(e);
           }}
         >
-        {/*<div style={{position:"fixed",zIndex:1000,width:"100%"}}>*/}
+          {/*<div style={{position:"fixed",zIndex:1000,width:"100%"}}>*/}
           <Row>
             <Col xs={6} md={6}>
               <div
@@ -4432,7 +4428,7 @@ filterDataFromArray=(res,item)=>{
               </div>
             </Col>
           </Row>
-        {/*  </div>*/}
+          {/*  </div>*/}
           {!_.isEmpty(mockData) &&
             moduleName &&
             actionName &&
@@ -4464,8 +4460,8 @@ filterDataFromArray=(res,item)=>{
                 workflowId={
                   window.location.hash.split("/").indexOf("update") == 1
                     ? (this.props.match.params.id &&
-                        decodeURIComponent(this.props.match.params.id)) ||
-                      this.props.match.params.master
+                      decodeURIComponent(this.props.match.params.id)) ||
+                    this.props.match.params.master
                     : ""
                 }
               />
@@ -4510,8 +4506,8 @@ const mapDispatchToProps = dispatch => ({
       requiredFields
     });
   },
-  displayError : (property,errorMessage )=>  dispatch({
-    type : 'DISPLAY_ERROR', property, errorMessage
+  displayError: (property, errorMessage) => dispatch({
+    type: 'DISPLAY_ERROR', property, errorMessage
   }),
   setMetaData: metaData => {
     dispatch({ type: "SET_META_DATA", metaData });
