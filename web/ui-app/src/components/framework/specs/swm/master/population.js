@@ -182,8 +182,8 @@ var dat ={
       //'ulb.code',
       ],
       resultPath: 'MdmsRes.swm.Population',
-      rowClickUrlUpdate: '/update/swm/populationmaster/{code}',
-      rowClickUrlView: '/view/swm/populationmaster/{code}',
+      rowClickUrlUpdate: '/update/swm/population/{code}',
+      rowClickUrlView: '/view/swm/population/{code}',
       isMasterScreen: true
     },
     },
