@@ -141,10 +141,12 @@ class UiAutoComplete extends Component {
       const isKeyValuePair = item.hasOwnProperty('isKeyValuePair') && item.isKeyValuePair ? true : false;
       dropDownData =  await this.networkCall(url, id, useTimestamp, item.isKeyValuePair, responseJsonPaths, resultsPerPage, offset,-1,dropDownData);
       dropDownData = dropDownData ? dropDownData : []; 
+      setDropDownData(item.jsonPath, dropDownData);
    } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
       dropDownData = item.defaultValue;
+      setDropDownData(item.jsonPath, dropDownData);
     }
-    setDropDownData(item.jsonPath, dropDownData);
+    
   };
 
   renderAutoComplete = item => {

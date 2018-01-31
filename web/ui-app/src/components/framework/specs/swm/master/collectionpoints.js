@@ -36,6 +36,15 @@ var dat = {
             "isRequired": false,
             "patternErrorMsg": "",
             "fullWidth": true,
+            
+          },
+          {
+            name: 'name',
+            jsonPath: '',
+            label: 'swm.collectionPoint.boundary.message',
+            type: 'label',
+            isDisabled: true,
+            color: "rgb(255,0,0)"
           }
         ],
       },
@@ -208,14 +217,22 @@ var dat = {
         fields: [
           {
             name: 'assetOrBinId',
-            jsonPath: 'collectionPoints[0].binDetails[0].assetOrBinId',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.code',
             label: 'swm.collectionpoints.create.assetOrBinId',
-            type: 'text',
+            type: 'autoCompelete',
             isRequired: true,
             isDisabled: false,
             maxLength: 256,
             minLength: 5,
             patternErrorMsg: '',
+            url: '/asset-services-maha/assets/_search?&categoryName=Bin|$.Assets.*.code|$.Assets.*.name',
+            "autoCompleteDependancy": {
+              "autoCompleteUrl": "asset-services-maha/assets/_search?code={collectionPoints[0].binDetails[0].asset.code}",
+              "autoFillFields": {
+                "collectionPoints[0].binDetails[0].latitude": "Assets[0].latitude",
+                "collectionPoints[0].binDetails[0].longitude": "Assets[0].longitude",
+              },
+            },
           },
           
           {
@@ -224,7 +241,7 @@ var dat = {
             label: 'ac.create.Latitude',
             type: 'number',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
           {
@@ -233,7 +250,7 @@ var dat = {
             label: 'ac.create.Longitude',
             type: 'number',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrorMsg: '',
           },
           {

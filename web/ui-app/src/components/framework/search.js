@@ -362,6 +362,7 @@ class Search extends Component {
       else {
         var str = [];
         for(var i=0; i<Object.keys(formData).length; i++) {
+          /* Forming filter for ULBs search --> array based search in general */
           if(_.isArray(formData[Object.keys(formData)[i]])){
             formData[Object.keys(formData)[i]].forEach(function(elem, ind){
               if(typeof elem === "object"){
@@ -374,7 +375,8 @@ class Search extends Component {
               }
             })
           }
-          else if(typeof(formData[Object.keys(formData)[i]]) === "object"){      //Nested feature for single level - Enhancement required
+          /* Nested feature for single level - Enhancement required */
+          else if(typeof(formData[Object.keys(formData)[i]]) === "object"){      
             var level_1 = Object.keys(formData)[i];
             for(let item in formData[level_1]){
               if(_.isEmpty(formData[level_1][item])) {
@@ -383,7 +385,7 @@ class Search extends Component {
               str.push(`@.${level_1}.${item}=='${formData[level_1][item]}'`);
             }
           }
-
+          /* Normal Search */
           else{
 
             str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);

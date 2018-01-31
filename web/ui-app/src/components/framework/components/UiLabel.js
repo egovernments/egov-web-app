@@ -204,7 +204,7 @@ class UiLabel extends Component {
               xs={12}
             >
               <label>
-                <span style={{ fontWeight: 600, fontSize: '13px' }}>{translate(item.label)}</span>
+                <span style={item.hasOwnProperty('color') ? { fontWeight: 300, fontSize: '13px', color: item.color } : { fontWeight: 600, fontSize: '13px'}}>{translate(item.label)}</span>
               </label>
             </Col>
           ) : (
