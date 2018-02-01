@@ -98,7 +98,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=year|$..code|$..name',
+            url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
           },
            {
             name: 'PopulationFrom',
@@ -321,7 +321,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=year|$..code|$..name',
+          url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
           },
            {
             name: 'populationEstimate',
@@ -451,7 +451,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-mdms-service/v1/_get?&moduleName=lcms&masterName=year|$..code|$..name',
+            url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
 
           },
            {
