@@ -44,7 +44,7 @@ var dat = {
             label: 'swm.collectionPoint.boundary.message',
             type: 'label',
             isDisabled: true,
-            color: "rgb(255,0,0)"
+            color: "rgb(0,0,0)"
           }
         ],
       },
@@ -106,7 +106,7 @@ var dat = {
         {
           jsonPath: 'binDetails',
           isMultiple: true,
-          name: 'assetOrBinId' 
+          name: 'asset.name' 
         },
         {
           jsonPath: 'binDetails',

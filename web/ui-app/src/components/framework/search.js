@@ -272,17 +272,20 @@ class Search extends Component {
             var dataMultiple = _.get(values[i], valuePath.jsonPath);
             var tempMultiple = [];
             var tempMultipleObj = {};
-            for(var s = 0; s < dataMultiple.length; s++){
-              if(Array.isArray(valuePath.name)){
-                valuePath.name.forEach(function(elem, ind){
-                  (dataMultiple[s][elem] === null || dataMultiple[s][elem] === "") ? tempMultipleObj[elem] = "NA" : tempMultipleObj[elem] = dataMultiple[s][elem];
-                })
-                tempMultiple.push(tempMultipleObj);
-              }
-              else{
-                dataMultiple[s][valuePath.name] === null || dataMultiple[s][valuePath.name] === "" ? tempMultiple.push("NA") : tempMultiple.push(dataMultiple[s][valuePath.name]);
+            if(typeof dataMultiple != "undefined" && dataMultiple != null){
+              for(var s = 0; s < dataMultiple.length; s++){
+                if(Array.isArray(valuePath.name)){
+                  valuePath.name.forEach(function(elem, ind){
+                    (_.get(dataMultiple[s], valuePath.name) === null ||  _.get(dataMultiple[s], valuePath.name) === "") ? tempMultipleObj[elem] = "NA" : tempMultiple.push(_.get(dataMultiple[s], valuePath.name));
+                  })
+                  tempMultiple.push(tempMultipleObj);
+                }
+                else{
+                  (_.get(dataMultiple[s], valuePath.name) === null ||  _.get(dataMultiple[s], valuePath.name) === "") ? tempMultiple.push("NA") : tempMultiple.push(_.get(dataMultiple[s], valuePath.name));
+                }
               }
             }
+            
             // console.log(tempMultiple);
             var arrToStr = self.showArrayInTable(tempMultiple);
             tmp.push(arrToStr);
