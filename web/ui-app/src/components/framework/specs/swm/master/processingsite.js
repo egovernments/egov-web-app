@@ -298,6 +298,7 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'ProcessingSiteLatitude',
@@ -846,6 +847,7 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'ProcessingSiteLatitude',

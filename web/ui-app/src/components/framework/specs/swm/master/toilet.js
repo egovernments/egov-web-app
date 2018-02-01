@@ -223,6 +223,7 @@ var dat={
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'Latitude',
@@ -465,6 +466,7 @@ var dat={
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'Latitude',
@@ -668,6 +670,7 @@ var dat={
           isDisabled: false,
           patternErrorMsg: '',
           url: '', 
+          hideTextarea: true
         },
           /* {
             name: 'Latitude',

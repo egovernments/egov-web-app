@@ -201,7 +201,7 @@ export default class UigoogleMaps extends Component {
                           this.props.handler(
                             { target: { value: null } },
                             item.jsonPathLng,
-                          item.isRequired ? true : false,
+                            item.isRequired ? true : false,
                             '',
                             item.requiredErrMsg,
                             item.patternErrMsg
@@ -225,6 +225,7 @@ export default class UigoogleMaps extends Component {
                         } }/>];
         return (
           <div>
+          {(item.hideTextarea) ? <div style={{ height:'30px' }}></div> : 
             <TextField
               floatingLabelFixed={true}
               floatingLabelText={
@@ -238,7 +239,7 @@ export default class UigoogleMaps extends Component {
               disabled={true}
               multiLine={true}
               value={this.props.getVal(item.jsonPathAddress)}
-            />
+            />  }
             <FlatButton
               id={item.label.split('.').join('-')}
               style={{ width: '20%' }}

@@ -361,6 +361,7 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'dumpingGroundLatitude',
@@ -1262,6 +1263,7 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
+            hideTextarea: true
           },
           {
             name: 'dumpingGroundLatitude',
