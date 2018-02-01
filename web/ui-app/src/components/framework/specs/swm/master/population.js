@@ -14,16 +14,16 @@ var dat ={
       url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE",
       jsonPath: "ward",
       jsExpForDD: {
-        key: "$..id",
-        value: "$..name",
+        key: "$.Boundary.*.boundaryNum",
+        value: "$.Boundary.*.name",
       }
     },
         {
           url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE",
          jsonPath: "zone",
         jsExpForDD: {
-          key: "$..id",
-          value: "$..name",
+          key: "$.Boundary.*.boundaryNum",
+          value: "$.Boundary.*.name",
       }
     }
   ],
