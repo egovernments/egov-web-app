@@ -128,6 +128,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            isNumber:true,
           },
             {
             name: 'GarbageTo',
@@ -137,6 +138,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
+            isNumber:true,
           },
       // name : 'ulb',
       // label : 'swm.populationmaster.create.ulb',
