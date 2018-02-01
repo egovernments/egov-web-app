@@ -36,8 +36,20 @@ const style = {
 
 export default class DashboardCard extends Component {
   handleOnClick = () => {
-    this.props.onClick(this.props.index);
+    this.props.onClick(this.props.index, this.props.code);
   };
+  constructor(props) {
+    super(props);
+    this.state = { shadow: 1 }
+  }
+
+  onMouseOver = () => { 
+    this.setState({ shadow: 3 }) 
+  };
+
+  onMouseOut = () => {
+    this.setState({ shadow: 1 });
+  }
 
   getRandomColor(str) {
     for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
@@ -50,7 +62,7 @@ export default class DashboardCard extends Component {
 
     return (
       <div>
-        <Card style={style.card} onClick={this.handleOnClick}>
+        <Card style={style.card} onClick={this.handleOnClick}  onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} zDepth={this.state.shadow}>
           <CardHeader style={style.cardheader} title="" />
           <CardMedia style={style.cardmedia}>
             <img src={this.props.logo} alt="" />

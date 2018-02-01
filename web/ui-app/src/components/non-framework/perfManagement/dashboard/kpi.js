@@ -54,10 +54,10 @@ export default class Dashboard extends Component {
     });
   }
 
-  processOnClickOnCard = index => {
+  processOnClickOnCard = (index, code) => {
     let departments = parseDepartmentResponse(this.departments);
     this.setState({
-      department: departments[index],
+      department: departments[index + (this.state.pageIndex - 1) * this.cardsPerPage],
       showDepartmentView: false,
       showQueryView: true,
     });
@@ -253,7 +253,7 @@ export default class Dashboard extends Component {
     let departments = parseDepartmentResponse(this.departments).slice((this.state.pageIndex - 1 ) * this.cardsPerPage, this.state.pageIndex * this.cardsPerPage);
     if (departments.length > 0) {
       return departments.map((item, index) => (
-        <DashboardCard key={index} index={index} onClick={this.processOnClickOnCard} name={item.name} logo={this.getDepartmentLogo(item.name.toUpperCase().replace(/ /g,''))} />
+        <DashboardCard key={index} index={index} onClick={this.processOnClickOnCard} name={item.name} code={item.code} logo={this.getDepartmentLogo(item.name.toUpperCase().replace(/ /g,''))} />
       ));
     }
   };
