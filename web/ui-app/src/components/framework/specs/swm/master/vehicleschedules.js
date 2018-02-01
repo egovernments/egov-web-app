@@ -187,14 +187,14 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
-                  "pattern":"",
+                  "pattern":"^([0-6][0-9]{0,1}(?:\\.\\d{1,2})?|7[0-4](?:\\.\\d{1,2})?|8|9|\\.\\d{0,2}|8\\.\\d{0,2}|9\\.\\d{0,2}|75|75.00)$",
                   "type":"text",
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
                   "maxLength": 256,
                   "minLength": 1,
-                  "patternErrorMsg":""
+                  "patternErrMsg":"Targeted Garbage b/w 0 - 75"
                }
             ]
          },
@@ -528,12 +528,12 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
-                  "pattern":"",
+                  "pattern":"^([0-6][0-9]{0,1}(?:\\.\\d{1,2})?|7[0-4](?:\\.\\d{1,2})?|8|9|\\.\\d{0,2}|8\\.\\d{0,2}|9\\.\\d{0,2}|75|75.00)$",
                   "type":"number",
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
-                  "patternErrorMsg":""
+                  "patternErrMsg":"Target Garbage b/w 0 - 75"
                }
             ]
          },

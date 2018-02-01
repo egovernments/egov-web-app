@@ -188,7 +188,7 @@ var dat ={
     },
     },
 'swm.view': {
-    numCols: 3,
+    numCols: 4,
     useTimestamp: true,
     objectName: 'Population',
     title: 'swm.populationmaster.create.title',
@@ -208,9 +208,29 @@ var dat ={
             isDisabled: false,
             defaultValue:'Autocomplete',
             url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
-
             patternErrorMsg: '',
-
+        },
+        {
+          name: 'Ward',
+          label: 'swm.populationmaster.create.ward',
+          jsonPath: 'MdmsRes.swm.Population["0"].ward',
+          type: 'label',
+          isRequired: false,
+          isDisabled: false,
+          patternErrorMsg: '',
+          defaultValue:'Autocomplete',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+        },
+        {
+          name: 'Zone', 
+          label: 'swm.populationmaster.create.Zone',
+          type: 'label',
+          jsonPath: 'MdmsRes.swm.Population["0"].zone',
+          isRequired: false,
+          isDisabled: false,
+          patternErrorMsg: '',
+          defaultValue:'Autocomplete',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
         },
           {
             name: 'Census',
@@ -242,53 +262,53 @@ var dat ={
           
         ],  
     }, 
-      {
+      // {
 
-        name: 'populationLocation',
-        label: 'swm.toiletmaster.create.populationLocation',
-        fields: [
-          // {
-          //   "type": "boundary",
-          //   "label": "",
-          //   "hierarchyType": "REVENUE",
-          //   "jsonPath": 'MdmsRes.swm.Population["0"].location.code',
-          //   "isRequired": true,
-          //   "patternErrorMsg": "",
-          //   "multiple": true,
-          //   "fullWidth": true,
-          // },
-           {
-            name: 'Ward',
-            label: 'swm.populationmaster.create.ward',
-            jsonPath: 'MdmsRes.swm.Population["0"].ward',
-            type: 'label',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            defaultValue:'Autocomplete',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
-          {
-            name: 'Zone', 
-            label: 'swm.populationmaster.create.Zone',
-            type: 'label',
-            jsonPath: 'MdmsRes.swm.Population["0"].zone',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            defaultValue:'Autocomplete',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
+      //   name: 'populationLocation',
+      //   label: 'swm.toiletmaster.create.populationLocation',
+      //   fields: [
+      //     // {
+      //     //   "type": "boundary",
+      //     //   "label": "",
+      //     //   "hierarchyType": "REVENUE",
+      //     //   "jsonPath": 'MdmsRes.swm.Population["0"].location.code',
+      //     //   "isRequired": true,
+      //     //   "patternErrorMsg": "",
+      //     //   "multiple": true,
+      //     //   "fullWidth": true,
+      //     // },
+      //      {
+      //       name: 'Ward',
+      //       label: 'swm.populationmaster.create.ward',
+      //       jsonPath: 'MdmsRes.swm.Population["0"].ward',
+      //       type: 'label',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //       defaultValue:'Autocomplete',
+      //       url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+      //     },
+      //     {
+      //       name: 'Zone', 
+      //       label: 'swm.populationmaster.create.Zone',
+      //       type: 'label',
+      //       jsonPath: 'MdmsRes.swm.Population["0"].zone',
+      //       isRequired: false,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //       defaultValue:'Autocomplete',
+      //       url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+      //     },
           
-        ],
-      },
+      //   ],
+      // },
 
       
     ], 
 },
 
 'swm.update': {
-    numCols: 3,
+    numCols: 4,
     useTimestamp: true,
     objectName: 'Population',
     title: 'swm.populationmaster.create.title',
@@ -313,16 +333,37 @@ var dat ={
             patternErrorMsg: '',
         },
         {
+          name: 'Ward',
+          label: 'swm.populationmaster.create.ward',
+          jsonPath: 'MasterMetaData.masterData[0].ward',
+          type: 'singleValueList',
+          isRequired: true,
+          isDisabled: false,
+          patternErrorMsg: '',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+        },
+        {
+          name: 'Zone', 
+          label: 'swm.populationmaster.create.Zone',
+          type: 'singleValueList',
+          jsonPath: 'MasterMetaData.masterData[0].zone',
+          isRequired: true,
+          isDisabled: false,
+          patternErrorMsg: '',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+        },
+        {
             name: 'Census',
             label: 'swm.populationmaster.create.Census',
             type: 'singleValueList',
             isCurrentYear: true,
             jsonPath: 'MasterMetaData.masterData[0].censusYear',
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-          url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
+            url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
           },
+          
            {
             name: 'populationEstimate',
             label: 'swm.populationmaster.create.populationEstimate',
@@ -346,6 +387,7 @@ var dat ={
       {
         name: 'populationLocation',
         label: 'swm.toiletmaster.create.populationLocation',
+        hide: true,
         fields: [
           // {
           //   "type": "boundary",
@@ -357,26 +399,6 @@ var dat ={
           //   "multiple": true,
           //   "fullWidth": true,
           // },
-            {
-            name: 'Ward',
-            label: 'swm.populationmaster.create.ward',
-            jsonPath: 'MasterMetaData.masterData[0].ward',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
-          {
-            name: 'Zone', 
-            label: 'swm.populationmaster.create.Zone',
-            type: 'singleValueList',
-            jsonPath: 'MasterMetaData.masterData[0].zone',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
           {
             name: 'code',
             jsonPath: 'MasterMetaData.masterData[0].code',
@@ -406,8 +428,6 @@ var dat ={
             defaultValue: 'Population',
             hide: true
           },
-
-
         ],
       },
       
@@ -418,7 +438,7 @@ var dat ={
 
 
 'swm.create': {
-    numCols: 3,
+    numCols: 4,
     useTimestamp: true,
   objectName: 'MasterMetaData',
   idJsonPath: 'MdmsRes.swm.Population[0].code',
@@ -436,10 +456,28 @@ var dat ={
             type : 'autoCompelete',
             isRequired: true,
             isDisabled: false,
-           
             url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..tenants.*.code|$..tenants.*.name',
             patternErrorMsg: '',
-
+        },
+        {
+          name: 'Ward',
+          label: 'swm.populationmaster.create.ward',
+          jsonPath: 'MasterMetaData.masterData[0].ward',
+          type: 'singleValueList',
+          isRequired: true,
+          isDisabled: false,
+          patternErrorMsg: '',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+        },
+        {
+          name: 'Zone', 
+          label: 'swm.populationmaster.create.Zone',
+          type: 'singleValueList',
+          jsonPath: 'MasterMetaData.masterData[0].zone',
+          isRequired: true,
+          isDisabled: false,
+          patternErrorMsg: '',
+          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
         },
           {
             name: 'Census',
@@ -448,7 +486,7 @@ var dat ={
             //  type:'text',
             isCurrentYear: true,
             jsonPath: "MasterMetaData.masterData[0].censusYear",
-            isRequired: false,
+            isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
             url: '/egov-mdms-service/v1/_get?&moduleName=common-masters&masterName=CensusYear|$..code|$..name',
@@ -477,43 +515,43 @@ var dat ={
           
         ],  
     }, 
-      {
+      // {
 
-        name: 'populationLocation',
-        label: 'swm.toiletmaster.create.populationLocation',
-        fields: [
-          // {
-          //   "type": "boundary",
-          //   "label": "",
-          //   "hierarchyType": "REVENUE",
-          //   "jsonPath": 'MasterMetaData.masterData[0].location.code',
-          //   "isRequired": true,
-          //   "patternErrorMsg": "",
-          //   "multiple": true,
-          //   "fullWidth": true,
-          // },
-            {
-            name: 'Ward',
-            label: 'swm.populationmaster.create.ward',
-            jsonPath: 'MasterMetaData.masterData[0].ward',
-            type: 'singleValueList',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
-          {
-            name: 'Zone', 
-            label: 'swm.populationmaster.create.Zone',
-            type: 'singleValueList',
-            jsonPath: 'MasterMetaData.masterData[0].zone',
-            isRequired: true,
-            isDisabled: false,
-            patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
-          },
-        ],
-      },
+      //   name: 'populationLocation',
+      //   label: 'swm.toiletmaster.create.populationLocation',
+      //   fields: [
+      //     // {
+      //     //   "type": "boundary",
+      //     //   "label": "",
+      //     //   "hierarchyType": "REVENUE",
+      //     //   "jsonPath": 'MasterMetaData.masterData[0].location.code',
+      //     //   "isRequired": true,
+      //     //   "patternErrorMsg": "",
+      //     //   "multiple": true,
+      //     //   "fullWidth": true,
+      //     // },
+      //       {
+      //       name: 'Ward',
+      //       label: 'swm.populationmaster.create.ward',
+      //       jsonPath: 'MasterMetaData.masterData[0].ward',
+      //       type: 'singleValueList',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //       url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+      //     },
+      //     {
+      //       name: 'Zone', 
+      //       label: 'swm.populationmaster.create.Zone',
+      //       type: 'singleValueList',
+      //       jsonPath: 'MasterMetaData.masterData[0].zone',
+      //       isRequired: true,
+      //       isDisabled: false,
+      //       patternErrorMsg: '',
+      //       url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+      //     },
+      //   ],
+      // },
 
       {
         name: 'HideGroup',
@@ -553,8 +591,6 @@ var dat ={
           },
         ]
       }
-
-      
     ],
   url: '/egov-mdms-create/v1/_create',
   tenantIdRequired: true 

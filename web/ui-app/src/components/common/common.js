@@ -3444,7 +3444,7 @@ var localization_EN_Data = {
   'swm.create.group.title.Vendors': 'Vendor Master',
 
   'swm.populationmaster.create.title': 'Population Master',
-  'swm.populationmaster.create.group.title.PopulationDetails': 'POPULATION DETAILS',
+  'swm.populationmaster.create.group.title.PopulationDetails': 'Population Details',
   'swm.toiletmaster.create.populationLocation': 'Population Location Details',
   'swm.populationmaster.create.ulb': 'ULB',
   'swm.populationmaster.create.ward': 'Ward',
