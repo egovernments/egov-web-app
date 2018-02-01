@@ -599,6 +599,7 @@ var dat ={
       }
     ],
   url: '/egov-mdms-create/v1/_create',
+  isMDMSScreen: true,
   tenantIdRequired: true 
 },
 

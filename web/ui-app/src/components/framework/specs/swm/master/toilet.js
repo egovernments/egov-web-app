@@ -1,6 +1,37 @@
+const saveOnLocal =`
+    let _mockData = {...self.props.mockData}
+        var groupArr = _mockData[self.props.moduleName + "." + self.props.actionName].groups;
+           groupArr.map((data)=>{
+             data.fields.map((inData)=>{
+               if(inData.hasOwnProperty('saveDataOnLocal') && inData.jsonPath == property){
+              localStorage.setItem('TltypeCode',e.target.value)
+ 
+               }
+             })
+           })
+  
+
+`
+
+
 var dat={
 
   'swm.search': {
+    preApiCalls: [
+      {
+        url: "/egov-mdms-service/v1/_get",
+        jsonPath: "ToiletType",
+        qs: {
+          moduleName: "swm",
+          masterName: "ToiletType"
+        },
+        jsExpForDD: {
+          key: "$..code",
+          value: "$..name",
+        }
+      },
+    ],
+
     numCols: 4,
     useTimestamp: true,
     objectName: 'Toilet',
@@ -88,7 +119,8 @@ var dat={
         'name',
         'seatCount',
         'address',
-        'toiletType.code'
+        
+        { jsonPath: 'toiletType.code', reduxObject: "ToiletType", isObj: true, cToN: true },
 
       ],
       resultPath: 'MdmsRes.swm.Toilet',
@@ -102,11 +134,15 @@ var dat={
   },
 
 'swm.create': {
+
+
+
     numCols: 4,
     useTimestamp: true,
     objectName: 'MasterMetaData',
     idJsonPath: 'MdmsRes.swm.Toilet[0].code',
     title: 'swm.toiletmaster.create.title',
+    afterHandleChange: saveOnLocal,// localStorage.setItem('toiletCode', 'MasterMetaData.masterData[0].toiletType.code'),
     groups:[
     {
     name: 'PublicToilet',
@@ -121,6 +157,7 @@ var dat={
         styleObj: { display: '-webkit-box' },
         isDisabled: false,
         patternErrorMsg: '',
+        saveDataOnLocal:true,
         url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
 
       },
@@ -166,81 +203,7 @@ var dat={
             "multiple": true,
             "fullWidth": true,
           },
-          // {
-          //   name: 'toiletward',
-          //   jsonPath: 'toilet.ward',
-          //   label: 'swm.toiletmaster.create.toiletWard',
-          //   pattern: '',
-          //   type: 'singleValueList',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   patternErrorMsg: '',
-          //   url: '',
-          // },
-          // {
-          //   name: 'toiletZone',
-          //   jsonPath: 'toilet.voucher',
-          //   label: 'swm.toiletmaster.create.toiletZone',
-          //   pattern: '',
-          //   type: 'singleValueList',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   patternErrorMsg: '',
-          //   url: '',
-          // },
-          // {
-          //   name: 'toiletStreet',
-          //   jsonPath: 'toilet.amount',
-          //   label: 'swm.toiletmaster.create.toiletStreet',
-          //   pattern: '',
-          //   type: 'singleValueList',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   patternErrorMsg: '',
-          //   url: '',
-          // },
-          // {
-          //   name: 'toiletSociety',
-          //   jsonPath: 'toilet.Society',
-          //   label: 'swm.toiletmaster.create.toiletSociety',
-          //   pattern: '',
-          //   type: 'singleValueList',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   patternErrorMsg: '',
-          //   url: '',
-          // },
-          // {
-          //     name: 'code',
-          //     jsonPath: 'MasterMetaData.masterData[0].code',
-          //     defaultValue: 'Toilet-' + new Date().getTime(),
-          //     isRequired : true,
-          //     type: 'text',
-          //     hide: true,
-          //   },
-          //   {
-          //     name: 'tenantId',
-          //     jsonPath: 'MasterMetaData.masterData[0].tenantId',
-          //     type: 'text',             
-          //     defaultValue: localStorage.getItem("tenantId"),
-          //     hide: true
-          //   },
-          //   {
-          //     name: 'moduleName',
-          //     jsonPath: 'MasterMetaData.moduleName',
-          //     type: 'text',             
-          //     defaultValue: 'swm',
-          //     hide: true
-          //   },
-          //   {
-          //     name: 'masterName',
-          //     jsonPath: 'MasterMetaData.masterName',              
-          //     type: 'text',
-          //     defaultValue: 'Toilet',
-          //     hide: true
-          //   },
-
-   
+       
           ],
       },
       {
@@ -337,10 +300,11 @@ var dat={
           {
             name: 'code',
             jsonPath: 'MasterMetaData.masterData[0].code',
-            defaultValue: 'Toilet-' + new Date().getTime(),
+            defaultValue: 'MH-'+localStorage.getItem("tenantId") +'-'+localStorage.getItem("TltypeCode")+'-'+ new Date().getTime() ,  
             isRequired: true,
             type: 'text',
-            hide: true
+            hide: true,
+            acceptCode:true,
           },
         ]
       }
@@ -559,18 +523,19 @@ var dat={
     name: 'PublicToilet',
     jsonPath: '',
     fields:[
-      {
-        name: 'isPublictoilet',
-        jsonPath: 'MdmsRes.swm.Toilet[0].toiletType.code',
-        type: 'label',
-        label: 'swm.create.PublicsToilet',
-        styleObj: { display: '-webkit-box' },
-        isRequired: false,
-        isDisabled: false,
-        patternErrorMsg: '',
-      
-      },
         {
+    
+            name: 'isPublictoilet',
+            jsonPath: 'name',
+            type: 'label',
+            label: 'swm.create.PublicsToilet',
+            styleObj: { display: '-webkit-box' },
+            isDisabled: false,
+            patternErrorMsg: '',
+            url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
+
+          },
+{
             name : 'toiletName',
             label : 'swm.toiletmaster.create.toiletName',
             jsonPath: 'MdmsRes.swm.Toilet["0"].name',
@@ -710,7 +675,7 @@ var dat={
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=swmToilet|$..code|$..name',
+       
           },
         ],
       },

@@ -818,8 +818,14 @@ class Report extends Component {
                 obj.groups[i].fields[j].jsonPath ===
                 "MasterMetaData.masterData[0].code"
               ) {
+                if (obj.groups[i].fields[j].acceptCode==true){
+                  obj.groups[i].fields[j].defaultValue = obj.groups[i].fields[j].defaultValue;
+                    
+                }
+                else{
                 obj.groups[i].fields[j].defaultValue =
                   masterName + "-" + new Date().getTime();
+                }
               }
             }
           } else {
