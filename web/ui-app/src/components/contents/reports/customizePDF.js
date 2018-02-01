@@ -28,10 +28,10 @@ const prepareBody = resultData => {
   }
 
   resultData.forEach(resultRow => {
-    const transformedResultRow = resultRow.map(element => {
+    const transformedResultRow = resultRow.map((element, index) => {
       return {
         text: element,
-        alignment: 'center',
+        alignment: index == 0 ? 'left' : 'center',
       };
     });
     body.push(transformedResultRow);
