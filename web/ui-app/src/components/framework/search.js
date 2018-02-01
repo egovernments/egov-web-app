@@ -391,7 +391,7 @@ class Search extends Component {
           /* Normal Search */
           else{
               if(Object.keys(formData)[i].includes("<") || Object.keys(formData)[i].includes(">") ){
-                str.push(`@.${Object.keys(formData)[i]}=${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
+                str.push(`@.${Object.keys(formData)[i]}=${((typeof Object.values(formData)[i] == 'boolean')|| (typeof Object.values(formData)[i] == 'number')) ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
               }else{
                 str.push(`@.${Object.keys(formData)[i]}==${typeof Object.values(formData)[i] == 'boolean' ? Object.values(formData)[i] : `'${Object.values(formData)[i]}'` }`);
               }
