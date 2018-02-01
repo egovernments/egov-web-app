@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import { fetchDepartmentAPI, parseDepartmentResponse } from '../apis/apis';
 import { translate } from '../../../common/common';
 
@@ -16,14 +18,17 @@ export default class Dashboard extends Component {
       showQueryView: false,
       toastMsg: '',
       department: null,
+      pageIndex: 1
     };
-    this.departments = [];
+    this.departments    = [];
+    this.cardsPerPage   = 4;
   }
 
   render() {
     return (
       <div>
         {this.renderUIBusy()}
+        {this.renderDepartmentNavigationButtons()}
         {this.renderDepartments()}
         {this.renderQueryDashboard()}
         {this.renderToast()}
@@ -80,6 +85,30 @@ export default class Dashboard extends Component {
       apiLoading: status,
     });
   };
+
+  processOnClickNext = () => {
+    if (this.state.pageIndex < (parseDepartmentResponse(this.departments).length / this.cardsPerPage)) {
+      this.setState({
+        pageIndex: this.state.pageIndex + 1
+      })
+    } else {
+      this.setState({
+        pageIndex: parseDepartmentResponse(this.departments).length / this.cardsPerPage
+      })
+    }
+  }
+
+  processOnClickPrevious = () => {
+    if (this.state.pageIndex > 1) {
+      this.setState({
+        pageIndex: this.state.pageIndex - 1
+      })
+    } else {
+      this.setState({
+        pageIndex: 1
+      })
+    }
+  }
 
   getDepartmentLogo = department => {
     if (department === 'ADMINISTRATION') {
@@ -181,14 +210,47 @@ export default class Dashboard extends Component {
 
   /**
    * render
+   * render navigation button
+   */
+  renderDepartmentNavigationButtons = () => {
+    if (!this.state.showDepartmentView) {
+      return <div />;
+    }
+
+    return (
+      <div>
+        <br />
+        <RaisedButton
+          style={{ marginLeft: '40px' }}
+          label={translate('perfManagement.dashboard.common.prev')}
+          primary={true}
+          type="button"
+          disabled={this.state.pageIndex <= 1 ? true : false}
+          onClick={this.processOnClickPrevious}
+        />
+
+        <RaisedButton
+          style={{ marginLeft: '10px' }}
+          label={translate('perfManagement.dashboard.common.next')}
+          primary={true}
+          type="button"
+          disabled={this.state.pageIndex >= (parseDepartmentResponse(this.departments).length / this.cardsPerPage) ? true : false}
+          onClick={this.processOnClickNext}
+        />
+      </div>
+    )
+  }
+
+  /**
+   * render
    * present card as per departments
    */
   renderDepartments = () => {
     if (!this.state.showDepartmentView) {
       return <div />;
     }
-
-    let departments = parseDepartmentResponse(this.departments);
+    
+    let departments = parseDepartmentResponse(this.departments).slice((this.state.pageIndex - 1 ) * this.cardsPerPage, this.state.pageIndex * this.cardsPerPage);
     if (departments.length > 0) {
       return departments.map((item, index) => (
         <DashboardCard key={index} index={index} onClick={this.processOnClickOnCard} name={item.name} logo={this.getDepartmentLogo(item.name.toUpperCase().replace(/ /g,''))} />
