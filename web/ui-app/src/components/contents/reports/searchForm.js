@@ -233,10 +233,6 @@ class ShowForm extends Component {
     return metaData.reportDetails.searchParams.filter(field => field.displayOnly).map(field => field.name);
   };
 
-  getEmptyIfNotSetFields = metaData => {
-    return metaData.reportDetails.searchParams.filter(field => field.emptyIfNotSet).map(field => field.name);
-  };
-
   search = (e = null, isDrilldown = false) => {
     if (e) {
       e.preventDefault();
@@ -262,7 +258,6 @@ class ShowForm extends Component {
 
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
-      const emptyIfNotSetFields = this.getEmptyIfNotSetFields(metaData);
 
       searchForm = searchForm
         ? Object.keys(searchForm)
@@ -272,12 +267,6 @@ class ShowForm extends Component {
               return acc;
             }, {})
         : searchForm;
-
-      emptyIfNotSetFields.forEach(field => {
-        if (Object.keys(searchForm).indexOf(field) === -1) {
-          searchForm[field] = '';
-        }
-      });
 
       for (var variable in searchForm) {
         let input;

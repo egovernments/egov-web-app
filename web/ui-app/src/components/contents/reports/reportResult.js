@@ -224,7 +224,7 @@ class ShowField extends Component {
         title: _this.state.reportSubTitle,
         text: 'Print Report',
         orientation: 'landscape',
-        pageSize: 'TABLOID',
+        pageSize: 'A4',
         footer: true,
         customize: function(doc) {
           customizePdfPrint(doc, ulbname, logoBase64, headerLogo, searchForm.wasteprocess, reportResult);
