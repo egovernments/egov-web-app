@@ -67,6 +67,14 @@ class Search extends Component {
         ) {
           //console.log(groups[i].fields[j].name + "--" + groups[i].fields[j].defaultValue);
           _.set(dat, groups[i].fields[j].jsonPath, groups[i].fields[j].defaultValue);
+          if(groups[i].fields[j].depedants&&groups[i].fields[j].depedants.length>0){
+            for(var k=0;k<groups[i].fields[j].depedants.length;k++){
+              if(groups[i].fields[j].depedants[k].type=='dropDown'){
+                this.props.setDropDownData(groups[i].fields[j].depedants[k].jsonPath,[]);
+                this.props.setDropDownOriginalData(groups[i].fields[j].depedants[k].jsonPath,[]);
+              }
+            }
+          }
         }
 
         if (groups[i].fields[j].children && groups[i].fields[j].children.length) {
