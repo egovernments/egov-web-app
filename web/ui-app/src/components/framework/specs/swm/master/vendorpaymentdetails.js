@@ -17,6 +17,7 @@ var dat = {
               isRequired: false,
               isDisabled: false,
               patternErrorMsg: '',
+              defaultValue: '',
               url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
               depedants: [
                 {
@@ -35,6 +36,7 @@ var dat = {
               type: 'singleValueList',
               isRequired: false,
               isDisabled: false,
+              defaultValue: '',
               depedants: [
                 {
                   jsonPath: 'paymentNo',
