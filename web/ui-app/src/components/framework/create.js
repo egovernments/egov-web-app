@@ -3194,17 +3194,8 @@ class Report extends Component {
           }
         }
 
-        Api.commonApiPost(
-          context,
-          id,
-          {},
-          false,
-          false,
-          false,
-          "",
-          "",
-          value.isStateLevel
-        ).then(
+        Api.commonApiPost( context, id, {}, false, false, false, "", "", value.isStateLevel)
+        .then(
           function (response) {
             if (response) {
               // console.log('In dropdown');
@@ -3249,7 +3240,17 @@ class Report extends Component {
                 currProperty.lastIndexOf("[")
               );
               let numberOfRowsArray = _.get(formData, currProperty);
-              if (numberOfRowsArray && numberOfRowsArray.length > 0) {
+              var isTableList = false;
+              for(var i=0; i<mockData[moduleName+'.'+actionName].groups.length; i++) {
+                for(var j=0; j<mockData[moduleName+'.'+actionName].groups[i].fields.length; j++) {
+                  if((mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableListTemp' 
+                  || mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableList')
+                  && JSON.stringify(mockData[moduleName+'.'+actionName].groups[i].fields[j]).includes(currProperty)) {
+                    isTableList = true;
+                  }
+                }
+              }
+              if (isTableList && numberOfRowsArray && numberOfRowsArray.length > 0) {
                 if (value.indexReplace) {
                   updateDropDownData(value, dependantIdx);
                 } else {
