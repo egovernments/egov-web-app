@@ -268,6 +268,11 @@ class ShowForm extends Component {
             }, {})
         : searchForm;
 
+      // todo remove this!
+      if (Object.keys(searchForm).indexOf('wastetype') === -1) {
+        searchForm['wastetype'] = '';
+      }
+
       for (var variable in searchForm) {
         let input;
 
