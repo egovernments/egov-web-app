@@ -455,25 +455,25 @@ var dat = {
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            defaultValue: false,
-            showHideFields: [
-              {
-                ifValue: true,
-                hide: [],
-                show: [
-                  {
-                    name: 'rfid',
-                    isGroup: false,
-                    isField: true,
-                  }
+           // defaultValue: false,
+            // showHideFields: [
+            //   {
+            //     ifValue: true,
+            //     hide: [],
+            //     show: [
+            //       {
+            //         name: 'rfid',
+            //         isGroup: false,
+            //         isField: true,
+            //       }
                   
-                ],
-              },
-            ],
+            //     ],
+            //   },
+            // ],
           },
           {
             name: 'rfid',
-            hide: true,
+            //hide: true,
             jsonPath: 'collectionPoints[0].binDetails[0].rfid',
             label: 'swm.collectionpoints.create.rfid',
             type: 'text',
