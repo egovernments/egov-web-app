@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Api from '../../../api/api';
 import { translate, epochToDate } from '../../common/common';
 import _ from 'lodash';
+import { customizePdfPrint } from './customizePDF.js';
 
 import $ from 'jquery';
 import JSZip from 'jszip/dist/jszip';
@@ -182,70 +183,56 @@ class ShowField extends Component {
       }
     }
 
-    const { reportResult } = _this.props;
+    const { reportResult, searchForm } = _this.props;
+    const { reportName, logoBase64, ulbname } = _this.state;
     const reportHeader = reportResult.hasOwnProperty('reportHeader') ? reportResult.reportHeader : [];
     const columns = ':visible';
+    const exportOptions = flag ? { rows: '.selected', columns } : { columns };
+    const buttons = [
+      {
+        extend: 'copy',
+        exportOptions,
+      },
+      {
+        extend: 'csv',
+        exportOptions,
+      },
+      {
+        extend: 'excel',
+        exportOptions,
+      },
+      {
+        extend: 'pdf',
+        exportOptions,
+        filename: _this.state.reportName,
+        title: _this.state.reportSubTitle,
+        text: 'PDF/Print',
+        orientation: 'landscape',
+        pageSize: 'TABLOID',
+        footer: true,
+        customize: function(doc) {
+          _this.PrintingCutomize(doc);
+        },
+      },
+    ];
 
-    if (flag) {
-      return [
-        {
-          extend: 'copy',
-          exportOptions: {
-            rows: '.selected',
-            columns,
-          },
+    if (reportName == 'DumpingGroundDetailReport') {
+      const customizedPrint = {
+        extend: 'pdfHtml5',
+        exportOptions,
+        filename: _this.state.reportName,
+        title: _this.state.reportSubTitle,
+        text: 'Print Report',
+        orientation: 'landscape',
+        pageSize: 'TABLOID',
+        footer: true,
+        customize: function(doc) {
+          customizePdfPrint(doc, ulbname, logoBase64, headerLogo, searchForm.wasteprocess, reportResult);
         },
-        {
-          extend: 'csv',
-          exportOptions: {
-            rows: '.selected',
-            columns,
-          },
-        },
-        {
-          extend: 'excel',
-          exportOptions: {
-            rows: '.selected',
-            columns,
-          },
-        },
-        {
-          extend: 'pdf',
-          exportOptions: {
-            rows: '.selected',
-            columns,
-          },
-          filename: _this.state.reportName,
-          title: _this.state.reportSubTitle,
-          text: 'PDF/Print',
-          orientation: 'landscape',
-          pageSize: 'TABLOID',
-          footer: true,
-          customize: function(doc) {
-            _this.PrintingCutomize(doc);
-          },
-        },
-      ];
-    } else {
-      return [
-        { extend: 'copy', text: 'Copy', exportOptions: { columns } },
-        { extend: 'csv', filename: _this.state.reportName, text: 'CSV', exportOptions: { columns } },
-        { extend: 'excel', filename: _this.state.reportName, text: 'Excel', exportOptions: { columns } },
-        {
-          extend: 'pdf',
-          filename: _this.state.reportName,
-          text: 'PDF/Print',
-          title: _this.state.reportSubTitle,
-          exportOptions: { columns },
-          orientation: 'landscape',
-          pageSize: 'TABLOID',
-          footer: true,
-          customize: function(doc) {
-            _this.PrintingCutomize(doc);
-          },
-        },
-      ];
+      };
+      buttons.push(customizedPrint);
     }
+    return buttons;
   };
 
   componentDidUpdate() {
@@ -318,7 +305,7 @@ class ShowField extends Component {
       pushReportHistory,
     } = this.props;
     let object = reportResult.reportHeader[i2];
-    let copySearchParams=_.clone(searchParams);
+    let copySearchParams = _.clone(searchParams);
 
     if (object.defaultValue && object.defaultValue.search('_parent') > -1) {
       let splitArray = object.defaultValue.split('&');
@@ -359,13 +346,16 @@ class ShowField extends Component {
           if (response.viewPath && response.reportData && response.reportData[0]) {
             localStorage.reportData = JSON.stringify(response.reportData);
             localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
-            localStorage.setItem('moduleName',match.params.moduleName)
-            localStorage.setItem('searchCriteria',JSON.stringify({
-              tenantId: tenantId,
-              reportName: match.params.reportName,
-              searchParams:copySearchParams,
-            }));
-            localStorage.setItem('searchForm',JSON.stringify(searchForm));
+            localStorage.setItem('moduleName', match.params.moduleName);
+            localStorage.setItem(
+              'searchCriteria',
+              JSON.stringify({
+                tenantId: tenantId,
+                reportName: match.params.reportName,
+                searchParams: copySearchParams,
+              })
+            );
+            localStorage.setItem('searchForm', JSON.stringify(searchForm));
             setRoute('/print/report/' + response.viewPath);
           } else {
             pushReportHistory({
@@ -442,9 +432,7 @@ class ShowField extends Component {
     return (
       <thead style={{ backgroundColor: '#f2851f', color: 'white' }}>
         <tr>
-          <th key={'Sr. No. '}>
-            {"Sr. No." }
-          </th>
+          <th key={'Sr. No. '}>{'Sr. No.'}</th>
           {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
             <th key={'testKey'}>
               <input type="checkbox" onChange={checkAllRows} />
@@ -544,9 +532,7 @@ class ShowField extends Component {
             let reportHeaderObj = reportResult.reportHeader;
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? 'selected' : ''}>
-                <td>
-                  {dataIndex+1}
-                </td>
+                <td>{dataIndex + 1}</td>
                 {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
                   <td>
                     <input
@@ -803,7 +789,6 @@ class ShowField extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state);
   return {
     isTableShow: state.form.showTable,
     metaData: state.report.metaData,
