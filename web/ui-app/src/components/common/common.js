@@ -3480,8 +3480,8 @@ var localization_EN_Data = {
   'swm.routes.search.result.totalNoOfStops': 'Total No of Stops',
   'swm.create.page.title.sanitationStaffTargets': 'Create Sanitation Staff Target',
   'swm.update.page.title.sanitationStaffTargets': 'Update Sanitation Staff Target',
-   'swm.search.page.title.sanitationStaffTargets':'Search Sanitation Staff Target ',
-
+  'swm.search.page.title.sanitationStaffTargets':'Search Sanitation Staff Target ',
+  'swm.toiletmaster.view.toiletId':'Toilet ID',
 
       "pattern.error.message.email": ' Email should be in format e.g - abc@abc.com',
       "pattern.error.message.mobileNumber": 'The Phone number structure is as follows: 999XXXX999',

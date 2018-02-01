@@ -2,14 +2,14 @@ var dat ={
 'swm.search': {
 
   preApiCalls: [
-    {
-      url: "/tenant/v1/tenant/_search",
-      jsonPath: "ulbs",
-      jsExpForDD: {
-        key: "$..tenant.*.code",
-        value: "$..tenant.*.name",
-      }
-    },
+    // {
+    //   url: "/tenant/v1/tenant/_search",
+    //   jsonPath: "ulbs",
+    //   jsExpForDD: {
+    //     key: "$..tenant.*.code",
+    //     value: "$..tenant.*.name",
+    //   }
+    // },
     {
       url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE",
       jsonPath: "ward",
@@ -166,9 +166,9 @@ var dat ={
         {
             label: 'swm.populationmaster.create.GarbageToCollect',
         },
-        {
-            label: 'swm.populationmaster.create.ulb',
-        },
+        // {
+        //     label: 'swm.populationmaster.create.ulb',
+        // },
        {
             label: 'swm.populationmaster.create.ward',
         },
@@ -180,7 +180,7 @@ var dat ={
       'censusYear',
         'population',
       'garbageToBeCollected',
-        { jsonPath: 'ulb.code', reduxObject: "ulbs", isObj: true, cToN: true },
+        // { jsonPath: 'ulb.code', reduxObject: "ulbs", isObj: true, cToN: true },
         { jsonPath: 'ward', reduxObject: "ward", isObj: true, cToN: true },
         { jsonPath: 'zone', reduxObject: "zone", isObj: true, cToN: true },
       //'ulb.code',

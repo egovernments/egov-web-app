@@ -513,6 +513,24 @@ var dat={
  isMDMSScreen: true,
 },
 'swm.view': {
+
+
+  preApiCalls: [
+    {
+      url: "egov-mdms-service/v1/_get",
+      jsonPath: "ToiletType",
+      qs: {
+        moduleName: "swm",
+        masterName: "ToiletType"
+      },
+      jsExpForDD: {
+        key: "$..code",
+        value: "$..name",
+      }
+    }
+  ],
+
+
     numCols: 3,
     useTimestamp: true,
     objectName: 'Toilet',
@@ -523,19 +541,34 @@ var dat={
     name: 'PublicToilet',
     jsonPath: '',
     fields:[
-        {
+          {
+            name: 'ToiletID',
+            label: 'swm.toiletmaster.view.toiletId',
+            jsonPath: 'MdmsRes.swm.Toilet[0].code',
+            type: 'label',
+            isRequired: true,
+            isDisabled: false,
+            defaultValue: '',
+            url: '',
+            patternErrorMsg: '',
+
+            
+          },
+          {
     
             name: 'isPublictoilet',
-            jsonPath: 'name',
+            jsonPath: 'MdmsRes.swm.Toilet[0].toiletType.code',
             type: 'label',
             label: 'swm.create.PublicsToilet',
             styleObj: { display: '-webkit-box' },
             isDisabled: false,
             patternErrorMsg: '',
             url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
+            reduxObject: "ToiletType",
+            cToN: true 
 
           },
-{
+          {
             name : 'toiletName',
             label : 'swm.toiletmaster.create.toiletName',
             jsonPath: 'MdmsRes.swm.Toilet["0"].name',
