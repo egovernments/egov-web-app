@@ -17,6 +17,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'ProcessingSite',
     url: '/swm-services/dumpingground/_search',
+    title: 'swm.create.page.title.processingsites',
     groups: [
       {
         name: 'ProcessingSite',

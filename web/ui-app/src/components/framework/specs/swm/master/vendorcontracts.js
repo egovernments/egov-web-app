@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vendorContracts',
     url: '/swm-services/vendorcontracts/_search',
+    title:'swm.search.page.title.vendorcontracts',
     groups: [
       {
         name: 'search',

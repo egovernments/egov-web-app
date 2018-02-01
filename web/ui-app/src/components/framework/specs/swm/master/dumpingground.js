@@ -32,6 +32,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'DumpingGround',
     url: '/egov-mdms-service/v1/_search',
+    title: 'swm.create.page.title.dumpingGrounds',
     groups: [
       {
         name: 'DumpingGround',

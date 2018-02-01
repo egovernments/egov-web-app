@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicleMaintenances',
     url: '/swm-services/vehiclemaintenances/_search',
+    title:'swm.search.page.title.vehiclemaintenances',
     groups: [
       {
         name: 'VehicleMaintenanceDetails',

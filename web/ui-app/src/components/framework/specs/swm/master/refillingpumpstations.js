@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'refillingPumpStations',
     url: '/swm-services/refillingpumpstations/_search',
+    title:'swm.search.page.title.refillingpumpstations',
     groups: [
       {
         name: 'search',

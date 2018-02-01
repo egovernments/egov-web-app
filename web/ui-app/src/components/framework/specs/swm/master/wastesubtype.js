@@ -113,7 +113,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'MasterMetaData',
       idJsonPath: 'MdmsRes.swm.WasteSubType[0].code',
-      title: 'lcms.create.group.title.wasteSubTypeDetails',
+      title: 'lcms.create.group.title.wasteSubTypeDetailss',
       groups: [
         {
           name:'wastesubTypeDetails',
@@ -189,7 +189,7 @@ var dat = {
       numCols: 4,
       useTimestamp: true,
       objectName: 'WasteSubType',
-      title: 'lcms.create.group.title.wasteSubTypeDetails',
+      title: 'lcms.create.group.title.wasteSubTypeDetailss',
       groups: [
         {
           name:'wastesubTypeDetails',
@@ -244,7 +244,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'WasteSubType',
       idJsonPath : 'MasterMetaData.masterData[0].code',
-      title: 'lcms.create.group.title.wasteSubTypeDetails',
+      title: 'lcms.create.group.title.wasteSubTypeDetailss',
       groups: [
         {
           name:'wastesubTypeDetails',

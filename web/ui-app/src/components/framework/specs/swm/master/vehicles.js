@@ -35,6 +35,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicles',
     url: '/swm-services/vehicles/_search',
+    title: 'swm.vehicles.search.title',
     groups: [
       {
         name: 'VehicleDetails1',

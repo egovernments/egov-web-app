@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'collectionPoints',
     url: '/swm-services/collectionpoints/_search',
+    title: 'swm.search.page.title.collectionpoints',
     preApiCallsBoundary:[
       {
         url:"/egov-location/location/v11/boundarys/_search?",

@@ -129,7 +129,7 @@ var dat = {
     useTimestamp: true,
     objectName: "sanitationStaffTargets",
     idJsonPath: "sanitationStaffTargets[0].targetNo",
-    title: 'swm.create.page.title.sanitationStaffTargets',
+    title: 'swm.sanitationstaffTargets.search.title',
     groups: [
       {
         name: "CardOne",

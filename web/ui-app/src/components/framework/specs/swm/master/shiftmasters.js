@@ -39,7 +39,7 @@ var dat = {
       useTimestamp: true,
       objectName: 'Shift',
       url: '/egov-mdms-service/v1/_search',
-      title: 'swm.create.page.title.shiftmasters',
+      title: 'swm.create.page.title.shiftmasterss',
       groups: [
         {
           name:'ShiftSelection',
