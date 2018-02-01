@@ -77,8 +77,8 @@ export const customizePdfPrint = (doc, ulbname, logoBase64, headerLogo, waste = 
             {
               alignment: 'center',
               stack: [
-                { margin: [0, 30, 0, 0], fontSize: 16, bold: true, text: ulbname },
-                { margin: [0, 10, 0, 0], fontSize: 16, bold: true, text: 'Solid Waste Management Department' },
+                { margin: [0, 10, 0, 0], fontSize: 14, bold: true, text: ulbname },
+                { margin: [0, 10, 0, 0], fontSize: 14, bold: true, text: 'Solid Waste Management Department' },
               ],
             },
             { alignment: 'right', image: headerLogo, height: 75, width: 75 },
@@ -86,18 +86,27 @@ export const customizePdfPrint = (doc, ulbname, logoBase64, headerLogo, waste = 
         ],
       },
       layout: {
-        hLineWidth: function(line) {
-          return 0;
+        hLineWidth: function() {
+          return 0.5;
         },
         vLineWidth: function() {
-          return 0;
+          return 0.5;
         },
         paddingBottom: function() {
-          return 5;
+          return 10;
+        },
+        paddingLeft: function() {
+          return 10;
+        },
+        paddingRight: function() {
+          return 10;
+        },
+        paddingTop: function() {
+          return 10;
         },
       },
     },
-    { margin: [0, 20, 0, 20], text: [{ text: 'Waste : ', bold: true }, waste] },
+    { margin: [0, 10, 0, 10], text: [{ text: 'Waste : ', bold: true }, waste] },
     { table: { widths: ['40%', '20%', '10%', '10%'], headerRows: 2, body: prepareBody(reportResult.reportData) } },
     { text: 'Chief Officer', alignment: 'right', bold: true, fontSize: 16, margin: [0, 100, 50, 0] },
     { text: ulbname, alignment: 'right', bold: true, fontSize: 16, margin: [0, 20, 50, 0] },
