@@ -519,7 +519,7 @@ var dat = {
       },
       {
         name: 'documentsUpload',
-        label: 'swm.vendorpayment.create.group.title.documentsUpload',
+        label: 'wc.create.groups.fileDetailsDownload.title',
         fields: [
           {
             name: 'UploadDocument',
