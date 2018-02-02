@@ -28,11 +28,8 @@ const prepareBody = resultData => {
   }
 
   resultData.forEach(resultRow => {
-    const transformedResultRow = resultRow.map((element, index) => {
-      return {
-        text: element,
-        alignment: index == 0 ? 'left' : 'center',
-      };
+    const transformedResultRow = resultRow.slice(0, resultRow.length - 2).map((element, index) => {
+      return { text: element, alignment: index == 0 ? 'left' : 'center' };
     });
     body.push(transformedResultRow);
   });
