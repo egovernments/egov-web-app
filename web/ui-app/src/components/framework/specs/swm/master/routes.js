@@ -80,28 +80,31 @@ const routeValidation =   `
   `
 
 const modifyFormData = `
+  const setVal = (formData, jsonPath, value) => {
+    _.set(formData, jsonPath, value);
+  };
+
   const modifyFormData = () => {
-    let _formData = {...formData};
     if(_formData.routes) {
 
       for(var i=0; i<_formData.routes[0].collectionPoints.length; i++) {
         const val = _formData.routes[0].collectionPoints[i].typeOfPoint;
         switch(val) {
           case "Starting Point":
-            self.setVal('routes[0].collectionPoints['+i+'].isStartingCollectionPoint', true);
-            self.setVal('routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isStartingCollectionPoint', true);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
             break;
           case "Route Stop":
-            self.setVal('routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
-            self.setVal('routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
             break;
           case "Ending Collection Point":
-            self.setVal('routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
-            self.setVal('routes[0].collectionPoints['+i+'].isEndingCollectionPoint', true);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isEndingCollectionPoint', true);
             break;
           case "Ending Dumping Ground point":
-            self.setVal('routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
-            self.setVal('routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isStartingCollectionPoint', false);
+            setVal(_formData, 'routes[0].collectionPoints['+i+'].isEndingCollectionPoint', false);
             break;
         }
       }
@@ -118,7 +121,6 @@ const modifyFormData = `
     delete _formData["routeStop"];
     delete _formData["startPoint"];
     delete _formData["endPoint"];
-    this.props.setFormData(_formData);
   }
   setStartEndPoint();modifyFormData();`
 

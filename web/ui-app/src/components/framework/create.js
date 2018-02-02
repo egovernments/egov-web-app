@@ -1353,7 +1353,7 @@ class Report extends Component {
   makeAjaxCall = (formData, url) => {
     let shouldSubmit = true;
     let self = this;
-    let _formData = _.cloneDeep(this.props.formData);
+    let _formData = _.cloneDeep(formData);
     let { setVal } = this.props;
     var hashLocation = window.location.hash;
     let obj =
