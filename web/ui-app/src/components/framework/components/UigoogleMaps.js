@@ -224,7 +224,11 @@ export default class UigoogleMaps extends Component {
                           );
                         } }/>];
         return (
+          
           <div>
+          <style dangerouslySetInnerHTML={{__html: `
+          .pac-container {   z-index: 10000 !important}
+        `}} />
           {(item.hideTextarea) ? <div style={{ height:'30px' }}></div> : 
             <TextField
               floatingLabelFixed={true}
