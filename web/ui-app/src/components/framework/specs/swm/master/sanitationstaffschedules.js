@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sanitationStaffSchedules',
     url: '/swm-services/sanitationstaffschedules/_search',
+    title:'swm.search.page.title.sanitationstaffschedules',
     groups: [{
       name: 'search',
       label: 'swm.sanitationstaffschedules.search.title',
@@ -49,6 +50,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sanitationStaffSchedules',
     idJsonPath: 'sanitationStaffSchedules[0].transactionNo',
+    title: 'swm.sanitationstaffschedules.create.title',
     groups: [{
       name: 'staffScheduleDetails',
       label: 'swm.create.group.title.staffScheduleDetails',
@@ -406,6 +408,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sanitationStaffSchedules',
     idJsonPath: 'sanitationStaffSchedules[0].transactionNo',
+    title:'swm.sanitationstaffschedules.create.title',
     groups: [{
       name: 'staffScheduleDetails',
       label: 'swm.create.group.title.staffScheduleDetails',

@@ -4,6 +4,8 @@ var dat = {
       "useTimestamp":true,
       "objectName":"",
       "url":"/swm-services/vehicleschedules/_search",
+      "title": "swm.search.page.title.VehicleSchedules",
+
       "groups":[
          {
             "name":"search",
@@ -433,6 +435,7 @@ var dat = {
       "useTimestamp":true,
       "objectName":"vehicleSchedules",
       "idJsonPath": 'vehicleSchedules[0].code',
+      title:"swm.create.page.title.VehicleSchedules",
       "groups":[
          {
             "name":"updateVehicle",

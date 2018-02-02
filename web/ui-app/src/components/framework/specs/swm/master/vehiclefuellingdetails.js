@@ -377,6 +377,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicleFuellingDetails',
     idJsonPath: 'vehicleFuellingDetails[0].transactionNo',
+    title:'vehiclefuellingdetails.create.group.title.VehicleDetails1',
     groups: [
       {
         name: 'VehicleDetails1',

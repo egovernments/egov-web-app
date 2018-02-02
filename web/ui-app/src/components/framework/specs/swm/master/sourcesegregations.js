@@ -24,6 +24,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sourceSegregations',
     url: '/swm-services/sourcesegregations/_search',
+    title: 'swm.search.page.title.sourcesegregations',
     groups: [
       {
         name: 'search',
@@ -150,6 +151,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sourceSegregations',
     idJsonPath: 'sourceSegregations[0].code',
+    title: 'swm.sourcesegregations.create.title',
     groups: [
       {
         name: 'SourceSegregationDetails',
@@ -464,6 +466,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sourceSegregations',
     idJsonPath: 'sourceSegregations[0].code',
+     title: 'swm.sourcesegregations.create.title',
     groups: [
       {
         name: 'SourceSegregationDetails',

@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: "vehicleTripSheetDetails",
     url: "/swm-services/vehicletripsheetdetails/_search",
+    title: 'swm.search.page.title.vehicletripsheetdetails',
     groups: [{
       name: "vehicleTripEntrySearch",
       label: "swm.vehiclestripsheet.search.vehicleTripEntrySearch",
@@ -130,7 +131,7 @@ var dat = {
     useTimestamp: true,
     objectName: "vehicleTripSheetDetails",
     idJsonPath: "vehicleTripSheetDetails[0].tripNo",
-    title: "swm.vehiclestripsheet.create.title",
+    title: 'swm.vehiclestripsheet.create.title',
     groups: [
       {
         name: "VehicleDetails",
@@ -486,7 +487,7 @@ var dat = {
     numCols: 4,
     useTimestamp: true,
     objectName: "vehicleTripSheetDetails",
-    title: "swm.vehiclestripsheet.create.title",
+    title: 'swm.vehiclestripsheet.create.title',
     idJsonPath: "vehicleTripSheetDetails[0].tripNo",
     groups: [{
         name: "VehicleDetails",

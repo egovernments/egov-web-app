@@ -495,6 +495,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'collectionPoints',
     idJsonPath: 'collectionPoints[0].code',
+    title:'swm.collectionpoints.create.title',
     groups: [
       {
         name: 'LocationDetails',

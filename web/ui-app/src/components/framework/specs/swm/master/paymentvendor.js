@@ -3,7 +3,7 @@ var dat ={
     numCols: 4,
     useTimestamp: true,
     objectName: 'paymentDetails',
-    title: 'swm.vendorpayment.create.searchcapturetitle',
+    title:'swm.search.page.title.paymentvendor',
     url: '/swm-services/paymentdetails/_search',
     groups: [
     {

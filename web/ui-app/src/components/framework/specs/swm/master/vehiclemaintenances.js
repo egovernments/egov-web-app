@@ -312,6 +312,7 @@ var dat = {
     objectName: 'vehicleMaintenances',
     searchUrl: 'swm-services/vehicleMaintenances/_search?code={code}',
     idJsonPath: 'vehicleMaintenances[0].code',
+    title: 'swm.create.group.title.VehicleMaintenanceDetails',
     groups: [
       {
         name: 'VehicleMaintenanceDetails',

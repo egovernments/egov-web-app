@@ -288,6 +288,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'refillingpumpstations',
     idJsonPath: 'refillingPumpStations[0].code',
+    title: 'swm.refillingpumpstations.create.title',
     groups: [
       {
         name: 'LocationDetails',

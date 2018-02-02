@@ -761,6 +761,7 @@ var dat = {
     useTimestamp: true,
     idJsonPath: 'vehicles[0].regNumber',
     objectName: 'vehicles',
+    title: 'swm.vehicles.create.title',
     groups: [
       {
         name: 'VehicleDetails1',

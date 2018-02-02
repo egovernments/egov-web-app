@@ -4,6 +4,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehiclemaintenancedetails',
     url: '/swm-services/vehiclemaintenancedetails/_search',
+     title: 'swm.search.page.title.vehiclemaintenancedetails',
     groups: [
       {
         name: 'search',
@@ -80,6 +81,8 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicleMaintenanceDetails',
     idJsonPath: 'vehicleMaintenanceDetails[0].code',
+    title: 'swm.vehiclemaintenancedetails.create.title',
+
     groups: [
       {
         name: 'Selection',
@@ -620,6 +623,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'vehicleMaintenanceDetails',
     idJsonPath: 'vehicleMaintenanceDetails[0].code',
+    title: 'swm.vehiclemaintenancedetails.create.title',
  preApiCalls:[
       {
         url:"/swm-services/vehiclemaintenances/_search?",

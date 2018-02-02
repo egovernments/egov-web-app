@@ -612,6 +612,7 @@ var dat = {
     useTimestamp: true,
     idJsonPath: 'vendors[0].vendorNo',
     objectName: 'vendors',
+    title: 'swm.create.group.title.Vendors',
     groups: [
       // {
       //   name: 'vendors',

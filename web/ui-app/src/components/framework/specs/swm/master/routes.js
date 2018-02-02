@@ -223,7 +223,7 @@ const setUpdateCards=`
 setUpdateCards(res);`
 
 var dat = {
-  'swm.create': {
+'swm.create': {
     afterHandleChange: routeValidation,
     beforeSubmit: modifyFormData,
     numCols: 3,
@@ -962,6 +962,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'routes',
     url: 'swm-services/routes/_search',
+    title: 'swm.search.page.title.routes',
     groups: [
       {
         name: 'RouteDetails',
