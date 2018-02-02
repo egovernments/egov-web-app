@@ -1135,7 +1135,7 @@ var dat = {
     useTimestamp: true,
     objectName: 'sanitationStaffTargets',
     idJsonPath: 'sanitationStaffTargets[0].transactionNo',
-    title: 'swm.update.page.title.sanitationStaffTargets',
+    title: 'swm.sanitationstaffTargets.search.title',
     groups: [
       {
         name: 'filtercollectionpoint',
