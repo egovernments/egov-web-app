@@ -54,6 +54,14 @@ var dat={
             "multiple": true,
             "fullWidth": true,
           },
+          {
+            name: 'name',
+            jsonPath: '',
+            label: 'swm.collectionPoint.boundary.message',
+            type: 'label',
+            isDisabled: true,
+            color: "rgb(0,0,0)"
+          }
         ],
       },
       {
