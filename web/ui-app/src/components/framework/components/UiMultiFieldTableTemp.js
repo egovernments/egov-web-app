@@ -486,7 +486,7 @@ class UiMultiFieldTable extends Component {
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
-            {!item.tableList.serialNoNotRequired ?   <th>#</th>  : ''}
+            {!item.tableList.serialNoNotRequired ?   <th>Sr. No.</th>  : ''}
             {item.tableList.selectedfilter ?   <th>{"Is Checked"}</th>  : ''}
               {item.tableList.header.map((v, i) => {
                 var style = {};

@@ -153,7 +153,8 @@ class Search extends Component {
 
   hasReturnUrl() {
     let { search } = this;
-    if (localStorage.getItem('returnUrl')) {
+    const {moduleName,master} = this.props.match.params;
+    if (localStorage.getItem('returnUrl') && localStorage.getItem('returnUrl').includes(moduleName + "/" + master)) {
       search(null, true);
     }
   }
@@ -983,9 +984,6 @@ class Search extends Component {
       pathname: this.props.history.location.pathname,
       showResult: false,
     });
-    //=======Autocomplete field reset===>
-    // var autoComField = document.querySelectorAll('[autoComplete="off"]');
-    // autoComField[0].value = '';
   };
 
   render() {
@@ -1006,8 +1004,6 @@ class Search extends Component {
       !_.isEmpty(mockData[`${moduleName}.${actionName}`]) && mockData[`${moduleName}.${actionName}`].hasOwnProperty('customActionsAndUrl')
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
         : '';
-    // console.log(formData);
-    // console.log(this.props.dropDownData);
     return (
       <div className="SearchResult">
         <Row>
