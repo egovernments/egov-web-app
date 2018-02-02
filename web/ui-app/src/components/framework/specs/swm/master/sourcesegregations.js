@@ -443,23 +443,23 @@ var dat = {
         }
       }
     ],
-    beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
-      if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
-        var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
-        for (var i = 0; i < dG.length; i++) {
-          if (dG[i].code==e.target.value) {
-            handleChange(
-              {target:{value:dG[i].siteDetails.location}},
-              "sourceSegregations[0].dumpingGround.siteDetails.location",
-              false,
-              "",
-              "",
-              "patternErrMsg"
-            );
-          }
-        }
-      }
-    }`,
+    // beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
+    //   if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
+    //     var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
+    //     for (var i = 0; i < dG.length; i++) {
+    //       if (dG[i].code==e.target.value) {
+    //         handleChange(
+    //           {target:{value:dG[i].siteDetails.location}},
+    //           "sourceSegregations[0].dumpingGround.siteDetails.location",
+    //           false,
+    //           "",
+    //           "",
+    //           "patternErrMsg"
+    //         );
+    //       }
+    //     }
+    //   }
+    // }`,
     numCols: 4,
     useTimestamp: true,
     objectName: 'sourceSegregations',
@@ -541,7 +541,16 @@ var dat = {
             "multiple": true,
             "fullWidth": true,
             "isDisabled":true,
-            "setResponseData": true
+            mdms: {
+              moduleName: 'swm',
+              masterName: 'DumpingGround',
+              filter: '',
+              key: '$..siteDetails.location.code',
+              value: '$..siteDetails.location.code', 
+              dependant: {
+                jsonExp: "$.swm.DumpingGround[?(@.code=='sourceSegregations[0].dumpingGround.code')]",
+              },
+            },
           }
         ],
       },
