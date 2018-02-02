@@ -24,7 +24,13 @@ $.ajax({
   contentType: "application/json",
   data: JSON.stringify(body),
   success: function (result) {
-    driverDesignaionId = result.Designation[0].id;
+    if(result.Designation[0].id)
+      {
+	driverDesignaionId = result.Designation[0].id;
+      }
+    else{
+	driverDesignaionId = 0;
+      }
   },
   async: false
 });
