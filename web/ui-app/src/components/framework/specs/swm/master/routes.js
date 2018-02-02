@@ -410,6 +410,7 @@ var dat = {
             "patternErrorMsg": "",
             "isDisabled": false,
             "fullWidth": true,
+            "setResponseData": true,
             depedants: [
               {
                 jsonPath: 'endPoint.collectionPoint.code',

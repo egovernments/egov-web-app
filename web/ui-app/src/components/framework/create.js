@@ -1107,10 +1107,12 @@ class Report extends Component {
   checkifHasDependedantMdmsField(path, value) {
     let obj = { ..._mockData };
     let _mockData = { ...this.props.mockData };
+    let _formData = {...this.props.formData};
     let {
       moduleName,
       actionName,
       setMockData,
+      setFormData,
       setDropDownData,
       setDropDownOriginalData
     } = this.props;
@@ -1151,6 +1153,11 @@ class Report extends Component {
                   _mockData[moduleName + "." + actionName].groups[i].fields[j]
                     .mdms.value
                 );
+                if(_mockData[moduleName + "." + actionName].groups[i].fields[j].type === "boundary"){
+                  const __formData = _.cloneDeep(_formData);
+                  _.set(__formData, _mockData[moduleName + "." + actionName].groups[i].fields[j].jsonPath, value[0]);
+                  setFormData(__formData);
+                }
                 for (let r = 0; r < key.length; r++) {
                   let masterObj = {};
                   masterObj.key = key[r];
@@ -3953,7 +3960,6 @@ class Report extends Component {
 
 
   };
-
 
   incrementIndexValue = (group, jsonPath) => {
     let { formData } = this.props;

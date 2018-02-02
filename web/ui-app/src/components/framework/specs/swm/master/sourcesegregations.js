@@ -119,23 +119,23 @@ var dat = {
     jPathBoundary: 'dumpingGround.siteDetails.location.code'
   },
   'swm.create': {
-    beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
-      if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
-        var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
-        for (var i = 0; i < dG.length; i++) {
-          if (dG[i].code==e.target.value) {
-            handleChange(
-              {target:{value:dG[i].siteDetails.location}},
-              "sourceSegregations[0].dumpingGround.siteDetails.location",
-              false,
-              "",
-              "",
-              "patternErrMsg"
-            );
-          }
-        }
-      }
-    }`,
+    // beforeHandleChange:`if (property=="sourceSegregations[0].dumpingGround.code") {
+    //   if (dropDownOringalData && dropDownOringalData.hasOwnProperty("sourceSegregations[0]-dumpingGround-code")) {
+    //     var dG=dropDownOringalData['sourceSegregations[0]-dumpingGround-code']["MdmsRes"]["swm"]["DumpingGround"];
+    //     for (var i = 0; i < dG.length; i++) {
+    //       if (dG[i].code==e.target.value) {
+    //         handleChange(
+    //           {target:{value:dG[i].siteDetails.location}},
+    //           "sourceSegregations[0].dumpingGround.siteDetails.location",
+    //           false,
+    //           "",
+    //           "",
+    //           "patternErrMsg"
+    //         );
+    //       }
+    //     }
+    //   }
+    // }`,
     preApiCalls:[
       {
         url:"/tenant/v1/tenant/_search",
@@ -168,7 +168,14 @@ var dat = {
             maxLength: 256,
             minLength: 1,
             patternErrorMsg: '',
-            url: '',
+            // url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround|$.MdmsRes.swm.DumpingGround[*].code|$.MdmsRes.swm.DumpingGround[*].name",
+            // autoCompleteDependancy: {
+            //   autoCompleteUrl: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=DumpingGround&filter%3D%5B%3F(%40.code%3D=%22{sourceSegregations[0].dumpingGround.code}%22)]',
+            //   autoFillFields: {
+            //     "sourceSegregations[0].dumpingGround.siteDetails.location.code":"MdmsRes.swm.DumpingGround[0].siteDetails.location.code"
+            //   },
+            // },
+
             mdms: {
               moduleName: 'swm',
               masterName: 'DumpingGround',
@@ -228,8 +235,43 @@ var dat = {
             "multiple": true,
             "fullWidth": true,
             "isDisabled":true,
-            "setResponseData": true
+            "setResponseData": true,
+            mdms: {
+              moduleName: 'swm',
+              masterName: 'DumpingGround',
+              filter: '',
+              key: '$..siteDetails.location.code',
+              value: '$..siteDetails.location.code', 
+              dependant: {
+                jsonExp: "$.swm.DumpingGround[?(@.code=='sourceSegregations[0].dumpingGround.code')]",
+              },
+            },
           }
+          // {
+          //   type: "tableListTemp",
+          //   jsonPath: "sourceSegregations[0].dumpingGround",
+          //   tableList: {
+          //     header: [{
+          //         label: "swm.create.sanitationstaffschedules.colletionPoint.location"
+          //       },
+          //     ],
+          //     values: [
+          //       {
+          //         "type": "boundary",
+          //         "label": "",
+          //         "hierarchyType": "REVENUE",
+          //         "jsonPath": "sourceSegregations[0].dumpingGround.siteDetails.location.code",
+          //         "isRequired": true,
+          //         "patternErrorMsg": "",
+          //         "isDisabled":true,
+          //         "setResponseData": true,
+          //         "multiple": true,
+          //       },
+          //     ],
+          //     actionsNotRequired: true
+          //   },
+          //   hasPreTransform: true,
+          // }
         ],
       },
       {
