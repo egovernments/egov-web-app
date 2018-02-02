@@ -81,7 +81,11 @@ class UiDatePicker extends Component {
             <br />
           </div>
         );
-
+        let dateTimeValue = this.props.getVal(item.jsonPath);
+        if(item.defaultDate && !dateTimeValue){
+          dateTimeValue = moment();
+        }
+       
         return (
           <div
             style={{
@@ -93,9 +97,8 @@ class UiDatePicker extends Component {
           >
             {label}
             <DateTime
-              value={this.props.getVal(item.jsonPath)}
+              value={dateTimeValue}
               dateFormat="DD/MM/YYYY"
-              defaultValue={item.defaultDate ? new Date() : ''}
               timeFormat={false}
               inputProps={{
                 placeholder: 'DD/MM/YYYY',
