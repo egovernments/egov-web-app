@@ -83,7 +83,8 @@ class UiDatePicker extends Component {
         );
         let dateTimeValue = this.props.getVal(item.jsonPath);
         if(item.defaultDate && !dateTimeValue){
-          dateTimeValue = moment();
+          dateTimeValue = new Date();
+          _.set(this.props.formData, this.props.item.jsonPath, new Date().getTime());
         }
        
         return (
