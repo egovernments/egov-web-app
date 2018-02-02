@@ -22,7 +22,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 import UiBackButton from '../../../framework/components/UiBackButton';
-import UiGoogleMapsPolygon from '../../../framework/components/UiGoogleMapsPolygon';
+
 
 
 var specifications = {};
