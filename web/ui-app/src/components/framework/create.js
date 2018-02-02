@@ -1346,7 +1346,7 @@ class Report extends Component {
   makeAjaxCall = (formData, url) => {
     let shouldSubmit = true;
     let self = this;
-    let _formData = { ...this.props.formData }
+    let _formData = _.cloneDeep(this.props.formData);
     let { setVal } = this.props;
     var hashLocation = window.location.hash;
     let obj =
@@ -1354,19 +1354,23 @@ class Report extends Component {
       `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
       ];
     const JP = jp;
+
+
     if (obj && obj.beforeSubmit) {
       eval(obj.beforeSubmit);
     }
+
     if (shouldSubmit) {
       let fields = jp.query(
         obj,
         `$.groups..fields[?(@.hasATOAATransform==true)]`
       );
+   
       for (var i = 0; i < fields.length; i++) {
-        let values = _.get(formData, fields[i].jsonPath);
+        let values = _.get(_formData, fields[i].jsonPath);
         if (values && _.isArray(values) && values.length > 0) {
-          formData = _.set(
-            formData,
+          _formData = _.set(
+            _formData,
             fields[i]["aATransformInfo"].to,
             values.map(item => {
               if (_.isObject(item) && _.has(item, fields[i]["aATransformInfo"].key)) {
@@ -1381,25 +1385,20 @@ class Report extends Component {
               }
             })
           );
+
         }
       }
-      // console.log(formData);
-      delete formData.ResponseInfo;
-      //return console.log(formData);
-      console.log(obj);
+
       if (obj.hasOwnProperty("omittableFields")) {
-        this.generateSpecificForm(formData, obj["omittableFields"]);
+        this.generateSpecificForm(_formData, obj["omittableFields"]);
       }
-      // console.log(formData);
-
-
 
       Api.commonApiPost(
         url ||
         self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
           .url,
         "",
-        formData,
+        _formData,
         "",
         true
       ).then(
@@ -1529,12 +1528,15 @@ class Report extends Component {
               }
             }
           }, 1500);
+
+
         },
         function (err) {
           self.props.setLoadingStatus("hide");
           self.props.toggleSnackbarAndSetText(true, err.message);
         }
-        );
+);
+ 
     }
     else {
       self.props.setLoadingStatus("hide");
