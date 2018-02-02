@@ -1,14 +1,21 @@
 const saveOnLocal =`
-    let _mockData = {...self.props.mockData}
-        var groupArr = _mockData[self.props.moduleName + "." + self.props.actionName].groups;
-           groupArr.map((data)=>{
-             data.fields.map((inData)=>{
-               if(inData.hasOwnProperty('saveDataOnLocal') && inData.jsonPath == property){
-              localStorage.setItem('TltypeCode',e.target.value)
- 
-               }
-             })
-           })
+     let _mockData = { ...self.props.mockData }
+    let formData = { ...self.props.formData }
+    var groupArr = _mockData[self.props.moduleName + "." + self.props.actionName].groups;
+    groupArr.map((data) => {
+      data.fields.map((innerData) => {
+        if (!!innerData.acceptCode) {
+          console.log(formData.MasterMetaData)
+          if (!_.isEmpty(formData) && formData.MasterMetaData.masterData[0] != 'undefined') {
+            if (formData.MasterMetaData.masterData[0].hasOwnProperty('toiletType')) {
+              formData.MasterMetaData.masterData[0].code = innerData.defaultValue + formData.MasterMetaData.masterData[0].toiletType.code + '-' + new Date().getTime()
+            }
+
+          }
+
+        }
+
+      })})
   
 
 `
@@ -309,7 +316,7 @@ var dat={
           {
             name: 'code',
             jsonPath: 'MasterMetaData.masterData[0].code',
-            defaultValue: 'MH-'+localStorage.getItem("tenantId") +'-'+localStorage.getItem("TltypeCode")+'-'+ new Date().getTime() ,  
+            defaultValue: 'MH-'+localStorage.getItem("tenantId") +'-' ,  
             isRequired: true,
             type: 'text',
             hide: true,
