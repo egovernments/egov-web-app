@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 var curDate = new Date();
 var formattedDate = curDate.getDate() + "/" + (curDate.getMonth() + 1) + "/" + curDate.getFullYear();
-let driverDesignaionId = "";
+let driverDesignaionId = 0;
 let body = {
   "RequestInfo": {
     apiId: 'org.egov.pt',
@@ -24,12 +24,9 @@ $.ajax({
   contentType: "application/json",
   data: JSON.stringify(body),
   success: function (result) {
-    if(result.Designation[0].id)
+    if(result && result.Designation[0] && result.Designation[0].id)
       {
 	driverDesignaionId = result.Designation[0].id;
-      }
-    else{
-	driverDesignaionId = 0;
       }
   },
   async: false
