@@ -2463,7 +2463,7 @@ var localization_EN_Data = {
   'reports.swm.date': 'Date',
   'reports.swm.wetwaste': 'Wet Waste',
   'reports.swm.drywaste': 'Dry Waste',
-  'reports.swm.vehicle': 'Vehicle',
+  'reports.swm.vehicle': 'Vehicle Reg no',
   'reports.swm.vehicletype': 'Vehicle Type',
   'reports.swm.registrationnumber': 'Vehicle Registration Number',
   'reports.swm.fuellingcost': 'Cost Incurred on Fuelling',
