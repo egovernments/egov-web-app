@@ -168,6 +168,8 @@ var dat ={
         ],
       },
     {
+      name: 'invoicedetails',
+      label: 'swm.vendorpayment.create.invoicetitle',
         fields:[
         {
             name: 'InvoiceAmount',
@@ -656,6 +658,8 @@ var dat ={
       ],
     },
   {
+    name: 'invoicedetails',
+    label: 'swm.vendorpayment.create.invoicetitle',
       fields:[
       {
           name: 'InvoiceAmount',
