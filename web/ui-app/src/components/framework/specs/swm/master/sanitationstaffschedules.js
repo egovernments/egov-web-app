@@ -451,7 +451,7 @@ var dat = {
           maxLength: 256,
           minLength: 1,
           patternErrorMsg: '',
-          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..code|$..code',
+          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
         },
         {
           name: 'targetFrom',
