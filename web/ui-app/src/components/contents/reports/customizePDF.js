@@ -28,7 +28,7 @@ const prepareBody = resultData => {
   }
 
   resultData.forEach(resultRow => {
-    const transformedResultRow = resultRow.slice(0, resultRow.length - 2).map((element, index) => {
+    const transformedResultRow = resultRow.slice(0, resultRow.length - 1).map((element, index) => {
       return { text: element, alignment: index == 0 ? 'left' : 'center' };
     });
     body.push(transformedResultRow);
