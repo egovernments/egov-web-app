@@ -173,14 +173,13 @@ var dat = {
             name: 'address',
             jsonPath: 'vendors[0].supplier.address',
             label: 'swm.create.supplier.address',
-            pattern: '^([ A-Za-z0-9_@./#&+-\,^()\%\$!]){10,500}$',
+            pattern: '^([ A-Za-z0-9_@./#&+\,^()\%\$!-]){10,500}$',
             type: 'textarea',
             isRequired: true,
             isDisabled: false,
-            // defaultValue: '',
             maxLength: 500,
             minLength: 10,
-            patternErrorMsg: 'length must be between 10 and 500',
+            patternErrMsg: 'length must be between 10 and 500',
           },
           {
             name: 'gst',
@@ -190,7 +189,6 @@ var dat = {
             type: 'text',
             isRequired: true,
             isDisabled: false,
-            // defaultValue: '',
             maxLength: 256,
             minLength: 1,
             patternErrMsg: 'pattern.error.message.gstNumber'
@@ -234,98 +232,12 @@ var dat = {
             "fullWidth": true,
           }
         ]
-        // fields: [
-        //       {
-        //         name: 'Ward',
-        //         jsonPath: 'vendors[0].servicedLocations[0].ward',
-        //         label: 'swm.collectionpoints.create.ward',
-        //         type: 'singleValueList',
-        //         isRequired: true,
-        //         isDisabled: false,
-        //         maxLength: 128,
-        //         url:
-        //           'egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?tenantId=default&boundaryTypeName=Ward&hierarchyTypeName=REVENUE|$.Boundary.*.id|$.Boundary.*.name',
-        //         minLength: 1,
-        //         patternErrorMsg: '',
-        //         depedants: [
-        //           {
-        //             jsonPath: 'vendors[0].servicedLocations[0].zone',
-        //             type: 'dropDown',
-        //             pattern:
-        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].ward}|$.Boundary.*.id|$.Boundary.*.name',
-        //           },
-        //         ],
-        //       },
-        //       {
-        //         name: 'Zone',
-        //         jsonPath: 'vendors[0].servicedLocations[0].zone',
-        //         label: 'swm.collectionpoints.create.zone',
-        //         type: 'singleValueList',
-        //         isRequired: true,
-        //         isDisabled: false,
-        //         maxLength: 128,
-        //         minLength: 1,
-        //         patternErrorMsg: '',
-        //         depedants: [
-        //           {
-        //             jsonPath: 'vendors[0].servicedLocations[0].block',
-        //             type: 'dropDown',
-        //             pattern:
-        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].zone}|$.Boundary.*.id|$.Boundary.*.name',
-        //           },
-        //         ],
-        //       },
-        //       {
-        //         name: 'Road/Street',
-        //         jsonPath: 'vendors[0].servicedLocations[0].block',
-        //         label: 'swm.collectionpoints.create.block',
-        //         type: 'singleValueList',
-        //         isRequired: true,
-        //         isDisabled: false,
-        //         maxLength: 128,
-        //         minLength: 1,
-        //         patternErrorMsg: '',
-        //         depedants: [
-        //           {
-        //             jsonPath: 'vendors[0].servicedLocations[0].code',
-        //             type: 'dropDown',
-        //             pattern:
-        //               'egov-location/boundarys/childLocationsByBoundaryId?tenantId=default&boundaryId={vendors[0].servicedLocations[0].block}|$.Boundary.*.id|$.Boundary.*.name',
-        //           },
-        //         ],
-        //       },
-        //       {
-        //         name: 'Colony',
-        //         jsonPath: 'vendors[0].servicedLocations[0].code',
-        //         label: 'swm.collectionpoints.create.colony',
-        //         type: 'singleValueList',
-        //         isRequired: true,
-        //         isDisabled: false,
-        //         maxLength: 128,
-        //         minLength: 1,
-        //         patternErrorMsg: '',
-        //       },
-        //   ],
       },
       {
         name: 'ServicesOffered',
         label: 'swm.create.servicesOffered',
         // children: [serviceProvided],
         fields: [
-          // {
-          //   name: 'ChecBxGrp',
-          //   jsonPath: ['vendors[0].supplier.collection', 'vendors[0].supplier.transportation','vendors[0].supplier.segregation','vendors[0].supplier.WasteTreatment', 'vendors[0].supplier.DisposalOfWaste', 'vendors[0].supplier.other'],
-          //   label: ['Collection','Transportation','Segregation','Waste Treatment', 'Disposal Of Waste', 'Other'],
-          //   pattern: '',
-          //   type: 'checkBoxGroup',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   defaultValue: false,
-          //   requiredErrMsg: '',
-          //   patternErrMsg: '',
-          //   colSpan:4
-          // },
-
           {
             name: 'ServicesOffered',
             label: 'swm.create.servicesOffered',
@@ -614,25 +526,6 @@ var dat = {
     objectName: 'vendors',
     title: 'swm.create.group.title.Vendors',
     groups: [
-      // {
-      //   name: 'vendors',
-      //   label: 'swm.create.group.title.vendors',
-      //   fields: [
-      //     {
-      //       name: 'vendorNo',
-      //       jsonPath: 'vendors[0].vendorNo',
-      //       label: 'swm.create.vendorNo',
-      //       pattern: '',
-      //       type: 'text',
-      //       isRequired: false,
-      //       isDisabled: false,
-      //       defaultValue: '',
-      //       maxLength: 128,
-      //       minLength: 1,
-      //       patternErrorMsg: '',
-      //     },
-      //   ],
-      // },
       {
         name: 'VendorDetails',
         label: 'swm.create.group.title.VendorDetails',
@@ -793,20 +686,6 @@ var dat = {
         label: 'swm.create.servicesOffered',
         // children: [serviceProvided],
         fields: [
-          // {
-          //   name: 'ChecBxGrp',
-          //   jsonPath: ['vendors[0].supplier.collection', 'vendors[0].supplier.transportation','vendors[0].supplier.segregation','vendors[0].supplier.WasteTreatment', 'vendors[0].supplier.DisposalOfWaste', 'vendors[0].supplier.other'],
-          //   label: ['Collection','Transportation','Segregation','Waste Treatment', 'Disposal Of Waste', 'Other'],
-          //   pattern: '',
-          //   type: 'checkBoxGroup',
-          //   isRequired: false,
-          //   isDisabled: false,
-          //   defaultValue: false,
-          //   requiredErrMsg: '',
-          //   patternErrMsg: '',
-          //   colSpan:4
-          // },
-
           {
             name: 'ServicesOffered',
             label: 'swm.create.servicesOffered',
