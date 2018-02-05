@@ -629,6 +629,7 @@ var dat = {
             maxLength: 128,
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             minLength: 1,
+            nextLine: true,
             patternErrorMsg: 'may not be null',
             hasATOAATransform: true,
             aATransformInfo: {

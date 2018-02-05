@@ -157,12 +157,12 @@ class UiLabel extends Component {
     if (Array.isArray(field)) {
       field.forEach(function(item, index) {
         if (typeof item == 'object') {
-          str += (item.name ? item.name : spec.cToN ? cToN(dropDownData[spec.reduxObject], item.code) : item.code) + ',';
+          str += (item.name ? item.name : spec.cToN ? cToN(dropDownData[spec.reduxObject], item.code) : item.code) + ', \n';
         } else {
-          str += (spec.cToN ? cToN(dropDownData[spec.reduxObject], item.code) : item.code) + ',';
+          str += (spec.cToN ? cToN(dropDownData[spec.reduxObject], item.code) : item.code) + ', \n';
         }
       });
-      return str.slice(0, -1);
+      return `${str.slice(0, -3)}`;
     } else {
       return spec.cToN ? cToN(dropDownData[spec.reduxObject], field) : field;
     }
@@ -226,7 +226,9 @@ class UiLabel extends Component {
               style={item.hasOwnProperty('textAlign') ? { textAlign: item.textAlign } : { textAlign: 'left' }}
               xs={12}
             >
+            <span style={item.nextLine ? { whiteSpace: "pre-line" } : { whiteSpace: "nowrap" }}>
               {this.state.value || showObjectInTable(this.props.getVal(item.jsonPath, item.isDate), item) || 'NA'}
+            </span>
             </Col>
           ) : item.dependentJsonPath ? (
             <Col

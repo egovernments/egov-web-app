@@ -649,6 +649,7 @@ var dat = {
             isDisabled: false,
             maxLength: '',
             minLength: '',
+            nextLine: true,
             url: '/egov-mdms-service/v1/_get?&moduleName=tenant&masterName=tenants|$..code|$..name',
             patternErrMsg: '',
             // mdms: {
@@ -955,6 +956,7 @@ var dat = {
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
+            nextLine: true,
             url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=WasteType|$..code|$..name',
             patternErrMsg: 'may not be null',
             hasATOAATransform: true,
