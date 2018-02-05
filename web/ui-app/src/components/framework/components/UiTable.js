@@ -246,7 +246,7 @@ class UiTable extends Component {
         return self.state[resultList.resultHeader[i2].label] ? self.state[resultList.resultHeader[i2].label][item2] : item2 + '';
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isDate) {
         var _date = new Date(Number(item2));
-        return ('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear();
+        return _date == "Invalid Date" ? item2 : ('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear();
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isTime) {
         return self.formatAMPM(new Date(parseInt(item2)));
       } else if (resultList.resultHeader[i2] && resultList.resultHeader[i2].isComma) {
