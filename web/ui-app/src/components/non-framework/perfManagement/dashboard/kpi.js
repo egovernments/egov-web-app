@@ -222,7 +222,7 @@ export default class Dashboard extends Component {
         <br />
         <RaisedButton
           style={{ marginLeft: '40px' }}
-          label={translate('perfManagement.dashboard.common.prev')}
+          label={translate('perfManagement.dashboard.common.nav.prev')}
           primary={true}
           type="button"
           disabled={this.state.pageIndex <= 1 ? true : false}
@@ -231,7 +231,7 @@ export default class Dashboard extends Component {
 
         <RaisedButton
           style={{ marginLeft: '10px' }}
-          label={translate('perfManagement.dashboard.common.next')}
+          label={translate('perfManagement.dashboard.common.nav.next')}
           primary={true}
           type="button"
           disabled={this.state.pageIndex >= (parseDepartmentResponse(this.departments).length / this.cardsPerPage) ? true : false}

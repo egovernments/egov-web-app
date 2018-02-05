@@ -5692,6 +5692,8 @@ var localization_MR_Data = {
   'perfManagement.dashboard.table.header.VALUE': 'केपीआई प्राप्त',
   'perfManagement.dashboard.table.header.ULBNAME': 'शहरी स्थानिक बॉडी नाव',
   'perfManagement.dashboard.table.header.DOCUMENTIDS': 'दस्तऐवज',
+  'perfManagement.dashboard.common.prev' : 'मागील',
+  'perfManagement.dashboard.common.next' : 'पुढे',
   'perfManagement.create.KPIs.groups.kpiCategory' : "केपीआई श्रेणी",
   'MdmsMetadata.masterData.PM.KpiCategory.name' : "वर्ग नाव",
   'MdmsMetadata.masterData.PM.KpiCategory.code' : "वर्ग कोड",
