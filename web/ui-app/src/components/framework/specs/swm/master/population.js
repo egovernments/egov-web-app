@@ -18,14 +18,14 @@ var dat ={
         value: "$.TenantBoundary.*.boundary.*.name",
       }
     },
-        {
+      /* {
           url: "/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Zone",
          jsonPath: "zone",
         jsExpForDD: {
           key: "$.TenantBoundary.*.boundary.*.code",
           value: "$.TenantBoundary.*.boundary.*.name",
       }
-    }
+    }*/
   ],
 
     numCols: 4,
@@ -59,7 +59,13 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+            url: '/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name',
+         depedants:[{
+          jsonPath:'zone',
+          type: 'dropDown',
+          pattern:'/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&codes={ward}|$.TenantBoundary.*.boundary.*.children.*.name|$.TenantBoundary.*.boundary.*.children.*.name'
+         }],
+
           },
           {
             name: 'Zone', 
@@ -69,7 +75,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+            url: ''
           },
            ],
       }, 
@@ -344,7 +350,13 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name',
+       depedants:[{
+          jsonPath:'MasterMetaData.masterData[0].zone',
+          type: 'dropDown',
+          pattern:'/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&codes={MasterMetaData.masterData[0].ward}|$.TenantBoundary.*.boundary.*.children.*.name|$.TenantBoundary.*.boundary.*.children.*.name'
+         }],
+
         },
         {
           name: 'Zone', 
@@ -354,7 +366,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+          url: ''
         },
         {
             name: 'Census',
@@ -473,7 +485,13 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name',
+        
+depedants:[{
+          jsonPath:'MasterMetaData.masterData[0].zone',
+          type: 'dropDown',
+          pattern:'/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&codes={MasterMetaData.masterData[0].ward}|$.TenantBoundary.*.boundary.*.children.*.name|$.TenantBoundary.*.boundary.*.children.*.name'
+         }],
         },
         {
           name: 'Zone', 
@@ -483,7 +501,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
+          url: ''
         },
           {
             name: 'Census',
