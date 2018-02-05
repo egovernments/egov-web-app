@@ -11,19 +11,19 @@ var dat ={
     //   }
     // },
     {
-      url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE",
+      url: "/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Ward",
       jsonPath: "ward",
       jsExpForDD: {
-        key: "$.Boundary.*.boundaryNum",
-        value: "$.Boundary.*.name",
+        key: "$.TenantBoundary.*.boundary.*.code",
+        value: "$.TenantBoundary.*.boundary.*.name",
       }
     },
         {
-          url: "/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE",
+          url: "/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Zone",
          jsonPath: "zone",
         jsExpForDD: {
-          key: "$.Boundary.*.boundaryNum",
-          value: "$.Boundary.*.name",
+          key: "$.TenantBoundary.*.boundary.*.code",
+          value: "$.TenantBoundary.*.boundary.*.name",
       }
     }
   ],
@@ -59,7 +59,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+            url: '/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
           },
           {
             name: 'Zone', 
@@ -69,7 +69,7 @@ var dat ={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+            url: '/egov-location/location/v11/boundarys/_search?&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
           },
            ],
       }, 
@@ -223,7 +223,7 @@ var dat ={
           isDisabled: false,
           patternErrorMsg: '',
           defaultValue:'Autocomplete',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
         {
           name: 'Zone', 
@@ -234,7 +234,7 @@ var dat ={
           isDisabled: false,
           patternErrorMsg: '',
           defaultValue:'Autocomplete',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
           {
             name: 'Census',
@@ -344,7 +344,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
         {
           name: 'Zone', 
@@ -354,7 +354,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
         {
             name: 'Census',
@@ -473,7 +473,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=WARD&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Ward|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
         {
           name: 'Zone', 
@@ -483,7 +483,7 @@ var dat ={
           isRequired: true,
           isDisabled: false,
           patternErrorMsg: '',
-          url: '/egov-location/boundarys/boundariesByBndryTypeNameAndHierarchyTypeName?&boundaryTypeName=ZONE&hierarchyTypeName=REVENUE|$.Boundary.*.boundaryNum|$.Boundary.*.name'
+          url: '/egov-location/location/v11/boundarys/_search?tenantId=default&hierarchyTypeCode=REVENUE&boundaryType=Zone|$.TenantBoundary.*.boundary.*.code|$.TenantBoundary.*.boundary.*.name'
         },
           {
             name: 'Census',
