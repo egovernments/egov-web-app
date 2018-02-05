@@ -8,6 +8,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
+import FontIcon from 'material-ui/FontIcon';
 
 import Dialog from 'material-ui/Dialog';
 
@@ -23,8 +24,11 @@ import UiButton from '../../../framework/components/UiButton';
 import { fileUpload } from '../../../framework/utility/utility';
 
 import { parseFinancialYearResponse } from '../apis/apis';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import KPIDocumentField from '../kpidoc/kpidocumentfield';
+import {orange500,blueGrey900,grey500, grey300, orange300} from 'material-ui/styles/colors';
+//import KPIRemarks from '../kpiremarks/kpiremarksfield';
 
 class kpivalues extends Component {
   constructor(props) {
@@ -39,6 +43,7 @@ class kpivalues extends Component {
       FinantialYear: [],
       collapse: [],
       showFooter:true,
+      isDisabled:true,
 
       selectedDeptId: '',
       selectedFinYear: '',
@@ -65,8 +70,15 @@ class kpivalues extends Component {
       documentsFields: [],
 
       open: false,
+      remarks:"",
+      changedDocId: -1,
+      selectedkpiValueID: "",
+      selectedPeriod: "",
+      openRemarks:false,
+      color:orange500,
       uploadPane: false,
       cellItem: [],
+      selectedBtn:[],
 
       /****/
 
@@ -96,9 +108,8 @@ class kpivalues extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFile = this.handleFile.bind(this);
-
     this.prepareBodyobject = this.prepareBodyobject.bind(this);
-
+    this.getRemarks = this.getRemarks.bind(this);
     this.renderFileObject = this.renderFileObject.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.nextSection = this.nextSection.bind(this);
@@ -108,6 +119,14 @@ class kpivalues extends Component {
     this.setUploadedFiles = this.setUploadedFiles.bind(this);
     this.unlinkKpiDoc = this.unlinkKpiDoc.bind(this);
   }
+  handleOpen = () => {
+    this.setState({openRemarks: true});
+  };
+  //handleChange = (event, index, value) => this.setState({value});
+  handleClose = () => {
+        this.setState({openRemarks: false});
+        this.setState({remarks:""});
+  };
 
   componentDidMount() {
     var url = 'egov-mdms-service/v1/_get?moduleName=common-masters&masterName=Department';
@@ -138,7 +157,13 @@ class kpivalues extends Component {
       },
       function(err) {}
     );
+  };
+
+  //Remarks input field update inside dialog box
+  onInputChange(remarks){
+    this.setState({remarks});
   }
+  //Remarks input field update inside dialog box
 
   nextSection() {
     this.setState({ prev: true });
@@ -386,7 +411,7 @@ class kpivalues extends Component {
   }
 
   uploadDocs(self) {
-    console.log(self.state.cellItem);
+    //console.log(self.state.cellItem);
   }
 
   setFileName(item, self, e) {
@@ -396,9 +421,9 @@ class kpivalues extends Component {
       let filelistClone = self.state.filelist.slice();
       //console.log(item.documents);
       item.documents.map(filedetails => {
-        console.log('file api call');
+        //console.log('file api call');
         let result = new Promise(function(resolve, reject) {
-          let { setLoadingStatus } = self.props;
+          let { setLoadingStatus } = self.props;                   
           let url = '/filestore/v1/files/id?tenantId=' + localStorage.getItem('tenantId') + '&fileStoreId=' + filedetails.fileStoreId;
 
           var oReq = new XMLHttpRequest();
@@ -428,7 +453,7 @@ class kpivalues extends Component {
 
         result.then(filename => {
           filelistClone[filedetails.fileStoreId] = filename;
-          console.log(filelistClone);
+          //console.log(filelistClone);
           self.setState({ filelist: filelistClone });
         });
 
@@ -443,8 +468,7 @@ class kpivalues extends Component {
         <span>{kpi.instructions}</span>
       </Popover>
     );
-  }
-
+  };
   prepareBodyobject(response) {
     response.map(item => {
       let result = [];
@@ -458,9 +482,8 @@ class kpivalues extends Component {
       });
       item.kpiValue.valueList = result;
     });
-
     return response.map(item => {
-      //this.state.uploadPane[item.kpiValue.id] = [];
+      //this.state.uploadPane[item.kpiValue.id]  = [];
       return (
         <tr>
           <td>
@@ -486,7 +509,6 @@ class kpivalues extends Component {
           <td />
           {item.kpiValue.valueList.map((itemValue, k) => {
             var className = this.panelVisiblity(k);
-            console.log(item.kpi.documentsReq.length);
             return (
               <td className={className}>
                 {item.kpi.targetType == 'TEXT' && (
@@ -533,15 +555,30 @@ class kpivalues extends Component {
                   </SelectField>
                 )}
                 {
-                  item.kpi.documentsReq.length != 0 &&
                   <div>
-                    <span style={{ color: 'orange' }}>
-                      <span className="glyphicon glyphicon-upload" aria-hidden="true" /> &nbsp;&nbsp;
-                      <span id={itemValue.valueid + '' + itemValue.period} onClick={e => this.getDialog(item.kpi, itemValue, this, e)}>
-                        <strong>{translate('perfManagement.create.KPIs.groups.Uploads')}</strong>
-                      </span>
-                    </span>
-                    <br/>
+                    {item.kpi.documentsReq.length != 0 &&
+                      <div style={{float:'left'}}>
+                          <FlatButton 
+                              label={translate('perfManagement.create.KPIs.groups.Uploads')} 
+                              style={{ color: 'orange'}}
+                              id={itemValue.valueid + '' + itemValue.period} 
+                              onClick={e => this.getDialog(item.kpi, itemValue, this, e)}
+                              icon={<FontIcon className="glyphicon glyphicon-upload" style={{fontSize:'15px'}}/>}
+                          />
+                      </div>
+                    }
+                    {item.kpi.targetType == 'OBJECTIVE' && 
+                      <div style={{float:'right',height:'20px'}}>
+                          <FlatButton 
+                              label={translate('perfManagement.create.KPIs.groups.Remarks')}
+                              style={(itemValue.value == "1" || itemValue.value == "" ) ? {color:grey500} : {color:orange500}}
+                              id={ itemValue.valueid + '' + itemValue.period}
+                              icon={<FontIcon className="glyphicon glyphicon-pencil" style={{fontSize:'13px'}}/>}
+                              onClick={e => this.getRemarks(itemValue.valueid,itemValue.period, this, e)}
+                              disabled={(itemValue.value == "1" || itemValue.value == "") ? true : false}
+                          />
+                      </div>
+                    }
                   </div>
                 }
               </td>
@@ -554,23 +591,24 @@ class kpivalues extends Component {
   }
 
   getDialog(kpi, item, self, e) {
-    // console.log(kpi.documentsReq, 'fields for doc');
-    // self.setState({ uploadPane: true });
-    self.setState({ open: true });
-    self.setState({ documentsFields: kpi.documentsReq });
-    self.setState({ cellItem: item });
-    // console.log(self.state.open);
-    console.log(self.state.documentsFields);
-    console.log(self.state.documentsReq);
+      //console.log(kpi.documentsReq, 'fields for doc');
+      // self.setState({ uploadPane: true });
+      self.setState({ open: true });
+      self.setState({ documentsFields: kpi.documentsReq });
+      self.setState({ cellItem: item });
+      //console.log(self.state.open);
+      //console.log("self.state.documentsFields",self.state.documentsFields);
+      //console.log("self.state.documentsReq",self.state.documentsReq);
+    }
+
+    closeDialog(self) {
+      //self.setState({uploadPane:false});
   }
 
-  closeDialog(self) {
-    //self.setState({uploadPane:false});
-  }
-
-  handleChange(kpiValueID, period, event, type) {
+  handleChange(kpiValueID, period, event, type, key) {
     let KPIsClone = this.state.KPIResult.slice();
-
+    console.log("KPIsClone",KPIsClone);
+    //console.log("this.state.KPIResult",this.state.KPIResult);
     /*if (KPIsClone[kpiId]) {
         KPIsClone[kpiId][kpiValueId] = event.target.value;
       }
@@ -583,11 +621,11 @@ class kpivalues extends Component {
       console.log(this.state.KPIResult);*/
 
     if (type == 'DD') {
-      if (event.target.innerHTML == 'NO') {
-        event.target.value = '2';
-      }
       if (event.target.innerHTML == 'YES') {
         event.target.value = '1';
+      }
+      if (event.target.innerHTML == 'NO') {
+        event.target.value = '2';
       }
       if (event.target.innerHTML == 'WIP') {
         event.target.value = '3';
@@ -598,19 +636,60 @@ class kpivalues extends Component {
       return false;
     }
 
+    this.setState({changedDocId: key});
+    //console.log("changedDoc Id", this.state.changedDocId);
+    this.setState({selectedkpiValueID: kpiValueID});
+    //console.log("changedDoc Id", this.state.changedDocId);
+    this.setState({selectedPeriod: period});
+
     for (var i = KPIsClone.length - 1; i >= 0; i--) {
+      //console.log("KPIsClone", KPIsClone);
       KPIsClone[i]['kpiValue']['valueList'].map(p => {
+        //console.log("KPIsClone[i]['kpiValue']['valueList']",KPIsClone[i]['kpiValue']['valueList']);
         if (p['valueid'] == kpiValueID && p['period'] == period) {
           p['value'] = event.target.value;
+          if(event.target.value == 1){
+            this.setState({remarksBtnStatus:true,color:grey500});
+          }
+          if(event.target.value == 2){
+            this.setState({openRemarks:true,remarksBtnStatus:false,color:orange500});
+            this.getRemarks(kpiValueID,period,event);
+          }
+          if(event.target.value == 3){
+            this.setState({openRemarks:true,remarksBtnStatus:false,color:orange500});
+            this.getRemarks(kpiValueID,period,event);
+          }
         }
       });
     }
-
     this.setState({ KPIResult: KPIsClone });
-
-    //console.log(this.state.KPIs);
   }
 
+  getRemarks(kpiValueID,period,e){
+      this.setState({openRemarks:true});
+      for (var i = this.state.KPIResult.length - 1; i >= 0; i--) {
+       this.state.KPIResult[i]['kpiValue']['valueList'].map(p => {
+         if (p['valueid'] == kpiValueID && p['period'] == period) {
+          this.setState({remarks:p['remarks']});
+         }
+       });
+     }
+  
+  }
+  //Remark Submition from the dialog box from 
+  onRemarksSubmit(remarksText){
+     //let KPIsClone = this.state.KPIResult.slice();
+     //console.log("KPIsClone",KPIsClone);
+     for (var i = this.state.KPIResult.length - 1; i >= 0; i--) {
+      this.state.KPIResult[i]['kpiValue']['valueList'].map(p => {
+        if (p['valueid'] == this.state.selectedkpiValueID && p['period'] == this.state.selectedPeriod) {
+          p['remarks'] = remarksText;
+        }
+      });
+    }
+    //this.setState({ KPIResult: KPIsClone,openRemarks:false});
+    this.setState({openRemarks:false});
+  }
   setUploadedFiles(filedetails) {
     let resultClone = this.state.KPIResult.slice();
 
@@ -926,21 +1005,22 @@ class kpivalues extends Component {
   switchDialog = dialogState => {
     this.setState({ open: dialogState });
   };
-
+  
   render() {
     let { mockData, moduleName, actionName, formData, fieldErrors, isFormValid } = this.props;
     let { create, handleChange, getVal, addNewCard, removeCard, autoComHandler, initiateWF } = this;
-    console.log(moduleName);
-    console.log(actionName);
+    //console.log(moduleName);
+    //console.log(actionName);
     let tableStyle = {
       align: 'center',
     };
 
     const actions = [
       <FlatButton label="Cancel" primary={true} onClick={this.closeDialog(this)} />,
-      <FlatButton label="Submit" primary={true} keyboardFocused={true} onClick={this.uploadDocs} />,
+      <FlatButton label="Submit" primary={true} onClick={this.uploadDocs} />,
     ];
 
+    let kpiData = this.state.KPIsClone;
     let body = this.prepareBodyobject(this.state.data);
     let header = this.header();
 
@@ -1067,7 +1147,7 @@ class kpivalues extends Component {
             &nbsp;&nbsp;
           </Col>
         </Row>
-
+        
         {this.state.showResult && (
           <Card className="uiCard">
             <CardHeader titleStyle={{ marginLeft: 638 }} title={<strong> {translate('ui.table.title')} </strong>} />
@@ -1124,7 +1204,31 @@ class kpivalues extends Component {
             </CardText>
           </Card>
         )}
-
+        <Dialog
+          title="Remarks"
+            actions={[
+              <FlatButton
+                  label="Cancel"
+                  primary="true"
+                  onClick={this.handleClose}
+              />,
+              <FlatButton
+                  label="Submit"
+                  disabled={(this.state.remarks === "")? true : false}
+                  onClick={e => this.onRemarksSubmit(this.state.remarks)}
+              />,
+          ]}
+            modal={false}
+            open={this.state.openRemarks}
+            onRequestClose={this.handleClose}  
+        >
+          <TextField 
+              fullWidth={true}
+              floatingLabelText="Enter your remarks here"
+              value={this.state.remarks}
+              onChange={event => this.onInputChange(event.target.value)}
+          /> 
+        </Dialog>
         <KPIDocumentField
           {...this.props}
           data={this.state.documentsFields}
@@ -1151,7 +1255,6 @@ const mapStateToProps = state => ({
   requiredFields: state.frameworkForm.requiredFields,
   dropDownData: state.framework.dropDownData,
 });
-
 const mapDispatchToProps = dispatch => ({
   initForm: requiredFields => {
     dispatch({
