@@ -467,6 +467,20 @@ var dat = {
         name: 'VehicleMaintenanceDeatils',
         label: 'swm.create.group.title.VehicleMaintenanceDetails',
         fields: [
+	{
+            name: 'transactionNo',
+            jsonPath: 'vehicleMaintenanceDetails[0].transactionNo',
+            label: 'swm.vehicles.create.transactionNo',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: true,
+            defaultValue: '',
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+            url: '',
+          },
           {
             name: 'regNumber',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.regNumber',
@@ -723,6 +737,20 @@ var dat = {
         name: 'VehicleMaintenanceDeatils',
         label: 'swm.create.group.title.VehicleMaintenanceDetails',
         fields: [
+	{
+            name: 'transactionNo',
+            jsonPath: 'vehicleMaintenanceDetails[0].transactionNo',
+            label: 'swm.vehicles.create.transactionNo',
+            pattern: '',
+            type: 'text',
+            isRequired: false,
+            isDisabled: true,
+            defaultValue: '',
+            maxLength: 128,
+            minLength: 1,
+            patternErrorMsg: '',
+            url: '',
+          },
           {
             name: 'regNumber',
             jsonPath: 'vehicleMaintenanceDetails[0].vehicle.regNumber',
