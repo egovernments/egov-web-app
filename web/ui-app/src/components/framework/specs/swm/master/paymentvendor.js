@@ -15,7 +15,8 @@ var dat ={
             type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: '',
+            defaultValue: '',
+            patternErrMsg: '',
             url: 'swm-services/vendors/_search?|$.vendors.*.vendorNo|$.vendors.*.name',
             depedants: [
               {
@@ -33,7 +34,8 @@ var dat ={
             type: 'singleValueList',
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: '',
+            defaultValue: '',
+            patternErrMsg: '',
             depedants: [
               {
                 jsonPath: 'paymentNo',
@@ -50,6 +52,7 @@ var dat ={
             jsonPath: "paymentNo",
             isRequired: false,
             isDisabled: false, 
+            defaultValue: '',
             patternErrorMsg: '',
           },
           {

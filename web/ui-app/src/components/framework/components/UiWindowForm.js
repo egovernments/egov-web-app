@@ -178,10 +178,10 @@ class UiWindowForm extends Component {
           mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields &&
           mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length
         ) {
-          console.log('Condition 1 satisfied');
+         // console.log('Condition 1 satisfied');
           for (let k = 0; k < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields.length; k++) {
             if (val == mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].ifValue) {
-              console.log('Value matched is:', val);
+            //  console.log('Value matched is:', val);
               for (let y = 0; y < mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable.length; y++) {
                 mockData = this.disField(mockData, mockData[moduleName + '.create'].groups[i].fields[j].enableDisableFields[k].disable[y]);
               }
@@ -285,9 +285,11 @@ class UiWindowForm extends Component {
   };
   deleteRow = index => {};
   renderTable = (item, _internal_val = []) => {
+    var dropDownData = _.clone(this.props.dropDownData);
+   // console.log("My formData", dropDownData);
     if (item.tableConfig) {
       return (
-        <Col xs={12} md={8}>
+     <Col xs={12} md={(item.tableConfig.expandTable)? 12 : 8}>
           <table className="table table-striped table-bordered" responsive>
             <thead>
               <tr>
@@ -297,7 +299,6 @@ class UiWindowForm extends Component {
                   if (v.style) {
                     style = v.style;
                   }
-
                   return (
                     <th style={style} key={i}>
                       {translate(v.label)}
@@ -320,7 +321,29 @@ class UiWindowForm extends Component {
                     <tr style={item.style}>
                       <td>{item.hidePrimaryRecord ? i : i + 1}</td>
                       {item.tableConfig.rows.map((value, idx) => {
+                      
+                        var getValue = _.get(v, value.displayField);
+                        
+                        if(_.isArray(getValue)){
+                            if(value.keyToValue && (value != null || value != undefined)){
+                              var getListValue = _.get(dropDownData, value.displayField);
+                              getValue =   getValue.map((item)=>{
+                                var _listItem =  _.filter(getListValue, ['key', item]);
+                                if(_.has(_listItem[0], 'value')){
+                                  return (_listItem[0].value);
+                                }
+                              });
+                            }
+                          return <td>{(getValue.length > 0 ) ? getValue.toString(): ''}</td>;  
+                        }else if(_.isObject(getValue)){
+                          return <td>{getValue.label}</td>;
+                        }else if (value.isDate){
+                        var dateVal = _.get(v, value.displayField);
+                        var _date = new Date(Number(dateVal));
+                        return <td>{('0' + _date.getDate()).slice(-2) + '/' + ('0' + (_date.getMonth() + 1)).slice(-2) + '/' + _date.getFullYear()}</td>;
+                       }else{
                         return <td>{_.get(v, value.displayField)}</td>;
+                       }
                         //this.renderFields(_.get(v,value.displayField),value.type)}</td>);
                       })}
                       <td>
@@ -497,6 +520,15 @@ class UiWindowForm extends Component {
   };
 
   checkValidations = (fieldErrors, property, value, isRequired, form, requiredFields, pattern, patErrMsg) => {
+    let _formData = {
+      ...this.props.formData,
+    };
+    for (var i = 0; i < requiredFields.length; i++) {
+      if(_.get(_formData,requiredFields[i])){
+          form[requiredFields[i]] = _.get(_formData,requiredFields[i]);
+      }
+    }
+
     let errorText = isRequired && (typeof value == 'undefined' || value === '') ? translate('ui.framework.required') : '';
     let isFormValid = true;
     // console.log(requiredFields);
@@ -674,6 +706,125 @@ class UiWindowForm extends Component {
             console.log(err);
           }
         );
+      } else if (value.type == "autoFill") {
+        let splitArray = value.pattern.split("?");
+        let context = "";
+        let id = {};
+        for (var j = 0; j < splitArray[0].split("/").length; j++) {
+          context += splitArray[0].split("/")[j] + "/";
+        }
+
+        let queryStringObject = splitArray[1].split("|")[0].split("&");
+        for (var i = 0; i < queryStringObject.length; i++) {
+          if (i) {
+            if (queryStringObject[i].split("=")[1].search("{") > -1) {
+              if (
+                queryStringObject[i]
+                  .split("=")[1]
+                  .split("{")[1]
+                  .split("}")[0] == property
+              ) {
+                id[queryStringObject[i].split("=")[0]] = e.target.value || "";
+              } else {
+                // id[queryStringObject[i].split("=")[0]] = getVal(
+                //   replaceLastIdxOnJsonPath(
+                //     queryStringObject[1]
+                //       .split("=")[1]
+                //       .split("{")[1]
+                //       .split("}")[0],
+                //     dependantIdx
+                //   )
+                // );
+                let filterParameter = queryStringObject[i]
+                  .split('=')[1]
+                  .split('{')[1]
+                  .split('}')[0];
+
+                if (dependantIdx && dependantIdx != 0 && filterParameter.indexOf('[') != filterParameter.lastIndexOf('[')) {
+                  filterParameter = replaceLastIdxOnJsonPath(filterParameter, dependantIdx);
+                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
+                }
+
+                id[queryStringObject[i].split("=")[0]] =
+                  queryStringObject[i].split("=")[1].replace(
+                    /\{(.*?)\}/,
+                    getVal(
+                      filterParameter
+                    )
+                  ) || "";
+              }
+            } else {
+              id[queryStringObject[i].split("=")[0]] = queryStringObject[
+                i
+              ].split("=")[1];
+            }
+          }
+        }
+        Api.commonApiPost(context, id).then(
+          function (response) {
+            let fields = jp.query(
+              obj,
+              `$.groups..fields[?(@.hasATOAATransform==true)]`
+            );
+
+            if (response) {
+              if (fields && fields.length > 0) {
+                let splitArray = value.pattern.split('?');
+                for (var i = 0; i < fields.length; i++) {
+                  if (!fields[i].hasPreTransform) {
+                    var keys = Object.keys(value.autoFillFields);
+                    let values = _.get(response, value.autoFillFields[keys[0]]);
+                    //console.log(values);
+                    let keysArray = jp.query(values, splitArray[1].split('|')[1]);
+                    let valuesArray = jp.query(values, splitArray[1].split('|')[2]);
+                    let dropDownData = [];
+                    for (var k = 0; k < keysArray.length; k++) {
+                      let dropdownObject = {};
+                      dropdownObject['key'] = value.convertToString ? keysArray[k].toString() : value.convertToNumber ? Number(keysArray[k]) : keysArray[k];
+                      dropdownObject['value'] = valuesArray[k];
+                      dropDownData.push(dropdownObject);
+                    }
+
+                    dropDownData.sort(function (s1, s2) {
+                      return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
+                    });
+
+                    setDropDownData(value.jsonPath, dropDownData);
+
+                  }
+                }
+
+              }
+              else {
+                for (var key in value.autoFillFields) {
+                  var keyField = key.substr(0, key.lastIndexOf("["));
+                  var keyLast = key.substr(key.lastIndexOf("]") + 2);
+                  var propertyCurIndex = property.substr(
+                    property.lastIndexOf("[") + 1,
+                    1
+                  );
+                  var newKey = keyField + "[" + propertyCurIndex + "]." + keyLast;
+                  handleChange(
+                    {
+                      target: {
+                        value: _.get(response, value.autoFillFields[key])
+                      }
+                    },
+                    newKey,
+                    false,
+                    "",
+                    ""
+                  );
+                }
+              }
+            }
+          },
+          function (err) {
+            console.log(err);
+          }
+        );
+      }else{
+
       }
     });
   };

@@ -2116,6 +2116,7 @@ var localization_EN_Data = {
    'swm.vendorpayment.search.vendorPaymentSearch' : 'Vendor Invoice Search',
    'swm.vendorpayment.search.vendorContractNo' : 'Vendor Contract No',
    'swm.vendorpayment.create.invoicetitle':'Invoice Details',
+   'swm.vendorcontract.create.multiplecontract':'Add More Contracts',
 
   'swm.search.page.title.routes':'Route Search',
   'swm.routes.search.title': 'Route Search',

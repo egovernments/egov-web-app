@@ -113,6 +113,33 @@ var dat = {
     },
   },
   'swm.create': {
+
+    beforeSubmit:
+    `
+    let OrignalArr = _formData.vendorContracts;
+    let getFormData = _.get(_formData, 'vendorContracts[0].vendorContracts');
+    if(getFormData){
+      _formData.vendorContracts = OrignalArr.concat(...getFormData);
+      let len  = _formData.vendorContracts.length;
+      if(len > 1){
+        _.unset(_formData, 'vendorContracts[0].vendorContracts');
+         let getInitalVendor = _.get(_formData,'vendorContracts[0].vendor');
+         for(var i = 1; i<len; i++){
+           let getServiceOff = _.get(_formData, 'vendorContracts['+i+'].servicesOffered');
+           if(_.isArray(getServiceOff)){
+            getServiceOff =  getServiceOff.map((item) => {
+              return ({"code" : item});
+            });
+           }
+           _formData.vendorContracts[i].vendor = getInitalVendor;
+           _formData.vendorContracts[i].servicesOffered = getServiceOff;
+           _formData.vendorContracts[i].tenantId = localStorage.getItem("tenantId");
+           _.unset(_formData, 'vendorContracts['+i+'].vendorContracts');
+         }
+      }
+    }
+    `,
+
     numCols: 4,
     useTimestamp: true,
     objectName: 'vendorContracts',
@@ -122,6 +149,7 @@ var dat = {
       {
         name: 'VendorContractDetails',
         label: 'vendorcontracts.create.group.title.VendorContractDetails',
+        jsonPath: 'vendorContracts',
         fields: [
           {
             name: 'vendor',
@@ -139,11 +167,19 @@ var dat = {
             "jsonPath":"vendorContracts[0].servicesOffered",
             "type":"autoFill",
             "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
-"autoFillFields":{
-"vendorContracts[0].servicesOffered":"vendors[0].servicesOffered",
-},
-},
-],
+            "autoFillFields":{
+                "vendorContracts[0].servicesOffered":"vendors[0].servicesOffered",
+                              },
+            },
+            {
+              "jsonPath":"servicesOffered",
+              "type":"autoFill",
+              "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
+              "autoFillFields":{
+                  "servicesOffered":"vendors[0].servicesOffered",
+                                },
+              },
+                        ],
           },
           {
             name: 'contractDate',
@@ -237,16 +273,14 @@ var dat = {
             minLength: 15,
             patternErrMsg: 'swm.vendorcontracts.create.description.errormsg',
           },
-
         ],
       },
 
-{
+    {
         name: 'ServicesOffered',
         label: 'swm.create.servicesOffered',
         fields: [
           {
-            
             name: 'ServicesOffered',
             label: 'swm.create.servicesOffered',
             jsonPath: 'vendorContracts[0].servicesOffered',
@@ -270,11 +304,110 @@ var dat = {
               to:'vendorContracts[0].servicesOffered',
               key:'code'
             },
-           
+          },
+          {
+            name: 'ServicesOffered',
+            label: 'swm.create.servicesOffered',
+            jsonPath: 'servicesOffered',
+            hide:true,
+            type: 'multiValueList',
+            pattern: '',
+            isRequired: false,
+            isDisabled: false,
+            maxLength: 128,
+            url:'',
+            minLength: 1,
+            patternErrorMsg: '',
+            mdms: {
+              "moduleName": "swm",
+              "masterName": "SwmProcess",
+              "filter": "",
+              "key": "$..code",
+              "value": "$..name",
+            },
+            hasATOAATransform:true,
+            aATransformInfo:{
+              to:'servicesOffered',
+              key:'code'
+            },
           },
           ],
         },
-
+        {
+          name: 'multipleContractWindow',
+          hide: false,
+          label: 'swm.vendorcontract.create.multiplecontract',
+          fields: [
+            {
+              name: 'multipleContractWindow',
+              jsonPath: 'vendorContracts[0]',
+              arrayPath: 'vendorContracts',
+              modulepath: 'swm.create',
+              // "isExceptFirstRecord":true,
+             // hidePrimaryRecord: true,
+              pattern: '',
+              type: 'window',
+              tableConfig: {
+                expandTable: true,
+                header: [
+                  {
+                    label: 'vendorcontracts.create.contractDate',
+                  },
+                  {
+                    label: 'vendorcontracts.create.contractPeriodFrom',
+                  },
+                  {
+                    label: 'vendorcontracts.create.contractPeriodTo',
+                  },
+                  {
+                    label: 'vendorcontracts.create.securityDeposit',
+                  },
+                  {
+                    label: 'swm.create.servicesOffered',
+                  },
+                  {
+                    label: 'vendorcontracts.search.result.paymentTerms',
+                  },
+                  {
+                    label: 'vendorcontracts.create.remarks',
+                  },
+                ],
+                rows: [
+                  {
+                    displayField: 'contractDate',
+                    isDate:true
+                  },
+                  {
+                    displayField: 'contractPeriodFrom',
+                    isDate:true
+                  },
+                  {
+                    displayField: 'contractPeriodTo',
+                    isDate:true
+                  },
+                  {
+                    displayField: 'securityDeposit',
+                  },
+                  {
+                    displayField: 'servicesOffered',
+                    keyToValue:true
+                  },
+                  {
+                    displayField: 'paymentTerms',
+                  },
+                  {
+                    displayField: 'remarks',
+                  },
+                ],
+              },
+              subPath: 'swm/master/addvendorcontract',
+              isRequired: false,
+              isDisabled: true,
+              requiredErrMsg: '',
+              patternErrMsg: '',
+            },
+          ],
+        },
     ],
     url: '/swm-services/vendorcontracts/_create',
     tenantIdRequired: true,
