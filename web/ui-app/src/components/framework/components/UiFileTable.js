@@ -136,10 +136,11 @@ class UiFileTable extends Component {
                   <td>{i + 1}</td>
                   <td>
                     <TextField
-                      className="cutustom-form-controll-for-textfield"
+                      className="custom-form-control-for-textfield"
                       id={item.jsonPath.split('.').join('-')}
-                      inputStyle={{ color: '#5F5C57' }}
+                      inputStyle={{ color: '#5F5C57' ,textAlign: item.hasOwnProperty('textAlign') ? item.textAlign : 'left'}}
                       errorStyle={{ float: 'left' }}
+                      style={{ display: item.hide ? 'none' : 'inline-block' }}
                       fullWidth={true}
                       disabled={readOnly}
                       value={value}
