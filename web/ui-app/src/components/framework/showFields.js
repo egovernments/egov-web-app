@@ -34,6 +34,7 @@ import UiMultiFieldTable from './components/UiMultiFieldTable';
 import UiMultiFieldTableTemp from './components/UiMultiFieldTableTemp';
 import UiHyperLink from './components/UiHyperLink';
 import UigoogleMaps from './components/UigoogleMaps';
+import UiGoogleMapsPolygon from './components/UiGoogleMapsPolygon';
 import UiWorkflow from './components/UiWorkflow';
 import UiTimeField from './components/UiTimeField';
 import UiWindowForm from './components/UiWindowForm';
@@ -749,6 +750,20 @@ class ShowFields extends Component {
             handler={this.props.handler}
           />
         );
+        case 'googleMapsPolygon':
+        console.log(this.props.formData);
+          return (
+            <UiGoogleMapsPolygon
+              tabIndex={index}
+              ui={this.props.ui}
+              getVal={this.props.getVal}
+              item={item}
+              edit={this.props.edit}
+              fieldErrors={this.props.fieldErrors}
+              handler={this.props.handler}
+              formData={this.props.formData}
+            />
+          );
 
       case 'image':
         return (

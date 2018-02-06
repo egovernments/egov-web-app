@@ -22,7 +22,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 import UiBackButton from '../../../framework/components/UiBackButton';
-
+import UiGoogleMapsPolygon from '../../../framework/components/UiGoogleMapsPolygon';
 
 
 var specifications = {};
@@ -578,7 +578,7 @@ class assetImmovableCreate extends Component {
                   customTemp.type = 'image';
                   break;
                 case 'GIS':
-                  customTemp.type = 'text';
+                  customTemp.type = 'googleMapsPolygon';
                   break;
               }
 
@@ -762,8 +762,6 @@ class assetImmovableCreate extends Component {
                                                               }
 
                                                               for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                                console.log("temp.jsonPath"+temp.jsonPath);
-                                                                  console.log("customSpecs[cId][m].jsonPath"+customSpecs[cId][m].jsonPath);
                                                                 if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Diameter UOM.Select") {
                                                                   customSpecs[cId][m].defaultValue = valueHolder;
                                                                   self.setState({
@@ -815,7 +813,6 @@ class assetImmovableCreate extends Component {
                                                                               }
 
                                                                               for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                                                console.log("temp.jsonPath"+temp.jsonPath);
                                                                                 if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Capacity UOM.Select") {
                                                                                   customSpecs[cId][m].defaultValue = valueHolder;
                                                                                   self.setState({
@@ -841,11 +838,7 @@ class assetImmovableCreate extends Component {
                                                                                       }
 
                                                                                       for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                                                        console.log("temp.jsonPath"+temp.jsonPath);
-                                                                                        console.log("customSpecs[cId][m].jsonPath"+customSpecs[cId][m].jsonPath);
-
                                                                                         if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Floor Wise Area UOM.Select") {
-                                                                                            console.log("temp.jsonPath"+temp.jsonPath);
                                                                                           customSpecs[cId][m].defaultValue = valueHolder;
                                                                                           self.setState({
                                                                                             customFieldsGen: customSpecs,
@@ -1152,6 +1145,20 @@ class assetImmovableCreate extends Component {
       var _date = _val.split('-');
       return new Date(_date[0], Number(_date[1]) - 1, _date[2]);
     }
+    if(path && path=="Asset.assetAttributesCheck.Location(Point to Point).GIS"){
+      console.log(_val);
+      let value=[];
+      if(_val){
+      _val.map((val)=>{
+        value.push(`{lat:${val.lat},lng:${val.lng}}`);
+      });
+      _val=value;
+      if(_val && _val.length &&_val.length>5){
+        //_val=_val.substring(0,300)+".......";
+        _val.splice(5,_val.length-5,".........")
+      }
+    }
+  }
 
     return typeof _val != 'undefined' ? _val : '';
   };
@@ -2230,7 +2237,7 @@ var CheckAutoCompleteData=[];
         formData.Asset.landDetails[y].isEnabled = true;
       }
     }
-
+    console.log(formData);
     return (
       <div className="Report">
         <form
@@ -2312,7 +2319,9 @@ var CheckAutoCompleteData=[];
                   addNewCard={addNewCard}
                   removeCard={removeCard}
                   autoComHandler={autoComHandler}
-                />
+                  formData={formData}
+                  edit={true}
+                  />
                 {!this.state.hide ? (
                   <ShowFields
                     groups={groups}
@@ -2325,6 +2334,8 @@ var CheckAutoCompleteData=[];
                     addNewCard={addNewCard}
                     removeCard={removeCard}
                     autoComHandler={autoComHandler}
+                    formData={formData}
+                    edit={true}
                   />
                 ) : (
                   ''

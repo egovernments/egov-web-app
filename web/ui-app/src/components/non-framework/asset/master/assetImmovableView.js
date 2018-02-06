@@ -22,6 +22,7 @@ import ContentRemove from 'material-ui/svg-icons/content/remove';
 import UiTable from '../../../framework/components/UiTable';
 import UiBackButton from '../../../framework/components/UiBackButton';
 import UiEditButton from '../../../framework/components/UiEditButton';
+import UiGoogleMapsPolygon from '../../../framework/components/UiGoogleMapsPolygon';
 
 var specifications = {};
 const styles = {
@@ -385,7 +386,6 @@ class assetImmovableView extends Component {
     mywindow.document.write('</head><body>');
     mywindow.document.write(document.getElementById('printable').innerHTML);
     mywindow.document.write('</body></html>');
-
     mywindow.document.close(); // necessary for IE >= 10
     mywindow.focus(); // necessary for IE >= 10*/
 
@@ -513,15 +513,33 @@ class assetImmovableView extends Component {
       }
       if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('assetAttributes')) {
         var createCustomObject = formData.Assets[0].assetAttributes;
+        console.log(createCustomObject);
         var disArray = [];
         _.forEach(createCustomObject, function(value, key) {
+          console.log(value);
           var temp = {};
           if(value.type == "Image"){
             temp.imagePath = value.value;
-          } else {
+          }
+          else if(value.type == "GIS"){
+            console.log(value.value);
+            temp.gislocation=[];
+            if(value.value){
+              value.value.map((val,i)=>{
+                temp.gislocation.push(val);
+              });
+            }
+            // if(value.value && value.value.length>5){
+            //   temp.value=  value.value.splice(5,value.value.length-5,".........")
+            // }
+            // else{
+              //temp.value=  value.value[0];
+            //}
+            console.log(temp.gislocation);
+          }else {
             temp.value = value.value;
           }
-          temp.label = value.key;
+        temp.label = value.key;
           disArray.push(temp);
         });
         return (
@@ -541,7 +559,7 @@ class assetImmovableView extends Component {
                         <Col style={{ textAlign: 'left' }}>
                           <label>
                             <span style={{ fontWeight: 500, fontSize: '13px' }}>
-                              {item.value ? (typeof item.value == 'object' ? item.value[Object.keys(item.value)[0]] : item.value) : (item.imagePath ? <img src={item.imagePath} width={item.width || '20%'} height={item.height || '60%'} /> : "NA") }
+                              {item.value ? (typeof item.value == 'object' ? item.value[Object.keys(item.value)[0]] : item.value) : (item.imagePath ? <img src={item.imagePath} width={item.width || '20%'} height={item.height || '60%'} /> : ((item.gislocation && item.gislocation.length >0 ) ? <UiGoogleMapsPolygon ui="google" item={item} formData={formData} getVal={getVal} edit={false}/>:"NA")) }
                             </span>
                           </label>
                         </Col>
