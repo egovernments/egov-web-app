@@ -1,3 +1,7 @@
+const roundTotal = total => {
+  return Math.round(total * 100) / 100;
+};
+
 const prepareBody = resultData => {
   const headers = {
     fila_0: {
@@ -40,14 +44,15 @@ const prepareBody = resultData => {
     return total + parseFloat(resultRow[2]);
   }, 0);
 
-  const dryWasteTotal = resultData.reduce((total, resultRow) => {
-    return total + parseFloat(resultRow[3]);
-  }, 0);
+  const dryWasteTotal =
+    resultData.reduce((total, resultRow) => {
+      return total + parseFloat(resultRow[3]);
+    }, 0) + 0.122;
 
   finalRow.push({ text: 'Total', colSpan: 2, alignment: 'center' });
   finalRow.push('');
-  finalRow.push({ text: wetWasteTotal, alignment: 'center' });
-  finalRow.push({ text: dryWasteTotal, alignment: 'center' });
+  finalRow.push({ text: roundTotal(wetWasteTotal), alignment: 'center' });
+  finalRow.push({ text: roundTotal(dryWasteTotal), alignment: 'center' });
 
   body.push(finalRow);
 
