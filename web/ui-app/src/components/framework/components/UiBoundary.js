@@ -32,11 +32,7 @@ class UiBoundary extends Component {
         this.fetchLocations(nextProps.item);
       }
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
+  } 
 
   renderView = labelData => {
     return (
@@ -96,29 +92,47 @@ class UiBoundary extends Component {
     });
   };
 
-  fetchLocations = item => {
-    var queryObj = {
-      hierarchyTypeCode: item.hierarchyType,
-    };
-    var cityBdry;
-    var self = this;
-    Api.commonApiPost('/egov-location/location/v11/boundarys/_search?', queryObj, {}, false, true).then(res => {
-      var jpath = '';
-      cityBdry = jp.query(res, `$.TenantBoundary[?(@.hierarchyType.name=="${item.hierarchyType}")].boundary[?(@.label=='City')]`);
-      var labelArr = self.fetchLabels(cityBdry[0]);
-      self.setState({
-        boundaryData: cityBdry,
-        labelArr: labelArr,
-      });
-      self.setFirstDropDownData(cityBdry);
-      if(window.location.hash.split('/')[1] != 'create' || item.setResponseData) {
-        if(!_.isEmpty(self.props.formData)) {
-          if(typeof(_.get(self.props.formData, self.props.item.jsonPath)) != 'undefined') {
-            self.initDropdownValues(cityBdry, _.get(self.props.formData, self.props.item.jsonPath));
-          }
+  fetchBoundaryData = async (item) => {
+    let boundaryData = sessionStorage.getItem("boundaryData");
+    if(boundaryData){
+      try {
+        boundaryData = JSON.parse(boundaryData);
+      } catch (error) {
+          boundaryData = [];   
+          console.log(error);
+        }
+    }
+    else{
+      const queryObj = {
+        hierarchyTypeCode: item.hierarchyType,
+      };
+      boundaryData = await Api.commonApiPost('/egov-location/location/v11/boundarys/_search?', queryObj, {}, false, true);
+      sessionStorage.setItem("boundaryData",JSON.stringify(boundaryData));
+    }
+    return boundaryData;
+  }
+
+  fetchLocations = async (item)  =>  {
+    let {resTransfer}=this;
+    let self = this;
+    const boundaryData = await this.fetchBoundaryData(item);
+    var jpath = '';
+    let cityBdry = jp.query(boundaryData, `$.TenantBoundary[?(@.hierarchyType.name=="${item.hierarchyType}")].boundary[?(@.label=='City')]`);
+    var labelArr = self.fetchLabels(cityBdry[0]);
+    self.setState({
+      boundaryData: cityBdry,
+      labelArr: labelArr,
+    });
+
+    self.setFirstDropDownData(cityBdry);
+
+    if(window.location.hash.split('/')[1] != 'create' || item.setResponseData) {
+      if(!_.isEmpty(self.props.formData)) {
+        if(typeof(_.get(self.props.formData, self.props.item.jsonPath)) != 'undefined') {
+          self.initDropdownValues(cityBdry, _.get(self.props.formData, self.props.item.jsonPath));
         }
       }
-    });
+    }
   };
 
   getDepth = obj => {
@@ -166,7 +180,6 @@ class UiBoundary extends Component {
     }
     return labelArr;
   };
-
   handler = (key, property) => {
     let { dropDownDataVal, dropDownData } = this.state;
     this.setState({
@@ -175,6 +188,7 @@ class UiBoundary extends Component {
         [property]: key,
       },
     });
+    
     //below runs for create & update only
     this.populateNextDropDown(key, property);
 
@@ -315,7 +329,7 @@ class UiBoundary extends Component {
         {this.props.match.url.split('/')[1] == 'view' && typeof _.get(this.props.formData, this.props.item.jsonPath) != 'undefined'
           ? this.renderView(this.state.viewLabels)
           : this.renderBoundary(this.props.item)}
-        {this.props.item.type == 'boundary' ? null : this.props.callbackFromCollectionRoute(this.state.dropDownDataVal, this.state.labelArr)}
+        {/* {this.props.item.type == 'boundary' ? null : this.props.callbackFromCollectionRoute(this.state.dropDownDataVal, this.state.labelArr)} */}
       </div>
     );
   }
