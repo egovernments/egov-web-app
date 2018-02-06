@@ -4,21 +4,22 @@ import { Row, Col } from 'react-bootstrap';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import { translate } from '../../../common/common';
 import { fileUpload } from '../../../framework/utility/utility';
+import {grey500,grey50} from 'material-ui/styles/colors';
 
 class KPIDocumentField extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       documents: [],
       open: false,
-      cell: '',
+      cell:'',
       fileAttrList: [],
       currentFileName: [],
       currentFileStoreID: [],
+      data:"",
     };
   }
 
@@ -32,7 +33,6 @@ class KPIDocumentField extends Component {
       let valueid = this.state.cell.valueid;
       let period = this.state.cell.period;
       let code = fileInfo.code;
-
       let result = new Promise(function(resolve, reject) {
         fileUpload(fileInfo.file, moduleName, function(err, res) {
           if (err) {
@@ -136,33 +136,34 @@ class KPIDocumentField extends Component {
     let storeID;
     //console.log(item);
     self.props.kpiresult.map(kpi => {
+      //console.log(kpi,'kpi Value list');
       kpi.kpiValue.valueList.map(kpiValue => {
-        //console.log(kpi.kpiValue.valueList,' Value list');
-
-        kpiValue.documents.map(kpidoc => {
-          //console.log(kpidoc, 'elements :');
-
-          let valueid = kpiValue.valueid;
-          let period = kpiValue.period;
-
-          if (kpidoc.fileStoreId) {
-            if (!fileNameArr[valueid]) {
-              fileNameArr[valueid] = [];
+        for( i = kpi.kpiValue.valueList.length -1 ; i >=0; i--){
+            //console.log("kpi.kpiValue.valueList[i]",kpi.kpiValue.valueList[i])
+            if(kpi.kpiValue.valueList[i].documents && kpi.kpiValue.valueList[i].documents.length != 0){
+              kpiValue.documents.map(kpidoc => {
+                //console.log(kpidoc, 'elements :,kpidoc');
+                let valueid = kpiValue.valueid;
+                let period = kpiValue.period;
+        
+                if (kpidoc.fileStoreId) {
+                  if (!fileNameArr[valueid]) {
+                    fileNameArr[valueid] = [];
+                  }
+        
+                  if (!fileNameArr[valueid][period]) {
+                    fileNameArr[valueid][period] = [];
+                  }
+        
+                  if (kpidoc.code == code) {
+                    fileNameArr[valueid][period][kpidoc.code] = kpidoc.fileStoreId;
+                  }
+                }
+                // console.log(fileNameArr,'file Name Arr');
+                // console.log(storeID,'store ID');
+                });
             }
-
-            if (!fileNameArr[valueid][period]) {
-              fileNameArr[valueid][period] = [];
-            }
-
-            if (kpidoc.code == code) {
-              fileNameArr[valueid][period][kpidoc.code] = kpidoc.fileStoreId;
-            }
-          }
-
-          // console.log(fileNameArr,'file Name Arr');
-          // console.log(storeID,'store ID');
-        });
-
+        }
         //fileNameArr.currentFileName
         // let kpidoc = kpiValue.documents[0];
         // console.log(kpiValue.documents);
@@ -279,11 +280,20 @@ class KPIDocumentField extends Component {
 
   render() {
     const actions = [
-      <FlatButton label={translate('perfManagement.create.KPIs.groups.CANCEL')} primary={true} onClick={this.handleClose.bind(this)} />,
-      <RaisedButton label={translate('perfManagement.create.KPIs.groups.UPLOAD')} primary={true} disabled={(this.props.data.length == 0)?true:false} keyboardFocused={true} onClick={this.docUpload.bind(this)} />,
+      <FlatButton 
+          label={translate('perfManagement.create.KPIs.groups.CANCEL')}
+          primary={true} 
+          onClick={this.handleClose.bind(this)}
+          style={{marginRight:"10px"}} 
+      />,
+      <RaisedButton 
+        label={translate('perfManagement.create.KPIs.groups.UPLOAD')}
+        primary={true} 
+        onClick={this.docUpload.bind(this)} 
+      />,
     ];
     //this.setState({fileAttrList:this.props.data});
-    console.log(this.props.data.length, 'data array');
+    //console.log('data array from here',this.props);
     return (
       <Dialog title={translate('perfManagement.create.KPIs.groups.kpidoc')} actions={actions} modal={true} open={this.props.open}>
         {this.props.data.length > 0 &&
@@ -331,4 +341,5 @@ const mapStateToProps = state => ({
   requiredFields: state.frameworkForm.requiredFields,
   dropDownData: state.framework.dropDownData,
 });
+
 export default connect(mapStateToProps)(KPIDocumentField);

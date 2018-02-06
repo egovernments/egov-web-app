@@ -1128,11 +1128,13 @@ class kpivalues extends Component {
         </Row>
 
         <Row className="show-grid">
-          <Col xs={6} xsOffset={5}>
+          <Col  md={6} xs={6}  mdOffset={5} xsOffset={5}>
             <UiButton
-              item={{ label: 'Search', uiType: 'button', primary: true, isDisabled: !this.state.search }}
+              item={{ label: 'Search', uiType: 'button', primary: true, isDisabled: !this.state.search}}
+              label="Search"
               ui="google"
               handler={e => this.handleSearch(e)}
+              disabled={(this.state.search == "")? true: false}
             />&nbsp;&nbsp;
             <RaisedButton
               icon={
@@ -1150,8 +1152,10 @@ class kpivalues extends Component {
         
         {this.state.showResult && (
           <Card className="uiCard">
-            <CardHeader titleStyle={{ marginLeft: 638 }} title={<strong> {translate('ui.table.title')} </strong>} />
-
+            <CardHeader 
+                style={{width:"100%",textAlign:"center"}}
+                titleStyle={{ float:"center"}} 
+                title={<strong> {translate('ui.table.title')} </strong>} />
             <CardText>
               <div className="cntdatatable">
                 <div className="cntdatatable1">
