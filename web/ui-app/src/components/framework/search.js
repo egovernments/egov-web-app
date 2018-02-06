@@ -154,8 +154,13 @@ class Search extends Component {
   hasReturnUrl() {
     let { search } = this;
     const {moduleName,master} = this.props.match.params;
-    if (localStorage.getItem('returnUrl') && localStorage.getItem('returnUrl').includes(moduleName + "/" + master)) {
-      search(null, true);
+    if (localStorage.getItem('returnUrl') && localStorage.getItem('returnUrl').includes(moduleName + "/" + master) ) {
+      if(!localStorage.getItem('page')){
+        search(null, true);
+      }else{
+        window.localStorage.setItem('returnUrl', '');
+        window.localStorage.setItem('page', '');
+      }
     }
   }
 
@@ -330,7 +335,9 @@ class Search extends Component {
 
     window.localStorage.setItem('formData', '');
     window.localStorage.setItem('returnUrl', '');
-
+    if(localStorage.getItem('page')){
+      window.localStorage.setItem('page', '');
+    }
   }
 
   search = (e = null, hasDefaultSearch = false) => {
