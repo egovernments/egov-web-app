@@ -95,16 +95,7 @@ var dat = {
     result: {
       header: [
         {
-          label: 'swm.vehicles.search.result.vehicleType',
-        },
-        {
           label: 'swm.vehicles.create.regNumber',
-        },
-        {
-          label: 'swm.vehicles.search.result.driver',
-        },
-        {
-          label: 'swm.vehicles.search.result.vehicleCapacity',
         },
         {
           label: 'swm.vehicles.search.result.engineSrNumber',
@@ -112,22 +103,12 @@ var dat = {
         {
           label: 'swm.vehicles.search.result.chassisSrNumber',
         },
-        {
-          label: 'swm.vehicles.search.result.model',
-        },
-        {
-          label: 'swm.vehicles.search.result.vendor',
-        },
       ],
       values: [
-        'vehicleType.name',
         'regNumber',
-        'driver.name',
-        'manufacturingDetails.vehicleCapacity',
         'manufacturingDetails.engineSrNumber',
         'manufacturingDetails.chassisSrNumber',
-        'manufacturingDetails.model',
-        'vendor.name',
+        
       ],
       resultPath: 'vehicles',
       rowClickUrlUpdate: '/update/swm/vehicles/{regNumber}',
