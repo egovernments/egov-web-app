@@ -506,7 +506,7 @@ var dat = {
             "label": "",
             "hierarchyType": "REVENUE",
             "jsonPath": "collectionPoints[0].location.code",
-            "isRequired": false,
+            "isRequired": true,
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
