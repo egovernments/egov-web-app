@@ -544,7 +544,13 @@ class assetImmovableCreate extends Component {
                 '.' +
                 response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type;
               customTemp.label = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].name;
-              customTemp.type = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type;
+              //added to check if the custom field has a type
+              if ( response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type) {
+                  customTemp.type = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].type;
+              }else {
+                  customTemp.type=null;
+              }
+
               customTemp.isRequired = response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isMandatory;
               customTemp.isDisabled = !response.MdmsRes.ASSET.AssetCategory[i].assetFieldsDefination[j].isActive;
               switch (customTemp.type) {
