@@ -248,12 +248,12 @@ var dat = {
                ],
                actionsNotRequired: true
              },
-             hasATOAATransform: true,
+            /* hasATOAATransform: true,
              aATransformInfo: {
                to: 'vehicleSchedules[0].route.collectionPoints',
                key: 'code',
                from: 'collectionPoint.code'
-             }
+             }*/
            }],
          }
       ],
@@ -468,7 +468,7 @@ var dat = {
                   "jsonPath": "vehicleSchedules[0].route.code",
                   "label": "swm.create.route",
                   "type": "autoCompelete",
-                  "isRequired": false,
+                  "isRequired": true,
                   "isDisabled": false,
                   "maxLength": 256,
                   "minLength": 1,
@@ -487,7 +487,7 @@ var dat = {
                   "jsonPath": "vehicleSchedules[0].vehicle.regNumber",
                   "label": "swm.vehicles.create.regNumber",
                   "type": "autoCompelete",
-                  "isRequired": false,
+                  "isRequired": true,
                   "isDisabled": false,
                   "defaultValue": "",
                   "maxLength": 12,
@@ -587,12 +587,12 @@ var dat = {
               ],
               actionsNotRequired: true
             },
-            hasATOAATransform: true,
+           /* hasATOAATransform: true,
             aATransformInfo: {
               to: 'vehicleSchedules[0].route.collectionPoints',
               key: 'code',
               from: 'collectionPoint.code'
-            }
+            }*/
           }],
          }
       ],
