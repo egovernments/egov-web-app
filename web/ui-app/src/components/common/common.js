@@ -2482,7 +2482,7 @@ var localization_EN_Data = {
   'reports.swm.fuellingcost': 'Cost Incurred on Fuelling (₹)',
   'reports.swm.maintenancecost': 'Cost Incurred on Maintenance/Repair (₹)',
   'reports.swm.totalcost': 'Total Cost Incurred (₹)',
-  'reports.swm.salary': 'Cost on vehicle driver salary',
+  'reports.swm.salary': 'Cost on vehicle driver salary (₹)',
   'reports.swm.wasteprocess': 'Waste Dump/Process',
  'reports.swm.wastetype': 'Waste Types',
   'vendorcontracts.create.contractNos': 'Contractnos',
