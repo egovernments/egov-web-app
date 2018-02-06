@@ -46,6 +46,18 @@ var dat = {
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
           },
+	{
+            name: 'transactionNo',
+            jsonPath: 'transactionNo',
+            label: 'swm.vehicles.create.transactionNo',
+            pattern: '',
+            type: 'autoCompelete',
+            isRequired: false,
+            isDisabled: false,
+            defaultValue: '',
+            patternErrorMsg: '',
+            url: 'swm-services/vehiclemaintenancedetails/_search?|$.vehicleMaintenanceDetails.*.transactionNo|$.vehicleMaintenanceDetails.*.transactionNo',
+          }
         ],
       },
     ],
@@ -72,15 +84,15 @@ var dat = {
         'costIncurred'
       ],
       resultPath: 'vehicleMaintenanceDetails',
-      rowClickUrlUpdate: '/update/swm/vehiclemaintenancedetails/{code}',
-      rowClickUrlView: '/view/swm/vehiclemaintenancedetails/{code}',
+      rowClickUrlUpdate: '/update/swm/vehiclemaintenancedetails/{transactionNo}',
+      rowClickUrlView: '/view/swm/vehiclemaintenancedetails/{transactionNo}',
     },
   },
   'swm.create': {
     numCols: 4,
     useTimestamp: true,
     objectName: 'vehicleMaintenanceDetails',
-    idJsonPath: 'vehicleMaintenanceDetails[0].code',
+    idJsonPath: 'vehicleMaintenanceDetails[0].transactionNo',
     title: 'swm.vehiclemaintenancedetails.create.title',
 
     groups: [
@@ -616,13 +628,13 @@ var dat = {
       },
     ],
     tenantIdRequired: true,
-    url: '/swm-services/vehiclemaintenancedetails/_search?code={code}',
+    url: '/swm-services/vehiclemaintenancedetails/_search?transactionNo={transactionNo}',
   },
   'swm.update': {
     numCols: 4,
     useTimestamp: true,
     objectName: 'vehicleMaintenanceDetails',
-    idJsonPath: 'vehicleMaintenanceDetails[0].code',
+    idJsonPath: 'vehicleMaintenanceDetails[0].transactionNo',
     title: 'swm.vehiclemaintenancedetails.create.title',
  preApiCalls:[
       {
@@ -920,7 +932,7 @@ var dat = {
     ],
     url: '/swm-services/vehiclemaintenancedetails/_update',
     tenantIdRequired: true,
-    searchUrl: '/swm-services/vehiclemaintenancedetails/_search?code={code}',
+    searchUrl: '/swm-services/vehiclemaintenancedetails/_search?transactionNo={transactionNo}',
   },
 };
 export default dat;
