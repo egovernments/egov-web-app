@@ -8,7 +8,7 @@ const defaultState = {
   complaintsLength: 0,
   pleaseWait: false,
   showMenu: false,
-  actionList:[],
+  actionList: [],
   // actionList: actions,
   showHome: false,
   tenantInfo: [],
@@ -65,6 +65,9 @@ export default (state = defaultState, action) => {
     case 'REGISTER_PAGE_UNLOADED':
       return { ...state, viewChangeCounter: state.viewChangeCounter + 1 };
     case 'SET_ROUTE':
+      const currentRouteParts = window.location.hash.split('#');
+      const previousRoute = currentRouteParts.length > 1 && currentRouteParts[1] !== action.route ? currentRouteParts[1] : '';
+      window.localStorage.setItem('previousRoute', previousRoute);
       return {
         ...state,
         route: action.route,

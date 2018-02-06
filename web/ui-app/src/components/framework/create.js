@@ -1350,7 +1350,7 @@ class Report extends Component {
     }
   };
 
-  makeAjaxCall = (formData, url) => {
+  makeAjaxCall = async (formData, url) => {
     let shouldSubmit = true;
     let self = this;
     let _formData = _.cloneDeep(formData);
@@ -1400,151 +1400,55 @@ class Report extends Component {
         this.generateSpecificForm(_formData, obj["omittableFields"]);
       }
 
-      Api.commonApiPost(
-        url ||
-        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
-          .url,
-        "",
-        _formData,
-        "",
-        true
-      ).then(
-        function (response) {
-          self.props.setLoadingStatus("hide");
-          self.initData();
-          if (response.summons) {
-            if (response.summons.length > 0) {
-              self.props.toggleSnackbarAndSetText(
-                true,
-                translate(
-                  self.props.actionName == "create"
-                    ? "Created Successfully Ref No. is " +
-                    response.summons[0].summonReferenceNo
-                    : "wc.update.message.success"
-                ),
-                true
-              );
-            } else {
-              self.props.toggleSnackbarAndSetText(
-                true,
-                translate(
-                  self.props.actionName == "create"
-                    ? "wc.create.message.success"
-                    : "wc.update.message.success"
-                ),
-                true
-              );
-            }
+    try {
+      const response = await Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', _formData, '', true);
+      // set the response item
+      const cacheKey =  this.props.moduleName + "." + this.props.match.params.master  + '.search';
+      window.sessionStorage.setItem(cacheKey,JSON.stringify(response));
+      self.props.setLoadingStatus('hide');
+      self.initData();
+      if (response.summons) {
+        if (response.summons.length > 0) {
+          self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'Created Successfully Ref No. is ' + response.summons[0].summonReferenceNo : 'wc.update.message.success'), true);
+        } else {
+          self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'), true);
+        }
+      } else {
+        let hashLocation = window.location.hash;
+        if ($('input[type=file]')) {
+          $('input[type=file]').val('');
+        }
+        self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'), true);
+      }
+
+      setTimeout(function() {
+        if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
+          if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
+            var hash = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl + '/' + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
           } else {
-            let hashLocation = window.location.hash;
-            if ($("input[type=file]")) {
-              $("input[type=file]").val("");
+            if (self.props.actionName == 'update') {
+              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, '/view/');
+            } else {
+              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, '/view/') + '/' + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
             }
-            self.props.toggleSnackbarAndSetText(
-              true,
-              translate(
-                self.props.actionName == "create"
-                  ? "wc.create.message.success"
-                  : "wc.update.message.success"
-              ),
-              true
-            );
           }
 
-          setTimeout(function () {
-            if (
-              self.props.metaData[
-                `${self.props.moduleName}.${self.props.actionName}`
-              ].idJsonPath
-            ) {
-              if (
-                self.props.metaData[
-                  `${self.props.moduleName}.${self.props.actionName}`
-                ].ackUrl
-              ) {
-                var hash =
-                  self.props.metaData[
-                    `${self.props.moduleName}.${self.props.actionName}`
-                  ].ackUrl +
-                  "/" +
-                  encodeURIComponent(
-                    _.get(
-                      response,
-                      self.props.metaData[
-                        `${self.props.moduleName}.${self.props.actionName}`
-                      ].idJsonPath
-                    )
-                  );
-              } else {
-                if (self.props.actionName == "update") {
-                  var hash = window.location.hash.replace(
-                    /(\#\/create\/|\#\/update\/)/,
-                    "/view/"
-                  );
-                } else {
-                  var hash =
-                    window.location.hash.replace(
-                      /(\#\/create\/|\#\/update\/)/,
-                      "/view/"
-                    ) +
-                    "/" +
-                    encodeURIComponent(
-                      _.get(
-                        response,
-                        self.props.metaData[
-                          `${self.props.moduleName}.${self.props.actionName}`
-                        ].idJsonPath
-                      )
-                    );
-                }
-              }
-
-              self.props.setRoute(
-                hash +
-                (self.props.metaData[
-                  `${self.props.moduleName}.${self.props.actionName}`
-                ].queryString || "")
-              );
-            } else if (
-              self.props.metaData[
-                `${self.props.moduleName}.${self.props.actionName}`
-              ].passResToLocalStore
-            ) {
-              var hash =
-                self.props.metaData[
-                  `${self.props.moduleName}.${self.props.actionName}`
-                ].ackUrl;
-              var obj = _.get(
-                response,
-                self.props.metaData[
-                  `${self.props.moduleName}.${self.props.actionName}`
-                ].passResToLocalStore
-              );
-              if (obj.isVakalatnamaGenerated) {
-                localStorage.setItem(
-                  "returnUrl",
-                  window.location.hash.split("#/")[1]
-                );
-                localStorage.setItem(
-                  self.props.metaData[
-                    `${self.props.moduleName}.${self.props.actionName}`
-                  ].localStoreResponseKey,
-                  JSON.stringify(obj)
-                );
-                self.props.setRoute(hash);
-              }
-            }
-          }, 1500);
-
-
-        },
-        function (err) {
-          self.props.setLoadingStatus("hide");
-          self.props.toggleSnackbarAndSetText(true, err.message);
+          self.props.setRoute(hash + (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].queryString || ''));
+        } else if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].passResToLocalStore) {
+          var hash = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl;
+          var obj = _.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].passResToLocalStore);
+          if (obj.isVakalatnamaGenerated) {
+            localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
+            localStorage.setItem(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].localStoreResponseKey, JSON.stringify(obj));
+            self.props.setRoute(hash);
+          }
         }
-);
- 
+      }, 1500);
+    } catch (err) {
+      self.props.setLoadingStatus('hide');
+      self.props.toggleSnackbarAndSetText(true, err.message);
     }
+  }
     else {
       self.props.setLoadingStatus("hide");
     }

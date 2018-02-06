@@ -252,7 +252,16 @@ class Report extends Component {
     this.props.setFormData(formData);
   };
 
-  initData() {
+  shouldLoadFromCache = () => {
+    let previousRoute = window.localStorage.getItem('previousRoute');
+    previousRoute = previousRoute ? previousRoute : '';
+    let currentRoute = window.location.hash.split('#')[1];
+    previousRoute = previousRoute.replace(/create|update/, 'view');
+    const shouldCache = currentRoute.indexOf(previousRoute) !== -1 ? true : false;
+    return shouldCache;
+  };
+
+  initData = async () => {
     try {
       var hash = window.location.hash.split('/');
       if (hash.length == 4) {
@@ -366,28 +375,37 @@ class Report extends Component {
     }
     self.props.setLoadingStatus('loading');
 
-    Api.commonApiPost(url, query, _body, false, specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp).then(
-      res => {
-        var spec = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
-        const JP = jp;
-        if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
-        self.props.setFormData(res);
+    const cacheKey = this.props.match.params.moduleName + '.' + this.props.match.params.master + '.search';
+    let res = window.sessionStorage.getItem(cacheKey);
 
-        self.setInitialUpdateData(
-          res,
-          JSON.parse(JSON.stringify(specifications)),
-          hashLocation.split('/')[2],
-          hashLocation.split('/')[1],
-          specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName
-        );
+    if (this.shouldLoadFromCache() && res) {
+      res = JSON.parse(res);
+    } else {
+      res = await Api.commonApiPost(
+        url,
+        query,
+        _body,
+        false,
+        specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp
+      );
+    }
 
-        if (spec && spec.afterSetForm) eval(spec.afterSetForm);
-        self.props.setLoadingStatus('hide');
+    var spec = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+    const JP = jp;
+    if (spec && spec.beforeSetForm) eval(spec.beforeSetForm);
+    self.props.setFormData(res);
 
-      },
-      function(err) {}
+    self.setInitialUpdateData(
+      res,
+      JSON.parse(JSON.stringify(specifications)),
+      hashLocation.split('/')[2],
+      hashLocation.split('/')[1],
+      specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].objectName
     );
-  }
+
+    if (spec && spec.afterSetForm) eval(spec.afterSetForm);
+    self.props.setLoadingStatus('hide');
+  };
 
   //To find last index in jsonPath for multiple cards
   indexFinder = jsonPath => {
@@ -398,6 +416,7 @@ class Report extends Component {
   componentDidMount() {
     this.initData();
   }
+
   formatAMPM = date => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
