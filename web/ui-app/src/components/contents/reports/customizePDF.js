@@ -44,10 +44,9 @@ const prepareBody = resultData => {
     return total + parseFloat(resultRow[2]);
   }, 0);
 
-  const dryWasteTotal =
-    resultData.reduce((total, resultRow) => {
-      return total + parseFloat(resultRow[3]);
-    }, 0) + 0.122;
+  const dryWasteTotal = resultData.reduce((total, resultRow) => {
+    return total + parseFloat(resultRow[3]);
+  }, 0);
 
   finalRow.push({ text: 'Total', colSpan: 2, alignment: 'center' });
   finalRow.push('');
