@@ -131,6 +131,9 @@ class Transaction extends Component {
        if(formData && formData.hasOwnProperty("assetCategoryType") && formData.assetCategoryType==""){
          delete formData.assetCategoryType;
        }
+       if(formData && formData.hasOwnProperty("department") && formData.department==""){
+         delete formData.department;
+       }
          if(formData && formData.hasOwnProperty("assetCategory") && formData.assetCategory==""){
          delete formData.assetCategory;
          delete formData.assetSubCategory;
