@@ -5,8 +5,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {
   parseCompareSearchResponse,
   parseCompareSearchConsolidatedResponse,
+  formatChartDataForFileStoreIds,
   parseTenantName,
+  fetchFileMetadataByFileStoreId,
   fetchFileByFileStoreId,
+  fetchFilesMetadata,
 } from '../apis/apis';
 import {
   formatChartData,
@@ -25,11 +28,12 @@ export default class TableCard extends Component {
       maxChartData: 0,
     };
     this.kpis = this.props.kpis;
+    this.fileStoreIds = [];
   }
 
   componentDidMount() {
-    if (this.props.isReportConsolidated) {
 
+    if (this.props.isReportConsolidated) {
       formatConsolidatedChartData(parseCompareSearchConsolidatedResponse(this.props.data, this.props.kpiType === 'TEXT' ? true : false), (data, dataKey) => {
         if (!data || !dataKey) {
         } else {
@@ -43,12 +47,27 @@ export default class TableCard extends Component {
       formatChartData(parseCompareSearchResponse(this.props.data, this.props.kpiType === 'TEXT' ? true : false), (data, dataKey) => {
         if (!data || !dataKey) {
         } else {
-          this.setState({
-            data: data,
-            dataKey: dataKey,
-            chartDataIndex: 1,
-            maxChartData: data.length,
-          });
+          this.fileStoreIds = formatChartDataForFileStoreIds(data);
+          
+          /////////////
+          // TESTING ONLY
+          this.fileStoreIds = [ { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=64a49ed5-4b95-42fa-9e08-6587eba096b4',
+          documentId: '64a49ed5-4b95-42fa-9e08-6587eba096b4' },
+        { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6',
+          documentId: '6e88c31c-6574-41c4-8f52-8bb9197ceeb6' },
+        { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=520653ec-3cc4-49cf-a43f-8c7e99e3b183',
+          documentId: '520653ec-3cc4-49cf-a43f-8c7e99e3b183' } ];
+          /////////////
+
+          fetchFilesMetadata(this.fileStoreIds, (err, res) => {
+            console.log(res)
+            this.setState({
+              data: data,
+              dataKey: dataKey,
+              chartDataIndex: 1,
+              maxChartData: data.length,
+            });
+          })
         }
       });
     }
@@ -346,7 +365,6 @@ export default class TableCard extends Component {
    */
   renderAttachmentDownloadButton = (label, fileStoreIds) => {
     let data = this.state.data[this.state.chartDataIndex - 1]
-    console.log(data.ulbName)
     return (
       <div>
         <RaisedButton

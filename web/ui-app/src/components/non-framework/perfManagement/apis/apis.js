@@ -7,54 +7,37 @@ import {
 var jp = require('jsonpath');
 var axios = require('axios');
 
-var instance = axios.create({
-  baseURL: window.location.origin,
-  // timeout: 5000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-function ApiGet(context, queryObject = {}, doNotOverride = false, noPageSize = false) {
-  var url = context;
-  if (!doNotOverride) url += '?tenantId=' + (localStorage.getItem('tenantId') || 'default');
-  else url += '?';
-  for (var variable in queryObject) {
-    if (typeof queryObject[variable] !== 'undefined') {
-      url += '&' + variable + '=' + queryObject[variable];
-    }
-  }
-
-  console.log(url)
-  return instance
-    .get(url)
-    .then(function(response) {
-      return response;
-    })
-    .catch(function(response) {
-      if (
-        response &&
-        response.response &&
-        response.response.data &&
-        response.response.data[0] &&
-        (response.response.data[0].error || response.response.data[0].Errors[0])
-      ) {
-        var _err = response.response.data[0].error.message || '';
-        if (response.response.data[0].error.errorFields && Object.keys(response.response.data[0].error.errorFields).length) {
-          for (var i = 0; i < response.response.data[0].error.errorFields.length; i++) {
-            _err += '\n ' + response.response.data[0].error.errorFields[i].message + ' ';
-          }
-          throw new Error(_err);
-        }
-      } else {
-        throw new Error('Something went wrong, please try again later.');
-      }
-    });
-}
 /**
  * defines all the api required to achieve functionality for
  * PMS module
  */
+
+export const fetchFilesMetadata = (fileInfos, cb) => {
+  // http://egov-micro-dev.egovernments.org/filestore/v1/files/id?tenantId=default&fileStoreId=2742d207-0cf4-42f3-83ca-34ee6a547197
+  let requests = [];
+  for (let i = 0; i < fileInfos.length; i++) {
+    requests.push(axios.get(fileInfos[i].url)
+      .then((res) => {
+        console.log(res)
+        return {
+          documentId: fileInfos[i].documentId,
+          fileName: res.fileName
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        return {
+          documentId: fileInfos[i].documentId,
+          fileName: 'NO NAME'
+        }
+    }));
+  }
+  axios.all(requests)
+          .then(axios.spread((...args) => {
+            return cb(null, args)
+          }));
+}
+
 export const fetchDepartmentAPI = cb => {
   Api.commonApiPost('egov-mdms-service/v1/_get?moduleName=common-masters&masterName=Department', [], {}, false, true, false, null, null, true).then(
     function(res) {
@@ -295,4 +278,32 @@ export const parseCompareSearchConsolidatedResponse = (res, isText = false) => {
         })
       })
   );
+}
+
+export const formatChartDataForFileStoreIds = (items) => {
+  let fileInfos = flattenArray(items.map((item, index) => {
+    if (item.data) {
+      return item.data.map((innerData, index) => {
+        if (innerData.documentIds && innerData.documentIds.length > 0) {
+          return {
+            ulbName: item.ulbName,
+            documentIds: innerData.documentIds
+          }
+        } else {
+          return { }
+        }
+      })
+    } else {
+      return { }
+    }
+  })).filter(value => Object.keys(value).length !== 0);
+
+  return flattenArray(fileInfos.map((fileInfo, index) => {
+    return fileInfo.documentIds.map((documentId, index) => {
+      return {
+        url: `filestore/v1/files/metadata?tenantId=${fileInfo.ulbName}&fileStoreId=${documentId}`,
+        documentId: documentId
+      }
+    })
+  }));
 }
