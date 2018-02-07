@@ -30,7 +30,6 @@ export default class TableCard extends Component {
     this.kpis = this.props.kpis;
     this.fileStoreIds = [];
   }
-
   componentDidMount() {
 
     if (this.props.isReportConsolidated) {
@@ -287,25 +286,40 @@ export default class TableCard extends Component {
   renderTable = () => {
     let headers = this.getTableHeaders();
     let data    = this.getModifiedChartData(this.getChartData())
+    const fileInfos = [
+        {name: "this is long file name to check the file name layout.txt",fileStoreId: "232323232"}, 
+        {name: "filename2.txt", fileStoreId: "232323232"},
+        {name: "this is long file name to check the file name layout.txt",fileStoreId: "232323232"},
+        {name: "filename3.txt", fileStoreId: "232323232"},
+        {name: "filename4.txt", fileStoreId: "232323232"}, ]
+        const fileInfosNew = [ 
+          {name: "filename2.txt", fileStoreId: "232323232"},
+          ]
     return (
-      <Table style={{ color: 'black', fontWeight: 'normal', marginTop: '10px' }} bordered responsive className="table-striped">
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>{headers.map((item, index) => <TableHeaderColumn key={index}>{this.getColumnName(item.toUpperCase())}</TableHeaderColumn>)}</TableRow>
-            </TableHeader>
+        <div>
+            <Table style={{ color: 'black', fontWeight: 'normal', marginTop: '10px' }} bordered responsive className="table-striped">
+                <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+                  <TableRow>{headers.map((item, index) => <TableHeaderColumn key={index}>{this.getColumnName(item.toUpperCase())}</TableHeaderColumn>)}</TableRow>
+                </TableHeader>
 
-            <TableBody displayRowCheckbox={false}>
-              {data.map((item, index) => (
-                  <TableRow key={index}>  {
-                                              headers.map((el, index) => <TableRowColumn style={{whiteSpace: 'normal', wordWrap: 'break-word'}} 
-                                                                                      key={index}>{ (el === 'documentIds' && item[el].length > 0) ? 
-                                                                                                this.renderAttachmentDownloadButton(translate('perfManagement.dashboard.common.nav.download'), item[el]) : 
-                                                                                                item[el] } 
-                                                                        </TableRowColumn>)
-                                          } 
-                  </TableRow>
-              ))}
-            </TableBody>
-      </Table>
+                <TableBody displayRowCheckbox={false}>
+                  {data.map((item, index) => (
+                      <TableRow key={index}> 
+                          {
+                            headers.map((el, index) => 
+                              <TableRowColumn 
+                                style={{whiteSpace: 'normal', wordWrap: 'break-word'}} 
+                                key={index}>
+                                  { (el === 'documentIds' && item[el].length > 0) ?  
+                                    this.renderAttachmetLinks((fileInfos), item[el]) : item[el]
+                                  } 
+                              </TableRowColumn>)
+                          } 
+                      </TableRow>
+                  ))}
+                </TableBody>
+          </Table>
+        </div>
     )
   }
 
@@ -361,20 +375,26 @@ export default class TableCard extends Component {
 
   /**
    * render
-   * render download files button
+   * render download files link with name
    */
-  renderAttachmentDownloadButton = (label, fileStoreIds) => {
-    let data = this.state.data[this.state.chartDataIndex - 1]
-    return (
-      <div>
-        <RaisedButton
-          label={label}
-          primary={true}
-          type="button"
-          disabled={false}
-          onClick={() => {this.processOnClickDownloadAttachments(fileStoreIds, data.ulbName)}}
-        />
-      </div>
+  renderAttachmetLinks = (fileInfos) => {
+      const listItems = fileInfos.map((link) =>{
+      //console.log("fileStoreId from link",link.fileStoreId);
+      //console.log("name from link",link.name);
+      const fileStoreId = link.fileStoreId;
+      const name = link.name;
+      return (
+          <div>
+              <ul>
+                  <li key={fileStoreId}>
+                      <a hre="" onClick={() => {this.processOnClickDownloadAttachments(fileStoreId, name)}}>{name}
+                    </a>
+                  </li>
+              </ul>
+          </div>
+        )
+      }
     )
+    return listItems;
   }
 }
