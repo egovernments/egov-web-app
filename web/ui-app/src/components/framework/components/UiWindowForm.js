@@ -880,11 +880,16 @@ class UiWindowForm extends Component {
     this.affectDependants(obj, e, property);
   };
 
-  getValueFn = path => {
-    return typeof _.get(this.state.valuesObj, path) != 'undefined'
-      ? _.get(this.state.valuesObj, path)
-      : _.get(this.props.formData, path) != 'undefined' ? _.get(this.props.formData, path) : '';
-  };
+ getValueFn = ( path,dateBool ) => {
+
+    var _val = _.get(this.state.valuesObj, path);
+    if (dateBool && typeof _val == "string" && _val && _val.indexOf("-") > -1) {
+      var _date = _val.split("-");
+      return new Date(_date[0], Number(_date[1]) - 1, _date[2]);
+    }
+    return typeof _val != "undefined" ? _val : "";
+}
+
   handleOpen = () => {
     //console.log("Popup states",this.state);
     // console.log("Popup Props",this.props);

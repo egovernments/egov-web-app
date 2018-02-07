@@ -460,9 +460,9 @@ class Search extends Component {
 
   };
 
-  getVal = path => {
+ /* getVal = path => {
     return _.get(this.props.formData, path) || '';
-  };
+  };*/
 
   getValFromDropdownData = (fieldJsonPath, key, path) => {
     let dropdownData = this.props.dropDownData[fieldJsonPath] || [];
