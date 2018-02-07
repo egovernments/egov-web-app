@@ -193,9 +193,15 @@ function validate(fieldErrors, property, value, isRequired, form, requiredFields
 
 function checkIfHasAllReqFields(reqFields, form) {
   for (var i = 0; i < reqFields.length; i++) {
+    if( typeof (_.get(form, reqFields[i]))=='boolean'){
+       if(reqFields[i]==null||reqFields[i]==undefined){
+        return false;
+       }
+    }else{
     if (!_.get(form, reqFields[i])) {
       return false;
     }
+   }
   }
 
   return true;
