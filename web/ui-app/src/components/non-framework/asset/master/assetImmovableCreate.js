@@ -1013,7 +1013,7 @@ class assetImmovableCreate extends Component {
     e.preventDefault();
     var flag = 0;
     var formData = JSON.parse(JSON.stringify(this.props.formData));
-    if (formData.Asset && formData.Asset.landDetails) {
+    if (formData.Asset && formData.Asset.landDetails && formData.Asset.landDetails.length>0) {
       for (var y = 0; y < formData.Asset.landDetails.length; y++) {
         formData.Asset.landDetails[y].tenantId = localStorage.getItem('tenantId');
         }
@@ -1035,7 +1035,8 @@ class assetImmovableCreate extends Component {
           return;
         }
       }
-    } else if (formData.Asset && !formData.Asset.landDetails) {
+    } else if (formData.Asset && (!formData.Asset.landDetails || (formData.Asset.landDetails && !formData.Asset.landDetails.length >0))) {
+      console.log(formData.Asset);
       flag = 1;
       formData.Asset.landDetails = null;
     }
@@ -1957,14 +1958,14 @@ var CheckAutoCompleteData=[];
       moduleName,
       actionName,
       setFormData,
-      delRequiredFields
+      delRequiredFields,
+      addRequiredFields
     } = this.props;
     let _formData = { ...this.props.formData };
     let self = this;
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
-
-    console.log(index);
+    let ReqFields = [];
     console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
@@ -1990,7 +1991,7 @@ var CheckAutoCompleteData=[];
             mockData[moduleName + "." + actionName].groups.filter(
               group => group.name === groupName
             ).length -
-              1
+            1
           ) {
             // console.log(mockData[moduleName + '.' + actionName].groups[i].jsonPath);
             // console.log(_formData);
@@ -2006,23 +2007,17 @@ var CheckAutoCompleteData=[];
                   mockData[moduleName + "." + actionName].groups[i].jsonPath
                 )
               ];
-              console.log(mockData[moduleName + "." + actionName].groups[i]);
-               console.log(mockData[moduleName + "." + actionName].groups[i].index);
-               console.log(_formData.Asset.landDetails);
-               if(_formData.Asset.landDetails[mockData[moduleName + "." + actionName].groups[i].index]){
-              _formData.Asset.landDetails[mockData[moduleName + "." + actionName].groups[i].index].isEnabled = false;
-            }
+              //console.log(mockData[moduleName + "." + actionName].groups[i].index-1);
+              // console.log(mockData[moduleName + "." + actionName].groups);
               grps.splice(
                 mockData[moduleName + "." + actionName].groups[i].index,
                 1
               );
-
               _.set(
                 _formData,
                 mockData[moduleName + "." + actionName].groups[i].jsonPath,
                 grps
               );
-
               // console.log(_formData);
               setFormData(_formData);
 
@@ -2058,18 +2053,24 @@ var CheckAutoCompleteData=[];
           }
           /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
           else {
+
+            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired)
+                  notReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
+              }
+              delRequiredFields(notReqFields);
+            }
+
             for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
-                mockData[moduleName + '.' + actionName].groups.splice(i, 1);
                 ind = i;
-                for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[ind].fields.length; k++) {
-                  if (mockData[moduleName + '.' + actionName].groups[ind].fields[k].isRequired)
-                    notReqFields.push(mockData[moduleName + '.' + actionName].groups[ind].fields[k].jsonPath);
-                }
-                delRequiredFields(notReqFields);
+                mockData[moduleName + '.' + actionName].groups.splice(i, 1);
                 break;
               }
             }
+
+
 
             for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
@@ -2087,10 +2088,10 @@ var CheckAutoCompleteData=[];
                   stringified.replace(
                     regexp,
                     mockData[moduleName + "." + actionName].groups[i].jsonPath +
-                      "[" +
-                      (mockData[moduleName + "." + actionName].groups[i].index -
-                        1) +
-                      "]"
+                    "[" +
+                    (mockData[moduleName + "." + actionName].groups[i].index -
+                      1) +
+                    "]"
                   )
                 );
               }
@@ -2098,7 +2099,7 @@ var CheckAutoCompleteData=[];
 
             console.log(mockData[moduleName + '.' + actionName].groups);
 
-            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+            for (let i = index; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
 
                 if (
@@ -2130,6 +2131,15 @@ var CheckAutoCompleteData=[];
                   break;
                 }
               }
+            }
+            for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
+              for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired &&
+                !mockData[moduleName + '.' + actionName].groups[i].fields[k].hide){
+                  ReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
+                }
+              }
+              addRequiredFields(ReqFields);
             }
           }
         }

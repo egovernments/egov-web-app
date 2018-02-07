@@ -23,6 +23,10 @@ var dat = {
             patternErrMsg: '',
             defaultValue: [
               {
+                key: null,
+                value: '-- Please Select --',
+              },
+              {
                 key: 'MOVABLE',
                 value: 'MOVABLE',
               },

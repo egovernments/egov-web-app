@@ -186,7 +186,10 @@ class Transaction extends Component {
     delete formData.revaluation;
 
    }
-
+   //code to handle "-- Please select --" selection of assetCategoryType
+   if(formData && formData.hasOwnProperty("assetCategoryType") && formData.assetCategoryType==""){
+     delete formData.assetCategoryType;
+   }
     if(formData && formData.hasOwnProperty("assetCategory") && formData.hasOwnProperty("assetSubCategory") && formData.assetCategory==""){
     delete formData.assetCategory;
     delete formData.assetSubCategory;
