@@ -261,6 +261,25 @@ class Report extends Component {
     return shouldCache;
   };
 
+  loadData = async (_body, url, query, specifications, hashLocation) => {
+    const cacheKey = this.props.match.params.moduleName + '.' + this.props.match.params.master + '.search';
+    let res = window.sessionStorage.getItem(cacheKey);
+
+    if (this.shouldLoadFromCache() && res) {
+      res = JSON.parse(res);
+    } else {
+      res = await Api.commonApiPost(
+        url,
+        query,
+        _body,
+        false,
+        specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp
+      );
+    }
+
+    return res;
+  };
+
   initData = async () => {
     try {
       var hash = window.location.hash.split('/');
@@ -375,20 +394,7 @@ class Report extends Component {
     }
     self.props.setLoadingStatus('loading');
 
-    const cacheKey = this.props.match.params.moduleName + '.' + this.props.match.params.master + '.search';
-    let res = window.sessionStorage.getItem(cacheKey);
-
-    if (this.shouldLoadFromCache() && res) {
-      res = JSON.parse(res);
-    } else {
-      res = await Api.commonApiPost(
-        url,
-        query,
-        _body,
-        false,
-        specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp
-      );
-    }
+    const res = await this.loadData(_body, url, query, specifications, hashLocation);
 
     var spec = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
     const JP = jp;
