@@ -171,14 +171,14 @@ var dat = {
                 "vendorContracts[0].servicesOffered":"vendors[0].servicesOffered",
                               },
             },
-            {
-              "jsonPath":"servicesOffered",
-              "type":"autoFill",
-              "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
-              "autoFillFields":{
-                  "servicesOffered":"vendors[0].servicesOffered",
-                                },
-              },
+            // {
+            //   "jsonPath":"servicesOffered",
+            //   "type":"autoFill",
+            //   "pattern":'/swm-services/vendors/_search?&vendorNo={vendorContracts[0].vendor.vendorNo}|$..code|$..name',
+            //   "autoFillFields":{
+            //       "servicesOffered":"vendors[0].servicesOffered",
+            //                     },
+            //   },
                         ],
           },
           {
@@ -305,109 +305,112 @@ var dat = {
               key:'code'
             },
           },
-          {
-            name: 'ServicesOffered',
-            label: 'swm.create.servicesOffered',
-            jsonPath: 'servicesOffered',
-            hide:true,
-            type: 'multiValueList',
-            pattern: '',
-            isRequired: false,
-            isDisabled: false,
-            maxLength: 128,
-            url:'',
-            minLength: 1,
-            patternErrorMsg: '',
-            mdms: {
-              "moduleName": "swm",
-              "masterName": "SwmProcess",
-              "filter": "",
-              "key": "$..code",
-              "value": "$..name",
-            },
-            hasATOAATransform:true,
-            aATransformInfo:{
-              to:'servicesOffered',
-              key:'code'
-            },
-          },
+          // {
+          //   name: 'ServicesOffered',
+          //   label: 'swm.create.servicesOffered',
+          //   jsonPath: 'servicesOffered',
+          //   hide:true,
+          //   type: 'multiValueList',
+          //   pattern: '',
+          //   isRequired: false,
+          //   isDisabled: false,
+          //   maxLength: 128,
+          //   url:'',
+          //   minLength: 1,
+          //   patternErrorMsg: '',
+          //   mdms: {
+          //     "moduleName": "swm",
+          //     "masterName": "SwmProcess",
+          //     "filter": "",
+          //     "key": "$..code",
+          //     "value": "$..name",
+          //   },
+          //   hasATOAATransform:true,
+          //   aATransformInfo:{
+          //     to:'servicesOffered',
+          //     key:'code'
+          //   },
+          // },
           ],
         },
-        {
-          name: 'multipleContractWindow',
-          hide: false,
-          label: 'swm.vendorcontract.create.multiplecontract',
-          fields: [
-            {
-              name: 'multipleContractWindow',
-              jsonPath: 'vendorContracts[0]',
-              arrayPath: 'vendorContracts',
-              modulepath: 'swm.create',
-              // "isExceptFirstRecord":true,
-             // hidePrimaryRecord: true,
-              pattern: '',
-              type: 'window',
-              tableConfig: {
-                expandTable: true,
-                header: [
-                  {
-                    label: 'vendorcontracts.create.contractDate',
-                  },
-                  {
-                    label: 'vendorcontracts.create.contractPeriodFrom',
-                  },
-                  {
-                    label: 'vendorcontracts.create.contractPeriodTo',
-                  },
-                  {
-                    label: 'vendorcontracts.create.securityDeposit',
-                  },
-                  {
-                    label: 'swm.create.servicesOffered',
-                  },
-                  {
-                    label: 'vendorcontracts.search.result.paymentTerms',
-                  },
-                  {
-                    label: 'vendorcontracts.create.remarks',
-                  },
-                ],
-                rows: [
-                  {
-                    displayField: 'contractDate',
-                    isDate:true
-                  },
-                  {
-                    displayField: 'contractPeriodFrom',
-                    isDate:true
-                  },
-                  {
-                    displayField: 'contractPeriodTo',
-                    isDate:true
-                  },
-                  {
-                    displayField: 'securityDeposit',
-                  },
-                  {
-                    displayField: 'servicesOffered',
-                    keyToValue:true
-                  },
-                  {
-                    displayField: 'paymentTerms',
-                  },
-                  {
-                    displayField: 'remarks',
-                  },
-                ],
-              },
-              subPath: 'swm/master/addvendorcontract',
-              isRequired: false,
-              isDisabled: true,
-              requiredErrMsg: '',
-              patternErrMsg: '',
-            },
-          ],
-        },
+        // {
+
+        // *** As per mutual discussion and decision, we are commenting multiple vendor functionality for this release.
+        
+        //   name: 'multipleContractWindow',
+        //   hide: false,
+        //   label: 'swm.vendorcontract.create.multiplecontract',
+        //   fields: [
+        //     {
+        //       name: 'multipleContractWindow',
+        //       jsonPath: 'vendorContracts[0]',
+        //       arrayPath: 'vendorContracts',
+        //       modulepath: 'swm.create',
+        //       // "isExceptFirstRecord":true,
+        //      // hidePrimaryRecord: true,
+        //       pattern: '',
+        //       type: 'window',
+        //       tableConfig: {
+        //         expandTable: true,
+        //         header: [
+        //           {
+        //             label: 'vendorcontracts.create.contractDate',
+        //           },
+        //           {
+        //             label: 'vendorcontracts.create.contractPeriodFrom',
+        //           },
+        //           {
+        //             label: 'vendorcontracts.create.contractPeriodTo',
+        //           },
+        //           {
+        //             label: 'vendorcontracts.create.securityDeposit',
+        //           },
+        //           {
+        //             label: 'swm.create.servicesOffered',
+        //           },
+        //           {
+        //             label: 'vendorcontracts.search.result.paymentTerms',
+        //           },
+        //           {
+        //             label: 'vendorcontracts.create.remarks',
+        //           },
+        //         ],
+        //         rows: [
+        //           {
+        //             displayField: 'contractDate',
+        //             isDate:true
+        //           },
+        //           {
+        //             displayField: 'contractPeriodFrom',
+        //             isDate:true
+        //           },
+        //           {
+        //             displayField: 'contractPeriodTo',
+        //             isDate:true
+        //           },
+        //           {
+        //             displayField: 'securityDeposit',
+        //           },
+        //           {
+        //             displayField: 'servicesOffered',
+        //             keyToValue:true
+        //           },
+        //           {
+        //             displayField: 'paymentTerms',
+        //           },
+        //           {
+        //             displayField: 'remarks',
+        //           },
+        //         ],
+        //       },
+        //       subPath: 'swm/master/addvendorcontract',
+        //       isRequired: false,
+        //       isDisabled: true,
+        //       requiredErrMsg: '',
+        //       patternErrMsg: '',
+        //     },
+        //   ],
+        // },
     ],
     url: '/swm-services/vendorcontracts/_create',
     tenantIdRequired: true,
