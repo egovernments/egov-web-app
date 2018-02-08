@@ -90,7 +90,7 @@ export default class TableCard extends Component {
     }
   }
 
-  processOnClickDownloadAttachments = (fileStoreIds, ulbName) => {
+  processOnClickDownloadAttachments = (fileStoreId, ulbName) => {
     fetchFileByFileStoreId(fileStoreId, ulbName)
   }
 
