@@ -97,6 +97,16 @@ class Report extends Component {
             !configObject.groups[i].hide
           )
             reqRequired.push(configObject.groups[i].fields[j].jsonPath);
+           if(configObject && configObject.groups[i].fields[j] && configObject.groups[i].fields[j].type == 'tableList'){
+
+             for(var l=0; l < configObject.groups[i].fields[j].tableList.values.length ; l++){
+               if(configObject.groups[i].fields[j].tableList.values[l].isRequired){
+
+                  reqRequired.push(configObject.groups[i].fields[j].tableList.values[l].jsonPath);
+                }
+             }
+          }
+
         }
 
         if (
