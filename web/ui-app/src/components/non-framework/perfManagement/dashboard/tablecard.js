@@ -48,6 +48,8 @@ export default class TableCard extends Component {
         } else {
           fetchFilesMetadata(formatChartDataForFileStoreIds(data), (err, res) => {
             this.filesMetadata = res
+            console.log(this.filesMetadata)
+            
             this.setState({
               data: data,
               dataKey: dataKey,
