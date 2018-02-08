@@ -22,7 +22,7 @@ import ContentRemove from 'material-ui/svg-icons/content/remove';
 import UiTable from '../../../framework/components/UiTable';
 import UiBackButton from '../../../framework/components/UiBackButton';
 import UiEditButton from '../../../framework/components/UiEditButton';
-import UiGoogleMapsPolygon from '../../../framework/components/UiGoogleMapsPolygon';
+import UiGoogleMapsPolyline from '../../../framework/components/UiGoogleMapsPolyline';
 
 var specifications = {};
 const styles = {
@@ -559,7 +559,7 @@ class assetImmovableView extends Component {
                         <Col style={{ textAlign: 'left' }}>
                           <label>
                             <span style={{ fontWeight: 500, fontSize: '13px' }}>
-                              {item.value ? (typeof item.value == 'object' ? item.value[Object.keys(item.value)[0]] : item.value) : (item.imagePath ? <img src={item.imagePath} width={item.width || '20%'} height={item.height || '60%'} /> : ((item.gislocation && item.gislocation.length >0 ) ? <UiGoogleMapsPolygon ui="google" item={item} formData={formData} getVal={getVal} edit={false}/>:"NA")) }
+                              {item.value ? (typeof item.value == 'object' ? item.value[Object.keys(item.value)[0]] : item.value) : (item.imagePath ? <img src={item.imagePath} width={item.width || '20%'} height={item.height || '60%'} /> : ((item.gislocation && item.gislocation.length >0 ) ? <UiGoogleMapsPolyline ui="google" item={item} formData={formData} getVal={getVal} edit={false}/>:"NA")) }
                             </span>
                           </label>
                         </Col>

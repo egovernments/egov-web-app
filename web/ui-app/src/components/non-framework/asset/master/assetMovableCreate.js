@@ -1510,7 +1510,23 @@ class assetMovableCreate extends Component {
         ? mockData[`${moduleName}.${actionName}`]['customActionsAndUrl'][0].url
         : '';
     let self = this;
+    console.log(`${moduleName}.${actionName}`);
+    if(`${moduleName}.${actionName}` == "asset.update"){
+      if(mockData &&  mockData[`${moduleName}.${actionName}`] && mockData[`${moduleName}.${actionName}`].groups
+      && mockData[`${moduleName}.${actionName}`].groups[0].fields){
+        console.log(mockData[`${moduleName}.${actionName}`]);
+        for(let i=0;i<mockData[`${moduleName}.${actionName}`].groups[0].fields.length;i++){
+          console.log(i);
+          console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+          if(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath == "Asset.assetCategory.id"){
+            console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+            mockData[`${moduleName}.${actionName}`].groups[0].fields[i].isDisabled=true;
+            break;
+          }
 
+        }
+      }
+    }
     return (
       <div className="Report">
         <form

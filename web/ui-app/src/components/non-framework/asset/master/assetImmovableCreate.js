@@ -22,7 +22,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 import UiBackButton from '../../../framework/components/UiBackButton';
-import UiGoogleMapsPolygon from '../../../framework/components/UiGoogleMapsPolygon';
+import UiGoogleMapsPolyline from '../../../framework/components/UiGoogleMapsPolyline';
 
 
 var specifications = {};
@@ -578,7 +578,7 @@ class assetImmovableCreate extends Component {
                   customTemp.type = 'image';
                   break;
                 case 'GIS':
-                  customTemp.type = 'googleMapsPolygon';
+                  customTemp.type = 'googleMapsPolyline';
                   break;
               }
 
@@ -2242,11 +2242,31 @@ var CheckAutoCompleteData=[];
     let self = this;
     //  {formData && formData.hasOwnProperty("Asset") && formData.Asset.hasOwnProperty("assetAttributes") && formData.Asset.assetAttributes.map((item,index)=>{
     // })}
-    if (formData.Asset && formData.Asset.landDetails) {
+    if (formData && formData.Asset && formData.Asset.landDetails) {
       for (var y = 0; y < formData.Asset.landDetails.length; y++) {
         formData.Asset.landDetails[y].isEnabled = true;
       }
     }
+    //code to make the asset sub type disabled in update screen
+        console.log(`${moduleName}.${actionName}`);
+        if(`${moduleName}.${actionName}` == "asset.update"){
+          if(mockData &&  mockData[`${moduleName}.${actionName}`] && mockData[`${moduleName}.${actionName}`].groups
+          && mockData[`${moduleName}.${actionName}`].groups[0].fields){
+            console.log(mockData[`${moduleName}.${actionName}`]);
+            for(let i=0;i<mockData[`${moduleName}.${actionName}`].groups[0].fields.length;i++){
+              console.log(i);
+              console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+              if(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath == "Asset.assetCategory.id"){
+                console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+                mockData[`${moduleName}.${actionName}`].groups[0].fields[i].isDisabled=true;
+                break;
+              }
+
+            }
+          }
+        }
+
+
     console.log(formData);
     return (
       <div className="Report">
