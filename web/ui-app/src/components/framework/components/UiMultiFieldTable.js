@@ -77,7 +77,7 @@ class UiMultiFieldTable extends Component {
     if ((nextProps.item.type=="tableList" && _.get(nextProps.formData,nextProps.item.jsonPath))) {
       // console.log('receive props condition succeeded', nextProps.item.jsonPath);
       this.renderOnLoad(nextProps);
-      this.setState({isintialLoad: false,});
+      //this.setState({isintialLoad: false,});
 
     }
   }
@@ -92,6 +92,8 @@ class UiMultiFieldTable extends Component {
     // console.log(listValues);
     // console.log('render load:',_.get(props.formData,props.item.jsonPath), numberOfRowsArray && numberOfRowsArray.length);
     let formData = { ...props.formData };
+      let requiredFields=this.props.requiredFields;
+      let tableListreqiredField=[];
     // console.log(formData, JSON.stringify(formData));
     // console.log(numberOfRowsArray, numberOfRowsArray ? numberOfRowsArray.length - 1 : 0,  props.item.jsonPath, isintialLoad);
     // console.log('render load', props.item.jsonPath, _.get(formData,props.item.jsonPath), props.item.tableList.values);
@@ -103,6 +105,19 @@ class UiMultiFieldTable extends Component {
         for (var j = 0; j < listValuesArray.length; j++) {
           //  console.log(listValuesArray[j].jsonPath);
           listValuesArray[j].jsonPath = listValuesArray[j].jsonPath.replace(regexp, `${props.item.jsonPath}[${i}]`);
+           if(listValuesArray[j].depedants){
+            listValuesArray[j].depedants.map((item)=>{
+                 return item.jsonPath=item.jsonPath.replace(regexp, `${props.item.jsonPath}[${i}]`);
+            })
+          }
+           
+          if(listValuesArray[j].isRequired){
+                if(!_.includes(requiredFields,listValuesArray[j].jsonPath)){
+                  tableListreqiredField.push(listValuesArray[j].jsonPath)
+                  this.props.addRequiredFields(tableListreqiredField)
+                }
+          }  
+
         }
         valuesArray.push(listValuesArray);
       }
@@ -186,6 +201,11 @@ class UiMultiFieldTable extends Component {
       () => {
         for (var i = 0; i < val.length; i++) {
           val[i].jsonPath = val[i].jsonPath.replace(regexp, `${this.props.item.jsonPath}[${idx}]`); //this.state.index}]`);
+           if(val[i].depedants){
+            val[i].depedants.map((item)=>{
+                 return item.jsonPath=item.jsonPath.replace(regexp, `${this.props.item.jsonPath}[${idx}]`);
+            })
+          }
         }
         this.addMandatoryforAdd(val);
         let values = [...this.state.values];
@@ -214,6 +234,13 @@ class UiMultiFieldTable extends Component {
     for (var i = 0; i < values.length; i++) {
       for (var j = 0; j < values[i].length; j++) {
         values[i][j].jsonPath = values[i][j].jsonPath.replace(regexp, `${this.props.item.jsonPath}[${i}]`);
+         if(values[i][j].depedants){
+            values[i][j].depedants.map((item)=>{
+                 return item.jsonPath=item.jsonPath.replace(regexp, `${this.props.item.jsonPath}[${i}]`);
+            })
+          }
+
+
         if (values[i][j].dependency) {
           //Changes to handle dependency sum
           dependencyFlag = 1;
@@ -240,8 +267,9 @@ class UiMultiFieldTable extends Component {
             for (let j = 0; j < values[i].length; j++) {
               if (values[i][j].isHidden) {
               } else {
+                        let value=typeof _.get(this.props.formData, values[i][j].jsonPath) != 'undefined' ? _.get(this.props.formData, values[i][j].jsonPath) : ''
                 this.props.handleChange(
-                  _.get(this.props.formData, values[i][j].jsonPath) || '',
+                  value,
                   values[i][j].jsonPath,
                   values[i][j].isRequired,
                   values[i][j].pattern,
@@ -249,6 +277,19 @@ class UiMultiFieldTable extends Component {
                   values[i][j].patternErrMsg
                 );
               }
+
+               if(values[i][j].depedants){
+                        let value=typeof _.get(this.props.formData, values[i][j].jsonPath) != 'undefined' ? _.get(this.props.formData, values[i][j].jsonPath) : ''
+                 
+                this.props.handler(
+                 { target: { value: value } },
+                  values[i][j].jsonPath,
+                  values[i][j].isRequired,
+                  values[i][j].pattern,
+                  values[i][j].requiredErrMsg,
+                  values[i][j].patternErrMsg
+                );
+              } 
             }
           }
         }

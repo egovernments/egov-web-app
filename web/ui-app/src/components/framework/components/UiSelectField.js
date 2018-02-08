@@ -25,8 +25,6 @@ class UiSelectField extends Component {
   }
 
   initData(props) {
-    //debugger;
-    // console.log("UiSelectField, initData() called", props);
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
         if (
       item.hasOwnProperty('url') &&
@@ -143,8 +141,7 @@ class UiSelectField extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //debugger;
-    //console.log("UiSelectField, componentWillReceiveProps() called,  nextProps = ", nextProps, "currentProps", this.props);
+    
     let { dropDownData, dropDownOringalData, value ,item, handler} = this.props;
 
     // on change of dropdown value reseting the 3rd level  dependant dropdown values
@@ -215,6 +212,10 @@ class UiSelectField extends Component {
     // if(item.jsonPath == 'abstractEstimates[0].natureOfWork.code' || item.jsonPath == 'abstractEstimates[0].pmcName' || item.jsonPath == 'abstractEstimates[0].department.code')
     // console.log(item.jsonPath, '<--->', value, typeof(value) );
     let dropDownDataArray = dropDownData;
+    if(value && !name && dropDownData ){
+      dropDownData.map((item)=>{if(item.key==value){return name=item.value}})
+
+    }
 
     if (item.filterMenu && filter) {
       dropDownDataArray = [
