@@ -7,6 +7,7 @@ var dat = {
     url: 'perfmanagement/v1/kpimaster/_create',
     useTimestamp: true,
     objectName: 'KPIs',
+    idJsonPath: 'KPIs[0]',
     groups: [
       {
         label: 'perfManagement.create.KPIs.groups.kpiMasterCreate',
@@ -333,6 +334,7 @@ var dat = {
     url: 'perfmanagement/v1/kpimaster/_update',
     useTimestamp: true,
     objectName: 'KPIs',
+    idJsonPath: 'KPIs[0]',
     groups: [
       {
         label: 'perfManagement.update.KPIs.groups.updateKpiDepartmentBlock',

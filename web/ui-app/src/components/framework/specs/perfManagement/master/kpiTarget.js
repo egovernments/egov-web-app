@@ -7,6 +7,7 @@ var dat = {
     url: 'perfmanagement/v1/kpitarget/_create',
     useTimestamp: true,
     objectName: 'kpiTargets',
+    idJsonPath: 'kpiTargets[0]',
     tenantIdRequired: true,
     groups: [
       {
@@ -436,6 +437,7 @@ var dat = {
     url: '/perfmanagement/v1/kpitarget/_update',
     useTimestamp: true,
     objectName: 'kpiTargets',
+    idJsonPath: 'kpiTargets[0]',
     groups: [
       {
         label: '',
