@@ -28,7 +28,7 @@ export default class TableCard extends Component {
       maxChartData: 0,
     };
     this.kpis = this.props.kpis;
-    this.fileStoreIds = [];
+    this.filesMetadata = [];
   }
   componentDidMount() {
 
@@ -46,20 +46,8 @@ export default class TableCard extends Component {
       formatChartData(parseCompareSearchResponse(this.props.data, this.props.kpiType === 'TEXT' ? true : false), (data, dataKey) => {
         if (!data || !dataKey) {
         } else {
-          this.fileStoreIds = formatChartDataForFileStoreIds(data);
-          
-          /////////////
-          // TESTING ONLY
-          this.fileStoreIds = [ { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=64a49ed5-4b95-42fa-9e08-6587eba096b4',
-          documentId: '64a49ed5-4b95-42fa-9e08-6587eba096b4' },
-        { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=6e88c31c-6574-41c4-8f52-8bb9197ceeb6',
-          documentId: '6e88c31c-6574-41c4-8f52-8bb9197ceeb6' },
-        { url: 'filestore/v1/files/metadata?tenantId=mh.roha&fileStoreId=520653ec-3cc4-49cf-a43f-8c7e99e3b183',
-          documentId: '520653ec-3cc4-49cf-a43f-8c7e99e3b183' } ];
-          /////////////
-
-          fetchFilesMetadata(this.fileStoreIds, (err, res) => {
-            console.log(res)
+          fetchFilesMetadata(formatChartDataForFileStoreIds(data), (err, res) => {
+            this.filesMetadata = res
             this.setState({
               data: data,
               dataKey: dataKey,
@@ -286,12 +274,6 @@ export default class TableCard extends Component {
   renderTable = () => {
     let headers = this.getTableHeaders();
     let data    = this.getModifiedChartData(this.getChartData())
-    const fileInfos = [
-        {name: "this is long file name to check the file name layout.txt",fileStoreId: "232323232"}, 
-        {name: "filename2.txt", fileStoreId: "232323232"},
-        {name: "this is long file name to check the file name layout.txt",fileStoreId: "232323232"},
-        {name: "filename3.txt", fileStoreId: "232323232"},
-        {name: "filename4.txt", fileStoreId: "232323232"}, ]
     return (
         <div>
             <Table style={{ color: 'black', fontWeight: 'normal', marginTop: '10px' }} bordered responsive className="table-striped">
@@ -308,7 +290,7 @@ export default class TableCard extends Component {
                                 style={{whiteSpace: 'normal', wordWrap: 'break-word'}} 
                                 key={index}>
                                   { (el === 'documentIds' && item[el].length > 0) ?  
-                                    this.renderAttachmetLinks((fileInfos), item[el]) : item[el]
+                                    this.renderAttachmetLinks(item[el]) : item[el]
                                   } 
                               </TableRowColumn>)
                           } 
@@ -374,24 +356,19 @@ export default class TableCard extends Component {
    * render
    * render download files link with name
    */
-  renderAttachmetLinks = (fileInfos) => {
-      const listItems = fileInfos.map((link) =>{
-      //console.log("fileStoreId from link",link.fileStoreId);
-      //console.log("name from link",link.name);
-      const fileStoreId = link.fileStoreId;
-      const name = link.name;
+  renderAttachmetLinks = (fileStoreIds) => {
+    const listItems =fileStoreIds.map((fileStoreId, index) => {
+      let {documentId, fileName} = this.filesMetadata.filter(elem => elem.documentId === fileStoreId)[0]
       return (
-          <div>
-              <ul>
-                  <li key={fileStoreId}>
-                      <a hre="" onClick={() => {this.processOnClickDownloadAttachments(fileStoreId, name)}}>{name}
-                    </a>
-                  </li>
-              </ul>
-          </div>
-        )
-      }
-    )
+        <div key={documentId}>
+          <ul key={documentId}>
+            <li key={documentId}>
+              <a href="" onClick={() => {this.processOnClickDownloadAttachments(documentId, fileName)}}>{fileName} </a>
+            </li>
+          </ul>
+        </div>
+      )
+    })
     return listItems;
   }
 }

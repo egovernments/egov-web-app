@@ -13,15 +13,16 @@ var axios = require('axios');
  */
 
 export const fetchFilesMetadata = (fileInfos, cb) => {
-  // http://egov-micro-dev.egovernments.org/filestore/v1/files/id?tenantId=default&fileStoreId=2742d207-0cf4-42f3-83ca-34ee6a547197
+  // http://egov-micro-dev.egovernments.org/filestore/v1/files/metadata?tenantId=default&fileStoreId=2742d207-0cf4-42f3-83ca-34ee6a547197
   let requests = [];
+  let headers = { headers: { "auth-token": localStorage.getItem('token'), 'Content-Type': 'application/json' } }
+
   for (let i = 0; i < fileInfos.length; i++) {
-    requests.push(axios.get(fileInfos[i].url)
+    requests.push(axios.get(fileInfos[i].url, headers)
       .then((res) => {
-        console.log(res)
         return {
           documentId: fileInfos[i].documentId,
-          fileName: res.fileName
+          fileName: res.data.fileName
         }
       })
       .catch((err) => {
