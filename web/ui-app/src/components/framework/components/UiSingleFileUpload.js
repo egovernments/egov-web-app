@@ -30,7 +30,9 @@ export default class UiSingleFileUpload extends Component {
                 {translate(item.label)}
               </a>
               <p style={{margin:'5px 0px 5px 20%'}}>{"OR"}</p>
-           </div> : ''
+           </div> : <label style={{margin:'15px 0px 15px 0'}}>
+           {item.label.replace("Download", "Upload")} <span style={{ color: '#FF0000' }}>{item.isRequired ? ' *' : ''}</span>
+          </label>
           } 
 
            <div
@@ -77,7 +79,7 @@ export default class UiSingleFileUpload extends Component {
               target="_blank"
             >
               {translate(item.label)}
-            </a> : <p>{"No documents"}</p>
+            </a> : <p style={{margin:'20px 0px 20px 0'}}>{"No documents"}</p>
           );
         } else {
           /*

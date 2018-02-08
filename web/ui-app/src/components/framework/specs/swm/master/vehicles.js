@@ -1017,6 +1017,7 @@ var dat = {
             label: 'swm.vehicles.create.insurance.download.details',
             type: 'singleFileUpload',
             readonly:true,
+            optionForNew:true,
             pathToArray: 'documentTypes',
             displayNameJsonPath: 'name',
             isRequired: false,
