@@ -27,6 +27,11 @@ class UiBoundary extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if( _.get(nextProps.formData, nextProps.item.jsonPath) === '' || _.get(nextProps.formData, nextProps.item.jsonPath) === undefined){
+        this.setState({
+          dropDownDataVal: {}
+        });
+      }
     if (window.location.hash.split('/')[1] != 'create' || nextProps.item.setResponseData == true) {
       if (_.get(this.props.formData, this.props.item.jsonPath) != _.get(nextProps.formData, nextProps.item.jsonPath)) {
         this.fetchLocations(nextProps.item);

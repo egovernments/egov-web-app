@@ -23,6 +23,10 @@ var dat = {
             patternErrMsg: '',
             defaultValue: [
               {
+                key: null,
+                value: '-- Please Select --',
+              },
+              {
                 key: 'MOVABLE',
                 value: 'MOVABLE',
               },
@@ -242,7 +246,7 @@ var dat = {
       // "rowClickUrlUpdate": "/update/wc/pipeSize/{id}",
       // "rowClickUrlView": "/view/wc/pipeSize/{id}"
     },
-  
+
     transaction: [
       {
         label: '',

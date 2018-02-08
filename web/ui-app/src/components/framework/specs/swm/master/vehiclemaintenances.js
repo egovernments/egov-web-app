@@ -96,7 +96,7 @@ var dat = {
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
             depedants: [
               {
-                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+                jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.name',
                 type: 'autoFill',
                 pattern: '/swm-services/vehicles/_search?&regNumber={vehicleMaintenances[0].vehicle.regNumber}',
                 autoFillFields: {
@@ -333,7 +333,7 @@ var dat = {
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
             depedants: [
               {
-                jsonPath: 'paymentDetails[0].vendorPaymentDetails.paymentNo',
+                jsonPath: 'vehicleMaintenances[0].vehicle.vehicleType.name',
                 type: 'autoFill',
                 pattern: '/swm-services/vehicles/_search?&regNumber={vehicleMaintenances[0].vehicle.regNumber}',
                 autoFillFields: {

@@ -24,7 +24,7 @@ var dat = {
           type: 'singleValueList',
           isDisabled: false,
           patternErrorMsg: 'swm.create.field.message.name',
-          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name'
+          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.code'
         },
       ],
     }, ],
@@ -38,7 +38,7 @@ var dat = {
       ],
       values: [
         'sanitationStaffTarget.targetNo',
-        'shift.name'
+        'shift.code'
       ],
       resultPath: 'sanitationStaffSchedules',
       rowClickUrlUpdate: '/update/swm/sanitationstaffschedules/{transactionNo}',
@@ -93,7 +93,7 @@ var dat = {
           maxLength: 256,
           minLength: 1,
           patternErrorMsg: '',
-          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name'
+          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.code'
         },
         {
           name: 'targetFrom',
@@ -254,7 +254,7 @@ var dat = {
         },
         {
           name: 'code',
-          jsonPath: 'sanitationStaffSchedules[0].shift.name',
+          jsonPath: 'sanitationStaffSchedules[0].shift.code',
           label: 'swm.create.sanitationstaffschedules.shift',
           pattern: '',
           type: 'text',
@@ -451,7 +451,7 @@ var dat = {
           maxLength: 256,
           minLength: 1,
           patternErrorMsg: '',
-          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.name',
+          url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=Shift|$..Shift.*.code|$..Shift.*.code',
         },
         {
           name: 'targetFrom',
