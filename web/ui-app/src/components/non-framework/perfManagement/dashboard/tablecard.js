@@ -49,7 +49,7 @@ export default class TableCard extends Component {
           fetchFilesMetadata(formatChartDataForFileStoreIds(data), (err, res) => {
             this.filesMetadata = res
             console.log(this.filesMetadata)
-            
+
             this.setState({
               data: data,
               dataKey: dataKey,
@@ -91,9 +91,7 @@ export default class TableCard extends Component {
   }
 
   processOnClickDownloadAttachments = (fileStoreIds, ulbName) => {
-    fileStoreIds.forEach((fileStoreId) => {
-      fetchFileByFileStoreId(fileStoreId, ulbName)
-    })
+    fetchFileByFileStoreId(fileStoreId, ulbName)
   }
 
   getTableHeaders = () => {
