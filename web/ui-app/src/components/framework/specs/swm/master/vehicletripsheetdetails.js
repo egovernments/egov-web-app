@@ -5,7 +5,8 @@ var dat = {
     objectName: "vehicleTripSheetDetails",
     url: "/swm-services/vehicletripsheetdetails/_search",
     title: 'swm.search.page.title.vehicletripsheetdetails',
-    groups: [{
+    groups: [
+    {
       name: "vehicleTripEntrySearch",
       label: "swm.vehiclestripsheet.search.vehicleTripEntrySearch",
       fields: [{
@@ -103,7 +104,7 @@ var dat = {
     var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
     if(result)
     {
-      alert("The from date should be future or current date");
+      alert("The from date should be current date");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
@@ -460,7 +461,7 @@ var dat = {
     var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
     if(result)
     {
-      alert("The from date should be future or current date");
+      alert("The from date should be current date");
       shouldSubmit=false;
     }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
