@@ -51,10 +51,10 @@ const routeValidation = `
               else if(groupArr[i].fields[j].jsonPath === "endPoint.dumpingGround.code") {
                 groupArr[i].fields[j].isDisabled = false;
               }
-              else if(groupArr[i].fields[j].jsonPath === "endPoint.garbageEstimate") {
-                groupArr[i].fields[j].isDisabled = true;
-                self.setVal('endPoint.garbageEstimate', '0');
-              }
+              // else if(groupArr[i].fields[j].jsonPath === "endPoint.garbageEstimate") {
+              //   groupArr[i].fields[j].isDisabled = true;
+              //   self.setVal('endPoint.garbageEstimate', '');
+              // }
             }
           }
         }
@@ -71,9 +71,9 @@ const routeValidation = `
                 groupArr[i].fields[j].isDisabled = true;
                 self.setVal('endPoint.dumpingGround', null);
               }
-              else if(groupArr[i].fields[j].jsonPath === "endPoint.garbageEstimate") {
-                groupArr[i].fields[j].isDisabled = false;
-              }
+              // else if(groupArr[i].fields[j].jsonPath === "endPoint.garbageEstimate") {
+              //   groupArr[i].fields[j].isDisabled = false;
+              // }
             }
           }
         }
@@ -189,10 +189,11 @@ setTypeOfPointView(res);getDumpingLocation(res);`
 const getDumpingLocationUpdate = `
   const getDumpingLocation=(res) => {
     var jsonPathArr = JP.query((self.props.mockData[self.props.moduleName+'.'+self.props.actionName]), "$.groups..fields[?(@.name=='dumpingGround')].jsonPath");
+    let _formData = _.cloneDeep(self.props.formData);
     jsonPathArr.forEach((item) => {
       if(_.get(res, item)) {
-        self.setVal("endPoint.collectionPoint.location.code", _.get(res, "endPoint.dumpingGround.siteDetails.location.code"));
-        console.log(self.props.formData);
+        _.set(_formData, "endPoint.collectionPoint.location.code", _.get(res, "endPoint.dumpingGround.siteDetails.location.code"));
+        self.props.setFormData(_formData);
       }
     })
   }
@@ -236,9 +237,9 @@ var dat = {
     afterHandleChange: routeValidation,
     beforeSubmit: modifyFormData,
     numCols: 3,
+    objectName: 'routes',
     useTimestamp: true,
     idJsonPath: 'routes[0].code',
-    objectName: 'routes',
     title: 'swm.routes.create.title',
     groups: [
       {
