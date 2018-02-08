@@ -820,7 +820,7 @@ class Report extends Component {
               ) {
                 if (obj.groups[i].fields[j].acceptCode==true){
                   obj.groups[i].fields[j].defaultValue = obj.groups[i].fields[j].defaultValue;
-                    
+
                 }
                 else{
                 obj.groups[i].fields[j].defaultValue =
@@ -1350,16 +1350,14 @@ class Report extends Component {
     }
   };
 
-  makeAjaxCall = async (formData, url) => {
+  makeAjaxCall = (formData, url) => {
     let shouldSubmit = true;
     let self = this;
     let _formData = _.cloneDeep(formData);
+    var formData=Object.assign({}, formData);
     let { setVal } = this.props;
     var hashLocation = window.location.hash;
-    let obj =
-      specifications[
-      `${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`
-      ];
+    let obj =specifications[`${hashLocation.split("/")[2]}.${hashLocation.split("/")[1]}`];
     const JP = jp;
 
 
@@ -1372,7 +1370,7 @@ class Report extends Component {
         obj,
         `$.groups..fields[?(@.hasATOAATransform==true)]`
       );
-   
+
       for (var i = 0; i < fields.length; i++) {
         let values = _.get(_formData, fields[i].jsonPath);
         if (values && _.isArray(values) && values.length > 0) {
@@ -1396,59 +1394,160 @@ class Report extends Component {
         }
       }
 
+      // console.log(formData);
+      delete formData.ResponseInfo;
+      //return console.log(formData);
+      // console.log(obj);
+
       if (obj.hasOwnProperty("omittableFields")) {
         this.generateSpecificForm(_formData, obj["omittableFields"]);
       }
 
-    try {
-      const response = await Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', _formData, '', true);
-      // set the response item
-      const cacheKey =  this.props.moduleName + "." + this.props.match.params.master  + '.search';
-      window.sessionStorage.setItem(cacheKey,JSON.stringify(response));
-      self.props.setLoadingStatus('hide');
-      self.initData();
-      if (response.summons) {
-        if (response.summons.length > 0) {
-          self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'Created Successfully Ref No. is ' + response.summons[0].summonReferenceNo : 'wc.update.message.success'), true);
-        } else {
-          self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'), true);
-        }
-      } else {
-        let hashLocation = window.location.hash;
-        if ($('input[type=file]')) {
-          $('input[type=file]').val('');
-        }
-        self.props.toggleSnackbarAndSetText(true, translate(self.props.actionName == 'create' ? 'wc.create.message.success' : 'wc.update.message.success'), true);
-      }
-
-      setTimeout(function() {
-        if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath) {
-          if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl) {
-            var hash = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl + '/' + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
-          } else {
-            if (self.props.actionName == 'update') {
-              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, '/view/');
+      Api.commonApiPost(
+        url ||
+        self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`]
+          .url,
+        "",
+        _formData,
+        "",
+        true
+      ).then(
+        function (response) {
+          self.props.setLoadingStatus("hide");
+          self.initData();
+          if (response.summons) {
+            if (response.summons.length > 0) {
+              self.props.toggleSnackbarAndSetText(
+                true,
+                translate(
+                  self.props.actionName == "create"
+                    ? "Created Successfully Ref No. is " +
+                    response.summons[0].summonReferenceNo
+                    : "wc.update.message.success"
+                ),
+                true
+              );
             } else {
-              var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, '/view/') + '/' + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
+              self.props.toggleSnackbarAndSetText(
+                true,
+                translate(
+                  self.props.actionName == "create"
+                    ? "wc.create.message.success"
+                    : "wc.update.message.success"
+                ),
+                true
+              );
             }
+          } else {
+            let hashLocation = window.location.hash;
+            if ($("input[type=file]")) {
+              $("input[type=file]").val("");
+            }
+            self.props.toggleSnackbarAndSetText(
+              true,
+              translate(
+                self.props.actionName == "create"
+                  ? "wc.create.message.success"
+                  : "wc.update.message.success"
+              ),
+              true
+            );
           }
 
-          self.props.setRoute(hash + (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].queryString || ''));
-        } else if (self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].passResToLocalStore) {
-          var hash = self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].ackUrl;
-          var obj = _.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].passResToLocalStore);
-          if (obj.isVakalatnamaGenerated) {
-            localStorage.setItem('returnUrl', window.location.hash.split('#/')[1]);
-            localStorage.setItem(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].localStoreResponseKey, JSON.stringify(obj));
-            self.props.setRoute(hash);
-          }
+          setTimeout(function () {
+            if (
+              self.props.metaData[
+                `${self.props.moduleName}.${self.props.actionName}`
+              ].idJsonPath
+            ) {
+              if (
+                self.props.metaData[
+                  `${self.props.moduleName}.${self.props.actionName}`
+                ].ackUrl
+              ) {
+                var hash =
+                  self.props.metaData[
+                    `${self.props.moduleName}.${self.props.actionName}`
+                  ].ackUrl +
+                  "/" +
+                  encodeURIComponent(
+                    _.get(
+                      response,
+                      self.props.metaData[
+                        `${self.props.moduleName}.${self.props.actionName}`
+                      ].idJsonPath
+                    )
+                  );
+              } else {
+                if (self.props.actionName == "update") {
+                  var hash = window.location.hash.replace(
+                    /(\#\/create\/|\#\/update\/)/,
+                    "/view/"
+                  );
+                } else {
+                  var hash =
+                    window.location.hash.replace(
+                      /(\#\/create\/|\#\/update\/)/,
+                      "/view/"
+                    ) +
+                    "/" +
+                    encodeURIComponent(
+                      _.get(
+                        response,
+                        self.props.metaData[
+                          `${self.props.moduleName}.${self.props.actionName}`
+                        ].idJsonPath
+                      )
+                    );
+                }
+              }
+
+              self.props.setRoute(
+                hash +
+                (self.props.metaData[
+                  `${self.props.moduleName}.${self.props.actionName}`
+                ].queryString || "")
+              );
+            } else if (
+              self.props.metaData[
+                `${self.props.moduleName}.${self.props.actionName}`
+              ].passResToLocalStore
+            ) {
+              var hash =
+                self.props.metaData[
+                  `${self.props.moduleName}.${self.props.actionName}`
+                ].ackUrl;
+              var obj = _.get(
+                response,
+                self.props.metaData[
+                  `${self.props.moduleName}.${self.props.actionName}`
+                ].passResToLocalStore
+              );
+              if (obj.isVakalatnamaGenerated) {
+                localStorage.setItem(
+                  "returnUrl",
+                  window.location.hash.split("#/")[1]
+                );
+                localStorage.setItem(
+                  self.props.metaData[
+                    `${self.props.moduleName}.${self.props.actionName}`
+                  ].localStoreResponseKey,
+                  JSON.stringify(obj)
+                );
+                self.props.setRoute(hash);
+              }
+            }
+          }, 1500);
+
+
+        },
+        function (err) {
+          self.props.setLoadingStatus("hide");
+          self.props.toggleSnackbarAndSetText(true, err.message);
         }
-      }, 1500);
-    } catch (err) {
-      self.props.setLoadingStatus('hide');
-      self.props.toggleSnackbarAndSetText(true, err.message);
+);
+
     }
-  }
     else {
       self.props.setLoadingStatus("hide");
     }
@@ -1554,6 +1653,7 @@ class Report extends Component {
     let { mockData, actionName, moduleName } = this.props;
     let self = this;
     let fileList = {};
+    var formData=Object.assign({}, formData);
     this.getFileList(
       mockData[moduleName + "." + actionName],
       formData,
@@ -3156,7 +3256,7 @@ class Report extends Component {
               var isTableList = false;
               for(var i=0; i<mockData[moduleName+'.'+actionName].groups.length; i++) {
                 for(var j=0; j<mockData[moduleName+'.'+actionName].groups[i].fields.length; j++) {
-                  if((mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableListTemp' 
+                  if((mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableListTemp'
                   || mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableList')
                   && JSON.stringify(mockData[moduleName+'.'+actionName].groups[i].fields[j]).includes(currProperty)) {
                     isTableList = true;
@@ -3181,7 +3281,10 @@ class Report extends Component {
             }
           },
           function (err) {
-            console.log(err);
+            // console.log(err);
+            setDropDownData(value.jsonPath, []);
+            setDropDownOriginalData(value.jsonPath, []);
+            self.props.toggleSnackbarAndSetText(true, err.message);
           }
           );
       } else if (value.type == "textField") {
@@ -3213,7 +3316,6 @@ class Report extends Component {
               ajaxResult = this.makeAPICallGetResponse(value.url);
             }
             let xt = eval(value.pattern);
-
             object = {
               target: {
                 value:
@@ -4132,7 +4234,7 @@ class Report extends Component {
           }
           /* Check for any other card --> Splice the array --> Create the form data --> Set form data */
           else {
-            
+
             for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
                 if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired)
@@ -4140,7 +4242,7 @@ class Report extends Component {
               }
               delRequiredFields(notReqFields);
             }
-            
+
             for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (index == i && groupName == mockData[moduleName + '.' + actionName].groups[i].name) {
                 ind = i;
@@ -4149,7 +4251,7 @@ class Report extends Component {
               }
             }
 
-            
+
 
             for (let i = ind; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
@@ -4213,7 +4315,7 @@ class Report extends Component {
             }
             for (let i = 0; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               for (var k = 0; k < mockData[moduleName + '.' + actionName].groups[i].fields.length; k++) {
-                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired && 
+                if (mockData[moduleName + '.' + actionName].groups[i].fields[k].isRequired &&
                 !mockData[moduleName + '.' + actionName].groups[i].fields[k].hide){
                   ReqFields.push(mockData[moduleName + '.' + actionName].groups[i].fields[k].jsonPath);
                 }
