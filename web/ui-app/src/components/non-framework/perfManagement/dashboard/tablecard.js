@@ -292,9 +292,6 @@ export default class TableCard extends Component {
         {name: "this is long file name to check the file name layout.txt",fileStoreId: "232323232"},
         {name: "filename3.txt", fileStoreId: "232323232"},
         {name: "filename4.txt", fileStoreId: "232323232"}, ]
-        const fileInfosNew = [ 
-          {name: "filename2.txt", fileStoreId: "232323232"},
-          ]
     return (
         <div>
             <Table style={{ color: 'black', fontWeight: 'normal', marginTop: '10px' }} bordered responsive className="table-striped">
