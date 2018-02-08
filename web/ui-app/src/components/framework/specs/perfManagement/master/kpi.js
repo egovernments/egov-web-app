@@ -43,7 +43,6 @@ var dat = {
             isRequired: true,
             pattern: '',
             type: 'singleValueList',
-            //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
             url:
               'egov-mdms-service/v1/_get?tenantId=' +
               localStorage.tenantId.split('.')[0] +
@@ -133,17 +132,6 @@ var dat = {
             requiredErrMsg: '',
             patternErrMsg: '',
           },
-          /*{
-                        "name": "kpidocCode",
-                        "jsonPath": "KPIs[0].documentsReq[0].code",
-                        "label": "perfManagement.create.KPIs.groups.kpidocCode",
-                        "pattern": "",
-                        "type": "text",
-                        "isDisabled": false,
-                        "requiredErrMsg": "",
-                        "patternErrMsg": "",
-                        "url": ""
-                    },*/
           {
             name: 'kpidocMandatory',
             jsonPath: 'KPIs[0].documentsReq[0].active',
@@ -243,7 +231,6 @@ var dat = {
           {
             name: 'viewkpiDepartment',
             jsonPath: 'KPIs[0].department.name',
-            // "url": "egov-mdms-service/v1/_get?tenantId=default&tenantIdCustom={KPIs[0].tenantId}&moduleName=common-masters&masterName=Department|$..id|$..name",
             label: 'perfManagement.view.KPIs.groups.viewkpiDepartment',
             pattern: '',
             type: 'text',
@@ -287,77 +274,9 @@ var dat = {
             type: 'text',
             isDisabled: false,
             requiredErrMsg: '',
-          } /* {
-                        "name": "viewkpitype",
-                        "jsonPath": "KPIs[0].targetType",
-                        "label": "perfManagement.view.KPIs.groups.viewkpitype",
-                        "pattern": "",
-                        "type": "radio",
-                        "isRequired": false,
-                        "isDisabled": false,
-                        "requiredErrMsg": "",
-                        "patternErrMsg": "",
-                        "defaultValue": false,
-                        "values": [{
-                            "label": "KPI Value Number",
-                            "value": true
-                        }, {
-                            "label": "KPI Value Objective Type",
-                            "value": false
-                        }],
-                        "showHideFields": [{
-                            "ifValue": false,
-                            "hide": [{
-                                "name": "viewkpiTargetBlock",
-                                "isGroup": true,
-                                "isField": false
-                            }],
-                            "show": [{
-                                "name": "viewkpiTargetRadioBlock",
-                                "isGroup": true,
-                                "isField": false
-                            }]
-                        }]
-                    }*/,
+          },
         ],
       },
-
-      /*{
-                "label": "perfManagement.view.KPIs.groups.viewkpiTargetBlock",
-                "name": "viewkpiTargetBlock",
-                "hide": false,
-                "multiple": false,
-                "fields": [{
-                    "name": "viewkpiTarget",
-                    //"hide": false,
-                    "jsonPath": "KPIs[0].targetDescription",
-                    "label": "",
-                    "pattern": "",
-                    "type": "text",
-                    "isDisabled": false,
-                    "requiredErrMsg": ""
-                }]
-            },
-
-            {
-                "label": "perfManagement.view.KPIs.groups.viewkpiTargetRadioBlock",
-                "name": "viewkpiTargetRadioBlock",
-                "hide": true,
-                "multiple": false,
-                "fields": [{
-                    "name": "viewkpiTargetRadio",
-                    "jsonPath": "KPIs[0].targetDescription",
-                    "label": "",
-                    "pattern": "",
-                    //"type": "radio",
-                    "type":"text",
-                    "isRequired": false,
-                    "isDisabled": false,
-                    "requiredErrMsg": "",
-                    "patternErrMsg": "",
-                }]
-            },*/
-
       {
         label: 'perfManagement.view.KPIs.groups.viewKpiInstruc',
         name: 'viewKpiInstruc',
@@ -392,24 +311,13 @@ var dat = {
             requiredErrMsg: '',
             patternErrMsg: '',
           },
-          /*{
-            name: 'viewkpidocCode',
-            jsonPath: 'KPIs[0].documentsReq[0].code',
-            label: 'perfManagement.view.KPIs.groups.viewkpidocCode',
-            pattern: '',
-            type: 'text',
-            isDisabled: false,
-            requiredErrMsg: '',
-            patternErrMsg: '',
-            url: '',
-          },*/
+          
           {
             name: 'viewkpidocMandatory',
             jsonPath: 'KPIs[0].documentsReq[0].active',
             label: 'perfManagement.view.KPIs.groups.viewkpidocMandatory',
             pattern: '',
             type: 'checkbox',
-            /*defaultValue: false,*/
             isDisabled: false,
             requiredErrMsg: '',
             patternErrMsg: '',
@@ -460,7 +368,6 @@ var dat = {
             isRequired: true,
             pattern: '',
             type: 'singleValueList',
-            //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
             url:
               'egov-mdms-service/v1/_get?tenantId=' +
               localStorage.tenantId.split('.')[0] +

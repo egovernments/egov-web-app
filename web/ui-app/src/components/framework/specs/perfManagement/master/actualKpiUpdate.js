@@ -31,29 +31,6 @@ var dat = {
             isDisabled: false,
             requiredErrMsg: '',
           },
-
-          /*{
-              "name": "searchKpi",
-              "jsonPath": "kpiCodes",
-              "label": "KPI",
-              "pattern": "",
-              "type": "singleValueList",
-              "isRequired":true,
-              "url":"/perfmanagement/v1/kpimaster/_search?tenantId=default|$.KPIs.*.code|$.KPIs.*.name",
-              "isDisabled": false,
-              "requiredErrMsg": ""
-          },
-          {
-              "name": "searchActualKpiDate",
-              "jsonPath": "finYear",
-              "label": "Financial Year",
-              "pattern": "",
-              "type": "multiValueList",
-              "isRequired":true,
-              "url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
-              "isDisabled": false,
-              "requiredErrMsg": ""
-            }*/
         ],
       },
     ],
@@ -84,7 +61,6 @@ var dat = {
             isRequired: false,
             pattern: '',
             type: 'text',
-            //"url":"/perfmanagement/v1/kpivalue/_search?tenantId=default|$.kpiValues.KPI.code|$.kpiValues.KPI.name",
             isDisabled: true,
             requiredErrMsg: '',
           },
@@ -108,25 +84,6 @@ var dat = {
             isDisabled: true,
             requiredErrMsg: '',
           },
-          /*{
-              "name": "updateActualKpiTarget",
-              "jsonPath": "kpiValues[0].kpi.targetDescription",
-              "label": "Target Value",
-              "pattern": "",
-              "type": "text",
-              "isDisabled": true,
-              "requiredErrMsg": ""
-            },*/
-
-          /*{
-              "name": "updateActualKpiActual",
-              "jsonPath": "kpiValues[0].resultDescription",
-              "label": "Actual Value",
-              "pattern": "",
-              "type": "number",
-              "isDisabled": true,
-              "requiredErrMsg": ""
-            },*/
           {
             name: 'kpitype',
             jsonPath: 'kpiValues[0].kpi.targetType',
@@ -294,7 +251,6 @@ var dat = {
         fields: [
           {
             name: 'kpiTarget',
-            //"hide":false,
             jsonPath: 'kpiValues[0].kpi.targetDescription',
             label: '',
             pattern: '[0-9]',
@@ -314,7 +270,6 @@ var dat = {
         fields: [
           {
             name: 'kpiTargetRadio',
-            //"hide":true,
             jsonPath: 'kpiValues[0].kpi.targetValue',
             label: '',
             pattern: '',
@@ -471,7 +426,6 @@ var dat = {
           {
             name: 'viewkpiDepartment',
             jsonPath: 'kpiValues[0].kpi.code',
-            // "url": "egov-mdms-service/v1/_get?tenantId=default&tenantIdCustom={KPIs[0].tenantId}&moduleName=common-masters&masterName=Department|$..id|$..name",
             label: 'KPI Code',
             pattern: '',
             type: 'text',
