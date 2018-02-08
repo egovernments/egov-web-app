@@ -149,7 +149,7 @@ export default class BarChartCard extends Component {
     }
     let data = this.state.data[this.state.chartDataIndex - 1]
     let ulbName = this.getULBName(data['ulbName']); 
-    return `${translate('perfManagement.dashboard.chart.monthly.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${ulbName} ${translate('perfManagement.dashboard.chart.monthly.msg1')} ${data.finYear}`
+    return `${translate('perfManagement.dashboard.chart.monthly.msg1')} ${this.props.kpis} ${translate('perfManagement.dashboard.chart.monthly.msg2')} ${ulbName} ${translate('perfManagement.dashboard.chart.monthly.msg3')} ${data.finYear}`
   }
 
   render() {
