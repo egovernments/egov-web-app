@@ -9,6 +9,7 @@ import _ from 'lodash';
 import { withRouter } from 'react-router';
 
 let tracker = [];
+//let currentUrl = '';
 
 class UiSelectField extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class UiSelectField extends Component {
       filter: true,
       getDisplayValue: '',
     };
+    
   }
 
   componentWillMount() {
@@ -26,11 +28,16 @@ class UiSelectField extends Component {
 
   initData(props) {
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
-        if (
+    const currentUrl = window.location.hash.split('#')[1];  
+
+    if(props.location.pathname != currentUrl)   {
+      tracker = [];
+    } 
+    if (
       item.hasOwnProperty('url') &&
       item.url &&
       item.url.search('\\|') > -1 &&
-      item.url.search('{') == -1 &&
+      item.url.search('{') == -1 && (props.location.pathname === currentUrl) &&
       !_.some(tracker, { jsonPath: item.jsonPath })
     ) {
       tracker.push({ jsonPath: item.jsonPath });
@@ -112,16 +119,6 @@ class UiSelectField extends Component {
             dropDownData.unshift({ key: null, value: '-- Please Select --' });
             setDropDownData(item.jsonPath, dropDownData);
             setDropDownOriginalData(item.jsonPath, response);
-            // props.handler(
-            //   { target: { value: '' } },
-            //   item.jsonPath,
-            //   item.isRequired ? true : false,
-            //   '',
-            //   item.requiredErrMsg,
-            //   item.patternErrMsg,
-            //   item.expression,
-            //   item.expressionMsg
-            // );
           }
             },
         function(err) {
@@ -131,7 +128,7 @@ class UiSelectField extends Component {
     } else if (item.hasOwnProperty('defaultValue') && typeof item.defaultValue == 'object') {
       setDropDownData(item.jsonPath, item.defaultValue);
     } else {
-      // console.log(this.props);
+      
     }
   }
 
@@ -141,7 +138,6 @@ class UiSelectField extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    
     let { dropDownData, dropDownOringalData, value ,item, handler} = this.props;
 
     // on change of dropdown value reseting the 3rd level  dependant dropdown values
@@ -180,30 +176,8 @@ class UiSelectField extends Component {
     }
 
     if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData === undefined){
-      // if(nextProps.item.jsonPath == 'assetSubCategory'){
-      //   console.log(nextProps);
-      //   nextProps.setDropDownData('','');
-      // }
-      // console.log(nextProps);
-    //   if(this.props.item.url != nextProps.item.url){
-    //
-    //   if(tracker.length && _.some(tracker, { jsonPath: nextProps.item.jsonPath })){
-    //   for(let x=0;x<tracker.length;x++){
-    //     if(tracker[x].jsonPath == nextProps.item.jsonPath){
-    //       tracker.splice(x,1);
-    //       x--;
-    //     }
-    //   }
-    //
-    //       }
-    //   this.initData(nextProps);
-    // }
       this.initData(nextProps);
     }
-    // if( dropDownData === undefined) {
-    //   this.initData(nextProps);
-    //
-    // }
   }
 
   renderSelect = item => {
