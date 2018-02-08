@@ -16,13 +16,8 @@ const saveOnLocal =`
         }
 
       })})
-  
-
 `
-
-
 var dat={
-
   'swm.search': {
     preApiCalls: [
       {
@@ -149,9 +144,6 @@ var dat={
   },
 
 'swm.create': {
-
-
-
     numCols: 4,
     useTimestamp: true,
     objectName: 'MasterMetaData',
@@ -174,10 +166,7 @@ var dat={
         patternErrorMsg: '',
         saveDataOnLocal:true,
         url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
-
-      },
-
-
+        },
         {
             name : 'toiletName',
             label : 'swm.toiletmaster.create.toiletName',
@@ -188,7 +177,6 @@ var dat={
             defaultValue:'',
             url :'',
             patternErrorMsg: '',
-
         },
         {
             name: 'toiletAddress',
@@ -198,9 +186,7 @@ var dat={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            
           },
-        
         ],  
     },
     {
@@ -218,7 +204,6 @@ var dat={
             "multiple": true,
             "fullWidth": true,
           },
-       
           ],
       },
       {
@@ -262,10 +247,7 @@ var dat={
             jsonPath: "MasterMetaData.masterData[0].longitude",
             url: '',
           },
-          
-     
         ],
-
       },
       {
         name: 'toiletmaster',
@@ -281,7 +263,6 @@ var dat={
             isDisabled: false,
             patternErrorMsg: '',
             url: '',
-
           },
         ],
       },
@@ -338,7 +319,6 @@ var dat={
     searchUrl: '/egov-mdms-service/v1/_search?code={code}',
     idJsonPath: 'MasterMetaData.masterData[0].code',
 
-
     groups:[
     {
       name: 'PublicToilet',
@@ -373,20 +353,6 @@ var dat={
           defaultValue: false,
           url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
         },
-
-        {
-          name: 'toiletName',
-          label: 'swm.toiletmaster.create.toiletName',
-          jsonPath: 'MasterMetaData.masterData[0].name',
-          type: 'text',
-          isRequired: true,
-          isDisabled: false,
-          defaultValue: '',
-          url: '',
-          patternErrorMsg: '',
-
-        },
-
         {
             name : 'toiletName',
             label : 'swm.toiletmaster.create.toiletName',
@@ -397,7 +363,6 @@ var dat={
             defaultValue:'',
             url :'',
             patternErrorMsg: '',
-
         },
         {
             name: 'toiletAddress',
@@ -407,13 +372,10 @@ var dat={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            
           },
-          
         ],  
     }, 
     {
-
         name: 'toiletLocation',
         label: 'swm.create.group.title.LocationDetails',
         fields: [
@@ -426,7 +388,6 @@ var dat={
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
-
           },
       /*     {
             name: 'toiletZone',
@@ -530,8 +491,6 @@ var dat={
  isMDMSScreen: true,
 },
 'swm.view': {
-
-
   preApiCalls: [
     {
       url: "egov-mdms-service/v1/_get",
@@ -546,7 +505,6 @@ var dat={
       }
     }
   ],
-
 
     numCols: 3,
     useTimestamp: true,
@@ -568,8 +526,6 @@ var dat={
             defaultValue: '',
             url: '',
             patternErrorMsg: '',
-
-            
           },
           {
     
@@ -583,7 +539,6 @@ var dat={
             url: "/egov-mdms-service/v1/_get?&moduleName=swm&masterName=ToiletType|$..code|$..name",
             reduxObject: "ToiletType",
             cToN: true 
-
           },
           {
             name : 'toiletName',
@@ -595,7 +550,6 @@ var dat={
             defaultValue:'',
             url :'',
             patternErrorMsg: '',
-
         },
         {
             name: 'toiletAddress',
@@ -605,15 +559,13 @@ var dat={
             isRequired: false,
             isDisabled: false,
             patternErrorMsg: '',
-            
           },
-          
         ],  
     }, 
     {
 
         name: 'toiletLocation',
-      label: 'swm.create.group.title.LocationDetails',
+        label: 'swm.create.group.title.LocationDetails',
         fields: [
         {
             "type": "boundary",
@@ -624,7 +576,6 @@ var dat={
             "patternErrorMsg": "",
             "multiple": true,
             "fullWidth": true,
-
           },
         // {
         //     name: 'toiletward',
@@ -670,7 +621,6 @@ var dat={
         //     patternErrorMsg: '',
         //     url: '',
         //   },
-     
           ],
       },
       {
@@ -709,9 +659,7 @@ var dat={
             jsonPath: 'MdmsRes.swm.Toilet["0"].longitude',
             url: '',
           },
-     
         ],
-
       },
       {
         name: 'toiletmaster',
@@ -726,7 +674,6 @@ var dat={
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: '',
-       
           },
         ],
       },
@@ -735,6 +682,5 @@ var dat={
      tenantIdRequired: true,
      url: '/egov-mdms-service/v1/_search?code={code}',
 },
-
 };
 export default dat;

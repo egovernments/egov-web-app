@@ -11,25 +11,27 @@ export default class UiSingleFileUpload extends Component {
     switch (this.props.ui) {
       case 'google':
       if (item.readonly && item.optionForNew) {
+        let {getVal}  = this.props;
+        let fileId =  getVal(item.jsonPath);
        return (
          <div>
-         
-       <div>  <a
-             href={
-               window.location.origin +
-               '/filestore/v1/files/id?tenantId=' +
-               localStorage.tenantId +
-               '&fileStoreId=' +
-               this.props.getVal(item.jsonPath)
-             }
-             target="_blank"
-           >
-             {translate(item.label)}
-             
-           </a>
-           <p style={{margin:'5px 0px 5px 20%'}}>{"OR"}</p>
-           </div>
-          
+       {(fileId) ?  
+       <div>
+             <a
+                href={
+                  window.location.origin +
+                  '/filestore/v1/files/id?tenantId=' +
+                  localStorage.tenantId +
+                  '&fileStoreId=' +
+                  fileId
+                }
+                target="_blank"
+              >
+                {translate(item.label)}
+              </a>
+              <p style={{margin:'5px 0px 5px 20%'}}>{"OR"}</p>
+           </div> : ''
+          } 
 
            <div
              style={{
@@ -59,19 +61,23 @@ export default class UiSingleFileUpload extends Component {
          </div>
        );
      }else if (item.readonly) {
+       let {getVal}  = this.props;
+       let fileId =  getVal(item.jsonPath);
+       console.log("File store Id Value Is", fileId);
           return (
+            (fileId) ?
             <a
               href={
                 window.location.origin +
                 '/filestore/v1/files/id?tenantId=' +
                 localStorage.tenantId +
                 '&fileStoreId=' +
-                this.props.getVal(item.jsonPath)
+                fileId
               }
               target="_blank"
             >
               {translate(item.label)}
-            </a>
+            </a> : <p>{"No documents"}</p>
           );
         } else {
           /*
