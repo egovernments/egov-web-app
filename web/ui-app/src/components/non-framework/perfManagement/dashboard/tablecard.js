@@ -357,13 +357,14 @@ export default class TableCard extends Component {
    * render download files link with name
    */
   renderAttachmetLinks = (fileStoreIds) => {
+    let data = this.state.data[this.state.chartDataIndex - 1]
     const listItems =fileStoreIds.map((fileStoreId, index) => {
       let {documentId, fileName} = this.filesMetadata.filter(elem => elem.documentId === fileStoreId)[0]
       return (
         <div key={documentId}>
           <ul key={documentId}>
             <li key={documentId}>
-              <a href="" onClick={() => {this.processOnClickDownloadAttachments(documentId, fileName)}}>{fileName} </a>
+              <a href="" onClick={() => {this.processOnClickDownloadAttachments(documentId, data.ulbName)}}>{fileName} </a>
             </li>
           </ul>
         </div>
