@@ -36,11 +36,6 @@ var dat = {
                 pattern: 'kpiTargets[0].KPI.code|KPIs|code|targetType',
                 hasFromDropDownOriginalData: true,
               },
-              // {
-              // "jsonPath": "kpiValues[0].tenantId",
-              // "type": "documentList",
-              // "pattern": localStorage.tenantId
-              // }
             ],
           },
           {
@@ -205,13 +200,11 @@ var dat = {
               criteria +
               '|$..finYearRange|$..finYearRange',
             isDisabled: false,
-            isRequired: true,
             requiredErrMsg: '',
             isStateLevel: true,
           },
           {
             name: 'kpiTarget',
-            //"hide":false,
             jsonPath: 'kpiTargets[0].targetValue',
             label: 'perfManagement.update.KPIs.groups.updatekpiTargetTextBlock',
             pattern: '^[0-9]*$',
@@ -248,7 +241,6 @@ var dat = {
           },
           {
             name: 'kpiTargetRadio',
-            //"hide":true,
             jsonPath: 'kpiTargets[0].targetValue',
             label: 'perfManagement.update.KPIs.groups.updatekpiTargetTextBlock',
             pattern: '',
@@ -351,7 +343,6 @@ var dat = {
           {
             name: 'viewkpiDepartment',
             jsonPath: 'kpiTargets[0].kpi.department.name',
-            // "url": "egov-mdms-service/v1/_get?tenantId=default&tenantIdCustom={KPIs[0].tenantId}&moduleName=common-masters&masterName=Department|$..id|$..name",
             label: 'perfManagement.view.KPIs.groups.viewkpiDepartment',
             pattern: '',
             type: 'text',
@@ -429,7 +420,6 @@ var dat = {
             jsonPath: 'kpiTargets[0].targetValue',
             label: '',
             pattern: '',
-            //"type": "radio",
             type: 'text',
             isRequired: false,
             isDisabled: false,
@@ -568,32 +558,6 @@ var dat = {
           },
         ],
       },
-      // {
-      //   label: '',
-      //   name: 'updatekpiTargetDateBlock',
-      //   hide: false,
-      //   multiple: false,
-      //   fields: [
-      //     {
-      //       name: 'updatekpiDate',
-      //       jsonPath: 'kpiTargets[0].finYear',
-      //       label: 'perfManagement.update.KPIs.groups.updatekpiTargetFinancialYear',
-      //       isRequired: true,
-      //       pattern: '',
-      //       type: 'singleValueList',
-      //       //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
-      //       url:
-      //         'egov-mdms-service/v1/_get?tenantId=' +
-      //         localStorage.tenantId.split('.')[0] +
-      //         '&masterName=FinancialYear&moduleName=egf-master&filter=' +
-      //         criteria +
-      //         '|$..finYearRange|$..finYearRange',
-      //       isDisabled: false,
-      //       requiredErrMsg: '',
-      //     },
-      //   ],
-      // },
-
       {
         label: '',
         name: 'updatekpiTargetTextBlock',
@@ -607,7 +571,6 @@ var dat = {
             isRequired: "this.props.getVal('kpiTargets[0].kpi.targetType') == 'TEXT'?true:false",
             pattern: '',
             type: 'singleValueList',
-            //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
             url:
               'egov-mdms-service/v1/_get?tenantId=' +
               localStorage.tenantId.split('.')[0] +
@@ -644,7 +607,6 @@ var dat = {
             isRequired: "this.props.getVal('kpiTargets[0].kpi.targetType') == 'VALUE'?true:false",
             pattern: '',
             type: 'singleValueList',
-            //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
             url:
               'egov-mdms-service/v1/_get?tenantId=' +
               localStorage.tenantId.split('.')[0] +
@@ -673,7 +635,6 @@ var dat = {
         label: '',
         name: 'updatekpiTargetRadioBlock',
         hide: "this.props.getVal('kpiTargets[0].kpi.targetType') != 'OBJECTIVE'?true:false",
-        //"hide": "`${getVal('KPIs[0].targetType')}`",
         multiple: false,
         fields: [
           {
@@ -683,7 +644,6 @@ var dat = {
             isRequired: "this.props.getVal('kpiTargets[0].kpi.targetType') == 'OBJECTIVE'?true:false",
             pattern: '',
             type: 'singleValueList',
-            //"url": "egf-master/financialyears/_search?tenantId=default|$.financialYears.*.finYearRange|$.financialYears.*.finYearRange",
             url:
               'egov-mdms-service/v1/_get?tenantId=' +
               localStorage.tenantId.split('.')[0] +
