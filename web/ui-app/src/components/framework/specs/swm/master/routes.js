@@ -36,7 +36,8 @@ const routeValidation = `
   }
 
   const toggleDumpingGround = (property) => {
-    let _mockData = {...self.props.mockData}
+    // let _mockData = {...self.props.mockData}
+    let _mockData = Object.assign({},self.props.mockData);
     if(property.indexOf('typeOfPoint') !== -1) {
       const val = self.getVal(property);
       if(val === 'Ending Dumping Ground point') {
@@ -122,7 +123,7 @@ const modifyFormData = `
     let indArr = [];
     delete _formData.routes[0]["collectionPoints"];
     _formData.routes[0].collectionPoints = [];
-    _formData.routes[0].collectionPoints.push(..._formData.routeStop.collectionPoints);
+    _formData.routes[0].collectionPoints = _formData.routes[0].collectionPoints.concat(_formData.routeStop.collectionPoints);
     _formData.routes[0].collectionPoints.unshift(_formData.startPoint);
     _formData.routes[0].collectionPoints.push(_formData.endPoint);
     delete _formData["routeStop"];
@@ -148,7 +149,8 @@ const setTypeOfPointUpdate = `
 `
 const setTypeOfPointView = `
   const setTypeOfPointView = (res) => {
-    let _mockData = {...self.props.mockData};
+    // let _mockData = {...self.props.mockData};
+    let _mockData = Object.assign({},self.props.mockData);
     let {moduleName, actionName} = self.props;
     if(res.routes && res.routes.length) {
       var jsonPathArr = JP.query((_mockData[moduleName+'.'+actionName]), "$.groups..fields[?(@.name=='typeOfPoint')].jsonPath");
