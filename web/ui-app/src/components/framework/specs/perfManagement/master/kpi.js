@@ -7,7 +7,7 @@ var dat = {
     url: 'perfmanagement/v1/kpimaster/_create',
     useTimestamp: true,
     objectName: 'KPIs',
-    idJsonPath: 'KPIs[0]',
+    idJsonPath: 'KPIs[0].code',
     groups: [
       {
         label: 'perfManagement.create.KPIs.groups.kpiMasterCreate',
