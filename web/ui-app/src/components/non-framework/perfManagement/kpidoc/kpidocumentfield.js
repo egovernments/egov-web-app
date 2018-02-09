@@ -138,41 +138,30 @@ class KPIDocumentField extends Component {
     self.props.kpiresult.map(kpi => {
       //console.log(kpi,'kpi Value list');
       kpi.kpiValue.valueList.map(kpiValue => {
-        for( i = kpi.kpiValue.valueList.length -1 ; i >=0; i--){
-            //console.log("kpi.kpiValue.valueList[i]",kpi.kpiValue.valueList[i])
-            if(kpi.kpiValue.valueList[i].documents && kpi.kpiValue.valueList[i].documents.length != 0){
-              kpiValue.documents.map(kpidoc => {
-                //console.log(kpidoc, 'elements :,kpidoc');
-                let valueid = kpiValue.valueid;
-                let period = kpiValue.period;
-        
-                if (kpidoc.fileStoreId) {
-                  if (!fileNameArr[valueid]) {
-                    fileNameArr[valueid] = [];
-                  }
-        
-                  if (!fileNameArr[valueid][period]) {
-                    fileNameArr[valueid][period] = [];
-                  }
-        
-                  if (kpidoc.code == code) {
-                    fileNameArr[valueid][period][kpidoc.code] = kpidoc.fileStoreId;
-                  }
-                }
-                // console.log(fileNameArr,'file Name Arr');
-                // console.log(storeID,'store ID');
-                });
+
+    if (kpiValue.documents) {    
+         kpiValue.documents.map(kpidoc => {
+          //console.log(kpidoc, 'elements :');
+
+          let valueid = kpiValue.valueid;
+          let period = kpiValue.period;
+
+          if (kpidoc.fileStoreId) {
+            if (!fileNameArr[valueid]) {
+              fileNameArr[valueid] = [];
             }
-        }
-        //fileNameArr.currentFileName
-        // let kpidoc = kpiValue.documents[0];
-        // console.log(kpiValue.documents);
-        // console.log(kpidoc);
-        // if (kpidoc) {
 
-        //       self.getFileDetails(kpidoc.fileStoreId,self);
+            if (!fileNameArr[valueid][period]) {
+              fileNameArr[valueid][period] = [];
+            }
 
-        // }
+            if (kpidoc.code == code) {
+              fileNameArr[valueid][period][kpidoc.code] = kpidoc.fileStoreId;
+            }
+          }
+        });
+       }
+
       });
     });
 
