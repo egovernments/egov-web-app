@@ -114,31 +114,31 @@ var dat = {
   },
   'swm.create': {
 
-    beforeSubmit:
-    `
-    let OrignalArr = _formData.vendorContracts;
-    let getFormData = _.get(_formData, 'vendorContracts[0].vendorContracts');
-    if(getFormData){
-      _formData.vendorContracts = OrignalArr.concat(...getFormData);
-      let len  = _formData.vendorContracts.length;
-      if(len > 1){
-        _.unset(_formData, 'vendorContracts[0].vendorContracts');
-         let getInitalVendor = _.get(_formData,'vendorContracts[0].vendor');
-         for(var i = 1; i<len; i++){
-           let getServiceOff = _.get(_formData, 'vendorContracts['+i+'].servicesOffered');
-           if(_.isArray(getServiceOff)){
-            getServiceOff =  getServiceOff.map((item) => {
-              return ({"code" : item});
-            });
-           }
-           _formData.vendorContracts[i].vendor = getInitalVendor;
-           _formData.vendorContracts[i].servicesOffered = getServiceOff;
-           _formData.vendorContracts[i].tenantId = localStorage.getItem("tenantId");
-           _.unset(_formData, 'vendorContracts['+i+'].vendorContracts');
-         }
-      }
-    }
-    `,
+    // beforeSubmit:
+    // `
+    // let OrignalArr = _formData.vendorContracts;
+    // let getFormData = _.get(_formData, 'vendorContracts[0].vendorContracts');
+    // if(getFormData){
+    //   _formData.vendorContracts = OrignalArr.concat(...getFormData);
+    //   let len  = _formData.vendorContracts.length;
+    //   if(len > 1){
+    //     _.unset(_formData, 'vendorContracts[0].vendorContracts');
+    //      let getInitalVendor = _.get(_formData,'vendorContracts[0].vendor');
+    //      for(var i = 1; i<len; i++){
+    //        let getServiceOff = _.get(_formData, 'vendorContracts['+i+'].servicesOffered');
+    //        if(_.isArray(getServiceOff)){
+    //         getServiceOff =  getServiceOff.map((item) => {
+    //           return ({"code" : item});
+    //         });
+    //        }
+    //        _formData.vendorContracts[i].vendor = getInitalVendor;
+    //        _formData.vendorContracts[i].servicesOffered = getServiceOff;
+    //        _formData.vendorContracts[i].tenantId = localStorage.getItem("tenantId");
+    //        _.unset(_formData, 'vendorContracts['+i+'].vendorContracts');
+    //      }
+    //   }
+    // }
+    // `,
 
     numCols: 4,
     useTimestamp: true,

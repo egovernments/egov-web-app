@@ -73,6 +73,12 @@ var dat = {
         {
           label: 'swm.collectionpoints.create.rfid',
         },
+        {
+          label: 'swm.processingplant.create.Latitude',
+        },
+        {
+          label: 'swm.processingplant.create.Longitude',
+        },
         // {
         //   label: 'swm.collectionpoints.create.group.title.BinDetails',
         // }
@@ -114,6 +120,8 @@ var dat = {
           isMultiple: true,
           name: 'rfid' 
         },
+        'binDetails[0].asset.latitude' ,
+        'binDetails[0].asset.longitude' ,
         // {
         //   jsonPath: 'binDetails',
         //   isMultiple: true,
