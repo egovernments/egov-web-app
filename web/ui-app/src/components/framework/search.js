@@ -103,40 +103,43 @@ class Search extends Component {
       }
     } catch (e) {}
     let { setMetaData, setModuleName, setActionName, initForm, setMockData, setFormData ,setDropDownData,setDropDownOriginalData,setLoadingStatus} = this.props;
-    let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
-    reqRequired = [];
-    this.setLabelAndReturnRequired(obj);
-    initForm(reqRequired);
-    setMetaData(specifications);
-    window.localStorage.setItem('specifications', JSON.stringify(specifications));
-    setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName(hashLocation.split('/')[2]);
-    setActionName(hashLocation.split('/')[1]);
-    var formData = {};
-    if (obj && obj.groups && obj.groups.length) this.setDefaultValues(obj.groups, formData);
-    setFormData(formData);
+    if(specifications) {
+      let obj = specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`];
+    
+      reqRequired = [];
+      this.setLabelAndReturnRequired(obj);
+      initForm(reqRequired);
+      setMetaData(specifications);
+      window.localStorage.setItem('specifications', JSON.stringify(specifications));
+      setMockData(JSON.parse(JSON.stringify(specifications)));
+      setModuleName(hashLocation.split('/')[2]);
+      setActionName(hashLocation.split('/')[1]);
+      var formData = {};
+      if (obj && obj.groups && obj.groups.length) this.setDefaultValues(obj.groups, formData);
+      setFormData(formData);
 
-    this.setState({
-      pathname: this.props.history.location.pathname,
-      showResult: false,
-    });
-    setLoadingStatus('loading');
-    if (obj && obj.preApiCalls) {
-      obj.preApiCalls.forEach(async (item)=>{
-        let res=await callApi(item);
-        let orgRes=Object.assign({},res);
-        setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
-        setDropDownOriginalData(item.jsonPath,res);
-      })
-    }
+      this.setState({
+        pathname: this.props.history.location.pathname,
+        showResult: false,
+      });
+      setLoadingStatus('loading');
+      if (obj && obj.preApiCalls) {
+        obj.preApiCalls.forEach(async (item)=>{
+          let res=await callApi(item);
+          let orgRes=Object.assign({},res);
+          setDropDownData(item.jsonPath,parseKeyAndValueForDD(res,item.jsExpForDD.key,item.jsExpForDD.value));
+          setDropDownOriginalData(item.jsonPath,res);
+        })
+      }
 
-    else if(obj && obj.preApiCallsBoundary){
-      obj.preApiCallsBoundary.forEach(async (item)=>{
-        let res=await callApi(item);
-        this.buildBoundaryData(res, item.qs, "", false);
-      })
+      else if(obj && obj.preApiCallsBoundary){
+        obj.preApiCallsBoundary.forEach(async (item)=>{
+          let res=await callApi(item);
+          this.buildBoundaryData(res, item.qs, "", false);
+        })
+      }
+      setLoadingStatus('hide');
     }
-    setLoadingStatus('hide');
   }
 
   componentDidMount() {

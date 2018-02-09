@@ -27,6 +27,10 @@ class UiSelectField extends Component {
   }
 
   initData(props) {
+    let currentURL = window.location.hash.split("#")[1];
+    if(this.props.location.pathname != currentURL){
+      tracker = [];
+    }
     let { item, setDropDownData, setDropDownOriginalData, useTimestamp, dropDownOringalData } = props;
     const currentUrl = window.location.hash.split('#')[1];  
 
@@ -37,7 +41,7 @@ class UiSelectField extends Component {
       item.hasOwnProperty('url') &&
       item.url &&
       item.url.search('\\|') > -1 &&
-      item.url.search('{') == -1 && (props.location.pathname === currentUrl) &&
+      item.url.search('{') == -1 && (this.props.location.pathname === currentURL) && 
       !_.some(tracker, { jsonPath: item.jsonPath })
     ) {
       tracker.push({ jsonPath: item.jsonPath });
@@ -133,7 +137,7 @@ class UiSelectField extends Component {
   }
 
   componentDidMount() {
-    //console.log("UiSelectField, componentDidMount() called");
+    
     this.initData(this.props);
   }
 
@@ -177,6 +181,9 @@ class UiSelectField extends Component {
 
     if (this.props.location.pathname != nextProps.history.location.pathname || dropDownData === undefined){
       this.initData(nextProps);
+      if (this.props.location.pathname != nextProps.location.pathname) {
+        tracker = [];
+      }
     }
   }
 

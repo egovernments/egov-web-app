@@ -1022,95 +1022,97 @@ class Report extends Component {
     let data = { moduleName: "", masterDetails: [] };
     let k = 0;
     var masterDetail = {};
-    for (let i = 0; i < obj.groups.length; i++) {
-      for (let j = 0; j < obj.groups[i].fields.length; j++) {
-        if (obj.groups[i].fields[j].mdms) {
-          masterDetail.name = obj.groups[i].fields[j].mdms.masterName;
-          masterDetail.filter =
-            obj.groups[i].fields[j].mdms.filter != ""
-              ? obj.groups[i].fields[j].mdms.filter
-              : null;
-          data.masterDetails[k] = _.cloneDeep(masterDetail);
-          data.moduleName = obj.groups[i].fields[j].mdms.moduleName;
-          k++;
+    if(obj){
+      for (let i = 0; i < obj.groups.length; i++) {
+        for (let j = 0; j < obj.groups[i].fields.length; j++) {
+          if (obj.groups[i].fields[j].mdms) {
+            masterDetail.name = obj.groups[i].fields[j].mdms.masterName;
+            masterDetail.filter =
+              obj.groups[i].fields[j].mdms.filter != ""
+                ? obj.groups[i].fields[j].mdms.filter
+                : null;
+            data.masterDetails[k] = _.cloneDeep(masterDetail);
+            data.moduleName = obj.groups[i].fields[j].mdms.moduleName;
+            k++;
+          }
         }
       }
-    }
-    moduleDetails.push(data);
-    var _body = {
-      MdmsCriteria: {
-        tenantId: localStorage.getItem("tenantId"),
-        moduleDetails: moduleDetails
-      }
-    };
+      moduleDetails.push(data);
+      var _body = {
+        MdmsCriteria: {
+          tenantId: localStorage.getItem("tenantId"),
+          moduleDetails: moduleDetails
+        }
+      };
 
-    if (jp.query(obj, `$.groups..fields..mdms`) != "") {
-      Api.commonApiPost(
-        "/egov-mdms-service/v1/_search",
-        "",
-        _body,
-        {},
-        true,
-        true
-      )
-        .then(res => {
-          this.setState({
-            mdmsData: res.MdmsRes
-          });
+      if (jp.query(obj, `$.groups..fields..mdms`) != "") {
+        Api.commonApiPost(
+          "/egov-mdms-service/v1/_search",
+          "",
+          _body,
+          {},
+          true,
+          true
+        )
+          .then(res => {
+            this.setState({
+              mdmsData: res.MdmsRes
+            });
 
-          //set dropdowndata
-          for (let i = 0; i < obj.groups.length; i++) {
-            for (let j = 0; j < obj.groups[i].fields.length; j++) {
-              if (obj.groups[i].fields[j].mdms) {
-                let dropDownData = [];
-                if (
-                  Object.keys(res.MdmsRes).includes(
-                    obj.groups[i].fields[j].mdms.moduleName
-                  )
-                ) {
-                  for (var prop in res.MdmsRes) {
-                    if (obj.groups[i].fields[j].mdms.dependant) continue;
-                    if (res.MdmsRes.hasOwnProperty(prop)) {
-                      if (prop == obj.groups[i].fields[j].mdms.moduleName)
-                        for (var master in res.MdmsRes[prop]) {
-                          if (res.MdmsRes[prop].hasOwnProperty(master)) {
-                            var moduleObj = res.MdmsRes[prop];
-                            if (
-                              master == obj.groups[i].fields[j].mdms.masterName
-                            ) {
-                              moduleObj[master].forEach(function (item) {
-                                let key = [];
-                                let value = [];
-                                key = jp.query(
-                                  item,
-                                  obj.groups[i].fields[j].mdms.key
-                                );
-                                value = jp.query(
-                                  item,
-                                  obj.groups[i].fields[j].mdms.value
-                                );
-                                for (let r = 0; r < key.length; r++) {
-                                  let masterObj = {};
-                                  masterObj.key = key[r];
-                                  masterObj.value = value[r];
-                                  dropDownData.push(masterObj);
-                                }
-                              });
+            //set dropdowndata
+            for (let i = 0; i < obj.groups.length; i++) {
+              for (let j = 0; j < obj.groups[i].fields.length; j++) {
+                if (obj.groups[i].fields[j].mdms) {
+                  let dropDownData = [];
+                  if (
+                    Object.keys(res.MdmsRes).includes(
+                      obj.groups[i].fields[j].mdms.moduleName
+                    )
+                  ) {
+                    for (var prop in res.MdmsRes) {
+                      if (obj.groups[i].fields[j].mdms.dependant) continue;
+                      if (res.MdmsRes.hasOwnProperty(prop)) {
+                        if (prop == obj.groups[i].fields[j].mdms.moduleName)
+                          for (var master in res.MdmsRes[prop]) {
+                            if (res.MdmsRes[prop].hasOwnProperty(master)) {
+                              var moduleObj = res.MdmsRes[prop];
+                              if (
+                                master == obj.groups[i].fields[j].mdms.masterName
+                              ) {
+                                moduleObj[master].forEach(function (item) {
+                                  let key = [];
+                                  let value = [];
+                                  key = jp.query(
+                                    item,
+                                    obj.groups[i].fields[j].mdms.key
+                                  );
+                                  value = jp.query(
+                                    item,
+                                    obj.groups[i].fields[j].mdms.value
+                                  );
+                                  for (let r = 0; r < key.length; r++) {
+                                    let masterObj = {};
+                                    masterObj.key = key[r];
+                                    masterObj.value = value[r];
+                                    dropDownData.push(masterObj);
+                                  }
+                                });
+                              }
                             }
                           }
-                        }
+                      }
                     }
                   }
+                  setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
+                  setDropDownOriginalData(obj.groups[i].fields[j].jsonPath.split('.').join('-'), res);
                 }
-                setDropDownData(obj.groups[i].fields[j].jsonPath, dropDownData);
-                setDropDownOriginalData(obj.groups[i].fields[j].jsonPath.split('.').join('-'), res);
               }
             }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   }
 
