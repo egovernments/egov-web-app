@@ -240,6 +240,11 @@ var dat = {
               "autoFillFields": {
                 "collectionPoints[0].binDetails[0].asset.latitude": "Assets[0].latitude",
                 "collectionPoints[0].binDetails[0].asset.longitude": "Assets[0].longitude",
+                 "iterableFields": {
+                   key : "RFID",
+                   from : "Assets[0].assetAttributes",
+                   to: "collectionPoints[0].binDetails[0].asset.rfid"
+                 }
               },
             },
           },
@@ -263,62 +268,71 @@ var dat = {
             patternErrorMsg: '',
           },
           {
-            name: 'dummy',
-            jsonPath: '',
-            label: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
+              name: 'rfid',
+              jsonPath: 'collectionPoints[0].binDetails[0].asset.rfid',
+              label: 'swm.collectionpoints.create.rfid',
+              type: 'text',
+              isRequired: false,
+              isDisabled: true,
+              patternErrMsg: '',
           },
-          {
-            name: 'rfidAssigned',
-            jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
-            label: 'swm.collectionpoints.create.rfidAssigned',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            defaultValue: false,
-            showHideFields: [
-              {
-                ifValue: true,
-                hide: [],
-                show: [
-                  {
-                    name: 'rfid',
-                    isGroup: false,
-                    isField: true,
-                  }
+          // {
+          //   name: 'dummy',
+          //   jsonPath: '',
+          //   label: '',
+          //   type: 'textArea',
+          //   isRequired: false,
+          //   isDisabled: false,
+          //   patternErrorMsg: '',
+          // },
+          // {
+          //   name: 'rfidAssigned',
+          //   jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
+          //   label: 'swm.collectionpoints.create.rfidAssigned',
+          //   type: 'checkbox',
+          //   isRequired: false,
+          //   isDisabled: false,
+          //   patternErrorMsg: '',
+          //   defaultValue: false,
+          //   showHideFields: [
+          //     {
+          //       ifValue: true,
+          //       hide: [],
+          //       show: [
+          //         {
+          //           name: 'rfid',
+          //           isGroup: false,
+          //           isField: true,
+          //         }
                   
-                ],
-              },
-              {
-                ifValue: false,
-                show: [],
-                hide: [
-                  {
-                    name: 'rfid',
-                    isGroup: false,
-                    isField: true,
-                  }
-                ],
-              },
-            ],
-          },
-          {
-            name: 'rfid',
-            hide: true,
-            jsonPath: 'collectionPoints[0].binDetails[0].rfid',
-            label: 'swm.collectionpoints.create.rfid',
-            defaultValue : '',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+          //       ],
+          //     },
+          //     {
+          //       ifValue: false,
+          //       show: [],
+          //       hide: [
+          //         {
+          //           name: 'rfid',
+          //           isGroup: false,
+          //           isField: true,
+          //         }
+          //       ],
+          //     },
+          //   ],
+          // },
+          // {
+          //   name: 'rfid',
+          //   hide: true,
+          //   jsonPath: 'collectionPoints[0].binDetails[0].asset[0].assetAttributes[0].rfid',
+          //   label: 'swm.collectionpoints.create.rfid',
+          //   defaultValue : '',
+          //   type: 'text',
+          //   isRequired: true,
+          //   isDisabled: false,
+          //   maxLength: 256,
+          //   minLength: 1,
+          //   patternErrorMsg: '',
+          // },
         ],
       },
     ],
@@ -448,6 +462,15 @@ var dat = {
             patternErrorMsg: '',
           },
           {
+            name: 'rfid',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.rfid',
+            label: 'swm.collectionpoints.create.rfid',
+            type: 'text',
+            isRequired: false,
+            isDisabled: true,
+            patternErrMsg: '',
+          },
+          {
             name: 'dummy',
             jsonPath: '',
             label: '',
@@ -456,42 +479,42 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
           },
-          {
-            name: 'rfidAssigned',
-            jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
-            label: 'swm.collectionpoints.create.rfidAssigned',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-           // defaultValue: false,
-            // showHideFields: [
-            //   {
-            //     ifValue: true,
-            //     hide: [],
-            //     show: [
-            //       {
-            //         name: 'rfid',
-            //         isGroup: false,
-            //         isField: true,
-            //       }
+          // {
+          //   name: 'rfidAssigned',
+          //   jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
+          //   label: 'swm.collectionpoints.create.rfidAssigned',
+          //   type: 'checkbox',
+          //   isRequired: false,
+          //   isDisabled: false,
+          //   patternErrorMsg: '',
+          //  // defaultValue: false,
+          //   // showHideFields: [
+          //   //   {
+          //   //     ifValue: true,
+          //   //     hide: [],
+          //   //     show: [
+          //   //       {
+          //   //         name: 'rfid',
+          //   //         isGroup: false,
+          //   //         isField: true,
+          //   //       }
                   
-            //     ],
-            //   },
-            // ],
-          },
-          {
-            name: 'rfid',
-            //hide: true,
-            jsonPath: 'collectionPoints[0].binDetails[0].rfid',
-            label: 'swm.collectionpoints.create.rfid',
-            type: 'text',
-            isRequired: true,
-            isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: '',
-          },
+          //   //     ],
+          //   //   },
+          //   // ],
+          // },
+          // {
+          //   name: 'rfid',
+          //   //hide: true,
+          //   jsonPath: 'collectionPoints[0].binDetails[0].rfid',
+          //   label: 'swm.collectionpoints.create.rfid',
+          //   type: 'text',
+          //   isRequired: true,
+          //   isDisabled: false,
+          //   maxLength: 256,
+          //   minLength: 1,
+          //   patternErrorMsg: '',
+          // },
         ],
       },
     ],
@@ -625,49 +648,13 @@ var dat = {
             patternErrorMsg: '',
           },
           {
-            name: 'dummy',
-            jsonPath: '',
-            label: '',
-            type: 'textArea',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-          },
-          {
-            name: 'rfidAssigned',
-            jsonPath: 'collectionPoints[0].binDetails[0].rfidAssigned',
-            label: 'swm.collectionpoints.create.rfidAssigned',
-            type: 'checkbox',
-            isRequired: false,
-            isDisabled: false,
-            patternErrorMsg: '',
-            defaultValue: false,
-            showHideFields: [
-              {
-                ifValue: true,
-                hide: [],
-                show: [
-                  {
-                    name: 'rfid',
-                    isGroup: false,
-                    isField: true,
-                  }
-                  
-                ],
-              },
-            ],
-          },
-          {
             name: 'rfid',
-            hide: true,
-            jsonPath: 'collectionPoints[0].binDetails[0].rfid',
+            jsonPath: 'collectionPoints[0].binDetails[0].asset.rfid',
             label: 'swm.collectionpoints.create.rfid',
             type: 'text',
-            isRequired: true,
+            isRequired: false,
             isDisabled: false,
-            maxLength: 256,
-            minLength: 1,
-            patternErrorMsg: '',
+            patternErrMsg: '',
           },
         ],
       },

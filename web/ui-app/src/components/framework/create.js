@@ -1351,7 +1351,20 @@ class Report extends Component {
         function (res) {
           var formData = { ...self.props.formData };
           for (var key in autoObject.autoFillFields) {
-            _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
+            if(key != "iterableFields"){
+              _.set(formData, key, _.get(res, autoObject.autoFillFields[key]));
+            }else{
+              let iterData = _.get(res, autoObject.autoFillFields[key].from);
+              if(iterData && _.isArray(iterData)){
+                iterData.forEach(function(elem, ind){
+                  if(typeof elem === "object"){
+                    if(elem.key === autoObject.autoFillFields[key].key){
+                      _.set(formData, autoObject.autoFillFields[key].to, elem.value);
+                    }
+                  }
+                })
+              }
+            }
           }
           self.props.setFormData(formData);
         },
