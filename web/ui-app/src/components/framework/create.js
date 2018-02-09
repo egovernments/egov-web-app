@@ -1557,7 +1557,7 @@ class Report extends Component {
           self.props.setLoadingStatus("hide");
           self.props.toggleSnackbarAndSetText(true, err.message);
         }
-);
+      );
 
     }
     else {

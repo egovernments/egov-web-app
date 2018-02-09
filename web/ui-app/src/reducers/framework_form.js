@@ -78,13 +78,13 @@ export default (state = defaultState, action) => {
         ...state,
         fieldErrors: _fieldErrors,
       };
-    
-    case 'DISPLAY_ERROR' : 
+
+    case 'DISPLAY_ERROR' :
      return {
       ...state,
       fieldErrors : {...state.fieldErrors, [action.property] :  action.errorMessage },
     };
-   
+
     return;
     case 'HANDLE_CHANGE_FRAMEWORK':
       var currentState = { ...state };
@@ -163,7 +163,7 @@ function validate(fieldErrors, property, value, isRequired, form, requiredFields
   let isFormValid = true;
   // console.log(requiredFields);
   for (var i = 0; i < requiredFields.length; i++) {
-    
+
     if (typeof _.get(form, requiredFields[i]) == 'undefined' || _.get(form, requiredFields[i]) === '' || _.get(form, requiredFields[i]) === 0 || _.get(form, requiredFields[i]) == null || (_.isArray(_.get(form, requiredFields[i])) && _.get(form, requiredFields[i]).length === 0)  ) {
       isFormValid = false;
       break;

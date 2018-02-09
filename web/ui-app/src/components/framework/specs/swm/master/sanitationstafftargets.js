@@ -128,6 +128,11 @@ var dat = {
           return obj.isSelected !== undefined && obj.isSelected !== false;
         }
       );
+      // formData.sanitationStaffTargets[0].collectionPoints = formData.sanitationStaffTargets[0].collectionPoints.map(
+      //   function(obj) {
+      //     return {...obj,[code]:obj.collectionPoint.code}
+      //   }
+      // );
     }`,
     numCols: 4,
     useTimestamp: true,
