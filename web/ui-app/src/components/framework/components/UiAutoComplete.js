@@ -151,6 +151,8 @@ class UiAutoComplete extends Component {
 
   renderAutoComplete = item => {
     let { dropDownData } = this.props;
+    dropDownData = dropDownData.hasOwnProperty(item.jsonPath) ? dropDownData[item.jsonPath] : []
+    dropDownData = dropDownData.filter((data) => data.key !== null);
     let { getNameById } = this;
     const dataSourceConfig = {
       text: 'value',
@@ -177,7 +179,7 @@ class UiAutoComplete extends Component {
               floatingLabelFixed={true}
               style={{ display: item.hide ? 'none' : 'inline-block' }}
               errorStyle={{ float: 'left' }}
-              dataSource={dropDownData.hasOwnProperty(item.jsonPath) ? dropDownData[item.jsonPath] : []}
+              dataSource={dropDownData}
               dataSourceConfig={dataSourceConfig}
               floatingLabelText={
                 <span>
@@ -227,7 +229,7 @@ class UiAutoComplete extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state,props) => ({
   dropDownData: state.framework.dropDownData,
   form: state.frameworkForm.form,
 });
