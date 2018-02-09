@@ -229,7 +229,20 @@ class UiMultiFieldTable extends Component {
 
     let values = Object.assign([], this.state.values);
     this.removeMandatoryForDelete(values.length - 1);
-    values.splice(ind, 1);
+   if(values.length==1){
+     let isRequire=false;
+      values[0].map((item)=>{
+          if(item.isRequired){
+           isRequire=true
+          }
+      })
+     if(!isRequire) {
+        values.splice(ind, 1);
+     }
+    
+   }else{
+      values.splice(ind, 1);
+   }
     var regexp = new RegExp(`${this.escapeRegExp(this.props.item.jsonPath)}\\[\\d+\\]`);
     for (var i = 0; i < values.length; i++) {
       for (var j = 0; j < values[i].length; j++) {
