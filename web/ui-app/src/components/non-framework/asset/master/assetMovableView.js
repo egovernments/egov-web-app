@@ -511,12 +511,12 @@ class assetMovableView extends Component {
       }
     };
     const renderBody = function() {
-      if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('titleDocumentsAvailable')) {
-        if(typeof(formData.Assets[0].titleDocumentsAvailable)=='object'){
-        formData.Assets[0].titleDocumentsAvailable=formData.Assets[0].titleDocumentsAvailable.join(',');
-        //console.log(formData.Assets[0].titleDocumentsAvailable);
-      }
-      }
+      // if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('titleDocumentsAvailable')) {
+      //   if(typeof(formData.Assets[0].titleDocumentsAvailable)=='object'){
+      //   formData.Assets[0].titleDocumentsAvailable=formData.Assets[0].titleDocumentsAvailable.join(',');
+      //   //console.log(formData.Assets[0].titleDocumentsAvailable);
+      // }
+      // }
       if (formData && formData.hasOwnProperty('Assets') && formData.Assets[0].hasOwnProperty('assetAttributes')) {
         var createCustomObject = formData.Assets[0].assetAttributes;
         var disArray = [];

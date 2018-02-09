@@ -263,9 +263,9 @@ class assetImmovableCreate extends Component {
             };
           }
         }
-        if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
-          response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
-        }
+        // if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
+        //   response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
+        // }
 
         response.Assets[0].assetAttributesCheck = assetCheck;
         self.props.setFormData({ Asset: response.Assets[0] });
@@ -655,7 +655,7 @@ class assetImmovableCreate extends Component {
                               }
 
                               for (var m = 0; m < customSpecs[cId].length; m++) {
-                                console.log("temp.jsonPath"+temp.jsonPath);
+                                //console.log("temp.jsonPath"+temp.jsonPath);
                                 if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Area UOM.Select") {
                                   customSpecs[cId][m].defaultValue = valueHolder;
                                   self.setState({
@@ -682,7 +682,7 @@ class assetImmovableCreate extends Component {
                                       }
 
                                       for (var m = 0; m < customSpecs[cId].length; m++) {
-                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                        //console.log("temp.jsonPath"+temp.jsonPath);
                                         if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Minimum Width UOM.Select") {
                                           customSpecs[cId][m].defaultValue = valueHolder;
                                           self.setState({
@@ -709,7 +709,7 @@ class assetImmovableCreate extends Component {
                                               }
 
                                               for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                //console.log("temp.jsonPath"+temp.jsonPath);
                                                 if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Maximum Width UOM.Select") {
                                                   customSpecs[cId][m].defaultValue = valueHolder;
                                                   self.setState({
@@ -736,7 +736,7 @@ class assetImmovableCreate extends Component {
                                                       }
 
                                                       for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                                        //console.log("temp.jsonPath"+temp.jsonPath);
                                                         if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Layer Size UOM.Select") {
                                                           customSpecs[cId][m].defaultValue = valueHolder;
                                                           self.setState({
@@ -787,7 +787,7 @@ class assetImmovableCreate extends Component {
                                                                       }
 
                                                                       for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                                        console.log("temp.jsonPath"+temp.jsonPath);
+                                                                        //console.log("temp.jsonPath"+temp.jsonPath);
                                                                         if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Length UOM.Select") {
                                                                           customSpecs[cId][m].defaultValue = valueHolder;
                                                                           self.setState({
@@ -863,7 +863,7 @@ class assetImmovableCreate extends Component {
                                                                                               }
 
                                                                                               for (var m = 0; m < customSpecs[cId].length; m++) {
-                                                                                                console.log("temp.jsonPath"+temp.jsonPath);
+                                                                                                //console.log("temp.jsonPath"+temp.jsonPath);
                                                                                                 if (customSpecs[cId][m].jsonPath == temp.jsonPath && temp.jsonPath=="Asset.assetAttributesCheck.Intake Water UOM.Select") {
                                                                                                   customSpecs[cId][m].defaultValue = valueHolder;
                                                                                                   self.setState({
@@ -1017,7 +1017,7 @@ class assetImmovableCreate extends Component {
       for (var y = 0; y < formData.Asset.landDetails.length; y++) {
         formData.Asset.landDetails[y].tenantId = localStorage.getItem('tenantId');
         }
-      console.log(formData);
+      //console.log(formData);
       for (var x = 0; x < formData.Asset.landDetails.length; x++) {
         var AutoCompleteData = _.get(formData, 'Asset.landDetails[' + x + '].code');
         var CheckAutoCompleteData = _.filter(self.props.dropDownData['Asset.landDetails[' + x + '].code'], { key: AutoCompleteData });
@@ -1036,18 +1036,18 @@ class assetImmovableCreate extends Component {
         }
       }
     } else if (formData.Asset && (!formData.Asset.landDetails || (formData.Asset.landDetails && !formData.Asset.landDetails.length >0))) {
-      console.log(formData.Asset);
+      //console.log(formData.Asset);
       flag = 1;
       formData.Asset.landDetails = null;
     }
     if (flag == 1) {
       self.props.setLoadingStatus('loading');
 
-      if (formData.Asset.titleDocumentsAvailable) {
-        formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
-      } else {
-        formData.Asset.titleDocumentsAvailable = [];
-      }
+      // if (formData.Asset.titleDocumentsAvailable) {
+      //   formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
+      // } else {
+      //   formData.Asset.titleDocumentsAvailable = [];
+      // }
       if (formData.Asset.assetCategory.id) {
         formData.Asset.assetCategory = self.state.cateoryObject[formData.Asset.assetCategory.id];
       }
@@ -1147,7 +1147,7 @@ class assetImmovableCreate extends Component {
       return new Date(_date[0], Number(_date[1]) - 1, _date[2]);
     }
     if(path && path=="Asset.assetAttributesCheck.Location(Point to Point).GIS"){
-      console.log(_val);
+      //console.log(_val);
       let value=[];
       if(_val){
       _val.map((val)=>{
@@ -1722,7 +1722,7 @@ var CheckAutoCompleteData=[];
             self.handleChange({ target: { value: null } }, 'Asset.landDetails[' + i + '].area');
             }
             else{
-              console.log(formData.Asset.landDetails[i]);
+              //console.log(formData.Asset.landDetails[i]);
                 formData.Asset.landDetails[i].isEnabled = true;
             }
         }
@@ -1966,7 +1966,7 @@ var CheckAutoCompleteData=[];
     let mockData = { ...this.props.mockData };
     let notReqFields = [];
     let ReqFields = [];
-    console.log(jsonPath);
+    //console.log(jsonPath);
     if (!jsonPath) {
       var ind = 0;
 
@@ -1979,12 +1979,12 @@ var CheckAutoCompleteData=[];
           index == i &&
           groupName == mockData[moduleName + "." + actionName].groups[i].name
         ) {
-          console.log(mockData[moduleName + "." + actionName].groups[i].index);
-          console.log(
-            mockData[moduleName + "." + actionName].groups.filter(
-              group => group.name === groupName
-            ).length - 1
-          );
+          //console.log(mockData[moduleName + "." + actionName].groups[i].index);
+          // console.log(
+          //   mockData[moduleName + "." + actionName].groups.filter(
+          //     group => group.name === groupName
+          //   ).length - 1
+          // );
           /* Check for last card --> Set Form Data --> Splice the groups array. */
           if (
             mockData[moduleName + "." + actionName].groups[i].index ===
@@ -2097,7 +2097,7 @@ var CheckAutoCompleteData=[];
               }
             }
 
-            console.log(mockData[moduleName + '.' + actionName].groups);
+            //console.log(mockData[moduleName + '.' + actionName].groups);
 
             for (let i = index; i < mockData[moduleName + '.' + actionName].groups.length; i++) {
               if (mockData[moduleName + '.' + actionName].groups[i].name == groupName) {
@@ -2145,8 +2145,8 @@ var CheckAutoCompleteData=[];
         }
       }
 
-      console.log(notReqFields);
-      console.log(mockData);
+      //console.log(notReqFields);
+      //console.log(mockData);
       setMockData(mockData);
     } else {
       var _groups = _.get(
@@ -2248,16 +2248,16 @@ var CheckAutoCompleteData=[];
       }
     }
     //code to make the asset sub type disabled in update screen
-        console.log(`${moduleName}.${actionName}`);
+        //console.log(`${moduleName}.${actionName}`);
         if(`${moduleName}.${actionName}` == "asset.update"){
           if(mockData &&  mockData[`${moduleName}.${actionName}`] && mockData[`${moduleName}.${actionName}`].groups
           && mockData[`${moduleName}.${actionName}`].groups[0].fields){
-            console.log(mockData[`${moduleName}.${actionName}`]);
+            //console.log(mockData[`${moduleName}.${actionName}`]);
             for(let i=0;i<mockData[`${moduleName}.${actionName}`].groups[0].fields.length;i++){
-              console.log(i);
-              console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+              //console.log(i);
+              //console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
               if(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath == "Asset.assetCategory.id"){
-                console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
+                //console.log(mockData[`${moduleName}.${actionName}`].groups[0].fields[i].jsonPath);
                 mockData[`${moduleName}.${actionName}`].groups[0].fields[i].isDisabled=true;
                 break;
               }
@@ -2267,7 +2267,7 @@ var CheckAutoCompleteData=[];
         }
 
 
-    console.log(formData);
+    //console.log(formData);
     return (
       <div className="Report">
         <form

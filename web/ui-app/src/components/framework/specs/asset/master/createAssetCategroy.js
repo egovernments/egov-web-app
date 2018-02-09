@@ -588,7 +588,7 @@ var dat = {
           },
           {
             name: 'additionalURL',
-            jsonPath: 'MasterMetaData.masterData[0].assetFieldsDefination[0].url',
+            jsonPath: 'MdmsRes.ASSET.AssetCategory[0].assetFieldsDefination[0].url',
             label: 'ac.create.additional.field.URL',
             pattern: '^[s.]*([^s.][s.]*){0,100}$',
             type: 'text',

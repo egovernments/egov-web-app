@@ -266,9 +266,10 @@ class assetMovableCreate extends Component {
         };
       }
     }
-    if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
-      response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
-    }
+    // if (response && response.Assets && response.Assets[0] && response.Assets[0].titleDocumentsAvailable) {
+    //   console.log(response.Assets[0]);
+    //   response.Assets[0].titleDocumentsAvailable = response.Assets[0].titleDocumentsAvailable.join(',');
+    // }
     response.Assets[0].assetAttributesCheck = assetCheck;
     self.props.setFormData({ Asset: response.Assets[0] });
     self.setInitialUpdateData(
@@ -727,14 +728,14 @@ class assetMovableCreate extends Component {
     e.preventDefault();
     self.props.setLoadingStatus('loading');
     var formData = JSON.parse(JSON.stringify(this.props.formData));
-    if (formData.Asset.titleDocumentsAvailable) {
-      formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
-    } else {
-      formData.Asset.titleDocumentsAvailable = [];
-    }
-    if (formData.Asset.assetCategory.id) {
-      formData.Asset.assetCategory = self.state.cateoryObject[formData.Asset.assetCategory.id];
-    }
+    // if (formData.Asset.titleDocumentsAvailable) {
+    //   formData.Asset.titleDocumentsAvailable = formData.Asset.titleDocumentsAvailable.split(',');
+    // } else {
+    //   formData.Asset.titleDocumentsAvailable = [];
+    // }
+    // if (formData.Asset.assetCategory.id) {
+    //   formData.Asset.assetCategory = self.state.cateoryObject[formData.Asset.assetCategory.id];
+    // }
 
     if (
       self.props.moduleName &&
