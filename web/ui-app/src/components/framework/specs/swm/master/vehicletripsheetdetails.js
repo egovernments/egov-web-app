@@ -101,12 +101,12 @@ var dat = {
     var oneDay = 24*60*60*1000;
     var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
     var curDate=new Date();
-    var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
-    if(result)
-    {
-      alert("The from date should be current date");
-      shouldSubmit=false;
-    }
+    // var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
+    // if(result)
+    // {
+    //   alert("The from date should be current date");
+    //   shouldSubmit=false;
+    // }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
@@ -458,12 +458,12 @@ var dat = {
     beforeSubmit: `var oneDay = 24*60*60*1000;
     var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
     var curDate=new Date();
-    var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
-    if(result)
-    {
-      alert("The from date should be current date");
-      shouldSubmit=false;
-    }
+    // var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
+    // if(result)
+    // {
+    //   alert("The from date should be current date");
+    //   shouldSubmit=false;
+    // }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
