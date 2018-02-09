@@ -3169,6 +3169,7 @@ class Report extends Component {
     _.forEach(depedants, function (value, key) {
       //console.log(value.type);
       if (value.type == "dropDown") {
+        let isEmpty = true;
         let splitArray = value.pattern.split("?");
         let context = "";
         let id = {};
@@ -3202,103 +3203,100 @@ class Report extends Component {
                     value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, dependantIdx);
                   }
                 }
-                id[queryStringObject[i].split("=")[0]] =
-                  queryStringObject[i].split("=")[1].replace(
-                    /\{(.*?)\}/,
-                    getVal(
-                      filterParameter
-                    )
-                  ) || "";
+                id[queryStringObject[i].split("=")[0]] = queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/,getVal(filterParameter));
+                if (queryStringObject[i].split("=")[1].replace(/\{(.*?)\}/,getVal(filterParameter)) == "") {
+                  isEmpty=false;
+                }
               }
             }
             else {
-              id[queryStringObject[i].split("=")[0]] = queryStringObject[
-                i
-              ].split("=")[1];
+              id[queryStringObject[i].split("=")[0]] = queryStringObject[i].split("=")[1];
             }
           }
         }
 
-        Api.commonApiPost( context, id, {}, false, false, false, "", "", value.isStateLevel)
-        .then(
-          function (response) {
-            if (response) {
-              // console.log('In dropdown');
-              // console.log(response);
-              let keys = jp.query(response, splitArray[1].split("|")[1]);
-              let values = jp.query(response, splitArray[1].split("|")[2]);
-              let dropDownData = [];
-              for (var k = 0; k < keys.length; k++) {
-                if (keys[k]) {
-                  let obj = {};
-                  obj["key"] = keys[k];
-                  obj["value"] = values[k];
-                  dropDownData.push(obj);
-                }
-              }
-
-              dropDownData.sort(function (s1, s2) {
-                return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
-              });
-              // if (value.autoSelect) {
-              //   //First value to be selected
-              // } else {
-              //   dropDownData.unshift({
-              //     key: null,
-              //     value: "-- Please Select --"
-              //   });
-              // }
-
-              const updateDropDownData = (value, i) => {
-                value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
-                setDropDownData(value.jsonPath, dropDownData);
-                setDropDownOriginalData(value.jsonPath, response);
-                if (value.autoSelect) {
-                  setVal(value.jsonPath, dropDownData[0]);
-                }
-              }
-
-              //to handle tableList dropdown
-              let currProperty = value.jsonPath;
-              let rootProperty = currProperty.substr(
-                0,
-                currProperty.lastIndexOf("[")
-              );
-              let numberOfRowsArray = _.get(formData, currProperty);
-              var isTableList = false;
-              for(var i=0; i<mockData[moduleName+'.'+actionName].groups.length; i++) {
-                for(var j=0; j<mockData[moduleName+'.'+actionName].groups[i].fields.length; j++) {
-                  if((mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableListTemp'
-                  || mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableList')
-                  && JSON.stringify(mockData[moduleName+'.'+actionName].groups[i].fields[j]).includes(currProperty)) {
-                    isTableList = true;
+        if (isEmpty) {
+          Api.commonApiPost( context, id, {}, false, false, false, "", "", value.isStateLevel).then(
+            function (response) {
+              if (response) {
+                // console.log('In dropdown');
+                // console.log(response);
+                let keys = jp.query(response, splitArray[1].split("|")[1]);
+                let values = jp.query(response, splitArray[1].split("|")[2]);
+                let dropDownData = [];
+                for (var k = 0; k < keys.length; k++) {
+                  if (keys[k]) {
+                    let obj = {};
+                    obj["key"] = keys[k];
+                    obj["value"] = values[k];
+                    dropDownData.push(obj);
                   }
                 }
-              }
-              if (isTableList && numberOfRowsArray && numberOfRowsArray.length > 0) {
-                if (value.indexReplace) {
-                  updateDropDownData(value, dependantIdx);
+
+                dropDownData.sort(function (s1, s2) {
+                  return s1.value < s2.value ? -1 : s1.value > s2.value ? 1 : 0;
+                });
+                // if (value.autoSelect) {
+                //   //First value to be selected
+                // } else {
+                //   dropDownData.unshift({
+                //     key: null,
+                //     value: "-- Please Select --"
+                //   });
+                // }
+
+                const updateDropDownData = (value, i) => {
+                  value.jsonPath = replaceLastIdxOnJsonPath(value.jsonPath, i);
+                  setDropDownData(value.jsonPath, dropDownData);
+                  setDropDownOriginalData(value.jsonPath, response);
+                  if (value.autoSelect) {
+                    setVal(value.jsonPath, dropDownData[0]);
+                  }
+                }
+
+                //to handle tableList dropdown
+                let currProperty = value.jsonPath;
+                let rootProperty = currProperty.substr(
+                  0,
+                  currProperty.lastIndexOf("[")
+                );
+                let numberOfRowsArray = _.get(formData, currProperty);
+                var isTableList = false;
+                for(var i=0; i<mockData[moduleName+'.'+actionName].groups.length; i++) {
+                  for(var j=0; j<mockData[moduleName+'.'+actionName].groups[i].fields.length; j++) {
+                    if((mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableListTemp'
+                    || mockData[moduleName+'.'+actionName].groups[i].fields[j].type == 'tableList')
+                    && JSON.stringify(mockData[moduleName+'.'+actionName].groups[i].fields[j]).includes(currProperty)) {
+                      isTableList = true;
+                    }
+                  }
+                }
+                if (isTableList && numberOfRowsArray && numberOfRowsArray.length > 0) {
+                  if (value.indexReplace) {
+                    updateDropDownData(value, dependantIdx);
+                  } else {
+                    for (let i = 0; i < numberOfRowsArray.length; i++) {
+                      updateDropDownData(value, i);
+                    }
+                  }
                 } else {
-                  for (let i = 0; i < numberOfRowsArray.length; i++) {
-                    updateDropDownData(value, i);
+                  setDropDownData(value.jsonPath, dropDownData);
+                  setDropDownOriginalData(value.jsonPath, response);
+                  if (value.autoSelect) {
+                    setVal(value.jsonPath, dropDownData[0]);
                   }
                 }
-              } else {
-                setDropDownData(value.jsonPath, dropDownData);
-                setDropDownOriginalData(value.jsonPath, response);
-                if (value.autoSelect) {
-                  setVal(value.jsonPath, dropDownData[0]);
-                }
               }
+            },
+            function (err) {
+              // console.log(err);
+              setDropDownData(value.jsonPath, []);
+              setDropDownOriginalData(value.jsonPath, []);
+              self.props.toggleSnackbarAndSetText(true, err.message);
             }
-          },
-          function (err) {
-            // console.log(err);
-            setDropDownData(value.jsonPath, []);
-            setDropDownOriginalData(value.jsonPath, []);
-            self.props.toggleSnackbarAndSetText(true, err.message);
-          }
           );
+        }
+
       } else if (value.type == "textField") {
         try {
           let object = {};
