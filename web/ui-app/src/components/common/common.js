@@ -3429,7 +3429,7 @@ var localization_EN_Data = {
   "swm.create.scheduledTo": "Scheduled To",
   "swm.create.route": "Route",
   "swm.create.regNumber": "Vehicle Registration No.",
-  "swm.create.targetedGarbage": "Targeted Garbage(in Tons)",
+  "swm.create.targetedGarbage": "Targeted Garbage(In Tons)",
   "swm.create.collectionType": "Collection Type",
   "swm.create.page.title.VehicleSchedules": "Set Vehicle Schedule",
   "swm.create.page.title.VehicleViewSchedules": "Vehicle Schedule Details",

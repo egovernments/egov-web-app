@@ -189,14 +189,14 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
-                  "pattern":"^([0-6][0-9]{0,1}(?:\\.\\d{1,2})?|7[0-4](?:\\.\\d{1,2})?|8|9|\\.\\d{0,2}|8\\.\\d{0,2}|9\\.\\d{0,2}|75|75.00)$",
-                  "type":"text",
+                  "type":"number",
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
                   "maxLength": 256,
                   "minLength": 1,
-                  "patternErrMsg":"Targeted Garbage b/w 0 - 75"
+                  "pattern":'',
+                  "patternErrMsg": '',
                }
             ]
          },
@@ -260,7 +260,7 @@ var dat = {
       "url":"/swm-services/vehicleschedules/_create",
       "tenantIdRequired":true
    },
-   "swm.view":{
+"swm.view":{
        beforeSetForm:`if (res &&
          _.isArray(res.vehicleSchedules) && res.vehicleSchedules[0].route.collectionPoints && res.vehicleSchedules[0].route.collectionPoints.length>0) {
            for(var i=0;i<res.vehicleSchedules[0].route.collectionPoints.length;i++)
@@ -361,7 +361,7 @@ var dat = {
                   "isRequired":false,
                   "isDisabled":false,
                   "defaultValue":"",
-                  "patternErrorMsg":""
+                  "patternErrMsg":""
                }
             ]
          },
@@ -421,7 +421,7 @@ var dat = {
       "tenantIdRequired":true,
       "url":"/swm-services/vehicleschedules/_search?transactionNo={transactionNo}",
    },
-   "swm.update":{
+"swm.update":{
        beforeSetForm:`if (res &&
          _.isArray(res.vehicleSchedules) && res.vehicleSchedules[0].route.collectionPoints && res.vehicleSchedules[0].route.collectionPoints.length>0) {
            for(var i=0;i<res.vehicleSchedules[0].route.collectionPoints.length;i++)
@@ -531,12 +531,12 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
-                  "pattern":"^([0-6][0-9]{0,1}(?:\\.\\d{1,2})?|7[0-4](?:\\.\\d{1,2})?|8|9|\\.\\d{0,2}|8\\.\\d{0,2}|9\\.\\d{0,2}|75|75.00)$",
                   "type":"number",
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
-                  "patternErrMsg":"Target Garbage b/w 0 - 75"
+                  "pattern":'',
+                  "patternErrMsg": '',
                }
             ]
          },
