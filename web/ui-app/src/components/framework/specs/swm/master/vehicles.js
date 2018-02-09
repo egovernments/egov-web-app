@@ -767,7 +767,7 @@ var dat = {
             type: 'text',
             pattern: '([A-z]+[ ]*[^A-z0-9]*[ ]*[0-9]+[ ]*|[0-9]+[ ]*[^A-z0-9]*[ ]*[A-z]+[ ]*)',
             isRequired: true,
-            isDisabled: false,
+            isDisabled: true,
             maxLength: 22,
             minLength: 1,
             patternErrMsg: 'Registration Number should be Alphanumeric',
