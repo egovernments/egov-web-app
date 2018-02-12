@@ -682,6 +682,17 @@ class Transaction extends Component {
     _url = _url.replace('{' + key + '}', _.get(value, key));
     this.props.setRoute(_url);
   };
+  resetForm = () => {
+    let { moduleName, actionName, metaData, setFormData } = this.props;
+    let obj = metaData[`${moduleName}.${actionName}`];
+    var formData = {};
+    if (obj && obj.groups && obj.groups.length) this.setDefaultValues(obj.groups, formData);
+    setFormData(formData);
+    this.setState({
+      pathname: this.props.history.location.pathname,
+      showResult: false,
+    });
+  };
 
   create = e => {
     let self = this;
@@ -782,6 +793,17 @@ class Transaction extends Component {
           <div style={{ textAlign: 'center' }}>
             <br />
             <UiButton item={{ label: 'Search', uiType: 'submit' }} ui="google" />
+            <UiButton
+              icon={
+                <i style={{ color: 'black' }} className="material-icons">
+                  backspace
+                </i>
+              }
+              item={{ label: 'Reset', uiType: 'button', primary: false }}
+              ui="google"
+              handler={this.resetForm}
+            />&nbsp;&nbsp;
+            <br />
             <br />
           </div>
           {/*showResult && <UiTable resultList={resultList} rowClickHandler={rowClickHandler}/>*/}
