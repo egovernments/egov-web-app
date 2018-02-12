@@ -1,18 +1,36 @@
 ## UI Autogen
 
-App is bootstrapped with Create React App and uses Redux for State Management. https://github.com/reactjs/redux/blob/master/docs/basics/DataFlow.md
+The framework is intended to create CRUD screens with JSON configuration.
+
+An high level overview of the UI Autogen Flow.
+
+**Specs => Specs Interpreter => Specs to View Adapter => View**
+
+The bulk of framework business logic resides in [Redux](https://redux.js.org/) . 
+
+App is bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+## Running the app
++ Clone the repository
++ Navigate to ui-app-v2 folder.
++ npm install - Install the dependencies
++ npm start - To run the dev server. The app runs on http://locahost:3000
++ npm run build - To get a production build.
+
 
 ### Specs
 
-The Specs can render the screens of the following types
+The Specs can render the screens of following types
 
    + Create
-   + Update - fields in the create screen + plus search API call.searchApiCall => Filters => FormData => View Render
-   + View - Create Screen Fields => View Adapters for each Create Field => Search Api Call => Filters =>  FormData - View Render 
+   + Update - fields in the create screen + Search API Calls => FormData => Render
+   + View - fields in the create screen => View Adapters for each Create Field => Search Api Call => FormData => Render 
    + Search
 
-An example specs may look like this.
-  `specs = {
+A spec may look like this.
+  ```
+  {
     createUrl: "",
     viewUrl: "",
     searchUrl: "",
@@ -64,7 +82,7 @@ An example specs may look like this.
       }
     ],
     search: {
-    searchParams : [{param1 : value1, param2 : value2}]
+    searchParams : [{param1 : value1, param2 : value2}],
     groups: [
       {
         label: "Search Group One",
@@ -80,39 +98,33 @@ An example specs may look like this.
       }
     ]
   }
- }`
+ }
+ ```
 
+By default, the view adapter assumes the following. All single value fields will be translated to Labels. If this is not the desired behaviour a view adapter field can be used to override the default implementation.  
 
-### Writing New Components
-
-Every Component should be written with its accompanying HoC(Higher Order Component).
-All the API calls, logic, event binding, redux subscriptions should happen in the HoC.  
-The presentation components should be purely dumb. It should ideally be stateless, without implementing 
-any lifecycle methods. 
-
-
-### Actions
+### Core Actions
 
 Here are the main actions the framework can do.
 
-SET_SPECS
-SET_MODULE_NAME
-SET_ACTION_NAME
-HANDLE_CHANGE
-SET_DROPDOWN_DATA
-SET_FORM_DATA
-SUBMIT_FORM_DATA
-RESET_FORM_DATA
-API_CALL
-API_WAITING
-API_SUCCESS
-API_FAILED
-SET_ROUTE
-
+SET_SPECS    
+SET_MODULE_NAME   
+SET_ACTION_NAME    
+HANDLE_CHANGE    
+SET_DROPDOWN_DATA   
+SET_FORM_DATA  
+SUBMIT_FORM_DATA  
+RESET_FORM_DATA   
+API_CALL  
+API_WAITING  
+API_SUCCESS  
+API_FAILED  
+SET_ROUTE  
 
 
 ## Redux State
-`{
+```
+{
   specs: {},
   form: {},
   dropdownData: {},
@@ -120,24 +132,38 @@ SET_ROUTE
   moduleName: "",
   moduleMaster: "",
   loadingStatus: false
-}`
+}
+```
+
+
+### Writing Components
+
+Every Component should be written with its accompanying HoC(Higher Order Component).
+All the API calls, logic, event binding, redux subscriptions should happen in the HoC.  
+The presentation components should be purely dumb. It should ideally be stateless, without implementing any lifecycle methods. 
 
 
 ### Extending the framework
- The extensibility to the framework is provided by Redux middlewares.
- Example Middleware
+ The extensibility to the framework is provided by [Redux middlewares](https://redux.js.org/docs/advanced/Middleware.html).
+ 
+ Certain modules might want to **transform** the formData before it is set to the redux store and might want to a **reverse transformation** before it sends the form data back to the server. Middlewares comes in handy in those cases.
+ 
+ If there is a need to transform the formData before setting it to the redux store, we could use a middleware which taps into `SET_FORM_DATA` action.
 
-`const middleware = store => next => action => {
+```
+const middleware = store => next => action => {
   const { type } = action;
   switch (type) {
     case "SET_FORM_DATA":
-      //do something with the middleware
-      break;
-    default:
+      const {formData,target} = action;
+      // do some transformation with the form data
       break;
   }
   next(action);
-}`
+}
+```
+
+Similarly if the formData needs to be transformed before making a server call, we could tap into SUBMIT_FORM_DATA action.
 
 ### Performance Considerations
 
@@ -165,10 +191,6 @@ SET_ROUTE
     + hocs - Higer Order Components
     + middlewares - A middleware to redux actions
     + reducers 
-    + specs - Contains all the UI Autogen Specs 
+    + specs - Contains all the Specs files. 
     + store - redux store
     + styles
-
-  
-### Future Roadmap
-   The Framework and components will be published as npm packages. 
