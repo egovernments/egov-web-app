@@ -1,26 +1,16 @@
 import React from "react";
-import { TextField, SelectField } from "../components";
-import FieldHoC from "../hocs/field";
+import { TextField, SelectField } from "../containers";
 
 const Field = ({ field, actionName }) => {
-  const { type, target, label, width } = field;
+  const { type, width, label } = field;
 
   const renderField = () => {
     switch (type) {
       case "text":
-        const InputWrapper = FieldHoC(TextField);
-        return <InputWrapper target={target} />;
+        return <TextField field={field} />;
 
       case "dropdown":
-        const { options, sourceUrl } = field;
-        const SelectWrapper = FieldHoC(SelectField);
-        return (
-          <SelectWrapper
-            target={target}
-            sourceUrl={sourceUrl}
-            options={options}
-          />
-        );
+        return <SelectField field={field} />;
 
       default:
         break;

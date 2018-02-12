@@ -13,11 +13,12 @@ const frameworkMiddleware = store => next => action => {
   switch (type) {
     case "HANDLE_CHANGE":
       const { target, value } = action;
+      // nbi
       break;
     // data to be sent to the server
     case "SUBMIT_FORM_DATA":
       break;
-    // from the server
+
     case "SET_FORM_DATA":
       break;
     default:

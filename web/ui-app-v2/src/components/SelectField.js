@@ -1,10 +1,11 @@
 import React from "react";
-const SelectField = ({ value, onChange, options = [] }) => {
+
+const SelectField = ({ value, onChange, dropDownData = [] }) => {
   return (
     <select onChange={onChange}>
-      {options.map(option => (
-        <option value={option} key={option}>
-          {option}
+      {dropDownData.map(option => (
+        <option value={option.key} key={option.key}>
+          {option.value}
         </option>
       ))}
     </select>

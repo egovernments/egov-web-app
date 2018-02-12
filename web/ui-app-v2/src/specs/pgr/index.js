@@ -1,6 +1,9 @@
+import transformers from "./transfomers";
+
 const specs = {
   createUrl: "",
   searchUrl: "",
+  transfomers: transformers,
   groups: [
     {
       label: "Group One",
@@ -16,8 +19,8 @@ const specs = {
           width: 4,
           label: "Country",
           type: "dropdown",
-          target: "country",
-          sourceUrl: "http://somedatasource.com/api/...",
+          target: "countries",
+          dataSource: "http://somedatasource.com/api/...",
           options: ["India", "USA", "AUSTRALIA"],
           dependency: [
             {
@@ -41,7 +44,7 @@ const specs = {
           width: 4,
           label: "City",
           type: "dropdown",
-          target: "country"
+          target: "cities"
         }
       ]
     }

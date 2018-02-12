@@ -2,7 +2,7 @@ const intialState = {
   specs: {},
   form: {},
   fields: {},
-  dropdownData: {},
+  dropDownData: {},
   moduleAction: "",
   moduleName: "",
   moduleMaster: "",
@@ -26,7 +26,7 @@ const framework = (state = intialState, action) => {
       return { ...state, form: formData || {} };
 
     case "SET_FIELD_PROPERTY":
-      const { target, property } = action;
+      const { property } = action;
       return { ...state, fields: { ...state.fields, [target]: property } };
 
     case "SET_ACTION_NAME":
@@ -38,10 +38,10 @@ const framework = (state = intialState, action) => {
       return { ...state, moduleName };
 
     case "SET_DROPDOWN_DATA":
-      const { dropdownData } = action;
+      const { dropDownData } = action;
       return {
         ...state,
-        dropdownData: { ...state.dropdownData, [target]: dropdownData }
+        dropDownData: { ...state.dropDownData, [target]: dropDownData }
       };
 
     case "LOADING_STATUS":

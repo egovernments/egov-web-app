@@ -49,6 +49,23 @@ export const setFormData = formData => {
   };
 };
 
+export const setDropDownData = (target, dropDownData) => {
+  return {
+    type: "SET_DROPDOWN_DATA",
+    target,
+    dropDownData
+  };
+};
+
+export const fetchDropDownData = (url, target, params = "countries") => {
+  return async (dispatch, getState) => {
+    // api calls go here
+    const response = await api(url, target);
+    dispatch(setDropDownData(target, response));
+    // do some transformation
+  };
+};
+
 export const apiCall = (url, params) => {
   return async (dispatch, getState) => {
     // api calls go here

@@ -1,7 +1,13 @@
 import React from "react";
-const TextField = ({ value, onChange }) => {
+const TextField = ({ value, onChange, disabled, hide }) => {
   return (
-    <input onChange={onChange} placeholder="Type Something" value={value} />
+    <input
+      onChange={onChange}
+      disabled={disabled}
+      hide={hide}
+      placeholder="Type Something"
+      value={value}
+    />
   );
 };
 
