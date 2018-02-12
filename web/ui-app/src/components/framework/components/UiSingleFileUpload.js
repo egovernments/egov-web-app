@@ -11,7 +11,6 @@ export default class UiSingleFileUpload extends Component {
   }
 
   checkDownloadlink(e){
-    console.log(e.target.files[0]);
     if(e.target.files[0]){
         this.setState(
           () =>{

@@ -11,6 +11,15 @@ var dat = {
         label: 'swm.vehiclefuellingdetails.search.searchtype',
         fields: [
           {
+            name: 'transactionNo',
+            jsonPath: 'transactionNo',
+            label: 'swm.vehiclefuellingdetails.create.transactionNo',
+            type: 'autoCompelete',
+            isDisabled: false,
+            patternErrorMsg: '',
+            url: 'swm-services/vehiclefuellingdetails/_search?|$.vehicleFuellingDetails.*.transactionNo|$.vehicleFuellingDetails.*.transactionNo',
+          },
+          {
             name: 'VehicleRegs',
             jsonPath: 'regNumber',
             label: 'swm.vehicles.create.regNumber',
@@ -19,24 +28,33 @@ var dat = {
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
           },
-          // {
+           // {
           //   name: 'vehicleTypes',
-          //   jsonPath: 'vehicleFuellingDetails[0].fuelType.name',
+          //   jsonPath: 'vehicleTypeCode',
           //   label: 'swm.vehiclefuellingdetails.create.Vehicletypes',
-          //   type: 'text',
-          //   isDisabled: true,
+          //   type: 'singleValueList',
+          //   isDisabled: false,
           //   patternErrorMsg: '',
-          //  // url: 'swm-services/vehiclefuellingdetails/_search?|$.vehicleFuellingDetails.*.transactionNo|$.vehicleFuellingDetails.*.transactionNo',
+          //   url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=VehicleType|$..code|$..name',
           // },
-        /*  {
-            name: 'transactionNo',
-            jsonPath: 'transactionNo',
-            label: 'swm.vehiclefuellingdetails.create.transactionNo',
+          {
+            name: 'name',
+            jsonPath: 'refuellingStationName',
+            label: 'vehiclefuellingdetails.search.result.refuellingStation',
             type: 'autoCompelete',
             isDisabled: false,
             patternErrorMsg: '',
-            url: 'swm-services/vehiclefuellingdetails/_search?|$.vehicleFuellingDetails.*.transactionNo|$.vehicleFuellingDetails.*.transactionNo',
-          },*/
+            url: '/swm-services/refillingpumpstations/_search?|$.refillingPumpStations.*.code|$.refillingPumpStations.*.name',
+          },
+          {
+            name: 'fueltype',
+            jsonPath: 'fuelTypeCode',
+            label: 'swm.vehicles.create.fuelType',
+            type: 'singleValueList',
+            isDisabled: false,
+            patternErrorMsg: '',
+            url: '/egov-mdms-service/v1/_get?&moduleName=swm&masterName=FuelType|$..code|$..name',
+          },
           {
             name: 'transactionFromDate',
             jsonPath: 'transactionFromDate',
@@ -53,6 +71,14 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: '',
           },
+          // {
+          //   name: 'name',
+          //   jsonPath: 'totalCostIncurred',
+          //   label: 'vehiclefuellingdetails.create.totalCostIncurred',
+          //   type: 'number',
+          //   isDisabled: false,
+          //   patternErrorMsg: '',
+          // },
         ],
       },
     ],
@@ -72,10 +98,29 @@ var dat = {
           label: 'swm.vehicles.create.regNumber',
         },
         {
+        label:'vehiclefuellingdetails.create.vehicleReadingDuringFuelling'
+        },
+        {
           label: 'vehiclefuellingdetails.search.result.refuellingStation',
         },
+        {
+          label:'vehiclefuellingdetails.create.fuelFilled'
+        },
+        {
+          label:'vehiclefuellingdetails.create.typeOfFuel'
+        },
+        {
+          label:'vehiclefuellingdetails.create.totalCostIncurred'
+        },
+        {
+          label:'vehiclefuellingdetails.search.result.receiptNo'
+        },
+        {
+          label:'vehiclefuellingdetails.search.result.receiptDate',
+          isDate:true
+        }
       ],
-      values: ['transactionNo', 'transactionDate', 'vehicle.vehicleType.name', 'vehicle.regNumber', 'refuellingStation.name'],
+      values: ['transactionNo', 'transactionDate', 'vehicle.vehicleType.name', 'vehicle.regNumber', 'vehicleReadingDuringFuelling', 'refuellingStation.name','fuelFilled','vehicle.fuelType.name','totalCostIncurred','receiptNo','receiptDate'],
       resultPath: 'vehicleFuellingDetails',
       rowClickUrlUpdate: '/update/swm/vehiclefuellingdetails/{transactionNo}',
       rowClickUrlView: '/view/swm/vehiclefuellingdetails/{transactionNo}',
