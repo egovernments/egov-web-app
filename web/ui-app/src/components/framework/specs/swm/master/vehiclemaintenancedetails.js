@@ -76,10 +76,10 @@ var dat = {
         {
           label: 'vehiclefuellingdetails.create.vehicleType',
         },
-        {
-          label: 'swm.create.vehicleScheduledMaintenanceDate',
-          isDate: true,
-        },
+        // {
+        //   label: 'swm.create.vehicleScheduledMaintenanceDate',
+        //   isDate: true,
+        // },
         {
           label: 'swm.create.costIncurred',
         },
@@ -98,7 +98,7 @@ var dat = {
         'actualMaintenanceDate',
         'vehicle.regNumber',
         'vehicle.vehicleType.name', 
-        'vehicleScheduledMaintenanceDate', 
+        // 'vehicleScheduledMaintenanceDate', 
         'costIncurred',
         'vehicleReadingDuringMaintenance',
         'vehicleDowntimeActual',
