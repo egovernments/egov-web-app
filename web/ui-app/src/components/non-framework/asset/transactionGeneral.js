@@ -919,8 +919,8 @@ class Transaction extends Component {
       return (
         <div>
           <Card className="uiCard">
-              <Row>
-              <Checkbox
+            <CardText>
+            <Checkbox
                 label="Select All"
                 disabled={false}
                 onCheck={(obj, bol) => {
@@ -928,7 +928,8 @@ class Transaction extends Component {
                   self.selectAllFunction(bol);
                 }}
               />
-              </Row>
+            </CardText>
+
           </Card>
         </div>
       );
