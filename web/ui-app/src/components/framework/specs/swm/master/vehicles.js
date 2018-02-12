@@ -780,6 +780,7 @@ var dat = {
             isDisabled: false,
             maxLength: 128,
             minLength: 1,
+            isRequired: true,
             patternErrorMsg: '',
             url: "hr-employee/employees/_search?&designationId=" + driverDesignaionId + "&asOnDate=" + formattedDate + "|$.Employee[*].code|$.Employee[*].name",
           },
