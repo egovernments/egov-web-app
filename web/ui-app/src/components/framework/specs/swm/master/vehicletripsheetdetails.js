@@ -100,19 +100,29 @@ var dat = {
     beforeSubmit: `
     var oneDay = 24*60*60*1000;
     var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    var toDate=new Date(formData.vehicleTripSheetDetails[0].tripEndDate);
     var curDate=new Date();
-    // var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
-    // if(result)
-    // {
-    //   alert("The from date should be current date");
-    //   shouldSubmit=false;
-    // }
+    var result=(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear());
+    if(result)
+    {
+      var endDate = (toDate.getDate()==curDate.getDate() && toDate.getMonth()==curDate.getMonth() && toDate.getYear()==curDate.getYear());
+      if(!endDate){
+        alert("Please Select To date as Current Date");
+        shouldSubmit=false;
+      }
+    }
+    
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
       shouldSubmit=false;
     }
-    if(formData.vehicleTripSheetDetails[0].route.dumpingGround && formData.vehicleTripSheetDetails[0].route.dumpingGround.name && (!formData.vehicleTripSheetDetails[0].inTime || !formData.vehicleTripSheetDetails[0].outTime || !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
+    if(formData.vehicleTripSheetDetails[0].route.dumpingGround && 
+      formData.vehicleTripSheetDetails[0].route.dumpingGround.name && 
+      (!formData.vehicleTripSheetDetails[0].inTime || 
+        !formData.vehicleTripSheetDetails[0].outTime || 
+        !parseFloat(formData.vehicleTripSheetDetails[0].entryWeight) || 
+        !parseFloat(formData.vehicleTripSheetDetails[0].exitWeight)))
     {
       alert("Please enter values for In Time, Out Time, Entry Weight and Exit Weight");
       shouldSubmit=false;
@@ -124,9 +134,19 @@ var dat = {
     }
     if(parseFloat(formData.vehicleTripSheetDetails[0].garbageWeight)>parseFloat(formData.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo))
     {
-      alert("Total weight of garbage should equal or lessthan dumping ground capacity");
+      alert("Total weight of garbage should equal or less than DumpingGround Capacity of value " + formData.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo);
       shouldSubmit=false;
     }
+
+    if(formData && _.isArray(formData.vehicleTripSheetDetails)){
+      if(formData.vehicleTripSheetDetails[0].entryWeight && formData.vehicleTripSheetDetails[0].exitWeight){
+        var garbage = (formData.vehicleTripSheetDetails[0].entryWeight) - (formData.vehicleTripSheetDetails[0].exitWeight);
+        if(garbage.toString().split('.')[1] && garbage.toString().split('.')[1].length>2){
+          formData.vehicleTripSheetDetails[0].garbageWeight = garbage.toFixed(2);
+        }
+      }
+    }
+
     `,
     numCols: 4,
     useTimestamp: true,
@@ -188,6 +208,7 @@ var dat = {
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: "",
+              maxDate: 'today',
               depedants: [
                 {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
@@ -206,6 +227,7 @@ var dat = {
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: "",
+              maxDate: 'today',
               depedants: [
                 {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
@@ -389,12 +411,12 @@ var dat = {
             type: "text",
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: "",
+            patternErrMsg: "",
             defaultValue: "",
             depedants: [{
               jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
               type: "textField",
-              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
               rg: "",
               isRequired: false,
               requiredErrMsg: "",
@@ -408,12 +430,12 @@ var dat = {
             type: "text",
             isRequired: false,
             isDisabled: false,
-            patternErrorMsg: "",
+            patternErrMsg: "",
             defaultValue: "",
             depedants: [{
               jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
               type: "textField",
-              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
               rg: "",
               isRequired: false,
               requiredErrMsg: "",
@@ -454,16 +476,30 @@ var dat = {
             res.vehicleTripSheetDetails[0].route.collectionPoints.splice(i,1)
           }
         }
-    }`,
+    }
+    
+    if(res && _.isArray(res.vehicleTripSheetDetails)){
+      if(res.vehicleTripSheetDetails[0].entryWeight && res.vehicleTripSheetDetails[0].exitWeight){
+        var garbage = (res.vehicleTripSheetDetails[0].entryWeight) - (res.vehicleTripSheetDetails[0].exitWeight);
+        if(garbage.toString().split('.')[1] && garbage.toString().split('.')[1].length>2){
+          res.vehicleTripSheetDetails[0].garbageWeight = garbage.toFixed(2);
+        }
+      }
+    }
+    `,
     beforeSubmit: `var oneDay = 24*60*60*1000;
     var startDate=new Date(formData.vehicleTripSheetDetails[0].tripStartDate);
+    var toDate=new Date(formData.vehicleTripSheetDetails[0].tripEndDate);
     var curDate=new Date();
-    // var result=!(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear())
-    // if(result)
-    // {
-    //   alert("The from date should be current date");
-    //   shouldSubmit=false;
-    // }
+    var result=(startDate.getDate()==curDate.getDate() && startDate.getMonth()==curDate.getMonth() && startDate.getYear()==curDate.getYear());
+    if(result)
+    {
+      var endDate = (toDate.getDate()==curDate.getDate() && toDate.getMonth()==curDate.getMonth() && toDate.getYear()==curDate.getYear());
+      if(!endDate){
+        alert("Please Select To date as Current Date");
+        shouldSubmit=false;
+      }
+    }
     if(formData.vehicleTripSheetDetails[0].tripEndDate<formData.vehicleTripSheetDetails[0].tripStartDate || Math.round(Math.abs((formData.vehicleTripSheetDetails[0].tripEndDate - formData.vehicleTripSheetDetails[0].tripStartDate)/(oneDay)))>1)
     {
       alert("The difference between from date and to date should be less than 1 day");
@@ -476,7 +512,7 @@ var dat = {
     }
     if(parseFloat(formData.vehicleTripSheetDetails[0].entryWeight)<parseFloat(formData.vehicleTripSheetDetails[0].exitWeight))
     {
-      alert("Entry weight should be greatet than exit weight");
+      alert("Entry weight should be greater than exit weight");
       shouldSubmit=false;
     }
     if(parseFloat(formData.vehicleTripSheetDetails[0].garbageWeight)>parseFloat(formData.vehicleTripSheetDetails[0].route.totalGarbageEstimateTwo))
@@ -560,6 +596,7 @@ var dat = {
               isRequired: true,
               isDisabled: false,
               patternErrorMsg: "",
+              maxDate: 'today',
               depedants: [
                 {
                   jsonPath: "vehicleTripSheetDetails[0].route.code",
@@ -577,6 +614,7 @@ var dat = {
             isRequired: true,
             isDisabled: false,
             patternErrorMsg: "",
+            maxDate: 'today',
             url: "swm-services/routes/_search?|$.routes.*.code|$.routes.*.name",
             autoCompleteDependancy: [{
                 autoCompleteUrl: "/swm-services/routes/_search?code={vehicleTripSheetDetails[0].route.code}&excludeDumpingGround=true",
@@ -748,7 +786,7 @@ var dat = {
             depedants: [{
               jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
               type: "textField",
-              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
               rg: "",
               isRequired: false,
               requiredErrMsg: "",
@@ -767,7 +805,7 @@ var dat = {
             depedants: [{
               jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
               type: "textField",
-              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) > parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+              pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
               rg: "",
               isRequired: false,
               requiredErrMsg: "",
@@ -792,7 +830,8 @@ var dat = {
     searchUrl: "/swm-services/vehicletripsheetdetails/_search?tripNo={tripNo}"
   },
   "swm.view": {
-    beforeSetForm:`if (res &&
+    beforeSetForm:
+    `if (res &&
       _.isArray(res.vehicleTripSheetDetails) && res.vehicleTripSheetDetails[0].route.collectionPoints && res.vehicleTripSheetDetails[0].route.collectionPoints.length>0) {
         for(var i=0;i<res.vehicleTripSheetDetails[0].route.collectionPoints.length;i++)
         {
@@ -802,13 +841,23 @@ var dat = {
             res.vehicleTripSheetDetails[0].route.collectionPoints.splice(i,1);
           }
         }
-    }`,
+    }
+    if(res && _.isArray(res.vehicleTripSheetDetails)){
+      if(res.vehicleTripSheetDetails[0].entryWeight && res.vehicleTripSheetDetails[0].exitWeight){
+        var garbage = (res.vehicleTripSheetDetails[0].entryWeight) - (res.vehicleTripSheetDetails[0].exitWeight);
+        if(garbage.toString().split('.')[1] && garbage.toString().split('.')[1].length>2){
+          res.vehicleTripSheetDetails[0].garbageWeight = garbage.toFixed(2);
+        }
+      }
+    }
+    `,
     numCols: 4,
     useTimestamp: true,
     objectName: "vehicleTripSheetDetails",
     title: "swm.vehiclestripsheet.create.title",
     searchUrl: "/swm-services/vehicletripsheetdetails/_search?tripNo={tripNo}",
-    groups: [{
+    groups: [
+      {
         name: "VehicleDetails",
         label: "",
         fields: [
@@ -1024,15 +1073,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [{
-              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-              type: "textField",
-              pattern: "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-              rg: "",
-              isRequired: false,
-              requiredErrMsg: "",
-              patternErrMsg: ""
-            }]
+            // depedants: [{
+            //   jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+            //   type: "textField",
+            //   pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+            //   rg: "",
+            //   isRequired: false,
+            //   requiredErrMsg: "",
+            //   patternErrMsg: ""
+            // }]
           },
           {
             name: "exitWeight",
@@ -1043,15 +1092,15 @@ var dat = {
             isDisabled: false,
             patternErrorMsg: "",
             defaultValue: "",
-            depedants: [{
-              jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
-              type: "textField",
-              pattern: "`${getVal('vehicleTripSheetDetails[0].entryWeight') && getVal('vehicleTripSheetDetails[0].exitWeight') && getVal('vehicleTripSheetDetails[0].entryWeight') > getVal('vehicleTripSheetDetails[0].exitWeight') ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
-              rg: "",
-              isRequired: false,
-              requiredErrMsg: "",
-              patternErrMsg: ""
-            }]
+            // depedants: [{
+            //   jsonPath: "vehicleTripSheetDetails[0].garbageWeight",
+            //   type: "textField",
+            //   pattern: "`${parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) && parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight')) ? (parseFloat(getVal('vehicleTripSheetDetails[0].entryWeight')) - parseFloat(getVal('vehicleTripSheetDetails[0].exitWeight'))).toFixed(2):0}`",
+            //   rg: "",
+            //   isRequired: false,
+            //   requiredErrMsg: "",
+            //   patternErrMsg: ""
+            // }]
           },
           {
             name: "garbageWeight",
