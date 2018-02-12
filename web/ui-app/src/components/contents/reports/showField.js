@@ -167,6 +167,7 @@ export default class ShowField extends Component {
               floatingLabelStyle={{ color: obj.disabled ? '#A9A9A9' : '#696969', fontSize: '20px', whiteSpace: 'nowrap' }}
               inputStyle={{ color: '#5F5C57' }}
               floatingLabelFixed={true}
+              fullWidth={true}
               style={{ display: 'inline-block' }}
               filter={(searchText, key) => {
                 return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
