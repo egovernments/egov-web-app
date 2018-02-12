@@ -5,6 +5,26 @@ import { translate } from '../../common/common';
 export default class UiSingleFileUpload extends Component {
   constructor(props) {
     super(props);
+   this.state = {
+     showDownloadLink : true
+   }
+  }
+
+  checkDownloadlink(e){
+    console.log(e.target.files[0]);
+    if(e.target.files[0]){
+        this.setState(
+          () =>{
+            return  {showDownloadLink : false}
+          }
+        );
+    }else{
+      this.setState(
+        () =>{
+          return  {showDownloadLink : true}
+        }
+      );
+    }
   }
 
   renderSingleFileUpload = item => {
@@ -15,7 +35,7 @@ export default class UiSingleFileUpload extends Component {
         let fileId =  getVal(item.jsonPath);
        return (
          <div>
-       {(fileId) ?  
+       {(fileId && this.state.showDownloadLink) ?  
        <div>
              <a
                 href={
@@ -34,7 +54,6 @@ export default class UiSingleFileUpload extends Component {
            {item.label.replace("Download", "Upload")} <span style={{ color: '#FF0000' }}>{item.isRequired ? ' *' : ''}</span>
           </label>
           } 
-
            <div
              style={{
                marginTop: '0px',
@@ -47,16 +66,18 @@ export default class UiSingleFileUpload extends Component {
                type="file"
                accept=".doc,.docx,.xls,.xlsx,.csv,.pdf,.jpeg,.jpg,.png"
                style={{ marginTop: '0px' }}
-               onChange={e =>
-                 this.props.handler(
-                   { target: { value: e.target.files[0] } },
-                   item.jsonPath,
-                   item.isRequired ? true : false,
-                   '',
-                   item.requiredErrMsg,
-                   item.patternErrMsg,
-                   item.hidePrevious=true
-                 )
+               onChange={ (e) =>{
+                this.checkDownloadlink(e);
+                this.props.handler(
+                  { target: { value: e.target.files[0] } },
+                  item.jsonPath,
+                  item.isRequired ? true : false,
+                  '',
+                  item.requiredErrMsg,
+                  item.patternErrMsg,
+                  item.hidePrevious=true
+                )
+               }
                }
              />
            </div>
@@ -79,7 +100,7 @@ export default class UiSingleFileUpload extends Component {
               target="_blank"
             >
               {translate(item.label)}
-            </a> : <p style={{margin:'20px 0px 20px 0'}}>{"No documents"}</p>
+            </a> : <div><p style={{margin:'0 0 5px 0','fontWeight':'600','fontSize':'13px'}}>{translate(item.label)}</p><p>{"No documents"}</p></div>
           );
         } else {
           /*
