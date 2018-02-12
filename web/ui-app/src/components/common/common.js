@@ -2373,6 +2373,8 @@ var localization_EN_Data = {
   'swm.create.vehicle.remarks': 'Remarks',
   'swm.create.actualMaintenanceDate': 'Actual Maintenance Date',
   'swm.create.vehicleScheduledMaintenanceDate': 'Vehicle Scheduled Maintenance Date',
+  'swm.create.vehicleRepairdMaintenanceNumber': 'Vehicle Repair/ Maintenance Number',
+  'swm.create.actualRepairMaintenanceDate': 'Actual Repair/ Maintenance date',
   'swm.create.costIncurred': 'Cost Incurred (₹)',
   'swm.create.vehicleDowntimeActual': 'Vehicle Downtime Actual',
   'swm.create.vehicleDownTimeActualUom': 'Hrs/Days',

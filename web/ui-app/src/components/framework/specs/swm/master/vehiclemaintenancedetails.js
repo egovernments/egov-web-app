@@ -64,6 +64,13 @@ var dat = {
     result: {
       header: [
         {
+          label: 'swm.create.vehicleRepairdMaintenanceNumber'
+        },
+        {
+          label: 'swm.create.actualRepairMaintenanceDate',
+          isDate: true,
+        },
+        {
           label: 'swm.vehicles.create.regNumber',
         },
         {
@@ -76,12 +83,26 @@ var dat = {
         {
           label: 'swm.create.costIncurred',
         },
+        {
+          label:'swm.create.vehicleReadingDuringMaintenance'
+        },
+        {
+          label: 'swm.create.vehicleDowntimeActual'
+        },
+        {
+          label:'swm.create.remarks'
+        }
       ],
       values: [
+        'transactionNo',
+        'actualMaintenanceDate',
         'vehicle.regNumber',
         'vehicle.vehicleType.name', 
         'vehicleScheduledMaintenanceDate', 
-        'costIncurred'
+        'costIncurred',
+        'vehicleReadingDuringMaintenance',
+        'vehicleDowntimeActual',
+        'remarks'
       ],
       resultPath: 'vehicleMaintenanceDetails',
       rowClickUrlUpdate: '/update/swm/vehiclemaintenancedetails/{transactionNo}',
