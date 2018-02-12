@@ -46,7 +46,7 @@ var dat = {
             patternErrorMsg: '',
             url: 'swm-services/vehicles/_search?|$.vehicles.*.regNumber|$.vehicles.*.regNumber',
           },
-	{
+	        {
             name: 'transactionNo',
             jsonPath: 'transactionNo',
             label: 'swm.vehicles.create.transactionNo',
