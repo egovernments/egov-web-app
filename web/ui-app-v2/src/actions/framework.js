@@ -109,15 +109,11 @@ export const submitFormDataRequest = (url, formData) => {
 
 export const fetchDropDownData = (dataSourceObj, target) => {
   return async (dispatch, getState) => {
-    // api calls go here
-    const response = await apiForm(dataSourceObj, dataSourceObj.response.path);
-    const dropDownData = response.map(responseObj => {
-      var dropDownObj = {};
-      return (dropDownObj = {
-        key: responseObj[dataSourceObj.response.config.key],
-        value: responseObj[dataSourceObj.response.config.value]
-      });
-    });
+    const dropDownData = await apiForm(
+      dataSourceObj,
+      dataSourceObj.response.path
+    );
+
     dispatch(setDropDownData(target, dropDownData));
   };
 };

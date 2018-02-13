@@ -121,8 +121,18 @@ var dat = {
           name: 'asset.assetAttributes' ,
           key: 'RFID',
         },
-        'binDetails[0].asset.latitude' ,
-        'binDetails[0].asset.longitude' ,
+        {
+          jsonPath: 'binDetails',
+          isMultiple: true,
+          name: 'asset.latitude' 
+        },
+        {
+          jsonPath: 'binDetails',
+          isMultiple: true,
+          name: 'asset.longitude' 
+        },
+        // 'binDetails[0].' ,
+        // 'binDetails[0].asset.longitude' ,
         // {
         //   jsonPath: 'binDetails',
         //   isMultiple: true,

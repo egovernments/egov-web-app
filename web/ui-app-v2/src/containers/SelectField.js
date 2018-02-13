@@ -10,8 +10,22 @@ export default class SelectFieldContainer extends Component {
     }
   }
 
+  transformDropData = (field, dropDownData=[]) => {
+    const {dataSourceConfig} = field;
+    
+     return dropDownData.map(responseObj => {
+      return {
+        key: responseObj[dataSourceConfig.key],
+        value: responseObj[dataSourceConfig.value]
+      }
+    })
+   
+  }
+
+
   render() {
-    const { field, fetchDropDownData, ...rest } = this.props;
-    return <SelectField {...rest} />;
+    const { field, fetchDropDownData, dropDownData, ...rest } = this.props;
+    const transformedDropdownData = this.transformDropData(field, dropDownData);
+    return <SelectField dropDownData={transformedDropdownData} {...rest} />;
   }
 }
