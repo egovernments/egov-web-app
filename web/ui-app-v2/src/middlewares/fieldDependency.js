@@ -1,13 +1,17 @@
-import { fetchDropDownData } from "../actions/framework";
+import { fetchDropDownData, setFieldProperty } from "../actions/framework";
 
 const dependantApiCall = (dependency, dispatch) => {
   const { dataSource, target } = dependency;
   dispatch(fetchDropDownData(dataSource, target));
 };
 
-const handleFieldVisibilityToggle = (dependency, dispatch) => {};
-
-const handleEnableDisableToggle = (target, value) => {};
+const handleFieldVisibilityToggle = (value, property, dependency, dispatch) => {
+  const { affectants } = dependency;
+  affectants.forEach(affectant => {
+    const { target } = affectant;
+    dispatch(setFieldProperty, { hide: true });
+  });
+};
 
 const fieldDependency = store => next => action => {
   const { type } = action;
@@ -16,7 +20,7 @@ const fieldDependency = store => next => action => {
 
   if (type == "HANDLE_CHANGE") {
     const { field } = action;
-    const { dependencies } = field;
+    const { value, dependencies } = field;
 
     if (dependencies && dependencies.length) {
       dependencies.forEach(dependency => {
@@ -25,9 +29,8 @@ const fieldDependency = store => next => action => {
           case "API_CALL":
             dependantApiCall(dependency, dispatch);
             break;
-          case "VISIBILITY_TOGGLE":
-            break;
-          case "ENABLE_DISABILITY_TOGGLE":
+          case "PROPERTY_TOGGLE":
+            handleFieldVisibilityToggle(value, dependency, dispatch);
             break;
           default:
             break;

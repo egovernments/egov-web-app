@@ -111,8 +111,7 @@ export const fetchDropDownData = (dataSourceObj, target) => {
   return async (dispatch, getState) => {
     // api calls go here
     const response = await apiForm(dataSourceObj, dataSourceObj.response.path);
-    console.log(response);
-    let dropDownData = response.map(responseObj => {
+    const dropDownData = response.map(responseObj => {
       var dropDownObj = {};
       return (dropDownObj = {
         key: responseObj[dataSourceObj.response.config.key],
@@ -120,7 +119,6 @@ export const fetchDropDownData = (dataSourceObj, target) => {
       });
     });
     dispatch(setDropDownData(target, dropDownData));
-    // do some transformation
   };
 };
 
