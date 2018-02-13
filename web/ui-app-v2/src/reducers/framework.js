@@ -25,6 +25,9 @@ const framework = (state = intialState, action) => {
       const { formData } = action;
       return { ...state, form: formData || {} };
 
+    case "RESET_FORM_DATA":
+      return { ...state, form: {} };
+
     case "SET_FIELD_PROPERTY":
       const { property } = action;
       return {
@@ -55,7 +58,7 @@ const framework = (state = intialState, action) => {
       return { ...state, moduleName };
 
     case "SET_DROPDOWN_DATA":
-      const { dropDownData,target } = action;
+      const { dropDownData, target } = action;
       return {
         ...state,
         dropDownData: { ...state.dropDownData, [target]: dropDownData }

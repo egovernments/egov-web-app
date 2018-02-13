@@ -1,13 +1,11 @@
-import {fetchDropDownData} from "../actions/framework";
+import { fetchDropDownData } from "../actions/framework";
 
 const dependantApiCall = (dependency, dispatch) => {
- const {dataSource,target} = dependency;
- dispatch(fetchDropDownData(dataSource,target));
+  const { dataSource, target } = dependency;
+  dispatch(fetchDropDownData(dataSource, target));
 };
 
-
-
-const handleFieldVisibilityToggle = (target, value) => {};
+const handleFieldVisibilityToggle = (dependency, dispatch) => {};
 
 const handleEnableDisableToggle = (target, value) => {};
 
@@ -18,29 +16,26 @@ const fieldDependency = store => next => action => {
 
   if (type == "HANDLE_CHANGE") {
     const { field } = action;
-      console.log(field);
-      const { dependencies } = field;
-      // api depency
-      if(dependencies && dependencies.length){
-        dependencies.forEach(dependency => {
-          const {type} = dependency;
-          switch(type){
-            case "API_CALL" :
-            dependantApiCall(dependency,dispatch);
+    const { dependencies } = field;
+
+    if (dependencies && dependencies.length) {
+      dependencies.forEach(dependency => {
+        const { type } = dependency;
+        switch (type) {
+          case "API_CALL":
+            dependantApiCall(dependency, dispatch);
             break;
-            case "VISIBILITY_TOGGLE":
+          case "VISIBILITY_TOGGLE":
             break;
-            case "ENABLE_DISABILITY_TOGGLE":
+          case "ENABLE_DISABILITY_TOGGLE":
             break;
-            default:
+          default:
             break;
-      
-          }
-      
-        })
-        
-        dependantApiCall(field,dispatch);
-     }
+        }
+      });
+
+      dependantApiCall(field, dispatch);
+    }
   }
 
   next(action);

@@ -66,8 +66,8 @@ const mapStateToProps = (state, props) => {
   const { field } = props;
   const { target, type } = field;
   const fieldProperty = framework.fields[target];
-  const hide = fieldProperty ? fieldProperty.hide : "false";
-  const disabled = fieldProperty ? fieldProperty.disabled : false;
+  const hide = fieldProperty ? fieldProperty.hide : field.hide;
+  const disabled = fieldProperty ? fieldProperty.disabled : field.disabled;
   const dropDownData = framework.dropDownData[target];
   const errorMessage = fieldProperty ? fieldProperty.errorMessage : "";
   const value = framework.form[target] || "";

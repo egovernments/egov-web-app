@@ -11,6 +11,7 @@ const specs = {
         {
           label: "First Name",
           type: "text",
+          disabled: false,
           target: "name",
           width: 4,
           patternErrorMessage: "Please Enter a valid name",
@@ -25,14 +26,14 @@ const specs = {
           target: "countries",
           dataSource: {
             url: "http://somedatasource.com/api/...",
-            request:{},
+            request: {},
             response: {
-              path : "countries",
+              path: "countries",
               config: {
                 key: "code",
                 value: "name"
               }
-            },
+            }
           },
           options: ["India", "USA", "AUSTRALIA"],
           dependencies: [
@@ -41,33 +42,31 @@ const specs = {
               type: "API_CALL",
               dataSource: {
                 url: "http://somedatasource.com/api/...",
-                request:{},
-                response:  {
-                  path : "cities",
-                  config: {
-                    key: "code",
-                    value: "name"
-                  }
-                },
+                request: {},
+                response: {
+                  path: "cities",
+                  config: { key: "code", value: "name" }
+                }
               }
             },
             {
-              target: "",
               type: "VISIBILITY_TOGGLE",
-              toggleValue: ""
+              toggleValue: "",
+              affectants: [
+                {
+                  target: "name",
+                  isGroup: true
+                }
+              ]
             },
-            {
-              target: "",
-              type: "ENABLE_DISABILITY_TOGGLE",
-              toggleValue: ""
-            }
+            { target: "", type: "ENABLE_DISABILITY_TOGGLE", toggleValue: "" }
           ]
         },
         {
           width: 4,
           label: "Cities",
           type: "dropdown",
-          target: "cities",
+          target: "cities"
         },
         {
           label: "Can code?",

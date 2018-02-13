@@ -10,7 +10,12 @@ const pgrTransfomer = data => {
 
 const pgrReverseTransformer = data => {
   const clonedData = Object.assign(data);
-  clonedData["property"] = "some property";
+
+  if (clonedData["canCode"] == true) {
+    clonedData["canCode"] = "yes";
+  } else {
+    clonedData["canCode"] = "no";
+  }
   return clonedData;
 };
 

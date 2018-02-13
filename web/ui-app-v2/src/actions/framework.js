@@ -1,4 +1,4 @@
-import { api, postData, search, apiForm } from "../utils/api"; 
+import { api, postData, search, apiForm } from "../utils/api";
 
 export const setSpecs = specs => {
   return {
@@ -13,6 +13,8 @@ export const setModuleName = moduleName => {
     moduleName
   };
 };
+
+export const setFieldProperty = () => {};
 
 export const setActionName = actionName => {
   return {
@@ -55,12 +57,14 @@ export const handleChange = field => {
   };
 };
 
-export const setFormData = formData => {
+export const setFormData = (formData, target) => {
   return {
     type: "SET_FORM_DATA",
     formData
   };
 };
+
+// export const setFieldProperty = (target,)
 
 export const searchEntitySuccess = formData => {
   return {
@@ -110,11 +114,11 @@ export const fetchDropDownData = (dataSourceObj, target) => {
     console.log(response);
     let dropDownData = response.map(responseObj => {
       var dropDownObj = {};
-      return dropDownObj = {
+      return (dropDownObj = {
         key: responseObj[dataSourceObj.response.config.key],
         value: responseObj[dataSourceObj.response.config.value]
-      }
-    })
+      });
+    });
     dispatch(setDropDownData(target, dropDownData));
     // do some transformation
   };

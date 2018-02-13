@@ -1,12 +1,15 @@
 import React from "react";
 import renderGroups from "./render-groups";
 
-const Create = ({ submitFormData, groups, actionName }) => {
+const Create = ({ resetFormData, submitFormData, groups, actionName }) => {
   return (
     <div className="row">
       {renderGroups(groups)}
       {actionName !== "view" ? (
-        <button onClick={() => submitFormData()}>Save</button>
+        <div>
+          <button onClick={() => submitFormData()}>Save</button>
+          <button onClick={() => resetFormData()}>Reset</button>
+        </div>
       ) : (
         ""
       )}

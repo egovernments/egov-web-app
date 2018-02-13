@@ -1,11 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import { submitFormData, searchEntity } from "../actions/framework";
+import {
+  submitFormData,
+  resetFormData,
+  searchEntity
+} from "../actions/framework";
 import CreateHoC from "../hocs/create";
 import Create from "./create";
 import Search from "./search";
 
-const Screen = ({ specs, actionName, submitFormData, searchEntity }) => {
+const Screen = ({
+  specs,
+  actionName,
+  resetFormData,
+  submitFormData,
+  searchEntity
+}) => {
   const renderScreen = () => {
     const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
 
@@ -14,6 +24,7 @@ const Screen = ({ specs, actionName, submitFormData, searchEntity }) => {
         return (
           <Create
             submitFormData={submitFormData}
+            resetFormData={resetFormData}
             actionName={actionName}
             groups={groups}
           />
@@ -34,6 +45,7 @@ const Screen = ({ specs, actionName, submitFormData, searchEntity }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  resetFormData: () => dispatch(resetFormData()),
   submitFormData: () => dispatch(submitFormData()),
   searchEntity: () => dispatch(searchEntity())
 });
