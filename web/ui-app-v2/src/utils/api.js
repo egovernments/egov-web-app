@@ -30,7 +30,7 @@ export const search = (url, params) => {
   const response = {
     name: "Varun",
     country: "India",
-    canCode: true
+    canCode: "yes"
   };
 
   return new Promise((resolve, reject) => {

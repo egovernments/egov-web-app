@@ -31,7 +31,7 @@ const Field = ({ field, actionName, handleChange, ...rest }) => {
         return <SelectField onChange={onChange} {...rest} field={field} />;
 
       case "checkbox":
-        return <Checkbox onChange={onChange} />;
+        return <Checkbox {...rest} onChange={onChange} />;
 
       default:
         break;
@@ -70,14 +70,19 @@ const mapStateToProps = (state, props) => {
   const disabled = fieldProperty ? fieldProperty.disabled : false;
   const dropDownData = framework.dropDownData[target];
   const errorMessage = fieldProperty ? fieldProperty.errorMessage : "";
+  const value = framework.form[target] || "";
 
   const mappedProps = {
-    value: framework.form[target] || "",
+    value,
     actionName,
     hide,
     disabled,
     errorMessage
   };
+
+  if (type === "checkbox") {
+    mappedProps["checked"] = value;
+  }
 
   if (type === "dropdown") {
     mappedProps["dropDownData"] = dropDownData;

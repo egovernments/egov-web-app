@@ -4,12 +4,14 @@ const frameworkMiddleware = store => next => action => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
-  const { form: formData, specs } = state.framework;
+  const { specs, form: formData } = state.framework;
   const { transformers, createUrl } = specs;
-  let transformedFormData = Object.assign({}, formData);
+  let transformedFormData;
 
   switch (type) {
     case "SUBMIT_FORM_DATA":
+      transformedFormData = Object.assign({}, formData);
+
       if (
         transformers &&
         transformers.VToBModelTransform &&
@@ -21,21 +23,20 @@ const frameworkMiddleware = store => next => action => {
 
       dispatch(submitFormDataRequest(createUrl, transformedFormData));
       return;
-    // set form data
-    case "SET_FORM_DATA":
-      const { formData: searchResponse } = action;
 
+    case "SET_FORM_DATA":
+      transformedFormData = Object.assign({}, action.formData);
       if (
         transformers &&
-        transformers.VToBModelTransform &&
-        transformers.VToBModelTransform.length
-      )
-        transformers.VToBModelTransform.forEach(transformer => {
+        transformers.BToVModelTransform &&
+        transformers.BToVModelTransform.length
+      ) {
+        transformers.BToVModelTransform.forEach(transformer => {
           transformedFormData = transformer(transformedFormData);
         });
-
-      dispatch(setFormData(searchResponse));
-      return;
+        action.formData = transformedFormData;
+      }
+      break;
     default:
       break;
   }

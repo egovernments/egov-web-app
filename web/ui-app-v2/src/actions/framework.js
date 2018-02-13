@@ -62,6 +62,13 @@ export const setFormData = formData => {
   };
 };
 
+export const searchEntitySuccess = formData => {
+  return {
+    type: "SEARCH_ENTITY_SUCCESS",
+    formData
+  };
+};
+
 export const setDropDownData = (field, dropDownData) => {
   return {
     type: "SET_DROPDOWN_DATA",
