@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleChange, apiCall } from "../actions/framework";
+import { handleChange } from "../actions/framework";
 
 // this UiField can be a
 const Field = UiField => {

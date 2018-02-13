@@ -10,12 +10,12 @@ const intialState = {
 };
 
 const framework = (state = intialState, action) => {
-  const { type, target } = action;
+  const { type } = action;
+  const { field } = action;
 
   switch (type) {
     case "HANDLE_CHANGE":
-      const { value } = action;
-      return { ...state, form: { ...state.form, [target]: value } };
+      return { ...state, form: { ...state.form, [field.target]: field.value } };
 
     case "SET_SPECS":
       const { specs } = action;
@@ -27,7 +27,24 @@ const framework = (state = intialState, action) => {
 
     case "SET_FIELD_PROPERTY":
       const { property } = action;
-      return { ...state, fields: { ...state.fields, [target]: property } };
+      return {
+        ...state,
+        fields: { ...state.fields, [field.target]: property }
+      };
+
+    case "DISPLAY_ERROR_MESSAGE":
+      let fieldProperty = state.fields[field.target] || {};
+
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          [field.target]: {
+            ...fieldProperty,
+            errorMessage: action.errorMessage
+          }
+        }
+      };
 
     case "SET_ACTION_NAME":
       const { actionName } = action;
@@ -41,7 +58,7 @@ const framework = (state = intialState, action) => {
       const { dropDownData } = action;
       return {
         ...state,
-        dropDownData: { ...state.dropDownData, [target]: dropDownData }
+        dropDownData: { ...state.dropDownData, [field.target]: dropDownData }
       };
 
     case "LOADING_STATUS":

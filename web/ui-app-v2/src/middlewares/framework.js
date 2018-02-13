@@ -1,19 +1,54 @@
+import { displayError } from "../actions/framework";
+
 const dependentApiCall = (target, value) => {};
 
-const handleValidation = (target, value) => {};
+const isFieldValid = (value, isRequired, regex, patternErrorMessage) => {
+  let errorMessage = "",
+    valid = true;
+
+  if (isRequired && !value.length) {
+    valid = false;
+    errorMessage = "Required";
+  }
+
+  if (!regex.test(value)) {
+    valid = false;
+    errorMessage = patternErrorMessage;
+  }
+
+  return { valid, errorMessage };
+};
+
+const handleValidation = (field, state, dispatch) => {
+  const { target, isRequired, value, pattern, patternErrorMessage } = field;
+  const regex = new RegExp(pattern);
+
+  const { valid, errorMessage } = isFieldValid(
+    value,
+    isRequired,
+    regex,
+    patternErrorMessage
+  );
+
+  // do you need to dispatch every time?
+  dispatch(displayError(field, errorMessage));
+};
 
 const handleFieldVisibilityToggle = (target, value) => {};
 
 const handleEnableDisableToggle = (target, value) => {};
 
-// should validation be a middleware
-
 const frameworkMiddleware = store => next => action => {
   const { type } = action;
+  const dispatch = store.dispatch;
+  const state = store.getState();
   switch (type) {
     case "HANDLE_CHANGE":
-      const { target, value } = action;
-      // nbi
+      const { field } = action;
+
+      // handle Validation
+      handleValidation(field, state, dispatch);
+
       break;
     // data to be sent to the server
     case "SUBMIT_FORM_DATA":

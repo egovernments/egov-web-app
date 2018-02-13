@@ -13,6 +13,9 @@ const specs = {
           type: "text",
           target: "name",
           width: 4,
+          patternErrorMessage: "Please Enter a valid name",
+          pattern: "",
+          isRequired: true,
           viewAdapter: ""
         },
         {

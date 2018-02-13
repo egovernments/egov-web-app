@@ -34,11 +34,10 @@ export const resetFormData = () => {
   };
 };
 
-export const handleChange = (target, value) => {
+export const handleChange = field => {
   return {
     type: "HANDLE_CHANGE",
-    target,
-    value
+    field
   };
 };
 
@@ -49,19 +48,27 @@ export const setFormData = formData => {
   };
 };
 
-export const setDropDownData = (target, dropDownData) => {
+export const setDropDownData = (field, dropDownData) => {
   return {
     type: "SET_DROPDOWN_DATA",
-    target,
+    field,
     dropDownData
   };
 };
 
-export const fetchDropDownData = (url, target, params = "countries") => {
+export const displayError = (field, errorMessage) => {
+  return {
+    type: "DISPLAY_ERROR_MESSAGE",
+    field,
+    errorMessage
+  };
+};
+
+export const fetchDropDownData = (url, field, params = "countries") => {
   return async (dispatch, getState) => {
     // api calls go here
-    const response = await api(url, target);
-    dispatch(setDropDownData(target, response));
+    const response = await api(url, field.target);
+    dispatch(setDropDownData(field, response));
     // do some transformation
   };
 };
