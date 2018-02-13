@@ -21,17 +21,19 @@ const isFieldValid = (value, isRequired, regex, patternErrorMessage) => {
 
 const handleValidation = (field, state, dispatch) => {
   const { target, isRequired, value, pattern, patternErrorMessage } = field;
-  const regex = new RegExp(pattern);
 
-  const { valid, errorMessage } = isFieldValid(
-    value,
-    isRequired,
-    regex,
-    patternErrorMessage
-  );
+  if (pattern || isRequired) {
+    const regex = new RegExp(pattern);
+    const { valid, errorMessage } = isFieldValid(
+      value,
+      isRequired,
+      regex,
+      patternErrorMessage
+    );
 
-  // do you need to dispatch every time?
-  dispatch(displayError(field, errorMessage));
+    // do you need to dispatch every time?
+    dispatch(displayError(field, errorMessage));
+  }
 };
 
 const handleFieldVisibilityToggle = (target, value) => {};
@@ -45,15 +47,19 @@ const frameworkMiddleware = store => next => action => {
   switch (type) {
     case "HANDLE_CHANGE":
       const { field } = action;
-
-      // handle Validation
       handleValidation(field, state, dispatch);
-
       break;
     // data to be sent to the server
     case "SUBMIT_FORM_DATA":
+      const { form: formData, specs } = state.framework;
+      const { transformers } = specs;
+      let transformedFormData = Object.assign({}, formData);
+      transformers.VToBModelTransform.forEach(transformer => {
+        transformedFormData = transformer(transformedFormData);
+      });
+      // make api call
       break;
-
+    // set form data
     case "SET_FORM_DATA":
       break;
     default:

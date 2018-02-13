@@ -3,7 +3,7 @@ import transformers from "./transfomers";
 const specs = {
   createUrl: "",
   searchUrl: "",
-  transfomers: transformers,
+  transformers: transformers,
   groups: [
     {
       label: "Group One",
@@ -44,10 +44,11 @@ const specs = {
           ]
         },
         {
+          label: "Can code?",
+          type: "checkbox",
+          target: "canCode",
           width: 4,
-          label: "City",
-          type: "dropdown",
-          target: "cities"
+          viewAdapter: ""
         }
       ]
     }

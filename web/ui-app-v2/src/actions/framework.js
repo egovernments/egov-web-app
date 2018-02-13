@@ -21,10 +21,9 @@ export const setActionName = actionName => {
   };
 };
 
-export const submitFormData = formData => {
+export const submitFormData = () => {
   return {
-    type: "SUBMIT_FORM_DATA",
-    formData
+    type: "SUBMIT_FORM_DATA"
   };
 };
 

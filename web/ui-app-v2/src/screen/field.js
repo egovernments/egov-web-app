@@ -1,15 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import { SelectField } from "../containers";
-import { TextField } from "../components";
+import { Label, Checkbox, TextField } from "../components";
 import { fetchDropDownData, handleChange } from "../actions/framework";
 
 const Field = ({ field, actionName, handleChange, ...rest }) => {
   const { type, width, label } = field;
 
   const onChange = event => {
-    const value = event.target.value;
+    let value;
+    if (type == "checkbox") {
+      value = event.target.checked === true ? true : false;
+    } else {
+      value = event.target.value;
+    }
     handleChange({ ...field, value });
+  };
+
+  const renderViewField = () => {
+    const { value: label } = this.props;
+    return <Label label={label} />;
   };
 
   const renderField = () => {
@@ -19,6 +29,9 @@ const Field = ({ field, actionName, handleChange, ...rest }) => {
 
       case "dropdown":
         return <SelectField onChange={onChange} {...rest} field={field} />;
+
+      case "checkbox":
+        return <Checkbox onChange={onChange} />;
 
       default:
         break;
@@ -49,6 +62,7 @@ const mapDispatchToProps = (dispatch, props) => {
 
 const mapStateToProps = (state, props) => {
   const { framework } = state;
+  const { actionName } = framework.actionName;
   const { field } = props;
   const { target, type } = field;
   const fieldProperty = framework.fields[target];
@@ -59,6 +73,7 @@ const mapStateToProps = (state, props) => {
 
   const mappedProps = {
     value: framework.form[target] || "",
+    actionName,
     hide,
     disabled,
     errorMessage

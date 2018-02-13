@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 const pgrTransfomer = data => {
   const clonedData = Object.assign(data);
   clonedData["property"] = "some property";

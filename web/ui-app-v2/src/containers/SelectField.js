@@ -9,7 +9,7 @@ export default class SelectFieldContainer extends Component {
   }
 
   render() {
-    const { field, ...rest } = this.props;
+    const { field, fetchDropDownData, ...rest } = this.props;
     return <SelectField {...rest} />;
   }
 }
