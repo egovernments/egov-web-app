@@ -531,7 +531,7 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
-                  "pattern": "^([a-zA-Z0-9_-\\s]){10}$",
+                  "pattern":"^[0-9]{1,11}$",
                   "type":"text",
                   "isRequired":true,
                   "isDisabled":false,
