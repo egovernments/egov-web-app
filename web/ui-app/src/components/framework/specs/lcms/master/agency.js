@@ -42,14 +42,14 @@ var dat = {
             }
           ],*/
       header: [
-        {
+       /* {
           label: 'legal.search.result.actionLabels',
           isChecked: true,
           checkedItem: {
             jsonPath: 'checkedRow',
             label: '',
           },
-        },
+        },*/
         {
           label: 'legal.search.result.agencyName',
         },
@@ -60,7 +60,7 @@ var dat = {
           label: 'reports.lcms.status',
         },
       ],
-      values: ['code', 'name', 'agencyAddress','status'],
+      values: [ 'name', 'agencyAddress','status'],
       resultPath: 'agencies',
       resultIdKey: 'code',
       rowClickUrlUpdate: '/update/lcms/updateagency/{code}',
