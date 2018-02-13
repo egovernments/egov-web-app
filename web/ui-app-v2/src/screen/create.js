@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import renderGroups from "./render-groups";
 
 const Create = ({ submitFormData, groups, actionName }) => {
