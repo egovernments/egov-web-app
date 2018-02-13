@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { SelectField } from "../containers";
-import { Label, Checkbox, TextField } from "../components";
+import { Label, Checkbox, TextField, TextArea } from "../components";
 import { fetchDropDownData, handleChange } from "../actions/framework";
 
 const Field = ({ field, actionName, handleChange, ...rest }) => {
@@ -32,6 +32,9 @@ const Field = ({ field, actionName, handleChange, ...rest }) => {
 
       case "checkbox":
         return <Checkbox {...rest} onChange={onChange} />;
+
+      case "textarea":
+        return <TextArea {...rest} onChange={onChange} />;
 
       default:
         break;
