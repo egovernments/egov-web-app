@@ -296,8 +296,14 @@ class Search extends Component {
                     (_.get(dataMultiple[s], valuePath.name) === null ||  _.get(dataMultiple[s], valuePath.name) === "") ? tempMultipleObj[elem] = "NA" : tempMultiple.push(_.get(dataMultiple[s], valuePath.name));
                   })
                   tempMultiple.push(tempMultipleObj);
-                }
-                else{
+                } else if(Array.isArray(_.get(dataMultiple[s], valuePath.name))){
+                  var propertValue = _.get(dataMultiple[s], valuePath.name);
+                  for(var m =0 ;m < propertValue.length ; m++ ){
+                    if(propertValue[m].key && propertValue[m].key === valuePath.key){
+                      tempMultiple.push(propertValue[m].value);
+                    }
+                  }
+                }else{
                   (_.get(dataMultiple[s], valuePath.name) === null ||  _.get(dataMultiple[s], valuePath.name) === "") ? tempMultiple.push("NA") : tempMultiple.push(_.get(dataMultiple[s], valuePath.name));
                 }
               }

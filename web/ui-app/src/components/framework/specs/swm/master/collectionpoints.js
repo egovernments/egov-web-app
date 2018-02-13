@@ -118,7 +118,8 @@ var dat = {
         {
           jsonPath: 'binDetails',
           isMultiple: true,
-          name: 'rfid' 
+          name: 'asset.assetAttributes' ,
+          key: 'RFID',
         },
         'binDetails[0].asset.latitude' ,
         'binDetails[0].asset.longitude' ,
@@ -340,6 +341,21 @@ var dat = {
     tenantIdRequired: true,
   },
   'swm.view': {
+    beforeSetForm:
+    `
+    if(res && res.collectionPoints ){
+      for(var x=0 ; x < res.collectionPoints[0].binDetails.length ; x++){
+        var assetAttributes = res.collectionPoints[0].binDetails[x].asset.assetAttributes;
+        for(var i=0 ; i< assetAttributes.length ; i++){
+          if(assetAttributes[i].key === "RFID"){
+            res.collectionPoints[0].binDetails[x].asset.rfid = assetAttributes[i].value;
+            break;
+          }
+        }
+      }
+      
+    }
+    `,
     numCols: 3,
     useTimestamp: true,
     objectName: 'collectionPoints',
@@ -522,6 +538,21 @@ var dat = {
     url: '/swm-services/collectionpoints/_search?code={code}',
   },
   'swm.update': {
+    beforeSetForm:
+    `
+    if(res && res.collectionPoints ){
+      for(var x=0 ; x < res.collectionPoints[0].binDetails.length ; x++){
+        var assetAttributes = res.collectionPoints[0].binDetails[x].asset.assetAttributes;
+        for(var i=0 ; i< assetAttributes.length ; i++){
+          if(assetAttributes[i].key === "RFID"){
+            res.collectionPoints[0].binDetails[x].asset.rfid = assetAttributes[i].value;
+            break;
+          }
+        }
+      }
+      
+    }
+    `,
     numCols: 3,
     useTimestamp: true,
     objectName: 'collectionPoints',
@@ -625,6 +656,11 @@ var dat = {
               "autoFillFields": {
                 "collectionPoints[0].binDetails[0].asset.latitude": "Assets[0].latitude",
                 "collectionPoints[0].binDetails[0].asset.longitude": "Assets[0].longitude",
+                "iterableFields": {
+                  key : "RFID",
+                  from : "Assets[0].assetAttributes",
+                  to: "collectionPoints[0].binDetails[0].asset.rfid"
+                }
               },
             },
           },
@@ -653,7 +689,7 @@ var dat = {
             label: 'swm.collectionpoints.create.rfid',
             type: 'text',
             isRequired: false,
-            isDisabled: false,
+            isDisabled: true,
             patternErrMsg: '',
           },
         ],
