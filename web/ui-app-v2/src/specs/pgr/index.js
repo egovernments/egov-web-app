@@ -23,13 +23,33 @@ const specs = {
           label: "Country",
           type: "dropdown",
           target: "countries",
-          dataSource: "http://somedatasource.com/api/...",
+          dataSource: {
+            url: "http://somedatasource.com/api/...",
+            request:{},
+            response: {
+              path : "countries",
+              config: {
+                key: "code",
+                value: "name"
+              }
+            },
+          },
           options: ["India", "USA", "AUSTRALIA"],
-          dependency: [
+          dependencies: [
             {
-              target: "",
+              target: "cities",
               type: "API_CALL",
-              dataSource: "...some url with selected value"
+              dataSource: {
+                url: "http://somedatasource.com/api/...",
+                request:{},
+                response:  {
+                  path : "cities",
+                  config: {
+                    key: "code",
+                    value: "name"
+                  }
+                },
+              }
             },
             {
               target: "",
@@ -38,10 +58,16 @@ const specs = {
             },
             {
               target: "",
-              type: "INTERACTIVITY_TOGGLE",
+              type: "ENABLE_DISABILITY_TOGGLE",
               toggleValue: ""
             }
           ]
+        },
+        {
+          width: 4,
+          label: "Cities",
+          type: "dropdown",
+          target: "cities",
         },
         {
           label: "Can code?",

@@ -1,4 +1,11 @@
-const dependentApiCall = (target, value) => {};
+import {fetchDropDownData} from "../actions/framework";
+
+const dependantApiCall = (dependency, dispatch) => {
+ const {dataSource,target} = dependency;
+ dispatch(fetchDropDownData(dataSource,target));
+};
+
+
 
 const handleFieldVisibilityToggle = (target, value) => {};
 
@@ -11,6 +18,29 @@ const fieldDependency = store => next => action => {
 
   if (type == "HANDLE_CHANGE") {
     const { field } = action;
+      console.log(field);
+      const { dependencies } = field;
+      // api depency
+      if(dependencies && dependencies.length){
+        dependencies.forEach(dependency => {
+          const {type} = dependency;
+          switch(type){
+            case "API_CALL" :
+            dependantApiCall(dependency,dispatch);
+            break;
+            case "VISIBILITY_TOGGLE":
+            break;
+            case "ENABLE_DISABILITY_TOGGLE":
+            break;
+            default:
+            break;
+      
+          }
+      
+        })
+        
+        dependantApiCall(field,dispatch);
+     }
   }
 
   next(action);

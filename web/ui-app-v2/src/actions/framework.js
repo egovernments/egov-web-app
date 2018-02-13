@@ -1,4 +1,4 @@
-import { api, postData, search } from "../utils/api";
+import { api, postData, search, apiForm } from "../utils/api"; 
 
 export const setSpecs = specs => {
   return {
@@ -69,10 +69,10 @@ export const searchEntitySuccess = formData => {
   };
 };
 
-export const setDropDownData = (field, dropDownData) => {
+export const setDropDownData = (target, dropDownData) => {
   return {
     type: "SET_DROPDOWN_DATA",
-    field,
+    target,
     dropDownData
   };
 };
@@ -103,11 +103,19 @@ export const submitFormDataRequest = (url, formData) => {
   };
 };
 
-export const fetchDropDownData = (url, field, params = "countries") => {
+export const fetchDropDownData = (dataSourceObj, target) => {
   return async (dispatch, getState) => {
     // api calls go here
-    const response = await api(url, field.target);
-    dispatch(setDropDownData(field, response));
+    const response = await apiForm(dataSourceObj, dataSourceObj.response.path);
+    console.log(response);
+    let dropDownData = response.map(responseObj => {
+      var dropDownObj = {};
+      return dropDownObj = {
+        key: responseObj[dataSourceObj.response.config.key],
+        value: responseObj[dataSourceObj.response.config.value]
+      }
+    })
+    dispatch(setDropDownData(target, dropDownData));
     // do some transformation
   };
 };

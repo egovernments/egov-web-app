@@ -55,10 +55,10 @@ const framework = (state = intialState, action) => {
       return { ...state, moduleName };
 
     case "SET_DROPDOWN_DATA":
-      const { dropDownData } = action;
+      const { dropDownData,target } = action;
       return {
         ...state,
-        dropDownData: { ...state.dropDownData, [field.target]: dropDownData }
+        dropDownData: { ...state.dropDownData, [target]: dropDownData }
       };
 
     case "LOADING_STATUS":
