@@ -193,10 +193,10 @@ var dat = {
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
-                  "maxLength": 256,
+                  "maxLength": 11,
                   "minLength": 1,
-                  "pattern":'',
-                  "patternErrMsg": '',
+                  "pattern":"^[0-9]{1,11}$",
+                  "patternErrMsg": 'Targeted Garbage should accepts maximum of 11 characters',
                }
             ]
          },
@@ -531,12 +531,13 @@ var dat = {
                   "name":"targetedGarbage",
                   "jsonPath":"vehicleSchedules[0].targetedGarbage",
                   "label":"swm.create.targetedGarbage",
+                  "pattern":"^[0-9]{1,11}$",
                   "type":"number",
                   "isRequired":true,
                   "isDisabled":false,
                   "defaultValue":"",
                   "pattern":'',
-                  "patternErrMsg": '',
+                  "patternErrMsg": 'Targeted Garbage should accepts maximum of 11 characters',
                }
             ]
          },
