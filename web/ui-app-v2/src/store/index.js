@@ -2,11 +2,19 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import framework from "../middlewares/framework";
+import {
+  fieldDependency,
+  formValidation,
+  modelDataTransformation
+} from "../middlewares";
 
 const middlewares = [];
-middlewares.push(framework);
 middlewares.push(thunk);
+
+// framework specific middlewares
+middlewares.push(fieldDependency);
+middlewares.push(formValidation);
+middlewares.push(modelDataTransformation);
 
 if (process.env.NODE_ENV === "development") {
   const { logger } = require("redux-logger");

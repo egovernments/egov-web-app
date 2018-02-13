@@ -1,7 +1,7 @@
 import transformers from "./transfomers";
 
 const specs = {
-  createUrl: "",
+  createUrl: "/post",
   searchUrl: "",
   transformers: transformers,
   groups: [

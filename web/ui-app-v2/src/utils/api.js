@@ -1,4 +1,4 @@
-const api = (url, params) => {
+export const api = (url, params) => {
   const data = {
     countries: [{ key: "India", value: "India" }, { key: "USA", value: "USA" }],
     cities: []
@@ -19,4 +19,21 @@ const api = (url, params) => {
   });
 };
 
-export default api;
+export const postData = (url, params) => {
+  const message = `Data posted to ${url} with ${JSON.stringify(params)}`;
+  return new Promise((resolve, reject) => {
+    resolve(message);
+  });
+};
+
+export const search = (url, params) => {
+  const response = {
+    name: "Varun",
+    country: "India",
+    canCode: true
+  };
+
+  return new Promise((resolve, reject) => {
+    resolve(response);
+  });
+};
