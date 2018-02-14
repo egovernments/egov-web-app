@@ -3,7 +3,15 @@ import PropTypes from "prop-types";
 import Error from "../Error";
 import TextField from "material-ui/TextField";
 
-const TextFieldUi = ({ onChange, value, disabled, hide, label }) => {
+const TextFieldUi = ({
+  onChange,
+  errorMessage,
+  value,
+  disabled,
+  field,
+  hide,
+  label
+}) => {
   const labelProperty = {
     floatingLabelFixed: true,
     floatingLabelStyle: {
@@ -11,7 +19,7 @@ const TextFieldUi = ({ onChange, value, disabled, hide, label }) => {
       fontSize: "20px",
       whiteSpace: "nowrap"
     },
-    floatingLabelText: <span>{label} </span>
+    floatingLabelText: <span>{field.label}</span>
   };
 
   return (
@@ -19,6 +27,8 @@ const TextFieldUi = ({ onChange, value, disabled, hide, label }) => {
       className="custom-form-control-for-textfield"
       {...labelProperty}
       underlineShow={false}
+      errorStyle={{ float: "left" }}
+      errorText={errorMessage}
       value={value}
       hide={hide}
       disabled={disabled}

@@ -19,13 +19,18 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
   };
 
   const renderViewField = () => {
-    return <Label {...rest} />;
+    return (
+      <div>
+        <label>{label}</label>
+        <Label {...rest} />
+      </div>
+    );
   };
 
   const renderField = () => {
     switch (type) {
       case "text":
-        return <TextField onChange={onChange} {...rest} />;
+        return <TextField onChange={onChange} field={field} {...rest} />;
 
       case "dropdown":
         return <SelectField onChange={onChange} {...rest} field={field} />;
@@ -43,8 +48,7 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
 
   return (
     <div className={`col-lg-${width}`}>
-      <label>{label}</label>
-      {moduleAction == "view" ? renderViewField() : renderField()}
+      {moduleAction === "view" ? renderViewField() : renderField()}
     </div>
   );
 };
