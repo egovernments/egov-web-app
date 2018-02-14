@@ -8,7 +8,7 @@ const DropDownUi = ({
   value,
   label,
   name,
-  dropDownData = [], 
+  dropDownData = [],
   selected,
   onChange,
   style
@@ -21,7 +21,9 @@ const DropDownUi = ({
 
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.value} primaryText={option.value} />;
+      return (
+        <MenuItem key={index} value={option.value} primaryText={option.value} />
+      );
     });
   };
 

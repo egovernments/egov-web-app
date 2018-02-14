@@ -11,8 +11,8 @@ export default class SelectFieldContainer extends Component {
     }
   }
 
-  onChange = (event,index,value) => {
-    const {field,handleChange} = this.props;
+  onChange = (event, index, value) => {
+    const { field, handleChange } = this.props;
     handleChange({ ...field, value });
   };
 
@@ -28,9 +28,16 @@ export default class SelectFieldContainer extends Component {
   };
 
   render() {
-    const {onChange} = this;
+    const { onChange } = this;
     const { field, fetchDropDownData, dropDownData, ...rest } = this.props;
     const transformedDropdownData = this.transformDropData(field, dropDownData);
-    return <SelectField onChange={onChange} dropDownData={transformedDropdownData} {...rest} />;
+    return (
+      <SelectField
+        onChange={onChange}
+        label={field.label}
+        dropDownData={transformedDropdownData}
+        {...rest}
+      />
+    );
   }
 }
