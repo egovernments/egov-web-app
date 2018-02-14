@@ -5,12 +5,16 @@ const ButtonUi = ({
   label,
   icon = {},
   onClick,
+  disabled,
+  hide,
   primary = false,
   style = {}
 }) => {
   return (
     <RaisedButton
       style={style}
+      hide={hide}
+      disabled={disabled}
       primary={primary}
       type="button"
       label={label}

@@ -14,7 +14,13 @@ export const setModuleName = moduleName => {
   };
 };
 
-export const setFieldProperty = () => {};
+export const setFieldProperty = (target, property) => {
+  return {
+    type: "SET_FIELD_PROPERTY",
+    target,
+    property
+  };
+};
 
 export const setActionName = actionName => {
   return {

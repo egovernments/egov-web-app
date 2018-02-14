@@ -5,11 +5,18 @@ const dependantApiCall = (dependency, dispatch) => {
   dispatch(fetchDropDownData(dataSource, target));
 };
 
-const handleFieldVisibilityToggle = (value, property, dependency, dispatch) => {
+const toggleFieldProperty = (
+  dependency,
+  fieldPropertyKey,
+  fieldPropertyValue,
+  dispatch
+) => {
   const { affectants } = dependency;
   affectants.forEach(affectant => {
     const { target } = affectant;
-    dispatch(setFieldProperty, { hide: true });
+    dispatch(
+      setFieldProperty(target, { fieldPropertyKey: fieldPropertyValue })
+    );
   });
 };
 
@@ -24,13 +31,13 @@ const fieldDependency = store => next => action => {
 
     if (dependencies && dependencies.length) {
       dependencies.forEach(dependency => {
-        const { type } = dependency;
+        const { type, propertyToToggle } = dependency;
         switch (type) {
           case "API_CALL":
             dependantApiCall(dependency, dispatch);
             break;
           case "PROPERTY_TOGGLE":
-            handleFieldVisibilityToggle(value, dependency, dispatch);
+            toggleFieldProperty(dependency, propertyToToggle, true, dispatch);
             break;
           default:
             break;

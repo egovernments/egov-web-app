@@ -38,7 +38,7 @@ const framework = (state = intialState, action) => {
       const { property } = action;
       return {
         ...state,
-        fields: { ...state.fields, [field.target]: property }
+        fields: { ...state.fields, [action.target]: property }
       };
 
     case "VALIDATE_FORM":
