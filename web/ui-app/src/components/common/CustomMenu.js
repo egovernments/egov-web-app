@@ -325,7 +325,7 @@ const menuConvention = {
   //SWM mdms Menu
   'Solid Waste Management.SWM Masters.Vehicle type.Vehicle type': '/mdms/swm/VehicleType',
   'Solid Waste Management.SWM Masters.Waste Type.Waste Type': '/mdms/swm/WasteType',
-  'Solid Waste Management.SWM Masters.Waste Subtype.Waste Sub-Type': '/search/swm/wastesubtype/view',
+  'Solid Waste Management.SWM Masters.Waste Sub-Type.Waste Sub-Type': '/search/swm/wastesubtype/view',
   'Solid Waste Management.SWM Masters.Shift Type.Shift Type': '/mdms/swm/ShiftType',
   'Solid Waste Management.SWM Masters.Collection type.Collection type': '/mdms/swm/CollectionType',
   'Solid Waste Management.SWM Masters.Population.Population': '/search/swm/population/view',
