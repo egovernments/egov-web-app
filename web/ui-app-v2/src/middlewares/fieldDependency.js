@@ -25,6 +25,8 @@ const fieldDependency = store => next => action => {
   const dispatch = store.dispatch;
   const state = store.getState();
 
+  // state.framework.form
+
   if (type == "HANDLE_CHANGE") {
     const { field } = action;
     const { value, dependencies } = field;

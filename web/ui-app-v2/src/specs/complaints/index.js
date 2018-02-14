@@ -2,6 +2,7 @@ const specs = {
     createUrl: "/post",
     searchUrl: "",
     transformers: '',
+    requestObject: "complaints",
     groups: [
       {
         label: "Group One",
@@ -10,7 +11,8 @@ const specs = {
             label: "Complaint Name",
             type: "text",
             target: "name",
-            width: 4,
+            jsonPath: "complaints.name",
+            width: 3,
             patternErrorMessage: "Please Enter a valid name",
             pattern: "",
             isRequired: true,
@@ -20,14 +22,20 @@ const specs = {
             label: "Complaint Details",
             type: "textarea",
             target: "complaintDetails",
-            width: 4,
+            jsonPath: "complaints.details",
+            width: 3,
             patternErrorMessage: "Please Enter a valid name",
             pattern: "",
             isRequired: true,
             viewAdapter: ""
-          },
+          }
+        ]
+      },
+      {
+        label: "Group Two",
+        fields: [
           {
-            width: 4,
+            width: 3,
             label: "Complaint Category",
             type: "dropdown",
             target: "complaintCategory",
@@ -69,10 +77,10 @@ const specs = {
             ]
           },
           {
-            width: 4,
-            label: "complaintSubCategory",
+            width: 3,
+            label: "Complaint Sub Category",
             type: "dropdown",
-            target: "cities",
+            target: "complaintSubCategory",
             dataSourceConfig : {
               key: "code",
               value: "name"

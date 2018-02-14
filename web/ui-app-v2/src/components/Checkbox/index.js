@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Checkbox from "material-ui/Checkbox";
 
-const CheckboxUi = ({ checked, onChange, onCheck, style = {} }) => {
+const CheckboxUi = ({ checked, onCheck, style = {}, label, index }) => {
   return (
     <Checkbox
       onCheck={onCheck}
-      label={option.label}
+      label={label}
       key={index}
       checked={checked}
       style={style}

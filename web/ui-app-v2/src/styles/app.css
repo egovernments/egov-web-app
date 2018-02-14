@@ -1,4 +1,23 @@
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+.textcenter{
+  text-align: center;
+}
+
 .custom-form-control-for-textfield input,
+.custom-form-control-for-textarea textarea,
 .custom-form-control-for-datepicker input {
   border-right: 0 !important;
   border-radius: 5px !important;
@@ -27,3 +46,28 @@
 .custom-form-control-for-select hr {
   border-bottom: 0px !important;
 }
+
+
+
+.custom-form-control-for-textarea{
+	height: 110px !important;
+}
+
+
+.custom-form-control-for-textarea textarea:first-child{
+	display:none !important;
+}
+
+.custom-form-control-for-textarea textarea{
+	top:5px !important;
+	min-height: 63px;
+}
+
+.custom-form-control-for-textfield div:last-child{
+	bottom: -34px !important;
+}
+
+.custom-form-control-for-textarea div:last-child{
+	bottom: 0px !important;
+}
+

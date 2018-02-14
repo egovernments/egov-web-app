@@ -18,6 +18,10 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
     handleChange({ ...field, value });
   };
 
+  const onCheck = (event, isInputChecked) => {
+    handleChange({ ...field, value: isInputChecked });
+  }
+
   const renderViewField = () => {
     return (
       <div>
@@ -33,10 +37,10 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
         return <TextField onChange={onChange} field={field} {...rest} />;
 
       case "dropdown":
-        return <SelectField onChange={onChange} {...rest} field={field} />;
+        return <SelectField handleChange={handleChange} {...rest} field={field} />;
 
       case "checkbox":
-        return <Checkbox {...rest} onChange={onChange} />;
+        return <Checkbox {...rest} onCheck={onCheck} />;
 
       case "textarea":
         return <TextArea {...rest} onChange={onChange} />;

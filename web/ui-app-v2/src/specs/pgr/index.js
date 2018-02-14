@@ -40,6 +40,7 @@ const specs = {
           dependencies: [
             {
               target: "cities",
+              targetType: "dropdown",
               type: "API_CALL",
               dataSource: {
                 url: "http://somedatasource.com/api/...",
@@ -77,7 +78,7 @@ const specs = {
           target: "canCode",
           width: 4,
           viewAdapter: ""
-        }
+        },
       ]
     }
   ],

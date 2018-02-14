@@ -5,11 +5,12 @@ import MenuItem from "material-ui/MenuItem";
 import "./style.css";
 
 const DropDownUi = ({
+  value,
   label,
-  options = [],
   name,
+  dropDownData = [], 
   selected,
-  handleChange,
+  onChange,
   style
 }) => {
   const labelProperty = {
@@ -19,8 +20,8 @@ const DropDownUi = ({
   };
 
   const renderSelectMenuItems = () => {
-    return options.map((value, index) => {
-      return <MenuItem key={index} value={value} primaryText={value} />;
+    return dropDownData.map((option, index) => {
+      return <MenuItem key={index} value={option.value} primaryText={option.value} />;
     });
   };
 
@@ -37,8 +38,8 @@ const DropDownUi = ({
         targetOrigin: { horizontal: "left", vertical: "bottom" }
       }}
       labelStyle={{ color: "#5F5C57" }}
-      value={selected}
-      onChange={handleChange}
+      value={value}
+      onChange={onChange}
       {...labelProperty}
     >
       {renderSelectMenuItems()}

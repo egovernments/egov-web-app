@@ -13,11 +13,12 @@ const Create = ({
     <div className="row">
       {renderGroups(groups)}
       {moduleAction !== "view" ? (
-        <div>
+        <div className="textcenter">
           <Button
             primary={true}
             disabled={!isFormValid}
             label="Save"
+            style={{marginRight:"20px"}}
             onClick={() => submitFormData()}
           />
           {moduleAction === "create" ? (

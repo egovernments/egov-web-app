@@ -26,7 +26,7 @@ const styles = {
 
 const CardUi = ({ children, cardTitle }) => {
   return (
-    <div style={styles.cardUi} className="cardUi">
+    <div style={styles.cardUi} className="cardUi clearfix">
       <div className="col-lg-12" style={styles.cardTitle}>
         {cardTitle}
       </div>
