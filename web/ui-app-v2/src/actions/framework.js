@@ -1,4 +1,5 @@
 import { api, postData, search, apiForm } from "../utils/api";
+import jp from "jsonpath";
 
 export const setSpecs = specs => {
   return {
@@ -104,10 +105,16 @@ const applicationError = error => {
   };
 };
 
+// calculate the route and dispatch
 export const submitFormDataRequest = (url, formData) => {
   return async (dispatch, getState) => {
     try {
-      const response = await postData(url, formData);
+      const state = getState();
+      const { idJsonPath, objectName } = state.framework.specs;
+      let response = await postData(url, { [objectName]: formData });
+      response = jp.query(response, objectName);
+      let entityId = response.length ? jp.query(response[0], idJsonPath) : null;
+      entityId = entityId && entityId.length ? entityId[0] : null;
       dispatch(submitFormDataSuccess(response));
     } catch (error) {
       dispatch(applicationError(error));

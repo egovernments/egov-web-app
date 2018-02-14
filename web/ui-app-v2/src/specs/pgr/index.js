@@ -3,7 +3,8 @@ import transformers from "./transfomers";
 const specs = {
   createUrl: "/post",
   searchUrl: "/search",
-  requestObject: "location",
+  objectName: "location",
+  idJsonPath: "code",
   transformers: transformers,
   groups: [
     {

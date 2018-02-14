@@ -69,5 +69,3 @@ const formValidation = store => next => action => {
 };
 
 export default formValidation;
-
-// care about routing

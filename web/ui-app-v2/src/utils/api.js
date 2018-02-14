@@ -22,7 +22,8 @@ export const api = (url, params) => {
 export const postData = (url, params) => {
   const message = `Data posted to ${url} with ${JSON.stringify(params)}`;
   return new Promise((resolve, reject) => {
-    resolve(message);
+    params["location"]["code"] = "abcd1234";
+    resolve(params);
   });
 };
 
@@ -36,15 +37,24 @@ export const search = (url, params) => {
   return new Promise((resolve, reject) => {
     resolve(response);
   });
-};  
+};
 
 export const apiForm = (url, params) => {
   const data = {
     countries: [{ code: "IND", name: "India" }, { code: "US", name: "USA" }],
-    cities: [{ code: "BLR", name: "Bangalore" }, { code: "MYS", name: "Mysore" }],
+    cities: [
+      { code: "BLR", name: "Bangalore" },
+      { code: "MYS", name: "Mysore" }
+    ],
     area: ["HSR Layout"],
-    complaintCategory: [{ code: "C1", name: "Complaint Type 1" }, { code: "C2", name: "Complaint Type 2" }],
-    complaintSubCategory: [{ code: "CS1", name: "Complaint SubType 1" }, { code: "CS2", name: "Complaint SubType 2" }],
+    complaintCategory: [
+      { code: "C1", name: "Complaint Type 1" },
+      { code: "C2", name: "Complaint Type 2" }
+    ],
+    complaintSubCategory: [
+      { code: "CS1", name: "Complaint SubType 1" },
+      { code: "CS2", name: "Complaint SubType 2" }
+    ]
 
     // cities: {
     //   India: [
@@ -62,6 +72,3 @@ export const apiForm = (url, params) => {
     resolve(data[params]);
   });
 };
-
-
-
