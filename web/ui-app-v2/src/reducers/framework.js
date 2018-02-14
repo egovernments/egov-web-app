@@ -57,6 +57,12 @@ const framework = (state = intialState, action) => {
         isFormValid
       };
 
+    case "SET_ROUTE":
+      return {
+        ...state,
+        route: action.route
+      };
+
     case "SET_ACTION_NAME":
       const { actionName } = action;
       return { ...state, actionName };

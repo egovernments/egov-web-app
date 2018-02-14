@@ -29,6 +29,14 @@ export const setActionName = actionName => {
   };
 };
 
+// set routes
+const setRoute = route => {
+  return {
+    type: "SET_ROUTE",
+    route
+  };
+};
+
 // submit form
 const submitFormDataSuccess = response => {
   return {
@@ -63,14 +71,12 @@ export const handleChange = field => {
   };
 };
 
-export const setFormData = (formData, target) => {
+export const setFormData = formData => {
   return {
     type: "SET_FORM_DATA",
     formData
   };
 };
-
-// export const setFieldProperty = (target,)
 
 export const searchEntitySuccess = formData => {
   return {

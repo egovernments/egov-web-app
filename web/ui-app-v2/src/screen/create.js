@@ -30,3 +30,9 @@ const Create = ({
 };
 
 export default Create;
+
+//  if (self.props.actionName == "update") {
+//    var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/");
+//  } else {
+//    var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/") + "/" + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
+//  }
