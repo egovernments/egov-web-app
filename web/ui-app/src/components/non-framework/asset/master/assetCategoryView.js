@@ -217,123 +217,283 @@ class assetCategoryView extends Component {
 
     setMockData(specs);
   }
+  shouldLoadFromCache = () => {
+     let previousRoute = window.localStorage.getItem('previousRoute');
+     previousRoute = previousRoute ? previousRoute : '';
+     let currentRoute = window.location.hash.split('#')[1];
+     console.log(previousRoute);
+     previousRoute = previousRoute.replace(/assetCategoryCreate|update/, 'assetCategoryView');
+     console.log(previousRoute);
+     console.log(currentRoute);
+     const shouldCache = currentRoute.indexOf(previousRoute) !== -1 ? true : false;
+     console.log(shouldCache);
+    return shouldCache;
+   };
+   loadData = async (_body, url, specifications, hashLocation) => {
+     const cacheKey = 'asset' + '.' + this.props.match.params.id + '.assetcategory.search';
+     console.log(cacheKey);
+     let res = window.sessionStorage.getItem(cacheKey);
+     console.log(res);
+     let loadFromCache=this.shouldLoadFromCache();
+     console.log(loadFromCache);
+     if (loadFromCache && res) {
+       console.log("inside if");
+       res = JSON.parse(res);
+       console.log(res);
+     } else {
+       console.log("inside else");
+       // res = await Api.commonApiPost(
+       //   url,
+       //   query,
+       //   _body,
+       //   false,
+       //   specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp
+       // );
+      res =await Api.commonApiPost('/egov-mdms-service/v1/_search', '', _body, {}, true, true)
+     }
 
-  initData() {
-    // try {
-    //   var hash = window.location.hash.split("/");
-    //   if(hash.length == 4) {
-    //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-    //   } else {
-    //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-    //   }
-    // } catch(e) {
-    //
-    // }
+     return res;
+   };
+  initData = async () => {
+     // try {
+     //   var hash = window.location.hash.split("/");
+     //   if(hash.length == 4) {
+     //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+     //   } else {
+     //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+     //   }
+     // } catch(e) {
+     //
+     // }
 
-    specifications = require(`../../../framework/specs/asset/master/createAssetCategroy`).default;
+     specifications = require(`../../../framework/specs/asset/master/createAssetCategroy`).default;
 
-    let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
-    let hashLocation = window.location.hash;
-    let self = this;
-    let obj = specifications[`asset.view`];
-    self.setLabelAndReturnRequired(obj);
-    setMetaData(specifications);
-    setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName('asset');
-    setActionName('view');
-    //Get view form data
-    var url = specifications[`asset.view`].url.split('?')[0];
-    var hash = window.location.hash.split('/');
-    var value = self.props.match.params.id;
-    console.log(self.props.match.params.id);
-    // var query = {
-    //   [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value
-    // };
-    //handle 2nd parameter
-    // if(specifications[`asset.view`].url.split("?")[1].split("=")[2])
-    //  {
-    //    var pval= specifications[`asset.view`].url.split("?")[1].split("=")[2];
-    //    var pname= specifications[`asset.view`].url.split("?")[1].split("=")[1].split('&')[1];
-    //
-    //    query = {
-    //  [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value,
-    //  [pname]:pval
-    //    };
-    //  }
+     let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+     let hashLocation = window.location.hash;
+     let self = this;
+     let obj = specifications[`asset.view`];
+     self.setLabelAndReturnRequired(obj);
+     setMetaData(specifications);
+     setMockData(JSON.parse(JSON.stringify(specifications)));
+     setModuleName('asset');
+     setActionName('view');
+     //Get view form data
+     var url = specifications[`asset.view`].url.split('?')[0];
+     var hash = window.location.hash.split('/');
+     var value = self.props.match.params.id;
+     console.log(self.props.match.params.id);
+     // var query = {
+     //   [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value
+     // };
+     //handle 2nd parameter
+     // if(specifications[`asset.view`].url.split("?")[1].split("=")[2])
+     //  {
+     //    var pval= specifications[`asset.view`].url.split("?")[1].split("=")[2];
+     //    var pname= specifications[`asset.view`].url.split("?")[1].split("=")[1].split('&')[1];
+     //
+     //    query = {
+     //  [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value,
+     //  [pname]:pval
+     //    };
+     //  }
 
-    //  if(window.location.href.indexOf("?") > -1) {
-    //
-    //   var qs =  window.location.href.split("?")[1];
-    //   if(qs && qs.indexOf("=") > -1) {
-    //     qs = qs.indexOf("&") > -1 ? qs.split("&") : [qs];
-    //     for(var i=0; i<qs.length; i++) {
-    //       query[qs[i].split("=")[0]] = qs[i].split("=")[1];
-    //     }
-    //   }
-    // }
+     //  if(window.location.href.indexOf("?") > -1) {
+     //
+     //   var qs =  window.location.href.split("?")[1];
+     //   if(qs && qs.indexOf("=") > -1) {
+     //     qs = qs.indexOf("&") > -1 ? qs.split("&") : [qs];
+     //     for(var i=0; i<qs.length; i++) {
+     //       query[qs[i].split("=")[0]] = qs[i].split("=")[1];
+     //     }
+     //   }
+     // }
 
-    var _body = {
-      MdmsCriteria: {
-        tenantId: localStorage.getItem('tenantId'),
-        moduleDetails: [
-          {
-            moduleName: 'ASSET',
-            masterDetails: [
-              {
-                name: 'AssetCategory',
-                filter: '[?(@.id IN [' + self.props.match.params.id + '])]',
-              },
-            ],
-          },
-        ],
-      },
-    };
-    Api.commonApiPost('/egov-mdms-service/v1/_search', '', _body, {}, true, true).then(
-      function(res) {
-        var resHolder = res;
+     var _body = {
+       MdmsCriteria: {
+         tenantId: localStorage.getItem('tenantId'),
+         moduleDetails: [
+           {
+             moduleName: 'ASSET',
+             masterDetails: [
+               {
+                 name: 'AssetCategory',
+                 filter: '[?(@.id IN [' + self.props.match.params.id + '])]',
+               },
+             ],
+           },
+         ],
+       },
+     };
 
-        // self.props.setFormData(resHolder);
-        // console.log(res.MdmsRes.ASSET.AssetCategory[0].parent);
-        // console.log(specifications[`asset.view`].objectName);
-        //self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
-        if(res.MdmsRes.ASSET.AssetCategory[0].parent){
-          Api.commonApiPost(
-            '/egov-mdms-service/v1/_get',
-            {
-              moduleName: 'ASSET',
-              masterName: 'AssetCategory',
-              filter: '%5B%3F%28%40.id+%3D%3D' + res.MdmsRes.ASSET.AssetCategory[0].parent + '%29%5D',
-            },
-            {},
-            false,
-            false,
-            false,
-            '',
-            '',
-            true
-          ).then(
-            function(subResponse) {
-              //this.handleChange({ target: { value: subResponse.MdmsRes.ASSET.AssetCategory[0].name } }, 'MdmsRes.ASSET.AssetCategory[0].parent');
-            //  if(subResponse.MdmsRes.ASSET && subResponse.MdmsRes.ASSET.AssetCategory && subResponse.MdmsRes.ASSET.AssetCategory[0].name){
-                resHolder.MdmsRes.ASSET.AssetCategory[0].parentName = subResponse.MdmsRes.ASSET.AssetCategory[0].name;
-                self.props.setFormData(resHolder);
-              //}
-              // console.log(self.props.formData.MdmsRes.ASSET.AssetCategory);
-            },
-            function(err) {
-              console.log(err);
-            }
-          );
-        } else{
-          self.props.setFormData(resHolder);
-        }
-        console.log(resHolder);
-        console.log(JSON.parse(JSON.stringify(specifications)));
-    self.setInitialUpdateData(resHolder, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
-      },
-      function(err) {}
-    );
-  }
+     // Api.commonApiPost('/egov-mdms-service/v1/_search', '', _body, {}, true, true).then(
+     //   function(res) {
+     const res = await this.loadData(_body, url, specifications, hashLocation);
+          console.log(res);
+         var resHolder = res;
+         console.log(resHolder);
+         // self.props.setFormData(resHolder);
+         // console.log(res.MdmsRes.ASSET.AssetCategory[0].parent);
+         // console.log(specifications[`asset.view`].objectName);
+         //self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
+         if(res){
+         if(res.MdmsRes.ASSET.AssetCategory[0].parent){
+           Api.commonApiPost(
+             '/egov-mdms-service/v1/_get',
+             {
+               moduleName: 'ASSET',
+               masterName: 'AssetCategory',
+               filter: '%5B%3F%28%40.id+%3D%3D' + res.MdmsRes.ASSET.AssetCategory[0].parent + '%29%5D',
+             },
+             {},
+             false,
+             false,
+             false,
+             '',
+             '',
+             true
+           ).then(
+             function(subResponse) {
+               console.log(subResponse);
+               //this.handleChange({ target: { value: subResponse.MdmsRes.ASSET.AssetCategory[0].name } }, 'MdmsRes.ASSET.AssetCategory[0].parent');
+             //  if(subResponse.MdmsRes.ASSET && subResponse.MdmsRes.ASSET.AssetCategory && subResponse.MdmsRes.ASSET.AssetCategory[0].name){
+                 resHolder.MdmsRes.ASSET.AssetCategory[0].parentName = subResponse.MdmsRes.ASSET.AssetCategory[0].name;
+                 self.props.setFormData(resHolder);
+               //}
+               // console.log(self.props.formData.MdmsRes.ASSET.AssetCategory);
+             },
+             function(err) {
+               console.log(err);
+             }
+           );
+         } else{
+           self.props.setFormData(resHolder);
+         }
+
+         console.log(resHolder);
+         console.log(JSON.parse(JSON.stringify(specifications)));
+     self.setInitialUpdateData(resHolder, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
+   }
+     //   },
+     //   function(err) {}
+     // );
+   }
+  // initData() {
+  //   // try {
+  //   //   var hash = window.location.hash.split("/");
+  //   //   if(hash.length == 4) {
+  //   //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+  //   //   } else {
+  //   //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+  //   //   }
+  //   // } catch(e) {
+  //   //
+  //   // }
+  //
+  //   specifications = require(`../../../framework/specs/asset/master/createAssetCategroy`).default;
+  //
+  //   let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+  //   let hashLocation = window.location.hash;
+  //   let self = this;
+  //   let obj = specifications[`asset.view`];
+  //   self.setLabelAndReturnRequired(obj);
+  //   setMetaData(specifications);
+  //   setMockData(JSON.parse(JSON.stringify(specifications)));
+  //   setModuleName('asset');
+  //   setActionName('view');
+  //   //Get view form data
+  //   var url = specifications[`asset.view`].url.split('?')[0];
+  //   var hash = window.location.hash.split('/');
+  //   var value = self.props.match.params.id;
+  //   console.log(self.props.match.params.id);
+  //   // var query = {
+  //   //   [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value
+  //   // };
+  //   //handle 2nd parameter
+  //   // if(specifications[`asset.view`].url.split("?")[1].split("=")[2])
+  //   //  {
+  //   //    var pval= specifications[`asset.view`].url.split("?")[1].split("=")[2];
+  //   //    var pname= specifications[`asset.view`].url.split("?")[1].split("=")[1].split('&')[1];
+  //   //
+  //   //    query = {
+  //   //  [specifications[`asset.view`].url.split("?")[1].split("=")[0]]: value,
+  //   //  [pname]:pval
+  //   //    };
+  //   //  }
+  //
+  //   //  if(window.location.href.indexOf("?") > -1) {
+  //   //
+  //   //   var qs =  window.location.href.split("?")[1];
+  //   //   if(qs && qs.indexOf("=") > -1) {
+  //   //     qs = qs.indexOf("&") > -1 ? qs.split("&") : [qs];
+  //   //     for(var i=0; i<qs.length; i++) {
+  //   //       query[qs[i].split("=")[0]] = qs[i].split("=")[1];
+  //   //     }
+  //   //   }
+  //   // }
+  //
+  //   var _body = {
+  //     MdmsCriteria: {
+  //       tenantId: localStorage.getItem('tenantId'),
+  //       moduleDetails: [
+  //         {
+  //           moduleName: 'ASSET',
+  //           masterDetails: [
+  //             {
+  //               name: 'AssetCategory',
+  //               filter: '[?(@.id IN [' + self.props.match.params.id + '])]',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   };
+  //
+  //   Api.commonApiPost('/egov-mdms-service/v1/_search', '', _body, {}, true, true).then(
+  //     function(res) {
+  //       var resHolder = res;
+  //
+  //       // self.props.setFormData(resHolder);
+  //       // console.log(res.MdmsRes.ASSET.AssetCategory[0].parent);
+  //       // console.log(specifications[`asset.view`].objectName);
+  //       //self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
+  //       if(res.MdmsRes.ASSET.AssetCategory[0].parent){
+  //         Api.commonApiPost(
+  //           '/egov-mdms-service/v1/_get',
+  //           {
+  //             moduleName: 'ASSET',
+  //             masterName: 'AssetCategory',
+  //             filter: '%5B%3F%28%40.id+%3D%3D' + res.MdmsRes.ASSET.AssetCategory[0].parent + '%29%5D',
+  //           },
+  //           {},
+  //           false,
+  //           false,
+  //           false,
+  //           '',
+  //           '',
+  //           true
+  //         ).then(
+  //           function(subResponse) {
+  //             //this.handleChange({ target: { value: subResponse.MdmsRes.ASSET.AssetCategory[0].name } }, 'MdmsRes.ASSET.AssetCategory[0].parent');
+  //           //  if(subResponse.MdmsRes.ASSET && subResponse.MdmsRes.ASSET.AssetCategory && subResponse.MdmsRes.ASSET.AssetCategory[0].name){
+  //               resHolder.MdmsRes.ASSET.AssetCategory[0].parentName = subResponse.MdmsRes.ASSET.AssetCategory[0].name;
+  //               self.props.setFormData(resHolder);
+  //             //}
+  //             // console.log(self.props.formData.MdmsRes.ASSET.AssetCategory);
+  //           },
+  //           function(err) {
+  //             console.log(err);
+  //           }
+  //         );
+  //       } else{
+  //         self.props.setFormData(resHolder);
+  //       }
+  //       console.log(resHolder);
+  //       console.log(JSON.parse(JSON.stringify(specifications)));
+  //   self.setInitialUpdateData(resHolder, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications[`asset.view`].objectName);
+  //     },
+  //     function(err) {}
+  //   );
+  // }
 
   componentDidMount() {
     this.initData();

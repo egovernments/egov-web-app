@@ -282,56 +282,143 @@ class assetImmovableView extends Component {
 
     setMockData(specs);
   }
+  shouldLoadFromCache = () => {
+     let previousRoute = window.localStorage.getItem('previousRoute');
+     previousRoute = previousRoute ? previousRoute : '';
+     let currentRoute = window.location.hash.split('#')[1];
+     console.log(previousRoute);
+     previousRoute = previousRoute.replace(/assetImmovableCreate|update/, 'assetImmovableView');
+     console.log(previousRoute);
+     console.log(currentRoute);
+     const shouldCache = currentRoute.indexOf(previousRoute) !== -1 ? true : false;
+     console.log(shouldCache);
+    return shouldCache;
+   };
+   loadData = async (url, query,specifications, hashLocation) => {
+     const cacheKey = 'asset' + '.' + this.props.match.params.id + '.assetImmovable.search';
+     console.log(cacheKey);
+     let res = window.sessionStorage.getItem(cacheKey);
+     console.log(res);
+     let loadFromCache=this.shouldLoadFromCache();
+     console.log(loadFromCache);
+     if (loadFromCache && res) {
+       console.log("inside if");
+       res = JSON.parse(res);
+       console.log(res);
+     } else {
+       console.log("inside else");
+       // res = await Api.commonApiPost(
+       //   url,
+       //   query,
+       //   _body,
+       //   false,
+       //   specifications[`${hashLocation.split('/')[2]}.${hashLocation.split('/')[1]}`].useTimestamp
+       // );
+      res =await   Api.commonApiPost(url, query, {}, false, specifications['asset.view'].useTimestamp);
+     }
 
-  initData() {
-    // try {
-    //   var hash = window.location.hash.split("/");
-    //   if(hash.length == 4) {
-    //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
-    //   } else {
-    //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
-    //   }
-    // } catch(e) {
-    //
-    // }
+     return res;
+   };
+   initData = async () => {
+     // try {
+     //   var hash = window.location.hash.split("/");
+     //   if(hash.length == 4) {
+     //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+     //   } else {
+     //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+     //   }
+     // } catch(e) {
+     //
+     // }
 
-    specifications = require(`../../../framework/specs/asset/master/assetImmovable`).default;
+     specifications = require(`../../../framework/specs/asset/master/assetImmovable`).default;
 
-    let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
-    let hashLocation = window.location.hash;
-    let self = this;
-    let obj = specifications['asset.view'];
-    self.setLabelAndReturnRequired(obj);
-    setMetaData(specifications);
-    setMockData(JSON.parse(JSON.stringify(specifications)));
-    setModuleName('asset');
-    setActionName('view');
-    //Get view form data
-    var url = specifications['asset.view'].url.split('?')[0];
-    var hash = window.location.hash.split('/');
-    var value = self.props.match.params.id;
-    var query = {
-      [specifications['asset.view'].url.split('?')[1].split('=')[0]]: value,
-    };
+     let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+     let hashLocation = window.location.hash;
+     let self = this;
+     let obj = specifications['asset.view'];
+     self.setLabelAndReturnRequired(obj);
+     setMetaData(specifications);
+     setMockData(JSON.parse(JSON.stringify(specifications)));
+     setModuleName('asset');
+     setActionName('view');
+     //Get view form data
+     var url = specifications['asset.view'].url.split('?')[0];
+     var hash = window.location.hash.split('/');
+     var value = self.props.match.params.id;
+     var query = {
+       [specifications['asset.view'].url.split('?')[1].split('=')[0]]: value,
+     };
 
-    if (window.location.href.indexOf('?') > -1) {
-      var qs = window.location.href.split('?')[1];
-      if (qs && qs.indexOf('=') > -1) {
-        qs = qs.indexOf('&') > -1 ? qs.split('&') : [qs];
-        for (var i = 0; i < qs.length; i++) {
-          query[qs[i].split('=')[0]] = qs[i].split('=')[1];
-        }
-      }
-    }
+     if (window.location.href.indexOf('?') > -1) {
+       var qs = window.location.href.split('?')[1];
+       if (qs && qs.indexOf('=') > -1) {
+         qs = qs.indexOf('&') > -1 ? qs.split('&') : [qs];
+         for (var i = 0; i < qs.length; i++) {
+           query[qs[i].split('=')[0]] = qs[i].split('=')[1];
+         }
+       }
+     }
 
-    Api.commonApiPost(url, query, {}, false, specifications['asset.view'].useTimestamp).then(
-      function(res) {
-        self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications['asset.view'].objectName);
-        self.props.setFormData(res);
-      },
-      function(err) {}
-    );
-  }
+     // Api.commonApiPost(url, query, {}, false, specifications['asset.view'].useTimestamp).then(
+     //   function(res) {
+     const res = await this.loadData(url, query, specifications, hashLocation);
+         self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications['asset.view'].objectName);
+         self.props.setFormData(res);
+     //   },
+     //   function(err) {}
+     // );
+   }
+
+  // initData() {
+  //   // try {
+  //   //   var hash = window.location.hash.split("/");
+  //   //   if(hash.length == 4) {
+  //   //     specifications = require(`./specs/${hash[2]}/${hash[2]}`).default;
+  //   //   } else {
+  //   //     specifications = require(`./specs/${hash[2]}/master/${hash[3]}`).default;
+  //   //   }
+  //   // } catch(e) {
+  //   //
+  //   // }
+  //
+  //   specifications = require(`../../../framework/specs/asset/master/assetImmovable`).default;
+  //
+  //   let { setMetaData, setModuleName, setActionName, setMockData } = this.props;
+  //   let hashLocation = window.location.hash;
+  //   let self = this;
+  //   let obj = specifications['asset.view'];
+  //   self.setLabelAndReturnRequired(obj);
+  //   setMetaData(specifications);
+  //   setMockData(JSON.parse(JSON.stringify(specifications)));
+  //   setModuleName('asset');
+  //   setActionName('view');
+  //   //Get view form data
+  //   var url = specifications['asset.view'].url.split('?')[0];
+  //   var hash = window.location.hash.split('/');
+  //   var value = self.props.match.params.id;
+  //   var query = {
+  //     [specifications['asset.view'].url.split('?')[1].split('=')[0]]: value,
+  //   };
+  //
+  //   if (window.location.href.indexOf('?') > -1) {
+  //     var qs = window.location.href.split('?')[1];
+  //     if (qs && qs.indexOf('=') > -1) {
+  //       qs = qs.indexOf('&') > -1 ? qs.split('&') : [qs];
+  //       for (var i = 0; i < qs.length; i++) {
+  //         query[qs[i].split('=')[0]] = qs[i].split('=')[1];
+  //       }
+  //     }
+  //   }
+  //
+  //   Api.commonApiPost(url, query, {}, false, specifications['asset.view'].useTimestamp).then(
+  //     function(res) {
+  //       self.setInitialUpdateData(res, JSON.parse(JSON.stringify(specifications)), 'asset', 'view', specifications['asset.view'].objectName);
+  //       self.props.setFormData(res);
+  //     },
+  //     function(err) {}
+  //   );
+  // }
 
   componentDidMount() {
     this.initData();

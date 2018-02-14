@@ -950,6 +950,8 @@ class assetImmovableCreate extends Component {
     //delete formData.ResponseInfo;
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
       function(response) {
+        const cacheKey =  self.props.moduleName + "." + self.props.match.params.id  + '.assetImmovable.search';
+        "",		 +      window.sessionStorage.setItem(cacheKey,JSON.stringify(response));
         self.props.setLoadingStatus('hide');
         self.initData();
         self.props.toggleSnackbarAndSetText(

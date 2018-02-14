@@ -683,6 +683,9 @@ class assetCategoryCreate extends Component {
     //return console.log(formData);
     Api.commonApiPost(url || self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url, '', formData, '', true).then(
       function(response) {
+        console.log(self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].url);
+        const cacheKey =  self.props.moduleName + "." + self.props.match.params.id  + '.assetcategory.search';
+        "",		 +      window.sessionStorage.setItem(cacheKey,JSON.stringify(response));
         self.props.setLoadingStatus('hide');
         self.initData();
         self.props.toggleSnackbarAndSetText(
