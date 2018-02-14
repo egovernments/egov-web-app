@@ -355,6 +355,10 @@ class Search extends Component {
     }
 
     let self = this;
+     self.setState({
+      selectedRecordId: '',
+      selectedRecords:[],
+    });
     var {dropDownData,dropDownOriginalData}= this.props;
     self.props.setLoadingStatus('loading');
     var formData = { ...this.props.formData };

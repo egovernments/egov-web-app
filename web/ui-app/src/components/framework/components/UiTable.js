@@ -51,9 +51,9 @@ class UiTable extends Component {
       .destroy(true);
   }
 
-  componentWillUpdate() {
+  componentWillUpdate(nextProps) {
     let { flag } = this.props;
-    if (flag == 1) {
+    if (flag == 1 && nextProps.selectedValue ==='') {
       flag = 0;
       $('#searchTable')
         .dataTable()
@@ -62,7 +62,9 @@ class UiTable extends Component {
   }
 
   componentDidUpdate() {
+    if(this.props.selectedValue ===''){
     this.initTable();
+  }
   }
 
   initTable = () => {
