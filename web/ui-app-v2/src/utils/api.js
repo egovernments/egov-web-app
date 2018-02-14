@@ -21,17 +21,22 @@ export const api = (url, params) => {
 
 export const postData = (url, params) => {
   const message = `Data posted to ${url} with ${JSON.stringify(params)}`;
+  console.log(message);
   return new Promise((resolve, reject) => {
     params["location"]["code"] = "abcd1234";
     resolve(params);
   });
 };
 
+// do a reverse transformation
 export const search = (url, params) => {
   const response = {
-    name: "Varun",
-    country: "India",
-    canCode: "yes"
+    code: "abcd1234",
+    nested: {
+      name: "varun",
+      location: { country: "India", city: "Bangalore" },
+      inner: { canCode: "Yes" }
+    }
   };
 
   return new Promise((resolve, reject) => {

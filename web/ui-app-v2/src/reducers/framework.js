@@ -63,13 +63,17 @@ const framework = (state = intialState, action) => {
         route: action.route
       };
 
-    case "SET_ACTION_NAME":
-      const { actionName } = action;
-      return { ...state, actionName };
+    case "SET_MODULE_ACTION":
+      const { moduleAction } = action;
+      return { ...state, moduleAction };
 
     case "SET_MODULE_NAME":
       const { moduleName } = action;
       return { ...state, moduleName };
+
+    case "SET_MODULE_MASTER":
+      const { moduleMaster } = action;
+      return { ...state, moduleMaster };
 
     case "SET_DROPDOWN_DATA":
       const { dropDownData, target } = action;

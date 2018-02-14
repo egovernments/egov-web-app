@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { setSpecs, setModuleName, setActionName } from "./actions/framework";
+import {
+  setSpecs,
+  setModuleName,
+  setActionName,
+  setMasterName
+} from "./actions/framework";
 import Screen from "./screen/index.js";
 import PropTypes from "prop-types";
 
@@ -12,6 +17,12 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { route } = nextProps;
+    const nextAction = nextProps.match.params.actionName;
+    const currentAction = this.props.match.params.actionName;
+
+    if (nextAction !== currentAction) {
+      this.props.setActionName(nextAction);
+    }
 
     if (route && window.location.pathname !== route) {
       this.props.history.push(route);
@@ -19,19 +30,29 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { actionName, moduleName } = this.props.match.params;
-    const { setSpecs, setActionName, setModuleName } = this.props;
+    const { actionName, moduleName, master } = this.props.match.params;
+    const {
+      setSpecs,
+      setActionName,
+      setMasterName,
+      setModuleName
+    } = this.props;
     const specs = require(`./specs/${moduleName}`).default;
     setSpecs(specs);
+    setMasterName(master);
     setActionName(actionName);
     setModuleName(moduleName);
   }
 
   render() {
-    const { specs, moduleName, actionName } = this.props;
+    const { specs, moduleName, moduleAction } = this.props;
     return (
       <div className="container">
-        <Screen specs={specs} moduleName={moduleName} actionName={actionName} />
+        <Screen
+          specs={specs}
+          moduleName={moduleName}
+          moduleAction={moduleAction}
+        />
       </div>
     );
   }
@@ -40,12 +61,13 @@ class App extends Component {
 const mapStateToProps = state => ({
   route: state.framework.route,
   specs: state.framework.specs,
-  actionName: state.framework.actionName,
+  moduleAction: state.framework.moduleAction,
   moduleName: state.framework.moduleName
 });
 
 const mapDispatchToProps = dispatch => ({
   setSpecs: specs => dispatch(setSpecs(specs)),
+  setMasterName: masterName => dispatch(setMasterName(masterName)),
   setActionName: actionName => dispatch(setActionName(actionName)),
   setModuleName: moduleName => dispatch(setModuleName(moduleName))
 });

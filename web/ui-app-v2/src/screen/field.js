@@ -1,11 +1,11 @@
 import React from "react";
-import jp from "jsonpath";
+import _ from "lodash";
 import { connect } from "react-redux";
 import { SelectField } from "../containers";
 import { Label, Checkbox, TextField, TextArea } from "../components";
 import { fetchDropDownData, handleChange } from "../actions/framework";
 
-const Field = ({ field, actionName, handleChange, ...rest }) => {
+const Field = ({ field, moduleAction, handleChange, ...rest }) => {
   const { type, width, label } = field;
 
   const onChange = event => {
@@ -19,8 +19,7 @@ const Field = ({ field, actionName, handleChange, ...rest }) => {
   };
 
   const renderViewField = () => {
-    const { value: label } = this.props;
-    return <Label label={label} />;
+    return <Label {...rest} />;
   };
 
   const renderField = () => {
@@ -45,7 +44,7 @@ const Field = ({ field, actionName, handleChange, ...rest }) => {
   return (
     <div className={`col-lg-${width}`}>
       <label>{label}</label>
-      {renderField()}
+      {moduleAction == "view" ? renderViewField() : renderField()}
     </div>
   );
 };
@@ -66,7 +65,7 @@ const mapDispatchToProps = (dispatch, props) => {
 
 const mapStateToProps = (state, props) => {
   const { framework } = state;
-  const { actionName } = framework.actionName;
+  const { moduleAction } = framework;
   const { field } = props;
   const { target, jsonPath, type } = field;
   const fieldProperty = framework.fields[target];
@@ -74,11 +73,11 @@ const mapStateToProps = (state, props) => {
   const disabled = fieldProperty ? fieldProperty.disabled : field.disabled;
   const dropDownData = framework.dropDownData[target];
   const errorMessage = fieldProperty ? fieldProperty.errorMessage : "";
-  const value = jp.query(framework.form, jsonPath) || "";
+  const value = _.get(framework.form, jsonPath) || "";
 
   const mappedProps = {
     value,
-    actionName,
+    moduleAction,
     hide,
     disabled,
     errorMessage

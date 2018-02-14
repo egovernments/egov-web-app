@@ -15,6 +15,20 @@ export const setModuleName = moduleName => {
   };
 };
 
+export const setActionName = moduleAction => {
+  return {
+    type: "SET_MODULE_ACTION",
+    moduleAction
+  };
+};
+
+export const setMasterName = moduleMaster => {
+  return {
+    type: "SET_MODULE_MASTER",
+    moduleMaster
+  };
+};
+
 export const setFieldProperty = (target, property) => {
   return {
     type: "SET_FIELD_PROPERTY",
@@ -23,15 +37,8 @@ export const setFieldProperty = (target, property) => {
   };
 };
 
-export const setActionName = actionName => {
-  return {
-    type: "SET_ACTION_NAME",
-    actionName
-  };
-};
-
 // set routes
-const setRoute = route => {
+export const setRoute = route => {
   return {
     type: "SET_ROUTE",
     route
@@ -111,10 +118,7 @@ export const submitFormDataRequest = (url, formData) => {
     try {
       const state = getState();
       const { idJsonPath, objectName } = state.framework.specs;
-      let response = await postData(url, { [objectName]: formData });
-      response = jp.query(response, objectName);
-      let entityId = response.length ? jp.query(response[0], idJsonPath) : null;
-      entityId = entityId && entityId.length ? entityId[0] : null;
+      const response = await postData(url, { [objectName]: formData });
       dispatch(submitFormDataSuccess(response));
     } catch (error) {
       dispatch(applicationError(error));

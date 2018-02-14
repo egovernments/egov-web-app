@@ -11,7 +11,7 @@ import Search from "./search";
 
 const Screen = ({
   specs,
-  actionName,
+  moduleAction,
   resetFormData,
   submitFormData,
   searchEntity,
@@ -20,14 +20,14 @@ const Screen = ({
   const renderScreen = () => {
     const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
 
-    switch (actionName) {
+    switch (moduleAction) {
       case "create":
         return (
           <Create
             isFormValid={isFormValid}
             submitFormData={submitFormData}
             resetFormData={resetFormData}
-            actionName={actionName}
+            moduleAction={moduleAction}
             groups={groups}
           />
         );
@@ -37,7 +37,8 @@ const Screen = ({
         return (
           <CreateWrapper
             isFormValid={isFormValid}
-            actionName={actionName}
+            submitFormData={submitFormData}
+            moduleAction={moduleAction}
             groups={groups}
           />
         );

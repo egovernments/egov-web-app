@@ -64,7 +64,7 @@ const specs = {
         },
         {
           width: 4,
-          label: "Cities",
+          label: "City",
           type: "dropdown",
           jsonPath: "nested.location.city",
           target: "cities",
@@ -73,7 +73,7 @@ const specs = {
         {
           label: "Can code?",
           type: "checkbox",
-          jsonPath: "outer.inner.canCode",
+          jsonPath: "nested.inner.canCode",
           target: "canCode",
           width: 4,
           viewAdapter: ""

@@ -7,12 +7,12 @@ const Create = ({
   isFormValid,
   submitFormData,
   groups,
-  actionName
+  moduleAction
 }) => {
   return (
     <div className="row">
       {renderGroups(groups)}
-      {actionName !== "view" ? (
+      {moduleAction !== "view" ? (
         <div>
           <Button
             primary={true}
@@ -20,7 +20,11 @@ const Create = ({
             label="Save"
             onClick={() => submitFormData()}
           />
-          <Button label="Reset" onClick={() => resetFormData()} />
+          {moduleAction === "create" ? (
+            <Button label="Reset" onClick={() => resetFormData()} />
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         ""
@@ -30,9 +34,3 @@ const Create = ({
 };
 
 export default Create;
-
-//  if (self.props.actionName == "update") {
-//    var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/");
-//  } else {
-//    var hash = window.location.hash.replace(/(\#\/create\/|\#\/update\/)/, "/view/") + "/" + encodeURIComponent(_.get(response, self.props.metaData[`${self.props.moduleName}.${self.props.actionName}`].idJsonPath));
-//  }

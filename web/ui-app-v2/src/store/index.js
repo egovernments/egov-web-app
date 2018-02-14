@@ -3,6 +3,7 @@ import rootReducer from "../reducers";
 import thunk from "redux-thunk";
 
 import {
+  framework,
   fieldDependency,
   formValidation,
   modelDataTransformation
@@ -12,6 +13,7 @@ const middlewares = [];
 middlewares.push(thunk);
 
 // framework specific middlewares
+middlewares.push(framework);
 middlewares.push(fieldDependency);
 middlewares.push(formValidation);
 middlewares.push(modelDataTransformation);
