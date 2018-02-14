@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const intialState = {
   specs: {},
   form: {},
@@ -6,7 +8,8 @@ const intialState = {
   moduleAction: "",
   moduleName: "",
   moduleMaster: "",
-  loadingStatus: false
+  loadingStatus: false,
+  isFormValid: false
 };
 
 const framework = (state = intialState, action) => {
@@ -15,7 +18,10 @@ const framework = (state = intialState, action) => {
 
   switch (type) {
     case "HANDLE_CHANGE":
-      return { ...state, form: { ...state.form, [field.target]: field.value } };
+      const jsonPath = field.jsonPath;
+      const newForm = _.clone(state.form);
+      _.set(newForm, jsonPath, field.value);
+      return { ...state, form: newForm };
 
     case "SET_SPECS":
       const { specs } = action;
@@ -35,8 +41,9 @@ const framework = (state = intialState, action) => {
         fields: { ...state.fields, [field.target]: property }
       };
 
-    case "DISPLAY_ERROR_MESSAGE":
+    case "VALIDATE_FORM":
       let fieldProperty = state.fields[field.target] || {};
+      const { isFormValid, errorMessage } = action;
 
       return {
         ...state,
@@ -44,9 +51,10 @@ const framework = (state = intialState, action) => {
           ...state.fields,
           [field.target]: {
             ...fieldProperty,
-            errorMessage: action.errorMessage
+            errorMessage
           }
-        }
+        },
+        isFormValid
       };
 
     case "SET_ACTION_NAME":

@@ -14,7 +14,8 @@ const Screen = ({
   actionName,
   resetFormData,
   submitFormData,
-  searchEntity
+  searchEntity,
+  isFormValid
 }) => {
   const renderScreen = () => {
     const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
@@ -23,6 +24,7 @@ const Screen = ({
       case "create":
         return (
           <Create
+            isFormValid={isFormValid}
             submitFormData={submitFormData}
             resetFormData={resetFormData}
             actionName={actionName}
@@ -32,7 +34,13 @@ const Screen = ({
       case "update":
       case "view":
         const CreateWrapper = CreateHoC(Create, searchEntity);
-        return <CreateWrapper actionName={actionName} groups={groups} />;
+        return (
+          <CreateWrapper
+            isFormValid={isFormValid}
+            actionName={actionName}
+            groups={groups}
+          />
+        );
       case "search":
         return <Search groups={groups} />;
 
@@ -44,10 +52,14 @@ const Screen = ({
   return <div>{renderScreen()}</div>;
 };
 
+const mapStateToProps = state => ({
+  isFormValid: state.framework.isFormValid
+});
+
 const mapDispatchToProps = dispatch => ({
   resetFormData: () => dispatch(resetFormData()),
   submitFormData: () => dispatch(submitFormData()),
   searchEntity: () => dispatch(searchEntity())
 });
 
-export default connect(null, mapDispatchToProps)(Screen);
+export default connect(mapStateToProps, mapDispatchToProps)(Screen);

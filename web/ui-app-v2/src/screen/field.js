@@ -1,4 +1,5 @@
 import React from "react";
+import jp from "jsonpath";
 import { connect } from "react-redux";
 import { SelectField } from "../containers";
 import { Label, Checkbox, TextField, TextArea } from "../components";
@@ -67,13 +68,13 @@ const mapStateToProps = (state, props) => {
   const { framework } = state;
   const { actionName } = framework.actionName;
   const { field } = props;
-  const { target, type } = field;
+  const { target, jsonPath, type } = field;
   const fieldProperty = framework.fields[target];
   const hide = fieldProperty ? fieldProperty.hide : field.hide;
   const disabled = fieldProperty ? fieldProperty.disabled : field.disabled;
   const dropDownData = framework.dropDownData[target];
   const errorMessage = fieldProperty ? fieldProperty.errorMessage : "";
-  const value = framework.form[target] || "";
+  const value = jp.query(framework.form, jsonPath) || "";
 
   const mappedProps = {
     value,

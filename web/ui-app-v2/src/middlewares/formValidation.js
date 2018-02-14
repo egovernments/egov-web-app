@@ -1,37 +1,41 @@
-import { displayError } from "../actions/framework";
+import { setFormValidation } from "../actions/framework";
 
-const isFieldValid = (value, isRequired, regex, patternErrorMessage) => {
+const validateField = (value, isRequired, regex, patternErrorMessage) => {
   let errorMessage = "",
-    valid = true;
+    isFieldValid = true;
 
   if (isRequired && !value.length) {
-    valid = false;
+    isFieldValid = false;
     errorMessage = "Required";
   }
 
   if (!regex.test(value)) {
-    valid = false;
+    isFieldValid = false;
     errorMessage = patternErrorMessage;
   }
 
-  return { valid, errorMessage };
+  return { isFieldValid, errorMessage };
 };
 
-const handleValidation = (field, state, dispatch) => {
-  const { target, isRequired, value, pattern, patternErrorMessage } = field;
+const validateForm = fields => {
+  const fieldKeys = Object.keys(fields);
+  let isFormValid = true;
 
-  if (pattern || isRequired) {
-    const regex = new RegExp(pattern);
-    const { valid, errorMessage } = isFieldValid(
-      value,
-      isRequired,
-      regex,
-      patternErrorMessage
-    );
-
-    // do you need to dispatch every time?
-    dispatch(displayError(field, errorMessage));
+  if (!fieldKeys.length) {
+    return false;
   }
+
+  for (let i = 0; i < fieldKeys.length; i++) {
+    const field = fields[fieldKeys[i]];
+    const { errorMessage } = field;
+
+    if (errorMessage && errorMessage.trim().length > 0) {
+      isFormValid = false;
+      break;
+    }
+  }
+
+  return isFormValid;
 };
 
 const formValidation = store => next => action => {
@@ -41,10 +45,29 @@ const formValidation = store => next => action => {
 
   if (type == "HANDLE_CHANGE") {
     const { field } = action;
-    handleValidation(field, state, dispatch);
-  }
+    const { target, isRequired, value, pattern, patternErrorMessage } = field;
+    let isFieldValid = true,
+      isFormValid = true,
+      errorMessage = "";
 
+    if (pattern || isRequired) {
+      const regex = new RegExp(pattern);
+      const validationObject = validateField(
+        value,
+        isRequired,
+        regex,
+        patternErrorMessage
+      );
+      isFieldValid = validationObject.isFieldValid;
+      errorMessage = validationObject.errorMessage;
+      isFormValid = validateForm(state.framework.fields) && isFieldValid;
+    }
+    // dispatch the form validation
+    dispatch(setFormValidation(field, errorMessage, isFormValid));
+  }
   next(action);
 };
 
 export default formValidation;
+
+// care about routing

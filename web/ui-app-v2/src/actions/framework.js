@@ -81,12 +81,8 @@ export const setDropDownData = (target, dropDownData) => {
   };
 };
 
-export const displayError = (field, errorMessage) => {
-  return {
-    type: "DISPLAY_ERROR_MESSAGE",
-    field,
-    errorMessage
-  };
+export const setFormValidation = (field, errorMessage, isFormValid) => {
+  return { type: "VALIDATE_FORM", field, errorMessage, isFormValid };
 };
 
 const applicationError = error => {

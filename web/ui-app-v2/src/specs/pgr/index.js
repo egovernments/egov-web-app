@@ -2,7 +2,8 @@ import transformers from "./transfomers";
 
 const specs = {
   createUrl: "/post",
-  searchUrl: "",
+  searchUrl: "/search",
+  requestObject: "location",
   transformers: transformers,
   groups: [
     {
@@ -11,6 +12,7 @@ const specs = {
         {
           label: "First Name",
           type: "text",
+          jsonPath: "nested.name",
           disabled: false,
           target: "name",
           width: 4,
@@ -23,16 +25,14 @@ const specs = {
           width: 4,
           label: "Country",
           type: "dropdown",
+          jsonPath: "nested.location.country",
           target: "countries",
+          dataSourceConfig: { key: "code", value: "name" },
           dataSource: {
             url: "http://somedatasource.com/api/...",
             request: {},
             response: {
-              path: "countries",
-              config: {
-                key: "code",
-                value: "name"
-              }
+              path: "countries"
             }
           },
           options: ["India", "USA", "AUSTRALIA"],
@@ -44,8 +44,7 @@ const specs = {
                 url: "http://somedatasource.com/api/...",
                 request: {},
                 response: {
-                  path: "cities",
-                  config: { key: "code", value: "name" }
+                  path: "cities"
                 }
               }
             },
@@ -66,11 +65,14 @@ const specs = {
           width: 4,
           label: "Cities",
           type: "dropdown",
-          target: "cities"
+          jsonPath: "nested.location.city",
+          target: "cities",
+          dataSourceConfig: { key: "code", value: "name" }
         },
         {
           label: "Can code?",
           type: "checkbox",
+          jsonPath: "outer.inner.canCode",
           target: "canCode",
           width: 4,
           viewAdapter: ""

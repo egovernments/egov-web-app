@@ -1,22 +1,18 @@
+import jp from "jsonpath";
+import _ from "lodash";
+
 const pgrTransfomer = data => {
-  const clonedData = Object.assign(data);
-  if (clonedData["canCode"] == "yes") {
-    clonedData["canCode"] = true;
-  } else {
-    clonedData["canCode"] = false;
-  }
-  return clonedData;
+  const fieldJsonPath = "nested.inner.canCode";
+  let canCode = jp.query(data, fieldJsonPath);
+  canCode = canCode === "yes" ? true : canCode === "false" ? false : canCode;
+  _.set(data, fieldJsonPath, canCode);
 };
 
 const pgrReverseTransformer = data => {
-  const clonedData = Object.assign(data);
-
-  if (clonedData["canCode"] == true) {
-    clonedData["canCode"] = "yes";
-  } else {
-    clonedData["canCode"] = "no";
-  }
-  return clonedData;
+  const fieldJsonPath = "nested.inner.canCode";
+  let canCode = jp.query(data, fieldJsonPath);
+  canCode = canCode == true ? "yes" : canCode == false ? "no" : canCode;
+  _.set(data, fieldJsonPath, canCode);
 };
 
 const transformers = {
