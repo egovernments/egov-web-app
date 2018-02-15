@@ -31,15 +31,17 @@ export const postData = (url, params) => {
 // do a reverse transformation
 export const search = (url, params) => {
   const response =  {
+    "complaints": {
       "code": "com-1",
-      "name": "jhbjbhjjbhbhj",
-      "details": "Waste ",
+      "name": "Complaint 1",
+      "details": "Waste Stinking",
       "category": {
         "type": "Waste/Garbage",
-        "subcategory": "Medical Waste"
+        "subtype": "Plastic Waste"
       },
-      "reopened": true
-    };
+      "reopened": false
+    }
+  }
 
 
   return new Promise((resolve, reject) => {

@@ -94,7 +94,7 @@ const mapStateToProps = (state, props) => {
   };
 
   if (type === "checkbox") {
-    mappedProps["checked"] = value;
+    mappedProps["checked"] = value || false;
   }
 
   if (type === "dropdown") {

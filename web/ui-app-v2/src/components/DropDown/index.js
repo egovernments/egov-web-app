@@ -52,8 +52,7 @@ const DropDownUi = ({
 DropDownUi.propTypes = {
   label: PropTypes.string,
   handleChange: PropTypes.func,
-  selected: PropTypes.string,
-  options: PropTypes.array.isRequired
+  selected: PropTypes.string
 };
 
 export default DropDownUi;
