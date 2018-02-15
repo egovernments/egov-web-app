@@ -1,86 +1,94 @@
-import transformers from "./transformers"
+import transformers from "./transformers";
 
 const specs = {
   createUrl: "/post",
-  searchUrl: "/search",
-  objectName: "location",
-  idJsonPath: "code",
+  searchUrl: "",
   transformers: transformers,
+  objectName: "complaints",
+  idJsonPath: "complaints.code",
   groups: [
     {
-      label: "Group One",
+      label: "Complaints Details",
       fields: [
         {
-          label: "First Name",
+          label: "Complaint Name",
           type: "text",
-          jsonPath: "nested.name",
-          disabled: false,
           target: "name",
-          width: 4,
+          jsonPath: "complaints.name",
+          width: 3,
+          patternErrorMessage: "Please Enter a valid name",
+          pattern: "",
+          isRequired: true,
+          viewAdapter: "",
+          isRequired: true
+        },
+        {
+          label: "Comments",
+          type: "textarea",
+          target: "complaintDetails",
+          jsonPath: "complaints.details",
+          width: 3,
           patternErrorMessage: "Please Enter a valid name",
           pattern: "",
           isRequired: true,
           viewAdapter: ""
-        },
+        }
+      ]
+    },
+    {
+      label: "Complaint Category",
+      fields: [
         {
-          width: 4,
-          label: "Country",
+          width: 3,
+          label: "Complaint Type",
           type: "dropdown",
-          jsonPath: "nested.location.country",
-          target: "countries",
-          dataSourceConfig: { key: "code", value: "name" },
+          target: "complaintCategory",
+          jsonPath: "complaints.category.type",
+          dataSourceConfig: {
+            key: "code",
+            value: "name"
+          },
           dataSource: {
             url: "http://somedatasource.com/api/...",
             request: {},
             response: {
-              path: "countries"
+              path: "complaintCategory"
             }
           },
           options: ["India", "USA", "AUSTRALIA"],
           dependencies: [
             {
-              target: "cities",
+              target: "complaintSubCategory",
               targetType: "dropdown",
               type: "API_CALL",
               dataSource: {
                 url: "http://somedatasource.com/api/...",
                 request: {},
                 response: {
-                  path: "cities"
+                  path: "complaintSubCategory"
                 }
               }
             }
           ]
         },
         {
-          width: 4,
-          label: "City",
+          width: 3,
+          label: "Complaint Sub Category",
           type: "dropdown",
-          jsonPath: "nested.location.city",
-          target: "cities",
-          dataSourceConfig: { key: "code", value: "name" }
+          target: "complaintSubCategory",
+          jsonPath: "complaints.category.subtype",
+          dataSourceConfig: {
+            key: "code",
+            value: "name"
+          }
         },
+
         {
-          label: "Can code?",
+          width: 3,
+          label: "Is complaint reopened?",
           type: "checkbox",
-          jsonPath: "nested.inner.canCode",
-          target: "canCode",
-          width: 4,
-          viewAdapter: "",
-          dependencies: [
-            {
-              type: "PROPERTY_TOGGLE",
-              toggleProperty: "disabled",
-              targets: ["name"]
-            }
-          ]
-        },
-        {
-          label: "Toggle Field",
-          target: "toggle-field",
-          type: "label",
-          hide: true,
-          width: 4
+          target: "complaintReopened",
+          jsonPath: "complaints.reopened"
         }
       ]
     }
@@ -88,106 +96,19 @@ const specs = {
   search: {
     groups: [
       {
-        label: "Complaints Details",
+        label: "Search Group One",
         fields: [
           {
-            label: "Complaint Name",
+            label: "First Name",
             type: "text",
             target: "name",
-            jsonPath: "complaints.name",
-            width: 3,
-            patternErrorMessage: "Please Enter a valid name",
-            pattern: "",
-            isRequired: true,
-            viewAdapter: "",
-          },
-          {
-            label: "Comments",
-            type: "textarea",
-            target: "complaintDetails",
-            jsonPath: "complaints.details",
-            width: 3,
-            patternErrorMessage: "Please Enter a valid name",
-            pattern: "",
-            isRequired: true,
+            width: "",
             viewAdapter: ""
           }
         ]
-      },
-      {
-        label: "Complaint Category",
-        fields: [
-          {
-            width: 3,
-            label: "Complaint Type",
-            type: "dropdown",
-            target: "complaintCategory",
-            jsonPath: "complaints.category.type",
-            dataSourceConfig : {
-              key: "code",
-              value: "name"
-            },
-            dataSource: {
-              url: "http://somedatasource.com/api/...",
-              request:{},
-              response: {
-                path : "complaintCategory",
-              },
-            },
-            options: ["India", "USA", "AUSTRALIA"],
-            dependencies: [
-              {
-                target: "complaintSubCategory",
-                targetType: "dropdown",
-                type: "API_CALL",
-                dataSource: {
-                  url: "http://somedatasource.com/api/...",
-                  request:{},
-                  response:  {
-                    path : "complaintSubCategory",
-                  },
-                }
-              },
-            ]
-          },
-          {
-            width: 3,
-            label: "Complaint Sub Category",
-            type: "dropdown",
-            target: "complaintSubCategory",
-            jsonPath:"complaints.category.subtype",
-            dataSourceConfig : {
-              key: "code",
-              value: "name"
-            },
-          },
-
-          {
-            width: 3,
-            label: "Is complaint reopened?",
-            type: "checkbox",
-            target: "complaintReopened",
-            jsonPath:"complaints.reopened",
-          },
-        ]
       }
-    ],
-    search: {
-      groups: [
-        {
-          label: "Search Group One",
-          fields: [
-            {
-              label: "First Name",
-              type: "text",
-              target: "name",
-              width: "",
-              viewAdapter: ""
-            }
-          ]
-        }
-      ]
-    }
-  };
-  
-  export default specs;
+    ]
+  }
+};
+
+export default specs;
