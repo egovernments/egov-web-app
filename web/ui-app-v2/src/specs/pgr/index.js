@@ -1,9 +1,11 @@
+import transformers from "./transformers";
+
 const specs = {
   createUrl: "/post",
   searchUrl: "",
-  transformers: "",
+  transformers: transformers,
   objectName: "complaints",
-  idJsonPath: "code",
+  idJsonPath: "complaints.code",
   groups: [
     {
       label: "Complaints Details",
@@ -12,18 +14,18 @@ const specs = {
           label: "Complaint Name",
           type: "text",
           target: "name",
-          jsonPath: "name",
+          jsonPath: "complaints.name",
           width: 3,
           patternErrorMessage: "Please Enter a valid name",
           pattern: "",
-          viewAdapter: "",
-          isRequired: true
+          isRequired: true,
+          viewAdapter: ""
         },
         {
           label: "Comments",
           type: "textarea",
           target: "complaintDetails",
-          jsonPath: "details",
+          jsonPath: "complaints.details",
           width: 3,
           patternErrorMessage: "Please Enter a valid name",
           pattern: "",
@@ -40,7 +42,7 @@ const specs = {
           label: "Complaint Type",
           type: "dropdown",
           target: "complaintCategory",
-          jsonPath: "category.type",
+          jsonPath: "complaints.category.type",
           dataSourceConfig: {
             key: "code",
             value: "name"
@@ -73,7 +75,7 @@ const specs = {
           label: "Complaint Sub Category",
           type: "dropdown",
           target: "complaintSubCategory",
-          jsonPath: "category.subcategory",
+          jsonPath: "complaints.category.subtype",
           dataSourceConfig: {
             key: "code",
             value: "name"
@@ -85,14 +87,7 @@ const specs = {
           label: "Is complaint reopened?",
           type: "checkbox",
           target: "complaintReopened",
-          jsonPath: "reopened",
-          dependencies: [
-            {
-              type: "PROPERTY_TOGGLE",
-              toggleProperty: "disabled",
-              targets: []
-            }
-          ]
+          jsonPath: "complaints.reopened"
         }
       ]
     }

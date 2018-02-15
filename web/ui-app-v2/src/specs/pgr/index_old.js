@@ -1,4 +1,4 @@
-import transformers from "./transfomers";
+import transformers from "./transformers";
 
 const specs = {
   createUrl: "/post",
