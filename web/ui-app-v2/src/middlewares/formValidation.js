@@ -1,4 +1,4 @@
-import { setFormValidation } from "../actions/framework";
+import { setFieldValidation, setFormValidation } from "../actions/framework";
 
 const validateField = (value, isRequired, regex, patternErrorMessage) => {
   let errorMessage = "",
@@ -39,9 +39,6 @@ const validateForm = (fields, requiredFields) => {
     }
   }
 
-  console.log(isFormValid);
-  console.log(requiredFields);
-
   if (isFormValid) {
     for (let index = 0; index < requiredFields.length; index++) {
       const field = requiredFields[index];
@@ -62,13 +59,10 @@ const formValidation = store => next => action => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
+  const { field } = action;
 
   if (type == "HANDLE_CHANGE") {
-    const { field } = action;
     const { target, isRequired, value, pattern, patternErrorMessage } = field;
-    let isFieldValid = true,
-      isFormValid = true,
-      errorMessage = "";
 
     if (pattern || isRequired) {
       const regex = new RegExp(pattern);
@@ -78,16 +72,21 @@ const formValidation = store => next => action => {
         regex,
         patternErrorMessage
       );
-      isFieldValid = validationObject.isFieldValid;
-      errorMessage = validationObject.errorMessage;
-      isFormValid =
-        isFieldValid &&
-        validateForm(state.framework.fields, state.framework.requiredFields);
+      const errorMessage = validationObject.errorMessage;
+      dispatch(setFieldValidation(field, errorMessage));
     }
-    // dispatch the form validation
-    dispatch(setFormValidation(field, errorMessage, isFormValid));
+    next(action);
+  } else if (type == "VALIDATE_FIELD") {
+    next(action);
+    const validatedState = store.getState();
+    const isFormValid = validateForm(
+      validatedState.framework.fields,
+      validatedState.framework.requiredFields
+    );
+    dispatch(setFormValidation(isFormValid));
+  } else {
+    next(action);
   }
-  next(action);
 };
 
 export default formValidation;

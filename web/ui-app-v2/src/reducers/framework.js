@@ -49,9 +49,15 @@ const framework = (state = intialState, action) => {
       };
 
     case "VALIDATE_FORM":
-      let fieldProperty = state.fields[field.target] || {};
-      const { isFormValid, errorMessage } = action;
+      const { isFormValid } = action;
+      return {
+        ...state,
+        isFormValid
+      };
 
+    case "VALIDATE_FIELD":
+      let fieldProperty = state.fields[field.target] || {};
+      const { errorMessage } = action;
       return {
         ...state,
         fields: {
@@ -60,8 +66,7 @@ const framework = (state = intialState, action) => {
             ...fieldProperty,
             errorMessage
           }
-        },
-        isFormValid
+        }
       };
 
     case "SET_ROUTE":

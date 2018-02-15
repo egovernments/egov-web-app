@@ -22,7 +22,7 @@ const DropDownUi = ({
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
       return (
-        <MenuItem key={index} value={option.value} primaryText={option.value} />
+        <MenuItem key={index} value={option.key} primaryText={option.value} />
       );
     });
   };

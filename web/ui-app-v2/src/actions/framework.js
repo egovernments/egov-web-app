@@ -108,8 +108,12 @@ export const addRequiredFields = requiredFields => {
   };
 };
 
-export const setFormValidation = (field, errorMessage, isFormValid) => {
-  return { type: "VALIDATE_FORM", field, errorMessage, isFormValid };
+export const setFormValidation = isFormValid => {
+  return { type: "VALIDATE_FORM", isFormValid };
+};
+
+export const setFieldValidation = (field, errorMessage) => {
+  return { type: "VALIDATE_FIELD", field, errorMessage };
 };
 
 const applicationError = error => {
