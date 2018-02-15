@@ -22,15 +22,19 @@ const TextFieldUi = ({
     floatingLabelText: <span>{field.label}</span>
   };
 
+  const style = {
+    display: hide ? "none" : "block"
+  };
+
   return (
     <TextField
       className="custom-form-control-for-textfield"
       {...labelProperty}
       underlineShow={false}
+      style={style}
       errorStyle={{ float: "left" }}
       errorText={errorMessage}
       value={value}
-      hide={hide}
       disabled={disabled}
       onChange={onChange}
     />

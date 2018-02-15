@@ -9,12 +9,7 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
   const { type, width, label } = field;
 
   const onChange = event => {
-    let value;
-    if (type == "checkbox") {
-      value = event.target.checked === true ? true : false;
-    } else {
-      value = event.target.value;
-    }
+    const value = event.target.value;
     handleChange({ ...field, value });
   };
 
@@ -46,6 +41,9 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
 
       case "textarea":
         return <TextArea {...rest} field={field} onChange={onChange} />;
+
+      case "label":
+        return <Label {...rest} value="Toggle Field" />;
 
       default:
         break;

@@ -16,7 +16,7 @@ export default class SelectFieldContainer extends Component {
     handleChange({ ...field, value });
   };
 
-  transformDropData = (field, dropDownData = []) => {
+  transformDropdownData = (field, dropDownData = []) => {
     const { dataSourceConfig } = field;
 
     return dropDownData.map(responseObj => {
@@ -30,7 +30,10 @@ export default class SelectFieldContainer extends Component {
   render() {
     const { onChange } = this;
     const { field, fetchDropDownData, dropDownData, ...rest } = this.props;
-    const transformedDropdownData = this.transformDropData(field, dropDownData);
+    const transformedDropdownData = this.transformDropdownData(
+      field,
+      dropDownData
+    );
     return (
       <SelectField
         onChange={onChange}

@@ -1,11 +1,91 @@
 import transformers from "./transformers"
 
 const specs = {
-    createUrl: "/post",
-    searchUrl: "",
-    transformers: transformers,
-    objectName: "complaints",
-    idJsonPath: "complaints.code",
+  createUrl: "/post",
+  searchUrl: "/search",
+  objectName: "location",
+  idJsonPath: "code",
+  transformers: transformers,
+  groups: [
+    {
+      label: "Group One",
+      fields: [
+        {
+          label: "First Name",
+          type: "text",
+          jsonPath: "nested.name",
+          disabled: false,
+          target: "name",
+          width: 4,
+          patternErrorMessage: "Please Enter a valid name",
+          pattern: "",
+          isRequired: true,
+          viewAdapter: ""
+        },
+        {
+          width: 4,
+          label: "Country",
+          type: "dropdown",
+          jsonPath: "nested.location.country",
+          target: "countries",
+          dataSourceConfig: { key: "code", value: "name" },
+          dataSource: {
+            url: "http://somedatasource.com/api/...",
+            request: {},
+            response: {
+              path: "countries"
+            }
+          },
+          options: ["India", "USA", "AUSTRALIA"],
+          dependencies: [
+            {
+              target: "cities",
+              targetType: "dropdown",
+              type: "API_CALL",
+              dataSource: {
+                url: "http://somedatasource.com/api/...",
+                request: {},
+                response: {
+                  path: "cities"
+                }
+              }
+            }
+          ]
+        },
+        {
+          width: 4,
+          label: "City",
+          type: "dropdown",
+          jsonPath: "nested.location.city",
+          target: "cities",
+          dataSourceConfig: { key: "code", value: "name" }
+        },
+        {
+          label: "Can code?",
+          type: "checkbox",
+          jsonPath: "nested.inner.canCode",
+          target: "canCode",
+          width: 4,
+          viewAdapter: "",
+          dependencies: [
+            {
+              type: "PROPERTY_TOGGLE",
+              toggleProperty: "disabled",
+              targets: ["name"]
+            }
+          ]
+        },
+        {
+          label: "Toggle Field",
+          target: "toggle-field",
+          type: "label",
+          hide: true,
+          width: 4
+        }
+      ]
+    }
+  ],
+  search: {
     groups: [
       {
         label: "Complaints Details",
@@ -20,7 +100,6 @@ const specs = {
             pattern: "",
             isRequired: true,
             viewAdapter: "",
-            isRequired: true,
           },
           {
             label: "Comments",
