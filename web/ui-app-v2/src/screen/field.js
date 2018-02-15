@@ -56,7 +56,7 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
   };
 
   return (
-    <div className={`col-lg-${width}`}>
+    <div style={{height: '110px'}} className={`col-md-${width} col-sm-${width} col-xs-12 col-lg-${width}`}>
       {moduleAction === "view" ? renderViewField() : renderField()}
     </div>
   );

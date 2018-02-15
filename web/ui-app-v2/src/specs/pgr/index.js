@@ -1,106 +1,116 @@
-import transformers from "./transformers";
+import transformers from "./transformers"
 
 const specs = {
-  createUrl: "/post",
-  searchUrl: "",
-  transformers: transformers,
-  objectName: "complaints",
-  idJsonPath: "complaints.code",
-  groups: [
-    {
-      label: "Complaints Details",
-      fields: [
-        {
-          label: "Complaint Name",
-          type: "text",
-          target: "name",
-          jsonPath: "complaints.name",
-          width: 3,
-          patternErrorMessage: "Please Enter a valid name",
-          pattern: "",
-          isRequired: true,
-          viewAdapter: ""
-        },
-        {
-          label: "Comments",
-          type: "textarea",
-          target: "complaintDetails",
-          jsonPath: "complaints.details",
-          width: 3,
-          patternErrorMessage: "Please Enter a valid name",
-          pattern: "",
-          isRequired: true,
-          viewAdapter: ""
-        }
-      ]
-    },
-    {
-      label: "Complaint Category",
-      fields: [
-        {
-          width: 3,
-          label: "Complaint Type",
-          type: "dropdown",
-          target: "complaintCategory",
-          jsonPath: "complaints.category.type",
-          dataSourceConfig: {
-            key: "code",
-            value: "name"
-          },
-          dataSource: {
-            url: "http://somedatasource.com/category"
-          },
-          dependencies: [
-            {
-              target: "complaintSubCategory",
-              targetType: "dropdown",
-              type: "API_CALL",
-              dataSource: {
-                url: "http://somedatasource.com/category",
-                searchKey: "categoryType"
-              }
-            }
-          ]
-        },
-        {
-          width: 3,
-          label: "Complaint Sub Category",
-          type: "dropdown",
-          target: "complaintSubCategory",
-          jsonPath: "complaints.category.subtype",
-          dataSourceConfig: {
-            key: "code",
-            value: "name"
-          }
-        },
-        {
-          width: 3,
-          label: "Is complaint reopened?",
-          type: "checkbox",
-          target: "complaintReopened",
-          jsonPath: "complaints.reopened"
-        }
-      ]
-    }
-  ],
-  search: {
-    url: "/search",
-    searchKey: "code",
+    createUrl: "/post",
+    searchUrl: "",
+    transformers: transformers,
+    objectName: "complaints",
+    idJsonPath: "complaints.code",
     groups: [
       {
-        label: "Search",
+        label: "Complaints Details",
         fields: [
           {
-            label: "First Name",
+            label: "Complaint Name",
             type: "text",
             target: "name",
-            width: "",
+            jsonPath: "complaints.name",
+            width: 3,
+            patternErrorMessage: "Please Enter a valid name",
+            pattern: "",
+            isRequired: true,
+            viewAdapter: "",
+          },
+          {
+            label: "Comments",
+            type: "textarea",
+            target: "complaintDetails",
+            jsonPath: "complaints.details",
+            width: 3,
+            patternErrorMessage: "Please Enter a valid name",
+            pattern: "",
+            isRequired: true,
             viewAdapter: ""
           }
         ]
-      }
-    ]
-  }
-};
+      },
+      {
+        label: "Complaint Category",
+        fields: [
+          {
+            width: 3,
+            label: "Complaint Type",
+            type: "dropdown",
+            target: "complaintCategory",
+            jsonPath: "complaints.category.type",
+            dataSourceConfig : {
+              key: "code",
+              value: "name"
+            },
+            dataSource: {
+              request:{
+                url: "http://somedatasource.com/category",
+                searchKey: "",
+                path:""
+              },
+              response: {
+                path : "complaintCategory",
+              },
+            },
+            options: ["India", "USA", "AUSTRALIA"],
+            dependencies: [
+              {
+                target: "complaintSubCategory",
+                targetType: "dropdown",
+                type: "API_CALL",
+                dataSource: {
+                  request: {
+                    url: "http://somedatasource.com/category",
+                    searchKey : "categoryType",
+                    path: "complaints.category.type"
+                  }
+                }
+              },
+            ]
+          },
+          {
+            width: 3,
+            label: "Complaint Sub Category",
+            type: "dropdown",
+            target: "complaintSubCategory",
+            jsonPath:"complaints.category.subtype",
+            dataSourceConfig : {
+              key: "code",
+              value: "name"
+            },
+          },
 
-export default specs;
+          {
+            width: 3,
+            label: "Is complaint reopened?",
+            type: "checkbox",
+            target: "complaintReopened",
+            jsonPath:"complaints.reopened",
+          },
+        ]
+      }
+    ],
+    search: {
+      groups: [
+        {
+          label: "Search Group One",
+          fields: [
+            {
+              label: "First Name",
+              type: "text",
+              target: "name",
+              width: "",
+              viewAdapter: ""
+            }
+          ]
+        }
+      ]
+    }
+  };
+  
+  export default specs;
