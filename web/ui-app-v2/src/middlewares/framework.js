@@ -7,19 +7,16 @@ const framework = store => next => action => {
   const state = store.getState();
 
   switch (type) {
-    // routing handled only for create
     case "SUBMIT_FORM_DATA_SUCCESS":
-      let { response } = action;
+      const { response } = action;
       const { framework } = state;
       const { specs, moduleName, moduleMaster } = framework;
-      const { idJsonPath, objectName } = state.framework.specs;
-
-      response = _.get(response, objectName);
+      const { idJsonPath } = state.framework.specs;
       let entityId = response ? _.get(response, idJsonPath) : null;
-      // make it dynamic, have a configuration as to which route needs to be called
-      const route = `/view/${moduleName}/${moduleMaster}/${entityId}`;
-      action.response = response[0];
-      dispatch(setRoute(route));
+      if (entityId) {
+        const route = `/view/${moduleName}/${moduleMaster}/${entityId}`;
+        dispatch(setRoute(route));
+      }
       break;
 
     default:

@@ -116,9 +116,7 @@ const applicationError = error => {
 export const submitFormDataRequest = (url, formData) => {
   return async (dispatch, getState) => {
     try {
-      const state = getState();
-      const { idJsonPath, objectName } = state.framework.specs;
-      const response = await postData(url, { [objectName]: formData });
+      const response = await postData(url, formData);
       dispatch(submitFormDataSuccess(response));
     } catch (error) {
       dispatch(applicationError(error));

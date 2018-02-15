@@ -23,7 +23,7 @@ export const postData = (url, params) => {
   const message = `Data posted to ${url} with ${JSON.stringify(params)}`;
   console.log(message);
   return new Promise((resolve, reject) => {
-    params["location"]["code"] = "abcd1234";
+    params["code"] = "abcd1234";
     resolve(params);
   });
 };
