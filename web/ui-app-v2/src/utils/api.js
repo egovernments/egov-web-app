@@ -36,8 +36,8 @@ export const searchApi = (url, params) => {
       name: "Complaint 1",
       details: "Waste Stinking",
       category: {
-        type: "Waste/Garbage",
-        subtype: "Plastic Waste"
+        type: "C1",
+        subtype: "CS2"
       },
       reopened: false
     }

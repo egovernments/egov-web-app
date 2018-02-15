@@ -1,13 +1,28 @@
 import React, { Component } from "react";
 import { SelectField } from "../components";
+import { prepareSearchUrl } from "../utils/commons";
 
 export default class SelectFieldContainer extends Component {
-  // if update make an api call to all its dependants
   componentDidMount() {
-    const { actionName, field, fetchDropDownData } = this.props;
+    const { field, fetchDropDownData } = this.props;
     const { dataSource, target } = field;
     if (dataSource) {
       this.props.fetchDropDownData(dataSource.url, target);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.value && nextProps.value) {
+      const { field, value } = nextProps;
+      let { dependencies } = field;
+      dependencies = dependencies && dependencies.length ? dependencies : [];
+      dependencies.forEach(dependency => {
+        const { target, dataSource, type: dependencyType } = dependency;
+        if (dependencyType === "API_CALL") {
+          const searchUrl = prepareSearchUrl(dataSource, value);
+          this.props.fetchDropDownData(searchUrl, target);
+        }
+      });
     }
   }
 
@@ -17,12 +32,15 @@ export default class SelectFieldContainer extends Component {
   };
 
   transformDropdownData = (field, dropDownData = []) => {
-    const { dataSourceConfig } = field;
+    const {
+      key: dataSourceKey,
+      value: dataSourceValue
+    } = field.dataSourceConfig;
 
-    return dropDownData.map(responseObj => {
+    return dropDownData.map(dropDownItem => {
       return {
-        key: responseObj[dataSourceConfig.key],
-        value: responseObj[dataSourceConfig.value]
+        key: dropDownItem[dataSourceKey],
+        value: dropDownItem[dataSourceValue]
       };
     });
   };

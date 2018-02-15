@@ -33,7 +33,12 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
 
       case "dropdown":
         return (
-          <SelectField handleChange={handleChange} {...rest} field={field} />
+          <SelectField
+            moduleAction={moduleAction}
+            handleChange={handleChange}
+            {...rest}
+            field={field}
+          />
         );
 
       case "checkbox":
