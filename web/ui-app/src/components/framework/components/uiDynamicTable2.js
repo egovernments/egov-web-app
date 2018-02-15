@@ -76,8 +76,55 @@ class UiDynamicTable extends Component {
   //           }
   //     });
   // 	}
+  //used datatable for pagination
+  componentWillUnmount() {
+    $('#dynamicTable')
+      .DataTable()
+      .destroy(true);
+  }
+
+  componentWillUpdate(nextProps) {
+    let { flag } = this.props;
+    if (flag == 1 && nextProps.selectedValue ==='' || (this.props.resultList.resultValues.length != nextProps.resultList.resultValues.length)) {
+      flag = 0;
+      $('#dynamicTable')
+        .dataTable()
+        .fnDestroy();
+    }
+  }
+
+  componentDidUpdate(nextProps) {
+    if((this.props.selectedValue ==='') || (this.props.resultList.resultValues.length != nextProps.resultList.resultValues.length)){
+    this.initTable();
+  }
+  }
+
+  initTable = () => {
+    const { resultList,orientation } = this.props;
+    const resultHeader = resultList.hasOwnProperty('resultHeader') ? resultList.resultHeader : [];
+    const columns = resultHeader.map((item, i) => (item.label !== 'Action' ? i : -1)).filter(index => index !== -1);
+    const resultValues=resultList.hasOwnProperty('resultValues') ? resultList.resultValues : [];
+    console.log(resultValues.length);
+    $('#dynamicTable').DataTable({
+      dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
+      order: [],
+      searching: resultValues,
+      lengthChange:resultValues,
+      buttons:[],
+      ordering: false,
+      bDestroy: true,
+      language: {
+        emptyTable: 'No Records',
+      },
+    });
+  };
+  componentDidMount() {
+    console.log("componentdidmount");
+    this.initTable();
+  }
 
   renderFields = item => {
+    //console.log(item);
     switch (item.type) {
       case 'text':
         return (
