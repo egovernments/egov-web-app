@@ -1,3 +1,4 @@
+
 export const api = (url, params) => {
   const data = {
     countries: [{ key: "India", value: "India" }, { key: "USA", value: "USA" }],
@@ -49,34 +50,44 @@ export const search = (url, params) => {
   });
 };
 
-export const apiForm = (url, params) => {
-  const data = {
-    countries: [{ code: "IND", name: "India" }, { code: "US", name: "USA" }],
-    cities: [
-      { code: "BLR", name: "Bangalore" },
-      { code: "MYS", name: "Mysore" }
-    ],
-    area: ["HSR Layout"],
-    complaintCategory: [
-      { code: "C1", name: "Waste/Garbage" },
-      { code: "C2", name: "Electricity" }
-    ],
-    complaintSubCategory: [
-      { code: "CS1", name: "Medical Waste" },
-      { code: "CS2", name: "Plastic Waste" }
-    ]
+export const createQuery = (dataSource, value) => {
+  let { request } = dataSource;
+  if(request){
+    return `${request.url}?${request.searchKey}=${value}`;
+  }
+}
 
-    // cities: {
-    //   India: [
-    //     { key: "Bangalore", value: "Bangalore" },
-    //     { key: "Delhi", value: "Delhi" }
-    //   ],
-    //   USA: [
-    //     { key: "California", value: "California" },
-    //     { key: "New York", value: "New York" }
-    //   ]
-    // }
+
+export const apiForm = (url, params) => {
+  let complaintCategory, complaintSubCategory = [];
+  switch(url){
+    case "http://somedatasource.com/category":
+      complaintCategory = [
+          { code: "C1", name: "Waste/Garbage" },
+          { code: "C2", name: "Electricity" }
+      ]
+    break;
+    case "http://somedatasource.com/category?categoryType=C1":
+      complaintSubCategory = [
+          { code: "CS1", name: "Medical Waste" },
+          { code: "CS2", name: "Solid Waste" }
+      ]
+    break;
+    case "http://somedatasource.com/category?categoryType=C2":
+      complaintSubCategory = [
+        { code: "CS3", name: "Radioactive Waste" },
+        { code: "CS4", name: "Nuclear Waste" }
+      ]
+    break;
+    default: 
+    break;
+  }
+  const data = {
+    complaintCategory: complaintCategory,
+    complaintSubCategory: complaintSubCategory
   };
+
+  
 
   return new Promise((resolve, reject) => {
     resolve(data[params]);

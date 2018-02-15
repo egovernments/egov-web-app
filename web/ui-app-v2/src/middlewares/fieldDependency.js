@@ -1,8 +1,16 @@
 import { fetchDropDownData, setFieldProperty } from "../actions/framework";
+import { createQuery } from "../utils/api"
 
-const dependantApiCall = (dependency, dispatch) => {
+const dependantApiCall = (value, dependency, dispatch) => {
   const { dataSource, target } = dependency;
-  dispatch(fetchDropDownData(dataSource, target));
+  const { request } = dataSource;
+  if(request.searchKey){
+    let url = createQuery(dataSource, value)
+    dispatch(fetchDropDownData(url, target));
+  }
+  else{
+    dispatch(fetchDropDownData(dependency.request.url, target));
+  }
 };
 
 const toggleFieldProperty = (dependency, value, dispatch) => {
@@ -31,7 +39,7 @@ const fieldDependency = store => next => action => {
         const { type } = dependency;
         switch (type) {
           case "API_CALL":
-            dependantApiCall(dependency, dispatch);
+            dependantApiCall(value, dependency, dispatch);
             break;
           case "PROPERTY_TOGGLE":
             toggleFieldProperty(dependency, value, dispatch);
