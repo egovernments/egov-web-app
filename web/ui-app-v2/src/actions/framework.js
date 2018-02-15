@@ -1,4 +1,4 @@
-import { api, postData, search, apiForm } from "../utils/api";
+import { api, postData, searchApi, apiForm } from "../utils/api";
 import jp from "jsonpath";
 
 export const setSpecs = specs => {
@@ -46,6 +46,12 @@ export const setRoute = route => {
 };
 
 // submit form
+export const submitFormData = () => {
+  return {
+    type: "SUBMIT_FORM_DATA"
+  };
+};
+
 const submitFormDataSuccess = response => {
   return {
     type: "SUBMIT_FORM_DATA_SUCCESS",
@@ -57,12 +63,6 @@ const submitFormDataFailure = error => {
   return {
     type: "SUBMIT_FORM_DATA_FAILURE",
     error
-  };
-};
-
-export const submitFormData = () => {
-  return {
-    type: "SUBMIT_FORM_DATA"
   };
 };
 
@@ -123,8 +123,7 @@ const applicationError = error => {
   };
 };
 
-// calculate the route and dispatch
-export const submitFormDataRequest = (url, formData) => {
+export const saveForm = (url, formData) => {
   return async (dispatch, getState) => {
     try {
       const response = await postData(url, formData);
@@ -135,25 +134,20 @@ export const submitFormDataRequest = (url, formData) => {
   };
 };
 
-export const fetchDropDownData = (url, target) => {
+export const search = (url, params) => {
   return async (dispatch, getState) => {
-    const dropDownData = await apiForm(
-      url,
-      target
-    );
-
-    dispatch(setDropDownData(target, dropDownData));
-  };
-};
-// removonmg
-export const searchEntity = (url, params) => {
-  return async (dispatch, getState) => {
-    // api calls go here
     try {
-      const response = await search(url, params);
+      const response = await searchApi(url, params);
       dispatch(setFormData(response));
     } catch (error) {
       dispatch(applicationError(error));
     }
+  };
+};
+
+export const fetchDropDownData = (url, target) => {
+  return async (dispatch, getState) => {
+    const dropDownData = await apiForm(url);
+    dispatch(setDropDownData(target, dropDownData));
   };
 };

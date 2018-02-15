@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-const CreateHoC = (Create, searchEntity) => {
+// recieve search, search url
+const CreateHoC = (Create, search, searchUrl) => {
   return class WrappedCreate extends Component {
     componentDidMount() {
-      // make the api call here
-      console.log("API call made");
-      searchEntity();
+      search(searchUrl);
     }
     render() {
       return <Create {...this.props} />;

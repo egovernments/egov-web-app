@@ -7,7 +7,7 @@ export default class SelectFieldContainer extends Component {
     const { actionName, field, fetchDropDownData } = this.props;
     const { dataSource, target } = field;
     if (dataSource) {
-      this.props.fetchDropDownData(dataSource.request.url, target);
+      this.props.fetchDropDownData(dataSource.url, target);
     }
   }
 

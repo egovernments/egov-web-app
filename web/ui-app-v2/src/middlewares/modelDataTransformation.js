@@ -1,4 +1,4 @@
-import { submitFormDataRequest, setFormData } from "../actions/framework";
+import { saveForm, setFormData } from "../actions/framework";
 import _ from "lodash";
 
 const frameworkMiddleware = store => next => action => {
@@ -22,7 +22,7 @@ const frameworkMiddleware = store => next => action => {
           transformer(transformedFormData);
         });
 
-      dispatch(submitFormDataRequest(createUrl, transformedFormData));
+      dispatch(saveForm(createUrl, transformedFormData));
       return;
 
     case "SET_FORM_DATA":

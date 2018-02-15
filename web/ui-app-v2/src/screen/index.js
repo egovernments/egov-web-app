@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import {
   submitFormData,
   resetFormData,
-  searchEntity,
+  search,
   addRequiredFields
 } from "../actions/framework";
+import { prepareSearchUrl } from "../utils/commons";
+import { withRouter } from "react-router";
 import CreateHoC from "../hocs/create";
 import Create from "./create";
 import Search from "./search";
@@ -35,7 +37,7 @@ class Screen extends Component {
       moduleAction,
       resetFormData,
       submitFormData,
-      searchEntity,
+      search,
       isFormValid
     } = this.props;
 
@@ -54,7 +56,10 @@ class Screen extends Component {
         );
       case "update":
       case "view":
-        const CreateWrapper = CreateHoC(Create, searchEntity);
+        // form the url here and pass
+        const { id } = this.props.match.params;
+        const searchUrl = prepareSearchUrl(specs.search, id);
+        const CreateWrapper = CreateHoC(Create, search, searchUrl);
         return (
           <CreateWrapper
             isFormValid={isFormValid}
@@ -65,7 +70,6 @@ class Screen extends Component {
         );
       case "search":
         return <Search groups={groups} />;
-
       default:
         break;
     }
@@ -86,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addRequiredFields(requiredFields)),
   resetFormData: () => dispatch(resetFormData()),
   submitFormData: () => dispatch(submitFormData()),
-  searchEntity: () => dispatch(searchEntity())
+  search: url => dispatch(search(url))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screen);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));

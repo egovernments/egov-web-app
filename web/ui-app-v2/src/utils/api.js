@@ -1,4 +1,3 @@
-
 export const api = (url, params) => {
   const data = {
     countries: [{ key: "India", value: "India" }, { key: "USA", value: "USA" }],
@@ -30,66 +29,52 @@ export const postData = (url, params) => {
 };
 
 // do a reverse transformation
-export const search = (url, params) => {
-  const response =  {
-    "complaints": {
-      "code": "com-1",
-      "name": "Complaint 1",
-      "details": "Waste Stinking",
-      "category": {
-        "type": "Waste/Garbage",
-        "subtype": "Plastic Waste"
+export const searchApi = (url, params) => {
+  const response = {
+    complaints: {
+      code: "com-1",
+      name: "Complaint 1",
+      details: "Waste Stinking",
+      category: {
+        type: "Waste/Garbage",
+        subtype: "Plastic Waste"
       },
-      "reopened": false
+      reopened: false
     }
-  }
-
+  };
 
   return new Promise((resolve, reject) => {
     resolve(response);
   });
 };
 
-export const createQuery = (dataSource, value) => {
-  let { request } = dataSource;
-  if(request){
-    return `${request.url}?${request.searchKey}=${value}`;
-  }
-}
-
-
 export const apiForm = (url, params) => {
-  let complaintCategory, complaintSubCategory = [];
-  switch(url){
+  let data;
+
+  switch (url) {
     case "http://somedatasource.com/category":
-      complaintCategory = [
-          { code: "C1", name: "Waste/Garbage" },
-          { code: "C2", name: "Electricity" }
-      ]
-    break;
+      data = [
+        { code: "C1", name: "Waste/Garbage" },
+        { code: "C2", name: "Electricity" }
+      ];
+      break;
     case "http://somedatasource.com/category?categoryType=C1":
-      complaintSubCategory = [
-          { code: "CS1", name: "Medical Waste" },
-          { code: "CS2", name: "Solid Waste" }
-      ]
-    break;
+      data = [
+        { code: "CS1", name: "Medical Waste" },
+        { code: "CS2", name: "Solid Waste" }
+      ];
+      break;
     case "http://somedatasource.com/category?categoryType=C2":
-      complaintSubCategory = [
+      data = [
         { code: "CS3", name: "Radioactive Waste" },
         { code: "CS4", name: "Nuclear Waste" }
-      ]
-    break;
-    default: 
-    break;
+      ];
+      break;
+    default:
+      break;
   }
-  const data = {
-    complaintCategory: complaintCategory,
-    complaintSubCategory: complaintSubCategory
-  };
-
-  
 
   return new Promise((resolve, reject) => {
-    resolve(data[params]);
+    resolve(data);
   });
 };
