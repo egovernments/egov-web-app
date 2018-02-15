@@ -1,6 +1,9 @@
 import { setFieldValidation, setFormValidation } from "../actions/framework";
 
-const validateField = (value, isRequired, regex, patternErrorMessage) => {
+const validateField = (value, field) => {
+  const { isRequired, pattern, patternErrorMessage } = field;
+  const regex = new RegExp(pattern);
+
   let errorMessage = "",
     isFieldValid = true;
 
@@ -62,16 +65,10 @@ const formValidation = store => next => action => {
   const { field } = action;
 
   if (type == "HANDLE_CHANGE") {
-    const { target, isRequired, value, pattern, patternErrorMessage } = field;
+    const { isRequired, value, pattern } = field;
 
     if (pattern || isRequired) {
-      const regex = new RegExp(pattern);
-      const validationObject = validateField(
-        value,
-        isRequired,
-        regex,
-        patternErrorMessage
-      );
+      const validationObject = validateField(value, field);
       const errorMessage = validationObject.errorMessage;
       dispatch(setFieldValidation(field, errorMessage));
     }

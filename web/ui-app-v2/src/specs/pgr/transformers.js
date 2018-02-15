@@ -2,16 +2,22 @@ import _ from "lodash";
 
 const pgrTransfomer = data => {
   const fieldJsonPath = "complaints.reopened";
-  let canCode = _.get(data, fieldJsonPath);
-  canCode = canCode === "yes" ? true : canCode === "false" ? false : canCode;
-  _.set(data, fieldJsonPath, canCode);
+  let complaintsReopened = _.get(data, fieldJsonPath);
+  complaintsReopened =
+    complaintsReopened === "yes"
+      ? true
+      : complaintsReopened === "false" ? false : complaintsReopened;
+  _.set(data, fieldJsonPath, complaintsReopened);
 };
 
 const pgrReverseTransformer = data => {
   const fieldJsonPath = "complaints.reopened";
-  let canCode = _.get(data, fieldJsonPath);
-  canCode = canCode == true ? "yes" : canCode == false ? "no" : canCode;
-  _.set(data, fieldJsonPath, canCode);
+  let complaintsReopened = _.get(data, fieldJsonPath);
+  complaintsReopened =
+    complaintsReopened == true
+      ? "yes"
+      : complaintsReopened == false ? "no" : complaintsReopened;
+  _.set(data, fieldJsonPath, complaintsReopened);
 };
 
 const transformers = {

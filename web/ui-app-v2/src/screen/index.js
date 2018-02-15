@@ -56,7 +56,6 @@ class Screen extends Component {
         );
       case "update":
       case "view":
-        // form the url here and pass
         const { id } = this.props.match.params;
         const searchUrl = prepareSearchUrl(specs.search, id);
         const CreateWrapper = CreateHoC(Create, search, searchUrl);
