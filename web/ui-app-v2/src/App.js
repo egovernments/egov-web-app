@@ -45,14 +45,10 @@ class App extends Component {
   }
 
   render() {
-    const { specs, moduleName, moduleAction } = this.props;
+    const { moduleName, moduleAction } = this.props;
     return (
       <div className="container">
-        <Screen
-          specs={specs}
-          moduleName={moduleName}
-          moduleAction={moduleAction}
-        />
+        <Screen moduleName={moduleName} moduleAction={moduleAction} />
       </div>
     );
   }
@@ -60,7 +56,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   route: state.framework.route,
-  specs: state.framework.specs,
   moduleAction: state.framework.moduleAction,
   moduleName: state.framework.moduleName
 });

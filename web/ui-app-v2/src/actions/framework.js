@@ -101,6 +101,13 @@ export const setDropDownData = (target, dropDownData) => {
   };
 };
 
+export const addRequiredFields = requiredFields => {
+  return {
+    type: "ADD_REQUIRED_FIELDS",
+    requiredFields
+  };
+};
+
 export const setFormValidation = (field, errorMessage, isFormValid) => {
   return { type: "VALIDATE_FORM", field, errorMessage, isFormValid };
 };

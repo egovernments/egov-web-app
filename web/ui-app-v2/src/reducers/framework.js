@@ -41,6 +41,13 @@ const framework = (state = intialState, action) => {
         fields: { ...state.fields, [action.target]: property }
       };
 
+    case "ADD_REQUIRED_FIELDS":
+      const { requiredFields } = action;
+      return {
+        ...state,
+        requiredFields
+      };
+
     case "VALIDATE_FORM":
       let fieldProperty = state.fields[field.target] || {};
       const { isFormValid, errorMessage } = action;
