@@ -19,7 +19,7 @@ const TextAreaUi = ({
       fontSize: "20px",
       whiteSpace: "nowrap"
     },
-    floatingLabelText: <span>{field.label} </span>
+    floatingLabelText: <span>{field.label}</span>
   };
 
   return (

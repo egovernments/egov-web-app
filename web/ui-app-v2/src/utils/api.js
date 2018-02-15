@@ -23,21 +23,24 @@ export const postData = (url, params) => {
   const message = `Data posted to ${url} with ${JSON.stringify(params)}`;
   console.log(message);
   return new Promise((resolve, reject) => {
-    params["code"] = "abcd1234";
+    params["complaints"]["code"] = "com-1";
     resolve(params);
   });
 };
 
 // do a reverse transformation
 export const search = (url, params) => {
-  const response = {
-    code: "abcd1234",
-    nested: {
-      name: "varun",
-      location: { country: "India", city: "Bangalore" },
-      inner: { canCode: "Yes" }
-    }
-  };
+  const response =  {
+      "code": "com-1",
+      "name": "jhbjbhjjbhbhj",
+      "details": "Waste ",
+      "category": {
+        "type": "Waste/Garbage",
+        "subcategory": "Medical Waste"
+      },
+      "reopened": true
+    };
+
 
   return new Promise((resolve, reject) => {
     resolve(response);
@@ -53,12 +56,12 @@ export const apiForm = (url, params) => {
     ],
     area: ["HSR Layout"],
     complaintCategory: [
-      { code: "C1", name: "Complaint Type 1" },
-      { code: "C2", name: "Complaint Type 2" }
+      { code: "C1", name: "Waste/Garbage" },
+      { code: "C2", name: "Electricity" }
     ],
     complaintSubCategory: [
-      { code: "CS1", name: "Complaint SubType 1" },
-      { code: "CS2", name: "Complaint SubType 2" }
+      { code: "CS1", name: "Medical Waste" },
+      { code: "CS2", name: "Plastic Waste" }
     ]
 
     // cities: {

@@ -134,7 +134,7 @@ export const fetchDropDownData = (dataSourceObj, target) => {
     dispatch(setDropDownData(target, dropDownData));
   };
 };
-
+// removonmg
 export const searchEntity = (url, params) => {
   return async (dispatch, getState) => {
     // api calls go here
