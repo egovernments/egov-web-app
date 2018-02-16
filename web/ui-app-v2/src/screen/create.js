@@ -2,34 +2,20 @@ import React from "react";
 import { Button } from "../components";
 import renderGroups from "./render-groups";
 
-const Create = ({
-  resetFormData,
-  isFormValid,
-  submitFormData,
-  groups,
-  moduleAction
-}) => {
+const Create = ({ resetFormData, isFormValid, submitFormData, groups }) => {
   return (
     <div className="row">
       {renderGroups(groups)}
-      {moduleAction !== "view" ? (
-        <div className="textcenter">
-          <Button
-            primary={true}
-            disabled={!isFormValid}
-            label="Save"
-            style={{marginRight:"20px"}}
-            onClick={() => submitFormData()}
-          />
-          {moduleAction === "create" ? (
-            <Button label="Reset" onClick={() => resetFormData()} />
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="textcenter">
+        <Button
+          primary={true}
+          disabled={!isFormValid}
+          label="Save"
+          style={{ marginRight: "20px" }}
+          onClick={() => submitFormData()}
+        />
+        <Button label="Reset" onClick={() => resetFormData()} />
+      </div>
     </div>
   );
 };

@@ -1,18 +1,30 @@
 import { setFieldValidation, setFormValidation } from "../actions/framework";
+import _ from "lodash";
 
 const validateField = (value, field) => {
-  const { isRequired, pattern, patternErrorMessage } = field;
-  const regex = new RegExp(pattern);
+  const {
+    minLength,
+    maxLength,
+    isRequired,
+    pattern,
+    patternErrorMessage
+  } = field;
 
   let errorMessage = "",
     isFieldValid = true;
+
+  const fieldLength = value.length;
 
   if (isRequired && !value.length) {
     isFieldValid = false;
     errorMessage = "Required";
   }
 
-  if (!regex.test(value)) {
+  if (
+    (minLength && fieldLength < minLength) ||
+    (maxLength && fieldLength > maxLength) ||
+    (pattern && !new RegExp(pattern).test(value))
+  ) {
     isFieldValid = false;
     errorMessage = patternErrorMessage;
   }
@@ -28,10 +40,6 @@ const doesFieldHaveError = field => {
 const validateForm = (fields, requiredFields) => {
   const fieldKeys = Object.keys(fields);
   let isFormValid = true;
-
-  if (!Object.keys(fields).length) {
-    return false;
-  }
 
   for (let i = 0; i < fieldKeys.length; i++) {
     const field = fields[fieldKeys[i]];
@@ -49,8 +57,6 @@ const validateForm = (fields, requiredFields) => {
       if (formFieldIndex === -1) {
         isFormValid = false;
         break;
-      } else {
-        const formField = fields[formFieldIndex];
       }
     }
   }

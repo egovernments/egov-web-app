@@ -1,47 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  submitFormData,
-  resetFormData,
-  search,
-  addRequiredFields
-} from "../actions/framework";
+import { submitFormData, resetFormData, search } from "../actions/framework";
 import { prepareSearchUrl } from "../utils/commons";
 import { withRouter } from "react-router";
-import CreateHoC from "../hocs/create";
 import Create from "./create";
+import Update from "./update";
+import View from "./view";
 import Search from "./search";
 
 class Screen extends Component {
-  componentWillReceiveProps(nextProps) {
-    const { specs } = nextProps;
-
-    if (Object.keys(specs).length && !Object.keys(this.props.specs).length) {
-      const requiredFields = [];
-      const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
-
-      groups.forEach(group => {
-        group.fields.forEach(field => {
-          if (field.isRequired) {
-            requiredFields.push(field.target);
-          }
-        });
-      });
-      this.props.addRequiredFields(requiredFields);
-    }
-  }
+  searchUrl = (moduleAction, specs) => {
+    const { id } = this.props.match.params;
+    return moduleAction === "create"
+      ? null
+      : prepareSearchUrl(specs.search, id);
+  };
 
   renderScreen = () => {
     const {
-      specs,
-      moduleAction,
       resetFormData,
       submitFormData,
       search,
+      specs,
       isFormValid
     } = this.props;
-
+    const { actionName: moduleAction } = this.props.match.params;
     const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
+    const searchUrl = this.searchUrl(moduleAction, specs);
 
     switch (moduleAction) {
       case "create":
@@ -50,23 +35,21 @@ class Screen extends Component {
             isFormValid={isFormValid}
             submitFormData={submitFormData}
             resetFormData={resetFormData}
-            moduleAction={moduleAction}
             groups={groups}
           />
         );
       case "update":
-      case "view":
-        const { id } = this.props.match.params;
-        const searchUrl = prepareSearchUrl(specs.search, id);
-        const CreateWrapper = CreateHoC(Create, search, searchUrl);
         return (
-          <CreateWrapper
+          <Update
+            searchUrl={searchUrl}
+            search={search}
             isFormValid={isFormValid}
             submitFormData={submitFormData}
-            moduleAction={moduleAction}
             groups={groups}
           />
         );
+      case "view":
+        return <View search={search} searchUrl={searchUrl} groups={groups} />;
       case "search":
         return <Search groups={groups} />;
       default:
@@ -80,13 +63,10 @@ class Screen extends Component {
 }
 
 const mapStateToProps = state => ({
-  specs: state.framework.specs,
   isFormValid: state.framework.isFormValid
 });
 
 const mapDispatchToProps = dispatch => ({
-  addRequiredFields: requiredFields =>
-    dispatch(addRequiredFields(requiredFields)),
   resetFormData: () => dispatch(resetFormData()),
   submitFormData: () => dispatch(submitFormData()),
   search: url => dispatch(search(url))

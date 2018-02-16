@@ -34,7 +34,7 @@ export const searchApi = (url, params) => {
     complaints: {
       code: "com-1",
       name: "Complaint 1",
-      details: "Waste Stinking",
+      details: "Waste Thrown Around",
       category: {
         type: "C1",
         subtype: "CS2"

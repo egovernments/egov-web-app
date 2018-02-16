@@ -5,7 +5,8 @@ import {
   setSpecs,
   setModuleName,
   setActionName,
-  setMasterName
+  setMasterName,
+  addRequiredFields
 } from "./actions/framework";
 import Screen from "./screen/index.js";
 import PropTypes from "prop-types";
@@ -14,6 +15,12 @@ class App extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired
   };
+
+  constructor(props, context) {
+    super(props, context);
+    const { moduleName } = this.props.match.params;
+    this.specs = require(`./specs/${moduleName}`).default;
+  }
 
   componentWillReceiveProps(nextProps) {
     const { route } = nextProps;
@@ -33,11 +40,25 @@ class App extends Component {
     const { actionName, moduleName, master } = this.props.match.params;
     const {
       setSpecs,
+      addRequiredFields,
       setActionName,
       setMasterName,
       setModuleName
     } = this.props;
-    const specs = require(`./specs/${moduleName}`).default;
+    const { specs } = this;
+
+    const requiredFields = [];
+    const groups = specs.hasOwnProperty("groups") ? specs.groups : [];
+
+    groups.forEach(group => {
+      group.fields.forEach(field => {
+        if (field.isRequired) {
+          requiredFields.push(field.target);
+        }
+      });
+    });
+    addRequiredFields(requiredFields);
+
     setSpecs(specs);
     setMasterName(master);
     setActionName(actionName);
@@ -46,9 +67,14 @@ class App extends Component {
 
   render() {
     const { moduleName, moduleAction } = this.props;
+    const { specs } = this;
     return (
       <div className="container">
-        <Screen moduleName={moduleName} moduleAction={moduleAction} />
+        <Screen
+          specs={specs}
+          moduleName={moduleName}
+          moduleAction={moduleAction}
+        />
       </div>
     );
   }
@@ -61,6 +87,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addRequiredFields: requiredFields =>
+    dispatch(addRequiredFields(requiredFields)),
   setSpecs: specs => dispatch(setSpecs(specs)),
   setMasterName: masterName => dispatch(setMasterName(masterName)),
   setActionName: actionName => dispatch(setActionName(actionName)),
