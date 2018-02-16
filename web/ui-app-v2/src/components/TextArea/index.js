@@ -19,7 +19,10 @@ const TextAreaUi = ({
       fontSize: "20px",
       whiteSpace: "nowrap"
     },
-    floatingLabelText: <span>{field.label}</span>
+    floatingLabelText: (
+    <span>
+      {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
+    </span>)
   };
 
   const style = { display: hide ? "none" : "block" };

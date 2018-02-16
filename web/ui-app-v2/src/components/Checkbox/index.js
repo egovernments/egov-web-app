@@ -6,7 +6,9 @@ const CheckboxUi = ({ checked, onCheck, style = {}, field, index }) => {
   return (
     <Checkbox
       onCheck={onCheck}
-      label={field.label}
+      label={<span>
+              {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
+            </span>}
       key={index}
       checked={checked}
       style={style}

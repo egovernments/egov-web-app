@@ -6,7 +6,7 @@ import "./style.css";
 
 const DropDownUi = ({
   value,
-  label,
+  field,
   name,
   dropDownData = [],
   selected,
@@ -15,7 +15,16 @@ const DropDownUi = ({
 }) => {
   const labelProperty = {
     floatingLabelFixed: true,
-    floatingLabelText: <span>{label}</span>,
+    floatingLabelStyle: {
+      color: "#696969",
+      fontSize: "20px",
+      whiteSpace: "nowrap"
+    },
+    floatingLabelText: (
+      <span>
+        {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
+      </span>
+    ),
     hintText: "-- Please Select --"
   };
 
