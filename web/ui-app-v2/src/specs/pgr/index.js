@@ -44,8 +44,8 @@ const specs = {
           target: "complaintCategory",
           jsonPath: "complaints.category.type",
           dataSourceConfig: {
-            key: "code",
-            value: "name"
+            key: "$..code",
+            value: "$..name"
           },
           dataSource: {
             url: "http://somedatasource.com/category"
@@ -70,8 +70,8 @@ const specs = {
           target: "complaintSubCategory",
           jsonPath: "complaints.category.subtype",
           dataSourceConfig: {
-            key: "code",
-            value: "name"
+            key: "$..code",
+            value: "$..name"
           }
         },
 

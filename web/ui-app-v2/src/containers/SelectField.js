@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { SelectField } from "../components";
 import { prepareSearchUrl } from "../utils/commons";
+import jp from "jsonpath";
 
 export default class SelectFieldContainer extends Component {
   componentDidMount() {
@@ -32,17 +33,17 @@ export default class SelectFieldContainer extends Component {
   };
 
   transformDropdownData = (field, dropDownData = []) => {
-    const {
-      key: dataSourceKey,
-      value: dataSourceValue
-    } = field.dataSourceConfig;
+    const { key: jsonPathKey, value: jsonPathValue } = field.dataSourceConfig;
+    const keys = jp.query(dropDownData, jsonPathKey);
+    const values = jp.query(dropDownData, jsonPathValue);
 
-    return dropDownData.map(dropDownItem => {
-      return {
-        key: dropDownItem[dataSourceKey],
-        value: dropDownItem[dataSourceValue]
-      };
-    });
+    return Object.keys(keys).reduce((transformDropdownData, index) => {
+      const transformDropdownDataItem = {};
+      transformDropdownDataItem.key = keys[index];
+      transformDropdownDataItem.value = values[index];
+      transformDropdownData.push(transformDropdownDataItem);
+      return transformDropdownData;
+    }, []);
   };
 
   render() {

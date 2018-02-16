@@ -1,4 +1,5 @@
 import { api, postData, searchApi, apiForm } from "../utils/api";
+import { httpRequest } from "../api";
 import jp from "jsonpath";
 
 export const setSpecs = specs => {
@@ -147,7 +148,11 @@ export const search = (url, params) => {
 
 export const fetchDropDownData = (url, target) => {
   return async (dispatch, getState) => {
-    const dropDownData = await apiForm(url);
-    dispatch(setDropDownData(target, dropDownData));
+    try {
+      const dropDownData = await httpRequest(url);
+      dispatch(setDropDownData(target, dropDownData));
+    } catch (error) {
+      dispatch(applicationError(error));
+    }
   };
 };

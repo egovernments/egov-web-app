@@ -40,12 +40,12 @@ const specs = {
           target: "Department",
           jsonPath: "stores[0].department.code",
           dataSourceConfig: {
-            key: "code",
-            value: "name"
+            key: "$..code",
+            value: "$..name"
           },
           dataSource: {
             url:
-              "/egov-mdms-service/v1/_get?moduleName=common-masters&masterName=Department"
+              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department"
           },
           dependencies: [
             {
@@ -81,12 +81,12 @@ const specs = {
           target: "location",
           jsonPath: "stores[0].officeLocation.code",
           dataSourceConfig: {
-            key: "code",
-            value: "name"
+            key: "$..code",
+            value: "$..name"
           },
           dataSource: {
             url:
-              "/egov-mdms-service/v1/_get?moduleName=inventory&masterName=Location"
+              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=inventory&masterName=Location"
           }
         },
 

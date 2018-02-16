@@ -22,6 +22,8 @@ const TextAreaUi = ({
     floatingLabelText: <span>{field.label}</span>
   };
 
+  const style = { display: hide ? "none" : "block" };
+
   return (
     <TextField
       className="custom-form-control-for-textarea"
@@ -35,6 +37,7 @@ const TextAreaUi = ({
       value={value}
       disabled={disabled}
       onChange={onChange}
+      style={style}
       hide={hide}
     />
   );
