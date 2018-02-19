@@ -1,5 +1,6 @@
 import { setFieldValidation, setFormValidation } from "../actions/framework";
 import _ from "lodash";
+import { isFieldEmpty } from "../utils";
 
 const validateField = (value, field) => {
   const {
@@ -53,8 +54,7 @@ const validateForm = (fields, requiredFields) => {
   if (isFormValid) {
     for (let index = 0; index < requiredFields.length; index++) {
       const field = requiredFields[index];
-      const formFieldIndex = fieldKeys.indexOf(field);
-      if (formFieldIndex === -1) {
+      if (isFieldEmpty(field)) {
         isFormValid = false;
         break;
       }

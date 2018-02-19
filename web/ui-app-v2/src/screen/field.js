@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import { isFieldEmpty } from "../utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { SelectField } from "../containers";
@@ -19,10 +20,12 @@ const Field = ({ moduleAction, field, handleChange, ...rest }) => {
   };
 
   const renderViewField = () => {
+    let { value, ...restProps } = rest;
+    value = isFieldEmpty(value) ? "NA" : value;
     return (
       <div>
         <label>{label}</label>
-        <Label {...rest} />
+        <Label value={value} {...restProps} />
       </div>
     );
   };

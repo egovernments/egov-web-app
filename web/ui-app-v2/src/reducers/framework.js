@@ -29,7 +29,10 @@ const framework = (state = intialState, action) => {
 
     case "SET_FORM_DATA":
       const { formData } = action;
-      return { ...state, form: formData || {} };
+      return {
+        ...state,
+        form: formData || {}
+      };
 
     case "RESET_FORM_DATA":
       return { ...state, form: {} };

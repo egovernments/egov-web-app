@@ -8,9 +8,9 @@ export default class SelectFieldContainer extends Component {
     const { field, fetchDropDownData } = this.props;
     const { dataSource, target } = field;
     if (dataSource) {
-      this.props.fetchDropDownData(dataSource.request.url, target);
+      const searchUrl = prepareSearchUrl(dataSource);
+      this.props.fetchDropDownData(searchUrl, target);
     }
-    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,7 +57,7 @@ export default class SelectFieldContainer extends Component {
     return (
       <SelectField
         onChange={onChange}
-        field= {field}
+        field={field}
         dropDownData={transformedDropdownData}
         {...rest}
       />

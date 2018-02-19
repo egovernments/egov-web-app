@@ -1,5 +1,5 @@
 const specs = {
-  createUrl: "/inventory-services/stores/_create",
+  createUrl: "/inventory-services/stores/_create?tenantId=default",
   objectName: "stores",
   idJsonPath: "complaints.code",
   groups: [
@@ -45,7 +45,7 @@ const specs = {
           },
           dataSource: {
             url:
-              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=common-masters&masterName=Department"
+              "/egov-mdms-service/v1/_get?moduleName=common-masters&masterName=Department"
           },
           dependencies: [
             {
@@ -86,7 +86,7 @@ const specs = {
           },
           dataSource: {
             url:
-              "/egov-mdms-service/v1/_get?tenantId=default&moduleName=inventory&masterName=Location"
+              "/egov-mdms-service/v1/_get?moduleName=inventory&masterName=Location"
           }
         },
 

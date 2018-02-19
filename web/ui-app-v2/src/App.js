@@ -53,7 +53,7 @@ class App extends Component {
     groups.forEach(group => {
       group.fields.forEach(field => {
         if (field.isRequired) {
-          requiredFields.push(field.target);
+          requiredFields.push(field.jsonPath);
         }
       });
     });

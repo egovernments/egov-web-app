@@ -1,10 +1,12 @@
+import _ from "lodash";
+
 export const prepareSearchUrl = (search, id) => {
   const { url: searchUrl, searchKey } = search;
   const tenantId = fetchFromLocalStorage("tenantId");
-  const query = [
-    { key: "tenantId", value: tenantId },
-    { key: "searchKey", value: id }
-  ];
+  const query = [{ key: "tenantId", value: tenantId }];
+  if (searchKey && id) {
+    query.push({ key: searchKey, value: id });
+  }
   return addQueryArg(searchUrl, query);
 };
 
@@ -20,6 +22,17 @@ const addQueryArg = (url, queries = []) => {
   });
   const newUrl = path + "?" + queryParts.join("&");
   return newUrl;
+};
+
+export const isFieldEmpty = field => {
+  if (field === undefined || field === null) {
+    return true;
+  }
+  if (typeof field !== "object") {
+    field = field.toString().trim();
+    return _.isEmpty(field);
+  }
+  return false;
 };
 
 export const slugify = term => {
