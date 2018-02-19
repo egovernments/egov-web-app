@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { submitFormData, resetFormData, search } from "../actions/framework";
-import { prepareSearchUrl } from "../utils/commons";
+import { prepareSearchUrl } from "../utils";
 import { withRouter } from "react-router";
 import Create from "./create";
 import Update from "./update";

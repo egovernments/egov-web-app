@@ -1,11 +1,12 @@
 import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import { SelectField } from "../containers";
 import { Label, Checkbox, TextField, TextArea } from "../components";
 import { fetchDropDownData, handleChange } from "../actions/framework";
 
-const Field = ({ field, moduleAction, handleChange, ...rest }) => {
+const Field = ({ moduleAction, field, handleChange, ...rest }) => {
   const { type, width, label } = field;
 
   const onChange = event => {
@@ -56,7 +57,10 @@ const Field = ({ field, moduleAction, handleChange, ...rest }) => {
   };
 
   return (
-    <div style={{height: '110px'}} className={`col-md-${width} col-sm-${width} col-xs-12 col-lg-${width}`}>
+    <div
+      style={{ height: "110px" }}
+      className={`col-md-${width} col-sm-${width} col-xs-12 col-lg-${width}`}
+    >
       {moduleAction === "view" ? renderViewField() : renderField()}
     </div>
   );
@@ -78,7 +82,6 @@ const mapDispatchToProps = (dispatch, props) => {
 
 const mapStateToProps = (state, props) => {
   const { framework } = state;
-  const { moduleAction } = framework;
   const { field } = props;
   const { target, jsonPath, type } = field;
   const fieldProperty = framework.fields[target];
@@ -90,7 +93,6 @@ const mapStateToProps = (state, props) => {
 
   const mappedProps = {
     value,
-    moduleAction,
     hide,
     disabled,
     errorMessage

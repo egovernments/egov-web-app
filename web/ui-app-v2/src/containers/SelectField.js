@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { SelectField } from "../components";
-import { prepareSearchUrl } from "../utils/commons";
+import { prepareSearchUrl } from "../utils";
 import jp from "jsonpath";
 
 export default class SelectFieldContainer extends Component {

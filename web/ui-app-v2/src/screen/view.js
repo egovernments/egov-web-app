@@ -10,7 +10,7 @@ class View extends Component {
 
   render() {
     const { groups } = this.props;
-    return <div className="row">{renderGroups(groups)}</div>;
+    return <div className="row">{renderGroups(groups, "view")}</div>;
   }
 }
 

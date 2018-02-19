@@ -1,9 +1,9 @@
 import React from "react";
 import Group from "./group";
 
-const renderGroups = groups => {
+const renderGroups = (groups, moduleAction) => {
   return groups.map((group, groupIndex) => {
-    return <Group key={groupIndex} group={group} />;
+    return <Group key={groupIndex} moduleAction={moduleAction} group={group} />;
   });
 };
 

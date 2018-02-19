@@ -1,4 +1,3 @@
-import { api, postData, searchApi, apiForm } from "../utils/api";
 import { httpRequest } from "../api";
 import jp from "jsonpath";
 
@@ -73,6 +72,7 @@ export const resetFormData = () => {
   };
 };
 
+// handle change event
 export const handleChange = field => {
   return {
     type: "HANDLE_CHANGE",
@@ -87,9 +87,9 @@ export const setFormData = formData => {
   };
 };
 
-export const searchEntitySuccess = formData => {
+export const searchSuccess = formData => {
   return {
-    type: "SEARCH_ENTITY_SUCCESS",
+    type: "SEARCH_SUCCESS",
     formData
   };
 };
@@ -109,6 +109,7 @@ export const addRequiredFields = requiredFields => {
   };
 };
 
+// form field validations
 export const setFormValidation = isFormValid => {
   return { type: "VALIDATE_FORM", isFormValid };
 };
@@ -127,7 +128,7 @@ const applicationError = error => {
 export const saveForm = (url, formData) => {
   return async (dispatch, getState) => {
     try {
-      const response = await postData(url, formData);
+      const response = await httpRequest(url, formData);
       dispatch(submitFormDataSuccess(response));
     } catch (error) {
       dispatch(applicationError(error));
@@ -138,7 +139,7 @@ export const saveForm = (url, formData) => {
 export const search = (url, params) => {
   return async (dispatch, getState) => {
     try {
-      const response = await searchApi(url, params);
+      const response = await httpRequest(url);
       dispatch(setFormData(response));
     } catch (error) {
       dispatch(applicationError(error));

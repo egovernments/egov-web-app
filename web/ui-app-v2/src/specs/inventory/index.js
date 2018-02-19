@@ -134,8 +134,8 @@ const specs = {
           target: "Employee",
           jsonPath: "stores[0].storeInCharge.code",
           dataSourceConfig: {
-            key: "code",
-            value: "name"
+            key: "$..code",
+            value: "$..name"
           }
         },
         {

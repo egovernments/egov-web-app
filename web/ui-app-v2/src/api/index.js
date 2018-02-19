@@ -20,7 +20,7 @@ const wrapRequestBody = requestBody => {
   const RequestInfo = {
     apiId: "emp",
     ver: "1.0",
-    ts: "1234",
+    ts: "27-06-2017 10:30:12",
     action: "create",
     did: "1",
     key: "abcdkey",

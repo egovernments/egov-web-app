@@ -1,5 +1,5 @@
 import { fetchDropDownData, setFieldProperty } from "../actions/framework";
-import { prepareSearchUrl } from "../utils/commons";
+import { prepareSearchUrl } from "../utils";
 
 const dependantApiCall = (value, dependency, dispatch) => {
   const { dataSource, target } = dependency;
