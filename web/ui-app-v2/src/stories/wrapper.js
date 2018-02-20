@@ -1,9 +1,7 @@
 import React from "react";
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 
-
-const Wrapper =({imports,component,code,children})=>
-(
+const Wrapper = ({ imports, component, code, children }) => (
   <Card>
     <CardHeader
       title={component}
@@ -11,42 +9,37 @@ const Wrapper =({imports,component,code,children})=>
       actAsExpander={true}
       showExpandableButton={true}
     />
-    <CardActions>
-      {children}
-    </CardActions>
+    <CardActions>{children}</CardActions>
     <CardText expandable={true}>
       <Card>
-        <CardHeader
-          title="Code"
-        />
+        <CardHeader title="Code" />
         <CardText>
-          <div>
-            {`import React from "react";`}
-          </div>
-          {imports.map((item,index)=>{
+         <code>
+          <div>{`import React from "react";`}</div>
+          {imports.map((item, index) => {
             return (
               <div>
                 {item}
-                <br/>
+                <br />
               </div>
-            )
+            );
           })}
-          <br/>
+          <br />
 
           <div>
             {`const ${component}Demo=()=>(`}
-              <br/>
-                {code}
-              <br/>
-            {')'}
-            <br/>
+            <br />
+            {code}
+            <br />
+            {")"}
+            <br />
             {`export default ${component}Demo;`}
           </div>
+         </code>
         </CardText>
       </Card>
     </CardText>
   </Card>
-)
-
+);
 
 export default Wrapper;
