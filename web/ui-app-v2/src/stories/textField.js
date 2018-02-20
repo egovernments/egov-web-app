@@ -11,7 +11,7 @@ storiesOf("TextField", module)
   .add("All feature", () => (
     <Wrapper
       imports={[
-        `import React from "react";`,`import { TextField } from "../components";`
+        `import { TextField } from "<Egov-Reusable-Components-Location>";`
       ]}
       component={`TextField`}
       code={`<TextField
