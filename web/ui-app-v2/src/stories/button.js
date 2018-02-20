@@ -11,11 +11,15 @@ storiesOf("Button", module)
   .add("with some emoji", () => (
     <Button label="😀 😎 👍 💯" onClick={action("clicked")} />
   ))
-  .add("with primary true", () => (
-    <Button
-      primary={true}
-      label="Button with primary"
-      onClick={action("clicked")}
-    />
-  ))
+  .add("with primary true", () => {
+    return (
+      <div>
+        <Button
+          primary={true}
+          label="Button with primary"
+          onClick={action("clicked")}
+        />
+      </div>
+    );
+  })
   .add("with disabled", () => <Button disabled={true} label="I am disabled" />);

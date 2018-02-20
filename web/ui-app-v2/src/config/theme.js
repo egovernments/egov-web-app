@@ -1,3 +1,5 @@
+import { grey300 } from "material-ui/styles/colors";
+
 const theme = {
   fontFamily: "Lato, sans",
   textColor: "rgba(0, 0, 0, 0.68)",
@@ -7,7 +9,7 @@ const theme = {
     primary2Color: "#f58720",
     textColor: "#5f5c62",
     canvasColor: "#F7F7F7",
-    borderColor: "#0288d1"
+    borderColor: grey300
   },
   raisedButton: {
     primaryColor: "#607D8B"
