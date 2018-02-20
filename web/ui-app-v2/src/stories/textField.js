@@ -19,14 +19,24 @@ storiesOf("TextField", module)
                 label:"Test",
                 isRequired:true
               }}
+              errorMessage={"please enter valid"}
+              value={"test Value"}
+              disabled=false
+              hide=floatingLabelStyle
+              className={""}
               onChange={action("clicked")}
-            />`}
+      />`}
     >
       <TextField
         field={{
           label:"Test",
           isRequired:true
         }}
+        errorMessage={"please enter valid"}
+        value={"test Value"}
+        disabled={false}
+        hide={false}
+        className={""}
         onChange={action("clicked")}
       />
     </Wrapper>
