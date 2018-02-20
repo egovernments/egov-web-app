@@ -27,6 +27,9 @@ const framework = (state = intialState, action) => {
       const { specs } = action;
       return { ...state, specs };
 
+    case "SUBMIT_FORM_DATA":
+      return state;
+
     case "SET_FORM_DATA":
       const { formData } = action;
       return {

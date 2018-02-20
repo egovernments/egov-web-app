@@ -1,5 +1,5 @@
 const specs = {
-  createUrl: "/inventory-services/stores/_create?tenantId=default",
+  createUrl: "/inventory-services/stores/_create",
   objectName: "stores",
   idJsonPath: "complaints.code",
   groups: [

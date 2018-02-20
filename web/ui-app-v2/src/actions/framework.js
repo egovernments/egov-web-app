@@ -1,5 +1,4 @@
 import { httpRequest } from "../api";
-import jp from "jsonpath";
 
 export const setSpecs = specs => {
   return {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from "material-ui/Card";
 
 const styles = {
   cardUi: {
@@ -27,27 +27,14 @@ const styles = {
 
 const CardUi = ({ children, cardTitle }) => {
   return (
-    <Card
-      expanded = {true}
-      style= {styles.cardUi}
-    >
-      <CardHeader
-        title = {cardTitle}
-      />
+    <Card expanded={true} style={styles.cardUi}>
+      <CardHeader title={cardTitle} />
       <CardText>
-        <div className = "container">
-          <div className = "row">
-            {children}
-          </div>
+        <div className="container">
+          <div className="row">{children}</div>
         </div>
       </CardText>
     </Card>
-    // <div style={styles.cardUi} className="cardUi clearfix">
-    //   <div className="col-lg-12" style={styles.cardTitle}>
-    //     {cardTitle}
-    //   </div>
-    //   <div>{children}</div>
-    // </div>
   );
 };
 
