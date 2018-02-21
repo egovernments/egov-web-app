@@ -15,10 +15,8 @@ storiesOf("TextField", module)
       ]}
       component={`TextField`}
       code={`<TextField
-              field={{
-                label:"Test",
-                isRequired:true
-              }}
+              label="Test"
+              isRequired={true}
               errorMessage={"please enter valid"}
               value={"test Value"}
               disabled=false
@@ -28,16 +26,14 @@ storiesOf("TextField", module)
       />`}
     >
       <TextField
-        field={{
-          label:"Test",
-          isRequired:true
-        }}
-        errorMessage={"please enter valid"}
-        value={"test Value"}
+        label="Test"
+        isRequired={true}
+        errorMessage="Please enter a valid Message"
+        value="test Value"
         disabled={false}
         hide={false}
-        className={""}
+        className=""
         onChange={action("clicked")}
       />
     </Wrapper>
-  ))
+  ));

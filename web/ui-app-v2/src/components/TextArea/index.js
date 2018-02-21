@@ -1,37 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Error from "../Error";
 import TextField from "material-ui/TextField";
 
 const TextAreaUi = ({
+  className,
   onChange,
   errorMessage,
-  field,
   value,
   disabled,
+  isRequired,
   hide,
   label
 }) => {
   const labelProperty = {
+    className: className ? className : "",
     floatingLabelFixed: true,
     floatingLabelStyle: {
-      color: "#696969",
       fontSize: "20px",
       whiteSpace: "nowrap"
     },
     floatingLabelText: (
-    <span>
-      {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
-    </span>)
+      <span>
+        {label}
+        <span style={{ color: "#FF0000" }}>{isRequired ? " *" : ""}</span>
+      </span>
+    )
   };
 
   const style = { display: hide ? "none" : "block" };
 
   return (
     <TextField
-      className="custom-form-control-for-textarea"
       inputStyle={{ color: "#5F5C57" }}
-      id="textArea"
       fullWidth={true}
       multiLine={true}
       errorText={errorMessage}
@@ -41,9 +41,20 @@ const TextAreaUi = ({
       disabled={disabled}
       onChange={onChange}
       style={style}
-      hide={hide}
     />
   );
+};
+
+TextAreaUi.propTypes = {
+  onChange: PropTypes.func,
+  style: PropTypes.object,
+  errorMessage: PropTypes.string,
+  value: PropTypes.string,
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  isRequired: PropTypes.bool,
+  hide: PropTypes.bool,
+  className: PropTypes.string
 };
 
 export default TextAreaUi;

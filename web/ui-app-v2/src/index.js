@@ -4,6 +4,9 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import Main from "./router";
 import store from "./store";
+
+//Web font loader
+import WebFont from "webfontloader";
 // styles
 import "./styles/bootstrap-grid.css";
 import "./styles/app.css";
@@ -32,6 +35,13 @@ let themeObject = {
 };
 
 const muiTheme = getMuiTheme(themeObject);
+
+// load material icons
+WebFont.load({
+  google: {
+    families: ["Material+Icons"]
+  }
+});
 
 render(
   <Provider store={store}>

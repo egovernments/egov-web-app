@@ -2,17 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Tabs as MaterialUiTabs, Tab } from "material-ui/Tabs";
 
-const Tabs = ({ tabs = [], handleActive }) => {
+const Tabs = ({ tabs = [], onActive }) => {
   const renderTabs = () => {
     return tabs.map((tab, index) => {
       const { route, label } = tab;
       return (
-        <Tab
-          key={index}
-          onActive={handleActive}
-          data-route={route}
-          label={label}
-        />
+        <Tab key={index} onActive={onActive} data-route={route} label={label} />
       );
     });
   };

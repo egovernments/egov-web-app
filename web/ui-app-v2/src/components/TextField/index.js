@@ -8,22 +8,24 @@ const TextFieldUi = ({
   errorMessage,
   value,
   disabled,
-  field,
   hide,
+  isRequired,
+  label,
   className
 }) => {
   const labelProperty = {
-    className:className?className:"",
+    className: className ? className : "",
     floatingLabelFixed: true,
     floatingLabelStyle: {
-      // color: "#696969",
       fontSize: "20px",
       whiteSpace: "nowrap"
     },
-    floatingLabelText:
-    <span>
-      {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
-    </span>
+    floatingLabelText: (
+      <span>
+        {label}
+        <span style={{ color: "#FF0000" }}>{isRequired ? " *" : ""}</span>
+      </span>
+    )
   };
 
   const style = {
@@ -33,7 +35,6 @@ const TextFieldUi = ({
   return (
     <TextField
       {...labelProperty}
-      // underlineShow={false}
       style={style}
       errorStyle={{ float: "left" }}
       errorText={errorMessage}
@@ -44,14 +45,15 @@ const TextFieldUi = ({
   );
 };
 
-export default TextFieldUi;
-
 TextFieldUi.propTypes = {
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,
-  field: PropTypes.object,
+  label: PropTypes.string,
+  isRequired: PropTypes.bool,
   hide: PropTypes.bool,
   className: PropTypes.string
-}
+};
+
+export default TextFieldUi;
