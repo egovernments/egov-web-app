@@ -7,6 +7,7 @@ import TextArea from "./TextArea";
 import Button from "./Button";
 import Card from "./Card";
 import DatePicker from "./DatePicker";
+import TimePicker from "./TimePicker";
 
 export {
   Label,
@@ -17,5 +18,6 @@ export {
   TextArea,
   Button,
   Card,
-  DatePicker
+  DatePicker,
+  TimePicker
 };

@@ -9,6 +9,7 @@ function loadStories() {
   require("../src/stories/bottomNavigation.js");
   require("../src/stories/tabs.js");
   require("../src/stories/datepicker.js");
+  require("../src/stories/timepicker.js");
 }
 
 configure(loadStories, module);
