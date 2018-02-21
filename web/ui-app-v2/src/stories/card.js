@@ -13,7 +13,10 @@ storiesOf("Card", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <Wrapper
-      imports={[`import { Card, CardTitle } from "<Egov-Reusable-Components-Location>";`,`import { Button } from "../components";`]}
+      imports={[
+        `import { Card, CardTitle } from "<Egov-Reusable-Components-Location>";`,
+        `import { Button } from "../components";`
+      ]}
       component={`Card`}
       code={`<Card
         header={{
@@ -60,9 +63,6 @@ storiesOf("Card", module)
           subtitle: "Subtitle",
           avatar: "images/jsa-128.jpg"
         }}
-        // mediaOverlay={
-        //   <CardTitle title="Overlay title" subtitle="Overlay subtitle" />
-        // }
         mediaChildren={<img src="images/nature-600-337.jpg" alt="" />}
         title={{
           title: "Card title",

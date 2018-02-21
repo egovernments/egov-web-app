@@ -5,7 +5,7 @@ import { action } from "@storybook/addon-actions";
 import { TextArea } from "../components";
 import theme from "../config/theme";
 
-storiesOf("TextField", module)
+storiesOf("Text Area", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <TextArea
