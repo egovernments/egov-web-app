@@ -69,10 +69,18 @@ class SimpleMap extends Component {
       this.setState({
         markers: [{ position: { lat: nextProps.lat, lng: nextProps.lng } }],
       });
-    }
+      }
     if(!this.props.select && nextProps.select){
-      console.log("select props");
-      this.props.handler(this.state.center.lat(), this.state.center.lng());
+      //console.log("select props");
+       //this.props.handler(this.state.center.lat(), this.state.center.lng());
+      if(this.state.markers && this.state.markers.length>0 && this.state.markers[0].position){
+        //console.log(this.state.markers);
+      this.props.handler(this.state.markers[0].position.lat(), this.state.markers[0].position.lng());
+     }
+     else{
+       //console.log(this.state.markers);
+      this.props.handler(null, null)
+     }
       }
   }
 
@@ -86,6 +94,7 @@ class SimpleMap extends Component {
   }
 
   handleBoundsChanged() {
+      //console.log("handleBoundsChanged");
     let tempArray = [];
     tempArray.push(this._map.getCenter());
 
@@ -93,14 +102,24 @@ class SimpleMap extends Component {
     const markers = tempArray.map(place => ({
       position: this._map.getCenter(),
     }));
-
+    //disable the select button if no marker is there
+    if(!markers || (markers && markers.length<=0)){
+      this.props.disableselect();
+    }
+    else{
+      this.props.enableselect();
+    }
     // Set markers; set map center to first search result
     const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+    // console.log(mapCenter);
+    // console.log(markers);
+    // console.log(mapCenter.lat(),mapCenter.lng());
 
     this.setState({
-      center: mapCenter,
+      //center: mapCenter,
       markers,
     });
+
   }
 
   handleSearchBoxMounted(searchBox) {
@@ -108,21 +127,28 @@ class SimpleMap extends Component {
   }
 
   handlePlacesChanged() {
+    console.log("places changed");
     const places = this._searchBox.getPlaces();
 
     // Add a marker for each place returned from search bar
     const markers = places.map(place => ({
       position: place.geometry.location,
     }));
-
+//disable the select button if no marker is there
+    if(!markers || (markers && markers.length<=0)){
+      this.props.disableselect();
+    }
+    else{
+      this.props.enableselect();
+    }
     // Set markers; set map center to first search result
-    const mapCenter = markers.length > 0 ? markers[0].position : this.state.center;
+    const mapCenter = markers.length > 0 ? markers[0].position :this.state.center;
 
     this.setState({
       center: mapCenter,
       markers,
     });
-  }
+    }
 
   render() {
     return (
@@ -134,7 +160,7 @@ class SimpleMap extends Component {
         center={this.state.center}
         onMapMounted={this.handleMapMounted}
         onBoundsChanged={() => {
-          console.log("Bounds Changed");
+          //console.log("Bounds Changed");
           this.handleBoundsChanged();
           //this.props.handler(this.state.center.lat(), this.state.center.lng());
         }}
@@ -155,6 +181,7 @@ export default class UigoogleMaps extends Component {
    state = {
     open: false,
     select:false,
+    selectEnabled:true,
   };
 
     handleOpen = () => {
@@ -173,6 +200,7 @@ export default class UigoogleMaps extends Component {
   getAddress = (lat, lng,item) => {
     console.log("getaddress");
     let self = this;
+    if(lat != null && lng != null){
     axios
       .post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
       .then(function(response) {
@@ -187,13 +215,26 @@ export default class UigoogleMaps extends Component {
           item.patternErrMsg
         );
       });
+    }
+    else{
+      self.props.handler(
+        { target: { value: null } },
+        item.jsonPathAddress,
+        item.isRequired ? true : false,
+        '',
+        item.requiredErrMsg,
+        item.patternErrMsg
+      );
+    }
       this.setState({select:false,open:false});
       };
 
   renderMaps = item => {
+    //console.log("renderMaps");
+    let enableSelect=this.state.selectEnabled;
     switch (this.props.ui) {
       case 'google':
-        const actions = [<FlatButton label="Select" primary={true} onClick={this.handleSelect}/>,
+        const actions = [<FlatButton label="Select" primary={true} onClick={this.handleSelect} disabled={!enableSelect}/>,
                         <FlatButton label="Close" primary={true} onClick={this.handleClose} />,
                         <FlatButton label="Clear" primary={true} onClick={()=>{
                           console.log(item);
@@ -224,12 +265,12 @@ export default class UigoogleMaps extends Component {
                           );
                         } }/>];
         return (
-          
+
           <div>
           <style dangerouslySetInnerHTML={{__html: `
           .pac-container {   z-index: 10000 !important}
         `}} />
-          {(item.hideTextarea) ? <div style={{ height:'30px' }}></div> : 
+          {(item.hideTextarea) ? <div style={{ height:'30px' }}></div> :
             <TextField
               floatingLabelFixed={true}
               floatingLabelText={
@@ -280,6 +321,24 @@ export default class UigoogleMaps extends Component {
 
                     this.getAddress(lat, lng, item);
                   }}
+                  disableselect={
+                    () => {
+                      if(this.state.selectEnabled){
+                      this.setState({
+                        selectEnabled:false,
+                      });
+                    }
+                  }
+                  }
+                  enableselect={
+                    () => {
+                      if(!this.state.selectEnabled){
+                      this.setState({
+                        selectEnabled:true,
+                      });
+                    }
+                    }
+                  }
                 />
               </div>
             </Dialog>
