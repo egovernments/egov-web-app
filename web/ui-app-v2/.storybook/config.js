@@ -10,6 +10,7 @@ function loadStories() {
   require("../src/stories/tabs.js");
   require("../src/stories/datepicker.js");
   require("../src/stories/timepicker.js");
+  require("../src/stories/list.js");
 }
 
 configure(loadStories, module);
