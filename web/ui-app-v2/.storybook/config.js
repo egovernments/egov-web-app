@@ -8,6 +8,7 @@ function loadStories() {
   require("../src/stories/card.js");
   require("../src/stories/bottomNavigation.js");
   require("../src/stories/tabs.js");
+  require("../src/stories/datepicker.js");
 }
 
 configure(loadStories, module);

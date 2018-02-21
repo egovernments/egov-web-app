@@ -15,7 +15,7 @@ storiesOf("Card", module)
     <Wrapper
       imports={[
         `import { Card, CardTitle } from "<Egov-Reusable-Components-Location>";`,
-        `import { Button } from "../components";`
+        `import { Button } from "<Egov-Reusable-Components-Location>";`
       ]}
       component={`Card`}
       code={`<Card
@@ -92,5 +92,8 @@ storiesOf("Card", module)
           </div>
         }
       />
+      <br/>
+      <br/>
+      <div>For more props information please visit <a href="http://www.material-ui.com/#/components/card" target="_blank">Card</a></div>
     </Wrapper>
   ));

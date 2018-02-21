@@ -6,6 +6,7 @@ import Checkbox from "./Checkbox";
 import TextArea from "./TextArea";
 import Button from "./Button";
 import Card from "./Card";
+import DatePicker from "./DatePicker";
 
 export {
   Label,
@@ -15,5 +16,6 @@ export {
   Checkbox,
   TextArea,
   Button,
-  Card
+  Card,
+  DatePicker
 };

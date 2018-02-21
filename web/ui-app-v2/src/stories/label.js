@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf, addDecorator } from "@storybook/react";
 import { muiTheme } from "storybook-addon-material-ui";
 import { action } from "@storybook/addon-actions";
-import Label from "../components/Label";
+import {Label} from "../components";
 import theme from "../config/theme";
 
 storiesOf("Label", module)
