@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<h1> My Cool Website </h1>
+<p> The content goes here </p>
+<input id="OTP"  placeholder="Enter your OTP"/>
+<script type="text/javascript">
+
+// SMS recieved
+function messageReceieved(message){
+  console.log(message);
+  document.getElementById("OTP").value = message;
+}
+
+</script>
+</body>
+</html>
+
+
+
+
+
