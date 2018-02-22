@@ -37,7 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String message = intent.getStringExtra("message");
-        Log.d("sms","New SMS " + message);
+        Log.d("sms","OTP " + message);
 
         // call the javascript page
         this.webView.loadUrl("javascript:messageReceieved('" + message + "')");

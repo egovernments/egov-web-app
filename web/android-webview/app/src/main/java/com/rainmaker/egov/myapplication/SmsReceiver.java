@@ -12,6 +12,25 @@ import android.telephony.SmsMessage;
  */
 
 public class SmsReceiver extends BroadcastReceiver {
+
+    // signature could vary; here looking for Way2Online
+    final private String messageSignature = "Way2Online";
+
+    private String getMessageOTP(String smsMessage){
+        String[] messageParts = smsMessage.split(":");
+        String messagePayload = messageParts[1].split("-")[0].trim();
+        return messagePayload;
+    }
+
+    private boolean shouldBroadcastSMS(String smsMessage){
+
+        String[] messageParts = smsMessage.split(":");
+        String phoneNumber = messageParts[0].trim();
+        String messagePayload = messageParts[1].split("-")[0].trim();
+        String messageSender = messageParts[1].split("-")[1].trim();
+        return messageSender.indexOf(messageSignature) > -1;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -26,11 +45,15 @@ public class SmsReceiver extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody();
                     try {
                         String messagePayload = currentMessage.getMessageBody();
-                        // Pass the message
-                        Intent intentCall = new Intent(context, WebViewActivity.class);
-                        intentCall.putExtra("message",messagePayload);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentCall, PendingIntent.FLAG_UPDATE_CURRENT);
-                        pendingIntent.send();
+                        if(shouldBroadcastSMS(messagePayload)){
+                            // Pass the message
+                            String otp = getMessageOTP(messagePayload);
+                            Intent intentCall = new Intent(context, WebViewActivity.class);
+                            intentCall.putExtra("message",otp);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentCall, PendingIntent.FLAG_UPDATE_CURRENT);
+                            pendingIntent.send();
+                        }
+
                      } catch (Exception e) {
                     }
                 }
