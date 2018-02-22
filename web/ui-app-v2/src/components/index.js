@@ -8,6 +8,9 @@ import Button from "./Button";
 import Card from "./Card";
 import DatePicker from "./DatePicker";
 import TimePicker from "./TimePicker";
+import FilePicker from "./FilePicker";
+import Dialog from "./Dialog";
+
 
 export {
   Label,
@@ -19,5 +22,7 @@ export {
   Button,
   Card,
   DatePicker,
-  TimePicker
+  TimePicker,
+  FilePicker,
+  Dialog
 };

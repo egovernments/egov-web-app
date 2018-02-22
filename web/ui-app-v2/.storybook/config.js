@@ -11,6 +11,9 @@ function loadStories() {
   require("../src/stories/datepicker.js");
   require("../src/stories/timepicker.js");
   require("../src/stories/list.js");
+  require("../src/stories/filePicker.js");
+  require("../src/stories/dialog.js");
+
 }
 
 configure(loadStories, module);
