@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -17,15 +18,6 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
         webView = (WebView) findViewById(R.id.webview);
         webView.addJavascriptInterface(new AppJavaScriptProxy(this), "androidAppProxy");
-
-//        webView.setWebViewClient(new WebViewClient() {
-//
-//            public void onPageFinished(WebView view, String url)
-//            {
-//               super.onPageFinished(view,url);
-//            }
-//        });
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -43,4 +35,17 @@ public class WebViewActivity extends AppCompatActivity {
         // call the javascript page
         this.webView.loadUrl("javascript:messageReceieved('" + message + "')");
    }
+
+
+   // for the back button to work
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && this.webView.canGoBack()) {
+            this.webView.goBack();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
