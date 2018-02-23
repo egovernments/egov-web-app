@@ -15,6 +15,8 @@ function loadStories() {
   require("../src/stories/list.js");
   require("../src/stories/filePicker.js");
   require("../src/stories/dialog.js");
+  require("../src/stories/appbar.js");
+  require("../src/stories/drawer.js");
   require("../src/stories/loadingIndicator.js");
   require("../src/stories/checkBox.js");
   require("../src/stories/setMapLocation.js");
