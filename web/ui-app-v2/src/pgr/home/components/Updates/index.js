@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
-class Banner extends Component {
+class Updates extends Component {
 
   render() {
     return (
       <div>
-        Banner
+        Updates
       </div>
     );
   }
 }
 
-export default Banner;
+export default Updates;

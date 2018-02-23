@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
-class Banner extends Component {
+class Events extends Component {
 
   render() {
     return (
       <div>
-        Banner
+        Events
       </div>
     );
   }
 }
 
-export default Banner;
+export default Events;

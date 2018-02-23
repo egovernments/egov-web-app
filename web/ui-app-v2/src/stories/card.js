@@ -61,7 +61,7 @@ storiesOf('Card', module)
         header={{
           title: 'URL Avatar',
           subtitle: 'Subtitle',
-          avatar: 'images/jsa-128.jpg',
+          avatar: 'images/jsa-128.jpg'
         }}
         mediaChildren={<img src="images/nature-600-337.jpg" alt="" />}
         title={{
