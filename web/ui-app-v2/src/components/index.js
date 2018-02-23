@@ -14,6 +14,7 @@ import Dialog from "./Dialog";
 import LoadingIndicator from "./LoadingIndicator";
 import BottomNavigation from "./BottomNavigation";
 import Tabs from "./Tabs";
+import SetMapLocation from "./SetMapLocation";
 
 export {
   Label,
@@ -31,5 +32,6 @@ export {
   Dialog,
   LoadingIndicator,
   BottomNavigation,
-  Tabs
+  Tabs,
+  SetMapLocation
 };

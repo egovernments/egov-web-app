@@ -17,6 +17,7 @@ function loadStories() {
   require("../src/stories/dialog.js");
   require("../src/stories/loadingIndicator.js");
   require("../src/stories/checkBox.js");
+  require("../src/stories/setMapLocation.js");
 }
 
 configure(loadStories, module);
