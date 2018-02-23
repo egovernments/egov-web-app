@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 
 class App extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -30,7 +30,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  route: state.framework.route
+  route: state.framework.route,
 });
 
 export default withRouter(connect(mapStateToProps, null)(App));

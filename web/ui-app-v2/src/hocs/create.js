@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 // recieve search, search url
 const CreateHoC = (Create, search, searchUrl) => {

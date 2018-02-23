@@ -1,31 +1,21 @@
-import { setFieldValidation, setFormValidation } from "../actions/framework";
-import _ from "lodash";
-import { isFieldEmpty } from "../utils";
+import { setFieldValidation, setFormValidation } from '../actions/framework';
+import _ from 'lodash';
+import { isFieldEmpty } from '../utils';
 
 const validateField = (value, field) => {
-  const {
-    minLength,
-    maxLength,
-    isRequired,
-    pattern,
-    patternErrorMessage
-  } = field;
+  const { minLength, maxLength, isRequired, pattern, patternErrorMessage } = field;
 
-  let errorMessage = "",
+  let errorMessage = '',
     isFieldValid = true;
 
   const fieldLength = value.length;
 
   if (isRequired && !value.length) {
     isFieldValid = false;
-    errorMessage = "Required";
+    errorMessage = 'Required';
   }
 
-  if (
-    (minLength && fieldLength < minLength) ||
-    (maxLength && fieldLength > maxLength) ||
-    (pattern && !new RegExp(pattern).test(value))
-  ) {
+  if ((minLength && fieldLength < minLength) || (maxLength && fieldLength > maxLength) || (pattern && !new RegExp(pattern).test(value))) {
     isFieldValid = false;
     errorMessage = patternErrorMessage;
   }
@@ -70,7 +60,7 @@ const formValidation = store => next => action => {
   const state = store.getState();
   const { field } = action;
 
-  if (type == "HANDLE_CHANGE") {
+  if (type == 'HANDLE_CHANGE') {
     const { isRequired, value, pattern } = field;
 
     if (pattern || isRequired) {
@@ -79,13 +69,10 @@ const formValidation = store => next => action => {
       dispatch(setFieldValidation(field, errorMessage));
     }
     next(action);
-  } else if (type == "VALIDATE_FIELD") {
+  } else if (type == 'VALIDATE_FIELD') {
     next(action);
     const validatedState = store.getState();
-    const isFormValid = validateForm(
-      validatedState.framework.fields,
-      validatedState.framework.requiredFields
-    );
+    const isFormValid = validateForm(validatedState.framework.fields, validatedState.framework.requiredFields);
     dispatch(setFormValidation(isFormValid));
   } else {
     next(action);

@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import PropTypes from 'prop-types';
 
 // const styles = {
 //   cardUi: {
@@ -33,14 +26,7 @@ import PropTypes from "prop-types";
 //   }
 // };
 
-const CardUi = ({
-  header,
-  mediaOverlay,
-  mediaChildren,
-  title,
-  textChildren,
-  actionChildren
-}) => {
+const CardUi = ({ header, mediaOverlay, mediaChildren, title, textChildren, actionChildren }) => {
   return (
     <Card>
       <CardHeader {...header} />
@@ -55,10 +41,10 @@ const CardUi = ({
 export default CardUi;
 
 CardUi.propTypes = {
-  header:PropTypes.object,
-  mediaOverlay:PropTypes.element,
-  mediaChildren:PropTypes.element,
-  title:PropTypes.object,
-  textChildren:PropTypes.element,
-  actionChildren:PropTypes.element
-}
+  header: PropTypes.object,
+  mediaOverlay: PropTypes.element,
+  mediaChildren: PropTypes.element,
+  title: PropTypes.object,
+  textChildren: PropTypes.element,
+  actionChildren: PropTypes.element,
+};

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import FlatButton from "material-ui/FlatButton";
+import React from 'react';
+import PropTypes from 'prop-types';
+import FlatButton from 'material-ui/FlatButton';
 
 const Label = ({ label, style }) => {
   return <FlatButton style={style} label={label} />;
@@ -8,7 +8,7 @@ const Label = ({ label, style }) => {
 
 Label.PropTypes = {
   label: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default Label;

@@ -1,15 +1,7 @@
-import React from "react";
-import RaisedButton from "material-ui/RaisedButton";
+import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
-const ButtonUi = ({
-  label,
-  icon = {},
-  onClick,
-  disabled,
-  hide,
-  primary = false,
-  style = {}
-}) => {
+const ButtonUi = ({ label, icon = {}, onClick, disabled, hide, primary = false, style = {} }) => {
   return (
     <RaisedButton
       style={style}

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { SelectField } from "../components";
-import { prepareSearchUrl } from "../utils";
-import jp from "jsonpath";
+import React, { Component } from 'react';
+import { SelectField } from '../components';
+import { prepareSearchUrl } from '../utils';
+import jp from 'jsonpath';
 
 export default class SelectFieldContainer extends Component {
   componentDidMount() {
@@ -20,7 +20,7 @@ export default class SelectFieldContainer extends Component {
       dependencies = dependencies && dependencies.length ? dependencies : [];
       dependencies.forEach(dependency => {
         const { target, dataSource, type: dependencyType } = dependency;
-        if (dependencyType === "API_CALL") {
+        if (dependencyType === 'API_CALL') {
           const searchUrl = prepareSearchUrl(dataSource, value);
           this.props.fetchDropDownData(searchUrl, target);
         }
@@ -50,17 +50,7 @@ export default class SelectFieldContainer extends Component {
   render() {
     const { onChange } = this;
     const { field, fetchDropDownData, dropDownData, ...rest } = this.props;
-    const transformedDropdownData = this.transformDropdownData(
-      field,
-      dropDownData
-    );
-    return (
-      <SelectField
-        onChange={onChange}
-        field={field}
-        dropDownData={transformedDropdownData}
-        {...rest}
-      />
-    );
+    const transformedDropdownData = this.transformDropdownData(field, dropDownData);
+    return <SelectField onChange={onChange} field={field} dropDownData={transformedDropdownData} {...rest} />;
   }
 }
