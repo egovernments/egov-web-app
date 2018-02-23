@@ -1,12 +1,5 @@
 import { httpRequest } from "../api";
 
-export const setSpecs = specs => {
-  return {
-    type: "SET_SPECS",
-    specs
-  };
-};
-
 export const setModuleName = moduleName => {
   return {
     type: "SET_MODULE_NAME",

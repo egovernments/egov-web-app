@@ -7,11 +7,6 @@ const Main = () => {
     <main style={{ marginTop: "50px" }}>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route
-          exact
-          path={"/:actionName/:moduleName/:master?/:id?"}
-          component={App}
-        />
       </Switch>
     </main>
   );

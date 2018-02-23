@@ -11,6 +11,8 @@ export default class FilePicker extends Component {
       file: null
     };
   }
+
+  // this function should be called in the container
   handleFileChange = event => {
     let input = event.target;
     if (input.files && input.files[0]) {
