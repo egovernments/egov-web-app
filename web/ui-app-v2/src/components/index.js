@@ -36,7 +36,7 @@ export {
   FilePicker,
   Dialog,
   AppBar,
-  Drawer
+  Drawer,
   LoadingIndicator,
   BottomNavigation,
   Tabs,
