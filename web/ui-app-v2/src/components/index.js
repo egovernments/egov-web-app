@@ -20,6 +20,8 @@ import BottomNavigation from './BottomNavigation';
 import Tabs from './Tabs';
 import SetMapLocation from './SetMapLocation';
 import List from './List';
+import Ratings from './Ratings';
+import ButtonGroup from './ButtonGroup';
 
 
 export {
@@ -43,5 +45,7 @@ export {
   BottomNavigation,
   Tabs,
   SetMapLocation,
-  List
+  List,
+  Ratings,
+  ButtonGroup
 };

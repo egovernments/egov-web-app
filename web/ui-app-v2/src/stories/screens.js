@@ -3,7 +3,7 @@ import { storiesOf, addDecorator } from "@storybook/react";
 import { muiTheme } from "storybook-addon-material-ui";
 import { action } from "@storybook/addon-actions";
 
-import Home from "../pgr/home";
+import Home from "../pgr/Home";
 
 import theme from "../config/theme";
 import Wrapper from "./wrapper.js";
@@ -12,7 +12,7 @@ storiesOf("PGR Screens", module)
   .addDecorator(muiTheme([theme]))
   .add("Home", () => (
     <Wrapper
-      imports={[`import Home from "../pgr/home";`]}
+      imports={[`import Home from "../pgr/Home";`]}
       component={'Home'}
       code={`<Home/>`}
     >

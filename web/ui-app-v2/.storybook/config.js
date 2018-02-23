@@ -21,6 +21,8 @@ function loadStories() {
   require("../src/stories/checkBox.js");
   require("../src/stories/setMapLocation.js");
   require("../src/stories/screens.js");
+  require("../src/stories/ratings.js");
+  require("../src/stories/buttonToggle.js");
 }
 
 configure(loadStories, module);
