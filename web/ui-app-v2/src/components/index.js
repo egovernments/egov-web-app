@@ -1,6 +1,7 @@
 import TextField from "./TextField";
 import SelectField from "./DropDown";
 import Label from "./Label";
+import Image from "./Image";
 import NumberField from "./NumberField";
 import Checkbox from "./Checkbox";
 import TextArea from "./TextArea";
@@ -11,9 +12,12 @@ import TimePicker from "./TimePicker";
 import FilePicker from "./FilePicker";
 import Dialog from "./Dialog";
 import LoadingIndicator from "./LoadingIndicator";
+import BottomNavigation from "./BottomNavigation";
+import Tabs from "./Tabs";
 
 export {
   Label,
+  Image,
   NumberField,
   TextField,
   SelectField,
@@ -25,5 +29,7 @@ export {
   TimePicker,
   FilePicker,
   Dialog,
-  LoadingIndicator
+  LoadingIndicator,
+  BottomNavigation,
+  Tabs
 };
