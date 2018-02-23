@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { handleChange } from "../actions/framework";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { handleChange } from '../actions/framework';
 
 // this UiField can be a
 const Field = UiField => {
@@ -19,11 +19,11 @@ const Field = UiField => {
   }
 
   const mapStateToProps = (state, props) => ({
-    value: state.framework.form[props.target] || ""
+    value: state.framework.form[props.target] || '',
   });
 
   const mapDispatchToProps = dispatch => ({
-    handleChange: (item, value) => dispatch(handleChange(item, value))
+    handleChange: (item, value) => dispatch(handleChange(item, value)),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(Field);

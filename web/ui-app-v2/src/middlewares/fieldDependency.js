@@ -1,5 +1,5 @@
-import { fetchDropDownData, setFieldProperty } from "../actions/framework";
-import { prepareSearchUrl } from "../utils";
+import { fetchDropDownData, setFieldProperty } from '../actions/framework';
+import { prepareSearchUrl } from '../utils';
 
 const dependantApiCall = (value, dependency, dispatch) => {
   const { dataSource, target } = dependency;
@@ -13,7 +13,7 @@ const toggleFieldProperty = (dependency, value, dispatch) => {
   targets.forEach(target => {
     dispatch(
       setFieldProperty(target, {
-        [toggleProperty]: toggleValue
+        [toggleProperty]: toggleValue,
       })
     );
   });
@@ -24,7 +24,7 @@ const fieldDependency = store => next => action => {
   const dispatch = store.dispatch;
   const state = store.getState();
 
-  if (type == "HANDLE_CHANGE") {
+  if (type == 'HANDLE_CHANGE') {
     const { field } = action;
     const { value, dependencies } = field;
 
@@ -32,10 +32,10 @@ const fieldDependency = store => next => action => {
       dependencies.forEach(dependency => {
         const { type } = dependency;
         switch (type) {
-          case "API_CALL":
+          case 'API_CALL':
             dependantApiCall(value, dependency, dispatch);
             break;
-          case "PROPERTY_TOGGLE":
+          case 'PROPERTY_TOGGLE':
             toggleFieldProperty(dependency, value, dispatch);
             break;
           default:

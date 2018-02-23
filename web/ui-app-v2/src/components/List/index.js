@@ -1,15 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { List as MaterialUiList, ListItem } from "material-ui/List";
-import Avatar from "material-ui/Avatar";
-import SvgIcon from "material-ui/SvgIcon";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { List as MaterialUiList, ListItem } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import SvgIcon from 'material-ui/SvgIcon';
 
-const List = ({
-  listItemContainer,
-  listItemStyle = {},
-  listContainerStyle,
-  items = []
-}) => {
+const List = ({ listItemContainer, listItemStyle = {}, listContainerStyle, items = [] }) => {
   const renderListItems = items => {
     return items.map((item, index) => {
       const listItemProps = {};
@@ -24,7 +19,7 @@ const List = ({
         rightAvatar,
         initiallyOpen,
         primaryTogglesNestedList,
-        style
+        style,
       } = item;
 
       if (listItemStyle && Object.keys(listItemStyle).length) {
@@ -61,21 +56,13 @@ const List = ({
         listItemProps.style = style;
       }
 
-      return (
-        <ListItem
-          containerElement={listItemContainer}
-          key={index}
-          {...listItemProps}
-        />
-      );
+      return <ListItem containerElement={listItemContainer} key={index} {...listItemProps} />;
     });
   };
 
   return (
     <div>
-      <MaterialUiList style={listContainerStyle}>
-        {renderListItems(items)}
-      </MaterialUiList>
+      <MaterialUiList style={listContainerStyle}>{renderListItems(items)}</MaterialUiList>
     </div>
   );
 };
@@ -95,9 +82,9 @@ List.propTypes = {
       rightAvatar: PropTypes.instanceOf(Avatar),
       initiallyOpen: PropTypes.bool,
       primaryTogglesNestedList: PropTypes.bool,
-      style: PropTypes.object
+      style: PropTypes.object,
     })
-  )
+  ),
 };
 
 export default List;

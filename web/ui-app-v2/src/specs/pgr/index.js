@@ -1,106 +1,106 @@
-import transformers from "./transformers";
+import transformers from './transformers';
 
 const specs = {
-  createUrl: "/post",
-  searchUrl: "",
+  createUrl: '/post',
+  searchUrl: '',
   transformers: transformers,
-  objectName: "complaints",
-  idJsonPath: "complaints.code",
+  objectName: 'complaints',
+  idJsonPath: 'complaints.code',
   groups: [
     {
-      label: "Complaints Details",
+      label: 'Complaints Details',
       fields: [
         {
-          label: "Complaint Name",
-          type: "text",
-          target: "name",
-          jsonPath: "complaints.name",
+          label: 'Complaint Name',
+          type: 'text',
+          target: 'name',
+          jsonPath: 'complaints.name',
           width: 3,
-          patternErrorMessage: "Please Enter a valid name",
-          pattern: "",
+          patternErrorMessage: 'Please Enter a valid name',
+          pattern: '',
           isRequired: true,
-          viewAdapter: ""
+          viewAdapter: '',
         },
         {
-          label: "Comments",
-          type: "textarea",
-          target: "complaintDetails",
-          jsonPath: "complaints.details",
+          label: 'Comments',
+          type: 'textarea',
+          target: 'complaintDetails',
+          jsonPath: 'complaints.details',
           width: 3,
-          patternErrorMessage: "Please Enter a valid name",
-          pattern: "",
+          patternErrorMessage: 'Please Enter a valid name',
+          pattern: '',
           isRequired: true,
-          viewAdapter: ""
-        }
-      ]
+          viewAdapter: '',
+        },
+      ],
     },
     {
-      label: "Complaint Category",
+      label: 'Complaint Category',
       fields: [
         {
           width: 3,
-          label: "Complaint Type",
-          type: "dropdown",
-          target: "complaintCategory",
-          jsonPath: "complaints.category.type",
+          label: 'Complaint Type',
+          type: 'dropdown',
+          target: 'complaintCategory',
+          jsonPath: 'complaints.category.type',
           dataSourceConfig: {
-            key: "$..code",
-            value: "$..name"
+            key: '$..code',
+            value: '$..name',
           },
           dataSource: {
-            url: "http://somedatasource.com/category"
+            url: 'http://somedatasource.com/category',
           },
-          options: ["India", "USA", "AUSTRALIA"],
+          options: ['India', 'USA', 'AUSTRALIA'],
           dependencies: [
             {
-              target: "complaintSubCategory",
-              targetType: "dropdown",
-              type: "API_CALL",
+              target: 'complaintSubCategory',
+              targetType: 'dropdown',
+              type: 'API_CALL',
               dataSource: {
-                url: "http://somedatasource.com/category",
-                searchKey: "categoryType"
-              }
-            }
-          ]
+                url: 'http://somedatasource.com/category',
+                searchKey: 'categoryType',
+              },
+            },
+          ],
         },
         {
           width: 3,
-          label: "Complaint Sub Category",
-          type: "dropdown",
-          target: "complaintSubCategory",
-          jsonPath: "complaints.category.subtype",
+          label: 'Complaint Sub Category',
+          type: 'dropdown',
+          target: 'complaintSubCategory',
+          jsonPath: 'complaints.category.subtype',
           dataSourceConfig: {
-            key: "$..code",
-            value: "$..name"
-          }
+            key: '$..code',
+            value: '$..name',
+          },
         },
 
         {
           width: 3,
-          label: "Is complaint reopened?",
-          type: "checkbox",
-          target: "complaintReopened",
-          jsonPath: "complaints.reopened"
-        }
-      ]
-    }
+          label: 'Is complaint reopened?',
+          type: 'checkbox',
+          target: 'complaintReopened',
+          jsonPath: 'complaints.reopened',
+        },
+      ],
+    },
   ],
   search: {
     groups: [
       {
-        label: "Search Group One",
+        label: 'Search Group One',
         fields: [
           {
-            label: "First Name",
-            type: "text",
-            target: "name",
-            width: "",
-            viewAdapter: ""
-          }
-        ]
-      }
-    ]
-  }
+            label: 'First Name',
+            type: 'text',
+            target: 'name',
+            width: '',
+            viewAdapter: '',
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export default specs;

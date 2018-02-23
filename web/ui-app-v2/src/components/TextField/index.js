@@ -1,42 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Error from "../Error";
-import TextField from "material-ui/TextField";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Error from '../Error';
+import TextField from 'material-ui/TextField';
 
-const TextFieldUi = ({
-  onChange,
-  errorMessage,
-  value,
-  disabled,
-  hide,
-  isRequired,
-  label,
-  className
-}) => {
+const TextFieldUi = ({ onChange, errorMessage, value, disabled, hide, isRequired, label, className }) => {
   const labelProperty = {
-    className: className ? className : "",
+    className: className ? className : '',
     floatingLabelFixed: true,
     floatingLabelStyle: {
-      fontSize: "20px",
-      whiteSpace: "nowrap"
+      fontSize: '20px',
+      whiteSpace: 'nowrap',
     },
     floatingLabelText: (
       <span>
         {label}
-        <span style={{ color: "#FF0000" }}>{isRequired ? " *" : ""}</span>
+        <span style={{ color: '#FF0000' }}>{isRequired ? ' *' : ''}</span>
       </span>
-    )
+    ),
   };
 
   const style = {
-    display: hide ? "none" : "block"
+    display: hide ? 'none' : 'block',
   };
 
   return (
     <TextField
       {...labelProperty}
       style={style}
-      errorStyle={{ float: "left" }}
+      errorStyle={{ float: 'left' }}
       errorText={errorMessage}
       value={value}
       disabled={disabled}
@@ -53,7 +44,7 @@ TextFieldUi.propTypes = {
   label: PropTypes.string,
   isRequired: PropTypes.bool,
   hide: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default TextFieldUi;
