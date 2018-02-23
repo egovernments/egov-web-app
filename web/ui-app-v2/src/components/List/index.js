@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { List as MaterialUiList, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import SvgIcon from 'material-ui/SvgIcon';
+// icons cont
 
-const List = ({ listItemContainer, listItemStyle = {}, listContainerStyle, items = [] }) => {
+const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle, items = [] }) => {
   const renderListItems = items => {
     return items.map((item, index) => {
       const listItemProps = {};
@@ -76,8 +77,8 @@ List.propTypes = {
       primaryText: PropTypes.string,
       nestedItems: PropTypes.array,
       secondaryText: PropTypes.string,
-      leftIcon: PropTypes.instanceOf(SvgIcon),
-      rightIcon: PropTypes.instanceOf(SvgIcon),
+      leftIcon: PropTypes.node,
+      rightIcon: PropTypes.node,
       leftAvatar: PropTypes.instanceOf(Avatar),
       rightAvatar: PropTypes.instanceOf(Avatar),
       initiallyOpen: PropTypes.bool,
