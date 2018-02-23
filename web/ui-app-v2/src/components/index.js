@@ -19,6 +19,7 @@ import BottomNavigation from "./BottomNavigation";
 import Tabs from "./Tabs";
 import SetMapLocation from "./SetMapLocation";
 import List from "./List";
+import ProfileSection from "./ProfileSection";
 
 export {
   Label,
@@ -41,4 +42,5 @@ export {
   Tabs,
   SetMapLocation,
   List,
+  ProfileSection
 };

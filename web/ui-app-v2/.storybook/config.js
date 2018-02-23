@@ -21,6 +21,7 @@ function loadStories() {
   require('../src/stories/card.js');
   require('../src/stories/timeline.js');
   require('../src/stories/screens.js');
+  require("../src/stories/profileSection.js");
 }
 
 configure(loadStories, module);
