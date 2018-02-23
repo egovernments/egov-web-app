@@ -15,8 +15,6 @@ const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
 
-// how do we include custom icons which are not present in font or google icons
-
 // load material icons
 WebFont.load({
   google: {

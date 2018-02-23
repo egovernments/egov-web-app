@@ -7,5 +7,4 @@ import theme from "../config/theme";
 
 storiesOf("FilePicker", module)
   .addDecorator(muiTheme([theme]))
-  .add("photopicker", () => <FilePicker browse={true}/>)
-  .add("photocapture", () => <FilePicker capture={true}/>)
+  .add("photopicker", () => <FilePicker browse={true} />);

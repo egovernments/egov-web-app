@@ -10,7 +10,7 @@ function loadStories() {
   require("../src/stories/tabs.js");
   require("../src/stories/datepicker.js");
   require("../src/stories/timepicker.js");
-  require("../src/stories/timeline.js");
+  //   require("../src/stories/timeline.js");
   require("../src/stories/list.js");
   require("../src/stories/filePicker.js");
   require("../src/stories/dialog.js");
@@ -18,4 +18,4 @@ function loadStories() {
   require("../src/stories/checkBox.js");
 }
 
-configure(loadStories, module)
+configure(loadStories, module);
