@@ -8,13 +8,9 @@ import Button from "./Button";
 import Card from "./Card";
 import DatePicker from "./DatePicker";
 import TimePicker from "./TimePicker";
-<<<<<<< 21d62ab636ff0e74e35d189393e4e2354debe1d9
 import FilePicker from "./FilePicker";
 import Dialog from "./Dialog";
-
-=======
 import LoadingIndicator from "./LoadingIndicator";
->>>>>>> Added Spiner
 
 export {
   Label,
@@ -27,10 +23,7 @@ export {
   Card,
   DatePicker,
   TimePicker,
-<<<<<<< 21d62ab636ff0e74e35d189393e4e2354debe1d9
   FilePicker,
-  Dialog
-=======
+  Dialog,
   LoadingIndicator
->>>>>>> Added Spiner
 };
