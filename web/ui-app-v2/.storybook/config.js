@@ -14,7 +14,8 @@ function loadStories() {
   require("../src/stories/list.js");
   require("../src/stories/filePicker.js");
   require("../src/stories/dialog.js");
-
+  require("../src/stories/loadingIndicator.js");
+  require("../src/stories/checkBox.js");
 }
 
-configure(loadStories, module);
+configure(loadStories, module)

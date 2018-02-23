@@ -20,18 +20,20 @@ const style = {
     position: "relative",
     zIndex: 9999,
     marginLeft: "48%",
-    marginTop: "23%"
+    marginTop: "23%",
+    color: "#FF9800"
   }
 };
 
 const LoadingIndicator = ({ status }) => {
+  console.log("Hi...." + status)
   return (
     <div style={status === "hide" ? style.containerHide : style.container}>
       <RefreshIndicator
         size={40}
         left={10}
         top={0}
-        status={status}
+        status="loading"
         style={style.refresh}
       />
     </div>
