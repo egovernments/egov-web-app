@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const ButtonUi = ({ label, icon = {}, onClick, disabled, hide, primary = false, style = {} }) => {
+const Button = ({ label, icon = {}, onClick, fullWidth, disabled, hide, primary = false, style = {} }) => {
   return (
     <RaisedButton
       style={style}
-      hide={hide}
       disabled={disabled}
+      fullWidth={fullWidth}
       primary={primary}
-      type="button"
       label={label}
       onClick={onClick}
       icon={
@@ -20,4 +20,13 @@ const ButtonUi = ({ label, icon = {}, onClick, disabled, hide, primary = false, 
   );
 };
 
-export default ButtonUi;
+Button.propTypes = {
+  onClick: PropTypes.func,
+  primary: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  style: PropTypes.object,
+};
+
+export default Button;
