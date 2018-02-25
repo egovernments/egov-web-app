@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-const PoweredBy = ({style,poweredBy,icon}) => {
+const PoweredBy = ({ style, poweredByStyle, icon }) => {
   return (
     <div {...style}>
       <span {...poweredByStyle}>Powered By</span>
-      <img {...icon}/>
+      <img {...icon} />
     </div>
   );
 };
@@ -13,7 +13,7 @@ const PoweredBy = ({style,poweredBy,icon}) => {
 export default PoweredBy;
 
 PoweredBy.propTypes = {
-  style:PropTypes.object,
-  poweredBy:PropTypes.object,
-  icon:PropTypes.object
-}
+  style: PropTypes.object,
+  poweredByStyle: PropTypes.object,
+  icon: PropTypes.object,
+};

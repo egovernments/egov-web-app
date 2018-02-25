@@ -1,22 +1,18 @@
-import React from "react";
-import { storiesOf, addDecorator } from "@storybook/react";
-import { muiTheme } from "storybook-addon-material-ui";
-import { action } from "@storybook/addon-actions";
+import React from 'react';
+import { storiesOf, addDecorator } from '@storybook/react';
+import { muiTheme } from 'storybook-addon-material-ui';
+import { action } from '@storybook/addon-actions';
 
-import Home from "../pgr/home";
+import Home from '../screens/Home';
 
-import theme from "../config/theme";
-import Wrapper from "./wrapper.js";
+import theme from '../config/theme';
+import Wrapper from './wrapper.js';
 
-storiesOf("PGR Screens", module)
+storiesOf('PGR Screens', module)
   .addDecorator(muiTheme([theme]))
-  .add("Home", () => (
-    <Wrapper
-      imports={[`import Home from "../pgr/home";`]}
-      component={'Home'}
-      code={`<Home/>`}
-    >
-      <Home/>
+  .add('Home', () => (
+    <Wrapper imports={[`import Home from "../pgr/home";`]} component={'Home'} code={`<Home/>`}>
+      <Home />
 
       <br />
       <br />
@@ -30,4 +26,4 @@ storiesOf("PGR Screens", module)
         </a>
       </div>*/}
     </Wrapper>
-  ))
+  ));

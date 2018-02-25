@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import TextField from '../components/TextField';
-import Button from '../components/Button';
 import Paper from 'material-ui/Paper';
-import Image from '../components/Image';
-import Label from '../components/Label';
+import TextField from '../../components/TextField';
+import Button from '../../components/Button';
+import Image from '../../components/Image';
+import Label from '../../components/Label';
 
 const styles = {
   logo: {
@@ -30,7 +30,7 @@ const Form = () => {};
 export default class Login extends Component {
   render() {
     return (
-      <div className="col-xs-12 col-lg-offset-3 col-lg-6">
+      <div className="col-xs-12 col-lg-4 col-sm-4 col-md-4 col-lg-offset-4 col-sm-offset-4 col-md-offset-4">
         <Image source="https://placeimg.com/450/450/arch" />
         <div style={styles.formContainer}>
           <Image style={styles.logo} circular={true} source="https://placeimg.com/100/100/tech" />

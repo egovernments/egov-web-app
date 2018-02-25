@@ -1,37 +1,30 @@
-import React from "react";
+import React from 'react';
 import _ from 'lodash';
-import SearchBox from "react-google-maps/lib/components/places/SearchBox";
+import SearchBox from 'react-google-maps/lib/components/places/SearchBox';
 
-const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
-const {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} = require("react-google-maps");
-
-// const demoFancyMapStyles = require("./demoFancyMapStyles.json");
+const { compose, withProps, lifecycle, withStateHandlers } = require('recompose');
+const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require('react-google-maps');
 
 const SetMapLocation = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places',
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 12.972442, lng: 77.580643 },
-  }), 
+  }),
   lifecycle({
     componentWillMount() {
-      const refs={};
+      const refs = {};
       var self = this;
       var lati;
       var long;
-      if(navigator.geolocation) { 
-        navigator.geolocation.getCurrentPosition((position) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
           this.setState({
-            center: {lat: position.coords.latitude, lng: position.coords.longitude}
-          })
-        })
+            center: { lat: position.coords.latitude, lng: position.coords.longitude },
+          });
+        });
       }
       this.setState({
         bounds: null,
@@ -43,26 +36,27 @@ const SetMapLocation = compose(
           this.setState({
             bounds: refs.map.getBounds(),
             center: refs.map.getCenter(),
-          })
+          });
         },
         onSearchBoxMounted: ref => {
           refs.searchBox = ref;
         },
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
-          const bounds = new google.maps.LatLngBounds();
+          // const bounds = new google.maps.LatLngBounds();
+          const bounds = {};
 
           places.forEach(place => {
             if (place.geometry.viewport) {
-              bounds.union(place.geometry.viewport)
+              bounds.union(place.geometry.viewport);
             } else {
-              bounds.extend(place.geometry.location)
+              bounds.extend(place.geometry.location);
             }
           });
           const nextMarkers = places.map(place => ({
             position: place.geometry.location,
           }));
-          console.log(this.state.center); 
+          console.log(this.state.center);
           const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
           this.setState({
             center: nextCenter,
@@ -70,31 +64,28 @@ const SetMapLocation = compose(
           });
           // refs.map.fitBounds(bounds);
         },
-      })
-      
+      });
+    },
+  }),
+  withStateHandlers(
+    () => ({
+      isOpen: false,
+    }),
+    {
+      onToggleOpen: ({ isOpen }) => () => ({
+        isOpen: !isOpen,
+      }),
     }
-  }),
-  withStateHandlers(() => ({
-    isOpen: false,
-  }), {
-    onToggleOpen: ({ isOpen }) => () => ({
-      isOpen: !isOpen,
-    })
-  }),
+  ),
   withScriptjs,
-  withGoogleMap,
-)(props =>
+  withGoogleMap
+)(props => (
   <GoogleMap
     defaultZoom={11}
     defaultCenter={props.center}
     // defaultOptions={{ styles: demoFancyMapStyles }}
   >
-    <SearchBox
-      ref={props.onSearchBoxMounted}
-      bounds={props.bounds}
-      controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={props.onPlacesChanged}
-    >
+    <SearchBox ref={props.onSearchBoxMounted} bounds={props.bounds} onPlacesChanged={props.onPlacesChanged}>
       <input
         type="text"
         placeholder="Search address"
@@ -113,11 +104,8 @@ const SetMapLocation = compose(
         }}
       />
     </SearchBox>
-    {props.markers.map((marker, index) =>
-      <Marker key={index} position={marker.position} />
-    )}
-
+    {props.markers.map((marker, index) => <Marker key={index} position={marker.position} />)}
   </GoogleMap>
-); 
+));
 
 export default SetMapLocation;

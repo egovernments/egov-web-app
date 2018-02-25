@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import TextField from '../components/TextField';
-import Button from '../components/Button';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import Image from '../components/Image';
+import Image from '../../components/Image';
+import TextField from '../../components/TextField';
+import Button from '../../components/Button';
 
 const styles = {
   logo: {
@@ -34,7 +34,7 @@ const Form = () => {};
 export default class Login extends Component {
   render() {
     return (
-      <div>
+      <div className="col-xs-12 col-lg-4 col-sm-6 col-md-4 col-lg-offset-4 col-sm-offset-3 col-md-offset-4">
         <Image source="https://placeimg.com/450/450/arch" />
         <Paper style={styles.formContainer} zDepth={1}>
           <Image style={styles.logo} circular={true} source="https://placeimg.com/100/100/tech" />
