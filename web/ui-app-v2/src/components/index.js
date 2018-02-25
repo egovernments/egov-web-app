@@ -19,6 +19,8 @@ import LoadingIndicator from './LoadingIndicator';
 import BottomNavigation from './BottomNavigation';
 import Tabs from './Tabs';
 import SetMapLocation from './SetMapLocation';
+import List from './List';
+
 
 export {
   Label,
@@ -41,4 +43,5 @@ export {
   BottomNavigation,
   Tabs,
   SetMapLocation,
+  List
 };

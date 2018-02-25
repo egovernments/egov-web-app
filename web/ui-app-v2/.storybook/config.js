@@ -20,6 +20,7 @@ function loadStories() {
   require('../src/stories/textArea.js');
   require('../src/stories/card.js');
   require('../src/stories/timeline.js');
+  require('../src/stories/screens.js');
 }
 
 configure(loadStories, module);
