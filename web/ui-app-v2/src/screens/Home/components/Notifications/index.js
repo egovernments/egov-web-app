@@ -22,6 +22,11 @@ class Notification extends Component {
             backgroundColor:"#ffffff",
             }
         }}
+        text={{
+          style:{
+             paddingTop:0
+          }
+         }}
         textChildren={
         <div className="row">
         <div className="col-xs-2" style={{background:'#73b332'}}>
