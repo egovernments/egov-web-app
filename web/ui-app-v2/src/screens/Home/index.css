@@ -10,11 +10,13 @@
 
 
 .row-body {
-    display: table;
+    overflow: hidden;
 }
 
 .left-side {
-    display: table-cell;
+  padding-bottom: 1000px;
+  margin-bottom: -1000px;
+  height: 100%;
 }
 
 .right-side {

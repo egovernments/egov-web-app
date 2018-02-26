@@ -28,12 +28,13 @@ class Events extends Component {
           }}
           text={{
           style:{
-             paddingTop:0
+             paddingTop:0,
+             paddingBottom:0
           }
          }}
           textChildren={
-            <div className = "row">
-              <div className = "col-xs-3" style = {{background : "#8e44ad"}}>
+            <div className = "row row-body">
+              <div className = "col-xs-4 col-md-2 left-side" style = {{background : "#8e44ad"}}>
                 <div style={{height : "40px", color: "#ffffff"}}>
                   {this.state.dateRange}
                 </div>
@@ -41,7 +42,7 @@ class Events extends Component {
                   {this.state.month}
                 </div>
               </div>
-              <div className = "col-xs-9">
+              <div className = "col-xs-8 col-md-10">
                   <div style={{marginBottom : "10px"}}>
                   {this.state.eventName}
                   </div>

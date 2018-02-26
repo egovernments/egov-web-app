@@ -11,21 +11,23 @@ class Updates extends Component {
     return <div>
       <Card card={{
           style:{
-            backgroundColor:"#ffffff", 
+            backgroundColor:"#ffffff",
           }
         }}
         text={{
           style:{
-            paddingTop:0
+             paddingTop:0,
+             paddingBottom:0
           }
-        }}
-         textChildren={
-         <div className = "row">
-          <div className = "col-xs-2 update-icon" style = {{background : "#e74c3c"}}>
+         }}
+
+          textChildren={
+         <div className = "row row-body">
+          <div className = "col-xs-4 col-md-2 update-icon left-side" style = {{background : "#e74c3c"}}>
             <ActionHome color = "#ffffff"/>
           </div>
-          <div className = "col-xs-10">
-            <div className = "row" padding = "20px"> 
+          <div className = "col-xs-8 col-md-10">
+            <div className = "row">
               <Label label="ROAD CLOSED" />
               <p  color = "#767676">5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
               </p >
@@ -35,10 +37,10 @@ class Updates extends Component {
             </div>
           </div>
         </div>
-         
+
         }>
-        
-         
+
+
         </Card>
     </div>;
   }

@@ -76,7 +76,7 @@ class Home extends Component {
       <div>
         <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
         <Banner {...banner} />
-        <div className="home-page-content">
+        <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
           <NewAndOldComplaints />
           <Updates {...Updates} />
           <Notifications />
