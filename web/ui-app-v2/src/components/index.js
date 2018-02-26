@@ -42,5 +42,6 @@ export {
   Tabs,
   MapLocation,
   List,
-  ProfileSection
+  ProfileSection,
+  PoweredBy
 };

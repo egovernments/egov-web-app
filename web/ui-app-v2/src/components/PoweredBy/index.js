@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Image from "../Image";
 
-const PoweredBy = ({ style, poweredByStyle, icon }) => {
+const PoweredBy = ({ divProps, poweredByStyle, image }) => {
   return (
-    <div {...style}>
+    <div {...divProps}>
       <span {...poweredByStyle}>Powered By</span>
-      <img {...icon} />
+      <Image {...image}/>
     </div>
   );
 };

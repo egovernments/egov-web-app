@@ -33,6 +33,9 @@ class NewAndOldComplaints extends Component {
         card={{
           style:{
             backgroundColor:"#ffffff",
+            position: "relative",
+            width: "100%",
+            top: "-20px"
             // position:"absolute",
             // width:"100%"
           }
