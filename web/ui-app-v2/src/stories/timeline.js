@@ -12,9 +12,7 @@ storiesOf("TimeLine", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <Wrapper
-      imports={[
-        `import { TimeLine } from "<Egov-Reusable-Components-Location>";`
-      ]}
+      imports={[`import { TimeLine } from "<Egov-Reusable-Components-Location>";`]}
       component={`TimeLine`}
       code={`<TimeLine
         header={{
@@ -56,36 +54,39 @@ storiesOf("TimeLine", module)
       />`}
     >
       <TimeLine
-        divStyle={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}
+        divStyle={{ maxWidth: 380, maxHeight: 400, margin: "auto" }}
         stepperProps={{
-          activeStep:0,
-          orientation:"vertical"
+          activeStep: 0,
+          orientation: "vertical",
         }}
         steps={[
           {
-            labelChildren:"Select campaign settings 1",
-            contentChildren:<p>
-                For each ad campaign that you create, you can control how much
-                youre willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.
+            labelChildren: "Select campaign settings 1",
+            contentChildren: (
+              <p>
+                For each ad campaign that you create, you can control how much youre willing to spend on clicks and conversions, which networks and
+                geographical locations you want your ads to show on, and more.
               </p>
+            ),
           },
           {
-            labelChildren:"Select campaign settings 2",
-            contentChildren:<p>
-                For each ad campaign that you create, you can control how much
-                youre willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.
+            labelChildren: "Select campaign settings 2",
+            contentChildren: (
+              <p>
+                For each ad campaign that you create, you can control how much youre willing to spend on clicks and conversions, which networks and
+                geographical locations you want your ads to show on, and more.
               </p>
+            ),
           },
           {
-            labelChildren:"Select campaign settings 3",
-            contentChildren:<p>
-                For each ad campaign that you create, you can control how much
-                youre willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.
+            labelChildren: "Select campaign settings 3",
+            contentChildren: (
+              <p>
+                For each ad campaign that you create, you can control how much youre willing to spend on clicks and conversions, which networks and
+                geographical locations you want your ads to show on, and more.
               </p>
-          }
+            ),
+          },
         ]}
         // header={{
         //   title: "URL Avatar",
@@ -121,8 +122,13 @@ storiesOf("TimeLine", module)
         //   </div>
         // }
       />
-      <br/>
-      <br/>
-      <div>For more props information please visit <a href="http://www.material-ui.com/#/components/stepper" target="_blank">Stepper</a></div>
+      <br />
+      <br />
+      <div>
+        For more props information please visit{" "}
+        <a href="http://www.material-ui.com/#/components/stepper" target="_blank">
+          Stepper
+        </a>
+      </div>
     </Wrapper>
   ));

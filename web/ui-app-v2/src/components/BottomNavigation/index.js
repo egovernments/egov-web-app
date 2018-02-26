@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
+import React from "react";
+import PropTypes from "prop-types";
+import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
 
 const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
   const renderNavigationOptions = () => {

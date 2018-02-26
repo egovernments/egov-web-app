@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 // uses bootstrap classes img-responsive img-circle
-const Image = ({ circular = false, className = '', style, source, height, width }) => {
+const Image = ({ circular = false, className = "", style, source, height, width }) => {
   const classNames = circular ? `img-responsive img-circle` : `img-responsive`;
   return <img className={classNames} style={style} src={source} height={height} width={width} />;
 };

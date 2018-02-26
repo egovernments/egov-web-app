@@ -1,13 +1,13 @@
-import React from 'react';
-import _ from 'lodash';
-import SearchBox from 'react-google-maps/lib/components/places/SearchBox';
+import React from "react";
+import _ from "lodash";
+import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 
-const { compose, withProps, lifecycle, withStateHandlers } = require('recompose');
-const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require('react-google-maps');
+const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
+const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
 
 const SetMapLocation = compose(
   withProps({
-    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places',
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
@@ -57,7 +57,7 @@ const SetMapLocation = compose(
             position: place.geometry.location,
           }));
           console.log(this.state.center);
-          const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+          const nextCenter = _.get(nextMarkers, "0.position", this.state.center);
           this.setState({
             center: nextCenter,
             markers: nextMarkers,

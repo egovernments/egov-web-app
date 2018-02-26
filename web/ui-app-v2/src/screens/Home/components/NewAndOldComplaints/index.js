@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 
 class NewAndOldComplaints extends Component {
-
   render() {
-    return (
-      <div>
-        New And Old Complaints
-      </div>
-    );
+    return <div>New And Old Complaints</div>;
   }
 }
 

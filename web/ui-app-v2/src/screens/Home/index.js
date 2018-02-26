@@ -7,71 +7,67 @@ import Notifications from "./components/Notifications";
 import Events from "./components/Events";
 import BottomNavigation from "../../components/BottomNavigation";
 
-import FontIcon from 'material-ui/FontIcon';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
+import FontIcon from "material-ui/FontIcon";
+import IconLocationOn from "material-ui/svg-icons/communication/location-on";
 const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
 
 const options = [
   {
-    label: 'Recents',
+    label: "Recents",
     icon: recentsIcon,
-    route: '/recents',
+    route: "/recents",
   },
   {
-    label: 'Favourites',
+    label: "Favourites",
     icon: favoritesIcon,
-    route: '/favourites',
+    route: "/favourites",
   },
   {
-    label: 'Nearby',
+    label: "Nearby",
     icon: nearbyIcon,
-    route: '/nearby',
+    route: "/nearby",
   },
 ];
 
 class Home extends Component {
   state = {
     toggleMenu: false,
-    tabIndex:0
+    tabIndex: 0,
   };
 
-
-  _handleToggleMenu=()=>
-  {
-    let {toggleMenu}=this.state;
-    toggleMenu=!toggleMenu;
+  _handleToggleMenu = () => {
+    let { toggleMenu } = this.state;
+    toggleMenu = !toggleMenu;
     this.setState({
-      toggleMenu
-    })
-  }
+      toggleMenu,
+    });
+  };
 
-  _updateMenuState=(status)=>
-  {
+  _updateMenuState = status => {
     this.setState({
-      toggleMenu:status
-    })
-  }
+      toggleMenu: status,
+    });
+  };
 
-  _onTabChange=(tabIndex)=>{
+  _onTabChange = tabIndex => {
     this.setState({
-      tabIndex
-    })
-  }
-
+      tabIndex,
+    });
+  };
 
   render() {
-    let { toggleMenu,banner,updates,events,tabIndex} = this.state;
-    let {_handleToggleMenu,_updateMenuState,_onTabChange} =this;
+    let { toggleMenu, banner, updates, events, tabIndex } = this.state;
+    let { _handleToggleMenu, _updateMenuState, _onTabChange } = this;
     return (
       <div>
-        <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState}/>
-        <Banner {...banner}/>
+        <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
+        <Banner {...banner} />
         <NewAndOldComplaints />
-        <Updates {...Updates}/>
+        <Updates {...Updates} />
         <Notifications />
-        <Events {...events}/>
+        <Events {...events} />
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );

@@ -1,36 +1,36 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
-import Image from '../../components/Image';
-import TextField from '../../components/TextField';
-import Button from '../../components/Button';
+import React, { Component } from "react";
+import { withRouter } from "react-router";
+import DropDownMenu from "material-ui/DropDownMenu";
+import MenuItem from "material-ui/MenuItem";
+import RaisedButton from "material-ui/RaisedButton";
+import Paper from "material-ui/Paper";
+import Image from "../../components/Image";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
 
 const styles = {
   logo: {
-    margin: '0 auto',
-    display: 'block',
+    margin: "0 auto",
+    display: "block",
   },
   dropDown: {
-    width: '100%',
-    background: '#f2f2f2',
-    height: '56px',
+    width: "100%",
+    background: "#f2f2f2",
+    height: "56px",
   },
   imageContainer: {
-    position: 'relative',
+    position: "relative",
   },
   formContainer: {
-    padding: '10px',
+    padding: "10px",
     // why 65? ~= imageHeight/2 + paddding + bottomMargin
-    marginTop: '-65px',
+    marginTop: "-65px",
   },
 };
 
 class Login extends Component {
   login = () => {
-    this.props.history.push('/otp');
+    this.props.history.push("/otp");
   };
 
   render() {
@@ -43,7 +43,7 @@ class Login extends Component {
           <form>
             <TextField className="textfield" id="name" fullWidth={true} placeholder="Name" />
             <DropDownMenu style={styles.dropDown} value={1}>
-              <MenuItem style={{ width: '100%' }} value={1} primaryText="Amritsar" />
+              <MenuItem style={{ width: "100%" }} value={1} primaryText="Amritsar" />
             </DropDownMenu>
             <br />
             <TextField className="textfield" id="phone-number" underlineShow={false} fullWidth={true} placeholder="Phone Number" />

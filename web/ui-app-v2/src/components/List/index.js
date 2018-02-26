@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { List as MaterialUiList, ListItem } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import SvgIcon from 'material-ui/SvgIcon';
+import React from "react";
+import PropTypes from "prop-types";
+import { List as MaterialUiList, ListItem } from "material-ui/List";
+import Avatar from "material-ui/Avatar";
+import SvgIcon from "material-ui/SvgIcon";
 // icons cont
 
 const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle, items = [] }) => {

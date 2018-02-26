@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import './style.css';
+import React from "react";
+import PropTypes from "prop-types";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
+import "./style.css";
 
 const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange, style }) => {
   const labelProperty = {
     floatingLabelFixed: true,
     floatingLabelStyle: {
-      color: '#696969',
-      fontSize: '20px',
-      whiteSpace: 'nowrap',
+      color: "#696969",
+      fontSize: "20px",
+      whiteSpace: "nowrap",
     },
     floatingLabelText: (
       <span>
-        {field.label} <span style={{ color: '#FF0000' }}>{field.isRequired ? ' *' : ''}</span>
+        {field.label} <span style={{ color: "#FF0000" }}>{field.isRequired ? " *" : ""}</span>
       </span>
     ),
-    hintText: '-- Please Select --',
+    hintText: "-- Please Select --",
   };
 
   const renderSelectMenuItems = () => {
@@ -31,14 +31,14 @@ const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange,
       className="custom-form-control-for-select"
       style={style}
       floatingLabelStyle={{
-        color: '#696969',
-        fontSize: '20px',
-        whiteSpace: 'nowrap',
+        color: "#696969",
+        fontSize: "20px",
+        whiteSpace: "nowrap",
       }}
       dropDownMenuProps={{
-        targetOrigin: { horizontal: 'left', vertical: 'bottom' },
+        targetOrigin: { horizontal: "left", vertical: "bottom" },
       }}
-      labelStyle={{ color: '#5F5C57' }}
+      labelStyle={{ color: "#5F5C57" }}
       value={value}
       onChange={onChange}
       {...labelProperty}

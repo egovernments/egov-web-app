@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import React from "react";
+import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 
 const Wrapper = ({ imports, component, code, children }) => (
   <Card>
@@ -26,7 +26,7 @@ const Wrapper = ({ imports, component, code, children }) => (
               <br />
               {code}
               <br />
-              {')'}
+              {")"}
               <br />
               {`export default ${component}Demo;`}
             </div>

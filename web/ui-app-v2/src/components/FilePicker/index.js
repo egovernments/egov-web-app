@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import Image from '../Image';
-import pickerIcon from './OpenCamera.png';
-import FlatButton from 'material-ui/FlatButton';
+import React, { Component } from "react";
+import RaisedButton from "material-ui/RaisedButton";
+import Image from "../Image";
+import pickerIcon from "./OpenCamera.png";
+import FlatButton from "material-ui/FlatButton";
 
 export default class FilePicker extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ export default class FilePicker extends Component {
         <div>
           <Image source={this.state.file} />
           <div>
-            <input id="file1" type="file" onChange={this.handleFileChange} accept="image/x-png,image/gif,image/jpeg" style={{ display: 'none' }} />
+            <input id="file1" type="file" onChange={this.handleFileChange} accept="image/x-png,image/gif,image/jpeg" style={{ display: "none" }} />
             <FlatButton icon={<Image source={pickerIcon} width="35" />} primary={true} />
           </div>
         </div>

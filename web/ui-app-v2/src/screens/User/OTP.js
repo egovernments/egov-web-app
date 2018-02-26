@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import Paper from 'material-ui/Paper';
-import TextField from '../../components/TextField';
-import Button from '../../components/Button';
-import Image from '../../components/Image';
-import Label from '../../components/Label';
+import React, { Component } from "react";
+import { withRouter } from "react-router";
+import Paper from "material-ui/Paper";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
+import Image from "../../components/Image";
+import Label from "../../components/Label";
 
 const styles = {
   logo: {
-    margin: '0 auto',
-    display: 'block',
+    margin: "0 auto",
+    display: "block",
   },
   resendOTP: {
-    float: 'right',
+    float: "right",
   },
   formContainer: {
-    padding: '10px',
-    margin: '0px 2px',
+    padding: "10px",
+    margin: "0px 2px",
     zIndex: 30,
     // why 65? ~= imageHeight/2 + paddding + bottomMargin
-    marginTop: '-65px',
+    marginTop: "-65px",
   },
 };
 
@@ -29,7 +29,7 @@ const Form = () => {};
 
 class OTP extends Component {
   onOtpSubmit = () => {
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
 
   render() {

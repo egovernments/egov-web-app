@@ -15,15 +15,15 @@ import Avatar from "material-ui/Avatar";
 const items = [
   {
     primaryText: "Inbox",
-    leftIcon: <ContentInbox />
+    leftIcon: <ContentInbox />,
   },
   {
     primaryText: "Starred",
-    leftIcon: <ActionGrade />
+    leftIcon: <ActionGrade />,
   },
   {
     primaryText: "Sent Mail",
-    leftIcon: <ContentSend />
+    leftIcon: <ContentSend />,
   },
   {
     primaryText: "Drafts",
@@ -31,66 +31,52 @@ const items = [
     initiallyOpen: false,
     primaryTogglesNestedList: true,
     style: {
-      borderBottom: "none"
+      borderBottom: "none",
     },
     nestedItems: [
       {
         primaryText: "Inbox",
         leftIcon: <ContentInbox />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Starred",
         leftIcon: <ActionGrade />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Sent Mail",
         leftIcon: <ContentSend />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
-      }
-    ]
-  }
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
+      },
+    ],
+  },
 ];
 
 class HeaderWithDrawer extends Component {
   render() {
-    let {onHandleToggleMenu,onUpdateMenuStatus,toggleMenu}=this.props;
+    let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-          <AppBar
-            title={`Mseva/ Home`}
-            iconElementRight={
-              <Badge
-                badgeContent={10}
-                secondary={true}
-                badgeStyle={{ top: 2, right: 2 }}
-                style={{ padding: "0" }}
+        <AppBar
+          title={`Mseva/ Home`}
+          iconElementRight={
+            <Badge badgeContent={10} secondary={true} badgeStyle={{ top: 2, right: 2 }} style={{ padding: "0" }}>
+              <IconButton
+                tooltip="Notifications"
+                onClick={() => {
+                  alert("hai");
+                }}
               >
-                <IconButton
-                  tooltip="Notifications"
-                  onClick={() => {
-                    alert("hai");
-                  }}
-                >
-                  <NotificationsIcon color={"white"} />
-                </IconButton>
-              </Badge>
-            }
-            onLeftIconButtonClick={onHandleToggleMenu}
-          />
+                <NotificationsIcon color={"white"} />
+              </IconButton>
+            </Badge>
+          }
+          onLeftIconButtonClick={onHandleToggleMenu}
+        />
 
-        <Drawer
-          docked={false}
-          width={304}
-          open={toggleMenu}
-          onRequestChange={open => onUpdateMenuStatus(open) }
-        >
-          <List
-            items={items}
-            listContainerStyle={{ background: "#ffffff" }}
-            listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
-          />
+        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
+          <List items={items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
         </Drawer>
       </div>
     );

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import React, { Component } from "react";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 // import img from '../images/open.jpg'
-const img = '';
+const img = "";
 
 export default class Dialogui extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      username: 'Babika',
-      inputname: 'Babika',
+      username: "Babika",
+      inputname: "Babika",
       select: false,
     };
   }
@@ -66,18 +66,18 @@ export default class Dialogui extends Component {
     return (
       <div>
         <FlatButton
-          style={{ width: '10%', height: '80%' }}
+          style={{ width: "10%", height: "80%" }}
           icon={<img src={img} height="50px" width="100%" />}
           type="button"
           primary={true}
           onClick={this.handleOpen}
         />
-        <Dialog style={{ width: '90%', height: '95%' }} actions={actions} modal={true} open={this.state.open}>
-          <div style={{ background: 'lightblue' }}>
-            {<h2 style={{ color: 'black' }}>Example Dialog</h2>}
+        <Dialog style={{ width: "90%", height: "95%" }} actions={actions} modal={true} open={this.state.open}>
+          <div style={{ background: "lightblue" }}>
+            {<h2 style={{ color: "black" }}>Example Dialog</h2>}
             {(ok || reset) && (
               <div>
-                <label style={{ color: 'black' }}>Enter Your Name:</label>
+                <label style={{ color: "black" }}>Enter Your Name:</label>
                 <input type="text" value={inputname} onChange={this.handleChange} />
               </div>
             )}

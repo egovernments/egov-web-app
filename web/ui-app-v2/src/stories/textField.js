@@ -1,14 +1,14 @@
-import React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react';
-import { muiTheme } from 'storybook-addon-material-ui';
-import { action } from '@storybook/addon-actions';
-import { TextField } from '../components';
-import theme from '../config/theme';
-import Wrapper from './wrapper.js';
+import React from "react";
+import { storiesOf, addDecorator } from "@storybook/react";
+import { muiTheme } from "storybook-addon-material-ui";
+import { action } from "@storybook/addon-actions";
+import { TextField } from "../components";
+import theme from "../config/theme";
+import Wrapper from "./wrapper.js";
 
-storiesOf('TextField', module)
+storiesOf("TextField", module)
   .addDecorator(muiTheme([theme]))
-  .add('All feature', () => (
+  .add("All feature", () => (
     <Wrapper
       imports={[`import { TextField } from "<Egov-Reusable-Components-Location>";`]}
       component={`TextField`}
@@ -31,7 +31,7 @@ storiesOf('TextField', module)
         disabled={false}
         hide={false}
         className=""
-        onChange={action('clicked')}
+        onChange={action("clicked")}
       />
     </Wrapper>
   ));

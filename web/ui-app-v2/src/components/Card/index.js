@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from "material-ui/Card";
+import PropTypes from "prop-types";
 
 // const styles = {
 //   cardUi: {

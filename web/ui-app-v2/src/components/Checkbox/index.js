@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Checkbox from 'material-ui/Checkbox';
+import React from "react";
+import PropTypes from "prop-types";
+import Checkbox from "material-ui/Checkbox";
 
 const CheckboxUi = ({ options, checkedValues, defaultValue, onCheck, style = {} }) => {
   const renderCheckboxOptions = () => {

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 
 class Template extends Component {
-
   render() {
-    return (
-      <div>
-        Banner
-      </div>
-    );
+    return <div>Banner</div>;
   }
 }
 

@@ -15,10 +15,13 @@ storiesOf("AppBar", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <Wrapper
-      imports={[`import { AppBar} from "<Egov-Reusable-Components-Location>";`,`import Badge from "material-ui/Badge";`
-      ,`import IconButton from "material-ui/IconButton";`,
-      `import NotificationsIcon from "material-ui/svg-icons/social/notifications";`]}
-      component={'AppBar'}
+      imports={[
+        `import { AppBar} from "<Egov-Reusable-Components-Location>";`,
+        `import Badge from "material-ui/Badge";`,
+        `import IconButton from "material-ui/IconButton";`,
+        `import NotificationsIcon from "material-ui/svg-icons/social/notifications";`,
+      ]}
+      component={"AppBar"}
       code={`<AppBar
         title="Mseva / Home"
         iconElementRight={
@@ -39,14 +42,9 @@ storiesOf("AppBar", module)
       <AppBar
         title="Mseva / Home"
         iconElementRight={
-          <Badge
-            badgeContent={10}
-            secondary={true}
-            badgeStyle={{ top: 2, right: 2}}
-            style={{padding:"0"}}
-          >
-            <IconButton  tooltip="Notifications" onClick={action("notification clicked")}>
-              <NotificationsIcon color={"white"}/>
+          <Badge badgeContent={10} secondary={true} badgeStyle={{ top: 2, right: 2 }} style={{ padding: "0" }}>
+            <IconButton tooltip="Notifications" onClick={action("notification clicked")}>
+              <NotificationsIcon color={"white"} />
             </IconButton>
           </Badge>
         }
@@ -56,12 +54,9 @@ storiesOf("AppBar", module)
       <br />
       <div>
         For more props information please visit{" "}
-        <a
-          href="http://www.material-ui.com/#/components/app-bar"
-          target="_blank"
-        >
+        <a href="http://www.material-ui.com/#/components/app-bar" target="_blank">
           AppBar
         </a>
       </div>
     </Wrapper>
-  ))  
+  ));

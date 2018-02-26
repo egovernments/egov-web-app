@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Tabs as MaterialUiTabs, Tab } from 'material-ui/Tabs';
+import React from "react";
+import PropTypes from "prop-types";
+import { Tabs as MaterialUiTabs, Tab } from "material-ui/Tabs";
 
 const Tabs = ({ tabs = [], onActive }) => {
   const renderTabs = () => {

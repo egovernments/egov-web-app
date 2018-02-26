@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from '../reducers';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "../reducers";
+import thunk from "redux-thunk";
 
-import { framework, fieldDependency, formValidation, modelDataTransformation } from '../middlewares';
+import { framework, fieldDependency, formValidation, modelDataTransformation } from "../middlewares";
 
 const middlewares = [];
 middlewares.push(thunk);
@@ -13,8 +13,8 @@ middlewares.push(fieldDependency);
 middlewares.push(formValidation);
 middlewares.push(modelDataTransformation);
 
-if (process.env.NODE_ENV === 'development') {
-  const { logger } = require('redux-logger');
+if (process.env.NODE_ENV === "development") {
+  const { logger } = require("redux-logger");
   middlewares.push(logger);
 }
 
