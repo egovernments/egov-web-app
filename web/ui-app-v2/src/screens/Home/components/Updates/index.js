@@ -24,11 +24,11 @@ class Updates extends Component {
           textChildren={
          <div className = "row row-body">
           <div className = "col-xs-4 col-md-2 update-icon left-side" style = {{background : "#e74c3c"}}>
-            <ActionHome color = "#ffffff"/>
+            <ActionHome color = "#ffffff" style = {{padding : "50px 35px 50px 35px"}}/>
           </div>
-          <div className = "col-xs-8 col-md-10">
+          <div className = "col-xs-8 col-md-10" style = {{padding : "30px"}}>
             <div className = "row">
-              <Label label="ROAD CLOSED" />
+              <p>ROAD CLOSED </p>
               <p  color = "#767676">5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
               </p >
             </div>
