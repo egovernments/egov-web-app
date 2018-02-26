@@ -3,13 +3,7 @@ import _ from "lodash";
 import { isFieldEmpty } from "../utils";
 
 const validateField = (value, field) => {
-  const {
-    minLength,
-    maxLength,
-    isRequired,
-    pattern,
-    patternErrorMessage
-  } = field;
+  const { minLength, maxLength, isRequired, pattern, patternErrorMessage } = field;
 
   let errorMessage = "",
     isFieldValid = true;
@@ -21,11 +15,7 @@ const validateField = (value, field) => {
     errorMessage = "Required";
   }
 
-  if (
-    (minLength && fieldLength < minLength) ||
-    (maxLength && fieldLength > maxLength) ||
-    (pattern && !new RegExp(pattern).test(value))
-  ) {
+  if ((minLength && fieldLength < minLength) || (maxLength && fieldLength > maxLength) || (pattern && !new RegExp(pattern).test(value))) {
     isFieldValid = false;
     errorMessage = patternErrorMessage;
   }
@@ -33,7 +23,7 @@ const validateField = (value, field) => {
   return { isFieldValid, errorMessage };
 };
 
-const doesFieldHaveError = field => {
+const doesFieldHaveError = (field) => {
   const { errorMessage } = field;
   return !(errorMessage && errorMessage.trim().length);
 };
@@ -64,7 +54,7 @@ const validateForm = (fields, requiredFields) => {
   return isFormValid;
 };
 
-const formValidation = store => next => action => {
+const formValidation = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
@@ -82,10 +72,7 @@ const formValidation = store => next => action => {
   } else if (type == "VALIDATE_FIELD") {
     next(action);
     const validatedState = store.getState();
-    const isFormValid = validateForm(
-      validatedState.framework.fields,
-      validatedState.framework.requiredFields
-    );
+    const isFormValid = validateForm(validatedState.framework.fields, validatedState.framework.requiredFields);
     dispatch(setFormValidation(isFormValid));
   } else {
     next(action);

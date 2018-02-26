@@ -8,17 +8,11 @@ import theme from "../config/theme";
 storiesOf("Button", module)
   .addDecorator(muiTheme([theme]))
   .add("with text", () => <Button label="Hello" onClick={action("clicked")} />)
-  .add("with some emoji", () => (
-    <Button label="😀 😎 👍 💯" onClick={action("clicked")} />
-  ))
+  .add("with some emoji", () => <Button label="😀 😎 👍 💯" onClick={action("clicked")} />)
   .add("with primary true", () => {
     return (
       <div>
-        <Button
-          primary={true}
-          label="Button with primary"
-          onClick={action("clicked")}
-        />
+        <Button primary={true} label="Button with primary" onClick={action("clicked")} />
       </div>
     );
   })

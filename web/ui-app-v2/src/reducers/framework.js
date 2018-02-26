@@ -9,7 +9,7 @@ const intialState = {
   moduleName: "",
   moduleMaster: "",
   loadingStatus: false,
-  isFormValid: false
+  isFormValid: false,
 };
 
 const framework = (state = intialState, action) => {
@@ -34,7 +34,7 @@ const framework = (state = intialState, action) => {
       const { formData } = action;
       return {
         ...state,
-        form: formData || {}
+        form: formData || {},
       };
 
     case "RESET_FORM_DATA":
@@ -44,21 +44,21 @@ const framework = (state = intialState, action) => {
       const { property } = action;
       return {
         ...state,
-        fields: { ...state.fields, [action.target]: property }
+        fields: { ...state.fields, [action.target]: property },
       };
 
     case "ADD_REQUIRED_FIELDS":
       const { requiredFields } = action;
       return {
         ...state,
-        requiredFields
+        requiredFields,
       };
 
     case "VALIDATE_FORM":
       const { isFormValid } = action;
       return {
         ...state,
-        isFormValid
+        isFormValid,
       };
 
     case "VALIDATE_FIELD":
@@ -70,15 +70,15 @@ const framework = (state = intialState, action) => {
           ...state.fields,
           [field.target]: {
             ...fieldProperty,
-            errorMessage
-          }
-        }
+            errorMessage,
+          },
+        },
       };
 
     case "SET_ROUTE":
       return {
         ...state,
-        route: action.route
+        route: action.route,
       };
 
     case "SET_MODULE_ACTION":
@@ -97,7 +97,7 @@ const framework = (state = intialState, action) => {
       const { dropDownData, target } = action;
       return {
         ...state,
-        dropDownData: { ...state.dropDownData, [target]: dropDownData }
+        dropDownData: { ...state.dropDownData, [target]: dropDownData },
       };
 
     case "LOADING_STATUS":

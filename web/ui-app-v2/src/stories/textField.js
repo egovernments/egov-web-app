@@ -10,9 +10,7 @@ storiesOf("TextField", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <Wrapper
-      imports={[
-        `import { TextField } from "<Egov-Reusable-Components-Location>";`
-      ]}
+      imports={[`import { TextField } from "<Egov-Reusable-Components-Location>";`]}
       component={`TextField`}
       code={`<TextField
               label="Test"

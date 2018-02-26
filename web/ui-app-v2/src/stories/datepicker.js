@@ -10,9 +10,7 @@ storiesOf("DatePicker", module)
   .addDecorator(muiTheme([theme]))
   .add("All feature", () => (
     <Wrapper
-      imports={[
-        `import { DatePicker } from "<Egov-Reusable-Components-Location>";`
-      ]}
+      imports={[`import { DatePicker } from "<Egov-Reusable-Components-Location>";`]}
       component={`DatePicker`}
       code={`<DatePicker
           onChange={action("clicked")}
@@ -20,13 +18,14 @@ storiesOf("DatePicker", module)
           floatingLabelText="Test Date Picker"
       />`}
     >
-      <DatePicker
-          onChange={action("clicked")}
-          autoOk={true}
-          floatingLabelText="Test Date Picker"
-      />
-      <br/>
-      <br/>
-      <div>For more props information please visit <a href="http://www.material-ui.com/#/components/date-picker" target="_blank">Date picker</a></div>
+      <DatePicker onChange={action("clicked")} autoOk={true} floatingLabelText="Test Date Picker" />
+      <br />
+      <br />
+      <div>
+        For more props information please visit{" "}
+        <a href="http://www.material-ui.com/#/components/date-picker" target="_blank">
+          Date picker
+        </a>
+      </div>
     </Wrapper>
   ));

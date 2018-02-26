@@ -11,19 +11,19 @@ export default class Dialogui extends Component {
       open: false,
       username: "Babika",
       inputname: "Babika",
-      select: false
+      select: false,
     };
   }
   handleOpen = () => {
     let name = this.state.username;
     this.setState({
       open: true,
-      inputname: name
+      inputname: name,
     });
   };
   handleClose = () => {
     this.setState({
-      open: false
+      open: false,
     });
   };
   handleOk = () => {
@@ -31,21 +31,21 @@ export default class Dialogui extends Component {
     this.setState({
       select: true,
       open: false,
-      username: name
+      username: name,
     });
   };
   handleReset = () => {
     let name = this.state.username;
     this.setState({
-      inputname: name
+      inputname: name,
     });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     let name = event.target.value;
     //let select=this.state.select;
     console.log(name);
     this.setState({
-      inputname: name
+      inputname: name,
     });
   };
 
@@ -54,26 +54,11 @@ export default class Dialogui extends Component {
     const actions = close
       ? [<FlatButton label="close" primary={true} onClick={this.handleClose} />]
       : ok
-        ? [
-            <FlatButton label="ok" primary={true} onClick={this.handleOk} />,
-            <FlatButton
-              label="close"
-              primary={true}
-              onClick={this.handleClose}
-            />
-          ]
+        ? [<FlatButton label="ok" primary={true} onClick={this.handleOk} />, <FlatButton label="close" primary={true} onClick={this.handleClose} />]
         : [
             <FlatButton label="ok" primary={true} onClick={this.handleOk} />,
-            <FlatButton
-              label="close"
-              primary={true}
-              onClick={this.handleClose}
-            />,
-            <FlatButton
-              label="reset"
-              primary={true}
-              onClick={this.handleReset}
-            />
+            <FlatButton label="close" primary={true} onClick={this.handleClose} />,
+            <FlatButton label="reset" primary={true} onClick={this.handleReset} />,
           ];
     let username = this.state.username;
     let inputname = this.state.inputname;
@@ -87,22 +72,13 @@ export default class Dialogui extends Component {
           primary={true}
           onClick={this.handleOpen}
         />
-        <Dialog
-          style={{ width: "90%", height: "95%" }}
-          actions={actions}
-          modal={true}
-          open={this.state.open}
-        >
+        <Dialog style={{ width: "90%", height: "95%" }} actions={actions} modal={true} open={this.state.open}>
           <div style={{ background: "lightblue" }}>
             {<h2 style={{ color: "black" }}>Example Dialog</h2>}
             {(ok || reset) && (
               <div>
                 <label style={{ color: "black" }}>Enter Your Name:</label>
-                <input
-                  type="text"
-                  value={inputname}
-                  onChange={this.handleChange}
-                />
+                <input type="text" value={inputname} onChange={this.handleChange} />
               </div>
             )}
           </div>

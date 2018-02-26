@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  prepareFormData,
-  getRequestUrl,
-  fetchFromLocalStorage
-} from "../utils";
+import { prepareFormData, getRequestUrl, fetchFromLocalStorage } from "../utils";
 
 const authToken = fetchFromLocalStorage("token");
 const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
@@ -12,11 +8,11 @@ const tenantId = fetchFromLocalStorage("tenantId");
 const instance = axios.create({
   baseURL: window.location.origin,
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
 
-const wrapRequestBody = requestBody => {
+const wrapRequestBody = (requestBody) => {
   const RequestInfo = {
     apiId: "emp",
     ver: "1.0",
@@ -27,7 +23,7 @@ const wrapRequestBody = requestBody => {
     msgId: "20170310130900",
     requesterId: "rajesh",
     userInfo,
-    authToken
+    authToken,
   };
 
   return Object.assign({}, { RequestInfo: RequestInfo }, requestBody);
@@ -36,18 +32,12 @@ const wrapRequestBody = requestBody => {
 export const httpRequest = async (endPoint, requestBody, headers) => {
   let apiError = "Api Error";
   try {
-    const response = await instance.post(
-      endPoint,
-      wrapRequestBody(requestBody)
-    );
+    const response = await instance.post(endPoint, wrapRequestBody(requestBody));
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
     } else {
-      apiError =
-        response.hasOwnProperty("Errors") && response.Errors.length
-          ? response.Errors[0].message
-          : apiError;
+      apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
     apiError = error;

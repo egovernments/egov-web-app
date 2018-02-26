@@ -9,11 +9,11 @@ const style = {
     backgroundColor: "rgba(189,189,189,0.5)",
     zIndex: 9998,
     left: 0,
-    top: 0
+    top: 0,
   },
   containerHide: {
     display: "none",
-    position: "relative"
+    position: "relative",
   },
   refresh: {
     display: "block",
@@ -21,21 +21,15 @@ const style = {
     zIndex: 9999,
     marginLeft: "48%",
     marginTop: "23%",
-    color: "#FF9800"
-  }
+    color: "#FF9800",
+  },
 };
 
 const LoadingIndicator = ({ status }) => {
-  console.log("Hi...." + status)
+  console.log("Hi...." + status);
   return (
     <div style={status === "hide" ? style.containerHide : style.container}>
-      <RefreshIndicator
-        size={40}
-        left={10}
-        top={0}
-        status="loading"
-        style={style.refresh}
-      />
+      <RefreshIndicator size={40} left={10} top={0} status="loading" style={style.refresh} />
     </div>
   );
 };

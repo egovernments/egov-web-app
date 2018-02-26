@@ -7,6 +7,6 @@ import theme from "../config/theme";
 
 storiesOf("Dialog", module)
   .addDecorator(muiTheme([theme]))
-  .add("withclose", () => <Dialog close={true} ok={false} reset={false}/>)
-  .add("withok", () => <Dialog close={false} ok={true} reset={false}/>)
-  .add("withReset", () => <Dialog close={false} ok={false} reset={true}/>)
+  .add("withclose", () => <Dialog close={true} ok={false} reset={false} />)
+  .add("withok", () => <Dialog close={false} ok={true} reset={false} />)
+  .add("withReset", () => <Dialog close={false} ok={false} reset={true} />);

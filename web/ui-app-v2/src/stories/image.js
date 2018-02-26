@@ -8,13 +8,7 @@ import theme from "../config/theme";
 
 storiesOf("Image", module)
   .addDecorator(muiTheme([theme]))
-  .add("default usage", () => (
-    <Image source="http://via.placeholder.com/350x250" />
-  ))
+  .add("default usage", () => <Image source="http://via.placeholder.com/350x250" />)
   .add("image with circle", () => (
-    <Image
-      className="img-circle"
-      style={{ borderRadius: "50%", width: "100px", height: "100px" }}
-      source="http://via.placeholder.com/350x250"
-    />
+    <Image className="img-circle" style={{ borderRadius: "50%", width: "100px", height: "100px" }} source="http://via.placeholder.com/350x250" />
   ));

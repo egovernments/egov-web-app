@@ -1,7 +1,7 @@
 import { saveForm, setFormData } from "../actions/framework";
 import _ from "lodash";
 
-const frameworkMiddleware = store => next => action => {
+const frameworkMiddleware = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
@@ -13,12 +13,8 @@ const frameworkMiddleware = store => next => action => {
     case "SUBMIT_FORM_DATA":
       transformedFormData = _.clone(formData);
 
-      if (
-        transformers &&
-        transformers.VToBModelTransform &&
-        transformers.VToBModelTransform.length
-      )
-        transformers.VToBModelTransform.forEach(transformer => {
+      if (transformers && transformers.VToBModelTransform && transformers.VToBModelTransform.length)
+        transformers.VToBModelTransform.forEach((transformer) => {
           transformer(transformedFormData);
         });
 
@@ -27,12 +23,8 @@ const frameworkMiddleware = store => next => action => {
 
     case "SET_FORM_DATA":
       transformedFormData = _.clone(action.formData);
-      if (
-        transformers &&
-        transformers.BToVModelTransform &&
-        transformers.BToVModelTransform.length
-      ) {
-        transformers.BToVModelTransform.forEach(transformer => {
+      if (transformers && transformers.BToVModelTransform && transformers.BToVModelTransform.length) {
+        transformers.BToVModelTransform.forEach((transformer) => {
           transformer(transformedFormData);
         });
         action.formData = transformedFormData;

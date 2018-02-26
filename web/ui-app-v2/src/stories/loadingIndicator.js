@@ -6,11 +6,5 @@ import theme from "../config/theme";
 import { LoadingIndicator } from "../components";
 
 storiesOf("LoadingIndicator", module)
-    .addDecorator(muiTheme([theme]))
-    .add("load", () => 
-    (
-        <LoadingIndicator
-        status="loading"
-        />
-    )
-);
+  .addDecorator(muiTheme([theme]))
+  .add("load", () => <LoadingIndicator status="loading" />);

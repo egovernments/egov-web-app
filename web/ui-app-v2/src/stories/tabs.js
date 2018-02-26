@@ -8,12 +8,12 @@ import theme from "../config/theme";
 const tabs = [
   {
     label: "My Complaints",
-    route: "/my-complaints"
+    route: "/my-complaints",
   },
   {
     label: "Around Me",
-    route: "/around-me"
-  }
+    route: "/around-me",
+  },
 ];
 
 storiesOf("Tabs", module)

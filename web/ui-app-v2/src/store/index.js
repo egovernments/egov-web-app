@@ -2,12 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers";
 import thunk from "redux-thunk";
 
-import {
-  framework,
-  fieldDependency,
-  formValidation,
-  modelDataTransformation
-} from "../middlewares";
+import { framework, fieldDependency, formValidation, modelDataTransformation } from "../middlewares";
 
 const middlewares = [];
 middlewares.push(thunk);

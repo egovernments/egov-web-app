@@ -18,7 +18,7 @@ export default class SelectFieldContainer extends Component {
       const { field, value } = nextProps;
       let { dependencies } = field;
       dependencies = dependencies && dependencies.length ? dependencies : [];
-      dependencies.forEach(dependency => {
+      dependencies.forEach((dependency) => {
         const { target, dataSource, type: dependencyType } = dependency;
         if (dependencyType === "API_CALL") {
           const searchUrl = prepareSearchUrl(dataSource, value);
@@ -50,17 +50,7 @@ export default class SelectFieldContainer extends Component {
   render() {
     const { onChange } = this;
     const { field, fetchDropDownData, dropDownData, ...rest } = this.props;
-    const transformedDropdownData = this.transformDropdownData(
-      field,
-      dropDownData
-    );
-    return (
-      <SelectField
-        onChange={onChange}
-        field={field}
-        dropDownData={transformedDropdownData}
-        {...rest}
-      />
-    );
+    const transformedDropdownData = this.transformDropdownData(field, dropDownData);
+    return <SelectField onChange={onChange} field={field} dropDownData={transformedDropdownData} {...rest} />;
   }
 }

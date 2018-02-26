@@ -1,23 +1,23 @@
 import { httpRequest } from "../api";
 
-export const setModuleName = moduleName => {
+export const setModuleName = (moduleName) => {
   return {
     type: "SET_MODULE_NAME",
-    moduleName
+    moduleName,
   };
 };
 
-export const setActionName = moduleAction => {
+export const setActionName = (moduleAction) => {
   return {
     type: "SET_MODULE_ACTION",
-    moduleAction
+    moduleAction,
   };
 };
 
-export const setMasterName = moduleMaster => {
+export const setMasterName = (moduleMaster) => {
   return {
     type: "SET_MODULE_MASTER",
-    moduleMaster
+    moduleMaster,
   };
 };
 
@@ -25,64 +25,64 @@ export const setFieldProperty = (target, property) => {
   return {
     type: "SET_FIELD_PROPERTY",
     target,
-    property
+    property,
   };
 };
 
 // set routes
-export const setRoute = route => {
+export const setRoute = (route) => {
   return {
     type: "SET_ROUTE",
-    route
+    route,
   };
 };
 
 // submit form
 export const submitFormData = () => {
   return {
-    type: "SUBMIT_FORM_DATA"
+    type: "SUBMIT_FORM_DATA",
   };
 };
 
-const submitFormDataSuccess = response => {
+const submitFormDataSuccess = (response) => {
   return {
     type: "SUBMIT_FORM_DATA_SUCCESS",
-    response
+    response,
   };
 };
 
-const submitFormDataFailure = error => {
+const submitFormDataFailure = (error) => {
   return {
     type: "SUBMIT_FORM_DATA_FAILURE",
-    error
+    error,
   };
 };
 
 export const resetFormData = () => {
   return {
-    type: "RESET_FORM_DATA"
+    type: "RESET_FORM_DATA",
   };
 };
 
 // handle change event
-export const handleChange = field => {
+export const handleChange = (field) => {
   return {
     type: "HANDLE_CHANGE",
-    field
+    field,
   };
 };
 
-export const setFormData = formData => {
+export const setFormData = (formData) => {
   return {
     type: "SET_FORM_DATA",
-    formData
+    formData,
   };
 };
 
-export const searchSuccess = formData => {
+export const searchSuccess = (formData) => {
   return {
     type: "SEARCH_SUCCESS",
-    formData
+    formData,
   };
 };
 
@@ -90,19 +90,19 @@ export const setDropDownData = (target, dropDownData) => {
   return {
     type: "SET_DROPDOWN_DATA",
     target,
-    dropDownData
+    dropDownData,
   };
 };
 
-export const addRequiredFields = requiredFields => {
+export const addRequiredFields = (requiredFields) => {
   return {
     type: "ADD_REQUIRED_FIELDS",
-    requiredFields
+    requiredFields,
   };
 };
 
 // form field validations
-export const setFormValidation = isFormValid => {
+export const setFormValidation = (isFormValid) => {
   return { type: "VALIDATE_FORM", isFormValid };
 };
 
@@ -110,10 +110,10 @@ export const setFieldValidation = (field, errorMessage) => {
   return { type: "VALIDATE_FIELD", field, errorMessage };
 };
 
-const applicationError = error => {
+const applicationError = (error) => {
   return {
     type: "APPLICATION_ERROR",
-    error
+    error,
   };
 };
 

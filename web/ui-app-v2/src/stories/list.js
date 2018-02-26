@@ -16,17 +16,17 @@ const items = [
   {
     primaryText: "Inbox",
     leftIcon: <ContentInbox />,
-    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
   },
   {
     primaryText: "Starred",
     leftIcon: <ActionGrade />,
-    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
   },
   {
     primaryText: "Sent Mail",
     leftIcon: <ContentSend />,
-    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+    rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
   },
   {
     primaryText: "Drafts",
@@ -37,20 +37,20 @@ const items = [
       {
         primaryText: "Inbox",
         leftIcon: <ContentInbox />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Starred",
         leftIcon: <ActionGrade />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Sent Mail",
         leftIcon: <ContentSend />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
-      }
-    ]
-  }
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
+      },
+    ],
+  },
 ];
 
 storiesOf("List", module)

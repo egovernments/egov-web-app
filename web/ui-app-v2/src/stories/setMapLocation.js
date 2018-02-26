@@ -7,4 +7,4 @@ import theme from "../config/theme";
 
 storiesOf("SetMapLocation", module)
   .addDecorator(muiTheme([theme]))
-  .add("with a marker", () => <SetMapLocation/>);
+  .add("with a marker", () => <SetMapLocation />);

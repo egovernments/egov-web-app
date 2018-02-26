@@ -18,36 +18,32 @@ const nearbyIcon = <IconLocationOn />;
 // load material icons
 WebFont.load({
   google: {
-    families: ["Material+Icons"]
-  }
+    families: ["Material+Icons"],
+  },
 });
 
 const options = [
   {
     label: "Recents",
     icon: recentsIcon,
-    route: "/recents"
+    route: "/recents",
   },
   {
     label: "Favourites",
     icon: favoritesIcon,
-    route: "/favourites"
+    route: "/favourites",
   },
   {
     label: "Nearby",
     icon: nearbyIcon,
-    route: "/nearby"
-  }
+    route: "/nearby",
+  },
 ];
 
 storiesOf("Bottom Navigation", module)
   .addDecorator(muiTheme([theme]))
   .add("with options", () => (
     <Paper zDepth={1}>
-      <BottomNavigation
-        selectedIndex={0}
-        options={options}
-        handleChange={action("clicked")}
-      />
+      <BottomNavigation selectedIndex={0} options={options} handleChange={action("clicked")} />
     </Paper>
   ));

@@ -10,16 +10,16 @@ const dependantApiCall = (value, dependency, dispatch) => {
 const toggleFieldProperty = (dependency, value, dispatch) => {
   const { toggleProperty, targets } = dependency;
   const toggleValue = value == true ? false : true;
-  targets.forEach(target => {
+  targets.forEach((target) => {
     dispatch(
       setFieldProperty(target, {
-        [toggleProperty]: toggleValue
+        [toggleProperty]: toggleValue,
       })
     );
   });
 };
 
-const fieldDependency = store => next => action => {
+const fieldDependency = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();
@@ -29,7 +29,7 @@ const fieldDependency = store => next => action => {
     const { value, dependencies } = field;
 
     if (dependencies && dependencies.length) {
-      dependencies.forEach(dependency => {
+      dependencies.forEach((dependency) => {
         const { type } = dependency;
         switch (type) {
           case "API_CALL":

@@ -6,9 +6,7 @@ const Tabs = ({ tabs = [], onActive }) => {
   const renderTabs = () => {
     return tabs.map((tab, index) => {
       const { route, label } = tab;
-      return (
-        <Tab key={index} onActive={onActive} data-route={route} label={label} />
-      );
+      return <Tab key={index} onActive={onActive} data-route={route} label={label} />;
     });
   };
 
@@ -17,6 +15,6 @@ const Tabs = ({ tabs = [], onActive }) => {
 
 Tabs.propTypes = {
   tabs: PropTypes.array,
-  onActive: PropTypes.func
+  onActive: PropTypes.func,
 };
 export default Tabs;
