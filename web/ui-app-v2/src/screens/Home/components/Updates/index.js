@@ -8,24 +8,24 @@ import "./index.css"
 
 class Updates extends Component {
   render() {
-    return <div style = {{"paddingTop" :"20px"}}>
+    return <div>
       <Card card={{
           style:{
-            backgroundColor:"#ffffff",  
+            backgroundColor:"#ffffff", 
           }
         }} textChildren={
          <div className = "row">
-          <div className = "col-xs-2" style = {{background : "#e74c3c"}}>
+          <div className = "col-xs-2 update-icon" style = {{background : "#e74c3c"}}>
             <ActionHome color = "#ffffff"/>
           </div>
           <div className = "col-xs-10">
-            <div className = "row">
+            <div className = "row" padding = "20px"> 
               <Label label="ROAD CLOSED" />
-              <p >5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
+              <p  color = "#767676">5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
               </p >
             </div>
             <div className = "row "  style = {{ textAlign : 'right' }} >
-              <Location />
+              <Location color = "#767676"/>
             </div>
           </div>
         </div>
