@@ -34,8 +34,8 @@ class Notification extends Component {
         </span>
         </div>
         <div className="row">
-        <Label className="notification-content-label" labelPosition="after" label="YES"  icon={<ThumbUp style={iconStyle} color={"#f5a623"}/>}  />
-        <Label className="notification-content-label" labelPosition="after" label="NO" icon={<ThumbDown style={iconStyle} color={"#f5a623"}/>}  />
+        <Label style={{display : "inline-block"}} className="notification-content-label" labelPosition="after" label="YES"  icon={<ThumbUp style={iconStyle} color={"#f5a623"}/>}  />
+        <Label style={{display : "inline-block"}} className="notification-content-label" labelPosition="after" label="NO" icon={<ThumbDown style={iconStyle} color={"#f5a623"}/>}  />
         </div>
         </div>
         </div>

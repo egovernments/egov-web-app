@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import FlatButton from "material-ui/FlatButton";
 
 const baseStyle = {
-    display : "block"
+    display : "block",
 } 
 
 const baseLabelStyle = {
   fontSize: "12px",
-  paddingLeft : "0px"
+  paddingLeft : "0px",
+
 };
 
 const Label = ({ children, icon, labelStyle, labelPosition = "after", label, style, primary, className }) => {
   return (
-    <FlatButton style={style} children={children} labelPosition={labelPosition} className={className} icon={icon} primary={primary} label={label} />
+    <FlatButton labelStyle={Object.assign({},baseLabelStyle,labelStyle )} style={Object.assign({}, baseStyle,style )} children={children} labelPosition={labelPosition} className={className} icon={icon} primary={primary} label={label} />
   );
 };
 

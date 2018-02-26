@@ -32,8 +32,8 @@ class Events extends Component {
                 <Label label={this.state.dateRange} style={{color: "#ffffff"}}/>
                 <Label label={this.state.month} style={{color: "#ffffff", backgroundColor:"#9b59b6"}}/>
               </div>
-              <div className = "col-xs-9" style = {{}}>
-                <Label label={this.state.eventName} style={{}}/>
+              <div className = "col-xs-9">
+                <Label label={this.state.eventName}/>
                 <Label label={this.state.location} labelPosition="after" icon={<LocationIcon/>}/>
                 <Label label={this.state.timing}  />
               </div>
