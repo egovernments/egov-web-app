@@ -2,46 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import "./style.css";
 
-const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange, style }) => {
-  const labelProperty = {
-    floatingLabelFixed: true,
-    floatingLabelStyle: {
-      color: "#696969",
-      fontSize: "20px",
-      whiteSpace: "nowrap",
-    },
-    floatingLabelText: (
-      <span>
-        {field.label} <span style={{ color: "#FF0000" }}>{field.isRequired ? " *" : ""}</span>
-      </span>
-    ),
-    hintText: "-- Please Select --",
-  };
+const baseStyle = {
+  background: "#f2f2f2",
+  height: "56px",
+  paddingLeft: "10px",
+};
 
+const DropDownUi = ({ value, fullWidth = false, dropDownData = [], selected, onChange, style = {} }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.key} primaryText={option.value} />;
+      return <MenuItem key={index} value={option.value} primaryText={option.label} />;
     });
   };
 
   return (
     <SelectField
-      className="custom-form-control-for-select"
-      style={style}
-      floatingLabelStyle={{
-        color: "#696969",
-        fontSize: "20px",
-        whiteSpace: "nowrap",
-      }}
+      className="dropdown"
+      style={Object.assign({}, baseStyle, style)}
+      fullWidth={fullWidth}
       dropDownMenuProps={{
         targetOrigin: { horizontal: "left", vertical: "bottom" },
       }}
       labelStyle={{ color: "#5F5C57" }}
       value={value}
       onChange={onChange}
-      {...labelProperty}
     >
       {renderSelectMenuItems()}
     </SelectField>
@@ -49,8 +34,9 @@ const DropDownUi = ({ value, field, name, dropDownData = [], selected, onChange,
 };
 
 DropDownUi.propTypes = {
+  fullWidth: PropTypes.bool,
   label: PropTypes.string,
-  handleChange: PropTypes.func,
+  onChange: PropTypes.func,
   selected: PropTypes.string,
 };
 
