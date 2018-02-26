@@ -8,7 +8,7 @@ import "./index.css"
 
 class Updates extends Component {
   render() {
-    return <div style = {{"padding-top" :"20px"}}>
+    return <div style = {{"paddingTop" :"20px"}}>
       <Card card={{
           style:{
             backgroundColor:"#ffffff",  
@@ -21,10 +21,10 @@ class Updates extends Component {
           <div className = "col-xs-10">
             <div className = "row">
               <Label label="ROAD CLOSED" />
-              <p>5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
+              <p >5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
               </p >
             </div>
-            <div className = "row "  style = {{ "text-align" : 'right' }} >
+            <div className = "row "  style = {{ textAlign : 'right' }} >
               <Location />
             </div>
           </div>
