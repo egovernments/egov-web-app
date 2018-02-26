@@ -1,8 +1,12 @@
 package com.rainmaker.egov.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 
 /**
  * Created by varun hegde on 2/21/18.
