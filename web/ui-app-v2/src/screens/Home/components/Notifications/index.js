@@ -24,12 +24,12 @@ class Notification extends Component {
         }}
         text={{
           style:{
-             paddingTop:0
+            paddingTop:0
           }
-         }}
+        }}
         textChildren={
         <div className="row">
-        <div className="col-xs-2" style={{background:'#73b332'}}>
+        <div className="col-xs-2 notification-icon" style={{background:'#73b332'}}>
         <ActionHome/>
         </div>
         <div className="col-xs-10">

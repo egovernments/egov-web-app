@@ -16,11 +16,10 @@ class Updates extends Component {
         }}
         text={{
           style:{
-             paddingTop:0
+            paddingTop:0
           }
-         }}
-         
-          textChildren={
+        }}
+         textChildren={
          <div className = "row">
           <div className = "col-xs-2 update-icon" style = {{background : "#e74c3c"}}>
             <ActionHome color = "#ffffff"/>
