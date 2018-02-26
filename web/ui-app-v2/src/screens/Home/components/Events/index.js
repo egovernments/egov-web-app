@@ -26,6 +26,11 @@ class Events extends Component {
               backgroundColor:"#ffffff",
             }
           }}
+          text={{
+          style:{
+             paddingTop:0
+          }
+         }}
           textChildren={
             <div className = "row">
               <div className = "col-xs-3" style = {{background : "#8e44ad"}}>
