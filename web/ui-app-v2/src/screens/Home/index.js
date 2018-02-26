@@ -80,7 +80,7 @@ class Home extends Component {
       <div>
         <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
         <Banner {...banner} />
-        <div className="contentLeftAndRightPadding">
+        <div className="home-page-content">
           <NewAndOldComplaints />
           <Updates {...Updates} />
           <Notifications />
