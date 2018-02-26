@@ -44,7 +44,6 @@ const MapLocation = compose(
         onPlacesChanged: () => {
           const places = refs.searchBox.getPlaces();
           const bounds = new window.google.maps.LatLngBounds();
-          // const bounds = {};
 
           places.forEach((place) => {
             if (place.geometry.viewport) {
@@ -81,9 +80,10 @@ const MapLocation = compose(
   withGoogleMap
 )((props) => (
   <GoogleMap
+    ref={props.onMapMounted}
     defaultZoom={11}
-    defaultCenter={props.center}
-    // defaultOptions={{ styles: demoFancyMapStyles }}
+    center={props.center}
+    onBoundsChanged={props.onBoundsChanged}
   >
     <SearchBox ref={props.onSearchBoxMounted} bounds={props.bounds} controlPosition={window.google.maps.ControlPosition.TOP_LEFT} onPlacesChanged={props.onPlacesChanged}>
       <input
