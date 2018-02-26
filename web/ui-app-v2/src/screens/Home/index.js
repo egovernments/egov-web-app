@@ -9,6 +9,7 @@ import BottomNavigation from "../../components/BottomNavigation";
 
 import FontIcon from "material-ui/FontIcon";
 import IconLocationOn from "material-ui/svg-icons/communication/location-on";
+import "./index.css"
 const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 const nearbyIcon = <IconLocationOn />;
@@ -64,10 +65,12 @@ class Home extends Component {
       <div>
         <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
         <Banner {...banner} />
-        <NewAndOldComplaints />
-        <Updates {...Updates} />
-        <Notifications />
-        <Events {...events} />
+        <div className="contentLeftAndRightPadding">
+          <NewAndOldComplaints />
+          <Updates {...Updates} />
+          <Notifications />
+          <Events {...events} />
+        </div>
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );
