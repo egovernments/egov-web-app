@@ -4,6 +4,7 @@ import Label from "../../../../components/Label";
 import ThumbDown from "material-ui/svg-icons/action/thumb-down";
 import ThumbUp from "material-ui/svg-icons/action/thumb-up";
 import ActionHome from "material-ui/svg-icons/action/home";
+import "./index.css";
 
 class Notification extends Component {
   render() {
@@ -12,8 +13,9 @@ class Notification extends Component {
       height: "24px",
       width: "24px"
           };
+
     return (
-      <div style={{'padding-top':'10px'}}>
+      <div style={{paddingTop:'20px'}}>
         <Card
         card={{
           style:{
@@ -27,13 +29,13 @@ class Notification extends Component {
         </div>
         <div className="col-xs-10">
         <div className="row">
-        <span className="col-xs-12">
+        <span className="col-xs-12 notification-content" >
         Are there enough dustbins in your area?
         </span>
         </div>
         <div className="row">
-        <Label labelPosition="after" label="YES"  icon={<ThumbUp style={iconStyle} color={"#f5a623"}/>} />
-        <Label labelPosition="after" label="NO" icon={<ThumbDown style={iconStyle} color={"#f5a623"}/>} />
+        <Label className="notification-content-label" labelPosition="after" label="YES"  icon={<ThumbUp style={iconStyle} color={"#f5a623"}/>}  />
+        <Label className="notification-content-label" labelPosition="after" label="NO" icon={<ThumbDown style={iconStyle} color={"#f5a623"}/>}  />
         </div>
         </div>
         </div>
