@@ -15,7 +15,7 @@ function loadStories() {
   require('../src/stories/drawer.js');
   require('../src/stories/loadingIndicator.js');
   require('../src/stories/checkBox.js');
-  require('../src/stories/setMapLocation.js');
+  require('../src/stories/mapLocation.js');
   require('../src/stories/button.js');
   require('../src/stories/textArea.js');
   require('../src/stories/card.js');

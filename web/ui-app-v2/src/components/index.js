@@ -17,7 +17,7 @@ import Image from "./Image";
 import LoadingIndicator from "./LoadingIndicator";
 import BottomNavigation from "./BottomNavigation";
 import Tabs from "./Tabs";
-import SetMapLocation from "./SetMapLocation";
+import MapLocation from "./MapLocation";
 import List from "./List";
 import ProfileSection from "./ProfileSection";
 
@@ -40,7 +40,7 @@ export {
   LoadingIndicator,
   BottomNavigation,
   Tabs,
-  SetMapLocation,
+  MapLocation,
   List,
   ProfileSection
 };

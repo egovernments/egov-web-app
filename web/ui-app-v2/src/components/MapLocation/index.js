@@ -5,7 +5,7 @@ import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
 
-const SetMapLocation = compose(
+const MapLocation = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
@@ -108,4 +108,4 @@ const SetMapLocation = compose(
   </GoogleMap>
 ));
 
-export default SetMapLocation;
+export default MapLocation;
