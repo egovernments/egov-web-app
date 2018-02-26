@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -27,12 +28,13 @@ const styles = {
   },
 };
 
-const Banner = () => {};
+class Login extends Component {
+  login = () => {
+    this.props.history.push('/otp');
+  };
 
-const Form = () => {};
-
-export default class Login extends Component {
   render() {
+    const { login } = this;
     return (
       <div className="col-xs-12 col-lg-4 col-sm-6 col-md-4 col-lg-offset-4 col-sm-offset-3 col-md-offset-4">
         <Image source="https://placeimg.com/450/450/arch" />
@@ -41,15 +43,17 @@ export default class Login extends Component {
           <form>
             <TextField className="textfield" id="name" fullWidth={true} placeholder="Name" />
             <DropDownMenu style={styles.dropDown} value={1}>
-              <MenuItem value={1} primaryText="Amritsar" />
+              <MenuItem style={{ width: '100%' }} value={1} primaryText="Amritsar" />
             </DropDownMenu>
             <br />
             <TextField className="textfield" id="phone-number" underlineShow={false} fullWidth={true} placeholder="Phone Number" />
             <br />
-            <Button primary={true} label="Submit" fullWidth={true} />
+            <Button onClick={login} primary={true} label="Submit" fullWidth={true} />
           </form>
         </Paper>
       </div>
     );
   }
 }
+
+export default withRouter(Login);

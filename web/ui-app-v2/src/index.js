@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Main from './router';
 import store from './store';
 import theme from './config/theme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 //Web font loader
 import WebFont from 'webfontloader';
@@ -16,6 +17,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const muiTheme = getMuiTheme(theme);
+
+// to eliminate the click delay
+injectTapEventPlugin();
 
 // load material icons
 WebFont.load({

@@ -6,7 +6,7 @@ import OTP from './screens/User/OTP';
 
 const Main = () => {
   return (
-    <main style={{ marginTop: '50px' }}>
+    <main>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
