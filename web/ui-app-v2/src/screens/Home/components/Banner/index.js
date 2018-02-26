@@ -25,7 +25,7 @@ const styles = {
 class Banner extends Component {
   render() {
     return (
-      <div style={styles.container} className="row">
+      <div style={styles.container} >
         <div style={styles.overlay} />
         <Image style={styles.logo} circular={true} source="https://placeimg.com/100/100/tech" />
       </div>
