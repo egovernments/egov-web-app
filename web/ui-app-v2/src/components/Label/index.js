@@ -2,9 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import FlatButton from "material-ui/FlatButton";
 
-const Label = ({ children, icon, labelPosition = "after", label, style, primary, className }) => {
+const baseStyle = {
+    display : "block"
+} 
+
+const baseLabelStyle = {
+  fontSize: "12px",
+  paddingLeft : "0px"
+};
+
+const Label = ({ children, icon, labelStyle, labelPosition = "after", label, style, primary, className }) => {
   return (
-    <FlatButton children={children} labelPosition={labelPosition} className={className} style={style} icon={icon} primary={primary} label={label} />
+    <FlatButton labelStyle={Object.assign({}, baseLabelStyle, labelStyle)} children={children} labelPosition={labelPosition} className={className} style={Object.assign({},baseStyle,style)} icon={icon} primary={primary} label={label} />
   );
 };
 
