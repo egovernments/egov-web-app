@@ -45,13 +45,13 @@ class Home extends Component {
     });
   };
 
-  _updateMenuState = status => {
+  _updateMenuState = (status) => {
     this.setState({
       toggleMenu: status,
     });
   };
 
-  _onTabChange = tabIndex => {
+  _onTabChange = (tabIndex) => {
     this.setState({
       tabIndex,
     });

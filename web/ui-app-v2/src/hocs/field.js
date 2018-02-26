@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { handleChange } from "../actions/framework";
 
 // this UiField can be a
-const Field = UiField => {
+const Field = (UiField) => {
   class Field extends Component {
-    onChange = event => {
+    onChange = (event) => {
       const value = event.target.value;
       const { target, handleChange } = this.props;
       handleChange(target, value);
@@ -22,7 +22,7 @@ const Field = UiField => {
     value: state.framework.form[props.target] || "",
   });
 
-  const mapDispatchToProps = dispatch => ({
+  const mapDispatchToProps = (dispatch) => ({
     handleChange: (item, value) => dispatch(handleChange(item, value)),
   });
 

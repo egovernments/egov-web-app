@@ -40,7 +40,7 @@ export default class Dialogui extends Component {
       inputname: name,
     });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     let name = event.target.value;
     //let select=this.state.select;
     console.log(name);

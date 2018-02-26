@@ -98,7 +98,7 @@ export default class DrawerUndockedExample extends React.Component {
     return (
       <div>
         <RaisedButton label="Open Drawer" onClick={this.handleToggle} />
-        <Drawer docked={false} width={304} open={this.state.open} onRequestChange={open => this.setState({ open })}>
+        <Drawer docked={false} width={304} open={this.state.open} onRequestChange={(open) => this.setState({ open })}>
           <List items={items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
           {/*<PoweredBy
             style={{

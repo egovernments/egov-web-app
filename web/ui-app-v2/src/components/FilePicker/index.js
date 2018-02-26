@@ -13,12 +13,12 @@ export default class FilePicker extends Component {
   }
 
   // this function should be called in the container
-  handleFileChange = event => {
+  handleFileChange = (event) => {
     let input = event.target;
     if (input.files && input.files[0]) {
       var reader = new FileReader();
 
-      reader.onload = e => {
+      reader.onload = (e) => {
         let source = e.target.result;
         this.setState({
           file: source,

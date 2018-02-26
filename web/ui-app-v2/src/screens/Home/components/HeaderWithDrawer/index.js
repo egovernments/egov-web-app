@@ -75,7 +75,7 @@ class HeaderWithDrawer extends Component {
           onLeftIconButtonClick={onHandleToggleMenu}
         />
 
-        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <List items={items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
         </Drawer>
       </div>

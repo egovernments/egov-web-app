@@ -23,7 +23,7 @@ const validateField = (value, field) => {
   return { isFieldValid, errorMessage };
 };
 
-const doesFieldHaveError = field => {
+const doesFieldHaveError = (field) => {
   const { errorMessage } = field;
   return !(errorMessage && errorMessage.trim().length);
 };
@@ -54,7 +54,7 @@ const validateForm = (fields, requiredFields) => {
   return isFormValid;
 };
 
-const formValidation = store => next => action => {
+const formValidation = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();

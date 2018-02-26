@@ -20,7 +20,7 @@ const SetMapLocation = compose(
       var lati;
       var long;
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
+        navigator.geolocation.getCurrentPosition((position) => {
           this.setState({
             center: { lat: position.coords.latitude, lng: position.coords.longitude },
           });
@@ -29,7 +29,7 @@ const SetMapLocation = compose(
       this.setState({
         bounds: null,
         markers: [],
-        onMapMounted: ref => {
+        onMapMounted: (ref) => {
           refs.map = ref;
         },
         onBoundsChanged: () => {
@@ -38,7 +38,7 @@ const SetMapLocation = compose(
             center: refs.map.getCenter(),
           });
         },
-        onSearchBoxMounted: ref => {
+        onSearchBoxMounted: (ref) => {
           refs.searchBox = ref;
         },
         onPlacesChanged: () => {
@@ -46,14 +46,14 @@ const SetMapLocation = compose(
           // const bounds = new google.maps.LatLngBounds();
           const bounds = {};
 
-          places.forEach(place => {
+          places.forEach((place) => {
             if (place.geometry.viewport) {
               bounds.union(place.geometry.viewport);
             } else {
               bounds.extend(place.geometry.location);
             }
           });
-          const nextMarkers = places.map(place => ({
+          const nextMarkers = places.map((place) => ({
             position: place.geometry.location,
           }));
           console.log(this.state.center);
@@ -79,7 +79,7 @@ const SetMapLocation = compose(
   ),
   withScriptjs,
   withGoogleMap
-)(props => (
+)((props) => (
   <GoogleMap
     defaultZoom={11}
     defaultCenter={props.center}

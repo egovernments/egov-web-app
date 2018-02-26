@@ -18,7 +18,7 @@ export default class SelectFieldContainer extends Component {
       const { field, value } = nextProps;
       let { dependencies } = field;
       dependencies = dependencies && dependencies.length ? dependencies : [];
-      dependencies.forEach(dependency => {
+      dependencies.forEach((dependency) => {
         const { target, dataSource, type: dependencyType } = dependency;
         if (dependencyType === "API_CALL") {
           const searchUrl = prepareSearchUrl(dataSource, value);

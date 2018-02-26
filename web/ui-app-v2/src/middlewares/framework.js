@@ -1,7 +1,7 @@
 import { setRoute } from "../actions/framework";
 import _ from "lodash";
 
-const framework = store => next => action => {
+const framework = (store) => (next) => (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
   const state = store.getState();

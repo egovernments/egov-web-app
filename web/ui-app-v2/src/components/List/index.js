@@ -6,7 +6,7 @@ import SvgIcon from "material-ui/SvgIcon";
 // icons cont
 
 const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle, items = [] }) => {
-  const renderListItems = items => {
+  const renderListItems = (items) => {
     return items.map((item, index) => {
       const listItemProps = {};
 

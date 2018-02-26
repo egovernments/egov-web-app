@@ -12,7 +12,7 @@ const instance = axios.create({
   },
 });
 
-const wrapRequestBody = requestBody => {
+const wrapRequestBody = (requestBody) => {
   const RequestInfo = {
     apiId: "emp",
     ver: "1.0",
