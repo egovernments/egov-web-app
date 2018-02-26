@@ -2,17 +2,24 @@ import React, { Component } from "react";
 import { Image } from "../../../../components";
 
 const styles = {
+  container: {
+    position: "relative",
+    height: `200px`,
+    backgroundImage: `url(https://amedia.britannica.com/700x450/53/176353-004-58581F75.jpg)`,
+  },
   logo: {
-    display: "block",
-    margin: "0 auto",
+    position: "absolute",
+    left: "40%",
+    top: "25%",
   },
 };
 
 class Banner extends Component {
   render() {
     return (
-      <div className="row">
-        <Image source="https://placeimg.com/600/300/arch" />
+      <div style={styles.container} className="row">
+        <div />
+        <Image style={styles.logo} circular={true} source="https://placeimg.com/100/100/tech" />
       </div>
     );
   }
