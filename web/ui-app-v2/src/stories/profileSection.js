@@ -54,15 +54,8 @@ const label2 = {
   fontFamily: 'Roboto',
   fontSize: 7,
   fontWeight: 500,
-  fontStyle: 'normal',
-  fontStretch: 'normal',
-  lineHeight: 'normal',
-  letterSpacing: 0.3,
-  color: '#484848',
-  padding: 0,
-  paddingTop: 10,
-  textTransform: 'none',
-  display: 'block'
+  // display: 'none'
 }
-const _label1 = "Gyan";
-const _label2 = "Ludhiana";
+
+const _label1 = "Name";
+const _label2 = "Location";
