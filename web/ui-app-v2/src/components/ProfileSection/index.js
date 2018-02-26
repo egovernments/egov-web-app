@@ -8,13 +8,17 @@ import ListItem from 'material-ui/List/ListItem';
 import Image from '../Image';
 import Label from '../Label';
 import img from '../../assets/people.jpg';
+import Location from "material-ui/svg-icons/maps/place";
 
-const ProfileSection = ({style,cardStyles,nameStyle,_label, _label1}) => {
+const ProfileSection = ({style,cardStyles,label1, label2, iconStyle, _label1, _label2}) => {
   return (
     <div style={cardStyles}>
       <Image className={"img-circle"} style={style} source={img} height={200} width={200} />
-      <Label label={_label} style={nameStyle}/>
-      <Label label={_label1} style={nameStyle}/>
+      <Label label={_label1} style={label1}/>
+      <div style={{display:"inline-flex"}}>
+        <Location style={iconStyle} color={"#696969"} />
+        <Label label={_label2} style={label2}/>
+      </div>
     </div>
   )   
 }
@@ -23,5 +27,9 @@ export default ProfileSection;
 
 
 ProfileSection.PropTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
+  cardStyles: PropTypes.object,
+  label1: PropTypes.object,
+  label2: PropTypes.object,
+  iconStyle: PropTypes.object,
 }

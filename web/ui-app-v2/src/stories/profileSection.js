@@ -7,8 +7,16 @@ import theme from "../config/theme";
 
 storiesOf("ProfileSection", module)
   .addDecorator(muiTheme([theme]))
-  .add("with Location", () => <ProfileSection style={style} cardStyles={cardStyles} nameStyle={nameStyle} _label={_label} _label1={_label1}/>);
-
+  .add("with Location", () => <ProfileSection 
+    style={style} 
+    cardStyles={cardStyles} 
+    label1={label1}
+    label2={label2} 
+    _label1={_label1} 
+    _label2={_label2}
+    iconStyle={iconStyle}
+  />
+);
 
 const style = {borderRadius: '50%', width: 85, height: 85};
 const cardStyles = { 
@@ -22,7 +30,7 @@ const cardStyles = {
   paddingBottom: 30,
   backgroundColor: '#e0e0e0'
 }
-const nameStyle = {
+const label1 = {
   paddingTop: 10,
   fontFamily: 'Roboto',
   fontSize: 7,
@@ -36,5 +44,25 @@ const nameStyle = {
   textTransform: 'none',
 
 }
-const _label = "Gyan";
-const _label1 = "Ludhiana";
+const iconStyle = {
+  height: "18px",
+  width: "18px",
+  paddingTop: 12,
+};
+
+const label2 = {
+  fontFamily: 'Roboto',
+  fontSize: 7,
+  fontWeight: 500,
+  fontStyle: 'normal',
+  fontStretch: 'normal',
+  lineHeight: 'normal',
+  letterSpacing: 0.3,
+  color: '#484848',
+  padding: 0,
+  paddingTop: 10,
+  textTransform: 'none',
+  display: 'block'
+}
+const _label1 = "Gyan";
+const _label2 = "Ludhiana";
