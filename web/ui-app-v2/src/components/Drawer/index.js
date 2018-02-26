@@ -8,4 +8,6 @@ const DrawerUi = (props) => {
 
 export default DrawerUi;
 
-DrawerUi.propTypes = {};
+DrawerUi.propTypes = {
+  props:PropTypes.object
+}
