@@ -4,6 +4,7 @@ import { muiTheme } from "storybook-addon-material-ui";
 import { action } from "@storybook/addon-actions";
 import { ProfileSection } from '../components';
 import theme from "../config/theme";
+import img from '../assets/people.jpg';
 
 storiesOf("ProfileSection", module)
   .addDecorator(muiTheme([theme]))
@@ -12,9 +13,9 @@ storiesOf("ProfileSection", module)
     cardStyles={cardStyles} 
     label1={label1}
     label2={label2} 
-    _label1={_label1} 
-    _label2={_label2}
-    iconStyle={iconStyle}
+    name={_label1} 
+    location={_label2}
+    imgSrc={img}
   />
 );
 
