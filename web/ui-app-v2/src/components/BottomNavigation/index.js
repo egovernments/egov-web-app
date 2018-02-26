@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
 
+const styles = {
+  bottomNavigation: { position: "fixed", bottom: "0", width: "100%" },
+};
+
 const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
   const renderNavigationOptions = () => {
     return options.map((option, index) => (
@@ -16,7 +20,11 @@ const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
     ));
   };
 
-  return <MaterialUiBottomNavigation selectedIndex={selectedIndex}>{renderNavigationOptions()}</MaterialUiBottomNavigation>;
+  return (
+    <MaterialUiBottomNavigation style={styles.bottomNavigation} selectedIndex={selectedIndex}>
+      {renderNavigationOptions()}
+    </MaterialUiBottomNavigation>
+  );
 };
 
 BottomNavigation.propTypes = {
