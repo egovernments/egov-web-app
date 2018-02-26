@@ -19,7 +19,7 @@ class Events extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="home-page-content-card-margin" >
         <Card
           card={{
             style:{
@@ -28,11 +28,11 @@ class Events extends Component {
           }}
           textChildren={
             <div className = "row">
-              <div className = "col-xs-2" style = {{background : "#8e44ad"}}>
+              <div className = "col-xs-3" style = {{background : "#8e44ad"}}>
                 <Label label={this.state.dateRange} style={{color: "#ffffff"}}/>
                 <Label label={this.state.month} style={{color: "#ffffff", backgroundColor:"#9b59b6"}}/>
               </div>
-              <div className = "col-xs-10" style = {{}}>
+              <div className = "col-xs-9" style = {{}}>
                 <Label label={this.state.eventName} style={{}}/>
                 <Label label={this.state.location} labelPosition="after" icon={<LocationIcon/>}/>
                 <Label label={this.state.timing}  />

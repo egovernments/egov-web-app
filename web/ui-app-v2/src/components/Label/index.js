@@ -13,7 +13,7 @@ const baseLabelStyle = {
 
 const Label = ({ children, icon, labelStyle, labelPosition = "after", label, style, primary, className }) => {
   return (
-    <FlatButton children={children} labelPosition={labelPosition} className={className} icon={icon} primary={primary} label={label} />
+    <FlatButton style={style} children={children} labelPosition={labelPosition} className={className} icon={icon} primary={primary} label={label} />
   );
 };
 
