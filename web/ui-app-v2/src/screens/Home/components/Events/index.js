@@ -29,13 +29,24 @@ class Events extends Component {
           textChildren={
             <div className = "row">
               <div className = "col-xs-3" style = {{background : "#8e44ad"}}>
-                <Label label={this.state.dateRange} style={{color: "#ffffff"}}/>
-                <Label label={this.state.month} style={{color: "#ffffff", backgroundColor:"#9b59b6"}}/>
+                <div style={{height : "40px", color: "#ffffff"}}>
+                  {this.state.dateRange}
+                </div>
+                <div style={{height : "40px", color: "#ffffff", backgroundColor:"#9b59b6"}}>
+                  {this.state.month}
+                </div>
               </div>
               <div className = "col-xs-9">
-                <Label label={this.state.eventName}/>
-                <Label label={this.state.location} labelPosition="after" icon={<LocationIcon/>}/>
-                <Label label={this.state.timing}  />
+                  <div style={{marginBottom : "10px"}}>
+                  {this.state.eventName}
+                  </div>
+                <div style={{marginBottom : "10px"}}>
+                  <LocationIcon/>
+                  {this.state.location}
+                </div>
+                <div style={{marginBottom : "10px"}}>
+                  {this.state.timing}
+                </div>
               </div>
             </div>
           }
