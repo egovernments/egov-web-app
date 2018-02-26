@@ -22,7 +22,7 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("http://13.229.110.236/login");
 
     }
 

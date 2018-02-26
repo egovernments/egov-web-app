@@ -1,6 +1,7 @@
 package com.rainmaker.egov.myapplication;
 
 import android.app.Activity;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -17,12 +18,12 @@ public class WebViewClientImpl extends WebViewClient {
     }
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        String url = request.getUrl().toString();
+    //    String url = request.getUrl().toString();
          // prevent links of our domain to be opened in the browser
-        if(url.indexOf(domain) > -1 ) return false;
+//        if(url.indexOf(domain) > -1 ) return false;
         
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        activity.startActivity(intent);
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        //activity.startActivity(intent);
         return true;
         
     }
