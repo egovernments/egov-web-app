@@ -7,3 +7,16 @@
 .home-page-content-card-margin {
   margin-top: 20px;
 }
+
+
+.row-body {
+    display: table;
+}
+
+.left-side {
+    display: table-cell;
+}
+
+.right-side {
+    display: table-cell;
+}

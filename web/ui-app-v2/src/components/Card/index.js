@@ -26,13 +26,13 @@ import PropTypes from "prop-types";
 //   }
 // };
 
-const CardUi = ({card, header, mediaOverlay, mediaChildren, title, textChildren, actionChildren }) => {
+const CardUi = ({card, header, mediaOverlay, mediaChildren, title,text, textChildren, actionChildren }) => {
   return (
     <Card {...card}>
       {header && <CardHeader {...header} />}
       {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
       {title && <CardTitle {...title} />}
-      {textChildren && <CardText>{textChildren}</CardText>}
+      {textChildren && <CardText {...text}>{textChildren}</CardText>}
       {actionChildren && <CardActions>{actionChildren}</CardActions>}
     </Card>
   );
