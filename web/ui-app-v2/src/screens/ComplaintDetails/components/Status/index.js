@@ -26,7 +26,8 @@ class Status extends Component {
 
   render() {
     let {status,bgColor,message}=this.props;
-    return (<div className="status">
+    return (
+      <div className="status">
       <Card
         card={{
           style:{
@@ -34,11 +35,11 @@ class Status extends Component {
           }
         }}
         textChildren={
-          <div className="row row-body">
-            <div className="col-xs-4 col-md-2 left-side" style={{backgroundColor:bgColor}}>
+          <div className="wrapper">
+            <div className="left" style={{backgroundColor:bgColor}}>
                   <StatusIcon status={status}/>
             </div>
-            <div className="col-xs-8 col-md-10" style={{textAlign:"center"}}>
+            <div className="right" style={{textAlign:"center"}}>
                   {message}
             </div>
           </div>
