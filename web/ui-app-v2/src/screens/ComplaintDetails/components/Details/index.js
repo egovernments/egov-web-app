@@ -10,31 +10,30 @@ import Avatar from "material-ui/Avatar";
 
 import NewComplaint from "material-ui/svg-icons/notification/sms-failed";
 
-
 const items = [
   {
     primaryText: "COMPLAINT DETAILS",
-    leftIcon: <NewComplaint/>,
+    leftIcon: <NewComplaint />,
     initiallyOpen: false,
     primaryTogglesNestedList: true,
     nestedItems: [
       {
         primaryText: "Inbox",
         leftIcon: <ContentInbox />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Starred",
         leftIcon: <ActionGrade />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
       },
       {
         primaryText: "Sent Mail",
         leftIcon: <ContentSend />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />
-      }
-    ]
-  }
+        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
+      },
+    ],
+  },
 ];
 
 class Details extends Component {
@@ -44,12 +43,10 @@ class Details extends Component {
         <Card
           card={{
             style: {
-              backgroundColor: "#ffffff"
-            }
+              backgroundColor: "#ffffff",
+            },
           }}
-          textChildren={
-            <List items={items}/>
-          }
+          textChildren={<List items={items} />}
         />
       </div>
     );

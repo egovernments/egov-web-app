@@ -9,5 +9,5 @@ const DrawerUi = (props) => {
 export default DrawerUi;
 
 DrawerUi.propTypes = {
-  props:PropTypes.object
-}
+  props: PropTypes.object,
+};

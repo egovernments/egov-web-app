@@ -6,7 +6,7 @@ const PoweredBy = ({ divProps, poweredByStyle, image }) => {
   return (
     <div {...divProps}>
       <span {...poweredByStyle}>Powered By</span>
-      <Image {...image}/>
+      <Image {...image} />
     </div>
   );
 };

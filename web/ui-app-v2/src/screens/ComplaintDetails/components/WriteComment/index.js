@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import {Image,TextField} from "../../../../components";
+import { Image, TextField } from "../../../../components";
 import Profile from "material-ui/svg-icons/social/person";
 import Send from "material-ui/svg-icons/content/send";
-import "./index.css"
+import "./index.css";
 
 const profileStyle = {
   marginRight: 24,
@@ -10,13 +10,13 @@ const profileStyle = {
   width: "40px",
   borderRadius: "50%",
   padding: "9px",
-  background: "#f5a623"
+  background: "#f5a623",
 };
 
 const iconStyle = {
   marginRight: 24,
   height: "65px",
-  width: "65px"
+  width: "65px",
 };
 
 class WriteComment extends Component {
@@ -44,7 +44,8 @@ class WriteComment extends Component {
             <Send style={iconStyle} color={"#9E9E9E"} />
           </div>*/}
         </div>
-    </div>)
+      </div>
+    );
   }
 }
 

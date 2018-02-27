@@ -20,11 +20,10 @@ import Tabs from "./Tabs";
 import MapLocation from "./MapLocation";
 import List from "./List";
 import ProfileSection from "./ProfileSection";
-import Ratings from './Ratings';
-import ButtonGroup from './ButtonGroup';
-import DropDown from './DropDown';
-import Icon from './Icon';
-
+import Ratings from "./Ratings";
+import ButtonGroup from "./ButtonGroup";
+import DropDown from "./DropDown";
+import Icon from "./Icon";
 
 export {
   Label,
@@ -52,5 +51,5 @@ export {
   Ratings,
   ButtonGroup,
   DropDown,
-  Icon
+  Icon,
 };

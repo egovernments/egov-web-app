@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
-import ComplaintDetails from "./screens/ComplaintDetails"
+import ComplaintDetails from "./screens/ComplaintDetails";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 

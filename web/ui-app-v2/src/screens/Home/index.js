@@ -9,12 +9,10 @@ import FontIcon from "material-ui/FontIcon";
 import IconLocationOn from "material-ui/svg-icons/communication/location-on";
 import "./index.css";
 
-
 class Home extends Component {
-  state= {
-  }
+  state = {};
   render() {
-    let { banner, updates, events} = this.state;
+    let { banner, updates, events } = this.state;
     return (
       <div>
         <Banner {...banner} />

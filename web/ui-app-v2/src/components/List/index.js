@@ -6,9 +6,7 @@ import Avatar from "material-ui/Avatar";
 const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle, items = [] }) => {
   const renderListItems = (items) => {
     return items.map((item, index) => {
-      const {
-         nestedItems
-      } = item;
+      const { nestedItems } = item;
 
       if (listItemStyle && Object.keys(listItemStyle).length) {
         item.style = listItemStyle;
@@ -17,7 +15,7 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         // recursive function for nested items
         item.nestedItems = renderListItems(nestedItems);
       }
-      
+
       return <ListItem containerElement={listItemContainer} key={index} {...item} />;
     });
   };

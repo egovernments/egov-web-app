@@ -28,14 +28,6 @@ const style = {
   },
 };
 
-
 storiesOf("LoadingIndicator", module)
   .addDecorator(muiTheme([theme]))
-  .add("load", () => <LoadingIndicator 
-    status="loading"
-    size={40} 
-    left={50} 
-    top={0} 
-    loadingColor="#8B008B"
-    style={style.refresh}
-  />);
+  .add("load", () => <LoadingIndicator status="loading" size={40} left={50} top={0} loadingColor="#8B008B" style={style.refresh} />);

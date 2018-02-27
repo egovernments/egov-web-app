@@ -79,13 +79,13 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap
-    ref={props.onMapMounted}
-    defaultZoom={11}
-    center={props.center}
-    onBoundsChanged={props.onBoundsChanged}
-  >
-    <SearchBox ref={props.onSearchBoxMounted} bounds={props.bounds} controlPosition={window.google.maps.ControlPosition.TOP_LEFT} onPlacesChanged={props.onPlacesChanged}>
+  <GoogleMap ref={props.onMapMounted} defaultZoom={11} center={props.center} onBoundsChanged={props.onBoundsChanged}>
+    <SearchBox
+      ref={props.onSearchBoxMounted}
+      bounds={props.bounds}
+      controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
+      onPlacesChanged={props.onPlacesChanged}
+    >
       <input
         type="text"
         placeholder="Search address"
