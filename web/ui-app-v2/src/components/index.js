@@ -23,6 +23,7 @@ import ProfileSection from "./ProfileSection";
 import Ratings from './Ratings';
 import ButtonGroup from './ButtonGroup';
 import DropDown from './DropDown';
+import Icon from './Icon';
 
 
 export {
@@ -50,5 +51,6 @@ export {
   PoweredBy,
   Ratings,
   ButtonGroup,
-  DropDown
+  DropDown,
+  Icon
 };

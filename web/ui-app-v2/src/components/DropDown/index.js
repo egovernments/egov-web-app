@@ -15,7 +15,7 @@ const DropDownUi = ({ value, fullWidth = false,labelStyle, dropDownData,children
       return <MenuItem 
       key={index} 
       value={option.value} 
-      primaryText={option.value} />;
+      primaryText={option.label} />;
     });
   };
 
@@ -24,9 +24,9 @@ const DropDownUi = ({ value, fullWidth = false,labelStyle, dropDownData,children
       className="dropdown"
       style={Object.assign({}, baseStyle, style)}
       fullWidth={fullWidth}
-      // dropDownMenuProps={{
-      //   targetOrigin: { horizontal: "left", vertical: "bottom" },
-      // }}
+       dropDownMenuProps={{
+         targetOrigin: { horizontal: "left", vertical: "bottom" },
+       }}
       labelStyle={labelStyle}
       onChange={onChange}
       selected = "Select"
