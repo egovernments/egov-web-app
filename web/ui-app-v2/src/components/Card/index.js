@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const CardUi = ({card, header, mediaOverlay, mediaChildren, title,text, textChildren, actionChildren }) => {
   return (
-    <Card style={{backgroundColor : "#fff" }} {...card}>
+    <Card style={{backgroundColor : "#fff", margin:"10px 0px" }} {...card}>
       {header && <CardHeader {...header} />}
       {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
       {title && <CardTitle {...title} />}

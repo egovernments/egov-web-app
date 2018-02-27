@@ -21,6 +21,7 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         initiallyOpen,
         primaryTogglesNestedList,
         style,
+        handler,
       } = item;
 
       if (listItemStyle && Object.keys(listItemStyle).length) {
@@ -55,6 +56,9 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
       }
       if (style && Object.keys(style).length) {
         listItemProps.style = style;
+      }
+      if (handler) {
+        listItemProps.onClick = handler;
       }
 
       return <ListItem containerElement={listItemContainer} key={index} {...listItemProps} />;
