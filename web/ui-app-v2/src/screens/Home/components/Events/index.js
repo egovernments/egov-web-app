@@ -19,7 +19,6 @@ class Events extends Component {
   }
   render() {
     return (
-      <div className="home-page-content-card-margin" >
         <Card
           textChildren={
             <div className = "events wrapper">
@@ -46,7 +45,6 @@ class Events extends Component {
             </div>
           }
         />
-      </div>
     )
   }
 }
