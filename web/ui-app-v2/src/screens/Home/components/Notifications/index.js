@@ -15,19 +15,9 @@ class Notification extends Component {
           };
 
     return (
-      <div style={{paddingTop:'20px'}}>
+      <div>
         <Card
-        card={{
-          style:{
-            backgroundColor:"#ffffff",
-            paddingBottom:0
-            }
-        }}
-        text={{
-          style:{
-             padding:0,
-          }
-        }}
+       
         textChildren={
         <div className="wrapper">
         <div className="left" style={{background:'#73b332'}}>

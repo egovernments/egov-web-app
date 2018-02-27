@@ -30,14 +30,6 @@ class NewAndOldComplaints extends Component {
   render() {
     return (
       <Card
-        card={{
-          style:{
-            backgroundColor:"#ffffff",
-            position: "relative",
-            width: "100%",
-            top: "-20px"
-          }
-        }}
         textChildren={
           <div className="row newAndOldComplaints-content-section">
             <div className="col-xs-6">

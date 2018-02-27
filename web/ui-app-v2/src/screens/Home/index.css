@@ -2,25 +2,12 @@
   padding-left: 2%;
   padding-right: 2%;
   margin-bottom: 70px;
+  margin-top : -20px;
 }
 
 .home-page-content-card-margin {
   margin-top: 20px;
 }
-
-
-.row-body {
-    overflow: hidden;
-    margin-bottom: -8px;
-    margin-left: -16px !important;
-}
-
-.left-side {
-  padding-bottom: 10000px;
-  margin-bottom: -10000px;
-  height: 100%;
-}
-
 
 /* Wrapper*/
 .wrapper{
