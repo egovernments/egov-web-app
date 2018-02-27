@@ -6,13 +6,13 @@ const errorStyle = {
   marginTop: "5px",
 };
 
-const baseStyle = {
-  border: "1px solid #e6e6e6",
-  paddingLeft: "10px",
-  height: "56px",
-  margin: "5px 0px",
-  boxSizing: "border-box",
-};
+// const baseStyle = {
+//   border: "1px solid #e6e6e6",
+//   paddingLeft: "10px",
+//   height: "56px",
+//   margin: "5px 0px",
+//   boxSizing: "border-box",
+// };
 
 const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield" }) => {
   return (
@@ -20,9 +20,9 @@ const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = fal
       errorStyle={errorStyle}
       onChange={onChange}
       disabled={disabled}
-      className={className}
+      // className={className}
       underlineShow={false}
-      style={Object.assign({}, baseStyle, style)}
+      // style={Object.assign({}, baseStyle, style)}
       id={id}
       fullWidth={fullWidth}
       hintText={placeholder}

@@ -24,3 +24,8 @@
 .zeroPadding {
   padding: 0 !important;
 }
+
+.comment-section
+{
+  padding: 5px 15px;
+}
