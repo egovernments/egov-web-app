@@ -36,7 +36,7 @@ class OTP extends Component {
     const { onOtpSubmit } = this;
     return (
       <div className="col-xs-12 col-lg-4 col-sm-4 col-md-4 col-lg-offset-4 col-sm-offset-4 col-md-offset-4">
-        <Image source="https://placeimg.com/450/450/arch" />
+        <Image source="https://i.imgur.com/7M1osdL.png" />
         <Paper style={styles.formContainer} zDepth={1}>
           <Image style={styles.logo} circular={true} source="https://placeimg.com/100/100/tech" />
 

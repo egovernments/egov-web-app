@@ -36,8 +36,6 @@ class NewAndOldComplaints extends Component {
             position: "relative",
             width: "100%",
             top: "-20px"
-            // position:"absolute",
-            // width:"100%"
           }
         }}
         textChildren={

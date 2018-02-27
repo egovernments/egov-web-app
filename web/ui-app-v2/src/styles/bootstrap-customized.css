@@ -1370,3 +1370,15 @@ pre code {
     display: none !important;
   }
 }
+
+
+/* additional utilities*/
+.text-center{
+  text-align : center;
+}
+.text-right{
+  text-align : right;
+}
+.text-center{
+  text-align : left;
+}

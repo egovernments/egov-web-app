@@ -25,23 +25,22 @@ class Notification extends Component {
         }}
         text={{
           style:{
-             paddingTop:0,
-             paddingBottom:0
+             padding:0,
           }
         }}
         textChildren={
-        <div className="row row-body">
-        <div className="col-xs-4 col-md-2 left-side" style={{background:'#73b332'}}>
+        <div className="wrapper">
+        <div className="left" style={{background:'#73b332'}}>
         <ActionHome/>
         </div>
-        <div className="col-xs-8 col-md-10">
-        <div className="row">
+        <div className="right">
+        <div>
         <span className="col-xs-12 notification-content" >
         Are there enough dustbins in your area?
         </span>
         </div>
         <br/>
-        <div className="row">
+        <div>
         <Label style={{display : "inline-block"}} className="notification-content-label" labelPosition="after" label="YES"  icon={<ThumbUp style={iconStyle} color={"#f5a623"}/>}  />
         <Label style={{display : "inline-block"}} className="notification-content-label" labelPosition="after" label="NO" icon={<ThumbDown style={iconStyle} color={"#f5a623"}/>}  />
         </div>

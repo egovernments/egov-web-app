@@ -4,7 +4,7 @@ import ActionHome from "material-ui/svg-icons/action/home";
 import Location from "material-ui/svg-icons/maps/place";
 import Label from "../../../../components/Label";
 import LocationIcon from "material-ui/svg-icons/maps/place";
-
+import "./index.css";
 
 class Events extends Component {
   constructor(props) {
@@ -21,36 +21,25 @@ class Events extends Component {
     return (
       <div className="home-page-content-card-margin" >
         <Card
-          card={{
-            style:{
-              backgroundColor:"#ffffff",
-            }
-          }}
-          text={{
-          style:{
-             paddingTop:0,
-             paddingBottom:0
-          }
-         }}
           textChildren={
-            <div className = "row row-body">
-              <div className = "col-xs-4 col-md-2 left-side" style = {{background : "#8e44ad"}}>
-                <div style={{height : "40px", color: "#ffffff"}}>
+            <div className = "events wrapper">
+              <div className = "left">
+                <div className="date-range">
                   {this.state.dateRange}
                 </div>
-                <div style={{height : "40px", color: "#ffffff", backgroundColor:"#9b59b6"}}>
+                <div className="month" style={{background:"#9b59b6"}}>
                   {this.state.month}
                 </div>
               </div>
-              <div className = "col-xs-8 col-md-10">
-                  <div style={{marginBottom : "10px"}}>
+              <div className = "right">
+                  <div>
                   {this.state.eventName}
                   </div>
-                <div style={{marginBottom : "10px"}}>
+                <div>
                   <LocationIcon/>
                   {this.state.location}
                 </div>
-                <div style={{marginBottom : "10px"}}>
+                <div>
                   {this.state.timing}
                 </div>
               </div>

@@ -28,11 +28,11 @@ import PropTypes from "prop-types";
 
 const CardUi = ({card, header, mediaOverlay, mediaChildren, title,text, textChildren, actionChildren }) => {
   return (
-    <Card {...card}>
+    <Card style={{backgroundColor : "#fff" }} {...card}>
       {header && <CardHeader {...header} />}
       {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
       {title && <CardTitle {...title} />}
-      {textChildren && <CardText {...text}>{textChildren}</CardText>}
+      {textChildren && <CardText {...text} style={{padding : 0 }}>{textChildren}</CardText>}
       {actionChildren && <CardActions>{actionChildren}</CardActions>}
     </Card>
   );
