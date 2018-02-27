@@ -20,6 +20,9 @@ import Tabs from "./Tabs";
 import MapLocation from "./MapLocation";
 import List from "./List";
 import ProfileSection from "./ProfileSection";
+import Ratings from './Ratings';
+import ButtonGroup from './ButtonGroup';
+
 
 export {
   Label,
@@ -43,5 +46,7 @@ export {
   MapLocation,
   List,
   ProfileSection,
-  PoweredBy
+  PoweredBy,
+  Ratings,
+  ButtonGroup
 };

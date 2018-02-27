@@ -22,6 +22,8 @@ function loadStories() {
   require('../src/stories/timeline.js');
   require('../src/stories/screens.js');
   require("../src/stories/profileSection.js");
+  require("../src/stories/ratings.js");
+  require("../src/stories/buttonToggle.js");
 }
 
 configure(loadStories, module);
