@@ -24,6 +24,7 @@ function loadStories() {
   require("../src/stories/profileSection.js");
   require("../src/stories/ratings.js");
   require("../src/stories/buttonToggle.js");
+  require("../src/stories/dropDown.js");
 }
 
 configure(loadStories, module);

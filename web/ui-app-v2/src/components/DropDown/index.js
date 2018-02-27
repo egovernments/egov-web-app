@@ -9,10 +9,13 @@ const baseStyle = {
   paddingLeft: "10px",
 };
 
-const DropDownUi = ({ value, fullWidth = false, dropDownData = [], selected, onChange, style = {} }) => {
+const DropDownUi = ({ value, fullWidth = false,labelStyle, dropDownData,children, selected, onChange, style = {} }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.value} primaryText={option.label} />;
+      return <MenuItem 
+      key={index} 
+      value={option.value} 
+      primaryText={option.value} />;
     });
   };
 
@@ -21,12 +24,13 @@ const DropDownUi = ({ value, fullWidth = false, dropDownData = [], selected, onC
       className="dropdown"
       style={Object.assign({}, baseStyle, style)}
       fullWidth={fullWidth}
-      dropDownMenuProps={{
-        targetOrigin: { horizontal: "left", vertical: "bottom" },
-      }}
-      labelStyle={{ color: "#5F5C57" }}
-      value={value}
+      // dropDownMenuProps={{
+      //   targetOrigin: { horizontal: "left", vertical: "bottom" },
+      // }}
+      labelStyle={labelStyle}
       onChange={onChange}
+      selected = "Select"
+      value={value}
     >
       {renderSelectMenuItems()}
     </SelectField>

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import RefreshIndicator from "material-ui/RefreshIndicator";
 
 
@@ -14,6 +15,16 @@ const LoadingIndicator = ({ status , loadingColor, size , left, top , style }) =
       style={style} />
     </div>
   );
+};
+
+
+LoadingIndicator.propTypes = {
+  size: PropTypes.number,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  status: PropTypes.string,
+  loadingColor: PropTypes.string,
+  style : PropTypes.object
 };
 
 export default LoadingIndicator;
