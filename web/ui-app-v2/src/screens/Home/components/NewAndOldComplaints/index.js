@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Card,Icon} from "../../../../components";
 import "./index.css"
+import "../../../../styles/app.css"
 
 
 class NewAndOldComplaints extends Component {

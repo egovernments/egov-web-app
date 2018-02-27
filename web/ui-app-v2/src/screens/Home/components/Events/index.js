@@ -27,7 +27,7 @@ class Events extends Component {
                 <div className="date-range">
                   {this.state.dateRange}
                 </div>
-                <div className="month" style={{background:"#9b59b6"}}>
+                <div className="month">
                   {this.state.month}
                 </div>
               </div>

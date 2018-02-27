@@ -21,15 +21,15 @@ storiesOf("DropDown", module)
             items: [
                 {
                     value: "India",
-                    key: "IN",
+                    label: "IN",
                 },
                 {
                     value: "USA",
-                    key: "US",
+                    label: "US",
                 },
                 {
                     value: "Australia",
-                    key: "AUS",
+                    label: "AUS",
                 },
             ],
             style: {
@@ -42,7 +42,8 @@ storiesOf("DropDown", module)
                 label:{
                     color: "#5F5C57"
                 }
-            }
+            },
+            value:"India"
         }
     }
 

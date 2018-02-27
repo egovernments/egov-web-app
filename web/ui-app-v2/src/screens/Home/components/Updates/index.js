@@ -4,6 +4,8 @@ import Label from "../../../../components/Label";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Location from "material-ui/svg-icons/maps/place";
 import "./index.css"
+import "../../../../styles/app.css"
+//import "./styles/bootstrap-customized.css";
 
 class Updates extends Component {
   render() {
@@ -13,8 +15,8 @@ class Updates extends Component {
         textChildren={
          <div className = "wrapper">
           {/* Left section*/}
-          <div className = "left" style = {{background : "#e74c3c"}}>
-            <ActionHome color = "#ffffff"/>
+          <div className = "left update-icon">
+            <ActionHome className = "color-white"/>
           </div>
           
           {/* right section*/}
@@ -23,13 +25,13 @@ class Updates extends Component {
             {/* Individual Rows; Row 1 */}
             <div>
               <Label label="ROAD CLOSED" />
-              <p color = "#767676">5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
+              <p className = "color-grey">5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
               </p>
             </div>
 
             {/* Individual Rows; Row 2 */}
             <div style = {{ textAlign : 'right' }} >
-              <Location color = "#767676"/>
+              <Location className = "color-grey"/>
             </div>
 
           </div>

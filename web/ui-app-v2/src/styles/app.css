@@ -9,16 +9,16 @@ body{
     background : #8E44AD;
 }
 .color-white{
-    color: #ffffff;
+    color: #ffffff !important;
 }
 .color-lima{
     background : #73B332;
 }
 .color-lightning-yellow{
-    color : #F5A623;
+    background : #F5A623 !important;
 }
 .color-grey{
-    color : #767676;
+    color : #767676 !important;
 }
 .color-cinnabar{
     color : #E74C3C;
