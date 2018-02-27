@@ -9,8 +9,7 @@ const CardUi = ({card, header, mediaOverlay, mediaChildren, title,text, textChil
       {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
       {title && <CardTitle {...title} />}
       {textChildren && <CardText {...text} style={{
-         paddingTop:0,
-         paddingBottom:0
+         padding:0
       }}>{textChildren}</CardText>}
       {actionChildren && <CardActions>{actionChildren}</CardActions>}
     </Card>
