@@ -6,7 +6,7 @@ import {
   List,
   ProfileSection,
   PoweredBy
-} from "../../../../components";
+} from "../../../components";
 import Badge from "material-ui/Badge";
 import IconButton from "material-ui/IconButton";
 import NotificationsIcon from "material-ui/svg-icons/social/notifications";
@@ -16,8 +16,8 @@ import Info from "material-ui/svg-icons/action/info";
 import Logout from "material-ui/svg-icons/action/power-settings-new";
 import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
-import profileImage from "../../../../assets/people1.png";
-import poweredByLogo from "../../../../assets/images/logo.png";
+import profileImage from "../../../assets/people1.png";
+import poweredByLogo from "../../../assets/images/logo.png";
 import "./index.css"
 //App bar imports ends
 
@@ -106,7 +106,7 @@ class HeaderWithDrawer extends Component {
               <IconButton
                 tooltip="Notifications"
                 onClick={() => {
-                  alert("hai");
+
                 }}
               >
                 <NotificationsIcon color={"white"} />
