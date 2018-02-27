@@ -33,7 +33,7 @@ const cardStyles = {
   paddingBottom: 30,
   backgroundColor: "#e0e0e0"
 };
-const label1 = {
+const nameStyle = {
   paddingTop: 10,
   fontFamily: "Roboto",
   fontSize: 7,
@@ -52,15 +52,15 @@ const iconStyle = {
   paddingTop: 12
 };
 
-const label2 = {
+const locationStyle = {
   fontFamily: "Roboto",
   fontSize: 7,
   fontWeight: 500
   // display: 'none'
 };
 
-const _label1 = "Name";
-const _label2 = "Location";
+const _label_Name = "Name";
+const _label_Location = "Location";
 
 const items = [
   {
@@ -125,10 +125,10 @@ class HeaderWithDrawer extends Component {
           <ProfileSection
             style={style}
             cardStyles={cardStyles}
-            label1={label1}
-            label2={label2}
-            name={_label1}
-            location={_label2}
+            nameStyle={nameStyle}
+            locationStyle={locationStyle}
+            name={_label_Name}
+            location={_label_Location}
             iconStyle={iconStyle}
             imgSrc={profileImage}
           />
