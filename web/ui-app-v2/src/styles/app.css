@@ -19,3 +19,25 @@
 .color-cinnabar{
     color : #E74C3C;
 }
+
+/* Wrapper*/
+.wrapper{
+  display : table;
+  width : 100%;
+  margin-bottom : -8px
+}
+
+.left,.right{
+   display : table-cell;
+   vertical-align : middle;
+ }
+
+.left{
+  width : 10%;
+  text-align : center;
+}
+
+.right{
+  width : 90%;
+  padding: 0px 10px; 
+}
