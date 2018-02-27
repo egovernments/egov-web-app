@@ -1,32 +1,29 @@
 import React, { Component } from "react";
-import Banner from "./components/Banner";
-import NewAndOldComplaints from "./components/NewAndOldComplaints";
-import Updates from "./components/Updates";
-import Notifications from "./components/Notifications";
-import Events from "./components/Events";
+import Complaints from "./components/Complaints";
+
 
 import FontIcon from "material-ui/FontIcon";
 import IconLocationOn from "material-ui/svg-icons/communication/location-on";
 import "./index.css";
 
 
-class Home extends Component {
+
+class MyComplaints extends Component {
   state= {
+    comaplaints:[
+      {
+        
+      }
+    ]
   }
   render() {
-    let { banner, updates, events} = this.state;
+    let { complaints} = this.state;
     return (
       <div>
-        <Banner {...banner} />
-        <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
-          <NewAndOldComplaints />
-          <Updates {...Updates} />
-          <Notifications />
-          <Events {...events} />
-        </div>
+        <Complaints complaints={complaints}/>
       </div>
     );
   }
 }
 
-export default Home;
+export default MyComplaints;
