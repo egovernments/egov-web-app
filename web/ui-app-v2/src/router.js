@@ -4,6 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
+import Profile from "./screens/profile";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import MapDemo from "./screens/common/MapDemo";
@@ -20,6 +21,7 @@ const Main = () => {
         <PrivateRoute exact path={`${base}/`} component={Home} />
         <PrivateRoute exact path={`${base}/my-complaints`} component={MyComplaints} />
         <PrivateRoute exact path={`${base}/complaint-details`} component={ComplaintDetails} />
+        <PrivateRoute exact path={`${base}/profile`} component={Profile} />
         <Route exact path={`${base}/map`} component={MapDemo} />
       </Switch>
     </main>
