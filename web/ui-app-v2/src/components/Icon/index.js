@@ -8,9 +8,9 @@ const baseStyle = {
   padding: "12px",
 };
 
-const Icon = ({ style, color, action, name }) => {
+const Icon = ({ style, color = "#fff", action, name }) => {
   const WrappedIcon = require(`material-ui/svg-icons/${action}/${name}`).default;
-  return <WrappedIcon  style={Object.assign({}, baseStyle, style)} color={color} />;
+  return <WrappedIcon style={Object.assign({}, baseStyle, style)} color={color} />;
 };
 
 Icon.propTypes = {

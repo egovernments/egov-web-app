@@ -21,12 +21,6 @@ const theme = {
   floatingActionButton: {
     color: "#f58720",
   },
-  icon : {
-    color : "#fff"
-  },
-  svgIcon : {
-    color : "#fff"
-  }
 };
 
 export default theme;
