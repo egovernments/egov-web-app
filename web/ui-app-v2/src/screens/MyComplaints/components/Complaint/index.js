@@ -7,11 +7,6 @@ import "./index.css";
 import Location from "material-ui/svg-icons/maps/place";
 
 const Complaint = ({ item }) => {
-  const iconStyle = {
-    marginRight: 24,
-    height: "24px",
-    width: "24px",
-  };
   return (
     <div className="complaints-card-main-cont home-page-content-card-margin">
       <Card
@@ -59,7 +54,7 @@ const Complaint = ({ item }) => {
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
                 console.log(image);
-                return <Image key={index} className="complaint-image" width="31%" height={46} source={image.source} />;
+                return <Image key={index} className="complaint-image" width="32%" height={46} source={image.source} />;
               })}
             </div>
           </div>
