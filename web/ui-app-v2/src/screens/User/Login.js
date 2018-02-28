@@ -64,6 +64,7 @@ class Login extends Component {
       <div className="col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
         <div style={styles.imageContainer} />
         <div style={styles.cardBackground} />
+        <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
         <Card
           card={cardStyle}
           textChildren={
@@ -92,7 +93,6 @@ class Login extends Component {
             </div>
           }
         />
-        <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
       </div>
     );
   }

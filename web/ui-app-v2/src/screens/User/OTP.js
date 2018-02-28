@@ -10,6 +10,10 @@ const styles = {
     display: "block",
     width: "100px",
     height: "100px",
+    position: "absolute",
+    left: "40%",
+    top: "28%",
+    zIndex: "100",
   },
   resendOTP: {
     float: "right",
@@ -21,8 +25,25 @@ const styles = {
     backgroundPosition: "center",
     height: "300px",
   },
+  cardBackground: {
+    position: "relative",
+    backgroundColor: "#f2f2f2",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    height: "350px",
+    border: "1px solid #e6e6e6",
+    boxSizing: "border-box",
+  },
 };
 
+const cardStyle = {
+  style: {
+    position: "absolute",
+    top: "35%",
+    left: "7%",
+    right: "6%",
+  },
+};
 const Banner = () => {};
 
 const Form = () => {};
@@ -37,13 +58,16 @@ class OTP extends Component {
     return (
       <div className="col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
         <div style={styles.imageContainer} />
+        <div style={styles.cardBackground} />
+        <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
         <Card
+        card={cardStyle}
           textChildren={
             <div>
-              <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
-              <span className="otp-text">
+
+              <p className="otp-text"  style={{ marginTop: "10%" }}>
                 We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account.
-              </span>
+              </p>
 
               <form>
                 <TextField className="textfield" id="otp" fullWidth={true} placeholder="Enter OTP" />
