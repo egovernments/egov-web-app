@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Card from "../../../../components/Card";
+import { Card, Icon } from "../../../../components";
 import Label from "../../../../components/Label";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Location from "material-ui/svg-icons/maps/place";
@@ -9,6 +9,8 @@ import "../../../../styles/app.css";
 
 class Updates extends Component {
   render() {
+   
+
     return (
       <div>
         <Card
@@ -16,7 +18,7 @@ class Updates extends Component {
             <div className="wrapper">
               {/* Left section*/}
               <div className="left update-icon">
-                <ActionHome className="color-white" />
+                <Icon action="action" name="home" />
               </div>
 
               {/* right section*/}
@@ -31,7 +33,7 @@ class Updates extends Component {
 
                 {/* Individual Rows; Row 2 */}
                 <div style={{ textAlign: "right" }}>
-                  <Location className="color-grey" />
+                  <Icon action="maps" name="place" color = "#767676"/>
                 </div>
               </div>
               {/* End of right section */}

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import Card from "../../../../components/Card";
+import { Card, Icon } from "../../../../components";
 import Label from "../../../../components/Label";
-import ThumbDown from "material-ui/svg-icons/action/thumb-down";
-import ThumbUp from "material-ui/svg-icons/action/thumb-up";
-import ActionHome from "material-ui/svg-icons/action/home";
 import "./index.css";
 import "../../../../styles/app.css";
 
@@ -14,6 +11,8 @@ class Notification extends Component {
       height: "24px",
       width: "24px",
       fill: "#F5A623",
+      borderRadius: "0%",
+      padding: "0px",
     };
 
     return (
@@ -22,7 +21,7 @@ class Notification extends Component {
           textChildren={
             <div className="wrapper">
               <div className="left color-lime">
-                <ActionHome className="color-white" />
+                <Icon action="action" name="home" />
               </div>
               <div className="right">
                 <div>
@@ -35,14 +34,14 @@ class Notification extends Component {
                     className="notification-content-label"
                     labelPosition="after"
                     label="YES"
-                    icon={<ThumbUp style={iconStyle} />}
+                    icon={<Icon style={iconStyle} action="action" name="thumb-up"/>}
                   />
                   <Label
                     style={{ display: "inline-block" }}
                     className="notification-content-label"
                     labelPosition="after"
                     label="NO"
-                    icon={<ThumbDown style={iconStyle} />}
+                    icon={<Icon style={iconStyle} action="action" name="thumb-down"/>}
                   />
                 </div>
               </div>

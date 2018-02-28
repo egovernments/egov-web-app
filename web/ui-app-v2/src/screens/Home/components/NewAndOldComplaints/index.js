@@ -10,12 +10,12 @@ class NewAndOldComplaints extends Component {
         textChildren={
           <div className="row newAndOldComplaints-content-section">
             <div className="col-xs-6">
-              <Icon color="#FFFFFF" style={{ background: "#f5a623" }} action="notification" name="sms-failed" />
+              <Icon style={{ background: "#f5a623" }} action="notification" name="sms-failed" />
               <br />
               NEW COMPLAINT
             </div>
             <div className="col-xs-6">
-              <Icon style={{ background: "#73aacc" }} color={"#FFFFFF"} action="social" name="person" />
+              <Icon style={{ background: "#73aacc" }} action="social" name="person" />
               <br />
               OLD COMPLAINT
             </div>
