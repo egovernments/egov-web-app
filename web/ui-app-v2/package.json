@@ -2,6 +2,7 @@
   "name": "ui-app-v2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://egov-micro-dev.egovernments.org/app/rainmaker",
   "proxy": "http://egov-micro-dev.egovernments.org/",
   "dependencies": {
     "axios": "^0.17.1",
