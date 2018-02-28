@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Card } from "../../components";
-import Location from "material-ui/svg-icons/maps/place";
+import { Card, Button, Label } from "../../components";
+import Track from "material-ui/svg-icons/maps/my-location";
+import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 const cardContainers = {
   backgroundColor: " #f2f2f2",
@@ -23,8 +24,7 @@ class Profile extends Component {
             textChildren={
               <div className="cardWrapper">
                 <div className="left">
-                  <label>Name</label>
-                  <br />
+                  <span className="label">Name</span>
                   <span>Jaswinder</span>
                 </div>
               </div>
@@ -39,15 +39,16 @@ class Profile extends Component {
             textChildren={
               <div className="cardWrapper">
                 <div className="left">
-                  <label style={{ display: "block", marginBottom: "2%" }}>Address </label>
+                  <span className="label">Address</span>
                   <span>#12,Model town,Ludhiana</span>
                 </div>
                 <div className="right">
-                  <Location />
+                  <FlatButton disableTouchRipple={true} className="iconButton" icon={<Track color="#73aacc" />} />
                 </div>
               </div>
             }
           />
+          <Button primary={true} label="next" style={{ width: "95%", margin: "32% 2% 5% 2%" }} />
         </div>
       </div>
     );

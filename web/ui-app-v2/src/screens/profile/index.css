@@ -19,12 +19,18 @@
 }
 
 .right {
-  width: 20%;
-  text-align: right;
+  width: 70%;
+  float: right;
 }
 
 .left {
-  width: 80%;
+  width: 100%;
   padding: 10px;
   text-align: left;
+}
+
+.label {
+  display: block;
+  margin-bottom: 2%;
+  color: #6090ae;
 }
