@@ -6,7 +6,6 @@ import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
-// adddng comment back; testing only
 import MapDemo from "./screens/common/MapDemo";
 
 const Main = () => {

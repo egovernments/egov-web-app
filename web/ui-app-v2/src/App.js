@@ -53,13 +53,13 @@ class App extends Component {
     });
   };
 
-  _updateMenuState = status => {
+  _updateMenuState = (status) => {
     this.setState({
       toggleMenu: status,
     });
   };
 
-  _onTabChange = tabIndex => {
+  _onTabChange = (tabIndex) => {
     this.setState({
       tabIndex,
     });
@@ -89,7 +89,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   route: state.framework.route,
 });
 

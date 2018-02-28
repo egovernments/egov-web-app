@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Complaints from "./components/Complaints";
 
 import FontIcon from "material-ui/FontIcon";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
 import IconLocationOn from "material-ui/svg-icons/communication/location-on";
 import "./index.css";
 
@@ -60,10 +62,14 @@ class MyComplaints extends Component {
   };
   render() {
     let { complaints } = this.state;
-    console.log(complaints);
     return (
-      <div>
+      <div className="complaints-main-container">
         <Complaints complaints={complaints} />
+        <div class="floating-botton-cont">
+          <FloatingActionButton className="floating-button">
+            <ContentAdd />
+          </FloatingActionButton>
+        </div>
       </div>
     );
   }
