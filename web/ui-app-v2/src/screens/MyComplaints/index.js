@@ -13,7 +13,7 @@ class MyComplaints extends Component {
       {
         header: "Potholes",
         address: "#18/2A, Ambalipura village, Bellandur Gate",
-        status: "OPEN",
+        status: "CLOSED",
         images: [
           {
             source: "https://placeimg.com/100/100/tech",

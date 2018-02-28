@@ -6,6 +6,27 @@ import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 import Location from "material-ui/svg-icons/maps/place";
 
+const getStatusAndChangeColor = (status) => {
+  let style = {};
+  switch (status) {
+    case "OPEN":
+      style = {
+        color: "#d84f41",
+      };
+      break;
+    case "CLOSED":
+      style = {
+        color: "#55970a",
+      };
+      break;
+    default:
+      style = {
+        color: "#484848",
+      };
+  }
+  return style;
+};
+
 const Complaint = ({ item }) => {
   return (
     <div className="complaints-card-main-cont home-page-content-card-margin">
@@ -48,7 +69,7 @@ const Complaint = ({ item }) => {
             <div className="complaint-status-cont">
               <span className="complaint-status-text">
                 Status :
-                <span style={item.status === "CLOSED" ? { color: "#55970a" } : { color: "#d84f41" }}>{` ${item.status}`}</span>
+                <span style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
               </span>
             </div>
             <div className="complaint-image-cont">
