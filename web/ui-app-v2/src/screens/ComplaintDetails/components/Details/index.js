@@ -18,19 +18,7 @@ const items = [
     primaryTogglesNestedList: true,
     nestedItems: [
       {
-        primaryText: "Inbox",
-        leftIcon: <ContentInbox />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
-      },
-      {
-        primaryText: "Starred",
-        leftIcon: <ActionGrade />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
-      },
-      {
-        primaryText: "Sent Mail",
-        leftIcon: <ContentSend />,
-        rightAvatar: <Avatar src="http://via.placeholder.com/150x150" />,
+        children: <div key={10}>The content Goes here</div>,
       },
     ],
   },
