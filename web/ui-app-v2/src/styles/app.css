@@ -28,7 +28,7 @@ body {
 .wrapper {
   display: table;
   width: 100%;
-  margin-bottom: -8px;
+  margin: -16px -16px -24px -16px;
 }
 
 .left,

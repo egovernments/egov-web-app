@@ -37,7 +37,7 @@ class OTP extends Component {
         <div style={styles.imageContainer} />
         <Card
           textChildren={
-            <div style={{ padding: "10px" }}>
+            <div>
               <Image
                 style={styles.logo}
                 circular={true}
