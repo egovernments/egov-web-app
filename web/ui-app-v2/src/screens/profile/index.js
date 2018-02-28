@@ -3,17 +3,11 @@ import { Card, Button, Label } from "../../components";
 import Track from "material-ui/svg-icons/maps/my-location";
 import FlatButton from "material-ui/FlatButton";
 import "./index.css";
-const cardContainers = {
-  backgroundColor: " #f2f2f2",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  height: "350px",
-  border: "1px solid #e6e6e6",
-};
+
 class Profile extends Component {
   render() {
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
         <div className="cardContainer" style={cardContainers}>
           <Card
             card={{
@@ -48,7 +42,7 @@ class Profile extends Component {
               </div>
             }
           />
-          <Button primary={true} label="next" style={{ width: "95%", margin: "32% 2% 5% 2%" }} />
+          <Button primary={true} label="next" style={{ width: "95%", margin: "28% 2% 5% 2%" }} />
         </div>
       </div>
     );
@@ -56,3 +50,12 @@ class Profile extends Component {
 }
 
 export default Profile;
+
+const cardContainers = {
+  backgroundColor: " #f2f2f2",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+  height: "350px",
+  border: "1px solid #e6e6e6",
+  padding: "0px",
+};
