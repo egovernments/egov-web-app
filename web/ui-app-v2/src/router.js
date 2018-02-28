@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
@@ -10,11 +11,11 @@ const Main = () => {
   return (
     <main>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/my-complaints" component={MyComplaints} />
-        <Route exact path="/complaint-details" component={ComplaintDetails} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
+        <PrivateRoute exact path="/" component={Home} />
+        <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
+        <PrivateRoute exact path="/complaint-details" component={ComplaintDetails} />
       </Switch>
     </main>
   );

@@ -6,7 +6,7 @@ const theme = {
     primary1Color: "#2f80ed",
     primary2Color: "#f58720",
     textColor: "#5f5c62",
-    canvasColor: "#F7F7F7",
+    canvasColor: "#fff",
     borderColor: "#e6e6e6",
   },
   button: {

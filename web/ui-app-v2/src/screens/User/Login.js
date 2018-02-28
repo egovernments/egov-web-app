@@ -19,12 +19,10 @@ const styles = {
     backgroundImage: `url(https://i.imgur.com/7M1osdL.png)`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    height: "400px",
+    height: "300px",
   },
   formContainer: {
     padding: "10px",
-    // why 65? ~= imageHeight/2 + paddding + bottomMargin
-    marginTop: "-65px",
   },
 };
 
