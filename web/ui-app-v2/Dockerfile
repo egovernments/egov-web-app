@@ -1,6 +1,6 @@
 FROM nginx:1.11.10-alpine
 
-ENV WEB_DIR=/var/web/app/rainmaker
+ENV WEB_DIR=/var/web/app/v3
 RUN mkdir -p ${WEB_DIR}
 COPY ./build/asset-manifest.json ${WEB_DIR}/asset-manifest.json
 COPY ./build/favicon.ico ${WEB_DIR}/favicon.ico
