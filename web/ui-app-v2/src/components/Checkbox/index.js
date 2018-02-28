@@ -9,7 +9,8 @@ const CheckboxUi = ({ options, checkedValues, defaultValue, onCheck, style = {} 
       const isChecked = value !== -1 ? true : false;
       return (
         <Checkbox
-          onCheck={value !== -1 ? checkedValues.splice(index, value) : checkedValues.push(option.value)}
+          //onCheck={value !== -1 ? checkedValues.splice(index, value) : checkedValues.push(option.value)}
+          onCheck={onCheck}
           label={option.label}
           key={index}
           checked={isChecked}
