@@ -4,14 +4,15 @@ import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
+const API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
 
 const MapLocation = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
-    center: { lat: 12.972442, lng: 77.580643 },
+    center: { lat: 12.972442, lng: 77.580643 }
   }),
   lifecycle({
     componentWillMount() {
@@ -19,13 +20,8 @@ const MapLocation = compose(
       var self = this;
       var lati;
       var long;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          this.setState({
-            center: { lat: position.coords.latitude, lng: position.coords.longitude },
-          });
-        });
-      }
+
+      // console.log(this.state.center)
       this.setState({
         bounds: null,
         markers: [],
@@ -55,7 +51,6 @@ const MapLocation = compose(
           const nextMarkers = places.map((place) => ({
             position: place.geometry.location,
           }));
-          console.log(this.state.center);
           const nextCenter = _.get(nextMarkers, "0.position", this.state.center);
           this.setState({
             center: nextCenter,
@@ -64,7 +59,7 @@ const MapLocation = compose(
           // refs.map.fitBounds(bounds);
         },
       });
-    },
+    }
   }),
   withStateHandlers(
     () => ({
@@ -79,32 +74,24 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap ref={props.onMapMounted} defaultZoom={11} center={props.center} onBoundsChanged={props.onBoundsChanged}>
-    <SearchBox
-      ref={props.onSearchBoxMounted}
-      bounds={props.bounds}
-      controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={props.onPlacesChanged}
-    >
+  <GoogleMap
+    ref={props.onMapMounted}
+    defaultZoom={13}
+    center={props.currLoc}
+    onBoundsChanged={props.onBoundsChanged}
+  >
+    <SearchBox ref={props.onSearchBoxMounted} bounds={props.bounds} controlPosition={window.google.maps.ControlPosition.TOP_LEFT} onPlacesChanged={props.onPlacesChanged}>
       <input
         type="text"
         placeholder="Search address"
-        style={{
-          boxSizing: `border-box`,
-          border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
-          marginTop: `10px`,
-          padding: `0 12px`,
-          borderRadius: `3px`,
-          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
-          outline: `none`,
-          textOverflow: `ellipses`,
-        }}
+        style={props.styles}
       />
     </SearchBox>
-    {props.markers.map((marker, index) => <Marker key={index} position={marker.position} />)}
+    {props.markers.map((marker, index) => {
+      props.setLocation(marker.position.lat(), marker.position.lng(), index);
+      return <Marker key={index} position={marker.position} draggable={true} onDragEnd={(e) => { props.setLocation(e.latLng.lat(), e.latLng.lng()) }} />
+    })}
+    <Marker position={props.currLoc} icon={props.icon} />
   </GoogleMap>
 ));
 
