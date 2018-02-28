@@ -20,8 +20,9 @@ else if (navigator.geolocation) {
   });
 }
 
-const setPickedLocation = (marker, index) => {
-  console.log(marker.position, index)
+const setPickedLocation = (lat, lng, index) => {
+  if (_.isUndefined(index)) index = 0;
+  console.log(lat, lng, index)
 }
 
 const styles = {
