@@ -5,11 +5,21 @@ import MenuItem from "material-ui/MenuItem";
 
 const baseStyle = {
   background: "#f2f2f2",
-  height: "56px",
   paddingLeft: "10px",
 };
 
-const DropDownUi = ({ value, fullWidth = false, labelStyle, dropDownData, children, selected, onChange, style = {} }) => {
+const DropDownUi = ({
+  value,
+  fullWidth = false,
+  labelStyle,
+  dropDownData,
+  children,
+  selected,
+  onChange,
+  style = {},
+  floatingLabelText,
+  floatingLabelStyle,
+}) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
       return <MenuItem key={index} value={option.value} primaryText={option.label} />;
@@ -28,6 +38,10 @@ const DropDownUi = ({ value, fullWidth = false, labelStyle, dropDownData, childr
       onChange={onChange}
       selected="Select"
       value={value}
+      floatingLabelText={floatingLabelText}
+      floatingLabelStyle={floatingLabelStyle}
+      iconStyle={{ fill: "#484848" }}
+      underlineStyle={{ borderBottom: "none" }}
     >
       {renderSelectMenuItems()}
     </SelectField>
