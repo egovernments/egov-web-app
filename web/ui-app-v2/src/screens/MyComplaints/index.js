@@ -63,7 +63,7 @@ class MyComplaints extends Component {
   render() {
     let { complaints } = this.state;
     return (
-      <div className="complaints-main-container">
+      <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 complaints-main-container">
         <Complaints complaints={complaints} />
         <div class="floating-botton-cont">
           <FloatingActionButton className="floating-button">
