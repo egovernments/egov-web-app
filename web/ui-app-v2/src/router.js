@@ -15,12 +15,12 @@ const Main = () => {
   return (
     <main>
       <Switch>
-        <Route exact path={`${base}/login`} component={Login} />
-        <Route exact path={`${base}/otp`} component={OTP} />
-        <PrivateRoute exact path={`${base}/`} component={Home} />
-        <PrivateRoute exact path={`${base}/my-complaints`} component={MyComplaints} />
-        <PrivateRoute exact path={`${base}/complaint-details`} component={ComplaintDetails} />
-        <Route exact path={`${base}/map`} component={MapDemo} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/otp" component={OTP} />
+        <PrivateRoute exact path="/" component={Home} />
+        <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
+        <PrivateRoute exact path="/complaint-details" component={ComplaintDetails} />
+        <Route exact path="/map" component={MapDemo} />
       </Switch>
     </main>
   );
