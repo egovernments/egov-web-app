@@ -4,6 +4,7 @@ import ButtonGroupComponent from "./components/ButtonToggle";
 import TextAreaComponent from "./components/TextArea";
 import RaisedButton from "material-ui/RaisedButton";
 import "./index.css";
+import cloneDeep from "lodash/cloneDeep";
 
 class Feedback extends Component {
   state = {
@@ -61,8 +62,8 @@ class Feedback extends Component {
 
   handleClick = (index) => {
     let { items } = this.state;
-    let _items = [...items];
-    for (var i = 0; i < items.length; i++) {
+    let _items = cloneDeep(items);
+    for (var i = 0; i < _items.length; i++) {
       _items[i].style["background"] = "transparent";
       _items[i].labelStyle["color"] = "#484848";
     }

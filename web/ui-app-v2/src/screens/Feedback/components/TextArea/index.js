@@ -15,7 +15,7 @@ const TextAreaComponent = () => {
       <TextField
         className="feedback-textarea"
         hintText="Problem Description"
-        rows={5}
+        rows={4}
         multiLine={true}
         fullWidth={true}
         floatingLabelStyle={{ color: "#767676 !important", fontSize: "20px", whiteSpace: "nowrap" }}
