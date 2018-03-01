@@ -21,7 +21,7 @@ class Profile extends Component {
           <ProfileSection className="profileSection" imgStyle={imgStyle} cardStyles={cardStyles} imgSrc={img} />
           <Icon style={addIconStyle} action="image" name="add-a-photo" onClick={this.onClickAddPic} />
         </div>
-        <div className="profileCardContainer" style={profileCardContainer}>
+        <div className="profileCardContainer">
           <Card
             card={{
               style: {
@@ -64,15 +64,8 @@ class Profile extends Component {
 
 export default Profile;
 
-const profileCardContainer = {
-  backgroundColor: " #f2f2f2",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  height: "350px",
-  border: "1px solid #e6e6e6",
-};
+const imgStyle = { width: "40%", height: 143 };
 
-const imgStyle = { borderRadius: "50%", width: "35%", height: 116 };
 const cardStyles = {
   width: "100%",
   height: "auto",
@@ -85,17 +78,9 @@ const cardStyles = {
   backgroundColor: "#e0e0e0",
 };
 
-const iconStyle = {
-  height: "18px",
-  width: "18px",
-  paddingTop: 12,
-};
-
 const addIconStyle = {
   backgroundColor: "#73b332",
   position: "absolute",
   right: "30%",
   bottom: "20px",
 };
-
-const labelStyle = {};
