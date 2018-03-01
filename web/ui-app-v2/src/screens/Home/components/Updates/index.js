@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import { Card, Icon } from "../../../../components";
-import Label from "../../../../components/Label";
-import ActionHome from "material-ui/svg-icons/action/home";
-import Location from "material-ui/svg-icons/maps/place";
+import { Card, Icon, Label } from "../../../../components";
 import "./index.css";
-import "../../../../styles/app.css";
-//import "./styles/bootstrap-customized.css";
 
 class Updates extends Component {
   render() {
-   
-
     return (
       <div>
         <Card
@@ -26,14 +19,12 @@ class Updates extends Component {
                 {/* Individual Rows; Row 1 */}
                 <div>
                   <Label label="ROAD CLOSED" />
-                  <p className="color-grey">
-                    5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience.
-                  </p>
+                  <Label containerStyle={{marginTop : "10px" }} label="5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience." />
                 </div>
 
                 {/* Individual Rows; Row 2 */}
                 <div style={{ textAlign: "right" }}>
-                  <Icon action="maps" name="place" color = "#767676"/>
+                  <Icon action="maps" name="place" color="#767676" />
                 </div>
               </div>
               {/* End of right section */}

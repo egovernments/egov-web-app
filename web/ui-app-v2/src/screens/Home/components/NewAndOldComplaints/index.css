@@ -4,6 +4,6 @@
 }
 
 
-.newAndOldComplaints-content-section div:nth-child(1) {
+.newAndOldComplaints-content-section > div {
     border-right: 1px solid #e0e0e0;
 }
