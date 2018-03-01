@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextField from "material-ui/TextField";
 
-const TextAreaUi = ({ className, onChange, errorMessage, value, disabled, isRequired, hide, label }) => {
+const TextAreaUi = ({ className, onChange, errorMessage, value, disabled, isRequired, hide, label, rows, hintText }) => {
   const labelProperty = {
     className: className ? className : "",
     floatingLabelFixed: true,
@@ -26,12 +26,13 @@ const TextAreaUi = ({ className, onChange, errorMessage, value, disabled, isRequ
       fullWidth={true}
       multiLine={true}
       errorText={errorMessage}
-      rows={2}
+      rows={rows}
       {...labelProperty}
       value={value}
       disabled={disabled}
       onChange={onChange}
       style={style}
+      hintText={hintText}
     />
   );
 };

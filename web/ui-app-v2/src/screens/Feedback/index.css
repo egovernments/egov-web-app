@@ -1,0 +1,38 @@
+.feedback-main-container {
+  position: relative;
+}
+
+.feedback-firstCard-container,
+.feedback-secondCard-container {
+  background-color: #ffffff;
+  padding: 15px 15px;
+  margin-bottom: 20px;
+}
+
+.feedback-firstCard-heading,
+.feedback-firstCard-subheading {
+  font-size: 15px;
+  color: #767676;
+  line-height: 1;
+}
+
+.feedback-firstCard-top {
+  text-align: center;
+}
+
+.feedback-firstCard-bottom {
+}
+
+.feedback-buttongroup-cont {
+  padding-top: 15px;
+}
+
+.feedback-button-cont {
+  padding: 0 10px;
+  margin-top: 20%;
+}
+
+.feedback-textarea-label {
+  font-size: 15px;
+  color: #767676;
+}

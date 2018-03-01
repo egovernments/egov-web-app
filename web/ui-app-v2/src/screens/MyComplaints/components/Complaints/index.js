@@ -5,10 +5,9 @@ const Complaints = ({ complaints }) => {
   console.log(complaints);
   return (
     <div>
-      {complaints.map((item, index) => {
-        return <Complaint key={index} item={item} />;
+      {complaints.map((complaintItem, complaintIndex) => {
+        return <Complaint key={complaintIndex} item={complaintItem} />;
       })}
-      <div className="dummy-div-for-last-card" />
     </div>
   );
 };
