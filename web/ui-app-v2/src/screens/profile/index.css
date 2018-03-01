@@ -1,11 +1,3 @@
-.profileCardContainer {
-  background-color: #f2f2f2;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 350px;
-  border: 1px solid #e6e6e6;
-}
-
 .profileCardContainer .wrapper .right {
   width: 70%;
   float: right;

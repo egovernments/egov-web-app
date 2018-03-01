@@ -5,17 +5,18 @@ import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 import ProfileSection from "../../components/ProfileSection";
 import img from "../../assets/people.jpg";
-// import Icon from "../../components/Icon";
-// import IconButton from "material-ui/IconButton";
 
 class Profile extends Component {
+  handleLocation = () => {
+    console.log("clicked");
+  };
   onClickAddPic = () => {
     console.log("clicked");
   };
 
   render() {
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
         <div style={{ position: "relative" }}>
           <ProfileSection className="profileSection" imgStyle={imgStyle} cardStyles={cardStyles} imgSrc={img} />
           <Icon style={addIconStyle} action="image" name="add-a-photo" onClick={this.onClickAddPic} />
@@ -49,7 +50,7 @@ class Profile extends Component {
                   <span>#12,Model town,Ludhiana</span>
                 </div>
                 <div className="right">
-                  <FlatButton disableTouchRipple={true} className="iconButton" icon={<Icon name="my-location" action="maps" color="#73aacc" />} />
+                  <Icon onClick={this.handleLocation} name="my-location" action="maps" color="#73aacc" />
                 </div>
               </div>
             }
