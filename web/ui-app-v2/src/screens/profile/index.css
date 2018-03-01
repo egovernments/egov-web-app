@@ -5,31 +5,30 @@
   height: 350px;
   border: 1px solid #e6e6e6;
 }
-
-.cardWrapper {
+.cardContainer .Wrapper {
   display: table;
   width: 100%;
   margin: -16px -16px -24px -16px;
 }
 
-.left,
-.right {
+.cardContainer .Wrapper .left,
+.cardContainer .Wrapper .right {
   display: table-cell;
   vertical-align: middle;
 }
 
-.right {
+.cardContainer .Wrapper .right {
   width: 70%;
   float: right;
 }
 
-.left {
+.cardContainer .Wrapper .left {
   width: 100%;
   padding: 10px;
   text-align: left;
 }
 
-.label {
+.cardContainer .Wrapper .label {
   display: block;
   margin-bottom: 2%;
   color: #6090ae;
