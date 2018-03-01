@@ -31,8 +31,8 @@ class Profile extends Component {
             textChildren={
               <div className="wrapper">
                 <div className="left">
-                  <span className="label">Name</span>
-                  <span>Jaswinder</span>
+                  <Label className="label" label={"Name"} color={"#6090ae"} />
+                  <Label className="name" label={"Jaswinder"} color={"#484848"} />
                 </div>
               </div>
             }
@@ -46,8 +46,8 @@ class Profile extends Component {
             textChildren={
               <div className="wrapper">
                 <div className="left">
-                  <span className="label">Address</span>
-                  <span>#12,Model town,Ludhiana</span>
+                  <Label className="label" label={"Address"} color={"#6090ae"} />
+                  <Label className="name" label={"#12,Model town,Ludhiana"} color={"#484848"} />
                 </div>
                 <div className="right">
                   <Icon onClick={this.handleLocation} name="my-location" action="maps" color="#73aacc" />
@@ -97,3 +97,5 @@ const addIconStyle = {
   right: "30%",
   bottom: "20px",
 };
+
+const labelStyle = {};
