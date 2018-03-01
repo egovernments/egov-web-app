@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "../../../../components";
-import { Image } from "../../../../components";
-import complaintImage from "../../../../assets/people.jpg";
-import FlatButton from "material-ui/FlatButton";
 import "./index.css";
-import "../../../../styles/app.css";
-import Location from "material-ui/svg-icons/maps/place";
-import TextArea from "../../../../components/TextArea";
 import TextField from "material-ui/TextField";
 
 const TextAreaComponent = () => {

@@ -1,32 +1,43 @@
 import React, { Component } from "react";
-import { Card } from "../../../../components";
-import { Image } from "../../../../components";
 import "./index.css";
-import "../../../../styles/app.css";
-import ButtonToggle from "../../../../components/ButtonGroup";
+import { ButtonGroup } from "../../../../components";
 
-const ButtonToggleComponent = ({ item, onClick }) => {
-  return <ButtonToggle item={item} onClick={onClick} />;
+const defaultBGColor = "transparent";
+const BGColor = "#f5a623";
+const labelStyle = {
+  textTransform: "none",
+  fontWeight: "900",
+  color: "#ffffff",
 };
 
-// class RatingComponent extends Component {
-//   render() {
-//     return (
-//       <div className="feedback-main-container">
-//         <div style={{ textAlign: "center" }}>
-//           <span>
-//             Your feedback is valuable to us.<br />rate our service.
-//           </span>
-//         </div>
-//         <div>
-//           <Ratings />
-//         </div>
-//         <div style={{ textAlign: "center" }}>
-//           <span>What did you like from us?</span>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+const defaultStyle = {
+  border: "1px solid #f5a623",
+  borderRadius: "3px",
+  marginRight: "5px",
+  height: "auto",
+  lineHeight: "30px",
+};
+
+const defaultLabelStyle = {
+  textTransform: "none",
+  fontWeight: "900",
+  color: "#484848",
+};
+
+const ButtonToggleComponent = ({ items, onClick, selected }) => {
+  console.log(selected);
+  return (
+    <ButtonGroup
+      items={items}
+      onClick={onClick}
+      selected={selected}
+      defaultStyle={defaultStyle}
+      defaultLabelStyle={defaultLabelStyle}
+      BGColor={BGColor}
+      defaultBGColor={defaultBGColor}
+      labelStyle={labelStyle}
+    />
+  );
+};
 
 export default ButtonToggleComponent;

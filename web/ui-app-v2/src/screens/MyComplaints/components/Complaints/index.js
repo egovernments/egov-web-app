@@ -8,7 +8,6 @@ const Complaints = ({ complaints }) => {
       {complaints.map((complaintItem, complaintIndex) => {
         return <Complaint key={complaintIndex} item={complaintItem} />;
       })}
-      <div className="dummy-div-for-last-card" />
     </div>
   );
 };

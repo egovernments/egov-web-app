@@ -11,83 +11,26 @@ class Feedback extends Component {
     items: [
       {
         label: "Service",
-        style: {
-          border: "1px solid #f5a623",
-          borderRadius: "3px",
-          marginRight: "5px",
-          background: "transparent",
-          height: "auto",
-          lineHeight: "30px",
-        },
-        labelStyle: {
-          textTransform: "none",
-          fontWeight: "900",
-          color: "#484848",
-        },
+        value: "Service",
       },
       {
         label: "Resolution Time",
-        style: {
-          border: "1px solid #f5a623",
-          borderRadius: "3px",
-          marginRight: "5px",
-          background: "transparent",
-          height: "auto",
-          lineHeight: "30px",
-        },
-        labelStyle: {
-          textTransform: "none",
-          fontWeight: "900",
-          color: "#484848",
-        },
+        value: "RT",
       },
       {
         label: "Other",
-        style: {
-          border: "1px solid #f5a623",
-          borderRadius: "3px",
-          marginRight: "5px",
-          background: "transparent",
-          height: "auto",
-          lineHeight: "30px",
-        },
-        labelStyle: {
-          textTransform: "none",
-          fontWeight: "900",
-          color: "#484848",
-        },
+        value: "Other",
       },
     ],
+    value: null,
   };
 
-  handleClick = (index) => {
-    let { items } = this.state;
-    let _items = cloneDeep(items);
-    for (var i = 0; i < _items.length; i++) {
-      _items[i].style["background"] = "transparent";
-      _items[i].labelStyle["color"] = "#484848";
-    }
-    _items[index].style["background"] = "#f5a623";
-    _items[index].labelStyle["color"] = "#ffffff";
-    this.setState({ items: _items });
-  };
-
-  renderButtonGroups = () => {
-    let { items } = this.state;
-    return items.map((item, index) => {
-      return (
-        <ButtonGroupComponent
-          key={index}
-          item={item}
-          onClick={() => {
-            this.handleClick(index);
-          }}
-        />
-      );
-    });
+  onClick = (value) => {
+    this.setState({ value });
   };
 
   render() {
+    let { items, value } = this.state;
     return (
       <div className="feedback-main-container">
         <div className="feedback-firstCard-container">
@@ -99,7 +42,9 @@ class Feedback extends Component {
           <RatingsComponent />
           <div className="feedback-firstCard-bottom">
             <span className="feedback-firstCard-subheading">What did you like from us?</span>
-            <div className="feedback-buttongroup-cont">{this.renderButtonGroups()}</div>
+            <div className="feedback-buttongroup-cont">
+              <ButtonGroupComponent items={items} selected={value} onClick={this.onClick} />
+            </div>
           </div>
         </div>
 

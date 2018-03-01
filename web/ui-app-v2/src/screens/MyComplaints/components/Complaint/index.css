@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.complaints-main-container:last-child {
+  margin-bottom: 80px;
+}
+
 .floating-botton-cont {
   position: fixed;
   right: 3%;
@@ -57,7 +61,7 @@
 
 .complaint-image-cont {
   white-space: nowrap;
-  overflow: scroll;
+  overflow: none;
 }
 .complaint-image-cont img {
   display: inline-block !important;
