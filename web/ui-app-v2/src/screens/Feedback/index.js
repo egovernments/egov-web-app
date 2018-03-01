@@ -53,7 +53,7 @@ class Feedback extends Component {
           <TextAreaComponent />
         </div>
         <div className="feedback-button-cont">
-          <RaisedButton label="Submit" backgroundColor={`#f5a623`} style={{}} fullWidth={true} labelStyle={{ color: "#ffffff", fontWeight: "900" }} />
+          <RaisedButton label="Submit" backgroundColor={`#f5a623`}  fullWidth={true} labelStyle={{ color: "#ffffff", fontWeight: "900" }} />
         </div>
       </div>
     );
