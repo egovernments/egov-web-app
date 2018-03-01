@@ -9,19 +9,16 @@ import img from "../../assets/people.jpg";
 // import IconButton from "material-ui/IconButton";
 
 class Profile extends Component {
+  onClickAddPic = () => {
+    console.log("clicked");
+  };
+
   render() {
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <div style={{ position: "relative" }}>
-          <ProfileSection
-            className="profileSection"
-            imgStyle={imgStyle}
-            cardStyles={cardStyles}
-            imgSrc={img}
-            nameStyle={nameStyle}
-            locationStyle={locationStyle}
-          />
-          <Icon style={addIconStyle} action="image" name="add-a-photo" />
+          <ProfileSection className="profileSection" imgStyle={imgStyle} cardStyles={cardStyles} imgSrc={img} />
+          <Icon style={addIconStyle} action="image" name="add-a-photo" onClick={this.onClickAddPic} />
         </div>
         <div className="profileCardContainer" style={profileCardContainer}>
           <Card
@@ -86,17 +83,11 @@ const cardStyles = {
   paddingBottom: 30,
   backgroundColor: "#e0e0e0",
 };
-const nameStyle = {
-  display: "none",
-};
+
 const iconStyle = {
   height: "18px",
   width: "18px",
   paddingTop: 12,
-};
-
-const locationStyle = {
-  display: "none",
 };
 
 const addIconStyle = {

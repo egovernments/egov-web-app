@@ -13,8 +13,8 @@ const ProfileSection = ({ imgStyle, cardStyles, nameStyle, locationStyle, name, 
   return (
     <div className="profileSection" style={cardStyles}>
       <Image className="img-Profile" circular={true} style={imgStyle} source={imgSrc} />
-      <Label className="name-Profile" label={name} style={nameStyle} />
-      <Label className="loc-Profile" labelPosition="after" label={location} style={locationStyle} icon={<LocationIcon />} />
+      {name && <Label className="name-Profile" label={name} style={nameStyle} />}
+      {location && <Label className="loc-Profile" labelPosition="after" label={location} style={locationStyle} icon={<LocationIcon />} />}
     </div>
   );
 };
