@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Card } from "../../components";
-import Location from "material-ui/svg-icons/maps/place";
+import { Card, Button, Label, Icon } from "../../components";
+import Track from "material-ui/svg-icons/maps/my-location";
+import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 import ProfileSection from "../../components/ProfileSection";
 import img from "../../assets/people.jpg";
@@ -22,7 +23,7 @@ class Profile extends Component {
           />
           <Icon style={addIconStyle} action="image" name="add-a-photo" />
         </div>
-        <div className="cardContainer" style={cardContainers}>
+        <div className="profileCardContainer" style={profileCardContainer}>
           <Card
             card={{
               style: {
@@ -30,10 +31,9 @@ class Profile extends Component {
               },
             }}
             textChildren={
-              <div className="cardWrapper">
+              <div className="wrapper">
                 <div className="left">
-                  <label>Name</label>
-                  <br />
+                  <span className="label">Name</span>
                   <span>Jaswinder</span>
                 </div>
               </div>
@@ -46,17 +46,18 @@ class Profile extends Component {
               },
             }}
             textChildren={
-              <div className="cardWrapper">
+              <div className="wrapper">
                 <div className="left">
-                  <label style={{ display: "block", marginBottom: "2%" }}>Address </label>
+                  <span className="label">Address</span>
                   <span>#12,Model town,Ludhiana</span>
                 </div>
                 <div className="right">
-                  <Location />
+                  <FlatButton disableTouchRipple={true} className="iconButton" icon={<Icon name="my-location" action="maps" color="#73aacc" />} />
                 </div>
               </div>
             }
           />
+          <Button primary={true} label="next" style={{ width: "95%", margin: "28% 2% 5% 2%" }} />
         </div>
       </div>
     );
@@ -65,7 +66,7 @@ class Profile extends Component {
 
 export default Profile;
 
-const cardContainers = {
+const profileCardContainer = {
   backgroundColor: " #f2f2f2",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
