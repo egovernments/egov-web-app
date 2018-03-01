@@ -1,34 +1,23 @@
-.cardContainer = {
+.profileCardContainer = {
   background-color: #f2f2f2;
   background-repeat: no-repeat;
   background-position: center;
   height: 350px;
   border: 1px solid #e6e6e6;
 }
-.cardContainer .Wrapper {
-  display: table;
-  width: 100%;
-  margin: -16px -16px -24px -16px;
-}
 
-.cardContainer .Wrapper .left,
-.cardContainer .Wrapper .right {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.cardContainer .Wrapper .right {
+.profileCardContainer .wrapper .right {
   width: 70%;
   float: right;
 }
 
-.cardContainer .Wrapper .left {
+.profileCardContainer .wrapper .left {
   width: 100%;
   padding: 10px;
   text-align: left;
 }
 
-.cardContainer .Wrapper .label {
+.profileCardContainer .label {
   display: block;
   margin-bottom: 2%;
   color: #6090ae;

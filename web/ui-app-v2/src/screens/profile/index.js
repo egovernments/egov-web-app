@@ -8,7 +8,7 @@ class Profile extends Component {
   render() {
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
-        <div className="cardContainer" style={cardContainers}>
+        <div className="profileCardContainer" style={profileCardContainer}>
           <Card
             card={{
               style: {
@@ -16,7 +16,7 @@ class Profile extends Component {
               },
             }}
             textChildren={
-              <div className="Wrapper">
+              <div className="wrapper">
                 <div className="left">
                   <span className="label">Name</span>
                   <span>Jaswinder</span>
@@ -31,7 +31,7 @@ class Profile extends Component {
               },
             }}
             textChildren={
-              <div className="Wrapper">
+              <div className="wrapper">
                 <div className="left">
                   <span className="label">Address</span>
                   <span>#12,Model town,Ludhiana</span>
@@ -51,7 +51,7 @@ class Profile extends Component {
 
 export default Profile;
 
-const cardContainers = {
+const profileCardContainer = {
   backgroundColor: " #f2f2f2",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center",
