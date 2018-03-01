@@ -5,7 +5,7 @@ import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 import ProfileSection from "../../components/ProfileSection";
 import img from "../../assets/people.jpg";
-import Icon from "../../components/Icon";
+// import Icon from "../../components/Icon";
 // import IconButton from "material-ui/IconButton";
 
 class Profile extends Component {
