@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "../../../../components";
+import { Card, Label } from "../../../../components";
 import { Image } from "../../../../components";
 import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
@@ -45,7 +45,7 @@ const Complaint = ({ item }) => {
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
-              <span className="complaint-header">{item.header}</span>
+              <Label label={item.header} className="complaint-header" />
               <FlatButton
                 backgroundColor="transparent"
                 label={"Track"}
@@ -64,7 +64,7 @@ const Complaint = ({ item }) => {
             </div>
             <div className="complaint-address-cont">
               <Location className="location-marker" />
-              <span className="complaint-address">{item.address}</span>
+              <Label label={item.address} className="complaint-address" />
             </div>
             <div className="complaint-status-cont">
               <span className="complaint-status-text">

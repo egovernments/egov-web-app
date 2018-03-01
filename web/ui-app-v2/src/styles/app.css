@@ -11,9 +11,19 @@ body {
 .color-white {
   color: #ffffff !important;
 }
-.color-lima {
+
+.color-lime {
   background: #73b332;
 }
+
+.color-lightning-yellow {
+  color: #f5a623;
+}
+
+.color-white {
+  color: #ffffff;
+}
+
 .color-lightning-yellow {
   background: #f5a623 !important;
 }

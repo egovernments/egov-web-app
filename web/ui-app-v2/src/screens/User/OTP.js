@@ -15,9 +15,6 @@ const styles = {
     top: "28%",
     zIndex: "100",
   },
-  resendOTP: {
-    float: "right",
-  },
   imageContainer: {
     position: "relative",
     backgroundImage: `url(${bannerMuncipal})`,
@@ -61,20 +58,21 @@ class OTP extends Component {
         <div style={styles.cardBackground} />
         <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
         <Card
-        card={cardStyle}
+          card={cardStyle}
           textChildren={
             <div>
-
-              <p className="otp-text"  style={{ marginTop: "10%" }}>
-                We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account.
-              </p>
+              <Label
+                label="We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account."
+                className="otp-text"
+                labelStyle={{ marginTop: "10%" }}
+              />
 
               <form>
                 <TextField className="textfield" id="otp" fullWidth={true} placeholder="Enter OTP" />
-                <div style={styles.resendOTP}>
-                  <Label label="Didn't recieve OTP?" />
-                  <Label primary={true} label="resend" />
-                </div>
+
+                <Label label="Didn't recieve OTP?" labelStyle={{ float: "left", margin: "5% 10% 5% 10%" }} />
+                <Label label="RESEND" labelStyle={{ color: "#6090ae", float: "right", margin: "5% 10% 5% 10%" }} />
+
                 <Button onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
               </form>
             </div>

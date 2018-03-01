@@ -27,14 +27,11 @@ class Events extends Component {
               <div className="month">{this.state.month}</div>
             </div>
             <div className="right">
-              <div className="event-row">{this.state.eventName}</div>
-              <div className="event-row event-location">
-                <div className="location-icon">
-                  <LocationIcon />
-                </div>
-                <div className="location-name">{this.state.location}</div>
+              <Label label={this.state.eventName} />
+              <div className="event-location">
+                <Label icon={<LocationIcon />} label={this.state.location} />
               </div>
-              <div className="event-row">{this.state.timing}</div>
+              <Label label={this.state.timing} />
             </div>
           </div>
         }

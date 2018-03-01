@@ -11,17 +11,3 @@
 .events.wrapper .month {
   background: #9b59b6;
 }
-
-.event-row {
-  margin-bottom: 5px;
-}
-
-.event-location {
-  display: table;
-}
-
-.location-icon,
-.location-name {
-  display: table-cell;
-  vertical-align: middle;
-}
