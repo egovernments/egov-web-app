@@ -8,7 +8,7 @@ import img from "../../assets/people.jpg";
 
 class Profile extends Component {
   handleLocation = () => {
-    console.log("clicked");
+    window.location.pathname = "/map";
   };
   onClickAddPic = () => {
     console.log("clicked");
