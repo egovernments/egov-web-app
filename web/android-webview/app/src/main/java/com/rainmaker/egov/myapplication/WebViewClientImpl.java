@@ -29,7 +29,10 @@ public class WebViewClientImpl extends WebViewClient {
     }
     @Override
     public void onPageFinished(WebView view, String url) {
-       super.onPageFinished(view,url);
+
+        super.onPageFinished(view,url);
+        // dispatch an event once page is loaded
+        // javascript function should store the result in the localstorage
     }
 
 

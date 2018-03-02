@@ -13,10 +13,9 @@ const cardStyle = {
   },
 };
 class Login extends Component {
-
   state = {
-    name : '',
-    phoneNumber : ''
+    name: "",
+    phoneNumber: "",
   };
 
   dropDownData = [
@@ -34,17 +33,17 @@ class Login extends Component {
     this.props.history.push("/otp");
   };
 
-  onNameChanged = (e,value) => {
-    this.setState({name : value});
-  }
+  onNameChanged = (e, value) => {
+    this.setState({ name: value });
+  };
 
-  onPhoneNumberChanged = (e,value) => {
-    this.setState({phoneNumber : value})
-  }
+  onPhoneNumberChanged = (e, value) => {
+    this.setState({ phoneNumber: value });
+  };
 
   render() {
-    const { login, dropDownData,onNameChanged,onPhoneNumberChanged } = this;
-    const {name,phoneNumber} = this.state;
+    const { login, dropDownData, onNameChanged, onPhoneNumberChanged } = this;
+    const { name, phoneNumber } = this.state;
 
     return (
       <div className="user-login col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
@@ -54,9 +53,9 @@ class Login extends Component {
         <Card
           card={cardStyle}
           textChildren={
-            <div style={{marginTop : "50px"}}>
+            <div style={{ marginTop: "50px" }}>
               <form>
-                <TextField value={name} onChange={onNameChanged}  className="textfield" name="name" id="name" fullWidth={true} placeholder="Name" style={{ marginTop: "6%" }} />
+                <TextField value={name} onChange={onNameChanged} className="textfield" name="name" id="name" fullWidth={true} placeholder="Name" />
                 <DropDown
                   name="cities"
                   value={1}

@@ -10,7 +10,7 @@ const baseStyle = {
   border: "1px solid #e6e6e6",
   paddingLeft: "10px",
   height: "56px",
-  margin: "5px 0px",
+  marginBottom: "5px",
   boxSizing: "border-box",
 };
 
