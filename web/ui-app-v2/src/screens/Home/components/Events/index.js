@@ -27,7 +27,7 @@ class Events extends Component {
               <div className="month">{this.state.month}</div>
             </div>
             <div className="right">
-              <Label label={this.state.eventName} />
+              <Label color="black" label={this.state.eventName} />
               <div className="event-location">
                 <Label icon={<LocationIcon />} label={this.state.location} />
               </div>

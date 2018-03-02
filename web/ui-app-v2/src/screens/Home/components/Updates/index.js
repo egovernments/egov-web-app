@@ -15,10 +15,10 @@ class Updates extends Component {
               </div>
 
               {/* right section*/}
-              <div className="right">
+              <div style={{paddingRight : "0px"}} className="right">
                 {/* Individual Rows; Row 1 */}
                 <div>
-                  <Label label="ROAD CLOSED" />
+                  <Label color="black" bold={true} label="ROAD CLOSED" />
                   <Label
                     containerStyle={{ marginTop: "10px" }}
                     label="5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience."
@@ -27,7 +27,7 @@ class Updates extends Component {
 
                 {/* Individual Rows; Row 2 */}
                 <div style={{ textAlign: "right" }}>
-                  <Icon action="maps" name="place" color="#767676" />
+                  <Icon style={{paddingRight:"0px"}} action="maps" name="place" color="#767676" />
                 </div>
               </div>
               {/* End of right section */}
