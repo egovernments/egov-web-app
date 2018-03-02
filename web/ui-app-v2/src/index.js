@@ -6,7 +6,8 @@ import Main from "./router";
 import store from "./store";
 import theme from "./config/theme";
 import injectTapEventPlugin from "react-tap-event-plugin";
-
+// adding roboto
+import "typeface-roboto";
 //Web font loader
 import WebFont from "webfontloader";
 // styles

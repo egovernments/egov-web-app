@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Card, Icon, Label } from "../../../../components";
 import "./index.css";
 
-
 class NewAndOldComplaints extends Component {
   render() {
     return (
@@ -15,7 +14,7 @@ class NewAndOldComplaints extends Component {
             </div>
             <div className="col-xs-6">
               <Icon style={{ background: "#73aacc" }} action="social" name="person" />
-                <Label label="OLD COMPLAINT" />
+              <Label label="OLD COMPLAINT" />
             </div>
           </div>
         }

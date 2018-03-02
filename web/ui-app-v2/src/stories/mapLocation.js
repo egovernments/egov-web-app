@@ -6,23 +6,21 @@ import { MapLocation } from "../components";
 import theme from "../config/theme";
 import pinIcon from "../assets/mapPin.png";
 
-
 var currLoc = {};
 var showMyAddress = true;
-var myLocation = { lat: 12.972442, lng: 77.580643 }
+var myLocation = { lat: 12.972442, lng: 77.580643 };
 
 if (showMyAddress === true && myLocation) {
   currLoc = myLocation;
-}
-else if (navigator.geolocation) {
+} else if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition((position) => {
-    currLoc = { lat: position.coords.latitude , lng: position.coords.longitude };
+    currLoc = { lat: position.coords.latitude, lng: position.coords.longitude };
   });
 }
 
 const setPickedLocation = (marker, index) => {
-  console.log(marker.position, index)
-}
+  console.log(marker.position, index);
+};
 
 const styles = {
   boxSizing: `border-box`,
@@ -36,7 +34,7 @@ const styles = {
   fontSize: `14px`,
   outline: `none`,
   textOverflow: `ellipses`,
-}
+};
 
 storiesOf("MapLocation", module)
   .addDecorator(muiTheme([theme]))

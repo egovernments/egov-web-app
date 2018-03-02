@@ -10,6 +10,8 @@
 
 .label-text {
   color: #767676;
+  letter-spacing: 0.3px;
+  font-size: 14px;
 }
 
 .label-icon > svg {

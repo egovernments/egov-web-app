@@ -1,42 +1,40 @@
 import React, { Component } from "react";
 import MapLocation from "../../components/MapLocation";
-import RaisedButton from "../../components/Button"
+import RaisedButton from "../../components/Button";
 import pinIcon from "../../assets/mapPin.png";
-import _ from 'lodash';
+import _ from "lodash";
 
 class MapDemo extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       showMyAddress: false,
-      currLoc: {}
-    }
+      currLoc: {},
+    };
   }
 
   componentDidMount() {
     var myLocation = { lat: 12.9279, lng: 77.6271 };
     if (this.state.showMyAddress === true && myLocation) {
       this.setState({
-        currLoc: myLocation
-      })
-    }
-    else if (navigator.geolocation) {
+        currLoc: myLocation,
+      });
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
-          currLoc: { lat: position.coords.latitude , lng: position.coords.longitude }
-        })
+          currLoc: { lat: position.coords.latitude, lng: position.coords.longitude },
+        });
       });
     }
   }
 
   setPickedLocation(lat, lng, index) {
     if (_.isUndefined(index)) index = 0;
-    console.log(lat, lng, index)
+    console.log(lat, lng, index);
   }
 
   onClickPick() {
-    console.log("picked")
+    console.log("picked");
   }
 
   render() {
@@ -66,7 +64,7 @@ const styles = {
   fontSize: `14px`,
   outline: `none`,
   textOverflow: `ellipses`,
-}
+};
 
 const closeBtn = {
   width: "40.6%",
@@ -79,6 +77,6 @@ const closeBtn = {
   fontFamily: "Roboto",
   fontSize: "7px",
   fontWeight: 500,
-  fontStyle: "normal"
+  fontStyle: "normal",
 };
 const pickBtn = { width: "40.6%", marginTop: 10, backgroundColor: "#f5a623", marginRight: "5.7%", marginLeft: "2.8%", color: "#ffffff" };

@@ -19,7 +19,10 @@ class Updates extends Component {
                 {/* Individual Rows; Row 1 */}
                 <div>
                   <Label label="ROAD CLOSED" />
-                  <Label containerStyle={{marginTop : "10px" }} label="5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience." />
+                  <Label
+                    containerStyle={{ marginTop: "10px" }}
+                    label="5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience."
+                  />
                 </div>
 
                 {/* Individual Rows; Row 2 */}
