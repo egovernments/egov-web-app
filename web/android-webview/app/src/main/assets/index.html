@@ -17,7 +17,15 @@ function messageReceieved(message){
   document.getElementById("OTP").value = message;
 }
 
+if (androidAppProxy) {
+   console.log("Had SMS Access" + androidAppProxy.hasSMSAccess());
+}
+
+androidAppProxy.requestSMS();
+
+
 </script>
+<a href="https://www.google.com">Leave this page</a>
 </body>
 </html>
 
