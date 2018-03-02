@@ -14,12 +14,36 @@ const cardStyle = {
 };
 
 class OTP extends Component {
+
+  state = {
+    otp : ''
+  }
+
+  componentDidMount(){
+
+    const otpElement = document.getElementById("otp");
+
+     otpElement.addEventListener("smsReceived", (e) => {
+        const {otp} = e.detail;
+        this.setState({otp})
+   });
+
+  }
+
+  componentWillUnmount(){
+    const otpElement = document.getElementById("otp");
+    otpElement.removeEventListener("smsReceived",null);
+  } 
+
   onOtpSubmit = () => {
     this.props.history.push("/");
   };
 
   render() {
     const { onOtpSubmit } = this;
+    const {otp} = this.state;
+    const disabled = (otp.trim().length > 0) ? false : true;
+
     return (
       <div className="user-otp col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
         <div className="imageContainer" />
@@ -35,7 +59,7 @@ class OTP extends Component {
               />
 
               <form>
-                <TextField className="textfield" id="otp" fullWidth={true} placeholder="Enter OTP" />
+                <TextField className="textfield" id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
                 <div style={{ margin: "10px 0px 20px" }} className="text-right">
                   <Label className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label className="otp-resend" label="RESEND" />

@@ -14,10 +14,11 @@ const baseStyle = {
   boxSizing: "border-box",
 };
 
-const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield" }) => {
+const TextField = ({ style, value, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield" }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
+      value={value}
       onChange={onChange}
       disabled={disabled}
       className={className}
