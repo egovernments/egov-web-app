@@ -4,7 +4,6 @@ import ButtonGroupComponent from "./components/ButtonToggle";
 import TextAreaComponent from "./components/TextArea";
 import RaisedButton from "material-ui/RaisedButton";
 import "./index.css";
-import cloneDeep from "lodash/cloneDeep";
 
 class Feedback extends Component {
   state = {

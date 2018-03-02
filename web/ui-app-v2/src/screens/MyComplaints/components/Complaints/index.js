@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Complaint from "../Complaint";
 
 const Complaints = ({ complaints }) => {
-  console.log(complaints);
   return (
-    <div>
+    <div className="complaints-top-level-wrapper">
       {complaints.map((complaintItem, complaintIndex) => {
         return <Complaint key={complaintIndex} item={complaintItem} />;
       })}

@@ -29,7 +29,9 @@
 
 .feedback-button-cont {
   padding: 0 10px;
-  margin-top: 20%;
+  position: fixed;
+  width: 100%;
+  bottom: 65px;
 }
 
 .feedback-textarea-label {
