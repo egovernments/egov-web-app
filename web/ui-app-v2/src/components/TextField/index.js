@@ -1,29 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MaterialUITextField from "material-ui/TextField";
+import "./index.css";
 
 const errorStyle = {
   marginTop: "5px",
 };
 
-const baseStyle = {
-  border: "1px solid #e6e6e6",
-  paddingLeft: "10px",
-  height: "56px",
-  marginBottom: "5px",
-  boxSizing: "border-box",
-};
-
-const TextField = ({ style, value, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield" }) => {
+const TextField = ({ style = {}, value, onChange, id, disabled, placeholder, fullWidth = false, className = "" }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
       value={value}
       onChange={onChange}
       disabled={disabled}
-      className={className}
+      className={`textfield ${className}`}
       underlineShow={false}
-      style={Object.assign({}, baseStyle, style)}
+      style={style}
       id={id}
       fullWidth={fullWidth}
       hintText={placeholder}

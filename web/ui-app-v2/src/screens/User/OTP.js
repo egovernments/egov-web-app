@@ -56,7 +56,7 @@ class OTP extends Component {
               />
 
               <form>
-                <TextField className="textfield" id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
+                <TextField id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
                 <div style={{ margin: "10px 0px 10px" }} className="text-right">
                   <Label className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label className="otp-resend" label="RESEND" />

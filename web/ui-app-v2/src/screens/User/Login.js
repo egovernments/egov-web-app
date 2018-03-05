@@ -55,7 +55,7 @@ class Login extends Component {
           textChildren={
             <div style={{ marginTop: "50px" }}>
               <form>
-                <TextField value={name} onChange={onNameChanged} className="textfield" name="name" id="name" fullWidth={true} placeholder="Name" />
+                <TextField value={name} onChange={onNameChanged} name="name" id="name" fullWidth={true} placeholder="Name" />
                 <DropDown
                   name="cities"
                   value={1}
@@ -68,7 +68,6 @@ class Login extends Component {
                 <TextField
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
-                  className="textfield"
                   name="phone-number"
                   id="phone-number"
                   underlineShow={false}
