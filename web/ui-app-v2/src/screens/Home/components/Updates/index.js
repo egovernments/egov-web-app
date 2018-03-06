@@ -8,14 +8,14 @@ class Updates extends Component {
       <div>
         <Card
           textChildren={
-            <div className="wrapper">
+            <div id="home-updates" className="wrapper">
               {/* Left section*/}
               <div className="left update-icon">
                 <Icon action="action" name="home" />
               </div>
 
               {/* right section*/}
-              <div style={{paddingRight : "0px"}} className="right">
+              <div style={{ paddingRight: "0px" }} className="right">
                 {/* Individual Rows; Row 1 */}
                 <div>
                   <Label color="black" bold={true} label="ROAD CLOSED" />
@@ -27,7 +27,7 @@ class Updates extends Component {
 
                 {/* Individual Rows; Row 2 */}
                 <div style={{ textAlign: "right" }}>
-                  <Icon style={{paddingRight:"0px"}} action="maps" name="place" color="#767676" />
+                  <Icon style={{ paddingRight: "0px" }} action="maps" name="place" color="#767676" />
                 </div>
               </div>
               {/* End of right section */}

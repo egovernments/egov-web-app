@@ -8,11 +8,11 @@ class NewAndOldComplaints extends Component {
       <Card
         textChildren={
           <div className="row newAndOldComplaints-content-section">
-            <div className="col-xs-6">
+            <div id="home-new-complaint" className="col-xs-6">
               <Icon style={{ background: "#f5a623" }} action="notification" name="sms-failed" />
               <Label label="NEW COMPLAINT" />
             </div>
-            <div className="col-xs-6">
+            <div id="home-old-complaint" className="col-xs-6">
               <Icon style={{ background: "#73aacc" }} action="social" name="person" />
               <Label label="OLD COMPLAINT" />
             </div>

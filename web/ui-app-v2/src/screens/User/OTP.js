@@ -21,7 +21,7 @@ class OTP extends Component {
   componentDidMount() {
     const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", e => {
+    otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       this.setState({ otp });
     });
@@ -56,12 +56,12 @@ class OTP extends Component {
               />
 
               <form>
-                <TextField id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
+                <TextField id="enter-otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
                 <div style={{ margin: "10px 0px 10px" }} className="text-right">
-                  <Label className="otp-prompt" label="Didn't recieve OTP?" />
-                  <Label className="otp-resend" label="RESEND" />
+                  <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
+                  <Label id="otp-resend" className="otp-resend" label="RESEND" />
                 </div>
-                <Button onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
+                <Button id="otp-start" onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
               </form>
             </div>
           }

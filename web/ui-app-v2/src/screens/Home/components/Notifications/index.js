@@ -17,7 +17,7 @@ class Notification extends Component {
       <div>
         <Card
           textChildren={
-            <div className="wrapper">
+            <div id="home-notification" className="wrapper">
               <div className="left color-lime">
                 <Icon action="action" name="home" />
               </div>
@@ -27,8 +27,18 @@ class Notification extends Component {
                 </div>
                 <br />
                 <div>
-                  <Label className="notification-content-label" label="YES" icon={<Icon style={iconStyle} action="action" name="thumb-up" />} />
-                  <Label className="notification-content-label" label="NO" icon={<Icon style={iconStyle} action="action" name="thumb-down" />} />
+                  <Label
+                    id="thumb-up-action"
+                    className="notification-content-label"
+                    label="YES"
+                    icon={<Icon style={iconStyle} action="action" name="thumb-up" />}
+                  />
+                  <Label
+                    id="thumb-down-action"
+                    className="notification-content-label"
+                    label="NO"
+                    icon={<Icon style={iconStyle} action="action" name="thumb-down" />}
+                  />
                 </div>
               </div>
             </div>

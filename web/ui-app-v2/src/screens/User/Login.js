@@ -55,8 +55,9 @@ class Login extends Component {
           textChildren={
             <div style={{ marginTop: "50px" }}>
               <form>
-                <TextField value={name} onChange={onNameChanged} name="name" id="name" fullWidth={true} placeholder="Name" />
+                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} placeholder="Name" />
                 <DropDown
+                  id="login-city-field"
                   name="cities"
                   value={1}
                   dropDownData={dropDownData}
@@ -66,15 +67,15 @@ class Login extends Component {
                   style={{ border: "1px solid #e6e6e6" }}
                 />
                 <TextField
+                  id="login-phone-number"
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
                   name="phone-number"
-                  id="phone-number"
                   underlineShow={false}
                   fullWidth={true}
                   placeholder="Phone Number"
                 />
-                <Button onClick={login} primary={true} label="Submit" fullWidth={true} />
+                <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
               </form>
             </div>
           }
