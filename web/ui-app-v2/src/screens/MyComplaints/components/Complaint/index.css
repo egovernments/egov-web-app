@@ -56,8 +56,10 @@
   font-family: Roboto;
 }
 
-.location-marker {
+.complaint-address-cont > svg {
   color: #969696 !important;
+  fill: currentColor !important;
+  padding: 0 !important;
   margin-right: 10px;
   width: 17px !important;
   height: 17px !important;

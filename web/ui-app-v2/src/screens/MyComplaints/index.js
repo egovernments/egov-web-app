@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
-
-import FontIcon from "material-ui/FontIcon";
+import { Icon } from "../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import IconLocationOn from "material-ui/svg-icons/communication/location-on";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -65,9 +62,9 @@ class MyComplaints extends Component {
     return (
       <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 complaints-main-container">
         <Complaints complaints={complaints} />
-        <div class="floating-button-cont">
+        <div className="floating-button-cont">
           <FloatingActionButton className="floating-button">
-            <ContentAdd />
+            <Icon action="content" name="add" />
           </FloatingActionButton>
         </div>
       </div>

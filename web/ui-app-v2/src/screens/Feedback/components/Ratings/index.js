@@ -1,13 +1,6 @@
-import React, { Component } from "react";
-import { Card } from "../../../../components";
-import { Image } from "../../../../components";
-import complaintImage from "../../../../assets/people.jpg";
-import FlatButton from "material-ui/FlatButton";
+import React from "react";
 import "./index.css";
-import "../../../../styles/app.css";
-import Location from "material-ui/svg-icons/maps/place";
 import Ratings from "../../../../components/Ratings";
-import ButtonToggle from "../../../../components/ButtonGroup";
 
 const RatingsComponent = ({ size, count }) => {
   return (
@@ -16,25 +9,5 @@ const RatingsComponent = ({ size, count }) => {
     </div>
   );
 };
-
-// class RatingComponent extends Component {
-//   render() {
-//     return (
-//       <div className="feedback-main-container">
-//         <div style={{ textAlign: "center" }}>
-//           <span>
-//             Your feedback is valuable to us.<br />rate our service.
-//           </span>
-//         </div>
-//         <div>
-//           <Ratings />
-//         </div>
-//         <div style={{ textAlign: "center" }}>
-//           <span>What did you like from us?</span>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 export default RatingsComponent;

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Card, Label } from "../../../../components";
+import { Card, Label, Icon } from "../../../../components";
 import { Image } from "../../../../components";
 import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
 import "./index.css";
-import Location from "material-ui/svg-icons/maps/place";
 
 const getStatusAndChangeColor = (status) => {
   let style = {};
@@ -58,7 +57,7 @@ const Complaint = ({ index, item }) => {
               />
             </div>
             <div className="complaint-address-cont">
-              <Location className="location-marker" />
+              <Icon action="maps" name="place" />
               <span className="complaint-address">{item.address}</span>
             </div>
             <div className="complaint-status-cont">
