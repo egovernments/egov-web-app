@@ -11,7 +11,7 @@
 }
 
 .complaint-detail-detail-section-expanded-status-negative-margin {
-  padding-left: 59px !important;
+  padding-left: 45px !important;
 }
 
 .complaint-detail-detail-section-expanded {
@@ -47,5 +47,9 @@
 }
 
 .complaint-detail-detail-section-collapse-status-padding {
-  padding-left: 33px !important;
+  padding-left: 15px !important;
+}
+
+.textWrap > div {
+  white-space: nowrap;
 }

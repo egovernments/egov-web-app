@@ -30,13 +30,16 @@ const items = [
         <br />
         <div className="complaint-detail-detail-section container">
           <div className="complaint-detail-detail-section-status row">
-            <Label className="col-xs-9 status-color" label="STATUS" />
+            <Label className="col-xs-8 status-color" label="STATUS" />
             <Label className="col-xs-3 status-result-color" label="Assigned" />
           </div>
           <br />
           <div className="complaint-detail-detail-section-status row">
-            <Label className="col-xs-9 status-color" label="COMPLAINT" />
-            <Label className="col-xs-3 status-result-color" label="Overflowing of bins" />
+            <Label className="col-xs-8 status-color" label="COMPLAINT" />
+            <Label
+              className="col-xs-3 status-result-color textWrap complaint-detail-detail-section-collapse-status-padding"
+              label="Overflowing of bins"
+            />
           </div>
         </div>
       </div>
@@ -51,9 +54,9 @@ const items = [
     nestedItems: [
       {
         children: (
-          <div key={10} className="complaint-detail-detail-section-expanded container">
+          <div key={10} className="complaint-detail-detail-section-expanded container complaint-detail-full-width">
             <div className="complaint-detail-detail-section-status row">
-              <Label className="col-xs-6 status-color" label="APPLICATION NO" />
+              <Label className="col-xs-7 status-color" label="APPLICATION NO" />
               <Label className="col-xs-6 status-result-color complaint-detail-detail-section-expanded-status-negative-margin" label="25467895" />
             </div>
             <br />

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import { Card, List, Image, Label } from "../../../../components";
+import { Card, List, Image, Label, Icon } from "../../../../components";
 import WriteComment from "../WriteComment";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
-import Avatar from 'material-ui/Avatar';
+import Avatar from "material-ui/Avatar";
 
 import "./index.css";
-
-
-
 
 const items = [
   {
@@ -17,21 +14,46 @@ const items = [
 
 const itemsOne = [
   {
-    leftAvatar: <Avatar
-          src="http://via.placeholder.com/128x128"
-        />,
-    primaryText: (<Label label="please sterilize the dogs in the area."/>),
+    leftAvatar: <Avatar src="http://via.placeholder.com/128x128" />,
+    primaryText: (
+      <div>
+        <Label label="please sterilize the dogs in the area." />
+        <div className="write-comment-time-cont">
+          <Icon
+            action="device"
+            name="access-time"
+            color={"#969696"}
+            style={{ color: "#969696", fill: "currentColor", width: "14px", height: "14px", padding: 0, marginRight: "5px" }}
+          />
+          <span style={{ color: "#969696", fontSize: "14px" }}>2 hours ago</span>
+        </div>
+      </div>
+    ),
   },
 ];
 
 const itemsTwo = [
   {
-    primaryText: (<Label style={{
-      marginRight:"20px"
-    }} label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time.Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."/>),
-    rightAvatar: <Avatar
-          src="http://via.placeholder.com/128x128"
-        />,
+    primaryText: (
+      <div>
+        <Label
+          style={{
+            marginRight: "20px",
+          }}
+          label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
+        />
+        <div className="write-comment-time-cont">
+          <Icon
+            action="device"
+            name="access-time"
+            color={"#969696"}
+            style={{ color: "#969696", fill: "currentColor", width: "14px", height: "14px", padding: 0, marginRight: "5px" }}
+          />
+          <span style={{ color: "#969696", fontSize: "14px" }}>2 minutes ago</span>
+        </div>
+      </div>
+    ),
+    rightAvatar: <Avatar src="http://via.placeholder.com/128x128" />,
   },
 ];
 
@@ -41,18 +63,18 @@ class Comments extends Component {
       <div style={{ paddingBottom: "70px" }}>
         <Card
           card={{
-            style:{
+            style: {
               backgroundColor: "#fff",
-              padding:"0px",
-              margin: "1px 0px"
-            }
+              padding: "0px",
+              margin: "1px 0px",
+            },
           }}
           textChildren={
             <div>
               <List items={items} />
               <List items={itemsOne} />
               <List items={itemsTwo} />
-            {/*<div className="wrapper comment-section">
+              {/*<div className="wrapper comment-section">
                 <div className="left">
                   <Image
                     className="img-circle"
