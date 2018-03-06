@@ -28,7 +28,7 @@ const items = [
       <div>
         {"COMPLAINT DETAILS"}
         <br />
-        <div className="complaint-detail-detail-section container width-100-per">
+        <div className="complaint-detail-detail-section container complaint-detail-full-width">
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-10 status-color" label="STATUS" />
             <Label className="col-xs-2 status-result-color" labelStyle={{ color: "inherit" }} label="Assigned" />
