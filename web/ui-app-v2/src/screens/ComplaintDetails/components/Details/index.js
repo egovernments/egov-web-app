@@ -16,11 +16,10 @@ import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import garbageTwo from "../../../../assets/images/Garbage_4.jpg";
 import garbageThree from "../../../../assets/images/Garbage_6.jpg";
 
-
 const iconStyle = {
   marginRight: "10px",
   height: "15px",
-  width: "11px"
+  width: "11px",
 };
 
 const items = [
@@ -29,18 +28,15 @@ const items = [
       <div>
         {"COMPLAINT DETAILS"}
         <br />
-        <div className="complaint-detail-detail-section container complaint-detail-full-width">
+        <div className="complaint-detail-detail-section container">
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-9 status-color" label="STATUS" />
-            <Label className="col-xs-3 status-result-color complaint-detail-detail-section-collapse-status-padding" label="Assigned" />
+            <Label className="col-xs-3 status-result-color" label="Assigned" />
           </div>
           <br />
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-9 status-color" label="COMPLAINT" />
-            <Label
-              className="col-xs-3 status-result-color complaint-detail-detail-section-collapse-status-padding"
-              label="Overflowing of bins"
-            />
+            <Label className="col-xs-3 status-result-color" label="Overflowing of bins" />
           </div>
         </div>
       </div>
@@ -55,16 +51,10 @@ const items = [
     nestedItems: [
       {
         children: (
-          <div
-            key={10}
-            className="complaint-detail-detail-section-expanded container complaint-detail-full-width"
-          >
+          <div key={10} className="complaint-detail-detail-section-expanded container">
             <div className="complaint-detail-detail-section-status row">
               <Label className="col-xs-6 status-color" label="APPLICATION NO" />
-              <Label
-                className="col-xs-6 status-result-color complaint-detail-detail-section-expanded-status-negative-margin"
-                label="25467895"
-              />
+              <Label className="col-xs-6 status-result-color complaint-detail-detail-section-expanded-status-negative-margin" label="25467895" />
             </div>
             <br />
             <Label
@@ -72,13 +62,13 @@ const items = [
               label="Too much garbage lying on the road, its very dificult to cross the area."
             />
             <br />
-            <div style={{marginLeft:"16px"}}>
+            <div style={{ marginLeft: "16px" }}>
               <div className="row">
                 <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
                   <Image
                     style={{
                       width: "97px",
-                      height: "93px"
+                      height: "93px",
                     }}
                     source={garbageOne}
                   />
@@ -87,7 +77,7 @@ const items = [
                   <Image
                     style={{
                       width: "97px",
-                      height: "93px"
+                      height: "93px",
                     }}
                     source={garbageTwo}
                   />
@@ -96,31 +86,37 @@ const items = [
                   <Image
                     style={{
                       width: "97px",
-                      height: "93px"
+                      height: "93px",
                     }}
                     source={garbageThree}
                   />
                 </div>
               </div>
             </div>
-            <div className="complaint-detail-detail-section-location-section"><Location style={iconStyle} color={"#969696"} /><Label label={"Sector 32, 1 main, Amritsar"}/></div>
+            <div className="complaint-detail-detail-section-location-section">
+              <Location style={iconStyle} color={"#969696"} />
+              <Label label={"Sector 32, 1 main, Amritsar"} />
+            </div>
           </div>
-        )
-      }
-    ]
-  }
+        ),
+      },
+    ],
+  },
 ];
 
 class Details extends Component {
   render() {
     return (
       <div>
-        <Card card={{
-          style:{
-            backgroundColor: "#fff",
-            padding:"0px 0px 25px 0px"
-          }
-        }} textChildren={<List items={items} />} />
+        <Card
+          card={{
+            style: {
+              backgroundColor: "#fff",
+              padding: "0px 0px 25px 0px",
+            },
+          }}
+          textChildren={<List items={items} />}
+        />
       </div>
     );
   }
