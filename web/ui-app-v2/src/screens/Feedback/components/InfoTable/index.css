@@ -1,0 +1,24 @@
+.feedback-info-item-container {
+  padding-bottom: 18px;
+}
+
+.feedback-info-item-container:last-child {
+  padding: 0;
+}
+
+.feedback-info-label-container,
+.feedback-info-value-container {
+  display: inline-block;
+  width: 50%;
+}
+
+.feedback-info-label-container span {
+  font-size: 14px;
+  color: #969696;
+  line-height: 1;
+}
+
+.feedback-info-value-container span {
+  color: #484848;
+  line-height: 1;
+}

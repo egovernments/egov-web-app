@@ -6,7 +6,7 @@
   margin-bottom: 80px;
 }
 
-.floating-botton-cont {
+.floating-button-cont {
   position: fixed;
   right: 3%;
   bottom: 10%;
@@ -20,16 +20,25 @@
   padding: 10px 0;
 }
 
+.complaint-track-button {
+  padding: 2px 8px !important;
+}
+
+.complaint-track-button div {
+  max-height: 17px;
+}
+
 .complaint-header-cont {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 }
 
-.complaint-header {
-  font-size: 17px;
+.complaint-header,
+.complaint-status-text {
+  font-size: 15px;
   color: #484848;
-  font-weight: 900;
+  font-weight: 500;
   line-height: 1;
 }
 
@@ -40,16 +49,11 @@
   padding: 5px 0;
 }
 
-.complaint-address,
-.complaint-status-text {
-  font-size: 17px;
+.complaint-address {
+  font-size: 15px;
   text-align: left;
   color: #767676;
   font-family: Roboto;
-}
-
-.dummy-div-for-last-card {
-  height: 80px;
 }
 
 .location-marker {

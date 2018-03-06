@@ -65,7 +65,7 @@ class MyComplaints extends Component {
     return (
       <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 complaints-main-container">
         <Complaints complaints={complaints} />
-        <div class="floating-botton-cont">
+        <div class="floating-button-cont">
           <FloatingActionButton className="floating-button">
             <ContentAdd />
           </FloatingActionButton>
