@@ -29,16 +29,16 @@ const items = [
       <div>
         {"COMPLAINT DETAILS"}
         <br />
-        <div className="complaint-detail-detail-section container">
+        <div className="complaint-detail-detail-section container complaint-detail-full-width">
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-9 status-color" label="STATUS" />
-            <Label className="col-xs-3 status-result-color" label="Assigned" />
+            <Label className="col-xs-3 status-result-color complaint-detail-detail-section-collapse-status-padding" label="Assigned" />
           </div>
           <br />
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-9 status-color" label="COMPLAINT" />
             <Label
-              className="col-xs-3 status-result-color"
+              className="col-xs-3 status-result-color complaint-detail-detail-section-collapse-status-padding"
               label="Overflowing of bins"
             />
           </div>
@@ -57,7 +57,7 @@ const items = [
         children: (
           <div
             key={10}
-            className="complaint-detail-detail-section-expanded container"
+            className="complaint-detail-detail-section-expanded container complaint-detail-full-width"
           >
             <div className="complaint-detail-detail-section-status row">
               <Label className="col-xs-6 status-color" label="APPLICATION NO" />
