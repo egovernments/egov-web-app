@@ -6,8 +6,8 @@ import "./index.css";
 
 const profileStyle = {
   marginRight: 24,
-  height: "40px",
-  width: "40px",
+  height: "50px",
+  width: "50px",
   borderRadius: "50%",
   padding: "9px",
   background: "#f5a623",
@@ -22,8 +22,30 @@ const iconStyle = {
 class WriteComment extends Component {
   render() {
     return (
-      <div>
-        <div className="wrapper comment-section">
+      <div className="container">
+        <br/>
+        <div className="row">
+          <div className="col-xs-2 col-md-1" style={{paddingTop:"7px"}}>
+              <Profile style={profileStyle} color={"#FFFFFF"} />
+          </div>
+          <div className="col-xs-10 col-md-8 write-comment-align-ComplaintTimeLine">
+            <TextField
+              id="complaint-details-comment-box"
+              label="Test"
+              isRequired={true}
+              errorMessage="Please enter a valid Message"
+              value="test Value"
+              disabled={false}
+              hide={false}
+              className=""
+              onChange={()=>{
+                console.log("test")
+              }}
+              fullWidth={true}
+              multiLine={true}
+            />
+            <Send style={iconStyle} color={"#9E9E9E"} />
+          </div>
           {/*<div className="left">
               <Profile style={profileStyle} color={"#FFFFFF"} />
           </div>

@@ -32,15 +32,7 @@ const Complaint = ({ index, item }) => {
     <div id={"complaint-" + index} className="complaints-card-main-cont home-page-content-card-margin">
       <Card
         card={{
-          style: {
-            backgroundColor: "#ffffff",
-          },
-        }}
-        text={{
-          style: {
-            paddingTop: 0,
-            paddingBottom: 0,
-          },
+          
         }}
         textChildren={
           <div className="complaint-card-wrapper">

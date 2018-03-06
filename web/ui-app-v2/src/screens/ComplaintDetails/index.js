@@ -9,16 +9,17 @@ import "./index.css";
 class ComplaintDetails extends Component {
   state = {
     status: {
-      // status:"PROCESS",
-      // message:"Your application has been assigned to JR.INSPECTOR - J KUMAR & is under process",
-      // bgColor:"#f5a623"
-      status: "COMPLETED",
-      message: (
-        <div>
-          <span>THANK YOU </span> <br /> <span>for your Application!</span>
-        </div>
-      ),
-      bgColor: "#7ed321",
+      status:"PROGRESS",
+      message:"Your application has been assigned to JR.INSPECTOR - J KUMAR & is under process",
+      bgColor:"#f5a623"
+      // status: "COMPLETED",
+      // message: "THANK YOU for your Application!",
+      // // message: (
+      // //   <div>
+      // //     <span>THANK YOU </span> <br /> <span>for your Application!</span>
+      // //   </div>
+      // // ),
+      // bgColor: "#7ed321"
     },
   };
   render() {
