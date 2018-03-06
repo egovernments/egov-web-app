@@ -11,15 +11,15 @@ class Feedback extends Component {
     items: [
       {
         label: "APPLICATION NO.",
-        JSX: <span>25467895</span>,
+        childElements: <span>25467895</span>,
       },
       {
         label: "COMPLAINT",
-        JSX: <span>Overflowing of Bins</span>,
+        childElements: <span>Overflowing of Bins</span>,
       },
       {
         label: "LOCATION",
-        JSX: <span>Ward No. 6</span>,
+        childElements: <span>Ward No. 6</span>,
       },
     ],
   };
