@@ -2,36 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { Button, Image, DropDown, TextField, Card } from "../../components";
 import logoMuncipal from "../../assets/images/logo-muncipal.png";
-import bannerMuncipal from "../../assets/images/banner-muncipal.png";
-
-const styles = {
-  logo: {
-    margin: "0 auto",
-    display: "block",
-    height: "100px",
-    width: "100px",
-    position: "absolute",
-    left: "40%",
-    top: "28%",
-    zIndex: "100",
-  },
-  imageContainer: {
-    position: "relative",
-    backgroundImage: `url(${bannerMuncipal})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    height: "300px",
-  },
-  cardBackground: {
-    position: "relative",
-    backgroundColor: "#f2f2f2",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    height: "350px",
-    border: "1px solid #e6e6e6",
-    boxSizing: "border-box",
-  },
-};
+import "./index.css";
 
 const cardStyle = {
   style: {
@@ -42,6 +13,11 @@ const cardStyle = {
   },
 };
 class Login extends Component {
+  state = {
+    name: "",
+    phoneNumber: "",
+  };
+
   dropDownData = [
     {
       value: 1,
@@ -57,21 +33,32 @@ class Login extends Component {
     this.props.history.push("/otp");
   };
 
+  onNameChanged = (e, value) => {
+    this.setState({ name: value });
+  };
+
+  onPhoneNumberChanged = (e, value) => {
+    this.setState({ phoneNumber: value });
+  };
+
   render() {
-    const { login, dropDownData } = this;
+    const { login, dropDownData, onNameChanged, onPhoneNumberChanged } = this;
+    const { name, phoneNumber } = this.state;
 
     return (
-      <div className="col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
-        <div style={styles.imageContainer} />
-        <div style={styles.cardBackground} />
-        <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
+
+      <div className="user-login col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
+        <div className="imageContainer" />
+        <div className="cardBackground" />
+        <Image className="logo" circular={true} source={`${logoMuncipal}`} />
         <Card
           card={cardStyle}
           textChildren={
-            <div>
+            <div style={{ marginTop: "50px" }}>
               <form>
-                <TextField className="textfield" name="name" id="name" fullWidth={true} placeholder="Name" style={{ marginTop: "6%" }} />
+                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} placeholder="Name" />
                 <DropDown
+                  id="login-city-field"
                   name="cities"
                   value={1}
                   dropDownData={dropDownData}
@@ -81,14 +68,15 @@ class Login extends Component {
                   style={{ border: "1px solid #e6e6e6" }}
                 />
                 <TextField
-                  className="textfield"
+                  id="login-phone-number"
+                  onChange={onPhoneNumberChanged}
+                  value={phoneNumber}
                   name="phone-number"
-                  id="phone-number"
                   underlineShow={false}
                   fullWidth={true}
                   placeholder="Phone Number"
                 />
-                <Button onClick={login} primary={true} label="Submit" fullWidth={true} />
+                <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
               </form>
             </div>
           }

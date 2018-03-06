@@ -12,7 +12,7 @@ const MapLocation = compose(
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
-    center: { lat: 12.972442, lng: 77.580643 }
+    center: { lat: 12.972442, lng: 77.580643 },
   }),
   lifecycle({
     componentWillMount() {
@@ -59,7 +59,7 @@ const MapLocation = compose(
           // refs.map.fitBounds(bounds);
         },
       });
-    }
+    },
   }),
   withStateHandlers(
     () => ({
@@ -74,22 +74,27 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap
-    ref={props.onMapMounted}
-    defaultZoom={13}
-    center={props.currLoc}
-    onBoundsChanged={props.onBoundsChanged}
-  >
-    <SearchBox ref={props.onSearchBoxMounted} bounds={props.bounds} controlPosition={window.google.maps.ControlPosition.TOP_LEFT} onPlacesChanged={props.onPlacesChanged}>
-      <input
-        type="text"
-        placeholder="Search address"
-        style={props.styles}
-      />
+  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged}>
+    <SearchBox
+      ref={props.onSearchBoxMounted}
+      bounds={props.bounds}
+      controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
+      onPlacesChanged={props.onPlacesChanged}
+    >
+      <input type="text" placeholder="Search address" style={props.styles} />
     </SearchBox>
     {props.markers.map((marker, index) => {
       props.setLocation(marker.position.lat(), marker.position.lng(), index);
-      return <Marker key={index} position={marker.position} draggable={true} onDragEnd={(e) => { props.setLocation(e.latLng.lat(), e.latLng.lng()) }} />
+      return (
+        <Marker
+          key={index}
+          position={marker.position}
+          draggable={true}
+          onDragEnd={(e) => {
+            props.setLocation(e.latLng.lat(), e.latLng.lng());
+          }}
+        />
+      );
     })}
     <Marker position={props.currLoc} icon={props.icon} />
   </GoogleMap>

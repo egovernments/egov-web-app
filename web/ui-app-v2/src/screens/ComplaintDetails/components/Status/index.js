@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "../../../../components";
+import { Card,Label } from "../../../../components";
 import Info from "material-ui/svg-icons/action/info";
 import Check from "material-ui/svg-icons/navigation/check";
 import "./index.css";
@@ -21,9 +21,20 @@ const checkStyle = {
   background: "#ffffff",
 };
 
+const StatusMessage = ({status,message}) => {
+  switch (status) {
+    case "PROGRESS":
+        return <Label label={message} />;
+    default:
+        return <div>
+                  <Label labelStyle={{fontWeight: "bold",color:"#484848",fontStyle: "normal",fontStretch: "normal",lineHeight: "normal"}} label="THANK YOU"/> <Label label="for your Application!"/>
+               </div>
+  }
+}
+
 const StatusIcon = ({ status }) => {
   switch (status) {
-    case "PROCESS":
+    case "PROGRESS":
       return <Info style={iconStyle} color={"#ffffff"} />;
     case "COMPLETED":
       return <Check style={checkStyle} color={"#7ed321"} />;
@@ -38,18 +49,13 @@ class Status extends Component {
     return (
       <div className="status">
         <Card
-          card={{
-            style: {
-              backgroundColor: "#ffffff",
-            },
-          }}
           textChildren={
             <div className="wrapper">
               <div className="left" style={{ backgroundColor: bgColor }}>
                 <StatusIcon status={status} />
               </div>
               <div className="right" style={{ textAlign: "center" }}>
-                {message}
+                <StatusMessage status={status} message={message}/>
               </div>
             </div>
           }

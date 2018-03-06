@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Card, Icon } from "../../../../components";
-import Label from "../../../../components/Label";
+import { Card, Icon, Label } from "../../../../components";
 import "./index.css";
-import "../../../../styles/app.css";
 
 class Notification extends Component {
   render() {
@@ -19,29 +17,27 @@ class Notification extends Component {
       <div>
         <Card
           textChildren={
-            <div className="wrapper">
+            <div id="home-notification" className="wrapper">
               <div className="left color-lime">
                 <Icon action="action" name="home" />
               </div>
               <div className="right">
                 <div>
-                  <span className="col-xs-12 notification-content">Are there enough dustbins in your area?</span>
+                  <Label label="Are there enough dustbins in your area?" className="notification-content" />
                 </div>
                 <br />
                 <div>
                   <Label
-                    style={{ display: "inline-block" }}
+                    id="thumb-up-action"
                     className="notification-content-label"
-                    labelPosition="after"
                     label="YES"
-                    icon={<Icon style={iconStyle} action="action" name="thumb-up"/>}
+                    icon={<Icon style={iconStyle} action="action" name="thumb-up" />}
                   />
                   <Label
-                    style={{ display: "inline-block" }}
+                    id="thumb-down-action"
                     className="notification-content-label"
-                    labelPosition="after"
                     label="NO"
-                    icon={<Icon style={iconStyle} action="action" name="thumb-down"/>}
+                    icon={<Icon style={iconStyle} action="action" name="thumb-down" />}
                   />
                 </div>
               </div>

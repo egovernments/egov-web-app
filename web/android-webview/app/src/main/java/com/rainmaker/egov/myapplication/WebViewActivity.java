@@ -15,6 +15,9 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_web_view);
         webView = (WebView) findViewById(R.id.webview);
         webView.addJavascriptInterface(new AppJavaScriptProxy(this), "androidAppProxy");
@@ -22,7 +25,7 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         
-        webView.loadUrl("http://13.229.110.236/login");
+        webView.loadUrl("http://egov-micro-dev.egovernments.org/app/v3/login");
 
     }
 

@@ -2,28 +2,16 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { Button, Image, Label, TextField, Card } from "../../components";
 import logoMuncipal from "../../assets/images/logo-muncipal.png";
-import bannerMuncipal from "../../assets/images/banner-muncipal.png";
+import "./index.css";
 
-const styles = {
-  logo: {
-    margin: "0 auto",
-    display: "block",
-    width: "100px",
-    height: "100px",
+
+const cardStyle = {
+  style: {
     position: "absolute",
-    left: "40%",
-    top: "28%",
-    zIndex: "100",
-  },
-  resendOTP: {
-    float: "right",
-  },
-  imageContainer: {
-    position: "relative",
-    backgroundImage: `url(${bannerMuncipal})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    height: "300px",
+    top: "35%",
+    left: "7%",
+    right: "6%",
+
   },
   cardBackground: {
     position: "relative",
@@ -36,46 +24,62 @@ const styles = {
   },
 };
 
-const cardStyle = {
-  style: {
-    position: "absolute",
-    top: "35%",
-    left: "7%",
-    right: "6%",
-  },
-};
-const Banner = () => {};
 
-const Form = () => {};
 
 class OTP extends Component {
+  state = {
+    otp: "",
+    disabled: false,
+  };
+
+  componentDidMount() {
+    const otpElement = document.getElementById("otp");
+
+    otpElement.addEventListener("smsReceived", e => {
+      const { otp } = e.detail;
+      this.setState({ otp, disabled: true });
+    });
+  }
+
+  componentWillUnmount() {
+    const otpElement = document.getElementById("otp");
+    otpElement.removeEventListener("smsReceived", null);
+  }
+
   onOtpSubmit = () => {
     this.props.history.push("/");
   };
 
+  onOtpChanged = (e, value) => {
+    this.setState({ otp: value });
+  };
+
   render() {
-    const { onOtpSubmit } = this;
+    const { onOtpSubmit, onOtpChanged } = this;
+    const { otp, disabled } = this.state;
+
     return (
-      <div className="col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
-        <div style={styles.imageContainer} />
-        <div style={styles.cardBackground} />
-        <Image style={styles.logo} circular={true} source={`${logoMuncipal}`} />
+
+      <div className="user-otp col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
+        <div className="imageContainer" />
+        <div className="cardBackground" />
+        <Image className="logo" circular={true} source={`${logoMuncipal}`} />
         <Card
-        card={cardStyle}
+          card={cardStyle}
           textChildren={
             <div>
-
-              <p className="otp-text"  style={{ marginTop: "10%" }}>
-                We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account.
-              </p>
+              <Label
+                label="We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account."
+                className="otp-text"
+              />
 
               <form>
-                <TextField className="textfield" id="otp" fullWidth={true} placeholder="Enter OTP" />
-                <div style={styles.resendOTP}>
-                  <Label label="Didn't recieve OTP?" />
-                  <Label primary={true} label="resend" />
+                <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
+                <div style={{ margin: "10px 0px 10px" }} className="text-right">
+                  <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
+                  <Label id="otp-resend" className="otp-resend" label="RESEND" />
                 </div>
-                <Button onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
+                <Button id="otp-start" onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
               </form>
             </div>
           }

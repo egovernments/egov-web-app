@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import isEqual from "lodash";
 
 const parentStyles = {
   overflow: "hidden",
@@ -12,6 +13,7 @@ const defaultStyles = {
   cursor: "pointer",
   display: "block",
   float: "left",
+  marginRight: "5px",
 };
 
 const getHalfStarStyles = (color, uniqueness) => {
@@ -65,15 +67,17 @@ class ReactStars extends Component {
     });
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({
-      stars: this.getStars(props.value),
-      value: props.value,
-      halfStar: {
-        at: Math.floor(props.value),
-        hidden: this.state.config.half && props.value % 1 < 0.5,
-      },
-    });
+  componentWillReceiveProps(nextprops) {
+    if (!isEqual(nextprops, this.props)) {
+      this.setState({
+        stars: this.getStars(nextprops.value),
+        value: nextprops.value,
+        halfStar: {
+          at: Math.floor(nextprops.value),
+          hidden: this.state.config.half && nextprops.value % 1 < 0.5,
+        },
+      });
+    }
   }
 
   isDecimal(value) {

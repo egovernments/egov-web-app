@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Card, Icon } from "../../../../components";
+import { Card, Icon, Label } from "../../../../components";
 import "./index.css";
-import "../../../../styles/app.css";
 
 class NewAndOldComplaints extends Component {
   render() {
@@ -9,15 +8,13 @@ class NewAndOldComplaints extends Component {
       <Card
         textChildren={
           <div className="row newAndOldComplaints-content-section">
-            <div className="col-xs-6">
+            <div id="home-new-complaint" className="col-xs-6">
               <Icon style={{ background: "#f5a623" }} action="notification" name="sms-failed" />
-              <br />
-              NEW COMPLAINT
+              <Label label="NEW COMPLAINT" />
             </div>
-            <div className="col-xs-6">
+            <div id="home-old-complaint" className="col-xs-6">
               <Icon style={{ background: "#73aacc" }} action="social" name="person" />
-              <br />
-              OLD COMPLAINT
+              <Label label="OLD COMPLAINT" />
             </div>
           </div>
         }

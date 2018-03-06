@@ -1,31 +1,45 @@
 import React, { Component } from "react";
-import { Card } from "../../../../components";
+import { Card, Label } from "../../../../components";
 import { Image } from "../../../../components";
 import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 import Location from "material-ui/svg-icons/maps/place";
 
-const Complaint = ({ item }) => {
+const getStatusAndChangeColor = (status) => {
+  let style = {};
+  switch (status) {
+    case "OPEN":
+      style = {
+        color: "#d84f41",
+      };
+      break;
+    case "CLOSED":
+      style = {
+        color: "#55970a",
+      };
+      break;
+    default:
+      style = {
+        color: "#484848",
+      };
+  }
+  return style;
+};
+
+const Complaint = ({ index, item }) => {
   return (
-    <div className="complaints-card-main-cont home-page-content-card-margin">
+    <div id={"complaint-" + index} className="complaints-card-main-cont home-page-content-card-margin">
       <Card
         card={{
-          style: {
-            backgroundColor: "#ffffff",
-          },
-        }}
-        text={{
-          style: {
-            paddingTop: 0,
-            paddingBottom: 0,
-          },
+          
         }}
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
-              <span className="complaint-header">{item.header}</span>
+              <Label label={item.header} className="complaint-header" />
               <FlatButton
+                className="track"
                 backgroundColor="transparent"
                 label={"Track"}
                 style={{
@@ -43,17 +57,16 @@ const Complaint = ({ item }) => {
             </div>
             <div className="complaint-address-cont">
               <Location className="location-marker" />
-              <span className="complaint-address">{item.address}</span>
+              <Label label={item.address} className="complaint-address" />
             </div>
             <div className="complaint-status-cont">
               <span className="complaint-status-text">
                 Status :
-                <span style={item.status === "CLOSED" ? { color: "#55970a" } : { color: "#d84f41" }}>{` ${item.status}`}</span>
+                <span style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
               </span>
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
-                console.log(image);
                 return <Image key={index} className="complaint-image" width="32%" height={46} source={image.source} />;
               })}
             </div>

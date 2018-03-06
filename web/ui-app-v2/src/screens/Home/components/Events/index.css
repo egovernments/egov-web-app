@@ -1,12 +1,13 @@
-.events.wrapper .date-range,  .events.wrapper .month{
-  padding : 15px 0px;
-  color : #fff;
+.events.wrapper .date-range,
+.events.wrapper .month {
+  padding: 15px 0px;
+  color: #fff;
 }
 
-.events.wrapper .date-range{
-  background : #8e44ad;
+.events.wrapper .date-range {
+  background: #8e44ad;
 }
 
- .events.wrapper .month{
-  background:#9b59b6;
- }
+.events.wrapper .month {
+  background: #9b59b6;
+}

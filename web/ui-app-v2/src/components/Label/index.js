@@ -1,37 +1,57 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FlatButton from "material-ui/FlatButton";
+import "./index.css";
 
-const baseStyle = {};
-
-const baseLabelStyle = {
-  fontSize: "12px",
-  paddingLeft: "0px",
+const labelText = (label, labelStyle) => {
+  return label && label.length ? (
+    <div className="label-text" style={labelStyle}>
+      {label}
+    </div>
+  ) : (
+    ""
+  );
 };
 
-const Label = ({ children, icon, labelStyle, labelPosition = "after", label, style, primary, className }) => {
+const labelIcon = (icon) => {
+  return icon ? <div className="label-icon">{icon}</div> : "";
+};
+
+const Label = ({ className = "", label, children, iconPosition = "before", icon, color, bold=false, containerStyle = {}, labelStyle = {} }) => {
+  let labelPadding,
+    additionalStyles = {};
+
+  if (icon) {
+    additionalStyles.padding = "0px 15px";
+  }
+  if (color) {
+    additionalStyles.color = color;
+  }
+  if(bold){
+    additionalStyles.fontWeight = "500";
+  }
+
+  if (Object.keys(labelStyle).length || Object.keys(additionalStyles).length) {
+    labelStyle = Object.assign({}, labelStyle, additionalStyles);
+  }
+
   return (
-    <FlatButton
-      labelStyle={Object.assign({}, baseLabelStyle, labelStyle)}
-      style={Object.assign({}, baseStyle, style)}
-      children={children}
-      labelPosition={labelPosition}
-      className={className}
-      icon={icon}
-      primary={primary}
-      label={label}
-    />
+    <div style={containerStyle} className={`label-container ${className}`}>
+      {iconPosition === "before" ? labelIcon(icon) : ""}
+      {labelText(label, labelStyle)}
+      {iconPosition === "after" ? labelIcon(icon) : ""}
+    </div>
   );
 };
 
 Label.propTypes = {
   label: PropTypes.string,
-  primary: PropTypes.bool,
+  color: PropTypes.string,
   className: PropTypes.string,
-  icon: PropTypes.node,
+  icon: PropTypes.element,
   children: PropTypes.node,
-  labelPosition: PropTypes.oneOf(["after", "before"]),
-  style: PropTypes.object,
+  iconPosition: PropTypes.oneOf(["after", "before"]),
+  containerStyle: PropTypes.object,
+  labelStyle: PropTypes.object,
 };
 
 export default Label;

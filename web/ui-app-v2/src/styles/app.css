@@ -1,6 +1,11 @@
 body {
-  background: #f2f2f2;
+  background-color: #f2f2f2 !important;
 }
+
+body,body p,body div{
+	font-family: Roboto, sans-serif !important;
+}
+
 
 .color-yellow-green {
   background: #7ed321;
@@ -11,9 +16,19 @@ body {
 .color-white {
   color: #ffffff !important;
 }
-.color-lima {
+
+.color-lime {
   background: #73b332;
 }
+
+.color-lightning-yellow {
+  color: #f5a623;
+}
+
+.color-white {
+  color: #ffffff;
+}
+
 .color-lightning-yellow {
   background: #f5a623 !important;
 }
@@ -28,7 +43,7 @@ body {
 .wrapper {
   display: table;
   width: 100%;
-  margin: -16px -16px -24px -16px;
+  margin: -8px -8px -16px -8px;
 }
 
 .left,
