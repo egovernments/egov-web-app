@@ -33,13 +33,13 @@ List.propTypes = {
   listContainerStyle: PropTypes.object,
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      primaryText: PropTypes.string,
+      primaryText: PropTypes.node,
       nestedItems: PropTypes.array,
-      secondaryText: PropTypes.string,
+      secondaryText: PropTypes.node,
       leftIcon: PropTypes.element,
       rightIcon: PropTypes.element,
-      leftAvatar: PropTypes.instanceOf(Avatar),
-      rightAvatar: PropTypes.instanceOf(Avatar),
+      leftAvatar: PropTypes.element,
+      rightAvatar: PropTypes.element,
       initiallyOpen: PropTypes.bool,
       primaryTogglesNestedList: PropTypes.bool,
       style: PropTypes.object,
