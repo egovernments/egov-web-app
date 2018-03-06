@@ -25,7 +25,6 @@ const defaultLabelStyle = {
 };
 
 const ButtonToggleComponent = ({ items, onClick, selected }) => {
-  console.log(selected);
   return (
     <ButtonGroup
       items={items}

@@ -24,6 +24,7 @@ import Ratings from "./Ratings";
 import ButtonGroup from "./ButtonGroup";
 import DropDown from "./DropDown";
 import Icon from "./Icon";
+import InfoTable from "./InfoTable";
 
 export {
   Label,
@@ -52,4 +53,5 @@ export {
   ButtonGroup,
   DropDown,
   Icon,
+  InfoTable,
 };

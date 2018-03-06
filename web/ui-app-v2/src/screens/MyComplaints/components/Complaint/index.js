@@ -37,9 +37,9 @@ const Complaint = ({ index, item }) => {
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
-              <Label label={item.header} className="complaint-header" />
+              <span className="complaint-header">{item.header}</span>
               <FlatButton
-                className="track"
+                className="complaint-track-button"
                 backgroundColor="transparent"
                 label={"Track"}
                 style={{
@@ -47,17 +47,19 @@ const Complaint = ({ index, item }) => {
                   height: "auto",
                   lineHeight: "auto",
                   padding: "5px 5px",
+                  minWidth: "inherit",
                 }}
                 labelStyle={{
                   color: "orange",
                   padding: 0,
+                  letterSpacing: "1px",
                 }}
                 hoverColor="none"
               />
             </div>
             <div className="complaint-address-cont">
               <Location className="location-marker" />
-              <Label label={item.address} className="complaint-address" />
+              <span className="complaint-address">{item.address}</span>
             </div>
             <div className="complaint-status-cont">
               <span className="complaint-status-text">
