@@ -46,6 +46,7 @@ class Login extends Component {
     const { name, phoneNumber } = this.state;
 
     return (
+
       <div className="user-login col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
         <div className="imageContainer" />
         <div className="cardBackground" />

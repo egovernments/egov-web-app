@@ -7,7 +7,18 @@ const errorStyle = {
   marginTop: "5px",
 };
 
-const TextField = ({ style = {}, value, onChange, id, disabled, placeholder, fullWidth = false, className = "" }) => {
+const TextField = ({
+  style,
+  onChange,
+  id,
+  disabled,
+  placeholder,
+  fullWidth = false,
+  className = "textfield",
+  value,
+  floatingLabelText,
+  floatingLabelStyle,
+}) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
@@ -18,8 +29,12 @@ const TextField = ({ style = {}, value, onChange, id, disabled, placeholder, ful
       underlineShow={false}
       style={style}
       id={id}
+      defaultValue={value}
       fullWidth={fullWidth}
       hintText={placeholder}
+      floatingLabelText={floatingLabelText}
+      floatingLabelStyle={floatingLabelStyle}
+      floatingLabelFixed={true}
     />
   );
 };
