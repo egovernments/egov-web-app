@@ -14,7 +14,18 @@ const baseStyle = {
   boxSizing: "border-box",
 };
 
-const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield" }) => {
+const TextField = ({
+  style,
+  onChange,
+  id,
+  disabled,
+  placeholder,
+  fullWidth = false,
+  className = "textfield",
+  value,
+  floatingLabelText,
+  floatingLabelStyle,
+}) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
@@ -24,8 +35,12 @@ const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = fal
       underlineShow={false}
       style={Object.assign({}, baseStyle, style)}
       id={id}
+      defaultValue={value}
       fullWidth={fullWidth}
       hintText={placeholder}
+      floatingLabelText={floatingLabelText}
+      floatingLabelStyle={floatingLabelStyle}
+      floatingLabelFixed={true}
     />
   );
 };
