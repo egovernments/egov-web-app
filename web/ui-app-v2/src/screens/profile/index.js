@@ -23,11 +23,6 @@ class Profile extends Component {
         </div>
         <div className="profileCardContainer">
           <Card
-            card={{
-              style: {
-                margin: "3%",
-              },
-            }}
             textChildren={
               <div className="wrapper">
                 <div className="left">
@@ -38,11 +33,6 @@ class Profile extends Component {
             }
           />
           <Card
-            card={{
-              style: {
-                margin: "3%",
-              },
-            }}
             textChildren={
               <div className="wrapper">
                 <div className="left">
@@ -55,7 +45,7 @@ class Profile extends Component {
               </div>
             }
           />
-          <Button primary={true} label="next" style={{ width: "95%", margin: "28% 2% 5% 2%" }} />
+          <Button primary={true} label="next" fullWidth={true} style={{ marginTop: "20px" }} />
         </div>
       </div>
     );
