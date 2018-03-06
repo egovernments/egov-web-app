@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RaisedButton from "material-ui/RaisedButton";
 
-const Button = ({ label, icon = {}, onClick, backgroundColor, labelColor, fullWidth, disabled, hide, primary = false, style = {} }) => {
+const Button = ({ label, icon = {}, onClick, backgroundColor, labelColor, fullWidth, disabled, hide, primary = false, style = {}, id }) => {
   return (
     <RaisedButton
       style={style}
@@ -18,6 +18,7 @@ const Button = ({ label, icon = {}, onClick, backgroundColor, labelColor, fullWi
           {icon.name}
         </i>
       }
+      id={id}
     />
   );
 };

@@ -27,9 +27,9 @@ const getStatusAndChangeColor = (status) => {
   return style;
 };
 
-const Complaint = ({ item }) => {
+const Complaint = ({ index, item }) => {
   return (
-    <div className="complaints-card-main-cont home-page-content-card-margin">
+    <div id={"complaint-" + index} className="complaints-card-main-cont home-page-content-card-margin">
       <Card
         card={{
           style: {
@@ -47,6 +47,7 @@ const Complaint = ({ item }) => {
             <div className="complaint-header-cont">
               <Label label={item.header} className="complaint-header" />
               <FlatButton
+                className="track"
                 backgroundColor="transparent"
                 label={"Track"}
                 style={{

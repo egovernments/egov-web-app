@@ -5,7 +5,7 @@ const Complaints = ({ complaints }) => {
   return (
     <div className="complaints-top-level-wrapper">
       {complaints.map((complaintItem, complaintIndex) => {
-        return <Complaint key={complaintIndex} item={complaintItem} />;
+        return <Complaint key={complaintIndex} item={complaintItem} index={complaintIndex} />;
       })}
     </div>
   );
