@@ -16,14 +16,15 @@ const cardStyle = {
 class OTP extends Component {
   state = {
     otp: "",
+    disabled: false,
   };
 
   componentDidMount() {
     const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", (e) => {
+    otpElement.addEventListener("smsReceived", e => {
       const { otp } = e.detail;
-      this.setState({ otp });
+      this.setState({ otp, disabled: true });
     });
   }
 
@@ -36,10 +37,13 @@ class OTP extends Component {
     this.props.history.push("/");
   };
 
+  onOtpChanged = (e, value) => {
+    this.setState({ otp: value });
+  };
+
   render() {
-    const { onOtpSubmit } = this;
-    const { otp } = this.state;
-    const disabled = otp.trim().length > 0 ? false : true;
+    const { onOtpSubmit, onOtpChanged } = this;
+    const { otp, disabled } = this.state;
 
     return (
       <div className="user-otp col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
@@ -56,7 +60,7 @@ class OTP extends Component {
               />
 
               <form>
-                <TextField id="enter-otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
+                <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
                 <div style={{ margin: "10px 0px 10px" }} className="text-right">
                   <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label id="otp-resend" className="otp-resend" label="RESEND" />
