@@ -12,6 +12,14 @@ body span {
   font-weight: 400;
 }
 
+.dark-color {
+  color: #484848;
+}
+
+.text-bold {
+  font-weight: 500;
+}
+
 .color-green {
   color: #417505 !important;
 }
