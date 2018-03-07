@@ -9,12 +9,12 @@ import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
+import ReOpenComplaint from "./screens/ReOpenComplaint";
 
 const Main = () => {
   return (
     <main>
       <Switch>
-
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
         <PrivateRoute exact path="/" component={Home} />
@@ -23,7 +23,7 @@ const Main = () => {
         <PrivateRoute exact path="/map" component={MapDemo} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
-
+        <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
       </Switch>
     </main>
   );
