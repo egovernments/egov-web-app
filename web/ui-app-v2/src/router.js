@@ -14,8 +14,6 @@ import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
 
-
-
 const Main = () => {
   return (
     <main>

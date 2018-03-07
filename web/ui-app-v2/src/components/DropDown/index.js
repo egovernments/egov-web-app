@@ -4,8 +4,6 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import "./index.css";
 
-
-
 const DropDownUi = ({
   value,
   fullWidth = false,

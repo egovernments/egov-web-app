@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import {ButtonGroup, Button, Label, Card} from "../../../components";
+import { ButtonGroup, Button, Label, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
-
 
 const cardStyle = {
   style: {
@@ -11,7 +10,7 @@ const cardStyle = {
     top: "35%",
     left: "10px",
     right: "10px",
-    padding : "8px"
+    padding: "8px",
   },
 };
 
@@ -51,10 +50,8 @@ const defaultLabelStyle = {
   verticalAlign: "initial",
 };
 
-
 class LanguageSelection extends Component {
-
-    state = {
+  state = {
     items: [
       {
         label: "ENGLISH",
@@ -76,11 +73,10 @@ class LanguageSelection extends Component {
   };
 
   render() {
-
-     let { items, value } = this.state;
+    let { items, value } = this.state;
 
     return (
-    <UserScreensWrapper>
+      <UserScreensWrapper>
         <Card
           className="language-selection-card"
           card={cardStyle}
@@ -102,7 +98,7 @@ class LanguageSelection extends Component {
                   />
                 </div>
                 <div className="button-container">
-                  <Button id="continue-action" primary={true} label="Continue" fullWidth={true}  />
+                  <Button id="continue-action" primary={true} label="Continue" fullWidth={true} />
                 </div>
               </form>
             </div>

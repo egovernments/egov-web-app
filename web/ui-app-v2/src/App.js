@@ -82,9 +82,11 @@ class App extends Component {
     return (
       <div>
         <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
-        <Component style={{
-          marginBottom:"72px"
-        }} />
+        <Component
+          style={{
+            marginBottom: "72px",
+          }}
+        />
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );
