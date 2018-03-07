@@ -23,7 +23,7 @@ const checkStyle = {
 
 const StatusMessage = ({status,message}) => {
   switch (status) {
-    case "PROGRESS":
+    case "ASSIGNED":
         return <Label label={message} />;
     default:
         return <div>
