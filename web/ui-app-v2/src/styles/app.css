@@ -6,9 +6,8 @@ body,body p,body div,body span{
 	font-family: Roboto, sans-serif !important;
   color: #767676;
   font-size: 14px;
-  font-weight: 400px;
+  font-weight: 400;
 }
-
 
 .color-green {
   color: #417505 !important;

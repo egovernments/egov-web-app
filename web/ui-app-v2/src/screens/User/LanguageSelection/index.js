@@ -8,8 +8,8 @@ const cardStyle = {
   style: {
     position: "absolute",
     top: "35%",
-    left: "10px",
-    right: "10px",
+    left: "25px",
+    right: "25px",
     padding: "8px",
   },
 };
