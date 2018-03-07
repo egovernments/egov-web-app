@@ -2,8 +2,11 @@ body {
   background-color: #f2f2f2 !important;
 }
 
-body,body p,body div{
+body,body p,body div,body span{
 	font-family: Roboto, sans-serif !important;
+  color: #767676;
+  font-size: 14px;
+  font-weight: 400px;
 }
 
 
