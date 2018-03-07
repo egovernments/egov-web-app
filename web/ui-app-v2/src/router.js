@@ -5,14 +5,16 @@ import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
 import Profile from "./screens/profile";
-import Login from "./screens/User/Login";
-import OTP from "./screens/User/OTP";
 import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
 import LanguageSelection from "./screens/LanguageSelection";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import LanguageSelection from "./screens/User/LanguageSelection";
 import SearchComplaint from "./screens/SearchComplaint";
+// user related screens
+import Login from "./screens/User/Login";
+import OTP from "./screens/User/OTP";
+import LanguageSelection from "./screens/User/LanguageSelection";
 
 const Main = () => {
   return (
