@@ -13,7 +13,7 @@ const defaultStyles = {
   cursor: "pointer",
   display: "block",
   float: "left",
-  marginRight: "5px",
+  marginRight: "4px",
 };
 
 const getHalfStarStyles = (color, uniqueness) => {
@@ -238,7 +238,7 @@ ReactStars.defaultProps = {
   char: "★",
   size: 15,
   color1: "gray",
-  color2: "#ffd700",
+  color2: "#f5a623",
 
   onChange: () => {},
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
 
 const styles = {
-  bottomNavigation: { position: "fixed", bottom: "0", width: "100%" },
+  bottomNavigation: { position: "fixed", bottom: "0", width: "100%", backgroundColor: "#ffffff" },
 };
 
 const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
