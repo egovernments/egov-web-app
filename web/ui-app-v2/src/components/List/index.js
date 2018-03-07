@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { List as MaterialUiList, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 
-const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle, items = [] }) => {
-  const renderListItems = (items) => {
+const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
+  const renderListItems = items => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 
@@ -12,10 +12,9 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         item.style = listItemStyle;
       }
       if (nestedItems) {
-        // recursive function for nested items
+        // recurse over the nested items
         item.nestedItems = renderListItems(nestedItems);
       }
-
       return <ListItem containerElement={listItemContainer} key={index} {...item} />;
     });
   };
