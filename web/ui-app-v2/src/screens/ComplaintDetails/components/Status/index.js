@@ -24,7 +24,7 @@ const checkStyle = {
 const StatusMessage = ({ status, message }) => {
   switch (status) {
     case "ASSIGNED":
-      return <Label label={message} />;
+        return <Label containerStyle={{textAlign:"left"}}  children={<div>Your application has been <span className="dark-color">ASSIGNED</span> to <span className="dark-color">{message}</span></div>} />;
     default:
       return (
         <div>

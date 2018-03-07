@@ -15,7 +15,8 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         // recurse over the nested items
         item.nestedItems = renderListItems(nestedItems);
       }
-      return <ListItem containerElement={listItemContainer} key={index} {...item} />;
+
+      return <ListItem style={{color:"#484848 !Important",fontWeight:"500 !Important"}} containerElement={listItemContainer} key={index} {...item} />;
     });
   };
 
