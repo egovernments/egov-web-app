@@ -29,7 +29,6 @@ const TextField = ({
       underlineShow={false}
       style={style}
       id={id}
-      defaultValue={value}
       fullWidth={fullWidth}
       hintText={placeholder}
       floatingLabelText={floatingLabelText}

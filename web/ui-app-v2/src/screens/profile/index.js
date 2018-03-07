@@ -5,6 +5,14 @@ import img from "../../assets/people.jpg";
 import "./index.css";
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Jaswinder",
+      emailId: "abc@gmail.com",
+    };
+  }
+
   onClickAddPic = () => {
     console.log("clicked");
   };
@@ -18,8 +26,21 @@ class Profile extends Component {
       label: "Patiala",
     },
   ];
+  handleNameChange = (event) => {
+    let name = event.target.value;
 
+    this.setState({
+      name,
+    });
+  };
+  handleMailChange = (event) => {
+    let emailId = event.target.value;
+    this.setState({
+      emailId,
+    });
+  };
   render() {
+    let { name, emailId } = this.state;
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
         <div style={{ position: "relative" }}>
@@ -32,20 +53,22 @@ class Profile extends Component {
             id="profile-form-name"
             underlineShow={false}
             fullWidth={true}
-            value={"Jaswinder"}
+            value={name}
             floatingLabelText={"Name"}
             floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
+            onChange={this.handleNameChange}
           />
           <TextField
             className="profile-form-field"
             id="profile-form-name"
             underlineShow={false}
             fullWidth={true}
-            value={"abc@gmail.com"}
+            value={emailId}
             floatingLabelText={"Email Id"}
             floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
+            onChange={this.handleMailChange}
           />
 
           <DropDown
