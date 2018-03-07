@@ -9,7 +9,7 @@ import "./index.css";
 class ComplaintDetails extends Component {
   state = {
     status: {
-      status:"PROGRESS",
+      status:"ASSIGNED",
       message:"Your application has been assigned to JR.INSPECTOR - J KUMAR & is under process",
       bgColor:"#f5a623"
       // status: "COMPLETED",
