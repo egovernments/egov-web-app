@@ -4,5 +4,16 @@
   background-position: center;
   height: 350px;
   border: 1px solid #e6e6e6;
-  padding: 8px 4px 0px 4px;
+  padding: 13px 8px 8px 8px;
+}
+.profile-form-field > input {
+  margin-top: 10px !important;
+}
+
+.dropdown > div {
+  margin-top: 6px !important;
+}
+
+.profileBtn {
+  height: 48px;
 }

@@ -10,12 +10,10 @@ class Profile extends Component {
     this.state = {
       name: "Jaswinder",
       emailId: "abc@gmail.com",
+      city: 1,
     };
   }
 
-  onClickAddPic = () => {
-    console.log("clicked");
-  };
   dropDownData = [
     {
       value: 1,
@@ -26,18 +24,26 @@ class Profile extends Component {
       label: "Patiala",
     },
   ];
+  onClickAddPic = () => {
+    //TO UPLOAD PIC- using phone native feature.
+  };
   handleNameChange = (event) => {
-    let name = event.target.value;
-
     this.setState({
-      name,
+      name: event.target.value,
     });
   };
   handleMailChange = (event) => {
-    let emailId = event.target.value;
     this.setState({
-      emailId,
+      emailId: event.target.value,
     });
+  };
+  onDDChange = (event, key, value) => {
+    this.setState({
+      city: value,
+    });
+  };
+  onSaveClick = (event) => {
+    //To save/send the data from the Form
   };
   render() {
     let { name, emailId } = this.state;
@@ -54,7 +60,7 @@ class Profile extends Component {
             underlineShow={false}
             fullWidth={true}
             value={name}
-            floatingLabelText={"Name"}
+            floatingLabelText="Name"
             floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
             onChange={this.handleNameChange}
@@ -65,7 +71,7 @@ class Profile extends Component {
             underlineShow={false}
             fullWidth={true}
             value={emailId}
-            floatingLabelText={"Email Id"}
+            floatingLabelText="Email Id"
             floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
             onChange={this.handleMailChange}
@@ -75,14 +81,22 @@ class Profile extends Component {
             name="cities"
             className="profile-form-field"
             id="profile-form-cities"
-            value={1}
+            value={this.state.city}
             dropDownData={this.dropDownData}
             fullWidth={true}
             floatingLabelText="City"
             floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
+            onChange={this.onDDChange}
           />
-          <Button primary={true} label="next" fullWidth={true} style={{ marginTop: "20px" }} />
+          <Button
+            className="profileBtn"
+            primary={true}
+            label="SAVE"
+            fullWidth={true}
+            onClick={this.onSaveClick}
+            style={{ marginTop: 53, height: 48 }}
+          />
         </form>
       </div>
     );
@@ -91,15 +105,17 @@ class Profile extends Component {
 
 export default Profile;
 
-const imgStyle = { width: "40%", height: 143 };
+const imgStyle = { width: 127, height: 127 };
 
 const profileStyles = {
   floatingLabelStyle: {
     textAlign: "left",
     color: "#6090ae",
-    fontSize: "14px",
-    fontWeight: "normal",
+    fontFamily: "Roboto",
+    fontSize: "12px",
+    fontWeight: 500,
     textAlign: "left",
+    top: 32,
   },
   formFieldStyle: {
     background: "#ffffff",
@@ -109,12 +125,14 @@ const profileStyles = {
     fontWeight: "normal",
     color: "#484848",
     textAlign: "left",
+    fontFamily: "Roboto",
+    height: 56,
   },
   addIconStyle: {
-    backgroundColor: "#73b332",
+    backgroundColor: "#3498db",
     position: "absolute",
-    right: "30%",
-    bottom: "20px",
+    right: "31%",
+    bottom: "26px",
   },
   cardStyles: {
     width: "100%",
