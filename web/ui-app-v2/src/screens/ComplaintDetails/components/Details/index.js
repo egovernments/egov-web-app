@@ -31,7 +31,7 @@ const items = [
         <div className="complaint-detail-detail-section container width-100-per">
           <div className="complaint-detail-detail-section-status row">
             <Label className="col-xs-10 status-color" label="STATUS" />
-            <Label className="col-xs-2 status-result-color" labelStyle={{color:"inherit"}} label="Assigned" />
+            <Label className="col-xs-2 status-result-color" labelStyle={{ color: "inherit" }} label="Assigned" />
           </div>
           <br />
           <div className="complaint-detail-detail-section-status row">
@@ -39,7 +39,7 @@ const items = [
             <Label
               className="col-xs-2 status-result-color textWrap complaint-detail-detail-section-collapse-status-padding"
               label="Overflowing of bins"
-              labelStyle={{color:"inherit"}}
+              labelStyle={{ color: "inherit" }}
             />
           </div>
         </div>
@@ -58,13 +58,17 @@ const items = [
           <div key={10} className="complaint-detail-detail-section-expanded container complaint-detail-full-width">
             <div className="complaint-detail-detail-section-status row">
               <Label className="col-xs-7 status-color" label="APPLICATION NO" />
-              <Label labelStyle={{color:"inherit"}} className="col-xs-6 status-result-color complaint-detail-detail-section-expanded-status-negative-margin" label="25467895" />
+              <Label
+                labelStyle={{ color: "inherit" }}
+                className="col-xs-6 status-result-color complaint-detail-detail-section-expanded-status-negative-margin"
+                label="25467895"
+              />
             </div>
             <br />
             <Label
               className="complaint-detail-detail-section-details"
               label="Too much garbage lying on the road, its very dificult to cross the area."
-              labelStyle={{color:"inherit"}}
+              labelStyle={{ color: "inherit" }}
             />
             <br />
             <div style={{ marginLeft: "16px" }}>
@@ -100,7 +104,7 @@ const items = [
             </div>
             <div className="complaint-detail-detail-section-location-section">
               <Location style={iconStyle} color={"#969696"} />
-              <Label labelStyle={{color:"inherit"}} label={"Sector 32, 1 main, Amritsar"} />
+              <Label labelStyle={{ color: "inherit" }} label={"Sector 32, 1 main, Amritsar"} />
             </div>
           </div>
         ),

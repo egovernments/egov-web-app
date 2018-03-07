@@ -32,7 +32,7 @@ export default class SearchComplaint extends Component {
     "Drains & Sewers": [{ id: 7, text: "VVS Laxman" }, { id: 8, text: "Yousuf Youhana" }, { id: 9, text: "Kevin Pietersen" }],
   };
 
-  generateDataSource = dataSource => {
+  generateDataSource = (dataSource) => {
     return Object.keys(dataSource).reduce((source, key) => {
       return source.concat(dataSource[key]);
     }, []);
@@ -51,8 +51,8 @@ export default class SearchComplaint extends Component {
     });
   };
 
-  renderListWithHeader = dataSource => {
-    return Object.keys(dataSource).map(key => {
+  renderListWithHeader = (dataSource) => {
+    return Object.keys(dataSource).map((key) => {
       const resultsForDisplay = this.prepareResultsForDisplay(dataSource[key]);
       return (
         <div>

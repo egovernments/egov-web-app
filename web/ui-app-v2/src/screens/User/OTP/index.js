@@ -10,7 +10,7 @@ const cardStyle = {
     top: "35%",
     left: "10px",
     right: "10px",
-    padding : "8px"
+    padding: "8px",
   },
 };
 
@@ -23,7 +23,7 @@ class OTP extends Component {
   componentDidMount() {
     const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", e => {
+    otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       this.setState({ otp, disabled: true });
     });
@@ -47,7 +47,7 @@ class OTP extends Component {
     const { otp, disabled } = this.state;
 
     return (
-    <UserScreensWrapper>
+      <UserScreensWrapper>
         <Card
           card={cardStyle}
           textChildren={

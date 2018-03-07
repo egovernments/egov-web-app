@@ -30,9 +30,7 @@ const Complaint = ({ index, item }) => {
   return (
     <div id={"complaint-" + index} className="complaints-card-main-cont home-page-content-card-margin">
       <Card
-        card={{
-          
-        }}
+        card={{}}
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">

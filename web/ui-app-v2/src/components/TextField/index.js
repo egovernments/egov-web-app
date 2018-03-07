@@ -8,9 +8,9 @@ const errorStyle = {
 };
 
 const hintStyle = {
-  fontSize : "14px",
-  color : "#969696"
-}
+  fontSize: "14px",
+  color: "#969696",
+};
 
 const TextField = ({
   style,
