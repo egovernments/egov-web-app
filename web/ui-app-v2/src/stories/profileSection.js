@@ -9,10 +9,18 @@ import img from "../assets/people.jpg";
 storiesOf("ProfileSection", module)
   .addDecorator(muiTheme([theme]))
   .add("with Location", () => (
-    <ProfileSection style={style} cardStyles={cardStyles} label1={label1} label2={label2} name={_label1} location={_label2} imgSrc={img} />
+    <ProfileSection
+      imgStyle={style}
+      cardStyles={cardStyles}
+      nameStyle={label1}
+      locationStyle={label2}
+      name={_label1}
+      location={_label2}
+      imgSrc={img}
+    />
   ));
 
-const style = { borderRadius: "50%", width: 85, height: 85 };
+const style = { borderRadius: "50%", width: 127, height: 127 };
 const cardStyles = {
   width: "84.5%",
   height: "auto",
