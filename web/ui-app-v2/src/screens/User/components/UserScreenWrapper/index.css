@@ -42,3 +42,11 @@
   display: block;
   width: 90px;
 }
+
+.user-screens-wrapper .user-screens-card{
+    position: absolute !important;
+    top: 35%;
+    left: 25px;
+    right: 25px;
+    padding: 16px !important;
+}

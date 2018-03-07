@@ -4,16 +4,6 @@ import { Button, Label, TextField, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
-const cardStyle = {
-  style: {
-    position: "absolute",
-    top: "35%",
-    left: "25px",
-    right: "25px",
-    padding: "8px",
-  },
-};
-
 class OTP extends Component {
   state = {
     otp: "",
@@ -49,7 +39,7 @@ class OTP extends Component {
     return (
       <UserScreensWrapper>
         <Card
-          card={cardStyle}
+          className="user-screens-card"
           textChildren={
             <div>
               <Label
