@@ -16,7 +16,7 @@ const labelIcon = (icon) => {
   return icon ? <div className="label-icon">{icon}</div> : "";
 };
 
-const Label = ({ className = "", label, children, iconPosition = "before", icon, color, bold=false, containerStyle = {}, labelStyle = {} }) => {
+const Label = ({ className = "", label, children, iconPosition = "before", icon, color, bold = false, containerStyle = {}, labelStyle = {} }) => {
   let labelPadding,
     additionalStyles = {};
 
@@ -26,7 +26,7 @@ const Label = ({ className = "", label, children, iconPosition = "before", icon,
   if (color) {
     additionalStyles.color = color;
   }
-  if(bold){
+  if (bold) {
     additionalStyles.fontWeight = "500";
   }
 

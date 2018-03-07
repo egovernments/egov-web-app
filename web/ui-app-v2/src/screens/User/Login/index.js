@@ -10,7 +10,7 @@ const cardStyle = {
     top: "35%",
     left: "10px",
     right: "10px",
-    padding : "8px"
+    padding: "8px",
   },
 };
 class Login extends Component {
@@ -47,38 +47,38 @@ class Login extends Component {
     const { name, phoneNumber } = this.state;
 
     return (
-      <UserScreensWrapper> 
+      <UserScreensWrapper>
         <Card
-            card={cardStyle}
-            textChildren={
-              <div style={{ marginTop: "50px" }}>
-                <form>
-                  <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} placeholder="Name" />
-                  <DropDown
-                    id="login-city-field"
-                    name="cities"
-                    value={1}
-                    dropDownData={dropDownData}
-                    fullWidth={true}
-                    floatingLabelText="City"
-                    floatingLabelStyle={{ textAlign: "left", color: "#6090ae", top : "30px" }}
-                    style={{ border: "1px solid #e6e6e6" }}
-                  />
-                  <TextField
-                    id="login-phone-number"
-                    onChange={onPhoneNumberChanged}
-                    value={phoneNumber}
-                    name="phone-number"
-                    underlineShow={false}
-                    fullWidth={true}
-                    placeholder="Phone Number"
-                  />
-                  <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
-                </form>
-              </div>
-            }
-          />
-      </UserScreensWrapper> 
+          card={cardStyle}
+          textChildren={
+            <div style={{ marginTop: "50px" }}>
+              <form>
+                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} placeholder="Name" />
+                <DropDown
+                  id="login-city-field"
+                  name="cities"
+                  value={1}
+                  dropDownData={dropDownData}
+                  fullWidth={true}
+                  floatingLabelText="City"
+                  floatingLabelStyle={{ textAlign: "left", color: "#6090ae", top: "30px" }}
+                  style={{ border: "1px solid #e6e6e6" }}
+                />
+                <TextField
+                  id="login-phone-number"
+                  onChange={onPhoneNumberChanged}
+                  value={phoneNumber}
+                  name="phone-number"
+                  underlineShow={false}
+                  fullWidth={true}
+                  placeholder="Phone Number"
+                />
+                <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
+              </form>
+            </div>
+          }
+        />
+      </UserScreensWrapper>
     );
   }
 }

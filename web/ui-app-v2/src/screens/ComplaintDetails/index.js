@@ -9,9 +9,9 @@ import "./index.css";
 class ComplaintDetails extends Component {
   state = {
     status: {
-      status:"ASSIGNED",
-      message:"Your application has been assigned to JR.INSPECTOR - J KUMAR & is under process",
-      bgColor:"#f5a623"
+      status: "ASSIGNED",
+      message: "Your application has been assigned to JR.INSPECTOR - J KUMAR & is under process",
+      bgColor: "#f5a623",
       // status: "COMPLETED",
       // message: "THANK YOU for your Application!",
       // // message: (
@@ -21,21 +21,23 @@ class ComplaintDetails extends Component {
       // // ),
       // bgColor: "#7ed321"
     },
-    details:{
-      status:"Assigned",
-      complaint:"Overflow of bins",
-      applicationNo:"1234566",
-      description:"Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
-      images:[{
-        src:""
-      },
-      {
-        src:""
-      },
-      {
-        src:""
-      }],
-      location:"Sector 32, 1 main, Amritsar"
+    details: {
+      status: "Assigned",
+      complaint: "Overflow of bins",
+      applicationNo: "1234566",
+      description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
+      images: [
+        {
+          src: "",
+        },
+        {
+          src: "",
+        },
+        {
+          src: "",
+        },
+      ],
+      location: "Sector 32, 1 main, Amritsar",
     },
   };
   render() {

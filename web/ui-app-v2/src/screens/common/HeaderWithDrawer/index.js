@@ -99,7 +99,7 @@ class HeaderWithDrawer extends Component {
           }
           onLeftIconButtonClick={onHandleToggleMenu}
           style={{
-            background: "linear-gradient(#56ccf2, #2f80ed)"
+            background: "linear-gradient(#56ccf2, #2f80ed)",
           }}
         />
 
