@@ -9,6 +9,7 @@ import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
+import LanguageSelection from "./screens/LanguageSelection";
 
 const Main = () => {
   return (
@@ -17,6 +18,7 @@ const Main = () => {
 
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
+        <Route exact path="/language-selection" component={LanguageSelection} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details" component={ComplaintDetails} />
