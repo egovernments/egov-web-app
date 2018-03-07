@@ -15,7 +15,7 @@ import poweredByLogo from "../../../assets/images/logo.png";
 import "./index.css";
 //App bar imports ends
 
-const style = { borderRadius: "50%", width: 85, height: 85 };
+const style = { borderRadius: "50%", width: 89, height: 88 };
 const cardStyles = {
   // width: '84.5%',
   height: "auto",
@@ -98,6 +98,9 @@ class HeaderWithDrawer extends Component {
             </Badge>
           }
           onLeftIconButtonClick={onHandleToggleMenu}
+          style={{
+            background: "linear-gradient(#56ccf2, #2f80ed)"
+          }}
         />
 
         <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
