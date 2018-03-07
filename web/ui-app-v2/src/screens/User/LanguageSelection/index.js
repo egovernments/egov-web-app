@@ -4,16 +4,6 @@ import { ButtonGroup, Button, Label, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
-const cardStyle = {
-  style: {
-    position: "absolute",
-    top: "35%",
-    left: "25px",
-    right: "25px",
-    padding: "8px",
-  },
-};
-
 const defaultBGColor = "transparent";
 const BGColor = "#3498db";
 
@@ -78,8 +68,7 @@ class LanguageSelection extends Component {
     return (
       <UserScreensWrapper>
         <Card
-          className="language-selection-card"
-          card={cardStyle}
+          className="user-screens-card language-selection-card"
           textChildren={
             <div style={{ marginTop: "50px" }}>
               <form>
