@@ -11,6 +11,7 @@ import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import LanguageSelection from "./screens/LanguageSelection";
+import LanguageSelection from "./screens/User/LanguageSelection";
 import SearchComplaint from "./screens/SearchComplaint";
 
 const Main = () => {
