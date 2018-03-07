@@ -2,13 +2,17 @@ import React from "react";
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from "material-ui/Card";
 import PropTypes from "prop-types";
 
-const CardUi = ({ card, header, mediaOverlay, mediaChildren, title, text, textChildren, actionChildren }) => {
+const CardUi = ({ card, header, mediaOverlay, mediaChildren, title, text, textChildren, actionChildren, className }) => {
   return (
-    <Card style={{ backgroundColor: "#fff", margin: "10px 0px",padding:"8px" }} {...card}>
+    <Card style={{ backgroundColor: "#fff", margin: "10px 0px", padding: "8px" }} {...card} className={className}>
       {header && <CardHeader {...header} />}
       {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
       {title && <CardTitle {...title} />}
-      {textChildren && <CardText style={{padding:"0px"}} {...text}>{textChildren}</CardText>}
+      {textChildren && (
+        <CardText style={{ padding: "0px" }} {...text}>
+          {textChildren}
+        </CardText>
+      )}
       {actionChildren && <CardActions>{actionChildren}</CardActions>}
     </Card>
   );

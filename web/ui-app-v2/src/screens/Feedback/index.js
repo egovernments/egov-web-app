@@ -4,8 +4,25 @@ import ButtonGroupComponent from "./components/ButtonToggle";
 import TextAreaComponent from "./components/TextArea";
 import RaisedButton from "material-ui/RaisedButton";
 import "./index.css";
+import InfoTableComponent from "./components/InfoTable";
 
 class Feedback extends Component {
+  InfoTable = {
+    items: [
+      {
+        label: "APPLICATION NO.",
+        childElements: <span>25467895</span>,
+      },
+      {
+        label: "COMPLAINT",
+        childElements: <span>Overflowing of Bins</span>,
+      },
+      {
+        label: "LOCATION",
+        childElements: <span>Ward No. 6</span>,
+      },
+    ],
+  };
   state = {
     items: [
       {
@@ -32,7 +49,10 @@ class Feedback extends Component {
     let { items, value } = this.state;
     return (
       <div className="feedback-main-container">
-        <div className="feedback-firstCard-container">
+        <div className="feedback-infoCard-container feedback-Card-container">
+          <InfoTableComponent items={this.InfoTable.items} />
+        </div>
+        <div className="feedback-Card-container">
           <div className="feedback-firstCard-top">
             <span className="feedback-firstCard-heading">
               Your feedback is valuable to us.<br />rate our service.
@@ -47,7 +67,7 @@ class Feedback extends Component {
           </div>
         </div>
 
-        <div className="feedback-secondCard-container">
+        <div className="feedback-Card-container feedback-lastCard-container">
           <span className="feedback-textarea-label">Is there anything else you want to know?</span>
           <TextAreaComponent />
         </div>
