@@ -1,30 +1,18 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Button, Image, Label, TextField, Card } from "../../components";
-import logoMuncipal from "../../assets/images/logo-muncipal.png";
+import { Button, Label, TextField, Card } from "../../../components";
+import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
-
 
 const cardStyle = {
   style: {
     position: "absolute",
     top: "35%",
-    left: "7%",
-    right: "6%",
-
-  },
-  cardBackground: {
-    position: "relative",
-    backgroundColor: "#f2f2f2",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    height: "350px",
-    border: "1px solid #e6e6e6",
-    boxSizing: "border-box",
+    left: "10px",
+    right: "10px",
+    padding : "8px"
   },
 };
-
-
 
 class OTP extends Component {
   state = {
@@ -59,11 +47,7 @@ class OTP extends Component {
     const { otp, disabled } = this.state;
 
     return (
-
-      <div className="user-otp col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3">
-        <div className="imageContainer" />
-        <div className="cardBackground" />
-        <Image className="logo" circular={true} source={`${logoMuncipal}`} />
+    <UserScreensWrapper>
         <Card
           card={cardStyle}
           textChildren={
@@ -84,7 +68,7 @@ class OTP extends Component {
             </div>
           }
         />
-      </div>
+      </UserScreensWrapper>
     );
   }
 }

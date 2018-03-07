@@ -1,0 +1,14 @@
+/* otp */
+.otp-text {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+.otp-prompt,
+.otp-resend {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.otp-resend .label-text {
+  color: #6090ae;
+}

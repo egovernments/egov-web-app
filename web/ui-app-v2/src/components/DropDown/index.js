@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
+import "./index.css";
 
-const baseStyle = {
-  background: "#f2f2f2",
-  paddingLeft: "10px",
-};
+
 
 const DropDownUi = ({
   value,
@@ -16,6 +14,7 @@ const DropDownUi = ({
   children,
   selected,
   onChange,
+  id,
   style = {},
   floatingLabelText,
   floatingLabelStyle,
@@ -29,7 +28,8 @@ const DropDownUi = ({
   return (
     <SelectField
       className="dropdown"
-      style={Object.assign({}, baseStyle, style)}
+      id={id}
+      style={style}
       fullWidth={fullWidth}
       dropDownMenuProps={{
         targetOrigin: { horizontal: "left", vertical: "bottom" },

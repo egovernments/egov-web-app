@@ -7,6 +7,11 @@ const errorStyle = {
   marginTop: "5px",
 };
 
+const hintStyle = {
+  fontSize : "14px",
+  color : "#969696"
+}
+
 const TextField = ({
   style,
   onChange,
@@ -31,6 +36,7 @@ const TextField = ({
       id={id}
       fullWidth={fullWidth}
       hintText={placeholder}
+      hintStyle={hintStyle}
       floatingLabelText={floatingLabelText}
       floatingLabelStyle={floatingLabelStyle}
       floatingLabelFixed={true}
