@@ -2,11 +2,19 @@
   position: relative;
 }
 
-.feedback-firstCard-container,
-.feedback-secondCard-container {
+.feedback-Card-container {
   background-color: #ffffff;
   padding: 15px 15px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.feedback-lastCard-container {
+  margin-bottom: 140px;
+}
+
+.feedback-infoCard-container {
+  padding: 18px 23px;
 }
 
 .feedback-firstCard-heading,

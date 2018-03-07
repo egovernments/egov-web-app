@@ -1,10 +1,8 @@
-.complaint-detail-detail-section
-{
-  margin-top:19px;
-  margin-left:-57px !important;
-  margin-bottom:-25px;
+.complaint-detail-detail-section {
+  margin-top: 19px;
+  margin-left: -57px !important;
+  margin-bottom: -25px;
 }
-
 
 .complaint-detail-detail-section-status {
   display: inline-flex;
@@ -21,7 +19,6 @@
   margin-top: -14px;
 }
 
-
 .status-result-color {
   color: #484848;
 }
@@ -32,24 +29,27 @@
 
 .complaint-detail-detail-section-details {
   margin-top: 20px;
-  color: #484848
+  color: #484848;
 }
 
 .complaint-detail-detail-section-padding-zero {
   padding-left: 0 !important;
-  margin-right:  8 !important;
+  margin-right: 8 !important;
 }
 
 .complaint-detail-detail-section-location-section {
-  margin-top:17px;
+  margin-top: 17px;
   display: inline-flex;
 }
-
 
 .complaint-detail-full-width {
   width: 100% !important;
 }
 
 .complaint-detail-detail-section-collapse-status-padding {
-  padding-left: 33px !important;
+  padding-left: 15px !important;
+}
+
+.textWrap > div {
+  white-space: nowrap;
 }

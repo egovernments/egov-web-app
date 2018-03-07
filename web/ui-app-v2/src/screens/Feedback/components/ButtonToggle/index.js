@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./index.css";
 import { ButtonGroup } from "../../../../components";
 
@@ -25,7 +25,6 @@ const defaultLabelStyle = {
 };
 
 const ButtonToggleComponent = ({ items, onClick, selected }) => {
-  console.log(selected);
   return (
     <ButtonGroup
       items={items}

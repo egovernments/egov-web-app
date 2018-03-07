@@ -1,0 +1,47 @@
+.language-label > div {
+  color: #484848;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.language-label {
+  padding-left: 16px;
+  padding-right: 35px;
+  padding: 0x 35px 0px 16px;
+}
+
+.button-toggle-container {
+  margin: 17.84px 0px 61px 16px;
+}
+
+.language-selection-card > div > div {
+  padding: 0 !important;
+}
+
+.language-selection-card > div {
+  padding-bottom: 0 !important;
+}
+
+.button-container {
+  padding: 0% 2.32% 0% 2.32%;
+}
+
+.user-login {
+  padding: 0px !important;
+}
+
+/* .mseva-logo {
+  width: 90px;
+  height: 28px;
+} */
+
+.mseva-logo {
+  margin: 0 auto;
+  display: block;
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 37.5%;
+  top: 94.37%;
+  z-index: 100;
+}

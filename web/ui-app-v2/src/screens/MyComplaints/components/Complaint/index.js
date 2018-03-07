@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Card, Label } from "../../../../components";
+import { Card, Label, Icon } from "../../../../components";
 import { Image } from "../../../../components";
 import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
 import "./index.css";
-import Location from "material-ui/svg-icons/maps/place";
 
 const getStatusAndChangeColor = (status) => {
   let style = {};
@@ -37,9 +36,9 @@ const Complaint = ({ index, item }) => {
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
-              <Label label={item.header} className="complaint-header" />
+              <span className="complaint-header">{item.header}</span>
               <FlatButton
-                className="track"
+                className="complaint-track-button"
                 backgroundColor="transparent"
                 label={"Track"}
                 style={{
@@ -47,17 +46,19 @@ const Complaint = ({ index, item }) => {
                   height: "auto",
                   lineHeight: "auto",
                   padding: "5px 5px",
+                  minWidth: "inherit",
                 }}
                 labelStyle={{
                   color: "orange",
                   padding: 0,
+                  letterSpacing: "1px",
                 }}
                 hoverColor="none"
               />
             </div>
             <div className="complaint-address-cont">
-              <Location className="location-marker" />
-              <Label label={item.address} className="complaint-address" />
+              <Icon action="maps" name="place" />
+              <span className="complaint-address">{item.address}</span>
             </div>
             <div className="complaint-status-cont">
               <span className="complaint-status-text">
