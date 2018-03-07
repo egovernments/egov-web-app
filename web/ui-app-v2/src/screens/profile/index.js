@@ -4,6 +4,43 @@ import ProfileSection from "../../components/ProfileSection";
 import img from "../../assets/people.jpg";
 import "./index.css";
 
+const imgStyle = { width: "40%", height: 143 };
+
+const profileStyles = {
+  floatingLabelStyle: {
+    textAlign: "left",
+    color: "#6090ae",
+    fontSize: "14px",
+    fontWeight: "normal",
+    textAlign: "left",
+  },
+  formFieldStyle: {
+    background: "#ffffff",
+    margin: "0px 0px 8px 0px",
+    border: "0.5px solid  #e6e6e6",
+    fontSize: "14px",
+    fontWeight: "normal",
+    color: "#484848",
+    textAlign: "left",
+  },
+  addIconStyle: {
+    backgroundColor: "#73b332",
+    position: "absolute",
+    right: "30%",
+    bottom: "20px",
+  },
+  cardStyles: {
+    width: "100%",
+    height: "auto",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "0 auto",
+    paddingTop: 30,
+    paddingBottom: 30,
+    backgroundColor: "#e0e0e0",
+  },
+};
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +50,10 @@ class Profile extends Component {
       city: 1,
     };
   }
+
+  onClickAddPic = () => {
+    console.log("clicked");
+  };
 
   dropDownData = [
     {
@@ -76,7 +117,6 @@ class Profile extends Component {
             style={profileStyles.formFieldStyle}
             onChange={this.handleMailChange}
           />
-
           <DropDown
             name="cities"
             className="profile-form-field"
@@ -104,45 +144,3 @@ class Profile extends Component {
 }
 
 export default Profile;
-
-const imgStyle = { width: 127, height: 127 };
-
-const profileStyles = {
-  floatingLabelStyle: {
-    textAlign: "left",
-    color: "#6090ae",
-    fontFamily: "Roboto",
-    fontSize: "12px",
-    fontWeight: 500,
-    textAlign: "left",
-    top: 32,
-  },
-  formFieldStyle: {
-    background: "#ffffff",
-    margin: "0px 0px 8px 0px",
-    border: "0.5px solid  #e6e6e6",
-    fontSize: "14px",
-    fontWeight: "normal",
-    color: "#484848",
-    textAlign: "left",
-    fontFamily: "Roboto",
-    height: 56,
-  },
-  addIconStyle: {
-    backgroundColor: "#3498db",
-    position: "absolute",
-    right: "31%",
-    bottom: "26px",
-  },
-  cardStyles: {
-    width: "100%",
-    height: "auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "0 auto",
-    paddingTop: 30,
-    paddingBottom: 30,
-    backgroundColor: "#e0e0e0",
-  },
-};
