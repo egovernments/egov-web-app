@@ -2,11 +2,21 @@
   position: relative;
 }
 
-.feedback-Card-container {
+.feedback-Card-container-1,
+.feedback-Card-container-2,
+.feedback-Card-container-3 {
   background-color: #ffffff;
-  padding: 15px 15px;
-  margin-bottom: 20px;
+  padding: 23.94px 15px 19.38px 4.44%;
+  margin-bottom: 17px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.feedback-Card-container-2 {
+  padding: 19px 15px 17px 18px;
+}
+
+.feedback-Card-container-3 {
+  padding: 18px 18.5px 19px 18.5px;
 }
 
 .feedback-lastCard-container {
@@ -14,14 +24,15 @@
 }
 
 .feedback-infoCard-container {
-  padding: 18px 23px;
+  padding: 22px 5.27% 22px 6.38%;
 }
 
 .feedback-firstCard-heading,
 .feedback-firstCard-subheading {
-  font-size: 15px;
+  font-size: 16px;
   color: #767676;
   line-height: 1;
+  letter-spacing: 0.7px;
 }
 
 .feedback-firstCard-top {
@@ -32,7 +43,11 @@
 }
 
 .feedback-buttongroup-cont {
-  padding-top: 15px;
+  padding-top: 16px;
+}
+
+.feedback-buttongroup-cont > button {
+  min-width: 0px !important;
 }
 
 .feedback-button-cont {
@@ -43,6 +58,7 @@
 }
 
 .feedback-textarea-label {
-  font-size: 15px;
+  font-size: 16px;
   color: #767676;
+  letter-spacing: 0.7px;
 }
