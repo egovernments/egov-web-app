@@ -49,10 +49,10 @@ class Feedback extends Component {
     let { items, value } = this.state;
     return (
       <div className="feedback-main-container">
-        <div className="feedback-infoCard-container feedback-Card-container">
+        <div className="feedback-infoCard-container feedback-Card-container-1">
           <InfoTableComponent items={this.InfoTable.items} />
         </div>
-        <div className="feedback-Card-container">
+        <div className="feedback-Card-container-2">
           <div className="feedback-firstCard-top">
             <span className="feedback-firstCard-heading">
               Your feedback is valuable to us.<br />rate our service.
@@ -67,12 +67,21 @@ class Feedback extends Component {
           </div>
         </div>
 
-        <div className="feedback-Card-container feedback-lastCard-container">
+        <div className="feedback-Card-container-3 feedback-lastCard-container">
           <span className="feedback-textarea-label">Is there anything else you want to know?</span>
           <TextAreaComponent />
         </div>
         <div className="feedback-button-cont">
-          <RaisedButton label="Submit" backgroundColor={`#f5a623`} fullWidth={true} labelStyle={{ color: "#ffffff", fontWeight: "900" }} />
+          <RaisedButton
+            label="Submit"
+            backgroundColor={`#f5a623`}
+            fullWidth={true}
+            labelStyle={{ color: "#ffffff", fontWeight: "500" }}
+            style={{
+              height: "53px",
+              lineHeight: "53px",
+            }}
+          />
         </div>
       </div>
     );
