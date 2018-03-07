@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Card, TimeLine, List, Label } from "../../../../components";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
 import Gallery from "material-ui/svg-icons/image/image";
+import Location from "material-ui/svg-icons/maps/place";
+import Call from "material-ui/svg-icons/communication/call";
 import "./index.css"
 // header={{
 //   title:<div><ContentInbox/>COMPLAINT TIMELINE</div>
@@ -30,6 +32,12 @@ const items = [
     leftIcon: <ContentInbox />,
   },
 ];
+
+const iconStyle = {
+  marginRight: "10px",
+  height: "18px",
+  width: "18px"
+};
 
 class ComplaintTimeLine extends Component {
   render() {
@@ -96,6 +104,7 @@ class ComplaintTimeLine extends Component {
                         <Label label="Department of Health & Sanitation"/>
                         <Label labelStyle={{color:"#484848",fontStyle: "normal",fontStretch: "normal",lineHeight: "normal"}} label="SR.INSPECTOR KUMAR" />
                         <Label label="is looking into your problem"/>
+                        <div className="complaint-detail-detail-section-location-section"><Call style={iconStyle} color={"#417505"} /><Label labelStyle={{color:"#417505"}} label={"Call"}/></div>
                       </div>
                     ),
                   }

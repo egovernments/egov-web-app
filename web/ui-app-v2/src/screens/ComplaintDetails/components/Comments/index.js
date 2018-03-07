@@ -17,15 +17,15 @@ const itemsOne = [
     leftAvatar: <Avatar src="http://via.placeholder.com/128x128" />,
     primaryText: (
       <div>
-        <Label label="please sterilize the dogs in the area." />
-        <div className="write-comment-time-cont">
+        <Label labelStyle={{color:"inherit"}} label="please sterilize the dogs in the area." />
+        <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
           <Icon
             action="device"
             name="access-time"
             color={"#969696"}
-            style={{ color: "#969696", fill: "currentColor", width: "14px", height: "14px", padding: 0, marginRight: "5px" }}
+            style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
           />
-          <span style={{ color: "#969696", fontSize: "14px" }}>2 hours ago</span>
+          <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago"/>
         </div>
       </div>
     ),
@@ -37,19 +37,17 @@ const itemsTwo = [
     primaryText: (
       <div>
         <Label
-          style={{
-            marginRight: "20px",
-          }}
+          labelStyle={{color:"inherit"}}
           label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
         />
-        <div className="write-comment-time-cont">
+        <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
           <Icon
             action="device"
             name="access-time"
             color={"#969696"}
-            style={{ color: "#969696", fill: "currentColor", width: "14px", height: "14px", padding: 0, marginRight: "5px" }}
+            style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
           />
-          <span style={{ color: "#969696", fontSize: "14px" }}>2 minutes ago</span>
+          <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago"/>
         </div>
       </div>
     ),
@@ -72,29 +70,8 @@ class Comments extends Component {
           textChildren={
             <div>
               <List items={items} />
-              <List items={itemsOne} />
-              <List items={itemsTwo} />
-              {/*<div className="wrapper comment-section">
-                <div className="left">
-                  <Image
-                    className="img-circle"
-                    style={{ borderRadius: "50%", width: "50px", height: "50px" }}
-                    source="http://via.placeholder.com/350x250"
-                  />
-                </div>
-                <div className="right"><Label label="please sterilize the dogs in the area."/></div>
-              </div>
-              <br />
-              <div className="wrapper comment-section">
-                <div className="right"><Label label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."/></div>
-                <div className="left">
-                  <Image
-                    className="img-circle"
-                    style={{ borderRadius: "50%", width: "50px", height: "50px" }}
-                    source="http://via.placeholder.com/350x250"
-                  />
-                </div>
-              </div>*/}
+              <List listItemStyle={{marginBottom:"-12.5px"}} items={itemsOne} />
+              <List listItemStyle={{marginBottom:"-12.5px"}} items={itemsTwo} />
               <WriteComment />
             </div>
           }
@@ -105,3 +82,27 @@ class Comments extends Component {
 }
 
 export default Comments;
+
+
+
+/*<div className="wrapper comment-section">
+  <div className="left">
+    <Image
+      className="img-circle"
+      style={{ borderRadius: "50%", width: "50px", height: "50px" }}
+      source="http://via.placeholder.com/350x250"
+    />
+  </div>
+  <div className="right"><Label label="please sterilize the dogs in the area."/></div>
+</div>
+<br />
+<div className="wrapper comment-section">
+  <div className="right"><Label label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."/></div>
+  <div className="left">
+    <Image
+      className="img-circle"
+      style={{ borderRadius: "50%", width: "50px", height: "50px" }}
+      source="http://via.placeholder.com/350x250"
+    />
+  </div>
+</div>*/

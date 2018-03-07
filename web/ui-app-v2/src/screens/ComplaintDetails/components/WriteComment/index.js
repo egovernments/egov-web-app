@@ -32,12 +32,12 @@ const textFieldStyle = {
 class WriteComment extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container width-100-per">
         <br />
         <div className="write-complaint-profile-cont col-xs-2 col-md-1">
           <Profile style={profileStyle} color={"#FFFFFF"} />
         </div>
-        <div className="col-xs-10 col-md-8 write-comment-align-ComplaintTimeLine">
+        <div className="col-xs-10 col-md-11 write-comment-align-ComplaintTimeLine">
           <MaterialUITextField
             hintText="Write your comments..."
             style={textFieldStyle}
