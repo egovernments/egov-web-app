@@ -8,6 +8,7 @@ import "./index.css";
 const UserScreensWrapper = ({ children, className = "" }) => {
   return (
     <div className={`${className} user-screens-wrapper col-xs-12 col-lg-6 col-sm-6 col-md-6 col-lg-offset-3 col-sm-offset-3 col-md-offset-3`}>
+      <div className="row">
       <div className="imageContainer" />
       <div className="cardBackground" />
       <div className="logo-container">
@@ -16,6 +17,7 @@ const UserScreensWrapper = ({ children, className = "" }) => {
       {children}
       <div className="bottom-logo">
         <Image className="mseva-logo" source={`${logoMseva}`} />
+      </div>
       </div>
     </div>
   );

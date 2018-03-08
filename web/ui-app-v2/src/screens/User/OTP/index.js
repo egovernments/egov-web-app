@@ -43,7 +43,7 @@ class OTP extends Component {
           textChildren={
             <div>
               <Label
-                label="We have sent a 4 digit OTP number to your registered mobile number. Enter the OTP to create your account."
+                label="We have sent a 6 digit OTP number to your registered mobile number.Enter the OTP to create your account."
                 className="otp-text"
               />
 

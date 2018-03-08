@@ -2,7 +2,6 @@
   position: relative;
   height: 200px;
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
   background-image: url(../../../../assets/images/banner-muncipal.png);
 }
@@ -13,15 +12,6 @@
   top: 25%;
   height: 100px;
   width: 100px;
-}
-
-.banner .overlay {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  height: 200px;
 }
 
 @media screen and (max-width: 768px) {
