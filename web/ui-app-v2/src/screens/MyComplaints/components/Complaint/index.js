@@ -6,7 +6,6 @@ import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 
 const imageStyles = {
-  maxWidth: "117px",
   minHeight: "106px",
 };
 const getStatusAndChangeColor = (status) => {
@@ -39,22 +38,22 @@ const Complaint = ({ index, item }) => {
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
-              <span className="complaint-header">{item.header}</span>
+              <span className="complaint-header text-bold dark-color">{item.header}</span>
               <FlatButton
                 className="complaint-track-button"
                 backgroundColor="transparent"
                 label={"Track"}
                 style={{
-                  border: "1px solid orange",
+                  border: "1px solid #f5a623",
                   height: "auto",
                   lineHeight: "auto",
                   padding: "5px 5px",
                   minWidth: "inherit",
                 }}
                 labelStyle={{
-                  color: "orange",
+                  color: "#f5a623",
                   padding: 0,
-                  letterSpacing: "1px",
+                  letterSpacing: "0.3px",
                 }}
                 hoverColor="none"
               />
@@ -64,14 +63,18 @@ const Complaint = ({ index, item }) => {
               <span className="complaint-address">{item.address}</span>
             </div>
             <div className="complaint-status-cont">
-              <span className="complaint-status-text">
+              <span className="complaint-status-text dark-color text-bold">
                 Status :
-                <span style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
+                <span class="text-bold" style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
               </span>
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
-                return <Image style={imageStyles} key={index} className="complaint-image" width="32%" height={46} source={image.source} />;
+                return (
+                  <div className="complaint-image-wrapper">
+                    <Image style={imageStyles} key={index} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
+                  </div>
+                );
               })}
             </div>
           </div>

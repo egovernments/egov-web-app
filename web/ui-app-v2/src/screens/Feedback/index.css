@@ -40,6 +40,10 @@
   min-width: 0px !important;
 }
 
+.feedback-buttongroup-cont button:last-child {
+  margin: 0 !important;
+}
+
 .feedback-button-cont {
   padding: 0 10px;
   position: fixed;
