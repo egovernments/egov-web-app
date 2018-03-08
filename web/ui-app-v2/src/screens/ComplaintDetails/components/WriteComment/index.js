@@ -11,7 +11,7 @@ const profileStyle = {
   height: "38px",
   width: "38px",
   borderRadius: "50%",
-  padding: "9px",
+  padding: "5px",
   background: "#f5a623",
 };
 
