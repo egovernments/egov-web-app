@@ -39,16 +39,20 @@ class Details extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px 0px 25px 0px",
+              padding: "12px 7px 18px 7px",
             },
           }}
           textChildren={<div>
             <div key={10} className="container complaint-detail-full-width">
-              <div className="complaint-detail-detail-section-status row">
-                <Label className="col-xs-7 status-color" label="STATUS" />
-                <Label className="col-xs-5 status-result-color" labelStyle={{ color: "inherit" }} label="Assigned" />
-              </div>
-              <br />
+            <div className="complaint-detail-detail-section-status row">
+              <Label className="col-xs-7 status-color" label="APPLICATION NO" />
+              <Label
+                labelStyle={{ color: "inherit" }}
+                className="col-xs-5 status-result-color"
+                label="25467895"
+              />
+            </div>
+            <br />
               <div className="complaint-detail-detail-section-status row">
                 <Label className="col-xs-7 status-color" label="COMPLAINT" />
                 <Label
@@ -57,13 +61,10 @@ class Details extends Component {
                   labelStyle={{ color: "inherit" }}
                 />
               </div>
+            <br/>
               <div className="complaint-detail-detail-section-status row">
-                <Label className="col-xs-7 status-color" label="APPLICATION NO" />
-                <Label
-                  labelStyle={{ color: "inherit" }}
-                  className="col-xs-5 status-result-color"
-                  label="25467895"
-                />
+                <Label className="col-xs-7 status-color" label="LOCATION" />
+                <Label className="col-xs-5 status-result-color" labelStyle={{ color: "inherit" }} label="Ward No.6" />
               </div>
               <br />
               <div className="complaint-detail-detail-section-status row">
