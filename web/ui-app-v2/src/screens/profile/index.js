@@ -1,9 +1,39 @@
 import React, { Component } from "react";
 import { Button, Icon, TextField, DropDown } from "../../components";
 import ProfileSection from "../../components/ProfileSection";
-import img from "../../assets/people.jpg";
+import img from "../../assets/images/people.jpg";
 import "./index.css";
 
+const imgStyle = { width: 143, height: 143 };
+
+const profileStyles = {
+  formFieldStyle: {
+    background: "#ffffff",
+    margin: "0px 0px 8px 0px",
+    border: "0.5px solid  #e6e6e6",
+    fontSize: "14px",
+    fontWeight: "normal",
+    color: "#484848",
+    textAlign: "left",
+  },
+  addIconStyle: {
+    backgroundColor: "#3498db",
+    position: "absolute",
+    right: "-5%",
+    bottom: "0px",
+  },
+  cardStyles: {
+    width: "100%",
+    height: "auto",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "0 auto",
+    paddingTop: 30,
+    paddingBottom: 30,
+    backgroundColor: "#e0e0e0",
+  },
+};
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -49,9 +79,17 @@ class Profile extends Component {
     let { name, emailId } = this.state;
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
-        <div style={{ position: "relative" }}>
-          <ProfileSection id="profile-photo" className="profileSection" imgStyle={imgStyle} cardStyles={profileStyles.cardStyles} imgSrc={img} />
-          <Icon id="profile-upload-icon" style={profileStyles.addIconStyle} action="image" name="add-a-photo" onClick={this.onClickAddPic} />
+        <div>
+          <ProfileSection
+            id="profile-photo"
+            className="profileSection"
+            imgStyle={imgStyle}
+            addIconName="add-a-photo"
+            addIconStyle={profileStyles.addIconStyle}
+            cardStyles={profileStyles.cardStyles}
+            imgSrc={img}
+            onClickAddPic={this.onClickAddPic}
+          />
         </div>
         <form className="profileFormContainer">
           <TextField
@@ -103,34 +141,3 @@ class Profile extends Component {
 }
 
 export default Profile;
-
-const imgStyle = { width: 127, height: 127 };
-
-const profileStyles = {
-  formFieldStyle: {
-    background: "#ffffff",
-    margin: "0px 0px 8px 0px",
-    border: "0.5px solid  #e6e6e6",
-    fontSize: "14px",
-    color: "#484848",
-    textAlign: "left",
-    height: 56,
-  },
-  addIconStyle: {
-    backgroundColor: "#3498db",
-    position: "absolute",
-    right: "31%",
-    bottom: "26px",
-  },
-  cardStyles: {
-    width: "100%",
-    height: "auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "0 auto",
-    paddingTop: 30,
-    paddingBottom: 30,
-    backgroundColor: "#e0e0e0",
-  },
-};

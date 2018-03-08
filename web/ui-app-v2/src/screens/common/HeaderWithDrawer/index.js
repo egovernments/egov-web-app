@@ -15,7 +15,7 @@ import poweredByLogo from "../../../assets/images/logo.png";
 import "./index.css";
 //App bar imports ends
 
-const style = { borderRadius: "50%", width: 89, height: 88 };
+const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',
   height: "auto",
