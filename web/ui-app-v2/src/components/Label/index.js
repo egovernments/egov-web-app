@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-const labelText = (label, labelStyle,labelClassName) => {
+const labelText = (label, labelStyle, labelClassName) => {
   return label && label.length ? (
     <div className={`label-text ${labelClassName}`} style={labelStyle}>
       {label}
@@ -36,7 +36,7 @@ const Label = ({ className = "", label, children, iconPosition = "before", icon,
 
   return (
     <div style={containerStyle} className={`label-container ${className}`}>
-     {children}
+      {children}
       {iconPosition === "before" ? labelIcon(icon) : ""}
       {labelText(label, labelStyle)}
       {iconPosition === "after" ? labelIcon(icon) : ""}
@@ -53,7 +53,7 @@ Label.propTypes = {
   iconPosition: PropTypes.oneOf(["after", "before"]),
   containerStyle: PropTypes.object,
   labelStyle: PropTypes.object,
-  labelClassName:PropTypes.string
+  labelClassName: PropTypes.string,
 };
 
 export default Label;
