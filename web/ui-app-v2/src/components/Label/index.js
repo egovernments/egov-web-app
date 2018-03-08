@@ -27,7 +27,7 @@ const Label = ({ className = "", label, children, iconPosition = "before", icon,
     additionalStyles.color = color;
   }
   if (bold) {
-    additionalStyles.fontWeight = 600;
+    additionalStyles.fontWeight = 500;
   }
 
   if (Object.keys(labelStyle).length || Object.keys(additionalStyles).length) {
