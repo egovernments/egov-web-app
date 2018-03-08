@@ -2,25 +2,13 @@
   background-color: #ffffff;
   background-repeat: no-repeat;
   background-position: center;
-  height: 200px;
-  padding-left: 12px;
-  padding-top: 10px;
+  height: 231px;
+  padding-top: 16px;
 }
-.reopencomplaint-label {
-  font-size: 7px;
-  font-weight: normal;
-  padding-bottom: 16px;
-  text-align: left;
-  color: #484848;
+
+.reopencomplaint-textArea {
+  padding: 16px 8px 0px 8px;
 }
-.reopencomplaint-radio {
-  font-size: 7px;
-  font-weight: normal;
-  padding-bottom: 12px;
-  text-align: left;
-  color: #484848;
-}
-.reopencomplaint-textField {
-  padding-left: 12px;
-  padding-top: 10px;
+.reopencomplaint-button {
+  padding: 25% 4.5% 20% 4.5%;
 }

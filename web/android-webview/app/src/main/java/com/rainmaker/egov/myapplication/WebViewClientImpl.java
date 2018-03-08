@@ -14,7 +14,7 @@ import android.webkit.WebViewClient;
 
 public class WebViewClientImpl extends WebViewClient {
     private Activity activity = null;
-    private final String domain = "egov"; 
+    private final String domain = "egov";
 
     public WebViewClientImpl(WebViewActivity activity) {
         this.activity = activity;
@@ -24,11 +24,11 @@ public class WebViewClientImpl extends WebViewClient {
     //    String url = request.getUrl().toString();
          // prevent links of our domain to be opened in the browser
 //        if(url.indexOf(domain) > -1 ) return false;
-        
+
         //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         //activity.startActivity(intent);
         return true;
-        
+
     }
     @Override
     public void onPageFinished(WebView view, String url) {

@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
+import "./index.css";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
@@ -10,7 +11,7 @@ const MapLocation = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
+    containerElement: <div className="container" />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 12.972442, lng: 77.580643 },
   }),
@@ -21,7 +22,6 @@ const MapLocation = compose(
       var lati;
       var long;
 
-      // console.log(this.state.center)
       this.setState({
         bounds: null,
         markers: [],
@@ -56,7 +56,7 @@ const MapLocation = compose(
             center: nextCenter,
             markers: nextMarkers,
           });
-          // refs.map.fitBounds(bounds);
+          refs.map.fitBounds(bounds);
         },
       });
     },
@@ -74,7 +74,7 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged}>
+  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged} gestureHandling={"greedy"}>
     <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
