@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FlatButton from "material-ui/FlatButton";
+import "./index.css";
 
 const ButtonGroup = ({
   items,
@@ -15,6 +16,7 @@ const ButtonGroup = ({
   return items.map((item, index) => {
     return (
       <FlatButton
+        className="button-item"
         multiple={multiple}
         key={index}
         label={item.label}
