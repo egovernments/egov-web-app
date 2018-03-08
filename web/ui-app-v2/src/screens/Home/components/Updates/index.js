@@ -18,8 +18,8 @@ class Updates extends Component {
               <div style={{ paddingRight: "0px" }} className="right">
                 {/* Individual Rows; Row 1 */}
                 <div>
-                  <Label color="#484848" bold={true} label="ROAD & FOOTPATH DAMAGE" />
-                  <Label label="RAJAJI NAGAR" />
+                  <Label color="#484848" bold={true} label="Road & Footpath Damage" />
+                  <Label label="Rajaji Nagar" />
                   <div style={{ marginTop: "10px" }}>
                     <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been " />
                     <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} color="#484848" label=" RESOLVED." />
@@ -28,8 +28,8 @@ class Updates extends Component {
                 </div>
                 {/* card footer */}
                 <div style={{ marginTop: "10px", textAlign: "right" }}>
-                  <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
-                  <Label color="#f5a623" containerStyle={{ display: "inline-block", marginLeft: "10px" }} label="FEEDBACK" />
+                  <Label bold={true} color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
+                  <Label bold={true} color="#f5a623" containerStyle={{ display: "inline-block", marginLeft: "10px" }} label="FEEDBACK" />
                 </div>
               </div>
               {/* End of right section */}
@@ -49,8 +49,8 @@ class Updates extends Component {
               <div style={{ paddingRight: "0px" }} className="right">
                 {/* Individual Rows; Row 1 */}
                 <div>
-                  <Label color="#484848" bold={true} label="STREETLIGHT REPAIR" />
-                  <Label label="JAKKASANDRA" />
+                  <Label color="#484848" bold={true} label="Streetlight Repair" />
+                  <Label label="Jakkasandra" />
                   <div style={{ marginTop: "10px" }}>
                     <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been" />
                     <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} color="#484848" label="ASSIGNED." />
@@ -58,7 +58,7 @@ class Updates extends Component {
                 </div>
                 {/* card footer */}
                 <div style={{ marginTop: "10px", textAlign: "right" }}>
-                  <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
+                  <Label bold={true} color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
                 </div>
               </div>
               {/* End of right section */}
