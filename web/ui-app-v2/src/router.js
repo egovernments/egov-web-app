@@ -4,9 +4,9 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
+import ComplaintSubmited from "./screens/ComplaintSubmited";
 import Profile from "./screens/profile";
 import TrackLocation from "./screens/common/TrackLocation";
-import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import SearchComplaint from "./screens/SearchComplaint";
@@ -26,6 +26,7 @@ const Main = () => {
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details" component={ComplaintDetails} />
         <PrivateRoute exact path="/map" component={TrackLocation} />
+        <PrivateRoute exact path="/complaint-submitted" component={ComplaintSubmited} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />

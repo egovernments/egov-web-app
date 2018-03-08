@@ -1,0 +1,37 @@
+.home-page-content {
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-bottom: 70px;
+}
+
+.home-page-content-card-margin {
+  margin-top: 20px;
+}
+
+
+.row-body {
+    overflow: hidden;
+    margin-bottom: -8px;
+    margin-left: -16px !important;
+}
+
+.left-side {
+  padding-bottom: 10000px;
+  margin-bottom: -10000px;
+  height: 100%;
+}
+
+.zeroPadding {
+  padding: 0 !important;
+}
+
+.comment-section
+{
+  padding: 15px 30px;
+}
+
+.complaint-detail-detail-section-location-section {
+  margin-top: 17px;
+  margin-bottom: -25px;
+  display: inline-flex;
+}
