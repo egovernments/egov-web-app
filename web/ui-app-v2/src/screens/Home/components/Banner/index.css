@@ -1,21 +1,10 @@
-.banner {
-  position: relative;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(../../../../assets/images/banner-muncipal.png);
+.home-screen-wrapper .logo-container{
+  top : 33%;
 }
 
-.banner .logo {
-  position: absolute;
-  left: 45%;
-  top: 25%;
-  height: 100px;
-  width: 100px;
-}
-
-@media screen and (max-width: 768px) {
-  .banner .logo {
-    left: 40%;
+@media only screen and (min-width: 720px){
+  .home-screen-wrapper .imageContainer{
+      background-size: cover;
   }
+  
 }
