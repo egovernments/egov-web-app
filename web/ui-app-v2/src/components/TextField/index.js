@@ -11,19 +11,20 @@ const hintStyle = {
   fontSize: "14px",
   color: "#969696",
 };
+const floatingLabelStyle = {
+  top: 18,
+  color: "#969696",
+  fontSize: "14px",
+};
 
-const TextField = ({
-  style,
-  onChange,
-  id,
-  disabled,
-  placeholder,
-  fullWidth = false,
-  className = "textfield",
-  value,
-  floatingLabelText,
-  floatingLabelStyle,
-}) => {
+const floatingLabelShrinkStyle = {
+  fontSize: "12px",
+  transform: "scale(1) translate(0px, -16px)",
+  color: "#6090ae",
+  fontWeight: 500,
+};
+
+const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield", value, floatingLabelText }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
@@ -34,12 +35,13 @@ const TextField = ({
       underlineShow={false}
       style={style}
       id={id}
+      floatingLabelShrinkStyle={floatingLabelShrinkStyle}
       fullWidth={fullWidth}
       hintText={placeholder}
       hintStyle={hintStyle}
       floatingLabelText={floatingLabelText}
       floatingLabelStyle={floatingLabelStyle}
-      floatingLabelFixed={true}
+      floatingLabelFixed={false}
     />
   );
 };
@@ -53,6 +55,8 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   isRequired: PropTypes.bool,
   hide: PropTypes.bool,
+  hintText: PropTypes.string,
+  floatingLabelText: PropTypes.string,
   className: PropTypes.string,
 };
 

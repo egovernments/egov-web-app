@@ -48,7 +48,7 @@ class OTP extends Component {
               />
 
               <form>
-                <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} placeholder="Enter OTP" />
+                <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} floatingLabelText="Enter OTP" />
                 <div style={{ margin: "10px 0px 10px" }} className="text-right">
                   <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label id="otp-resend" className="otp-resend" label="RESEND" />
