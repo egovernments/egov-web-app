@@ -1,7 +1,8 @@
 .home-page-content {
-  padding-left: 2%;
-  padding-right: 2%;
+  position : absolute !important;
+  top : 40%;
+  left : 8px;
+  right : 8px;
   margin-bottom: 70px;
-  margin-top : -20px;
 }
 
