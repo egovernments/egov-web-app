@@ -45,7 +45,7 @@ class App extends Component {
 
   state = {
     toggleMenu: false,
-    tabIndex: 0,
+    tabIndex: 0
   };
 
   _handleToggleMenu = () => {
@@ -76,7 +76,9 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+
+  }
 
   render() {
     const { moduleName, moduleAction, Component } = this.props;
