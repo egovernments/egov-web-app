@@ -7,13 +7,6 @@ import "./index.css";
 const imgStyle = { width: "40%", height: 143 };
 
 const profileStyles = {
-  floatingLabelStyle: {
-    textAlign: "left",
-    color: "#6090ae",
-    fontSize: "14px",
-    fontWeight: "normal",
-    textAlign: "left",
-  },
   formFieldStyle: {
     background: "#ffffff",
     margin: "0px 0px 8px 0px",
