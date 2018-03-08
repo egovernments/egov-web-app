@@ -27,9 +27,9 @@ class Updates extends Component {
                   </div>
                 </div>
                 {/* card footer */}
-                <div style={{ marginTop : "10px", textAlign : "right" }}>
-                 <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
-                 <Label color="#f5a623" containerStyle={{ display: "inline-block", marginLeft: "10px" }} label="FEEDBACK" />
+                <div style={{ marginTop: "10px", textAlign: "right" }}>
+                  <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
+                  <Label color="#f5a623" containerStyle={{ display: "inline-block", marginLeft: "10px" }} label="FEEDBACK" />
                 </div>
               </div>
               {/* End of right section */}
@@ -57,10 +57,9 @@ class Updates extends Component {
                   </div>
                 </div>
                 {/* card footer */}
-                <div style={{ marginTop : "10px", textAlign : "right" }}>
-                 <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
+                <div style={{ marginTop: "10px", textAlign: "right" }}>
+                  <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
                 </div>
-
               </div>
               {/* End of right section */}
             </div>
