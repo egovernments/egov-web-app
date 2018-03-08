@@ -6,7 +6,6 @@ import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
 import Profile from "./screens/profile";
 import TrackLocation from "./screens/common/TrackLocation";
-import MapDemo from "./screens/common/MapDemo";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import SearchComplaint from "./screens/SearchComplaint";
