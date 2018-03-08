@@ -37,4 +37,13 @@ const ButtonGroup = ({
   });
 };
 
+ButtonGroup.prototype = {
+  onClick: PropTypes.func,
+  multiple: PropTypes.bool,
+  defaultStyle: PropTypes.object,
+  selectedStyle: PropTypes.object,
+  selectedLabelStyle: PropTypes.object,
+  defaultLabelStyle: PropTypes.object,
+};
+
 export default ButtonGroup;
