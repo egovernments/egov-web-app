@@ -38,11 +38,21 @@ class Feedback extends Component {
         value: "Other",
       },
     ],
-    value: null,
+    value: [],
   };
 
-  onClick = (value) => {
-    this.setState({ value });
+  onClick = (value, multiple) => {
+    if (multiple) {
+      var valueArray = this.state.value.slice(0);
+      if (valueArray.indexOf(value) > -1) {
+        valueArray.splice(valueArray.indexOf(value), 1);
+      } else {
+        valueArray.push(value);
+      }
+      this.setState({ value: valueArray });
+    } else {
+      this.setState(value === this.state.value ? { value: null } : { value });
+    }
   };
 
   render() {

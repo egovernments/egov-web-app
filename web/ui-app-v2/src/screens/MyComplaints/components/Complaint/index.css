@@ -12,12 +12,17 @@
   bottom: 10%;
 }
 
+.complaint-card {
+  padding: 0 !important;
+  margin: 8px 0 !important;
+}
+
 .complaints-card-main-cont {
-  font-family: Roboto;
+  margin-top: 16px;
 }
 
 .complaint-card-wrapper {
-  padding: 10px 0;
+  padding: 14px 20px 4px 20px;
 }
 
 .complaint-track-button {
@@ -36,7 +41,7 @@
 
 .complaint-header,
 .complaint-status-text {
-  font-size: 15px;
+  font-size: 16px;
   color: #484848;
   font-weight: 500;
   line-height: 1;
@@ -46,11 +51,19 @@
 .complaint-status-cont,
 .complaint-image-cont,
 .complaint-header-cont {
-  padding: 5px 0;
+  padding-bottom: 13px;
+}
+
+.complaint-address-cont {
+  display: flex;
+}
+
+.complaint-image-cont:last-child {
+  padding: 0;
 }
 
 .complaint-address {
-  font-size: 15px;
+  font-size: 16px;
   text-align: left;
   color: #767676;
   font-family: Roboto;
@@ -71,7 +84,7 @@
 }
 .complaint-image-cont img {
   display: inline-block !important;
-  margin-right: 2%;
+  margin-right: 14px;
 }
 
 .complaint-image-cont img:last-child {

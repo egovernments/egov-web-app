@@ -5,6 +5,10 @@ import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
 import "./index.css";
 
+const imageStyles = {
+  maxWidth: "117px",
+  minHeight: "106px",
+};
 const getStatusAndChangeColor = (status) => {
   let style = {};
   switch (status) {
@@ -13,7 +17,7 @@ const getStatusAndChangeColor = (status) => {
         color: "#d84f41",
       };
       break;
-    case "CLOSED":
+    case "CLOSE":
       style = {
         color: "#55970a",
       };
@@ -28,9 +32,10 @@ const getStatusAndChangeColor = (status) => {
 
 const Complaint = ({ index, item }) => {
   return (
-    <div id={"complaint-" + index} className="complaints-card-main-cont home-page-content-card-margin">
+    <div id={"complaint-" + index} className="complaints-card-main-cont">
       <Card
-        card={{}}
+        card={{ padding: 0 }}
+        className="complaint-card"
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
@@ -66,7 +71,7 @@ const Complaint = ({ index, item }) => {
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
-                return <Image key={index} className="complaint-image" width="32%" height={46} source={image.source} />;
+                return <Image style={imageStyles} key={index} className="complaint-image" width="32%" height={46} source={image.source} />;
               })}
             </div>
           </div>

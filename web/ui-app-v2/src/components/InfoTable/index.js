@@ -14,7 +14,7 @@ const InfoTable = ({ items, labelParentClass, valueParentClass, parentClass }) =
   });
 };
 
-InfoTable.PropTypes = {
+InfoTable.propTypes = {
   labelContainer: PropTypes.string,
   valueContainer: PropTypes.string,
   itemContainer: PropTypes.string,
