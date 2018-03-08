@@ -42,10 +42,18 @@ class OTP extends Component {
           className="user-screens-card"
           textChildren={
             <div>
-              <Label
-                label="We have sent a 6 digit OTP number to your registered mobile number.Enter the OTP to create your account."
-                className="otp-text"
-              />
+              <div className="otp-text">
+                  <Label
+                    color = "#484848"
+                    containerStyle = {{padding : "0px 16px"}}
+                    label="We have sent a 6 digit OTP number to your registered mobile number."
+                  />
+                  <Label
+                    color = "#484848"
+                    containerStyle = {{padding : "0px 16px"}}
+                    label="Enter the OTP to create your account."
+                  />
+              </div>
 
               <form>
                 <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} floatingLabelText="Enter OTP" />
