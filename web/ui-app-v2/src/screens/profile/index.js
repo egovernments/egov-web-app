@@ -85,7 +85,6 @@ class Profile extends Component {
             dropDownData={this.dropDownData}
             fullWidth={true}
             floatingLabelText="City"
-            floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
             onChange={this.onDDChange}
           />
@@ -108,24 +107,13 @@ export default Profile;
 const imgStyle = { width: 127, height: 127 };
 
 const profileStyles = {
-  floatingLabelStyle: {
-    textAlign: "left",
-    color: "#6090ae",
-    fontFamily: "Roboto",
-    fontSize: "12px",
-    fontWeight: 500,
-    textAlign: "left",
-    top: 32,
-  },
   formFieldStyle: {
     background: "#ffffff",
     margin: "0px 0px 8px 0px",
     border: "0.5px solid  #e6e6e6",
     fontSize: "14px",
-    fontWeight: "normal",
     color: "#484848",
     textAlign: "left",
-    fontFamily: "Roboto",
     height: 56,
   },
   addIconStyle: {

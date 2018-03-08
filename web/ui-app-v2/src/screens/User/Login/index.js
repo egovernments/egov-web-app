@@ -4,7 +4,6 @@ import { Button, DropDown, TextField, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
-
 class Login extends Component {
   state = {
     name: "",
@@ -45,7 +44,7 @@ class Login extends Component {
           textChildren={
             <div style={{ marginTop: "50px" }}>
               <form>
-                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} placeholder="Name" />
+                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} floatingLabelText="Name" />
                 <DropDown
                   id="login-city-field"
                   name="cities"
@@ -53,7 +52,6 @@ class Login extends Component {
                   dropDownData={dropDownData}
                   fullWidth={true}
                   floatingLabelText="City"
-                  floatingLabelStyle={{ textAlign: "left", color: "#6090ae", top: "30px" }}
                   style={{ border: "1px solid #e6e6e6" }}
                 />
                 <TextField
@@ -63,7 +61,7 @@ class Login extends Component {
                   name="phone-number"
                   underlineShow={false}
                   fullWidth={true}
-                  placeholder="Phone Number"
+                  floatingLabelText="Phone Number"
                 />
                 <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
               </form>
