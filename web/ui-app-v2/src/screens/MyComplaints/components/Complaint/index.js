@@ -65,14 +65,14 @@ const Complaint = ({ index, item }) => {
             <div className="complaint-status-cont">
               <span className="complaint-status-text dark-color text-bold">
                 Status :
-                <span class="text-bold" style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
+                <span className="text-bold" style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
               </span>
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
                 return (
-                  <div className="complaint-image-wrapper">
-                    <Image style={imageStyles} key={index} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
+                  <div className="complaint-image-wrapper" key={index}>
+                    <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
                   </div>
                 );
               })}

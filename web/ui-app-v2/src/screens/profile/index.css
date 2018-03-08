@@ -17,3 +17,11 @@
 .profileBtn {
   height: 48px;
 }
+
+.profile-form-field > label {
+  color: "#3498db";
+}
+
+.profileContainer {
+  position: relative;
+}

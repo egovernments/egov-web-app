@@ -10,5 +10,12 @@
   padding: 16px 8px 0px 8px;
 }
 .reopencomplaint-button {
-  padding: 25% 4.5% 20% 4.5%;
+  padding: 0 8px;
+  position: fixed;
+  width: 100%;
+  bottom: 70px;
+}
+.reopencomplaint-button button {
+  height: 48px !important;
+  line-height: 48px !important;
 }
