@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import { Card, Icon, Label } from "../../../../components";
 import "./index.css";
 
+const cardStyle = {
+  style : {
+    padding: "50px 16px 16px 16px"
+  }
+}
+
 class NewAndOldComplaints extends Component {
   render() {
     return (
       <Card
+        card = {cardStyle}
         textChildren={
           <div className="row newAndOldComplaints-content-section">
             <div id="home-new-complaint" className="col-xs-6">
