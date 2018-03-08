@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, TimeLine, List, Label } from "../../../../components";
+import { Card, TimeLine, List, Label,Button } from "../../../../components";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
 import Gallery from "material-ui/svg-icons/image/image";
 import Location from "material-ui/svg-icons/maps/place";
@@ -11,25 +11,34 @@ import "./index.css";
 
 const cameraStyle = {
   marginRight: 24,
-  height: "50px",
-  width: "50px",
+  height: "38px",
+  width: "38px",
   borderRadius: "50%",
-  padding: "12px",
+  padding: "10px",
   background: "#f5a623",
 };
 
 const galleryStyle = {
   marginRight: 24,
-  height: "50px",
-  width: "50px",
+  height: "38px",
+  width: "38px",
   borderRadius: "50%",
-  padding: "12px",
+  padding: "10px",
   background: "#2f80ed",
+};
+
+const galleryStyleTwo = {
+  marginRight: 24,
+  height: "38px",
+  width: "38px",
+  borderRadius: "50%",
+  padding: "10px",
+  background: "#e74c3c",
 };
 const items = [
   {
-    primaryText: "COMLAINT TIMELINE",
-    leftIcon: <ContentInbox />,
+    primaryText: <div className="dark-heading">COMLAINT TIMELINE</div>,
+    leftIcon: <ContentInbox color="#969696"/>,
   },
 ];
 
@@ -47,8 +56,7 @@ class ComplaintTimeLine extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px",
-              margin: "1px 0px",
+              padding: "0px 0px 25px 0px"
             },
           }}
           textChildren={
@@ -73,7 +81,7 @@ class ComplaintTimeLine extends Component {
                         icon: (
                           <div className="wrapper stepLabelAlignment">
                             <div className="left leftOverRide">
-                              <Label label="JAN 21" />
+                              <Label><div className="dark-color">JAN 21</div></Label>
                             </div>
                             <div className="right rightOverRide">
                               <ContentInbox style={cameraStyle} color={"#FFFFFF"} />
@@ -90,7 +98,7 @@ class ComplaintTimeLine extends Component {
                       contentChildren: (
                         <div className="complaint-timeline-content-section">
                           <Label
-                            labelStyle={{ color: "#484848", fontStyle: "normal", fontStretch: "normal", lineHeight: "normal" }}
+                            labelStyle={{ color: "#484848"}}
                             label="SUBMITTED"
                           />
                           <Label label="BBMP" />
@@ -105,7 +113,7 @@ class ComplaintTimeLine extends Component {
                         icon: (
                           <div className="wrapper stepLabelAlignment">
                             <div className="left leftOverRide">
-                              <Label label="JAN 25" />
+                              <Label><div className="dark-color">JAN 25</div></Label>
                             </div>
                             <div className="right rightOverRide">
                               <Gallery style={galleryStyle} color={"#FFFFFF"} />
@@ -122,22 +130,55 @@ class ComplaintTimeLine extends Component {
                       contentChildren: (
                         <div className="complaint-timeline-content-section">
                           <Label
-                            labelStyle={{ color: "#484848", fontStyle: "normal", fontStretch: "normal", lineHeight: "normal" }}
+                            labelStyle={{ color: "#484848"}}
                             label="RE-ASSIGNED"
                           />
                           <Label label="Department of Health & Sanitation" />
                           <Label
-                            labelStyle={{ color: "#484848", fontStyle: "normal", fontStretch: "normal", lineHeight: "normal" }}
+                            labelStyle={{ color: "#484848"}}
                             label="SR.INSPECTOR KUMAR"
                           />
                           <Label label="is looking into your problem" />
                           <div className="complaint-detail-detail-section-location-section">
                             <Call style={iconStyle} color={"#417505"} />
-                            <Label labelStyle={{ color: "#417505" }} label={"Call"} />
+                            <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
                           </div>
                         </div>
                       ),
                     },
+                    {
+                      props: {
+                        active: true,
+                      },
+                      labelProps: {
+                        icon: (
+                          <div className="wrapper stepLabelAlignment">
+                            <div className="left leftOverRide">
+                              <Label><div className="dark-color">JAN 26</div></Label>
+                            </div>
+                            <div className="right rightOverRide">
+                              <Gallery style={galleryStyleTwo} color={"#FFFFFF"} />
+                            </div>
+                          </div>
+                        ),
+                      },
+                      contentProps: {
+                        style: {
+                          marginTop: "-50px",
+                        },
+                      },
+                      // labelChildren: "Select campaign settings 1",
+                      contentChildren: (
+                        <div className="complaint-timeline-content-section" style={{border:"none"}}>
+                          <Label
+                            labelStyle={{ color: "#484848"}}
+                            label="REJECTED"
+                          />
+                          <Label label="Your Complaint is not valid." />
+                          <div className="complaint-details-timline-reopen-button"   onClick={(e)=>{console.log("clicked");}}>RE-OPEN</div>
+                        </div>
+                      ),
+                    }
                   ]}
                 />
               </div>

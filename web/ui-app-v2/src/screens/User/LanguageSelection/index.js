@@ -4,14 +4,20 @@ import { ButtonGroup, Button, Label, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
-const defaultBGColor = "transparent";
-const BGColor = "#3498db";
+// const defaultBGColor = "transparent";
+// const BGColor = "#3498db";
 
-const labelStyle = {
-  textTransform: "none",
-  fontWeight: "900",
+const selectedLabelStyle = {
   color: "#ffffff",
-  verticalAlign: "initial",
+  fontSize: "14.5px",
+  letterSpacing: "0.7px",
+  padding: "0 14px",
+  fontWeight: "900",
+};
+
+const selectedStyle = {
+  backgroundColor: "#3498db",
+  border: "1px solid #3498db",
 };
 
 const defaultStyle = {
@@ -21,16 +27,6 @@ const defaultStyle = {
   height: "44px",
   lineHeight: "44px",
   width: "28.48%",
-};
-
-const style = {
-  border: "0px",
-  borderRadius: "1px",
-  marginRight: "4.65%",
-  height: "44px",
-  lineHeight: "44px",
-  width: "28.48%",
-  backgroundColor: "#3498db",
 };
 
 const defaultLabelStyle = {
@@ -80,10 +76,9 @@ class LanguageSelection extends Component {
                     selected={value}
                     defaultStyle={defaultStyle}
                     defaultLabelStyle={defaultLabelStyle}
-                    BGColor={BGColor}
-                    defaultBGColor={defaultBGColor}
-                    labelStyle={labelStyle}
-                    style={style}
+                    selectedStyle={selectedStyle}
+                    selectedLabelStyle={selectedLabelStyle}
+                    multiple={false}
                   />
                 </div>
                 <div className="button-container">

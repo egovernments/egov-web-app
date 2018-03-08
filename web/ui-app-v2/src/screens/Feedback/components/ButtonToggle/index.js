@@ -2,16 +2,12 @@ import React from "react";
 import "./index.css";
 import { ButtonGroup } from "../../../../components";
 
-const defaultBGColor = "transparent";
-const BGColor = "#f5a623";
-
-const labelStyle = {
-  textTransform: "none",
-  fontWeight: "500",
+const selectedLabelStyle = {
   color: "#ffffff",
-  fontSize: "14.5px",
-  letterSpacing: "0.7px",
-  padding: "0 14px",
+};
+
+const selectedStyle = {
+  backgroundColor: "#f5a623",
 };
 
 const defaultStyle = {
@@ -20,14 +16,15 @@ const defaultStyle = {
   marginRight: "4.44%",
   height: "auto",
   lineHeight: "30px",
+  backgroundColor: "transparent",
 };
 
 const defaultLabelStyle = {
   textTransform: "none",
-  fontWeight: "500",
+  fontWeight: "600",
   color: "#484848",
-  fontSize: "14.5px",
-  letterSpacing: "0.7px",
+  fontSize: "14px",
+  letterSpacing: "0.3px",
   padding: "0 14px",
 };
 
@@ -39,9 +36,9 @@ const ButtonToggleComponent = ({ items, onClick, selected }) => {
       selected={selected}
       defaultStyle={defaultStyle}
       defaultLabelStyle={defaultLabelStyle}
-      BGColor={BGColor}
-      defaultBGColor={defaultBGColor}
-      labelStyle={labelStyle}
+      selectedStyle={selectedStyle}
+      selectedLabelStyle={selectedLabelStyle}
+      multiple={true}
     />
   );
 };

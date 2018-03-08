@@ -1,7 +1,7 @@
 .logo-container{
     width: 100%;
     position: absolute;
-    top: 30%;
+    top: 50%;
     text-align: center; 
     z-index: 100;
 }
@@ -9,25 +9,16 @@
 .user-screens-wrapper .logo {
   margin: 0 auto;
   display: block;
-  width: 90px;
+  width: 100px;
 }
 
 .imageContainer {
   position: relative;
-  background-image: url(../../../../assets/images/banner-muncipal.png);
+  background-image: url(../../../../assets/images/banner-image.png);
   background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
-  height: 300px;
-}
-
-.cardBackground {
-  position: relative;
-  background-color: #f2f2f2;
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 350px;
-  border: 1px solid #e6e6e6;
-  box-sizing: border-box;
+  height: 200px;
 }
 
 .bottom-logo{
@@ -45,7 +36,7 @@
 
 .user-screens-wrapper .user-screens-card{
     position: absolute !important;
-    top: 35%;
+    top: 65%;
     left: 8px;
     right: 8px;
     padding: 16px !important;

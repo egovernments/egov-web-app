@@ -100,12 +100,14 @@ class HeaderWithDrawer extends Component {
           onLeftIconButtonClick={onHandleToggleMenu}
           style={{
             background: "linear-gradient(#56ccf2, #2f80ed)",
+            overflowX: "hidden",
+            width: "initial",
           }}
         />
 
         <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
-            style={style}
+            imgStyle={style}
             cardStyles={cardStyles}
             nameStyle={nameStyle}
             locationStyle={locationStyle}

@@ -20,6 +20,11 @@ body span {
   font-weight: 500;
 }
 
+.dark-heading {
+  color: #484848;
+  font-weight: 500;
+}
+
 .color-green {
   color: #417505 !important;
 }

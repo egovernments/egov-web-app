@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import Complaints from "./components/Complaints";
 import { Icon } from "../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import Garbage_1 from "../../assets/images/Garbage_1.jpg";
+import Garbage_2 from "../../assets/images/Garbage_2.jpg";
+import Garbage_3 from "../../assets/images/Garbage_3.jpg";
+import Potholes_1 from "../../assets/images/Potholes_1.png";
+import Potholes_2 from "../../assets/images/Potholes_2.jpg";
+import Potholes_3 from "../../assets/images/Potholes_3.jpg";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -10,48 +16,48 @@ class MyComplaints extends Component {
       {
         header: "Potholes",
         address: "#18/2A, Ambalipura village, Bellandur Gate",
-        status: "CLOSED",
+        status: "OPEN",
         images: [
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_1,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_2,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_3,
           },
         ],
       },
       {
         header: "Garbage",
-        address: "#18/2A, Ambalipura village, Bellandur Gate",
-        status: "OPEN",
+        address: "#21, Jakkasandra, Kormangala",
+        status: "CLOSE",
         images: [
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Garbage_1,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Garbage_2,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Garbage_3,
           },
         ],
       },
       {
-        header: "Potholes",
+        header: "Streetlight not working",
         address: "#18/2A, Ambalipura village, Bellandur Gate",
         status: "OPEN",
         images: [
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_1,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_2,
           },
           {
-            source: "https://placeimg.com/100/100/tech",
+            source: Potholes_3,
           },
         ],
       },
@@ -60,7 +66,7 @@ class MyComplaints extends Component {
   render() {
     let { complaints } = this.state;
     return (
-      <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 complaints-main-container">
+      <div className="complaints-main-container">
         <Complaints complaints={complaints} />
         <div className="floating-button-cont">
           <FloatingActionButton className="floating-button">
