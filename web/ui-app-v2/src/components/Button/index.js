@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import RaisedButton from "material-ui/RaisedButton";
 
 const buttonStyle = {
-  height: "53px",
-  lineHeight: "53px",
+  // height: "53px",
+  // lineHeight: "53px",
 };
 
-const Button = ({ label, icon = {}, onClick, backgroundColor, labelColor, fullWidth, disabled, hide, primary = false, style = {}, id }) => {
+const Button = (props) => {
+  let { label, icon = {},className, onClick, backgroundColor, labelColor, fullWidth, disabled, hide, primary = false, style = {}, id }=props;
   return (
     <RaisedButton
       style={Object.assign({}, buttonStyle, style)}
@@ -24,6 +25,7 @@ const Button = ({ label, icon = {}, onClick, backgroundColor, labelColor, fullWi
         </i>
       }
       id={id}
+      {...props}
     />
   );
 };

@@ -1,11 +1,13 @@
 .stepLabelAlignment {
-  margin-left: -117px !important;
+  margin-left: -100px !important;
   text-align: left;
+  margin-top: -18px !important;
 }
 
 
 .leftOverRide {
   width:70% !important;
+  color: #484848 !important;
 }
 
 .rightOverRide {
@@ -13,9 +15,23 @@
 }
 
 .complaintTimeLineContainer {
-  margin-left: 30%;
+  margin-left: 86px;
 }
 
+.complaint-details-timline-reopen-button
+{
+  font-weight: 500;
+  color: #e74c3c;
+  width: 89px;
+  height: 21px;
+  margin-top: 20px;
+  background-color: #ffffff !important;
+  text-align: center;
+  cursor: pointer;
+  /* padding: 5px 3px; */
+  border-radius: 2px !important;
+  border: solid 1px #e74c3c !important;
+}
 
 .complaint-timeline-content-section {
   margin-left: 25px;
