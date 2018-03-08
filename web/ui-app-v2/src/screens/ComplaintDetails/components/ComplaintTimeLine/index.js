@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Card, TimeLine, List, Label,Button } from "../../../../components";
-import ContentInbox from "material-ui/svg-icons/content/inbox";
-import Gallery from "material-ui/svg-icons/image/image";
+import { Card, TimeLine, List, Label, Button } from "../../../../components";
+import SubmittedIcon from "material-ui/svg-icons/content/send";
+import TimeLineIcon from "material-ui/svg-icons/action/timeline";
+import ReAssignedIcon from "material-ui/svg-icons/action/assignment-turned-in";
+import RejectedIcon from "material-ui/svg-icons/navigation/close";
 import Location from "material-ui/svg-icons/maps/place";
 import Call from "material-ui/svg-icons/communication/call";
 import "./index.css";
@@ -18,12 +20,12 @@ const cameraStyle = {
   background: "#f5a623",
 };
 
-const galleryStyle = {
+const ReAssignedStyle = {
   marginRight: 24,
   height: "38px",
   width: "38px",
   borderRadius: "50%",
-  padding: "10px",
+  padding: "7px",
   background: "#2f80ed",
 };
 
@@ -38,7 +40,7 @@ const galleryStyleTwo = {
 const items = [
   {
     primaryText: <div className="dark-heading">COMLAINT TIMELINE</div>,
-    leftIcon: <ContentInbox color="#969696"/>,
+    leftIcon: <TimeLineIcon color="#969696" />,
   },
 ];
 
@@ -56,7 +58,7 @@ class ComplaintTimeLine extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px 0px 25px 0px"
+              padding: "0px 0px 25px 0px",
             },
           }}
           textChildren={
@@ -81,10 +83,12 @@ class ComplaintTimeLine extends Component {
                         icon: (
                           <div className="wrapper stepLabelAlignment">
                             <div className="left leftOverRide">
-                              <Label><div className="dark-color">JAN 21</div></Label>
+                              <Label>
+                                <div className="dark-color">JAN 21</div>
+                              </Label>
                             </div>
                             <div className="right rightOverRide">
-                              <ContentInbox style={cameraStyle} color={"#FFFFFF"} />
+                              <SubmittedIcon style={cameraStyle} color={"#FFFFFF"} />
                             </div>
                           </div>
                         ),
@@ -97,10 +101,7 @@ class ComplaintTimeLine extends Component {
                       },
                       contentChildren: (
                         <div className="complaint-timeline-content-section">
-                          <Label
-                            labelStyle={{ color: "#484848"}}
-                            label="SUBMITTED"
-                          />
+                          <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
                           <Label label="BBMP" />
                         </div>
                       ),
@@ -113,10 +114,12 @@ class ComplaintTimeLine extends Component {
                         icon: (
                           <div className="wrapper stepLabelAlignment">
                             <div className="left leftOverRide">
-                              <Label><div className="dark-color">JAN 25</div></Label>
+                              <Label>
+                                <div className="dark-color">JAN 25</div>
+                              </Label>
                             </div>
                             <div className="right rightOverRide">
-                              <Gallery style={galleryStyle} color={"#FFFFFF"} />
+                              <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
                             </div>
                           </div>
                         ),
@@ -129,15 +132,9 @@ class ComplaintTimeLine extends Component {
                       // labelChildren: "Select campaign settings 1",
                       contentChildren: (
                         <div className="complaint-timeline-content-section">
-                          <Label
-                            labelStyle={{ color: "#484848"}}
-                            label="RE-ASSIGNED"
-                          />
+                          <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
                           <Label label="Department of Health & Sanitation" />
-                          <Label
-                            labelStyle={{ color: "#484848"}}
-                            label="SR.INSPECTOR KUMAR"
-                          />
+                          <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
                           <Label label="is looking into your problem" />
                           <div className="complaint-detail-detail-section-location-section">
                             <Call style={iconStyle} color={"#417505"} />
@@ -154,10 +151,12 @@ class ComplaintTimeLine extends Component {
                         icon: (
                           <div className="wrapper stepLabelAlignment">
                             <div className="left leftOverRide">
-                              <Label><div className="dark-color">JAN 26</div></Label>
+                              <Label>
+                                <div className="dark-color">JAN 26</div>
+                              </Label>
                             </div>
                             <div className="right rightOverRide">
-                              <Gallery style={galleryStyleTwo} color={"#FFFFFF"} />
+                              <RejectedIcon style={galleryStyleTwo} color={"#FFFFFF"} />
                             </div>
                           </div>
                         ),
@@ -169,16 +168,20 @@ class ComplaintTimeLine extends Component {
                       },
                       // labelChildren: "Select campaign settings 1",
                       contentChildren: (
-                        <div className="complaint-timeline-content-section" style={{border:"none"}}>
-                          <Label
-                            labelStyle={{ color: "#484848"}}
-                            label="REJECTED"
-                          />
+                        <div className="complaint-timeline-content-section" style={{ border: "none" }}>
+                          <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
                           <Label label="Your Complaint is not valid." />
-                          <div className="complaint-details-timline-reopen-button"   onClick={(e)=>{console.log("clicked");}}>RE-OPEN</div>
+                          <div
+                            className="complaint-details-timline-reopen-button"
+                            onClick={(e) => {
+                              console.log("clicked");
+                            }}
+                          >
+                            RE-OPEN
+                          </div>
                         </div>
                       ),
-                    }
+                    },
                   ]}
                 />
               </div>
