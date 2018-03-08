@@ -7,6 +7,7 @@ const selectedLabelStyle = {
   fontSize: "14.5px",
   letterSpacing: "0.7px",
   padding: "0 14px",
+  fontWeight: "900",
 };
 
 const selectedStyle = {
@@ -24,9 +25,9 @@ const defaultStyle = {
 
 const defaultLabelStyle = {
   textTransform: "none",
-  fontWeight: "500",
+  fontWeight: "900",
   color: "#484848",
-  fontSize: "14.5px",
+  fontSize: "14px",
   letterSpacing: "0.7px",
   padding: "0 14px",
 };
