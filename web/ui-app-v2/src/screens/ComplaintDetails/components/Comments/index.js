@@ -6,7 +6,6 @@ import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../assets/images/faceOne.jpg";
 import faceTwo from "../../../../assets/images/faceTwo.jpg";
 
-
 import "./index.css";
 
 const items = [
