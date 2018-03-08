@@ -10,7 +10,7 @@ import "./index.css";
 
 const items = [
   {
-    primaryText: "COMMENTS",
+    primaryText: <div className="dark-heading">COMMENTS</div>,
   },
 ];
 
@@ -65,8 +65,7 @@ class Comments extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px",
-              margin: "1px 0px",
+              padding: "0px"
             },
           }}
           textChildren={

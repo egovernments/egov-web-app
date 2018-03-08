@@ -17,7 +17,12 @@ body span {
 }
 
 .text-bold {
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.dark-heading {
+  color: #484848;
+  font-weight: 500;
 }
 
 .color-green {
