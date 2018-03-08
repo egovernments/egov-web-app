@@ -106,7 +106,7 @@ class HeaderWithDrawer extends Component {
 
         <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
-            style={style}
+            imgStyle={style}
             cardStyles={cardStyles}
             nameStyle={nameStyle}
             locationStyle={locationStyle}

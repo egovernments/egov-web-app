@@ -3,6 +3,9 @@ import { Card, List, Image, Label, Icon } from "../../../../components";
 import WriteComment from "../WriteComment";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
 import Avatar from "material-ui/Avatar";
+import faceOne from "../../../../assets/images/faceOne.jpg";
+import faceTwo from "../../../../assets/images/faceTwo.jpg";
+
 
 import "./index.css";
 
@@ -14,7 +17,7 @@ const items = [
 
 const itemsOne = [
   {
-    leftAvatar: <Avatar src="http://via.placeholder.com/128x128" />,
+    leftAvatar: <Avatar src={faceOne} />,
     primaryText: (
       <div>
         <Label labelStyle={{ color: "inherit" }} label="please sterilize the dogs in the area." />
@@ -51,7 +54,7 @@ const itemsTwo = [
         </div>
       </div>
     ),
-    rightAvatar: <Avatar src="http://via.placeholder.com/128x128" />,
+    rightAvatar: <Avatar src={faceTwo} />,
   },
 ];
 
