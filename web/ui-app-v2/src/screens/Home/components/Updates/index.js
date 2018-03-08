@@ -11,24 +11,56 @@ class Updates extends Component {
             <div id="home-updates" className="wrapper">
               {/* Left section*/}
               <div className="left update-icon">
-                <Icon action="action" name="home" />
+                <Icon action="alert" name="add-alert" />
               </div>
 
               {/* right section*/}
               <div style={{ paddingRight: "0px" }} className="right">
                 {/* Individual Rows; Row 1 */}
                 <div>
-                  <Label color="black" bold={true} label="ROAD CLOSED" />
-                  <Label
-                    containerStyle={{ marginTop: "10px" }}
-                    label="5th cross, 1st Block Kormangala is closed for maintanance till 23rd Feb.We apologize for the inconvinience."
-                  />
+                  <Label color="#484848" bold={true} label="ROAD & FOOTPATH DAMAGE" />
+                  <Label label="RAJAJI NAGAR" />
+                  <div style={{ marginTop: "10px" }}>
+                    <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been " />
+                    <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} color="#484848" label=" RESOLVED." />
+                    <Label label="Please give us your feedback." />
+                  </div>
+                </div>
+                {/* card footer */}
+                <div style={{ marginTop : "10px", textAlign : "right" }}>
+                 <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
+                 <Label color="#f5a623" containerStyle={{ display: "inline-block", marginLeft: "10px" }} label="FEEDBACK" />
+                </div>
+              </div>
+              {/* End of right section */}
+            </div>
+          }
+        />
+
+        <Card
+          textChildren={
+            <div id="home-updates" className="wrapper">
+              {/* Left section*/}
+              <div className="left update-icon">
+                <Icon action="alert" name="add-alert" />
+              </div>
+
+              {/* right section*/}
+              <div style={{ paddingRight: "0px" }} className="right">
+                {/* Individual Rows; Row 1 */}
+                <div>
+                  <Label color="#484848" bold={true} label="STREETLIGHT REPAIR" />
+                  <Label label="JAKKASANDRA" />
+                  <div style={{ marginTop: "10px" }}>
+                    <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been" />
+                    <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} color="#484848" label="ASSIGNED." />
+                  </div>
+                </div>
+                {/* card footer */}
+                <div style={{ marginTop : "10px", textAlign : "right" }}>
+                 <Label color="#f5a623" containerStyle={{ display: "inline-block" }} label="TRACK" />
                 </div>
 
-                {/* Individual Rows; Row 2 */}
-                <div style={{ textAlign: "right" }}>
-                  <Icon style={{ paddingRight: "0px" }} action="maps" name="place" color="#767676" />
-                </div>
               </div>
               {/* End of right section */}
             </div>

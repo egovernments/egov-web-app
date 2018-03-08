@@ -43,16 +43,12 @@ class OTP extends Component {
           textChildren={
             <div>
               <div className="otp-text">
-                  <Label
-                    color = "#484848"
-                    containerStyle = {{padding : "0px 16px"}}
-                    label="We have sent a 6 digit OTP number to your registered mobile number."
-                  />
-                  <Label
-                    color = "#484848"
-                    containerStyle = {{padding : "0px 16px"}}
-                    label="Enter the OTP to create your account."
-                  />
+                <Label
+                  color="#484848"
+                  containerStyle={{ padding: "0px 16px" }}
+                  label="We have sent a 6 digit OTP number to your registered mobile number."
+                />
+                <Label color="#484848" containerStyle={{ padding: "0px 16px" }} label="Enter the OTP to create your account." />
               </div>
 
               <form>
