@@ -11,7 +11,7 @@ const MapLocation = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div className="container" />,
+    containerElement: <div className="map container" />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 12.972442, lng: 77.580643 },
   }),
