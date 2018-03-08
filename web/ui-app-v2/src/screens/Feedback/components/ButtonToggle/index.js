@@ -4,10 +4,6 @@ import { ButtonGroup } from "../../../../components";
 
 const selectedLabelStyle = {
   color: "#ffffff",
-  fontSize: "14.5px",
-  letterSpacing: "0.7px",
-  padding: "0 14px",
-  fontWeight: "900",
 };
 
 const selectedStyle = {
@@ -25,10 +21,10 @@ const defaultStyle = {
 
 const defaultLabelStyle = {
   textTransform: "none",
-  fontWeight: "900",
+  fontWeight: "600",
   color: "#484848",
   fontSize: "14px",
-  letterSpacing: "0.7px",
+  letterSpacing: "0.3px",
   padding: "0 14px",
 };
 

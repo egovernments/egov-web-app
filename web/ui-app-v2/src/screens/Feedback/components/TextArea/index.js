@@ -12,7 +12,8 @@ const TextAreaComponent = () => {
         multiLine={true}
         fullWidth={true}
         floatingLabelStyle={{ color: "#767676 !important", fontSize: "20px", whiteSpace: "nowrap" }}
-        hintStyle={{ color: "#969696", fontSize: "14px", top: "25px", zIndex: 1, left: "9px" }}
+        hintStyle={{ color: "#969696", fontSize: "14px", top: "16px", left: "10px" }}
+        underlineShow={false}
       />
     </div>
   );
