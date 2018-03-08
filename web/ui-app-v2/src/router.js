@@ -5,7 +5,9 @@ import Home from "./screens/Home";
 import MyComplaints from "./screens/MyComplaints";
 import ComplaintDetails from "./screens/ComplaintDetails";
 import Profile from "./screens/profile";
-import MapDemo from "./screens/common/MapDemo";
+import Login from "./screens/User/Login";
+import OTP from "./screens/User/OTP";
+import TrackLocation from "./screens/common/TrackLocation";
 import Feedback from "./screens/Feedback";
 import LanguageSelection from "./screens/LanguageSelection";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
@@ -26,7 +28,7 @@ const Main = () => {
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details" component={ComplaintDetails} />
-        <PrivateRoute exact path="/map" component={MapDemo} />
+        <PrivateRoute exact path="/map" component={TrackLocation} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
