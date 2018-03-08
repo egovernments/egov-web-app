@@ -46,7 +46,7 @@
 .user-screens-wrapper .user-screens-card{
     position: absolute !important;
     top: 35%;
-    left: 25px;
-    right: 25px;
+    left: 8px;
+    right: 8px;
     padding: 16px !important;
 }

@@ -8,7 +8,6 @@ class Banner extends Component {
   render() {
     return (
       <div className="banner">
-        <div className="overlay" />
         <Image className="logo" circular={true} source={logoMuncipal} />
       </div>
     );
