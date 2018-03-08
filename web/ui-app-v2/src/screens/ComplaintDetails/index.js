@@ -9,10 +9,10 @@ import "./index.css";
 class ComplaintDetails extends Component {
   state = {
     status: {
-      status: "ASSIGNED",
-      message: "JR.INSPECTOR - J KUMAR",
+      // status: "ASSIGNED",
+      // message: "JR.INSPECTOR - J KUMAR",
       bgColor: "#f5a623",
-      // status: "COMPLETED",
+      status: "REJECTED",
       // message: "THANK YOU for your Application!",
       // // message: (
       // //   <div>
@@ -40,6 +40,12 @@ class ComplaintDetails extends Component {
       location: "Sector 32, 1 main, Amritsar",
     },
   };
+
+  componentDidMount()
+  {
+    console.log(this.props.match);
+  }
+
   render() {
     let { status, details, timeLine, comments } = this.state;
     return (

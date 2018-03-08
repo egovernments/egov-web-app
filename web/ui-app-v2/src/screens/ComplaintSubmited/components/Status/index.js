@@ -38,7 +38,7 @@ const StatusMessage = ({ status, message }) => {
       return (
         <div style={{textAlign:"left"}}>
           <Label
-            labelStyle={{ fontWeight: "bold", color: "#484848"}}
+            labelStyle={{ fontWeight: "500", color: "#484848"}}
             label="THANK YOU"
           />{" "}
           <Label label="for your Application!" />
