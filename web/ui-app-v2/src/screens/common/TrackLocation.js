@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import MapLocation from "../../components/MapLocation";
-import RaisedButton from "../../components/Button";
+import Button from "../../components/Button";
 import pinIcon from "../../assets/mapPin.png";
 import _ from "lodash";
 
-class MapDemo extends Component {
+class TrackLocation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,26 +38,28 @@ class MapDemo extends Component {
   }
 
   render() {
+    var _currloc = { lat: parseFloat(this.state.currLoc.lat), lng: parseFloat(this.state.currLoc.lng) };
+    console.log(_currloc);
     return (
       <div>
-        <MapLocation currLoc={this.state.currLoc} styles={styles} setLocation={this.setPickedLocation} icon={pinIcon} />
-        <div style={{ width: "100%" }}>
-          <RaisedButton label={"Close"} style={closeBtn} backgroundColor="#969696" labelColor="#ffffff" />
-          <RaisedButton label={"Pick"} style={pickBtn} primary={true} labelColor="#ffffff" onClick={this.onClickPick} />
+        <MapLocation currLoc={_currloc} styles={styles} setLocation={this.setPickedLocation} icon={pinIcon} hideTerrainBtn={true} />
+        <div style={{ width: "100%", position: "absolute", bottom: 56 }}>
+          <Button className="close" label={"Close"} style={closeBtn} backgroundColor="#969696" labelColor="#ffffff" />
+          <Button className="pick" label={"Pick"} style={pickBtn} primary={true} labelColor="#ffffff" onClick={this.onClickPick} />
         </div>
       </div>
     );
   }
 }
 
-export default MapDemo;
+export default TrackLocation;
 
 const styles = {
   boxSizing: `border-box`,
   border: `1px solid transparent`,
-  width: `65%`,
-  height: `32px`,
-  marginTop: `10px`,
+  width: `91.1%`,
+  height: `45px`,
+  marginTop: `74px`,
   padding: `0 12px`,
   borderRadius: `3px`,
   boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
@@ -68,7 +70,7 @@ const styles = {
 
 const closeBtn = {
   width: "40.6%",
-  // height: "40px",
+  height: "56px",
   backgroundColor: "#969696",
   marginLeft: "5.7%",
   marginRight: "2.8%",
