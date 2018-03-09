@@ -9,24 +9,30 @@ const styles = {
     paddingLeft: "24px",
     fontSize: "14px",
     fontWeight: "normal",
-    color: "#484848",
+    color: "#767676",
+    letterSpacing: "0.3px",
   },
   checkedIconStyle: { fill: "#ffffff", background: "#73b332", borderRadius: "50%" },
-  textareaStyle: { border: " 0.5px solid #e6e6e6", backgroundColor: "#ffffff", paddingLeft: "5px", height: "106px" },
-  hintStyle: { color: "#969696", fontSize: "14px", top: "10px", left: "5px", bottom: "0px" },
+  unCheckedIconStyle: { fill: "#e0e0e0", background: "#e0e0e0", borderRadius: "50%" },
+  textareaStyle: { border: "0.5px solid #e6e6e6", backgroundColor: "#ffffff", paddingLeft: "5px", height: "106px" },
+  hintStyle: {
+    color: "#767676",
+    fontSize: "14px",
+    fontWeight: "normal",
+    top: "10px",
+    left: "5px",
+    lineHeight: "20px",
+    letterSpacing: "0.3px",
+  },
+
 };
 class ReOpenComplaint extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      backgroundColor: "green",
-    };
-  }
   options = [
     { value: "Complaint has not Resolved", label: "Complaint has not Resolved" },
     { value: "Complaint has been wrongly Rejected", label: "Complaint has been wrongly Rejected" },
     { value: "Other", label: "Other" },
   ];
+
   handleChange = event => {
     this.options.forEach(option => {
       if (option.value == event.target.value) {
@@ -45,16 +51,19 @@ class ReOpenComplaint extends Component {
     //console.log("changed");
   };
   render() {
+
     this.options.forEach(option => {
       option.style = {
-        fontSize: "14px",
-        fontWeight: "bold",
         paddingBottom: "12px",
-        color: "#484848",
         paddingLeft: "24px",
         height: "48px",
         paddingTop: "15px",
         lineHeight: "normal",
+      };
+      option.labelStyle = {
+        fontSize: "14px",
+        fontWeight: "500",
+        color: "#484848",
         letterSpacing: "0.3px",
       };
     });
@@ -68,6 +77,7 @@ class ReOpenComplaint extends Component {
             checkedIcon={<Check style={styles.checkedIconStyle} />}
             options={this.options}
             handleChange={this.handleChange}
+            iconStyle={styles.unCheckedIconStyle}
           />
         </div>
 
@@ -75,7 +85,7 @@ class ReOpenComplaint extends Component {
           <TextArea
             id="reopencomplaint-comment-field"
             hintText="Write your comments..."
-            rows={5}
+            rows={4}
             style={styles.textareaStyle}
             hintStyle={styles.hintStyle}
             onChange={this.handleCommentChange}

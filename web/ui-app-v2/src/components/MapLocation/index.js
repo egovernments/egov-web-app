@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
+import Icon from "../Icon";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
@@ -11,7 +12,7 @@ const MapLocation = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div className="map container" />,
+    containerElement: <div className="map-container" />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 12.972442, lng: 77.580643 },
   }),
@@ -75,6 +76,9 @@ const MapLocation = compose(
   withGoogleMap
 )((props) => (
   <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged} gestureHandling={"greedy"}>
+    <div className="myLoc">
+      <Icon id="my-location" style={{ backgroundColor: "gray" }} action="maps" name={"my-location"} onClick={props.getMyLoc} />
+    </div>
     <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}

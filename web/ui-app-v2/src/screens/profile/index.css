@@ -16,6 +16,10 @@
 
 .profileBtn {
   height: 48px;
+  position: fixed;
+  bottom: 65px;
+  padding: 0 8px;
+  box-shadow: none !important;
 }
 
 .profile-form-field > label {
