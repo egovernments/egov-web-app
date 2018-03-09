@@ -13,3 +13,9 @@
   right: 0;
   padding: 0px !important;
 }
+
+.myLoc {
+  position: absolute;
+  bottom: 165px;
+  right: 5px;
+}
