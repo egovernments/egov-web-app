@@ -16,6 +16,38 @@ class MyComplaints extends Component {
       {
         header: "Potholes",
         address: "#18/2A, Ambalipura village, Bellandur Gate",
+        status: "REJECTED",
+        images: [
+          {
+            source: Potholes_1,
+          },
+          {
+            source: Potholes_2,
+          },
+          {
+            source: Potholes_3,
+          },
+        ],
+      },
+      {
+        header: "Potholes",
+        address: "#18/2A, Ambalipura village, Bellandur Gate",
+        status: "ASSIGNED",
+        images: [
+          {
+            source: Potholes_1,
+          },
+          {
+            source: Potholes_2,
+          },
+          {
+            source: Potholes_3,
+          },
+        ],
+      },
+      {
+        header: "Potholes",
+        address: "#18/2A, Ambalipura village, Bellandur Gate",
         status: "OPEN",
         images: [
           {

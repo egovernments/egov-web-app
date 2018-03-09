@@ -3,6 +3,7 @@ import { Card, Label, Icon } from "../../../../components";
 import { Image } from "../../../../components";
 import complaintImage from "../../../../assets/people.jpg";
 import FlatButton from "material-ui/FlatButton";
+import {withRouter} from "react-router-dom";
 import "./index.css";
 
 const imageStyles = {
@@ -29,9 +30,9 @@ const getStatusAndChangeColor = (status) => {
   return style;
 };
 
-const Complaint = ({ index, item }) => {
+const Complaint = ({ index, item,history }) => {
   return (
-    <div id={"complaint-" + index} className="complaints-card-main-cont">
+    <div id={"complaint-" + index} className="complaints-card-main-cont" >
       <Card
         card={{ padding: 0 }}
         className="complaint-card"
@@ -40,6 +41,13 @@ const Complaint = ({ index, item }) => {
             <div className="complaint-header-cont">
               <span className="complaint-header text-bold dark-color">{item.header}</span>
               <FlatButton
+                onClick={(e)=>{
+                  if (item.status=="ASSIGNED") {
+                    history.push("/complaint-details?status=assigned")
+                  } else if (item.status=="REJECTED") {
+                    history.push("/complaint-details?status=rejected")
+                  }
+                }}
                 className="complaint-track-button"
                 backgroundColor="transparent"
                 label={"Track"}
@@ -84,4 +92,4 @@ const Complaint = ({ index, item }) => {
   );
 };
 
-export default Complaint;
+export default withRouter(Complaint);
