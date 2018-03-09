@@ -5,7 +5,15 @@ const RadioButtonUi = ({ options, name, defaultValue, handleChange, style = {}, 
   const renderRadioButtons = () => {
     return options.map((option, index) => {
       return (
-        <RadioButton key={index} value={option.value} label={option.label} style={option.style} iconStyle={iconStyle} checkedIcon={checkedIcon} />
+        <RadioButton
+          key={index}
+          value={option.value}
+          label={option.label}
+          style={option.style}
+          labelStyle={option.labelStyle}
+          iconStyle={iconStyle}
+          checkedIcon={checkedIcon}
+        />
       );
     });
   };
