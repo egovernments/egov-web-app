@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Button, Icon, TextField, DropDown } from "../../components";
-import ProfileSection from "../../components/ProfileSection";
+import { ProfileSection, Button, Icon, TextField, DropDown } from "../../components";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
 
@@ -57,12 +56,12 @@ class Profile extends Component {
   onClickAddPic = () => {
     //TO UPLOAD PIC- using phone native feature.
   };
-  handleNameChange = (event) => {
+  handleNameChange = event => {
     this.setState({
       name: event.target.value,
     });
   };
-  handleMailChange = (event) => {
+  handleMailChange = event => {
     this.setState({
       emailId: event.target.value,
     });
@@ -72,7 +71,7 @@ class Profile extends Component {
       city: value,
     });
   };
-  onSaveClick = (event) => {
+  onSaveClick = event => {
     //To save/send the data from the Form
   };
   render() {
