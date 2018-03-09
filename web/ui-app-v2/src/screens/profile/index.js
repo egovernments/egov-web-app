@@ -126,6 +126,8 @@ class Profile extends Component {
             style={profileStyles.formFieldStyle}
             onChange={this.onDDChange}
           />
+        </form>
+        <div className="profileBtnWrapper">
           <Button
             className="profileBtn"
             primary={true}
@@ -134,7 +136,7 @@ class Profile extends Component {
             onClick={this.onSaveClick}
             style={{ marginTop: 53, height: 48 }}
           />
-        </form>
+        </div>
       </div>
     );
   }
