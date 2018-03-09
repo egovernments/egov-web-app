@@ -3,6 +3,7 @@ import Status from "./components/Status";
 import Details from "./components/Details";
 import ComplaintTimeLine from "./components/ComplaintTimeLine";
 import Comments from "./components/Comments";
+import {withRouter} from "react-router-dom";
 
 import "./index.css";
 
@@ -22,7 +23,7 @@ class ComplaintDetails extends Component {
       // bgColor: "#7ed321"
     },
     details: {
-      status: "Assigned",
+      status: "Rejected",
       complaint: "Overflow of bins",
       applicationNo: "1234566",
       description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
@@ -43,7 +44,23 @@ class ComplaintDetails extends Component {
 
   componentDidMount()
   {
-    console.log(this.props.match);
+    let {details}=this.state;
+    console.log(this.props);
+    if (this.props.location && this.props.location.search.split("=")[1]=="assigned") {
+      this.setState({
+        status:
+           {
+            status: "ASSIGNED",
+            message: "JR.INSPECTOR - J KUMAR",
+            bgColor: "#f5a623"
+          },
+        details:{
+          ...details,
+          status:"Assigned"
+        }
+
+    })
+    }
   }
 
   render() {
@@ -52,11 +69,11 @@ class ComplaintDetails extends Component {
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeroPadding">
         <Status {...status} />
         <Details {...details} />
-        <ComplaintTimeLine timeLine={timeLine} />
+        <ComplaintTimeLine status={status.status} timeLine={timeLine} />
         <Comments comments={comments} />
       </div>
     );
   }
 }
 
-export default ComplaintDetails;
+export default withRouter(ComplaintDetails);

@@ -33,6 +33,7 @@ const items = [
 
 class Details extends Component {
   render() {
+    let {status}=this.props;
     return (
       <div>
         <Card
@@ -47,7 +48,7 @@ class Details extends Component {
             <div key={10} className="container complaint-detail-full-width">
               <div className="complaint-detail-detail-section-status row">
                 <Label className="col-xs-7 status-color" label="STATUS" />
-                <Label className="col-xs-5 status-result-color" labelStyle={{ color: "inherit" }} label="Assigned" />
+                <Label className="col-xs-5 status-result-color" labelStyle={{ color: "inherit" }} label={status} />
               </div>
               <br />
               <div className="complaint-detail-detail-section-status row">
