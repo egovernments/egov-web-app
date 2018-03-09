@@ -52,6 +52,195 @@ const iconStyle = {
 
 class ComplaintTimeLine extends Component {
   render() {
+    let {status}=this.props;
+    let steps=[
+      {
+        style: {
+          marginTop: "-10px",
+        },
+        props: {
+          active: true,
+        },
+        labelProps: {
+          icon: (
+            <div className="wrapper stepLabelAlignment">
+              <div className="left leftOverRide">
+                <Label>
+                  <div className="dark-color">JAN 21</div>
+                </Label>
+              </div>
+              <div className="right rightOverRide">
+                <SubmittedIcon style={cameraStyle} color={"#FFFFFF"} />
+              </div>
+            </div>
+          ),
+        },
+        // labelChildren: "Select campaign settings 1",
+        contentProps: {
+          style: {
+            marginTop: "-50px",
+          },
+        },
+        contentChildren: (
+          <div className="complaint-timeline-content-section">
+            <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
+            <Label label="BBMP" />
+          </div>
+        ),
+      },
+      {
+        props: {
+          active: true,
+        },
+        labelProps: {
+          icon: (
+            <div className="wrapper stepLabelAlignment">
+              <div className="left leftOverRide">
+                <Label>
+                  <div className="dark-color">JAN 25</div>
+                </Label>
+              </div>
+              <div className="right rightOverRide">
+                <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
+              </div>
+            </div>
+          ),
+        },
+        contentProps: {
+          style: {
+            marginTop: "-50px",
+          },
+        },
+        // labelChildren: "Select campaign settings 1",
+        contentChildren: (
+          <div className="complaint-timeline-content-section">
+            <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
+            <Label label="Department of Health & Sanitation" />
+            <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
+            <Label label="is looking into your problem" />
+            <div className="complaint-detail-detail-section-location-section">
+              <Call style={iconStyle} color={"#417505"} />
+              <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
+            </div>
+          </div>
+        ),
+      },
+      {
+        props: {
+          active: true,
+        },
+        labelProps: {
+          icon: (
+            <div className="wrapper stepLabelAlignment">
+              <div className="left leftOverRide">
+                <Label>
+                  <div className="dark-color">JAN 26</div>
+                </Label>
+              </div>
+              <div className="right rightOverRide">
+                <RejectedIcon style={galleryStyleTwo} color={"#FFFFFF"} />
+              </div>
+            </div>
+          ),
+        },
+        contentProps: {
+          style: {
+            marginTop: "-50px",
+          },
+        },
+        // labelChildren: "Select campaign settings 1",
+        contentChildren: (
+          <div className="complaint-timeline-content-section" style={{ border: "none" }}>
+            <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
+            <Label label="Your Complaint is not valid." />
+            <div
+              className="complaint-details-timline-reopen-button"
+              onClick={(e) => {
+                console.log("clicked");
+              }}
+            >
+              RE-OPEN
+            </div>
+          </div>
+        ),
+      },
+    ];
+    console.log(status);
+    if (status==="ASSIGNED") {
+      steps=[
+        {
+          style: {
+            marginTop: "-10px",
+          },
+          props: {
+            active: true,
+          },
+          labelProps: {
+            icon: (
+              <div className="wrapper stepLabelAlignment">
+                <div className="left leftOverRide">
+                  <Label>
+                    <div className="dark-color">JAN 21</div>
+                  </Label>
+                </div>
+                <div className="right rightOverRide">
+                  <SubmittedIcon style={cameraStyle} color={"#FFFFFF"} />
+                </div>
+              </div>
+            ),
+          },
+          // labelChildren: "Select campaign settings 1",
+          contentProps: {
+            style: {
+              marginTop: "-50px",
+            },
+          },
+          contentChildren: (
+            <div className="complaint-timeline-content-section">
+              <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
+              <Label label="BBMP" />
+            </div>
+          ),
+        },
+        {
+          props: {
+            active: true,
+          },
+          labelProps: {
+            icon: (
+              <div className="wrapper stepLabelAlignment">
+                <div className="left leftOverRide">
+                  <Label>
+                    <div className="dark-color">JAN 25</div>
+                  </Label>
+                </div>
+                <div className="right rightOverRide">
+                  <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
+                </div>
+              </div>
+            ),
+          },
+          contentProps: {
+            style: {
+              marginTop: "-50px",
+            },
+          },
+          // labelChildren: "Select campaign settings 1",
+          contentChildren: (
+            <div className="complaint-timeline-content-section" style={{border:"none"}}>
+              <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
+              <Label label="Department of Health & Sanitation" />
+              <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
+              <Label label="is looking into your problem" />
+              <div className="complaint-detail-detail-section-location-section">
+                <Call style={iconStyle} color={"#417505"} />
+                <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
+              </div>
+            </div>
+          ),
+        }
+      ]
+    }
     return (
       <div>
         <Card
@@ -71,118 +260,7 @@ class ComplaintTimeLine extends Component {
                   stepperProps={{
                     orientation: "vertical",
                   }}
-                  steps={[
-                    {
-                      style: {
-                        marginTop: "-10px",
-                      },
-                      props: {
-                        active: true,
-                      },
-                      labelProps: {
-                        icon: (
-                          <div className="wrapper stepLabelAlignment">
-                            <div className="left leftOverRide">
-                              <Label>
-                                <div className="dark-color">JAN 21</div>
-                              </Label>
-                            </div>
-                            <div className="right rightOverRide">
-                              <SubmittedIcon style={cameraStyle} color={"#FFFFFF"} />
-                            </div>
-                          </div>
-                        ),
-                      },
-                      // labelChildren: "Select campaign settings 1",
-                      contentProps: {
-                        style: {
-                          marginTop: "-50px",
-                        },
-                      },
-                      contentChildren: (
-                        <div className="complaint-timeline-content-section">
-                          <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
-                          <Label label="BBMP" />
-                        </div>
-                      ),
-                    },
-                    {
-                      props: {
-                        active: true,
-                      },
-                      labelProps: {
-                        icon: (
-                          <div className="wrapper stepLabelAlignment">
-                            <div className="left leftOverRide">
-                              <Label>
-                                <div className="dark-color">JAN 25</div>
-                              </Label>
-                            </div>
-                            <div className="right rightOverRide">
-                              <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
-                            </div>
-                          </div>
-                        ),
-                      },
-                      contentProps: {
-                        style: {
-                          marginTop: "-50px",
-                        },
-                      },
-                      // labelChildren: "Select campaign settings 1",
-                      contentChildren: (
-                        <div className="complaint-timeline-content-section">
-                          <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
-                          <Label label="Department of Health & Sanitation" />
-                          <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
-                          <Label label="is looking into your problem" />
-                          <div className="complaint-detail-detail-section-location-section">
-                            <Call style={iconStyle} color={"#417505"} />
-                            <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
-                          </div>
-                        </div>
-                      ),
-                    },
-                    {
-                      props: {
-                        active: true,
-                      },
-                      labelProps: {
-                        icon: (
-                          <div className="wrapper stepLabelAlignment">
-                            <div className="left leftOverRide">
-                              <Label>
-                                <div className="dark-color">JAN 26</div>
-                              </Label>
-                            </div>
-                            <div className="right rightOverRide">
-                              <RejectedIcon style={galleryStyleTwo} color={"#FFFFFF"} />
-                            </div>
-                          </div>
-                        ),
-                      },
-                      contentProps: {
-                        style: {
-                          marginTop: "-50px",
-                        },
-                      },
-                      // labelChildren: "Select campaign settings 1",
-                      contentChildren: (
-                        <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-                          <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-                          <Label label="Your Complaint is not valid." />
-                          <div
-                            className="complaint-details-timline-reopen-button"
-                            onClick={(e) => {
-                              console.log("clicked");
-                            }}
-                          >
-                            RE-OPEN
-                          </div>
-                        </div>
-                      ),
-                    },
-                  ]}
+                  steps={steps}
                 />
               </div>
             </div>
