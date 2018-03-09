@@ -24,25 +24,31 @@ const styles = {
     lineHeight: "20px",
     letterSpacing: "0.3px",
   },
-
+  radioButtonItemStyle: {
+    paddingBottom: "12px",
+    paddingLeft: "24px",
+    height: "48px",
+    paddingTop: "15px",
+  },
+  selectedButtonStyle: { borderLeft: "1.5px solid #f5a623", backgroundColor: "#f8f8f8" },
+  radioButtonLabelStyle: {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#484848",
+    letterSpacing: "0.3px",
+  },
 };
 class ReOpenComplaint extends Component {
+  state = {
+    valueSelected: "",
+  };
   options = [
     { value: "Complaint has not Resolved", label: "Complaint has not Resolved" },
     { value: "Complaint has been wrongly Rejected", label: "Complaint has been wrongly Rejected" },
     { value: "Other", label: "Other" },
   ];
-
-  handleChange = event => {
-    this.options.forEach(option => {
-      if (option.value == event.target.value) {
-        option.style.backgroundColor = "#f8f8f8";
-        option.style.borderLeft = "1.5px solid #f5a623";
-      } else {
-        option.style.backgroundColor = "#ffffff";
-        option.style.borderLeft = "none";
-      }
-    });
+  handleChange = (event, value) => {
+    this.setState({ valueSelected: value });
   };
   handleComplaintSubmit = () => {
     //console.log("submitted");
@@ -51,33 +57,21 @@ class ReOpenComplaint extends Component {
     //console.log("changed");
   };
   render() {
-
-    this.options.forEach(option => {
-      option.style = {
-        paddingBottom: "12px",
-        paddingLeft: "24px",
-        height: "48px",
-        paddingTop: "15px",
-        lineHeight: "normal",
-      };
-      option.labelStyle = {
-        fontSize: "14px",
-        fontWeight: "500",
-        color: "#484848",
-        letterSpacing: "0.3px",
-      };
-    });
+    const { valueSelected } = this.state;
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
         <div className="reopencomplaint-field">
           <Label label="Why do you want to Re-Open your Complaint?" labelStyle={styles.labelStyle} />
           <RadioButton
-            id="reopencomplaint-radio"
             name="reopencomplaint-radio"
+            valueSelected={valueSelected}
             checkedIcon={<Check style={styles.checkedIconStyle} />}
             options={this.options}
             handleChange={this.handleChange}
             iconStyle={styles.unCheckedIconStyle}
+            radioButtonItemStyle={styles.radioButtonItemStyle}
+            labelStyle={styles.radioButtonLabelStyle}
+            selectedStyle={styles.selectedButtonStyle}
           />
         </div>
 
