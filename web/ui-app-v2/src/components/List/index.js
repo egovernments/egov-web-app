@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List as MaterialUiList, ListItem } from "material-ui/List";
-import Avatar from "material-ui/Avatar";
 
 const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
-  const renderListItems = (items) => {
+  const renderListItems = items => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 

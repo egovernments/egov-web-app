@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Image, TextField } from "../../../../components";
 import Profile from "material-ui/svg-icons/social/person";
 import Send from "material-ui/svg-icons/content/send";
 import MaterialUITextField from "material-ui/TextField";

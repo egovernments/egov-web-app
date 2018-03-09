@@ -1,15 +1,13 @@
-import React, { Component } from "react";
-import { Card, Label, Icon } from "../../../../components";
-import { Image } from "../../../../components";
-import complaintImage from "../../../../assets/people.jpg";
+import React from "react";
+import { Image, Card, Icon } from "../../../../components";
 import FlatButton from "material-ui/FlatButton";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./index.css";
 
 const imageStyles = {
   minHeight: "106px",
 };
-const getStatusAndChangeColor = (status) => {
+const getStatusAndChangeColor = status => {
   let style = {};
   switch (status) {
     case "OPEN":
@@ -30,9 +28,9 @@ const getStatusAndChangeColor = (status) => {
   return style;
 };
 
-const Complaint = ({ index, item,history }) => {
+const Complaint = ({ index, item, history }) => {
   return (
-    <div id={"complaint-" + index} className="complaints-card-main-cont" >
+    <div id={"complaint-" + index} className="complaints-card-main-cont">
       <Card
         card={{ padding: 0 }}
         className="complaint-card"
@@ -41,11 +39,11 @@ const Complaint = ({ index, item,history }) => {
             <div className="complaint-header-cont">
               <span className="complaint-header text-bold dark-color">{item.header}</span>
               <FlatButton
-                onClick={(e)=>{
-                  if (item.status=="ASSIGNED") {
-                    history.push("/complaint-details?status=assigned")
-                  } else if (item.status=="REJECTED") {
-                    history.push("/complaint-details?status=rejected")
+                onClick={e => {
+                  if (item.status == "ASSIGNED") {
+                    history.push("/complaint-details?status=assigned");
+                  } else if (item.status == "REJECTED") {
+                    history.push("/complaint-details?status=rejected");
                   }
                 }}
                 className="complaint-track-button"

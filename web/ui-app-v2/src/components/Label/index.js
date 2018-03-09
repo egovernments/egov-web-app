@@ -12,13 +12,12 @@ const labelText = (label, labelStyle, labelClassName) => {
   );
 };
 
-const labelIcon = (icon) => {
+const labelIcon = icon => {
   return icon ? <div className="label-icon">{icon}</div> : "";
 };
 
 const Label = ({ className = "", label, children, iconPosition = "before", icon, color, bold = false, containerStyle = {}, labelStyle = {} }) => {
-  let labelPadding,
-    additionalStyles = {};
+  let additionalStyles = {};
 
   if (icon) {
     additionalStyles.padding = "0px 15px";

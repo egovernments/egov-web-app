@@ -2,16 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import RaisedButton from "material-ui/RaisedButton";
 
-const buttonStyle = {
-  // height: "53px",
-  // lineHeight: "53px",
-};
-
-const Button = (props) => {
-  let { label, icon = {},className, onClick, backgroundColor, labelColor, fullWidth, disabled, hide, primary = false, style = {}, id }=props;
+const Button = props => {
+  let { label, icon = {}, className, onClick, backgroundColor, labelColor, fullWidth, disabled, primary = false, style = {}, id } = props;
   return (
     <RaisedButton
-      style={Object.assign({}, buttonStyle, style)}
+      className={className}
+      style={style}
       disabled={disabled}
       fullWidth={fullWidth}
       primary={primary}

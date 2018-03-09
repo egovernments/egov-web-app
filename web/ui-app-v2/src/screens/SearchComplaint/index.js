@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Autosuggest from "../../components/Autosuggest";
 import List from "../../components/List";
 import ActionHome from "material-ui/svg-icons/action/home";
-import { red500, yellow500, blue500 } from "material-ui/styles/colors";
+import { red500 } from "material-ui/styles/colors";
 
 export default class SearchComplaint extends Component {
   state = { results: [] };
@@ -32,7 +32,7 @@ export default class SearchComplaint extends Component {
     "Drains & Sewers": [{ id: 7, text: "VVS Laxman" }, { id: 8, text: "Yousuf Youhana" }, { id: 9, text: "Kevin Pietersen" }],
   };
 
-  generateDataSource = (dataSource) => {
+  generateDataSource = dataSource => {
     return Object.keys(dataSource).reduce((source, key) => {
       return source.concat(dataSource[key]);
     }, []);
@@ -51,8 +51,8 @@ export default class SearchComplaint extends Component {
     });
   };
 
-  renderListWithHeader = (dataSource) => {
-    return Object.keys(dataSource).map((key) => {
+  renderListWithHeader = dataSource => {
+    return Object.keys(dataSource).map(key => {
       const resultsForDisplay = this.prepareResultsForDisplay(dataSource[key]);
       return (
         <div>

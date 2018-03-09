@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
-import Router from "./router";
 import { BottomNavigation, Icon } from "./components";
 
 import SvgIcon from "material-ui/SvgIcon";

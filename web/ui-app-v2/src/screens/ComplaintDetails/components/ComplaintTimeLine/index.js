@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Card, TimeLine, List, Label, Button } from "../../../../components";
+import { Card, TimeLine, List, Label } from "../../../../components";
 import SubmittedIcon from "material-ui/svg-icons/content/send";
 import TimeLineIcon from "material-ui/svg-icons/action/timeline";
 import ReAssignedIcon from "material-ui/svg-icons/action/assignment-turned-in";
 import RejectedIcon from "material-ui/svg-icons/navigation/close";
-import Location from "material-ui/svg-icons/maps/place";
 import Call from "material-ui/svg-icons/communication/call";
 import "./index.css";
-// header={{
-//   title:<div><ContentInbox/>COMPLAINT TIMELINE</div>
-// }}
 
 const cameraStyle = {
   marginRight: 24,
@@ -52,8 +48,8 @@ const iconStyle = {
 
 class ComplaintTimeLine extends Component {
   render() {
-    let {status}=this.props;
-    let steps=[
+    let { status } = this.props;
+    let steps = [
       {
         style: {
           marginTop: "-10px",
@@ -155,7 +151,7 @@ class ComplaintTimeLine extends Component {
             <Label label="Your Complaint is not valid." />
             <div
               className="complaint-details-timline-reopen-button"
-              onClick={(e) => {
+              onClick={e => {
                 console.log("clicked");
               }}
             >
@@ -166,8 +162,8 @@ class ComplaintTimeLine extends Component {
       },
     ];
     console.log(status);
-    if (status==="ASSIGNED") {
-      steps=[
+    if (status === "ASSIGNED") {
+      steps = [
         {
           style: {
             marginTop: "-10px",
@@ -227,7 +223,7 @@ class ComplaintTimeLine extends Component {
           },
           // labelChildren: "Select campaign settings 1",
           contentChildren: (
-            <div className="complaint-timeline-content-section" style={{border:"none"}}>
+            <div className="complaint-timeline-content-section" style={{ border: "none" }}>
               <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
               <Label label="Department of Health & Sanitation" />
               <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
@@ -238,8 +234,8 @@ class ComplaintTimeLine extends Component {
               </div>
             </div>
           ),
-        }
-      ]
+        },
+      ];
     }
     return (
       <div>
