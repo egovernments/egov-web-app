@@ -17,6 +17,7 @@ const defaultStyle = {
   height: "auto",
   lineHeight: "30px",
   backgroundColor: "transparent",
+  padding: "0 14px",
 };
 
 const defaultLabelStyle = {
@@ -25,7 +26,9 @@ const defaultLabelStyle = {
   color: "#484848",
   fontSize: "14px",
   letterSpacing: "0.3px",
-  padding: "0 14px",
+  padding: 0,
+  display: "inline-block",
+  lineHeight: 1,
 };
 
 const ButtonToggleComponent = ({ items, onClick, selected }) => {

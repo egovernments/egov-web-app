@@ -9,10 +9,6 @@ import "./index.css";
 
 const selectedLabelStyle = {
   color: "#ffffff",
-  fontSize: "14.5px",
-  letterSpacing: "0.7px",
-  padding: "0 14px",
-  fontWeight: "900",
 };
 
 const selectedStyle = {
@@ -27,6 +23,7 @@ const defaultStyle = {
   height: "44px",
   lineHeight: "44px",
   width: "28.48%",
+  padding: "0 16px",
 };
 
 const defaultLabelStyle = {
@@ -34,6 +31,7 @@ const defaultLabelStyle = {
   fontWeight: "500",
   color: "#484848",
   verticalAlign: "initial",
+  padding: 0,
 };
 
 class LanguageSelection extends Component {
@@ -54,7 +52,7 @@ class LanguageSelection extends Component {
     ],
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
 
