@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import RadioButton from "../../components/RadioButton";
-import TextArea from "../../components/TextArea";
-import { Label, Icon, Button } from "../../components";
-import ProfileSection from "../../components/ProfileSection";
+import { ProfileSection, TextArea, Label, Icon, Button } from "../../components";
 import Check from "material-ui/svg-icons/navigation/check";
 import "./index.css";
 const styles = {
@@ -14,7 +12,7 @@ const styles = {
     color: "#484848",
   },
   checkedIconStyle: { fill: "#ffffff", background: "#73b332", borderRadius: "50%" },
-  textareaStyle: { border: " 0.5px solid #e6e6e6", backgroundColor: "#ffffff", height: "106px" },
+  textareaStyle: { border: " 0.5px solid #e6e6e6", backgroundColor: "#ffffff",  paddingLeft : "5px", height: "106px" },
   hintStyle: { color: "#969696", fontSize: "14px", top: "10px", left: "5px", bottom: "0px" },
 };
 class ReOpenComplaint extends Component {
@@ -29,8 +27,8 @@ class ReOpenComplaint extends Component {
     { value: "Complaint has been wrongly Rejected", label: "Complaint has been wrongly Rejected" },
     { value: "Other", label: "Other" },
   ];
-  handleChange = (event) => {
-    this.options.map((option) => {
+  handleChange = event => {
+    this.options.map(option => {
       if (option.value == event.target.value) {
         option.style.backgroundColor = "#f8f8f8";
         option.style.borderLeft = "1.5px solid #f5a623";
@@ -47,7 +45,7 @@ class ReOpenComplaint extends Component {
     //console.log("changed");
   };
   render() {
-    this.options.map((option) => {
+    this.options.map(option => {
       option.style = {
         fontSize: "14px",
         fontWeight: "bold",
