@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Card, List, Image, Label, Icon } from "../../../../components";
+import { Card, List, Label, Icon } from "../../../../components";
 import WriteComment from "../WriteComment";
-import ContentInbox from "material-ui/svg-icons/content/inbox";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../assets/images/faceOne.jpg";
 import faceTwo from "../../../../assets/images/faceTwo.jpg";
-
 import "./index.css";
 
 const items = [
@@ -65,7 +63,7 @@ class Comments extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px"
+              padding: "0px",
             },
           }}
           textChildren={

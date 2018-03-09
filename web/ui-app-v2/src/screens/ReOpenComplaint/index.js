@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import RadioButton from "../../components/RadioButton";
-import { ProfileSection, TextArea, Label, Icon, Button } from "../../components";
+import { TextArea, Label, Button } from "../../components";
 import Check from "material-ui/svg-icons/navigation/check";
 import "./index.css";
 const styles = {

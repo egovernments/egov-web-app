@@ -12,7 +12,6 @@ class LocationDetails extends Component {
     ],
   };
   render() {
-    let { items, value } = this.state;
     return (
       <Card
         header={this.state.complaints.header}
