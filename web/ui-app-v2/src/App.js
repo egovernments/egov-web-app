@@ -81,9 +81,7 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
+  componentDidMount() {}
 
   render() {
     const { moduleName, moduleAction, Component } = this.props;

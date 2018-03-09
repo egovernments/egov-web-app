@@ -25,6 +25,9 @@ const theme = {
   floatingActionButton: {
     color: "#f58720",
   },
+  bottomNavigation: {
+    backgroundColor: "#ffffff",
+  },
 };
 
 export default theme;
