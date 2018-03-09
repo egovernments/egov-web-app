@@ -54,12 +54,17 @@ class LanguageSelection extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 
+  onLanguageSelect = () => {
+    this.props.history.push("/login");
+  };
+
   render() {
-    let { items, value } = this.state;
+    const { items, value } = this.state;
+    const { onLanguageSelect, onClick } = this;
 
     return (
       <UserScreensWrapper>
@@ -72,7 +77,7 @@ class LanguageSelection extends Component {
                 <div className="button-toggle-container">
                   <ButtonGroup
                     items={items}
-                    onClick={this.onClick}
+                    onClick={onClick}
                     selected={value}
                     defaultStyle={defaultStyle}
                     defaultLabelStyle={defaultLabelStyle}
@@ -82,7 +87,7 @@ class LanguageSelection extends Component {
                   />
                 </div>
                 <div className="button-container">
-                  <Button id="continue-action" primary={true} label="Continue" fullWidth={true} />
+                  <Button id="continue-action" onClick={onLanguageSelect} primary={true} label="Continue" fullWidth={true} />
                 </div>
               </form>
             </div>

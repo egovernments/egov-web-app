@@ -9,11 +9,9 @@ const errorStyle = {
 
 const hintStyle = {
   fontSize: "14px",
-  color: "#969696",
 };
 const floatingLabelStyle = {
   top: 18,
-  color: "#969696",
   fontSize: "14px",
 };
 
