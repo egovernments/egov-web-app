@@ -17,6 +17,10 @@ const theme = {
   },
   textField: {
     backgroundColor: "#f2f2f2",
+    textColor: "#464646",
+    hintColor: "#969696",
+    floatingLabelColor: "#969696",
+    borderColor: "#e6e6e6",
   },
   floatingActionButton: {
     color: "#f58720",

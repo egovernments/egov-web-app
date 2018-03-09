@@ -1,8 +1,7 @@
 .textfield {
-  border: 1px solid #e6e6e6 !important;
-  padding-left: 10px !important;
+  border: 1px solid #e6e6e6;
+  padding-left: 10px;
   height: 56px !important;
-  margin-bottom: 10px !important;
-  box-sizing: border-box !important;
-  color : #464646 !important;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
