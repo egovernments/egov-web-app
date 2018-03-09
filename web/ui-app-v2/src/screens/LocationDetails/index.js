@@ -1,27 +1,18 @@
 import React, { Component } from "react";
-import Card from "../../components/Card";
+import Card from "./components/ComplaintType";
 import "./index.css";
 
 class LocationDetails extends Component {
   state = {
     complaints: [
       {
-        header: "Complaint Type",
+        children: "Complaint Type",
         text: "Accumulation of Litter",
       },
     ],
   };
   render() {
-    return (
-      <Card
-        header={this.state.complaints.header}
-        textChildren={
-          <div>
-            <span>{this.state.complaints.text} </span>
-          </div>
-        }
-      />
-    );
+    return <Card complaints={this.state.complaints} />;
   }
 }
 
