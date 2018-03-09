@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
+import "./index.css";
 
-const styles = {
-  bottomNavigation: { position: "fixed", bottom: "0", width: "100%", backgroundColor: "#ffffff" },
-};
-
-const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
+const BottomNavigation = ({ style = {}, options, handleChange, selectedIndex }) => {
   const renderNavigationOptions = () => {
     return options.map((option, index) => (
       <BottomNavigationItem
@@ -21,7 +18,7 @@ const BottomNavigation = ({ style, options, handleChange, selectedIndex }) => {
   };
 
   return (
-    <MaterialUiBottomNavigation style={styles.bottomNavigation} selectedIndex={selectedIndex}>
+    <MaterialUiBottomNavigation className="bottom-navigation" style={style} selectedIndex={selectedIndex}>
       {renderNavigationOptions()}
     </MaterialUiBottomNavigation>
   );
@@ -33,7 +30,7 @@ BottomNavigation.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      icon: PropTypes.any,
+      icon: PropTypes.node,
       route: PropTypes.string.isRequired,
     })
   ).isRequired,
