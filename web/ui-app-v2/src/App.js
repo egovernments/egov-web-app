@@ -5,13 +5,9 @@ import PropTypes from "prop-types";
 
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
 import Router from "./router";
-import BottomNavigation from "./components/BottomNavigation";
+import { BottomNavigation, Icon } from "./components";
 
 import SvgIcon from "material-ui/SvgIcon";
-
-import ActionHome from "material-ui/svg-icons/action/home";
-import Info from "material-ui/svg-icons/action/info";
-import Complaint from "material-ui/svg-icons/alert/warning";
 
 // place it in a different folder
 const RupeeIcon = props => (
@@ -23,12 +19,12 @@ const RupeeIcon = props => (
 const options = [
   {
     label: "Home",
-    icon: <ActionHome />,
+    icon: <Icon style={{ height: "24px", padding: "0px" }} action="action" name="home" />,
     route: "/",
   },
   {
     label: "Information",
-    icon: <Info />,
+    icon: <Icon style={{ height: "24px", padding: "0px" }} action="action" name="info" />,
     route: "/information",
   },
   {
@@ -38,7 +34,7 @@ const options = [
   },
   {
     label: "Complaints",
-    icon: <Complaint />,
+    icon: <Icon style={{ height: "24px", padding: "0px" }} action="alert" name="warning" />,
     route: "/complaints",
   },
 ];

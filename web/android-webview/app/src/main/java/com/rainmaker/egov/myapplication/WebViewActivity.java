@@ -25,7 +25,7 @@ public class WebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         
-        webView.loadUrl("http://egov-micro-dev.egovernments.org/app/v3/login");
+        webView.loadUrl("http://egov-micro-dev.egovernments.org/app/v3/language-selection");
 
     }
 
