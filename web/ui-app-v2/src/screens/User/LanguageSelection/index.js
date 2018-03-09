@@ -52,7 +52,7 @@ class LanguageSelection extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 

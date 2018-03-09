@@ -151,7 +151,7 @@ class ComplaintTimeLine extends Component {
             <Label label="Your Complaint is not valid." />
             <div
               className="complaint-details-timline-reopen-button"
-              onClick={e => {
+              onClick={(e) => {
                 console.log("clicked");
               }}
             >
