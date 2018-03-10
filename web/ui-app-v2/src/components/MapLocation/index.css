@@ -16,6 +16,10 @@
 
 .myLoc {
   position: absolute;
-  bottom: 165px;
-  right: 5px;
+  bottom: 145px;
+  right: 16px;
+}
+.myLoc svg {
+  height: 55px !important;
+  width: 55px !important;
 }
