@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
-import { Icon } from "../../components";
+import { Icon, ImageModal } from "../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../assets/images/Garbage_2.jpg";
@@ -94,12 +94,23 @@ class MyComplaints extends Component {
         ],
       },
     ],
+    source: "",
   };
+
+  imageOnClick = (source) => {
+    this.setState({ source });
+  };
+
+  onCloseClick = () => {
+    this.setState({ source: "" });
+  };
+
   render() {
-    let { complaints } = this.state;
+    let { complaints, source } = this.state;
     return (
       <div className="complaints-main-container">
-        <Complaints complaints={complaints} />
+        <Complaints complaints={complaints} onClick={this.imageOnClick} />
+        <ImageModal imageSource={source} hide={source ? false : true} onCloseClick={this.onCloseClick} />
         <div className="floating-button-cont">
           <FloatingActionButton className="floating-button">
             <Icon action="content" name="add" />

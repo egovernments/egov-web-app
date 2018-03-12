@@ -28,7 +28,7 @@ const getStatusAndChangeColor = (status) => {
   return style;
 };
 
-const Complaint = ({ index, item, history }) => {
+const Complaint = ({ index, item, history, onClick }) => {
   return (
     <div id={"complaint-" + index} className="complaints-card-main-cont">
       <Card
@@ -81,7 +81,14 @@ const Complaint = ({ index, item, history }) => {
               {item.images.map((image, index) => {
                 return (
                   <div className="complaint-image-wrapper" key={index}>
-                    <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
+                    <Image
+                      style={imageStyles}
+                      className="complaint-image"
+                      width="100%"
+                      height={46}
+                      source={image.source}
+                      onClick={() => onClick(image.source)}
+                    />{" "}
                   </div>
                 );
               })}
