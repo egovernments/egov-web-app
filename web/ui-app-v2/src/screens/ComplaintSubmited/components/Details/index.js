@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { List, Card, Label, Image } from "../../../../components";
-import NewComplaint from "material-ui/svg-icons/notification/sms-failed";
+import { Card, Label } from "../../../../components";
 import "./index.css";
 
 class Details extends Component {
