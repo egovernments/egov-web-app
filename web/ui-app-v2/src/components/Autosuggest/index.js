@@ -8,16 +8,16 @@ export default class AutoSuggest extends Component {
 
   state = { inputValue: "" };
 
-  fetchSuggestions = inputValue => {
+  fetchSuggestions = (inputValue) => {
     inputValue = inputValue.toLowerCase();
 
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
-      return dataSource.filter(result => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
+      return dataSource.filter((result) => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
     }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     const inputValue = e.target.value;
     const suggestions = this.fetchSuggestions(inputValue);
     this.props.callback(suggestions, inputValue);
