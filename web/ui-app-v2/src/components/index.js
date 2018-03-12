@@ -25,6 +25,7 @@ import ButtonGroup from "./ButtonGroup";
 import DropDown from "./DropDown";
 import Icon from "./Icon";
 import InfoTable from "./InfoTable";
+import ImageModal from "./ImageModal";
 
 export {
   Label,
@@ -54,4 +55,5 @@ export {
   DropDown,
   Icon,
   InfoTable,
+  ImageModal,
 };
