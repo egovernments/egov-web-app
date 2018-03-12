@@ -5,7 +5,7 @@ import ActionHome from "material-ui/svg-icons/action/home";
 import { red500 } from "material-ui/styles/colors";
 
 export default class SearchComplaint extends Component {
-  state = { results: [] };
+  state = { results: [], searchTerm: "" };
 
   items = [
     {
@@ -32,14 +32,14 @@ export default class SearchComplaint extends Component {
     "Drains & Sewers": [{ id: 7, text: "VVS Laxman" }, { id: 8, text: "Yousuf Youhana" }, { id: 9, text: "Kevin Pietersen" }],
   };
 
-  generateDataSource = dataSource => {
+  generateDataSource = (dataSource) => {
     return Object.keys(dataSource).reduce((source, key) => {
       return source.concat(dataSource[key]);
     }, []);
   };
 
-  autoSuggestCallback = (results = [], searchterm) => {
-    this.setState({ results });
+  autoSuggestCallback = (results = [], searchTerm) => {
+    this.setState({ results, searchTerm });
   };
 
   prepareResultsForDisplay = (results = []) => {
@@ -51,13 +51,13 @@ export default class SearchComplaint extends Component {
     });
   };
 
-  renderListWithHeader = dataSource => {
-    return Object.keys(dataSource).map(key => {
+  renderListWithHeader = (dataSource) => {
+    return Object.keys(dataSource).map((key, index) => {
       const resultsForDisplay = this.prepareResultsForDisplay(dataSource[key]);
       return (
         <div>
           <h4 style={{ color: "#2f80ed" }}>{key}</h4>
-          <List listItemStyle={{ background: "#fff", borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
+          <List key={index} listItemStyle={{ background: "#fff", borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
         </div>
       );
     });

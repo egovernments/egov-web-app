@@ -2,7 +2,7 @@ import React from "react";
 import Dialog from "material-ui/Dialog";
 import PropTypes from "prop-types";
 
-const Dialogui = props => {
+const Dialogui = (props) => {
   let { dialogProps } = props;
   return <Dialog {...dialogProps} />;
 };
