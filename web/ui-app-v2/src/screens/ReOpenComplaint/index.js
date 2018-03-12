@@ -37,6 +37,7 @@ const styles = {
     color: "#484848",
     letterSpacing: "0.3px",
   },
+
 };
 class ReOpenComplaint extends Component {
   state = {
@@ -47,6 +48,7 @@ class ReOpenComplaint extends Component {
     { value: "Complaint has been wrongly Rejected", label: "Complaint has been wrongly Rejected" },
     { value: "Other", label: "Other" },
   ];
+
   handleChange = (event, value) => {
     this.setState({ valueSelected: value });
   };
@@ -58,6 +60,7 @@ class ReOpenComplaint extends Component {
   };
   render() {
     const { valueSelected } = this.state;
+
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
         <div className="reopencomplaint-field">
