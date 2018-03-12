@@ -24,7 +24,6 @@ const styles = {
     lineHeight: "20px",
     letterSpacing: "0.3px",
   },
-
 };
 class ReOpenComplaint extends Component {
   options = [
@@ -33,8 +32,8 @@ class ReOpenComplaint extends Component {
     { value: "Other", label: "Other" },
   ];
 
-  handleChange = event => {
-    this.options.forEach(option => {
+  handleChange = (event) => {
+    this.options.forEach((option) => {
       if (option.value == event.target.value) {
         option.style.backgroundColor = "#f8f8f8";
         option.style.borderLeft = "1.5px solid #f5a623";
@@ -51,8 +50,7 @@ class ReOpenComplaint extends Component {
     //console.log("changed");
   };
   render() {
-
-    this.options.forEach(option => {
+    this.options.forEach((option) => {
       option.style = {
         paddingBottom: "12px",
         paddingLeft: "24px",

@@ -7,7 +7,7 @@ import "./index.css";
 const imageStyles = {
   minHeight: "106px",
 };
-const getStatusAndChangeColor = status => {
+const getStatusAndChangeColor = (status) => {
   let style = {};
   switch (status) {
     case "OPEN":
@@ -39,7 +39,7 @@ const Complaint = ({ index, item, history }) => {
             <div className="complaint-header-cont">
               <span className="complaint-header text-bold dark-color">{item.header}</span>
               <FlatButton
-                onClick={e => {
+                onClick={(e) => {
                   if (item.status == "ASSIGNED") {
                     history.push("/complaint-details?status=assigned");
                   } else if (item.status == "REJECTED") {

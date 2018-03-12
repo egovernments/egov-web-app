@@ -3,13 +3,13 @@ import Label from "../Label";
 import PropTypes from "prop-types";
 
 class FilePicker extends Component {
-  handleFileChange = event => {
+  handleFileChange = (event) => {
     let input = event.target;
     if (input.files && input.files.length > 0) {
       let files = input.files;
       Object.keys(files).forEach((key, index) => {
         var reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = (e) => {
           let fileurl = e.target.result;
           this.props.handleimage(files[key], fileurl);
         };

@@ -3,7 +3,7 @@ import Status from "./components/Status";
 import Details from "./components/Details";
 import ComplaintTimeLine from "./components/ComplaintTimeLine";
 import Comments from "./components/Comments";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./index.css";
 
@@ -42,24 +42,21 @@ class ComplaintDetails extends Component {
     },
   };
 
-  componentDidMount()
-  {
-    let {details}=this.state;
+  componentDidMount() {
+    let { details } = this.state;
     console.log(this.props);
-    if (this.props.location && this.props.location.search.split("=")[1]=="assigned") {
+    if (this.props.location && this.props.location.search.split("=")[1] == "assigned") {
       this.setState({
-        status:
-           {
-            status: "ASSIGNED",
-            message: "JR.INSPECTOR - J KUMAR",
-            bgColor: "#f5a623"
-          },
-        details:{
+        status: {
+          status: "ASSIGNED",
+          message: "JR.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
           ...details,
-          status:"Assigned"
-        }
-
-    })
+          status: "Assigned",
+        },
+      });
     }
   }
 

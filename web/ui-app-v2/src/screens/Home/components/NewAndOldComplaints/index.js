@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Icon, Label } from "../../../../components";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./index.css";
 
 const cardStyle = {
@@ -11,7 +11,7 @@ const cardStyle = {
 
 class NewAndOldComplaints extends Component {
   render() {
-    let {history}=this.props;
+    let { history } = this.props;
     return (
       <Card
         card={cardStyle}
@@ -21,9 +21,13 @@ class NewAndOldComplaints extends Component {
               <Icon style={{ background: "#f5a623" }} action="notification" name="sms-failed" />
               <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} label="New Complaint" />
             </div>
-            <div id="home-old-complaint" className="col-xs-6" onClick={(e)=>{
-              history.push("/my-complaints");
-            }}>
+            <div
+              id="home-old-complaint"
+              className="col-xs-6"
+              onClick={(e) => {
+                history.push("/my-complaints");
+              }}
+            >
               <Icon style={{ background: "#73aacc" }} action="social" name="person" />
               <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} label="My Complaints" />
             </div>
