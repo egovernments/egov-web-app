@@ -17,7 +17,7 @@ class Updates extends Component {
     },
   ];
 
-  renderUpdate = update => {
+  renderUpdate = (update) => {
     const { title, place, status } = update;
     return (
       <Card
@@ -36,7 +36,7 @@ class Updates extends Component {
                 <Label label={title} />
                 <div style={{ marginTop: "10px" }}>
                   <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been " />
-                  <Label containerStyle={{ display: "inline-block", marginLeft: "4px", textTransform:"uppercase" }} color="#484848" label={status} />
+                  <Label containerStyle={{ display: "inline-block", marginLeft: "4px", textTransform: "uppercase" }} color="#484848" label={status} />
                   {status === "resolved" ? <Label label="Please give us your feedback." /> : ""}
                 </div>
               </div>

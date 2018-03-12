@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Status from "./components/Status";
 import Details from "./components/Details";
 
-
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -18,7 +17,7 @@ class ComplaintDetails extends Component {
       //     <span>THANK YOU </span> <br /> <span>for your Application!</span>
       //   </div>
       // ),
-      bgColor: "#2ecc71"
+      bgColor: "#2ecc71",
     },
     details: {
       status: "Assigned",

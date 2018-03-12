@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
@@ -39,10 +38,6 @@ const options = [
 ];
 
 class App extends Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-  };
-
   state = {
     toggleMenu: false,
     tabIndex: 0,
@@ -100,4 +95,4 @@ const mapStateToProps = (state) => ({
   route: state.framework.route,
 });
 
-export default withRouter(connect(mapStateToProps, null)(App));
+export default connect(mapStateToProps, null)(App);

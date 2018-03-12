@@ -36,10 +36,9 @@ const StatusMessage = ({ status, message }) => {
       );
     default:
       return (
-        <div style={{textAlign:"left"}}>
-          <Label
-          >
-            Your application has been <span style={{ color: "#484848"}}>REJECTED</span>
+        <div style={{ textAlign: "left" }}>
+          <Label>
+            Your application has been <span style={{ color: "#484848" }}>REJECTED</span>
           </Label>
         </div>
       );

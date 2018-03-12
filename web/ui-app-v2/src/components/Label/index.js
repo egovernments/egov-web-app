@@ -12,7 +12,7 @@ const labelText = (label, labelStyle, labelClassName) => {
   );
 };
 
-const labelIcon = icon => {
+const labelIcon = (icon) => {
   return icon ? <div className="label-icon">{icon}</div> : "";
 };
 

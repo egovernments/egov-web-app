@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Redirect, Route } from "react-router-dom";
 import App from "./App";
 
-const fakeAuth = {
+const auth = {
   isAuthenticated: true, // hardcode it to true
   authenticate(cb) {
     this.isAuthenticated = true;
@@ -15,12 +15,9 @@ const fakeAuth = {
   },
 };
 
-const PrivateRoute = ({ component: Component, ...rest }) =>
-{
-  return (
-    <Route {...rest} render={(props) => (fakeAuth.isAuthenticated === true ? <App Component={Component} {...props} /> : <Redirect to="/login" />)} />
-  )
-}
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return <Route {...rest} render={props => (auth.isAuthenticated === true ? <App Component={Component} {...rest} /> : <Redirect to="/login" />)} />;
+};
 
 PrivateRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
