@@ -8,7 +8,7 @@ const imgStyle = { width: 143, height: 143 };
 const profileStyles = {
   formFieldStyle: {
     background: "#ffffff",
-    margin: "0px 0px 8px 0px",
+    paddingBottom: "16px",
     border: "0.5px solid  #e6e6e6",
     fontSize: "14px",
     fontWeight: "normal",
@@ -98,18 +98,16 @@ class Profile extends Component {
             fullWidth={true}
             value={name}
             floatingLabelText="Name"
-            floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
             onChange={this.handleNameChange}
           />
           <TextField
             className="profile-form-field"
-            id="profile-form-name"
+            id="profile-form-email"
             underlineShow={false}
             fullWidth={true}
             value={emailId}
             floatingLabelText="Email Id"
-            floatingLabelStyle={profileStyles.floatingLabelStyle}
             style={profileStyles.formFieldStyle}
             onChange={this.handleMailChange}
           />
@@ -129,6 +127,7 @@ class Profile extends Component {
         <div className="profileBtnWrapper">
           <Button
             className="profileBtn"
+            id="profile-save-action"
             primary={true}
             label="SAVE"
             fullWidth={true}

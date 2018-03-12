@@ -1,16 +1,31 @@
 import React from "react";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 
-const RadioButtonUi = ({ options, name, defaultValue, handleChange, style = {}, checkedIcon, iconStyle }) => {
+const RadioButtonUi = ({
+  options,
+  valueSelected,
+  className,
+  name,
+  defaultValue,
+  style = {},
+  radioButtonItemStyle = {},
+  labelItemStyle = {},
+  labelStyle = {},
+  selectedStyle = {},
+  handleChange,
+  checkedIcon,
+  iconStyle,
+}) => {
   const renderRadioButtons = () => {
     return options.map((option, index) => {
+      const { value, label } = option;
       return (
         <RadioButton
           key={index}
-          value={option.value}
-          label={option.label}
-          style={option.style}
-          labelStyle={option.labelStyle}
+          style={value === valueSelected ? { ...radioButtonItemStyle, ...selectedStyle } : radioButtonItemStyle}
+          value={value}
+          label={label}
+          labelStyle={labelStyle}
           iconStyle={iconStyle}
           checkedIcon={checkedIcon}
         />
@@ -19,7 +34,14 @@ const RadioButtonUi = ({ options, name, defaultValue, handleChange, style = {}, 
   };
 
   return (
-    <RadioButtonGroup name={name} onChange={handleChange} defaultSelected={defaultValue}>
+    <RadioButtonGroup
+      valueSelected={valueSelected}
+      name={name}
+      className={`${className} RadioComp`}
+      onChange={handleChange}
+      defaultSelected={defaultValue}
+      style={style}
+    >
       {renderRadioButtons()}
     </RadioButtonGroup>
   );
