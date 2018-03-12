@@ -2,13 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { List as MaterialUiList, ListItem } from "material-ui/List";
 
+const baseListContainerStyle = { background: "#fff", padding: "0px" };
+const baseListItemStyle = { color: "#484848", fontWeight: 500 };
+
 const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
   const renderListItems = (items) => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 
       if (listItemStyle && Object.keys(listItemStyle).length) {
-        item.style = listItemStyle;
+        item.style = { ...baseListItemStyle, ...listItemStyle, ...item.style };
       }
       if (nestedItems) {
         // recurse over the nested items
@@ -16,14 +19,14 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
       }
 
       return (
-        <ListItem style={{ color: "#484848 !Important", fontWeight: "500 !Important" }} containerElement={listItemContainer} key={index} {...item} />
+        <ListItem containerElement={listItemContainer} key={index} {...item} />
       );
     });
   };
 
   return (
     <div>
-      <MaterialUiList style={listContainerStyle}>{renderListItems(items)}</MaterialUiList>
+      <MaterialUiList style={{ ...baseListContainerStyle, ...listContainerStyle }}>{renderListItems(items)}</MaterialUiList>
     </div>
   );
 };

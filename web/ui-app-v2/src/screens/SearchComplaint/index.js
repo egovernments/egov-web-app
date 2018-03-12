@@ -58,7 +58,6 @@ export default class SearchComplaint extends Component {
         <div>
           <h4 style={{ color: "#2f80ed" }}>{key}</h4>
           <List
-            listContainerStyle={{ background: "#fff", padding: "0px" }}
             key={index}
             listItemStyle={{ borderBottom: "1px solid #eee" }}
             items={resultsForDisplay}
@@ -70,7 +69,7 @@ export default class SearchComplaint extends Component {
 
   render() {
     const { autoSuggestCallback, dataSource, prepareResultsForDisplay, generateDataSource } = this;
-    const { results,searchTerm } = this.state;
+    const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const resultsForDisplay = prepareResultsForDisplay(results);
     const transformedDataSource = generateDataSource(dataSource);
@@ -81,7 +80,6 @@ export default class SearchComplaint extends Component {
           this.renderListWithHeader(dataSource)
         ) : (
           <List
-            listContainerStyle={{ background: "#fff", padding: "0px" }}
             listItemStyle={{ borderBottom: "1px solid #eee" }}
             items={resultsForDisplay}
           />
