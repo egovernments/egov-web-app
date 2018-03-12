@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import Checkbox from "material-ui/Checkbox";
 
-const CheckboxUi = ({ options, checkedValues, defaultValue, onCheck, style = {} }) => {
+const CheckboxUi = ({ options, defaultValue, onCheck, style = {}, checkedIcon, iconStyle }) => {
   const renderCheckboxOptions = () => {
     return options.map((option, index) => {
-      var value = checkedValues.indexOf(option.value);
-      const isChecked = value !== -1 ? true : false;
       return (
         <Checkbox
-          //onCheck={value !== -1 ? checkedValues.splice(index, value) : checkedValues.push(option.value)}
+          key={index}
+          value={option.value}
+          label={option.label}
           onCheck={onCheck}
           label={option.label}
-          key={index}
-          checked={isChecked}
-          style={style}
+          style={option.style}
+          iconStyle={iconStyle}
+          checkedIcon={checkedIcon}
         />
       );
     });
@@ -30,7 +30,6 @@ CheckboxUi.propTypes = {
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     }).isRequired
   ),
-  checkedValues: PropTypes.array.isRequired,
   defaultValue: PropTypes.string,
   onCheck: PropTypes.func,
   style: PropTypes.object,

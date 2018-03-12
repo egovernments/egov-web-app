@@ -5,7 +5,7 @@ import TextField from "material-ui/TextField";
 const TextAreaUi = ({ className, style, onChange, errorMessage, value, disabled, isRequired, hide, rows, hintText, hintStyle, textareaStyle }) => {
   return (
     <TextField
-      name={className}
+      className={className}
       fullWidth={true}
       multiLine={true}
       rows={rows}

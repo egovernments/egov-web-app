@@ -10,5 +10,17 @@
 }
 
 .button-toggle-container {
-  margin: 20px 0px 60px 8px;
+  padding: 20px 10px 60px 10px;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 360px) {
+  .button-toggle-container button {
+    padding: 0 10px !important;
+  }
+
+  .button-toggle-container span {
+    font-size: 13px !important;
+  }
 }

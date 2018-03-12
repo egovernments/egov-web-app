@@ -6,12 +6,6 @@
   margin-bottom: 80px;
 }
 
-.floating-button-cont {
-  position: fixed;
-  right: 3%;
-  bottom: 10%;
-}
-
 .complaint-card {
   padding: 16px 16px 8px 16px !important;
   margin: 8px 0;
@@ -25,12 +19,8 @@
   padding: 0;
 }
 
-.complaint-track-button {
-  padding: 2px 8px !important;
-}
-
 .complaint-track-button div {
-  max-height: 17px;
+  display: flex;
 }
 
 .complaint-header-cont {

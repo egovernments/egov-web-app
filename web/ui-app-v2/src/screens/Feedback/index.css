@@ -34,6 +34,8 @@
 
 .feedback-buttongroup-cont {
   padding-top: 16px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .feedback-buttongroup-cont > button {
@@ -54,3 +56,17 @@
 .feedback-textarea-label {
   letter-spacing: 0.3px;
 }
+
+/* ***************** Media Query Start ***************** */
+
+@media only screen and (max-width: 360px) {
+  .feedback-buttongroup-cont button {
+    padding: 0 10px !important;
+  }
+
+  .feedback-buttongroup-cont span {
+    font-size: 13px !important;
+  }
+}
+
+/* ***************** Media Query End ***************** */

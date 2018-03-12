@@ -8,4 +8,8 @@
   margin-top: 20px;
 }
 
-
+.floating-button-cont {
+  position: fixed;
+  right: 3%;
+  bottom: 65px;
+}

@@ -29,3 +29,11 @@
 .profileContainer {
   position: relative;
 }
+
+.profile-form-field > label {
+  color: "#3498db";
+}
+
+.profileContainer {
+  position: relative;
+}

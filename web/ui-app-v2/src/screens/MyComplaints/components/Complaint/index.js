@@ -53,13 +53,16 @@ const Complaint = ({ index, item, history }) => {
                   border: "1px solid #f5a623",
                   height: "auto",
                   lineHeight: "auto",
-                  padding: "5px 5px",
+                  padding: "4px 8px",
                   minWidth: "inherit",
                 }}
                 labelStyle={{
                   color: "#f5a623",
                   padding: 0,
                   letterSpacing: "0.3px",
+                  display: "inline-block",
+                  height: "14px",
+                  lineHeight: "14px",
                 }}
                 hoverColor="none"
               />
