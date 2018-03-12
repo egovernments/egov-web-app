@@ -1,35 +1,7 @@
 import React, { Component } from "react";
 import { List, Card, Label, Image } from "../../../../components";
-
-import ContentInbox from "material-ui/svg-icons/content/inbox";
-import ActionGrade from "material-ui/svg-icons/action/grade";
-import ContentSend from "material-ui/svg-icons/content/send";
-import ContentDrafts from "material-ui/svg-icons/content/drafts";
-import ActionInfo from "material-ui/svg-icons/action/info";
-import Location from "material-ui/svg-icons/maps/place";
-import Avatar from "material-ui/Avatar";
-
 import NewComplaint from "material-ui/svg-icons/notification/sms-failed";
 import "./index.css";
-
-import garbageOne from "../../../../assets/images/Garbage_3.jpg";
-import garbageTwo from "../../../../assets/images/Garbage_4.jpg";
-import garbageThree from "../../../../assets/images/Garbage_6.jpg";
-
-const iconStyle = {
-  marginRight: "10px",
-  height: "18px",
-  width: "18px",
-};
-
-const items = [
-  {
-    primaryText: <div className="dark-heading">COMPLAINT DETAILS</div>,
-    leftIcon: <NewComplaint color="#969696" />,
-    initiallyOpen: false,
-    primaryTogglesNestedList: true,
-  },
-];
 
 class Details extends Component {
   render() {

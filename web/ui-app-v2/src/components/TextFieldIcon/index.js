@@ -52,7 +52,6 @@ const TextFieldIcon = ({ value = "", Icon, iconStyle = {}, textFieldStyle = {}, 
 };
 
 TextFieldIcon.propTypes = {
-  Icon: PropTypes.node.isRequired,
   iconPosition: PropTypes.string,
   textFieldStyle: PropTypes.object,
   iconProps: PropTypes.object,

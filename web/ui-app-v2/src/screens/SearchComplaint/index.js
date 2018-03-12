@@ -1,35 +1,29 @@
 import React, { Component } from "react";
-import Autosuggest from "../../components/Autosuggest";
-import List from "../../components/List";
-import ActionHome from "material-ui/svg-icons/action/home";
+import { List, Icon, AutoSuggest, Label } from "../../components";
 import { red500 } from "material-ui/styles/colors";
+
+const customIconStyles = {
+  position: "absolute",
+  height: 40,
+  width: 40,
+  margin: 0,
+  padding: 0,
+  top: 0,
+  left: 5,
+};
 
 export default class SearchComplaint extends Component {
   state = { results: [], searchTerm: "" };
 
-  items = [
-    {
-      primaryText: "Inbox",
-      leftIcon: <ActionHome color />,
-    },
-    {
-      primaryText: "Starred",
-      leftIcon: <ActionHome />,
-    },
-    {
-      primaryText: "Sent Mail",
-      leftIcon: <ActionHome />,
-    },
-    {
-      primaryText: "Drafts",
-      leftIcon: <ActionHome />,
-    },
-  ];
-
   dataSource = {
-    Cleanliness: [{ id: 1, text: "Sachin Tendulkar" }, { id: 2, text: "Brian Lara" }, { id: 3, text: "Ricky Ponting" }],
-    "Roads & Footpaths": [{ id: 4, text: "Rahul Dravid" }, { id: 5, text: "Jacques Kallis" }, { id: 6, text: "Younis Khan" }],
-    "Drains & Sewers": [{ id: 7, text: "VVS Laxman" }, { id: 8, text: "Yousuf Youhana" }, { id: 9, text: "Kevin Pietersen" }],
+    Cleanliness: [
+      { id: 1, text: "Accumulation Of Litter" },
+      { id: 2, text: "Overflowing Garbage Bins" },
+      { id: 3, text: "Garbage Bin Absent" },
+      { id: 4, text: "Absenteeism Of Sweepers" },
+    ],
+    "Roads & Footpaths": [{ id: 5, text: "Potholes" }, { id: 6, text: "Broken Footpaths" }],
+    "Drains & Sewers": [{ id: 7, text: "Blockage Of Drains" }],
   };
 
   generateDataSource = (dataSource) => {
@@ -46,7 +40,7 @@ export default class SearchComplaint extends Component {
     return results.map((result, index) => {
       const mappedResult = {};
       mappedResult.primaryText = result.text;
-      mappedResult.leftIcon = <ActionHome color={red500} />;
+      mappedResult.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
       return mappedResult;
     });
   };
@@ -55,13 +49,9 @@ export default class SearchComplaint extends Component {
     return Object.keys(dataSource).map((key, index) => {
       const resultsForDisplay = this.prepareResultsForDisplay(dataSource[key]);
       return (
-        <div>
-          <h4 style={{ color: "#2f80ed" }}>{key}</h4>
-          <List
-            key={index}
-            listItemStyle={{ borderBottom: "1px solid #eee" }}
-            items={resultsForDisplay}
-          />
+        <div key={index}>
+          <Label upperCase={true} bold={true} labelStyle={{ padding: "15px", color: "#2f80ed" }} label={key} />
+          <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
         </div>
       );
     });
@@ -74,15 +64,12 @@ export default class SearchComplaint extends Component {
     const resultsForDisplay = prepareResultsForDisplay(results);
     const transformedDataSource = generateDataSource(dataSource);
     return (
-      <div style={{ padding: "10px" }}>
-        <Autosuggest dataSource={transformedDataSource} searchKey="text" callback={autoSuggestCallback} />
+      <div style={{ padding: "8px 8px 0px 8px", background: "#fff" }}>
+        <AutoSuggest dataSource={transformedDataSource} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
         {displayInitialList ? (
           this.renderListWithHeader(dataSource)
         ) : (
-          <List
-            listItemStyle={{ borderBottom: "1px solid #eee" }}
-            items={resultsForDisplay}
-          />
+          <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
         )}
       </div>
     );

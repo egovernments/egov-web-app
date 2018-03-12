@@ -16,7 +16,18 @@ const labelIcon = (icon) => {
   return icon ? <div className="label-icon">{icon}</div> : "";
 };
 
-const Label = ({ className = "", label, children, iconPosition = "before", icon, color, bold = false, containerStyle = {}, labelStyle = {} }) => {
+const Label = ({
+  className = "",
+  label,
+  children,
+  iconPosition = "before",
+  icon,
+  color,
+  upperCase = false,
+  bold = false,
+  containerStyle = {},
+  labelStyle = {},
+}) => {
   let additionalStyles = {};
 
   if (icon) {
@@ -27,6 +38,9 @@ const Label = ({ className = "", label, children, iconPosition = "before", icon,
   }
   if (bold) {
     additionalStyles.fontWeight = 500;
+  }
+  if (upperCase) {
+    additionalStyles.textTransform = "uppercase";
   }
 
   if (Object.keys(labelStyle).length || Object.keys(additionalStyles).length) {
@@ -46,6 +60,8 @@ const Label = ({ className = "", label, children, iconPosition = "before", icon,
 Label.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
+  bold: PropTypes.bool,
+  upperCase: PropTypes.bool,
   className: PropTypes.string,
   icon: PropTypes.element,
   children: PropTypes.node,

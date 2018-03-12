@@ -251,8 +251,6 @@ class ComplaintTimeLine extends Component {
               <List items={items} />
               <div className="complaintTimeLineContainer">
                 <TimeLine
-                  // divStyle={{ maxwidth: 380, maxheight: 400, margin: "auto" }}
-
                   stepperProps={{
                     orientation: "vertical",
                   }}

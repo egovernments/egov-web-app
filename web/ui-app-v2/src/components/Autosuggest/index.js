@@ -27,10 +27,11 @@ export default class AutoSuggest extends Component {
   render() {
     const { onChange } = this;
     const { inputValue } = this.state;
+    const { searchInputText } = this.props;
 
     return (
       <div>
-        <SearchBar iconPosition="after" hintText="Search Complaints" Icon={SearchIcon} onChange={onChange} value={inputValue} />
+        <SearchBar iconPosition="after" hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
       </div>
     );
   }
