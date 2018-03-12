@@ -18,9 +18,7 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         item.nestedItems = renderListItems(nestedItems);
       }
 
-      return (
-        <ListItem containerElement={listItemContainer} key={index} {...item} />
-      );
+      return <ListItem containerElement={listItemContainer} key={index} {...item} />;
     });
   };
 
