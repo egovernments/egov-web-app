@@ -10,7 +10,7 @@ const containerStyle = {
   width: "100%",
 };
 
-const getStyles = iconPosition => {
+const getStyles = (iconPosition) => {
   const textFieldStyle = {
     padding: "15px",
     background: "#fff",

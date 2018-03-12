@@ -37,7 +37,6 @@ const styles = {
     color: "#484848",
     letterSpacing: "0.3px",
   },
-
 };
 class ReOpenComplaint extends Component {
   state = {

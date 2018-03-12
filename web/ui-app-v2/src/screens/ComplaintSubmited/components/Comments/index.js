@@ -65,7 +65,7 @@ class Comments extends Component {
           card={{
             style: {
               backgroundColor: "#fff",
-              padding: "0px"
+              padding: "0px",
             },
           }}
           textChildren={
