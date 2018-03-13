@@ -9,7 +9,7 @@ const containerStyle = {
   width: "100%",
 };
 
-const getStyles = (iconPosition) => {
+const getStyles = iconPosition => {
   const textFieldStyle = {
     padding: "15px",
     background: "#fff",
@@ -21,8 +21,6 @@ const getStyles = (iconPosition) => {
     color: "#969696",
     zIndex: 2,
     top: 18,
-    width: 24,
-    height: 24,
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 5;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 30 : 0;

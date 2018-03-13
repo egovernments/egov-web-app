@@ -22,7 +22,7 @@ const floatingLabelShrinkStyle = {
   fontWeight: 500,
 };
 
-const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "textfield", value, floatingLabelText }) => {
+const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "", value, floatingLabelText }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}

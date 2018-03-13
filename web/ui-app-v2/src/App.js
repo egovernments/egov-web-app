@@ -44,13 +44,13 @@ class App extends Component {
     });
   };
 
-  _updateMenuState = (status) => {
+  _updateMenuState = status => {
     this.setState({
       toggleMenu: status,
     });
   };
 
-  _onTabChange = (tabIndex) => {
+  _onTabChange = tabIndex => {
     this.setState({
       tabIndex,
     });
@@ -67,24 +67,20 @@ class App extends Component {
   componentDidMount() {}
 
   render() {
-    const { moduleName, moduleAction, Component } = this.props;
+    const { moduleName, Component, ...rest } = this.props;
     const { specs, _handleToggleMenu, _updateMenuState, _onTabChange } = this;
     const { toggleMenu, tabIndex } = this.state;
     return (
       <div>
         <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
-        <Component
-          style={{
-            marginBottom: "72px",
-          }}
-        />
+        <Component {...rest} />
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   route: state.framework.route,
 });
 
