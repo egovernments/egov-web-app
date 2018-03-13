@@ -31,7 +31,7 @@ export default class AutoSuggest extends Component {
 
     return (
       <div>
-        <SearchBar iconPosition="after" hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
+        <SearchBar iconPosition="before" hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
       </div>
     );
   }

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 // can we pull the existing textfield
-import TextField from "material-ui/TextField";
-import IconButton from "material-ui/IconButton";
+import TextField from "../TextField";
 
 const containerStyle = {
   position: "relative",
@@ -21,12 +20,12 @@ const getStyles = (iconPosition) => {
     position: "absolute",
     color: "#969696",
     zIndex: 2,
-    top: 15,
-    width: 20,
-    height: 20,
+    top: 18,
+    width: 24,
+    height: 24,
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 5;
-  textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
+  textFieldStyle["textIndent"] = iconPosition === "before" ? 30 : 0;
 
   return {
     iconStyle,
@@ -45,7 +44,7 @@ const TextFieldIcon = ({ value = "", Icon, iconStyle = {}, textFieldStyle = {}, 
         fullWidth={true}
         style={{ ...style.textFieldStyle, ...textFieldStyle }}
         underlineShow={false}
-        hintText={hintText}
+        placeholder={hintText}
       />
     </div>
   );
