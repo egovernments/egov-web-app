@@ -4,9 +4,12 @@ import { Dialog, Ratings, Checkbox, TextArea, Button } from "../../../../compone
 
 const titleStyle = {
   textAlign: "center",
-  fontSize: "18px",
-  fontWeight: 900,
-  padding: "20px 0 0 0",
+  fontSize: "16px",
+  fontWeight: 500,
+  padding: "28px 0 0 0",
+  letterSpacing: 0.7,
+  lineHeight: 1,
+  color: "#484848",
 };
 
 const actions = [
@@ -24,12 +27,17 @@ const FeedbackPopup = ({ open, checkboxOptions, handleClose }) => {
         actions={actions}
         children={[
           <div className="feedback-ratings-cont" key={"feedback-ratings-cont"}>
-            <Ratings className="feedback-ratings" size={30} count={5} half={false} />
+            <Ratings className="feedback-ratings" size={40} count={5} half={false} />
           </div>,
-          <span key={"feedback-subtext"} style={{ textAlign: "center", display: "block", marginBottom: "10px" }}>
+          <span className="what-was-good" key={"feedback-subtext"}>
             What was good?
           </span>,
-          <Checkbox key={"feedbox-checkboxGroup"} options={checkboxOptions} />,
+          <Checkbox
+            key={"feedback-checkboxGroup"}
+            labelStyle={{ letterSpacing: "0.6px" }}
+            options={checkboxOptions}
+            containerClassName={"feedback-checkbox-cont"}
+          />,
           <TextArea key={"feedback-textarea"} hintText="Type your comments" underlineShow={true} />,
         ]}
         handleClose={handleClose}

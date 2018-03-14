@@ -9,11 +9,11 @@ const defaultTitleStyle = {
   textAlign: "center",
 };
 const defaultActionsContainerStyle = {
-  padding: "16px",
+  padding: "14px",
 };
 const defaultContentStyle = {};
 const defaultBodyStyle = {
-  padding: "16px",
+  padding: "0 12px",
 };
 
 const closebuttonStyle = {
@@ -38,6 +38,10 @@ const DialogUI = ({ title, titleStyle, overlayStyle, actionsContainerStyle, body
       contentStyle={{ ...defaultContentStyle, ...contentStyle }}
       bodyStyle={{ ...defaultBodyStyle, bodyStyle }}
       open={open}
+      autoDetectWindowHeight={false}
+      style={{
+        paddingTop: "0 !important",
+      }}
     />
   );
 };

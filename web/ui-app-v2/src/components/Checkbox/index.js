@@ -8,7 +8,7 @@ const defaultLabelStyle = {
 };
 
 const defaultStyle = {
-  marginBottom: "10px",
+  marginBottom: "21px",
 };
 const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, checkedIcon, iconStyle, containerClassName }) => {
   const renderCheckboxOptions = () => {

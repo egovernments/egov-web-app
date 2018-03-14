@@ -13,7 +13,7 @@ const defaultStyles = {
   cursor: "pointer",
   display: "block",
   float: "left",
-  marginRight: "4px",
+  marginRight: "7px",
 };
 
 const getHalfStarStyles = (color, uniqueness) => {
