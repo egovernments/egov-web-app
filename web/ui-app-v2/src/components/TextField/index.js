@@ -25,7 +25,18 @@ const inputStyle = {
   paddingBottom: 10,
 };
 
-const TextField = ({ style, onChange, id, disabled,floatingLabelStyle={}, hintText, fullWidth = true, className = "", value, floatingLabelText }) => {
+const TextField = ({
+  style,
+  onChange,
+  id,
+  disabled,
+  floatingLabelStyle = {},
+  hintText,
+  fullWidth = true,
+  className = "",
+  value,
+  floatingLabelText,
+}) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
@@ -41,7 +52,7 @@ const TextField = ({ style, onChange, id, disabled,floatingLabelStyle={}, hintTe
       hintText={hintText}
       hintStyle={hintStyle}
       floatingLabelText={floatingLabelText}
-      floatingLabelStyle={{...floatingLabelBaseStyle, ...floatingLabelStyle}}
+      floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
       underlineShow={true}
       floatingLabelFixed={true}
     />

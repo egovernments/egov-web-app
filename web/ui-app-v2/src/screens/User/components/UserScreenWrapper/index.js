@@ -1,6 +1,5 @@
 import React from "react";
 import { Image } from "../../../../components";
-import logoMuncipal from "../../../../assets/images/PB logo.png";
 import logoMseva from "../../../../assets/images/Mseva logo.png";
 import "./index.css";
 

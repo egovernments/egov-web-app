@@ -6,32 +6,30 @@ const containerStyle = {
   position: "relative",
   display: "inline-block",
   width: "100%",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
 };
 
-
 const textFieldBaseStyle = {
-    textIndent : 35
-  };
+  textIndent: 35,
+};
 
 const prefixBaseStyle = {
-    position: "absolute",
-    color: "#969696",
-    zIndex: 2,
-    bottom: 15,
-    paddingRight : 5,
-    borderRight: "1px solid #eee",
-  };
+  position: "absolute",
+  color: "#969696",
+  zIndex: 2,
+  bottom: 15,
+  paddingRight: 5,
+  borderRight: "1px solid #eee",
+};
 
 const floatingLabelStyle = {
-  left : -35
-}
+  left: -35,
+};
 
-const MobileNumberField = ({ textFieldStyle = {}, prefix = "+91", prefixStyle={}, ...textFieldProps }) => {
- 
+const MobileNumberField = ({ textFieldStyle = {}, prefix = "+91", prefixStyle = {}, ...textFieldProps }) => {
   return (
     <div style={containerStyle}>
-      <div style={{ ...prefixBaseStyle,prefixStyle}}>{prefix}</div>
+      <div style={{ ...prefixBaseStyle, prefixStyle }}>{prefix}</div>
       <TextField
         name="mobile-number-field"
         style={{ ...textFieldBaseStyle, ...textFieldStyle }}
@@ -45,8 +43,8 @@ const MobileNumberField = ({ textFieldStyle = {}, prefix = "+91", prefixStyle={}
 
 MobileNumberField.propTypes = {
   textFieldStyle: PropTypes.object,
-  prefixStyle  : PropTypes.object,
-  prefix  : PropTypes.string
+  prefixStyle: PropTypes.object,
+  prefix: PropTypes.string,
 };
 
 export default MobileNumberField;

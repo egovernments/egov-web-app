@@ -16,6 +16,7 @@ import ContactUs from "./screens/ContactUs";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
+import CityPicker from "./screens/common/CityPicker";
 
 const Main = () => {
   return (

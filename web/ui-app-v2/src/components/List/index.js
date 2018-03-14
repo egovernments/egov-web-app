@@ -5,8 +5,8 @@ import { List as MaterialUiList, ListItem } from "material-ui/List";
 const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
-const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
-  const renderListItems = (items) => {
+const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
+  const renderListItems = items => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 
@@ -18,7 +18,7 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
         item.nestedItems = renderListItems(nestedItems);
       }
 
-      return <ListItem containerElement={listItemContainer} key={index} {...item} />;
+      return <ListItem onClick={() => onItemClick(index)} containerElement={listItemContainer} key={index} {...item} />;
     });
   };
 
@@ -32,6 +32,7 @@ const List = ({ listItemContainer, onItemHandler, listItemStyle = {}, listContai
 List.propTypes = {
   listItemContainer: PropTypes.string,
   listItemStyle: PropTypes.object,
+  onItemClick: PropTypes.func,
   listContainerStyle: PropTypes.object,
   items: PropTypes.arrayOf(
     PropTypes.shape({
