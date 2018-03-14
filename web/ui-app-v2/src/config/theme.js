@@ -1,9 +1,9 @@
 const theme = {
-  fontFamily: "Lato, sans",
+  fontFamily: "Roboto",
   textColor: "rgba(0, 0, 0, 0.68)",
   backgroundColor: "#fff",
   palette: {
-    primary1Color: "#2f80ed",
+    primary1Color: "#00bcd1",
     primary2Color: "#f58720",
     textColor: "#5f5c62",
     canvasColor: "#F7F7F7",
@@ -13,10 +13,10 @@ const theme = {
     height: 56,
   },
   raisedButton: {
-    primaryColor: "#f5a623",
+    primaryColor: "#00bcd1",
   },
   textField: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#ffffff",
     textColor: "#464646",
     hintColor: "#969696",
     floatingLabelColor: "#969696",

@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { AppBar, Drawer, List, ProfileSection, PoweredBy } from "../../../components";
 import Badge from "material-ui/Badge";
 import IconButton from "material-ui/IconButton";
-import NotificationsIcon from "material-ui/svg-icons/social/notifications";
 import ContentInbox from "material-ui/svg-icons/content/inbox";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Info from "material-ui/svg-icons/action/info";
@@ -90,16 +89,8 @@ class HeaderWithDrawer extends Component {
       <div>
         <AppBar
           title={`Mseva/ Home`}
-          iconElementRight={
-            <Badge badgeContent={10} secondary={true} badgeStyle={{ top: 2, right: 2 }} style={{ padding: "0" }}>
-              <IconButton tooltip="Notifications" onClick={() => {}}>
-                <NotificationsIcon color={"white"} />
-              </IconButton>
-            </Badge>
-          }
           onLeftIconButtonClick={onHandleToggleMenu}
           style={{
-            background: "linear-gradient(#56ccf2, #2f80ed)",
             overflowX: "hidden",
             width: "initial",
           }}

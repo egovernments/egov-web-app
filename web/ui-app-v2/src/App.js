@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "./components";
 
@@ -44,13 +43,13 @@ class App extends Component {
     });
   };
 
-  _updateMenuState = status => {
+  _updateMenuState = (status) => {
     this.setState({
       toggleMenu: status,
     });
   };
 
-  _onTabChange = tabIndex => {
+  _onTabChange = (tabIndex) => {
     this.setState({
       tabIndex,
     });
@@ -64,10 +63,8 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {}
-
   render() {
-    const { moduleName, Component, ...rest } = this.props;
+    const { Component, ...rest } = this.props;
     const { specs, _handleToggleMenu, _updateMenuState, _onTabChange } = this;
     const { toggleMenu, tabIndex } = this.state;
     return (
@@ -80,7 +77,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   route: state.framework.route,
 });
 

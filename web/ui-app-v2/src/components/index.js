@@ -1,4 +1,5 @@
 import TextField from "./TextField";
+import TextFieldIcon from "./TextFieldIcon";
 import SelectField from "./DropDown";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
@@ -32,6 +33,7 @@ export {
   Label,
   Image,
   TextField,
+  TextFieldIcon,
   SelectField,
   Checkbox,
   TextArea,
