@@ -66,9 +66,9 @@ class LanguageSelection extends Component {
         <Card
           className="user-screens-card language-selection-card"
           textChildren={
-            <div style={{ marginTop: "50px" }}>
+            <div>
               <form>
-                <Label label="Pick your language" className="language-label" />
+                <Label bold={true} label="LANGUAGE" className="language-label" />
                 <div className="button-toggle-container">
                   <ButtonGroup
                     items={items}
