@@ -14,46 +14,50 @@ const items = [
 
 const itemsOne = [
   {
-    leftAvatar: <Avatar src={faceOne} />,
-    primaryText: (
-      <div>
-        <Label labelStyle={{ color: "inherit" }} label="please sterilize the dogs in the area." />
-        <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
-          <Icon
-            action="device"
-            name="access-time"
-            color={"#969696"}
-            style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
-          />
-          <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago" />
-        </div>
-      </div>
-    ),
-  },
+    leftAvatar:<div> <Avatar src={faceOne} /></div>,
+    primaryText: <div className="complaint-details-comments-section"><Label label="please sterilize the dogs in the area."/> <Label label="11-MAR-18"/> </div>
+  }
 ];
+
+// (
+//  <div className="rainmaker-list-right-item-overide-style complaint-details-comments-section">
+//    <Label labelStyle={{ color: "inherit" }} label="please sterilize the dogs in the area." />
+//    <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
+//      <Icon
+//        action="device"
+//        name="access-time"
+//        color={"#969696"}
+//        style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
+//      />
+//      <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago" />
+//    </div>
+//  </div>
+// ),
 
 const itemsTwo = [
   {
-    primaryText: (
-      <div>
-        <Label
-          labelStyle={{ color: "inherit" }}
-          label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
-        />
-        <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
-          <Icon
-            action="device"
-            name="access-time"
-            color={"#969696"}
-            style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
-          />
-          <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago" />
-        </div>
-      </div>
-    ),
+    primaryText:<div className="complaint-details-comments-section"> <Label label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time." /><Label label="11-MAR-18" /></div>,
     rightAvatar: <Avatar src={faceTwo} />,
   },
 ];
+
+// (
+//   <div className="rainmaker-list-right-item-overide-style complaint-details-comments-section">
+//     <Label
+//       labelStyle={{ color: "inherit" }}
+//       label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
+//     />
+//     <div className="complaint-detail-detail-section-location-section complaint-details-comments-section-comment-and-time-letterSpacing">
+//       <Icon
+//         action="device"
+//         name="access-time"
+//         color={"#969696"}
+//         style={{ color: "#969696", fill: "currentColor", width: "18px", height: "18px", padding: 0, marginRight: "5px" }}
+//       />
+//       <Label style={{ color: "#969696", fontSize: "14px" }} label="2 minutes ago" />
+//     </div>
+//   </div>
+// ),
 
 class Comments extends Component {
   render() {

@@ -32,9 +32,10 @@ class Details extends Component {
         <Card
           textChildren={
             <div>
-              <List items={items} />
-              <div key={10} className="container complaint-detail-full-width">
-                <div className="dark-heading">Potholes on the road</div>
+              <Label label="Complaint Details" labelClassName="dark-heading" icon={<NewComplaint color="#969696" />}/>
+              {/*<List items={items} />*/}
+              <div key={10} className="complaint-detail-full-width">
+                <Label className="dark-heading" labelStyle={{fontSize:"16px"}} label="Potholes on the road" />
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="Complaint No." />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label="25467895" />

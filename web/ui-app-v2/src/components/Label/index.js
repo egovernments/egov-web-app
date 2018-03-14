@@ -19,7 +19,6 @@ const labelIcon = (icon) => {
 const Label = ({
   className = "",
   label,
-  children,
   iconPosition = "before",
   icon,
   color,
@@ -27,6 +26,7 @@ const Label = ({
   bold = false,
   containerStyle = {},
   labelStyle = {},
+  labelClassName=""
 }) => {
   let additionalStyles = {};
 
@@ -49,9 +49,8 @@ const Label = ({
 
   return (
     <div style={containerStyle} className={`label-container ${className}`}>
-      {children}
       {iconPosition === "before" ? labelIcon(icon) : ""}
-      {labelText(label, labelStyle)}
+      {labelText(label, labelStyle,labelClassName)}
       {iconPosition === "after" ? labelIcon(icon) : ""}
     </div>
   );
@@ -64,7 +63,6 @@ Label.propTypes = {
   upperCase: PropTypes.bool,
   className: PropTypes.string,
   icon: PropTypes.element,
-  children: PropTypes.node,
   iconPosition: PropTypes.oneOf(["after", "before"]),
   containerStyle: PropTypes.object,
   labelStyle: PropTypes.object,

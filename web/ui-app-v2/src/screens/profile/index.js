@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-<<<<<<< gyans
 import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon} from "../../components";
 import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";

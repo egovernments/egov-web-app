@@ -3,6 +3,7 @@ import Status from "./components/Status";
 import Details from "./components/Details";
 import ComplaintTimeLine from "./components/ComplaintTimeLine";
 import Comments from "./components/Comments";
+import Screen from "../common/Screen";
 import { withRouter } from "react-router-dom";
 
 import "./index.css";
@@ -63,12 +64,12 @@ class ComplaintDetails extends Component {
   render() {
     let { status, details, timeLine, comments } = this.state;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <Screen>
         {/*<Status {...status} />*/}
         <Details {...details} />
         <ComplaintTimeLine status={status.status} timeLine={timeLine} />
         <Comments comments={comments} />
-      </div>
+      </Screen>
     );
   }
 }
