@@ -6,11 +6,11 @@
 }
 
 .language-label {
-  padding-left: 8px;
+  text-align :center;
 }
 
 .button-toggle-container {
-  padding: 20px 10px 60px 10px;
+  padding: 25px 0px;
   display: flex;
   justify-content: center;
 }

@@ -18,13 +18,13 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 200px;
+  height: 100vh;
 }
 
 .bottom-logo{
   position: fixed;
   width : 100%;
-  bottom: 10px;
+  top: 50px;
   padding : 10px;
 }
 
@@ -36,7 +36,7 @@
 
 .user-screens-wrapper .user-screens-card{
     position: absolute !important;
-    top: 65%;
+    bottom: 10px;
     left: 8px;
     right: 8px;
     padding: 16px !important;
