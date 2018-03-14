@@ -25,6 +25,10 @@ const inputStyle = {
   paddingBottom: 10,
 };
 
+const requiredStyle = {
+  color: "red",
+};
+
 const TextField = ({
   style,
   onChange,
@@ -36,6 +40,7 @@ const TextField = ({
   className = "",
   value,
   floatingLabelText,
+  isRequired,
 }) => {
   return (
     <MaterialUITextField
@@ -51,7 +56,7 @@ const TextField = ({
       fullWidth={fullWidth}
       hintText={hintText}
       hintStyle={hintStyle}
-      floatingLabelText={floatingLabelText}
+      floatingLabelText={[floatingLabelText, isRequired ? <span style={requiredStyle}> *</span> : null]}
       floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
       underlineShow={true}
       floatingLabelFixed={true}

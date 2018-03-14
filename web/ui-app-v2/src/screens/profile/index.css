@@ -7,12 +7,11 @@
   padding: 15px;
 }
 
-
 .profileBtn {
   height: 48px;
   position: fixed;
-  bottom: 65px;
-  padding: 0 8px;
+  bottom: 85px;
+  padding: 0 16px 0 16px;
   box-shadow: none !important;
 }
 
@@ -21,7 +20,7 @@
 }
 
 .profile-form-field > label {
-  color: "#3498db";
+  color: #03b0c6 !important;
 }
 
 .profileContainer {

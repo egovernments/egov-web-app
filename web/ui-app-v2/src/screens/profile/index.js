@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon} from "../../components";
+import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon } from "../../components";
 import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
@@ -53,7 +53,7 @@ class Profile extends Component {
     },
   ];
 
-  // Set/remove profile picture
+  /* Set/remove profile picture */
   setProfilePic = (url) => {
     if (url === "") url = img;
     this.setState({
@@ -61,17 +61,16 @@ class Profile extends Component {
     });
   };
   onClickAddPic = (isOpen) => {
-    //TO UPLOAD PIC- using phone native feature.
     this.setState({
       openUploadSlide: isOpen,
     });
   };
-  handleNameChange = event => {
+  handleNameChange = (event) => {
     this.setState({
       name: event.target.value,
     });
   };
-  handleMailChange = event => {
+  handleMailChange = (event) => {
     this.setState({
       emailId: event.target.value,
     });
@@ -81,7 +80,7 @@ class Profile extends Component {
       city: value,
     });
   };
-  onSaveClick = event => {
+  onSaveClick = (event) => {
     //To save/send the data from the Form
   };
   render() {
@@ -110,7 +109,9 @@ class Profile extends Component {
             hintText="Enter your Name"
             floatingLabelText="Name"
             onChange={this.handleNameChange}
+            isRequired={true}
           />
+          <CityPicker />
           <TextField
             className="profile-form-field"
             id="profile-form-email"
@@ -121,7 +122,6 @@ class Profile extends Component {
             hintText="Enter your Email Id"
             onChange={this.handleMailChange}
           />
-          <CityPicker />
         </form>
         <div className="profileBtnWrapper">
           <Button
