@@ -1,5 +1,10 @@
-.headerWithDrawer-list-poweredBy-wrapper
-{
+.headerWithDrawer-list-poweredBy-wrapper {
   background-color: #ffffff;
   height: 100%;
+}
+
+.mseva-logo {
+  display: block;
+  width: 90px;
+  margin-top: 35px !important;
 }

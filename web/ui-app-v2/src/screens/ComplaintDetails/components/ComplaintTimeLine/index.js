@@ -240,12 +240,6 @@ class ComplaintTimeLine extends Component {
     return (
       <div>
         <Card
-          card={{
-            style: {
-              backgroundColor: "#fff",
-              padding: "0px 0px 25px 0px",
-            },
-          }}
           textChildren={
             <div>
               <List items={items} />

@@ -11,10 +11,12 @@ import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import SearchComplaint from "./screens/SearchComplaint";
 import LocationDetails from "./screens/LocationDetails";
+import ContactUs from "./screens/ContactUs";
 // user related screens
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
+import CityPicker from "./screens/common/CityPicker";
 
 const Main = () => {
   return (
@@ -23,6 +25,7 @@ const Main = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
         <Route exact path="/language-selection" component={LanguageSelection} />
+        <PrivateRoute exact path="/contact-us" component={ContactUs} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details/:status?" component={ComplaintDetails} />

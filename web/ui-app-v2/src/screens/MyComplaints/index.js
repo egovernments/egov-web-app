@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
+import FeedbackPopup from "./components/FeedbackPopup";
 import { Icon, ImageModal } from "../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../assets/images/Garbage_1.jpg";
@@ -95,10 +96,22 @@ class MyComplaints extends Component {
       },
     ],
     source: "",
+    feedbackPopup: false,
+    checkboxOptions: [
+      { value: "Services", label: "Services" },
+      { value: "Resolution Time", label: "Resolution Time" },
+      { value: "Quality of work", label: "Quality of work" },
+      { value: "Others", label: "Others" },
+    ],
   };
 
-  imageOnClick = (source) => {
+  imageOnClick = source => {
     this.setState({ source });
+    // this.setState({ feedbackPopup: true });
+  };
+
+  handlePopupClose = () => {
+    this.setState({ feedbackPopup: false });
   };
 
   onCloseClick = () => {
@@ -111,6 +124,7 @@ class MyComplaints extends Component {
       <div className="complaints-main-container">
         <Complaints complaints={complaints} onClick={this.imageOnClick} />
         <ImageModal imageSource={source} hide={source ? false : true} onCloseClick={this.onCloseClick} />
+        <FeedbackPopup open={this.state.feedbackPopup} checkboxOptions={this.state.checkboxOptions} handleClose={this.handlePopupClose} />
         <div className="floating-button-cont">
           <FloatingActionButton className="floating-button">
             <Icon action="content" name="add" />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon, DropDown } from "../../components";
-import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+<<<<<<< gyans
+import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon} from "../../components";
+import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
 
@@ -66,12 +67,12 @@ class Profile extends Component {
       openUploadSlide: isOpen,
     });
   };
-  handleNameChange = (event) => {
+  handleNameChange = event => {
     this.setState({
       name: event.target.value,
     });
   };
-  handleMailChange = (event) => {
+  handleMailChange = event => {
     this.setState({
       emailId: event.target.value,
     });
@@ -81,7 +82,7 @@ class Profile extends Component {
       city: value,
     });
   };
-  onSaveClick = (event) => {
+  onSaveClick = event => {
     //To save/send the data from the Form
   };
   render() {
@@ -121,15 +122,7 @@ class Profile extends Component {
             hintText="Enter your Email Id"
             onChange={this.handleMailChange}
           />
-          <TextFieldIcon
-            floatingLabelText="City"
-            hintText="Enter your City"
-            iconPosition="after"
-            Icon={DownArrow}
-            fullWidth={true}
-            id="person-city"
-            name="person-city"
-          />
+          <CityPicker />
         </form>
         <div className="profileBtnWrapper">
           <Button

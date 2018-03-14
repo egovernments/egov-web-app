@@ -1,0 +1,10 @@
+.feedback-ratings-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 20px 0;
+}
+
+.feedback-popup-button-cont {
+  margin-top: 30px;
+}
