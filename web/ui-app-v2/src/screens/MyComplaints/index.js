@@ -105,7 +105,7 @@ class MyComplaints extends Component {
     ],
   };
 
-  imageOnClick = (source) => {
+  imageOnClick = source => {
     this.setState({ source });
     // this.setState({ feedbackPopup: true });
   };

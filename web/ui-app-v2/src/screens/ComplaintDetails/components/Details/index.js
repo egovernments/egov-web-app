@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { List, Card, Label, Image } from "../../../../components";
 import Location from "material-ui/svg-icons/maps/place";
+import FormateQuote from "material-ui/svg-icons/editor/format-quote";
 import NewComplaint from "material-ui/svg-icons/notification/sms-failed";
 import "./index.css";
 
@@ -29,41 +30,31 @@ class Details extends Component {
     return (
       <div>
         <Card
-          card={{
-            style: {
-              backgroundColor: "#fff",
-              padding: "0px 0px 25px 0px",
-            },
-          }}
           textChildren={
             <div>
               <List items={items} />
               <div key={10} className="container complaint-detail-full-width">
+                <div className="dark-heading">Potholes on the road</div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-7 status-color" label="STATUS" />
-                  <Label className="col-xs-5 status-result-color" labelStyle={{ color: "inherit" }} label={status} />
+                  <Label className="col-xs-6 status-color" label="Complaint No." />
+                  <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label="25467895" />
                 </div>
                 <br />
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-7 status-color" label="COMPLAINT" />
+                  <Label className="col-xs-6 status-color" label="Current Status" />
+                  <Label className="col-xs-6 status-result-color" labelStyle={{ color: "inherit" }} label={status} />
+                </div>
+                <br />
+                <div className="complaint-detail-detail-section-status row">
+                  <Label className="col-xs-6 status-color" label="Submission Date" />
                   <Label
-                    className="col-xs-5 status-result-color textWrap complaint-detail-detail-section-collapse-status-padding"
-                    label="Overflowing of bins"
+                    className="col-xs-6 status-result-color"
+                    label="11-Mar-18"
                     labelStyle={{ color: "inherit" }}
                   />
                 </div>
-                <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-7 status-color" label="APPLICATION NO" />
-                  <Label labelStyle={{ color: "inherit" }} className="col-xs-5 status-result-color" label="25467895" />
-                </div>
-                <br />
-                <Label
-                  className="complaint-detail-detail-section-details"
-                  label="Too much garbage lying on the road, its very dificult to cross the area."
-                  labelStyle={{ color: "inherit" }}
-                />
-                <br />
-                <div style={{ marginLeft: "16px" }}>
+
+                <div style={{ marginLeft: "16px",marginTop: "20px" }}>
                   <div className="row">
                     <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
                       <Image
@@ -94,9 +85,23 @@ class Details extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="complaint-detail-detail-section-location-section">
-                  <Location style={iconStyle} color={"#969696"} />
-                  <Label labelStyle={{ color: "inherit" }} label={"Sector 32, 1 main, Amritsar"} />
+
+                <div className="row" style={{ marginTop: "20px" }}>
+                  <div className="col-xs-2">
+                    <Location style={iconStyle} color={"#969696"}/>
+                  </div>
+                  <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
+                    <Label label={"Sector 32, 1 main, Amritsar"} className="status-result-color" labelStyle={{ color: "inherit" }}/>
+                  </div>
+                </div>
+
+                <div className="row" style={{ marginTop: "20px" }}>
+                  <div className="col-xs-2">
+                    <FormateQuote style={iconStyle} color={"#969696"}/>
+                  </div>
+                  <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
+                    <Label label={"Too much garbage lying on the road, its very dificult to cross the area."} className="status-result-color" labelStyle={{ color: "inherit" }}/>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Button, DropDown, TextField, MobileNumberField, TextFieldIcon, Card } from "../../../components";
-import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+import { Button, TextField, MobileNumberField, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
+import CityPicker from "../../common/CityPicker";
 import "./index.css";
 
 class Login extends Component {
@@ -10,17 +10,6 @@ class Login extends Component {
     name: "",
     phoneNumber: "",
   };
-
-  dropDownData = [
-    {
-      value: 1,
-      label: "Amritsar",
-    },
-    {
-      value: 2,
-      label: "Patiala",
-    },
-  ];
 
   login = () => {
     this.props.history.push("/otp");
@@ -35,7 +24,7 @@ class Login extends Component {
   };
 
   render() {
-    const { login, dropDownData, onNameChanged, onPhoneNumberChanged } = this;
+    const { login, onNameChanged, onPhoneNumberChanged } = this;
     const { name, phoneNumber } = this.state;
 
     return (
@@ -64,15 +53,7 @@ class Login extends Component {
                   fullWidth={true}
                   floatingLabelText="Name"
                 />
-                <TextFieldIcon
-                  floatingLabelText="City"
-                  hintText="Enter your City"
-                  iconPosition="after"
-                  fullWidth={true}
-                  Icon={DownArrow}
-                  id="person-city"
-                  name="person-city"
-                />
+                <CityPicker />
                 <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
               </form>
             </div>

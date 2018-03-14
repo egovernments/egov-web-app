@@ -20,7 +20,7 @@
 } */
 
 .status-result-color {
-  color: #484848;
+  color: #484848 !important;
 }
 
 .status-color {
@@ -29,7 +29,7 @@
 
 .complaint-detail-detail-section-details {
   margin-top: 20px;
-  color: #484848;
+  /* color: #464646; */
 }
 
 .complaint-detail-detail-section-padding-zero {

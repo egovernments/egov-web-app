@@ -16,6 +16,7 @@ import ContactUs from "./screens/ContactUs";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
+import CityPicker from "./screens/common/CityPicker";
 
 const Main = () => {
   return (
@@ -24,7 +25,7 @@ const Main = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
         <Route exact path="/language-selection" component={LanguageSelection} />
-        <Route exact path="/contact-us" component={ContactUs} />
+        <PrivateRoute exact path="/contact-us" component={ContactUs} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details/:status?" component={ComplaintDetails} />

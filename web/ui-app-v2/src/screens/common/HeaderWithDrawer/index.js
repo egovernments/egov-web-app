@@ -85,45 +85,6 @@ const locationStyle = {
 const _label_Name = "Name";
 const _label_Location = "Location";
 
-// const items = [
-//   {
-//     primaryText: "Home",
-//     leftIcon: <ActionHome />,
-//   },
-//   {
-//     primaryText: "Profile",
-//     leftIcon: <Profile />,
-//   },
-//   {
-//     primaryText: "Language",
-//     leftIcon: <Language />,
-//     secondaryText: (
-//       <ButtonGroup
-//         items={languageItems}
-//         onClick={onClick}
-//         selected={value}
-//         defaultStyle={defaultStyle}
-//         defaultLabelStyle={defaultLabelStyle}
-//         selectedStyle={selectedStyle}
-//         selectedLabelStyle={selectedLabelStyle}
-//         multiple={false}
-//       />
-//     ),
-//   },
-//   {
-//     primaryText: "Contact Us",
-//     leftIcon: <Call />,
-//   },
-//   {
-//     primaryText: "How it Works",
-//     leftIcon: <Help />,
-//   },
-//   {
-//     primaryText: "Logout",
-//     leftIcon: <Logout />,
-//   },
-// ];
-
 class HeaderWithDrawer extends Component {
   state = {
     languageItems: [
@@ -183,7 +144,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 
@@ -202,7 +163,7 @@ class HeaderWithDrawer extends Component {
           }}
         />
 
-        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -215,22 +176,6 @@ class HeaderWithDrawer extends Component {
           />
           <div className="headerWithDrawer-list-poweredBy-wrapper">
             <List items={this.listItems.items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
-            {/* <PoweredBy
-              divProps={{
-                style: {
-                  textAlign: "center",
-                  marginTop: "8%",
-                  marginBottom: "4%",
-                },
-              }}
-              image={{
-                source: poweredByLogo,
-                style: {
-                  display: "block",
-                  margin: "0 auto",
-                },
-              }}
-            /> */}
             <Image className="mseva-logo" source={`${logoMseva}`} />
           </div>
         </Drawer>
