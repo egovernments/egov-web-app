@@ -43,42 +43,14 @@ const Complaint = ({ index, item, history, onClick }) => {
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
               <span className="complaint-header text-bold dark-color">{item.header}</span>
-              {/* <FlatButton
-                onClick={(e) => {
-                  if (item.status == "ASSIGNED") {
-                    history.push("/complaint-details?status=assigned");
-                  } else if (item.status == "REJECTED") {
-                    history.push("/complaint-details?status=rejected");
-                  }
-                }}
-                className="complaint-track-button"
-                backgroundColor="transparent"
-                label={"Track"}
-                style={{
-                  border: "1px solid #f5a623",
-                  height: "auto",
-                  lineHeight: "auto",
-                  padding: "4px 8px",
-                  minWidth: "inherit",
-                }}
-                labelStyle={{
-                  color: "#f5a623",
-                  padding: 0,
-                  letterSpacing: "0.3px",
-                  display: "inline-block",
-                  height: "14px",
-                  lineHeight: "14px",
-                }}
-                hoverColor="none"
-              /> */}
-              {<span className="complaint-status-text text-bold" style={getStatusAndChangeColor(item.status).style}>{` ${item.status}`}</span>}
+              <span className="complaint-status-text text-bold" style={getStatusAndChangeColor(item.status).style}>{` ${item.status}`}</span>
             </div>
             <div className="complaint-date-cont">
               <Icon action="action" name="date-range" />
               <span className="complaint-date">{item.date}</span>
             </div>
             <div className="complaint-number-cont">
-              <span className="complaint-number cpmplaint-date">Complaint No {item.complaintNo}</span>
+              <span className="complaint-number complaint-date">Complaint No {item.complaintNo}</span>
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {

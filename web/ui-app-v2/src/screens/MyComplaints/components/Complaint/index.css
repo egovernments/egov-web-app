@@ -1,19 +1,9 @@
 .complaints-main-container {
   position: relative;
-  padding: 0 8px;
 }
 
 .complaints-card-main-cont:last-child {
   margin-bottom: 80px;
-}
-
-.complaint-card {
-  padding: 12px 8px 4px 8px !important;
-  margin: 8px 0;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
-}
-
-.complaints-card-main-cont {
 }
 
 .complaint-card-wrapper {
