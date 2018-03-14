@@ -1,45 +1,49 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MaterialUITextField from "material-ui/TextField";
-import "./index.css";
 
 const errorStyle = {
-  marginTop: "5px",
+  marginTop: 5,
 };
 
 const hintStyle = {
   fontSize: "14px",
 };
-const floatingLabelStyle = {
-  top: 18,
+const floatingLabelBaseStyle = {
+  top: 30,
   fontSize: "14px",
 };
 
-const floatingLabelShrinkStyle = {
+const floatingLabelBaseShrinkStyle = {
   fontSize: "12px",
+  color: "#00bcd1",
   transform: "scale(1) translate(0px, -16px)",
-  color: "#6090ae",
   fontWeight: 500,
 };
 
-const TextField = ({ style, onChange, id, disabled, placeholder, fullWidth = false, className = "", value, floatingLabelText }) => {
+const inputStyle = {
+  paddingBottom: 10,
+};
+
+const TextField = ({ style, onChange, id, disabled,floatingLabelStyle={}, hintText, fullWidth = true, className = "", value, floatingLabelText }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
       value={value}
       onChange={onChange}
       disabled={disabled}
+      inputStyle={inputStyle}
       className={`textfield ${className}`}
-      underlineShow={false}
       style={style}
       id={id}
-      floatingLabelShrinkStyle={floatingLabelShrinkStyle}
+      floatingLabelShrinkStyle={floatingLabelBaseShrinkStyle}
       fullWidth={fullWidth}
-      hintText={placeholder}
+      hintText={hintText}
       hintStyle={hintStyle}
       floatingLabelText={floatingLabelText}
-      floatingLabelStyle={floatingLabelStyle}
-      floatingLabelFixed={false}
+      floatingLabelStyle={{...floatingLabelBaseStyle, ...floatingLabelStyle}}
+      underlineShow={true}
+      floatingLabelFixed={true}
     />
   );
 };
@@ -50,10 +54,9 @@ TextField.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
+  hintText: PropTypes.string,
   isRequired: PropTypes.bool,
   hide: PropTypes.bool,
-  hintText: PropTypes.string,
   floatingLabelText: PropTypes.string,
   className: PropTypes.string,
 };

@@ -7,23 +7,24 @@ const containerStyle = {
   position: "relative",
   display: "inline-block",
   width: "100%",
+  boxSizing: "border-box",
 };
 
-const getStyles = iconPosition => {
-  const textFieldStyle = {
-    padding: "15px",
-    background: "#fff",
-    boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
-  };
+const getStyles = (iconPosition, textFieldProps) => {
+  const textFieldStyle = {};
 
   const iconStyle = {
     position: "absolute",
     color: "#969696",
     zIndex: 2,
-    top: 18,
+    bottom: 15,
   };
-  iconStyle[iconPosition === "before" ? "left" : "right"] = 5;
+  iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 30 : 0;
+
+  if (textFieldProps.floatingLabelText) {
+    iconStyle.top = 30;
+  }
 
   return {
     iconStyle,
@@ -31,19 +32,12 @@ const getStyles = iconPosition => {
   };
 };
 
-const TextFieldIcon = ({ value = "", Icon, iconStyle = {}, textFieldStyle = {}, iconPosition = "after", hintText, onChange }) => {
-  const style = getStyles(iconPosition);
+const TextFieldIcon = ({ Icon, iconStyle = {}, textFieldStyle = {}, iconPosition = "after", ...textFieldProps }) => {
+  const style = getStyles(iconPosition, textFieldProps);
   return (
     <div style={containerStyle}>
       <Icon style={{ ...style.iconStyle, ...iconStyle }} />
-      <TextField
-        value={value}
-        onChange={onChange}
-        fullWidth={true}
-        style={{ ...style.textFieldStyle, ...textFieldStyle }}
-        underlineShow={false}
-        placeholder={hintText}
-      />
+      <TextField name="textfield-icon" style={{ ...style.textFieldStyle, ...textFieldStyle }} fullWidth={false} {...textFieldProps} />
     </div>
   );
 };
@@ -53,8 +47,6 @@ TextFieldIcon.propTypes = {
   textFieldStyle: PropTypes.object,
   iconProps: PropTypes.object,
   iconStyle: PropTypes.object,
-  onChange: PropTypes.func,
-  hint: PropTypes.string,
 };
 
 export default TextFieldIcon;

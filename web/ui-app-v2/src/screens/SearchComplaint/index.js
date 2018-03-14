@@ -64,7 +64,7 @@ export default class SearchComplaint extends Component {
     const resultsForDisplay = prepareResultsForDisplay(results);
     const transformedDataSource = generateDataSource(dataSource);
     return (
-      <div style={{ marginBottom :60, padding: "8px 8px 0px 8px", background: "#fff" }}>
+      <div style={{ marginBottom: 60, padding: "8px 8px 0px 8px", background: "#fff" }}>
         <AutoSuggest dataSource={transformedDataSource} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
         {displayInitialList ? (
           this.renderListWithHeader(dataSource)
