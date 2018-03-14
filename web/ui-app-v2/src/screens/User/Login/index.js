@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Button, DropDown, TextField, TextFieldIcon, Card } from "../../../components";
+import { Button, DropDown, TextField, MobileNumberField, TextFieldIcon, Card } from "../../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
@@ -45,7 +45,7 @@ class Login extends Component {
           textChildren={
             <div>
               <form>
-                <TextField
+                <MobileNumberField
                   id="person-phone-number"
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
@@ -68,6 +68,7 @@ class Login extends Component {
                   floatingLabelText="City"
                   hintText="Enter your City"
                   iconPosition="after"
+                  fullWidth={true}
                   Icon={DownArrow}
                   id="person-city"
                   name="person-city"
