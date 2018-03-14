@@ -1,44 +1,49 @@
 import React from "react";
-import { Image, Card, Icon } from "../../../../components";
+import { Image, Card, Icon, Button } from "../../../../components";
 import FlatButton from "material-ui/FlatButton";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 
 const imageStyles = {
-  minHeight: "106px",
+  minHeight: "87px",
 };
-const getStatusAndChangeColor = (status) => {
-  let style = {};
+const getStatusAndChangeColor = (status, assignee) => {
+  let statusObj = {
+    style: {},
+    message: "",
+  };
   switch (status) {
     case "OPEN":
-      style = {
-        color: "#d84f41",
+      statusObj.style = {
+        color: "#f89a3f",
       };
+      statusObj.message = `Complaint Re-assigned to ${assignee}`;
       break;
-    case "CLOSE":
-      style = {
-        color: "#55970a",
+    case "CLOSED":
+      statusObj.style = {
+        color: "#5385a6",
       };
+      statusObj.message = `Complaint resolved. Please rate`;
       break;
     default:
-      style = {
+      statusObj.style = {
         color: "#484848",
       };
+      statusObj.message = `Complaint Re-assigned to ${assignee}`;
   }
-  return style;
+  return statusObj;
 };
 
 const Complaint = ({ index, item, history, onClick }) => {
   return (
     <div id={"complaint-" + index} className="complaints-card-main-cont">
       <Card
-        card={{ padding: 0 }}
         className="complaint-card"
         textChildren={
           <div className="complaint-card-wrapper">
             <div className="complaint-header-cont">
               <span className="complaint-header text-bold dark-color">{item.header}</span>
-              <FlatButton
+              {/* <FlatButton
                 onClick={(e) => {
                   if (item.status == "ASSIGNED") {
                     history.push("/complaint-details?status=assigned");
@@ -65,17 +70,15 @@ const Complaint = ({ index, item, history, onClick }) => {
                   lineHeight: "14px",
                 }}
                 hoverColor="none"
-              />
+              /> */}
+              {<span className="complaint-status-text text-bold" style={getStatusAndChangeColor(item.status).style}>{` ${item.status}`}</span>}
             </div>
-            <div className="complaint-address-cont">
-              <Icon action="maps" name="place" />
-              <span className="complaint-address">{item.address}</span>
+            <div className="complaint-date-cont">
+              <Icon action="action" name="date-range" />
+              <span className="complaint-date">{item.date}</span>
             </div>
-            <div className="complaint-status-cont">
-              <span className="complaint-status-text dark-color text-bold">
-                Status :
-                <span className="text-bold" style={getStatusAndChangeColor(item.status)}>{` ${item.status}`}</span>
-              </span>
+            <div className="complaint-number-cont">
+              <span className="complaint-number cpmplaint-date">Complaint No {item.complaintNo}</span>
             </div>
             <div className="complaint-image-cont">
               {item.images.map((image, index) => {
@@ -92,6 +95,29 @@ const Complaint = ({ index, item, history, onClick }) => {
                   </div>
                 );
               })}
+            </div>
+            <div className="complaint-status-cont">
+              <span className="complaint-status-text dark-color">{getStatusAndChangeColor(item.status, item.assignee).message}</span>
+            </div>
+            <div className="complaint-track-button-cont">
+              <Button
+                primary={true}
+                label={"TRACK"}
+                style={{
+                  height: "auto",
+                  lineHeight: "auto",
+                  minWidth: "inherit",
+                }}
+                labelStyle={{
+                  color: "#ffffff",
+                  padding: "0 16px",
+                  letterSpacing: "0.6px",
+                  display: "inline-block",
+                  height: "14px",
+                  fontSize: "12px",
+                  lineHeight: "14px",
+                }}
+              />
             </div>
           </div>
         }

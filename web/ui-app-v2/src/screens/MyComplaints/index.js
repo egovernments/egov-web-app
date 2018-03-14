@@ -15,41 +15,47 @@ class MyComplaints extends Component {
   state = {
     complaints: [
       {
-        header: "Potholes",
-        address: "#18/2A, Ambalipura village, Bellandur Gate",
-        status: "REJECTED",
-        images: [
-          {
-            source: Potholes_1,
-          },
-          {
-            source: Potholes_2,
-          },
-          {
-            source: Potholes_3,
-          },
-        ],
-      },
-      {
-        header: "Potholes",
-        address: "#18/2A, Ambalipura village, Bellandur Gate",
-        status: "ASSIGNED",
-        images: [
-          {
-            source: Potholes_1,
-          },
-          {
-            source: Potholes_2,
-          },
-          {
-            source: Potholes_3,
-          },
-        ],
-      },
-      {
-        header: "Potholes",
-        address: "#18/2A, Ambalipura village, Bellandur Gate",
+        header: "Potholes on the road",
+        date: "18-Mar-18",
         status: "OPEN",
+        assignee: "Dharmendra Pal",
+        complaintNo: "ARN 180311-05",
+        images: [
+          {
+            source: Potholes_1,
+          },
+          {
+            source: Potholes_2,
+          },
+          {
+            source: Potholes_3,
+          },
+        ],
+      },
+      {
+        header: "Potholes on the road",
+        date: "18-Mar-18",
+        status: "CLOSED",
+        assignee: "Dharmendra Pal",
+        complaintNo: "ARN 180311-05",
+        images: [
+          {
+            source: Potholes_1,
+          },
+          {
+            source: Potholes_2,
+          },
+          {
+            source: Potholes_3,
+          },
+        ],
+      },
+      {
+        header: "Potholes on the road",
+        date: "18-Mar-18",
+        status: "OPEN",
+        assignee: "Dharmendra Pal",
+        complaintNo: "ARN 180311-05",
         images: [
           {
             source: Potholes_1,
@@ -64,8 +70,10 @@ class MyComplaints extends Component {
       },
       {
         header: "Garbage",
-        address: "#21, Jakkasandra, Kormangala",
-        status: "CLOSE",
+        date: "18-Mar-18",
+        status: "CLOSED",
+        assignee: "Dharmendra Pal",
+        complaintNo: "ARN 180311-05",
         images: [
           {
             source: Garbage_1,
@@ -80,8 +88,10 @@ class MyComplaints extends Component {
       },
       {
         header: "Streetlight not working",
-        address: "#18/2A, Ambalipura village, Bellandur Gate",
+        date: "18-Mar-18",
         status: "OPEN",
+        assignee: "Dharmendra Pal",
+        complaintNo: "ARN 180311-05",
         images: [
           {
             source: Potholes_1,
@@ -105,7 +115,7 @@ class MyComplaints extends Component {
     ],
   };
 
-  imageOnClick = source => {
+  imageOnClick = (source) => {
     this.setState({ source });
     // this.setState({ feedbackPopup: true });
   };
