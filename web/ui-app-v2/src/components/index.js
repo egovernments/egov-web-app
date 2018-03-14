@@ -21,7 +21,7 @@ import BottomNavigation from "./BottomNavigation";
 import Tabs from "./Tabs";
 import MapLocation from "./MapLocation";
 import List from "./List";
-import AutoSuggest from "./Autosuggest";
+import AutoSuggest from "./AutoSuggest";
 import ProfileSection from "./ProfileSection";
 import Ratings from "./Ratings";
 import ButtonGroup from "./ButtonGroup";

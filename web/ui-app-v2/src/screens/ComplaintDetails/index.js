@@ -63,8 +63,8 @@ class ComplaintDetails extends Component {
   render() {
     let { status, details, timeLine, comments } = this.state;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeroPadding">
-        <Status {...status} />
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+        {/*<Status {...status} />*/}
         <Details {...details} />
         <ComplaintTimeLine status={status.status} timeLine={timeLine} />
         <Comments comments={comments} />
