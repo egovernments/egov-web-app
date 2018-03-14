@@ -9,12 +9,12 @@ const errorStyle = {
 const hintStyle = {
   fontSize: "14px",
 };
-const floatingLabelStyle = {
+const floatingLabelBaseStyle = {
   top: 30,
   fontSize: "14px",
 };
 
-const floatingLabelShrinkStyle = {
+const floatingLabelBaseShrinkStyle = {
   fontSize: "12px",
   color: "#00bcd1",
   transform: "scale(1) translate(0px, -16px)",
@@ -25,7 +25,7 @@ const inputStyle = {
   paddingBottom: 10,
 };
 
-const TextField = ({ style, onChange, id, disabled, hintText, fullWidth = false, className = "", value, floatingLabelText }) => {
+const TextField = ({ style, onChange, id, disabled,floatingLabelStyle={}, hintText, fullWidth = true, className = "", value, floatingLabelText }) => {
   return (
     <MaterialUITextField
       errorStyle={errorStyle}
@@ -36,12 +36,12 @@ const TextField = ({ style, onChange, id, disabled, hintText, fullWidth = false,
       className={`textfield ${className}`}
       style={style}
       id={id}
-      floatingLabelShrinkStyle={floatingLabelShrinkStyle}
+      floatingLabelShrinkStyle={floatingLabelBaseShrinkStyle}
       fullWidth={fullWidth}
       hintText={hintText}
       hintStyle={hintStyle}
       floatingLabelText={floatingLabelText}
-      floatingLabelStyle={floatingLabelStyle}
+      floatingLabelStyle={{...floatingLabelBaseStyle, ...floatingLabelStyle}}
       underlineShow={true}
       floatingLabelFixed={true}
     />

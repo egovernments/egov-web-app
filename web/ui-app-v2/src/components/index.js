@@ -1,5 +1,6 @@
 import TextField from "./TextField";
 import TextFieldIcon from "./TextFieldIcon";
+import MobileNumberField from "./MobileNumberField";
 import SelectField from "./DropDown";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
@@ -33,6 +34,7 @@ export {
   Label,
   Image,
   TextField,
+  MobileNumberField,
   TextFieldIcon,
   SelectField,
   Checkbox,

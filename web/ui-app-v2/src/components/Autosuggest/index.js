@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import SearchIcon from "material-ui/svg-icons/action/search";
-import SearchBar from "../TextFieldIcon";
+import TextFieldIcon from "../TextFieldIcon";
 
 export default class AutoSuggest extends Component {
   static propTypes = { callback: PropTypes.func, dataSource: PropTypes.array, searchKey: PropTypes.string };
@@ -31,7 +31,7 @@ export default class AutoSuggest extends Component {
 
     return (
       <div>
-        <SearchBar iconPosition="before" hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
+        <TextFieldIcon iconPosition="before" fullWidth={true} hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
       </div>
     );
   }
