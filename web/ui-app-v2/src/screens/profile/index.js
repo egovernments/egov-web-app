@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ProfileSection, Button, Icon, TextField, TextFieldIcon, DropDown } from "../../components";
+import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon, DropDown } from "../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
@@ -24,6 +24,11 @@ const profileStyles = {
     paddingBottom: 30,
     backgroundColor: "#e0e0e0",
   },
+  UploadDrawerLabelStyle: {
+    fontFamily: "Roboto",
+    fontSize: "14px",
+    letterSpacing: "0.3px",
+  },
 };
 class Profile extends Component {
   constructor(props) {
@@ -32,6 +37,8 @@ class Profile extends Component {
       name: "Jaswinder",
       emailId: "abc@gmail.com",
       city: 1,
+      openUploadSlide: false,
+      img: img,
     };
   }
 
@@ -45,8 +52,19 @@ class Profile extends Component {
       label: "Patiala",
     },
   ];
-  onClickAddPic = () => {
+
+  // Set/remove profile picture
+  setProfilePic = (url) => {
+    if (url === "") url = img;
+    this.setState({
+      img: url,
+    });
+  };
+  onClickAddPic = (isOpen) => {
     //TO UPLOAD PIC- using phone native feature.
+    this.setState({
+      openUploadSlide: isOpen,
+    });
   };
   handleNameChange = (event) => {
     this.setState({
@@ -78,7 +96,7 @@ class Profile extends Component {
             addIconName="add-a-photo"
             addIconStyle={profileStyles.addIconStyle}
             cardStyles={profileStyles.cardStyles}
-            imgSrc={img}
+            imgSrc={this.state.img}
             onClickAddPic={this.onClickAddPic}
           />
         </div>
@@ -123,6 +141,18 @@ class Profile extends Component {
             onClick={this.onSaveClick}
             style={{ marginTop: 53 }}
           />
+        </div>
+        <div>
+          {this.state.openUploadSlide && (
+            <UploadDrawer
+              openUploadSlide={this.state.openUploadSlide}
+              galleryIcon={true}
+              removeIcon={true}
+              labelStyle={profileStyles.UploadDrawerLabelStyle}
+              setProfilePic={this.setProfilePic}
+              onClickAddPic={this.onClickAddPic}
+            />
+          )}
         </div>
       </div>
     );

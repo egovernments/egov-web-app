@@ -29,6 +29,7 @@ import DropDown from "./DropDown";
 import Icon from "./Icon";
 import InfoTable from "./InfoTable";
 import ImageModal from "./ImageModal";
+import UploadDrawer from "./UploadDrawer";
 
 export {
   Label,
@@ -62,4 +63,5 @@ export {
   Icon,
   InfoTable,
   ImageModal,
+  UploadDrawer,
 };
