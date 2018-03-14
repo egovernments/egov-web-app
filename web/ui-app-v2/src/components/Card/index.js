@@ -2,19 +2,16 @@ import React from "react";
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from "material-ui/Card";
 import PropTypes from "prop-types";
 
-const CardUi = ({ card, header, mediaOverlay, mediaChildren, title, text, textChildren, actionChildren, className }) => {
+import "./index.css";
+
+const CardUi = (props) => {
+  let {id, card, header, mediaOverlay, mediaChildren, title, text, textChildren, actionChildren, className=""}=props;
   return (
-    <Card style={{ backgroundColor: "#fff", margin: "16px 0px", padding: "8px" }} {...card} className={className}>
-      {header && <CardHeader {...header} />}
-      {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
-      {title && <CardTitle {...title} />}
-      {textChildren && (
-        <CardText style={{ padding: "0px" }} {...text}>
-          {textChildren}
-        </CardText>
-      )}
-      {actionChildren && <CardActions>{actionChildren}</CardActions>}
-    </Card>
+    <div className={`rainmaker-card ${className}`} {...card}>
+      {
+        textChildren
+      }
+    </div>
   );
 };
 
@@ -28,3 +25,16 @@ CardUi.propTypes = {
   textChildren: PropTypes.element,
   actionChildren: PropTypes.element,
 };
+
+
+// <Card style={{ backgroundColor: "#fff", margin: "16px 0px", padding: "8px" }} {...card} className={className}>
+//   {header && <CardHeader {...header} />}
+//   {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
+//   {title && <CardTitle {...title} />}
+//   {textChildren && (
+//     <CardText style={{ padding: "0px" }} {...text}>
+//       {textChildren}
+//     </CardText>
+//   )}
+//   {actionChildren && <CardActions>{actionChildren}</CardActions>}
+// </Card>

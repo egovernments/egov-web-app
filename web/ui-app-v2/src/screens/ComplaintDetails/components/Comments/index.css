@@ -1,4 +1,12 @@
-.complaint-details-comments-section-comment-and-time-letterSpacing
-{
+.complaint-details-comments-section-comment-and-time-letterSpacing {
   margin-top: 6px !important;
+}
+
+.complaint-details-comments-section {
+  margin-top: -11px;
+  background-color: #f2f2f2;
+  width: 96%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 8px;
 }
