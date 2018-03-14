@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { AppBar, Drawer, List, ProfileSection, PoweredBy, Image, ButtonGroup } from "../../../components";
 import Badge from "material-ui/Badge";
 import IconButton from "material-ui/IconButton";
+import ContentInbox from "material-ui/svg-icons/content/inbox";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Call from "material-ui/svg-icons/communication/call";
 import Logout from "material-ui/svg-icons/action/power-settings-new";

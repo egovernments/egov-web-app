@@ -1371,14 +1371,13 @@ pre code {
   }
 }
 
-
 /* additional utilities*/
-.text-center{
-  text-align : center;
+.text-center {
+  text-align: center;
 }
-.text-right{
-  text-align : right;
+.text-right {
+  text-align: right;
 }
-.text-center{
-  text-align : left;
+.text-left {
+  text-align: left;
 }
