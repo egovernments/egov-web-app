@@ -13,8 +13,7 @@ const intialState = {
 };
 
 const framework = (state = intialState, action) => {
-  const { type } = action;
-  const { field } = action;
+  const { type, field } = action;
 
   switch (type) {
     case "HANDLE_CHANGE":
@@ -22,10 +21,6 @@ const framework = (state = intialState, action) => {
       const newForm = _.clone(state.form);
       _.set(newForm, jsonPath, field.value);
       return { ...state, form: newForm };
-
-    case "SET_SPECS":
-      const { specs } = action;
-      return { ...state, specs };
 
     case "SUBMIT_FORM_DATA":
       return state;

@@ -52,12 +52,20 @@ class OTP extends Component {
               </div>
 
               <form>
-                <TextField onChange={onOtpChanged} id="otp" disabled={disabled} value={otp} fullWidth={true} floatingLabelText="Enter OTP" />
+                <TextField
+                  onChange={onOtpChanged}
+                  id="otp"
+                  disabled={disabled}
+                  value={otp}
+                  fullWidth={true}
+                  hintText="Enter OTP"
+                  floatingLabelText="OTP"
+                />
                 <div style={{ margin: "10px 0px 10px" }} className="text-right">
                   <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label id="otp-resend" className="otp-resend" label="RESEND" />
                 </div>
-                <Button id="otp-start" onClick={onOtpSubmit} primary={true} label="Start" fullWidth={true} />
+                <Button id="otp-start" onClick={onOtpSubmit} primary={true} label="Get Started" fullWidth={true} />
               </form>
             </div>
           }

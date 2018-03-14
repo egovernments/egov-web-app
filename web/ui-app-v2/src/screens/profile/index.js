@@ -1,20 +1,12 @@
 import React, { Component } from "react";
-import { ProfileSection, Button, Icon, TextField, DropDown } from "../../components";
+import { ProfileSection, Button, Icon, TextField, TextFieldIcon, DropDown } from "../../components";
+import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
 
 const imgStyle = { width: 143, height: 143 };
 
 const profileStyles = {
-  formFieldStyle: {
-    background: "#ffffff",
-    paddingBottom: "16px",
-    border: "0.5px solid  #e6e6e6",
-    fontSize: "14px",
-    fontWeight: "normal",
-    color: "#484848",
-    textAlign: "left",
-  },
   addIconStyle: {
     backgroundColor: "#3498db",
     position: "absolute",
@@ -97,8 +89,8 @@ class Profile extends Component {
             underlineShow={false}
             fullWidth={true}
             value={name}
+            hintText="Enter your Name"
             floatingLabelText="Name"
-            style={profileStyles.formFieldStyle}
             onChange={this.handleNameChange}
           />
           <TextField
@@ -108,20 +100,17 @@ class Profile extends Component {
             fullWidth={true}
             value={emailId}
             floatingLabelText="Email Id"
-            style={profileStyles.formFieldStyle}
+            hintText="Enter your Email Id"
             onChange={this.handleMailChange}
           />
-
-          <DropDown
-            name="cities"
-            className="profile-form-field"
-            id="profile-form-cities"
-            value={this.state.city}
-            dropDownData={this.dropDownData}
-            fullWidth={true}
+          <TextFieldIcon
             floatingLabelText="City"
-            style={profileStyles.formFieldStyle}
-            onChange={this.onDDChange}
+            hintText="Enter your City"
+            iconPosition="after"
+            Icon={DownArrow}
+            fullWidth={true}
+            id="person-city"
+            name="person-city"
           />
         </form>
         <div className="profileBtnWrapper">
@@ -132,7 +121,7 @@ class Profile extends Component {
             label="SAVE"
             fullWidth={true}
             onClick={this.onSaveClick}
-            style={{ marginTop: 53, height: 48 }}
+            style={{ marginTop: 53 }}
           />
         </div>
       </div>
