@@ -31,7 +31,7 @@ const Label = ({
   let additionalStyles = {};
 
   if (icon) {
-    additionalStyles.padding = "0px 15px";
+    additionalStyles.padding = "0px 16px 6px 16px";
   }
   if (color) {
     additionalStyles.color = color;
