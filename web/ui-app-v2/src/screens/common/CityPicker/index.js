@@ -62,6 +62,7 @@ export default class CityPickerDialog extends Component {
             Icon={DownArrow}
             id="person-city"
             name="person-city"
+            isRequired={true}
           />
         </div>
         <Dialog bodyStyle={{ padding: "5px" }} title="Choose City" modal={false} open={open} onRequestClose={onClose} autoScrollBodyContent={true}>
