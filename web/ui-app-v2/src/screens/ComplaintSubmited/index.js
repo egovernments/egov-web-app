@@ -1,54 +1,32 @@
 import React, { Component } from "react";
 import { Card, Label, Icon } from "../../components";
+import { withRouter } from "react-router";
 import "./index.css";
 
 class ComplaintDetails extends Component {
-  state = {
-    status: {
-      // status: "ASSIGNED",
-      // message: "JR.INSPECTOR - J KUMAR",
-      // bgColor: "#f5a623",
-      status: "COMPLETED",
-      // message: "THANK YOU for your Application!",
-      // message: (
-      //   <div>
-      //     <span>THANK YOU </span> <br /> <span>for your Application!</span>
-      //   </div>
-      // ),
-      bgColor: "#2ecc71",
-    },
-    details: {
-      status: "Assigned",
-      complaint: "Overflow of bins",
-      applicationNo: "1234566",
-      description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
-      images: [
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-      ],
-      location: "Sector 32, 1 main, Amritsar",
-    },
-  };
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.history.push("");
+    }, 6000);
+  }
   render() {
-    let { status, details, timeLine, comments } = this.state;
     let complaintnumber = 25436789;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeroPadding">
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8  complaint-submitted-card">
         <Card
           textChildren={
             <div>
-              <Label label={"Complaint Registerd Successfully"} />
-              <Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332" }} />
-              <Label label={"Thank You!"} />
-              <Label label={`Complaint Number. ${complaintnumber}`} />
-              <Label label={`You can track the status of your complaint on this app anytime!`} />
+              <div className="complaint-submitted-boldlabel">
+                <Label label={"Complaint Registerd Successfully"} />
+                <Label
+                  icon={<Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332", marginBottom: "20px" }} />}
+                />
+                <Label label={"Thank You!"} />
+                <Label label={`Complaint Number. ${complaintnumber}`} />
+              </div>
+              <div className="complaint-submitted-label">
+                <Label label={`You can track the status of your complaint on this app anytime!`} />
+              </div>
             </div>
           }
         />
