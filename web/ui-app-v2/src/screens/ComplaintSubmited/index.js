@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Status from "./components/Status";
-import Details from "./components/Details";
-
+import { Card, Label, Icon } from "../../components";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -40,10 +38,20 @@ class ComplaintDetails extends Component {
   };
   render() {
     let { status, details, timeLine, comments } = this.state;
+    let complaintnumber = 25436789;
     return (
       <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeroPadding">
-        <Status {...status} />
-        <Details {...details} />
+        <Card
+          textChildren={
+            <div>
+              <Label label={"Complaint Registerd Successfully"} />
+              <Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332" }} />
+              <Label label={"Thank You!"} />
+              <Label label={`Complaint Number. ${complaintnumber}`} />
+              <Label label={`You can track the status of your complaint on this app anytime!`} />
+            </div>
+          }
+        />
       </div>
     );
   }
