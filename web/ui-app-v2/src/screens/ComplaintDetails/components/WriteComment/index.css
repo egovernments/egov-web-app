@@ -5,6 +5,7 @@
   align-items: center;
   padding-left: 8px;
   padding-right: 8px;
+  opacity: 0.74;
 }
 
 .write-complaint-chat-field textarea {

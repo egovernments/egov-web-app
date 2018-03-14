@@ -65,7 +65,6 @@ class ComplaintDetails extends Component {
     let { status, details, timeLine, comments } = this.state;
     return (
       <Screen>
-        {/*<Status {...status} />*/}
         <Details {...details} />
         <ComplaintTimeLine status={status.status} timeLine={timeLine} />
         <Comments comments={comments} />
