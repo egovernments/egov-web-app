@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Button, DropDown, TextField, Card } from "../../../components";
+import { Button, DropDown, TextField, TextFieldIcon, Card } from "../../../components";
+import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
@@ -42,26 +43,34 @@ class Login extends Component {
         <Card
           className="user-screens-card"
           textChildren={
-            <div style={{ marginTop: "50px" }}>
+            <div>
               <form>
-                <TextField value={name} onChange={onNameChanged} name="name" id="login-name-field" fullWidth={true} floatingLabelText="Name" />
-                <DropDown
-                  id="login-city-field"
-                  name="cities"
-                  value={1}
-                  dropDownData={dropDownData}
-                  fullWidth={true}
-                  floatingLabelText="City"
-                  style={{ border: "1px solid #e6e6e6" }}
-                />
                 <TextField
-                  id="login-phone-number"
+                  id="person-phone-number"
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
                   name="phone-number"
                   underlineShow={false}
                   fullWidth={true}
+                  hintText="Enter your Mobile Number"
                   floatingLabelText="Phone Number"
+                />
+                <TextField
+                  value={name}
+                  onChange={onNameChanged}
+                  name="person-name"
+                  hintText="Enter your Name"
+                  id="person-name"
+                  fullWidth={true}
+                  floatingLabelText="Name"
+                />
+                <TextFieldIcon
+                  floatingLabelText="City"
+                  hintText="Enter your City"
+                  iconPosition="after"
+                  Icon={DownArrow}
+                  id="person-city"
+                  name="person-city"
                 />
                 <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
               </form>
