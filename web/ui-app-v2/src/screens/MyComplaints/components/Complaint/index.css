@@ -1,5 +1,6 @@
 .complaints-main-container {
   position: relative;
+  padding: 0 8px;
 }
 
 .complaints-card-main-cont:last-child {
@@ -7,7 +8,7 @@
 }
 
 .complaint-card {
-  padding: 16px 16px 8px 16px !important;
+  padding: 12px 8px 4px 8px !important;
   margin: 8px 0;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
 }
@@ -23,26 +24,47 @@
   display: flex;
 }
 
-.complaint-header-cont {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
 .complaint-header,
 .complaint-status-text {
   line-height: 1;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.7px;
 }
 
-.complaint-address-cont,
+.complaint-header {
+  font-size: 16px;
+}
+
+.complaint-date {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+
+.complaint-date-cont,
 .complaint-status-cont,
 .complaint-image-cont,
 .complaint-header-cont {
-  padding-bottom: 13px;
+  padding-bottom: 16px;
 }
 
-.complaint-address-cont {
+.complaint-number-cont {
+  padding-bottom: 8px;
+}
+
+.complaint-number {
+  display: block;
+  line-height: 14px;
+  height: 14px;
+  font-size: 12px;
+}
+
+.complaint-header-cont {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 3px;
+}
+
+.complaint-date-cont {
   display: flex;
 }
 
@@ -50,16 +72,13 @@
   padding: 0;
 }
 
-.complaint-address {
-}
-
-.complaint-address-cont > svg {
+.complaint-date-cont > svg {
   color: #969696 !important;
   fill: currentColor !important;
   padding: 0 !important;
   margin-right: 10px;
-  width: 17px !important;
-  height: 17px !important;
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .complaint-image-cont {
@@ -76,4 +95,12 @@
 
 .complaint-image-wrapper:last-child {
   margin: 0;
+}
+
+.complaint-track-button-cont {
+  text-align: right;
+}
+
+.complaint-track-button-cont i {
+  margin: 0 !important;
 }

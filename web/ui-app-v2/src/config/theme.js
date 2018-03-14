@@ -10,7 +10,7 @@ const theme = {
     borderColor: "#e6e6e6",
   },
   button: {
-    height: 56,
+    height: 48,
   },
   raisedButton: {
     primaryColor: "#00bcd1",
