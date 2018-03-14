@@ -6,21 +6,11 @@ const Button = (props) => {
   let { label, icon = {}, className, onClick, backgroundColor, labelColor, fullWidth, disabled, primary = false, style = {}, id } = props;
   return (
     <RaisedButton
-      className={className}
-      style={style}
-      disabled={disabled}
-      fullWidth={fullWidth}
-      primary={primary}
-      label={label}
-      onClick={onClick}
-      backgroundColor={backgroundColor}
-      labelColor={labelColor}
       icon={
         <i style={icon.style} className="material-icons">
           {icon.name}
         </i>
       }
-      id={id}
       {...props}
     />
   );
