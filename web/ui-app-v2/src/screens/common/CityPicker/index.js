@@ -32,15 +32,11 @@ export default class CityPickerDialog extends Component {
     this.setState({ open: false });
   };
 
-  onCitySelected = city => {
-    this.setState({ city });
-  };
-
-  onItemClick = index => {
-    const city = this.cities[index].text;
-    const { onCitySelected, onClose } = this;
-    onCitySelected(city);
-    onClose();
+  onItemClick = (item, index) => {
+    const city = item.primaryText;
+    this.setState({ city }, () => {
+      this.onClose();
+    });
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {

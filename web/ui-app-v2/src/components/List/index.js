@@ -18,7 +18,7 @@ const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContaine
         item.nestedItems = renderListItems(nestedItems);
       }
 
-      return <ListItem onClick={() => onItemClick(index)} containerElement={listItemContainer} key={index} {...item} />;
+      return <ListItem onClick={() => onItemClick(item, index)} containerElement={listItemContainer} key={index} {...item} />;
     });
   };
 
