@@ -4,16 +4,13 @@ import { ButtonGroup, Button, Label, Card } from "../../../components";
 import UserScreensWrapper from "../components/UserScreenWrapper";
 import "./index.css";
 
-// const defaultBGColor = "transparent";
-// const BGColor = "#3498db";
-
 const selectedLabelStyle = {
   color: "#ffffff",
 };
 
 const selectedStyle = {
-  backgroundColor: "#3498db",
-  border: "1px solid #3498db",
+  backgroundColor: "#00bcd1",
+  border: "1px solid #00bcd1",
 };
 
 const defaultStyle = {
