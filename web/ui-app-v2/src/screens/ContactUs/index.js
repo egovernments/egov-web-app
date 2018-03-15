@@ -123,7 +123,7 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      <div class="contactus-main-cont">
+      <div className="contactus-main-cont">
         <Card
           className="contactus-main-card"
           textChildren={
