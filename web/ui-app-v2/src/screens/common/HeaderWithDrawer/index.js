@@ -109,14 +109,14 @@ class HeaderWithDrawer extends Component {
 
     logoutPopupOpen: false,
 
-    value: "",
+    value: "English",
   };
 
   onClick = (value) => {
     this.setState({ value });
   };
 
-  listItems = {
+  listItemsPartOne = {
     items: [
       {
         primaryText: "Home",
@@ -137,21 +137,15 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Language",
         leftIcon: <Language />,
-        secondaryText: (
-          <div className="drawer-button-toggle-container">
-            <ButtonGroup
-              items={this.state.languageItems}
-              onClick={this.onClick}
-              selected={this.state.value}
-              defaultStyle={defaultStyle}
-              defaultLabelStyle={defaultLabelStyle}
-              selectedStyle={selectedStyle}
-              selectedLabelStyle={selectedLabelStyle}
-              multiple={false}
-            />
-          </div>
-        ),
-      },
+        style: {
+          borderBottom:"none"
+        }
+      }
+    ]
+  };
+
+  listItemsPartTwo = {
+    items: [
       {
         primaryText: "Contact Us",
         leftIcon: <Call />,
@@ -227,14 +221,44 @@ class HeaderWithDrawer extends Component {
           />
 
           <div className="drawer-list-poweredBy-wrappr">
-            <List
+          <List
+            onItemClick={this.handleItem}
+            innerDivStyle={listInnerDivStyle}
+            className="drawer-list-style"
+            items={this.listItemsPartOne.items}
+            listContainerStyle={{ background: "#ffffff" }}
+            listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+          />
+
+          <div className="drawer-button-toggle-container">
+            <ButtonGroup
+              items={this.state.languageItems}
+              onClick={this.onClick}
+              selected={this.state.value}
+              defaultStyle={defaultStyle}
+              defaultLabelStyle={defaultLabelStyle}
+              selectedStyle={selectedStyle}
+              selectedLabelStyle={selectedLabelStyle}
+              multiple={false}
+            />
+          </div>
+
+          <List
+            onItemClick={this.handleItem}
+            innerDivStyle={listInnerDivStyle}
+            className="drawer-list-style"
+            items={this.listItemsPartTwo.items}
+            listContainerStyle={{ background: "#ffffff" }}
+            listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+          />
+            {/*<List
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
               className="drawer-list-style"
               items={this.listItems.items}
               listContainerStyle={{ background: "#ffffff" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
-            />
+            />*/}
             <div className="drawer-image-cont">
               <Image className="mseva-logo" source={`${logoMseva}`} />
             </div>
