@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Icon, List, Image, Card } from "../../components";
-import logoMseva from "../../assets/images/Mseva logo.png";
+import { Icon, List, Image, Card, MapLocation } from "../../components";
+import Logo from "../../assets/images/logo-black.png";
 import Facebook from "../../custom-icons/facebook.js";
 import Twitter from "../../custom-icons/twitter.js";
+import pinIcon from "../../assets/Location_pin.svg";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -39,7 +40,26 @@ const twitterStyle = {
   background: "#55acee",
 };
 
+const searchBoxStyles = {
+  display: "none",
+};
+
+const location = { lat: 12.9199988, lng: 77.67078 };
+
 class ContactUs extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openMap: false,
+    };
+  }
+
+  openMap = () => {
+    this.setState({
+      openMap: true,
+    });
+  };
+
   ListItems = {
     items: [
       {
@@ -49,13 +69,10 @@ class ContactUs extends Component {
             eGovernments Foundation <br />18/2A, Sarjapur Main Rd, Bellandur, Bengaluru <br />Karnataka 560102{" "}
           </span>
         ),
-        //   <br />
-        // <span> 18/2A, 2nd Floor, Ambalipura Village,Sarjapur Main Road, Bellandur Gate ,Bangalore - 560102 </span>
-
         secondaryText: (
-          <span style={{ color: "#00bbd3" }}>
-            <br />Open Map
-          </span>
+          <div className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMap}>
+            Open Map
+          </div>
         ),
         style: {
           paddingBottom: "8px",
@@ -73,7 +90,7 @@ class ContactUs extends Component {
       {
         leftIcon: <Icon style={iconStyle} action="device" name="access-time" />,
         primaryText: "Mon - Fri",
-        secondaryText: "9.00 AM-6.00 PM",
+        secondaryText: "9.00 AM - 6.00 PM",
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -82,7 +99,7 @@ class ContactUs extends Component {
       {
         insetChildren: true,
         primaryText: "Sat",
-        secondaryText: "9.00 AM-12 PM",
+        secondaryText: "9.00 AM - 12 PM",
         style: {
           paddingBottom: "5px",
           paddingTop: "8px",
@@ -108,21 +125,24 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      <Card
-        className="contactus-main-cont"
-        textChildren={
-          <div>
-            <Image className="mseva-logo" source={`${logoMseva}`} />
-            <div className="contactus-list-container">
-              <List innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+      <div class="contactus-main-cont">
+        <Card
+          className="contactus-main-card"
+          textChildren={
+            <div>
+              <Image className="mseva-logo-top" source={`${Logo}`} />
+              <div className="contactus-list-container">
+                <List onItemClick={this.openMap} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+              </div>
+              <div style={{ textAlign: "center", paddingBottom: "8px" }}>
+                <Twitter style={twitterStyle} action="custom" name="facebook" color="ffffff" />
+                <Facebook style={facebookStyle} action="custom" name="twitter" color="ffffff" />
+              </div>
             </div>
-            <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-              <Twitter style={twitterStyle} action="custom" name="facebook" color="ffffff" />
-              <Facebook style={facebookStyle} action="custom" name="twitter" color="ffffff" />
-            </div>
-          </div>
-        }
-      />
+          }
+        />
+        {this.state.openMap && <MapLocation currLoc={location} styles={searchBoxStyles} icon={pinIcon} hideTerrainBtn={true} />}
+      </div>
     );
   }
 }
