@@ -6,13 +6,19 @@ import Call from "material-ui/svg-icons/communication/call";
 import Logout from "material-ui/svg-icons/action/power-settings-new";
 import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
-import Help from "material-ui-community-icons/icons/help-circle";
+import Help from "../../../custom-icons/help-circle.js";
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/Mseva logo.png";
+import Logo from "../../../components/Logo";
 import "./index.css";
 //App bar imports ends
 
 /*Styles for language toggle starts */
+
+const listInnerDivStyle = {
+  padding: "16px 0px 16px 60px",
+};
+
 const selectedLabelStyle = {
   color: "#ffffff",
 };
@@ -28,7 +34,7 @@ const defaultStyle = {
   marginRight: "4.65%",
   height: "35px",
   lineHeight: "35px",
-  width: "28.48%",
+  width: "40px",
   padding: "0 16px",
 };
 
@@ -57,7 +63,7 @@ const nameStyle = {
   paddingTop: 10,
   fontFamily: "Roboto",
   fontSize: 7,
-  fontWeight: 500,
+  fontWeight: 900,
   fontStyle: "normal",
   fontStretch: "normal",
   lineHeight: "normal",
@@ -78,8 +84,25 @@ const locationStyle = {
   fontWeight: 500,
 };
 
-const _label_Name = "Name";
-const _label_Location = "Location";
+const _label_Name = "Jaswinder";
+const _label_Location = "Amritsar";
+const _label_emailId = "jaswinder@gmail.com";
+
+const button = (items, onClick, selected) => {
+  console.log("inside Button");
+  return (
+    <ButtonGroup
+      items={items}
+      onClick={onClick}
+      selected={selected}
+      defaultStyle={defaultStyle}
+      defaultLabelStyle={defaultLabelStyle}
+      selectedStyle={selectedStyle}
+      selectedLabelStyle={selectedLabelStyle}
+      multiple={false}
+    />
+  );
+};
 
 class HeaderWithDrawer extends Component {
   state = {
@@ -97,6 +120,12 @@ class HeaderWithDrawer extends Component {
         value: "Marati",
       },
     ],
+    value: "",
+  };
+
+  onClick = (value) => {
+    console.log("---------" + value);
+    this.setState({ value });
   };
 
   listItems = {
@@ -104,34 +133,39 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Home",
         leftIcon: <ActionHome />,
+        style: {
+          paddingBottom: "1px",
+          paddingTop: "1px",
+        },
       },
       {
         primaryText: "Profile",
         leftIcon: <Profile />,
+        style: {
+          paddingBottom: "3px",
+          paddingTop: "3px",
+        },
       },
       {
         primaryText: "Language",
         leftIcon: <Language />,
-        secondaryText: (
-          <ButtonGroup
-            items={this.state.languageItems}
-            onClick={this.onClick}
-            selected={this.state.value}
-            defaultStyle={defaultStyle}
-            defaultLabelStyle={defaultLabelStyle}
-            selectedStyle={selectedStyle}
-            selectedLabelStyle={selectedLabelStyle}
-            multiple={false}
-          />
-        ),
+        secondaryText: <div className="button-toggle-container">{button(this.state.languageItems, this.onClick, this.state.value)}</div>,
       },
       {
         primaryText: "Contact Us",
         leftIcon: <Call />,
+        style: {
+          paddingBottom: "8px",
+          paddingTop: "8px",
+        },
       },
       {
         primaryText: "How it Works",
-        leftIcon: <Help />,
+        leftIcon: <Help action="custom" name="help-circle" />,
+        style: {
+          paddingBottom: "2px",
+          paddingTop: "2px",
+        },
       },
       {
         primaryText: "Logout",
@@ -157,20 +191,30 @@ class HeaderWithDrawer extends Component {
           }}
         />
 
-        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
             nameStyle={nameStyle}
             locationStyle={locationStyle}
+            emailIdStyle={nameStyle}
             name={_label_Name}
+            emailId={_label_emailId}
             location={_label_Location}
             iconStyle={iconStyle}
             imgSrc={profileImage}
           />
-          <div className="headerWithDrawer-list-poweredBy-wrapper">
-            <List items={this.listItems.items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
-            <Image className="mseva-logo" source={`${logoMseva}`} />
+          <div className="headerWithDrawer-list-poweredBy-wrappr ">
+            <List
+              innerDivStyle={listInnerDivStyle}
+              className="headerWithDrawer-list-style"
+              items={this.listItems.items}
+              listContainerStyle={{ background: "#ffffff" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+            />
+            <div style={{ marginTop: "43px" }}>
+              <Logo />
+            </div>
           </div>
         </Drawer>
       </div>
