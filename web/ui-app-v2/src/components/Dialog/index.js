@@ -12,6 +12,7 @@ const defaultActionsContainerStyle = {
   padding: "14px",
 };
 const defaultContentStyle = {};
+
 const defaultBodyStyle = {
   padding: "0 12px",
 };
@@ -21,7 +22,18 @@ const closebuttonStyle = {
   height: "25px",
   padding: "3px",
 };
-const DialogUI = ({ title, titleStyle, overlayStyle, actionsContainerStyle, bodyStyle, children, actions, contentStyle, open, handleClose }) => {
+const DialogUI = ({
+  title,
+  titleStyle,
+  overlayStyle,
+  actionsContainerStyle = {},
+  bodyStyle = {},
+  children,
+  actions,
+  contentStyle = {},
+  open,
+  handleClose,
+}) => {
   return (
     <Dialog
       title={title}
@@ -36,7 +48,7 @@ const DialogUI = ({ title, titleStyle, overlayStyle, actionsContainerStyle, body
       overlayStyle={{ ...defaultOverlayStyle, ...overlayStyle }}
       actionsContainerStyle={{ ...defaultActionsContainerStyle, ...actionsContainerStyle }}
       contentStyle={{ ...defaultContentStyle, ...contentStyle }}
-      bodyStyle={{ ...defaultBodyStyle, bodyStyle }}
+      bodyStyle={{ ...defaultBodyStyle, ...bodyStyle }}
       open={open}
       autoDetectWindowHeight={false}
       style={{
@@ -47,7 +59,7 @@ const DialogUI = ({ title, titleStyle, overlayStyle, actionsContainerStyle, body
 };
 
 DialogUI.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.node).isRequired,
+  actions: PropTypes.arrayOf(PropTypes.node),
   title: PropTypes.string,
   handleClose: PropTypes.func,
   overlayStyle: PropTypes.object,
