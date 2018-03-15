@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "./components";
 
@@ -65,7 +64,7 @@ class App extends Component {
 
   render() {
     const { Component, ...rest } = this.props;
-    const { specs, _handleToggleMenu, _updateMenuState, _onTabChange } = this;
+    const { _handleToggleMenu, _updateMenuState, _onTabChange } = this;
     const { toggleMenu, tabIndex } = this.state;
     return (
       <div>

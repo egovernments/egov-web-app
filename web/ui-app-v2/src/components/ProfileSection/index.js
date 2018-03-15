@@ -5,8 +5,6 @@ import Label from "../Label";
 import { Icon } from "../../components";
 import "./index.css";
 
-import LocationIcon from "material-ui/svg-icons/maps/place";
-
 const ProfileSection = ({
   imgStyle,
   cardStyles,

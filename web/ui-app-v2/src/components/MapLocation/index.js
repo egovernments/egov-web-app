@@ -19,9 +19,6 @@ const MapLocation = compose(
   lifecycle({
     componentWillMount() {
       const refs = {};
-      var self = this;
-      var lati;
-      var long;
 
       this.setState({
         bounds: null,

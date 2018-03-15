@@ -10,14 +10,12 @@ import TrackLocation from "./screens/common/TrackLocation";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
 import SearchComplaint from "./screens/SearchComplaint";
-import LocationDetails from "./screens/LocationDetails";
 import ContactUs from "./screens/ContactUs";
 // user related screens
 import Register from "./screens/User/Register";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
-import CityPicker from "./screens/common/CityPicker";
 
 const Main = () => {
   return (
@@ -37,7 +35,6 @@ const Main = () => {
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
         <PrivateRoute exact path="/search-complaint" component={SearchComplaint} />
-        <PrivateRoute exact path="/location-details" component={LocationDetails} />
       </Switch>
     </main>
   );
