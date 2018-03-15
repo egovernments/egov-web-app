@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "../../components";
 import pinIcon from "../../assets/Location_pin.svg";
 import Logo from "../../assets/images/logo_black.png";
+import Screen from "../common/Screen";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -121,7 +122,8 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      <div className="contactus-main-cont">
+      // <div className="contactus-main-cont">
+      <Screen>
         <Card
           className="contactus-main-card"
           textChildren={
@@ -138,7 +140,7 @@ class ContactUs extends Component {
           }
         />
         {this.state.openMap && <MapLocation currLoc={location} styles={searchBoxStyles} icon={pinIcon} hideTerrainBtn={true} />}
-      </div>
+      </Screen>
     );
   }
 }
