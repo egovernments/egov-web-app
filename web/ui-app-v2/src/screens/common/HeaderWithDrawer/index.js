@@ -30,11 +30,12 @@ const selectedStyle = {
 const defaultStyle = {
   border: "1px solid #484848",
   borderRadius: "1px",
-  marginRight: "5px",
-  height: "35px",
-  lineHeight: "35px",
-  width: "40px",
-  padding: "0 16px",
+  marginRight: "4.65%",
+  height: "30px",
+  lineHeight: "30px",
+  width: "28.48%",
+  minWidth: "inherit",
+  padding: 0
 };
 
 const defaultLabelStyle = {
@@ -88,21 +89,6 @@ const locationStyle = {
 const _label_Name = "Jaswinder";
 const _label_Location = "Amritsar";
 const _label_emailId = "jaswinder@gmail.com";
-
-const button = (items, onClick, selected) => {
-  return (
-    <ButtonGroup
-      items={items}
-      onClick={onClick}
-      selected={selected}
-      defaultStyle={defaultStyle}
-      defaultLabelStyle={defaultLabelStyle}
-      selectedStyle={selectedStyle}
-      selectedLabelStyle={selectedLabelStyle}
-      multiple={false}
-    />
-  );
-};
 
 class HeaderWithDrawer extends Component {
   state = {

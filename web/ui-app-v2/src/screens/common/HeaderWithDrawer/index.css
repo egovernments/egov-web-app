@@ -6,6 +6,22 @@
 .drawer-button-toggle-container {
   padding: 10px 10px 0px 0px !important;
   height: auto !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.drawer-image-cont .mseva-logo {
+  width: 40% !important;
+  margin-top: 43px !important;
+}
+
+@media only screen and (max-width: 361px) {
+  .drawer-button-toggle-container button {
+  }
+
+  .drawer-button-toggle-container span {
+    font-size: 13px !important;
+  }
 }
 
 .drawer-image-cont .mseva-logo {
