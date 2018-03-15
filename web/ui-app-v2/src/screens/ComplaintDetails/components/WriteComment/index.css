@@ -5,9 +5,10 @@
   align-items: center;
   padding-left: 8px;
   padding-right: 8px;
-  opacity: 0.74;
+  /* opacity: 0.74; */
   height: 36px;
   margin-left: -15px;
+  margin-top: -11px;
 }
 
 .write-complaint-chat-field textarea {

@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { Card, TimeLine, List, Label,Icon } from "../../../../components";
-import SubmittedIcon from "material-ui/svg-icons/content/send";
-import TimeLineIcon from "material-ui/svg-icons/action/timeline";
-import ReAssignedIcon from "material-ui/svg-icons/action/assignment-turned-in";
-import RejectedIcon from "material-ui/svg-icons/navigation/close";
-import Call from "material-ui/svg-icons/communication/call";
+import { Card, TimeLine, List, Label,Icon,Image } from "../../../../components";
+import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
 const timelineIconCommonStyle ={
@@ -29,46 +25,119 @@ const statusResolvedIconStyle = {
   border: "solid 1px #22b25f"
 };
 
-const ReAssignedStyle = {
-  // marginRight: 24,
-  height: "38px",
-  width: "38px",
+
+const callIconStyle = {
+  marginRight: "7px",
+  height: "9px",
+  width: "9px",
   borderRadius: "50%",
-  padding: "7px",
-  background: "#2f80ed",
 };
 
-const galleryStyleTwo = {
-  // marginRight: 24,
-  height: "38px",
-  width: "38px",
-  borderRadius: "50%",
-  padding: "7px",
-  background: "#e74c3c",
-};
-const items = [
-  {
-    primaryText: <div className="dark-heading">COMLAINT TIMELINE</div>,
-    leftIcon: <TimeLineIcon color="#969696" />,
-  },
-];
 
-// const statusCommonIconStyle = {
-//   marginRight: "10px",
-//   height: "18px",
-//   width: "18px",
-// };
 
 const StatusIcon =({status})=>{
   switch (status) {
     case "SUBMITTED":
-        return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
-    case "ASSIGNED":
         return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />;
+    case "ASSIGNED":
+        return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "REJECTED":
         return <Icon action="content" name="clear" style={statusCommonIconStyle} color={"#f5a623"} />;
     default:
         return <Icon action="action" name="done"style={statusResolvedIconStyle} color={"#FFFFFF"} />;
+  }
+}
+
+const StatusContent =({status,currentStatus,content}) =>{
+  switch (status) {
+    case "SUBMITTED":
+        var {date,resolveImage,resolveFeedback}=content;
+        return (
+          <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={date || "11-Mar-18"}/>
+              <Label labelClassName="dark-color" label="Complaint Filed"/>
+              {
+                currentStatus=="Submitted" && <div
+                  className="complaint-details-timline-button"
+                  onClick={(e) => {
+                    console.log("clicked");
+                  }}
+                >
+                  <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+                  CALL
+                </div>
+              }
+          </div>
+        );
+    case "ASSIGNED":
+        var {status,name,designation,department}=content;
+        return (
+          <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"}/>
+              <Label labelClassName="dark-color" label={`Assigned to ${name ||"Satpal Singh"}`}/>
+              <Label labelClassName="rainmaker-small-font" containerStyle={{width:"192px"}} label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}/>
+          </div>
+        );
+
+    case "REASSIGNED":
+            var {name,designation,department}=content;
+            return (
+              <div className="complaint-timeline-content-section">
+                  <Label labelClassName="rainmaker-small-font" label={date || "15-Mar-18"}/>
+                  <Label labelClassName="dark-color" label={`Re-Assigned to ${name ||"Satpal Singh"}`}/>
+                  <Label labelClassName="rainmaker-small-font" containerStyle={{width:"192px"}} label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}/>
+              </div>
+            );
+    case "REJECTED":
+        var {name,department}=content;
+        return (
+          <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"}/>
+              <Label labelClassName="dark-color" label="Complaint Rejected"/>
+              <Label labelClassName="rainmaker-small-font" containerStyle={{width:"192px"}} label={department || "Amritsar Municipal Corporation"} />
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  console.log("clicked");
+                }}
+              >
+                RE-OPEN
+              </div>
+          </div>
+        );
+    default:
+        var {date,resolveImage,resolveFeedback}=content;
+        return (
+          <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={date || "18-Mar-18"}/>
+              <Label labelClassName="dark-color" label="Complaint Resolved"/>
+              <Image
+                style={{
+                  width: "97px",
+                  height: "93px",
+                  margin:"8px 0"
+                }}
+                source={garbageOne || resolveImage}
+              />
+              <Label labelClassName="rainmaker-small-font" containerStyle={{width:"192px"}} label={resolveFeedback || "Sweepers will clean this area on mondays & thursdays"}/>
+              <div className="rainmaker-displayInline"><div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  console.log("clicked");
+                }}
+              >
+                RATE
+              </div>
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  console.log("clicked");
+                }}
+              >
+                RE-OPEN
+              </div></div>
+          </div>
+        );
   }
 }
 
@@ -77,27 +146,18 @@ class ComplaintTimeLine extends Component {
     let { status } = this.props;
     let steps = [
       {
-        style: {
-          marginTop: "-10px",
-        },
         props: {
           active: true,
         },
         labelProps: {
           icon: <StatusIcon status="RESOLVED"/>,
         },
-        // labelChildren: "Select campaign settings 1",
         contentProps: {
           style: {
             marginTop: "-50px",
           },
         },
-        contentChildren: (
-          <div className="complaint-timeline-content-section">
-            <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
-            <Label label="BBMP" />
-          </div>
-        ),
+        contentChildren: <StatusContent status="RESOLVED" content={{}}/>,
       },
       {
         props: {
@@ -111,19 +171,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        // labelChildren: "Select campaign settings 1",
-        contentChildren: (
-          <div className="complaint-timeline-content-section">
-            <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
-            <Label label="Department of Health & Sanitation" />
-            <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
-            <Label label="is looking into your problem" />
-            <div className="complaint-detail-detail-section-location-section">
-              <Call style={statusCommonIconStyle} color={"#417505"} />
-              <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
-            </div>
-          </div>
-        ),
+        contentChildren: <StatusContent status="REASSIGNED" content={{}}/>,
       },
       {
         props: {
@@ -137,21 +185,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        // labelChildren: "Select campaign settings 1",
-        contentChildren: (
-          <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-            <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-            <Label label="Your Complaint is not valid." />
-            <div
-              className="complaint-details-timline-reopen-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
-              RE-OPEN
-            </div>
-          </div>
-        ),
+        contentChildren: <StatusContent status="ASSIGNED" content={{}}/>,
       },
       {
         props: {
@@ -165,21 +199,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        // labelChildren: "Select campaign settings 1",
-        contentChildren: (
-          <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-            <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-            <Label label="Your Complaint is not valid." />
-            <div
-              className="complaint-details-timline-reopen-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
-              RE-OPEN
-            </div>
-          </div>
-        ),
+        contentChildren: <StatusContent status="REJECTED" content={{}}/>,
       },
       {
         props: {
@@ -193,105 +213,70 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        // labelChildren: "Select campaign settings 1",
-        contentChildren: (
-          <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-            <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-            <Label label="Your Complaint is not valid." />
-            <div
-              className="complaint-details-timline-reopen-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
-              RE-OPEN
-            </div>
-          </div>
-        ),
+        contentChildren:<StatusContent status="SUBMITTED" content={{}}/>,
       }
     ];
-    console.log(status);
-    if (status === "ASSIGNED") {
+    if (status === "Submitted") {
       steps = [
         {
-          style: {
-            marginTop: "-10px",
-          },
           props: {
             active: true,
           },
           labelProps: {
-            icon: (
-              <div className="wrapper stepLabelAlignment">
-                <div className="left leftOverRide">
-                  <Label>
-                    <div className="dark-color">JAN 21</div>
-                  </Label>
-                </div>
-                <div className="right rightOverRide">
-                  <SubmittedIcon style={statusCommonIconStyle} color={"#FFFFFF"} />
-                </div>
-              </div>
-            ),
+            icon: <StatusIcon status="SUBMITTED"/>,
           },
-          // labelChildren: "Select campaign settings 1",
           contentProps: {
             style: {
               marginTop: "-50px",
             },
           },
-          contentChildren: (
-            <div className="complaint-timeline-content-section">
-              <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
-              <Label label="BBMP" />
-            </div>
-          ),
+          contentChildren:<StatusContent currentStatus={status} status="SUBMITTED" content={{}}/>,
+        }
+      ];
+    }
+    else if (status === "Rejected") {
+      steps=[
+        {
+          props: {
+            active: true,
+          },
+          labelProps: {
+            icon: <StatusIcon status="REJECTED"/>,
+          },
+          contentProps: {
+            style: {
+              marginTop: "-50px",
+            },
+          },
+          contentChildren: <StatusContent status="REJECTED" content={{}}/>,
         },
         {
           props: {
             active: true,
           },
           labelProps: {
-            icon: (
-              <div className="wrapper stepLabelAlignment">
-                <div className="left leftOverRide">
-                  <Label>
-                    <div className="dark-color">JAN 25</div>
-                  </Label>
-                </div>
-                <div className="right rightOverRide">
-                  <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
-                </div>
-              </div>
-            ),
+            icon: <StatusIcon status="SUBMITTED"/>,
           },
           contentProps: {
             style: {
               marginTop: "-50px",
             },
           },
-          // labelChildren: "Select campaign settings 1",
-          contentChildren: (
-            <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-              <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
-              <Label label="Department of Health & Sanitation" />
-              <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
-              <Label label="is looking into your problem" />
-              <div className="complaint-detail-detail-section-location-section">
-                <Call style={statusCommonIconStyle} color={"#417505"} />
-                <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
-              </div>
-            </div>
-          ),
-        },
+          contentChildren:<StatusContent status="SUBMITTED" content={{}}/>,
+        }
       ];
     }
     return (
       <div>
         <Card
+          style={{
+              paddingBottom: "0px"
+          }}
           textChildren={
             <div>
-              <Label label="Complaint Timeline" labelClassName="dark-heading" icon={<TimeLineIcon color="#969696" />}/>
+              <div className="rainmaker-displayInline">
+                <Icon action="action" name="timeline" color="#969696" />   <Label label="Complaint Timeline" containerStyle={{marginLeft:"13px"}} labelClassName="dark-heading"/>
+              </div>
               <div className="complaintTimeLineContainer">
                 <TimeLine
                   stepperProps={{
@@ -310,157 +295,4 @@ class ComplaintTimeLine extends Component {
 
 export default ComplaintTimeLine;
 
-// <div className="wrapper" style={{marginLeft: "-53px"}}><div style={{width: "60%"}} className="left">JAN 21</div><div style={{width: "40%"}} className="right"><ContentInbox style={statusCommonIconStyle} color={"#FFFFFF"}/></div></div>
-
-
-// let steps = [
-//   {
-//     style: {
-//       marginTop: "-10px",
-//     },
-//     props: {
-//       active: true,
-//     },
-//     labelProps: {
-//       icon: (
-//         <div className="wrapper stepLabelAlignment">
-//           <div className="left leftOverRide">
-//             <Label>
-//               <div className="dark-color">JAN 21</div>
-//             </Label>
-//           </div>
-//           <div className="right rightOverRide">
-//             <SubmittedIcon style={statusCommonIconStyle} color={"#FFFFFF"} />
-//           </div>
-//         </div>
-//       ),
-//     },
-//     // labelChildren: "Select campaign settings 1",
-//     contentProps: {
-//       style: {
-//         marginTop: "-50px",
-//       },
-//     },
-//     contentChildren: (
-//       <div className="complaint-timeline-content-section">
-//         <Label labelStyle={{ color: "#484848" }} label="SUBMITTED" />
-//         <Label label="BBMP" />
-//       </div>
-//     ),
-//   },
-//   {
-//     props: {
-//       active: true,
-//     },
-//     labelProps: {
-//       icon: (
-//         <div className="wrapper stepLabelAlignment">
-//           <div className="left leftOverRide">
-//             <Label>
-//               <div className="dark-color">JAN 25</div>
-//             </Label>
-//           </div>
-//           <div className="right rightOverRide">
-//             <ReAssignedIcon style={ReAssignedStyle} color={"#FFFFFF"} />
-//           </div>
-//         </div>
-//       ),
-//     },
-//     contentProps: {
-//       style: {
-//         marginTop: "-50px",
-//       },
-//     },
-//     // labelChildren: "Select campaign settings 1",
-//     contentChildren: (
-//       <div className="complaint-timeline-content-section">
-//         <Label labelStyle={{ color: "#484848" }} label="RE-ASSIGNED" />
-//         <Label label="Department of Health & Sanitation" />
-//         <Label labelStyle={{ color: "#484848" }} label="SR.INSPECTOR KUMAR" />
-//         <Label label="is looking into your problem" />
-//         <div className="complaint-detail-detail-section-location-section">
-//           <Call style={statusCommonIconStyle} color={"#417505"} />
-//           <Label labelStyle={{ color: "#417505" }} label={"CALL"} />
-//         </div>
-//       </div>
-//     ),
-//   },
-//   {
-//     props: {
-//       active: true,
-//     },
-//     labelProps: {
-//       icon: (
-//         <div className="wrapper stepLabelAlignment">
-//           <div className="left leftOverRide">
-//             <Label>
-//               <div className="dark-color">JAN 26</div>
-//             </Label>
-//           </div>
-//           <div className="right rightOverRide">
-//             <RejectedIcon style={galleryStyleTwo} color={"#FFFFFF"} />
-//           </div>
-//         </div>
-//       ),
-//     },
-//     contentProps: {
-//       style: {
-//         marginTop: "-50px",
-//       },
-//     },
-//     // labelChildren: "Select campaign settings 1",
-//     contentChildren: (
-//       <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-//         <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-//         <Label label="Your Complaint is not valid." />
-//         <div
-//           className="complaint-details-timline-reopen-button"
-//           onClick={(e) => {
-//             console.log("clicked");
-//           }}
-//         >
-//           RE-OPEN
-//         </div>
-//       </div>
-//     ),
-//   },
-//   {
-//     props: {
-//       active: true,
-//     },
-//     labelProps: {
-//       icon: (
-//         <div className="wrapper stepLabelAlignment">
-//           <div className="left leftOverRide">
-//             <Label>
-//               <div className="dark-color">JAN 26</div>
-//             </Label>
-//           </div>
-//           <div className="right rightOverRide">
-//             <RejectedIcon style={galleryStyleTwo} color={"#FFFFFF"} />
-//           </div>
-//         </div>
-//       ),
-//     },
-//     contentProps: {
-//       style: {
-//         marginTop: "-50px",
-//       },
-//     },
-//     // labelChildren: "Select campaign settings 1",
-//     contentChildren: (
-//       <div className="complaint-timeline-content-section" style={{ border: "none" }}>
-//         <Label labelStyle={{ color: "#484848" }} label="REJECTED" />
-//         <Label label="Your Complaint is not valid." />
-//         <div
-//           className="complaint-details-timline-reopen-button"
-//           onClick={(e) => {
-//             console.log("clicked");
-//           }}
-//         >
-//           RE-OPEN
-//         </div>
-//       </div>
-//     ),
-//   }
-// ];
+//props types check yet to add

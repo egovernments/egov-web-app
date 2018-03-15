@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Status from "./components/Status";
 import Details from "./components/Details";
 import ComplaintTimeLine from "./components/ComplaintTimeLine";
 import Comments from "./components/Comments";
@@ -14,7 +13,7 @@ class ComplaintDetails extends Component {
       // status: "ASSIGNED",
       // message: "JR.INSPECTOR - J KUMAR",
       bgColor: "#f5a623",
-      status: "REJECTED",
+      status: "Resolved",
       // message: "THANK YOU for your Application!",
       // // message: (
       // //   <div>
@@ -24,7 +23,7 @@ class ComplaintDetails extends Component {
       // bgColor: "#7ed321"
     },
     details: {
-      status: "Rejected",
+      status: "Resolved",
       complaint: "Overflow of bins",
       applicationNo: "1234566",
       description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
@@ -46,16 +45,30 @@ class ComplaintDetails extends Component {
   componentDidMount() {
     let { details } = this.state;
     console.log(this.props);
-    if (this.props.location && this.props.location.search.split("=")[1] == "assigned") {
+    if (this.props.location && this.props.location.search.split("=")[1] == "rejected") {
       this.setState({
         status: {
-          status: "ASSIGNED",
+          status: "Rejected",
           message: "JR.INSPECTOR - J KUMAR",
           bgColor: "#f5a623",
         },
         details: {
           ...details,
-          status: "Assigned",
+          status: "Rejected",
+        },
+      });
+    }
+    else if(this.props.location && this.props.location.search.split("=")[1] == "filed")
+    {
+      this.setState({
+        status: {
+          status: "Submitted",
+          message: "JR.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Submitted",
         },
       });
     }
