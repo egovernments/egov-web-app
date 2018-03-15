@@ -29,6 +29,10 @@ const requiredStyle = {
   color: "red",
 };
 
+const underlineFocusBaseStyle = {
+  borderColor: "#e0e0e0",
+};
+
 const TextField = ({
   style,
   onChange,
@@ -40,6 +44,7 @@ const TextField = ({
   className = "",
   value,
   floatingLabelText,
+  underlineFocusStyle = {},
   isRequired,
 }) => {
   return (
@@ -58,6 +63,7 @@ const TextField = ({
       hintStyle={hintStyle}
       floatingLabelText={[floatingLabelText, isRequired ? <span style={requiredStyle}> *</span> : null]}
       floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
+      underlineFocusStyle={{ ...underlineFocusBaseStyle, underlineFocusStyle }}
       underlineShow={true}
       floatingLabelFixed={true}
     />
