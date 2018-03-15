@@ -6,7 +6,8 @@
 }
 
 .language-label {
-  text-align :center;
+  display: inline-block;
+  padding: 0px 5px;
 }
 
 .button-toggle-container {

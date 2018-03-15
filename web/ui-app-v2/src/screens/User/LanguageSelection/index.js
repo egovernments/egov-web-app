@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { ButtonGroup, Button, Label, Card } from "../../../components";
-import UserScreensWrapper from "../components/UserScreenWrapper";
+import Banner from "../../common/Banner";
 import "./index.css";
 
 const selectedLabelStyle = {
@@ -49,7 +48,7 @@ class LanguageSelection extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 
@@ -62,13 +61,19 @@ class LanguageSelection extends Component {
     const { onLanguageSelect, onClick } = this;
 
     return (
-      <UserScreensWrapper>
+      <Banner>
         <Card
           className="user-screens-card language-selection-card"
           textChildren={
             <div>
               <form>
-                <Label bold={true} label="LANGUAGE" className="language-label" />
+                <div className="text-center">
+                  <Label bold={true} label="LANGUAGE" className="language-label" />
+                  <span>|</span>
+                  <Label bold={true} label="भाषा" className="language-label" />
+                  <span>|</span>
+                  <Label bold={true} label="ਭਾਸ਼ਾ" className="language-label" />
+                </div>
                 <div className="button-toggle-container">
                   <ButtonGroup
                     items={items}
@@ -88,9 +93,9 @@ class LanguageSelection extends Component {
             </div>
           }
         />
-      </UserScreensWrapper>
+      </Banner>
     );
   }
 }
 
-export default withRouter(LanguageSelection);
+export default LanguageSelection;

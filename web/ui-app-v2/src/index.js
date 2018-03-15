@@ -23,7 +23,7 @@ injectTapEventPlugin();
 // load material icons
 WebFont.load({
   google: {
-    families: ["Material+Icons"],
+    families: ["Material+Icons", "Roboto"],
   },
 });
 

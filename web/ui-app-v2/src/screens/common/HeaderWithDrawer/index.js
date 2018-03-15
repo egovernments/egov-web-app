@@ -8,8 +8,7 @@ import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
 import Help from "../../../custom-icons/help-circle.js";
 import profileImage from "../../../assets/people1.png";
-import logoMseva from "../../../assets/images/Mseva logo.png";
-import Logo from "../../../components/Logo";
+import logoMseva from "../../../assets/images/logo_black.png";
 import "./index.css";
 //App bar imports ends
 
@@ -91,7 +90,6 @@ const _label_Location = "Amritsar";
 const _label_emailId = "jaswinder@gmail.com";
 
 const button = (items, onClick, selected) => {
-  console.log("inside Button");
   return (
     <ButtonGroup
       items={items}
@@ -128,10 +126,8 @@ class HeaderWithDrawer extends Component {
     value: "",
   };
 
-  onClick = (value) => {
-    console.log("---------" + value);
+  onClick = value => {
     this.setState({ value });
-
   };
 
   listItems = {
@@ -180,7 +176,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
   handleItem = (item, index) => {
@@ -215,17 +211,9 @@ class HeaderWithDrawer extends Component {
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-        <AppBar
-          title={`Mseva/ Home`}
-          onLeftIconButtonClick={onHandleToggleMenu}
-          style={{
-            overflowX: "hidden",
-            width: "initial",
-          }}
-        />
+        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
 
-
-        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -249,9 +237,8 @@ class HeaderWithDrawer extends Component {
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />
             <div style={{ marginTop: "43px" }}>
-              <Logo />
+              <Image className="mseva-logo" source={`${logoMseva}`} />
             </div>
-
           </div>
         </Drawer>
         <Dialog

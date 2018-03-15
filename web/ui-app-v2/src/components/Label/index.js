@@ -16,7 +16,7 @@ const Label = ({
   className = "",
   label,
   color,
-  fontSize = "14px",
+  fontSize = 14,
   dark = false,
   upperCase = false,
   bold = false,
