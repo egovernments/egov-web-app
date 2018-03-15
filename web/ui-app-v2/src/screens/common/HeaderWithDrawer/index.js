@@ -212,7 +212,7 @@ class HeaderWithDrawer extends Component {
           children={[
             <div style={logoutContentStyle} key={"logout-popup"}>
               <div className="logout-label">
-                <Label label={"Logout"} bold={true} color="#484848" labelStyle={{ marginBottom: "24px" }} />
+                <Label label={"Logout"} bold={true} color="#484848" fontSize="16px" labelStyle={{ marginBottom: "24px" }} />
                 <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
               </div>
               <div className="logout-button">
