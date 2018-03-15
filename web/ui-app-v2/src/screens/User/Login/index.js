@@ -20,7 +20,7 @@ class Login extends Component {
     const { phoneNumber } = this.state;
 
     return (
-      <Banner>
+      <Banner className="col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
         <Card
           className="user-screens-card"
           textChildren={

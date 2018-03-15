@@ -1,15 +1,15 @@
 .home-page-content {
   position: absolute !important;
-  top: 80%;
+  top: 75%;
   left: 8px;
   right: 8px;
   margin-bottom: 70px;
 }
 
-.homepage-banner .banner-image {
-  height: 25vh;
+.homepage-banner.user-screens-wrapper{
+    height: 30vh;
 }
 
 .homepage-banner .logo-wrapper {
-  top: 12%;
+  top: 30%;
 }

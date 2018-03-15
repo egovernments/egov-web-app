@@ -5,7 +5,6 @@ import Notifications from "./components/Notifications";
 import "./index.css";
 
 class Home extends Component {
-  state = {};
   render() {
     return (
       <Banner className="homepage-banner">
