@@ -1,52 +1,53 @@
 import React, { Component } from "react";
 import { Card, Icon, Label } from "../../../../components";
+import VerticalCenterWrapper from "../../../common/VerticalCenterWrapper";
 import "./index.css";
 
-class Notification extends Component {
-  render() {
-    const iconStyle = {
-      marginRight: 24,
-      height: "24px",
-      width: "24px",
-      fill: "#F5A623",
-      borderRadius: "0%",
-      padding: "0px",
-    };
+// currently the card is hardcoded, ideally should be driven by data
+class Updates extends Component {
+  updates = [
+    {
+      title: "Contamination of water",
+      date: "10-Mar-18",
+      status: "Re-Assigned",
+    },
+    {
+      title: "Dog menace",
+      date: "10-Mar-18",
+      status: "Rejected",
+    },
+  ];
 
+  renderUpdate = (update, index) => {
+    const { title, date, status } = update;
     return (
-      <div>
-        <Card
-          textChildren={
-            <div id="home-notification" className="wrapper">
-              <div className="left color-lime">
-                <Icon action="action" name="home" />
-              </div>
-              <div className="right">
-                <div>
-                  <Label label="Are there enough dustbins in your area?" className="notification-content" />
-                </div>
-                <br />
-                <div>
-                  <Label
-                    id="thumb-up-action"
-                    className="notification-content-label"
-                    label="YES"
-                    icon={<Icon style={iconStyle} action="action" name="thumb-up" />}
-                  />
-                  <Label
-                    id="thumb-down-action"
-                    className="notification-content-label"
-                    label="NO"
-                    icon={<Icon style={iconStyle} action="action" name="thumb-down" />}
-                  />
-                </div>
-              </div>
+      <Card
+        key={index}
+        textChildren={
+          <div className="update">
+            <VerticalCenterWrapper
+              leftWrapperStyle={{ width: "100%" }}
+              leftChildren={<Label leftWrapperStyle fontSize={16} dark={true} bold={true} label={title} />}
+              rightChildren={<Icon style={{ color: "#5385a6" }} action="custom" name="notifications" />}
+            />
+            <VerticalCenterWrapper
+              leftChildren={<Icon style={{ width: "16px", height: "16px" }} action="custom" name="calendar" />}
+              rightChildren={<Label fontSize={12} label={date} />}
+              rightWrapperStyle={{ paddingLeft: "5px", width: "100%" }}
+            />
+            <div className="complaint-status" style={{ marginTop: "16px" }}>
+              <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been" />
+              <Label containerStyle={{ display: "inline-block", marginLeft:"4px" }} dark={true} label={`${status}`} />
             </div>
-          }
-        />
-      </div>
+          </div>
+        }
+      />
     );
+  };
+
+  render() {
+    return <div>{this.updates.map((update, index) => this.renderUpdate(update, index))}</div>;
   }
 }
 
-export default Notification;
+export default Updates;

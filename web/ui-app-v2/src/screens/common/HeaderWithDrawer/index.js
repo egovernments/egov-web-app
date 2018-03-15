@@ -140,7 +140,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
 
@@ -157,7 +157,7 @@ class HeaderWithDrawer extends Component {
           }}
         />
 
-        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}

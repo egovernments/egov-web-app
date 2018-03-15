@@ -1,11 +1,5 @@
-.notification-content-label {
-  border: 1px solid #f5a623 !important;
-  display: inline-block;
-  padding: 8px 5px 2px 10px;
-  margin-right: 10px;
+.update-icon{
+ background : #2ecc71;
 }
 
-.notification-content-label .label-text {
-  letter-spacing: 0.3px;
-  color: #767676;
-}
+  

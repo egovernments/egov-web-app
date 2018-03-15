@@ -242,7 +242,7 @@ class ComplaintTimeLine extends Component {
         <Card
           textChildren={
             <div>
-              <Label label="Complaint Timeline" labelClassName="dark-heading" icon={<TimeLineIcon color="#969696" />}/>  
+              <Label label="Complaint Timeline" labelClassName="dark-heading" icon={<TimeLineIcon color="#969696" />} />
               <div className="complaintTimeLineContainer">
                 <TimeLine
                   stepperProps={{

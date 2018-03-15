@@ -26,10 +26,8 @@ body span {
 
 .dark-heading {
   color: #484848 !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
 }
-
-
 
 .color-green {
   color: #417505 !important;
@@ -67,42 +65,6 @@ body span {
   color: #e74c3c;
 }
 
-/* Wrapper*/
-.wrapper {
-  display: table;
-  width: 100%;
-  margin: -8px -8px -16px -8px;
-}
-
-.left,
-.right {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.left {
-  width: 20%;
-  text-align: center;
-}
-
-.right {
-  width: 80%;
-  padding: 10px;
-}
-
 .width-100-per {
   width: 100%;
-}
-
-.rainmaker-list-right-item-overide-style {
-  margin-top: -11px;
-}
-
-@media screen and (min-width: 768px) {
-  .left {
-    width: 15%;
-  }
-  .right {
-    width: 85%;
-  }
 }
