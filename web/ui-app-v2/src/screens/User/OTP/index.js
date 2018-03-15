@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { Button, Label, TextField, Card } from "../../../components";
-import UserScreensWrapper from "../components/UserScreenWrapper";
+import Banner from "../../common/Banner";
 import "./index.css";
 
 class OTP extends Component {
@@ -13,7 +13,7 @@ class OTP extends Component {
   componentDidMount() {
     const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", (e) => {
+    otpElement.addEventListener("smsReceived", e => {
       const { otp } = e.detail;
       this.setState({ otp, disabled: true });
     });
@@ -37,20 +37,15 @@ class OTP extends Component {
     const { otp, disabled } = this.state;
 
     return (
-      <UserScreensWrapper>
+      <Banner>
         <Card
           className="user-screens-card"
           textChildren={
             <div>
-              <div className="otp-text">
-                <Label
-                  color="#484848"
-                  containerStyle={{ padding: "0px 16px" }}
-                  label="We have sent a 6 digit OTP number to your registered mobile number."
-                />
-                <Label color="#484848" containerStyle={{ padding: "0px 16px" }} label="Enter the OTP to create your account." />
-              </div>
-
+             
+             <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
+             <Label className="otp-text" color="#484848" label="An OTP has been sent to Mobile Number 9968739374" />
+             
               <form>
                 <TextField
                   onChange={onOtpChanged}
@@ -70,7 +65,7 @@ class OTP extends Component {
             </div>
           }
         />
-      </UserScreensWrapper>
+      </Banner>
     );
   }
 }

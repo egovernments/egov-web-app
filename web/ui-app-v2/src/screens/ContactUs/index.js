@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "../../components";
-import Logo from "../../assets/images/logo-black.png";
-import Facebook from "../../custom-icons/facebook.js";
-import Twitter from "../../custom-icons/twitter.js";
 import pinIcon from "../../assets/Location_pin.svg";
+import Logo from "../../assets/images/logo_black.png";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -128,13 +126,13 @@ class ContactUs extends Component {
           className="contactus-main-card"
           textChildren={
             <div>
-              <Image className="mseva-logo-top" source={`${Logo}`} />
+              <Image className="mseva-logo" source={`${Logo}`} />
               <div className="contactus-list-container">
                 <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
               </div>
               <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                <Twitter style={twitterStyle} action="custom" name="facebook" color="ffffff" />
-                <Facebook style={facebookStyle} action="custom" name="twitter" color="ffffff" />
+                <Icon style={twitterStyle} action="custom" name="facebook" color="ffffff" />
+                <Icon style={facebookStyle} action="custom" name="twitter" color="ffffff" />
               </div>
             </div>
           }

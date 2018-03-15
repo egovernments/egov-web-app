@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { Button, TextField, MobileNumberField, Card } from "../../../components";
-import UserScreensWrapper from "../components/UserScreenWrapper";
+import Banner from "../../common/Banner";
 import CityPicker from "../../common/CityPicker";
 import "./index.css";
 
@@ -28,7 +28,7 @@ class Login extends Component {
     const { name, phoneNumber } = this.state;
 
     return (
-      <UserScreensWrapper>
+      <Banner>
         <Card
           className="user-screens-card"
           textChildren={
@@ -59,7 +59,7 @@ class Login extends Component {
             </div>
           }
         />
-      </UserScreensWrapper>
+      </Banner>
     );
   }
 }
