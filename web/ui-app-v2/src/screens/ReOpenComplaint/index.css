@@ -2,18 +2,29 @@
   background-color: #ffffff;
   background-repeat: no-repeat;
   background-position: center;
-  height: 231px;
-  padding-top: 16px;
+  padding-left: 16px !important;
+  padding-top: 16px !important;
+}
+.reopencomplaint-question {
+  padding-right: 115px;
 }
 
 .reopencomplaint-textArea {
-  padding: 16px 8px 0px 8px;
+  padding: 24px 16px 150px 1px;
+}
+.reopencomplaint-upload-photo {
+  margin-top: 24px;
+  margin-left: 1px;
+  border: 1px dashed #979797;
+  height: 100px;
+  width: 100px;
 }
 .reopencomplaint-button {
-  padding: 0 8px;
+  padding: 0px 30px 0px 1px;
   position: fixed;
   width: 100%;
-  bottom: 70px;
+  bottom: 80px;
+  background-color: #ffffff;
 }
 .reopencomplaint-button button {
   height: 48px !important;
