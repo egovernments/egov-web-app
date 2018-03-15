@@ -18,8 +18,24 @@ body span {
 
 }
 
+.rainmaker-displayInline {
+  display: flex;
+}
+
+.rainmaker-small-font {
+  font-size: 12px !important;
+}
+
+.rainmaker-big-font {
+  font-size: 16px !important;
+}
+
 .dark-color {
   color: #484848;
+}
+
+.rainmaker-custom-gap {
+  margin-bottom: 8px;
 }
 
 .text-bold {
