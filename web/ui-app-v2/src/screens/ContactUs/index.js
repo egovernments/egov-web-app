@@ -7,11 +7,7 @@ import pinIcon from "../../assets/Location_pin.svg";
 import "./index.css";
 
 const listInnerDivStyle = {
-  padding: "0px 0px 0px 60px",
-};
-
-const listItemStyle = {
-  padding: "8px 0px 8px 0px",
+  padding: "0px 0px 0px 50px",
 };
 
 const iconStyle = {
