@@ -198,7 +198,6 @@ class HeaderWithDrawer extends Component {
 
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
-
     const { onClick } = this;
 
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
@@ -206,7 +205,7 @@ class HeaderWithDrawer extends Component {
       <div>
         <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
 
-        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+         <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -251,14 +250,6 @@ class HeaderWithDrawer extends Component {
             listContainerStyle={{ background: "#ffffff" }}
             listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
           />
-            {/*<List
-              onItemClick={this.handleItem}
-              innerDivStyle={listInnerDivStyle}
-              className="drawer-list-style"
-              items={this.listItems.items}
-              listContainerStyle={{ background: "#ffffff" }}
-              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
-            />*/}
             <div className="drawer-image-cont">
               <Image className="mseva-logo" source={`${logoMseva}`} />
             </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import SvgIcon from "material-ui/SvgIcon";
 
-const MyComplaint = props => {
+const MyComplaint = (props) => {
   return (
     <SvgIcon viewBox="0 0 42 42" className="custom-icon" {...props}>
       <path d="M-3-2h48v48H-3z" />

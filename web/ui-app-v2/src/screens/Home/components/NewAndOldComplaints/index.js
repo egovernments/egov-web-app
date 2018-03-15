@@ -30,11 +30,11 @@ class NewAndOldComplaints extends Component {
             <div
               id="home-old-complaint"
               className="col-xs-6"
-              onClick={e => {
+              onClick={(e) => {
                 history.push("/my-complaints");
               }}
             >
-              <Icon style={{ height: "48px", color:"#fff", width: "48px" }} action="custom" name="my-complaint" />
+              <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />
               <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} label="My Complaints" />
             </div>
           </div>

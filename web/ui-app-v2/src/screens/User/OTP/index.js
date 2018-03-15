@@ -12,7 +12,7 @@ class OTP extends Component {
   componentDidMount() {
     const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", e => {
+    otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       this.setState({ otp, disabled: true });
     });

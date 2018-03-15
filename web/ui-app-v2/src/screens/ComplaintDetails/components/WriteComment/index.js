@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List,Icon } from "../../../../components";
+import { List, Icon } from "../../../../components";
 import MaterialUITextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../assets/images/faceOne.jpg";
@@ -43,7 +43,6 @@ const itemsOne = [
     ),
   },
 ];
-
 
 class WriteComment extends Component {
   render() {
