@@ -30,7 +30,7 @@ const selectedStyle = {
 const defaultStyle = {
   border: "1px solid #484848",
   borderRadius: "1px",
-  marginRight: "4.65%",
+  marginRight: "5px",
   height: "35px",
   lineHeight: "35px",
   width: "40px",
@@ -44,8 +44,8 @@ const defaultLabelStyle = {
   verticalAlign: "initial",
   padding: 0,
 };
-
 /*Styles for language toggle ends */
+
 const logoutButtonStyle = { width: "101px", height: "35px", lineHeight: "35px" };
 const logoutContentStyle = { textAlign: "center", padding: "24px 20px 24px 20px" };
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
@@ -126,7 +126,7 @@ class HeaderWithDrawer extends Component {
     value: "",
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
 
@@ -151,7 +151,20 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Language",
         leftIcon: <Language />,
-        secondaryText: <div className="button-toggle-container">{button(this.state.languageItems, this.onClick, this.state.value)}</div>,
+        secondaryText: (
+          <div className="drawer-button-toggle-container">
+            <ButtonGroup
+              items={this.state.languageItems}
+              onClick={this.onClick}
+              selected={this.state.value}
+              defaultStyle={defaultStyle}
+              defaultLabelStyle={defaultLabelStyle}
+              selectedStyle={selectedStyle}
+              selectedLabelStyle={selectedLabelStyle}
+              multiple={false}
+            />
+          </div>
+        ),
       },
       {
         primaryText: "Contact Us",
@@ -176,7 +189,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
   handleItem = (item, index) => {
@@ -213,7 +226,7 @@ class HeaderWithDrawer extends Component {
       <div>
         <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
 
-        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -227,16 +240,16 @@ class HeaderWithDrawer extends Component {
             imgSrc={profileImage}
           />
 
-          <div className="headerWithDrawer-list-poweredBy-wrappr ">
+          <div className="drawer-list-poweredBy-wrappr">
             <List
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
-              className="headerWithDrawer-list-style"
+              className="drawer-list-style"
               items={this.listItems.items}
               listContainerStyle={{ background: "#ffffff" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />
-            <div style={{ marginTop: "43px" }}>
+            <div className="drawer-image-cont">
               <Image className="mseva-logo" source={`${logoMseva}`} />
             </div>
           </div>

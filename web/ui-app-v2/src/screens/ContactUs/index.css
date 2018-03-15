@@ -9,3 +9,7 @@
 .contactus-main-cont {
   padding: 0px 8px;
 }
+
+.contactus-main-card .mseva-logo {
+  width: 40% !important;
+}

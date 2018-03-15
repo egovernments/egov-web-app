@@ -1,14 +1,14 @@
-.headerWithDrawer-list-poweredBy-wrapper {
+.drawer-list-poweredBy-wrapper {
   background-color: #ffffff;
   height: 100%;
 }
 
-.mseva-logo {
-  display: block;
-  margin-top: 35px !important;
-}
-
-.button-toggle-container {
+.drawer-button-toggle-container {
   padding: 10px 10px 0px 0px !important;
   height: auto !important;
+}
+
+.drawer-image-cont .mseva-logo {
+  width: 40% !important;
+  margin-top: 43px !important;
 }
