@@ -17,9 +17,7 @@ class ComplaintDetails extends Component {
             <div>
               <div className="complaint-submitted-boldlabel">
                 <Label label={"Complaint Registerd Successfully"} />
-                <Label
-                  icon={<Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332", marginBottom: "20px" }} />}
-                />
+                <Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332", marginBottom: "20px" }} />
                 <Label label={"Thank You!"} />
                 <Label label={`Complaint Number. ${complaintnumber}`} />
               </div>
