@@ -16,3 +16,6 @@
   padding-right: 50px;
   padding-left: 50px;
 }
+.zeropadding {
+  padding: 0px !important;
+}

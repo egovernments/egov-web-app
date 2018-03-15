@@ -12,7 +12,7 @@ class ComplaintDetails extends Component {
   render() {
     let complaintnumber = 25436789;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8  complaint-submitted-card">
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeropadding complaint-submitted-card">
         <Card
           textChildren={
             <div>
