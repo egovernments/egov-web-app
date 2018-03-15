@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { Button, Label, TextField, Card } from "../../../components";
 import Banner from "../../common/Banner";
 import "./index.css";
@@ -42,10 +41,9 @@ class OTP extends Component {
           className="user-screens-card"
           textChildren={
             <div>
-             
-             <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
-             <Label className="otp-text" color="#484848" label="An OTP has been sent to Mobile Number 9968739374" />
-             
+              <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
+              <Label className="otp-text" color="#484848" label="An OTP has been sent to Mobile Number 9968739374" />
+
               <form>
                 <TextField
                   onChange={onOtpChanged}
@@ -70,4 +68,4 @@ class OTP extends Component {
   }
 }
 
-export default withRouter(OTP);
+export default OTP;

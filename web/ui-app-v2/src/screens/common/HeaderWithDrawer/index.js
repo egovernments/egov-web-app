@@ -90,7 +90,6 @@ const _label_Location = "Amritsar";
 const _label_emailId = "jaswinder@gmail.com";
 
 const button = (items, onClick, selected) => {
-  console.log("inside Button");
   return (
     <ButtonGroup
       items={items}

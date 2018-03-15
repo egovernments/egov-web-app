@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { ButtonGroup, Button, Label, Card } from "../../../components";
 import Banner from "../../common/Banner";
 import "./index.css";
@@ -99,4 +98,4 @@ class LanguageSelection extends Component {
   }
 }
 
-export default withRouter(LanguageSelection);
+export default LanguageSelection;

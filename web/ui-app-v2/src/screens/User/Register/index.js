@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { Button, TextField, MobileNumberField, Card } from "../../../components";
 import Banner from "../../common/Banner";
 import CityPicker from "../../common/CityPicker";
 import "./index.css";
 
-class Login extends Component {
+class Register extends Component {
   state = {
     name: "",
     phoneNumber: "",
@@ -64,4 +63,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default Register;
