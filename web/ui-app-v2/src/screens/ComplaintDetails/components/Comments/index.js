@@ -9,35 +9,16 @@ import "./index.css";
 
 const itemsOne = [
   {
-    leftAvatar: (
-      <div>
-        {" "}
-        <Avatar src={faceOne} />
       </div>
-    ),
-    primaryText: (
-      <div className="complaint-details-comments-section">
-        <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label="please sterilize the dogs in the area." />{" "}
-        <Label labelStyle={{ fontSize: "12px" }} label="11-MAR-18" />{" "}
-      </div>
-    ),
-  },
+    leftAvatar:<div> <Avatar size={33} src={faceOne} /></div>,
+    primaryText: <div className="complaint-details-comments-section"><Label containerStyle={{marginBottom:"8px"}} labelStyle={{color:"#464646"}} label="please sterilize the dogs in the area."/> <Label labelStyle={{fontSize:"12px"}} label="11-MAR-18"/> </div>
+  }
 ];
 
 const itemsTwo = [
   {
-    primaryText: (
-      <div className="complaint-details-comments-section">
-        {" "}
-        <Label
-          containerStyle={{ marginBottom: "8px" }}
-          labelStyle={{ color: "#464646" }}
-          label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
-        />
-        <Label labelStyle={{ fontSize: "12px" }} label="11-MAR-18" />
-      </div>
-    ),
-    rightAvatar: <Avatar src={faceTwo} />,
+    primaryText:<div className="complaint-details-comments-section"> <Label containerStyle={{marginBottom:"8px"}} labelStyle={{color:"#464646"}} label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time." /><Label labelStyle={{fontSize:"12px"}} label="11-MAR-18" /></div>,
+    rightAvatar: <Avatar size={33} src={faceTwo} />,
   },
 ];
 
