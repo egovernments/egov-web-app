@@ -60,6 +60,8 @@ class ContactUs extends Component {
     });
   };
 
+  onItemClick = (item, index) => {};
+
   ListItems = {
     items: [
       {
@@ -132,7 +134,7 @@ class ContactUs extends Component {
             <div>
               <Image className="mseva-logo-top" source={`${Logo}`} />
               <div className="contactus-list-container">
-                <List onItemClick={this.openMap} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+                <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
               </div>
               <div style={{ textAlign: "center", paddingBottom: "8px" }}>
                 <Twitter style={twitterStyle} action="custom" name="facebook" color="ffffff" />
