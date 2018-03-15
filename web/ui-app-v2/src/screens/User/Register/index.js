@@ -10,7 +10,7 @@ class Register extends Component {
     phoneNumber: "",
   };
 
-  login = () => {
+  register = () => {
     this.props.history.push("/otp");
   };
 
@@ -23,7 +23,7 @@ class Register extends Component {
   };
 
   render() {
-    const { login, onNameChanged, onPhoneNumberChanged } = this;
+    const { register, onNameChanged, onPhoneNumberChanged } = this;
     const { name, phoneNumber } = this.state;
 
     return (
@@ -53,7 +53,7 @@ class Register extends Component {
                   floatingLabelText="Name"
                 />
                 <CityPicker />
-                <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
+                <Button id="login-submit-action" onClick={register} primary={true} label="Submit" fullWidth={true} />
               </form>
             </div>
           }
