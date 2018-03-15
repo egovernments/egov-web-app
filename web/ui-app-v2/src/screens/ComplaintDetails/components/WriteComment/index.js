@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {List} from "../../../../components";
-import Profile from "material-ui/svg-icons/social/person";
+import { List } from "../../../../components";
 import Send from "material-ui/svg-icons/content/send";
 import MaterialUITextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
@@ -8,21 +7,12 @@ import faceOne from "../../../../assets/images/faceOne.jpg";
 
 import "./index.css";
 
-const profileStyle = {
-  marginRight: 24,
-  height: "38px",
-  width: "38px",
-  borderRadius: "50%",
-  padding: "5px",
-  background: "#f5a623",
-};
-
 const iconStyle = {
   marginLeft: "20px",
   height: "27px",
   width: "27px",
   transform: "rotate(-15deg)",
-  marginBottom: "5px"
+  marginBottom: "5px",
 };
 
 const textFieldStyle = {
@@ -57,7 +47,7 @@ const itemsOne = [
 
 class WriteComment extends Component {
   render() {
-    return (<List items={itemsOne}/>);
+    return <List items={itemsOne} />;
   }
 }
 

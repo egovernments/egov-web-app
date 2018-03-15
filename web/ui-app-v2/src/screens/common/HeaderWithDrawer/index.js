@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 //App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, PoweredBy, Image, ButtonGroup } from "../../../components";
-import Badge from "material-ui/Badge";
-import IconButton from "material-ui/IconButton";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup } from "../../../components";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Call from "material-ui/svg-icons/communication/call";
 import Logout from "material-ui/svg-icons/action/power-settings-new";
@@ -10,7 +8,6 @@ import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
 import Help from "material-ui-community-icons/icons/help-circle";
 import profileImage from "../../../assets/people1.png";
-import poweredByLogo from "../../../assets/images/logo.png";
 import logoMseva from "../../../assets/images/Mseva logo.png";
 import "./index.css";
 //App bar imports ends
@@ -79,7 +76,6 @@ const locationStyle = {
   fontFamily: "Roboto",
   fontSize: 7,
   fontWeight: 500,
-  // display: 'none'
 };
 
 const _label_Name = "Name";
@@ -149,8 +145,6 @@ class HeaderWithDrawer extends Component {
   };
 
   render() {
-    const { languageItems, value } = this.state;
-    const { onClick } = this;
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
