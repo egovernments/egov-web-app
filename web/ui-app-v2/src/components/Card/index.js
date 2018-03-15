@@ -1,16 +1,12 @@
 import React from "react";
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from "material-ui/Card";
 import PropTypes from "prop-types";
-
 import "./index.css";
 
-const CardUi = (props) => {
-  let {id, card, header, mediaOverlay, mediaChildren, title, text, textChildren, actionChildren, className=""}=props;
+const CardUi = props => {
+  let { id, card, textChildren, className = "" } = props;
   return (
-    <div className={`rainmaker-card ${className}`} {...card}>
-      {
-        textChildren
-      }
+    <div id={id} className={`rainmaker-card ${className}`} {...card}>
+      {textChildren}
     </div>
   );
 };
@@ -18,23 +14,7 @@ const CardUi = (props) => {
 export default CardUi;
 
 CardUi.propTypes = {
-  header: PropTypes.object,
-  mediaOverlay: PropTypes.element,
-  mediaChildren: PropTypes.element,
-  title: PropTypes.object,
+  className: PropTypes.string,
+  id: PropTypes.string,
   textChildren: PropTypes.element,
-  actionChildren: PropTypes.element,
 };
-
-
-// <Card style={{ backgroundColor: "#fff", margin: "16px 0px", padding: "8px" }} {...card} className={className}>
-//   {header && <CardHeader {...header} />}
-//   {mediaOverlay && <CardMedia overlay={mediaOverlay}>{mediaChildren}</CardMedia>}
-//   {title && <CardTitle {...title} />}
-//   {textChildren && (
-//     <CardText style={{ padding: "0px" }} {...text}>
-//       {textChildren}
-//     </CardText>
-//   )}
-//   {actionChildren && <CardActions>{actionChildren}</CardActions>}
-// </Card>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, Label, Icon } from "../../components";
-import { withRouter } from "react-router";
 import "./index.css";
 
 class ComplaintDetails extends Component {

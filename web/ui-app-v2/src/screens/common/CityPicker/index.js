@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Dialog, TextFieldIcon, Icon, AutoSuggest, Label } from "../../../components";
+import { List, Dialog, TextFieldIcon, AutoSuggest } from "../../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 
 export default class CityPickerDialog extends Component {

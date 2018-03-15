@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Drawer from "material-ui/Drawer";
 import Icon from "../Icon";
 import FilePicker from "../FilePicker";
 import Label from "../Label";
@@ -25,10 +24,6 @@ const galleryIconBtn = {
 };
 
 class UploadDrawer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   onCameraClick = () => {
     //onCameraClick
   };
