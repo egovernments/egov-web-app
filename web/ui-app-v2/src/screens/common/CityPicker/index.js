@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { List, TextFieldIcon, Icon, AutoSuggest, Label } from "../../../components";
-import Dialog from "material-ui/Dialog";
+import { List, Dialog, TextFieldIcon, Icon, AutoSuggest, Label } from "../../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 
 export default class CityPickerDialog extends Component {
@@ -65,7 +64,15 @@ export default class CityPickerDialog extends Component {
             isRequired={true}
           />
         </div>
-        <Dialog bodyStyle={{ padding: "5px" }} title="Choose City" modal={false} open={open} onRequestClose={onClose} autoScrollBodyContent={true}>
+        <Dialog
+          handleClose={onClose}
+          bodyStyle={{ padding: "0px" }}
+          title="Choose City"
+          modal={false}
+          open={open}
+          onRequestClose={onClose}
+          autoScrollBodyContent={true}
+        >
           <AutoSuggest dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
           <List
             onItemClick={onItemClick}
