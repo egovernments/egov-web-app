@@ -6,6 +6,8 @@
   padding-left: 8px;
   padding-right: 8px;
   opacity: 0.74;
+  height: 36px;
+  margin-left: -15px;
 }
 
 .write-complaint-chat-field textarea {

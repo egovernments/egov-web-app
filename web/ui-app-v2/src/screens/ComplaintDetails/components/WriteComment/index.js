@@ -24,7 +24,7 @@ const textFieldStyle = {
 
 const itemsOne = [
   {
-    leftAvatar: <Avatar src={faceOne} />,
+    leftAvatar: <Avatar size={33} src={faceOne} />,
     primaryText: (
       <div className="write-comment-align-ComplaintTimeLine rainmaker-list-right-item-overide-style">
         <MaterialUITextField
