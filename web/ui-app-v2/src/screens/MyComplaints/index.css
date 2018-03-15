@@ -17,3 +17,8 @@
 .complaints-top-level-wrapper {
   padding: 0 8px;
 }
+
+.no-complaints-message-cont {
+  padding: 180px 34px;
+  text-align: center;
+}

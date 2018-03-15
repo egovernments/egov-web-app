@@ -8,7 +8,7 @@ const ImageModal = ({ imageSource, width, height, style, className, onCloseClick
     <div className="modal" style={hide ? { display: "none" } : { display: "flex" }}>
       <Image source={imageSource} width={width} height={height} style={hide ? { width: "0%" } : { width: "100%" }} className={className} />
       <div className="modal-close-cont" onClick={onCloseClick}>
-        <Icon action="navigation" name="close" />
+        <Icon action="navigation" name="close" color="#ffffff" />
       </div>
     </div>
   );

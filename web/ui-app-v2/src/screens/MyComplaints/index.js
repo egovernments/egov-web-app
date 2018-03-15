@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
-import FeedbackPopup from "./components/FeedbackPopup";
-import { Icon, ImageModal } from "../../components";
+import { Icon, ImageModal, Label } from "../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../assets/images/Garbage_2.jpg";
@@ -106,22 +105,10 @@ class MyComplaints extends Component {
       },
     ],
     source: "",
-    feedbackPopup: false,
-    checkboxOptions: [
-      { value: "Services", label: "Services" },
-      { value: "Resolution Time", label: "Resolution Time" },
-      { value: "Quality of work", label: "Quality of work" },
-      { value: "Others", label: "Others" },
-    ],
   };
 
   imageOnClick = (source) => {
     this.setState({ source });
-    // this.setState({ feedbackPopup: true });
-  };
-
-  handlePopupClose = () => {
-    this.setState({ feedbackPopup: false });
   };
 
   onCloseClick = () => {
@@ -132,9 +119,21 @@ class MyComplaints extends Component {
     let { complaints, source } = this.state;
     return (
       <div className="complaints-main-container">
-        <Complaints complaints={complaints} onClick={this.imageOnClick} />
-        <ImageModal imageSource={source} hide={source ? false : true} onCloseClick={this.onCloseClick} />
-        <FeedbackPopup open={this.state.feedbackPopup} checkboxOptions={this.state.checkboxOptions} handleClose={this.handlePopupClose} />
+        {complaints.length === 0 ? (
+          <div className="no-complaints-message-cont">
+            <Label
+              label={"You haven’t logged any complaints yet. Start with one, make a change"}
+              dark={true}
+              fontSize={"16px"}
+              labelStyle={{ letterSpacing: "0.7px" }}
+            />
+          </div>
+        ) : (
+          <div>
+            <Complaints complaints={complaints} onClick={this.imageOnClick} />
+            <ImageModal imageSource={source} hide={source ? false : true} onCloseClick={this.onCloseClick} />
+          </div>
+        )}
         <div className="floating-button-cont">
           <FloatingActionButton className="floating-button">
             <Icon action="content" name="add" />
