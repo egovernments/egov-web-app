@@ -35,7 +35,7 @@ const defaultStyle = {
   lineHeight: "30px",
   width: "28.48%",
   minWidth: "inherit",
-  padding: 0,
+  padding: 0
 };
 
 const defaultLabelStyle = {
