@@ -5,6 +5,11 @@
 
 .mseva-logo {
   display: block;
-  width: 90px;
+  width: 70px !important;
   margin-top: 35px !important;
+}
+
+.button-toggle-container {
+  padding: 10px 10px 0px 0px !important;
+  height: auto !important;
 }

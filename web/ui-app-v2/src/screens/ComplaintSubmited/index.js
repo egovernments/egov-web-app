@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Label, Icon } from "../../components";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -11,17 +12,17 @@ class ComplaintDetails extends Component {
   render() {
     let complaintnumber = 25436789;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8  complaint-submitted-card">
+      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 zeropadding complaint-submitted-card">
         <Card
           textChildren={
             <div>
               <div className="complaint-submitted-boldlabel">
-                <Label label={"Complaint Registerd Successfully"} />
-                <Label
-                  icon={<Icon name={"check"} action={"navigation"} style={{ fill: "#ffffff", background: "#73b332", marginBottom: "20px" }} />}
-                />
-                <Label label={"Thank You!"} />
-                <Label label={`Complaint Number. ${complaintnumber}`} />
+                <Label label={"Complaint Registerd Successfully"} fontSize="16px" />
+                <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "16px" }}>
+                  <Icon name={"check"} action={"navigation"} />
+                </FloatingActionButton>
+                <Label label={"Thank You!"} fontSize="16px" />
+                <Label label={`Complaint Number. ${complaintnumber}`} fontSize="16px" />
               </div>
               <div className="complaint-submitted-label">
                 <Label label={`You can track the status of your complaint on this app anytime!`} />

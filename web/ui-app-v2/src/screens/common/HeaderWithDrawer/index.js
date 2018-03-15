@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 //App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup } from "../../../components";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Dialog, Label, Button } from "../../../components";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Call from "material-ui/svg-icons/communication/call";
 import Logout from "material-ui/svg-icons/action/power-settings-new";
 import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
-import Help from "material-ui-community-icons/icons/help-circle";
+import Help from "../../../custom-icons/help-circle.js";
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/Mseva logo.png";
+import Logo from "../../../components/Logo";
 import "./index.css";
 //App bar imports ends
 
 /*Styles for language toggle starts */
+
+const listInnerDivStyle = {
+  padding: "16px 0px 16px 60px",
+};
+
 const selectedLabelStyle = {
   color: "#ffffff",
 };
@@ -28,7 +34,7 @@ const defaultStyle = {
   marginRight: "4.65%",
   height: "35px",
   lineHeight: "35px",
-  width: "28.48%",
+  width: "40px",
   padding: "0 16px",
 };
 
@@ -39,8 +45,10 @@ const defaultLabelStyle = {
   verticalAlign: "initial",
   padding: 0,
 };
-/*Styles for language toggle ends */
 
+/*Styles for language toggle ends */
+const logoutButtonStyle = { width: "101px", height: "35px", lineHeight: "35px" };
+const logoutContentStyle = { textAlign: "center", padding: "24px 20px 24px 20px" };
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',
@@ -57,7 +65,7 @@ const nameStyle = {
   paddingTop: 10,
   fontFamily: "Roboto",
   fontSize: 7,
-  fontWeight: 500,
+  fontWeight: 900,
   fontStyle: "normal",
   fontStretch: "normal",
   lineHeight: "normal",
@@ -78,8 +86,25 @@ const locationStyle = {
   fontWeight: 500,
 };
 
-const _label_Name = "Name";
-const _label_Location = "Location";
+const _label_Name = "Jaswinder";
+const _label_Location = "Amritsar";
+const _label_emailId = "jaswinder@gmail.com";
+
+const button = (items, onClick, selected) => {
+  console.log("inside Button");
+  return (
+    <ButtonGroup
+      items={items}
+      onClick={onClick}
+      selected={selected}
+      defaultStyle={defaultStyle}
+      defaultLabelStyle={defaultLabelStyle}
+      selectedStyle={selectedStyle}
+      selectedLabelStyle={selectedLabelStyle}
+      multiple={false}
+    />
+  );
+};
 
 class HeaderWithDrawer extends Component {
   state = {
@@ -97,6 +122,16 @@ class HeaderWithDrawer extends Component {
         value: "Marati",
       },
     ],
+
+    logoutPopupOpen: false,
+
+    value: "",
+  };
+
+  onClick = (value) => {
+    console.log("---------" + value);
+    this.setState({ value });
+
   };
 
   listItems = {
@@ -104,34 +139,39 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Home",
         leftIcon: <ActionHome />,
+        style: {
+          paddingBottom: "1px",
+          paddingTop: "1px",
+        },
       },
       {
         primaryText: "Profile",
         leftIcon: <Profile />,
+        style: {
+          paddingBottom: "3px",
+          paddingTop: "3px",
+        },
       },
       {
         primaryText: "Language",
         leftIcon: <Language />,
-        secondaryText: (
-          <ButtonGroup
-            items={this.state.languageItems}
-            onClick={this.onClick}
-            selected={this.state.value}
-            defaultStyle={defaultStyle}
-            defaultLabelStyle={defaultLabelStyle}
-            selectedStyle={selectedStyle}
-            selectedLabelStyle={selectedLabelStyle}
-            multiple={false}
-          />
-        ),
+        secondaryText: <div className="button-toggle-container">{button(this.state.languageItems, this.onClick, this.state.value)}</div>,
       },
       {
         primaryText: "Contact Us",
         leftIcon: <Call />,
+        style: {
+          paddingBottom: "8px",
+          paddingTop: "8px",
+        },
       },
       {
         primaryText: "How it Works",
-        leftIcon: <Help />,
+        leftIcon: <Help action="custom" name="help-circle" />,
+        style: {
+          paddingBottom: "2px",
+          paddingTop: "2px",
+        },
       },
       {
         primaryText: "Logout",
@@ -143,8 +183,35 @@ class HeaderWithDrawer extends Component {
   onClick = (value) => {
     this.setState({ value });
   };
+  handleItem = (item, index) => {
+    if (item.primaryText == "Logout") {
+      this.props.onHandleToggleMenu();
+      this.setState({
+        logoutPopupOpen: true,
+      });
+    }
+  };
+  handleYes = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
+  handleNo = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
+  handleLogoutClose = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
 
   render() {
+    const { languageItems, value, logoutPopupOpen } = this.state;
+
+    const { onClick } = this;
+
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
@@ -157,22 +224,59 @@ class HeaderWithDrawer extends Component {
           }}
         />
 
-        <Drawer docked={false} width={304} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+
+        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
             nameStyle={nameStyle}
             locationStyle={locationStyle}
+            emailIdStyle={nameStyle}
             name={_label_Name}
+            emailId={_label_emailId}
             location={_label_Location}
             iconStyle={iconStyle}
             imgSrc={profileImage}
           />
-          <div className="headerWithDrawer-list-poweredBy-wrapper">
-            <List items={this.listItems.items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
-            <Image className="mseva-logo" source={`${logoMseva}`} />
+
+          <div className="headerWithDrawer-list-poweredBy-wrappr ">
+            <List
+              onItemClick={this.handleItem}
+              innerDivStyle={listInnerDivStyle}
+              className="headerWithDrawer-list-style"
+              items={this.listItems.items}
+              listContainerStyle={{ background: "#ffffff" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+            />
+            <div style={{ marginTop: "43px" }}>
+              <Logo />
+            </div>
+
           </div>
         </Drawer>
+        <Dialog
+          open={logoutPopupOpen}
+          children={[
+            <div style={logoutContentStyle} key={"logout-popup"}>
+              <div className="logout-label">
+                <Label label={"Logout"} bold={true} color="#484848" fontSize="16px" labelStyle={{ marginBottom: "24px" }} />
+                <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
+              </div>
+              <div className="logout-button">
+                <Button
+                  label={"NO"}
+                  backgroundColor={"#969696"}
+                  onClick={this.handleNo}
+                  labelColor="#ffffff"
+                  style={{ marginRight: "14px" }}
+                  buttonStyle={logoutButtonStyle}
+                />
+                <Button label={"YES"} primary={true} onClick={this.handleYes} labelColor="#ffffff" buttonStyle={logoutButtonStyle} />
+              </div>
+            </div>,
+          ]}
+          handleClose={this.handleLogoutClose}
+        />
       </div>
     );
   }
