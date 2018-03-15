@@ -22,12 +22,13 @@ class Register extends Component {
     this.setState({ phoneNumber: value });
   };
 
+
   render() {
     const { register, onNameChanged, onPhoneNumberChanged } = this;
     const { name, phoneNumber } = this.state;
 
     return (
-      <Banner>
+      <Banner className="col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
         <Card
           className="user-screens-card"
           textChildren={

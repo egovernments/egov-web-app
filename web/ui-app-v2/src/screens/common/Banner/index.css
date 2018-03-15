@@ -1,31 +1,37 @@
-.banner-overlay {
-  position: absolute;
-  left: 0;
-  top: 0;
-  background: rgba();
-  width: 100%;
+.user-screens-wrapper{
+    height: 100vh;
+    position: relative;
+    width: 100%;
+}
+
+.banner-image, .banner-overlay {
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 100%;
   height: 100%;
-  background: rgba(61, 89, 107, 0.85);
+}
+
+.banner-overlay {
+  background: rgba(61, 89, 107, 0.75);
 }
 
 .banner-image {
-  position: relative;
   background-image: url(../../../assets/images/banner.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
 }
 
 .logo-wrapper {
-  position: fixed;
+  position: absolute;
   width: 100%;
   top: 50px;
   padding: 10px;
 }
 
 .mseva-logo {
-  width: 250px;
+  width: 200px;
   display: block;
   margin: 0 auto;
 }
