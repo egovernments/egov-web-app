@@ -1,22 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  BottomNavigation as MaterialUiBottomNavigation,
-  BottomNavigationItem
-} from "material-ui/BottomNavigation";
+import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
 import "./index.css";
 
-const BottomNavigation = ({
-  style = {},
-  options,
-  handleChange,
-  selectedIndex
-}) => (
-  <MaterialUiBottomNavigation
-    className="bottom-navigation"
-    style={style}
-    selectedIndex={selectedIndex}
-  >
+const BottomNavigation = ({ style = {}, options, handleChange, selectedIndex }) => (
+  <MaterialUiBottomNavigation className="bottom-navigation" style={style} selectedIndex={selectedIndex}>
     {options.map((item, index) => (
       <BottomNavigationItem
         key={index}
@@ -37,10 +25,10 @@ BottomNavigation.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       icon: PropTypes.node,
-      route: PropTypes.string.isRequired
+      route: PropTypes.string.isRequired,
     })
   ).isRequired,
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
 };
 
 export default BottomNavigation;

@@ -12,32 +12,31 @@ const labelText = (label, labelStyle, labelClassName) => {
   );
 };
 
-const labelIcon = (icon) => {
-  return icon ? <div className="label-icon">{icon}</div> : "";
-};
-
 const Label = ({
   className = "",
   label,
-  iconPosition = "before",
-  icon,
   color,
+  fontSize = "14px",
+  dark = false,
   upperCase = false,
   bold = false,
   containerStyle = {},
   labelStyle = {},
-  labelClassName=""
+  labelClassName = "",
 }) => {
   let additionalStyles = {};
 
-  if (icon) {
-    additionalStyles.padding = "0px 16px 6px 16px";
-  }
   if (color) {
     additionalStyles.color = color;
   }
+  if (dark) {
+    additionalStyles.color = "#484848";
+  }
   if (bold) {
     additionalStyles.fontWeight = 500;
+  }
+  if (fontSize) {
+    additionalStyles.fontSize = fontSize;
   }
   if (upperCase) {
     additionalStyles.textTransform = "uppercase";
@@ -49,9 +48,7 @@ const Label = ({
 
   return (
     <div style={containerStyle} className={`label-container ${className}`}>
-      {iconPosition === "before" ? labelIcon(icon) : ""}
-      {labelText(label, labelStyle,labelClassName)}
-      {iconPosition === "after" ? labelIcon(icon) : ""}
+      {labelText(label, labelStyle, labelClassName)}
     </div>
   );
 };
@@ -62,8 +59,6 @@ Label.propTypes = {
   bold: PropTypes.bool,
   upperCase: PropTypes.bool,
   className: PropTypes.string,
-  icon: PropTypes.element,
-  iconPosition: PropTypes.oneOf(["after", "before"]),
   containerStyle: PropTypes.object,
   labelStyle: PropTypes.object,
   labelClassName: PropTypes.string,

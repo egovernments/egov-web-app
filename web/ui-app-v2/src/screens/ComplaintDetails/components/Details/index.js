@@ -15,7 +15,6 @@ const iconStyle = {
   width: "18px",
 };
 
-
 class Details extends Component {
   render() {
     let { status } = this.props;
@@ -24,9 +23,9 @@ class Details extends Component {
         <Card
           textChildren={
             <div>
-              <Label label="Complaint Details" labelClassName="dark-heading" icon={<NewComplaint color="#969696" />}/>
+              <Label label="Complaint Details" labelClassName="dark-heading" icon={<NewComplaint color="#969696" />} />
               <div key={10} className="complaint-detail-full-width">
-                <Label labelClassName="dark-heading" labelStyle={{fontSize:"16px"}} label="Potholes on the road" />
+                <Label labelClassName="dark-heading" labelStyle={{ fontSize: "16px" }} label="Potholes on the road" />
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="Complaint No." />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label="25467895" />
@@ -37,13 +36,9 @@ class Details extends Component {
                 </div>
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="Submission Date" />
-                  <Label
-                    className="col-xs-6 status-result-color"
-                    label="11-Mar-18"
-                    labelStyle={{ color: "inherit" }}
-                  />
+                  <Label className="col-xs-6 status-result-color" label="11-Mar-18" labelStyle={{ color: "inherit" }} />
                 </div>
-                <div style={{ marginLeft: "16px",marginTop: "24px",marginBottom: "17px" }}>
+                <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
                     <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
                       <Image
@@ -77,19 +72,23 @@ class Details extends Component {
 
                 <div className="row">
                   <div className="col-xs-2">
-                    <Location style={iconStyle} color={"#969696"}/>
+                    <Location style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
-                    <Label label={"Sector 32, 1 main, Amritsar"} className="status-result-color" labelStyle={{ color: "inherit" }}/>
+                    <Label label={"Sector 32, 1 main, Amritsar"} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                 </div>
 
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">
-                    <FormateQuote style={iconStyle} color={"#969696"}/>
+                    <FormateQuote style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
-                    <Label label={"Too much garbage lying on the road, its very dificult to cross the area."} className="status-result-color" labelStyle={{ color: "inherit" }}/>
+                    <Label
+                      label={"Too much garbage lying on the road, its very dificult to cross the area."}
+                      className="status-result-color"
+                      labelStyle={{ color: "inherit" }}
+                    />
                   </div>
                 </div>
               </div>
