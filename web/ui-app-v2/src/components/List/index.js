@@ -5,6 +5,7 @@ import { List as MaterialUiList, ListItem } from "material-ui/List";
 const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
+
 const List = ({ listItemContainer, innerDivStyle, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
   const renderListItems = (items) => {
     return items.map((item, index) => {

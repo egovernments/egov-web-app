@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 //App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup } from "../../../components";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Dialog, Label, Button } from "../../../components";
 import ActionHome from "material-ui/svg-icons/action/home";
 import Call from "material-ui/svg-icons/communication/call";
 import Logout from "material-ui/svg-icons/action/power-settings-new";
@@ -45,8 +45,10 @@ const defaultLabelStyle = {
   verticalAlign: "initial",
   padding: 0,
 };
-/*Styles for language toggle ends */
 
+/*Styles for language toggle ends */
+const logoutButtonStyle = { width: "101px", height: "35px", lineHeight: "35px" };
+const logoutContentStyle = { textAlign: "center", padding: "24px 20px 24px 20px" };
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',
@@ -120,12 +122,16 @@ class HeaderWithDrawer extends Component {
         value: "Marati",
       },
     ],
+
+    logoutPopupOpen: false,
+
     value: "",
   };
 
   onClick = (value) => {
     console.log("---------" + value);
     this.setState({ value });
+
   };
 
   listItems = {
@@ -177,8 +183,35 @@ class HeaderWithDrawer extends Component {
   onClick = (value) => {
     this.setState({ value });
   };
+  handleItem = (item, index) => {
+    if (item.primaryText == "Logout") {
+      this.props.onHandleToggleMenu();
+      this.setState({
+        logoutPopupOpen: true,
+      });
+    }
+  };
+  handleYes = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
+  handleNo = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
+  handleLogoutClose = () => {
+    this.setState({
+      logoutPopupOpen: false,
+    });
+  };
 
   render() {
+    const { languageItems, value, logoutPopupOpen } = this.state;
+
+    const { onClick } = this;
+
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
@@ -190,6 +223,7 @@ class HeaderWithDrawer extends Component {
             width: "initial",
           }}
         />
+
 
         <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
@@ -204,8 +238,10 @@ class HeaderWithDrawer extends Component {
             iconStyle={iconStyle}
             imgSrc={profileImage}
           />
+
           <div className="headerWithDrawer-list-poweredBy-wrappr ">
             <List
+              onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
               className="headerWithDrawer-list-style"
               items={this.listItems.items}
@@ -215,8 +251,32 @@ class HeaderWithDrawer extends Component {
             <div style={{ marginTop: "43px" }}>
               <Logo />
             </div>
+
           </div>
         </Drawer>
+        <Dialog
+          open={logoutPopupOpen}
+          children={[
+            <div style={logoutContentStyle} key={"logout-popup"}>
+              <div className="logout-label">
+                <Label label={"Logout"} bold={true} color="#484848" fontSize="16px" labelStyle={{ marginBottom: "24px" }} />
+                <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
+              </div>
+              <div className="logout-button">
+                <Button
+                  label={"NO"}
+                  backgroundColor={"#969696"}
+                  onClick={this.handleNo}
+                  labelColor="#ffffff"
+                  style={{ marginRight: "14px" }}
+                  buttonStyle={logoutButtonStyle}
+                />
+                <Button label={"YES"} primary={true} onClick={this.handleYes} labelColor="#ffffff" buttonStyle={logoutButtonStyle} />
+              </div>
+            </div>,
+          ]}
+          handleClose={this.handleLogoutClose}
+        />
       </div>
     );
   }
