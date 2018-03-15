@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Card, Label, Image,Icon } from "../../../../components";
+import { List, Card, Label, Image, Icon } from "../../../../components";
 import "./index.css";
 
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
@@ -21,7 +21,8 @@ class Details extends Component {
           textChildren={
             <div>
               <div className="rainmaker-displayInline">
-                <Icon action="notification" name="sms-failed" color="#969696" /> <Label label="Complaint Details" containerStyle={{marginLeft:"13px"}} labelClassName="dark-heading"/>
+                <Icon action="notification" name="sms-failed" color="#969696" />{" "}
+                <Label label="Complaint Details" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
               <div key={10} className="complaint-detail-full-width">
                 <Label labelClassName="dark-heading rainmaker-big-font" label="Potholes on the road" />

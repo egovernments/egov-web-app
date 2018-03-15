@@ -25,7 +25,7 @@ class Login extends Component {
           className="user-screens-card"
           textChildren={
             <div>
-              <Label style={{marginBottom : "12px"}} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
+              <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
               <form>
                 <MobileNumberField
                   id="person-phone-number"
