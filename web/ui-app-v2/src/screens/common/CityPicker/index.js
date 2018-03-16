@@ -56,7 +56,6 @@ export default class CityPickerDialog extends Component {
     const { cities, autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
     const { results, searchTerm, open, city } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
-    const resultsForDisplay = prepareResultsForDisplay(results);
 
     return (
       <div>

@@ -21,6 +21,7 @@ class Updates extends Component {
     const { title, date, status } = update;
     return (
       <Card
+        style={{marginBottom : "8px"}}
         key={index}
         textChildren={
           <div className="update">

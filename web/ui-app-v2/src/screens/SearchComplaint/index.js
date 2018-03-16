@@ -1,34 +1,35 @@
 import React, { Component } from "react";
-import { List, Icon, AutoSuggest, Label } from "../../components";
+import { List, Icon, AutoSuggest } from "../../components";
 import { red500 } from "material-ui/styles/colors";
 
 const customIconStyles = {
-  position: "absolute",
   height: 40,
   width: 40,
   margin: 0,
-  padding: 0,
-  top: 0,
-  left: 5,
 };
 
 export default class SearchComplaint extends Component {
   state = { results: [], searchTerm: "" };
 
-  dataSource = {
-    Cleanliness: [
-      { id: 1, text: "Accumulation Of Litter" },
-      { id: 2, text: "Overflowing Garbage Bins" },
-      { id: 3, text: "Garbage Bin Absent" },
-      { id: 4, text: "Absenteeism Of Sweepers" },
-    ],
-    "Roads & Footpaths": [{ id: 5, text: "Potholes" }, { id: 6, text: "Broken Footpaths" }],
-    "Drains & Sewers": [{ id: 7, text: "Blockage Of Drains" }],
-  };
+  dataSource = [
+    {
+      id: 0,
+      text: "Garbage",
+      nestedItems: [
+        { id: 1, text: "Accumulation Of Litter" },
+        { id: 2, text: "Overflowing Garbage Bins" },
+        { id: 3, text: "Garbage Bin Absent" },
+        { id: 4, text: "Absenteeism Of Sweepers" },
+      ],
+    },
+    { id: 5, text: "Roads & Footpaths", nestedItems: [{ id: 6, text: "Potholes" }, { id: 7, text: "Broken Footpaths" }] },
+    { id: 8, text: "Drains", nestedItems: [{ id: 9, text: "Blockage Of Drains" }] },
+    { id: 10, text: "StreetLights", nestedItems: [] },
+  ];
 
   generateDataSource = (dataSource) => {
-    return Object.keys(dataSource).reduce((source, key) => {
-      return source.concat(dataSource[key]);
+    return dataSource.reduce((transformedDataSource, source) => {
+      return transformedDataSource.concat(source.nestedItems);
     }, []);
   };
 
@@ -37,24 +38,42 @@ export default class SearchComplaint extends Component {
   };
 
   prepareResultsForDisplay = (results = []) => {
-    return results.map((result, index) => {
-      const mappedResult = {};
-      mappedResult.primaryText = result.text;
-      mappedResult.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-      return mappedResult;
+    return results.map((result) => {
+      const listItem = {};
+
+      listItem.primaryText = result.text;
+      listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
+      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
+        const item = {};
+        item.primaryText = nestedItem.text;
+        return item;
+      });
+
+      return listItem;
     });
   };
 
+  renderList = (dataSource) => {
+    return <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={dataSource} />;
+  };
+
   renderListWithHeader = (dataSource) => {
-    return Object.keys(dataSource).map((key, index) => {
-      const resultsForDisplay = this.prepareResultsForDisplay(dataSource[key]);
-      return (
-        <div key={index}>
-          <Label upperCase={true} bold={true} labelStyle={{ padding: "15px", color: "#2f80ed" }} label={key} />
-          <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
-        </div>
-      );
+    dataSource = dataSource.map((result) => {
+      const listItem = {};
+
+      listItem.primaryText = result.text;
+      listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
+      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
+        const item = {};
+        item.primaryText = nestedItem.text;
+        item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
+        return item;
+      });
+
+      return listItem;
     });
+
+    return this.renderList(dataSource);
   };
 
   render() {
@@ -63,9 +82,24 @@ export default class SearchComplaint extends Component {
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const resultsForDisplay = prepareResultsForDisplay(results);
     const transformedDataSource = generateDataSource(dataSource);
+
     return (
-      <div style={{ marginBottom: 60, padding: "8px 8px 0px 8px", background: "#fff" }}>
-        <AutoSuggest dataSource={transformedDataSource} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
+      <div style={{ marginBottom: 60 }}>
+        <AutoSuggest
+          containerStyle={{
+            padding: "0px 16px 16px 16px",
+            background: "#00bcd1",
+            boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)",
+          }}
+          textFieldStyle={{
+            boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
+            background: "#ffffff",
+          }}
+          dataSource={transformedDataSource}
+          searchInputText="Search"
+          searchKey="text"
+          callback={autoSuggestCallback}
+        />
         {displayInitialList ? (
           this.renderListWithHeader(dataSource)
         ) : (

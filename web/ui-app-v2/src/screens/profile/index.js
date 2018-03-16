@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { UploadDrawer, ProfileSection, Button, Icon, TextField, TextFieldIcon } from "../../components";
+import { UploadDrawer, ProfileSection, Button, TextField } from "../../components";
 import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";
 import "./index.css";

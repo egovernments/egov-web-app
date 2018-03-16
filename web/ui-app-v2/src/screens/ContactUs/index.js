@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "../../components";
 import pinIcon from "../../assets/Location_pin.svg";
 import Logo from "../../assets/images/logo_black.png";
-import Screen from "../common/Screen";
 import "./index.css";
 
 const listInnerDivStyle = {
-  padding: "0px 0px 0px 50px",
+  padding: "0px 0px 0px 40px",
 };
 
 const iconStyle = {
@@ -122,8 +121,7 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      // <div className="contactus-main-cont">
-      <Screen>
+      <div className="contactus-main-cont">
         <Card
           className="contactus-main-card"
           textChildren={
@@ -133,14 +131,14 @@ class ContactUs extends Component {
                 <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
               </div>
               <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                <Icon style={twitterStyle} action="custom" name="facebook" color="ffffff" />
-                <Icon style={facebookStyle} action="custom" name="twitter" color="ffffff" />
+                <Icon style={twitterStyle} action="custom" name="twitter" color="ffffff" />
+                <Icon style={facebookStyle} action="custom" name="facebook" color="ffffff" />
               </div>
             </div>
           }
         />
         {this.state.openMap && <MapLocation currLoc={location} styles={searchBoxStyles} icon={pinIcon} hideTerrainBtn={true} />}
-      </Screen>
+      </div>
     );
   }
 }
