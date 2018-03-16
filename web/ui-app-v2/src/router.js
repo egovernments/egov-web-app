@@ -16,6 +16,8 @@ import Register from "./screens/User/Register";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
+import HowItWorks from "./screens/HowItWorks";
+
 
 const Main = () => {
   return (
@@ -35,6 +37,7 @@ const Main = () => {
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
         <PrivateRoute exact path="/search-complaint" component={SearchComplaint} />
+        <PrivateRoute exact path="/how-it-works" component={HowItWorks} />
       </Switch>
     </main>
   );
