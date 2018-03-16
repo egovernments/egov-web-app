@@ -6,11 +6,21 @@ body,
 body p,
 body div,
 body span {
-  font-family: Roboto, sans-serif !important;
   color: #767676;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.3px;
+}
+
+body,
+body p,
+body div,
+body span,
+body h1,
+body h2,
+body h3,
+body h4 {
+  font-family: Roboto, sans-serif !important;
 }
 
 .screen {
