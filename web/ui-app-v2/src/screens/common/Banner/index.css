@@ -1,15 +1,14 @@
 .user-screens-wrapper{
-    height: 100vh;
     position: relative;
     width: 100%;
 }
 
 .banner-image, .banner-overlay {
-  position : absolute;
+  position : fixed;
   top : 0;
   left : 0;
   width : 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .banner-overlay {
@@ -23,8 +22,9 @@
   background-position: center;
 }
 
+
 .logo-wrapper {
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 50px;
   padding: 10px;
@@ -37,9 +37,9 @@
 }
 
 .user-screens-wrapper .user-screens-card {
-  position: absolute !important;
+  position: fixed;
   bottom: 10px;
   left: 8px;
   right: 8px;
-  padding: 16px !important;
+  padding: 16px;
 }
