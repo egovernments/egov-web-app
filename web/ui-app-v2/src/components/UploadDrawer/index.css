@@ -16,10 +16,14 @@
 .label-icon label svg,
 .labelIconBox svg {
   margin-left: 0px !important;
+  fill: #ffffff !important;
 }
 .labelIconBox {
   display: flex;
   flex-direction: column;
+}
+.labelIconBox div label {
+  text-align: inherit !important;
 }
 .removeUploadlabel {
   margin-top: 6px;
