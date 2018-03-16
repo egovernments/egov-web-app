@@ -47,8 +47,9 @@ const defaultLabelStyle = {
 };
 /*Styles for language toggle ends */
 
-const logoutButtonStyle = { width: "101px", height: "35px", lineHeight: "35px" };
-const logoutContentStyle = { textAlign: "center", padding: "24px 20px 24px 20px" };
+const logoutButtonStyle = { width: "90px", height: "35px", lineHeight: "35px" };
+const logoutContentStyle = { textAlign: "center", padding: "24px 20px" };
+
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',

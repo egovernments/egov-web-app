@@ -1,40 +1,38 @@
 import React, { Component } from "react";
 import RadioButton from "../../components/RadioButton";
-import { TextArea, Label, Button } from "../../components";
+import { TextArea, Label, Button, Icon } from "../../components";
 import Check from "material-ui/svg-icons/navigation/check";
+import Screen from "../common/Screen";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
+
 const styles = {
   labelStyle: {
-    paddingBottom: "16px",
-    paddingLeft: "24px",
     fontSize: "14px",
     fontWeight: "normal",
     color: "#767676",
     letterSpacing: "0.3px",
+    marginBottom: "26px",
   },
-  checkedIconStyle: { fill: "#ffffff", background: "#73b332", borderRadius: "50%" },
-  unCheckedIconStyle: { fill: "#e0e0e0", background: "#e0e0e0", borderRadius: "50%" },
-  textareaStyle: { border: "0.5px solid #e6e6e6", backgroundColor: "#ffffff", paddingLeft: "5px", height: "106px" },
   hintStyle: {
-    color: "#767676",
-    fontSize: "14px",
-    fontWeight: "normal",
-    top: "10px",
-    left: "5px",
-    lineHeight: "20px",
+    color: "#b3b3b3",
+    fontFamily: "Roboto",
+    fontSize: "16px",
+    fontWeight: "400",
     letterSpacing: "0.3px",
   },
   radioButtonItemStyle: {
-    paddingBottom: "12px",
-    paddingLeft: "24px",
-    height: "48px",
-    paddingTop: "15px",
+    marginBottom: "18px",
+    paddingLeft: "2px",
+    height: "16px",
   },
-  selectedButtonStyle: { borderLeft: "1.5px solid #f5a623", backgroundColor: "#f8f8f8" },
+  selectedLabelStyle: {
+    color: "#00bbd3",
+  },
   radioButtonLabelStyle: {
     fontSize: "14px",
-    fontWeight: "500",
-    color: "#484848",
+    fontWeight: "400",
+    color: "#767676",
     letterSpacing: "0.3px",
   },
 };
@@ -43,9 +41,10 @@ class ReOpenComplaint extends Component {
     valueSelected: "",
   };
   options = [
-    { value: "Complaint has not Resolved", label: "Complaint has not Resolved" },
-    { value: "Complaint has been wrongly Rejected", label: "Complaint has been wrongly Rejected" },
-    { value: "Other", label: "Other" },
+    { value: "No work was done", label: "No work was done" },
+    { value: "Only partial work was done ", label: "Only partial work was done " },
+    { value: "Employee did not turn up", label: "Employee did not turn up" },
+    { value: "No permanent solution", label: "No permanent solution" },
   ];
 
   handleChange = (event, value) => {
@@ -61,36 +60,47 @@ class ReOpenComplaint extends Component {
     const { valueSelected } = this.state;
 
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
-        <div className="reopencomplaint-field">
+      <Screen className="reopencomplaint-field">
+        <div className="reopencomplaint-question">
           <Label label="Why do you want to Re-Open your Complaint?" labelStyle={styles.labelStyle} />
           <RadioButton
             name="reopencomplaint-radio"
             valueSelected={valueSelected}
-            checkedIcon={<Check style={styles.checkedIconStyle} />}
             options={this.options}
             handleChange={this.handleChange}
-            iconStyle={styles.unCheckedIconStyle}
             radioButtonItemStyle={styles.radioButtonItemStyle}
             labelStyle={styles.radioButtonLabelStyle}
-            selectedStyle={styles.selectedButtonStyle}
+            selectedLabelStyle={styles.selectedLabelStyle}
           />
         </div>
-
+        <div className="reopencomplaint-upload-photo">
+          <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ margin: "15px 36px 4px 30px" }}>
+            <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} />
+          </FloatingActionButton>
+          <Label
+            label="UPLOAD PHOTO"
+            bold={true}
+            color={"#767676"}
+            fontSize={"12px"}
+            labelStyle={{ textAlign: "center", padding: "2px 24px 18px 23px" }}
+          />
+        </div>
         <div className="reopencomplaint-textArea">
           <TextArea
             id="reopencomplaint-comment-field"
-            hintText="Write your comments..."
-            rows={4}
-            style={styles.textareaStyle}
+            hintText="Type your comments"
             hintStyle={styles.hintStyle}
+            rowsMax={2}
             onChange={this.handleCommentChange}
+            underlineShow={true}
+            underlineStyle={{ borderColor: "#e0e0e0" }}
+            underlineFocusStyle={{ borderColor: "#e0e0e0" }}
           />
         </div>
         <div className="reopencomplaint-button">
           <Button id="reopencomplaint-submit-action" primary={true} label="SUBMIT" fullWidth={true} onClick={this.handleComplaintSubmit} />
         </div>
-      </div>
+      </Screen>
     );
   }
 }
