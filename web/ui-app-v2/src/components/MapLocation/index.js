@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import TextFieldIcon from "../TextFieldIcon";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
 import Icon from "../Icon";
@@ -19,9 +20,7 @@ const MapLocation = compose(
   lifecycle({
     componentWillMount() {
       const refs = {};
-
       this.setState({
-        bounds: null,
         markers: [],
         onMapMounted: (ref) => {
           refs.map = ref;
@@ -72,32 +71,90 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged} gestureHandling={"greedy"}>
-    <div className="myLoc">
-      <Icon id="my-location" style={{ backgroundColor: "gray" }} action="maps" name={"my-location"} onClick={props.getMyLoc} />
+  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged}>
+    <div className="back-btn">
+      <Icon
+        id="map-back-btn"
+        style={{
+          height: 24,
+          width: 24,
+          color: "#484848",
+        }}
+        action="navigation"
+        name={"arrow-back"}
+        onClick={props.onCLickMapBackBtn}
+      />
     </div>
+    <div className="search-icon">
+      <Icon
+        id="searchIcon"
+        style={{
+          height: 24,
+          width: 24,
+          color: "#484848",
+        }}
+        action="action"
+        name={"search"}
+      />
+    </div>
+    <div className="myLoc">
+      <Icon
+        id="my-location"
+        style={{
+          background: "#969696",
+          borderRadius: "50%",
+          padding: "12px",
+          height: 55,
+          width: 55,
+          color: "rgb(255, 255, 255)",
+        }}
+        action="maps"
+        name={"my-location"}
+        onClick={props.getMyLoc}
+      />
+    </div>
+    {props.dragInfoBox && (
+      <div className="dragInfoBox">
+        {" "}
+        <span>Move this pin to select your location</span>{" "}
+      </div>
+    )}
     <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
       controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
       onPlacesChanged={props.onPlacesChanged}
     >
-      <input type="text" placeholder="Search address" style={props.styles} />
+      <input type="text" placeholder="Search address" style={props.searchBoxStyles} />
     </SearchBox>
-    {props.markers.map((marker, index) => {
-      props.setLocation(marker.position.lat(), marker.position.lng(), index);
-      return (
-        <Marker
-          key={index}
-          position={marker.position}
-          draggable={true}
-          onDragEnd={(e) => {
-            props.setLocation(e.latLng.lat(), e.latLng.lng());
-          }}
-        />
-      );
-    })}
-    <Marker position={props.currLoc} icon={props.icon} />
+
+    {props.markers.length > 0 ? (
+      props.markers.map((marker, index) => {
+        props.setLocation(marker.position.lat(), marker.position.lng(), index);
+        return (
+          <Marker
+            key={index}
+            position={marker.position}
+            draggable={true}
+            icon={props.icon}
+            onDragEnd={(e) => {
+              props.setLocation(e.latLng.lat(), e.latLng.lng());
+            }}
+          />
+        );
+      })
+    ) : (
+      <Marker
+        position={props.center}
+        icon={props.icon}
+        draggable={true}
+        animation={window.google.maps.Animation.DROP}
+        onDragEnd={(e) => {
+          props.setLocation(e.latLng.lat(), e.latLng.lng());
+        }}
+      />
+    )}
+    {props.showMyLoc && <Marker position={props.currLoc} icon={props.icon} />}
   </GoogleMap>
 ));
 

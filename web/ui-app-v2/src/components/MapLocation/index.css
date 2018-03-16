@@ -23,3 +23,31 @@
   height: 55px !important;
   width: 55px !important;
 }
+.back-btn,
+.search-icon {
+  position: absolute !important;
+  top: 75px;
+  background: transparent;
+  margin-left: 15px;
+}
+
+.search-icon {
+  top: 116px;
+  margin-left: 34px;
+}
+.dragInfoBox {
+  top: 230px;
+  margin-left: 32px;
+  width: 82%;
+  height: 40px;
+  background-color: #f89a3f;
+  position: absolute;
+  font-family: Roboto;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  text-align: center;
+  padding-top: 12px;
+}
+.dragInfoBox span {
+  color: #ffffff;
+}
