@@ -5,7 +5,7 @@ import { List as MaterialUiList, ListItem } from "material-ui/List";
 const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
-const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
+const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [], ...rest }) => {
   const renderListItems = items => {
     return items.map((item, index) => {
       const { nestedItems } = item;
@@ -19,15 +19,7 @@ const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyl
       }
 
       return (
-        <ListItem
-          onClick={() => onItemClick && onItemClick(item, index)}
-          innerDivStyle={innerDivStyle}
-          autoGenerateNestedIndicator={false}
-          primaryTogglesNestedList={true}
-          containerElement={listItemContainer}
-          key={index}
-          {...item}
-        />
+        <ListItem onClick={() => onItemClick && onItemClick(item, index)} containerElement={listItemContainer} key={index} {...rest} {...item} />
       );
     });
   };
@@ -42,7 +34,6 @@ const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyl
 List.propTypes = {
   listItemContainer: PropTypes.string,
   listItemStyle: PropTypes.object,
-  innerDivStyle: PropTypes.object,
   onItemClick: PropTypes.func,
   listContainerStyle: PropTypes.object,
   items: PropTypes.arrayOf(
