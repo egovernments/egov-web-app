@@ -1,8 +1,22 @@
 .home-page-content {
-  position : absolute !important;
-  top : 80%;
-  left : 8px;
-  right : 8px;
+  position: absolute !important;
+  top: 75%;
+  left: 8px;
+  right: 8px;
   margin-bottom: 70px;
 }
 
+.homepage-banner.user-screens-wrapper{
+    height: 30vh;
+}
+
+.homepage-banner .banner-image, .homepage-banner .banner-overlay {
+  position : absolute;
+  height: 100%;
+}
+
+
+.homepage-banner .logo-wrapper {
+  position : absolute;
+  top: 30%;
+}

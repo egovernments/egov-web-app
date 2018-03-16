@@ -8,8 +8,7 @@ import Language from "material-ui/svg-icons/action/language";
 import Profile from "material-ui/svg-icons/social/person";
 import Help from "../../../custom-icons/help-circle.js";
 import profileImage from "../../../assets/people1.png";
-import logoMseva from "../../../assets/images/Mseva logo.png";
-import Logo from "../../../components/Logo";
+import logoMseva from "../../../assets/images/logo_black.png";
 import "./index.css";
 //App bar imports ends
 
@@ -32,10 +31,11 @@ const defaultStyle = {
   border: "1px solid #484848",
   borderRadius: "1px",
   marginRight: "4.65%",
-  height: "35px",
-  lineHeight: "35px",
-  width: "40px",
-  padding: "0 16px",
+  height: "30px",
+  lineHeight: "30px",
+  width: "28.48%",
+  minWidth: "inherit",
+  padding: 0,
 };
 
 const defaultLabelStyle = {
@@ -45,10 +45,11 @@ const defaultLabelStyle = {
   verticalAlign: "initial",
   padding: 0,
 };
-
 /*Styles for language toggle ends */
+
 const logoutButtonStyle = { width: "90px", height: "35px", lineHeight: "35px" };
 const logoutContentStyle = { textAlign: "center", padding: "24px 20px" };
+
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',
@@ -90,22 +91,6 @@ const _label_Name = "Jaswinder";
 const _label_Location = "Amritsar";
 const _label_emailId = "jaswinder@gmail.com";
 
-const button = (items, onClick, selected) => {
-  console.log("inside Button");
-  return (
-    <ButtonGroup
-      items={items}
-      onClick={onClick}
-      selected={selected}
-      defaultStyle={defaultStyle}
-      defaultLabelStyle={defaultLabelStyle}
-      selectedStyle={selectedStyle}
-      selectedLabelStyle={selectedLabelStyle}
-      multiple={false}
-    />
-  );
-};
-
 class HeaderWithDrawer extends Component {
   state = {
     languageItems: [
@@ -125,16 +110,14 @@ class HeaderWithDrawer extends Component {
 
     logoutPopupOpen: false,
 
-    value: "",
+    value: "English",
   };
 
   onClick = (value) => {
-    console.log("---------" + value);
     this.setState({ value });
-
   };
 
-  listItems = {
+  listItemsPartOne = {
     items: [
       {
         primaryText: "Home",
@@ -155,8 +138,15 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Language",
         leftIcon: <Language />,
-        secondaryText: <div className="button-toggle-container">{button(this.state.languageItems, this.onClick, this.state.value)}</div>,
+        style: {
+          borderBottom: "none",
+        },
       },
+    ],
+  };
+
+  listItemsPartTwo = {
+    items: [
       {
         primaryText: "Contact Us",
         leftIcon: <Call />,
@@ -209,23 +199,14 @@ class HeaderWithDrawer extends Component {
 
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
-
     const { onClick } = this;
 
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-        <AppBar
-          title={`Mseva/ Home`}
-          onLeftIconButtonClick={onHandleToggleMenu}
-          style={{
-            overflowX: "hidden",
-            width: "initial",
-          }}
-        />
+        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
 
-
-        <Drawer docked={false} width={360} open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -239,19 +220,40 @@ class HeaderWithDrawer extends Component {
             imgSrc={profileImage}
           />
 
-          <div className="headerWithDrawer-list-poweredBy-wrappr ">
+          <div className="drawer-list-poweredBy-wrappr">
             <List
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
-              className="headerWithDrawer-list-style"
-              items={this.listItems.items}
+              className="drawer-list-style"
+              items={this.listItemsPartOne.items}
               listContainerStyle={{ background: "#ffffff" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />
-            <div style={{ marginTop: "43px" }}>
-              <Logo />
+
+            <div className="drawer-button-toggle-container">
+              <ButtonGroup
+                items={this.state.languageItems}
+                onClick={this.onClick}
+                selected={this.state.value}
+                defaultStyle={defaultStyle}
+                defaultLabelStyle={defaultLabelStyle}
+                selectedStyle={selectedStyle}
+                selectedLabelStyle={selectedLabelStyle}
+                multiple={false}
+              />
             </div>
 
+            <List
+              onItemClick={this.handleItem}
+              innerDivStyle={listInnerDivStyle}
+              className="drawer-list-style"
+              items={this.listItemsPartTwo.items}
+              listContainerStyle={{ background: "#ffffff" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+            />
+            <div className="drawer-image-cont">
+              <Image className="mseva-logo" source={`${logoMseva}`} />
+            </div>
           </div>
         </Drawer>
         <Dialog

@@ -6,7 +6,7 @@ const errorStyle = {
   marginTop: 5,
 };
 
-const hintStyle = {
+const hintBaseStyle = {
   fontSize: "14px",
 };
 const floatingLabelBaseStyle = {
@@ -21,12 +21,16 @@ const floatingLabelBaseShrinkStyle = {
   fontWeight: 500,
 };
 
-const inputStyle = {
+const inputBaseStyle = {
   paddingBottom: 10,
 };
 
 const requiredStyle = {
   color: "red",
+};
+
+const underlineFocusBaseStyle = {
+  borderColor: "#e0e0e0",
 };
 
 const TextField = ({
@@ -37,9 +41,13 @@ const TextField = ({
   floatingLabelStyle = {},
   hintText,
   fullWidth = true,
+  hintStyle = {},
   className = "",
   value,
   floatingLabelText,
+  underlineShow = true,
+  inputStyle = {},
+  underlineFocusStyle = {},
   isRequired,
 }) => {
   return (
@@ -48,17 +56,18 @@ const TextField = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
-      inputStyle={inputStyle}
+      inputStyle={{ ...inputBaseStyle, ...inputStyle }}
       className={`textfield ${className}`}
       style={style}
       id={id}
       floatingLabelShrinkStyle={floatingLabelBaseShrinkStyle}
       fullWidth={fullWidth}
       hintText={hintText}
-      hintStyle={hintStyle}
+      hintStyle={{ ...hintBaseStyle, ...hintStyle }}
       floatingLabelText={[floatingLabelText, isRequired ? <span style={requiredStyle}> *</span> : null]}
       floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
-      underlineShow={true}
+      underlineFocusStyle={{ ...underlineFocusBaseStyle, underlineFocusStyle }}
+      underlineShow={underlineShow}
       floatingLabelFixed={true}
     />
   );

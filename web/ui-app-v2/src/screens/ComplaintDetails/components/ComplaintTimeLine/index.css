@@ -16,27 +16,33 @@
 
 .complaintTimeLineContainer {
   margin-left: -4px;
+  margin-top: 24px;
 }
 
-.complaint-details-timline-reopen-button
+.complaint-details-timline-button
 {
+  letter-spacing: 0.6px;
+  font-size: 12px;
   font-weight: 500;
-  color: #e74c3c;
+  color: #ffffff;
   width: 89px;
   height: 21px;
-  margin-top: 20px;
-  background-color: #ffffff !important;
+  margin-top: 8px;
+  border-radius: 2px;
+  background-color: #00bbd3;
   text-align: center;
   cursor: pointer;
-  /* padding: 5px 3px; */
-  border-radius: 2px !important;
-  border: solid 1px #e74c3c !important;
+  padding: 3px 3px;
+  /* border-radius: 2px !important;
+  border: solid 1px #e74c3c !important; */
+  margin-right: 16px;
 }
 
 .complaint-timeline-content-section {
   margin-left: 25px;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 26px;
+  /* border-bottom: 1px solid #e0e0e0; */
+  padding-bottom: 34px;
+  margin-top: -6px;
 }
 
 .complaint-timeline-content-section strong {

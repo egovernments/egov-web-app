@@ -1,13 +1,15 @@
-.mseva-logo {
-  margin: 0 auto;
-  display: block;
-  width: 90px;
-}
-
 .contactus-list-container {
-  padding: 25px 0px;
+  padding: 37px 0px 16px 0px;
 }
 
-.contactus-main-cont > div {
-  padding-top: 30px;
+.contactus-main-card > div {
+  padding-top: 15px;
+}
+
+.contactus-main-cont {
+  padding: 0px 8px;
+}
+
+.contactus-main-card .mseva-logo {
+  width: 40% !important;
 }

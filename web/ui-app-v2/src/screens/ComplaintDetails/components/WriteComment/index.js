@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { List } from "../../../../components";
-import Send from "material-ui/svg-icons/content/send";
+import { List, Icon } from "../../../../components";
 import MaterialUITextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../assets/images/faceOne.jpg";
@@ -24,7 +23,7 @@ const textFieldStyle = {
 
 const itemsOne = [
   {
-    leftAvatar: <Avatar src={faceOne} />,
+    leftAvatar: <Avatar size={33} src={faceOne} />,
     primaryText: (
       <div className="write-comment-align-ComplaintTimeLine rainmaker-list-right-item-overide-style">
         <MaterialUITextField
@@ -39,7 +38,7 @@ const itemsOne = [
           underlineShow={false}
           hintStyle={{ bottom: "8px" }}
         />
-        <Send style={iconStyle} color={"#00bcd1"} />
+        <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} />
       </div>
     ),
   },
@@ -52,3 +51,5 @@ class WriteComment extends Component {
 }
 
 export default WriteComment;
+
+//props types check yet to add

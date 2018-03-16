@@ -1,38 +1,31 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
-import { Button, TextField, MobileNumberField, Card } from "../../../components";
-import UserScreensWrapper from "../components/UserScreenWrapper";
-import CityPicker from "../../common/CityPicker";
+import { Button, Label, TextField, Card, MobileNumberField } from "../../../components";
+import Banner from "../../common/Banner";
 import "./index.css";
 
 class Login extends Component {
   state = {
-    name: "",
     phoneNumber: "",
   };
 
   login = () => {
-    this.props.history.push("/otp");
-  };
-
-  onNameChanged = (e, value) => {
-    this.setState({ name: value });
+    this.props.history.push("/");
   };
 
   onPhoneNumberChanged = (e, value) => {
     this.setState({ phoneNumber: value });
   };
-
   render() {
-    const { login, onNameChanged, onPhoneNumberChanged } = this;
-    const { name, phoneNumber } = this.state;
+    const { login, onPhoneNumberChanged } = this;
+    const { phoneNumber } = this.state;
 
     return (
-      <UserScreensWrapper>
+      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <Card
           className="user-screens-card"
           textChildren={
             <div>
+              <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
               <form>
                 <MobileNumberField
                   id="person-phone-number"
@@ -41,27 +34,18 @@ class Login extends Component {
                   name="phone-number"
                   underlineShow={false}
                   fullWidth={true}
+                  isRequired={true}
                   hintText="Enter your Mobile Number"
                   floatingLabelText="Phone Number"
                 />
-                <TextField
-                  value={name}
-                  onChange={onNameChanged}
-                  name="person-name"
-                  hintText="Enter your Name"
-                  id="person-name"
-                  fullWidth={true}
-                  floatingLabelText="Name"
-                />
-                <CityPicker />
-                <Button id="login-submit-action" onClick={login} primary={true} label="Submit" fullWidth={true} />
+                <Button id="login-submit-action" onClick={login} primary={true} label="Login" fullWidth={true} />
               </form>
             </div>
           }
         />
-      </UserScreensWrapper>
+      </Banner>
     );
   }
 }
 
-export default withRouter(Login);
+export default Login;

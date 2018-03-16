@@ -15,6 +15,16 @@ export default class CityPickerDialog extends Component {
     { key: "mohali", text: "Mohali" },
   ];
 
+  componentDidMount() {
+    document.getElementById("person-city").addEventListener("focus", function() {
+      this.blur();
+    });
+  }
+
+  componentWillUnmount() {
+    document.getElementById("person-city").removeEventListener("focus", null);
+  }
+
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
       const mappedResult = {};
@@ -65,6 +75,7 @@ export default class CityPickerDialog extends Component {
           />
         </div>
         <Dialog
+          titleStyle={{ textAlign: "left", padding: "24px 16px" }}
           handleClose={onClose}
           bodyStyle={{ padding: "0px" }}
           title="Choose City"
@@ -76,6 +87,7 @@ export default class CityPickerDialog extends Component {
           <AutoSuggest dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
           <List
             onItemClick={onItemClick}
+            innerDivStyle={{ paddingLeft: "50px" }}
             listItemStyle={{ borderBottom: "1px solid #eee" }}
             items={displayInitialList ? prepareResultsForDisplay(cities) : prepareResultsForDisplay(results)}
           />

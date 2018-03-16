@@ -3,7 +3,6 @@ import { Card, Icon, Label } from "../../../../components";
 import VerticalCenterWrapper from "../../../common/VerticalCenterWrapper";
 import "./index.css";
 
-// currently the card is hardcoded, ideally should be driven by data
 class Updates extends Component {
   updates = [
     {
@@ -37,7 +36,7 @@ class Updates extends Component {
             />
             <div className="complaint-status" style={{ marginTop: "16px" }}>
               <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been" />
-              <Label containerStyle={{ display: "inline-block", marginLeft:"4px" }} dark={true} label={`${status}`} />
+              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={`${status}`} />
             </div>
           </div>
         }

@@ -23,3 +23,13 @@
 .feedback-ratings span:last-child {
   margin: 0 !important;
 }
+
+.feedback-submitted-icon-cont,
+.feedback-thankyou-text {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.feedback-thankyou-text .label-text {
+  letter-spacing: 0.7px;
+}

@@ -13,6 +13,7 @@ import SearchComplaint from "./screens/SearchComplaint";
 import LocationDetails from "./screens/LocationDetails";
 import ContactUs from "./screens/ContactUs";
 // user related screens
+import Register from "./screens/User/Register";
 import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
@@ -22,6 +23,7 @@ const Main = () => {
   return (
     <main>
       <Switch>
+        <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
         <Route exact path="/language-selection" component={LanguageSelection} />

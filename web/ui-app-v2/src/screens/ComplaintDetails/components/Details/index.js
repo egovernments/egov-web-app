@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { List, Card, Label, Image } from "../../../../components";
-import Location from "material-ui/svg-icons/maps/place";
-import FormateQuote from "material-ui/svg-icons/editor/format-quote";
-import NewComplaint from "material-ui/svg-icons/notification/sms-failed";
+import { List, Card, Label, Image, Icon } from "../../../../components";
 import "./index.css";
 
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
@@ -23,9 +20,12 @@ class Details extends Component {
         <Card
           textChildren={
             <div>
-              <Label label="Complaint Details" labelClassName="dark-heading" icon={<NewComplaint color="#969696" />} />
+              <div className="rainmaker-displayInline">
+                <Icon action="notification" name="sms-failed" color="#969696" />{" "}
+                <Label label="Complaint Details" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+              </div>
               <div key={10} className="complaint-detail-full-width">
-                <Label labelClassName="dark-heading" labelStyle={{ fontSize: "16px" }} label="Potholes on the road" />
+                <Label labelClassName="dark-heading rainmaker-big-font" label="Potholes on the road" />
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="Complaint No." />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label="25467895" />
@@ -72,7 +72,7 @@ class Details extends Component {
 
                 <div className="row">
                   <div className="col-xs-2">
-                    <Location style={iconStyle} color={"#969696"} />
+                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
                     <Label label={"Sector 32, 1 main, Amritsar"} className="status-result-color" labelStyle={{ color: "inherit" }} />
@@ -81,7 +81,7 @@ class Details extends Component {
 
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">
-                    <FormateQuote style={iconStyle} color={"#969696"} />
+                    <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
                     <Label
@@ -101,3 +101,5 @@ class Details extends Component {
 }
 
 export default Details;
+
+//props types check yet to add

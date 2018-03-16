@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { Button, Label, TextField, Card } from "../../../components";
-import UserScreensWrapper from "../components/UserScreenWrapper";
+import Banner from "../../common/Banner";
 import "./index.css";
 
 class OTP extends Component {
@@ -37,19 +36,13 @@ class OTP extends Component {
     const { otp, disabled } = this.state;
 
     return (
-      <UserScreensWrapper>
+      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <Card
           className="user-screens-card"
           textChildren={
             <div>
-              <div className="otp-text">
-                <Label
-                  color="#484848"
-                  containerStyle={{ padding: "0px 16px" }}
-                  label="We have sent a 6 digit OTP number to your registered mobile number."
-                />
-                <Label color="#484848" containerStyle={{ padding: "0px 16px" }} label="Enter the OTP to create your account." />
-              </div>
+              <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
+              <Label className="otp-text"  label="An OTP has been sent to Mobile Number 9968739374" />
 
               <form>
                 <TextField
@@ -61,7 +54,7 @@ class OTP extends Component {
                   hintText="Enter OTP"
                   floatingLabelText="OTP"
                 />
-                <div style={{ margin: "10px 0px 10px" }} className="text-right">
+                <div style={{ marginBottom: "24px" }}  className="text-right">
                   <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label id="otp-resend" className="otp-resend" label="RESEND" />
                 </div>
@@ -70,9 +63,9 @@ class OTP extends Component {
             </div>
           }
         />
-      </UserScreensWrapper>
+      </Banner>
     );
   }
 }
 
-export default withRouter(OTP);
+export default OTP;
