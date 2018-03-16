@@ -34,6 +34,7 @@ class Login extends Component {
                   name="phone-number"
                   underlineShow={false}
                   fullWidth={true}
+                  isRequired={true}
                   hintText="Enter your Mobile Number"
                   floatingLabelText="Phone Number"
                 />
