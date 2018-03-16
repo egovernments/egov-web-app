@@ -104,7 +104,7 @@ class HeaderWithDrawer extends Component {
     value: "English",
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
 
@@ -116,6 +116,7 @@ class HeaderWithDrawer extends Component {
         style: {
           paddingBottom: "1px",
           paddingTop: "1px",
+          borderLeft: "3px solid #00bbd3",
         },
       },
       {
@@ -157,11 +158,15 @@ class HeaderWithDrawer extends Component {
       {
         primaryText: "Logout",
         leftIcon: <Icon action="action" name="power-settings-new" />,
+        style: {
+          borderBottom: "none",
+          borderLeft: "red",
+        },
       },
     ],
   };
 
-  onClick = value => {
+  onClick = (value) => {
     this.setState({ value });
   };
   handleItem = (item, index) => {
@@ -205,7 +210,7 @@ class HeaderWithDrawer extends Component {
       <div>
         <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={this.getAppBarStyles()} />
 
-        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -219,7 +224,7 @@ class HeaderWithDrawer extends Component {
             imgSrc={profileImage}
           />
 
-          <div className="drawer-list-poweredBy-wrappr">
+          <div className="drawer-list-poweredBy-wrapper">
             <List
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
