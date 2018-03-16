@@ -7,11 +7,14 @@ const errorStyle = {
 };
 
 const hintBaseStyle = {
-  fontSize: "14px",
+  fontSize: "16px",
+  letterSpacing: "0.7px",
+  color: "#b3b3b3",
 };
 const floatingLabelBaseStyle = {
   top: 30,
   fontSize: "14px",
+  letterSpacing: "0.6px",
 };
 
 const floatingLabelBaseShrinkStyle = {
@@ -23,6 +26,10 @@ const floatingLabelBaseShrinkStyle = {
 
 const inputBaseStyle = {
   paddingBottom: 10,
+  fontSize: "16px",
+  color: "#484848",
+  letterSpacing: "0.7px",
+  fontWeight: 500,
 };
 
 const requiredStyle = {
