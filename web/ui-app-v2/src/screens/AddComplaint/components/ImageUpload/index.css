@@ -1,6 +1,6 @@
 .upload-photo-overlay {
   background: #d8d8d8;
-  padding: 37px 0;
+  padding: 37px 8px;
   text-align: center;
 }
 
@@ -16,4 +16,47 @@
 
 .upload-photo-overlay .label-container {
   line-height: 1;
+}
+
+.upload-images-cont {
+  display: flex;
+  align-items: flex-start;
+  white-space: nowrap;
+}
+.upload-placeholder,
+.upload-image-cont {
+  width: 100px;
+  height: 100px;
+  margin-right: 14px;
+  position: relative;
+}
+
+.upload-placeholder {
+  border: 1px dashed #979797;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-remove {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 3px 0;
+}
+
+.upload-placeholder:last-child {
+  margin: 0;
+}
+
+.upload-image-cont:last-child {
+  margin: 0;
+}
+
+.upload-photo-text {
+  width: 80%;
 }
