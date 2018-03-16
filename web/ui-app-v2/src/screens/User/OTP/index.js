@@ -36,13 +36,13 @@ class OTP extends Component {
     const { otp, disabled } = this.state;
 
     return (
-      <Banner className="col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
+      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <Card
           className="user-screens-card"
           textChildren={
             <div>
               <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
-              <Label className="otp-text" color="#484848" label="An OTP has been sent to Mobile Number 9968739374" />
+              <Label className="otp-text"  label="An OTP has been sent to Mobile Number 9968739374" />
 
               <form>
                 <TextField
@@ -54,7 +54,7 @@ class OTP extends Component {
                   hintText="Enter OTP"
                   floatingLabelText="OTP"
                 />
-                <div style={{ margin: "10px 0px 10px" }} className="text-right">
+                <div style={{ marginBottom: "24px" }}  className="text-right">
                   <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
                   <Label id="otp-resend" className="otp-resend" label="RESEND" />
                 </div>

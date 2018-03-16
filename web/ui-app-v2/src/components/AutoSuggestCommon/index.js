@@ -34,7 +34,7 @@ export default class AutoSuggest extends Component {
         <TextFieldIcon
           textFieldStyle={{ border: "1px solid  #e0e0e0", background: "#f7f7f7", height: "48px" }}
           inputStyle={{ marginTop: "8px" }}
-          hintStyle={{bottom : 8}}
+          hintStyle={{ bottom: 8 }}
           iconStyle={{ left: "5px", bottom: "10px", color: "#767676" }}
           iconPosition="before"
           underlineShow={false}

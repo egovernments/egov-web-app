@@ -96,3 +96,8 @@ body h4 {
 .width-100-per {
   width: 100%;
 }
+
+.heading{
+  margin-top : 12px;
+  margin-bottom : 12px;
+}

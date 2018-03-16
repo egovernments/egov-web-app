@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TextField, MobileNumberField, Card } from "../../../components";
+import { Button, TextField, MobileNumberField, Label, Card } from "../../../components";
 import Banner from "../../common/Banner";
 import CityPicker from "../../common/CityPicker";
 import "./index.css";
@@ -14,6 +14,10 @@ class Register extends Component {
     this.props.history.push("/otp");
   };
 
+  navigateToLogin = () => {
+   this.props.history.push("/login"); 
+  }
+
   onNameChanged = (e, value) => {
     this.setState({ name: value });
   };
@@ -23,15 +27,17 @@ class Register extends Component {
   };
 
   render() {
-    const { register, onNameChanged, onPhoneNumberChanged } = this;
+    const { register, onNameChanged, navigateToLogin, onPhoneNumberChanged } = this;
     const { name, phoneNumber } = this.state;
 
     return (
-      <Banner className="col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
+      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <Card
           className="user-screens-card"
           textChildren={
             <div>
+              <Label className="heading text-center" bold={true} dark={true} fontSize={16} label="REGISTER" />
+
               <form>
                 <MobileNumberField
                   id="person-phone-number"
@@ -54,6 +60,11 @@ class Register extends Component {
                   floatingLabelText="Name"
                 />
                 <CityPicker />
+                <div onClick={navigateToLogin} style={{ marginBottom: "24px" }} className="text-right">
+                  <Label id="otp-trigger" className="otp-prompt" label="Have an account?" />
+                  <Label style={{cursor:"pointer"}} id="otp-resend" className="otp-resend" label="LOGIN" />
+                </div>
+
                 <Button id="login-submit-action" onClick={register} primary={true} label="Submit" fullWidth={true} />
               </form>
             </div>
