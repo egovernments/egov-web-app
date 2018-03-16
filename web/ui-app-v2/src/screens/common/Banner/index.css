@@ -43,3 +43,20 @@
   right: 8px;
   padding: 16px;
 }
+
+@media only screen and (min-width: 768px) {
+
+.user-screens-wrapper{
+    height: 100vh;
+}
+
+.banner-image, .banner-overlay {
+  position : absolute;
+  height: 100%;
+}
+
+.user-screens-wrapper .user-screens-card, .logo-wrapper{
+    position : absolute;
+}
+
+}

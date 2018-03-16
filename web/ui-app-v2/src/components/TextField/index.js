@@ -63,7 +63,7 @@ const TextField = ({
       floatingLabelShrinkStyle={floatingLabelBaseShrinkStyle}
       fullWidth={fullWidth}
       hintText={hintText}
-      hintStyle={{...hintBaseStyle, ...hintStyle}}
+      hintStyle={{ ...hintBaseStyle, ...hintStyle }}
       floatingLabelText={[floatingLabelText, isRequired ? <span style={requiredStyle}> *</span> : null]}
       floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
       underlineFocusStyle={{ ...underlineFocusBaseStyle, underlineFocusStyle }}
