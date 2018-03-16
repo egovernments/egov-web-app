@@ -38,8 +38,8 @@ class Register extends Component {
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
                   name="phone-number"
-                  underlineShow={false}
                   fullWidth={true}
+                  isRequired={true}
                   hintText="Enter your Mobile Number"
                   floatingLabelText="Phone Number"
                 />
@@ -47,6 +47,7 @@ class Register extends Component {
                   value={name}
                   onChange={onNameChanged}
                   name="person-name"
+                  isRequired={true}
                   hintText="Enter your Name"
                   id="person-name"
                   fullWidth={true}
