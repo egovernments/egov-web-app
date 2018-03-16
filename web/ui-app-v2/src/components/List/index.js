@@ -6,7 +6,7 @@ const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
 const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [] }) => {
-  const renderListItems = (items) => {
+  const renderListItems = items => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 
@@ -19,7 +19,13 @@ const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyl
       }
 
       return (
-        <ListItem onClick={() => onItemClick(item, index)} innerDivStyle={innerDivStyle} containerElement={listItemContainer} key={index} {...item} />
+        <ListItem
+          onClick={() => onItemClick && onItemClick(item, index)}
+          innerDivStyle={innerDivStyle}
+          containerElement={listItemContainer}
+          key={index}
+          {...item}
+        />
       );
     });
   };
