@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, TimeLine, List, Label, Icon, Image } from "../../../../components";
+import { Card, TimeLine, Label, Icon, Image } from "../../../../components";
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
@@ -46,14 +46,14 @@ const StatusIcon = ({ status }) => {
 };
 
 const StatusContent = ({ status, currentStatus, content }) => {
+  var { date, name, designation, department, resolveImage, resolveFeedback } = content;
   switch (status) {
     case "SUBMITTED":
-      var { date, resolveImage, resolveFeedback } = content;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "11-Mar-18"} />
           <Label labelClassName="dark-color" label="Complaint Filed" />
-          {currentStatus == "Submitted" && (
+          {currentStatus === "Submitted" && (
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
@@ -67,7 +67,7 @@ const StatusContent = ({ status, currentStatus, content }) => {
         </div>
       );
     case "ASSIGNED":
-      var { status, name, designation, department } = content;
+      var { status } = content;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"} />
@@ -81,7 +81,6 @@ const StatusContent = ({ status, currentStatus, content }) => {
       );
 
     case "REASSIGNED":
-      var { name, designation, department } = content;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "15-Mar-18"} />
@@ -94,7 +93,6 @@ const StatusContent = ({ status, currentStatus, content }) => {
         </div>
       );
     case "REJECTED":
-      var { name, department } = content;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"} />
@@ -111,7 +109,6 @@ const StatusContent = ({ status, currentStatus, content }) => {
         </div>
       );
     default:
-      var { date, resolveImage, resolveFeedback } = content;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "18-Mar-18"} />

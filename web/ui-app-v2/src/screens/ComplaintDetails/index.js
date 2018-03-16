@@ -45,7 +45,7 @@ class ComplaintDetails extends Component {
   componentDidMount() {
     let { details } = this.state;
     console.log(this.props);
-    if (this.props.location && this.props.location.search.split("=")[1] == "rejected") {
+    if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
       this.setState({
         status: {
           status: "Rejected",
@@ -57,7 +57,7 @@ class ComplaintDetails extends Component {
           status: "Rejected",
         },
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] == "filed") {
+    } else if (this.props.location && this.props.location.search.split("=")[1] === "filed") {
       this.setState({
         status: {
           status: "Submitted",

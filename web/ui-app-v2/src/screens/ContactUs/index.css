@@ -3,13 +3,21 @@
 }
 
 .contactus-main-card > div {
-  padding-top: 15px;
+  padding-top: 42px;
 }
 
 .contactus-main-cont {
-  padding: 0px 8px;
+  height: 100%;
+  position: fixed;
+  width: 100%;
 }
 
 .contactus-main-card .mseva-logo {
   width: 40% !important;
+}
+
+.contactus-main-card {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
 }

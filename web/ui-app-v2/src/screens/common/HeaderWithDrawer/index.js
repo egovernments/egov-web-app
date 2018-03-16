@@ -167,7 +167,7 @@ class HeaderWithDrawer extends Component {
     this.setState({ value });
   };
   handleItem = (item, index) => {
-    if (item.primaryText == "Logout") {
+    if (item.primaryText === "Logout") {
       this.props.onHandleToggleMenu();
       this.setState({
         logoutPopupOpen: true,
@@ -225,9 +225,9 @@ class HeaderWithDrawer extends Component {
 
             <div className="drawer-button-toggle-container">
               <ButtonGroup
-                items={this.state.languageItems}
-                onClick={this.onClick}
-                selected={this.state.value}
+                items={languageItems}
+                onClick={onClick}
+                selected={value}
                 defaultStyle={defaultStyle}
                 defaultLabelStyle={defaultLabelStyle}
                 selectedStyle={selectedStyle}
