@@ -22,10 +22,8 @@ const AddPhotoStyle = {
   padding: "12px",
   background: "limegreen",
 };
-const labelProps = {
-  icon: <AddPhoto style={AddPhotoStyle} color={"#FFFFFF"} />,
-};
+const labelProps = <AddPhoto style={AddPhotoStyle} color={"#FFFFFF"} />;
 
 storiesOf("FilePicker", module)
   .addDecorator(muiTheme([theme]))
-  .add("filePicker", () => <FilePicker inputProps={inputProps} labelProps={labelProps} handleimage={action("file")} />);
+  .add("filePicker", () => <FilePicker inputProps={inputProps} pickIcon={labelProps} handleimage={action("file")} />);
