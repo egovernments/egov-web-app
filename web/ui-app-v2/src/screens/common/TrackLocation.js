@@ -1,15 +1,48 @@
 import React, { Component } from "react";
-import MapLocation from "../../components/MapLocation";
+import { MapLocation, Icon } from "../../components";
 import Button from "../../components/Button";
 import pinIcon from "../../assets/Location_pin.svg";
 import _ from "lodash";
+
+const searchBoxStyles = {
+  boxSizing: `border-box`,
+  border: `1px solid transparent`,
+  width: `91.1%`,
+  height: `45px`,
+  marginTop: `106px`,
+  padding: `0 12px`,
+  borderRadius: `3px`,
+  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+  fontSize: `16px`,
+  outline: `none`,
+  textOverflow: `ellipses`,
+  paddingLeft: `30px`,
+  fontFamily: "Roboto",
+  letterSpacing: "0px",
+  textAlign: "left",
+  color: "#484848",
+  paddingLeft: 48,
+};
+const pickBtn = {
+  lineHeight: "38px",
+  display: "block",
+  margin: 0,
+  backgroundColor: "#f5a623",
+  color: "#ffffff",
+  fontFamily: "Roboto",
+  fontSize: "7px",
+  height: 38,
+  fontWeight: 500,
+  fontStyle: "normal",
+};
 
 class TrackLocation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showMyAddress: false,
-      currLoc: {},
+      currLoc: { lat: 12.9715987, lng: 77.5945699998 },
+      showMyLoc: false,
     };
   }
 
@@ -20,7 +53,11 @@ class TrackLocation extends Component {
         currLoc: myLocation,
       });
     } else if (navigator.geolocation) {
-      this.getMyLocation();
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          currLoc: { lat: position.coords.latitude, lng: position.coords.longitude },
+        });
+      });
     }
   }
 
@@ -30,6 +67,7 @@ class TrackLocation extends Component {
         (position) => {
           this.setState({
             currLoc: { lat: position.coords.latitude, lng: position.coords.longitude },
+            showMyLoc: true,
           });
         },
         function(error) {
@@ -45,6 +83,9 @@ class TrackLocation extends Component {
   onClickPick() {
     console.log("picked");
   }
+  onCLickMapBackBtn = () => {
+    // Redirect back from where you came.
+  };
 
   render() {
     var _currloc = { lat: parseFloat(this.state.currLoc.lat), lng: parseFloat(this.state.currLoc.lng) };
@@ -52,14 +93,25 @@ class TrackLocation extends Component {
       <div>
         <MapLocation
           currLoc={_currloc}
-          styles={styles}
+          searchBoxStyles={searchBoxStyles}
           setLocation={this.setPickedLocation}
           getMyLoc={this.getMyLocation}
           icon={pinIcon}
           hideTerrainBtn={true}
+          dragInfoBox={false}
+          showMyLoc={this.state.showMyLoc}
         />
-        <div style={{ width: "100%", position: "absolute", bottom: 64 }}>
-          <Button className="close" label={"Close"} style={closeBtn} backgroundColor="#969696" labelColor="#ffffff" />
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            bottom: 56,
+            height: 56,
+            padding: "9px 16px 0 16px",
+            backgroundColor: "rgb(255, 255, 255, 0.63)",
+            boxShadow: "0 0 0 0 rgba(0, 0, 0, 0.1), 0 -2px 5px 0 rgba(0, 0, 0, 0)",
+          }}
+        >
           <Button className="pick" label={"Pick"} style={pickBtn} primary={true} labelColor="#ffffff" onClick={this.onClickPick} />
         </div>
       </div>
@@ -68,45 +120,3 @@ class TrackLocation extends Component {
 }
 
 export default TrackLocation;
-
-const styles = {
-  boxSizing: `border-box`,
-  border: `1px solid transparent`,
-  width: `91.1%`,
-  height: `45px`,
-  marginTop: `74px`,
-  padding: `0 12px`,
-  borderRadius: `3px`,
-  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-  fontSize: `14px`,
-  outline: `none`,
-  textOverflow: `ellipses`,
-};
-
-const closeBtn = {
-  width: "40.6%",
-  height: "56px",
-  lineHeight: "56px",
-  backgroundColor: "#969696",
-  marginLeft: "5.7%",
-  marginRight: "2.8%",
-  marginTop: 10,
-  color: "#ffffff",
-  fontFamily: "Roboto",
-  fontSize: "7px",
-  fontWeight: 500,
-  fontStyle: "normal",
-};
-const pickBtn = {
-  width: "40.6%",
-  marginTop: 10,
-  lineHeight: "56px",
-  backgroundColor: "#f5a623",
-  marginRight: "5.7%",
-  marginLeft: "2.8%",
-  color: "#ffffff",
-  fontFamily: "Roboto",
-  fontSize: "7px",
-  fontWeight: 500,
-  fontStyle: "normal",
-};

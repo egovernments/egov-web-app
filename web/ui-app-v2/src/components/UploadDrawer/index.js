@@ -6,8 +6,13 @@ import Label from "../Label";
 import "./index.css";
 
 const iconStyle = {
-  backgroundColor: "#3498db",
+  background: "#00bbd3",
   marginLeft: "15px",
+  color: "rgb(255, 255, 255)",
+  borderRadius: "50%",
+  padding: "12px",
+  height: 48,
+  width: 48,
 };
 const inputProps = {
   accept: "image/*",

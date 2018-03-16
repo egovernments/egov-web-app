@@ -4,14 +4,19 @@ import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
 
-const imgStyle = { width: 143, height: 143 };
+const imgStyle = { width: 127, height: 127 };
 
 const profileStyles = {
   addIconStyle: {
-    backgroundColor: "#3498db",
+    background: "#00bbd3",
     position: "absolute",
     right: "-5%",
     bottom: "0px",
+    color: "rgb(255, 255, 255)",
+    borderRadius: "50%",
+    padding: "12px",
+    height: 48,
+    width: 48,
   },
   cardStyles: {
     width: "100%",
