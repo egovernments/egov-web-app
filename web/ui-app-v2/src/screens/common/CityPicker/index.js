@@ -15,6 +15,16 @@ export default class CityPickerDialog extends Component {
     { key: "mohali", text: "Mohali" },
   ];
 
+  componentDidMount() {
+    document.getElementById("person-city").addEventListener("focus", function() {
+      this.blur();
+    });
+  }
+
+  componentWillUnmount() {
+    document.getElementById("person-city").removeEventListener("focus", null);
+  }
+
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
       const mappedResult = {};

@@ -35,7 +35,7 @@ const defaultStyle = {
   lineHeight: "30px",
   width: "28.48%",
   minWidth: "inherit",
-  padding: 0
+  padding: 0,
 };
 
 const defaultLabelStyle = {
@@ -138,10 +138,10 @@ class HeaderWithDrawer extends Component {
         primaryText: "Language",
         leftIcon: <Language />,
         style: {
-          borderBottom:"none"
-        }
-      }
-    ]
+          borderBottom: "none",
+        },
+      },
+    ],
   };
 
   listItemsPartTwo = {
@@ -205,7 +205,7 @@ class HeaderWithDrawer extends Component {
       <div>
         <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
 
-         <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
@@ -220,36 +220,36 @@ class HeaderWithDrawer extends Component {
           />
 
           <div className="drawer-list-poweredBy-wrappr">
-          <List
-            onItemClick={this.handleItem}
-            innerDivStyle={listInnerDivStyle}
-            className="drawer-list-style"
-            items={this.listItemsPartOne.items}
-            listContainerStyle={{ background: "#ffffff" }}
-            listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
-          />
-
-          <div className="drawer-button-toggle-container">
-            <ButtonGroup
-              items={this.state.languageItems}
-              onClick={this.onClick}
-              selected={this.state.value}
-              defaultStyle={defaultStyle}
-              defaultLabelStyle={defaultLabelStyle}
-              selectedStyle={selectedStyle}
-              selectedLabelStyle={selectedLabelStyle}
-              multiple={false}
+            <List
+              onItemClick={this.handleItem}
+              innerDivStyle={listInnerDivStyle}
+              className="drawer-list-style"
+              items={this.listItemsPartOne.items}
+              listContainerStyle={{ background: "#ffffff" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />
-          </div>
 
-          <List
-            onItemClick={this.handleItem}
-            innerDivStyle={listInnerDivStyle}
-            className="drawer-list-style"
-            items={this.listItemsPartTwo.items}
-            listContainerStyle={{ background: "#ffffff" }}
-            listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
-          />
+            <div className="drawer-button-toggle-container">
+              <ButtonGroup
+                items={this.state.languageItems}
+                onClick={this.onClick}
+                selected={this.state.value}
+                defaultStyle={defaultStyle}
+                defaultLabelStyle={defaultLabelStyle}
+                selectedStyle={selectedStyle}
+                selectedLabelStyle={selectedLabelStyle}
+                multiple={false}
+              />
+            </div>
+
+            <List
+              onItemClick={this.handleItem}
+              innerDivStyle={listInnerDivStyle}
+              className="drawer-list-style"
+              items={this.listItemsPartTwo.items}
+              listContainerStyle={{ background: "#ffffff" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+            />
             <div className="drawer-image-cont">
               <Image className="mseva-logo" source={`${logoMseva}`} />
             </div>
