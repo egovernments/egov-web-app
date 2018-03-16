@@ -25,15 +25,18 @@ const galleryIconBtn = (
 class UploadDrawer extends Component {
   onCameraClick = () => {
     //onCameraClick
+    //this.props.uploadfile(url);
   };
   onRemoveClick = () => {
-    this.props.setProfilePic("");
+    this.props.uploadfile("");
+    this.props.closeDrawer(false);
   };
   picUpload = (file, url) => {
-    this.props.setProfilePic(url);
+    this.props.uploadfile(url);
+    this.props.closeDrawer(false);
   };
   onOverlayBodyClick = () => {
-    this.props.onClickAddPic(false);
+    this.props.closeDrawer(false);
   };
   render() {
     return (
@@ -90,7 +93,7 @@ UploadDrawer.propTypes = {
   removeIcon: PropTypes.bool,
   openUploadSlide: PropTypes.bool,
   labelStyle: PropTypes.object,
-  setProfilePic: PropTypes.func,
-  onClickAddPic: PropTypes.func,
+  uploadfile: PropTypes.func,
+  closeDrawer: PropTypes.func,
 };
 export default UploadDrawer;

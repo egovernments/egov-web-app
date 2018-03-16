@@ -144,8 +144,8 @@ class Profile extends Component {
               galleryIcon={true}
               removeIcon={true}
               labelStyle={profileStyles.UploadDrawerLabelStyle}
-              setProfilePic={this.setProfilePic}
-              onClickAddPic={this.onClickAddPic}
+              uploadfile={this.setProfilePic}
+              closeDrawer={this.onClickAddPic}
             />
           )}
         </div>
