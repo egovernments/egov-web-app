@@ -22,7 +22,6 @@ class Register extends Component {
     this.setState({ phoneNumber: value });
   };
 
-
   render() {
     const { register, onNameChanged, onPhoneNumberChanged } = this;
     const { name, phoneNumber } = this.state;
