@@ -30,8 +30,20 @@ export default class AutoSuggest extends Component {
     const { searchInputText } = this.props;
 
     return (
-      <div>
-        <TextFieldIcon iconPosition="before" fullWidth={true} hintText={searchInputText} Icon={SearchIcon} onChange={onChange} value={inputValue} />
+      <div style={{ background: "#fff", padding: "0px 10px" }} className="search-field-container">
+        <TextFieldIcon
+          textFieldStyle={{ border: "1px solid  #e0e0e0", background: "#f7f7f7", height: "48px" }}
+          inputStyle={{ marginTop: "8px" }}
+          hintStyle={{bottom : 8}}
+          iconStyle={{ left: "5px", bottom: "10px", color: "#767676" }}
+          iconPosition="before"
+          underlineShow={false}
+          fullWidth={true}
+          hintText={searchInputText}
+          Icon={SearchIcon}
+          onChange={onChange}
+          value={inputValue}
+        />
       </div>
     );
   }

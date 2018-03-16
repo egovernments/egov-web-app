@@ -20,7 +20,7 @@ const getStyles = (iconPosition, textFieldProps) => {
     bottom: 15,
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
-  textFieldStyle["textIndent"] = iconPosition === "before" ? 30 : 0;
+  textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 30;

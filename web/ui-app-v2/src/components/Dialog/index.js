@@ -7,6 +7,9 @@ import "./index.css";
 const defaultOverlayStyle = {};
 const defaultTitleStyle = {
   textAlign: "center",
+  background: "#fff",
+  color: "#484848",
+  fontSize: "16px",
 };
 const defaultActionsContainerStyle = {
   padding: "14px",
@@ -22,6 +25,7 @@ const closebuttonStyle = {
   height: "25px",
   padding: "3px",
 };
+
 const DialogUI = ({
   title,
   titleStyle,

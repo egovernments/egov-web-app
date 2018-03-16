@@ -74,6 +74,7 @@ export default class CityPickerDialog extends Component {
           />
         </div>
         <Dialog
+          titleStyle={{ textAlign: "left", padding: "24px 16px" }}
           handleClose={onClose}
           bodyStyle={{ padding: "0px" }}
           title="Choose City"
@@ -85,6 +86,7 @@ export default class CityPickerDialog extends Component {
           <AutoSuggest dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
           <List
             onItemClick={onItemClick}
+            innerDivStyle={{paddingLeft : "50px"}}
             listItemStyle={{ borderBottom: "1px solid #eee" }}
             items={displayInitialList ? prepareResultsForDisplay(cities) : prepareResultsForDisplay(results)}
           />
