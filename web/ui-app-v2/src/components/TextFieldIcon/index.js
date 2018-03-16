@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 // can we pull the existing textfield
 import TextField from "../TextField";

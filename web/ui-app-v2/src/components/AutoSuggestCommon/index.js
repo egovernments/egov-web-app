@@ -36,6 +36,7 @@ export default class AutoSuggest extends Component {
     const { containerStyle, textFieldStyle, iconStyle, searchInputText } = this.props;
 
     return (
+
       <div style={{ ...styles.defaultContainerStyle, ...containerStyle }} className="search-field-container">
         <TextFieldIcon
           textFieldStyle={{ ...styles.defaultTextFieldStyle, ...textFieldStyle }}

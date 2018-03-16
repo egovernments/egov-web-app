@@ -39,6 +39,18 @@ body h4 {
   font-size: 16px !important;
 }
 
+.rainmaker-displayInline {
+  display: flex;
+}
+
+.rainmaker-small-font {
+  font-size: 12px !important;
+}
+
+.rainmaker-big-font {
+  font-size: 16px !important;
+}
+
 .dark-color {
   color: #484848;
 }

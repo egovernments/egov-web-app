@@ -35,6 +35,7 @@ class NewAndOldComplaints extends Component {
               }}
             >
               <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />
+
               <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="My Complaints" />
             </div>
           </div>

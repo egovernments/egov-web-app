@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 //App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Dialog, Label, Button } from "../../../components";
-import ActionHome from "material-ui/svg-icons/action/home";
-import Call from "material-ui/svg-icons/communication/call";
-import Logout from "material-ui/svg-icons/action/power-settings-new";
-import Language from "material-ui/svg-icons/action/language";
-import Profile from "material-ui/svg-icons/social/person";
-import Help from "../../../custom-icons/help-circle.js";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Label, Button } from "../../../components";
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
 import "./index.css";
@@ -118,7 +112,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Home",
-        leftIcon: <ActionHome />,
+        leftIcon: <Icon action="action" name="home" />,
         style: {
           paddingBottom: "1px",
           paddingTop: "1px",
@@ -126,7 +120,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Profile",
-        leftIcon: <Profile />,
+        leftIcon: <Icon action="social" name="person" />,
         style: {
           paddingBottom: "3px",
           paddingTop: "3px",
@@ -134,7 +128,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Language",
-        leftIcon: <Language />,
+        leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",
         },
@@ -146,7 +140,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Contact Us",
-        leftIcon: <Call />,
+        leftIcon: <Icon action="communication" name="call" />,
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -154,7 +148,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "How it Works",
-        leftIcon: <Help action="custom" name="help-circle" />,
+        leftIcon: <Icon action="custom" name="help-circle" />,
         style: {
           paddingBottom: "2px",
           paddingTop: "2px",
@@ -162,7 +156,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Logout",
-        leftIcon: <Logout />,
+        leftIcon: <Icon action="action" name="power-settings-new" />,
       },
     ],
   };
@@ -171,7 +165,7 @@ class HeaderWithDrawer extends Component {
     this.setState({ value });
   };
   handleItem = (item, index) => {
-    if (item.primaryText == "Logout") {
+    if (item.primaryText === "Logout") {
       this.props.onHandleToggleMenu();
       this.setState({
         logoutPopupOpen: true,
@@ -237,9 +231,9 @@ class HeaderWithDrawer extends Component {
 
             <div className="drawer-button-toggle-container">
               <ButtonGroup
-                items={this.state.languageItems}
-                onClick={this.onClick}
-                selected={this.state.value}
+                items={languageItems}
+                onClick={onClick}
+                selected={value}
                 defaultStyle={defaultStyle}
                 defaultLabelStyle={defaultLabelStyle}
                 selectedStyle={selectedStyle}

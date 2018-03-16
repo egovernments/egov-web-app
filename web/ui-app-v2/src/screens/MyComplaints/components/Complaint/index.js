@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, Card, Icon, Button } from "../../../../components";
-import FlatButton from "material-ui/FlatButton";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 

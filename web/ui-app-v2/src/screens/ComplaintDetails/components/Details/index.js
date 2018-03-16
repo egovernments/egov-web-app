@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Card, Label, Image, Icon } from "../../../../components";
+import { Card, Label, Image, Icon } from "../../../../components";
 import "./index.css";
 
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
