@@ -103,7 +103,6 @@ class Profile extends Component {
           <TextField
             className="profile-form-field"
             id="profile-form-name"
-            underlineShow={false}
             fullWidth={true}
             value={name}
             hintText="Enter your Name"
@@ -115,7 +114,6 @@ class Profile extends Component {
           <TextField
             className="profile-form-field"
             id="profile-form-email"
-            underlineShow={false}
             fullWidth={true}
             value={emailId}
             floatingLabelText="Email Id"
