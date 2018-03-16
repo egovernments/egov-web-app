@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Icon, AutoSuggest } from "../../components";
+import { List, Icon, AutoSuggest, Label } from "../../components";
 import { red500 } from "material-ui/styles/colors";
 
 const customIconStyles = {
@@ -24,10 +24,14 @@ export default class SearchComplaint extends Component {
     },
     { id: 5, text: "Roads & Footpaths", nestedItems: [{ id: 6, text: "Potholes" }, { id: 7, text: "Broken Footpaths" }] },
     { id: 8, text: "Drains", nestedItems: [{ id: 9, text: "Blockage Of Drains" }] },
-    { id: 10, text: "StreetLights", nestedItems: [] },
+    { id: 10, text: "Street Lights", nestedItems: [] },
+    { id: 11, text: "Public Health & Hygiene", nestedItems: [] },
+    { id: 12, text: "Public Land & Property", nestedItems: [] },
+    { id: 13, text: "Water", nestedItems: [] },
+    { id: 14, text: "Others", nestedItems: [] },
   ];
 
-  generateDataSource = (dataSource) => {
+  generateDataSource = dataSource => {
     return dataSource.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
@@ -38,49 +42,41 @@ export default class SearchComplaint extends Component {
   };
 
   prepareResultsForDisplay = (results = []) => {
-    return results.map((result) => {
+    return results.map(result => {
       const listItem = {};
 
       listItem.primaryText = result.text;
-      listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
-        const item = {};
-        item.primaryText = nestedItem.text;
-        return item;
-      });
+      listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
+
+      if (result.nestedItems) {
+        listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
+        listItem.nestedItems = result.nestedItems.map(nestedItem => {
+          const item = {};
+          item.primaryText = nestedItem.text;
+          item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
+          return item;
+        });
+      }
 
       return listItem;
     });
   };
 
-  renderList = (dataSource) => {
-    return <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={dataSource} />;
-  };
-
-  renderListWithHeader = (dataSource) => {
-    dataSource = dataSource.map((result) => {
-      const listItem = {};
-
-      listItem.primaryText = result.text;
-      listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
-        const item = {};
-        item.primaryText = nestedItem.text;
-        item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-        return item;
-      });
-
-      return listItem;
-    });
-
-    return this.renderList(dataSource);
+  renderList = dataSource => {
+    return (
+      <List
+        listItemStyle={{ borderBottom: "1px solid #eee", paddingTop: "8px", paddingBottom: "8px" }}
+        autoGenerateNestedIndicator={false}
+        primaryTogglesNestedList={true}
+        items={dataSource}
+      />
+    );
   };
 
   render() {
     const { autoSuggestCallback, dataSource, prepareResultsForDisplay, generateDataSource } = this;
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
-    const resultsForDisplay = prepareResultsForDisplay(results);
     const transformedDataSource = generateDataSource(dataSource);
 
     return (
@@ -91,20 +87,13 @@ export default class SearchComplaint extends Component {
             background: "#00bcd1",
             boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)",
           }}
-          textFieldStyle={{
-            boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
-            background: "#ffffff",
-          }}
+          textFieldStyle={{ boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)", background: "#ffffff" }}
           dataSource={transformedDataSource}
           searchInputText="Search"
           searchKey="text"
           callback={autoSuggestCallback}
         />
-        {displayInitialList ? (
-          this.renderListWithHeader(dataSource)
-        ) : (
-          <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={resultsForDisplay} />
-        )}
+        {displayInitialList ? this.renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results))}
       </div>
     );
   }

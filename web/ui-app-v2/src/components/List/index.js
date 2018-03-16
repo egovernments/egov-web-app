@@ -22,6 +22,8 @@ const List = ({ listItemContainer, innerDivStyle = {}, onItemClick, listItemStyl
         <ListItem
           onClick={() => onItemClick && onItemClick(item, index)}
           innerDivStyle={innerDivStyle}
+          autoGenerateNestedIndicator={false}
+          primaryTogglesNestedList={true}
           containerElement={listItemContainer}
           key={index}
           {...item}
