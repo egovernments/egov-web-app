@@ -83,6 +83,7 @@ export default class SearchComplaint extends Component {
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest
           containerStyle={{
+            overflowX: "hidden",
             padding: "0px 16px 16px 16px",
             background: "#00bcd1",
             boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)",
