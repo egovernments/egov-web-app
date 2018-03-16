@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "../../components";
 import pinIcon from "../../assets/Location_pin.svg";
 import Logo from "../../assets/images/logo_black.png";
-import Screen from "../common/Screen";
 import "./index.css";
 
 const listInnerDivStyle = {

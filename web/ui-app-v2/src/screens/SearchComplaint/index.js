@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Icon, AutoSuggest, Label } from "../../components";
+import { List, Icon, AutoSuggest } from "../../components";
 import { red500 } from "material-ui/styles/colors";
 
 const customIconStyles = {
@@ -27,7 +27,7 @@ export default class SearchComplaint extends Component {
     { id: 10, text: "StreetLights", nestedItems: [] },
   ];
 
-  generateDataSource = dataSource => {
+  generateDataSource = (dataSource) => {
     return dataSource.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
@@ -38,12 +38,12 @@ export default class SearchComplaint extends Component {
   };
 
   prepareResultsForDisplay = (results = []) => {
-    return results.map(result => {
+    return results.map((result) => {
       const listItem = {};
 
       listItem.primaryText = result.text;
       listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-      listItem.nestedItems = result.nestedItems.map(nestedItem => {
+      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
         const item = {};
         item.primaryText = nestedItem.text;
         return item;
@@ -53,17 +53,17 @@ export default class SearchComplaint extends Component {
     });
   };
 
-  renderList = dataSource => {
+  renderList = (dataSource) => {
     return <List listItemStyle={{ borderBottom: "1px solid #eee" }} items={dataSource} />;
   };
 
-  renderListWithHeader = dataSource => {
-    dataSource = dataSource.map(result => {
+  renderListWithHeader = (dataSource) => {
+    dataSource = dataSource.map((result) => {
       const listItem = {};
 
       listItem.primaryText = result.text;
       listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
-      listItem.nestedItems = result.nestedItems.map(nestedItem => {
+      listItem.nestedItems = result.nestedItems.map((nestedItem) => {
         const item = {};
         item.primaryText = nestedItem.text;
         item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color={red500} />;
