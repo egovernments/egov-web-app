@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, TimeLine, Label, Icon, Image } from "../../../../components";
+
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 

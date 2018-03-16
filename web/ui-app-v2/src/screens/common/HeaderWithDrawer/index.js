@@ -4,9 +4,6 @@ import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog,
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
 import "./index.css";
-//App bar imports ends
-
-/*Styles for language toggle starts */
 
 const listInnerDivStyle = {
   padding: "16px 0px 16px 60px",
@@ -41,8 +38,9 @@ const defaultLabelStyle = {
 };
 /*Styles for language toggle ends */
 
-const logoutButtonStyle = { width: "101px", height: "35px", lineHeight: "35px" };
-const logoutContentStyle = { textAlign: "center", padding: "24px 20px 24px 20px" };
+const logoutButtonStyle = { width: "90px", height: "35px", lineHeight: "35px" };
+const logoutContentStyle = { textAlign: "center", padding: "24px 20px" };
+
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
 const cardStyles = {
   // width: '84.5%',
@@ -106,7 +104,7 @@ class HeaderWithDrawer extends Component {
     value: "English",
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 
@@ -163,7 +161,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
   handleItem = (item, index) => {
@@ -190,6 +188,14 @@ class HeaderWithDrawer extends Component {
     });
   };
 
+  getAppBarStyles = () => {
+    const style = { overflowX: "hidden", width: "initial" };
+    if (window.location.pathname.endsWith("search-complaint")) {
+      style.boxShadow = "none";
+    }
+    return style;
+  };
+
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
@@ -197,9 +203,9 @@ class HeaderWithDrawer extends Component {
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
+        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={this.getAppBarStyles()} />
 
-        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}

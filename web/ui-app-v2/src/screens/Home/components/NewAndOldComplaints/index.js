@@ -25,7 +25,7 @@ class NewAndOldComplaints extends Component {
           <div className="row newAndOldComplaints-content-section">
             <div id="home-new-complaint" className="col-xs-6">
               <Icon style={{ ...iconStyle, background: "#f5a623" }} action="content" name="add" />
-              <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} label="File Complaint" />
+              <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="File Complaint" />
             </div>
             <div
               id="home-old-complaint"
@@ -35,7 +35,8 @@ class NewAndOldComplaints extends Component {
               }}
             >
               <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />
-              <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} label="My Complaints" />
+
+              <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="My Complaints" />
             </div>
           </div>
         }
