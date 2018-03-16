@@ -10,9 +10,6 @@ import Help from "../../../custom-icons/help-circle.js";
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
 import "./index.css";
-//App bar imports ends
-
-/*Styles for language toggle starts */
 
 const listInnerDivStyle = {
   padding: "16px 0px 16px 60px",
@@ -113,7 +110,7 @@ class HeaderWithDrawer extends Component {
     value: "English",
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
 
@@ -170,7 +167,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  onClick = (value) => {
+  onClick = value => {
     this.setState({ value });
   };
   handleItem = (item, index) => {
@@ -197,6 +194,14 @@ class HeaderWithDrawer extends Component {
     });
   };
 
+  getAppBarStyles = () => {
+    const style = { overflowX: "hidden", width: "initial" };
+    if (window.location.pathname.endsWith("search-complaint")) {
+      style.boxShadow = "none";
+    }
+    return style;
+  };
+
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
@@ -204,9 +209,9 @@ class HeaderWithDrawer extends Component {
     let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={{ overflowX: "hidden", width: "initial" }} />
+        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={this.getAppBarStyles()} />
 
-        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+        <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={open => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
             cardStyles={cardStyles}
