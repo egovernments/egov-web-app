@@ -17,12 +17,12 @@ class ComplaintDetails extends Component {
           textChildren={
             <div>
               <div className="complaint-submitted-boldlabel">
-                <Label label={"Complaint Registerd Successfully"} fontSize="16px" />
+                <Label label={"Complaint registered successfully"} fontSize="16px" />
                 <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "16px" }}>
                   <Icon name={"check"} action={"navigation"} />
                 </FloatingActionButton>
                 <Label label={"Thank You!"} fontSize="16px" />
-                <Label label={`Complaint Number. ${complaintnumber}`} fontSize="16px" />
+                <Label label={`Complaint No. ${complaintnumber}`} fontSize="16px" />
               </div>
               <div className="complaint-submitted-label">
                 <Label label={`You can track the status of your complaint on this app anytime!`} />

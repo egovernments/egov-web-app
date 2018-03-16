@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Label from "../Label";
+import FlatButton from "material-ui/FlatButton";
 import PropTypes from "prop-types";
 
 class FilePicker extends Component {
@@ -20,11 +20,12 @@ class FilePicker extends Component {
   };
 
   render() {
-    let { inputProps, labelProps } = this.props;
+    let { inputProps, pickIcon } = this.props;
     return (
       <div>
-        {inputProps && <input type="file" {...inputProps} onChange={this.handleFileChange} />}
-        {labelProps && <Label icon={<label htmlFor={inputProps.id}>{labelProps.icon}</label>} primary={true} />}
+        <FlatButton icon={pickIcon} containerElement="label" disableTouchRipple={true}>
+          <input type="file" {...inputProps} onChange={this.handleFileChange} style={{ display: "none" }} />
+        </FlatButton>
       </div>
     );
   }

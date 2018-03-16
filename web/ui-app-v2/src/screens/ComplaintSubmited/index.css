@@ -1,8 +1,6 @@
 .complaint-submitted-card {
   text-align: center;
-  margin-top: 130px;
-  margin-left: 8px;
-  margin-right: 8px;
+  margin: 130px 8px 100px 8px;
 }
 .complaint-submitted-boldlabel {
   padding-top: 20px;
@@ -13,9 +11,7 @@
   margin-bottom: 20px;
 }
 .complaint-submitted-label .label-text {
-  padding-right: 50px;
-  padding-left: 50px;
-  padding-bottom: 24px;
+  padding: 0px 50px 24px 50px;
 }
 .zeropadding {
   padding: 0px !important;

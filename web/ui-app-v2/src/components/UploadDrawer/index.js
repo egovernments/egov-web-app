@@ -11,17 +11,11 @@ const iconStyle = {
 };
 const inputProps = {
   accept: "image/*",
-  id: "i1",
   multiple: false, //for selecting single or multiple files
-  style: {
-    display: "none",
-  },
 };
-const galleryIconBtn = {
-  icon: (
-    <Icon className="gallery-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"image"} onClick={this.onGalleryClick} />
-  ),
-};
+const galleryIconBtn = (
+  <Icon className="gallery-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"image"} onClick={this.onGalleryClick} />
+);
 
 class UploadDrawer extends Component {
   onCameraClick = () => {
@@ -60,7 +54,7 @@ class UploadDrawer extends Component {
             )}
             {this.props.galleryIcon && (
               <div className="labelIconBox">
-                <FilePicker inputProps={inputProps} labelProps={galleryIconBtn} handleimage={this.picUpload} />
+                <FilePicker inputProps={inputProps} pickIcon={galleryIconBtn} handleimage={this.picUpload} />
                 <Label className="galleryUploadlabel" label="Gallery" color={"#484848"} labelStyle={this.props.labelStyle} />
               </div>
             )}
