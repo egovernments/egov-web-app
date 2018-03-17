@@ -17,7 +17,7 @@ const options = [
     route: "/information",
   },
   {
-    label: "Payments",
+  label: "Payments",
     icon: <Icon style={iconStyle} action="custom" name="rupee" />,
     route: "/payments",
   },
