@@ -195,11 +195,11 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick, getAppBarTitle, getAppLeftIcon } = this;
-    const { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu, ...appBarProps } = this.props;
+    const { onUpdateMenuStatus, toggleMenu, ...appBarProps } = this.props;
 
     return (
       <div>
-        <AppBar {...appBarProps} onLeftIconButtonClick={onHandleToggleMenu} />
+        <AppBar {...appBarProps} />
         {/* Navigation Drawer */}
         <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection

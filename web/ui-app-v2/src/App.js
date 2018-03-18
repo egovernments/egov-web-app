@@ -35,18 +35,20 @@ class App extends Component {
     tabIndex: 0,
   };
 
-  _handleToggleMenu = () => {
-    let { toggleMenu } = this.state;
-    toggleMenu = !toggleMenu;
-    this.setState({
-      toggleMenu,
-    });
-  };
-
   _updateMenuState = (status) => {
     this.setState({
       toggleMenu: status,
     });
+  };
+  _handleToggleMenu = () => {
+    let { toggleMenu } = this.state;
+    this.setState({
+      toggleMenu: !toggleMenu,
+    });
+  };
+
+  _handleBackNavigation = () => {
+    this.props.history.goBack();
   };
 
   _onTabChange = (tabIndex) => {
@@ -57,30 +59,31 @@ class App extends Component {
 
   _appBarProps = () => {
     const windowName = window.location.pathname.slice(1);
+    const isHomeScreen = windowName.trim().length === 0 ? true : false;
 
     const style = { overflowX: "hidden", width: "initial" };
     if (windowName.endsWith("complaint-category")) {
       style.boxShadow = "none";
     }
 
-    const title =
-      windowName.trim().length === 0
-        ? "Home"
-        : windowName
-            .split("-")
-            .map((element) => {
-              return element[0].toUpperCase() + element.slice(1);
-            })
-            .join(" ");
+    const title = isHomeScreen
+      ? "Home"
+      : windowName
+          .split("-")
+          .map((element) => {
+            return element[0].toUpperCase() + element.slice(1);
+          })
+          .join(" ");
 
-    const iconElementLeft =
-      windowName.trim().length === 0 ? null : (
-        <IconButton>
-          <Icon action="navigation" name="arrow-back" />
-        </IconButton>
-      );
+    const iconElementLeft = isHomeScreen ? null : (
+      <IconButton>
+        <Icon action="navigation" name="arrow-back" />
+      </IconButton>
+    );
 
-    return { style, title, iconElementLeft };
+    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
+
+    return { style, title, iconElementLeft, onLeftIconButtonClick };
   };
 
   componentWillReceiveProps(nextProps) {
@@ -98,7 +101,7 @@ class App extends Component {
 
     return (
       <div>
-        <HeaderWithDrawer {..._appBarProps()} toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
+        <HeaderWithDrawer {..._appBarProps()} onUpdateMenuStatus={_updateMenuState} toggleMenu={toggleMenu} />
         <Component {...rest} />
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
