@@ -26,11 +26,13 @@ const floatingLabelStyle = {
   left: -35,
 };
 
-const MobileNumberField = ({ textFieldStyle = {}, prefix = "+91", prefixStyle = {}, ...textFieldProps }) => {
+const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", prefixStyle = {}, ...textFieldProps }) => {
   return (
     <div style={containerStyle}>
       <div style={{ ...prefixBaseStyle, prefixStyle }}>{prefix}</div>
       <TextField
+        className={`mobile-number-field ${className}`}
+        id="mobile-number-field"
         name="mobile-number-field"
         style={{ ...textFieldBaseStyle, ...textFieldStyle }}
         fullWidth={true}
