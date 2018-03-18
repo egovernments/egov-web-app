@@ -1,27 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { Card, Icon, Label } from "../../../../components";
 import VerticalCenterWrapper from "../../../common/VerticalCenterWrapper";
 import "./index.css";
 
-class Updates extends Component {
-  updates = [
-    {
-      title: "Contamination of water",
-      date: "10-Mar-18",
-      status: "Re-Assigned",
-    },
-    {
-      title: "Dog menace",
-      date: "10-Mar-18",
-      status: "Rejected",
-    },
-  ];
-
-  renderUpdate = (update, index) => {
+const Updates = ({ updates }) => {
+  const renderUpdate = (update, index) => {
     const { title, date, status } = update;
     return (
       <Card
-        style={{marginBottom : "8px"}}
+        style={{ margin: "8px 0px" }}
         key={index}
         textChildren={
           <div className="update">
@@ -45,9 +32,7 @@ class Updates extends Component {
     );
   };
 
-  render() {
-    return <div>{this.updates.map((update, index) => this.renderUpdate(update, index))}</div>;
-  }
-}
+  return <div>{updates.map((update, index) => renderUpdate(update, index))}</div>;
+};
 
 export default Updates;
