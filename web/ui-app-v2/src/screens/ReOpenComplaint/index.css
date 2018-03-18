@@ -1,12 +1,6 @@
 .reopencomplaint-field {
   background-color: #ffffff;
-  background-repeat: no-repeat;
-  background-position: center;
-  padding-left: 16px !important;
   padding-top: 16px !important;
-}
-.reopencomplaint-question {
-  padding-right: 115px;
 }
 
 .reopencomplaint-textArea {
@@ -20,13 +14,9 @@
   width: 100px;
 }
 .reopencomplaint-button {
-  padding: 0px 30px 0px 1px;
+  padding: 0px 16px 0px 0px;
   position: fixed;
   width: 100%;
   bottom: 80px;
   background-color: #ffffff;
-}
-.reopencomplaint-button button {
-  height: 48px !important;
-  line-height: 48px !important;
 }
