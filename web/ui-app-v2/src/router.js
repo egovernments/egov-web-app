@@ -9,7 +9,7 @@ import Profile from "./screens/profile";
 import TrackLocation from "./screens/common/TrackLocation";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
-import SearchComplaint from "./screens/SearchComplaint";
+import ComplaintCategory from "./screens/ComplaintCategory";
 import ContactUs from "./screens/ContactUs";
 import AddComplaint from "./screens/AddComplaint";
 // user related screens
@@ -18,7 +18,6 @@ import Login from "./screens/User/Login";
 import OTP from "./screens/User/OTP";
 import LanguageSelection from "./screens/User/LanguageSelection";
 import HowItWorks from "./screens/HowItWorks";
-
 
 const Main = () => {
   return (
@@ -37,7 +36,7 @@ const Main = () => {
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
-        <PrivateRoute exact path="/search-complaint" component={SearchComplaint} />
+        <PrivateRoute exact path="/complaint-category" component={ComplaintCategory} />
         <PrivateRoute exact path="/how-it-works" component={HowItWorks} />
         <PrivateRoute exact path="/add-complaint" component={AddComplaint} />
       </Switch>

@@ -11,7 +11,7 @@ const TextAreaUi = ({
   underlineShow,
   onChange,
   errorMessage,
-  value,
+  value = "",
   disabled,
   isRequired,
   hide,

@@ -8,7 +8,7 @@ const customIconStyles = {
   margin: 0,
 };
 
-export default class SearchComplaint extends Component {
+export default class ComplaintCategory extends Component {
   state = { results: [], searchTerm: "" };
 
   dataSource = [
@@ -31,10 +31,16 @@ export default class SearchComplaint extends Component {
     { id: 14, text: "Others", nestedItems: [] },
   ];
 
-  generateDataSource = dataSource => {
+  generateDataSource = (dataSource) => {
     return dataSource.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
+  };
+
+  onComplaintTypeChosen = (item, index) => {
+    const complaintType = item.primaryText;
+    console.log(complaintType);
+    this.props.history.goBack();
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {
@@ -42,7 +48,7 @@ export default class SearchComplaint extends Component {
   };
 
   prepareResultsForDisplay = (results = []) => {
-    return results.map(result => {
+    return results.map((result) => {
       const listItem = {};
 
       listItem.primaryText = result.text;
@@ -50,9 +56,10 @@ export default class SearchComplaint extends Component {
 
       if (result.nestedItems) {
         listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
-        listItem.nestedItems = result.nestedItems.map(nestedItem => {
+        listItem.nestedItems = result.nestedItems.map((nestedItem) => {
           const item = {};
           item.primaryText = nestedItem.text;
+          item.onClick = this.onComplaintTypeChosen;
           item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
           return item;
         });
@@ -62,9 +69,10 @@ export default class SearchComplaint extends Component {
     });
   };
 
-  renderList = dataSource => {
+  renderList = (dataSource, enableClick) => {
     return (
       <List
+        onItemClick={enableClick && this.onComplaintTypeChosen}
         listItemStyle={{ borderBottom: "1px solid #eee", paddingTop: "8px", paddingBottom: "8px" }}
         autoGenerateNestedIndicator={false}
         primaryTogglesNestedList={true}
@@ -94,7 +102,7 @@ export default class SearchComplaint extends Component {
           searchKey="text"
           callback={autoSuggestCallback}
         />
-        {displayInitialList ? this.renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results))}
+        {displayInitialList ? this.renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results), true)}
       </div>
     );
   }

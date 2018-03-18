@@ -195,7 +195,7 @@ class HeaderWithDrawer extends Component {
 
   getAppBarStyles = () => {
     const style = { overflowX: "hidden", width: "initial" };
-    if (window.location.pathname.endsWith("search-complaint")) {
+    if (window.location.pathname.endsWith("complaint-category")) {
       style.boxShadow = "none";
     }
     return style;

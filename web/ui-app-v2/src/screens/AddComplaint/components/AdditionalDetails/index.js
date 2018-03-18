@@ -2,7 +2,7 @@ import React from "react";
 import { Card, TextField } from "../../../../components";
 import "./index.css";
 
-const AdditionalDetailsCard = ({ additionalDetails, onChange }) => {
+const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
   return (
     <div className="additional-details-main-cont">
       <Card
