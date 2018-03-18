@@ -17,7 +17,7 @@ const labelStyle = {
 const ImageUpload = ({ images, removeImage, addImage }) => {
   return (
     <div className="upload-photo-overlay" onClick={addImage}>
-      {images.length === 0 ? (
+      {!images.length ? (
         <div>
           <div className="upload-icon-cont">
             <Icon action="image" name="add-a-photo" style={iconStyle} color={"#ffffff"} />
