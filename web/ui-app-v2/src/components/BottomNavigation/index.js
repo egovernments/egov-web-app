@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { BottomNavigation as MaterialUiBottomNavigation, BottomNavigationItem } from "material-ui/BottomNavigation";
 import "./index.css";
 
-const BottomNavigation = ({ style = {}, options, handleChange, selectedIndex }) => (
-  <MaterialUiBottomNavigation className="bottom-navigation" style={style} selectedIndex={selectedIndex}>
+const BottomNavigation = ({ className, style = {}, options, handleChange, selectedIndex }) => (
+  <MaterialUiBottomNavigation className={`${className} bottom-navigation`} style={style} selectedIndex={selectedIndex}>
     {options.map((item, index) => (
       <BottomNavigationItem
         key={index}
