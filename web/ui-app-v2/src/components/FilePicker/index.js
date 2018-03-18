@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FlatButton from "material-ui/FlatButton";
 import PropTypes from "prop-types";
 
 class FilePicker extends Component {

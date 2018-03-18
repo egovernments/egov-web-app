@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-import TextFieldIcon from "../TextFieldIcon";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
 import Icon from "../Icon";

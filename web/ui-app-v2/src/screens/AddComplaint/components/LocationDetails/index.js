@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextFieldIcon, Label, TextField } from "../../../../components";
+import { Card, TextFieldIcon, TextField } from "../../../../components";
 import TrackIcon from "material-ui/svg-icons/maps/my-location";
 import "./index.css";
 

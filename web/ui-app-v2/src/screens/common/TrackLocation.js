@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { MapLocation, Icon } from "../../components";
+import { MapLocation } from "../../components";
 import Button from "../../components/Button";
 import pinIcon from "../../assets/Location_pin.svg";
 import _ from "lodash";
@@ -16,7 +16,6 @@ const searchBoxStyles = {
   fontSize: `16px`,
   outline: `none`,
   textOverflow: `ellipses`,
-  paddingLeft: `30px`,
   fontFamily: "Roboto",
   letterSpacing: "0px",
   textAlign: "left",
