@@ -17,7 +17,7 @@
 }
 
 .homepage-banner .banner-back-button {
-  display: none;
+  display: none !important;
 }
 
 .homepage-banner .logo-wrapper {
