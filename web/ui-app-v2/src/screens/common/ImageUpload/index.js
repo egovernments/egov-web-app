@@ -14,9 +14,9 @@ const labelStyle = {
   lineHeight: 1,
 };
 
-const Placeholder = ({ className, onFilePicked, inputProps, index }) => {
+const Placeholder = ({ className, onFilePicked, inputProps }) => {
   return (
-    <div key={index} className={`${className} upload-placeholder`}>
+    <div className={`${className} upload-placeholder`}>
       <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
         <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
           <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} />
@@ -36,7 +36,7 @@ class ImageUpload extends Component {
   fillPlaceholder = (images, onFilePicked, inputProps) => {
     const placeholders = [];
     for (let i = 0; i < 3 - images.length; i++) {
-      placeholders.push(<Placeholder index={i} onFilePicked={onFilePicked} />);
+      placeholders.push(<Placeholder key={i} onFilePicked={onFilePicked} />);
     }
     return placeholders;
   };

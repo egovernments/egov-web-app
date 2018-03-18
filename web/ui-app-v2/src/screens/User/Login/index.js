@@ -28,10 +28,8 @@ class Login extends Component {
               <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
               <form>
                 <MobileNumberField
-                  id="person-phone-number"
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
-                  name="phone-number"
                   underlineShow={false}
                   fullWidth={true}
                   isRequired={true}
