@@ -6,7 +6,7 @@ const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
 const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [], ...rest }) => {
-  const renderListItems = items => {
+  const renderListItems = (items) => {
     return items.map((item, index) => {
       const { nestedItems } = item;
 
