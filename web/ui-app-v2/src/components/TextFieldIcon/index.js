@@ -32,10 +32,10 @@ const getStyles = (iconPosition, textFieldProps) => {
   };
 };
 
-const TextFieldIcon = ({ Icon, iconStyle = {}, textFieldStyle = {}, iconPosition = "after", ...textFieldProps }) => {
+const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, iconPosition = "after", ...textFieldProps }) => {
   const style = getStyles(iconPosition, textFieldProps);
   return (
-    <div style={containerStyle}>
+    <div onClick={onClick} style={containerStyle}>
       <Icon style={{ ...style.iconStyle, ...iconStyle }} />
       <TextField name="textfield-icon" style={{ ...style.textFieldStyle, ...textFieldStyle }} fullWidth={false} {...textFieldProps} />
     </div>
@@ -43,6 +43,7 @@ const TextFieldIcon = ({ Icon, iconStyle = {}, textFieldStyle = {}, iconPosition
 };
 
 TextFieldIcon.propTypes = {
+  onClick: PropTypes.func,
   iconPosition: PropTypes.string,
   textFieldStyle: PropTypes.object,
   iconProps: PropTypes.object,

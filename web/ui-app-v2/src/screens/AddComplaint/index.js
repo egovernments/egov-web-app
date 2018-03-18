@@ -1,12 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Screen from "../common/Screen";
 import ImageUpload from "../common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
-import Potholes_1 from "../../assets/images/Potholes_1.png";
-import { Button, UploadDrawer } from "../../components";
-
+import { Button } from "../../components";
 import "./index.css";
 
 class AddComplaints extends Component {
@@ -23,12 +22,18 @@ class AddComplaints extends Component {
     this.setState({ additionalDetails: value });
   };
 
+  navigateToComplaintType = () => {
+    this.props.history.push("/complaint-category");
+  };
+
   render() {
+    const { navigateToComplaintType } = this;
+    const { complaintType } = this.props;
     return (
       <Screen>
         <div className="add-complaint-main-cont">
           <ImageUpload />
-          <ComplaintTypeCard />
+          <ComplaintTypeCard complaintType={complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard landmark={this.state.landmark} locationDetails={this.state.locationDetails} onChange={this.handleLandmarkChange} />
           <AdditionalDetailsCard additionalDetails={this.state.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="add-complaint-button-cont">
