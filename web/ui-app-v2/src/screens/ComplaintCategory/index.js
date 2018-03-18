@@ -38,7 +38,7 @@ export default class ComplaintCategory extends Component {
 
   onComplaintTypeChosen = (item, index) => {
     const complaintType = item.primaryText;
-    console.log(complaintType);
+    // do something with the complaint Type
     this.props.history.goBack();
   };
 
@@ -58,8 +58,8 @@ export default class ComplaintCategory extends Component {
         listItem.nestedItems = result.nestedItems.map((nestedItem) => {
           const item = {};
           item.primaryText = nestedItem.text;
-          item.onClick = this.onComplaintTypeChosen;
           item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
+          item.onClick = this.onComplaintTypeChosen.bind(null, item);
           return item;
         });
       }
