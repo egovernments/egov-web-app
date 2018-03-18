@@ -1,3 +1,7 @@
+.language-selection .banner-back-button {
+  display: none !important;
+}
+
 /* Language Selection  */
 .language-label > div {
   color: #484848;

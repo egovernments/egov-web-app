@@ -1,13 +1,15 @@
 import React from "react";
-import { Image } from "../../../components";
+import { withRouter } from "react-router";
+import { Image, Icon } from "../../../components";
 import logo from "../../../assets/images/logo.png";
 import "./index.css";
 
-const Banner = ({ children, className = "" }) => {
+const Banner = ({ children, history, className = "" }) => {
   return (
     <div>
       <div className={`${className} user-screens-wrapper`}>
         <div className="row">
+          <Icon onClick={() => history.goBack()} className="banner-back-button" action="navigation" name="arrow-back" />
           <div className="banner-image" />
           <div className="banner-overlay" />
           <div className="logo-wrapper">
@@ -20,4 +22,4 @@ const Banner = ({ children, className = "" }) => {
   );
 };
 
-export default Banner;
+export default withRouter(Banner);

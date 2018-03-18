@@ -190,7 +190,7 @@ class HeaderWithDrawer extends Component {
 
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
-    const { onClick, getAppBarTitle, getAppLeftIcon } = this;
+    const { onClick } = this;
     const { onUpdateMenuStatus, toggleMenu, ...appBarProps } = this.props;
 
     return (
