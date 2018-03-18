@@ -54,7 +54,7 @@ class ImageUpload extends Component {
   };
 
   render() {
-    const { addImage, onFilePicked, removeImage } = this;
+    const { onFilePicked, removeImage } = this;
     const { images } = this.state;
     const inputProps = { accept: "image/*", multiple: true };
 

@@ -102,10 +102,6 @@ class HeaderWithDrawer extends Component {
     value: "English",
   };
 
-  onClick = (value) => {
-    this.setState({ value });
-  };
-
   listItemsPartOne = {
     items: [
       {
@@ -170,7 +166,7 @@ class HeaderWithDrawer extends Component {
 
   handleItem = (item, index) => {
     if (item.primaryText === "Logout") {
-      this.props.onHandleToggleMenu();
+      this.props.onLeftIconButtonClick();
       this.setState({
         logoutPopupOpen: true,
       });

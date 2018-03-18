@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Screen from "../common/Screen";
 import ImageUpload from "../common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
