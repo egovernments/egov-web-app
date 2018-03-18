@@ -61,7 +61,7 @@ class LanguageSelection extends Component {
     const { onLanguageSelect, onClick } = this;
 
     return (
-      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <Banner className="language-selection col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
         <Card
           className="user-screens-card language-selection-card"
           textChildren={

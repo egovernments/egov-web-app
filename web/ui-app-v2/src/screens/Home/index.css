@@ -6,17 +6,21 @@
   margin-bottom: 70px;
 }
 
-.homepage-banner.user-screens-wrapper{
-    height: 30vh;
+.homepage-banner.user-screens-wrapper {
+  height: 30vh;
 }
 
-.homepage-banner .banner-image, .homepage-banner .banner-overlay {
-  position : absolute;
+.homepage-banner .banner-image,
+.homepage-banner .banner-overlay {
+  position: absolute;
   height: 100%;
 }
 
+.homepage-banner .banner-back-button {
+  display: none;
+}
 
 .homepage-banner .logo-wrapper {
-  position : absolute;
+  position: absolute;
   top: 30%;
 }
