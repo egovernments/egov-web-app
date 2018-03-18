@@ -20,7 +20,13 @@ const NewAndOldComplaints = ({ history }) => {
       style={cardStyle}
       textChildren={
         <div className="row newAndOldComplaints-content-section">
-          <div id="home-new-complaint" className="col-xs-6">
+          <div
+            id="home-new-complaint"
+            className="col-xs-6"
+            onClick={(e) => {
+              history.push("/add-complaint");
+            }}
+          >
             <Icon style={{ ...iconStyle, background: "#f5a623" }} action="content" name="add" />
             <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="File Complaint" />
           </div>
