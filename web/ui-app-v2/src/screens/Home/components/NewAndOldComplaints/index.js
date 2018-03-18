@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Icon, Label } from "../../../../components";
-import { withRouter } from "react-router-dom";
 import "./index.css";
 
 const cardStyle = {

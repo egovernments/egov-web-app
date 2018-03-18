@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import RadioButton from "../../components/RadioButton";
 import ImageUpload from "../common/ImageUpload";
-import { TextArea, Label, Button, Icon } from "../../components";
-import Check from "material-ui/svg-icons/navigation/check";
+import { TextArea, Label, Button } from "../../components";
 import Screen from "../common/Screen";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 
 const styles = {
