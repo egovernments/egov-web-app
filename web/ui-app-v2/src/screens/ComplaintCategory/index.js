@@ -73,6 +73,7 @@ export default class ComplaintCategory extends Component {
       <List
         onItemClick={enableClick && this.onComplaintTypeChosen}
         listItemStyle={{ borderBottom: "1px solid #eee", paddingTop: "8px", paddingBottom: "8px" }}
+        nestedListStyle={{ padding: "0px" }}
         autoGenerateNestedIndicator={false}
         primaryTogglesNestedList={true}
         items={dataSource}
