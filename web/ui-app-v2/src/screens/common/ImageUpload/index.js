@@ -36,7 +36,7 @@ class ImageUpload extends Component {
   fillPlaceholder = (images, onFilePicked, inputProps) => {
     const placeholders = [];
     for (let i = 0; i < 3 - images.length; i++) {
-      placeholders.push(<Placeholder onFilePicked={onFilePicked} index={i} />);
+      placeholders.push(<Placeholder index={i} onFilePicked={onFilePicked} />);
     }
     return placeholders;
   };
@@ -74,7 +74,7 @@ class ImageUpload extends Component {
           <div className="upload-images-cont">
             {images.map((image, index) => {
               return (
-                <div className="upload-image-cont" key={index}>
+                <div key={index} className="upload-image-cont">
                   <Image source={image} style={{ height: "100%" }} />
                   <div className="image-remove" onClick={() => removeImage(index)}>
                     <Icon action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />

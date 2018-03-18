@@ -4,7 +4,6 @@ import { muiTheme } from "storybook-addon-material-ui";
 import { action } from "@storybook/addon-actions";
 
 import { Drawer } from "../components";
-import { PoweredBy } from "../components";
 
 import RaisedButton from "material-ui/RaisedButton";
 import List from "../components/List";
@@ -100,16 +99,6 @@ export default class DrawerUndockedExample extends React.Component {
         <RaisedButton label="Open Drawer" onClick={this.handleToggle} />
         <Drawer docked={false} width={304} open={this.state.open} onRequestChange={(open) => this.setState({ open })}>
           <List items={items} listContainerStyle={{ background: "#ffffff" }} listItemStyle={{ borderBottom: "1px solid #e0e0e0" }} />
-          {/*<PoweredBy
-            style={{
-              textAlign:"center"
-            }}
-            icon={
-              {
-                src:require("../assests/images/logo.png")
-              }
-            }
-          />*/}
         </Drawer>
       </div>
     );

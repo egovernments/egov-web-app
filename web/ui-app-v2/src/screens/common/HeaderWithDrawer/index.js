@@ -98,9 +98,7 @@ class HeaderWithDrawer extends Component {
         value: "Marati",
       },
     ],
-
     logoutPopupOpen: false,
-
     value: "English",
   };
 
@@ -169,6 +167,7 @@ class HeaderWithDrawer extends Component {
   onClick = (value) => {
     this.setState({ value });
   };
+
   handleItem = (item, index) => {
     if (item.primaryText === "Logout") {
       this.props.onHandleToggleMenu();
@@ -193,23 +192,15 @@ class HeaderWithDrawer extends Component {
     });
   };
 
-  getAppBarStyles = () => {
-    const style = { overflowX: "hidden", width: "initial" };
-    if (window.location.pathname.endsWith("complaint-category")) {
-      style.boxShadow = "none";
-    }
-    return style;
-  };
-
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
-    const { onClick } = this;
+    const { onClick, getAppBarTitle, getAppLeftIcon } = this;
+    const { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu, ...appBarProps } = this.props;
 
-    let { onHandleToggleMenu, onUpdateMenuStatus, toggleMenu } = this.props;
     return (
       <div>
-        <AppBar title={`Mseva/ Home`} onLeftIconButtonClick={onHandleToggleMenu} style={this.getAppBarStyles()} />
-
+        <AppBar {...appBarProps} onLeftIconButtonClick={onHandleToggleMenu} />
+        {/* Navigation Drawer */}
         <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection
             imgStyle={style}
@@ -260,6 +251,7 @@ class HeaderWithDrawer extends Component {
             </div>
           </div>
         </Drawer>
+        {/* Logout Section */}
         <Dialog
           open={logoutPopupOpen}
           children={[

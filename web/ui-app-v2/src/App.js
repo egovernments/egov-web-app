@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "./components";
+import IconButton from "material-ui/IconButton";
 
 const iconStyle = { height: "24px", padding: "0px" };
 
@@ -17,7 +18,7 @@ const options = [
     route: "/information",
   },
   {
-  label: "Payments",
+    label: "Payments",
     icon: <Icon style={iconStyle} action="custom" name="rupee" />,
     route: "/payments",
   },
@@ -54,6 +55,34 @@ class App extends Component {
     });
   };
 
+  _appBarProps = () => {
+    const windowName = window.location.pathname.slice(1);
+
+    const style = { overflowX: "hidden", width: "initial" };
+    if (windowName.endsWith("complaint-category")) {
+      style.boxShadow = "none";
+    }
+
+    const title =
+      windowName.trim().length === 0
+        ? "Home"
+        : windowName
+            .split("-")
+            .map((element) => {
+              return element[0].toUpperCase() + element.slice(1);
+            })
+            .join(" ");
+
+    const iconElementLeft =
+      windowName.trim().length === 0 ? null : (
+        <IconButton>
+          <Icon action="navigation" name="arrow-back" />
+        </IconButton>
+      );
+
+    return { style, title, iconElementLeft };
+  };
+
   componentWillReceiveProps(nextProps) {
     const { route } = nextProps;
 
@@ -64,11 +93,12 @@ class App extends Component {
 
   render() {
     const { Component, ...rest } = this.props;
-    const { _handleToggleMenu, _updateMenuState, _onTabChange } = this;
+    const { _handleToggleMenu, _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
+
     return (
       <div>
-        <HeaderWithDrawer toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
+        <HeaderWithDrawer {..._appBarProps()} toggleMenu={toggleMenu} onHandleToggleMenu={_handleToggleMenu} onUpdateMenuStatus={_updateMenuState} />
         <Component {...rest} />
         <BottomNavigation selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
