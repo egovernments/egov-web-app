@@ -96,7 +96,7 @@ class App extends Component {
 
   render() {
     const { Component, ...rest } = this.props;
-    const { _handleToggleMenu, _updateMenuState, _onTabChange, _appBarProps } = this;
+    const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
     return (
