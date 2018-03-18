@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RadioButton from "../../components/RadioButton";
-import { TextArea, Label, Button, Icon, UploadDrawer, FilePicker } from "../../components";
+import ImageUpload from "../common/ImageUpload";
+import { TextArea, Label, Button, Icon } from "../../components";
 import Check from "material-ui/svg-icons/navigation/check";
 import Screen from "../common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -39,7 +40,6 @@ const styles = {
 class ReOpenComplaint extends Component {
   state = {
     valueSelected: "",
-    openUploadSlide: false,
   };
   options = [
     { value: "No work was done", label: "No work was done" },
@@ -57,14 +57,7 @@ class ReOpenComplaint extends Component {
   handleCommentChange = () => {
     //console.log("changed");
   };
-  handleSlider = () => {
-    this.setState({
-      openUploadSlide: true,
-    });
-  };
-  handlePhoto = (file, url) => {
-    console.log(file);
-  };
+
   render() {
     const { valueSelected } = this.state;
 
@@ -82,32 +75,7 @@ class ReOpenComplaint extends Component {
             selectedLabelStyle={styles.selectedLabelStyle}
           />
         </div>
-        <div className="reopencomplaint-upload-photo">
-          <FloatingActionButton
-            backgroundColor="#767676"
-            iconStyle={{ height: "40px", width: "40px" }}
-            style={{ margin: "15px 36px 4px 30px" }}
-            onClick={this.handleSlider}
-          >
-            <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} />
-          </FloatingActionButton>
-          <Label
-            label="UPLOAD PHOTO"
-            bold={true}
-            color={"#767676"}
-            fontSize={"12px"}
-            labelStyle={{ textAlign: "center", padding: "2px 24px 18px 23px" }}
-          />
-          {this.state.openUploadSlide && (
-            <UploadDrawer
-              openUploadSlide={this.state.openUploadSlide}
-              galleryIcon={true}
-              removeIcon={true}
-              onClickAddPic={this.handleSlider}
-              setProfilePic={this.handlePhoto}
-            />
-          )}
-        </div>
+        <ImageUpload />
         <div className="reopencomplaint-textArea">
           <TextArea
             id="reopencomplaint-comment-field"

@@ -19,13 +19,17 @@ class FilePicker extends Component {
     }
   };
 
+  openFileDialog = () => {
+    this.upload.click();
+  };
+
   render() {
-    let { inputProps, pickIcon } = this.props;
+    const { inputProps, children } = this.props;
+    const { handleFileChange, openFileDialog } = this;
     return (
-      <div>
-        <FlatButton icon={pickIcon} containerElement="label" disableTouchRipple={true}>
-          <input type="file" {...inputProps} onChange={this.handleFileChange} style={{ display: "none" }} />
-        </FlatButton>
+      <div onClick={openFileDialog}>
+        <input type="file" {...inputProps} ref={(ref) => (this.upload = ref)} style={{ display: "none" }} onChange={handleFileChange} />
+        {children}
       </div>
     );
   }
