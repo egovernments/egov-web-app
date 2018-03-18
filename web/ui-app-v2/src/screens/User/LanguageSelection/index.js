@@ -53,7 +53,7 @@ class LanguageSelection extends Component {
   };
 
   onLanguageSelect = () => {
-    this.props.history.push("/login");
+    this.props.history.push("/register");
   };
 
   render() {

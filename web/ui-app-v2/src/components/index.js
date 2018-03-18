@@ -14,7 +14,6 @@ import FilePicker from "./FilePicker";
 import Dialog from "./Dialog";
 import AppBar from "./AppBar";
 import Drawer from "./Drawer";
-import PoweredBy from "./PoweredBy";
 import Image from "./Image";
 import LoadingIndicator from "./LoadingIndicator";
 import BottomNavigation from "./BottomNavigation";
@@ -56,7 +55,6 @@ export {
   List,
   AutoSuggest,
   ProfileSection,
-  PoweredBy,
   Ratings,
   ButtonGroup,
   DropDown,
