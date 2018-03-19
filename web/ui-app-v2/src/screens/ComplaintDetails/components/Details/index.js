@@ -74,7 +74,7 @@ class Details extends Component {
                   <div className="col-xs-2">
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
-                  <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
+                  <div className="col-xs-10" style={{ paddingLeft: "0px",marginLeft: "-16.5px" }}>
                     <Label label={"Sector 32, 1 main, Amritsar"} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                 </div>
@@ -83,7 +83,7 @@ class Details extends Component {
                   <div className="col-xs-2">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                   </div>
-                  <div className="col-xs-10" style={{ paddingLeft: "0px" }}>
+                  <div className="col-xs-10" style={{ paddingLeft: "0px",marginLeft: "-16.5px" }}>
                     <Label
                       label={"Too much garbage lying on the road, its very dificult to cross the area."}
                       className="status-result-color"
