@@ -37,7 +37,7 @@ const Main = () => {
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
         <PrivateRoute exact hideBottomNavigation={true} path="/complaint-type" component={ComplaintType} />
-        <PrivateRoute exact path="/how-it-works" component={HowItWorks} />
+        <PrivateRoute exact hideBottomNavigation={true} path="/how-it-works" component={HowItWorks} />
         <PrivateRoute exact hideBottomNavigation={true} path="/add-complaint" component={AddComplaint} />
       </Switch>
     </main>
