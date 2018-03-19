@@ -54,7 +54,7 @@ class Comments extends Component {
                 <Icon action="communication" name="forum" color="#969696" />{" "}
                 <Label label="Comments" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
-              <List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsOne} />
+              <List listContainerStyle={{marginTop:"24px"}} listItemStyle={{ marginBottom: "-8.5px"}} items={itemsOne} />
               <List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwo} />
               <WriteComment />
             </div>
