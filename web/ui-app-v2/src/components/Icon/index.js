@@ -13,7 +13,7 @@ const Icon = ({ action, className, name, style = {}, color, onClick }) => {
     }
     return <WrappedIcon className={className} style={{ ...style }} color={color} onClick={onClick} />;
   } catch (error) {}
-  throw new Error("Icon not found");
+  throw new Error(`Icon with action ${action} and name ${name} not found`);
 };
 
 Icon.propTypes = {
