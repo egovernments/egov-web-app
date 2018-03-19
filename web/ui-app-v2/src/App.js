@@ -19,7 +19,7 @@ const options = [
   },
   {
     label: "Payments",
-    icon: <Icon style={iconStyle} action="custom" name="rupee" />,
+    icon: <Icon style={iconStyle} action="custom" name="streetlights" />,
     route: "/payments",
   },
   {
@@ -63,7 +63,7 @@ class App extends Component {
     const isHomeScreen = windowName.trim().length === 0 ? true : false;
 
     const style = { overflowX: "hidden", width: "initial" };
-    if (windowName.endsWith("complaint-category")) {
+    if (windowName.endsWith("complaint-type")) {
       style.boxShadow = "none";
     }
 
