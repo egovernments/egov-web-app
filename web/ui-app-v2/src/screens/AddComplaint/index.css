@@ -13,23 +13,3 @@
   width: 100%;
   padding: 0 8px;
 }
-
-.searchBoxStyles {
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  width: 91.1%;
-  height: 45px;
-  margin-top: 106px;
-  padding: 0 12px 0 12px;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  outline: none;
-  text-overflow: ellipses;
-  padding-left: 30px;
-  font-family: Roboto;
-  letter-spacing: 0px;
-  text-align: left;
-  color: #484848;
-  padding-left: 48;
-}

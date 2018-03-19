@@ -71,19 +71,6 @@ const MapLocation = compose(
   withGoogleMap
 )((props) => (
   <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged}>
-    <div className="back-btn">
-      <Icon
-        id="map-back-btn"
-        style={{
-          height: 24,
-          width: 24,
-          color: "#484848",
-        }}
-        action="navigation"
-        name={"arrow-back"}
-        onClick={props.onCLickMapBackBtn}
-      />
-    </div>
     <div className="search-icon">
       <Icon
         id="searchIcon"

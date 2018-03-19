@@ -1,27 +1,9 @@
 import React, { Component } from "react";
-import { MapLocation } from "../../components";
-import Button from "../../components/Button";
-import pinIcon from "../../assets/Location_pin.svg";
+import { MapLocation, Button, Icon } from "../../../components";
+import pinIcon from "../../../assets/Location_pin.svg";
 import _ from "lodash";
+import "./index.css";
 
-const searchBoxStyles = {
-  boxSizing: `border-box`,
-  border: `1px solid transparent`,
-  width: `91.1%`,
-  height: `45px`,
-  marginTop: `106px`,
-  padding: `0 12px`,
-  borderRadius: `3px`,
-  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-  fontSize: `16px`,
-  outline: `none`,
-  textOverflow: `ellipses`,
-  fontFamily: "Roboto",
-  letterSpacing: "0px",
-  textAlign: "left",
-  color: "#484848",
-  paddingLeft: 48,
-};
 const pickBtn = {
   lineHeight: "38px",
   display: "block",
@@ -75,24 +57,38 @@ class TrackLocation extends Component {
       );
     }
   };
-  setPickedLocation(lat, lng, index) {
+  setPickedLocation(lati, long, index) {
     if (_.isUndefined(index)) index = 0;
-    console.log(lat, lng, index);
+    console.log(lati, long, index);
   }
   onClickPick() {
-    console.log("picked");
+    console.log("picked your location");
+    window.history.back();
   }
   onCLickMapBackBtn = () => {
     // Redirect back from where you came.
+    window.history.back();
   };
 
   render() {
     var _currloc = { lat: parseFloat(this.state.currLoc.lat), lng: parseFloat(this.state.currLoc.lng) };
     return (
       <div>
+        <div className="back-btn">
+          <Icon
+            id="map-back-btn"
+            style={{
+              height: 24,
+              width: 24,
+              color: "#484848",
+            }}
+            action="navigation"
+            name={"arrow-back"}
+            onClick={this.onCLickMapBackBtn}
+          />
+        </div>
         <MapLocation
           currLoc={_currloc}
-          searchBoxStyles={searchBoxStyles}
           setLocation={this.setPickedLocation}
           getMyLoc={this.getMyLocation}
           icon={pinIcon}
@@ -100,17 +96,7 @@ class TrackLocation extends Component {
           dragInfoBox={false}
           showMyLoc={this.state.showMyLoc}
         />
-        <div
-          style={{
-            width: "100%",
-            position: "fixed",
-            bottom: 56,
-            height: 56,
-            padding: "9px 16px 0 16px",
-            backgroundColor: "rgb(255, 255, 255, 0.63)",
-            boxShadow: "0 0 0 0 rgba(0, 0, 0, 0.1), 0 -2px 5px 0 rgba(0, 0, 0, 0)",
-          }}
-        >
+        <div className="pickBtn">
           <Button className="pick" label={"Pick"} style={pickBtn} primary={true} labelColor="#ffffff" onClick={this.onClickPick} />
         </div>
       </div>

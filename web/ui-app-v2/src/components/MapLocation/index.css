@@ -23,18 +23,15 @@
   height: 55px !important;
   width: 55px !important;
 }
-.back-btn,
-.search-icon {
-  position: absolute !important;
-  top: 75px;
-  background: transparent;
-  margin-left: 15px;
-}
 
 .search-icon {
-  top: 116px;
+  position: absolute !important;
+  background: transparent;
+  margin-left: 15px;
+  top: 60px;
   margin-left: 34px;
 }
+
 .dragInfoBox {
   top: 230px;
   margin-left: 32px;
