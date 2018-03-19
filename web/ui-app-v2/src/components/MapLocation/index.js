@@ -124,7 +124,7 @@ const MapLocation = compose(
       controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
       onPlacesChanged={props.onPlacesChanged}
     >
-      <input type="text" placeholder="Search address" style={props.searchBoxStyles} />
+      <input type="text" className="searchBoxStyles" placeholder="Search address" style={props.searchBoxStyles} />
     </SearchBox>
 
     {props.markers.length > 0 ? (
