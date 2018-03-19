@@ -27,7 +27,7 @@ const Main = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/otp" component={OTP} />
         <Route exact path="/language-selection" component={LanguageSelection} />
-        <PrivateRoute exact path="/contact-us" component={ContactUs} />
+        <PrivateRoute exact hideBottomNavigation={true} path="/contact-us" component={ContactUs} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details/:status?" component={ComplaintDetails} />
