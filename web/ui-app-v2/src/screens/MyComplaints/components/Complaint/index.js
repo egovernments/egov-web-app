@@ -3,6 +3,8 @@ import { Image, Card, Icon, Button } from "../../../../components";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 
+const status={"OPEN":"filed","CLOSED":"resolved","REJECTED":"rejected"}
+
 const imageStyles = {
   minHeight: "87px",
 };
@@ -32,6 +34,7 @@ const getStatusAndChangeColor = (status, assignee) => {
   }
   return statusObj;
 };
+
 
 const Complaint = ({ index, item, history, onClick }) => {
   return (
@@ -87,6 +90,9 @@ const Complaint = ({ index, item, history, onClick }) => {
                   height: "14px",
                   fontSize: "12px",
                   lineHeight: "14px",
+                }}
+                onClick={(e)=>{
+                  history.push(`/complaint-details?status=${status[item.status]}`)
                 }}
               />
             </div>

@@ -72,9 +72,10 @@ class ReOpenComplaint extends Component {
             selectedLabelStyle={styles.selectedLabelStyle}
           />
         </div>
-        <div className="reopencomplaint-upload-photo">
+      <div className="reopencomplaint-upload-photo">
           <ImageUpload />
         </div>
+
         <div className="reopencomplaint-textArea">
           <TextArea
             id="reopencomplaint-comment-field"

@@ -23,7 +23,11 @@ const ProfileSection = ({
     <div className="profileSection" style={cardStyles}>
       <div className="profileContainer" style={{ textAlign: "center" }}>
         <Image className="img-Profile" circular={true} style={imgStyle} source={imgSrc} />
-        {addIconName && <Icon id="profile-upload-icon" style={addIconStyle} action="image" name={addIconName} onClick={onClickAddPic} />}
+        {addIconName && (
+          <div style={addIconStyle}>
+            <Icon id="profile-upload-icon" action="image" name={addIconName} onClick={onClickAddPic} color={"#ffffff"} />
+          </div>
+        )}
         {name && <Label className="name-Profile" label={name} style={nameStyle} />}
         {location && <Label className="loc-Profile" labelPosition="after" label={location} style={locationStyle} />}
         {emailId && <Label className="loc-Profile" label={emailId} style={emailIdStyle} />}

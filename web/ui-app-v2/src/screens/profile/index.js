@@ -127,15 +127,7 @@ class Profile extends Component {
           />
         </form>
         <div className="profileBtnWrapper">
-          <Button
-            className="profileBtn"
-            id="profile-save-action"
-            primary={true}
-            label="SAVE"
-            fullWidth={true}
-            onClick={this.onSaveClick}
-            style={{ marginTop: 53 }}
-          />
+          <Button className="profileBtn" id="profile-save-action" primary={true} label="SAVE" fullWidth={true} onClick={this.onSaveClick} />
         </div>
         <div>
           {this.state.openUploadSlide && (

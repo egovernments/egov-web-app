@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, TimeLine, Label, Icon, Image } from "../../../../components";
-
+import {withRouter} from "react-router-dom";
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
@@ -46,7 +46,7 @@ const StatusIcon = ({ status }) => {
   }
 };
 
-const StatusContent = ({ status, currentStatus, content }) => {
+const StatusContent = ({ status, currentStatus, content,history }) => {
   var { date, name, designation, department, resolveImage, resolveFeedback } = content;
   switch (status) {
     case "SUBMITTED":
@@ -102,7 +102,7 @@ const StatusContent = ({ status, currentStatus, content }) => {
           <div
             className="complaint-details-timline-button"
             onClick={(e) => {
-              console.log("clicked");
+              history.push("/reopen-complaint")
             }}
           >
             RE-OPEN
@@ -131,7 +131,7 @@ const StatusContent = ({ status, currentStatus, content }) => {
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                console.log("clicked");
+                history.push("/feedback")
               }}
             >
               RATE
@@ -139,7 +139,7 @@ const StatusContent = ({ status, currentStatus, content }) => {
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                console.log("clicked");
+                history.push("/reopen-complaint")
               }}
             >
               RE-OPEN
@@ -152,7 +152,7 @@ const StatusContent = ({ status, currentStatus, content }) => {
 
 class ComplaintTimeLine extends Component {
   render() {
-    let { status } = this.props;
+    let { status,history } = this.props;
     let steps = [
       {
         props: {
@@ -166,7 +166,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="RESOLVED" content={{}} />,
+        contentChildren: <StatusContent status="RESOLVED" content={{}} history={history}/>,
       },
       {
         props: {
@@ -195,20 +195,6 @@ class ComplaintTimeLine extends Component {
           },
         },
         contentChildren: <StatusContent status="ASSIGNED" content={{}} />,
-      },
-      {
-        props: {
-          active: true,
-        },
-        labelProps: {
-          icon: <StatusIcon status="REJECTED" />,
-        },
-        contentProps: {
-          style: {
-            marginTop: "-50px",
-          },
-        },
-        contentChildren: <StatusContent status="REJECTED" content={{}} />,
       },
       {
         props: {
@@ -256,7 +242,7 @@ class ComplaintTimeLine extends Component {
               marginTop: "-50px",
             },
           },
-          contentChildren: <StatusContent status="REJECTED" content={{}} />,
+          contentChildren: <StatusContent status="REJECTED" content={{}} history={history} />,
         },
         {
           props: {
@@ -302,6 +288,6 @@ class ComplaintTimeLine extends Component {
   }
 }
 
-export default ComplaintTimeLine;
+export default withRouter(ComplaintTimeLine);
 
 //props types check yet to add

@@ -30,7 +30,6 @@ class Login extends Component {
                 <MobileNumberField
                   onChange={onPhoneNumberChanged}
                   value={phoneNumber}
-                  underlineShow={false}
                   fullWidth={true}
                   isRequired={true}
                   hintText="Enter your Mobile Number"

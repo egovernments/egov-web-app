@@ -25,8 +25,14 @@ class AddComplaints extends Component {
     this.props.history.push("/complaint-type");
   };
 
+
+  submitComplaint = () => {
+    this.props.history.push("/complaint-submitted");
+  };
+
   render() {
-    const { navigateToComplaintType } = this;
+    const { navigateToComplaintType, submitComplaint } = this;
+
     const { complaintType } = this.props;
     return (
       <Screen>
@@ -36,7 +42,7 @@ class AddComplaints extends Component {
           <LocationDetailsCard landmark={this.state.landmark} locationDetails={this.state.locationDetails} onChange={this.handleLandmarkChange} />
           <AdditionalDetailsCard additionalDetails={this.state.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="add-complaint-button-cont">
-            <Button className="add-complaint-submit-button" label="SUBMIT COMPLAINT" fullWidth={true} primary={true} />
+            <Button onClick={submitComplaint} className="add-complaint-submit-button" label="SUBMIT COMPLAINT" fullWidth={true} primary={true} />
           </div>
         </div>
       </Screen>
