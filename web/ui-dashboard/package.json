@@ -2,6 +2,7 @@
   "name": "ui-dashboard",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@turf/bbox": "^6.0.0",
     "@turf/centroid": "^6.0.0",
