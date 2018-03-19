@@ -38,7 +38,6 @@ const defaultLabelStyle = {
 };
 /*Styles for language toggle ends */
 
-const logoutButtonStyle = { width: "90px", height: "35px", lineHeight: "35px" };
 const logoutContentStyle = { textAlign: "center", padding: "24px 20px" };
 
 const style = { borderRadius: "50%", width: 89, height: 88, margin: "0 auto" };
@@ -272,22 +271,8 @@ class HeaderWithDrawer extends Component {
                 <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
               </div>
               <div className="logout-button">
-                <Button
-                  className="logout-no-button"
-                  label={"NO"}
-                  backgroundColor={"#969696"}
-                  onClick={this.handleNo}
-                  labelColor="#ffffff"
-                  buttonStyle={logoutButtonStyle}
-                />
-                <Button
-                  className="logout-yes-button"
-                  label={"YES"}
-                  primary={true}
-                  onClick={this.handleYes}
-                  labelColor="#ffffff"
-                  buttonStyle={logoutButtonStyle}
-                />
+                <Button className="logout-no-button" label={"NO"} backgroundColor={"#969696"} onClick={this.handleNo} labelColor="#ffffff" />
+                <Button className="logout-yes-button" label={"YES"} primary={true} onClick={this.handleYes} labelColor="#ffffff" />
               </div>
             </div>,
           ]}
