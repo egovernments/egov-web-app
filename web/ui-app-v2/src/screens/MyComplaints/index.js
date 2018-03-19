@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
 import { Icon, ImageModal, Label } from "../../components";
+import {withRouter} from "react-router-dom";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../assets/images/Garbage_2.jpg";
@@ -99,6 +100,7 @@ class MyComplaints extends Component {
 
   render() {
     let { complaints, source } = this.state;
+    let {history} =this.props;
     return (
       <div className="complaints-main-container">
         {complaints.length === 0 ? (
@@ -117,7 +119,9 @@ class MyComplaints extends Component {
           </div>
         )}
         <div className="floating-button-cont">
-          <FloatingActionButton className="floating-button">
+          <FloatingActionButton onClick={(e)=>{
+            history.push("/add-complaint");
+          }} className="floating-button">
             <Icon action="content" name="add" />
           </FloatingActionButton>
         </div>
@@ -126,4 +130,4 @@ class MyComplaints extends Component {
   }
 }
 
-export default MyComplaints;
+export default withRouter(MyComplaints);
