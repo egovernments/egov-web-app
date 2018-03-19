@@ -171,7 +171,6 @@ class HeaderWithDrawer extends Component {
   };
 
   handleItem = (item, index) => {
-
     let { route } = item;
     this.props.onLeftIconButtonClick();
 
@@ -186,7 +185,6 @@ class HeaderWithDrawer extends Component {
       default:
         this.props.history.push(route);
         break;
-
     }
   };
   handleYes = () => {
@@ -275,14 +273,21 @@ class HeaderWithDrawer extends Component {
               </div>
               <div className="logout-button">
                 <Button
+                  className="logout-no-button"
                   label={"NO"}
                   backgroundColor={"#969696"}
                   onClick={this.handleNo}
                   labelColor="#ffffff"
-                  style={{ marginRight: "14px" }}
                   buttonStyle={logoutButtonStyle}
                 />
-                <Button label={"YES"} primary={true} onClick={this.handleYes} labelColor="#ffffff" buttonStyle={logoutButtonStyle} />
+                <Button
+                  className="logout-yes-button"
+                  label={"YES"}
+                  primary={true}
+                  onClick={this.handleYes}
+                  labelColor="#ffffff"
+                  buttonStyle={logoutButtonStyle}
+                />
               </div>
             </div>,
           ]}
