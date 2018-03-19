@@ -15,17 +15,17 @@ const options = [
   {
     label: "Information",
     icon: <Icon style={iconStyle} action="action" name="info" />,
-    route: "/information",
+    route: "",
   },
   {
     label: "Payments",
     icon: <Icon style={iconStyle} action="custom" name="rupee" />,
-    route: "/payments",
+    route: "",
   },
   {
     label: "Complaints",
     icon: <Icon style={iconStyle} action="alert" name="warning" />,
-    route: "/complaints",
+    route: "/my-complaints",
   },
 ];
 
@@ -52,9 +52,11 @@ class App extends Component {
   };
 
   _onTabChange = (tabIndex) => {
+    const route = options[tabIndex].route;
     this.setState({
       tabIndex,
     });
+    if (route.length) this.props.history.push(route);
   };
 
   _appBarProps = () => {
