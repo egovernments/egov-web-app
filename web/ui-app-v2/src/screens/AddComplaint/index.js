@@ -31,21 +31,12 @@ class AddComplaints extends Component {
     this.props.history.push("/complaint-type");
   };
 
-
   submitComplaint = () => {
     this.props.history.push("/complaint-submitted");
   };
 
   locationOnClick = () => {
     this.props.history.push("/map");
-  };
-
-  openMapPage = () => {};
-
-  onCLickMapBackBtn = () => {
-    this.setState({
-      openMap: false,
-    });
   };
 
   render() {
@@ -68,8 +59,6 @@ class AddComplaints extends Component {
             <Button onClick={submitComplaint} className="add-complaint-submit-button" label="SUBMIT COMPLAINT" fullWidth={true} primary={true} />
           </div>
         </div>
-        {/* <div className="add-complaint-Map">{this.state.openMap && <TrackLocation onCLickMapBackBtn={this.onCLickMapBackBtn} />}</div> */}
-        {/* <div className="add-complaint-Map">{this.openMapPage()}</div> */}
       </Screen>
     );
   }

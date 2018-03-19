@@ -44,9 +44,9 @@ class ContactUs extends Component {
     };
   }
 
-  openMap = () => {
+  openMapHandler = (isOpen) => {
     this.setState({
-      openMap: true,
+      openMap: isOpen,
     });
   };
 
@@ -62,7 +62,7 @@ class ContactUs extends Component {
           </span>
         ),
         secondaryText: (
-          <div className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMap}>
+          <div className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMapHandler}>
             Open Map
           </div>
         ),
@@ -133,7 +133,26 @@ class ContactUs extends Component {
             </div>
           }
         />
-        {this.state.openMap && <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} />}
+        {this.state.openMap && (
+          <div>
+            <div className="back-btn">
+              <Icon
+                className="mapBackBtn"
+                onClick={() => {
+                  this.openMapHandler(false);
+                }}
+                style={{
+                  height: 24,
+                  width: 24,
+                  color: "#484848",
+                }}
+                action="navigation"
+                name={"arrow-back"}
+              />
+            </div>
+            <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} />
+          </div>
+        )}
       </div>
     );
   }
