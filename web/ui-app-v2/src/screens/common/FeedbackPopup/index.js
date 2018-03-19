@@ -21,7 +21,8 @@ const checkboxOptions = [
 ];
 
 const actions = [];
-const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit }) => {
+const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit, selected, onCheck }) => {
+  console.log("open");
   return (
     <div>
       <Dialog
@@ -43,6 +44,8 @@ const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit }) => {
                   labelStyle={{ letterSpacing: "0.6px" }}
                   options={checkboxOptions}
                   containerClassName={"feedback-checkbox-cont"}
+                  selected={selected}
+                  onCheck={onCheck}
                 />,
                 <TextArea key={"feedback-textarea"} hintText="Type your comments" underlineShow={true} hintStyle={{ letterSpacing: "0.7px" }} />,
                 <div key={"feedback-submit-button"} className="feedback-popup-button-cont">
@@ -66,6 +69,7 @@ const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit }) => {
               ]
         }
         handleClose={handleClose}
+        bodyStyle={{ padding: "0 12px 24px 12px", backgroundColor: "#ffffff" }}
       />
     </div>
   );
