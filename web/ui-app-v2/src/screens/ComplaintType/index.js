@@ -28,7 +28,7 @@ export default class ComplaintCategory extends Component {
         { id: 1, text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
         { id: 2, text: "Overflowing Garbage Bins", icon: { action: "custom", name: "overflowing-garbage" } },
         { id: 3, text: "Garbage Bin Absent", icon: { action: "custom", name: "garbage-bin-absent" } },
-        { id: 4, text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper" } },
+        { id: 4, text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
       ],
     },
     {
@@ -78,7 +78,7 @@ export default class ComplaintCategory extends Component {
       listItem.primaryText = result.text;
       if (result.hasOwnProperty("icon") && result.icon) {
         const { action, name, style } = result.icon;
-        listItem.leftIcon = <Icon style={style} action={action} name={name} color="#f89a3f" />;
+        listItem.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
       } else {
         listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
       }
@@ -88,7 +88,12 @@ export default class ComplaintCategory extends Component {
         listItem.nestedItems = result.nestedItems.map((nestedItem) => {
           const item = {};
           item.primaryText = nestedItem.text;
-          item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
+          if (nestedItem.hasOwnProperty("icon") && nestedItem.icon) {
+            const { action, name, style } = nestedItem.icon;
+            item.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
+          } else {
+            item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
+          }
           item.onClick = this.onComplaintTypeChosen.bind(null, item);
           return item;
         });
