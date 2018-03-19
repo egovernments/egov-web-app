@@ -25,7 +25,15 @@
   box-shadow: none;
 }
 
-.searchBoxStyles,
-.search-icon {
+.contactus-main-cont .searchBoxStyles,
+.contactus-main-cont .search-icon {
   display: none;
+}
+
+.contactus-main-cont .back-btn {
+  position: absolute !important;
+  top: 76px;
+  background: transparent;
+  margin-left: 15px;
+  z-index: 3;
 }
