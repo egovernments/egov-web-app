@@ -19,7 +19,7 @@ const Placeholder = ({ className, onFilePicked, inputProps }) => {
     <div className={`${className} upload-placeholder`}>
       <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
         <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
-          <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} />
+          <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} color={"#ffffff"} />
         </FilePicker>
       </FloatingActionButton>
       <Label label="UPLOAD" labelStyle={labelStyle} fontSize="12px" />
