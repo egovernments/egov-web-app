@@ -29,7 +29,6 @@ const inputBaseStyle = {
   fontSize: "16px",
   color: "#484848",
   letterSpacing: "0.7px",
-  fontWeight: 500,
 };
 
 const requiredStyle = {
