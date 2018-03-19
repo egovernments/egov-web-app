@@ -1,72 +1,31 @@
 .feedback-main-container {
   position: relative;
+  padding: 16px 16px 0 16px;
+  background: #ffffff;
+  height: calc(100vh - 120px);
 }
 
-.feedback-Card-container-1,
-.feedback-Card-container-2,
-.feedback-Card-container-3 {
-  background-color: #ffffff;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 1px 0 rgba(0, 0, 0, 0.12);
-}
-
-.feedback-lastCard-container {
-  margin-bottom: 140px;
-}
-
-.feedback-infoCard-container {
-  padding: 16px;
-}
-
-.feedback-firstCard-heading,
-.feedback-firstCard-subheading {
-  line-height: 1;
-  letter-spacing: 0.3px;
-}
-
-.feedback-firstCard-top {
-  text-align: center;
-}
-
-.feedback-firstCard-bottom {
-}
-
-.feedback-buttongroup-cont {
-  padding-top: 16px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.feedback-buttongroup-cont > button {
-  min-width: 0px !important;
-}
-
-.feedback-buttongroup-cont button:last-child {
-  margin: 0 !important;
-}
-
-.feedback-button-cont {
-  padding: 0 10px;
+.feedback-popup-button-cont {
   position: fixed;
   width: 100%;
-  bottom: 65px;
+  bottom: 71px;
+  left: 0;
+  padding: 0 16px;
 }
 
-.feedback-textarea-label {
-  letter-spacing: 0.3px;
+.feedback-submitted-main-cont {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ***************** Media Query Start ***************** */
-
-@media only screen and (max-width: 360px) {
-  .feedback-buttongroup-cont button {
-    padding: 0 10px !important;
-  }
-
-  .feedback-buttongroup-cont span {
-    font-size: 13px !important;
-  }
+.feedback-submitted-icon-cont {
+  margin-bottom: 21px;
 }
 
-/* ***************** Media Query End ***************** */
+.feedback-thankyou-text .label-text {
+  letter-spacing: 0.7px;
+}

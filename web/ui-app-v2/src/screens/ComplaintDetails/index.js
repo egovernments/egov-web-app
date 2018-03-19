@@ -41,32 +41,6 @@ class ComplaintDetails extends Component {
       ],
       location: "Sector 32, 1 main, Amritsar",
     },
-    feedbackOpen: false,
-    submitted: false,
-    value: [],
-  };
-
-  handleFeedbackOpen = () => {
-    this.setState({ feedbackOpen: true });
-  };
-
-  handleFeedbackClose = () => {
-    this.setState({ feedbackOpen: false });
-    this.setState({ submitted: false });
-  };
-
-  handleFeedbackSubmit = () => {
-    this.setState({ submitted: true });
-  };
-
-  onCheck = (value) => {
-    let valueArray = this.state.value.slice(0);
-    if (valueArray.indexOf(value) > -1) {
-      valueArray.splice(valueArray.indexOf(value), 1);
-    } else {
-      valueArray.push(value);
-    }
-    this.setState({ value: valueArray });
   };
 
   componentDidMount() {
@@ -105,14 +79,6 @@ class ComplaintDetails extends Component {
         <Details {...details} />
         <ComplaintTimeLine status={status.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} />
         <Comments comments={comments} />
-        <FeedbackPopup
-          open={feedbackOpen}
-          submitted={submitted}
-          selected={value}
-          handleClose={this.handleFeedbackClose}
-          onSubmit={this.handleFeedbackSubmit}
-          onCheck={this.onCheck}
-        />
       </Screen>
     );
   }

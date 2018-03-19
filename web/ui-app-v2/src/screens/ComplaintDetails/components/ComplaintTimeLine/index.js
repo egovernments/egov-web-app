@@ -128,7 +128,12 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             label={resolveFeedback || "Sweepers will clean this area on mondays & thursdays"}
           />
           <div className="rainmaker-displayInline">
-            <div className="complaint-details-timline-button" onClick={handleFeedbackOpen}>
+            <div
+              className="complaint-details-timline-button"
+              onClick={(e) => {
+                history.push("/feedback");
+              }}
+            >
               RATE
             </div>
             <div
