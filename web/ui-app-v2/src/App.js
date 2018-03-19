@@ -98,7 +98,7 @@ class App extends Component {
   }
 
   render() {
-    const { Component, hideBottomNavigation, hideAppBar, history, ...rest } = this.props;
+    const { Component, hideBottomNavigation, hideAppBar, ...rest } = this.props;
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
@@ -107,7 +107,7 @@ class App extends Component {
         <HeaderWithDrawer
           {..._appBarProps()}
           className={hideAppBar ? "hide" : ""}
-          history={history}
+          history={rest.history}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
         />
