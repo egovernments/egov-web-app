@@ -22,7 +22,7 @@ class AddComplaints extends Component {
   };
 
   navigateToComplaintType = () => {
-    this.props.history.push("/complaint-category");
+    this.props.history.push("/complaint-type");
   };
 
   render() {

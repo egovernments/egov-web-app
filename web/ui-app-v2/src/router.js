@@ -9,7 +9,7 @@ import Profile from "./screens/profile";
 import TrackLocation from "./screens/common/TrackLocation";
 import Feedback from "./screens/Feedback";
 import ReOpenComplaint from "./screens/ReOpenComplaint";
-import ComplaintCategory from "./screens/ComplaintCategory";
+import ComplaintType from "./screens/ComplaintType";
 import ContactUs from "./screens/ContactUs";
 import AddComplaint from "./screens/AddComplaint";
 // user related screens
@@ -31,12 +31,12 @@ const Main = () => {
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details/:status?" component={ComplaintDetails} />
-        <PrivateRoute exact path="/map" component={TrackLocation} />
+        <PrivateRoute exact path="/map" hideAppBar={true} component={TrackLocation} />
         <PrivateRoute exact path="/complaint-submitted" component={ComplaintSubmited} />
-        <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute exact path="/profile" hideBottomNavigation={true} component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact path="/reopen-complaint" component={ReOpenComplaint} />
-        <PrivateRoute exact hideBottomNavigation={true} path="/complaint-category" component={ComplaintCategory} />
+        <PrivateRoute exact hideBottomNavigation={true} path="/complaint-type" component={ComplaintType} />
         <PrivateRoute exact path="/how-it-works" component={HowItWorks} />
         <PrivateRoute exact hideBottomNavigation={true} path="/add-complaint" component={AddComplaint} />
       </Switch>
