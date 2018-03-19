@@ -270,7 +270,7 @@ class ComplaintTimeLine extends Component {
               <div className="complaintTimeLineContainer">
                 <TimeLine
                   stepperProps={{
-                    orientation: "vertical",
+                    orientation: "vertical"
                   }}
                   steps={steps}
                 />

@@ -37,7 +37,9 @@ const HowItWorks = (props) => {
         </div>
       ),
       labelProps: {
-        icon: <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />,
+        icon: <div><Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />
+          <Icon action="navigation" name="arrow-drop-down" color="#f5a623" style={{width:"25px",marginLeft: "-32px",marginBottom: "-60px"}}/>
+        </div>,
       },
     },
     {
@@ -58,7 +60,9 @@ const HowItWorks = (props) => {
       ),
       // labelChildren:"Connect to Concerned Officer",
       labelProps: {
-        icon: <Icon action="social" name="person" style={statusCommonIconStyle} color={"#f5a623"} />,
+        icon: <div><Icon action="social" name="person" style={statusCommonIconStyle} color={"#f5a623"} />
+          <Icon action="navigation" name="arrow-drop-down" color="#f5a623" style={{width:"25px",marginLeft: "-32px",marginBottom: "-60px"}}/>
+        </div>,
       },
     },
     {
@@ -78,7 +82,9 @@ const HowItWorks = (props) => {
         </div>
       ),
       labelProps: {
-        icon: <Icon action="action" name="timeline" style={statusCommonIconStyle} color={"#f5a623"} />,
+        icon: <div><Icon action="action" name="timeline" style={statusCommonIconStyle} color={"#f5a623"} />
+          <Icon action="navigation" name="arrow-drop-down" color="#f5a623" style={{width:"25px",marginLeft: "-32px",marginBottom: "-60px"}}/>
+        </div>,
       },
     },
     {
@@ -98,7 +104,8 @@ const HowItWorks = (props) => {
         </div>
       ),
       labelProps: {
-        icon: <Icon action="action" name="done" style={statusCommonIconStyle} color={"#f5a623"} />,
+        icon: <div><Icon action="action" name="done" style={statusCommonIconStyle} color={"#f5a623"} />
+        </div>,
       },
     },
   ];
@@ -121,7 +128,7 @@ const HowItWorks = (props) => {
 
             <TimeLine
               stepperProps={{
-                orientation: "vertical",
+                orientation: "vertical"
               }}
               steps={steps}
             />
