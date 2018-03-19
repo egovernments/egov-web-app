@@ -49,7 +49,7 @@ class ReOpenComplaint extends Component {
     this.setState({ valueSelected: value });
   };
   handleComplaintSubmit = () => {
-    //console.log("submitted");
+    this.props.history.push("/complaint-submitted");
   };
   handleCommentChange = () => {
     //console.log("changed");
@@ -57,6 +57,7 @@ class ReOpenComplaint extends Component {
 
   render() {
     const { valueSelected } = this.state;
+    const { handleComplaintSubmit } = this;
 
     return (
       <Screen className="reopencomplaint-field">
@@ -72,7 +73,7 @@ class ReOpenComplaint extends Component {
             selectedLabelStyle={styles.selectedLabelStyle}
           />
         </div>
-      <div className="reopencomplaint-upload-photo">
+        <div className="reopencomplaint-upload-photo">
           <ImageUpload />
         </div>
 
@@ -89,7 +90,7 @@ class ReOpenComplaint extends Component {
           />
         </div>
         <div className="reopencomplaint-button">
-          <Button id="reopencomplaint-submit-action" primary={true} label="SUBMIT" fullWidth={true} onClick={this.handleComplaintSubmit} />
+          <Button id="reopencomplaint-submit-action" primary={true} label="SUBMIT" fullWidth={true} onClick={handleComplaintSubmit} />
         </div>
       </Screen>
     );

@@ -29,7 +29,7 @@
 .pickBtn {
   width: 100%;
   position: fixed;
-  bottom: 56px;
+  bottom: 0px;
   height: 56px;
   padding: 9px 16px 0 16px;
   background-color: rgb(255, 255, 255, 0.63);
