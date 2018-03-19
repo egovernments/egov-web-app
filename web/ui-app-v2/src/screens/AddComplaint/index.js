@@ -4,13 +4,18 @@ import ImageUpload from "../common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
-import { Button } from "../../components";
+import mapPinIcon from "../../assets/Location_pin.svg";
+import { Button, MapLocation } from "../../components";
+
 import "./index.css";
+
+const latLng = { lat: 12.9199988, lng: 77.67078 };
 
 class AddComplaints extends Component {
   state = {
     landmark: "",
     locationDetails: "Sector 32, 1 main, Amritsar",
+    openMap: false,
   };
 
   handleLandmarkChange = (e, value) => {
@@ -30,6 +35,18 @@ class AddComplaints extends Component {
     this.props.history.push("/complaint-submitted");
   };
 
+  locationOnClick = () => {
+    this.setState({
+      openMap: true,
+    });
+  };
+
+  onCLickMapBackBtn = () => {
+    this.setState({
+      openMap: false,
+    });
+  };
+
   render() {
     const { navigateToComplaintType, submitComplaint } = this;
 
@@ -39,11 +56,27 @@ class AddComplaints extends Component {
         <div className="add-complaint-main-cont">
           <ImageUpload />
           <ComplaintTypeCard complaintType={complaintType} onClick={navigateToComplaintType} />
-          <LocationDetailsCard landmark={this.state.landmark} locationDetails={this.state.locationDetails} onChange={this.handleLandmarkChange} />
+          <LocationDetailsCard
+            landmark={this.state.landmark}
+            locationDetails={this.state.locationDetails}
+            onChange={this.handleLandmarkChange}
+            locationOnClick={this.locationOnClick}
+          />
           <AdditionalDetailsCard additionalDetails={this.state.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="add-complaint-button-cont">
             <Button onClick={submitComplaint} className="add-complaint-submit-button" label="SUBMIT COMPLAINT" fullWidth={true} primary={true} />
           </div>
+        </div>
+        <div className="add-complaint-Map">
+          {this.state.openMap && (
+            <MapLocation
+              currLoc={latLng}
+              styles={{ display: "none" }}
+              icon={mapPinIcon}
+              hideTerrainBtn={true}
+              onCLickMapBackBtn={this.onCLickMapBackBtn}
+            />
+          )}
         </div>
       </Screen>
     );
