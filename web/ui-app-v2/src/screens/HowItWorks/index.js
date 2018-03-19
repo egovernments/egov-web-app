@@ -1,6 +1,7 @@
 import React from "react";
 import Screen from "../common/Screen";
-import {Card,Label,TimeLine,Icon} from "../../components";
+import { Card, Label, TimeLine, Icon } from "../../components";
+import "./index.css";
 
 const timelineIconCommonStyle = {
   height: "38px",
@@ -17,23 +18,27 @@ const statusCommonIconStyle = {
   border: "solid 1px #f89a3f",
 };
 
-const HowItWorks =(props)=>{
+const HowItWorks = (props) => {
   let steps = [
     {
       props: {
-        active: true
+        active: true,
       },
       contentProps: {
         style: {
           marginTop: "-43px",
           marginLeft: "25px",
-          paddingBottom:"80px"
+          paddingBottom: "80px",
         },
       },
-      contentChildren: <div style={{marginLeft:"16px"}}><Label labelClassName="dark-color" label="Raise a Complaint"/></div>,
+      contentChildren: (
+        <div style={{ marginLeft: "16px" }}>
+          <Label labelClassName="dark-color" label="Raise a Complaint" />
+        </div>
+      ),
       labelProps: {
-        icon: <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />
-      }
+        icon: <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />,
+      },
     },
     {
       props: {
@@ -43,14 +48,18 @@ const HowItWorks =(props)=>{
         style: {
           marginTop: "-43px",
           marginLeft: "25px",
-          paddingBottom:"80px"
+          paddingBottom: "80px",
         },
       },
-      contentChildren: <div style={{marginLeft:"16px"}}><Label labelClassName="dark-color" label="Connect to Concerned Officer"/></div>,
+      contentChildren: (
+        <div style={{ marginLeft: "16px" }}>
+          <Label labelClassName="dark-color" label="Connect to Concerned Officer" />
+        </div>
+      ),
       // labelChildren:"Connect to Concerned Officer",
       labelProps: {
         icon: <Icon action="social" name="person" style={statusCommonIconStyle} color={"#f5a623"} />,
-      }
+      },
     },
     {
       props: {
@@ -60,13 +69,17 @@ const HowItWorks =(props)=>{
         style: {
           marginTop: "-43px",
           marginLeft: "25px",
-          paddingBottom:"80px"
+          paddingBottom: "80px",
         },
       },
-      contentChildren: <div style={{marginLeft:"16px"}}><Label labelClassName="dark-color" label="Track Status"/></div>,
+      contentChildren: (
+        <div style={{ marginLeft: "16px" }}>
+          <Label labelClassName="dark-color" label="Track Status" />
+        </div>
+      ),
       labelProps: {
         icon: <Icon action="action" name="timeline" style={statusCommonIconStyle} color={"#f5a623"} />,
-      }
+      },
     },
     {
       props: {
@@ -76,39 +89,47 @@ const HowItWorks =(props)=>{
         style: {
           marginTop: "-43px",
           marginLeft: "25px",
-          paddingBottom:"80px"
+          paddingBottom: "80px",
         },
       },
-      contentChildren: <div style={{marginLeft:"16px"}}><Label labelClassName="dark-color" label="Resolved"/></div>,
+      contentChildren: (
+        <div style={{ marginLeft: "16px" }}>
+          <Label labelClassName="dark-color" label="Resolved" />
+        </div>
+      ),
       labelProps: {
         icon: <Icon action="action" name="done" style={statusCommonIconStyle} color={"#f5a623"} />,
-      }
-    }
+      },
+    },
   ];
   return (
-    <Screen>
+    <div>
       <Card
+        className="howItWorks-main-card"
         textChildren={
           <div>
-              <Label labelClassName="dark-color" containerStyle={{marginBottom:"40px"}} label={`We have made connecting with us easier than
+            <Label
+              labelClassName="dark-color"
+              containerStyle={{ marginBottom: "40px" }}
+              label={`We have made connecting with us easier than
         ever before. Once you raise the complaint, we
         will assign it to the responsible officer. You can
         track the status of your complaint on our web-
         site under “ My Complaints “ till your complaint
-        is resolved.`}/>
+        is resolved.`}
+            />
 
-              <TimeLine
-                stepperProps={{
-                  orientation: "vertical",
-                }}
-                steps={steps}
-              />
+            <TimeLine
+              stepperProps={{
+                orientation: "vertical",
+              }}
+              steps={steps}
+            />
           </div>
         }
       />
-    </Screen>
-  )
-}
-
+    </div>
+  );
+};
 
 export default HowItWorks;
