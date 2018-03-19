@@ -58,7 +58,8 @@ class App extends Component {
   };
 
   _appBarProps = () => {
-    const windowName = window.location.pathname.slice(1);
+    const windowLocationParts = window.location.pathname.split("/");
+    const windowName = windowLocationParts[windowLocationParts.length - 1];
     const isHomeScreen = windowName.trim().length === 0 ? true : false;
 
     const style = { overflowX: "hidden", width: "initial" };
