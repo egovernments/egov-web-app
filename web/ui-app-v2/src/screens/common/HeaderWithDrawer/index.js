@@ -106,6 +106,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Home",
+        route: "/",
         leftIcon: <Icon action="action" name="home" />,
         style: {
           paddingBottom: "1px",
@@ -115,6 +116,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Profile",
+        route: "/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
           paddingBottom: "3px",
@@ -123,6 +125,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Language",
+        route: "/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",
@@ -135,6 +138,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Contact Us",
+        route: "/contact-us",
         leftIcon: <Icon action="communication" name="call" />,
         style: {
           paddingBottom: "8px",
@@ -143,6 +147,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "How it Works",
+        route: "/how-it-works",
         leftIcon: <Icon action="custom" name="help-circle" />,
         style: {
           paddingBottom: "2px",
@@ -151,6 +156,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Logout",
+        route: "/logout",
         leftIcon: <Icon action="action" name="power-settings-new" />,
         style: {
           borderBottom: "none",
@@ -165,11 +171,20 @@ class HeaderWithDrawer extends Component {
   };
 
   handleItem = (item, index) => {
-    if (item.primaryText === "Logout") {
-      this.props.onLeftIconButtonClick();
-      this.setState({
-        logoutPopupOpen: true,
-      });
+    let { route } = item;
+    this.props.onLeftIconButtonClick();
+
+    switch (route.slice(1)) {
+      case "logout":
+        this.setState({
+          logoutPopupOpen: true,
+        });
+        break;
+      case "language-selection":
+        break;
+      default:
+        this.props.history.push(route);
+        break;
     }
   };
   handleYes = () => {
