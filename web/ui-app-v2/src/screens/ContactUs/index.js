@@ -34,10 +34,6 @@ const twitterStyle = {
   background: "#55acee",
 };
 
-const searchBoxStyles = {
-  display: "none",
-};
-
 const location = { lat: 12.9199988, lng: 77.67078 };
 
 class ContactUs extends Component {
@@ -137,7 +133,7 @@ class ContactUs extends Component {
             </div>
           }
         />
-        {this.state.openMap && <MapLocation currLoc={location} styles={searchBoxStyles} icon={pinIcon} hideTerrainBtn={true} />}
+        {this.state.openMap && <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} />}
       </div>
     );
   }

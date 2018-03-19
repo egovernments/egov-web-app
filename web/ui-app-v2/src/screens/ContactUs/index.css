@@ -24,3 +24,8 @@
   border-radius: 0px;
   box-shadow: none;
 }
+
+.searchBoxStyles,
+.search-icon {
+  display: none;
+}
