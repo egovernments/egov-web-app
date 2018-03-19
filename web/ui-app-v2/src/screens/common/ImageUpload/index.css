@@ -21,7 +21,7 @@
 .upload-images-cont {
   display: flex;
   align-items: flex-start;
-  white-space: nowrap;
+  justify-content: space-evenly;
 }
 .upload-placeholder,
 .upload-image-cont {

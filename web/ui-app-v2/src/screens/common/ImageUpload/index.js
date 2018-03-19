@@ -14,12 +14,12 @@ const labelStyle = {
   lineHeight: 1,
 };
 
-const Placeholder = ({ className, onFilePicked, inputProps }) => {
+const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
   return (
-    <div className={`${className} upload-placeholder`}>
+    <div className={`${className} upload-placeholder`} style={hide ? { visibility: "hidden" } : {}}>
       <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
         <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
-          <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} />
+          <Icon name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} color={"#ffffff"} />
         </FilePicker>
       </FloatingActionButton>
       <Label label="UPLOAD" labelStyle={labelStyle} fontSize="12px" />
@@ -36,7 +36,7 @@ class ImageUpload extends Component {
   fillPlaceholder = (images, onFilePicked, inputProps) => {
     const placeholders = [];
     for (let i = 0; i < 3 - images.length; i++) {
-      placeholders.push(<Placeholder key={i} onFilePicked={onFilePicked} />);
+      placeholders.push(<Placeholder key={i} onFilePicked={onFilePicked} hide={i === 1 ? true : false} />);
     }
     return placeholders;
   };

@@ -9,10 +9,14 @@
 
 .profileBtn {
   height: 48px;
-  position: fixed;
-  bottom: 85px;
   padding: 0 16px 0 16px;
   box-shadow: none !important;
+}
+
+.profileBtnWrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 24px;
 }
 
 .profileContainer {
