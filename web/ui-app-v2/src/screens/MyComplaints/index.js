@@ -32,27 +32,27 @@ class MyComplaints extends Component {
         ],
       },
       {
-        header: "Potholes on the road",
+        header: "Garbage",
         date: "18-Mar-18",
         status: "CLOSED",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
         images: [
           {
-            source: Potholes_1,
+            source: Garbage_1,
           },
           {
-            source: Potholes_2,
+            source: Garbage_2,
           },
           {
-            source: Potholes_3,
+            source: Garbage_3,
           },
         ],
       },
       {
         header: "Potholes on the road",
         date: "18-Mar-18",
-        status: "OPEN",
+        status: "REJECTED",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
         images: [
@@ -84,25 +84,7 @@ class MyComplaints extends Component {
             source: Garbage_3,
           },
         ],
-      },
-      {
-        header: "Streetlight not working",
-        date: "18-Mar-18",
-        status: "OPEN",
-        assignee: "Dharmendra Pal",
-        complaintNo: "ARN 180311-05",
-        images: [
-          {
-            source: Potholes_1,
-          },
-          {
-            source: Potholes_2,
-          },
-          {
-            source: Potholes_3,
-          },
-        ],
-      },
+      }
     ],
     source: "",
   };
