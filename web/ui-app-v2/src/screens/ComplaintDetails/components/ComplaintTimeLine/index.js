@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, TimeLine, Label, Icon, Image } from "../../../../components";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import garbageOne from "../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
@@ -46,7 +46,7 @@ const StatusIcon = ({ status }) => {
   }
 };
 
-const StatusContent = ({ status, currentStatus, content,history }) => {
+const StatusContent = ({ status, currentStatus, content, history, handleFeedbackOpen }) => {
   var { date, name, designation, department, resolveImage, resolveFeedback } = content;
   switch (status) {
     case "SUBMITTED":
@@ -102,7 +102,7 @@ const StatusContent = ({ status, currentStatus, content,history }) => {
           <div
             className="complaint-details-timline-button"
             onClick={(e) => {
-              history.push("/reopen-complaint")
+              history.push("/reopen-complaint");
             }}
           >
             RE-OPEN
@@ -128,18 +128,13 @@ const StatusContent = ({ status, currentStatus, content,history }) => {
             label={resolveFeedback || "Sweepers will clean this area on mondays & thursdays"}
           />
           <div className="rainmaker-displayInline">
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                history.push("/feedback")
-              }}
-            >
+            <div className="complaint-details-timline-button" onClick={handleFeedbackOpen}>
               RATE
             </div>
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/reopen-complaint")
+                history.push("/reopen-complaint");
               }}
             >
               RE-OPEN
@@ -152,7 +147,7 @@ const StatusContent = ({ status, currentStatus, content,history }) => {
 
 class ComplaintTimeLine extends Component {
   render() {
-    let { status,history } = this.props;
+    let { status, history, handleFeedbackOpen } = this.props;
     let steps = [
       {
         props: {
@@ -166,7 +161,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="RESOLVED" content={{}} history={history}/>,
+        contentChildren: <StatusContent status="RESOLVED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} />,
       },
       {
         props: {
@@ -180,7 +175,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="REASSIGNED" content={{}} />,
+        contentChildren: <StatusContent status="REASSIGNED" content={{}} handleFeedbackOpen={handleFeedbackOpen} />,
       },
       {
         props: {
@@ -194,7 +189,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="ASSIGNED" content={{}} />,
+        contentChildren: <StatusContent status="ASSIGNED" content={{}} handleFeedbackOpen={handleFeedbackOpen} />,
       },
       {
         props: {
@@ -208,7 +203,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="SUBMITTED" content={{}} />,
+        contentChildren: <StatusContent status="SUBMITTED" content={{}} handleFeedbackOpen={handleFeedbackOpen} />,
       },
     ];
     if (status === "Submitted") {
@@ -225,7 +220,7 @@ class ComplaintTimeLine extends Component {
               marginTop: "-50px",
             },
           },
-          contentChildren: <StatusContent currentStatus={status} status="SUBMITTED" content={{}} />,
+          contentChildren: <StatusContent currentStatus={status} status="SUBMITTED" content={{}} handleFeedbackOpen={handleFeedbackOpen} />,
         },
       ];
     } else if (status === "Rejected") {
@@ -242,7 +237,7 @@ class ComplaintTimeLine extends Component {
               marginTop: "-50px",
             },
           },
-          contentChildren: <StatusContent status="REJECTED" content={{}} history={history} />,
+          contentChildren: <StatusContent status="REJECTED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} />,
         },
         {
           props: {
@@ -256,7 +251,7 @@ class ComplaintTimeLine extends Component {
               marginTop: "-50px",
             },
           },
-          contentChildren: <StatusContent status="SUBMITTED" content={{}} />,
+          contentChildren: <StatusContent status="SUBMITTED" content={{}} handleFeedbackOpen={handleFeedbackOpen} />,
         },
       ];
     }

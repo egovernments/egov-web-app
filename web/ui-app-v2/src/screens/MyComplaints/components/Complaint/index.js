@@ -3,7 +3,7 @@ import { Image, Card, Icon, Button } from "../../../../components";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 
-const status={"OPEN":"filed","CLOSED":"resolved","REJECTED":"rejected"}
+const status = { OPEN: "filed", CLOSED: "resolved", REJECTED: "rejected" };
 
 const imageStyles = {
   minHeight: "87px",
@@ -26,6 +26,12 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = `Complaint resolved. Please rate`;
       break;
+    case "REJECTED":
+      statusObj.style = {
+        color: "#5385a6",
+      };
+      statusObj.message = `Complaint has been rejected`;
+      break;
     default:
       statusObj.style = {
         color: "#484848",
@@ -34,7 +40,6 @@ const getStatusAndChangeColor = (status, assignee) => {
   }
   return statusObj;
 };
-
 
 const Complaint = ({ index, item, history, onClick }) => {
   return (
@@ -87,12 +92,12 @@ const Complaint = ({ index, item, history, onClick }) => {
                   padding: "0 16px",
                   letterSpacing: "0.6px",
                   display: "inline-block",
-                  height: "14px",
+                  height: "35px",
                   fontSize: "12px",
-                  lineHeight: "14px",
+                  lineHeight: "35px",
                 }}
-                onClick={(e)=>{
-                  history.push(`/complaint-details?status=${status[item.status]}`)
+                onClick={(e) => {
+                  history.push(`/complaint-details?status=${status[item.status]}`);
                 }}
               />
             </div>
