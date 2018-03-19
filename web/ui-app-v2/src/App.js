@@ -96,13 +96,13 @@ class App extends Component {
   }
 
   render() {
-    const { Component, hideBottomNavigation, ...rest } = this.props;
+    const { Component, hideBottomNavigation, hideAppBar, ...rest } = this.props;
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
     return (
       <div>
-        <HeaderWithDrawer {..._appBarProps()} onUpdateMenuStatus={_updateMenuState} toggleMenu={toggleMenu} />
+        <HeaderWithDrawer {..._appBarProps()} className={hideAppBar ? "hide" : ""} onUpdateMenuStatus={_updateMenuState} toggleMenu={toggleMenu} />
         <Component {...rest} />
         <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
