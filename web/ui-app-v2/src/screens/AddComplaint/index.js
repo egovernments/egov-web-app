@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Screen from "../common/Screen";
 import ImageUpload from "../common/ImageUpload";
+import TrackLocation from "../common/TrackLocation";
 import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import mapPinIcon from "../../assets/Location_pin.svg";
-import { Button, MapLocation } from "../../components";
+import { Button } from "../../components";
 
 import "./index.css";
 
@@ -36,10 +37,10 @@ class AddComplaints extends Component {
   };
 
   locationOnClick = () => {
-    this.setState({
-      openMap: true,
-    });
+    this.props.history.push("/map");
   };
+
+  openMapPage = () => {};
 
   onCLickMapBackBtn = () => {
     this.setState({
@@ -67,17 +68,8 @@ class AddComplaints extends Component {
             <Button onClick={submitComplaint} className="add-complaint-submit-button" label="SUBMIT COMPLAINT" fullWidth={true} primary={true} />
           </div>
         </div>
-        <div className="add-complaint-Map">
-          {this.state.openMap && (
-            <MapLocation
-              currLoc={latLng}
-              styles={{ display: "none" }}
-              icon={mapPinIcon}
-              hideTerrainBtn={true}
-              onCLickMapBackBtn={this.onCLickMapBackBtn}
-            />
-          )}
-        </div>
+        {/* <div className="add-complaint-Map">{this.state.openMap && <TrackLocation onCLickMapBackBtn={this.onCLickMapBackBtn} />}</div> */}
+        {/* <div className="add-complaint-Map">{this.openMapPage()}</div> */}
       </Screen>
     );
   }
