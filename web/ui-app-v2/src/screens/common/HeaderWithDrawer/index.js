@@ -171,6 +171,7 @@ class HeaderWithDrawer extends Component {
   };
 
   handleItem = (item, index) => {
+
     let { route } = item;
     this.props.onLeftIconButtonClick();
 
@@ -185,6 +186,7 @@ class HeaderWithDrawer extends Component {
       default:
         this.props.history.push(route);
         break;
+
     }
   };
   handleYes = () => {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import RadioButton from "../../components/RadioButton";
+import { TextArea, Label, Button, RadioButton } from "../../components";
 import ImageUpload from "../common/ImageUpload";
-import { TextArea, Label, Button } from "../../components";
 import Screen from "../common/Screen";
 import "./index.css";
 
@@ -73,7 +72,10 @@ class ReOpenComplaint extends Component {
             selectedLabelStyle={styles.selectedLabelStyle}
           />
         </div>
-        <ImageUpload />
+      <div className="reopencomplaint-upload-photo">
+          <ImageUpload />
+        </div>
+
         <div className="reopencomplaint-textArea">
           <TextArea
             id="reopencomplaint-comment-field"

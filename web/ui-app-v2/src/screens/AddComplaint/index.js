@@ -25,12 +25,14 @@ class AddComplaints extends Component {
     this.props.history.push("/complaint-type");
   };
 
+
   submitComplaint = () => {
     this.props.history.push("/complaint-submitted");
   };
 
   render() {
     const { navigateToComplaintType, submitComplaint } = this;
+
     const { complaintType } = this.props;
     return (
       <Screen>

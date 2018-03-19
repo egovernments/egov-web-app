@@ -29,6 +29,7 @@ import Icon from "./Icon";
 import InfoTable from "./InfoTable";
 import ImageModal from "./ImageModal";
 import UploadDrawer from "./UploadDrawer";
+import RadioButton from "./RadioButton";
 
 export {
   Label,
@@ -62,4 +63,5 @@ export {
   InfoTable,
   ImageModal,
   UploadDrawer,
+  RadioButton,
 };

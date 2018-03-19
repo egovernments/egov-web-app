@@ -21,6 +21,7 @@ const options = [
     label: "Payments",
     icon: <Icon style={iconStyle} action="custom" name="rupee" />,
     route: "",
+
   },
   {
     label: "Complaints",
@@ -89,6 +90,36 @@ class App extends Component {
     return { style, title, iconElementLeft, onLeftIconButtonClick };
   };
 
+  _appBarProps = () => {
+    const windowLocationParts = window.location.pathname.split("/");
+    const windowName = windowLocationParts[windowLocationParts.length - 1];
+    const isHomeScreen = windowName.trim().length === 0 ? true : false;
+
+    const style = { overflowX: "hidden", width: "initial" };
+    if (windowName.endsWith("complaint-type")) {
+      style.boxShadow = "none";
+    }
+
+    const title = isHomeScreen
+      ? "Home"
+      : windowName
+          .split("-")
+          .map((element) => {
+            return element[0].toUpperCase() + element.slice(1);
+          })
+          .join(" ");
+
+    const iconElementLeft = isHomeScreen ? null : (
+      <IconButton>
+        <Icon action="navigation" name="arrow-back" />
+      </IconButton>
+    );
+
+    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
+
+    return { style, title, iconElementLeft, onLeftIconButtonClick };
+  };
+
   componentWillReceiveProps(nextProps) {
     const { route } = nextProps;
 
@@ -104,6 +135,7 @@ class App extends Component {
 
     return (
       <div>
+
         <HeaderWithDrawer
           {..._appBarProps()}
           className={hideAppBar ? "hide" : ""}
@@ -111,6 +143,7 @@ class App extends Component {
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
         />
+
         <Component {...rest} />
         <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
