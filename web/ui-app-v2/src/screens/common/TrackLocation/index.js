@@ -24,6 +24,7 @@ class TrackLocation extends Component {
       showMyAddress: false,
       currLoc: { lat: 12.9715987, lng: 77.5945699998 },
       showMyLoc: false,
+      pickedLoc: {},
     };
   }
 
@@ -57,14 +58,30 @@ class TrackLocation extends Component {
       );
     }
   };
-  setPickedLocation(lati, long, index) {
+
+  setPickedLocation = (lati, long, index) => {
     if (_.isUndefined(index)) index = 0;
     console.log(lati, long, index);
-  }
-  onClickPick() {
+    this.convertToAddress(lati, long);
+  };
+
+  convertToAddress = (lati, long) => {
+    var geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ location: { lat: lati, lng: long } }, function(results, status) {
+      if (status === "OK") {
+        if (results[0]) {
+          console.log(results[0].formatted_address);
+        }
+      }
+    });
+    //call parent function to pass the address
+  };
+
+  onClickPick = () => {
     console.log("picked your location");
     window.history.back();
-  }
+  };
+
   onCLickMapBackBtn = () => {
     // Redirect back from where you came.
     window.history.back();
