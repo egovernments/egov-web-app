@@ -112,3 +112,10 @@ body h4 {
   margin-top: 12px;
   margin-bottom: 12px;
 }
+
+/*  override body backkground */
+body.profile,
+body.contact-us,
+body.complaint-submitted {
+  background: #ffffff !important;
+}

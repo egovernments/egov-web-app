@@ -1,7 +1,6 @@
 .complaint-submitted-card {
   text-align: center;
   background-color: #ffffff;
-  padding: 130px 8px 200px 8px !important;
 }
 .complaint-submitted-boldlabel {
   padding-top: 20px;
@@ -19,4 +18,9 @@
   width: 100%;
   bottom: 16px;
   padding-right: 16px;
+}
+
+.complaint-submitted-card {
+  position: absolute !important;
+  top: 30%;
 }
