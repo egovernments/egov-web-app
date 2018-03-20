@@ -28,6 +28,7 @@ export default class CityPickerDialog extends Component {
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
       const mappedResult = {};
+      mappedResult.key = result.key;
       mappedResult.primaryText = result.text;
       return mappedResult;
     });
@@ -42,13 +43,18 @@ export default class CityPickerDialog extends Component {
   };
 
   onItemClick = (item, index) => {
-    const city = item.primaryText;
-    this.setState({ city }, () => {
-      this.onClose();
-    });
+    const { primaryText: city, key } = item;
+    if (key) {
+      this.setState({ city }, () => {
+        this.onClose();
+      });
+    }
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {
+    if (results.length === 0) {
+      results.push({ key: "", text: "No City Found" });
+    }
     this.setState({ results, searchTerm });
   };
 
@@ -80,6 +86,7 @@ export default class CityPickerDialog extends Component {
           title="Choose City"
           modal={false}
           open={open}
+          autoScrollBodyContent={true}
           onRequestClose={onClose}
           autoScrollBodyContent={true}
         >

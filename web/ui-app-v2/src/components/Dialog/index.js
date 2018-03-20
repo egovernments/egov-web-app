@@ -36,6 +36,7 @@ const DialogUI = ({
   actions,
   contentStyle = {},
   open,
+  autoScrollBodyContent = false,
   handleClose,
 }) => {
   return (
@@ -49,6 +50,7 @@ const DialogUI = ({
         </div>,
         ...children,
       ]}
+      autoScrollBodyContent={autoScrollBodyContent}
       overlayStyle={{ ...defaultOverlayStyle, ...overlayStyle }}
       actionsContainerStyle={{ ...defaultActionsContainerStyle, ...actionsContainerStyle }}
       contentStyle={{ ...defaultContentStyle, ...contentStyle }}
@@ -68,6 +70,7 @@ DialogUI.propTypes = {
   handleClose: PropTypes.func,
   overlayStyle: PropTypes.object,
   actionsContainerStyle: PropTypes.object,
+  autoScrollBodyContent: PropTypes.bool,
   titleStyle: PropTypes.object,
   contentStyle: PropTypes.object,
   bodyStyle: PropTypes.object,
