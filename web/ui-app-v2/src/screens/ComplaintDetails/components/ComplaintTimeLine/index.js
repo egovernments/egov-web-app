@@ -28,8 +28,8 @@ const statusResolvedIconStyle = {
 
 const callIconStyle = {
   marginRight: "7px",
-  height: "9px",
-  width: "9px",
+  height: "12px",
+  width: "12px",
   borderRadius: "50%",
 };
 
@@ -275,7 +275,7 @@ class ComplaintTimeLine extends Component {
               <div className="complaintTimeLineContainer">
                 <TimeLine
                   stepperProps={{
-                    orientation: "vertical"
+                    orientation: "vertical",
                   }}
                   steps={steps}
                 />

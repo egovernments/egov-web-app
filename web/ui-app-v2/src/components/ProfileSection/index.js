@@ -28,7 +28,7 @@ const ProfileSection = ({
             <Icon id="profile-upload-icon" action="image" name={addIconName} onClick={onClickAddPic} color={"#ffffff"} />
           </div>
         )}
-        {name && <Label className="name-Profile" label={name} style={nameStyle} />}
+        {name && <Label className="name-Profile" label={name} style={nameStyle} labelStyle={{ letterSpacing: 0.6 }} dark={true} bold={true} />}
         {location && <Label className="loc-Profile" labelPosition="after" label={location} style={locationStyle} />}
         {emailId && <Label className="loc-Profile" label={emailId} style={emailIdStyle} />}
       </div>
