@@ -84,3 +84,22 @@ export const getFileDownloadLink = (tenantId, fileStoreId) => {
   }
   return downloadLink;
 };
+
+export const getBodyClassFromPath = (path) => {
+  path = path.slice(1);
+  let bodyClass = "home";
+  if (path) {
+    bodyClass = path;
+  }
+  return bodyClass;
+};
+
+export const addBodyClass = (path) => {
+  const bodyClass = getBodyClassFromPath(path);
+  document.body.classList.add(bodyClass);
+};
+
+export const removeBodyClass = (path) => {
+  const bodyClass = getBodyClassFromPath(path);
+  document.body.classList.remove(bodyClass);
+};
