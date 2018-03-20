@@ -91,7 +91,9 @@ export const getBodyClassFromPath = (path) => {
   if (path) {
     bodyClass = path;
   }
-  return bodyClass;
+  const splitRegex = /(?!-)(\W+)/;
+  bodyClass = bodyClass.split(splitRegex);
+  return bodyClass[0];
 };
 
 export const addBodyClass = (path) => {
