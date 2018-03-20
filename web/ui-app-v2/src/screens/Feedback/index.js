@@ -38,7 +38,7 @@ class Feedback extends Component {
       <div className="feedback-main-container">
         {!submitted ? (
           <div className="feedback-form">
-            <RatingsComponent /> <CheckBoxGroup selected={value} onCheck={this.onCheck} /> <TextAreaComponent />,
+            <RatingsComponent /> <CheckBoxGroup selected={value} onCheck={this.onCheck} /> <TextAreaComponent />
           </div>
         ) : (
           <div className="feedback-submitted-main-cont">
