@@ -32,7 +32,7 @@ const Main = () => {
         <PrivateRoute exact path="/my-complaints" component={MyComplaints} />
         <PrivateRoute exact path="/complaint-details/:status?" component={ComplaintDetails} />
         <PrivateRoute exact path="/map" hideBottomNavigation={true} hideAppBar={true} component={TrackLocation} />
-        <PrivateRoute exact path="/complaint-submitted" component={ComplaintSubmited} />
+        <PrivateRoute exact path="/complaint-submitted" hideBottomNavigation={true} component={ComplaintSubmited} />
         <PrivateRoute exact path="/profile" hideBottomNavigation={true} component={Profile} />
         <PrivateRoute exact path="/feedback" component={Feedback} />
         <PrivateRoute exact hideBottomNavigation={true} path="/reopen-complaint" component={ReOpenComplaint} />
