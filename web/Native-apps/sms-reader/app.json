@@ -18,7 +18,7 @@
       "supportsTablet": true
     },
     "android":{
-      "permissions":["RECEIVE_SMS","READ_SMS","SEND_SMS","READ_PHONE_STATE"]
+      "permissions":["RECEIVE_SMS","READ_SMS","SEND_SMS","READ_PHONE_STATE","WRITE_SMS"]
     }
   }
 }

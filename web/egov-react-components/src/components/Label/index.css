@@ -1,0 +1,18 @@
+.label-container {
+  display: block;
+}
+
+.label-text,
+.label-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.label-text {
+  letter-spacing: 0.3px; 
+  font-weight: 400;
+}
+
+.label-icon > svg {
+  margin-right: 0px !important;
+}

@@ -1,0 +1,15 @@
+.add-complaint-main-cont {
+  margin-top: 16px;
+}
+
+.common-padding-for-new-complaint-card {
+  padding: 0 8px 8px 8px !important;
+}
+
+.add-complaint-button-cont {
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  padding: 0 8px;
+}

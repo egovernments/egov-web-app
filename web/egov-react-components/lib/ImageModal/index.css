@@ -1,0 +1,17 @@
+.modal {
+  width: 100%;
+  padding: 0 8px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1101;
+  background: rgba(1, 1, 1, 1);
+  align-items: center;
+  overflow: hidden;
+}
+
+.modal-close-cont {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

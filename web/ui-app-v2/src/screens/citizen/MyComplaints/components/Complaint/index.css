@@ -1,0 +1,96 @@
+.complaints-main-container {
+  position: relative;
+}
+
+.complaints-card-main-cont:last-child {
+  margin-bottom: 80px;
+}
+
+.complaint-card-wrapper {
+  padding: 0;
+}
+
+.complaint-track-button div {
+  display: flex;
+}
+
+.complaint-header,
+.complaint-status-text {
+  line-height: 1;
+  letter-spacing: 0.7px;
+}
+
+.complaint-header {
+  font-size: 16px;
+}
+
+.complaint-date {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+
+.complaint-date-cont,
+.complaint-status-cont,
+.complaint-image-cont,
+.complaint-header-cont {
+  padding-bottom: 16px;
+}
+
+.complaint-number-cont {
+  padding-bottom: 8px;
+}
+
+.complaint-number {
+  display: block;
+  line-height: 14px;
+  height: 14px;
+  font-size: 12px;
+}
+
+.complaint-header-cont {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 3px;
+}
+
+.complaint-date-cont {
+  display: flex;
+}
+
+.complaint-image-cont:last-child {
+  padding: 0;
+}
+
+.complaint-date-cont > svg {
+  color: #969696 !important;
+  fill: currentColor !important;
+  padding: 0 !important;
+  margin-right: 10px;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.complaint-image-cont {
+  white-space: nowrap;
+  overflow: none;
+  display: flex;
+}
+
+.complaint-image-wrapper {
+  display: inline-block;
+  margin-right: 14px;
+  width: 32%;
+}
+
+.complaint-image-wrapper:last-child {
+  margin: 0;
+}
+
+.complaint-track-button-cont {
+  text-align: right;
+}
+
+.complaint-track-button-cont i {
+  margin: 0 !important;
+}
