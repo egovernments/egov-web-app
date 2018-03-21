@@ -18,17 +18,6 @@ class Profile extends Component {
     };
   }
 
-  dropDownData = [
-    {
-      value: 1,
-      label: "Amritsar",
-    },
-    {
-      value: 2,
-      label: "Patiala",
-    },
-  ];
-
   /* Set/remove profile picture */
   setProfilePic = (url) => {
     if (url === "") url = img;
