@@ -1,31 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { LoadingIndicator } from "./components";
 import PropTypes from "prop-types";
 import { Redirect, Route } from "react-router-dom";
 import App from "./App";
 
-const auth = {
-  isAuthenticated: true, // hardcode it to true
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100); // fake async
-  },
+class PrivateRoute extends Component {
+  static propTypes = {
+    component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    authenticated: PropTypes.bool,
+    authenticating: PropTypes.bool,
+    authenticationFailed: PropTypes.bool,
+  };
+
+  render() {
+    const { component: Component, authenticating, authenticated, authenticationFailed, ...rest } = this.props;
+    return (
+      <Route
+        {...rest}
+        render={(props) =>
+          authenticated ? (
+            <App Component={Component} {...{ ...props, ...rest }} />
+          ) : authenticating ? (
+            <LoadingIndicator loading={true} />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+    );
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  const { authenticated, authenticating, authenticationFailed } = state.auth;
+  return { authenticated, authenticating, authenticationFailed };
 };
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => (auth.isAuthenticated === true ? <App Component={Component} {...{ ...props, ...rest }} /> : <Redirect to="/login" />)}
-    />
-  );
-};
-
-PrivateRoute.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-};
-
-export default PrivateRoute;
+export default connect(mapStateToProps, null)(PrivateRoute);
