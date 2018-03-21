@@ -9,7 +9,7 @@ const options = [
   {
     label: "Home",
     icon: <Icon action="action" name="home" />,
-    route: "/",
+    route: "/citizen",
   },
   {
     label: "Information",
@@ -24,7 +24,7 @@ const options = [
   {
     label: "Complaints",
     icon: <Icon action="alert" name="warning" />,
-    route: "/my-complaints",
+    route: "/citizen/my-complaints",
   },
 ];
 
@@ -68,15 +68,6 @@ class App extends Component {
       style.boxShadow = "none";
     }
 
-    const title = isHomeScreen
-      ? "Home"
-      : windowName
-          .split("-")
-          .map((element) => {
-            return element[0].toUpperCase() + element.slice(1);
-          })
-          .join(" ");
-
     const iconElementLeft = isHomeScreen ? null : (
       <IconButton>
         <Icon action="navigation" name="arrow-back" />
@@ -85,7 +76,7 @@ class App extends Component {
 
     const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
 
-    return { style, title, iconElementLeft, onLeftIconButtonClick };
+    return { style, iconElementLeft, onLeftIconButtonClick };
   };
 
   componentDidMount() {
@@ -113,6 +104,7 @@ class App extends Component {
           {..._appBarProps()}
           className={hideAppBar ? "hide" : ""}
           history={rest.history}
+          title={rest.title}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
         />

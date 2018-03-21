@@ -76,14 +76,11 @@ export const getDateFromEpoch = (epoch) => {
 };
 
 export const getBodyClassFromPath = (path) => {
-  path = path.slice(1);
-  let bodyClass = "home";
-  if (path) {
-    bodyClass = path;
-  }
-  const splitRegex = /(?!-)(\W+)/;
-  bodyClass = bodyClass.split(splitRegex);
-  return bodyClass[0];
+  let bodyClass = path
+    .split("/")
+    .filter((part) => part.trim().length > 0)
+    .join("-");
+  return bodyClass;
 };
 
 export const addBodyClass = (path) => {
