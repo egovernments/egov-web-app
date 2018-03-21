@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { UploadDrawer, ProfileSection, Button, TextField } from "../../components";
+import Screen from "../common/Screen";
 import CityPicker from "../common/CityPicker";
 import img from "../../assets/images/people.jpg";
 import "./index.css";
@@ -91,7 +92,7 @@ class Profile extends Component {
   render() {
     let { name, emailId } = this.state;
     return (
-      <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8" style={{ padding: "0px" }}>
+      <Screen>
         <div>
           <ProfileSection
             id="profile-photo"
@@ -141,7 +142,7 @@ class Profile extends Component {
             />
           )}
         </div>
-      </div>
+      </Screen>
     );
   }
 }
