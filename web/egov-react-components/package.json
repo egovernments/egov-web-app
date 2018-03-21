@@ -1,0 +1,39 @@
+{
+  "name": "ui-app-v2",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://egov-micro-dev.egovernments.org/app/v3",
+  "proxy": "http://egov-micro-dev.egovernments.org/",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "jsonpath": "^1.0.0",
+    "lodash": "^4.17.5",
+    "material-ui": "^0.20.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-google-maps": "^9.4.5",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "react-tap-event-plugin": "^3.0.2",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "webfontloader": "^1.6.28"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-knobs": "^3.3.13",
+    "@storybook/react": "^3.3.13",
+    "storybook-addon-material-ui": "^0.8.2"
+  }
+}
