@@ -1,86 +1,86 @@
-const privateWithHideBottomNavigation={
-  hideBottomNavigation:true,
-  isPrivate:true
-}
+const privateWithHideBottomNavigation = {
+  hideBottomNavigation: true,
+  isPrivate: true,
+};
 
-const routes=[
+const routes = [
   {
-    path:"/",
-    component:require("../screens/Home").default,
-    isPrivate:true
+    path: "/citizen",
+    component: require("../screens/citizen/Home").default,
+    isPrivate: true,
   },
   {
-    path:"/register",
-    component:require("../screens/User/Register").default
+    path: "/citizen/register",
+    component: require("../screens/citizen/User/Register").default,
   },
   {
-    path:"/login",
-    component:require("../screens/User/Login").default
+    path: "/citizen/login",
+    component: require("../screens/citizen/User/Login").default,
   },
   {
-    path:"/otp",
-    component:require("../screens/User/OTP").default
+    path: "/citizen/otp",
+    component: require("../screens/citizen/User/OTP").default,
   },
   {
-    path:"/language-selection",
-    component:require("../screens/User/LanguageSelection").default
+    path: "/citizen/language-selection",
+    component: require("../screens/citizen/User/LanguageSelection").default,
   },
   {
-    path:"/contact-us",
-    component:require("../screens/ContactUs").default,
-    ...privateWithHideBottomNavigation
-  },
-  {
-    path:"/my-complaints",
-    component:require("../screens/MyComplaints").default,
-    isPrivate:true
-  },
-  {
-    path:"/complaint-details/:status?",
-    component:require("../screens/ComplaintDetails").default,
-    isPrivate:true
-  },
-  {
-    path:"/map",
-    component:require("../screens/common/TrackLocation").default,
+    path: "/citizen/contact-us",
+    component: require("../screens/citizen/ContactUs").default,
     ...privateWithHideBottomNavigation,
-    hideAppBar:true,
   },
   {
-    path:"/complaint-submitted",
-    component:require("../screens/ComplaintSubmited").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/my-complaints",
+    component: require("../screens/citizen/MyComplaints").default,
+    isPrivate: true,
   },
   {
-    path:"/profile",
-    component:require("../screens/profile").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/complaint-details/:status?",
+    component: require("../screens/citizen/ComplaintDetails").default,
+    isPrivate: true,
   },
   {
-    path:"/feedback",
-    component:require("../screens/Feedback").default,
-    isPrivate:true
+    path: "/citizen/map",
+    component: require("../screens/common/TrackLocation").default,
+    ...privateWithHideBottomNavigation,
+    hideAppBar: true,
   },
   {
-    path:"/reopen-complaint",
-    component:require("../screens/ReOpenComplaint").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/complaint-submitted",
+    component: require("../screens/citizen/ComplaintSubmited").default,
+    ...privateWithHideBottomNavigation,
   },
   {
-    path:"/complaint-type",
-    component:require("../screens/ComplaintType").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/profile",
+    component: require("../screens/citizen/profile").default,
+    ...privateWithHideBottomNavigation,
   },
   {
-    path:"/how-it-works",
-    component:require("../screens/HowItWorks").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/feedback",
+    component: require("../screens/citizen/Feedback").default,
+    isPrivate: true,
   },
   {
-    path:"/add-complaint",
-    component:require("../screens/AddComplaint").default,
-    ...privateWithHideBottomNavigation
+    path: "/citizen/reopen-complaint",
+    component: require("../screens/citizen/ReOpenComplaint").default,
+    ...privateWithHideBottomNavigation,
   },
-]
+  {
+    path: "/citizen/complaint-type",
+    component: require("../screens/citizen/ComplaintType").default,
+    ...privateWithHideBottomNavigation,
+  },
+  {
+    path: "/citizen/how-it-works",
+    component: require("../screens/citizen/HowItWorks").default,
+    ...privateWithHideBottomNavigation,
+  },
+  {
+    path: "/citizen/add-complaint",
+    component: require("../screens/citizen/AddComplaint").default,
+    ...privateWithHideBottomNavigation,
+  },
+];
 
 export default routes;

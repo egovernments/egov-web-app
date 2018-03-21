@@ -1,0 +1,106 @@
+.stepLabelAlignment {
+  margin-left: -100px !important;
+  text-align: left;
+  margin-top: -18px !important;
+}
+
+
+.leftOverRide {
+  width:70% !important;
+  color: #484848 !important;
+}
+
+.rightOverRide {
+  width:30% !important;
+}
+
+.complaintTimeLineContainer {
+  margin-left: -4px;
+  margin-top: 24px;
+}
+
+.complaint-details-timline-button
+{
+  letter-spacing: 0.6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  width: 89px;
+  height: 36px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background-color: #00bbd3;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 3px;
+  /* border-radius: 2px !important;
+  border: solid 1px #e74c3c !important; */
+  margin-right: 16px;
+}
+
+.complaint-timeline-content-section {
+  margin-left: 25px;
+  /* border-bottom: 1px solid #e0e0e0; */
+  padding-bottom: 34px;
+  margin-top: -6px;
+}
+
+.complaint-timeline-content-section strong {
+  color: #484848
+}
+
+.complaint-timeline-content-section span {
+  color: #767676
+}
+
+/* @media screen and (min-width: 360px) and (max-width: 375px) {
+  .stepLabelAlignment {
+      margin-left: -80px;
+      text-align: left;
+  }
+  .leftOverRide {
+    width:80%;
+  }
+  .rightOverRide {
+    width:20%
+  }
+}
+
+@media screen and (min-width: 412px) and (max-width: 1200px) {
+  .stepLabelAlignment {
+      margin-left: -112px;
+      text-align: left;
+  }
+  .leftOverRide {
+    width:80%;
+  }
+  .rightOverRide {
+    width:20%
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 412px) {
+  .stepLabelAlignment {
+      margin-left: -90px;
+      text-align: left;
+  }
+  .leftOverRide {
+    width:80%;
+  }
+  .rightOverRide {
+    width:20%
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .stepLabelAlignment {
+      margin-left: -113px;
+      text-align: left;
+  }
+  .leftOverRide {
+    width:70%;
+  }
+  .rightOverRide {
+    width:30%
+  }
+} */
