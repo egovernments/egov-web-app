@@ -3,6 +3,14 @@ const privateWithHideBottomNavigation = {
   isPrivate: true,
 };
 
+const employeeRoutes = [
+  {
+    path: "/employee/all-complaints",
+    component: require("../screens/employee/AllComplaints").default,
+    ...privateWithHideBottomNavigation,
+  },
+];
+
 const routes = [
   {
     path: "/citizen",
@@ -81,6 +89,7 @@ const routes = [
     component: require("../screens/citizen/AddComplaint").default,
     ...privateWithHideBottomNavigation,
   },
+  ...employeeRoutes,
 ];
 
 export default routes;
