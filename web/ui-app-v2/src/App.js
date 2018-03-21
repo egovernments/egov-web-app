@@ -5,27 +5,25 @@ import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "./components";
 import IconButton from "material-ui/IconButton";
 
-const iconStyle = { height: "24px", padding: "0px" };
-
 const options = [
   {
     label: "Home",
-    icon: <Icon style={iconStyle} action="action" name="home" />,
+    icon: <Icon action="action" name="home" />,
     route: "/",
   },
   {
     label: "Information",
-    icon: <Icon style={iconStyle} action="action" name="info" />,
+    icon: <Icon action="action" name="info" />,
     route: "",
   },
   {
     label: "Payments",
-    icon: <Icon style={iconStyle} action="custom" name="rupee" />,
+    icon: <Icon action="custom" name="rupee" />,
     route: "",
   },
   {
     label: "Complaints",
-    icon: <Icon style={iconStyle} action="alert" name="warning" />,
+    icon: <Icon action="alert" name="warning" />,
     route: "/my-complaints",
   },
 ];
