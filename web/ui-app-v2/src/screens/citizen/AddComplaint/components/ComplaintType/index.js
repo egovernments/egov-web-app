@@ -11,6 +11,7 @@ const ComplaintTypeField = ({ onClick, complaintType }) => {
         textChildren={
           <div>
             <TextFieldIcon
+              id="addComplaint-complaint-type"
               onClick={onClick}
               value={complaintType}
               floatingLabelText="Complaint Type"
@@ -18,7 +19,6 @@ const ComplaintTypeField = ({ onClick, complaintType }) => {
               iconPosition="after"
               fullWidth={true}
               Icon={DownArrow}
-              id="complaint-type"
               name="complaint-type"
               isRequired={true}
             />

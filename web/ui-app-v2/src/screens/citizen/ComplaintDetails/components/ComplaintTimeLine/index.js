@@ -129,6 +129,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
           />
           <div className="rainmaker-displayInline">
             <div
+              id="complaint-details-rate-button"
               className="complaint-details-timline-button"
               onClick={(e) => {
                 history.push("/citizen/feedback");
@@ -137,6 +138,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
               RATE
             </div>
             <div
+              id="complaint-details-reopen-button"
               className="complaint-details-timline-button"
               onClick={(e) => {
                 history.push("/citizen/reopen-complaint");
@@ -263,6 +265,7 @@ class ComplaintTimeLine extends Component {
     return (
       <div>
         <Card
+          id="complaint-details-card-2"
           style={{
             paddingBottom: "0px",
           }}

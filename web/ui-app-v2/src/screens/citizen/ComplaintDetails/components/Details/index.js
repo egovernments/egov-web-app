@@ -18,6 +18,7 @@ class Details extends Component {
     return (
       <div>
         <Card
+          id={`complaint-details-card-1`}
           textChildren={
             <div>
               <div className="rainmaker-displayInline">

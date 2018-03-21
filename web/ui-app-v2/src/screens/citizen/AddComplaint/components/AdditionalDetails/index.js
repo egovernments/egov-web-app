@@ -10,12 +10,12 @@ const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
         textChildren={
           <div>
             <TextField
+              id="addComplaint-additional-details"
               value={additionalDetails}
               onChange={onChange}
               name="additional-details"
               isRequired={false}
               hintText="Enter Additional Details"
-              id="landmark-details"
               fullWidth={true}
               floatingLabelText="Additional Details"
             />

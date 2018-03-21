@@ -38,7 +38,7 @@ const itemsOne = [
           underlineShow={false}
           hintStyle={{ bottom: "8px" }}
         />
-        <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} />
+        <Icon id="complaint-details-send-icon" action="content" name="send" style={iconStyle} color={"#00bcd1"} />
       </div>
     ),
   },

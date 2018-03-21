@@ -64,7 +64,8 @@ class ReOpenComplaint extends Component {
         <div className="reopencomplaint-question">
           <Label label="Why do you want to Re-Open your Complaint?" labelStyle={styles.labelStyle} />
           <RadioButton
-            name="reopencomplaint-radio"
+            id="reopencomplaint-radio-button"
+            name="reopencomplaint-radio-button"
             valueSelected={valueSelected}
             options={this.options}
             handleChange={this.handleChange}

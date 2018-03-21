@@ -13,24 +13,24 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
             <div>
               <div onClick={locationOnClick}>
                 <TextFieldIcon
+                  id="addComplaint-location-details"
                   value={locationDetails}
                   floatingLabelText="Location"
                   hintText="Search Location"
                   iconPosition="after"
                   fullWidth={true}
                   Icon={TrackIcon}
-                  id="location-details"
                   name="location-details"
                   isRequired={true}
                 />
               </div>
               <TextField
+                id="addComplaint-landmark-details"
                 value={landmark}
                 onChange={onChange}
                 name="landmark-details"
                 isRequired={false}
                 hintText="Enter Landmark"
-                id="landmark-details"
                 fullWidth={true}
                 floatingLabelText="Landmark"
               />

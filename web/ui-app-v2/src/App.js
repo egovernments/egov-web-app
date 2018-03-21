@@ -70,7 +70,7 @@ class App extends Component {
 
     const iconElementLeft = isHomeScreen ? null : (
       <IconButton>
-        <Icon action="navigation" name="arrow-back" />
+        <Icon id="back-navigator" action="navigation" name="arrow-back" />
       </IconButton>
     );
 
