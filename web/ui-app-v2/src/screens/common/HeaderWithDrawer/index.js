@@ -105,7 +105,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Home",
-        route: "/",
+        route: "/citizen",
         leftIcon: <Icon action="action" name="home" />,
         style: {
           paddingBottom: "1px",
@@ -115,7 +115,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Profile",
-        route: "/profile",
+        route: "/citizen/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
           paddingBottom: "3px",
@@ -124,7 +124,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Language",
-        route: "/language-selection",
+        route: "/citizen/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",
@@ -137,7 +137,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Contact Us",
-        route: "/contact-us",
+        route: "/citizen/contact-us",
         leftIcon: <Icon action="communication" name="call" />,
         style: {
           paddingBottom: "8px",
@@ -146,7 +146,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "How it Works",
-        route: "/how-it-works",
+        route: "/citizen/how-it-works",
         leftIcon: <Icon action="custom" name="help-circle" />,
         style: {
           paddingBottom: "2px",

@@ -114,8 +114,8 @@ body h4 {
 }
 
 /*  override body backkground */
-body.profile,
-body.contact-us,
-body.complaint-submitted {
+body.citizen-profile,
+body.citizen-contact-us,
+body.citizen-complaint-submitted {
   background: #ffffff !important;
 }
