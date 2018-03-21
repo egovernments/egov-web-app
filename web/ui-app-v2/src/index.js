@@ -29,7 +29,7 @@ WebFont.load({
 
 // for hosting in subdirectories
 const urlParts = window.location.pathname.split("/");
-const basename = urlParts.slice(0, urlParts.length - 1).join("/");
+const basename = urlParts.slice(0, urlParts.length - 2).join("/");
 
 render(
   <Provider store={store}>

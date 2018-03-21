@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Card, TimeLine, Label, Icon, Image } from "../../../../components";
+import { Card, TimeLine, Label, Icon, Image } from "../../../../../components";
 import { withRouter } from "react-router-dom";
-import garbageOne from "../../../../assets/images/Garbage_3.jpg";
+import garbageOne from "../../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
 const timelineIconCommonStyle = {
@@ -102,7 +102,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
           <div
             className="complaint-details-timline-button"
             onClick={(e) => {
-              history.push("/reopen-complaint");
+              history.push("/citizen/reopen-complaint");
             }}
           >
             RE-OPEN
@@ -131,7 +131,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/feedback");
+                history.push("/citizen/feedback");
               }}
             >
               RATE
@@ -139,7 +139,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/reopen-complaint");
+                history.push("/citizen/reopen-complaint");
               }}
             >
               RE-OPEN

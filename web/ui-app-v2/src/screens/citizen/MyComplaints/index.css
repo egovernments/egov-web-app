@@ -1,0 +1,24 @@
+.home-page-content {
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-bottom: 70px;
+}
+
+.home-page-content-card-margin {
+  margin-top: 20px;
+}
+
+.floating-button-cont {
+  position: fixed;
+  right: 3%;
+  bottom: 65px;
+}
+
+.complaints-top-level-wrapper {
+  padding: 0 8px;
+}
+
+.no-complaints-message-cont {
+  padding: 180px 34px;
+  text-align: center;
+}

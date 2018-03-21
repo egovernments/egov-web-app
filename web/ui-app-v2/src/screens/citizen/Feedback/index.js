@@ -3,7 +3,7 @@ import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import "./index.css";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import { Button, Icon, Label } from "../../components";
+import { Button, Icon, Label } from "../../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { withRouter } from "react-router-dom";
 
@@ -27,7 +27,7 @@ class Feedback extends Component {
     if (this.state.submitted === false) {
       this.setState({ submitted: true });
     } else {
-      history.push("/complaint-details?status=resolved");
+      history.push("/citizen/complaint-details?status=resolved");
     }
   };
 
