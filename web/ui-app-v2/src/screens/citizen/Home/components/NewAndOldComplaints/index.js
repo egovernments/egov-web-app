@@ -17,6 +17,7 @@ const iconStyle = {
 const NewAndOldComplaints = ({ history }) => {
   return (
     <Card
+      id="home-complaint-card"
       style={cardStyle}
       textChildren={
         <div className="row newAndOldComplaints-content-section">

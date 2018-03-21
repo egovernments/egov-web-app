@@ -43,8 +43,9 @@ const getStatusAndChangeColor = (status, assignee) => {
 
 const Complaint = ({ index, item, history, onClick }) => {
   return (
-    <div id={"complaint-" + index} className="complaints-card-main-cont">
+    <div className="complaints-card-main-cont">
       <Card
+        id={"mycomplaint-complaint-card" + index}
         className="complaint-card"
         textChildren={
           <div className="complaint-card-wrapper">
@@ -80,6 +81,7 @@ const Complaint = ({ index, item, history, onClick }) => {
             </div>
             <div className="complaint-track-button-cont">
               <Button
+                id={`mycomplaint-track${index}`}
                 primary={true}
                 label={"TRACK"}
                 style={{

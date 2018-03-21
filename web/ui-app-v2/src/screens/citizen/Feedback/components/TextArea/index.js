@@ -4,7 +4,14 @@ import { TextArea } from "../../../../../components";
 
 const TextAreaComponent = () => {
   return (
-    <TextArea hintText="Type your comments" style={{ marginTop: "10px" }} underlineShow={true} hintStyle={{ letterSpacing: "0.7px" }} rowsMax={3} />
+    <TextArea
+      id="feedback-comments"
+      hintText="Type your comments"
+      style={{ marginTop: "10px" }}
+      underlineShow={true}
+      hintStyle={{ letterSpacing: "0.7px" }}
+      rowsMax={3}
+    />
   );
 };
 

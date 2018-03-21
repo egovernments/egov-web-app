@@ -19,6 +19,7 @@ const CheckboxGroup = ({ selected, onCheck }) => {
         containerClassName={"feedback-checkbox-cont"}
         selected={selected}
         onCheck={onCheck}
+        id="feedback-checkbox"
       />
     </div>
   );

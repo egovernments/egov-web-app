@@ -125,6 +125,7 @@ export default class ComplaintCategory extends Component {
     return (
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest
+          id="complainttype-search"
           containerStyle={{
             overflowX: "hidden",
             padding: "0px 16px 16px 16px",

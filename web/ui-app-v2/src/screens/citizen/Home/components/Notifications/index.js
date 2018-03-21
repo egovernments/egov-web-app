@@ -10,6 +10,7 @@ const Updates = ({ updates }) => {
       <Card
         style={{ margin: "8px 0px" }}
         key={index}
+        id={`home-notification${index}`}
         textChildren={
           <div className="update">
             <VerticalCenterWrapper

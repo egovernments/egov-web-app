@@ -22,10 +22,12 @@ const TextAreaUi = ({
   rowsMax,
   underlineStyle,
   underlineFocusStyle,
+  id,
 }) => {
   return (
     <TextField
       className={className}
+      id={id}
       fullWidth={true}
       multiLine={true}
       rows={rows}

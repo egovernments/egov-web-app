@@ -25,7 +25,7 @@ class ComplaintDetails extends Component {
             <Label label={`You can track the status of your complaint on this app anytime!`} />
           </div>
           <div className="complaintsubmit-button">
-            <Button id="complaint-submit-action" primary={true} label="CONTINUE" fullWidth={true} onClick={this.continueComplaintSubmit} />
+            <Button id="complaint-submitted-continue" primary={true} label="CONTINUE" fullWidth={true} onClick={this.continueComplaintSubmit} />
           </div>
         </Screen>
       </div>

@@ -178,6 +178,7 @@ class ReactStars extends Component {
   renderStars() {
     const { halfStar, stars, uniqueness, config } = this.state;
     const { color1, color2, size, char, half, edit } = config;
+    let { id } = this.props;
     return stars.map((star, i) => {
       let starClass = "";
       if (half && !halfStar.hidden && halfStar.at === i) {
@@ -193,6 +194,7 @@ class ReactStars extends Component {
           className={starClass}
           style={style}
           key={i}
+          id={id + i}
           data-index={i}
           data-forhalf={char}
           onMouseOver={this.mouseOver.bind(this)}
@@ -207,10 +209,10 @@ class ReactStars extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, id } = this.props;
 
     return (
-      <div className={className} style={parentStyles}>
+      <div className={className} style={parentStyles} id={id}>
         {this.state.config.half ? this.renderHalfStarStyleElement() : ""}
         {this.renderStars()}
       </div>

@@ -19,7 +19,14 @@ const inputProps = {
   multiple: false, //for selecting single or multiple files
 };
 const galleryIconBtn = (
-  <Icon className="gallery-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"image"} onClick={this.onGalleryClick} />
+  <Icon
+    className="gallery-upload-drawer"
+    id="uploadDrawerGallaryIcon"
+    style={iconStyle}
+    action="image"
+    name={"image"}
+    onClick={this.onGalleryClick}
+  />
 );
 
 class UploadDrawer extends Component {
@@ -48,7 +55,7 @@ class UploadDrawer extends Component {
               <div className="labelIconBox">
                 <Icon
                   className="camera-upload-drawer"
-                  id="uploadDrawerIcon"
+                  id="uploadDrawerCameraIcon"
                   style={iconStyle}
                   action="image"
                   name={"photo-camera"}
@@ -58,7 +65,7 @@ class UploadDrawer extends Component {
               </div>
             )}
             {this.props.videoCamIcon && (
-              <Icon className="video-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"photo-camera"} />
+              <Icon className="video-upload-drawer" id="uploadDrawerVideoCamIcon" style={iconStyle} action="image" name={"photo-camera"} />
             )}
             {this.props.galleryIcon && (
               <div className="labelIconBox">
@@ -72,7 +79,7 @@ class UploadDrawer extends Component {
               <div className="labelIconBox">
                 <Icon
                   className="remove-upload-drawer"
-                  id="uploadDrawerIcon"
+                  id="uploadDrawerRemoveIcon"
                   style={iconStyle}
                   action="action"
                   name={"delete"}

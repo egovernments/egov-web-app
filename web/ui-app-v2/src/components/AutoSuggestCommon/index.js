@@ -14,16 +14,16 @@ export default class AutoSuggest extends Component {
     defaultIconStyle: { left: "5px", bottom: "10px", color: "#767676" },
   };
 
-  fetchSuggestions = inputValue => {
+  fetchSuggestions = (inputValue) => {
     inputValue = inputValue.toLowerCase();
 
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
-      return dataSource.filter(result => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
+      return dataSource.filter((result) => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
     }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     const inputValue = e.target.value;
     const suggestions = this.fetchSuggestions(inputValue);
     this.props.callback(suggestions, inputValue);
@@ -34,9 +34,9 @@ export default class AutoSuggest extends Component {
     const { onChange, styles } = this;
     const { inputValue } = this.state;
     const { containerStyle, textFieldStyle, iconStyle, searchInputText } = this.props;
+    console.log(this.props.id);
 
     return (
-
       <div style={{ ...styles.defaultContainerStyle, ...containerStyle }} className="search-field-container">
         <TextFieldIcon
           textFieldStyle={{ ...styles.defaultTextFieldStyle, ...textFieldStyle }}
@@ -50,6 +50,7 @@ export default class AutoSuggest extends Component {
           Icon={SearchIcon}
           onChange={onChange}
           value={inputValue}
+          id={this.props.id}
         />
       </div>
     );

@@ -52,6 +52,7 @@ class Feedback extends Component {
         )}
         <div className="feedback-popup-button-cont">
           <Button
+            id={submitted ? "feedback-continue" : "feedback-submit"}
             label={submitted ? "CONTINUE" : "SUBMIT"}
             primary={true}
             fullWidth={true}

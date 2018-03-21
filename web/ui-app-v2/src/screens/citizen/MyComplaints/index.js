@@ -120,6 +120,7 @@ class MyComplaints extends Component {
         )}
         <div className="floating-button-cont">
           <FloatingActionButton
+            id="mycomplaints-add"
             onClick={(e) => {
               history.push("/citizen/add-complaint");
             }}

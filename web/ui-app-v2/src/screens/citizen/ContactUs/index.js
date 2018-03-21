@@ -62,7 +62,7 @@ class ContactUs extends Component {
           </span>
         ),
         secondaryText: (
-          <div className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMapHandler}>
+          <div id="contactus-open-map" className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMapHandler}>
             Open Map
           </div>
         ),
@@ -119,6 +119,7 @@ class ContactUs extends Component {
     return (
       <div className="contactus-main-cont">
         <Card
+          id="contactus-card"
           className="contactus-main-card"
           textChildren={
             <div>
@@ -127,8 +128,8 @@ class ContactUs extends Component {
                 <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
               </div>
               <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                <Icon style={twitterStyle} action="custom" name="twitter" color="ffffff" />
-                <Icon style={facebookStyle} action="custom" name="facebook" color="ffffff" />
+                <Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />
+                <Icon id="contactus-facebook" className="contactus-facebook" style={facebookStyle} action="custom" name="facebook" color="ffffff" />
               </div>
             </div>
           }
