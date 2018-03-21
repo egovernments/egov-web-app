@@ -75,16 +75,6 @@ export const getDateFromEpoch = (epoch) => {
   return day + "-" + month + "-" + year;
 };
 
-export const getFileDownloadLink = (tenantId, fileStoreId) => {
-  const requestParams = { tenantId, fileStoreId };
-  let downloadLink = getRequestUrl("FILE_DOWNLOAD_ENDPOINT", requestParams);
-  // for developement prepend the dev environment
-  if (process.env.NODE_ENV === "development") {
-    downloadLink = "http://egov-micro-dev.egovernments.org" + downloadLink;
-  }
-  return downloadLink;
-};
-
 export const getBodyClassFromPath = (path) => {
   path = path.slice(1);
   let bodyClass = "home";

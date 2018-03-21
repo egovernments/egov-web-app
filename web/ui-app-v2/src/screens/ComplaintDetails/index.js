@@ -11,17 +11,8 @@ import "./index.css";
 class ComplaintDetails extends Component {
   state = {
     status: {
-      // status: "ASSIGNED",
-      // message: "JR.INSPECTOR - J KUMAR",
       bgColor: "#f5a623",
       status: "Resolved",
-      // message: "THANK YOU for your Application!",
-      // // message: (
-      // //   <div>
-      // //     <span>THANK YOU </span> <br /> <span>for your Application!</span>
-      // //   </div>
-      // // ),
-      // bgColor: "#7ed321"
     },
     details: {
       status: "Resolved",
