@@ -7,11 +7,11 @@ const Main = () => {
   return (
     <main>
       <Switch>
-        {routes.map((route,routeKey)=>{
+        {routes.map((route, routeKey) => {
           if (route.isPrivate) {
-            return <PrivateRoute key={routeKey} exact {...route}/>
+            return <PrivateRoute key={routeKey} exact {...route} />;
           } else {
-            return <Route exact key={routeKey} {...route}/>
+            return <Route exact key={routeKey} {...route} />;
           }
         })}
       </Switch>

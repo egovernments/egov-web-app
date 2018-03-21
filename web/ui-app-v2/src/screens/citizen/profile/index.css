@@ -1,0 +1,30 @@
+.profileFormContainer {
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 15px;
+}
+
+.profileBtn {
+  height: 48px;
+  padding: 0 16px 0 16px;
+  box-shadow: none !important;
+}
+
+.profileBtnWrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 24px;
+}
+
+.profileContainer {
+  position: relative;
+}
+
+.profile-form-field > label {
+  color: #03b0c6 !important;
+}
+
+.profileContainer {
+  position: relative;
+}
