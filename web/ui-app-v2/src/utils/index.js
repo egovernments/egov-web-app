@@ -75,25 +75,12 @@ export const getDateFromEpoch = (epoch) => {
   return day + "-" + month + "-" + year;
 };
 
-export const getFileDownloadLink = (tenantId, fileStoreId) => {
-  const requestParams = { tenantId, fileStoreId };
-  let downloadLink = getRequestUrl("FILE_DOWNLOAD_ENDPOINT", requestParams);
-  // for developement prepend the dev environment
-  if (process.env.NODE_ENV === "development") {
-    downloadLink = "http://egov-micro-dev.egovernments.org" + downloadLink;
-  }
-  return downloadLink;
-};
-
 export const getBodyClassFromPath = (path) => {
-  path = path.slice(1);
-  let bodyClass = "home";
-  if (path) {
-    bodyClass = path;
-  }
-  const splitRegex = /(?!-)(\W+)/;
-  bodyClass = bodyClass.split(splitRegex);
-  return bodyClass[0];
+  let bodyClass = path
+    .split("/")
+    .filter((part) => part.trim().length > 0)
+    .join("-");
+  return bodyClass;
 };
 
 export const addBodyClass = (path) => {
