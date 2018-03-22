@@ -1,5 +1,5 @@
 import React from "react";
-import { UploadDrawer } from "../../../../../components";
+import { UploadDrawer } from "../../../../../../components";
 
 const UploadDrawerLabelStyle = {
   fontFamily: "Roboto",

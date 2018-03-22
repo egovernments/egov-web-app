@@ -9,11 +9,11 @@ class Register extends Component {
   };
 
   register = () => {
-    this.props.history.push("/citizen/otp");
+    this.props.history.push("/citizen/user/otp");
   };
 
   navigateToLogin = () => {
-    this.props.history.push("/citizen/login");
+    this.props.history.push("/citizen/user/login");
   };
 
   onNameChanged = (e, value) => {

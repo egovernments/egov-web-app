@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import UploadDrawer from "./components/UploadDrawer";
 import ProfileSection from "./components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
-import Screen from "../../common/Screen";
-import img from "../../../assets/images/people.jpg";
+import Screen from "../../../common/Screen";
+import img from "../../../../assets/images/people.jpg";
 import "./index.css";
 
 class Profile extends Component {
@@ -64,13 +64,14 @@ class Profile extends Component {
     const { setProfilePic, onClickAddPic, handleMailChange, handleNameChange } = this;
 
     return (
-      <Screen>
-        <div>
-          <ProfileSection img={img} onClickAddPic={onClickAddPic} />
+      <div>
+        <ProfileSection img={img} onClickAddPic={onClickAddPic} />
+
+        <Screen>
           <ProfileForm name={name} emailId={emailId} handleNameChange={handleNameChange} handleMailChange={handleMailChange} />
           {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
-        </div>
-      </Screen>
+        </Screen>
+      </div>
     );
   }
 }

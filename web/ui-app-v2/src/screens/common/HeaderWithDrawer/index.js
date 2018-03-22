@@ -115,7 +115,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Profile",
-        route: "/citizen/profile",
+        route: "/citizen/user/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
           paddingBottom: "3px",
@@ -124,7 +124,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Language",
-        route: "/citizen/language-selection",
+        route: "/citizen/user/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",

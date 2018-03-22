@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, TextField } from "../../../../../components";
-import CityPicker from "../../../../common/CityPicker";
+import { Button, TextField } from "../../../../../../components";
+import CityPicker from "../../../../../common/CityPicker";
 
 const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
   return (
