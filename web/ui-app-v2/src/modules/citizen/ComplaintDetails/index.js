@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Details from "./components/Details";
-import ComplaintTimeLine from "./components/ComplaintTimeLine";
-import Comments from "./components/Comments";
+import Details from "../../common/complaintDetails/components/Details";
+import ComplaintTimeLine from "../../common/complaintDetails/components/ComplaintTimeLine";
+import Comments from "../../common/complaintDetails/components/Comments";
 import Screen from "../../common/Screen";
 import FeedbackPopup from "../../common/FeedbackPopup";
 import { withRouter } from "react-router-dom";
@@ -69,7 +69,7 @@ class ComplaintDetails extends Component {
       <Screen>
         <Details {...details} />
         <ComplaintTimeLine status={status.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} />
-        <Comments comments={comments} />
+        <Comments comments={comments} hasComments={true} />
       </Screen>
     );
   }

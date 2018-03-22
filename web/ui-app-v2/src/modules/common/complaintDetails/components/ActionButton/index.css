@@ -1,0 +1,21 @@
+.compalint-details-action-buttons {
+  width: 100%;
+  height: 56px;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 9px;
+  background-color: rgb(255, 255, 255, 0.63);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1), 0 -2px 5px 0 rgba(0, 0, 0, 0);
+}
+.compalint-details-action-buttons button {
+  height: 38px;
+  padding-top: 11px !important;
+  min-width: 146px;
+}
+#actionOne span {
+  padding: 0px !important;
+  margin-left: -10px !important;
+}
