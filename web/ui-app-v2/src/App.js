@@ -59,12 +59,11 @@ class App extends Component {
   };
 
   _appBarProps = () => {
-    const windowLocationParts = window.location.pathname.split("/").filter((part) => part.length);
-    const windowName = windowLocationParts[windowLocationParts.length - 1];
-    const isHomeScreen = windowLocationParts.length === 1 ? true : false;
+    const isHomeScreen = /(citizen|employee)\/?$/.test(window.location.pathname);
+    const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
 
     const style = { overflowX: "hidden", width: "initial" };
-    if (windowName.endsWith("complaint-type")) {
+    if (isComplaintType) {
       style.boxShadow = "none";
     }
 
