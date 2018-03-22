@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Complaints from "./components/Complaints";
+import Complaints from "../../common/Complaints";
 import Screen from "../../common/Screen";
 import { Icon, ImageModal, Label } from "../../../components";
+import { withRouter } from "react-router-dom";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../../assets/images/Garbage_2.jpg";
@@ -17,6 +18,7 @@ class MyComplaints extends Component {
       {
         header: "Potholes on the road",
         date: "18-Mar-18",
+        address: "Koramangla",
         status: "OPEN",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
@@ -35,6 +37,7 @@ class MyComplaints extends Component {
       {
         header: "Garbage",
         date: "18-Mar-18",
+        address: "Koramangla",
         status: "CLOSED",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
@@ -53,6 +56,7 @@ class MyComplaints extends Component {
       {
         header: "Potholes on the road",
         date: "18-Mar-18",
+        address: "Koramangla",
         status: "REJECTED",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
@@ -71,6 +75,7 @@ class MyComplaints extends Component {
       {
         header: "Garbage",
         date: "18-Mar-18",
+        address: "Koramangla",
         status: "CLOSED",
         assignee: "Dharmendra Pal",
         complaintNo: "ARN 180311-05",
@@ -102,7 +107,7 @@ class MyComplaints extends Component {
     let { complaints, source } = this.state;
     let { history } = this.props;
     return (
-      <Screen className="complaints-main-container">
+      <div className="complaints-main-container">
         {complaints.length === 0 ? (
           <div className="no-complaints-message-cont">
             <Label
@@ -113,25 +118,25 @@ class MyComplaints extends Component {
             />
           </div>
         ) : (
-          <div>
-            <Complaints complaints={complaints} onClick={this.imageOnClick} />
+          <Screen>
+            <Complaints complaints={complaints} onClick={this.imageOnClick} track={true} role={"citizen"} />
             <ImageModal imageSource={source} hide={source ? false : true} onCloseClick={this.onCloseClick} />
-          </div>
+          </Screen>
         )}
         <div className="floating-button-cont">
           <FloatingActionButton
             id="mycomplaints-add"
             onClick={(e) => {
-              history.push("/citizen/add-complaint");
+              history.push("/add-complaint");
             }}
             className="floating-button"
           >
             <Icon action="content" name="add" />
           </FloatingActionButton>
         </div>
-      </Screen>
+      </div>
     );
   }
 }
 
-export default MyComplaints;
+export default withRouter(MyComplaints);

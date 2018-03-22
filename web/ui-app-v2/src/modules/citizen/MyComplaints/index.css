@@ -14,7 +14,16 @@
   bottom: 65px;
 }
 
+.complaints-top-level-wrapper {
+  padding: 0 8px;
+}
+
 .no-complaints-message-cont {
-  padding: 180px 34px;
+  padding: 0 34px;
   text-align: center;
+  height: calc(100vh - 121px);
+  display: inline-flex;
+  justify-content: center;
+  position: fixed;
+  flex-direction: column;
 }
