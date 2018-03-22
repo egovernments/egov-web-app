@@ -59,9 +59,9 @@ class App extends Component {
   };
 
   _appBarProps = () => {
-    const windowLocationParts = window.location.pathname.split("/");
+    const windowLocationParts = window.location.pathname.split("/").filter((part) => part.length);
     const windowName = windowLocationParts[windowLocationParts.length - 1];
-    const isHomeScreen = windowName.trim().length === 0 ? true : false;
+    const isHomeScreen = windowLocationParts.length === 1 ? true : false;
 
     const style = { overflowX: "hidden", width: "initial" };
     if (windowName.endsWith("complaint-type")) {
