@@ -12,6 +12,7 @@
 .reopencomplaint-button {
   padding: 0px 16px 0px 0px;
   position: fixed;
+  bottom: 60px;
   width: 100%;
   background-color: #ffffff;
 }

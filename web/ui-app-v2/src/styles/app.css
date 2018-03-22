@@ -116,6 +116,7 @@ body h4 {
 /*  override body backkground */
 body.citizen-profile,
 body.citizen-contact-us,
+body.citizen-reopen-complaint,
 body.citizen-complaint-submitted {
   background: #ffffff !important;
 }
