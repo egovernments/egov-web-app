@@ -77,7 +77,7 @@ class ImageUpload extends Component {
                 <div key={index} className="upload-image-cont">
                   <Image source={image} style={{ height: "100%" }} />
                   <div className="image-remove" onClick={() => removeImage(index)}>
-                    <Icon id="close-icon" action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />
+                    <Icon id="image-close-icon" action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />
                   </div>
                 </div>
               );

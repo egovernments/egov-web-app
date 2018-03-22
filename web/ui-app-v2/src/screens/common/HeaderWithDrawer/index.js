@@ -112,6 +112,7 @@ class HeaderWithDrawer extends Component {
           paddingTop: "1px",
           borderLeft: "3px solid #00bbd3",
         },
+        id: "header-home",
       },
       {
         primaryText: "Profile",
@@ -121,6 +122,7 @@ class HeaderWithDrawer extends Component {
           paddingBottom: "3px",
           paddingTop: "3px",
         },
+        id: "header-profile",
       },
       {
         primaryText: "Language",
@@ -129,6 +131,7 @@ class HeaderWithDrawer extends Component {
         style: {
           borderBottom: "none",
         },
+        id: "header-language",
       },
     ],
   };
@@ -143,6 +146,7 @@ class HeaderWithDrawer extends Component {
           paddingBottom: "8px",
           paddingTop: "8px",
         },
+        id: "header-contact-us",
       },
       {
         primaryText: "How it Works",
@@ -152,6 +156,7 @@ class HeaderWithDrawer extends Component {
           paddingBottom: "2px",
           paddingTop: "2px",
         },
+        id: "header-how-it-works",
       },
       {
         primaryText: "Logout",
@@ -161,6 +166,7 @@ class HeaderWithDrawer extends Component {
           borderBottom: "none",
           borderLeft: "red",
         },
+        id: "header-logout",
       },
     ],
   };
@@ -271,8 +277,22 @@ class HeaderWithDrawer extends Component {
                 <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
               </div>
               <div className="logout-button">
-                <Button className="logout-no-button" label={"NO"} backgroundColor={"#969696"} onClick={this.handleNo} labelColor="#ffffff" />
-                <Button className="logout-yes-button" label={"YES"} primary={true} onClick={this.handleYes} labelColor="#ffffff" />
+                <Button
+                  id="logout-no-button"
+                  className="logout-no-button"
+                  label={"NO"}
+                  backgroundColor={"#969696"}
+                  onClick={this.handleNo}
+                  labelColor="#ffffff"
+                />
+                <Button
+                  id="logout-yes-button"
+                  className="logout-yes-button"
+                  label={"YES"}
+                  primary={true}
+                  onClick={this.handleYes}
+                  labelColor="#ffffff"
+                />
               </div>
             </div>,
           ]}
