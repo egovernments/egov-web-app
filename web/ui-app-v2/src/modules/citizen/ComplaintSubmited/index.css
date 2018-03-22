@@ -14,10 +14,11 @@
   padding: 0px 50px 24px 50px;
 }
 .complaintsubmit-button {
-  position: fixed;
+  position: fixed !important;
+  left: 0px;
   width: 100%;
   bottom: 16px;
-  padding-right: 16px;
+  padding: 8px !important;
 }
 
 .complaint-submitted-card {

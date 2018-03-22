@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Complaints from "./components/Complaints";
+import Screen from "../../common/Screen";
 import { Icon, ImageModal, Label } from "../../../components";
-import { withRouter } from "react-router-dom";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../../assets/images/Garbage_2.jpg";
@@ -102,7 +102,7 @@ class MyComplaints extends Component {
     let { complaints, source } = this.state;
     let { history } = this.props;
     return (
-      <div className="complaints-main-container">
+      <Screen className="complaints-main-container">
         {complaints.length === 0 ? (
           <div className="no-complaints-message-cont">
             <Label
@@ -129,9 +129,9 @@ class MyComplaints extends Component {
             <Icon action="content" name="add" />
           </FloatingActionButton>
         </div>
-      </div>
+      </Screen>
     );
   }
 }
 
-export default withRouter(MyComplaints);
+export default MyComplaints;

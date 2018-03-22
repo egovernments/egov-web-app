@@ -56,7 +56,7 @@ class AddComplaints extends Component {
             locationOnClick={this.locationOnClick}
           />
           <AdditionalDetailsCard additionalDetails={this.state.additionalDetails} onChange={this.handleDetailsChange} />
-          <div className="add-complaint-button-cont">
+          <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
             <Button
               id="addComplaint-submit-complaint"
               onClick={submitComplaint}

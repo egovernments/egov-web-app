@@ -27,7 +27,7 @@ const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
           onChange={handleMailChange}
         />
       </form>
-      <div className="profileBtnWrapper">
+      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
         <Button className="profileBtn" id="profile-save-action" primary={true} label="SAVE" fullWidth={true} onClick={this.onSaveClick} />
       </div>
     </div>

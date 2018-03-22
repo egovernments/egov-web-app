@@ -90,7 +90,7 @@ class ReOpenComplaint extends Component {
             underlineFocusStyle={{ borderColor: "#e0e0e0" }}
           />
         </div>
-        <div className="reopencomplaint-button">
+        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reopencomplaint-button">
           <Button id="reopencomplaint-submit-action" primary={true} label="SUBMIT" fullWidth={true} onClick={handleComplaintSubmit} />
         </div>
       </Screen>

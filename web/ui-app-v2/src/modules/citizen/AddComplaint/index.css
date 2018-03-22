@@ -7,9 +7,9 @@
 }
 
 .add-complaint-button-cont {
-  position: fixed;
+  position: fixed !important;
   bottom: 8px;
   left: 0;
   width: 100%;
-  padding: 0 8px;
+  padding: 8px !important;
 }

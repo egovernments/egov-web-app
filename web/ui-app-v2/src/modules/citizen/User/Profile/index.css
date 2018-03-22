@@ -12,10 +12,11 @@
 }
 
 .profileBtnWrapper {
-  position: fixed;
+  position: fixed !important;
   width: 100%;
   bottom: 12px;
   left: 0px;
+  padding: 8px !important;
 }
 
 .profileContainer {

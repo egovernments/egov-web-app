@@ -64,14 +64,11 @@ class Profile extends Component {
     const { setProfilePic, onClickAddPic, handleMailChange, handleNameChange } = this;
 
     return (
-      <div>
+      <Screen>
         <ProfileSection img={img} onClickAddPic={onClickAddPic} />
-
-        <Screen>
-          <ProfileForm name={name} emailId={emailId} handleNameChange={handleNameChange} handleMailChange={handleMailChange} />
-          {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
-        </Screen>
-      </div>
+        <ProfileForm name={name} emailId={emailId} handleNameChange={handleNameChange} handleMailChange={handleMailChange} />
+        {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
+      </Screen>
     );
   }
 }

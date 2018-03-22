@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "../../../components";
+import Screen from "../../common/Screen";
 import pinIcon from "../../../assets/Location_pin.svg";
 import Logo from "../../../assets/images/logo_black.png";
 import "./index.css";
@@ -117,7 +118,7 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      <div className="contactus-main-cont">
+      <Screen className="contactus-main-cont">
         <Card
           id="contactus-card"
           className="contactus-main-card"
@@ -154,7 +155,7 @@ class ContactUs extends Component {
             <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} />
           </div>
         )}
-      </div>
+      </Screen>
     );
   }
 }
