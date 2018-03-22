@@ -23,7 +23,9 @@ import ContactUs from "./modules/citizen/ContactUs";
 import Citizen from "./modules/citizen/User";
 
 // Employee
+import ReAssignComplaint from "./modules/employee/ReAssignComplaint";
 import AllComplaints from "./modules/employee/AllComplaints";
+import ComplaintResolved from "./modules/employee/ComplaintResolved";
 
 const Main = () => {
   return (
@@ -49,6 +51,20 @@ const Main = () => {
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/add-complaint" title="Add Complaint" component={AddComplaint} />
         {/* Employee routes */}
         <PrivateRoute exact hideBottomNavigation={true} path="/employee/all-complaints" title="All Complaints" component={AllComplaints} />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/reassign-complaint"
+          title="ReAssign Complaint"
+          component={ReAssignComplaint}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/complaint-resolved"
+          title="Complaint Resolved"
+          component={ComplaintResolved}
+        />
       </Switch>
     </main>
   );
