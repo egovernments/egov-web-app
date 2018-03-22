@@ -26,6 +26,7 @@ import Citizen from "./modules/citizen/User";
 import ReAssignComplaint from "./modules/employee/ReAssignComplaint";
 import AllComplaints from "./modules/employee/AllComplaints";
 import ComplaintResolved from "./modules/employee/ComplaintResolved";
+import ComplaintSummary from "./modules/employee/ComplaintDetails";
 
 const Main = () => {
   return (
@@ -64,6 +65,13 @@ const Main = () => {
           path="/employee/complaint-resolved"
           title="Complaint Resolved"
           component={ComplaintResolved}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/complaint-details/:status?"
+          title="Complaint Summary"
+          component={ComplaintSummary}
         />
       </Switch>
     </main>
