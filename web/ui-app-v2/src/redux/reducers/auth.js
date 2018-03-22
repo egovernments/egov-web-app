@@ -1,3 +1,5 @@
+import * as actionTypes from "../actionTypes/auth";
+
 const intialState = {
   authenticating: false,
   authenticated: true,
@@ -10,11 +12,11 @@ const auth = (state = intialState, action) => {
   const { type, field } = action;
 
   switch (type) {
-    case "AUTHENTICATING":
+    case actionTypes.AUTHENTICATING:
       return { ...state, authenticated: false, authenticationFailed: true, authenticating: true };
-    case "AUTHENTICATED":
+    case actionTypes.AUTHENTICATED:
       return { ...state, authenticated: true, authenticationFailed: false, authenticating: false };
-    case "AUTHENTICATION_FAILED":
+    case actionTypes.AUTHENTICATION_FAILED:
       return { ...state, authenticated: false, authenticationFailed: true, authenticating: false };
     default:
       return state;

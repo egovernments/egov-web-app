@@ -115,8 +115,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  route: state.framework.route,
-});
-
-export default connect(mapStateToProps, null)(App);
+export default connect(null, null)(App);
