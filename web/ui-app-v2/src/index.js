@@ -28,13 +28,13 @@ WebFont.load({
 });
 
 // for hosting in subdirectories
-const urlParts = window.location.pathname.split("/");
-const basename = urlParts.slice(0, urlParts.length - 2).join("/");
+const urlParts = window.location.pathname.split("/").filter((part) => part.length);
+const basename = "/" + urlParts.slice(0, urlParts.length).join("/");
 
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Router basename={basename}>
+      <Router basename={process.env.NODE_ENV === "production" ? basename : ""}>
         <Main />
       </Router>
     </MuiThemeProvider>
