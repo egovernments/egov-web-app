@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { LoadingIndicator } from "./components";
+import { LoadingIndicator } from "../components";
 import PropTypes from "prop-types";
 import { Redirect, Route } from "react-router-dom";
 import App from "./App";

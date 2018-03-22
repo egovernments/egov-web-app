@@ -1,29 +1,29 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./modules/PrivateRoute";
 
 // Home page
-import Home from "./screens/citizen/Home";
+import Home from "./modules/citizen/Home";
 
 // complaint related routes
-import MyComplaints from "./screens/citizen/MyComplaints";
-import ComplaintDetails from "./screens/citizen/ComplaintDetails";
-import ComplaintSubmited from "./screens/citizen/ComplaintSubmited";
-import TrackLocation from "./screens/common/TrackLocation";
-import Feedback from "./screens/citizen/Feedback";
-import ReOpenComplaint from "./screens/citizen/ReOpenComplaint";
-import ComplaintType from "./screens/citizen/ComplaintType";
-import AddComplaint from "./screens/citizen/AddComplaint";
+import MyComplaints from "./modules/citizen/MyComplaints";
+import ComplaintDetails from "./modules/citizen/ComplaintDetails";
+import ComplaintSubmited from "./modules/citizen/ComplaintSubmited";
+import TrackLocation from "./modules/common/TrackLocation";
+import Feedback from "./modules/citizen/Feedback";
+import ReOpenComplaint from "./modules/citizen/ReOpenComplaint";
+import ComplaintType from "./modules/citizen/ComplaintType";
+import AddComplaint from "./modules/citizen/AddComplaint";
 
 // static pages
-import HowItWorks from "./screens/citizen/HowItWorks";
-import ContactUs from "./screens/citizen/ContactUs";
+import HowItWorks from "./modules/citizen/HowItWorks";
+import ContactUs from "./modules/citizen/ContactUs";
 
 // user related screens
-import Citizen from "./screens/citizen/User";
+import Citizen from "./modules/citizen/User";
 
 // Employee
-import AllComplaints from "./screens/employee/AllComplaints";
+import AllComplaints from "./modules/employee/AllComplaints";
 
 const Main = () => {
   return (

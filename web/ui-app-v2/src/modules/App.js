@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBodyClassFromPath, addBodyClass, removeBodyClass } from "./utils";
-import HeaderWithDrawer from "./screens/common/HeaderWithDrawer";
-import { BottomNavigation, Icon } from "./components";
+import { getBodyClassFromPath, addBodyClass, removeBodyClass } from "../utils/commons";
+import HeaderWithDrawer from "./common/HeaderWithDrawer";
+import { BottomNavigation, Icon } from "../components";
 import IconButton from "material-ui/IconButton";
 
 const options = [

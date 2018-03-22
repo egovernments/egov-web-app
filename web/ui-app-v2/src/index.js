@@ -9,8 +9,8 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 //Web font loader
 import WebFont from "webfontloader";
 // styles
-import "./styles/bootstrap-customized.css";
-import "./styles/app.css";
+import "./assets/styles/bootstrap-customized.css";
+import "./assets/styles/app.css";
 
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
