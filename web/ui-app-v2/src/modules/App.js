@@ -59,7 +59,7 @@ class App extends Component {
   };
 
   _appBarProps = () => {
-    const isHomeScreen = /(citizen|employee)\/?$/.test(window.location.pathname);
+    const isHomeScreen = /(citizen|employee\/all-complaints)\/?$/.test(window.location.pathname);
     const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
 
     const style = { overflowX: "hidden", width: "initial" };
@@ -97,6 +97,8 @@ class App extends Component {
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
+    const role = window.location.pathname.includes("citizen") ? "citizen" : "employee";
+
     return (
       <div>
         <HeaderWithDrawer
@@ -106,6 +108,7 @@ class App extends Component {
           title={rest.title}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
+          role={role}
         />
 
         <Component {...rest} />
