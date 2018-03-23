@@ -1,34 +1,62 @@
 import React, { Component } from "react";
-import { Button } from "../../../components";
+import { Button, Icon } from "../../../components";
 import ImageUpload from "../../common/ImageUpload";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import Screen from "../../common/Screen";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import "./index.css";
 
 class ComplaintResolved extends Component {
-  options = [
-    { value: "Not my Department", label: "Not my Department" },
-    { value: "Not my Jurisdiction", label: "Not my Jurisdiction" },
-    { value: "Absent or Leave", label: "Absent or Leave" },
-    { value: "Not a valid Complaint", label: "Not a valid Complaint" },
-  ];
+  state = {
+    submitted: false,
+  };
 
-  handleComplaintResolved = () => {
-    this.props.history.push("/citizen/complaint-submitted");
+  onSubmit = () => {
+    if (this.state.submitted === false) {
+      this.setState({ submitted: true });
+    }
   };
 
   render() {
+    let { history } = this.props;
+    let { submitted } = this.state;
     const { handleComplaintResolved } = this;
 
     return (
-      <Screen className="reassigncomplaint-field">
-        <ImageUpload />
-        <div style={{ padding: "24px 16px 350px 1px" }}>
-          <TextArea />
+      <div className="complaint-resolved-main-container">
+        {!submitted ? (
+          <div>
+            <ImageUpload />
+            <div style={{ padding: "24px 16px 350px 1px" }}>
+              <TextArea />
+            </div>
+          </div>
+        ) : (
+          <div className="complaint-resolved-main-cont ">
+            <div className="complaint-resolved-inner-cont">
+              <div className="complaint-resolved-icon-cont">
+                <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
+                  <Icon action="navigation" name="check" />
+                </FloatingActionButton>
+              </div>
+              <span className="thankyou-text">
+                You have marked the complaint as <span style={{ color: "#484848" }}>Resolved</span> <br /> successfully
+              </span>
+            </div>
+          </div>
+        )}
+        <div className="complaint-resolved-button-cont">
+          <Button
+            id={submitted ? "complaint-resolved-continue" : "complaint-resolved-submit"}
+            label={submitted ? "CONTINUE" : "MARK RESOLVED"}
+            primary={true}
+            fullWidth={true}
+            onClick={(e) => {
+              this.onSubmit(history);
+            }}
+          />
         </div>
-        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reassigncomplaint-button">
-          <Button id="reassigncomplaint-submit-action" primary={true} label="MARK RESOLVED" fullWidth={true} onClick={handleComplaintResolved} />
-        </div>
-      </Screen>
+      </div>
     );
   }
 }
