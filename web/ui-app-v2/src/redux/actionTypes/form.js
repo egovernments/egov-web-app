@@ -1,3 +1,4 @@
+export const INIT_FORM = "INIT_FORM";
 export const FIELD_CHANGE = "FIELD_CHANGE";
 export const SUBMIT_FORM = "SUBMIT_FORM";
 export const RESET_FORM = "RESET_FORM";

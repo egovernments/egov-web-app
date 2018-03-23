@@ -5,7 +5,6 @@ import Comments from "../../common/complaintDetails/components/Comments";
 import Screen from "../../common/Screen";
 import FeedbackPopup from "../../common/FeedbackPopup";
 import { withRouter } from "react-router-dom";
-
 import "./index.css";
 
 class ComplaintDetails extends Component {
