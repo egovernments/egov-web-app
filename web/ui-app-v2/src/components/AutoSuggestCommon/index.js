@@ -16,10 +16,13 @@ export default class AutoSuggest extends Component {
 
   fetchSuggestions = (inputValue) => {
     inputValue = inputValue.toLowerCase();
-
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
-      return dataSource.filter((result) => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
+      return dataSource.filter((result) => {
+        return typeof result[searchKey] === "object"
+          ? result[searchKey].props.label.toLowerCase().indexOf(inputValue) !== -1
+          : result[searchKey].toLowerCase().indexOf(inputValue) !== -1;
+      });
     }
   };
 
@@ -33,17 +36,16 @@ export default class AutoSuggest extends Component {
   render() {
     const { onChange, styles } = this;
     const { inputValue } = this.state;
-    const { containerStyle, textFieldStyle, iconStyle, searchInputText } = this.props;
-    console.log(this.props.id);
+    const { containerStyle, textFieldStyle, iconStyle, searchInputText, hintStyle, iconPosition } = this.props;
 
     return (
       <div style={{ ...styles.defaultContainerStyle, ...containerStyle }} className="search-field-container">
         <TextFieldIcon
           textFieldStyle={{ ...styles.defaultTextFieldStyle, ...textFieldStyle }}
           inputStyle={{ marginTop: "8px" }}
-          hintStyle={{ bottom: 8 }}
+          hintStyle={{ bottom: 8, ...hintStyle }}
           iconStyle={{ ...styles.defaultIconStyle, ...iconStyle }}
-          iconPosition="before"
+          iconPosition={iconPosition ? iconPosition : "before"}
           underlineShow={false}
           fullWidth={true}
           hintText={searchInputText}

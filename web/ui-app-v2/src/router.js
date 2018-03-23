@@ -28,6 +28,7 @@ import AllComplaints from "./modules/employee/AllComplaints";
 import ComplaintResolved from "./modules/employee/ComplaintResolved";
 import ComplaintSummary from "./modules/employee/ComplaintDetails";
 import EmpUser from "./modules/employee/User";
+import AssignComplaint from "./modules/employee/AssignComplaint";
 
 const Main = () => {
   return (
@@ -75,6 +76,7 @@ const Main = () => {
           component={ComplaintSummary}
         />
         <Route path="/employee/user" component={EmpUser} />
+        <PrivateRoute exact hideBottomNavigation={true} path="/employee/assign-complaint" title="Assign Complaint" component={AssignComplaint} />
       </Switch>
     </main>
   );
