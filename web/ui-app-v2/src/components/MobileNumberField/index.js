@@ -17,7 +17,7 @@ const prefixBaseStyle = {
   position: "absolute",
   color: "#969696",
   zIndex: 2,
-  bottom: 15,
+  top: 35,
   paddingRight: 5,
   borderRight: "1px solid #eee",
 };
@@ -34,6 +34,7 @@ const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", pre
         className={`mobile-number-field ${className}`}
         id="mobile-number-field"
         name="mobile-number-field"
+        errorStyle={{ marginLeft: "-35px" }}
         style={{ ...textFieldBaseStyle, ...textFieldStyle }}
         fullWidth={true}
         {...textFieldProps}

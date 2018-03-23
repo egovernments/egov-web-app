@@ -37,7 +37,7 @@ const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, ico
   return (
     <div onClick={onClick} style={containerStyle}>
       <Icon style={{ ...style.iconStyle, ...iconStyle }} />
-      <TextField name="textfield-icon" style={{ ...style.textFieldStyle, ...textFieldStyle }} fullWidth={false} {...textFieldProps} />
+      <TextField name="textfield-icon" style={{ ...style.textFieldStyle, ...textFieldStyle }} {...textFieldProps} />
     </div>
   );
 };

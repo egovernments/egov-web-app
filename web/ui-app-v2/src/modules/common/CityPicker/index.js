@@ -45,9 +45,9 @@ export default class CityPickerDialog extends Component {
   onItemClick = (item, index) => {
     const { primaryText: city, key } = item;
     if (key) {
-      this.setState({ city }, () => {
-        this.onClose();
-      });
+      const { formKey, fieldKey, onChange } = this.props;
+      onChange(formKey, fieldKey, city);
+      this.onClose();
     }
   };
 
@@ -60,24 +60,14 @@ export default class CityPickerDialog extends Component {
 
   render() {
     const { cities, autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
-    const { results, searchTerm, open, city } = this.state;
+    const { results, searchTerm, open } = this.state;
+    const { form, formKey, fieldKey } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
 
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon
-            value={city}
-            floatingLabelText="City"
-            hintText="Enter your City"
-            iconPosition="after"
-            fullWidth={true}
-            onChange={onCityFieldClicked}
-            Icon={DownArrow}
-            id="person-city"
-            name="person-city"
-            isRequired={true}
-          />
+          <TextFieldIcon {...form} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}

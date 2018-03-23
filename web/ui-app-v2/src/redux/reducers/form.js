@@ -1,11 +1,6 @@
 import * as actionTypes from "../actionTypes/form";
 
-const intialState = {
-  loading: false,
-  error: false,
-  errorMessage: "",
-  byId: {},
-};
+const intialState = {};
 
 const setForm = (state, formKey, fieldKey, propertyKey, propertyValue) => {
   const form = state[formKey] || {};
