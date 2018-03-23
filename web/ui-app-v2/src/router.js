@@ -27,6 +27,7 @@ import ReAssignComplaint from "./modules/employee/ReAssignComplaint";
 import AllComplaints from "./modules/employee/AllComplaints";
 import ComplaintResolved from "./modules/employee/ComplaintResolved";
 import ComplaintSummary from "./modules/employee/ComplaintDetails";
+import EmpUser from "./modules/employee/User";
 
 const Main = () => {
   return (
@@ -73,6 +74,7 @@ const Main = () => {
           title="Complaint Summary"
           component={ComplaintSummary}
         />
+        <Route path="/employee/user" component={EmpUser} />
       </Switch>
     </main>
   );

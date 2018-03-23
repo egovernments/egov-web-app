@@ -23,7 +23,7 @@ class OTP extends Component {
   }
 
   onOtpSubmit = () => {
-    this.props.history.push("/citizen");
+    this.props.history.push("/employee/all-complaints");
   };
 
   onOtpChanged = (e, value) => {
@@ -36,7 +36,7 @@ class OTP extends Component {
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <OTPForm onOtpChanged={onOtpChanged} onOtpSubmit={onOtpSubmit} otp={otp} disabled={disabled} btnText="Get Started" />
+        <OTPForm onOtpChanged={onOtpChanged} onOtpSubmit={onOtpSubmit} otp={otp} disabled={disabled} btnText="Login" />
       </Banner>
     );
   }
