@@ -1,8 +1,23 @@
 import * as actionTypes from "../actionTypes/app";
 
-const initialState = {};
+const initialState = {
+  name:"Mseva",
+  showMenu:false,
+  showDailog:false,
+  showToster:false,
+  localizationLabel:{}
+};
 
 const appReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case actionTypes.ADD_LOCALIZATION:
+      return {
+        ...state,
+        localizationLabel:action.payload
+      }
+    default:
+      return state;
+  }
+
 };
 export default appReducer;

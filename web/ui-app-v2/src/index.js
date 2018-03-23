@@ -27,6 +27,8 @@ WebFont.load({
   },
 });
 
+localStorage.setItem("tenantId","default");
+
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>

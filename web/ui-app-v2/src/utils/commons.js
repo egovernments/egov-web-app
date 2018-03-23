@@ -1,5 +1,20 @@
 import _ from "lodash";
 
+export const hyphenSeperatedDateTime = (d) => {
+  return d;
+  // function pad2(n) {
+  //   return n > 9 ? n : '0' + n;
+  // }
+  // var year = d.getFullYear();
+  // var month = d.getMonth() + 1; // months start at zero
+  // var day = d.getDate();
+  // var hr = d.getHour();
+  // var mn = d.getMinute();
+  // var sc = d.getSecond();
+  //
+  // return `${year}-${pad2(month)}-${pad2(day)} ${hr}:${mn}:${sc}`;
+}
+
 export const prepareSearchUrl = (search, id) => {
   const { url: searchUrl, searchKey } = search;
   const tenantId = fetchFromLocalStorage("tenantId");
@@ -10,7 +25,7 @@ export const prepareSearchUrl = (search, id) => {
   return addQueryArg(searchUrl, query);
 };
 
-const addQueryArg = (url, queries = []) => {
+export const addQueryArg = (url, queries = []) => {
   const urlParts = url.split("?");
   const path = urlParts[0];
   let queryParts = urlParts.length > 1 ? urlParts[1].split("&") : [];

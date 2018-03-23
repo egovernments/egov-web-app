@@ -1,8 +1,8 @@
 import axios from "axios";
-import { prepareFormData, getRequestUrl, fetchFromLocalStorage } from "../utils";
+import { prepareFormData,hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage,addQueryArg } from "./commons";
 
 const authToken = fetchFromLocalStorage("token");
-const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
+// const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
 const tenantId = fetchFromLocalStorage("tenantId");
 
 const instance = axios.create({
@@ -12,27 +12,29 @@ const instance = axios.create({
   },
 });
 
-const wrapRequestBody = (requestBody) => {
+const wrapRequestBody = (requestBody,action) => {
   const RequestInfo = {
-    apiId: "emp",
-    ver: "1.0",
-    ts: "27-06-2017 10:30:12",
-    action: "create",
+    apiId: "Rainmaker",
+    ver: ".01",
+    ts: hyphenSeperatedDateTime(new Date()),
+    action: action,
     did: "1",
-    key: "abcdkey",
-    msgId: "20170310130900",
-    requesterId: "rajesh",
-    userInfo,
+    key: "",
+    msgId: "20170310130900|en_IN",
+    requesterId: "",
+    // userInfo,
     authToken,
   };
 
   return Object.assign({}, { RequestInfo: RequestInfo }, requestBody);
 };
 
-export const httpRequest = async (endPoint, requestBody, headers) => {
+export const httpRequest = async (endPoint,action,queryObject=[],requestBody={}) => {
   let apiError = "Api Error";
+  queryObject.push({key:"tenantId",value:tenantId});
+  endPoint=addQueryArg(endPoint,queryObject);
   try {
-    const response = await instance.post(endPoint, wrapRequestBody(requestBody));
+    const response = await instance.post(endPoint, wrapRequestBody(requestBody,action));
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
