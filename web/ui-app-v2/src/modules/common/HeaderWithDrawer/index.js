@@ -99,9 +99,10 @@ class HeaderWithDrawer extends Component {
     ],
     logoutPopupOpen: false,
     value: "English",
+    role: "employee",
   };
 
-  listItemsPartOne = {
+  citizenItemsPartOne = {
     items: [
       {
         primaryText: "Home",
@@ -136,7 +137,7 @@ class HeaderWithDrawer extends Component {
     ],
   };
 
-  listItemsPartTwo = {
+  citizenItemsPartTwo = {
     items: [
       {
         primaryText: "Contact Us",
@@ -158,6 +159,73 @@ class HeaderWithDrawer extends Component {
         },
         id: "header-how-it-works",
       },
+      {
+        primaryText: "Logout",
+        route: "/logout",
+        leftIcon: <Icon action="action" name="power-settings-new" />,
+        style: {
+          borderBottom: "none",
+          borderLeft: "red",
+        },
+        id: "header-logout",
+      },
+    ],
+  };
+
+  employeeItemsPartOne = {
+    items: [
+      {
+        primaryText: "Home",
+        route: "/citizen",
+        leftIcon: <Icon action="action" name="home" />,
+        style: {
+          paddingBottom: "1px",
+          paddingTop: "1px",
+          borderLeft: "3px solid #00bbd3",
+        },
+        id: "header-home",
+      },
+      {
+        primaryText: "Closed Complaints",
+        route: "/citizen/contact-us",
+        leftIcon: <Icon action="custom" name="file-check" />,
+        id: "header-closed-complaint",
+      },
+      {
+        primaryText: "Employee Directory",
+        route: "/citizen/contact-us",
+        leftIcon: <Icon action="communication" name="call" />,
+        style: {
+          paddingBottom: "2px",
+          paddingTop: "2px",
+        },
+        id: "header-contact-us",
+      },
+
+      {
+        primaryText: "Edit Profile",
+        route: "/citizen/user/profile",
+        leftIcon: <Icon action="social" name="person" />,
+        style: {
+          paddingBottom: "3px",
+          paddingTop: "3px",
+        },
+        id: "header-profile",
+      },
+      {
+        primaryText: "Language",
+        route: "/citizen/user/language-selection",
+        leftIcon: <Icon action="action" name="language" />,
+        style: {
+          borderBottom: "none",
+        },
+        id: "header-language",
+      },
+    ],
+  };
+
+  employeeItemsPartTwo = {
+    items: [
       {
         primaryText: "Logout",
         route: "/logout",
@@ -211,8 +279,8 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
-    const { onUpdateMenuStatus, toggleMenu, className, ...appBarProps } = this.props;
-
+    const { onUpdateMenuStatus, toggleMenu, className, role, ...appBarProps } = this.props;
+    console.log("----------" + role);
     return (
       <div>
         <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />
@@ -236,7 +304,7 @@ class HeaderWithDrawer extends Component {
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
               className="drawer-list-style"
-              items={this.listItemsPartOne.items}
+              items={role === "citizen" ? this.citizenItemsPartOne.items : this.employeeItemsPartOne.items}
               listContainerStyle={{ background: "#ffffff" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />
@@ -258,7 +326,7 @@ class HeaderWithDrawer extends Component {
               onItemClick={this.handleItem}
               innerDivStyle={listInnerDivStyle}
               className="drawer-list-style"
-              items={this.listItemsPartTwo.items}
+              items={role === "citizen" ? this.citizenItemsPartTwo.items : this.employeeItemsPartTwo.items}
               listContainerStyle={{ background: "#ffffff" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
             />

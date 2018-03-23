@@ -194,7 +194,7 @@ class AllComplaints extends Component {
 
   state = {
     complaints: [],
-    role: "employee",
+    role: "ao",
   };
 
   componentDidMount() {
@@ -226,6 +226,7 @@ class AllComplaints extends Component {
     };
     return this.state.role === "ao" ? (
       <Tabs
+        className="employee-complaints-tab"
         onActive={this.handleTabChange}
         tabs={[
           {
