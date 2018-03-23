@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Banner from "../../../common/Banner";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "../../../common/User/components/LoginForm";
 
 class Login extends Component {
   state = {
@@ -20,7 +20,7 @@ class Login extends Component {
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <LoginForm login={login} onPhoneNumberChanged={onPhoneNumberChanged} phoneNumber={phoneNumber} />
+        <LoginForm login={login} onPhoneNumberChanged={onPhoneNumberChanged} phoneNumber={phoneNumber} isEmployee={false} />
       </Banner>
     );
   }
