@@ -1,0 +1,37 @@
+.complaint-resolved-main-container {
+  position: relative;
+  padding: 16px 16px 0 16px;
+  background: #ffffff;
+  height: calc(100vh - 64px);
+}
+
+.complaint-resolved-button-cont {
+  position: fixed;
+  width: 100%;
+  bottom: 16px;
+  left: 0;
+  padding: 0 16px;
+}
+
+.complaint-resolved-main-cont {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 64px;
+}
+
+.complaint-resolved-icon-cont {
+  margin-bottom: 21px;
+}
+
+.thankyou-text {
+  letter-spacing: 0.7px;
+  color: #767676 !important;
+}
+
+.complaint-resolved-inner-cont {
+  margin-bottom: 64px;
+}
