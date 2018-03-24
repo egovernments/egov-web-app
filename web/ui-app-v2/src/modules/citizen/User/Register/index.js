@@ -5,11 +5,6 @@ import RegisterForm from "../../../common/User/components/RegisterForm";
 import { handleFieldChange, initForm } from "../../../../redux/actions/form";
 
 class Register extends Component {
-  state = {
-    name: "",
-    phoneNumber: "",
-  };
-
   formKey = "register";
   formConfig = {
     name: {
@@ -48,24 +43,13 @@ class Register extends Component {
     this.props.history.push("/citizen/user/login");
   };
 
-  onChange = (fieldKey, fieldValue, value) => {
-    this.props.handleFieldChange(fieldKey, fieldValue, value);
-  };
-
   render() {
-    const { register, formConfig, formKey, onChange, navigateToLogin } = this;
-    const { form } = this.props;
+    const { register, formKey, navigateToLogin } = this;
+    const { form, handleFieldChange } = this.props;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <RegisterForm
-          form={form}
-          formKey={formKey}
-          formConfig={formConfig}
-          onChange={onChange}
-          register={register}
-          navigateToLogin={navigateToLogin}
-        />
+        <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} register={register} navigateToLogin={navigateToLogin} />
       </Banner>
     );
   }

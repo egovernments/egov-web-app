@@ -36,7 +36,6 @@ const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", pre
         name="mobile-number-field"
         errorStyle={{ marginLeft: "-35px" }}
         style={{ ...textFieldBaseStyle, ...textFieldStyle }}
-        fullWidth={true}
         {...textFieldProps}
         floatingLabelStyle={floatingLabelStyle}
       />
