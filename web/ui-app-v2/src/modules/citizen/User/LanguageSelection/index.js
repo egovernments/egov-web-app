@@ -1,13 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
 import LanguageSelectionForm from "../../../common/User/components/LanguageSelectionForm";
-import {connect} from "react-redux";
-import {fetchLocalizationLabel} from "../../../../redux/actions/app";
-
+import { fetchLocalizationLabel } from "../../../../redux/actions/app";
 
 class LanguageSelection extends Component {
   state = {
-    value:"en_IN",
+    value: "en_IN",
     items: [
       {
         label: "ENGLISH",
@@ -24,10 +23,9 @@ class LanguageSelection extends Component {
     ],
   };
 
-  componentDidMount = ()=> {
-    console.log(this.props);
+  componentDidMount = () => {
     this.props.fetchLocalizationLabel("en_IN");
-  }
+  };
 
   onClick = (value) => {
     this.setState({ value });
@@ -50,12 +48,8 @@ class LanguageSelection extends Component {
   }
 }
 
-const mapStateToProps=()=>{
-  return {};
-}
+const dispatchToProps = {
+  fetchLocalizationLabel,
+};
 
-const dispatchToProps={
-    fetchLocalizationLabel
-}
-
-export default connect(mapStateToProps,dispatchToProps)(LanguageSelection);
+export default connect(null, dispatchToProps)(LanguageSelection);
