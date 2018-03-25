@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "../../utils/api";
+import { prepareFormData } from "./utils";
 
 export const initForm = (form) => {
   return {
@@ -17,7 +18,9 @@ export const handleFieldChange = (formKey, fieldKey, value) => {
   };
 };
 
-export const displayFormErrors = (form) => {};
+export const displayFormErrors = (formKey) => {
+  return { type: actionTypes.DISPLAY_FORM_ERRORS, formKey };
+};
 
 export const setFormValidation = (formKey, isFormValid) => {
   return { type: actionTypes.VALIDATE_FORM, isFormValid, formKey };
@@ -38,10 +41,8 @@ export const submitFormComplete = (formKey, payload) => {
 export const submitFormError = (formKey, error) => {
   return { type: actionTypes.SUBMIT_FORM_ERROR, error };
 };
-// async action
-export const submitForm = (formKey, form) => {
+export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
-    // make a decision here
     const state = getState();
     const form = state.form[formKey];
     const { isFormValid } = form;
@@ -49,15 +50,16 @@ export const submitForm = (formKey, form) => {
       dispatch(submitFormPending(formKey));
       try {
         const formParams = {};
-        const formResponse = await httpRequest(formParams);
+        const { saveUrl, fields } = form;
+        const formData = prepareFormData(fields);
+        // const formResponse = await httpRequest(saveUrl,formParams);
         // data transformation will be handled by a custom middleware
-        dispatch(submitFormComplete(formKey, formResponse));
+        // dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
-        //handle the error
         dispatch(submitFormComplete(formKey, error));
       }
     } else {
-      dispatch(displayFormErrors(form));
+      dispatch(displayFormErrors(formKey));
     }
   };
 };

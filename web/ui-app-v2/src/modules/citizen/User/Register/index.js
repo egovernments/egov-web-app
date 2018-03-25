@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
-import RegisterForm from "../../../common/User/components/RegisterForm";
-import { handleFieldChange, initForm } from "../../../../redux/form/actions";
+import RegisterForm from "./components/RegisterForm";
+import { handleFieldChange, submitForm, initForm } from "../../../../redux/form/actions";
 
 class Register extends Component {
   formConfig = {
@@ -39,8 +39,10 @@ class Register extends Component {
     this.props.initForm(this.formConfig);
   }
 
-  register = (form) => {
-    this.props.history.push("/citizen/user/otp");
+  register = () => {
+    const formKey = this.formConfig.name;
+    this.props.submitForm(formKey);
+    // this.props.history.push("/citizen/user/otp");
   };
 
   navigateToLogin = () => {
@@ -69,6 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
   };
 };

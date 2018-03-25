@@ -2,33 +2,38 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
 import LoginForm from "./components/LoginForm";
-import { handleFieldChange, initForm } from "../../../../redux/form/actions";
+import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
 
 class Login extends Component {
-  formKey = "login";
   formConfig = {
-    phone: {
-      id: "person-phone",
-      required: true,
-      floatingLabelText: "Phone Number",
-      hintText: "Enter Your Phone Number",
-      pattern: "^([0-9])+$",
-      errorMessage: "Please enter a valid phone number",
-      value: "",
+    name: "login",
+    fields: {
+      phone: {
+        id: "person-phone",
+        required: true,
+        floatingLabelText: "Phone Number",
+        hintText: "Enter Your Phone Number",
+        pattern: "^([0-9])+$",
+        errorMessage: "Please enter a valid phone number",
+        value: "",
+      },
     },
   };
 
   login = () => {
-    this.props.history.push("/citizen");
+    const formKey = this.formConfig.name;
+    this.props.submitForm(formKey);
+    // this.props.history.push("/citizen/user/otp");
   };
 
   componentDidMount() {
-    this.props.initForm(this.formKey, this.formConfig);
+    this.props.initForm(this.formConfig);
   }
 
   render() {
-    const { login, formKey } = this;
+    const { login, formConfig } = this;
     const { form, handleFieldChange } = this.props;
+    const formKey = formConfig.name;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
@@ -47,7 +52,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    initForm: (formKey, form) => dispatch(initForm(formKey, form)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
   };
 };
 

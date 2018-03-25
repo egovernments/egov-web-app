@@ -1,14 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import { setFieldValidation, setFormValidation } from "../actions";
-
-const getFormFields = (form) => {
-  return form.fields || {};
-};
-
-const getFormField = (form, fieldKey) => {
-  const fields = getFormFields(form);
-  return fields[fieldKey];
-};
+import { validateField, getFormField, getFormFields } from "../utils";
 
 const validateForm = (form) => {
   let isFormValid = true;
@@ -21,27 +13,6 @@ const validateForm = (form) => {
     }
   }
   return isFormValid;
-};
-
-const validateField = (field, value = "") => {
-  const { minLength, maxLength, required, pattern } = field;
-
-  let errorText = "",
-    isFieldValid = true;
-
-  const fieldLength = value.length;
-
-  if (required && !value.length) {
-    isFieldValid = false;
-    errorText = "Required";
-  }
-
-  if ((minLength && fieldLength < minLength) || (maxLength && fieldLength > maxLength) || (pattern && !new RegExp(pattern).test(value))) {
-    isFieldValid = false;
-    errorText = field.errorMessage;
-  }
-
-  return { isFieldValid, errorText };
 };
 
 const formValidation = (store) => (next) => (action) => {
