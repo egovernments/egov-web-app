@@ -1,7 +1,7 @@
-import * as commonTypes from "../actionTypes/common";
+import * as commonTypes from "./actionTypes";
 
 const intialState = {
-  objects: {}
+  objects: {},
 };
 
 const commonReducer = (state = intialState, action) => {
@@ -14,9 +14,9 @@ const commonReducer = (state = intialState, action) => {
           [action.object]: {
             error: false,
             errorMessage: "",
-            loading: true
-          }
-        }
+            loading: true,
+          },
+        },
       };
 
     case commonTypes.ASYNC_COMPLETE:
@@ -27,9 +27,9 @@ const commonReducer = (state = intialState, action) => {
           [action.object]: {
             error: false,
             errorMessage: "",
-            loading: false
-          }
-        }
+            loading: false,
+          },
+        },
       };
 
     case commonTypes.ASYNC_ERROR:
@@ -40,15 +40,13 @@ const commonReducer = (state = intialState, action) => {
           [action.object]: {
             error: true,
             errorMessage: action.payload,
-            loading: false
-          }
-        }
+            loading: false,
+          },
+        },
       };
 
     default:
       return state;
-
   }
-
 };
 export default commonReducer;

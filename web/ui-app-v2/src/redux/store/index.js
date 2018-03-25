@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
-import rootReducer from "../reducers";
+import rootReducer from "./reducer";
 import thunk from "redux-thunk";
-import { formValidation } from "../middlewares";
+import formValidation from "../form/middlewares/validation";
 
 const middlewares = [];
 

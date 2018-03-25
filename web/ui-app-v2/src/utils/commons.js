@@ -13,18 +13,7 @@ export const hyphenSeperatedDateTime = (d) => {
   // var sc = d.getSecond();
   //
   // return `${year}-${pad2(month)}-${pad2(day)} ${hr}:${mn}:${sc}`;
-}
-
-export const prepareSearchUrl = (search, id) => {
-  const { url: searchUrl, searchKey } = search;
-  const tenantId = fetchFromLocalStorage("tenantId");
-  const query = [{ key: "tenantId", value: tenantId }];
-  if (searchKey && id) {
-    query.push({ key: searchKey, value: id });
-  }
-  return addQueryArg(searchUrl, query);
 };
-
 export const addQueryArg = (url, queries = []) => {
   const urlParts = url.split("?");
   const path = urlParts[0];

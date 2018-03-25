@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes/timeline";
+import * as actionTypes from "./actionTypes";
 
 const intialState = {
   loading: false,

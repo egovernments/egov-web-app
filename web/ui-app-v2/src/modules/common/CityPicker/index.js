@@ -61,13 +61,13 @@ export default class CityPickerDialog extends Component {
   render() {
     const { cities, autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
     const { results, searchTerm, open } = this.state;
-    const { form, formKey, fieldKey } = this.props;
+    const { field } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
 
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon {...form} id="person-city" iconPosition="after" Icon={DownArrow} />
+          <TextFieldIcon {...field} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}

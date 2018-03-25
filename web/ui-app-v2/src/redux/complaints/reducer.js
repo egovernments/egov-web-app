@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes/complaints";
+import * as actionTypes from "./actionTypes";
 
 const intialState = {
   loading: false,

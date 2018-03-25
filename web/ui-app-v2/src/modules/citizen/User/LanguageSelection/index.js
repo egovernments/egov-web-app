@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
 import LanguageSelectionForm from "../../../common/User/components/LanguageSelectionForm";
-import { fetchLocalizationLabel } from "../../../../redux/actions/app";
+import { fetchLocalizationLabel } from "../../../../redux/app/actions";
 
 class LanguageSelection extends Component {
   state = {

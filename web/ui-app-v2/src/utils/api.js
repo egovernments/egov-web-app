@@ -1,5 +1,5 @@
 import axios from "axios";
-import { prepareFormData,hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage,addQueryArg } from "./commons";
+import { prepareFormData, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
 const authToken = fetchFromLocalStorage("token");
 // const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
@@ -12,7 +12,7 @@ const instance = axios.create({
   },
 });
 
-const wrapRequestBody = (requestBody,action) => {
+const wrapRequestBody = (requestBody, action) => {
   const RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
@@ -26,15 +26,15 @@ const wrapRequestBody = (requestBody,action) => {
     authToken,
   };
 
-  return Object.assign({}, { RequestInfo: RequestInfo }, requestBody);
+  return Object.assign({}, { RequestInfo }, requestBody);
 };
 
-export const httpRequest = async (endPoint,action,queryObject=[],requestBody={}) => {
+export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}) => {
   let apiError = "Api Error";
-  queryObject.push({key:"tenantId",value:tenantId});
-  endPoint=addQueryArg(endPoint,queryObject);
+  queryObject.push({ key: "tenantId", value: tenantId });
+  endPoint = addQueryArg(endPoint, queryObject);
   try {
-    const response = await instance.post(endPoint, wrapRequestBody(requestBody,action));
+    const response = await instance.post(endPoint, wrapRequestBody(requestBody, action));
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;

@@ -1,10 +1,20 @@
-import * as actionTypes from "../actionTypes/form";
-import { setFieldValidation, setFormValidation } from "../actions/form";
+import * as actionTypes from "../actionTypes";
+import { setFieldValidation, setFormValidation } from "../actions";
+
+const getFormFields = (form) => {
+  return form.fields || {};
+};
+
+const getFormField = (form, fieldKey) => {
+  const fields = getFormFields(form);
+  return fields[fieldKey];
+};
 
 const validateForm = (form) => {
   let isFormValid = true;
-  for (let key in form) {
-    const field = form[key];
+  const formFields = getFormFields(form);
+  for (let key in formFields) {
+    const field = formFields[key];
     if (!validateField(field, field.value).isFieldValid) {
       isFormValid = false;
       break;
@@ -39,7 +49,7 @@ const formValidation = (store) => (next) => (action) => {
   const dispatch = store.dispatch;
   const state = store.getState();
   const form = state.form[formKey] || {};
-  const field = form[fieldKey] || {};
+  const field = getFormField(form, fieldKey);
 
   if (type == actionTypes.FIELD_CHANGE) {
     const { required, pattern } = field;

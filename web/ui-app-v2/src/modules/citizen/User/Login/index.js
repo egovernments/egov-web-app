@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
 import LoginForm from "./components/LoginForm";
-import { handleFieldChange, initForm } from "../../../../redux/actions/form";
+import { handleFieldChange, initForm } from "../../../../redux/form/actions";
 
 class Login extends Component {
   formKey = "login";
