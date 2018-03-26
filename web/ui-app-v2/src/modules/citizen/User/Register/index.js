@@ -55,11 +55,16 @@ class Register extends Component {
   render() {
     const { register, formConfig, navigateToLogin } = this;
     const { form, handleFieldChange } = this.props;
-    const formKey = formConfig.name;
+    const { name: formKey } = formConfig;
+    const { submitting } = form;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} register={register} navigateToLogin={navigateToLogin} />
+        {submitting ? (
+          <div>Loading...</div>
+        ) : (
+          <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} register={register} navigateToLogin={navigateToLogin} />
+        )}
       </Banner>
     );
   }

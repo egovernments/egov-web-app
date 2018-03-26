@@ -35,12 +35,13 @@ export const submitFormPending = (formKey) => {
 };
 
 export const submitFormComplete = (formKey, payload) => {
-  return { type: actionTypes.SUBMIT_FORM_COMPLETE, payload };
+  return { type: actionTypes.SUBMIT_FORM_COMPLETE, formKey, payload };
 };
 
 export const submitFormError = (formKey, error) => {
-  return { type: actionTypes.SUBMIT_FORM_ERROR, error };
+  return { type: actionTypes.SUBMIT_FORM_ERROR, formKey, error };
 };
+
 export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -55,7 +56,8 @@ export const submitForm = (formKey) => {
         console.log(formData);
         // const formResponse = await httpRequest(saveUrl,formParams);
         // data transformation will be handled by a custom middleware
-        // dispatch(submitFormComplete(formKey, formResponse));
+        // replace formData with form response
+        dispatch(submitFormComplete(formKey, formData));
       } catch (error) {
         dispatch(submitFormComplete(formKey, error));
       }
