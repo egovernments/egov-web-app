@@ -46,7 +46,8 @@ const CustomPieChart = (props) => {
               nameKey={!labelKey && 'name'}
               dataKey={!valueKey && 'value'}
               legendType="circle"
-              outerRadius="100%"
+              innerRadius={60}
+              outerRadius={100}
               isAnimationActive
             >
               {content}
