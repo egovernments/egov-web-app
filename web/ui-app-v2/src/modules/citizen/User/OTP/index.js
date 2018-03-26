@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
+import { setRoute } from "../../../../redux/app/actions";
+import isEmpty from "lodash/isEmpty";
 
 class OTP extends Component {
   formConfig = {
@@ -11,24 +13,76 @@ class OTP extends Component {
       otp: {
         id: "otp",
         required: true,
+        jsonPath: "User.otpReference",
         floatingLabelText: "OTP",
         hintText: "Enter OTP",
-        pattern: "^([0-9]){6}$",
+        pattern: "^([0-9]){5}$",
         errorMessage: "Please enter a valid OTP",
       },
     },
-    saveUrl: "/user/validateOTP",
+    action: "_create",
+    saveUrl: "/user/citizen/_create",
+    navigation: "/citizen",
   };
 
   componentDidMount() {
-    this.props.initForm(this.formConfig);
+    let { setRoute } = this.props;
+    // if (localStorage.previousPath) {
+      // if (localStorage.previousPath == "/citizen/user/register") {
+        let { fields } = this.props.registerFormData;
+        if(!isEmpty(fields))
+        {
+          this.formConfig.fields = {
+          ...this.formConfig.fields,
+          username: {
+            jsonPath: "User.username",
+            value: fields.phone.value,
+          },
+          name: {
+            jsonPath: "User.name",
+            value: fields.name.value,
+          },
+          tenantId: {
+            jsonPath: "User.tenantId",
+            value: fields.city.value,
+          },
+        };
+      }
+      // }
+      // else {
+      //   let { fields } = this.props.loginFormData;
+      //   this.formConfig.fields = {
+      //     ...this.formConfig.fields,
+      //     username: {
+      //       jsonPath: "username",
+      //       value: fields.phone.value,
+      //     },
+      //     scope: {
+      //       jsonPath: "login.scope",
+      //       value: "read",
+      //     },
+      //     grant_type: {
+      //       jsonPath: "login.grant_type",
+      //       value: "password",
+      //     },
+      //     tenantId: {
+      //       jsonPath: "login.tenantId",
+      //       value: "PB",
+      //     },
+      //   };
+      // }
+      this.props.initForm(this.formConfig);
 
-    const otpElement = document.getElementById("otp");
+      const otpElement = document.getElementById("otp");
 
-    otpElement.addEventListener("smsReceived", (e) => {
-      const { otp } = e.detail;
-      this.props.handleFieldChange("otp", "otp", otp);
-    });
+      otpElement.addEventListener("smsReceived", (e) => {
+        const { otp } = e.detail;
+        this.props.handleFieldChange("otp", "otp", otp);
+      });
+    // } else {
+      //redirect back to register screen
+      // setRoute("/citizen/user/register");
+    // }
   }
 
   componentWillUnmount() {
@@ -51,7 +105,9 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
-  return { form };
+  const registerFormData = state.form["register"] || {};
+  const loginFormData = state.form["login"] || {};
+  return { form, registerFormData, loginFormData };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -59,6 +115,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import {setRoute} from "../app/actions";
 import { httpRequest } from "../../utils/api";
 import { prepareFormData } from "./utils";
 
@@ -51,13 +52,13 @@ export const submitForm = (formKey) => {
       dispatch(submitFormPending(formKey));
       try {
         const formParams = {};
-        const { saveUrl, fields } = form;
+        const { saveUrl, fields ,navigation,action} = form;
         const formData = prepareFormData(fields);
-        console.log(formData);
-        // const formResponse = await httpRequest(saveUrl,formParams);
+        const formResponse = await httpRequest(saveUrl,action,[],formData);
         // data transformation will be handled by a custom middleware
         // replace formData with form response
-        dispatch(submitFormComplete(formKey, formData));
+        dispatch(submitFormComplete(formKey, formResponse));
+        navigation && dispatch(setRoute(navigation));
       } catch (error) {
         dispatch(submitFormError(formKey, error));
       }

@@ -13,7 +13,7 @@ import Profile from "./Profile";
 class Citizen extends Component {
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
-    const { route: currentRoute } = this.props;
+    const { route: currentRoute,history } = this.props;
     if (nextRoute && currentRoute !== nextRoute) {
       this.props.history.push(nextRoute);
     }

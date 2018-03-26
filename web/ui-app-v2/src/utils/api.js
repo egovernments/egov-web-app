@@ -16,7 +16,8 @@ const wrapRequestBody = (requestBody, action) => {
   const RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
-    ts: hyphenSeperatedDateTime(new Date()),
+    ts: "2018-03-29 11:12:12",
+    // hyphenSeperatedDateTime(new Date()),
     action: action,
     did: "1",
     key: "",

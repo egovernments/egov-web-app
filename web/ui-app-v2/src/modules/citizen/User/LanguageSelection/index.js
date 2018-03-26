@@ -14,7 +14,7 @@ class LanguageSelection extends Component {
       },
       {
         label: "हिंदी",
-        value: "hn_IN",
+        value: "hi_IN",
       },
       {
         label: "ਪੰਜਾਬੀ",

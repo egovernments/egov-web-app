@@ -10,16 +10,16 @@ class Register extends Component {
     fields: {
       name: {
         id: "person-name",
-        jsonPath: "user.name",
+        jsonPath: "otp.name",
         required: true,
         floatingLabelText: "Name",
         hintText: "Enter Your Name",
-        pattern: "^([A-z])+$",
+        pattern: "^([A-z ])+$",
         errorMessage: "Please enter a valid name",
       },
       city: {
         id: "person-city",
-        jsonPath: "user.location.city",
+        jsonPath: "otp.tenantId",
         required: true,
         floatingLabelText: "City",
         hintText: "Enter Your City",
@@ -27,15 +27,22 @@ class Register extends Component {
       phone: {
         id: "person-phone",
         required: true,
-        jsonPath: "user.contact.phone",
+        jsonPath: "otp.mobileNumber",
         floatingLabelText: "Phone Number",
         hintText: "Enter Your Phone Number",
         pattern: "^([0-9])+$",
         errorMessage: "Please enter a valid phone number",
         value: "",
       },
+      type: {
+        id: "otp-type",
+        jsonPath: "otp.type",
+        value: "register",
+      },
     },
-    saveUrl: "/user/register",
+    action:"_send",
+    saveUrl: "/user-otp/v1/_send",
+    navigation: "/citizen/user/otp"
   };
 
   componentDidMount() {
