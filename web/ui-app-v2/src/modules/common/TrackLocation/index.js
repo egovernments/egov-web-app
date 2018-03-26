@@ -115,7 +115,7 @@ class TrackLocation extends Component {
         />
         <div className="pickBtn">
           <Button
-            id="locationPickBtn"
+            id="map-pick-button"
             className="pick"
             label={"Pick"}
             style={pickBtn}
