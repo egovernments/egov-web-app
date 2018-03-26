@@ -114,7 +114,15 @@ class TrackLocation extends Component {
           showMyLoc={this.state.showMyLoc}
         />
         <div className="pickBtn">
-          <Button className="pick" label={"Pick"} style={pickBtn} primary={true} labelColor="#ffffff" onClick={this.onClickPick} />
+          <Button
+            id="map-pick-button"
+            className="pick"
+            label={"Pick"}
+            style={pickBtn}
+            primary={true}
+            labelColor="#ffffff"
+            onClick={this.onClickPick}
+          />
         </div>
       </div>
     );
