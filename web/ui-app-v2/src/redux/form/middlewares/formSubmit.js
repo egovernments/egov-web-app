@@ -14,10 +14,9 @@ const formSubmit = (store) => (next) => (action) => {
     let redirectionRoute = "";
     switch (formKey) {
       case "register":
-        redirectionRoute = "/citizen/user/login";
-        break;
       case "login":
-        redirectionRoute = "/citizen";
+        redirectionRoute = "/citizen/user/otp";
+        break;
       case "otp":
         redirectionRoute = "/citizen";
         break;

@@ -10,19 +10,23 @@ class Login extends Component {
     fields: {
       phone: {
         id: "person-phone",
-        jsonPath:"login.username",
+        jsonPath: "login.username",
         required: true,
         floatingLabelText: "Phone Number",
         hintText: "Enter Your Phone Number",
         pattern: "^([0-9])+$",
         errorMessage: "Please enter a valid phone number",
         value: "",
-      }
+      },
     },
     saveUrl: "/user/oauth/token",
-    navigation:"/citizen/user/otp",
-    action:"token"
+    navigation: "/citizen/user/otp",
+    action: "token",
   };
+  constructor(props) {
+    super(props);
+    this.formConfig = require("../../../../config/forms/login").default;
+  }
 
   componentDidMount() {
     this.props.initForm(this.formConfig);

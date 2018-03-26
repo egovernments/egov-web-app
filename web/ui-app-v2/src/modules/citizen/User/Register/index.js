@@ -40,10 +40,14 @@ class Register extends Component {
         value: "register",
       },
     },
-    action:"_send",
+    action: "_send",
     saveUrl: "/user-otp/v1/_send",
-    navigation: "/citizen/user/otp"
+    navigation: "/citizen/user/otp",
   };
+  constructor(props) {
+    super(props);
+    this.formConfig = require("../../../../config/forms/register").default;
+  }
 
   componentDidMount() {
     this.props.initForm(this.formConfig);
