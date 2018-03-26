@@ -32,7 +32,7 @@ const displayFieldErrors = (state, formKey) => {
   const formFields = getFormFields(form);
   for (let key in formFields) {
     const field = formFields[key];
-    const { errorText, isFieldValid } = validateField(field, field.value);
+    const { errorText, isFieldValid } = validateField(field);
     if (!isFieldValid) {
       state = setFieldProperty(state, formKey, key, "errorText", errorText);
     }

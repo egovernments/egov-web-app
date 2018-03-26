@@ -1,8 +1,9 @@
 import set from "lodash/set";
 
-export const validateField = (field, value = "") => {
+export const validateField = (field) => {
   const { required, pattern } = field;
 
+  const value = field.value || "";
   let errorText = "",
     isFieldValid = true;
 

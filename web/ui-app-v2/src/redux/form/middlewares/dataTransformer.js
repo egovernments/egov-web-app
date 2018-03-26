@@ -7,7 +7,7 @@ const frameworkMiddleware = (store) => (next) => (action) => {
   let transformedFormData;
 
   switch (type) {
-    case "SUBMIT_FORM_DATA":
+    case "SUBMIT_FORM":
       transformedFormData = _.clone(formData);
 
       if (transformers && transformers.VToBModelTransform && transformers.VToBModelTransform.length)
@@ -18,7 +18,7 @@ const frameworkMiddleware = (store) => (next) => (action) => {
       dispatch(saveForm(createUrl, transformedFormData));
       return;
 
-    case "SET_FORM_DATA":
+    case "SET_FORM":
       transformedFormData = _.clone(action.formData);
       if (transformers && transformers.BToVModelTransform && transformers.BToVModelTransform.length) {
         transformers.BToVModelTransform.forEach((transformer) => {
