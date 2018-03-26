@@ -75,9 +75,7 @@ class OTP extends Component {
     //   };
     // }
     this.props.initForm(this.formConfig);
-
     const otpElement = document.getElementById("otp");
-
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       this.props.handleFieldChange("otp", "otp", otp);
