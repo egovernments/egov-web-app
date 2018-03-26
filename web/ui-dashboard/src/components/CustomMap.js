@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, LayersControl, Marker, Tooltip, GeoJSON } from 'react-leaflet';
+import ContainerDimension from 'react-container-dimensions';
 import Card, { CardContent } from 'material-ui/Card';
 import red from 'material-ui/colors/red';
 import yellow from 'material-ui/colors/yellow';
@@ -128,61 +129,65 @@ class CustomMap extends Component {
     const corner1 = [bboxArray[1], bboxArray[0]];
     const corner2 = [bboxArray[3], bboxArray[2]];
     return (
-      <Card raised style={{ minWidth: '100px' }}>
-        <CardContent>
-          <Map
-            // center={position}
-            // zoom={zoomLevel}
-            bounds={[corner1, corner2]}
-            style={{ height: '420px', width: '100%' }}
-          >
-            <LayersControl position="topright">
-              <LayersControl.BaseLayer name="Map White">
-                <TileLayer
-                  attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                  url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
-                  id="mapbox.light"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Map Dark">
-                <TileLayer
-                  attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                  url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
-                  id="mapbox.dark"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Map Street View" checked>
-                <TileLayer
-                  attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                  url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
-                  id="mapbox.streets"
-                />
-              </LayersControl.BaseLayer>
-            </LayersControl>
-            {markers}
-            {geoJson.division.toUpperCase() === 'DISTRICT' && (
-              <GeoJSON
-                key={hash(geoJson.geoJson)}
-                data={geoJson.geoJson}
-                style={{
-                  weight: 5,
-                  color: 'white',
-                  dashArray: '3',
-                }}
-              />
-            )}
-            {geoJson && (
-              <GeoJSON
-                key={hash(plots)}
-                data={geoJson.geoJsonChildren}
-                style={this.style}
-                onEachFeature={this.onEachFeature}
-              />
-            )}
-            <StatsMapControl />
-          </Map>
-        </CardContent>
-      </Card>
+      <ContainerDimension>
+        {({ width, height }) => (
+          <Card raised style={{ height, width }}>
+            <CardContent>
+              <Map
+                // center={position}
+                // zoom={zoomLevel}
+                bounds={[corner1, corner2]}
+                style={{ height: height - 30, width: '100%' }}
+              >
+                <LayersControl position="topright">
+                  <LayersControl.BaseLayer name="Map White">
+                    <TileLayer
+                      attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                      url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
+                      id="mapbox.light"
+                    />
+                  </LayersControl.BaseLayer>
+                  <LayersControl.BaseLayer name="Map Dark">
+                    <TileLayer
+                      attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                      url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
+                      id="mapbox.dark"
+                    />
+                  </LayersControl.BaseLayer>
+                  <LayersControl.BaseLayer name="Map Street View" checked>
+                    <TileLayer
+                      attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                      url={`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${mapboxAccessToken}`}
+                      id="mapbox.streets"
+                    />
+                  </LayersControl.BaseLayer>
+                </LayersControl>
+                {markers}
+                {geoJson.division.toUpperCase() === 'DISTRICT' && (
+                  <GeoJSON
+                    key={hash(geoJson.geoJson)}
+                    data={geoJson.geoJson}
+                    style={{
+                      weight: 5,
+                      color: 'white',
+                      dashArray: '3',
+                    }}
+                  />
+                )}
+                {geoJson && (
+                  <GeoJSON
+                    key={hash(plots)}
+                    data={geoJson.geoJsonChildren}
+                    style={this.style}
+                    onEachFeature={this.onEachFeature}
+                  />
+                )}
+                <StatsMapControl />
+              </Map>
+            </CardContent>
+          </Card>
+        )}
+      </ContainerDimension>
     );
   }
 }

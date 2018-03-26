@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Card, { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import ContainerDimension from 'react-container-dimensions';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -35,29 +36,33 @@ const CustomPieChart = (props) => {
     content = data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />);
   }
   return (
-    <Card raised className={classes.card}>
-      <CardContent>
-        <Typography className={classes.pos}>{heading}</Typography>
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              onClick={onClick}
-              data={data}
-              nameKey={!labelKey && 'name'}
-              dataKey={!valueKey && 'value'}
-              legendType="circle"
-              innerRadius={60}
-              outerRadius={100}
-              isAnimationActive
-            >
-              {content}
-            </Pie>
-            <Tooltip content={tooltip} />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    <ContainerDimension>
+      {({ width, height }) => (
+        <Card raised className={classes.card} style={{ height, width }}>
+          <CardContent>
+            <Typography className={classes.pos}>{heading}</Typography>
+            <ResponsiveContainer width="100%" height={height - 50}>
+              <PieChart>
+                <Pie
+                  onClick={onClick}
+                  data={data}
+                  nameKey={!labelKey && 'name'}
+                  dataKey={!valueKey && 'value'}
+                  legendType="circle"
+                  innerRadius={60}
+                  outerRadius={100}
+                  isAnimationActive
+                >
+                  {content}
+                </Pie>
+                <Tooltip content={tooltip} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
+    </ContainerDimension>
   );
 };
 
