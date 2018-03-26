@@ -10,6 +10,7 @@ class Register extends Component {
     fields: {
       name: {
         id: "person-name",
+        jsonPath: "user.name",
         required: true,
         floatingLabelText: "Name",
         hintText: "Enter Your Name",
@@ -18,6 +19,7 @@ class Register extends Component {
       },
       city: {
         id: "person-city",
+        jsonPath: "user.location.city",
         required: true,
         floatingLabelText: "City",
         hintText: "Enter Your City",
@@ -25,6 +27,7 @@ class Register extends Component {
       phone: {
         id: "person-phone",
         required: true,
+        jsonPath: "user.contact.phone",
         floatingLabelText: "Phone Number",
         hintText: "Enter Your Phone Number",
         pattern: "^([0-9])+$",

@@ -52,6 +52,7 @@ export const submitForm = (formKey) => {
         const formParams = {};
         const { saveUrl, fields } = form;
         const formData = prepareFormData(fields);
+        console.log(formData);
         // const formResponse = await httpRequest(saveUrl,formParams);
         // data transformation will be handled by a custom middleware
         // dispatch(submitFormComplete(formKey, formResponse));

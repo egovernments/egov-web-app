@@ -1,3 +1,5 @@
+import set from "lodash/set";
+
 export const validateField = (field, value = "") => {
   const { required, pattern } = field;
 
@@ -29,5 +31,8 @@ export const getFormField = (form, fieldKey) => {
 };
 
 export const prepareFormData = (formFields) => {
-  return formFields;
+  return Object.keys(formFields).reduce((formData, fieldKey) => {
+    const { value, jsonPath } = formFields[fieldKey];
+    return set(formData, jsonPath, value);
+  }, {});
 };
