@@ -3,6 +3,7 @@ import { Button, Icon } from "../../../components";
 import ImageUpload from "../../common/ImageUpload";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
 import "./index.css";
 
 class ComplaintResolved extends Component {
@@ -13,6 +14,8 @@ class ComplaintResolved extends Component {
   onSubmit = () => {
     if (this.state.submitted === false) {
       this.setState({ submitted: true });
+    } else {
+      this.props.history.push("/citizen");
     }
   };
 
@@ -21,7 +24,7 @@ class ComplaintResolved extends Component {
     let { submitted } = this.state;
 
     return (
-      <div className="complaint-resolved-main-container">
+      <Screen className="complaint-resolved-main-container">
         {!submitted ? (
           <div>
             <ImageUpload />
@@ -30,20 +33,15 @@ class ComplaintResolved extends Component {
             </div>
           </div>
         ) : (
-          <div className="complaint-resolved-main-cont ">
-            <div className="complaint-resolved-inner-cont">
-              <div className="complaint-resolved-icon-cont">
-                <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
-                  <Icon action="navigation" name="check" />
-                </FloatingActionButton>
-              </div>
-              <span className="thankyou-text">
-                You have marked the complaint as <span style={{ color: "#484848" }}>Resolved</span> <br /> successfully
+          <SuccessMessage
+            successmessage={
+              <span>
+                You have marked the complaint as <span style={{ color: "#484848" }}>Resolved</span> successfully
               </span>
-            </div>
-          </div>
+            }
+          />
         )}
-        <div className="complaint-resolved-button-cont">
+        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 complaint-resolved-button-cont">
           <Button
             id={submitted ? "complaint-resolved-continue" : "complaint-resolved-submit"}
             label={submitted ? "CONTINUE" : "MARK RESOLVED"}
@@ -54,7 +52,7 @@ class ComplaintResolved extends Component {
             }}
           />
         </div>
-      </div>
+      </Screen>
     );
   }
 }

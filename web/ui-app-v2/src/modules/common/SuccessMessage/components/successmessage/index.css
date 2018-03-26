@@ -1,10 +1,21 @@
-.success-message-container {
+.success-message-main-cont {
   text-align: center;
-  background-color: #ffffff;
-  margin-left: -8px;
-  margin-right: -8px;
-  padding-top: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.success-message {
-  padding-bottom: 350px;
+
+.success-message-icon-cont {
+  margin-bottom: 21px;
+}
+
+.thankyou-text {
+  letter-spacing: 0.7px;
+  color: #767676 !important;
+}
+
+.success-message-inner-cont {
+  margin-bottom: 64px;
 }
