@@ -3,7 +3,6 @@ import Details from "../../common/complaintDetails/components/Details";
 import ComplaintTimeLine from "../../common/complaintDetails/components/ComplaintTimeLine";
 import Comments from "../../common/complaintDetails/components/Comments";
 import Screen from "../../common/Screen";
-import FeedbackPopup from "../../common/FeedbackPopup";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 
@@ -63,7 +62,7 @@ class ComplaintDetails extends Component {
   }
 
   render() {
-    let { status, details, timeLine, comments, feedbackOpen, submitted, value } = this.state;
+    let { status, details, timeLine, comments } = this.state;
     return (
       <Screen>
         <Details {...details} />

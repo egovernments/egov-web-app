@@ -62,7 +62,6 @@ export default class ComplaintCategory extends Component {
   };
 
   onComplaintTypeChosen = (item, index) => {
-    const complaintType = item.primaryText;
     // put the complaint type in the global store like redux
     this.props.history.goBack();
   };

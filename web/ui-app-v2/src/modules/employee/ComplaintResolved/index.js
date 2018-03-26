@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Button, Icon } from "../../../components";
 import ImageUpload from "../../common/ImageUpload";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
-import Screen from "../../common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 
@@ -20,7 +19,6 @@ class ComplaintResolved extends Component {
   render() {
     let { history } = this.props;
     let { submitted } = this.state;
-    const { handleComplaintResolved } = this;
 
     return (
       <div className="complaint-resolved-main-container">

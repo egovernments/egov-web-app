@@ -4,7 +4,6 @@ import ComplaintTimeLine from "../../common/complaintDetails/components/Complain
 import Comments from "../../common/complaintDetails/components/Comments";
 import Actions from "../../common/complaintDetails/components/ActionButton";
 import Screen from "../../common/Screen";
-import FeedbackPopup from "../../common/FeedbackPopup";
 import { withRouter } from "react-router-dom";
 
 import "./index.css";
@@ -115,7 +114,7 @@ class ComplaintDetails extends Component {
 
   render() {
     let btnOneLabel, btnTwoLabel;
-    let { status, details, timeLine, comments, feedbackOpen, submitted, value, role, hasComments } = this.state;
+    let { status, details, timeLine, comments, role, hasComments } = this.state;
     if (role === "AO" && status.status === "Unassigned") {
       btnOneLabel = "REJECT";
       btnTwoLabel = "ASSIGN";

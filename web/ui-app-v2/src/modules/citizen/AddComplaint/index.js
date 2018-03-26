@@ -2,16 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Screen from "../../common/Screen";
 import ImageUpload from "../../common/ImageUpload";
-import TrackLocation from "../../common/TrackLocation";
 import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
-import mapPinIcon from "../../../assets/Location_pin.svg";
 import { Button } from "../../../components";
 
 import "./index.css";
-
-const latLng = { lat: 12.9199988, lng: 77.67078 };
 
 class AddComplaints extends Component {
   state = {

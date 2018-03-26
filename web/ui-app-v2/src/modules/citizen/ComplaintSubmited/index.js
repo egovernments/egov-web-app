@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Label, Icon, Button } from "../../../components";
+import { Label, Icon, Button } from "../../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "../../common/Screen";
 import "./index.css";

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Label, Button, Icon } from "../../../components";
+import { Tabs, Label } from "../../../components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
@@ -220,7 +220,6 @@ class AllComplaints extends Component {
   };
 
   render() {
-    let { escalated } = this;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
