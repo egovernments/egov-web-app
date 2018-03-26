@@ -55,7 +55,7 @@ const Main = () => {
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/how-it-works" title="How it works" component={HowItWorks} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/add-complaint" title="Add Complaint" component={AddComplaint} />
         {/* Employee routes */}
-        <PrivateRoute exact hideBottomNavigation={true} path="/employee/all-complaints" title="All Complaints" component={AllComplaints} />
+        <PrivateRoute exact hideBottomNavigation={false} path="/employee/all-complaints" title="All Complaints" component={AllComplaints} />
         <PrivateRoute exact hideBottomNavigation={true} path="/employee/reassign-complaint" title="Request Re-Assign" component={ReAssignComplaint} />
         <PrivateRoute
           exact
