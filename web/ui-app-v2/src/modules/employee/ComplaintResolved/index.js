@@ -4,6 +4,7 @@ import ImageUpload from "../../common/ImageUpload";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import Screen from "../../common/Screen";
 import "./index.css";
 
 class ComplaintResolved extends Component {
