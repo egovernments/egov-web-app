@@ -4,6 +4,10 @@ import { asyncPending, asyncComplete, asyncError } from "../common/actions";
 import { LOCALATION } from "../../utils/endPoints";
 import { httpRequest } from "../../utils/api";
 
+export const setRoute = (route) => {
+  return { type: appTypes.SET_ROUTE, route };
+};
+
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
     dispatch(asyncPending(commonTypes.ASYNC_PENDING, "localation"));

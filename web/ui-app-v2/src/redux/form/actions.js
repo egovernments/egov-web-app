@@ -59,7 +59,7 @@ export const submitForm = (formKey) => {
         // replace formData with form response
         dispatch(submitFormComplete(formKey, formData));
       } catch (error) {
-        dispatch(submitFormComplete(formKey, error));
+        dispatch(submitFormError(formKey, error));
       }
     } else {
       dispatch(displayFormErrors(formKey));

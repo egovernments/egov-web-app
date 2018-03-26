@@ -42,19 +42,13 @@ class Register extends Component {
     this.props.initForm(this.formConfig);
   }
 
-  register = () => {
-    const formKey = this.formConfig.name;
-    this.props.submitForm(formKey);
-    // this.props.history.push("/citizen/user/otp");
-  };
-
   navigateToLogin = () => {
     this.props.history.push("/citizen/user/login");
   };
 
   render() {
-    const { register, formConfig, navigateToLogin } = this;
-    const { form, handleFieldChange } = this.props;
+    const { formConfig, navigateToLogin } = this;
+    const { form, handleFieldChange, submitForm } = this.props;
     const { name: formKey } = formConfig;
     const { submitting } = form;
 
@@ -63,7 +57,7 @@ class Register extends Component {
         {submitting ? (
           <div>Loading...</div>
         ) : (
-          <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} register={register} navigateToLogin={navigateToLogin} />
+          <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} navigateToLogin={navigateToLogin} />
         )}
       </Banner>
     );

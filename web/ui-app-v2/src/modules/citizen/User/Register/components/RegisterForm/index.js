@@ -2,7 +2,7 @@ import React from "react";
 import { Button, TextField, MobileNumberField, Label, Card } from "../../../../../../components";
 import CityPicker from "../../../../../common/CityPicker";
 
-const RegisterForm = ({ formKey, form, onChange, navigateToLogin, register }) => {
+const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -18,7 +18,7 @@ const RegisterForm = ({ formKey, form, onChange, navigateToLogin, register }) =>
               <Label id="otp-trigger" className="otp-prompt" label="Have an account?" />
               <Label containerStyle={{ cursor: "pointer" }} id="otp-resend" className="otp-resend" label="LOGIN" />
             </div>
-            <Button id="login-submit-action" onClick={register} primary={true} label="Submit" fullWidth={true} />
+            <Button id="login-submit-action" onClick={() => submitForm(formKey)} primary={true} label="Submit" fullWidth={true} />
           </form>
         </div>
       }

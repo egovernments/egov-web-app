@@ -18,12 +18,7 @@ class Login extends Component {
         value: "",
       },
     },
-  };
-
-  login = () => {
-    const formKey = this.formConfig.name;
-    this.props.submitForm(formKey);
-    // this.props.history.push("/citizen/user/otp");
+    saveUrl: "/user/login",
   };
 
   componentDidMount() {
@@ -31,13 +26,12 @@ class Login extends Component {
   }
 
   render() {
-    const { login, formConfig } = this;
-    const { form, handleFieldChange } = this.props;
-    const formKey = formConfig.name;
+    const { form, handleFieldChange, submitForm } = this.props;
+    const { name: formKey } = this.formConfig;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <LoginForm login={login} form={form} formKey={formKey} onChange={handleFieldChange} />
+        <LoginForm form={form} submitForm={submitForm} formKey={formKey} onChange={handleFieldChange} />
       </Banner>
     );
   }

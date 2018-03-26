@@ -84,6 +84,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // to be removed once all navigation is migrated to routes
     const { path: nextPath } = nextProps;
     const { path: currentPath } = this.props;
     if (nextPath && currentPath && currentPath !== nextPath) {
@@ -118,4 +119,9 @@ class App extends Component {
   }
 }
 
-export default connect(null, null)(App);
+const mapStateToProps = (state) => {
+  const { route } = state.app;
+  return { route };
+};
+
+export default connect(mapStateToProps, null)(App);

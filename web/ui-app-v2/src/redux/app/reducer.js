@@ -4,6 +4,7 @@ const initialState = {
   name: "Mseva",
   showMenu: false,
   showDailog: false,
+  route: "",
   showToster: false,
   localizationLabel: {},
 };
@@ -15,6 +16,8 @@ const appReducer = (state = initialState, action) => {
         ...state,
         localizationLabel: action.payload,
       };
+    case actionTypes.SET_ROUTE:
+      return { ...state, route: action.route };
     default:
       return state;
   }
