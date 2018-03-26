@@ -1,5 +1,4 @@
 import React from "react";
-import Screen from "../../common/Screen";
 import { Card, Label, TimeLine, Icon } from "../../../components";
 import "./index.css";
 

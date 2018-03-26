@@ -33,7 +33,7 @@ class Feedback extends Component {
 
   render() {
     let { history } = this.props;
-    let { items, value, submitted } = this.state;
+    let { value, submitted } = this.state;
     return (
       <div className="feedback-main-container">
         {!submitted ? (

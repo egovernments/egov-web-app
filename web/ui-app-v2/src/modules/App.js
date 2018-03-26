@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBodyClassFromPath, addBodyClass, removeBodyClass } from "../utils/commons";
+import { addBodyClass, removeBodyClass } from "../utils/commons";
 import HeaderWithDrawer from "./common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "../components";
 import IconButton from "material-ui/IconButton";

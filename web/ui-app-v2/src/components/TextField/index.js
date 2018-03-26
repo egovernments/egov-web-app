@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import MaterialUITextField from "material-ui/TextField";
 
-const errorStyle = {};
-
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
