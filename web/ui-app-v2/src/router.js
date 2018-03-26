@@ -26,6 +26,8 @@ import Citizen from "./modules/citizen/User";
 import ReAssignComplaint from "./modules/employee/ReAssignComplaint";
 import AllComplaints from "./modules/employee/AllComplaints";
 import ComplaintResolved from "./modules/employee/ComplaintResolved";
+import ResolveSuccess from "./modules/employee/ResolveSuccess";
+import ReAssignSuccess from "./modules/employee/ReAssignSuccess";
 import ComplaintSummary from "./modules/employee/ComplaintDetails";
 import EmpUser from "./modules/employee/User";
 import AssignComplaint from "./modules/employee/AssignComplaint";
@@ -54,13 +56,7 @@ const Main = () => {
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/add-complaint" title="Add Complaint" component={AddComplaint} />
         {/* Employee routes */}
         <PrivateRoute exact hideBottomNavigation={true} path="/employee/all-complaints" title="All Complaints" component={AllComplaints} />
-        <PrivateRoute
-          exact
-          hideBottomNavigation={true}
-          path="/employee/reassign-complaint"
-          title="ReAssign Complaint"
-          component={ReAssignComplaint}
-        />
+        <PrivateRoute exact hideBottomNavigation={true} path="/employee/reassign-complaint" title="Request Re-Assign" component={ReAssignComplaint} />
         <PrivateRoute
           exact
           hideBottomNavigation={true}
@@ -75,6 +71,8 @@ const Main = () => {
           title="Complaint Summary"
           component={ComplaintSummary}
         />
+        <PrivateRoute exact hideBottomNavigation={true} path="/employee/resolve-success" title="Complaint Resolved" component={ResolveSuccess} />
+        <PrivateRoute exact hideBottomNavigation={true} path="/employee/reassign-success" title="Re-Assign Complaint" component={ReAssignSuccess} />
         <Route path="/employee/user" component={EmpUser} />
         <PrivateRoute exact hideBottomNavigation={true} path="/employee/assign-complaint" title="Assign Complaint" component={AssignComplaint} />
       </Switch>

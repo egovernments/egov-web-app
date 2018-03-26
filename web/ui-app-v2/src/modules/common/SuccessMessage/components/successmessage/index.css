@@ -1,0 +1,10 @@
+.success-message-container {
+  text-align: center;
+  background-color: #ffffff;
+  margin-left: -8px;
+  margin-right: -8px;
+  padding-top: 200px;
+}
+.success-message {
+  padding-bottom: 350px;
+}

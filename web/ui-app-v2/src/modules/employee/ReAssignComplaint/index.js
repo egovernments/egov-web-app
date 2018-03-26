@@ -14,7 +14,7 @@ class ReAssignComplaint extends Component {
   ];
 
   handleComplaintReassigned = () => {
-    this.props.history.push("/citizen/complaint-submitted");
+    this.props.history.push("/employee/reassign-success");
   };
 
   render() {
