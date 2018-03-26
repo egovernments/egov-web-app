@@ -1,6 +1,11 @@
 .gm-style-mtc {
   display: none;
 }
+
+.gmnoprint {
+  z-index: -1;
+}
+
 .gm-fullscreen-control {
   display: none;
 }
