@@ -4,7 +4,6 @@ import { ListItem } from 'material-ui/List';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { layout, layoutProps } from './constants/layout';
-import Grid from 'material-ui/Grid';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import StatBox from './components/StatBox';
 import CustomPieChart from './components/CustomPieChart';
@@ -17,7 +16,6 @@ import {
   addConstraint,
 } from './actions/pgrActions';
 import ES_MAPPING from './constants/esMapping';
-import ResponsiveDrawer from './components/ResponsiveDrawer';
 import PersistentDrawer from './components/PersistentDrawer';
 import CustomSelectBox from './components/CustomSelectBox';
 import CustomDatePicker from './components/CustomDatePicker';
