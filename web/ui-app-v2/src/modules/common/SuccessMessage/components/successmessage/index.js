@@ -7,12 +7,14 @@ class SuccessMessage extends Component {
   render() {
     const { successmessage } = this.props;
     return (
-      <div className="success-message-container">
-        <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "24px" }}>
-          <Icon name={"check"} action={"navigation"} />
-        </FloatingActionButton>
-        <div className="success-message">
-          <Label label={successmessage} fontSize="14px" labelStyle={{ paddingLeft: "8px" }} />
+      <div className="success-message-main-cont ">
+        <div className="success-message-inner-cont">
+          <div className="success-message-icon-cont">
+            <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
+              <Icon action="navigation" name="check" />
+            </FloatingActionButton>
+          </div>
+          <span className="thankyou-text">{successmessage}</span>
         </div>
       </div>
     );

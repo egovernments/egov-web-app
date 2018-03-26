@@ -1,17 +1,18 @@
-.reassigncomplaint-field {
-  background-color: #ffffff;
-  padding-top: 16px !important;
+.reassign-complaint-main-container {
+  position: relative !important;
+  padding: 16px 16px 0 16px !important;
+  background: #ffffff;
+  height: calc(100vh - 64px);
 }
 
-.reassigncomplaint-textArea {
+.reassign-complaint-textArea {
   padding: 24px 16px 250px 1px;
 }
 
-.reassigncomplaint-button {
-  padding: 8px !important;
+.reassign-complaint-button {
   position: fixed !important;
-  left: 0px;
-  bottom: 30px;
   width: 100%;
-  background-color: #ffffff;
+  bottom: 12px;
+  left: 0px;
+  padding: 8px !important;
 }
