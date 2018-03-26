@@ -30,8 +30,10 @@ const wrapRequestBody = (requestBody, action) => {
   return Object.assign({}, { RequestInfo }, requestBody);
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}) => {
+export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers) => {
   let apiError = "Api Error";
+  if (headers) instance.defaults = Object.assign(instance.defaults, { headers });
+
   queryObject.push({ key: "tenantId", value: tenantId });
   endPoint = addQueryArg(endPoint, queryObject);
   try {

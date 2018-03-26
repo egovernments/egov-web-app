@@ -2,18 +2,8 @@ import _ from "lodash";
 
 export const hyphenSeperatedDateTime = (d) => {
   return d;
-  // function pad2(n) {
-  //   return n > 9 ? n : '0' + n;
-  // }
-  // var year = d.getFullYear();
-  // var month = d.getMonth() + 1; // months start at zero
-  // var day = d.getDate();
-  // var hr = d.getHour();
-  // var mn = d.getMinute();
-  // var sc = d.getSecond();
-  //
-  // return `${year}-${pad2(month)}-${pad2(day)} ${hr}:${mn}:${sc}`;
 };
+
 export const addQueryArg = (url, queries = []) => {
   const urlParts = url.split("?");
   const path = urlParts[0];

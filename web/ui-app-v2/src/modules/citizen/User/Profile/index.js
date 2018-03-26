@@ -15,7 +15,6 @@ class Profile extends Component {
       openUploadSlide: false,
       img: img,
     };
-
     this.formConfig = require("../../../../config/forms/profile").default;
   }
 
@@ -25,6 +24,7 @@ class Profile extends Component {
   }
 
   /* Set/remove profile picture */
+  // set it in the redux state
   setProfilePic = (url) => {
     if (url === "") url = img;
     this.setState({
@@ -39,9 +39,9 @@ class Profile extends Component {
   };
 
   render() {
+    const { form, handleFieldChange, submitForm } = this.props;
     const { img, openUploadSlide } = this.state;
     const { formConfig, setProfilePic, onClickAddPic } = this;
-    const { form, handleFieldChange, submitForm } = this.props;
     const { name: formKey } = formConfig;
     const { submitting } = form;
 
