@@ -125,7 +125,7 @@ const getStatusAndChangeColor = (status, assignee) => {
 const Complaints = ({ index, complaints, history, onClick, complaintLocation, track, role }) => {
   return complaints.map((complaint, complaintIndex) => {
     return (
-      <div id={"complaint-" + index} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
+      <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
         <Card
           className="complaint-card"
           textChildren={
@@ -141,7 +141,10 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
                 <span className="complaint-date">{complaint.date}</span>
               </div>
               <div className="complaint-number-cont">
-                <span className="complaint-number complaint-date">Complaint No {complaint.complaintNo}</span>
+                <div className="complaint-number complaint-date">
+                  <Label fontSize="12px" label={"Complaint No "} />
+                  <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
+                </div>
               </div>
               {complaintLocation && (
                 <div className="complaint-address-cont">
@@ -173,6 +176,7 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
               {track && (
                 <div className="complaint-track-button-cont">
                   <Button
+                    className="complaint-track-btn"
                     primary={true}
                     label={"TRACK"}
                     style={{

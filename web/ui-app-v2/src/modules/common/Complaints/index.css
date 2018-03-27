@@ -112,3 +112,12 @@
 .submitted-by-text {
   margin-bottom: 8px;
 }
+.complaint-number-cont .label-container,
+.complaint-number-cont .label-text {
+  display: inline;
+  letter-spacing: 0.6px;
+}
+.complaint-status-text .label-container,
+.complaint-status-text .label-text {
+  display: inline;
+}
