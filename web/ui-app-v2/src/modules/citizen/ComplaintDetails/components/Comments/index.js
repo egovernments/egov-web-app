@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Card, List, Label, Icon } from "../../../../../components";
+import { Card, List, Icon } from "../../../../../components";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
+import Label from "utils/translationNode";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
 import faceTwo from "../../../../../assets/images/faceTwo.jpg";
 import "./index.css";
@@ -52,7 +53,7 @@ class Comments extends Component {
             <div>
               <div className="rainmaker-displayInline">
                 <Icon action="communication" name="forum" color="#969696" />{" "}
-                <Label label="Comments" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+                <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
               <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={itemsOne} />
               <List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwo} />

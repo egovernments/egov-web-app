@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Icon, Label } from "../../../../../components";
+import { Card, Icon } from "../../../../../components";
+import Label from "../../../../../utils/translationNode";
 import "./index.css";
 
 const cardStyle = {
@@ -29,7 +30,7 @@ const NewAndOldComplaints = ({ history }) => {
             }}
           >
             <Icon style={{ ...iconStyle, background: "#f5a623" }} action="content" name="add" />
-            <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="File Complaint" />
+            <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="CS_HOME_FILE_COMPLAINT" />
           </div>
           <div
             id="home-old-complaint"
@@ -40,7 +41,7 @@ const NewAndOldComplaints = ({ history }) => {
           >
             <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />
 
-            <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="My Complaints" />
+            <Label containerStyle={{ marginTop: "10px" }} color="#484848" bold={true} fontSize={16} label="CS_HOME_MY_COMPLAINTS" />
           </div>
         </div>
       }

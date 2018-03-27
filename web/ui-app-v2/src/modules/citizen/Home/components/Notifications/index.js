@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Icon, Label } from "../../../../../components";
+import { Card, Icon } from "../../../../../components";
 import VerticalCenterWrapper from "../../../../common/VerticalCenterWrapper";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const Updates = ({ updates }) => {
@@ -24,7 +25,7 @@ const Updates = ({ updates }) => {
               rightWrapperStyle={{ paddingLeft: "5px", width: "100%" }}
             />
             <div className="complaint-status" style={{ marginTop: "16px" }}>
-              <Label containerStyle={{ display: "inline-block" }} label="Your complaint has been" />
+              <Label containerStyle={{ display: "inline-block" }} label="CS_HOME_STATUS_PREFIX" />
               <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={`${status}`} />
             </div>
           </div>

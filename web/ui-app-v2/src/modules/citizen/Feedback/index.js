@@ -3,7 +3,8 @@ import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import "./index.css";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import { Button, Icon, Label } from "../../../components";
+import { Button, Icon } from "../../../components";
+import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { withRouter } from "react-router-dom";
 
@@ -49,7 +50,7 @@ class Feedback extends Component {
             </div>
             <Label
               id="feedback-success-message"
-              label={"Thank you for your feedback"}
+              label="CS_FEEDBACK_SUCCESS"
               className="feedback-thankyou-text"
               dark={true}
               bold={true}

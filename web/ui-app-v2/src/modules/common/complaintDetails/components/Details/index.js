@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Card, Label, Image, Icon } from "../../../../../components";
+import { Card, Image, Icon } from "../../../../../components";
+import Label from "utils/translationNode";
 import "./index.css";
 
 import garbageOne from "../../../../../assets/images/Garbage_3.jpg";
@@ -38,20 +39,20 @@ class Details extends Component {
             <div>
               <div className="rainmaker-displayInline">
                 <Icon action="notification" name="sms-failed" color="#969696" />{" "}
-                <Label label="Complaint Details" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+                <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
               <div key={10} className="complaint-detail-full-width">
                 <Label labelClassName="dark-heading rainmaker-big-font" label="Potholes on the road" />
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="Complaint No." />
+                  <Label className="col-xs-6 status-color" label="CS_COMMON_COMPLAINT_NO" />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label="25467895" />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="Current Status" />
+                  <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
                   <Label className="col-xs-6 status-result-color" labelStyle={{ color: "inherit" }} label={status} />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="Submission Date" />
+                  <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
                   <Label className="col-xs-6 status-result-color" label="11-Mar-18" labelStyle={{ color: "inherit" }} />
                 </div>
                 <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
