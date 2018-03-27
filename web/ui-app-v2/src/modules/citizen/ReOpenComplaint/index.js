@@ -20,11 +20,10 @@ class ReOpenComplaint extends Component {
 
   render() {
     const { handleComplaintSubmit } = this;
-    let label = "Why do you want to Re-Open your Complaint?";
     return (
       <Screen className="reopencomplaint-field">
         <div className="reopencomplaint-question">
-          <Question options={this.options} label={label} />
+          <Question options={this.options} label="CS_REOPEN_COMPLAINT_WHY" />
         </div>
         <div className="reopencomplaint-upload-photo">
           <ImageUpload />

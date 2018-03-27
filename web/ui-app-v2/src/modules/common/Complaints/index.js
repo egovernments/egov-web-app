@@ -1,6 +1,7 @@
 import React from "react";
-import { Image, Card, Icon, Button, Label } from "../../../components";
+import { Image, Card, Icon, Button } from "../../../components";
 import { withRouter } from "react-router-dom";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const status = { OPEN: "filed", CLOSED: "resolved", REJECTED: "rejected" };
@@ -87,19 +88,38 @@ const getStatusAndChangeColor = (status, assignee) => {
       statusObj.style = {
         color: "#f89a3f",
       };
-      statusObj.message = `Complaint Re-assigned to ${assignee}`;
+      statusObj.message = (
+        <div>
+          <Label label={`Complaint `} />
+          <Label className="complaint-status-reassigned" label={`CS_COMMON_RE_ASSIGNED`} />
+          <Label label={` to `} />
+          <Label className="complaint-assignee" label={`${assignee}`} />
+        </div>
+      );
       break;
     case "CLOSED":
       statusObj.style = {
         color: "#5385a6",
       };
-      statusObj.message = `Complaint resolved. Please rate`;
+      statusObj.message = (
+        <div>
+          <Label label={`Complaint `} />
+          <Label className="complaint-status-resolved" label="CS_COMMON_RESOLVED" />
+          <Label label={`. Please rate`} />
+        </div>
+      );
       break;
     case "REJECTED":
       statusObj.style = {
         color: "#5385a6",
       };
-      statusObj.message = `Complaint has been rejected`;
+      statusObj.message = (
+        <div>
+          <Label label={`Complaint has been `} />
+          <Label className="complaint-status-rejected" label={`CS_COMMON_REJECTED`} />
+          <Label label={`. Please rate`} />
+        </div>
+      );
       break;
     case "Overdue by 1 day":
       statusObj.style = {
@@ -142,7 +162,7 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
               </div>
               <div className="complaint-number-cont">
                 <div className="complaint-number complaint-date">
-                  <Label fontSize="12px" label={"Complaint No "} />
+                  <Label fontSize="12px" label={"CS_COMMON_COMPLAINT_NO"} />
                   <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
                 </div>
               </div>

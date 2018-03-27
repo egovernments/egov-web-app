@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Complaints from "../../common/Complaints";
 import Screen from "../../common/Screen";
-import { Icon, ImageModal, Label } from "../../../components";
+import { Icon, ImageModal } from "../../../components";
 import { withRouter } from "react-router-dom";
-import {connect} from "react-redux";
-import {fetchComplaints} from "../../../redux/complaints/actions";
+import { connect } from "react-redux";
+import { fetchComplaints } from "../../../redux/complaints/actions";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../../assets/images/Garbage_2.jpg";
@@ -12,8 +12,8 @@ import Garbage_3 from "../../../assets/images/Garbage_3.jpg";
 import Potholes_1 from "../../../assets/images/Potholes_1.png";
 import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
+import Label from "utils/translationNode";
 import "./index.css";
-
 
 class MyComplaints extends Component {
   state = {
@@ -98,10 +98,10 @@ class MyComplaints extends Component {
     source: "",
   };
 
-  componentDidMount= ()=>{
-    let {fetchComplaints} =this.props;
+  componentDidMount = () => {
+    let { fetchComplaints } = this.props;
     fetchComplaints([]);
-  }
+  };
 
   imageOnClick = (source) => {
     this.setState({ source });
@@ -119,12 +119,7 @@ class MyComplaints extends Component {
       <div className="complaints-main-container">
         {complaints.length === 0 ? (
           <div className="no-complaints-message-cont">
-            <Label
-              label={"You haven’t logged any complaints yet. Start with one, make a change"}
-              dark={true}
-              fontSize={"16px"}
-              labelStyle={{ letterSpacing: "0.7px" }}
-            />
+            <Label label={"CS_MYCOMPLAINTS_NO_COMPLAINTS"} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
           </div>
         ) : (
           <Screen>
@@ -154,7 +149,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchComplaints
+  fetchComplaints,
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(MyComplaints));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MyComplaints));

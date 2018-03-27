@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Label, RadioButton } from "../../../../../components";
+import { RadioButton } from "../../../../../components";
+import Label from "../../../../../utils/translationNode";
 
 const styles = {
   labelStyle: {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Label, TimeLine, Icon } from "../../../components";
+import { Card, TimeLine, Icon } from "components";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const timelineIconCommonStyle = {
@@ -32,7 +33,7 @@ const HowItWorks = (props) => {
       },
       contentChildren: (
         <div style={{ marginLeft: "16px" }}>
-          <Label labelClassName="dark-color" label="Raise a Complaint" />
+          <Label labelClassName="dark-color" label="CS_HOWITWORKS_RAISE_COMPLAINT" />
         </div>
       ),
       labelProps: {
@@ -57,7 +58,7 @@ const HowItWorks = (props) => {
       },
       contentChildren: (
         <div style={{ marginLeft: "16px" }}>
-          <Label labelClassName="dark-color" label="Connect to Concerned Officer" />
+          <Label labelClassName="dark-color" label="CS_HOWITWORKS_CONNECT_OFFICER" />
         </div>
       ),
       // labelChildren:"Connect to Concerned Officer",
@@ -83,7 +84,7 @@ const HowItWorks = (props) => {
       },
       contentChildren: (
         <div style={{ marginLeft: "16px" }}>
-          <Label labelClassName="dark-color" label="Track Status" />
+          <Label labelClassName="dark-color" label="CS_HOWITWORKS_TRACK_STATUS" />
         </div>
       ),
       labelProps: {
@@ -108,7 +109,7 @@ const HowItWorks = (props) => {
       },
       contentChildren: (
         <div style={{ marginLeft: "16px" }}>
-          <Label labelClassName="dark-color" label="Resolved" />
+          <Label labelClassName="dark-color" label="CS_COMMON_RESOLVED" />
         </div>
       ),
       labelProps: {
@@ -126,16 +127,7 @@ const HowItWorks = (props) => {
         className="howItWorks-main-card"
         textChildren={
           <div>
-            <Label
-              labelClassName="dark-color"
-              containerStyle={{ marginBottom: "40px" }}
-              label={`We have made connecting with us easier than
-        ever before. Once you raise the complaint, we
-        will assign it to the responsible officer. You can
-        track the status of your complaint on our web-
-        site under “ My Complaints “ till your complaint
-        is resolved.`}
-            />
+            <Label labelClassName="dark-color" containerStyle={{ marginBottom: "40px" }} label={"CS_HOWITWORKS_DESCRIPTION"} />
 
             <TimeLine
               stepperProps={{
