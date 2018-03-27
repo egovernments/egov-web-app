@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 //App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Label, Button } from "../../../components";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Button } from "../../../components";
 import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -105,7 +106,7 @@ class HeaderWithDrawer extends Component {
   citizenItemsPartOne = {
     items: [
       {
-        primaryText: "Home",
+        primaryText: <Label label="CS_HOME_HOMEHEADER" />,
         route: "/citizen",
         leftIcon: <Icon action="action" name="home" />,
         style: {
@@ -116,7 +117,7 @@ class HeaderWithDrawer extends Component {
         id: "header-home",
       },
       {
-        primaryText: "Profile",
+        primaryText: <Label label="CS_HOME_HEADER_PROFILE" />,
         route: "/citizen/user/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
@@ -126,7 +127,7 @@ class HeaderWithDrawer extends Component {
         id: "header-profile",
       },
       {
-        primaryText: "Language",
+        primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
         route: "/citizen/user/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
@@ -140,7 +141,7 @@ class HeaderWithDrawer extends Component {
   citizenItemsPartTwo = {
     items: [
       {
-        primaryText: "Contact Us",
+        primaryText: <Label label="CS_HOME_HEADER_CONTACT_US" />,
         route: "/citizen/contact-us",
         leftIcon: <Icon action="communication" name="call" />,
         style: {
@@ -150,7 +151,7 @@ class HeaderWithDrawer extends Component {
         id: "header-contact-us",
       },
       {
-        primaryText: "How it Works",
+        primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
         route: "/citizen/how-it-works",
         leftIcon: <Icon action="custom" name="help-circle" />,
         style: {
@@ -160,7 +161,7 @@ class HeaderWithDrawer extends Component {
         id: "header-how-it-works",
       },
       {
-        primaryText: "Logout",
+        primaryText: <Label label="CORE_COMMON_LOGOUT" />,
         route: "/logout",
         leftIcon: <Icon action="action" name="power-settings-new" />,
         style: {
@@ -340,8 +341,8 @@ class HeaderWithDrawer extends Component {
           children={[
             <div style={logoutContentStyle} key={"logout-popup"}>
               <div className="logout-label">
-                <Label label={"Logout"} bold={true} color="#484848" fontSize="16px" labelStyle={{ marginBottom: "24px" }} />
-                <Label label={"Are you sure you want to logout?"} labelStyle={{ marginBottom: "32px" }} />
+                <Label label={"CORE_COMMON_LOGOUT"} bold={true} color="#484848" fontSize="16px" labelStyle={{ marginBottom: "24px" }} />
+                <Label label={"CORE_LOGOUTPOPUP_CONFIRM"} labelStyle={{ marginBottom: "32px" }} />
               </div>
               <div className="logout-button">
                 <Button

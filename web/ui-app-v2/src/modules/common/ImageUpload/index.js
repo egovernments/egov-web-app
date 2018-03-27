@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { FilePicker, Icon, Label, Image } from "../../../components";
+import { FilePicker, Icon, Image } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const iconStyle = {
@@ -12,6 +13,8 @@ const iconStyle = {
 const labelStyle = {
   letterSpacing: "0.6px",
   lineHeight: 1,
+  margin: "0 auto",
+  width: "75px",
 };
 
 const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
@@ -22,8 +25,7 @@ const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
           <Icon id="image-upload" name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} color={"#ffffff"} />
         </FilePicker>
       </FloatingActionButton>
-      <Label label="UPLOAD" labelStyle={labelStyle} fontSize="12px" />
-      <Label label="PHOTOS" labelStyle={labelStyle} fontSize="12px" />
+      <Label label="CS_COMMON_UPLOAD_PHOTOS" labelStyle={labelStyle} fontSize="12px" />
     </div>
   );
 };
@@ -67,8 +69,7 @@ class ImageUpload extends Component {
                 <Icon id="image-upload" action="image" name="add-a-photo" style={iconStyle} color={"#ffffff"} />
               </FilePicker>
             </div>
-            <Label label="UPLOAD" labelStyle={labelStyle} fontSize="12px" />
-            <Label label="PHOTOS" labelStyle={labelStyle} fontSize="12px" />
+            <Label label="CS_COMMON_UPLOAD_PHOTOS" labelStyle={labelStyle} fontSize="12px" />
           </div>
         ) : (
           <div className="upload-images-cont">

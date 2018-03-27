@@ -3,6 +3,7 @@ import { Icon, List, Image, Card, MapLocation } from "../../../components";
 import Screen from "../../common/Screen";
 import pinIcon from "../../../assets/Location_pin.svg";
 import Logo from "../../../assets/images/logo_black.png";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -57,14 +58,10 @@ class ContactUs extends Component {
     items: [
       {
         leftIcon: <Icon style={iconStyle} action="maps" name="place" />,
-        primaryText: (
-          <span>
-            eGovernments Foundation <br />18/2A, Sarjapur Main Rd, Bellandur, Bengaluru <br />Karnataka 560102{" "}
-          </span>
-        ),
+        primaryText: <Label label="CS_CONTACTUS_ADDRESS" />,
         secondaryText: (
-          <div id="contactus-open-map" className="openMap" style={{ color: "#00bbd3" }} onClick={this.openMapHandler}>
-            Open Map
+          <div onClick={this.openMapHandler}>
+            <Label id="contactus-open-map" label="CS_CONTACTUS_OPEN_MAP" className="openMap" labelStyle={{ color: "#00bbd3" }} />
           </div>
         ),
         style: {
@@ -82,7 +79,7 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="device" name="access-time" />,
-        primaryText: "Mon - Fri",
+        primaryText: <Label label="CS_CONTACTUS_WEEKDAY" />,
         secondaryText: "9.00 AM - 6.00 PM",
         style: {
           paddingBottom: "8px",
@@ -91,7 +88,7 @@ class ContactUs extends Component {
       },
       {
         insetChildren: true,
-        primaryText: "Sat",
+        primaryText: <Label label="CS_CONTACTUS_WEEKEND" />,
         secondaryText: "9.00 AM - 12 PM",
         style: {
           paddingBottom: "5px",
