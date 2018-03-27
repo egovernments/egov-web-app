@@ -1,8 +1,10 @@
 import * as actionTypes from "../actionTypes";
+import { getTranslatedLabel } from "../../../utils/commons";
 
 const translateFieldText = (store) => (next) => (action) => {
   const { type, form } = action;
   const state = store.getState();
+  const { localizationLabels } = state.app;
 
   if (type === actionTypes.INIT_FORM) {
     let { fields } = form;
@@ -10,11 +12,7 @@ const translateFieldText = (store) => (next) => (action) => {
       const field = Object.keys(fields[fieldKey]).reduce((field, fieldName) => {
         let fieldValue = fields[fieldKey][fieldName];
         if (fieldName === "hintText" || fieldName === "requiredMessage" || fieldName === "floatingLabelText") {
-          // put the translation logic here
-          const translatedLabel = state.app.localizationLabels[fieldValue];
-          if (translatedLabel && typeof translatedLabel === "object" && translatedLabel.hasOwnProperty("message")) {
-            fieldValue = translatedLabel.message;
-          }
+          fieldValue = getTranslatedLabel(fieldValue, localizationLabels);
         }
         field[fieldName] = fieldValue;
         return field;
