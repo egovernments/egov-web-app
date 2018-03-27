@@ -16,6 +16,7 @@ export const fetchLocalizationLabel = (locale) => {
         { key: "module", value: "rainmaker-pgr" },
         { key: "locale", value: locale },
       ]);
+      window.localStorage.setItem("localization", JSON.stringify(payload.messages));
       // data transformation will be handled by a custom middleware
       dispatch({ type: appTypes.ADD_LOCALIZATION, payload: payload.messages });
       dispatch(asyncComplete(commonTypes.ASYNC_COMPLETE, "localation"));

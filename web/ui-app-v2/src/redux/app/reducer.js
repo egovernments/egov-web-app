@@ -1,4 +1,7 @@
 import * as actionTypes from "./actionTypes";
+import { transformLocalizationLabels, initLocalizationLabels } from "./utils";
+
+let localizationLabels = initLocalizationLabels();
 
 const initialState = {
   name: "Mseva",
@@ -7,7 +10,7 @@ const initialState = {
   route: "",
   previousRoute: "",
   showToster: false,
-  localizationLabels: {},
+  localizationLabels,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -15,14 +18,7 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.ADD_LOCALIZATION:
       return {
         ...state,
-        localizationLabels: action.payload.reduce((result, item) => {
-          result[item.code] = {
-            message: item.message,
-            module: item.module,
-            locale: item.locale,
-          };
-          return result;
-        }, {}),
+        localizationLabels: transformLocalizationLabels(action.payload),
       };
     case actionTypes.SET_ROUTE:
       const { route: currentRoute } = state;

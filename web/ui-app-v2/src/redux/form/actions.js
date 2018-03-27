@@ -59,9 +59,7 @@ export const submitForm = (formKey) => {
           if (transformer && typeof transformer === "function") {
             formData = transformer(formKey, state);
           }
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
         if (formData === null) {
           formData = prepareFormData(fields);
         }

@@ -1,10 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducer";
 import thunk from "redux-thunk";
-import { validation, formSubmit } from "../form/middlewares";
+import { validation, translateFieldText, formSubmit } from "../form/middlewares";
 
 const middlewares = [];
 
+middlewares.push(translateFieldText);
 middlewares.push(validation);
 middlewares.push(formSubmit);
 
