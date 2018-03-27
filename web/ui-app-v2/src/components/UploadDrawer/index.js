@@ -39,7 +39,7 @@ class UploadDrawer extends Component {
     this.props.closeDrawer(false);
   };
   picUpload = (file, url) => {
-    this.props.uploadfile(url);
+    this.props.uploadfile(file, url);
     this.props.closeDrawer(false);
   };
   onOverlayBodyClick = () => {

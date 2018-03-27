@@ -1,5 +1,5 @@
 import axios from "axios";
-import { prepareFormData, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
+import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
 const authToken = fetchFromLocalStorage("token");
 // const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
@@ -9,6 +9,14 @@ const instance = axios.create({
   baseURL: window.location.origin,
   headers: {
     "Content-Type": "application/json",
+  },
+});
+
+// file upload instance
+const uploadInstance = axios.create({
+  baseURL: window.location.origin,
+  headers: {
+    "Content-Type": "multipart/form-data",
   },
 });
 
@@ -26,14 +34,14 @@ const wrapRequestBody = (requestBody, action) => {
     // userInfo,
     authToken,
     userInfo: {
-      "id": "128",
-      "roles": [
+      id: "128",
+      roles: [
         {
-          "id": 2,
-          "name": "Assistant RO"
-        }
-      ]
-    }
+          id: 2,
+          name: "Assistant RO",
+        },
+      ],
+    },
   };
 
   return Object.assign({}, { RequestInfo }, requestBody);
@@ -57,4 +65,25 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     apiError = error;
   }
   throw new Error(apiError);
+};
+
+// try to make a generic api call for this
+export const uploadFile = async (endPoint, module, file) => {
+  const requestParams = { tenantId, module, file };
+  const requestBody = prepareForm(requestParams);
+
+  try {
+    const response = await uploadInstance.post(endPoint, requestBody);
+    const responseStatus = parseInt(response.status, 10);
+    let fileStoreIds = [];
+
+    if (responseStatus === 201) {
+      const responseData = response.data;
+      const files = responseData.files || [];
+      fileStoreIds = responseData.files.map((f) => f.fileStoreId);
+      return fileStoreIds;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
 };

@@ -1,10 +1,10 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 
-export const transformById = (payload,id) => {
+export const transformById = (payload, id) => {
   return payload.reduce((result, item) => {
     result[item[id]] = {
-      ...item
+      ...item,
     };
     return result;
   }, {});
@@ -13,7 +13,6 @@ export const transformById = (payload,id) => {
 export const hyphenSeperatedDateTime = (d) => {
   return d;
 };
-
 
 export const addQueryArg = (url, queries = []) => {
   const urlParts = url.split("?");
@@ -56,21 +55,19 @@ export const fetchFromLocalStorage = (key) => {
 };
 
 export const getRequestUrl = (url, params) => {
-  var query = Object.keys(params)
+  let query = Object.keys(params)
     .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
     .join("&");
-
   return url + "?" + query;
 };
 
-// export const prepareFormData = (params) => {
-//   var formData = new FormData();
-
-//   for (var k in params) {
-//     formData.append(k, params[k]);
-//   }
-//   return formData;
-// };
+export const prepareForm = (params) => {
+  let formData = new FormData();
+  for (var k in params) {
+    formData.append(k, params[k]);
+  }
+  return formData;
+};
 
 export const getDateFromEpoch = (epoch) => {
   const dateObj = new Date(epoch);
