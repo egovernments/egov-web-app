@@ -4,3 +4,10 @@ export const LOCALATION={
       "ACTION":"_search"
     }
 }
+
+export const COMPLAINT = {
+  "GET":{
+    "URL":"rainmaker-pgr/v1/requests/_search",
+    "ACTION":"_search"
+  }
+}

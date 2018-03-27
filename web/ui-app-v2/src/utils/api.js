@@ -16,7 +16,7 @@ const wrapRequestBody = (requestBody, action) => {
   const RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
-    ts: "2018-03-29 11:12:12",
+    ts: "",
     // hyphenSeperatedDateTime(new Date()),
     action: action,
     did: "1",
@@ -25,6 +25,15 @@ const wrapRequestBody = (requestBody, action) => {
     requesterId: "",
     // userInfo,
     authToken,
+    userInfo: {
+      "id": "128",
+      "roles": [
+        {
+          "id": 2,
+          "name": "Assistant RO"
+        }
+      ]
+    }
   };
 
   return Object.assign({}, { RequestInfo }, requestBody);

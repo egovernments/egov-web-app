@@ -3,6 +3,8 @@ import Complaints from "../../common/Complaints";
 import Screen from "../../common/Screen";
 import { Icon, ImageModal, Label } from "../../../components";
 import { withRouter } from "react-router-dom";
+import {connect} from "react-redux";
+import {fetchComplaints} from "../../../redux/complaints/actions";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
 import Garbage_2 from "../../../assets/images/Garbage_2.jpg";
@@ -11,6 +13,7 @@ import Potholes_1 from "../../../assets/images/Potholes_1.png";
 import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import "./index.css";
+
 
 class MyComplaints extends Component {
   state = {
@@ -95,6 +98,11 @@ class MyComplaints extends Component {
     source: "",
   };
 
+  componentDidMount= ()=>{
+    let {fetchComplaints} =this.props;
+    fetchComplaints([]);
+  }
+
   imageOnClick = (source) => {
     this.setState({ source });
   };
@@ -106,6 +114,7 @@ class MyComplaints extends Component {
   render() {
     let { complaints, source } = this.state;
     let { history } = this.props;
+    console.log(this.props.complaints);
     return (
       <div className="complaints-main-container">
         {complaints.length === 0 ? (
@@ -139,4 +148,13 @@ class MyComplaints extends Component {
   }
 }
 
-export default withRouter(MyComplaints);
+const mapStateToProps = (state) => {
+  const complaints = state.complaints || {};
+  return { complaints };
+};
+
+const mapDispatchToProps = {
+  fetchComplaints
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(MyComplaints));

@@ -1,12 +1,9 @@
+import {transformById} from "../../utils/commons";
+
 export const transformLocalizationLabels = (localizationLabels) => {
-  return localizationLabels.reduce((result, item) => {
-    result[item.code] = {
-      message: item.message,
-      module: item.module,
-      locale: item.locale,
-    };
-    return result;
-  }, {});
+  let labelsById=transformById(localizationLabels,"code");
+  localStorage.setItem("localization",JSON.stringify(labelsById));
+  return labelsById;
 };
 
 export const initLocalizationLabels = () => {
