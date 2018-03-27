@@ -30,6 +30,7 @@ export default class CityPickerDialog extends Component {
       const mappedResult = {};
       mappedResult.key = result.key;
       mappedResult.primaryText = result.text;
+      mappedResult.id = result.key;
       return mappedResult;
     });
   };
@@ -80,7 +81,7 @@ export default class CityPickerDialog extends Component {
           onRequestClose={onClose}
           autoScrollBodyContent={true}
         >
-          <AutoSuggest dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
+          <AutoSuggest id="city-picker-search" dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
           <List
             onItemClick={onItemClick}
             innerDivStyle={{ paddingLeft: "50px" }}
