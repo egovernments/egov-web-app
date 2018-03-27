@@ -23,6 +23,7 @@ const Label = ({
   containerStyle = {},
   labelStyle = {},
   labelClassName = "",
+  id,
 }) => {
   let additionalStyles = {};
 
@@ -47,7 +48,7 @@ const Label = ({
   }
 
   return (
-    <div style={containerStyle} className={`label-container ${className}`}>
+    <div id={id} style={containerStyle} className={`label-container ${className}`}>
       {labelText(label, labelStyle, labelClassName)}
     </div>
   );

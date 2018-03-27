@@ -10,21 +10,25 @@ const options = [
     label: "Home",
     icon: <Icon action="action" name="home" />,
     route: "/citizen",
+    id: "home-button",
   },
   {
     label: "Information",
     icon: <Icon action="action" name="info" />,
     route: "",
+    id: "information-button",
   },
   {
     label: "Payments",
     icon: <Icon action="custom" name="rupee" />,
     route: "",
+    id: "payments-button",
   },
   {
     label: "Complaints",
     icon: <Icon action="alert" name="warning" />,
     route: "/citizen/my-complaints",
+    id: "complaints-button",
   },
 ];
 
@@ -67,9 +71,13 @@ class App extends Component {
       style.boxShadow = "none";
     }
 
-    const iconElementLeft = isHomeScreen ? null : (
+    const iconElementLeft = (
       <IconButton>
-        <Icon id="back-navigator" action="navigation" name="arrow-back" />
+        {isHomeScreen ? (
+          <Icon id="icon-hamburger" action="action" name="reorder" />
+        ) : (
+          <Icon id="back-navigator" action="navigation" name="arrow-back" />
+        )}
       </IconButton>
     );
 

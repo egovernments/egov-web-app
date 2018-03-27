@@ -25,3 +25,12 @@
   position: absolute !important;
   top: 30%;
 }
+
+.complaint-submitted-complaintNo-cont {
+  margin-bottom: 20px;
+}
+
+.complaint-submitted-complaintNo-cont .label-container,
+.complaint-submitted-complaintNo-cont .label-text {
+  display: inline;
+}

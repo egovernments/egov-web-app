@@ -9,7 +9,7 @@ class ComplaintDetails extends Component {
     this.props.history.push("/citizen");
   };
   render() {
-    let complaintnumber = 25436789;
+    let complaintnumber = "25436789";
     return (
       <div>
         <Screen className="complaint-submitted-card">
@@ -18,11 +18,14 @@ class ComplaintDetails extends Component {
             <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "16px" }}>
               <Icon name={"check"} action={"navigation"} />
             </FloatingActionButton>
-            <Label label={"Thank You!"} fontSize="16px" />
-            <Label label={`Complaint No. ${complaintnumber}`} fontSize="16px" />
+            <Label id="thank-you-text" label={"Thank You!"} fontSize="16px" />
+            <div className="complaint-submitted-complaintNo-cont">
+              <Label label={"Complaint No. "} fontSize="16px" />
+              <Label className="complaint-number-value" label={complaintnumber} />
+            </div>
           </div>
           <div className="complaint-submitted-label">
-            <Label label={`You can track the status of your complaint on this app anytime!`} />
+            <Label id="complaint-submitted-success-message" label={`You can track the status of your complaint on this app anytime!`} />
           </div>
           <div className="complaintsubmit-button col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
             <Button id="complaint-submitted-continue" primary={true} label="CONTINUE" fullWidth={true} onClick={this.continueComplaintSubmit} />

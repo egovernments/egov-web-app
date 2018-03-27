@@ -47,7 +47,14 @@ class Feedback extends Component {
                 <Icon action="navigation" name="check" />
               </FloatingActionButton>
             </div>
-            <Label label={"Thank you for your feedback"} className="feedback-thankyou-text" dark={true} bold={true} fontSize={"16px"} />
+            <Label
+              id="feedback-success-message"
+              label={"Thank you for your feedback"}
+              className="feedback-thankyou-text"
+              dark={true}
+              bold={true}
+              fontSize={"16px"}
+            />
           </div>
         )}
         <div className="feedback-popup-button-cont">
