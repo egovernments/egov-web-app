@@ -22,7 +22,6 @@ const complaintsReducer = (state = intialState, action) => {
     case actionTypes.COMPLAINTS_FETCH_COMPLETE:
 
       let complaintsById=transformById(action.payload,"serviceRequestId");
-      debugger;
       return {
         ...state,
         loading:false,
