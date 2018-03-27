@@ -11,3 +11,10 @@ export const COMPLAINT = {
     "ACTION":"_search"
   }
 }
+
+export const CORE = {
+  "GET":{
+    "URL":"egov-mdms-service/v1/_get",
+    "ACTION":"_search"
+  }
+}

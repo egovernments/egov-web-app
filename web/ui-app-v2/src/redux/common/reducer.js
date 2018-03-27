@@ -2,6 +2,7 @@ import * as commonTypes from "./actionTypes";
 
 const intialState = {
   objects: {},
+  dropDownData:{}
 };
 
 const commonReducer = (state = intialState, action) => {
@@ -44,6 +45,15 @@ const commonReducer = (state = intialState, action) => {
           },
         },
       };
+
+    case commonTypes.SET_DROPDOWN_DATA :
+      return {
+        ...state,
+        dropDownData:{
+          ...state.dropDownData,
+          [action.key]:action.payload
+        }
+      }
 
     default:
       return state;
