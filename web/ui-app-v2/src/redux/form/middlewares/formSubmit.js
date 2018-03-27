@@ -8,20 +8,11 @@ const formSubmit = (store) => (next) => (action) => {
   if (type == actionTypes.SUBMIT_FORM_COMPLETE) {
     // complete the form submit complete action
     next(action);
+    // navigation,
     // if you wish to do something with the state
     const state = store.getState();
-    // decide on the redirection route
-    let redirectionRoute = "";
-    switch (formKey) {
-      case "register":
-      case "login":
-        redirectionRoute = "/citizen/user/otp";
-        break;
-      case "otp":
-        redirectionRoute = "/citizen";
-        break;
-    }
-    if (redirectionRoute.length) dispatch(setRoute(redirectionRoute));
+    const { redirectionRoute } = state.form[formKey];
+    if (redirectionRoute && redirectionRoute.length) dispatch(setRoute(redirectionRoute));
   } else {
     next(action);
   }

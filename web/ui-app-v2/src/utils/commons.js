@@ -1,4 +1,5 @@
-import _ from "lodash";
+import set from "lodash/set";
+import isEmpty from "lodash/isEmpty";
 
 export const hyphenSeperatedDateTime = (d) => {
   return d;
@@ -24,7 +25,7 @@ export const isFieldEmpty = (field) => {
   }
   if (typeof field !== "object") {
     field = field.toString().trim();
-    return _.isEmpty(field);
+    return isEmpty(field);
   }
   return false;
 };
@@ -52,14 +53,14 @@ export const getRequestUrl = (url, params) => {
   return url + "?" + query;
 };
 
-export const prepareFormData = (params) => {
-  var formData = new FormData();
+// export const prepareFormData = (params) => {
+//   var formData = new FormData();
 
-  for (var k in params) {
-    formData.append(k, params[k]);
-  }
-  return formData;
-};
+//   for (var k in params) {
+//     formData.append(k, params[k]);
+//   }
+//   return formData;
+// };
 
 export const getDateFromEpoch = (epoch) => {
   const dateObj = new Date(epoch);
@@ -85,4 +86,11 @@ export const addBodyClass = (path) => {
 export const removeBodyClass = (path) => {
   const bodyClass = getBodyClassFromPath(path);
   document.body.classList.remove(bodyClass);
+};
+
+export const prepareFormData = (formFields) => {
+  return Object.keys(formFields).reduce((formData, fieldKey) => {
+    const { value, jsonPath } = formFields[fieldKey];
+    return set(formData, jsonPath, value);
+  }, {});
 };

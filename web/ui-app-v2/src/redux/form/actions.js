@@ -1,7 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import {setRoute} from "../app/actions";
 import { httpRequest } from "../../utils/api";
-import { prepareFormData } from "./utils";
+import { prepareFormData } from "../../utils/commons";
 
 export const initForm = (form) => {
   return {
@@ -52,13 +51,23 @@ export const submitForm = (formKey) => {
       dispatch(submitFormPending(formKey));
       try {
         const formParams = {};
-        const { saveUrl, fields ,navigation,action} = form;
-        const formData = prepareFormData(fields);
-        const formResponse = await httpRequest(saveUrl,action,[],formData);
-        // data transformation will be handled by a custom middleware
-        // replace formData with form response
+        const { saveUrl, fields, action } = form;
+        let formData = null;
+        try {
+          let transformer = require(`../../config/forms/transformers/${formKey}`).default;
+          transformer = transformer.viewModelToBusinessModelTransformer;
+          if (transformer && typeof transformer === "function") {
+            formData = transformer(formKey, state);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        if (formData === null) {
+          formData = prepareFormData(fields);
+        }
+        const formResponse = {};
+        // const formResponse = await httpRequest(saveUrl, action, [], formData);
         dispatch(submitFormComplete(formKey, formResponse));
-        navigation && dispatch(setRoute(navigation));
       } catch (error) {
         dispatch(submitFormError(formKey, error));
       }

@@ -4,13 +4,16 @@ const formConfig = {
     otp: {
       id: "otp",
       required: true,
+      jsonPath: "User.otpReference",
       floatingLabelText: "OTP",
       hintText: "Enter OTP",
-      pattern: "^([0-9]){6}$",
+      pattern: "^([0-9]){5}$",
       errorMessage: "Please enter a valid OTP",
     },
   },
-  saveUrl: "/user/validateOTP",
+  action: "_create",
+  saveUrl: "/user/citizen/_create",
+  redirectionRoute: "/citizen",
 };
 
 export default formConfig;

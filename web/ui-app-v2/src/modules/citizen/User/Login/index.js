@@ -5,24 +5,6 @@ import LoginForm from "./components/LoginForm";
 import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
 
 class Login extends Component {
-  formConfig = {
-    name: "login",
-    fields: {
-      phone: {
-        id: "person-phone",
-        jsonPath: "login.username",
-        required: true,
-        floatingLabelText: "Phone Number",
-        hintText: "Enter Your Phone Number",
-        pattern: "^([0-9])+$",
-        errorMessage: "Please enter a valid phone number",
-        value: "",
-      },
-    },
-    saveUrl: "/user/oauth/token",
-    navigation: "/citizen/user/otp",
-    action: "token",
-  };
   constructor(props) {
     super(props);
     this.formConfig = require("../../../../config/forms/login").default;

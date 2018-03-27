@@ -30,10 +30,3 @@ export const getFormField = (form, fieldKey) => {
   const fields = getFormFields(form);
   return fields[fieldKey];
 };
-
-export const prepareFormData = (formFields) => {
-  return Object.keys(formFields).reduce((formData, fieldKey) => {
-    const { value, jsonPath } = formFields[fieldKey];
-    return set(formData, jsonPath, value);
-  }, {});
-};
