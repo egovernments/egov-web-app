@@ -1,6 +1,15 @@
 import * as actionTypes from "./actionTypes";
 import { transformById } from "../../utils/commons";
 
+const mergeServiceWithActions=(payload)=>{
+  return payload.actionHistory.map((item,index)=>{
+    return {
+      ...payload.services[index],
+      actions:payload.actionHistory[index].actions
+    }
+  });
+}
+
 const intialState = {
   loading: false,
   error: false,
@@ -20,7 +29,7 @@ const complaintsReducer = (state = intialState, action) => {
         errorMessage: "",
       };
     case actionTypes.COMPLAINTS_FETCH_COMPLETE:
-      let complaintsById = transformById(action.payload.services, "serviceRequestId");
+      let complaintsById = transformById(mergeServiceWithActions(action.payload), "serviceRequestId");
       return {
         ...state,
         loading: false,
