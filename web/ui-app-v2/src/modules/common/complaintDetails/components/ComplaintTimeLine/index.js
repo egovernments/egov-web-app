@@ -5,6 +5,16 @@ import Label from "utils/translationNode";
 import garbageOne from "../../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
 
+const timelineButtonLabelStyle = {
+  height: 12,
+  lineHeight: 1,
+  color: "#ffffff",
+};
+const timelineButtonContainerStyle = {
+  lineHeight: 1,
+  height: 12,
+};
+
 const statusContainerStyle = {
   display: "inline-block",
 };
@@ -54,6 +64,7 @@ const StatusIcon = ({ status }) => {
     default:
       return <Icon action="action" name="done" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
   }
+  StatusContent;
 };
 
 const StatusContent = ({ status, currentStatus, content, history, handleFeedbackOpen, role }) => {
@@ -128,7 +139,12 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
               history.push("/citizen/reopen-complaint");
             }}
           >
-            RE-OPEN
+            <Label
+              label="CS_COMPLAINT_DETAILS_REOPEN"
+              fontSize="12px"
+              labelStyle={timelineButtonLabelStyle}
+              containerStyle={timelineButtonContainerStyle}
+            />
           </div>
         </div>
       );
@@ -182,7 +198,12 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
                 history.push("/citizen/feedback");
               }}
             >
-              RATE
+              <Label
+                label="CS_COMPLAINT_DETAILS_RATE"
+                fontSize="12px"
+                labelStyle={timelineButtonLabelStyle}
+                containerStyle={timelineButtonContainerStyle}
+              />
             </div>
             <div
               className="complaint-details-timline-button"
@@ -190,7 +211,12 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
                 history.push("/citizen/reopen-complaint");
               }}
             >
-              RE-OPEN
+              <Label
+                label="CS_COMPLAINT_DETAILS_REOPEN"
+                fontSize="12px"
+                labelStyle={timelineButtonLabelStyle}
+                containerStyle={timelineButtonContainerStyle}
+              />
             </div>
           </div>
         </div>

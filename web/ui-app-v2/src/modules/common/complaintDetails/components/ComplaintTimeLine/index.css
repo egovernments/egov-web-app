@@ -20,7 +20,7 @@
 
 .complaint-details-timline-button {
   letter-spacing: 0.6px;
-  font-size: 12px;
+  font-size: 12px !important;
   font-weight: 500;
   color: #ffffff;
   width: 89px;
