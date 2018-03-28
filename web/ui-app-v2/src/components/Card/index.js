@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-const CardUi = ({ id, card, style = {}, textChildren, className = "" }) => {
+const CardUi = ({ id, card, style = {}, textChildren, className = "", onClick }) => {
   return (
-    <div style={style} id={id} className={`rainmaker-card ${className}`}>
+    <div style={style} id={id} className={`rainmaker-card ${className}`} onClick={onClick}>
       {textChildren}
     </div>
   );

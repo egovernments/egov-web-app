@@ -4,14 +4,15 @@ import ImageUpload from "../../common/ImageUpload";
 import Screen from "../../common/Screen";
 import Question from "../../common/ReOpenComplaint/components/Question";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
+import Label from "utils/translationNode";
 import "./index.css";
 
 class ReOpenComplaint extends Component {
   options = [
-    { value: "No work was done", label: "No work was done" },
-    { value: "Only partial work was done ", label: "Only partial work was done " },
-    { value: "Employee did not turn up", label: "Employee did not turn up" },
-    { value: "No permanent solution", label: "No permanent solution" },
+    { value: "No work was done", label: <Label label="CS_REOPEN_OPTION_ONE" /> },
+    { value: "Only partial work was done ", label: <Label label="CS_REOPEN_OPTION_TWO" /> },
+    { value: "Employee did not turn up", label: <Label label="CS_REOPEN_OPTION_THREE" /> },
+    { value: "No permanent solution", label: <Label label="CS_REOPEN_OPTION_FOUR" /> },
   ];
 
   handleComplaintSubmit = () => {

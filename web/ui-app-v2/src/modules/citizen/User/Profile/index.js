@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
-import UploadDrawer from "../../../common/User/components/UploadDrawer";
-import ProfileSection from "../../../common/User/components/ProfileSection";
+import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
+import { fileUpload } from "redux/file/actions";
+import UploadDrawer from "modules/common/User/components/UploadDrawer";
+import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
-import Screen from "../../../common/Screen";
-import img from "../../../../assets/images/people.jpg";
+import Screen from "modules/common/Screen";
+import img from "assets/images/people.jpg";
 import "./index.css";
 
 class Profile extends Component {
@@ -17,15 +18,12 @@ class Profile extends Component {
     };
     this.formConfig = require("../../../../config/forms/profile").default;
   }
-
-  // init form config
   componentDidMount() {
     this.props.initForm(this.formConfig);
   }
 
-  /* Set/remove profile picture */
-  // set it in the redux state
-  setProfilePic = (url) => {
+  setProfilePic = (file, url) => {
+    this.props.fileUpload("profile", "photo", file);
     if (url === "") url = img;
     this.setState({
       img: url,
@@ -66,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
   };
 };
 

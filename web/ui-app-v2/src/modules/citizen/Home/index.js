@@ -2,27 +2,19 @@ import React, { Component } from "react";
 import Banner from "../../common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
+import { connect } from "react-redux";
+import { fetchComplaints } from "../../../redux/complaints/actions";
 import "./index.css";
+import { transformById } from "../../../utils/commons";
 
 class Home extends Component {
-  state = {
-    updates: [
-      {
-        title: "Contamination of water",
-        date: "10-Mar-18",
-        status: "Re-Assigned",
-      },
-      {
-        title: "Dog menace",
-        date: "10-Mar-18",
-        status: "Rejected",
-      },
-    ],
+  componentDidMount = () => {
+    let { fetchComplaints } = this.props;
+    fetchComplaints([]);
   };
 
   render() {
-    const { updates } = this.state;
-    const { history } = this.props;
+    const { history, updates } = this.props;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
@@ -36,4 +28,48 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const displayDate = (rawData) => {
+  let split = rawData.split("/");
+  split.splice(split.length - 1, 1);
+  return split.join("-");
+};
+
+const displayStatus = (status) => {
+  switch (status.toLowerCase()) {
+    case "new":
+      return "Opened";
+      break;
+    case "rejected":
+      return "Rejected";
+      break;
+    case "closed":
+      return "Closed";
+      break;
+    case "open":
+      return "Re-Opened";
+      break;
+    default:
+      return "";
+      break;
+  }
+};
+
+const mapStateToProps = (state) => {
+  const complaints = state.complaints || {};
+  let updates = [];
+  Object.keys(complaints.byId).forEach((complaintKey, index) => {
+    let complaintObj = {};
+    complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
+    complaintObj.title = complaints.byId[complaintKey].serviceCode;
+    complaintObj.date = displayDate(complaints.byId[complaintKey].serviceRequestId);
+    updates.push(complaintObj);
+  });
+  console.log(updates);
+  return { updates };
+};
+
+const mapDispatchToProps = {
+  fetchComplaints,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
