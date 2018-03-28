@@ -28,6 +28,13 @@ class Home extends Component {
   }
 }
 
+const statusToMessageMapping = {
+  new: "Opened",
+  rejected: "Rejected",
+  closed: "Closed",
+  open: "Re-Openned",
+};
+
 const displayDate = (rawData) => {
   let split = rawData.split("/");
   split.splice(split.length - 1, 1);
@@ -35,23 +42,7 @@ const displayDate = (rawData) => {
 };
 
 const displayStatus = (status) => {
-  switch (status.toLowerCase()) {
-    case "new":
-      return "Opened";
-      break;
-    case "rejected":
-      return "Rejected";
-      break;
-    case "closed":
-      return "Closed";
-      break;
-    case "open":
-      return "Re-Opened";
-      break;
-    default:
-      return "";
-      break;
-  }
+  return statusToMessageMapping[status.toLowerCase()];
 };
 
 const mapStateToProps = (state) => {
@@ -64,7 +55,6 @@ const mapStateToProps = (state) => {
     complaintObj.date = displayDate(complaints.byId[complaintKey].serviceRequestId);
     updates.push(complaintObj);
   });
-  console.log(updates);
   return { updates };
 };
 

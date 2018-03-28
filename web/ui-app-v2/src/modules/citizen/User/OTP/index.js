@@ -9,7 +9,7 @@ import isEmpty from "lodash/isEmpty";
 class OTP extends Component {
   constructor(props) {
     super(props);
-    this.formConfig = require("../../../../config/forms/otp").default;
+    this.formConfig = require("config/forms/otp").default;
   }
 
   componentDidMount() {

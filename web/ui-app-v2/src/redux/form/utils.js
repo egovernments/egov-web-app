@@ -11,9 +11,8 @@ export const validateField = (field) => {
 
   if (required && !value.length) {
     isFieldValid = false;
-    errorText = "Required";
+    errorText = field.requiredMessage;
   }
-
   if (isFieldValid && (pattern && !new RegExp(pattern).test(value))) {
     isFieldValid = false;
     errorText = field.errorMessage;

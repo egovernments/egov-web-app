@@ -11,13 +11,15 @@ const translateFieldText = (store) => (next) => (action) => {
     fields = Object.keys(fields).reduce((translatedField, fieldKey) => {
       const field = Object.keys(fields[fieldKey]).reduce((field, fieldName) => {
         let fieldValue = fields[fieldKey][fieldName];
-        if (fieldName === "hintText" || fieldName === "requiredMessage" || fieldName === "floatingLabelText") {
+        if (fieldName === "hintText" || fieldName === "floatingLabelText" || fieldName === "errorMessage") {
           fieldValue = getTranslatedLabel(fieldValue, localizationLabels);
         }
         field[fieldName] = fieldValue;
         return field;
       }, {});
 
+      // a bit hacky; instead of asking user to write it in config putting it here
+      field["requiredMessage"] = getTranslatedLabel("CORE_COMMON_REQUIRED_ERRMSG", localizationLabels);
       translatedField[fieldKey] = field;
       return translatedField;
     }, {});

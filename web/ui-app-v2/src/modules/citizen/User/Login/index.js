@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "../../../common/Banner";
 import LoginForm from "./components/LoginForm";
-import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
+import Banner from "modules/common/Banner";
+import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.formConfig = require("../../../../config/forms/login").default;
+    this.formConfig = require("config/forms/login").default;
   }
 
   componentDidMount() {

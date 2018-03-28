@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "../../../common/Banner";
 import RegisterForm from "./components/RegisterForm";
-import { handleFieldChange, submitForm, initForm } from "../../../../redux/form/actions";
+import Banner from "modules/common/Banner";
+import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.formConfig = require("../../../../config/forms/register").default;
+    this.formConfig = require("config/forms/register").default;
   }
 
- componentDidMount=async ()=> {
+  componentDidMount = () => {
     this.props.initForm(this.formConfig);
-  }
+  };
 
   navigateToLogin = () => {
     this.props.history.push("/citizen/user/login");

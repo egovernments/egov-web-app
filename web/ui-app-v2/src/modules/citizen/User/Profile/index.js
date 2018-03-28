@@ -16,7 +16,7 @@ class Profile extends Component {
       openUploadSlide: false,
       img: img,
     };
-    this.formConfig = require("../../../../config/forms/profile").default;
+    this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
     this.props.initForm(this.formConfig);
