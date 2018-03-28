@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import {transformById} from "../../utils/commons";
+import { transformById } from "../../utils/commons";
 
 const intialState = {
   loading: false,
@@ -15,28 +15,27 @@ const complaintsReducer = (state = intialState, action) => {
     case actionTypes.COMPLAINTS_FETCH_PENDING:
       return {
         ...state,
-        loading:true,
-        error:false,
-        errorMessage:""
-      }
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
     case actionTypes.COMPLAINTS_FETCH_COMPLETE:
-
-      let complaintsById=transformById(action.payload,"serviceRequestId");
+      let complaintsById = transformById(action.payload.services, "serviceRequestId");
       return {
         ...state,
-        loading:false,
-        byId:{
+        loading: false,
+        byId: {
           ...state.byId,
-          ...complaintsById
-        }
-      }
+          ...complaintsById,
+        },
+      };
     case actionTypes.COMPLAINTS_FETCH_ERROR:
       return {
         ...state,
-        loading:false,
-        error:true,
-        errorMessage:action.error
-      }
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
     default:
       return state;
   }

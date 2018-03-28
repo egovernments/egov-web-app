@@ -147,13 +147,16 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
     return (
       <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
         <Card
+          onClick={(e) => {
+            history.push(`/citizen/complaint-details?status=${status[complaint.status.status]}`);
+          }}
           className="complaint-card"
           textChildren={
             <div className="complaint-card-wrapper">
               <div className="complaint-header-cont">
                 <span className="complaint-header text-bold dark-color">{complaint.header}</span>
-                <span className="complaint-status-text text-bold" style={getStatusAndChangeColor(complaint.status).style}>{` ${
-                  complaint.status
+                <span className="complaint-status-text text-bold" style={getStatusAndChangeColor(complaint.status.status).style}>{` ${
+                  complaint.status.status
                 }`}</span>
               </div>
               <div className="complaint-date-cont">
@@ -176,24 +179,17 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
                 {complaint.images.map((image, index) => {
                   return (
                     <div className="complaint-image-wrapper" key={index}>
-                      <Image
-                        style={imageStyles}
-                        className="complaint-image"
-                        width="100%"
-                        height={46}
-                        source={image.source}
-                        onClick={() => onClick(image.source)}
-                      />{" "}
+                      <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
                     </div>
                   );
                 })}
               </div>
               {role === "citizen" && (
                 <div className="complaint-status-cont">
-                  <span className="complaint-status-text dark-color">{getStatusAndChangeColor(complaint.status, complaint.assignee).message}</span>
+                  <span className="complaint-status-text dark-color">{complaint.status.statusMessage}</span>
                 </div>
               )}
-              {track && (
+              {/* {track && (
                 <div className="complaint-track-button-cont">
                   <Button
                     className="complaint-track-btn"
@@ -218,7 +214,7 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
                     }}
                   />
                 </div>
-              )}
+              )} */}
               {bottomInfoTemplate(complaint, role)}
             </div>
           }

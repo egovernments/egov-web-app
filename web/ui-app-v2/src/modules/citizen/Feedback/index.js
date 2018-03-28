@@ -6,6 +6,7 @@ import CheckBoxGroup from "./components/CheckBoxGroup";
 import { Button, Icon } from "../../../components";
 import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import Screen from "../../common/Screen";
 import { withRouter } from "react-router-dom";
 
 class Feedback extends Component {
@@ -36,10 +37,12 @@ class Feedback extends Component {
     let { history } = this.props;
     let { value, submitted } = this.state;
     return (
-      <div className="feedback-main-container">
+      <Screen className="feedback-main-screen">
         {!submitted ? (
-          <div className="feedback-form">
-            <RatingsComponent /> <CheckBoxGroup selected={value} onCheck={this.onCheck} /> <TextAreaComponent />
+          <div className="feedback-main-container">
+            <div className="feedback-form">
+              <RatingsComponent /> <CheckBoxGroup selected={value} onCheck={this.onCheck} /> <TextAreaComponent />
+            </div>
           </div>
         ) : (
           <div className="feedback-submitted-main-cont">
@@ -69,7 +72,7 @@ class Feedback extends Component {
             }}
           />
         </div>
-      </div>
+      </Screen>
     );
   }
 }

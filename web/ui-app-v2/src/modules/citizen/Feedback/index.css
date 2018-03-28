@@ -1,8 +1,11 @@
+.feedback-main-screen {
+  padding: 0 !important;
+}
+
 .feedback-main-container {
   position: relative;
-  padding: 16px 16px 0 16px;
+  padding: 16px 16px 200px 16px;
   background: #ffffff;
-  height: calc(100vh - 120px);
 }
 
 .feedback-popup-button-cont {
@@ -15,7 +18,7 @@
 
 .feedback-submitted-main-cont {
   text-align: center;
-  height: 100%;
+  height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,6 +26,7 @@
 }
 
 .feedback-submitted-icon-cont {
+  margin-top: -16px;
   margin-bottom: 21px;
 }
 
