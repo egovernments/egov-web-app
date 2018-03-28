@@ -69,10 +69,57 @@ export const prepareForm = (params) => {
   return formData;
 };
 
+const getMonthName = (monthIndex) => {
+  switch (monthIndex) {
+    case 1:
+      return "Jan";
+      break;
+    case 2:
+      return "Feb";
+      break;
+    case 3:
+      return "Mar";
+      break;
+    case 4:
+      return "Apr";
+      break;
+    case 5:
+      return "May";
+      break;
+    case 6:
+      return "Jun";
+      break;
+    case 7:
+      return "Jul";
+      break;
+    case 8:
+      return "Aug";
+      break;
+    case 9:
+      return "Sep";
+      break;
+    case 10:
+      return "Oct";
+      break;
+    case 11:
+      return "Nov";
+      break;
+    case 12:
+      return "Dec";
+      break;
+    default:
+      return "";
+      break;
+  }
+};
+
 export const getDateFromEpoch = (epoch) => {
   const dateObj = new Date(epoch);
-  const year = dateObj.getFullYear();
-  const month = dateObj.getMonth() + 1;
+  const year = dateObj
+    .getFullYear()
+    .toString()
+    .slice(2, 4);
+  const month = getMonthName(dateObj.getMonth() + 1);
   const day = dateObj.getDate();
   return day + "-" + month + "-" + year;
 };

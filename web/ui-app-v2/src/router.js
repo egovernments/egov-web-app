@@ -40,7 +40,7 @@ const Main = () => {
         <PrivateRoute exact path="/citizen/" title="Home" component={Home} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/contact-us" title="Contact Us" component={ContactUs} />
         <PrivateRoute exact path="/citizen/my-complaints" title="My Complaints" component={MyComplaints} />
-        <PrivateRoute exact path="/citizen/complaint-details/:status?" title="Complaint Details" component={ComplaintDetails} />
+        <PrivateRoute exact path="/citizen/complaint-details/:serviceRequestId?" title="Complaint Details" component={ComplaintDetails} />
         <PrivateRoute exact path="/citizen/map" hideBottomNavigation={true} hideAppBar={true} title="Track Location" component={TrackLocation} />
         <PrivateRoute
           exact
@@ -67,7 +67,7 @@ const Main = () => {
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/complaint-details/:status?"
+          path="/employee/complaint-details/:serviceRequestId?"
           title="Complaint Summary"
           component={ComplaintSummary}
         />

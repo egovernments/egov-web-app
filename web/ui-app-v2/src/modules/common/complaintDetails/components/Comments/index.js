@@ -43,7 +43,6 @@ const itemsTwo = [
 
 class Comments extends Component {
   render() {
-    console.log(this.props.hasComments);
     return (
       <div>
         {this.props.hasComments && (

@@ -148,16 +148,27 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
       <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
         <Card
           onClick={(e) => {
-            history.push(`/citizen/complaint-details?status=${status[complaint.status.status]}`);
+            history.push(`/citizen/complaint-details/${encodeURIComponent(complaint.complaintNo)}`);
           }}
           className="complaint-card"
           textChildren={
             <div className="complaint-card-wrapper">
               <div className="complaint-header-cont">
-                <span className="complaint-header text-bold dark-color">{complaint.header}</span>
-                <span className="complaint-status-text text-bold" style={getStatusAndChangeColor(complaint.status.status).style}>{` ${
-                  complaint.status.status
-                }`}</span>
+                <Label
+                  className="complaint-header text-bold dark-color"
+                  fontSize="16px"
+                  dark={true}
+                  bold={true}
+                  label={complaint.header}
+                  containerStyle={{ width: "80%" }}
+                  labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
+                />
+
+                <Label
+                  className="complaint-status-text text-bold"
+                  labelStyle={{ letterSpacing: 0.7, ...getStatusAndChangeColor(complaint.status.status).style }}
+                  label={complaint.status.status}
+                />
               </div>
               <div className="complaint-date-cont">
                 <Icon action="action" name="date-range" />
@@ -166,6 +177,7 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
               <div className="complaint-number-cont">
                 <div className="complaint-number complaint-date">
                   <Label fontSize="12px" label={"CS_COMMON_COMPLAINT_NO"} />
+                  <Label fontSize="12px" label={" : "} />
                   <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
                 </div>
               </div>
