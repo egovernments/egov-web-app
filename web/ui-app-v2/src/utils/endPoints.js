@@ -12,7 +12,7 @@ export const COMPLAINT = {
   }
 }
 
-export const CORE = {
+export const TENANT = {
   "GET":{
     "URL":"egov-mdms-service/v1/_get",
     "ACTION":"_search"

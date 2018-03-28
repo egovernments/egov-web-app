@@ -22,7 +22,7 @@ const appReducer = (state = initialState, action) => {
       };
     case actionTypes.SET_ROUTE:
       const { route: currentRoute } = state;
-      const previousRoute = currentRoute.length ? currentRoute : window.location.pathname;
+      const previousRoute = window.location.pathname;
       return { ...state, previousRoute, route: action.route };
     default:
       return state;

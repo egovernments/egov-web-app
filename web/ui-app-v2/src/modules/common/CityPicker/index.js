@@ -1,25 +1,35 @@
 import React, { Component } from "react";
 import { List, Dialog, TextFieldIcon, AutoSuggest } from "../../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
+import { TENANT } from "utils/endPoints";
+import { httpRequest } from "utils/api";
 
 export default class CityPickerDialog extends Component {
   state = { results: [], searchTerm: "", open: false, city: "" };
 
-  cities = [
-    { key: "amritsar", text: "Amritsar" },
-    { key: "bathinda", text: "Bathinda" },
-    { key: "chandigarh", text: "Chandigarh" },
-    { key: "faridkot", text: "Faridkot" },
-    { key: "jalandhar", text: "Jalandhar" },
-    { key: "ludhiana", text: "Ludhiana" },
-    { key: "mohali", text: "Mohali" },
-  ];
+  cities = [];
 
-  componentDidMount() {
+  componentDidMount = async () => {
     document.getElementById("person-city").addEventListener("focus", function() {
       this.blur();
     });
-  }
+    try {
+      const payload = await httpRequest(TENANT.GET.URL, TENANT.GET.ACTION, [
+        { key: "moduleName", value: "tenant" },
+        { key: "masterName", value: "tenants" },
+      ]);
+      this.cities=payload.MdmsRes["tenant"]["tenants"].map((item)=>{
+        return {
+          key:item.code,
+          text:item.city.name
+        }
+      })
+      // console.log(this.cities);
+    } catch (error) {
+      //handle the error
+      console.log(error);
+    }
+  };
 
   componentWillUnmount() {
     document.getElementById("person-city").removeEventListener("focus", null);
@@ -44,10 +54,11 @@ export default class CityPickerDialog extends Component {
   };
 
   onItemClick = (item, index) => {
-    const { primaryText: city, key } = item;
+    const { primaryText : city, key } = item;
     if (key) {
       const { formKey, fieldKey, onChange } = this.props;
-      onChange(formKey, fieldKey, city);
+      onChange(formKey, fieldKey, key);
+      this.setState({city});
       this.onClose();
     }
   };
@@ -61,14 +72,14 @@ export default class CityPickerDialog extends Component {
 
   render() {
     const { cities, autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
-    const { results, searchTerm, open } = this.state;
+    const { results, searchTerm, open,city } = this.state;
     const { field } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
 
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon {...field} id="person-city" iconPosition="after" Icon={DownArrow} />
+          <TextFieldIcon {...field} value={city} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}

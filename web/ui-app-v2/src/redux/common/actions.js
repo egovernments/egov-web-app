@@ -1,4 +1,5 @@
-import {CORE} from "utils/endPoints";
+import * as actionTypes from "./actionTypes";
+// import {httpRequest} from "utils/api";
 
 export const asyncPending = (type, object) => {
   return { type, object };
@@ -12,7 +13,7 @@ export const asyncError = (type, object, error) => {
   return { type, object, payload: error };
 };
 
-export const fetchDropDownData = key => dispatch =>
+export const setDropDownData = (key,payload) =>
 {
-
+  return {type:actionTypes.SET_DROPDOWN_DATA,key,payload};
 }

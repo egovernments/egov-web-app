@@ -3,7 +3,7 @@ const formConfig = {
   fields: {
     phone: {
       id: "person-phone",
-      jsonPath: "login.username",
+      jsonPath: "otp.mobileNumber",
       required: true,
       floatingLabelText: "Phone Number",
       hintText: "Enter Your Phone Number",
@@ -11,8 +11,18 @@ const formConfig = {
       errorMessage: "Please enter a valid phone number",
       value: "",
     },
+    type: {
+      id: "otp-type",
+      jsonPath: "otp.type",
+      value: "login",
+    },
+    city: {
+      id: "person-city",
+      jsonPath: "otp.tenantId",
+      value:"pb"
+    }
   },
-  saveUrl: "/user/oauth/token",
+  saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/citizen/user/otp",
   action: "token",
 };

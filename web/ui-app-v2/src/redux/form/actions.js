@@ -63,8 +63,7 @@ export const submitForm = (formKey) => {
         if (formData === null) {
           formData = prepareFormData(fields);
         }
-        const formResponse = {};
-        // const formResponse = await httpRequest(saveUrl, action, [], formData);
+        const formResponse = await httpRequest(saveUrl, action, [], formData);
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
         dispatch(submitFormError(formKey, error));

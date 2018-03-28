@@ -10,7 +10,7 @@ class Register extends Component {
     this.formConfig = require("../../../../config/forms/register").default;
   }
 
-  componentDidMount() {
+ componentDidMount=async ()=> {
     this.props.initForm(this.formConfig);
   }
 

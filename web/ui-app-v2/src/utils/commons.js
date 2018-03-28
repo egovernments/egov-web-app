@@ -1,6 +1,7 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 
+
 export const transformById = (payload,id) => {
   return payload.reduce((result, item) => {
     result[item[id]] = {
