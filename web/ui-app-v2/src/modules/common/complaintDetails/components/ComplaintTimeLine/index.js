@@ -1,8 +1,18 @@
 import React, { Component } from "react";
-import { Card, TimeLine, Label, Icon, Image } from "../../../../../components";
+import { Card, TimeLine, Icon, Image } from "../../../../../components";
 import { withRouter } from "react-router-dom";
+import Label from "utils/translationNode";
 import garbageOne from "../../../../../assets/images/Garbage_3.jpg";
 import "./index.css";
+
+const statusContainerStyle = {
+  display: "inline-block",
+};
+
+const nameContainerStyle = {
+  display: "inline-block",
+  marginLeft: "3px",
+};
 
 const timelineIconCommonStyle = {
   height: "38px",
@@ -53,7 +63,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "11-Mar-18"} />
-          <Label labelClassName="dark-color" label="Complaint Filed" />
+          <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
           {currentStatus === "Submitted" && (
             <div
               className="complaint-details-timline-button"
@@ -72,7 +82,8 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"} />
-          <Label labelClassName="dark-color" label={`Assigned to ${name || "Satpal Singh"}`} />
+          <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_ASSIGNED_TO" />
+          <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
           <Label
             labelClassName="rainmaker-small-font"
             containerStyle={{ width: "192px" }}
@@ -96,7 +107,8 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "15-Mar-18"} />
-          <Label labelClassName="dark-color" label={`Re-Assigned to ${name || "Satpal Singh"}`} />
+          <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_REASSIGNED_TO" />
+          <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
           <Label
             labelClassName="rainmaker-small-font"
             containerStyle={{ width: "192px" }}
@@ -108,7 +120,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"} />
-          <Label labelClassName="dark-color" label="Complaint Rejected" />
+          <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={department || "Amritsar Municipal Corporation"} />
           <div
             className="complaint-details-timline-button"
@@ -124,7 +136,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "11-Mar-18"} />
-          <Label labelClassName="dark-color" label="Complaint Filed" />
+          <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
           <Label labelClassName="rainmaker-small-font" label={name || "Amrinder Singh"} />
           <div
             className="complaint-details-timline-button"
@@ -141,7 +153,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "12-Mar-18"} />
-          <Label labelClassName="dark-color" label={"Re-Assign requested"} />
+          <Label labelClassName="dark-color" label={"CS_COMPLAINT_DETAILS_REASSIGN_REQUESTED"} />
           <Label labelClassName="rainmaker-small-font" label={`Reason - ${reason || "Not my responsibility"}`} />
         </div>
       );
@@ -149,7 +161,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={date || "18-Mar-18"} />
-          <Label labelClassName="dark-color" label="Complaint Resolved" />
+          <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />
           <Image
             style={{
               width: "97px",
@@ -418,7 +430,7 @@ class ComplaintTimeLine extends Component {
             <div>
               <div className="rainmaker-displayInline">
                 <Icon action="action" name="timeline" color="#969696" />{" "}
-                <Label label="Complaint Timeline" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+                <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 {this.props.role === "AO" && <DueDate status="UnAssigned" duedateText={"Overdue by 1 day"} role="AO" />}
               </div>
               <div className="complaintTimeLineContainer">
