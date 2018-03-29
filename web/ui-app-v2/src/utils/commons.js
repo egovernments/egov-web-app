@@ -113,6 +113,10 @@ const getMonthName = (monthIndex) => {
   }
 };
 
+export const mapCompIDToName = (IDObj, compID) => {
+  return IDObj[compID] ? IDObj[compID].serviceName : "Default";
+};
+
 export const getDateFromEpoch = (epoch) => {
   const dateObj = new Date(epoch);
   const year = dateObj

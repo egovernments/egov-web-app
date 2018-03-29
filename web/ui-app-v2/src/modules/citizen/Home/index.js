@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { fetchComplaints } from "../../../redux/complaints/actions";
 import "./index.css";
 import { transformById } from "../../../utils/commons";
+import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class Home extends Component {
   componentDidMount = () => {
@@ -32,7 +33,7 @@ const statusToMessageMapping = {
   new: "Opened",
   rejected: "Rejected",
   closed: "Closed",
-  open: "Re-Openned",
+  open: "Re-Opened",
 };
 
 const displayDate = (rawData) => {
@@ -51,8 +52,8 @@ const mapStateToProps = (state) => {
   Object.keys(complaints.byId).forEach((complaintKey, index) => {
     let complaintObj = {};
     complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
-    complaintObj.title = complaints.byId[complaintKey].serviceCode;
-    complaintObj.date = displayDate(complaints.byId[complaintKey].serviceRequestId);
+    complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
+    complaintObj.date = getDateFromEpoch(complaints.byId[complaintKey].auditDetails.createdTime);
     updates.push(complaintObj);
   });
   return { updates };

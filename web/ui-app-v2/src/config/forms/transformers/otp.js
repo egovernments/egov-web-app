@@ -23,7 +23,6 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
         value: fields.city.value,
       },
     };
-    debugger;
   } else if (previousRoute.endsWith("login")) {
     fields = state.form["login"].fields;
     fields = {

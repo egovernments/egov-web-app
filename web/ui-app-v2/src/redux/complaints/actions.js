@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { COMPLAINT,CATEGORY } from "../../utils/endPoints";
+import { COMPLAINT, CATEGORY } from "../../utils/endPoints";
 import { httpRequest } from "../../utils/api";
 
 const complaintFetchPending = (type) => {
@@ -34,11 +34,28 @@ export const fetchComplaints = (queryObject) => {
   };
 };
 
-export const fetchComplaintCategoies = () => {
+export const fetchComplaintCategories = () => {
+  //Fetching Complaint Categories from MDMS
+  let requestBody = {
+    MdmsCriteria: {
+      tenantId: "pb",
+      moduleDetails: [
+        {
+          moduleName: "RAINMAKER-PGR",
+          masterDetails: [
+            {
+              name: "ServiceDefs",
+            },
+          ],
+        },
+      ],
+    },
+  };
+
   return async (dispatch) => {
     try {
-      const payload = await httpRequest(CATEGORY.GET.URL, CATEGORY.GET.ACTION);
-      dispatch({type:actionTypes.SET_COMPLAINTS_CATEGORIS, payload});
+      const payload = await httpRequest(CATEGORY.GET.URL, CATEGORY.GET.ACTION, [], requestBody);
+      dispatch({ type: actionTypes.SET_COMPLAINTS_CATEGORIS, payload });
     } catch (error) {
       console.log(error);
     }
