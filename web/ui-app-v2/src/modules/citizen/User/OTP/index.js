@@ -13,6 +13,7 @@ class OTP extends Component {
   }
 
   componentDidMount() {
+    this.props.initForm(this.formConfig);
     // for handling otp based events
     const otpElement = document.getElementById("otp");
     otpElement.addEventListener("smsReceived", (e) => {
@@ -27,12 +28,12 @@ class OTP extends Component {
   }
 
   render() {
-    const { form, handleFieldChange, submitForm,number } = this.props;
+    const { form, handleFieldChange, submitForm, number } = this.props;
     const { name: formKey } = this.formConfig;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <OTPForm submitForm={submitForm} form={form} formKey={formKey} onChange={handleFieldChange} number={number ||""}/>
+        <OTPForm submitForm={submitForm} form={form} formKey={formKey} onChange={handleFieldChange} number={number || ""} />
       </Banner>
     );
   }
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => {
   const form = state.form[formKey] || {};
   // debugger;
   // const number =!isEmpty(state.form) && (state.app.previousRoute.endsWith("login") ?state.form["login"].fields["phone"].value : state.form["register"].fields["phone"].value)
-  return { form};
+  return { form };
   // ,number
 };
 

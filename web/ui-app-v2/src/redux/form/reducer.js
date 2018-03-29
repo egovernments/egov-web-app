@@ -45,7 +45,6 @@ const form = (state = {}, action) => {
   switch (type) {
     case actionTypes.INIT_FORM:
       const { name, ...form } = action.form;
-      const currentForm = state[name] || {};
       return setForm(state, name, form);
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
