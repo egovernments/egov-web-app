@@ -30,7 +30,7 @@ class Home extends Component {
 }
 
 const statusToMessageMapping = {
-  new: "Opened",
+  new: "Open",
   rejected: "Rejected",
   closed: "Closed",
   open: "Re-Opened",
@@ -43,7 +43,7 @@ const displayDate = (rawData) => {
 };
 
 const displayStatus = (status) => {
-  return statusToMessageMapping[status.toLowerCase()];
+  return status?statusToMessageMapping[status.toLowerCase()]:"";
 };
 
 const mapStateToProps = (state) => {

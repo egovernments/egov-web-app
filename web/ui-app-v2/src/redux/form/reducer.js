@@ -40,13 +40,21 @@ const displayFieldErrors = (state, formKey) => {
   return state;
 };
 
+const mergeFields = (oldFields = {}, newFields = {}) => {
+  return Object.keys(newFields).reduce((mergedFields, fieldKey) => {
+    mergedFields[fieldKey] = { ...oldFields[fieldKey], ...newFields[fieldKey] };
+    return mergedFields;
+  }, {});
+};
+
 const form = (state = {}, action) => {
   const { type, formKey, fieldKey } = action;
   switch (type) {
     case actionTypes.INIT_FORM:
       const { name, ...form } = action.form;
       const currentForm = state[name] || {};
-      return { ...state, [name]: { ...currentForm, ...form, fields: { ...form.fields, ...currentForm.fields } } };
+      const mergedFields = mergeFields(currentForm.fields, action.form.fields);
+      return { ...state, [name]: { ...currentForm, ...form, fields: mergedFields } };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);
