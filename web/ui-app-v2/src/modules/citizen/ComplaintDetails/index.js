@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./index.css";
 import { fetchComplaints } from "../../../redux/complaints/actions";
-import { getDateFromEpoch } from "../../../utils/commons";
+import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class ComplaintDetails extends Component {
   state = {
@@ -86,7 +86,7 @@ const mapStateToProps = (state, ownProps) => {
   if (selectedComplaint) {
     let details = {
       status: selectedComplaint.status,
-      complaint: selectedComplaint.serviceCode,
+      complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
