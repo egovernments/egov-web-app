@@ -41,16 +41,7 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken,
-    userInfo: {
-      id: "128",
-      roles: [
-        {
-          id: 2,
-          name: "Assistant RO",
-        },
-      ],
-    },
+    authToken
   };
 
   return Object.assign({}, { RequestInfo }, requestBody);
@@ -113,11 +104,9 @@ export const loginRequest = async (username,password) => {
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
     } else {
-      debugger
       apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
-    debugger
     apiError = error;
   }
   throw new Error(apiError);
