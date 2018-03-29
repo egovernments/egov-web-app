@@ -8,17 +8,15 @@ const hintStyle = {
   fontWeight: "400",
   letterSpacing: "0.3px",
 };
-const handleCommentChange = () => {
-  //console.log("changed");
-};
-const TextAreaUi = () => {
+
+const TextAreaUi = ({ onChange }) => {
   return (
     <TextArea
       id="reopencomplaint-comment-field"
       hintText="Type your comments"
       hintStyle={hintStyle}
       rowsMax={2}
-      onChange={handleCommentChange}
+      onChange={onChange}
       underlineShow={true}
       underlineStyle={{ borderColor: "#e0e0e0" }}
       underlineFocusStyle={{ borderColor: "#e0e0e0" }}

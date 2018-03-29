@@ -27,15 +27,9 @@ const styles = {
   },
 };
 class Question extends Component {
-  state = {
-    valueSelected: "",
-  };
-  handleChange = (event, value) => {
-    this.setState({ valueSelected: value });
-  };
   render() {
-    let { options, label } = this.props;
-    let { valueSelected } = this.state;
+    let { options, label, handleChange, valueSelected } = this.props;
+
     return (
       <div>
         <Label label={label} labelStyle={styles.labelStyle} />
@@ -44,7 +38,7 @@ class Question extends Component {
           name="reopencomplaint-radio-button"
           valueSelected={valueSelected}
           options={options}
-          handleChange={this.handleChange}
+          handleChange={handleChange}
           radioButtonItemStyle={styles.radioButtonItemStyle}
           labelStyle={styles.radioButtonLabelStyle}
           selectedLabelStyle={styles.selectedLabelStyle}

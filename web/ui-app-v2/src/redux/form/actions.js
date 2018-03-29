@@ -1,10 +1,11 @@
 import * as actionTypes from "./actionTypes";
 import * as appTypes from "../app/actionTypes";
-import {toggleSnackbarAndSetText} from "../app/actions";
+import { toggleSnackbarAndSetText } from "../app/actions";
 import { httpRequest } from "../../utils/api";
 import { prepareFormData } from "../../utils/commons";
 
 export const initForm = (form) => {
+  console.log(form);
   return {
     type: actionTypes.INIT_FORM,
     form,
@@ -72,7 +73,7 @@ export const submitForm = (formKey) => {
         debugger;
         // console.log(error);
         dispatch(submitFormError(formKey, error));
-        toggleSnackbarAndSetText(false,error,false,true);
+        toggleSnackbarAndSetText(false, error, false, true);
       }
     } else {
       dispatch(displayFormErrors(formKey));

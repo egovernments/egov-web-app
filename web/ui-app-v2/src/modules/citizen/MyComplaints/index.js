@@ -76,11 +76,11 @@ const displayStatus = (status, assignee) => {
   let statusObj = {};
   switch (status.toLowerCase()) {
     case "new":
-      statusObj.status = "OPEN";
+      statusObj.status = "CS_COMMON_OPEN_UCASE";
       statusObj.statusMessage = `Your complaint has been opened`;
       break;
     case "rejected":
-      statusObj.status = "REJECTED";
+      statusObj.status = "CS_COMMON_REJECTED_UCASE";
       statusObj.statusMessage = `Your complaint has been rejected`;
       break;
     case "closed":
@@ -92,7 +92,7 @@ const displayStatus = (status, assignee) => {
       statusObj.statusMessage = `Your complaint has been re-assigned to ${assignee}`;
       break;
     default:
-      statusObj.status = "OPEN";
+      statusObj.status = "CS_COMMON_OPEN_UCASE";
       statusObj.statusMessage = `Your complaint has been opened`;
       break;
   }
