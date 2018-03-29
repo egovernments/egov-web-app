@@ -12,10 +12,14 @@ const formConfig = {
     },
     city: {
       id: "person-city",
-      jsonPath: "otp.tenantId",
+      jsonPath: "otp.permanentCity",
       required: true,
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "CORE_COMMON_CITY_PLACEHOLDER",
+    },
+    tenant: {
+      jsonPath: "otp.tenantId",
+      value:"pb"
     },
     phone: {
       id: "person-phone",

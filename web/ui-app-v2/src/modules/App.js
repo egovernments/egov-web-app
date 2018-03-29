@@ -92,7 +92,7 @@ class App extends Component {
   componentDidMount() {
     const { path } = this.props;
     addBodyClass(path);
-    // fetchComplaintCategoies();
+      // fetchComplaintCategoies();
   }
 
   componentWillReceiveProps(nextProps) {

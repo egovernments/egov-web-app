@@ -42,6 +42,7 @@ const displayDate = (rawData) => {
 };
 
 const displayStatus = (status) => {
+  debugger
   return statusToMessageMapping[status.toLowerCase()];
 };
 

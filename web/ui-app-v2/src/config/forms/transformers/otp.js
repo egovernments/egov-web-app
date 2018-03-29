@@ -23,27 +23,31 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
         value: fields.city.value,
       },
     };
-    debugger;
   } else if (previousRoute.endsWith("login")) {
     fields = state.form["login"].fields;
+    debugger
     fields = {
-      ...fields,
+      password:{
+        jsonPath:"login.password",
+        value:otpFields.otp.value
+      },
       username: {
-        jsonPath: "username",
+        jsonPath: "login.username",
         value: fields.phone.value,
-      },
-      scope: {
-        jsonPath: "login.scope",
-        value: "read",
-      },
-      grant_type: {
-        jsonPath: "login.grant_type",
-        value: "password",
-      },
-      tenantId: {
-        jsonPath: "login.tenantId",
-        value: "PB",
-      },
+      }
+      // ,
+      // scope: {
+      //   jsonPath: "login.scope",
+      //   value: "read",
+      // },
+      // grant_type: {
+      //   jsonPath: "login.grant_type",
+      //   value: "password",
+      // },
+      // tenantId: {
+      //   jsonPath: "login.tenantId",
+      //   value: "pb",
+      // },
     };
   }
   return prepareFormData(fields);

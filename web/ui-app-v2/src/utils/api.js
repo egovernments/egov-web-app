@@ -12,6 +12,14 @@ const instance = axios.create({
   },
 });
 
+const loginInstance = axios.create({
+      baseURL: window.location.origin,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        "Authorization": 'Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0',
+      },
+});
+
 // file upload instance
 const uploadInstance = axios.create({
   baseURL: window.location.origin,
@@ -86,4 +94,30 @@ export const uploadFile = async (endPoint, module, file) => {
   } catch (error) {
     throw new Error(error);
   }
+};
+
+
+export const loginRequest = async (username,password) => {
+  let apiError = "Api Error";
+  var params = new URLSearchParams();
+  params.append('username', username);
+  params.append('password', password);
+  params.append('grant_type', 'password');
+  params.append('scope', 'read');
+  params.append('tenantId', tenantId);
+
+  try {
+    const response = await loginInstance.post('/user/oauth/token', params);
+    const responseStatus = parseInt(response.status, 10);
+    if (responseStatus === 200 || responseStatus === 201) {
+      return response.data;
+    } else {
+      debugger
+      apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
+    }
+  } catch (error) {
+    debugger
+    apiError = error;
+  }
+  throw new Error(apiError);
 };
