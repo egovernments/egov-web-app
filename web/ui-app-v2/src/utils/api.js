@@ -40,16 +40,7 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken,
-    userInfo: {
-      id: "128",
-      roles: [
-        {
-          id: 2,
-          name: "Assistant RO",
-        },
-      ],
-    },
+    authToken
   };
 
   return Object.assign({}, { RequestInfo }, requestBody);
