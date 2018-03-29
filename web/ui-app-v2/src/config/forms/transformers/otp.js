@@ -25,7 +25,6 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
     };
   } else if (previousRoute.endsWith("login")) {
     fields = state.form["login"].fields;
-    debugger
     fields = {
       password:{
         jsonPath:"login.password",
