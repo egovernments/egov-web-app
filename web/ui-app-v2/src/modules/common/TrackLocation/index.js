@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { MapLocation, Button, Icon } from "../../../components";
 import pinIcon from "../../../assets/Location_pin.svg";
+import { handleFieldChange } from "redux/form/actions";
 import _ from "lodash";
 import "./index.css";
 
@@ -25,7 +27,10 @@ class TrackLocation extends Component {
       currLoc: { lat: 12.9715987, lng: 77.5945699998 },
       showMyLoc: false,
       pickedLoc: {},
+      formKey: window.location.href.split("?")[1],
     };
+    this.formConfig = require("config/forms/complaint").default;
+    console.log(window.location.href.split("?")[1], this.state.formKey);
   }
 
   componentDidMount() {
@@ -62,19 +67,22 @@ class TrackLocation extends Component {
   setPickedLocation = (lati, long, index) => {
     if (_.isUndefined(index)) index = 0;
     console.log(lati, long, index);
+
     this.convertToAddress(lati, long);
   };
 
   convertToAddress = (lati, long) => {
+    this.props.handleFieldChange(this.state.formKey, "latitude", lati.toFixed(6));
+    this.props.handleFieldChange(this.state.formKey, "longitude", long.toFixed(6));
     var geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: { lat: lati, lng: long } }, function(results, status) {
+    geocoder.geocode({ location: { lat: lati, lng: long } }, (results, status) => {
       if (status === "OK") {
         if (results[0]) {
           console.log(results[0].formatted_address);
+          this.props.handleFieldChange(this.state.formKey, "address", results[0].formatted_address);
         }
       }
     });
-    //call parent function to pass the address
   };
 
   onClickPick = () => {
@@ -129,4 +137,16 @@ class TrackLocation extends Component {
   }
 }
 
-export default TrackLocation;
+const mapStateToProps = (state) => {
+  return {
+    formKey: window.location.href.split("?")[1],
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TrackLocation);

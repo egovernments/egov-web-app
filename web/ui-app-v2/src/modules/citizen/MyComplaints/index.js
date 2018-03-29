@@ -54,7 +54,7 @@ class MyComplaints extends Component {
           <FloatingActionButton
             id="mycomplaints-add"
             onClick={(e) => {
-              history.push("/add-complaint");
+              history.push("/citizen/add-complaint");
             }}
             className="floating-button"
           >
