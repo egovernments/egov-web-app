@@ -4,7 +4,10 @@ import ComplaintTimeLine from "../../common/complaintDetails/components/Complain
 import Comments from "../../common/complaintDetails/components/Comments";
 import Screen from "../../common/Screen";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import "./index.css";
+import { fetchComplaints } from "../../../redux/complaints/actions";
+import { getDateFromEpoch } from "../../../utils/commons";
 
 class ComplaintDetails extends Component {
   state = {
@@ -33,6 +36,8 @@ class ComplaintDetails extends Component {
   };
 
   componentDidMount() {
+    let { fetchComplaints, match } = this.props;
+    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     let { details } = this.state;
     if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
       this.setState({
@@ -62,10 +67,12 @@ class ComplaintDetails extends Component {
   }
 
   render() {
+    let { complaint } = this.props.transformedComplaint;
+    console.log(complaint);
     let { status, details, timeLine, comments } = this.state;
     return (
       <Screen>
-        <Details {...details} />
+        {complaint && <Details {...complaint} />}
         <ComplaintTimeLine status={status.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} />
         <Comments comments={comments} hasComments={true} />
       </Screen>
@@ -73,4 +80,30 @@ class ComplaintDetails extends Component {
   }
 }
 
-export default withRouter(ComplaintDetails);
+const mapStateToProps = (state, ownProps) => {
+  const { complaints } = state;
+  let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
+  if (selectedComplaint) {
+    let details = {
+      status: selectedComplaint.status,
+      complaint: selectedComplaint.serviceCode,
+      applicationNo: selectedComplaint.serviceRequestId,
+      description: selectedComplaint.description,
+      submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
+      address: selectedComplaint.address,
+      images: selectedComplaint.actions[0].media,
+    };
+    let transformedComplaint = {
+      complaint: details,
+    };
+    return { transformedComplaint };
+  } else {
+    return { transformedComplaint: {} };
+  }
+};
+
+const mapDispatchToProps = {
+  fetchComplaints,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ComplaintDetails));
