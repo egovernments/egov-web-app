@@ -112,11 +112,9 @@ export const loginRequest = async (username,password) => {
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
     } else {
-      debugger
       apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
-    debugger
     apiError = error;
   }
   throw new Error(apiError);

@@ -13,7 +13,6 @@ export const setUserInfo = (userInfo) => {
 }
 
 export const toggleSnackbarAndSetText = (status,msg,isSuccess,isError) => dispatch => {
-  debugger;
   dispatch({
     type:appTypes.SHOW_TOAST,
     status,

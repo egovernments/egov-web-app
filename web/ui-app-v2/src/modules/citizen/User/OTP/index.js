@@ -42,7 +42,6 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
-  // debugger;
   // const number =!isEmpty(state.form) && (state.app.previousRoute.endsWith("login") ?state.form["login"].fields["phone"].value : state.form["register"].fields["phone"].value)
   return { form };
   // ,number
