@@ -21,6 +21,7 @@ const getStyles = (iconPosition, textFieldProps) => {
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
+  textFieldStyle["width"] = iconPosition === "after" ? "90%" : "100%";
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 30;

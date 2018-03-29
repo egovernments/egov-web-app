@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { List, Icon, AutoSuggest } from "../../../components";
+import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 
 const customIconStyles = {
   height: 36,
@@ -17,7 +19,11 @@ const customIconStylesAlternate = {
   left: 15,
 };
 
-export default class ComplaintCategory extends Component {
+class ComplaintCategory extends Component {
+  constructor(props) {
+    super(props);
+    this.formConfig = require("config/forms/complaint").default;
+  }
   state = { results: [], searchTerm: "" };
 
   dataSource = [
@@ -25,7 +31,7 @@ export default class ComplaintCategory extends Component {
       id: 0,
       text: "Garbage",
       nestedItems: [
-        { id: 1, text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
+        { id: "AC", text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
         { id: 2, text: "Overflowing Garbage Bins", icon: { action: "custom", name: "overflowing-garbage" } },
         { id: 3, text: "Garbage Bin Absent", icon: { action: "custom", name: "garbage-bin-absent" } },
         { id: 4, text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
@@ -63,6 +69,8 @@ export default class ComplaintCategory extends Component {
 
   onComplaintTypeChosen = (item, index) => {
     // put the complaint type in the global store like redux
+    // const value = { id: item.id, primaryText: item.primaryText };
+    this.props.handleFieldChange(this.formConfig.name, "complaintType", item.id);
     this.props.history.goBack();
   };
 
@@ -75,6 +83,7 @@ export default class ComplaintCategory extends Component {
       const listItem = {};
 
       listItem.primaryText = result.text;
+      listItem.id = result.id;
       if (result.hasOwnProperty("icon") && result.icon) {
         const { action, name, style } = result.icon;
         listItem.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
@@ -87,6 +96,7 @@ export default class ComplaintCategory extends Component {
         listItem.nestedItems = result.nestedItems.map((nestedItem) => {
           const item = {};
           item.primaryText = nestedItem.text;
+          item.id = nestedItem.id;
           if (nestedItem.hasOwnProperty("icon") && nestedItem.icon) {
             const { action, name, style } = nestedItem.icon;
             item.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
@@ -142,3 +152,11 @@ export default class ComplaintCategory extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ComplaintCategory);

@@ -7,7 +7,7 @@ export const validateField = (field) => {
   let errorText = "",
     isFieldValid = true;
 
-  const fieldLength = value.trim().length;
+  // const fieldLength = value.trim().length;
 
   if (required && !value.length) {
     isFieldValid = false;
