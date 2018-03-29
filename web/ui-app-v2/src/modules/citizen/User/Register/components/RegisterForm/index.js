@@ -5,6 +5,7 @@ import CityPicker from "../../../../../common/CityPicker";
 
 const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) => {
   const fields = form.fields || {};
+  const submit = form.submit;
   return (
     <Card
       className="user-screens-card"
@@ -19,7 +20,7 @@ const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) 
               <Label id="otp-trigger" className="otp-prompt" label="CORE_REGISTER_HAVE_ACCOUNT" />
               <Label containerStyle={{ cursor: "pointer" }} id="otp-resend" className="otp-resend" label="CORE_COMMON_LOGIN" />
             </div>
-            <Button id="login-submit-action" onClick={() => submitForm(formKey)} primary={true} label="Submit" fullWidth={true} />
+            <Button onClick={() => submitForm(formKey)} primary={true} fullWidth={true} {...submit} />
           </form>
         </div>
       }

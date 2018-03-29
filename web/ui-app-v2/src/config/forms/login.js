@@ -22,6 +22,10 @@ const formConfig = {
       value: "pb",
     },
   },
+  submit: {
+    label: "CORE_COMMON_LOGIN",
+    id: "login-submit-action",
+  },
   saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/citizen/user/otp",
   action: "token",

@@ -11,6 +11,10 @@ const formConfig = {
       pattern: "^([0-9]){5}$",
     },
   },
+  submit: {
+    label: "CORE_OTP_GET_STARTED",
+    id: "otp-start",
+  },
   action: "_create",
   saveUrl: "/user/citizen/_create",
   redirectionRoute: "/citizen",

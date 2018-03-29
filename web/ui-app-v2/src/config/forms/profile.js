@@ -28,6 +28,10 @@ const formConfig = {
       value: "",
     },
   },
+  submit: {
+    label: "CS_PROFILE_SAVE",
+    id: "profile-save-action",
+  },
   saveUrl: "/user/register",
 };
 

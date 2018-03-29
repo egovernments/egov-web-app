@@ -4,6 +4,7 @@ import CityPicker from "../../../../../common/CityPicker";
 
 const ProfileForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) => {
   const fields = form.fields || {};
+  const submit = form.submit;
 
   return (
     <div>
@@ -13,7 +14,7 @@ const ProfileForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) =
         <TextField {...fields.email} onChange={(e, value) => onChange(formKey, "email", value)} />
       </form>
       <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
-        <Button className="profileBtn" id="profile-save-action" primary={true} label="SAVE" fullWidth={true} onClick={() => submitForm(formKey)} />
+        <Button className="profileBtn" {...submit} primary={true} fullWidth={true} onClick={() => submitForm(formKey)} />
       </div>
     </div>
   );

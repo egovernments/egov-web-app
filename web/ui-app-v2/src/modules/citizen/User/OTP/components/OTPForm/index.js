@@ -1,9 +1,11 @@
 import React from "react";
-import { Button, Label, TextField, Card } from "../../../../../../components";
+import { Button, TextField, Card } from "components";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const OTP = ({ formKey, form, onChange, submitForm }) => {
   const fields = form.fields || {};
+  const submit = form.submit;
 
   return (
     <Card
@@ -15,10 +17,10 @@ const OTP = ({ formKey, form, onChange, submitForm }) => {
           <form>
             <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} />
             <div style={{ marginBottom: "24px" }} className="text-right">
-              <Label id="otp-trigger" className="otp-prompt" label="Didn't recieve OTP?" />
-              <Label id="otp-resend" className="otp-resend" label="RESEND" />
+              <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
+              <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
             </div>
-            <Button id="otp-start" onClick={() => submitForm(formKey)} primary={true} label="Get Started" fullWidth={true} />
+            <Button onClick={() => submitForm(formKey)} {...submit} primary={true} fullWidth={true} />
           </form>
         </div>
       }

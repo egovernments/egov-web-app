@@ -24,6 +24,12 @@ const translateFieldText = (store) => (next) => (action) => {
       return translatedField;
     }, {});
 
+    const { label } = form.submit;
+
+    if (label) {
+      form.submit.label = getTranslatedLabel(label, localizationLabels);
+    }
+
     action.form = { ...form, fields };
   }
 
