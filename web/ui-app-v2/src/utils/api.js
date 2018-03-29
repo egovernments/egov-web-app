@@ -59,7 +59,6 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
     } else {
-      debugger;
       apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
