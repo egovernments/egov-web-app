@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { COMPLAINT } from "../../utils/endPoints";
+import { COMPLAINT,CATEGORY } from "../../utils/endPoints";
 import { httpRequest } from "../../utils/api";
 
 const complaintFetchPending = (type) => {
@@ -30,6 +30,17 @@ export const fetchComplaints = (queryObject) => {
       dispatch(complaintFetchComplete(actionTypes.COMPLAINTS_FETCH_COMPLETE, payload));
     } catch (error) {
       dispatch(complaintFetchError(actionTypes.COMPLAINTS_FETCH_ERROR, error));
+    }
+  };
+};
+
+export const fetchComplaintCategoies = () => {
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(CATEGORY.GET.URL, CATEGORY.GET.ACTION);
+      dispatch({type:actionTypes.SET_COMPLAINTS_CATEGORIS, payload});
+    } catch (error) {
+      console.log(error);
     }
   };
 };

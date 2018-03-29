@@ -7,6 +7,7 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
   let fields;
 
   if (previousRoute.endsWith("register")) {
+    fields = state.form["register"].fields;
     fields = {
       ...otpFields,
       username: {
@@ -22,6 +23,7 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
         value: fields.city.value,
       },
     };
+    debugger;
   } else if (previousRoute.endsWith("login")) {
     fields = state.form["login"].fields;
     fields = {

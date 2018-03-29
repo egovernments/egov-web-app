@@ -24,3 +24,10 @@ export const FILE_UPLOAD = {
     URL: "filestore/v1/files",
   },
 };
+
+export const CATEGORY = {
+  GET: {
+    URL: "egov-mdms-service/v1/_search",
+    ACTION: "_search",
+  },
+};

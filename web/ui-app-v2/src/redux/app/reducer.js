@@ -9,6 +9,12 @@ const initialState = {
   showDailog: false,
   route: "",
   previousRoute: "",
+  toster:{
+    msg: "",
+    status: false,
+    isSuccess:false,
+    isError: false,
+  },
   showToster: false,
   localizationLabels,
 };
@@ -24,6 +30,16 @@ const appReducer = (state = initialState, action) => {
       const { route: currentRoute } = state;
       const previousRoute = window.location.pathname;
       return { ...state, previousRoute, route: action.route };
+    case actionTypes.SHOW_TOAST:
+        return {
+          ...state,
+          toster:{
+            msg: action.msg,
+            status: action.snackbarState,
+            isSuccess: action.isSuccess || false,
+            isError: action.isError || false,
+          }
+        };
     default:
       return state;
   }

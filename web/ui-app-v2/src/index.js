@@ -27,7 +27,7 @@ WebFont.load({
   },
 });
 
-localStorage.setItem("tenantId","default");
+localStorage.setItem("tenantId","pb");
 
 // hardcoded the base; to be changed soon!!!!!
 render(

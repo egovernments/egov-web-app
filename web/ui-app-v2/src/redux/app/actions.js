@@ -8,6 +8,17 @@ export const setRoute = (route) => {
   return { type: appTypes.SET_ROUTE, route };
 };
 
+export const toggleSnackbarAndSetText = (status,msg,isSuccess,isError) => dispatch => {
+  debugger;
+  dispatch({
+    type:appTypes.SHOW_TOAST,
+    status,
+    msg,
+    isSuccess,
+    isError
+  });
+}
+
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
     dispatch(asyncPending(commonTypes.ASYNC_PENDING, "localation"));

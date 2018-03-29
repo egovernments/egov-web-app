@@ -4,6 +4,9 @@ import { addBodyClass, removeBodyClass } from "../utils/commons";
 import HeaderWithDrawer from "./common/HeaderWithDrawer";
 import { BottomNavigation, Icon } from "../components";
 import IconButton from "material-ui/IconButton";
+import {toggleSnackbarAndSetText} from "../redux/app/actions";
+import {fetchComplaintCategoies} from "../redux/complaints/actions";
+import Snackbar from 'material-ui/Snackbar';
 
 const options = [
   {
@@ -89,6 +92,7 @@ class App extends Component {
   componentDidMount() {
     const { path } = this.props;
     addBodyClass(path);
+    // fetchComplaintCategoies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -102,7 +106,7 @@ class App extends Component {
   }
 
   render() {
-    const { Component, hideBottomNavigation, hideAppBar, ...rest } = this.props;
+    const { Component, hideBottomNavigation, hideAppBar, toast,...rest} = this.props;
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
@@ -121,6 +125,21 @@ class App extends Component {
         />
 
         <Component {...rest} />
+        {toast && toast.msg && (
+          <Snackbar
+            open={toast.status}
+            message={toast.msg}
+            style={{ pointerEvents: 'none', whiteSpace: 'nowrap' }}
+            bodyStyle={{
+              pointerEvents: 'initial',
+              maxWidth: 'none',
+              backgroundColor: toast.isSuccess ? '#3ca23c' : toast.isError ? '#e83e36' : 'rgb(95, 92, 98)',
+              textAlign: 'center',
+            }}
+            autoHideDuration={6000}
+            onRequestClose={() => toggleSnackbarAndSetText(false, '', false, false)}
+          />
+        )}
         <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );
@@ -128,8 +147,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { route } = state.app;
-  return { route };
+  const { route, toast } = state.app;
+  return { route,toast };
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, {toggleSnackbarAndSetText,fetchComplaintCategoies})(App);

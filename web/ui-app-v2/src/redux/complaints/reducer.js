@@ -15,6 +15,7 @@ const intialState = {
   error: false,
   errorMessage: "",
   byId: {},
+  categoriesById:{}
 };
 
 const complaintsReducer = (state = intialState, action) => {
@@ -45,6 +46,16 @@ const complaintsReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case actionTypes.SET_COMPLAINTS_CATEGORIS:
+        let categoriesById = transformById(action.payload.MdmsRes["RAINMAKER-PGR"].ServiceDefs, "serviceCode");
+        return {
+          ...state,
+          loading: false,
+          categoriesById: {
+            ...state.categoriesById,
+            ...categoriesById,
+          },
+        };
     default:
       return state;
   }
