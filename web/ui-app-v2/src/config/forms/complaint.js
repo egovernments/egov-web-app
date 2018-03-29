@@ -4,7 +4,7 @@ const formConfig = {
     media: {
       id: "media",
       jsonPath: "actionInfo.media",
-      required: true,
+      required: false,
       errorMessage: "CS_FILE_UPLOAD_FAILED",
     },
     complaintType: {
@@ -33,7 +33,7 @@ const formConfig = {
     additionalDetails: {
       id: "additional details",
       jsonPath: "services.description",
-      required: true,
+      required: false,
       floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
     },

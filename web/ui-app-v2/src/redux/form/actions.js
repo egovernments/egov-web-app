@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import * as appTypes from "../app/actionTypes";
-import {toggleSnackbarAndSetText} from "../app/actions";
+import { toggleSnackbarAndSetText } from "../app/actions";
 import { httpRequest } from "../../utils/api";
 import { prepareFormData } from "../../utils/commons";
 
@@ -69,10 +69,9 @@ export const submitForm = (formKey) => {
         const formResponse = await httpRequest(saveUrl, action, [], formData);
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
-        debugger;
         // console.log(error);
         dispatch(submitFormError(formKey, error));
-        toggleSnackbarAndSetText(false,error,false,true);
+        toggleSnackbarAndSetText(false, error, false, true);
       }
     } else {
       dispatch(displayFormErrors(formKey));
