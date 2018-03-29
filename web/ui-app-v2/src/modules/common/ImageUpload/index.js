@@ -33,7 +33,6 @@ const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
 class ImageUpload extends Component {
   state = {
     images: [],
-    files: [],
   };
 
   fillPlaceholder = (images, onFilePicked, inputProps) => {
@@ -51,14 +50,13 @@ class ImageUpload extends Component {
 
   onFilePicked = (file, imageUrl) => {
     const currentImages = this.state.images || [];
-    const currentFiles = this.state.files || [];
+    this.props.sendFile(file);
+
     if (currentImages.length < 3) {
       this.setState({
         images: currentImages.concat(imageUrl),
-        files: currentFiles.concat(file),
       });
     }
-    this.props.getAllImageUrls(this.state.files);
   };
 
   render() {

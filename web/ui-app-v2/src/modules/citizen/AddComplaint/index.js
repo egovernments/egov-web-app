@@ -22,17 +22,15 @@ class AddComplaints extends Component {
   }
 
   state = {
-    landmark: "",
     locationDetails: "Sector 32, 1 main, Amritsar",
     openMap: false,
   };
 
   handleLandmarkChange = (e, value) => {
-    this.setState({ landmark: value });
+    this.props.handleFieldChange(this.props.formKey, "landmark", value);
   };
 
   handleDetailsChange = (e, value) => {
-    this.setState({ additionalDetails: value });
     this.props.handleFieldChange(this.props.formKey, "additionalDetails", value);
   };
 
@@ -49,29 +47,25 @@ class AddComplaints extends Component {
     this.props.history.push(`/citizen/map?${this.props.formKey}`);
   };
 
-  getAllImageUrls = (images) => {
-    console.log(images);
-    this.props.fileUpload(this.props.formKey, "media", images[0]);
+  getImages = (images) => {
+    this.props.fileUpload(this.props.formKey, "media", images);
   };
 
   render() {
-    const { navigateToComplaintType, submitComplaint, getAllImageUrls } = this;
-
+    const { navigateToComplaintType, submitComplaint, getImages } = this;
+    const fields = this.props.form.fields || {};
     return (
       <Screen>
         <div className="add-complaint-main-cont">
-          <ImageUpload getAllImageUrls={getAllImageUrls} />
-          <ComplaintTypeCard
-            complaintType={this.props.form.fields && this.props.form.fields.complaintType && this.props.form.fields.complaintType.value}
-            onClick={navigateToComplaintType}
-          />
+          <ImageUpload sendFile={getImages} />
+          <ComplaintTypeCard {...fields.complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard
-            landmark={this.state.landmark}
-            locationDetails={this.props.form.fields && this.props.form.fields.address && this.props.form.fields.address.value}
+            landmark={fields.landmark && fields.landmark.value}
+            locationDetails={fields.address && fields.address.value}
             onChange={this.handleLandmarkChange}
             locationOnClick={this.locationOnClick}
           />
-          <AdditionalDetailsCard additionalDetails={this.state.additionalDetails} onChange={this.handleDetailsChange} />
+          <AdditionalDetailsCard additionalDetails={fields.additionalDetails && fields.additionalDetails.value} onChange={this.handleDetailsChange} />
           <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
             <Button
               id="addComplaint-submit-complaint"
