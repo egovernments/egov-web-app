@@ -1,5 +1,7 @@
 .feedback-main-screen {
   padding: 0 !important;
+  height: calc(100vh - 120px);
+  background: #ffffff;
 }
 
 .feedback-main-container {
