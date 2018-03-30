@@ -7,7 +7,6 @@ import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { Button } from "../../../components";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { fileUpload } from "redux/file/actions";
 
 import "./index.css";
 
@@ -46,17 +45,14 @@ class AddComplaints extends Component {
     this.props.history.push(`/citizen/map?${this.props.formKey}`);
   };
 
-  sendFile = (file) => {
-    this.props.fileUpload(this.props.formKey, "media", "pgr", file);
-  };
-
   render() {
     const { navigateToComplaintType, submitComplaint, sendFile } = this;
+    const { formKey, fileUpload } = this.props;
     const fields = this.props.form.fields || {};
     return (
       <Screen>
         <div className="add-complaint-main-cont">
-          <ImageUpload sendFile={sendFile} />
+          <ImageUpload module="pgr" formKey={formKey} fieldKey="media" />
           <ComplaintTypeCard complaintType={fields.complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard
             landmark={fields.landmark}
@@ -84,7 +80,6 @@ class AddComplaints extends Component {
 const mapStateToProps = (state) => {
   const formKey = "complaint";
   const form = state.form[formKey] || {};
-  // form: state.form;
   return { form, formKey };
 };
 
@@ -93,7 +88,6 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
   };
 };
 

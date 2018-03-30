@@ -1,12 +1,5 @@
 import axios from "axios";
-import {
-  prepareFormData,
-  prepareForm,
-  hyphenSeperatedDateTime,
-  getRequestUrl,
-  fetchFromLocalStorage,
-  addQueryArg
-} from "./commons";
+import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
 //const authToken = fetchFromLocalStorage("token");
 const authToken = "b0d296d2-2779-4fde-b667-e7114c5a3afb";
@@ -23,8 +16,8 @@ const instance = axios.create({
 const loginInstance = axios.create({
   baseURL: window.location.origin,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    "Authorization": 'Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0',
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0",
   },
 });
 
@@ -48,23 +41,28 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken
+    authToken,
   };
 
-  return Object.assign({}, {
-    RequestInfo
-  }, requestBody);
+  return Object.assign(
+    {},
+    {
+      RequestInfo,
+    },
+    requestBody
+  );
 };
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
   let apiError = "Api Error";
-  if (headers) instance.defaults = Object.assign(instance.defaults, {
-    headers
-  });
+  if (headers)
+    instance.defaults = Object.assign(instance.defaults, {
+      headers,
+    });
 
   queryObject.push({
     key: "tenantId",
-    value: tenantId
+    value: tenantId,
   });
   endPoint = addQueryArg(endPoint, queryObject);
   try {
@@ -86,7 +84,7 @@ export const uploadFile = async (endPoint, module, file) => {
   const requestParams = {
     tenantId,
     module,
-    file
+    file,
   };
   const requestBody = prepareForm(requestParams);
 
@@ -98,25 +96,24 @@ export const uploadFile = async (endPoint, module, file) => {
     if (responseStatus === 201) {
       const responseData = response.data;
       const files = responseData.files || [];
-      fileStoreIds = responseData.files.map((f) => f.fileStoreId);
-      return fileStoreIds;
+      fileStoreIds = files.map((f) => f.fileStoreId);
+      return fileStoreIds[0];
     }
   } catch (error) {
     throw new Error(error);
   }
 };
 
-
 export const loginRequest = async (username, password) => {
   let apiError = "Api Error";
   var params = new URLSearchParams();
-  params.append('username', username);
-  params.append('password', password);
-  params.append('grant_type', 'password');
-  params.append('scope', 'read');
-  params.append('tenantId', tenantId);
+  params.append("username", username);
+  params.append("password", password);
+  params.append("grant_type", "password");
+  params.append("scope", "read");
+  params.append("tenantId", tenantId);
   try {
-    const response = await loginInstance.post('/user/oauth/token', params);
+    const response = await loginInstance.post("/user/oauth/token", params);
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;

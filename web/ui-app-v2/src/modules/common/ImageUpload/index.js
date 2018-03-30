@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { FilePicker, Icon, Image } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
+import { fileUpload, removeFile } from "redux/file/actions";
 import "./index.css";
 
 const iconStyle = {
@@ -44,17 +46,21 @@ class ImageUpload extends Component {
   };
 
   removeImage = (imageIndex) => {
-    const images = this.state.images.filter((image, index) => imageIndex !== index);
-    this.setState({ images });
+    const { fieldKey, formKey, removeFile } = this.props;
+    const { images } = this.state;
+    const imageToBeRemoved = images[imageIndex];
+    removeFile(formKey, fieldKey, imageToBeRemoved.name);
+    this.setState({ images: images.filter((image, index) => imageIndex !== index) });
   };
 
-  onFilePicked = (file, imageUrl) => {
+  onFilePicked = (file, url) => {
     const currentImages = this.state.images || [];
-    this.props.sendFile(file);
-
     if (currentImages.length < 3) {
+      const { formKey, fieldKey, module, fileUpload } = this.props;
+      fileUpload(formKey, fieldKey, module, file);
+      const image = { url, name: file.name };
       this.setState({
-        images: currentImages.concat(imageUrl),
+        images: currentImages.concat(image),
       });
     }
   };
@@ -80,7 +86,7 @@ class ImageUpload extends Component {
             {images.map((image, index) => {
               return (
                 <div key={index} className="upload-image-cont">
-                  <Image source={image} style={{ height: "100%" }} />
+                  <Image source={image.url} style={{ height: "100%" }} />
                   <div className="image-remove" onClick={() => removeImage(index)}>
                     <Icon id="image-close-icon" action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />
                   </div>
@@ -95,4 +101,11 @@ class ImageUpload extends Component {
   }
 }
 
-export default ImageUpload;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
+    removeFile: (formKey, fieldKey, fileName) => dispatch(removeFile(formKey, fieldKey, fileName)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ImageUpload);
