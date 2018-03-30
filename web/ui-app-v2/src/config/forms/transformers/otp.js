@@ -26,14 +26,14 @@ const viewModelToBusinessModelTransformer = (formKey, state) => {
   } else if (previousRoute.endsWith("login")) {
     fields = state.form["login"].fields;
     fields = {
-      password:{
-        jsonPath:"login.password",
-        value:otpFields.otp.value
+      password: {
+        jsonPath: "login.password",
+        value: otpFields.otp.value,
       },
       username: {
         jsonPath: "login.username",
         value: fields.phone.value,
-      }
+      },
       // ,
       // scope: {
       //   jsonPath: "login.scope",

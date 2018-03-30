@@ -43,7 +43,7 @@ const displayDate = (rawData) => {
 };
 
 const displayStatus = (status) => {
-  return status?statusToMessageMapping[status.toLowerCase()]:"";
+  return status ? statusToMessageMapping[status.toLowerCase()] : "";
 };
 
 const mapStateToProps = (state) => {

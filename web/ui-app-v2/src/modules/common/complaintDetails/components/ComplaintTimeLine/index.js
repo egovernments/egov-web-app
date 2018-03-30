@@ -67,7 +67,7 @@ const StatusIcon = ({ status }) => {
   StatusContent;
 };
 
-const StatusContent = ({ status, currentStatus, content, history, handleFeedbackOpen, role }) => {
+const StatusContent = ({ status, currentStatus, content, history, handleFeedbackOpen, role, complaintNo }) => {
   var { date, name, designation, department, resolveImage, resolveFeedback, reason } = content;
   switch (status) {
     case "SUBMITTED":
@@ -195,7 +195,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/citizen/feedback");
+                history.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
               }}
             >
               <Label
@@ -230,7 +230,7 @@ const DueDate = ({ status, role, duedateText }) => {
 
 class ComplaintTimeLine extends Component {
   render() {
-    let { status, history, handleFeedbackOpen, role } = this.props;
+    let { status, history, handleFeedbackOpen, role, complaintNo } = this.props;
     let steps = [
       {
         props: {
@@ -244,7 +244,9 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent status="RESOLVED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} />,
+        contentChildren: (
+          <StatusContent status="RESOLVED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} complaintNo={complaintNo} />
+        ),
       },
       {
         props: {
