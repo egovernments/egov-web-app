@@ -1,10 +1,12 @@
 import * as actionTypes from "./actionTypes";
 import * as appTypes from "../app/actionTypes";
+
 import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "../app/actions";
 import { httpRequest, loginRequest } from "../../utils/api";
 import { prepareFormData } from "../../utils/commons";
 
 export const initForm = (form) => {
+  console.log(form);
   return {
     type: actionTypes.INIT_FORM,
     form,

@@ -198,7 +198,7 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
               </div>
               {role === "citizen" && (
                 <div className="complaint-status-cont">
-                  <span className="complaint-status-text dark-color">{complaint.status.statusMessage}</span>
+                  <Label label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
                 </div>
               )}
               {/* {track && (
