@@ -73,7 +73,7 @@ const displayDate = (rawData) => {
   return split.join("-");
 };
 
-const displayStatus = (status="", assignee) => {
+const displayStatus = (status = "", assignee) => {
   let statusObj = {};
   switch (status.toLowerCase()) {
     case "new":

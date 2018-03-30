@@ -41,21 +41,25 @@ class Feedback extends Component {
       valueArray.push(value);
     }
     this.setState({ value: valueArray });
-    this.props.handleFieldChange("selectedSevice", "selectedSevice", valueArray);
+    this.props.handleFieldChange(this.props.formKey, "selectedSevice", valueArray);
   };
 
   onClick = (value) => {
-    this.props.handleFieldChange("rating", "rating", value);
+    this.props.handleFieldChange(this.props.formKey, "rating", value);
     //
   };
 
   handleChange = (e) => {
-    this.props.handleFieldChange("comments", "comments", e.target.value);
+    this.props.handleFieldChange(this.props.formKey, "comments", e.target.value);
   };
 
   onSubmit = (history) => {
+    if (this.props.formKey === "feedback") {
+      this.props.form.fields.selectedSevice.value = this.props.form.fields.selectedSevice.value.toString();
+    }
     if (this.state.submitted === false) {
       this.setState({ submitted: true });
+      this.props.submitForm(this.props.formKey);
     } else {
       history.push("/citizen/complaint-details?status=resolved");
     }
@@ -115,7 +119,7 @@ class Feedback extends Component {
 const mapStateToProps = (state) => {
   const formKey = "feedback";
   const form = state.form[formKey] || {};
-  return { form };
+  return { form, formKey };
 };
 
 const mapDispatchToProps = (dispatch) => {

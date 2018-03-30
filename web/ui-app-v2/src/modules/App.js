@@ -78,7 +78,7 @@ class App extends Component {
     const iconElementLeft = (
       <IconButton id="icon-hamburger">
         {isHomeScreen ? (
-          <Icon id="icon-hamburger" action="action" name="reorder" />
+          <Icon id="icon-hamburger" action="custom" name="hamburger" />
         ) : (
           <Icon id="back-navigator" action="navigation" name="arrow-back" />
         )}

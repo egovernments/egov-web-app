@@ -1,7 +1,10 @@
 import axios from "axios";
 import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
-
+const authToken = fetchFromLocalStorage("token");
+//const authToken = "b0d296d2-2779-4fde-b667-e7114c5a3afb";
+// const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
+const tenantId = fetchFromLocalStorage("tenantId");
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -38,7 +41,7 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken:fetchFromLocalStorage("token"),
+    authToken,
   };
 
   return Object.assign(
@@ -59,7 +62,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 
   queryObject.push({
     key: "tenantId",
-    value: fetchFromLocalStorage("tenantId")
+    value: tenantId,
   });
   endPoint = addQueryArg(endPoint, queryObject);
   try {
@@ -108,7 +111,7 @@ export const loginRequest = async (username, password) => {
   params.append("password", password);
   params.append("grant_type", "password");
   params.append("scope", "read");
-  params.append("tenantId",fetchFromLocalStorage("tenantId"));
+  params.append("tenantId", tenantId);
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
     const responseStatus = parseInt(response.status, 10);
