@@ -26,16 +26,17 @@ const removeFile = (fileToBeRemoved, formKey, fieldKey) => {
   };
 };
 
-export const fileUpload = (formKey, fieldKey, files) => {
+export const fileUpload = (formKey, fieldKey, module, files) => {
   return async (dispatch, getState) => {
     dispatch(fileUploadPending());
     try {
-      const filesStoreIds = await uploadFile(FILE_UPLOAD.POST.URL, "pgr", files);
+      const filesStoreIds = await uploadFile(FILE_UPLOAD.POST.URL, module, files);
       dispatch(fileUploadCompleted(filesStoreIds));
       const state = getState();
       const { form } = state;
-      let currentFiles = form[formKey][fieldKey] || [];
-      currentFiles = currentFiles.concat(filesStoreIds);
+      let currentFiles = form[formKey].fields[fieldKey];
+      currentFiles = currentFiles && currentFiles.value ? currentFiles.value : [];
+      currentFiles.unshift(...filesStoreIds);
       dispatch(handleFieldChange(formKey, fieldKey, currentFiles));
     } catch (error) {
       dispatch(fileUploadError(error));

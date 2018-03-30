@@ -47,17 +47,17 @@ class AddComplaints extends Component {
     this.props.history.push(`/citizen/map?${this.props.formKey}`);
   };
 
-  getImages = (images) => {
-    this.props.fileUpload(this.props.formKey, "media", images);
+  sendFile = (file) => {
+    this.props.fileUpload(this.props.formKey, "media", "pgr", file);
   };
 
   render() {
-    const { navigateToComplaintType, submitComplaint, getImages } = this;
+    const { navigateToComplaintType, submitComplaint, sendFile } = this;
     const fields = this.props.form.fields || {};
     return (
       <Screen>
         <div className="add-complaint-main-cont">
-          <ImageUpload sendFile={getImages} />
+          <ImageUpload sendFile={sendFile} />
           <ComplaintTypeCard {...fields.complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard
             landmark={fields.landmark && fields.landmark.value}
@@ -94,7 +94,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
+    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
   };
 };
 

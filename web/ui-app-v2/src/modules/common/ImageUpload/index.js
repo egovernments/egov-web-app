@@ -38,7 +38,7 @@ class ImageUpload extends Component {
   fillPlaceholder = (images, onFilePicked, inputProps) => {
     const placeholders = [];
     for (let i = 0; i < 3 - images.length; i++) {
-      placeholders.push(<Placeholder key={i} onFilePicked={onFilePicked} hide={i === 1 ? true : false} />);
+      placeholders.push(<Placeholder key={i} inputProps={inputProps} onFilePicked={onFilePicked} hide={i === 1 ? true : false} />);
     }
     return placeholders;
   };
