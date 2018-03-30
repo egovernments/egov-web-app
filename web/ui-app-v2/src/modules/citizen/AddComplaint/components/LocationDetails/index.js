@@ -14,7 +14,7 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
               <div onClick={locationOnClick}>
                 <TextFieldIcon
                   id="addComplaint-location-details"
-                  value={locationDetails}
+                  {...locationDetails}
                   floatingLabelText="Location"
                   hintText="Search Location"
                   iconPosition="after"
@@ -26,7 +26,7 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
               </div>
               <TextField
                 id="addComplaint-landmark-details"
-                value={landmark}
+                {...landmark}
                 onChange={onChange}
                 name="landmark-details"
                 isRequired={false}

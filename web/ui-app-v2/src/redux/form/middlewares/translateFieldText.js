@@ -21,16 +21,17 @@ const translateFieldText = (store) => (next) => (action) => {
       // a bit hacky; instead of asking user to write it in config putting it here
       field["requiredMessage"] = getTranslatedLabel("CORE_COMMON_REQUIRED_ERRMSG", localizationLabels);
       translatedField[fieldKey] = field;
+
       return translatedField;
     }, {});
 
-    const { label } = form.submit;
+    let submit = {};
 
-    if (label) {
-      form.submit.label = getTranslatedLabel(label, localizationLabels);
+    if (form.submit && form.submit.label) {
+      const label = getTranslatedLabel(form.submit.label, localizationLabels);
+      submit = { ...form.submit, label };
     }
-
-    action.form = { ...form, fields };
+    action.form = { ...form, fields, submit };
   }
 
   next(action);

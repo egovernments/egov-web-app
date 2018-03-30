@@ -8,14 +8,18 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_NAME",
       errorMessage: "CORE_COMMON_NAME_VALIDMSG",
       hintText: "CORE_COMMON_NAME_PLACEHOLDER",
-      pattern: "^([A-z ])+$",
+      pattern: "^[A-z]+\\s?[A-z]*$",
     },
     city: {
       id: "person-city",
-      jsonPath: "otp.tenantId",
+      jsonPath: "otp.permanentCity",
       required: true,
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "CORE_COMMON_CITY_PLACEHOLDER",
+    },
+    tenant: {
+      jsonPath: "otp.tenantId",
+      value: "pb",
     },
     phone: {
       id: "person-phone",

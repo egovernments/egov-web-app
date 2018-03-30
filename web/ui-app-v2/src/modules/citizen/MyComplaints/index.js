@@ -15,6 +15,7 @@ import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import Label from "utils/translationNode";
 import "./index.css";
 import { transformById } from "../../../utils/commons";
+import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class MyComplaints extends Component {
   componentDidMount = () => {
@@ -72,7 +73,7 @@ const displayDate = (rawData) => {
   return split.join("-");
 };
 
-const displayStatus = (status, assignee) => {
+const displayStatus = (status="", assignee) => {
   let statusObj = {};
   switch (status.toLowerCase()) {
     case "new":
@@ -104,8 +105,8 @@ const mapStateToProps = (state) => {
   let transformedComplaints = [];
   Object.keys(complaints.byId).forEach((complaint, index) => {
     let complaintObj = {};
-    complaintObj.header = complaints.byId[complaint].serviceCode;
-    complaintObj.date = displayDate(complaints.byId[complaint].serviceRequestId);
+    complaintObj.header = mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode);
+    complaintObj.date = getDateFromEpoch(complaints.byId[complaint].auditDetails.createdTime);
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
     complaintObj.images = [
@@ -121,7 +122,6 @@ const mapStateToProps = (state) => {
     ];
     transformedComplaints.push(complaintObj);
   });
-  console.log(transformedComplaints);
   return { complaints, transformedComplaints };
 };
 

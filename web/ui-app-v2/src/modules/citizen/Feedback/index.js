@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import "./index.css";
@@ -8,11 +9,28 @@ import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "../../common/Screen";
 import { withRouter } from "react-router-dom";
+import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 
 class Feedback extends Component {
+  constructor(props) {
+    super(props);
+    this.formConfig = require("config/forms/feedback").default;
+  }
   state = {
     value: [],
+    ratingValue: 0,
+
     submitted: false,
+  };
+
+  componentDidMount = () => {
+    console.log(this.formConfig);
+    this.props.initForm(this.formConfig);
+  };
+
+  navigateToLogin = () => {
+    this.props.history.push("/citizen/complaint-details?status=resolved");
   };
 
   onCheck = (value) => {
@@ -23,6 +41,16 @@ class Feedback extends Component {
       valueArray.push(value);
     }
     this.setState({ value: valueArray });
+    this.props.handleFieldChange("selectedSevice", "selectedSevice", valueArray);
+  };
+
+  onClick = (value) => {
+    this.props.handleFieldChange("rating", "rating", value);
+    //
+  };
+
+  handleChange = (e) => {
+    this.props.handleFieldChange("comments", "comments", e.target.value);
   };
 
   onSubmit = (history) => {
@@ -36,30 +64,37 @@ class Feedback extends Component {
   render() {
     let { history } = this.props;
     let { value, submitted } = this.state;
+    const { formConfig, navigateToLogin } = this;
+    const { form, handleFieldChange, submitForm } = this.props;
+    const { name: formKey } = formConfig;
+
     return (
       <Screen className="feedback-main-screen">
         {!submitted ? (
           <div className="feedback-main-container">
             <div className="feedback-form">
-              <RatingsComponent /> <CheckBoxGroup selected={value} onCheck={this.onCheck} /> <TextAreaComponent />
+              <RatingsComponent onChange={this.onClick} />
+              <CheckBoxGroup selected={value} onCheck={this.onCheck} />
+              <TextAreaComponent onChange={this.handleChange} />
             </div>
           </div>
         ) : (
-          <div className="feedback-submitted-main-cont">
-            <div className="feedback-submitted-icon-cont">
-              <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
-                <Icon action="navigation" name="check" />
-              </FloatingActionButton>
-            </div>
-            <Label
-              id="feedback-success-message"
-              label="CS_FEEDBACK_SUCCESS"
-              className="feedback-thankyou-text"
-              dark={true}
-              bold={true}
-              fontSize={"16px"}
-            />
-          </div>
+          // <div className="feedback-submitted-main-cont">
+          //   <div className="feedback-submitted-icon-cont">
+          //     <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
+          //       <Icon action="navigation" name="check" />
+          //     </FloatingActionButton>
+          //   </div>
+          //   <Label
+          //     id="feedback-success-message"
+          //     label="CS_FEEDBACK_SUCCESS"
+          //     className="feedback-thankyou-text"
+          //     dark={true}
+          //     bold={true}
+          //     fontSize={"16px"}
+          //   />
+          // </div>
+          <SuccessMessage successmessage={"Thank you for you feedback"} />
         )}
         <div className="feedback-popup-button-cont">
           <Button
@@ -77,4 +112,18 @@ class Feedback extends Component {
   }
 }
 
-export default withRouter(Feedback);
+const mapStateToProps = (state) => {
+  const formKey = "feedback";
+  const form = state.form[formKey] || {};
+  return { form };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

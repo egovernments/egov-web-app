@@ -30,7 +30,6 @@ class TrackLocation extends Component {
       formKey: window.location.href.split("?")[1],
     };
     this.formConfig = require("config/forms/complaint").default;
-    console.log(window.location.href.split("?")[1], this.state.formKey);
   }
 
   componentDidMount() {

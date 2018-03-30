@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import { TextArea } from "../../../../../components";
 
-const TextAreaComponent = () => {
+const TextAreaComponent = ({ onChange }) => {
   return (
     <TextArea
       id="feedback-comments"
@@ -11,6 +11,7 @@ const TextAreaComponent = () => {
       underlineShow={true}
       hintStyle={{ letterSpacing: "0.7px" }}
       rowsMax={3}
+      onChange={onChange}
     />
   );
 };

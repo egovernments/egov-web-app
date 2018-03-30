@@ -13,7 +13,7 @@ const ComplaintTypeField = ({ onClick, complaintType }) => {
             <TextFieldIcon
               id="addComplaint-complaint-type"
               onClick={onClick}
-              value={complaintType}
+              {...complaintType}
               floatingLabelText="Complaint Type"
               hintText="Select Complaint Type"
               iconPosition="after"

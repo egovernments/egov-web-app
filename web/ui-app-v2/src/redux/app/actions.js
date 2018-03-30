@@ -8,16 +8,19 @@ export const setRoute = (route) => {
   return { type: appTypes.SET_ROUTE, route };
 };
 
+export const setUserInfo = (userInfo) => {
+  return { type:appTypes.SET_USER_INFO,userInfo}
+}
+
 export const toggleSnackbarAndSetText = (status,msg,isSuccess,isError) => dispatch => {
-  debugger;
   dispatch({
-    type:appTypes.SHOW_TOAST,
+    type: appTypes.SHOW_TOAST,
     status,
     msg,
     isSuccess,
-    isError
+    isError,
   });
-}
+};
 
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
