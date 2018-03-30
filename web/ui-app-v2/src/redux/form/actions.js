@@ -77,8 +77,10 @@ export const submitForm = (formKey) => {
           // console.log(formResponse);
         } else {
           //adding tenantId and phone in services. -- to be refactored --
-          formData.services[0].tenantId = localStorage.getItem("tenantId");
-          formData.services[0].phone = JSON.parse(localStorage.getItem("user-info")).UserRequest.mobileNumber;
+          if (formData.services) {
+            formData.services[0].tenantId = localStorage.getItem("tenantId");
+            formData.services[0].phone = JSON.parse(localStorage.getItem("user-info")).UserRequest.mobileNumber;
+          }
           formResponse = await httpRequest(saveUrl, action, [], formData);
           dispatch(submitFormComplete(formKey, formResponse));
         }
