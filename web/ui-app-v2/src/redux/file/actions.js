@@ -9,8 +9,8 @@ const fileUploadPending = () => {
   return { type: actionTypes.FILE_UPLOAD_STARTED };
 };
 
-const fileUploadCompleted = (fileKey, fileStoreId) => {
-  return { type: actionTypes.FILE_UPLOAD_COMPLETED, fileKey, fileStoreId };
+const fileUploadCompleted = (fileKey, file) => {
+  return { type: actionTypes.FILE_UPLOAD_COMPLETED, fileKey, file };
 };
 
 const fileUploadError = (error) => {
@@ -22,10 +22,12 @@ export const removeFile = (formKey, fieldKey, fileName) => {
     const state = getState();
     const { form, file } = state;
     const fileKey = getFileKey(formKey, fieldKey, fileName);
-    const fileStoreId = file.payload[fileKey];
+    //Deleting from the Form
+    const fileStoreId = file.payload[fileName].fileStoreId;
     let currentFiles = getFormFieldFiles(form, formKey, fieldKey);
     currentFiles = currentFiles.filter((f) => f !== fileStoreId);
     dispatch(handleFieldChange(formKey, fieldKey, currentFiles));
+    //Deleting from the File is pending.
   };
 };
 
@@ -34,9 +36,11 @@ export const fileUpload = (formKey, fieldKey, module, file) => {
   return async (dispatch, getState) => {
     dispatch(fileUploadPending());
     try {
+      const fileUrl = file.url;
+      file.url = null;
       const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, module, file);
       const fileKey = getFileKey(formKey, fieldKey, file.name);
-      dispatch(fileUploadCompleted(fileKey, fileStoreId));
+      dispatch(fileUploadCompleted(fileKey, { fileStoreId: fileStoreId, fileUrl: fileUrl }));
       const state = getState();
       const { form } = state;
       let currentFiles = getFormFieldFiles(form, formKey, fieldKey);
