@@ -64,6 +64,9 @@ const form = (state = {}, action) => {
     case actionTypes.VALIDATE_FORM:
       const { isFormValid } = action;
       return setFormProperty(state, formKey, "isFormValid", isFormValid);
+    case actionTypes.SET_REDIRECTION:
+      const { redirectionRoute } = action;
+      return setFormProperty(state, formKey, "redirectionRoute", redirectionRoute);
     case actionTypes.DISPLAY_FORM_ERRORS:
       return displayFieldErrors(state, formKey);
     case actionTypes.SUBMIT_FORM_PENDING:

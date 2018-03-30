@@ -30,10 +30,11 @@ class Home extends Component {
 }
 
 const statusToMessageMapping = {
-  new: "Open",
+  new: "Opened",
   rejected: "Rejected",
   closed: "Closed",
-  open: "Re-Opened",
+  open: "Opened",
+  "re-assign": "Re-assigned",
 };
 
 const displayDate = (rawData) => {
@@ -43,7 +44,7 @@ const displayDate = (rawData) => {
 };
 
 const displayStatus = (status) => {
-  return status?statusToMessageMapping[status.toLowerCase()]:"";
+  return status ? statusToMessageMapping[status.toLowerCase()] : "";
 };
 
 const mapStateToProps = (state) => {

@@ -58,19 +58,33 @@ class Details extends Component {
                 </div>
                 <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
-                    {images.map((image, index) => {
-                      return (
-                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
-                          <Image
-                            style={{
-                              width: "97px",
-                              height: "93px",
-                            }}
-                            source={image[index]}
-                          />
-                        </div>
-                      );
-                    })}
+                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                      <Image
+                        style={{
+                          width: "97px",
+                          height: "93px",
+                        }}
+                        source={garbageOne}
+                      />
+                    </div>
+                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                      <Image
+                        style={{
+                          width: "97px",
+                          height: "93px",
+                        }}
+                        source={garbageTwo}
+                      />
+                    </div>
+                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                      <Image
+                        style={{
+                          width: "97px",
+                          height: "93px",
+                        }}
+                        source={garbageThree}
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -79,7 +93,7 @@ class Details extends Component {
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
-                    <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
+                    <Label label={"27th Main HSR Layout"} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                   {this.props.role === "AO" && (
                     <div

@@ -28,7 +28,7 @@ const formConfig = {
   },
   saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/citizen/user/otp",
-  action: "token"
+  action: "token",
 };
 
 export default formConfig;

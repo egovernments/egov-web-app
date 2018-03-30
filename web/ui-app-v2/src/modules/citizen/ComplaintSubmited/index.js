@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Button } from "../../../components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import { connect } from "react-redux";
 import Screen from "../../common/Screen";
 import Label from "utils/translationNode";
 import "./index.css";
@@ -10,7 +11,7 @@ class ComplaintDetails extends Component {
     this.props.history.push("/citizen");
   };
   render() {
-    let complaintnumber = "25436789";
+    let complaintnumber = this.props.form.redirectionRoute.split("=")[1];
     return (
       <div>
         <Screen className="complaint-submitted-card">
@@ -22,7 +23,7 @@ class ComplaintDetails extends Component {
             <Label id="thank-you-text" label="CS_COMPLAINT_SUBMITTED_THANKYOU" fontSize="16px" />
             <div className="complaint-submitted-complaintNo-cont">
               <Label label="CS_COMMON_COMPLAINT_NO" fontSize="16px" />
-              <Label className="complaint-number-value" label={complaintnumber} />
+              <Label className="complaint-number-value" label={complaintnumber} containerStyle={{ marginLeft: 5 }} labelStyle={{ lineHeight: 1.5 }} />
             </div>
           </div>
           <div className="complaint-submitted-label">
@@ -37,4 +38,11 @@ class ComplaintDetails extends Component {
   }
 }
 
-export default ComplaintDetails;
+const mapStateToProps = (state) => {
+  const formKey = "complaint";
+  return {
+    form: state.form[formKey],
+  };
+};
+
+export default connect(mapStateToProps, null)(ComplaintDetails);

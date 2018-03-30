@@ -37,7 +37,7 @@ class AddComplaints extends Component {
 
   submitComplaint = () => {
     this.props.submitForm(this.props.formKey);
-    this.props.history.push("/citizen/complaint-submitted");
+    this.props.history.push(`/citizen/complaint-submitted`);
   };
 
   locationOnClick = () => {

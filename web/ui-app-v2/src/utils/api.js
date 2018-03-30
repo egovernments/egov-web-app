@@ -1,8 +1,6 @@
 import axios from "axios";
 import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
-
-
 const instance = axios.create({
   baseURL: window.location.origin,
   headers: {
@@ -38,7 +36,7 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken:fetchFromLocalStorage("token"),
+    authToken: fetchFromLocalStorage("token"),
   };
 
   return Object.assign(
@@ -59,7 +57,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 
   queryObject.push({
     key: "tenantId",
-    value: fetchFromLocalStorage("tenantId")
+    value: fetchFromLocalStorage("tenantId"),
   });
   endPoint = addQueryArg(endPoint, queryObject);
   try {
@@ -108,7 +106,7 @@ export const loginRequest = async (username, password) => {
   params.append("password", password);
   params.append("grant_type", "password");
   params.append("scope", "read");
-  params.append("tenantId",fetchFromLocalStorage("tenantId"));
+  params.append("tenantId", fetchFromLocalStorage("tenantId"));
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
     const responseStatus = parseInt(response.status, 10);
