@@ -7,7 +7,6 @@ import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { Button } from "../../../components";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-
 import "./index.css";
 
 class AddComplaints extends Component {
