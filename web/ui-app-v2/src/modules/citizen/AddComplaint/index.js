@@ -22,7 +22,6 @@ class AddComplaints extends Component {
   }
 
   state = {
-    locationDetails: "Sector 32, 1 main, Amritsar",
     openMap: false,
   };
 
@@ -58,14 +57,14 @@ class AddComplaints extends Component {
       <Screen>
         <div className="add-complaint-main-cont">
           <ImageUpload sendFile={sendFile} />
-          <ComplaintTypeCard {...fields.complaintType} onClick={navigateToComplaintType} />
+          <ComplaintTypeCard complaintType={fields.complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard
-            landmark={fields.landmark && fields.landmark.value}
-            locationDetails={fields.address && fields.address.value}
+            landmark={fields.landmark}
+            locationDetails={fields.address}
             onChange={this.handleLandmarkChange}
             locationOnClick={this.locationOnClick}
           />
-          <AdditionalDetailsCard additionalDetails={fields.additionalDetails && fields.additionalDetails.value} onChange={this.handleDetailsChange} />
+          <AdditionalDetailsCard additionalDetails={fields.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
             <Button
               id="addComplaint-submit-complaint"
