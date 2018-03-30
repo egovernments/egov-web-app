@@ -265,6 +265,7 @@ class HeaderWithDrawer extends Component {
     this.setState({
       logoutPopupOpen: false,
     });
+    this.props.logout();
   };
   handleNo = () => {
     this.setState({

@@ -6,4 +6,3 @@ export const SET_APP_NAME = "SET_APP_NAME";
 export const SET_ROUTE = "SET_ROUTE";
 export const ADD_LOCALIZATION = "ADD_LOCALIZATION";
 export const UPDATE_LOCALIZATION = "UPDATE_LOCALIZATION";
-export const SET_USER_INFO = "SET_USER_INFO";

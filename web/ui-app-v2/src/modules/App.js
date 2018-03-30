@@ -6,6 +6,7 @@ import { BottomNavigation, Icon } from "../components";
 import IconButton from "material-ui/IconButton";
 import { toggleSnackbarAndSetText } from "../redux/app/actions";
 import { fetchComplaintCategories } from "../redux/complaints/actions";
+import { logout } from "../redux/auth/actions";
 import Snackbar from "material-ui/Snackbar";
 
 const options = [
@@ -106,7 +107,7 @@ class App extends Component {
   }
 
   render() {
-    const { Component, hideBottomNavigation, hideAppBar, toast, ...rest } = this.props;
+    const { Component, hideBottomNavigation, hideAppBar, toast,logout, ...rest } = this.props;
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
@@ -122,6 +123,7 @@ class App extends Component {
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
           role={role}
+          logout={logout}
         />
 
         <Component {...rest} />
@@ -152,4 +154,4 @@ const mapStateToProps = (state) => {
   return { route, toast };
 };
 
-export default connect(mapStateToProps, { toggleSnackbarAndSetText, fetchComplaintCategories })(App);
+export default connect(mapStateToProps, { toggleSnackbarAndSetText, fetchComplaintCategories,logout})(App);

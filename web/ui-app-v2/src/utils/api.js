@@ -1,9 +1,7 @@
 import axios from "axios";
 import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
-const authToken = "2b510652-338d-43ac-99d0-c9f3d964fed0";
-// const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
-const tenantId = fetchFromLocalStorage("tenantId");
+
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -40,7 +38,7 @@ const wrapRequestBody = (requestBody, action) => {
     msgId: "20170310130900|en_IN",
     requesterId: "",
     // userInfo,
-    authToken,
+    authToken:fetchFromLocalStorage("token"),
   };
 
   return Object.assign(
@@ -61,7 +59,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 
   queryObject.push({
     key: "tenantId",
-    value: tenantId,
+    value: fetchFromLocalStorage("tenantId")
   });
   endPoint = addQueryArg(endPoint, queryObject);
   try {
@@ -81,7 +79,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 // try to make a generic api call for this
 export const uploadFile = async (endPoint, module, file) => {
   const requestParams = {
-    tenantId,
+    tenantId: fetchFromLocalStorage("tenantId"),
     module,
     file,
   };
@@ -110,7 +108,7 @@ export const loginRequest = async (username, password) => {
   params.append("password", password);
   params.append("grant_type", "password");
   params.append("scope", "read");
-  params.append("tenantId", tenantId);
+  params.append("tenantId",fetchFromLocalStorage("tenantId"));
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
     const responseStatus = parseInt(response.status, 10);

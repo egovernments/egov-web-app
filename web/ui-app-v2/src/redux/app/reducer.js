@@ -16,10 +16,7 @@ const initialState = {
     isError: false,
   },
   showToster: false,
-  localizationLabels,
-  userInfo:{
-
-  }
+  localizationLabels
 };
 
 const appReducer = (state = initialState, action) => {
@@ -43,11 +40,6 @@ const appReducer = (state = initialState, action) => {
             isError: action.isError || false,
           }
         };
-    case actionTypes.SET_USER_INFO:
-            return {
-              ...state,
-              userInfo:action.userInfo
-            };
     default:
       return state;
   }

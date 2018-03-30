@@ -24,7 +24,7 @@ class PrivateRoute extends Component {
           ) : authenticating ? (
             <LoadingIndicator loading={true} />
           ) : (
-            <Redirect to="/login" />
+            <Redirect to="/citizen/user/register" />
           )
         }
       />

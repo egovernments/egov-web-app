@@ -17,7 +17,7 @@ const formConfig = {
   },
   action: "_create",
   saveUrl: "/user/citizen/_create",
-  redirectionRoute: "/citizen/login",
+  redirectionRoute: "/citizen/user/login",
 };
 
 export default formConfig;

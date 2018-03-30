@@ -31,3 +31,10 @@ export const CATEGORY = {
     ACTION: "_search",
   },
 };
+
+export const AUTH = {
+  LOGOUT: {
+    URL: "/user/_logout",
+    ACTION:"_logout"
+  }
+}
