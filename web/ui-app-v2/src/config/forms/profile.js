@@ -8,7 +8,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_NAME",
       errorMessage: "CORE_COMMON_NAME_VALIDMSG",
       hintText: "CORE_COMMON_NAME_PLACEHOLDER",
-      pattern: "^([A-z])+$",
+      pattern: "^[A-z]+\\s?[A-z]*$",
     },
     city: {
       id: "profile-form-city",
@@ -24,7 +24,7 @@ const formConfig = {
       floatingLabelText: "CS_PROFILE_EMAIL",
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",
       errorMessage: "CS_PROFILE_EMAIL_ERRORMSG",
-      pattern: "^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$",
+      pattern: "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(.\\w{2,3})+$",
       value: "",
     },
   },
