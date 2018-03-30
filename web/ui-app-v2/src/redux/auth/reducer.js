@@ -2,10 +2,10 @@ import * as actionTypes from "./actionTypes";
 
 const intialState = {
   authenticating: false,
-  authenticated: false,
+  authenticated: localStorage.getItem("authenticated")?(localStorage.getItem("authenticated")=="true"?true:false):false,
   authenticationFailed: true,
-  userInfo: {},
-  token: "",
+  userInfo: localStorage.getItem("user-info") || {},
+  token: localStorage.getItem("token") || "",
 };
 
 const auth = (state = intialState, action) => {

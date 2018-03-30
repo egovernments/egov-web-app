@@ -21,6 +21,7 @@ const formSubmit = (store) => (next) => (action) => {
       delete payload.ResponseInfo;
       localStorage.setItem("user-info", JSON.stringify(payload));
       localStorage.setItem("token", payload["access_token"]);
+      localStorage.setItem("authenticated", true);
       localStorage.setItem("tenantId", payload["UserRequest"].tenantId);
       redirectionRoute = "/citizen";
       dispatch(authenticated(payload));
