@@ -14,20 +14,25 @@ class Profile extends Component {
     super(props);
     this.state = {
       openUploadSlide: false,
-      img: img,
+      img: { url: img },
     };
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
+    // get user info
+    // merge with form config
     this.props.initForm(this.formConfig);
   }
 
   setProfilePic = (file, url) => {
-    this.props.fileUpload("profile", "photo", file);
+    const fileName = file ? file.name : null;
+
     if (url === "") url = img;
     this.setState({
-      img: url,
+      img: { name: fileName, url },
     });
+
+    this.props.fileUpload(this.props.formKey, "photo", "pgr", file);
   };
 
   onClickAddPic = (isOpen) => {
@@ -45,7 +50,7 @@ class Profile extends Component {
 
     return (
       <Screen>
-        <ProfileSection img={img} onClickAddPic={onClickAddPic} />
+        <ProfileSection img={img.url} onClickAddPic={onClickAddPic} />
         <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
         {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
       </Screen>
@@ -56,7 +61,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => {
   const formKey = "profile";
   const form = state.form[formKey] || {};
-  return { form };
+  return { form, formKey };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -64,7 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
+    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
   };
 };
 
