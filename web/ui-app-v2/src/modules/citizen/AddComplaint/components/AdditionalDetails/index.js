@@ -11,7 +11,7 @@ const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
           <div>
             <TextField
               id="addComplaint-additional-details"
-              value={additionalDetails}
+              {...additionalDetails}
               onChange={onChange}
               name="additional-details"
               isRequired={false}

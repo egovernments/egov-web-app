@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import * as appTypes from "../app/actionTypes";
-import {toggleSnackbarAndSetText,setRoute,setUserInfo} from "../app/actions";
-import { httpRequest,loginRequest } from "../../utils/api";
+import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "../app/actions";
+import { httpRequest, loginRequest } from "../../utils/api";
 import { prepareFormData } from "../../utils/commons";
 
 export const initForm = (form) => {
@@ -53,7 +53,7 @@ export const submitForm = (formKey) => {
       dispatch(submitFormPending(formKey));
       try {
         const formParams = {};
-        const { saveUrl, fields, action,contentType } = form;
+        const { saveUrl, fields, action, contentType } = form;
         let formData = null;
         try {
           let transformer = require(`../../config/forms/transformers/${formKey}`).default;
@@ -65,17 +65,20 @@ export const submitForm = (formKey) => {
         if (formData === null) {
           formData = prepareFormData(fields);
         }
-        let formResponse={}
+        let formResponse = {};
         if (formData.hasOwnProperty("login")) {
-          formResponse = await loginRequest(formData.login.username,formData.login.password);
+          formResponse = await loginRequest(formData.login.username, formData.login.password);
           delete formResponse.ResponseInfo;
-          localStorage.setItem("user-info",JSON.stringify(formResponse));
-          localStorage.setItem("token",formResponse["access_token"]);
-          localStorage.setItem("tenantId",formResponse["UserRequest"].tenantId);
+          localStorage.setItem("user-info", JSON.stringify(formResponse));
+          localStorage.setItem("token", formResponse["access_token"]);
+          localStorage.setItem("tenantId", formResponse["UserRequest"].tenantId);
           dispatch(setRoute("/citizen"));
           dispatch(setUserInfo(formResponse));
           // console.log(formResponse);
         } else {
+          //adding tenantId and phone in services. -- to be refactored --
+          formData.services[0].tenantId = localStorage.getItem("tenantId");
+          formData.services[0].phone = JSON.parse(localStorage.getItem("user-info")).UserRequest.mobileNumber;
           formResponse = await httpRequest(saveUrl, action, [], formData);
           dispatch(submitFormComplete(formKey, formResponse));
         }
