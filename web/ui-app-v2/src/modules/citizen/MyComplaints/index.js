@@ -73,10 +73,10 @@ const displayDate = (rawData) => {
   return split.join("-");
 };
 
-const displayStatus = (status="", assignee) => {
+const displayStatus = (status = "", assignee) => {
   let statusObj = {};
   switch (status.toLowerCase()) {
-    case "new":
+    case "new" || "open":
       statusObj.status = "CS_COMMON_OPEN_UCASE";
       statusObj.statusMessage = `Your complaint has been opened`;
       break;
@@ -88,8 +88,8 @@ const displayStatus = (status="", assignee) => {
       statusObj.status = "OPEN";
       statusObj.statusMessage = `Complaint Resolved. Please Rate`;
       break;
-    case "open":
-      statusObj.status = "OPEN";
+    case "reassigned":
+      statusObj.status = "RE-ASSIGNED";
       statusObj.statusMessage = `Your complaint has been re-assigned to ${assignee}`;
       break;
     default:
@@ -109,17 +109,9 @@ const mapStateToProps = (state) => {
     complaintObj.date = getDateFromEpoch(complaints.byId[complaint].auditDetails.createdTime);
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
-    complaintObj.images = [
-      {
-        source: Potholes_1,
-      },
-      {
-        source: Potholes_2,
-      },
-      {
-        source: Potholes_3,
-      },
-    ];
+    complaintObj.images = complaints.byId[complaint].actions[0].media.map((imageSource, index) => {
+      return { source: imageSource };
+    });
     transformedComplaints.push(complaintObj);
   });
   return { complaints, transformedComplaints };

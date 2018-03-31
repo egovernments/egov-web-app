@@ -1,13 +1,15 @@
 import * as actionTypes from "../actionTypes";
-import {authenticated} from "redux/auth/actions";
+import { authenticated } from "redux/auth/actions";
 import { setRoute } from "../../app/actions";
+import get from "lodash/get";
+import set from "lodash/set";
+import { setRedirection } from "redux/form/actions";
 
 const formSubmit = (store) => (next) => (action) => {
-  const { type, formKey, payload } = action
-  console.log(formKey,payload);
+  const { type, formKey, payload } = action;
+  console.log(formKey, payload);
   const dispatch = store.dispatch;
   let redirectionRoute = "";
-
 
   if (type == actionTypes.SUBMIT_FORM_COMPLETE) {
     // complete the form submit complete action
@@ -15,9 +17,9 @@ const formSubmit = (store) => (next) => (action) => {
     // navigation,
     // if you wish to do something with the state
     const state = store.getState();
-    redirectionRoute = state.form[formKey].redirectionRoute;
+    let { redirectionRoute, idJsonPath } = state.form[formKey];
 
-    if(formKey === "otp"){
+    if (formKey === "otp") {
       delete payload.ResponseInfo;
       localStorage.setItem("user-info", JSON.stringify(payload));
       localStorage.setItem("token", payload["access_token"]);
@@ -27,7 +29,14 @@ const formSubmit = (store) => (next) => (action) => {
       dispatch(authenticated(payload));
     }
 
-    if (redirectionRoute && redirectionRoute.length) dispatch(setRoute(redirectionRoute));
+    if (redirectionRoute && redirectionRoute.length) {
+      if (idJsonPath) {
+        const id = get(payload, idJsonPath);
+        redirectionRoute = redirectionRoute.replace(redirectionRoute.split("=")[1], id);
+        dispatch(setRedirection(formKey, redirectionRoute));
+      }
+      dispatch(setRoute(redirectionRoute));
+    }
   } else {
     next(action);
   }

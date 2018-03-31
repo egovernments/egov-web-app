@@ -49,8 +49,8 @@ const Main = () => {
           title="Complaint Submitted"
           component={ComplaintSubmited}
         />
-        <PrivateRoute exact path="/citizen/feedback" title="Feedback" component={Feedback} />
         <PrivateRoute exact path="/citizen/reopen-complaint/:serviceRequestId?" title="Reopen Complaint" component={ReOpenComplaint} />
+        <PrivateRoute exact path="/citizen/feedback/:serviceRequestId?" title="Feedback" component={Feedback} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/complaint-type" title="Complaint Type" component={ComplaintType} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/how-it-works" title="How it works" component={HowItWorks} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/add-complaint" title="Add Complaint" component={AddComplaint} />

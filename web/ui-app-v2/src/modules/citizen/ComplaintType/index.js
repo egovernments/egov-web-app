@@ -34,7 +34,7 @@ class ComplaintCategory extends Component {
         { id: "AC", text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
         { id: 2, text: "Overflowing Garbage Bins", icon: { action: "custom", name: "overflowing-garbage" } },
         { id: 3, text: "Garbage Bin Absent", icon: { action: "custom", name: "garbage-bin-absent" } },
-        { id: 4, text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
+        { id: "AOS", text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
       ],
     },
     {

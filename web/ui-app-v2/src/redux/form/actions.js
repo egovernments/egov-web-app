@@ -29,6 +29,10 @@ export const setFormValidation = (formKey, isFormValid) => {
   return { type: actionTypes.VALIDATE_FORM, isFormValid, formKey };
 };
 
+export const setRedirection = (formKey, redirectionRoute) => {
+  return { type: actionTypes.SET_REDIRECTION, formKey, redirectionRoute };
+};
+
 export const setFieldValidation = (formKey, fieldKey, errorText) => {
   return { type: actionTypes.VALIDATE_FIELD, formKey, fieldKey, errorText };
 };

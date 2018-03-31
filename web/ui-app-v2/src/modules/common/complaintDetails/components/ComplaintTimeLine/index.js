@@ -195,7 +195,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/citizen/feedback");
+                history.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
               }}
             >
               <Label

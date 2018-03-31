@@ -3,32 +3,22 @@ const formConfig = {
   fields: {
     rating: {
       id: "complaint-rating",
-      jsonPath: "services.rating",
-      required: true,
+      jsonPath: "services[0].rating",
+      required: false,
     },
     selectedSevice: {
       id: "feedback-service",
-      jsonPath: "services.feedback",
-      required: true,
+      jsonPath: "services[0].feedback",
     },
     comments: {
       id: "feedback-comments",
       required: true,
-      jsonPath: "actionInfo.comments",
+      jsonPath: "actionInfo[0].comments",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-    },
-    submit: {
-      label: "CORE_COMMON_SUBMIT",
-      id: "login-submit-action",
-    },
-    continue: {
-      label: "CORE_COMMON_CONTINUE",
-      id: "login-continue-action",
     },
   },
   action: "_update",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
-  redirectionRoute: "/citizen/complaint-details?status=resolved",
 };
 
 export default formConfig;
