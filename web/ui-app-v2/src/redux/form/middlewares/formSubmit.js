@@ -1,4 +1,5 @@
 import * as actionTypes from "../actionTypes";
+import { resetForm } from "../actions";
 import { authenticated } from "redux/auth/actions";
 import { addQueryArg } from "utils/commons";
 import { setRoute } from "redux/app/actions";
@@ -29,6 +30,8 @@ const formSubmit = (store) => (next) => (action) => {
       redirectionRoute = idJsonPath ? addQueryArg(redirectionRoute, [{ key: "id", value: get(payload, idJsonPath) }]) : redirectionRoute;
       dispatch(setRoute(redirectionRoute));
     }
+    // reset form after successful submission
+    dispatch(resetForm(formKey));
   } else {
     next(action);
   }

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addBodyClass, removeBodyClass } from "../utils/commons";
+import { addBodyClass, removeBodyClass } from "utils/commons";
 import HeaderWithDrawer from "./common/HeaderWithDrawer";
-import { BottomNavigation, Icon } from "../components";
+import { BottomNavigation, Icon } from "components";
 import IconButton from "material-ui/IconButton";
-import { toggleSnackbarAndSetText } from "../redux/app/actions";
-import { fetchComplaintCategories } from "../redux/complaints/actions";
-import { logout } from "../redux/auth/actions";
+import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { fetchComplaintCategories } from "redux/complaints/actions";
+import { logout } from "redux/auth/actions";
 import Snackbar from "material-ui/Snackbar";
 
 const options = [
@@ -107,7 +107,7 @@ class App extends Component {
   }
 
   render() {
-    const { Component, hideBottomNavigation, hideAppBar, toast,logout, ...rest } = this.props;
+    const { Component, hideBottomNavigation, hideAppBar, toast, logout, ...rest } = this.props;
     const { _updateMenuState, _onTabChange, _appBarProps } = this;
     const { toggleMenu, tabIndex } = this.state;
 
@@ -154,4 +154,4 @@ const mapStateToProps = (state) => {
   return { route, toast };
 };
 
-export default connect(mapStateToProps, { toggleSnackbarAndSetText, fetchComplaintCategories,logout})(App);
+export default connect(mapStateToProps, { toggleSnackbarAndSetText, fetchComplaintCategories, logout })(App);
