@@ -2,7 +2,6 @@ import axios from "axios";
 import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
 
 const authToken = fetchFromLocalStorage("token");
-//const authToken = "b0d296d2-2779-4fde-b667-e7114c5a3afb";
 // const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
 const tenantId = fetchFromLocalStorage("tenantId");
 

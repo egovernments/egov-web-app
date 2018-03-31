@@ -1,5 +1,6 @@
 const formConfig = {
   name: "complaint",
+  idJsonPath: "services[0].serviceRequestId",
   fields: {
     media: {
       id: "media",
@@ -47,7 +48,7 @@ const formConfig = {
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",
-  redirectionRoute: "/citizen/complaint-submitted",
+  redirectionRoute: `/citizen/complaint-submitted?id= `,
 };
 
 export default formConfig;
