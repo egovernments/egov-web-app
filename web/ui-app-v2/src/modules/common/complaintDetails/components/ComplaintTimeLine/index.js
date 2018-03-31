@@ -136,7 +136,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
           <div
             className="complaint-details-timline-button"
             onClick={(e) => {
-              history.push("/citizen/reopen-complaint");
+              history.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
             }}
           >
             <Label
@@ -208,7 +208,7 @@ const StatusContent = ({ status, currentStatus, content, history, handleFeedback
             <div
               className="complaint-details-timline-button"
               onClick={(e) => {
-                history.push("/citizen/reopen-complaint");
+                history.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
               }}
             >
               <Label
@@ -336,7 +336,9 @@ class ComplaintTimeLine extends Component {
               marginTop: "-50px",
             },
           },
-          contentChildren: <StatusContent status="REJECTED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} />,
+          contentChildren: (
+            <StatusContent status="REJECTED" content={{}} history={history} handleFeedbackOpen={handleFeedbackOpen} complaintNo={complaintNo} />
+          ),
         },
         {
           props: {

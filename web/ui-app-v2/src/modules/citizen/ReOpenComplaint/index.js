@@ -31,8 +31,8 @@ class ReOpenComplaint extends Component {
   ];
 
   handleComplaintSubmit = () => {
-    this.props.history.push("/citizen/complaint-submitted");
     this.props.submitForm(this.props.formKey);
+    this.props.history.push("/citizen/complaint-submitted");
   };
   handleCommentChange = (e) => {
     this.props.handleFieldChange(this.props.formKey, "reopencomments", e.target.value);

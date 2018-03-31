@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
-import {authenticated} from "../auth/actions";
-import {toggleSnackbarAndSetText,setRoute} from "../app/actions";
-import { httpRequest,loginRequest } from "../../utils/api";
+import { authenticated } from "../auth/actions";
+import { toggleSnackbarAndSetText, setRoute } from "../app/actions";
+import { httpRequest, loginRequest } from "../../utils/api";
 import { prepareFormData } from "../../utils/commons";
 
 export const initForm = (form) => {
@@ -82,7 +82,6 @@ export const submitForm = (formKey) => {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }
         dispatch(submitFormComplete(formKey, formResponse));
-
       } catch (error) {
         // console.log(error);
         dispatch(submitFormError(formKey, error));
