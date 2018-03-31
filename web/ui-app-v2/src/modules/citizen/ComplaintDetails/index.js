@@ -73,7 +73,12 @@ class ComplaintDetails extends Component {
     return (
       <Screen>
         {complaint && <Details {...complaint} />}
-        <ComplaintTimeLine status={status.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} />
+        <ComplaintTimeLine
+          status={status.status}
+          timeLine={timeLine}
+          handleFeedbackOpen={this.handleFeedbackOpen}
+          complaintNo={complaint.applicationNo}
+        />
         <Comments comments={comments} hasComments={true} />
       </Screen>
     );
