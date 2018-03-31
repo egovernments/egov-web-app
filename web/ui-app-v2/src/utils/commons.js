@@ -73,43 +73,30 @@ const getMonthName = (monthIndex) => {
   switch (monthIndex) {
     case 1:
       return "Jan";
-      break;
     case 2:
       return "Feb";
-      break;
     case 3:
       return "Mar";
-      break;
     case 4:
       return "Apr";
-      break;
     case 5:
       return "May";
-      break;
     case 6:
       return "Jun";
-      break;
     case 7:
       return "Jul";
-      break;
     case 8:
       return "Aug";
-      break;
     case 9:
       return "Sep";
-      break;
     case 10:
       return "Oct";
-      break;
     case 11:
       return "Nov";
-      break;
     case 12:
       return "Dec";
-      break;
     default:
       return "";
-      break;
   }
 };
 
@@ -146,9 +133,14 @@ export const removeBodyClass = (path) => {
   document.body.classList.remove(bodyClass);
 };
 
-export const prepareFormData = (formFields) => {
+export const prepareFormData = (form) => {
+  const formFields = form.fields;
   return Object.keys(formFields).reduce((formData, fieldKey) => {
-    const { value, jsonPath } = formFields[fieldKey];
+    const { file, jsonPath } = formFields[fieldKey];
+    let { value } = formFields[fieldKey];
+    if (file) {
+      value = ((form.files && form.files[fieldKey]) || []).map((fieldFile) => fieldFile.fileStoreId);
+    }
     return set(formData, jsonPath, value);
   }, {});
 };
@@ -161,4 +153,15 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
       translatedLabel = translatedLabel.message;
   }
   return translatedLabel || labelKey;
+};
+
+export const getImageUrlByFile = (file) => {
+  return new Promise((resolve) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
+  });
 };

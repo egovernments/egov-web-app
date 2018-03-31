@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
-import "./index.css";
 import CheckBoxGroup from "./components/CheckBoxGroup";
 import { Button, Icon } from "../../../components";
 import Label from "utils/translationNode";
@@ -11,6 +10,7 @@ import Screen from "../../common/Screen";
 import { withRouter } from "react-router-dom";
 import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import "./index.css";
 
 class Feedback extends Component {
   constructor(props) {

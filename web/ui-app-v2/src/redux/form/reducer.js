@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { validateField, getFormField, getFormFields } from "./utils";
+import { validateField, getFormField, getFormFields, getFiles } from "./utils";
 const intialState = {};
 
 const setForm = (state, formKey, form) => {
@@ -47,6 +47,16 @@ const mergeFields = (oldFields = {}, newFields = {}) => {
   }, {});
 };
 
+const setFile = (state, formKey, fieldKey, fileObject) => {
+  const files = getFiles(state, formKey, fieldKey);
+  return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat(fileObject) } } };
+};
+
+const removeFile = (state, formKey, fieldKey, fileIndex) => {
+  const files = getFiles(state, formKey, fieldKey);
+  return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.filter((f, index) => index !== fileIndex) } } };
+};
+
 const form = (state = {}, action) => {
   const { type, formKey, fieldKey } = action;
   switch (type) {
@@ -55,6 +65,8 @@ const form = (state = {}, action) => {
       const currentForm = state[name] || {};
       const mergedFields = mergeFields(currentForm.fields, action.form.fields);
       return { ...state, [name]: { ...currentForm, ...form, fields: mergedFields } };
+    case actionTypes.RESET_FORM:
+      return { ...state, [formKey]: {} };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);
@@ -76,6 +88,14 @@ const form = (state = {}, action) => {
     case actionTypes.SUBMIT_FORM_ERROR:
       state = setFormProperty(state, formKey, "submitting", false);
       return setFormProperty(state, formKey, "error", true);
+    case actionTypes.FILE_UPLOAD_STARTED:
+      return setFormProperty(state, formKey, "submitting", true);
+    case actionTypes.FILE_UPLOAD_COMPLETED:
+      return setFile(state, formKey, fieldKey, action.fileObject);
+    case actionTypes.FILE_UPLOAD_ERROR:
+      return state;
+    case actionTypes.FILE_REMOVE:
+      return removeFile(state, formKey, fieldKey, action.index);
     default:
       return state;
   }

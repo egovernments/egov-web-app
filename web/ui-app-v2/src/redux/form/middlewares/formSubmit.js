@@ -1,21 +1,17 @@
 import * as actionTypes from "../actionTypes";
 import { authenticated } from "redux/auth/actions";
-import { setRoute } from "../../app/actions";
+import { addQueryArg } from "utils/commons";
+import { setRoute } from "redux/app/actions";
 import get from "lodash/get";
-import set from "lodash/set";
-import { setRedirection } from "redux/form/actions";
 
 const formSubmit = (store) => (next) => (action) => {
   const { type, formKey, payload } = action;
-  console.log(formKey, payload);
   const dispatch = store.dispatch;
   let redirectionRoute = "";
 
   if (type == actionTypes.SUBMIT_FORM_COMPLETE) {
     // complete the form submit complete action
     next(action);
-    // navigation,
-    // if you wish to do something with the state
     const state = store.getState();
     let { redirectionRoute, idJsonPath } = state.form[formKey];
 
@@ -30,11 +26,7 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     if (redirectionRoute && redirectionRoute.length) {
-      if (idJsonPath) {
-        const id = get(payload, idJsonPath);
-        redirectionRoute = redirectionRoute.replace(redirectionRoute.split("=")[1], id);
-        dispatch(setRedirection(formKey, redirectionRoute));
-      }
+      redirectionRoute = idJsonPath ? addQueryArg(redirectionRoute, [{ key: "id", value: get(payload, idJsonPath) }]) : redirectionRoute;
       dispatch(setRoute(redirectionRoute));
     }
   } else {

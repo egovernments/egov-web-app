@@ -7,8 +7,6 @@ export const validateField = (field) => {
   let errorText = "",
     isFieldValid = true;
 
-  // const fieldLength = value.trim().length;
-
   if (required && !value.length) {
     isFieldValid = false;
     errorText = field.requiredMessage;
@@ -28,4 +26,16 @@ export const getFormFields = (form) => {
 export const getFormField = (form, fieldKey) => {
   const fields = getFormFields(form);
   return fields[fieldKey];
+};
+
+export const getFormFieldFiles = (form, formKey, fieldKey) => {
+  let currentFiles = form[formKey].fields[fieldKey];
+  currentFiles = currentFiles && currentFiles.value ? currentFiles.value : [];
+  return currentFiles;
+};
+
+export const getFiles = (form, formKey, fieldKey) => {
+  form = form[formKey] || {};
+  const files = form.files && form.files[fieldKey] ? form.files[fieldKey] : [];
+  return files;
 };

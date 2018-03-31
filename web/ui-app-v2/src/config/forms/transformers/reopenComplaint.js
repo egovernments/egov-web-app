@@ -1,10 +1,9 @@
 import { prepareFormData } from "../../../utils/commons";
 
-const viewModelToBusinessModelTransformer = (formKey, state) => {
+const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
   const id = decodeURIComponent(window.location.href.split("/")[5]);
 
-  const form = state.form[formKey];
   const { fields: reopenFields } = form;
   let fields;
 

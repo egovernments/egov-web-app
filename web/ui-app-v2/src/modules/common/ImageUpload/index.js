@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FilePicker, Icon, Image } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
-import { fileUpload, removeFile } from "redux/file/actions";
+import { fileUpload, removeFile } from "redux/form/actions";
 import "./index.css";
 
 const iconStyle = {
@@ -33,10 +33,6 @@ const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
 };
 
 class ImageUpload extends Component {
-  state = {
-    images: [],
-  };
-
   fillPlaceholder = (images, onFilePicked, inputProps) => {
     const placeholders = [];
     for (let i = 0; i < 3 - images.length; i++) {
@@ -46,28 +42,20 @@ class ImageUpload extends Component {
   };
 
   removeImage = (imageIndex) => {
-    const { fieldKey, formKey, removeFile } = this.props;
-    const { images } = this.state;
-    const imageToBeRemoved = images[imageIndex];
-    removeFile(formKey, fieldKey, imageToBeRemoved.name);
-    this.setState({ images: images.filter((image, index) => imageIndex !== index) });
+    const { formKey, fieldKey, removeFile } = this.props;
+    removeFile(formKey, fieldKey, imageIndex);
   };
 
-  onFilePicked = (file, url) => {
-    const currentImages = this.state.images || [];
-    if (currentImages.length < 3) {
-      const { formKey, fieldKey, module, fileUpload } = this.props;
-      fileUpload(formKey, fieldKey, module, file);
-      const image = { url, name: file.name };
-      this.setState({
-        images: currentImages.concat(image),
-      });
+  onFilePicked = (file, imageUri) => {
+    const { images, formKey, fieldKey, module, fileUpload } = this.props;
+    if (images.length < 3) {
+      fileUpload(formKey, fieldKey, { module, file, imageUri });
     }
   };
 
   render() {
     const { onFilePicked, removeImage } = this;
-    const { images } = this.state;
+    const { images } = this.props;
     const inputProps = { accept: "image/*", multiple: true };
 
     return (
@@ -86,7 +74,7 @@ class ImageUpload extends Component {
             {images.map((image, index) => {
               return (
                 <div key={index} className="upload-image-cont">
-                  <Image source={image.url} style={{ height: "100%" }} />
+                  <Image source={image.imageUri} style={{ height: "100%" }} />
                   <div className="image-remove" onClick={() => removeImage(index)}>
                     <Icon id="image-close-icon" action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />
                   </div>
@@ -101,11 +89,16 @@ class ImageUpload extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const images = (state.form[ownProps.formKey] && state.form[ownProps.formKey].files && state.form[ownProps.formKey].files[ownProps.fieldKey]) || [];
+  return { images };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
-    removeFile: (formKey, fieldKey, fileName) => dispatch(removeFile(formKey, fieldKey, fileName)),
+    fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
+    removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(ImageUpload);
+export default connect(mapStateToProps, mapDispatchToProps)(ImageUpload);

@@ -1,16 +1,11 @@
-import { prepareFormData } from "../../../utils/commons";
+import { prepareFormData } from "utils/commons";
 
-const viewModelToBusinessModelTransformer = (formKey, state) => {
+const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
   const id = decodeURIComponent(window.location.href.split("/")[5]);
-  console.log("this is id....");
-  console.log(id);
-  const form = state.form[formKey];
   const { fields: reopenFields } = form;
   let fields;
   const complaint = state.complaints.byId[id];
-  console.log("This is complaint...");
-  console.log(complaint);
 
   fields = state.form["feedback"].fields;
   fields = {

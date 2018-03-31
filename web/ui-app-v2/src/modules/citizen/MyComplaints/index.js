@@ -1,17 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Complaints from "../../common/Complaints";
 import Screen from "../../common/Screen";
-import { Icon, ImageModal } from "../../../components";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { Icon } from "../../../components";
 import { fetchComplaints } from "../../../redux/complaints/actions";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import Garbage_1 from "../../../assets/images/Garbage_1.jpg";
-import Garbage_2 from "../../../assets/images/Garbage_2.jpg";
-import Garbage_3 from "../../../assets/images/Garbage_3.jpg";
-import Potholes_1 from "../../../assets/images/Potholes_1.png";
-import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
-import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import Label from "utils/translationNode";
 import "./index.css";
 import { transformById } from "../../../utils/commons";
@@ -121,4 +114,4 @@ const mapDispatchToProps = {
   fetchComplaints,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MyComplaints));
+export default connect(mapStateToProps, mapDispatchToProps)(MyComplaints);

@@ -13,11 +13,11 @@ export const COMPLAINT = {
 };
 
 export const TENANT = {
-  "GET":{
-    "URL":"egov-mdms-service/v1/_get",
-    "ACTION":"_search"
-  }
-}
+  GET: {
+    URL: "egov-mdms-service/v1/_get",
+    ACTION: "_search",
+  },
+};
 
 export const FILE_UPLOAD = {
   POST: {
@@ -35,6 +35,6 @@ export const CATEGORY = {
 export const AUTH = {
   LOGOUT: {
     URL: "/user/_logout",
-    ACTION:"_logout"
-  }
-}
+    ACTION: "_logout",
+  },
+};

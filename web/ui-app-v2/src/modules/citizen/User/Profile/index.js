@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
-import { fileUpload } from "redux/file/actions";
+import { fileUpload } from "redux/form/actions";
 import UploadDrawer from "modules/common/User/components/UploadDrawer";
 import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";

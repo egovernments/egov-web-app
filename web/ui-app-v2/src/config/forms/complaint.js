@@ -5,7 +5,7 @@ const formConfig = {
     media: {
       id: "media",
       jsonPath: "actionInfo[0].media",
-      required: true,
+      file: true,
       errorMessage: "CS_FILE_UPLOAD_FAILED",
     },
     complaintType: {
@@ -48,7 +48,7 @@ const formConfig = {
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",
-  redirectionRoute: `/citizen/complaint-submitted?id= `,
+  redirectionRoute: "/citizen/complaint-submitted",
 };
 
 export default formConfig;

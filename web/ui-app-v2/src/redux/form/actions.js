@@ -1,15 +1,19 @@
 import * as actionTypes from "./actionTypes";
-import { authenticated } from "../auth/actions";
-import { toggleSnackbarAndSetText, setRoute } from "../app/actions";
-import { httpRequest, loginRequest } from "../../utils/api";
-import { prepareFormData } from "../../utils/commons";
+import { authenticated } from "redux/auth/actions";
+import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "redux/app/actions";
+import { httpRequest, loginRequest, uploadFile } from "utils/api";
+import { prepareFormData } from "utils/commons";
+import { FILE_UPLOAD } from "utils/endPoints";
 
 export const initForm = (form) => {
-  console.log(form);
   return {
     type: actionTypes.INIT_FORM,
     form,
   };
+};
+
+export const resetForm = (formKey) => {
+  return { type: actionTypes.RESET_FORM, formKey };
 };
 
 export const handleFieldChange = (formKey, fieldKey, value) => {
@@ -27,10 +31,6 @@ export const displayFormErrors = (formKey) => {
 
 export const setFormValidation = (formKey, isFormValid) => {
   return { type: actionTypes.VALIDATE_FORM, isFormValid, formKey };
-};
-
-export const setRedirection = (formKey, redirectionRoute) => {
-  return { type: actionTypes.SET_REDIRECTION, formKey, redirectionRoute };
 };
 
 export const setFieldValidation = (formKey, fieldKey, errorText) => {
@@ -57,38 +57,62 @@ export const submitForm = (formKey) => {
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
       try {
-        const formParams = {};
-        const { saveUrl, fields, action, contentType } = form;
+        const { saveUrl, action } = form;
         let formData = null;
         try {
           let transformer = require(`../../config/forms/transformers/${formKey}`).default;
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
-            formData = transformer(formKey, state);
+            formData = transformer(form, state);
           }
-        } catch (error) {}
-        if (formData === null) {
-          formData = prepareFormData(fields);
+        } catch (error) {
+          // the assumption is that the error occured only because a transformer was not found
+          formData = prepareFormData(form);
         }
+        console.log(formData);
         let formResponse = {};
         if (formData.hasOwnProperty("login")) {
           formResponse = await loginRequest(formData.login.username, formData.login.password);
         } else {
-          //adding tenantId and phone in services. -- to be refactored --
-          if (formData.services) {
-            formData.services[0].tenantId = localStorage.getItem("tenantId");
-            formData.services[0].phone = JSON.parse(localStorage.getItem("user-info")).UserRequest.mobileNumber;
-          }
-          formResponse = await httpRequest(saveUrl, action, [], formData);
+          // formResponse = await httpRequest(saveUrl, action, [], formData);
         }
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
-        // console.log(error);
         dispatch(submitFormError(formKey, error));
         toggleSnackbarAndSetText(false, error, false, true);
       }
     } else {
       dispatch(displayFormErrors(formKey));
+    }
+  };
+};
+
+// file actions
+const fileUploadPending = (formKey, fieldKey) => {
+  return { type: actionTypes.FILE_UPLOAD_STARTED, formKey, fieldKey };
+};
+
+const fileUploadCompleted = (formKey, fieldKey, fileObject) => {
+  return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileObject };
+};
+
+const fileUploadError = (fieldKey, formKey, error) => {
+  return { type: actionTypes.FILE_UPLOAD_ERROR, formKey, fieldKey, error };
+};
+
+export const removeFile = (formKey, fieldKey, index) => {
+  return { type: actionTypes.FILE_REMOVE, fieldKey, formKey, index };
+};
+
+// currently supports only single file upload at a time, although the API has support for multiple file upload
+export const fileUpload = (formKey, fieldKey, fileObject) => {
+  return async (dispatch, getState) => {
+    dispatch(fileUploadPending(formKey, fieldKey));
+    try {
+      const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
+      dispatch(fileUploadCompleted(formKey, fieldKey, { ...fileObject, fileStoreId }));
+    } catch (error) {
+      dispatch(fileUploadError(formKey, fieldKey, error));
     }
   };
 };

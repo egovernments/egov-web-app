@@ -7,7 +7,7 @@ import Question from "../../common/ReOpenComplaint/components/Question";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import Label from "utils/translationNode";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { fileUpload } from "redux/file/actions";
+import { fileUpload } from "redux/form/actions";
 import "./index.css";
 
 class ReOpenComplaint extends Component {

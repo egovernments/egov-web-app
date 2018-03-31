@@ -1,8 +1,7 @@
 import { prepareFormData } from "../../../utils/commons";
 
-const viewModelToBusinessModelTransformer = (formKey, state) => {
+const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
-  const form = state.form[formKey];
   const { fields: otpFields } = form;
   let fields;
 
