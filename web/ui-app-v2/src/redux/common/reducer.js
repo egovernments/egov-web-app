@@ -1,59 +1,19 @@
 import * as commonTypes from "./actionTypes";
 
 const intialState = {
-  objects: {},
-  dropDownData:{}
+  dropDownData: {},
 };
 
 const commonReducer = (state = intialState, action) => {
   switch (action.type) {
-    case commonTypes.ASYNC_PENDING:
+    case commonTypes.SET_DROPDOWN_DATA:
       return {
         ...state,
-        objects: {
-          ...state.objects,
-          [action.object]: {
-            error: false,
-            errorMessage: "",
-            loading: true,
-          },
-        },
-      };
-
-    case commonTypes.ASYNC_COMPLETE:
-      return {
-        ...state,
-        objects: {
-          ...state.objects,
-          [action.object]: {
-            error: false,
-            errorMessage: "",
-            loading: false,
-          },
-        },
-      };
-
-    case commonTypes.ASYNC_ERROR:
-      return {
-        ...state,
-        objects: {
-          ...state.objects,
-          [action.object]: {
-            error: true,
-            errorMessage: action.payload,
-            loading: false,
-          },
-        },
-      };
-
-    case commonTypes.SET_DROPDOWN_DATA :
-      return {
-        ...state,
-        dropDownData:{
+        dropDownData: {
           ...state.dropDownData,
-          [action.key]:action.payload
-        }
-      }
+          [action.key]: action.payload,
+        },
+      };
 
     default:
       return state;

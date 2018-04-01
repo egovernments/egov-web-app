@@ -1,40 +1,155 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { LoadingIndicator } from "../components";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import App from "./App";
+import IconButton from "material-ui/IconButton";
+import { BottomNavigation, Icon, LoadingIndicator } from "components";
+import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
+import { setRoute } from "redux/app/actions";
+import { fetchComplaintCategories } from "redux/complaints/actions";
+import { logout } from "redux/auth/actions";
+
+const options = [
+  {
+    label: "Home",
+    icon: <Icon action="action" name="home" />,
+    route: "/citizen",
+    id: "home-button",
+  },
+  {
+    label: "Information",
+    icon: <Icon action="action" name="info" />,
+    route: "",
+    id: "information-button",
+  },
+  {
+    label: "Payments",
+    icon: <Icon action="custom" name="rupee" />,
+    route: "",
+    id: "payments-button",
+  },
+  {
+    label: "Complaints",
+    icon: <Icon action="alert" name="warning" />,
+    route: "/citizen/my-complaints",
+    id: "complaints-button",
+  },
+];
 
 class PrivateRoute extends Component {
-  static propTypes = {
-    component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    authenticated: PropTypes.bool,
-    authenticating: PropTypes.bool,
-    authenticationFailed: PropTypes.bool,
+  state = {
+    toggleMenu: false,
+    tabIndex: 0,
+  };
+
+  componentDidMount() {
+    const { fetchComplaintCategories } = this.props;
+    fetchComplaintCategories();
+  }
+
+  _updateMenuState = (status) => {
+    this.setState({
+      toggleMenu: status,
+    });
+  };
+  _handleToggleMenu = () => {
+    let { toggleMenu } = this.state;
+    this.setState({
+      toggleMenu: !toggleMenu,
+    });
+  };
+
+  _handleBackNavigation = () => {
+    const { previousRoute, setRoute } = this.props;
+    // go back to previous route
+    setRoute(previousRoute);
+  };
+
+  _onTabChange = (tabIndex) => {
+    const route = options[tabIndex].route;
+    this.setState({
+      tabIndex,
+    });
+    if (route.length) this.props.setRoute(route);
+  };
+
+  _appBarProps = () => {
+    const isHomeScreen = /(citizen|employee\/all-complaints)\/?$/.test(window.location.pathname);
+    const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
+
+    const style = { overflowX: "hidden", width: "initial" };
+    if (isComplaintType) {
+      style.boxShadow = "none";
+    }
+
+    const iconElementLeft = (
+      <IconButton id="icon-hamburger">
+        {isHomeScreen ? (
+          <Icon id="icon-hamburger" action="custom" name="hamburger" />
+        ) : (
+          <Icon id="back-navigator" action="navigation" name="arrow-back" />
+        )}
+      </IconButton>
+    );
+
+    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
+
+    return { style, iconElementLeft, onLeftIconButtonClick };
   };
 
   render() {
-    const { component: Component, authenticating, authenticated, authenticationFailed, ...rest } = this.props;
+    const {
+      component: Component,
+      hideBottomNavigation,
+      hideAppBar,
+      toast,
+      logout,
+      authenticating,
+      authenticated,
+      authenticationFailed,
+      setRoute,
+      ...rest
+    } = this.props;
+    const { _appBarProps, _updateMenuState, _onTabChange } = this;
+    const { toggleMenu, tabIndex } = this.state;
+    const role = window.location.pathname.includes("citizen") ? "citizen" : "employee";
+
     return (
-      <Route
-        {...rest}
-        render={(props) =>
-          authenticated ? (
-            <App Component={Component} {...{ ...props, ...rest }} />
-          ) : authenticating ? (
-            <LoadingIndicator loading={true} />
-          ) : (
-            <Redirect to="/citizen/user/register" />
-          )
-        }
-      />
+      <div>
+        <HeaderWithDrawer
+          {..._appBarProps()}
+          className={hideAppBar ? "hide" : ""}
+          title={rest.title}
+          setRoute={setRoute}
+          onUpdateMenuStatus={_updateMenuState}
+          toggleMenu={toggleMenu}
+          role={role}
+          logout={logout}
+        />
+        <Route
+          {...rest}
+          render={(props) =>
+            authenticated ? <Component {...props} /> : authenticating ? <LoadingIndicator loading={true} /> : <Redirect to="/citizen/user/register" />
+          }
+        />
+        <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { authenticated, authenticating, authenticationFailed } = state.auth;
-  return { authenticated, authenticating, authenticationFailed };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setRoute: (route) => dispatch(setRoute(route)),
+    fetchComplaintCategories: () => dispatch(fetchComplaintCategories()),
+    logout: () => dispatch(logout()),
+  };
 };
 
-export default connect(mapStateToProps, null)(PrivateRoute);
+const mapStateToProps = (state) => {
+  const { authenticated, authenticating, authenticationFailed } = state.auth;
+  const { previousRoute } = state.app;
+  return { authenticated, previousRoute, authenticating, authenticationFailed };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);

@@ -1,132 +1,46 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { addBodyClass, removeBodyClass } from "utils/commons";
-import HeaderWithDrawer from "./common/HeaderWithDrawer";
-import { BottomNavigation, Icon } from "components";
-import IconButton from "material-ui/IconButton";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
-import { fetchComplaintCategories } from "redux/complaints/actions";
-import { logout } from "redux/auth/actions";
+import { fetchLocalizationLabel, toggleSnackbarAndSetText } from "redux/app/actions";
 import Snackbar from "material-ui/Snackbar";
-
-const options = [
-  {
-    label: "Home",
-    icon: <Icon action="action" name="home" />,
-    route: "/citizen",
-    id: "home-button",
-  },
-  {
-    label: "Information",
-    icon: <Icon action="action" name="info" />,
-    route: "",
-    id: "information-button",
-  },
-  {
-    label: "Payments",
-    icon: <Icon action="custom" name="rupee" />,
-    route: "",
-    id: "payments-button",
-  },
-  {
-    label: "Complaints",
-    icon: <Icon action="alert" name="warning" />,
-    route: "/citizen/my-complaints",
-    id: "complaints-button",
-  },
-];
+import Router from "./Router";
 
 class App extends Component {
-  state = {
-    toggleMenu: false,
-    tabIndex: 0,
-  };
+  constructor(props) {
+    super(props);
+    const { pathname: currentPath } = props.location;
 
-  _updateMenuState = (status) => {
-    this.setState({
-      toggleMenu: status,
+    props.history.listen((location, action) => {
+      const { pathname: nextPath } = location;
+      // add body classes
+      removeBodyClass(currentPath);
+      addBodyClass(nextPath);
+      // clear any toasters
     });
-  };
-  _handleToggleMenu = () => {
-    let { toggleMenu } = this.state;
-    this.setState({
-      toggleMenu: !toggleMenu,
-    });
-  };
 
-  _handleBackNavigation = () => {
-    this.props.history.goBack();
-  };
-
-  _onTabChange = (tabIndex) => {
-    const route = options[tabIndex].route;
-    this.setState({
-      tabIndex,
-    });
-    if (route.length) this.props.history.push(route);
-  };
-
-  _appBarProps = () => {
-    const isHomeScreen = /(citizen|employee\/all-complaints)\/?$/.test(window.location.pathname);
-    const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
-
-    const style = { overflowX: "hidden", width: "initial" };
-    if (isComplaintType) {
-      style.boxShadow = "none";
-    }
-
-    const iconElementLeft = (
-      <IconButton id="icon-hamburger">
-        {isHomeScreen ? (
-          <Icon id="icon-hamburger" action="custom" name="hamburger" />
-        ) : (
-          <Icon id="back-navigator" action="navigation" name="arrow-back" />
-        )}
-      </IconButton>
-    );
-
-    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
-
-    return { style, iconElementLeft, onLeftIconButtonClick };
-  };
+    addBodyClass(currentPath);
+  }
 
   componentDidMount() {
-    const { path, fetchComplaintCategories } = this.props;
-    addBodyClass(path);
-    fetchComplaintCategories();
+    const { fetchLocalizationLabel } = this.props;
+    fetchLocalizationLabel("en_IN");
   }
 
   componentWillReceiveProps(nextProps) {
-    // to be removed once all navigation is migrated to routes
-    const { path: nextPath } = nextProps;
-    const { path: currentPath } = this.props;
-    if (nextPath && currentPath && currentPath !== nextPath) {
-      removeBodyClass(currentPath);
-      addBodyClass(nextPath);
+    const { route: nextRoute } = nextProps;
+    const { route: currentRoute, history } = this.props;
+    if (nextRoute && currentRoute !== nextRoute) {
+      history.push(nextRoute);
     }
   }
 
   render() {
-    const { Component, hideBottomNavigation, hideAppBar, toast, logout, ...rest } = this.props;
-    const { _updateMenuState, _onTabChange, _appBarProps } = this;
-    const { toggleMenu, tabIndex } = this.state;
-
-    const role = window.location.pathname.includes("citizen") ? "citizen" : "employee";
+    const { toast, toggleSnackbarAndSetText } = this.props;
 
     return (
       <div>
-        <HeaderWithDrawer
-          {..._appBarProps()}
-          className={hideAppBar ? "hide" : ""}
-          history={rest.history}
-          title={rest.title}
-          onUpdateMenuStatus={_updateMenuState}
-          toggleMenu={toggleMenu}
-          role={role}
-          logout={logout}
-        />
-
-        <Component {...rest} />
+        <Router />
         {toast &&
           toast.msg && (
             <Snackbar
@@ -143,7 +57,6 @@ class App extends Component {
               onRequestClose={() => toggleSnackbarAndSetText(false, "", false, false)}
             />
           )}
-        <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
       </div>
     );
   }
@@ -154,4 +67,6 @@ const mapStateToProps = (state) => {
   return { route, toast };
 };
 
-export default connect(mapStateToProps, { toggleSnackbarAndSetText, fetchComplaintCategories, logout })(App);
+const dispatchToProps = { fetchLocalizationLabel, toggleSnackbarAndSetText };
+
+export default withRouter(connect(mapStateToProps, dispatchToProps)(App));

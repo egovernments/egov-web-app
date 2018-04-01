@@ -1,38 +1,38 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./modules/PrivateRoute";
+import PrivateRoute from "modules/PrivateRoute";
 
 // Home page
-import Home from "./modules/citizen/Home";
+import Home from "modules/citizen/Home";
 
 // complaint related routes
-import MyComplaints from "./modules/citizen/MyComplaints";
-import ComplaintDetails from "./modules/citizen/ComplaintDetails";
-import ComplaintSubmited from "./modules/citizen/ComplaintSubmited";
-import TrackLocation from "./modules/common/TrackLocation";
-import Feedback from "./modules/citizen/Feedback";
-import ReOpenComplaint from "./modules/citizen/ReOpenComplaint";
-import ComplaintType from "./modules/citizen/ComplaintType";
-import AddComplaint from "./modules/citizen/AddComplaint";
+import MyComplaints from "modules/citizen/MyComplaints";
+import ComplaintDetails from "modules/citizen/ComplaintDetails";
+import ComplaintSubmited from "modules/citizen/ComplaintSubmited";
+import TrackLocation from "modules/common/TrackLocation";
+import Feedback from "modules/citizen/Feedback";
+import ReOpenComplaint from "modules/citizen/ReOpenComplaint";
+import ComplaintType from "modules/citizen/ComplaintType";
+import AddComplaint from "modules/citizen/AddComplaint";
 
 // static pages
-import HowItWorks from "./modules/citizen/HowItWorks";
-import ContactUs from "./modules/citizen/ContactUs";
+import HowItWorks from "modules/citizen/HowItWorks";
+import ContactUs from "modules/citizen/ContactUs";
 
 // user related screens
-import Citizen from "./modules/citizen/User";
+import Citizen from "modules/citizen/User";
 
 // Employee
-import ReAssignComplaint from "./modules/employee/ReAssignComplaint";
-import AllComplaints from "./modules/employee/AllComplaints";
-import ComplaintResolved from "./modules/employee/ComplaintResolved";
-import ResolveSuccess from "./modules/employee/ResolveSuccess";
-import ReAssignSuccess from "./modules/employee/ReAssignSuccess";
-import ComplaintSummary from "./modules/employee/ComplaintDetails";
-import EmpUser from "./modules/employee/User";
-import AssignComplaint from "./modules/employee/AssignComplaint";
+import ReAssignComplaint from "modules/employee/ReAssignComplaint";
+import AllComplaints from "modules/employee/AllComplaints";
+import ComplaintResolved from "modules/employee/ComplaintResolved";
+import ResolveSuccess from "modules/employee/ResolveSuccess";
+import ReAssignSuccess from "modules/employee/ReAssignSuccess";
+import ComplaintSummary from "modules/employee/ComplaintDetails";
+import EmpUser from "modules/employee/User";
+import AssignComplaint from "modules/employee/AssignComplaint";
 
-const Main = () => {
+const Main = ({ authenticated, authenticating, authenticationFailed }) => {
   return (
     <main>
       <Switch>

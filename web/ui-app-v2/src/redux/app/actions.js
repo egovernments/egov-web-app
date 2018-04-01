@@ -1,20 +1,20 @@
-import * as commonTypes from "../common/actionTypes";
-import * as appTypes from "./actionTypes";
-import { asyncPending, asyncComplete, asyncError } from "../common/actions";
+import * as actionTypes from "./actionTypes";
 import { LOCALATION } from "../../utils/endPoints";
 import { httpRequest } from "../../utils/api";
 
 export const setRoute = (route) => {
-  return { type: appTypes.SET_ROUTE, route };
+  return { type: actionTypes.SET_ROUTE, route };
 };
 
-export const setUserInfo = (userInfo) => {
-  return { type: appTypes.SET_USER_INFO, userInfo };
+const setLocalizationLabels = (locale, localizationLabels) => {
+  window.localStorage.setItem(`localization_${locale}`, JSON.stringify(localizationLabels));
+  window.localStorage.setItem("locale", locale);
+  return { type: actionTypes.ADD_LOCALIZATION, locale, localizationLabels };
 };
 
 export const toggleSnackbarAndSetText = (status, msg, isSuccess, isError) => (dispatch) => {
   dispatch({
-    type: appTypes.SHOW_TOAST,
+    type: actionTypes.SHOW_TOAST,
     status,
     msg,
     isSuccess,
@@ -24,19 +24,13 @@ export const toggleSnackbarAndSetText = (status, msg, isSuccess, isError) => (di
 
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
-    dispatch(asyncPending(commonTypes.ASYNC_PENDING, "localation"));
     try {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: "rainmaker-pgr" },
         { key: "locale", value: locale },
       ]);
-      window.localStorage.setItem("localization", JSON.stringify(payload.messages));
-      // data transformation will be handled by a custom middleware
-      dispatch({ type: appTypes.ADD_LOCALIZATION, payload: payload.messages });
-      dispatch(asyncComplete(commonTypes.ASYNC_COMPLETE, "localation"));
-    } catch (error) {
-      //handle the error
-      dispatch(asyncError(commonTypes.ASYNC_ERROR, "localation", error));
-    }
+
+      dispatch(setLocalizationLabels(locale, payload.messages));
+    } catch (error) {}
   };
 };

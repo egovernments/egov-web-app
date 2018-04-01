@@ -15,7 +15,7 @@ const iconStyle = {
   borderRadius: "50%",
 };
 
-const NewAndOldComplaints = ({ history }) => {
+const NewAndOldComplaints = ({ setRoute }) => {
   return (
     <Card
       id="home-complaint-card"
@@ -26,7 +26,7 @@ const NewAndOldComplaints = ({ history }) => {
             id="home-new-complaint"
             className="col-xs-6"
             onClick={(e) => {
-              history.push("/citizen/add-complaint");
+              setRoute("/citizen/add-complaint");
             }}
           >
             <Icon style={{ ...iconStyle, background: "#f5a623" }} action="content" name="add" />
@@ -36,7 +36,7 @@ const NewAndOldComplaints = ({ history }) => {
             id="home-old-complaint"
             className="col-xs-6"
             onClick={(e) => {
-              history.push("/citizen/my-complaints");
+              setRoute("/citizen/my-complaints");
             }}
           >
             <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />

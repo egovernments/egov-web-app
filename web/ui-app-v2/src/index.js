@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import Main from "./router";
+import App from "modules/App";
 import store from "./redux/store";
 import theme from "./config/theme";
 import injectTapEventPlugin from "react-tap-event-plugin";
@@ -32,7 +32,7 @@ render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router basename={process.env.NODE_ENV === "production" ? "/app/v3" : ""}>
-        <Main />
+        <App />
       </Router>
     </MuiThemeProvider>
   </Provider>,

@@ -1,20 +1,19 @@
-import {transformById} from "../../utils/commons";
+import { transformById } from "utils/commons";
 
 export const transformLocalizationLabels = (localizationLabels) => {
-  let labelsById=transformById(localizationLabels,"code");
+  let labelsById = transformById(localizationLabels, "code");
   return labelsById;
 };
 
-export const initLocalizationLabels = () => {
+export const initLocalizationLabels = (locale) => {
   let localizationLabels;
-  if ("localization" in window.localStorage) {
-    localizationLabels = localStorage.getItem("localization");
-    try {
-      localizationLabels = JSON.parse(localizationLabels);
-      localizationLabels = transformLocalizationLabels(localizationLabels);
-    } catch (error) {
-      localizationLabels = {};
-    }
+  try {
+    localizationLabels = window.localStorage.getItem(`localization_${locale}`);
+    localizationLabels = JSON.parse(localizationLabels);
+    localizationLabels = transformLocalizationLabels(localizationLabels);
+  } catch (error) {
+    localizationLabels = {};
   }
+
   return localizationLabels;
 };

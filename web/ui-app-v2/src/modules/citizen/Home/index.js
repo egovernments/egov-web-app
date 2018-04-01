@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Banner from "../../common/Banner";
+import { connect } from "react-redux";
+import Banner from "modules/common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
-import { connect } from "react-redux";
-import { fetchComplaints } from "../../../redux/complaints/actions";
+import { fetchComplaints } from "redux/complaints/actions";
+import { setRoute } from "redux/app/actions";
+import { getDateFromEpoch, mapCompIDToName, transformById } from "utils/commons";
 import "./index.css";
-import { transformById } from "../../../utils/commons";
-import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class Home extends Component {
   componentDidMount = () => {
@@ -15,12 +15,12 @@ class Home extends Component {
   };
 
   render() {
-    const { history, updates } = this.props;
+    const { setRoute, updates } = this.props;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
           <div className="row">
-            <NewAndOldComplaints history={history} />
+            <NewAndOldComplaints setRoute={setRoute} />
             <Notifications updates={updates} />
           </div>
         </div>
@@ -60,8 +60,11 @@ const mapStateToProps = (state) => {
   return { updates };
 };
 
-const mapDispatchToProps = {
-  fetchComplaints,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    setRoute: (route) => dispatch(setRoute(route)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

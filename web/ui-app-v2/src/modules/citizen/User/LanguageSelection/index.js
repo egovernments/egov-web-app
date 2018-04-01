@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "../../../common/Banner";
-import LanguageSelectionForm from "../../../common/User/components/LanguageSelectionForm";
-import { fetchLocalizationLabel } from "../../../../redux/app/actions";
+import Banner from "modules/common/Banner";
+import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
+import { fetchLocalizationLabel } from "redux/app/actions";
 
 class LanguageSelection extends Component {
   state = {
@@ -21,10 +21,6 @@ class LanguageSelection extends Component {
         value: "pn_IN",
       },
     ],
-  };
-
-  componentDidMount = () => {
-    this.props.fetchLocalizationLabel("en_IN");
   };
 
   onClick = (value) => {
