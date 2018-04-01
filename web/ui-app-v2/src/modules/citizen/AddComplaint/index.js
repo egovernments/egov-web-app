@@ -7,6 +7,7 @@ import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { Button } from "../../../components";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class AddComplaints extends Component {
@@ -32,7 +33,7 @@ class AddComplaints extends Component {
   };
 
   navigateToComplaintType = () => {
-    this.props.history.push("/citizen/complaint-type");
+    this.props.setRoute("/citizen/complaint-type");
   };
 
   submitComplaint = () => {
@@ -40,7 +41,7 @@ class AddComplaints extends Component {
   };
 
   locationOnClick = () => {
-    this.props.history.push(`/citizen/map?${this.props.formKey}`);
+    this.props.setRoute(`/citizen/map?${this.props.formKey}`);
   };
 
   render() {
@@ -86,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

@@ -41,7 +41,7 @@ const getStatusAndChangeColor = (status, assignee) => {
   return statusObj;
 };
 
-const Complaint = ({ index, item, history, onClick }) => {
+const Complaint = ({ index, item, setRoute, onClick }) => {
   return (
     <div className="complaints-card-main-cont">
       <Card
@@ -99,7 +99,7 @@ const Complaint = ({ index, item, history, onClick }) => {
                   lineHeight: "35px",
                 }}
                 onClick={(e) => {
-                  history.push(`/citizen/complaint-details?status=${status[item.status]}`);
+                  setRoute(`/citizen/complaint-details?status=${status[item.status]}`);
                 }}
               />
             </div>

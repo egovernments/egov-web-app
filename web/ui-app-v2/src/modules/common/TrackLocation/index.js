@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { MapLocation, Button, Icon } from "../../../components";
 import pinIcon from "../../../assets/Location_pin.svg";
 import { handleFieldChange } from "redux/form/actions";
-import _ from "lodash";
+import { setRoute } from "redux/app/actions";
+import isUndefined from "lodash/isUndefined";
 import "./index.css";
 
 const pickBtn = {
@@ -64,7 +65,7 @@ class TrackLocation extends Component {
   };
 
   setPickedLocation = (lati, long, index) => {
-    if (_.isUndefined(index)) index = 0;
+    if (isUndefined(index)) index = 0;
     console.log(lati, long, index);
 
     this.convertToAddress(lati, long);
@@ -77,7 +78,6 @@ class TrackLocation extends Component {
     geocoder.geocode({ location: { lat: lati, lng: long } }, (results, status) => {
       if (status === "OK") {
         if (results[0]) {
-          console.log(results[0].formatted_address);
           this.props.handleFieldChange(this.state.formKey, "address", results[0].formatted_address);
         }
       }
@@ -85,13 +85,13 @@ class TrackLocation extends Component {
   };
 
   onClickPick = () => {
-    console.log("picked your location");
-    window.history.back();
+    const { setRoute, previousRoute } = this.props;
+    setRoute(previousRoute);
   };
 
   onCLickMapBackBtn = () => {
-    // Redirect back from where you came.
-    window.history.back();
+    const { setRoute, previousRoute } = this.props;
+    setRoute(previousRoute);
   };
 
   render() {
@@ -137,15 +137,15 @@ class TrackLocation extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    formKey: window.location.href.split("?")[1],
-  };
+  const { previousRoute } = state.app;
+  return { previousRoute };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(TrackLocation);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackLocation);

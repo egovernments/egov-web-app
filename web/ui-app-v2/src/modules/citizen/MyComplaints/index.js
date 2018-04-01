@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Complaints from "../../common/Complaints";
-import Screen from "../../common/Screen";
-import { Icon } from "../../../components";
-import { fetchComplaints } from "../../../redux/complaints/actions";
+import { Icon } from "components";
+import Complaints from "modules/common/Complaints";
+import Screen from "modules/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
+import { fetchComplaints } from "redux/complaints/actions";
+import { setRoute } from "redux/app/actions";
+import { transformById, getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import "./index.css";
-import { transformById } from "../../../utils/commons";
-import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class MyComplaints extends Component {
   componentDidMount = () => {
@@ -17,7 +17,7 @@ class MyComplaints extends Component {
   };
 
   render() {
-    let { history, transformedComplaints, complaints } = this.props;
+    let { setRoute, transformedComplaints, complaints } = this.props;
     return (
       <div className="complaints-main-container clearfix">
         {this.props.complaints.loading ? (
@@ -48,7 +48,7 @@ class MyComplaints extends Component {
           <FloatingActionButton
             id="mycomplaints-add"
             onClick={(e) => {
-              history.push("/citizen/add-complaint");
+              setRoute("/citizen/add-complaint");
             }}
             className="floating-button"
           >
@@ -110,8 +110,11 @@ const mapStateToProps = (state) => {
   return { complaints, transformedComplaints };
 };
 
-const mapDispatchToProps = {
-  fetchComplaints,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    setRoute: (route) => dispatch(setRoute(route)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyComplaints);

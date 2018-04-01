@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { Icon, Button } from "../../../components";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import { connect } from "react-redux";
-import Screen from "../../common/Screen";
+import { Icon, Button } from "components";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import Screen from "modules/common/Screen";
 import Label from "utils/translationNode";
+import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class ComplaintDetails extends Component {
   continueComplaintSubmit = () => {
-    this.props.history.push("/citizen");
+    this.props.setRoute("/citizen");
   };
   render() {
     let complaintnumber = this.props.form.redirectionRoute.split("=")[1];
@@ -45,4 +46,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(ComplaintDetails);
+const mapDispatchToProps = (dispatch) => {
+  setRoute: (route) => dispatch(setRoute(route));
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);

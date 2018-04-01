@@ -1,6 +1,5 @@
 import React from "react";
-import { Image, Card, Icon, Button } from "../../../components";
-import { withRouter } from "react-router-dom";
+import { Image, Card, Icon, Button } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -201,32 +200,6 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
                   <Label label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
                 </div>
               )}
-              {/* {track && (
-                <div className="complaint-track-button-cont">
-                  <Button
-                    className="complaint-track-btn"
-                    primary={true}
-                    label={"TRACK"}
-                    style={{
-                      height: "auto",
-                      lineHeight: "auto",
-                      minWidth: "inherit",
-                    }}
-                    labelStyle={{
-                      color: "#ffffff",
-                      padding: "0 16px",
-                      letterSpacing: "0.6px",
-                      display: "inline-block",
-                      height: "35px",
-                      fontSize: "12px",
-                      lineHeight: "35px",
-                    }}
-                    onClick={(e) => {
-                      history.push(`/citizen/complaint-details?status=${status[complaint.status]}`);
-                    }}
-                  />
-                </div>
-              )} */}
               {bottomInfoTemplate(complaint, role)}
             </div>
           }
@@ -236,4 +209,4 @@ const Complaints = ({ index, complaints, history, onClick, complaintLocation, tr
   });
 };
 
-export default withRouter(Complaints);
+export default Complaints;

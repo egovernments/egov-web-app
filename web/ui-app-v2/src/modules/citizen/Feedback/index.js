@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import { Button, Icon } from "../../../components";
+import { Button, Icon } from "components";
 import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import Screen from "../../common/Screen";
+import Screen from "modules/common/Screen";
 import { withRouter } from "react-router-dom";
-import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class Feedback extends Component {
@@ -20,7 +21,6 @@ class Feedback extends Component {
   state = {
     value: [],
     ratingValue: 0,
-
     submitted: false,
   };
 
@@ -30,7 +30,7 @@ class Feedback extends Component {
   };
 
   navigateToLogin = () => {
-    this.props.history.push("/citizen/complaint-details?status=resolved");
+    this.props.setRoute("/citizen/complaint-details?status=resolved");
   };
 
   onCheck = (value) => {
@@ -46,7 +46,6 @@ class Feedback extends Component {
 
   onClick = (value) => {
     this.props.handleFieldChange(this.props.formKey, "rating", value);
-    //
   };
 
   handleChange = (e) => {
@@ -61,7 +60,7 @@ class Feedback extends Component {
       this.setState({ submitted: true });
       this.props.submitForm(this.props.formKey);
     } else {
-      history.push("/citizen/complaint-details?status=resolved");
+      setRoute("/citizen/complaint-details?status=resolved");
     }
   };
 
@@ -83,21 +82,6 @@ class Feedback extends Component {
             </div>
           </div>
         ) : (
-          // <div className="feedback-submitted-main-cont">
-          //   <div className="feedback-submitted-icon-cont">
-          //     <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={"#22b25f"}>
-          //       <Icon action="navigation" name="check" />
-          //     </FloatingActionButton>
-          //   </div>
-          //   <Label
-          //     id="feedback-success-message"
-          //     label="CS_FEEDBACK_SUCCESS"
-          //     className="feedback-thankyou-text"
-          //     dark={true}
-          //     bold={true}
-          //     fontSize={"16px"}
-          //   />
-          // </div>
           <SuccessMessage successmessage={"Thank you for you feedback"} />
         )}
         <div className="feedback-popup-button-cont">
@@ -127,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

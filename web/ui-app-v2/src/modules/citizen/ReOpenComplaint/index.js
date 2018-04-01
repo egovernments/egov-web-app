@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "../../../components";
-import ImageUpload from "../../common/ImageUpload";
-import Screen from "../../common/Screen";
-import Question from "../../common/ReOpenComplaint/components/Question";
-import TextArea from "../../common/ReOpenComplaint/components/TextArea";
+import { Button } from "components";
+import ImageUpload from "modules/common/ImageUpload";
+import Screen from "modules/common/Screen";
+import Question from "modules/common/ReOpenComplaint/components/Question";
+import TextArea from "modules/common/ReOpenComplaint/components/TextArea";
 import Label from "utils/translationNode";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fileUpload } from "redux/form/actions";
@@ -16,7 +16,6 @@ class ReOpenComplaint extends Component {
     this.formConfig = require("config/forms/reopenComplaint").default;
   }
   componentDidMount() {
-    console.log(this.props);
     this.props.initForm(this.formConfig);
   }
   state = {
@@ -32,7 +31,6 @@ class ReOpenComplaint extends Component {
 
   handleComplaintSubmit = () => {
     this.props.submitForm(this.props.formKey);
-    this.props.history.push("/citizen/complaint-submitted");
   };
   handleCommentChange = (e) => {
     this.props.handleFieldChange(this.props.formKey, "reopencomments", e.target.value);
@@ -72,10 +70,7 @@ class ReOpenComplaint extends Component {
 }
 const mapStateToProps = (state) => {
   const formKey = "reopenComplaint";
-  console.log(state.form[formKey]);
   const form = state.form[formKey] || {};
-  // form: state.form;
-  console.log(form);
   return { form, formKey };
 };
 const mapDispatchToProps = (dispatch) => {

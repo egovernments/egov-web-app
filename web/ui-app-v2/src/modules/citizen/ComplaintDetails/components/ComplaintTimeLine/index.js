@@ -292,5 +292,3 @@ class ComplaintTimeLine extends Component {
 }
 
 export default withRouter(ComplaintTimeLine);
-
-//props types check yet to add

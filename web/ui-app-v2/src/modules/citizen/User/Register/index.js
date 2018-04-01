@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import RegisterForm from "./components/RegisterForm";
 import Banner from "modules/common/Banner";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { setRoute } from "redux/app/actions";
 
 class Register extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Register extends Component {
   };
 
   navigateToLogin = () => {
-    this.props.history.push("/citizen/user/login");
+    this.props.setRoute("/citizen/user/login");
   };
 
   render() {
@@ -47,6 +48,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Details from "../../common/complaintDetails/components/Details";
-import ComplaintTimeLine from "../../common/complaintDetails/components/ComplaintTimeLine";
-import Comments from "../../common/complaintDetails/components/Comments";
-import Screen from "../../common/Screen";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Details from "modules/common/complaintDetails/components/Details";
+import ComplaintTimeLine from "modules/common/complaintDetails/components/ComplaintTimeLine";
+import Comments from "modules/common/complaintDetails/components/Comments";
+import Screen from "modules/common/Screen";
+import { fetchComplaints } from "redux/complaints/actions";
+import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import "./index.css";
-import { fetchComplaints } from "../../../redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName } from "../../../utils/commons";
 
 class ComplaintDetails extends Component {
   state = {
@@ -68,7 +67,6 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint } = this.props.transformedComplaint;
-    console.log(complaint);
     let { status, details, timeLine, comments } = this.state;
     return (
       <Screen>
@@ -107,8 +105,10 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = {
-  fetchComplaints,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ComplaintDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
