@@ -16,12 +16,9 @@ const formSubmit = (store) => (next) => (action) => {
     const state = store.getState();
     let { redirectionRoute, idJsonPath } = state.form[formKey];
 
+    // only execute for login intent
     if (formKey === "otp") {
       delete payload.ResponseInfo;
-      localStorage.setItem("user-info", JSON.stringify(payload));
-      localStorage.setItem("token", payload["access_token"]);
-      localStorage.setItem("authenticated", true);
-      localStorage.setItem("tenantId", payload["UserRequest"].tenantId);
       redirectionRoute = "/citizen";
       dispatch(authenticated(payload));
     }
@@ -31,7 +28,7 @@ const formSubmit = (store) => (next) => (action) => {
       dispatch(setRoute(redirectionRoute));
     }
     // reset form after successful submission
-    dispatch(resetForm(formKey));
+    // dispatch(resetForm(formKey));
   } else {
     next(action);
   }

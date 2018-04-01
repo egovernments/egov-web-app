@@ -19,7 +19,7 @@ class PrivateRoute extends Component {
       <Route
         {...rest}
         render={(props) =>
-          true || authenticated ? (
+          authenticated ? (
             <App Component={Component} {...{ ...props, ...rest }} />
           ) : authenticating ? (
             <LoadingIndicator loading={true} />

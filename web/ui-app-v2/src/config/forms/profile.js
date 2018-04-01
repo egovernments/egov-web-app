@@ -25,7 +25,6 @@ const formConfig = {
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",
       errorMessage: "CS_PROFILE_EMAIL_ERRORMSG",
       pattern: "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(.\\w{2,3})+$",
-      value: "",
     },
   },
   submit: {

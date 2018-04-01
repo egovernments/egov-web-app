@@ -1,11 +1,24 @@
 import * as actionTypes from "./actionTypes";
 
+let userInfo = localStorage.getItem("user-info");
+
+try {
+  userInfo = JSON.parse(userInfo);
+} catch (error) {
+  userInfo = null;
+}
+
+const authenticated = userInfo ? true : false;
+const tenantId = localStorage.getItem("tenant-id");
+const token = localStorage.getItem("token");
+
 const intialState = {
   authenticating: false,
-  authenticated: localStorage.getItem("authenticated") ? (localStorage.getItem("authenticated") == "true" ? true : false) : false,
-  authenticationFailed: true,
-  userInfo: localStorage.getItem("user-info") || {},
-  token: localStorage.getItem("token") || "",
+  authenticated,
+  authenticationFailed: !authenticated,
+  userInfo,
+  token,
+  tenantId,
 };
 
 const auth = (state = intialState, action) => {
@@ -21,7 +34,7 @@ const auth = (state = intialState, action) => {
         authenticationFailed: false,
         authenticating: false,
         userInfo: action.userInfo,
-        token: action.token,
+        token: action.accessToken,
       };
     case actionTypes.AUTHENTICATION_FAILED:
       return { ...state, authenticated: false, authenticationFailed: true, authenticating: false };

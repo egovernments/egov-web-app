@@ -21,7 +21,13 @@ class Profile extends Component {
   componentDidMount() {
     // get user info
     // merge with form config
-    this.props.initForm(this.formConfig);
+    const { name, mobileNumber, tenantId } = this.props.userInfo;
+    let { formConfig } = this;
+    formConfig = {
+      ...formConfig,
+      fields: { ...formConfig.fields, city: { ...formConfig.fields.city, value: tenantId }, name: { ...formConfig.fields.name, value: name } },
+    };
+    this.props.initForm(formConfig);
   }
 
   setProfilePic = (file, url) => {
@@ -60,8 +66,10 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   const formKey = "profile";
+  const { auth } = state;
+  const { userInfo } = auth;
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  return { form, formKey, userInfo };
 };
 
 const mapDispatchToProps = (dispatch) => {

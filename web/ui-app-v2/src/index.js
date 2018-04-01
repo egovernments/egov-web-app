@@ -27,9 +27,6 @@ WebFont.load({
   },
 });
 
-// temp fix !! to be removed soon!
-localStorage.setItem("tenantId", localStorage.getItem("tenantId") ? localStorage.getItem("tenantId") : "pb");
-
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>

@@ -1,9 +1,5 @@
 import axios from "axios";
-import { prepareFormData, prepareForm, hyphenSeperatedDateTime, getRequestUrl, fetchFromLocalStorage, addQueryArg } from "./commons";
-
-const authToken = fetchFromLocalStorage("token");
-// const userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
-const tenantId = fetchFromLocalStorage("tenantId");
+import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -12,34 +8,18 @@ const instance = axios.create({
   },
 });
 
-const loginInstance = axios.create({
-  baseURL: window.location.origin,
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0",
-  },
-});
-
-// file upload instance
-const uploadInstance = axios.create({
-  baseURL: window.location.origin,
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
-});
-
 const wrapRequestBody = (requestBody, action) => {
+  const authToken = fetchFromLocalStorage("token");
+
   const RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
     ts: "",
-    // hyphenSeperatedDateTime(new Date()),
     action: action,
     did: "1",
     key: "",
     msgId: "20170310130900|en_IN",
     requesterId: "",
-    // userInfo,
     authToken,
   };
 
@@ -54,6 +34,8 @@ const wrapRequestBody = (requestBody, action) => {
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
   let apiError = "Api Error";
+  const tenantId = fetchFromLocalStorage("tenant-id");
+
   if (headers)
     instance.defaults = Object.assign(instance.defaults, {
       headers,
@@ -78,10 +60,17 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
   throw new Error(apiError);
 };
 
-// try to make a generic api call for this
 export const uploadFile = async (endPoint, module, file) => {
+  const tenantId = fetchFromLocalStorage("tenant-id");
+  const uploadInstance = axios.create({
+    baseURL: window.location.origin,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   const requestParams = {
-    tenantId: fetchFromLocalStorage("tenantId"),
+    tenantId,
     module,
     file,
   };
@@ -104,6 +93,15 @@ export const uploadFile = async (endPoint, module, file) => {
 };
 
 export const loginRequest = async (username, password) => {
+  const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
+  const loginInstance = axios.create({
+    baseURL: window.location.origin,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0",
+    },
+  });
+
   let apiError = "Api Error";
   var params = new URLSearchParams();
   params.append("username", username);

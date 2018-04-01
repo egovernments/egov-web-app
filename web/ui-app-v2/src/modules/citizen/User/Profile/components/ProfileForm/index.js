@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, TextField } from "../../../../../../components";
-import CityPicker from "../../../../../common/CityPicker";
+import { Button, TextField } from "components";
+import CityPicker from "modules/common/CityPicker";
 
-const ProfileForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) => {
+const ProfileForm = ({ formKey, form, onChange, submitForm }) => {
   const fields = form.fields || {};
   const submit = form.submit;
-
   return (
     <div>
       <form className="profileFormContainer">

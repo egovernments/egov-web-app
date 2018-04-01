@@ -5,9 +5,7 @@ import { TENANT } from "utils/endPoints";
 import { httpRequest } from "utils/api";
 
 export default class CityPickerDialog extends Component {
-  state = { results: [], searchTerm: "", open: false, city: "" };
-
-  cities = [];
+  state = { results: [], searchTerm: "", open: false, cities: [] };
 
   componentDidMount = async () => {
     document.getElementById("person-city").addEventListener("focus", function() {
@@ -18,15 +16,14 @@ export default class CityPickerDialog extends Component {
         { key: "moduleName", value: "tenant" },
         { key: "masterName", value: "tenants" },
       ]);
-      this.cities=payload.MdmsRes["tenant"]["tenants"].map((item)=>{
+      const cities = payload.MdmsRes["tenant"]["tenants"].map((item) => {
         return {
-          key:item.code,
-          text:item.city.name
-        }
-      })
-      // console.log(this.cities);
+          key: item.code,
+          text: item.city.name,
+        };
+      });
+      this.setState({ cities });
     } catch (error) {
-      //handle the error
       console.log(error);
     }
   };
@@ -34,6 +31,12 @@ export default class CityPickerDialog extends Component {
   componentWillUnmount() {
     document.getElementById("person-city").removeEventListener("focus", null);
   }
+
+  getCityNameByCode = (code) => {
+    const { cities } = this.state;
+    const city = (cities || []).filter((city) => city.key === code);
+    return (city && city.length && city[0].text) || "";
+  };
 
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
@@ -54,11 +57,10 @@ export default class CityPickerDialog extends Component {
   };
 
   onItemClick = (item, index) => {
-    const { primaryText : city, key } = item;
+    const { key } = item;
     if (key) {
       const { formKey, fieldKey, onChange } = this.props;
       onChange(formKey, fieldKey, key);
-      this.setState({city});
       this.onClose();
     }
   };
@@ -71,15 +73,15 @@ export default class CityPickerDialog extends Component {
   };
 
   render() {
-    const { cities, autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
-    const { results, searchTerm, open,city } = this.state;
+    const { autoSuggestCallback, prepareResultsForDisplay, onClose, getCityNameByCode, onCityFieldClicked, onItemClick } = this;
+    const { cities, results, searchTerm, open } = this.state;
     const { field } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
 
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon {...field} value={city} id="person-city" iconPosition="after" Icon={DownArrow} />
+          <TextFieldIcon {...field} value={getCityNameByCode((field || {}).value)} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}
