@@ -11,3 +11,14 @@
   left: 0;
   padding: 0 16px;
 }
+
+.resolve-success-main-screen .thankyou-text,
+.resolve-success-main-screen .secondary-text,
+.resolve-success-main-screen .tertiary-text {
+  display: inline-block;
+}
+
+.resolve-success-main-screen .secondary-text .label-text {
+  margin-left: 5px;
+  color: #484848 !important;
+}

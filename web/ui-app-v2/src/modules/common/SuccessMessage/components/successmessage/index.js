@@ -6,7 +6,7 @@ import "./index.css";
 
 class SuccessMessage extends Component {
   render() {
-    const { successmessage } = this.props;
+    const { successmessage, secondaryLabel, tertiaryLabel } = this.props;
     return (
       <div className="success-message-main-cont ">
         <div className="success-message-inner-cont">
@@ -15,7 +15,9 @@ class SuccessMessage extends Component {
               <Icon action="navigation" name="check" />
             </FloatingActionButton>
           </div>
-          <Label labelStyle="thankyou-text" label={successmessage} color="#767676" />
+          <Label className="thankyou-text" label={successmessage} color="#767676" />
+          <Label className="secondary-text" label={secondaryLabel} color="#767676" />
+          <Label className="tertiary-text" label={tertiaryLabel} color="#767676" />
         </div>
       </div>
     );

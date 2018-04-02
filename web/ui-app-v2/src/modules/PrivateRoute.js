@@ -9,28 +9,29 @@ import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
 import { setRoute } from "redux/app/actions";
 import { fetchComplaintCategories } from "redux/complaints/actions";
 import { logout } from "redux/auth/actions";
+import Label from "utils/translationNode";
 
 const options = [
   {
-    label: "Home",
+    label: <Label fontSize="12px" label="COMMON_BOTTOM_NAVIGATION_HOME" color="#969696" />,
     icon: <Icon action="action" name="home" />,
     route: "/citizen",
     id: "home-button",
   },
   {
-    label: "Information",
+    label: <Label fontSize="12px" label="COMMON_BOTTOM_NAVIGATION_INFORMATION" color="#969696" />,
     icon: <Icon action="action" name="info" />,
     route: "",
     id: "information-button",
   },
   {
-    label: "Payments",
+    label: <Label fontSize="12px" label="COMMON_BOTTOM_NAVIGATION_PAYMENTS" color="#969696" />,
     icon: <Icon action="custom" name="rupee" />,
     route: "",
     id: "payments-button",
   },
   {
-    label: "Complaints",
+    label: <Label label="COMMON_BOTTOM_NAVIGATION_COMPLAINTS" fontSize="12px" color="#969696" />,
     icon: <Icon action="alert" name="warning" />,
     route: "/citizen/my-complaints",
     id: "complaints-button",

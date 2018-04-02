@@ -15,13 +15,12 @@ class ReassignSuccess extends Component {
     return (
       <div className="reassign-success-main-screen">
         <SuccessMessage
-          successmessage={
-            <div>
-              <Label label="You have assigned this complaint to" />
-              <Label label={officerName} />
-              <Label label={department} />
-            </div>
-          }
+          successmessage="You have assigned this complaint to"
+          secondaryLabel={officerName}
+          tertiaryLabel={department}
+          containerStyle={{
+            display: "inline-block",
+          }}
         />
         <div className="reassign-success-continue">
           <Button id="resolve-success-continue" primary={true} label="CONTINUE" fullWidth={true} onClick={this.handleComplaintReassigned} />

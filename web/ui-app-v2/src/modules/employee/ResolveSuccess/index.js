@@ -22,13 +22,10 @@ class ResolveSuccess extends Component {
     return (
       <div className="resolve-success-main-screen">
         <SuccessMessage
-          successmessage={
-            <div>
-              <Label label="You have marked the complaint as" contanerStyle={statusContainerStyle} />
-              <Label label="Resolved" color="#484848" containerStyle={nameContainerStyle} />
-              <Label label="successfully" />
-            </div>
-          }
+          successmessage="You have marked the complaint as"
+          secondaryLabel="Resolved"
+          tertiaryLabel="successfully"
+          containerStyle={{ display: "inline-block" }}
         />
         <div className="resolve-success-continue">
           <Button id="resolve-success-continue" primary={true} label="CONTINUE" fullWidth={true} onClick={this.continueComplaintSubmit} />
