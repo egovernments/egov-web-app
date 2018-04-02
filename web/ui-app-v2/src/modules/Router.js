@@ -14,6 +14,7 @@ import Feedback from "modules/citizen/Feedback";
 import ReOpenComplaint from "modules/citizen/ReOpenComplaint";
 import ComplaintType from "modules/citizen/ComplaintType";
 import AddComplaint from "modules/citizen/AddComplaint";
+import FeedbackAcknowledge from "modules/citizen/FeedbackAcknowledgement";
 
 // static pages
 import HowItWorks from "modules/citizen/HowItWorks";
@@ -51,6 +52,7 @@ const Main = () => {
         />
         <PrivateRoute exact path="/citizen/reopen-complaint/:serviceRequestId?" title="Reopen Complaint" component={ReOpenComplaint} />
         <PrivateRoute exact path="/citizen/feedback/:serviceRequestId?" title="Feedback" component={Feedback} />
+        <PrivateRoute exact path="/citizen/feedback-acknowledgement" title="Feedback" component={FeedbackAcknowledge} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/complaint-type" title="Complaint Type" component={ComplaintType} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/how-it-works" title="How it works" component={HowItWorks} />
         <PrivateRoute exact hideBottomNavigation={true} path="/citizen/add-complaint" title="Add Complaint" component={AddComplaint} />
