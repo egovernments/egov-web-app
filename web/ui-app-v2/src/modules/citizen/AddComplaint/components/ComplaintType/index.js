@@ -3,7 +3,7 @@ import { Card, TextFieldIcon } from "../../../../../components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 
-const ComplaintTypeField = ({ onClick, complaintType }) => {
+const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
   return (
     <div className="complaint-type-main-cont">
       <Card
@@ -14,6 +14,7 @@ const ComplaintTypeField = ({ onClick, complaintType }) => {
               id="addComplaint-complaint-type"
               onClick={onClick}
               {...complaintType}
+              value={(complaintType && complaintType.value && categories[complaintType.value] && categories[complaintType.value].serviceName) || ""}
               floatingLabelText="Complaint Type"
               hintText="Select Complaint Type"
               iconPosition="after"

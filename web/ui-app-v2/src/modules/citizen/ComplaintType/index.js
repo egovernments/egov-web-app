@@ -19,57 +19,72 @@ const customIconStylesAlternate = {
   left: 15,
 };
 
-class ComplaintCategory extends Component {
+class ComplaintType extends Component {
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/complaint").default;
   }
   state = { results: [], searchTerm: "" };
 
+  // dataSource = [
+  //   {
+  //     id: 0,
+  //     text: "Garbage",
+  //     nestedItems: [
+  //       { id: "AC", text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
+  //       { id: 2, text: "Overflowing Garbage Bins", icon: { action: "custom", name: "overflowing-garbage" } },
+  //       { id: 3, text: "Garbage Bin Absent", icon: { action: "custom", name: "garbage-bin-absent" } },
+  //       { id: 4, text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
+  //     ],
+  //   },
+  //   {
+  //     id: 5,
+  //     text: "Roads & Footpaths",
+  //     icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
+  //     nestedItems: [{ id: 6, text: "Potholes" }, { id: 7, text: "Broken Footpaths" }],
+  //   },
+  //   { id: 8, text: "Drains", nestedItems: [{ id: 9, text: "Blockage Of Drains" }] },
+  //   { id: 10, text: "Street Lights", nestedItems: [], icon: { action: "custom", name: "streetlights", style: customIconStylesAlternate } },
+  //   {
+  //     id: 11,
+  //     text: "Public Health & Hygiene",
+  //     icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
+  //     nestedItems: [],
+  //   },
+  //   {
+  //     id: 12,
+  //     text: "Public Land & Property",
+  //     icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
+  //     nestedItems: [],
+  //   },
+  //   { id: 13, text: "Water", icon: { action: "custom", name: "streetlights", style: customIconStylesAlternate }, nestedItems: [] },
+  //   { id: 14, text: "Others", icon: { action: "action", name: "info", style: customIconStylesAlternate }, nestedItems: [] },
+  // ];
+
   dataSource = [
     {
       id: 0,
       text: "Garbage",
-      nestedItems: [
-        { id: "AC", text: "Accumulation Of Litter", icon: { action: "custom", name: "accumulation-of-litter" } },
-        { id: 2, text: "Overflowing Garbage Bins", icon: { action: "custom", name: "overflowing-garbage" } },
-        { id: 3, text: "Garbage Bin Absent", icon: { action: "custom", name: "garbage-bin-absent" } },
-        { id: "AOS", text: "Absenteeism Of Sweepers", icon: { action: "custom", name: "absenteeism of-sweeper", style: customIconStylesAlternate } },
-      ],
-    },
-    {
-      id: 5,
-      text: "Roads & Footpaths",
-      icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
-      nestedItems: [{ id: 6, text: "Potholes" }, { id: 7, text: "Broken Footpaths" }],
-    },
-    { id: 8, text: "Drains", nestedItems: [{ id: 9, text: "Blockage Of Drains" }] },
-    { id: 10, text: "Street Lights", nestedItems: [], icon: { action: "custom", name: "streetlights", style: customIconStylesAlternate } },
-    {
-      id: 11,
-      text: "Public Health & Hygiene",
-      icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
+      icon: { action: "custom", name: "accumulation-of-litter" },
       nestedItems: [],
     },
-    {
-      id: 12,
-      text: "Public Land & Property",
-      icon: { action: "custom", name: "roads-footpaths", style: customIconStylesAlternate },
-      nestedItems: [],
-    },
-    { id: 13, text: "Water", icon: { action: "custom", name: "streetlights", style: customIconStylesAlternate }, nestedItems: [] },
-    { id: 14, text: "Others", icon: { action: "action", name: "info", style: customIconStylesAlternate }, nestedItems: [] },
   ];
 
   generateDataSource = (dataSource) => {
+    const { categories } = this.props;
+    Object.values(categories).map((category, index) => {
+      dataSource[0].nestedItems.push({
+        id: category.serviceCode,
+        text: category.serviceName,
+        icon: { action: "custom", name: "accumulation-of-litter" },
+      });
+    });
     return dataSource.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
   };
 
   onComplaintTypeChosen = (item, index) => {
-    // put the complaint type in the global store like redux
-    // const value = { id: item.id, primaryText: item.primaryText };
     this.props.handleFieldChange(this.formConfig.name, "complaintType", item.id);
     this.props.history.goBack();
   };
@@ -153,10 +168,16 @@ class ComplaintCategory extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    categories: state.complaints.categoriesById,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(ComplaintCategory);
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintType);

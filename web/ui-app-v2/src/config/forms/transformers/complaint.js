@@ -6,8 +6,9 @@ const viewModelToBusinessModelTransformer = (form, state) => {
   const userInfo = localStorage.getItem("user-info");
   let userPhone = null;
   try {
-    userPhone = userInfo.mobileNumber;
+    userPhone = JSON.parse(userInfo).mobileNumber;
   } catch (error) {}
+
   formData.services[0].tenantId = tenantId;
   formData.services[0].phone = userPhone;
   return formData;
