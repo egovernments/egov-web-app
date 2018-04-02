@@ -7,6 +7,7 @@ const formConfig = {
     },
     media: {
       id: "media-upload",
+      file: true,
       jsonPath: "actionInfo.media",
       errorMessage: "CS_FILE_UPLOAD_FAILED",
     },

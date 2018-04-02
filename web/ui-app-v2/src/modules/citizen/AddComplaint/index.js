@@ -51,7 +51,7 @@ class AddComplaints extends Component {
     return (
       <Screen>
         <div className="add-complaint-main-cont">
-          <ImageUpload module="pgr" formKey={formKey} fieldKey="media" />
+          <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
           <ComplaintTypeCard complaintType={fields.complaintType} onClick={navigateToComplaintType} />
           <LocationDetailsCard
             landmark={fields.landmark}

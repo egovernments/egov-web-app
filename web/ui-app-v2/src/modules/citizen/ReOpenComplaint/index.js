@@ -11,6 +11,10 @@ import { fileUpload } from "redux/form/actions";
 import "./index.css";
 
 class ReOpenComplaint extends Component {
+  state = {
+    valueSelected: "",
+  };
+
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/reopenComplaint").default;
@@ -18,9 +22,6 @@ class ReOpenComplaint extends Component {
   componentDidMount() {
     this.props.initForm(this.formConfig);
   }
-  state = {
-    valueSelected: "",
-  };
 
   options = [
     { value: "No work was done", label: <Label label="CS_REOPEN_OPTION_ONE" /> },
@@ -30,7 +31,8 @@ class ReOpenComplaint extends Component {
   ];
 
   handleComplaintSubmit = () => {
-    this.props.submitForm(this.props.formKey);
+    const { formKey, submitForm } = this.props;
+    submitForm(formKey);
   };
   handleCommentChange = (e) => {
     this.props.handleFieldChange(this.props.formKey, "reopencomments", e.target.value);
@@ -39,16 +41,10 @@ class ReOpenComplaint extends Component {
     this.setState({ valueSelected: value });
     this.props.handleFieldChange(this.props.formKey, "question", value);
   };
-  getAllImageUrls = (images) => {
-    console.log(images);
-    let val = [];
-    val.push(images[0]);
-    console.log(this.props);
-    this.props.handleFieldChange(this.props.formKey, "media", val);
-  };
 
   render() {
-    const { handleComplaintSubmit, handleCommentChange, handleOptionsChange, getAllImageUrls } = this;
+    const { handleComplaintSubmit, handleCommentChange, handleOptionsChange } = this;
+    const { formKey } = this.props;
     const { valueSelected } = this.state;
     return (
       <Screen className="reopencomplaint-field">
@@ -56,7 +52,7 @@ class ReOpenComplaint extends Component {
           <Question options={this.options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionsChange} valueSelected={valueSelected} />
         </div>
         <div className="reopencomplaint-upload-photo">
-          <ImageUpload getAllImageUrls={getAllImageUrls} />
+          <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
         </div>
         <div className="reopencomplaint-textArea">
           <TextArea onChange={handleCommentChange} />

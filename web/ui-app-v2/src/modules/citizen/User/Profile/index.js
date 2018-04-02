@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
-import { fileUpload } from "redux/form/actions";
 import UploadDrawer from "modules/common/User/components/UploadDrawer";
 import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/Screen";
 import img from "assets/images/people.jpg";
+import { fileUpload, removeFile } from "redux/form/actions";
 import "./index.css";
 
 class Profile extends Component {
@@ -14,13 +14,10 @@ class Profile extends Component {
     super(props);
     this.state = {
       openUploadSlide: false,
-      img: { url: img },
     };
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
-    // get user info
-    // merge with form config
     const { name, mobileNumber, tenantId } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
@@ -30,15 +27,16 @@ class Profile extends Component {
     this.props.initForm(formConfig);
   }
 
-  setProfilePic = (file, url) => {
-    const fileName = file ? file.name : null;
+  setProfilePic = (file = null, imageUri = "") => {
+    if (imageUri === "") imageUri = img;
+    if (imageUri.length) {
+      fileUpload("profile", "photo", { module: "rainmaker-pgr", file, imageUri });
+    }
+  };
 
-    if (url === "") url = img;
-    this.setState({
-      img: { name: fileName, url },
-    });
-
-    this.props.fileUpload(this.props.formKey, "photo", "pgr", file);
+  removeImage = (imageIndex) => {
+    const { removeFile } = this.props;
+    removeFile("profile", "photo", imageIndex);
   };
 
   onClickAddPic = (isOpen) => {
@@ -48,15 +46,15 @@ class Profile extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm } = this.props;
-    const { img, openUploadSlide } = this.state;
+    const { form, handleFieldChange, submitForm, profilePic } = this.props;
+    const { openUploadSlide } = this.state;
     const { formConfig, setProfilePic, onClickAddPic } = this;
     const { name: formKey } = formConfig;
     const { submitting } = form;
 
     return (
       <Screen>
-        <ProfileSection img={img.url} onClickAddPic={onClickAddPic} />
+        <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
         <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
         {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
       </Screen>
@@ -69,7 +67,8 @@ const mapStateToProps = (state) => {
   const { auth } = state;
   const { userInfo } = auth;
   const form = state.form[formKey] || {};
-  return { form, formKey, userInfo };
+  const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
+  return { form, formKey, userInfo, profilePic: images[0] };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -77,7 +76,8 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    fileUpload: (formKey, fieldKey, module, file) => dispatch(fileUpload(formKey, fieldKey, module, file)),
+    fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
+    removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
   };
 };
 

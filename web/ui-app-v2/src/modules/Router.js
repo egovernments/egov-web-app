@@ -32,7 +32,7 @@ import ComplaintSummary from "modules/employee/ComplaintDetails";
 import EmpUser from "modules/employee/User";
 import AssignComplaint from "modules/employee/AssignComplaint";
 
-const Main = ({ authenticated, authenticating, authenticationFailed }) => {
+const Main = () => {
   return (
     <main>
       <Switch>

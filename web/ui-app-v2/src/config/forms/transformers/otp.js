@@ -48,8 +48,6 @@ const viewModelToBusinessModelTransformer = (form, state) => {
       // },
     };
   }
-  console.log(previousRoute);
-  console.log(fields);
   return prepareFormData({ ...form, fields });
 };
 

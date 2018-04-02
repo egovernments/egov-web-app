@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Button, Icon } from "components";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import { Button, Icon } from "components";
 import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "modules/common/Screen";
@@ -25,12 +25,7 @@ class Feedback extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.formConfig);
     this.props.initForm(this.formConfig);
-  };
-
-  navigateToLogin = () => {
-    this.props.setRoute("/citizen/complaint-details?status=resolved");
   };
 
   onCheck = (value) => {
@@ -52,7 +47,7 @@ class Feedback extends Component {
     this.props.handleFieldChange(this.props.formKey, "comments", e.target.value);
   };
 
-  onSubmit = (history) => {
+  onSubmit = () => {
     if (this.props.formKey === "feedback") {
       this.props.form.fields.selectedSevice.value = this.props.form.fields.selectedSevice.value.toString();
     }
@@ -65,9 +60,8 @@ class Feedback extends Component {
   };
 
   render() {
-    let { history } = this.props;
     let { value, submitted } = this.state;
-    const { formConfig, navigateToLogin } = this;
+    const { formConfig } = this;
     const { form, handleFieldChange, submitForm } = this.props;
     const { name: formKey } = formConfig;
 
@@ -90,9 +84,6 @@ class Feedback extends Component {
             label={submitted ? "CONTINUE" : "SUBMIT"}
             primary={true}
             fullWidth={true}
-            onClick={(e) => {
-              this.onSubmit(history);
-            }}
           />
         </div>
       </Screen>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../../PrivateRoute";
 
 // routes
@@ -11,13 +11,13 @@ import Profile from "./Profile";
 
 const Citizen = ({ match }) => {
   return (
-    <div>
+    <Switch>
       <Route exact path={`${match.url}/register`} component={Register} />
       <Route exact path={`${match.url}/login`} component={Login} />
       <Route exact path={`${match.url}/otp`} component={OTP} />
       <Route exact path={`${match.url}/language-selection`} component={LanguageSelection} />
-      {/* <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Profile" component={Profile} /> */}
-    </div>
+      <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Profile" component={Profile} />
+    </Switch>
   );
 };
 
