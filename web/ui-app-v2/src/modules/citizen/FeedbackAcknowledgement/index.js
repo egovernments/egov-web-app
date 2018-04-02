@@ -1,45 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { Icon, Button } from "components";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import Screen from "modules/common/Screen";
-import Label from "utils/translationNode";
+import { Button } from "components";
 import { setRoute } from "redux/app/actions";
 import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import "./index.css";
 
-class FeedbackAcknowledge extends Component {
-  continueComplaintSubmit = () => {
-    this.props.setRoute("/citizen");
-  };
-
-  // the retrival logic to be changed!
-  getComplaintNumber = () => {
-    const { search } = this.props.location;
-    return (search && search.length && search.split("=").length && search.split("=")[1]) || null;
-  };
-
-  render() {
-    const complaintnumber = this.getComplaintNumber();
-    return (
-      <div>
-        <div className="feedback-main-screen">
-          <SuccessMessage successmessage={"CS_FEEDBACK_SUCCESS"} />
-        </div>
-        <div className="feedback-popup-button-cont ">
-          <Button id="feedback-acknowledgement" primary={true} label="CONTINUE" fullWidth={true} />
-        </div>
+const FeedbackAcknowledge = ({ setRoute }) => {
+  return (
+    <div>
+      <div className="feedback-main-screen">
+        <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" />
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  const formKey = "complaint";
-  return {
-    formKey,
-    form: state.form[formKey],
-  };
+      <div className="feedback-popup-button-cont ">
+        <Button id="feedback-acknowledgement" onClick={() => setRoute("/citizen")} primary={true} label="CONTINUE" fullWidth={true} />
+      </div>
+    </div>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -48,4 +24,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackAcknowledge);
+export default connect(null, mapDispatchToProps)(FeedbackAcknowledge);

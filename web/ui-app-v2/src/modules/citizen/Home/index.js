@@ -15,13 +15,13 @@ class Home extends Component {
   };
 
   render() {
-    const { setRoute, updates } = this.props;
+    const { setRoute, updates,history } = this.props;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
           <div className="row">
             <NewAndOldComplaints setRoute={setRoute} />
-            <Notifications updates={updates} />
+            <Notifications updates={updates} history={history}/>
           </div>
         </div>
       </Banner>
@@ -55,6 +55,7 @@ const mapStateToProps = (state) => {
     complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
     complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
     complaintObj.date = getDateFromEpoch(complaints.byId[complaintKey].auditDetails.createdTime);
+    complaintObj.number=complaintKey;
     updates.push(complaintObj);
   });
   return { updates };

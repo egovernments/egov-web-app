@@ -51,12 +51,7 @@ class Feedback extends Component {
     if (this.props.formKey === "feedback") {
       this.props.form.fields.selectedSevice.value = this.props.form.fields.selectedSevice.value.toString();
     }
-    if (this.state.submitted === false) {
-      this.setState({ submitted: true });
-      this.props.submitForm(this.props.formKey);
-    } else {
-      setRoute("/citizen/complaint-details?status=resolved");
-    }
+    this.props.submitForm(this.props.formKey);
   };
 
   render() {
@@ -67,7 +62,7 @@ class Feedback extends Component {
 
     return (
       <Screen className="feedback-main-screen">
-        {!submitted ? (
+        {
           <div className="feedback-main-container">
             <div className="feedback-form">
               <RatingsComponent onChange={this.onClick} />
@@ -75,15 +70,14 @@ class Feedback extends Component {
               <TextAreaComponent onChange={this.handleChange} />
             </div>
           </div>
-        ) : (
-          <SuccessMessage successmessage={"Thank you for you feedback"} />
-        )}
+        }
         <div className="feedback-popup-button-cont">
           <Button
             id={submitted ? "feedback-continue" : "feedback-submit"}
             label={submitted ? "CONTINUE" : "SUBMIT"}
             primary={true}
             fullWidth={true}
+            onClick={this.onSubmit}
           />
         </div>
       </Screen>

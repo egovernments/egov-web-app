@@ -28,6 +28,7 @@ export const fetchLocalizationLabel = (locale) => {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: "rainmaker-pgr" },
         { key: "locale", value: locale },
+        { key: "tenantId", value: "default" }
       ]);
 
       dispatch(setLocalizationLabels(locale, payload.messages));
