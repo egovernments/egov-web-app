@@ -14,7 +14,6 @@ class OTP extends Component {
 
   componentDidMount() {
     this.props.initForm(this.formConfig);
-    // for handling otp based events
     const otpElement = document.getElementById("otp");
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
@@ -42,9 +41,7 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
-  // const number =!isEmpty(state.form) && (state.app.previousRoute.endsWith("login") ?state.form["login"].fields["phone"].value : state.form["register"].fields["phone"].value)
   return { form };
-  // ,number
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -22,13 +22,12 @@ export const authenticated = (payload) => {
 
 export const logout = () => async (dispatch) => {
   var locale = localStorage.getItem("locale");
-  var localization = localStorage.getItem("localization");
+  var localization = localStorage.getItem(`localization_${locale}`);
   try {
     const payload = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: localStorage.getItem("token") }]);
     localStorage.clear();
     localStorage.setItem("locale", locale);
     localStorage.setItem("localization", localization);
-    localStorage.setItem("tenant-id", "pb");
     dispatch({ type: authType.LOGOUT });
   } catch (error) {}
 };

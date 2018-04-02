@@ -34,7 +34,7 @@ const wrapRequestBody = (requestBody, action) => {
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
   let apiError = "Api Error";
-  const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
+  const tenantId = fetchFromLocalStorage("tenant-id") || "default";
 
   if (headers)
     instance.defaults = Object.assign(instance.defaults, {

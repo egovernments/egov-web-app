@@ -12,7 +12,7 @@ const OTP = ({ formKey, form, onChange, submitForm, number }) => {
       className="user-screens-card"
       textChildren={
         <div>
-          <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="ENTER OTP" />
+          <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
           <Label label="CORE_OTP_SENT_MESSAGE" />
           <Label label="9968739374" />
           <form>
