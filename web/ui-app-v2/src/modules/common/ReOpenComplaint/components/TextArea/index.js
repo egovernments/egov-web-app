@@ -9,11 +9,11 @@ const hintStyle = {
   letterSpacing: "0.3px",
 };
 
-const TextAreaUi = ({ onChange }) => {
+const TextAreaUi = ({ onChange, hintText }) => {
   return (
     <TextArea
       id="reopencomplaint-comment-field"
-      hintText="Type your comments"
+      hintText={hintText}
       hintStyle={hintStyle}
       rowsMax={2}
       onChange={onChange}
