@@ -13,6 +13,14 @@ const formConfig = {
       id: "comments-reopen",
       jsonPath: "actionInfo[0].comments",
     },
+    textarea: {
+      id: "textarea",
+      hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
+    },
+  },
+  submit: {
+    label: "CORE_COMMON_CONTINUE",
+    id: "reopencomplaint-submit-action",
   },
   action: "_update",
   redirectionRoute: "/citizen/complaint-submitted",

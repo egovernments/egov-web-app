@@ -58,8 +58,15 @@ class ReOpenComplaint extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentChange, handleOptionsChange } = this;
-    const { formKey } = this.props;
+    const { formKey, form } = this.props;
     const { valueSelected } = this.state;
+    const { fields, submit } = form;
+    const submitprops = submit;
+    console.log(form.fields);
+    let textarea;
+    if (fields) {
+      textarea = fields.textarea;
+    }
     return (
       <Screen className="reopencomplaint-field">
         <div className="reopencomplaint-question">
@@ -69,10 +76,10 @@ class ReOpenComplaint extends Component {
           <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
         </div>
         <div className="reopencomplaint-textArea">
-          <TextArea onChange={handleCommentChange} />
+          <TextArea onChange={handleCommentChange} {...textarea} />
         </div>
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reopencomplaint-button">
-          <Button id="reopencomplaint-submit-action" primary={true} label="SUBMIT" fullWidth={true} onClick={handleComplaintSubmit} />
+          <Button {...submitprops} primary={true} fullWidth={true} onClick={handleComplaintSubmit} />
         </div>
       </Screen>
     );
