@@ -3,6 +3,7 @@ import { prepareFormData } from "utils/commons";
 const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
   const id = decodeURIComponent(window.location.href.split("/")[5]);
+  const tenantId = window.localStorage.getItem("tenant-id");
   const { fields: reopenFields } = form;
   let fields;
   const complaint = state.complaints.byId[id];
@@ -30,8 +31,12 @@ const viewModelToBusinessModelTransformer = (form, state) => {
       jsonPath: "services[0].serviceCode",
       value: complaint.serviceCode,
     },
+    serviceTenantId: {
+      jsonPath: "services[0].tenantId",
+      value: tenantId,
+    },
   };
-  return prepareFormData(fields);
+  return prepareFormData({ ...form, fields });
 };
 
 export default {

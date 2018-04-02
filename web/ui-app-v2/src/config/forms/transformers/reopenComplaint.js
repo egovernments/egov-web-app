@@ -2,7 +2,7 @@ import { prepareFormData } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
-  // doesn't seem right
+  const tenantId = window.localStorage.getItem("tenant-id");
   const id = decodeURIComponent(window.location.href.split("/")[5]);
   const { fields: reopenFields } = form;
   let fields;
@@ -34,7 +34,7 @@ const viewModelToBusinessModelTransformer = (form, state) => {
     },
     serviceTenantId: {
       jsonPath: "services[0].tenantId",
-      value: "pb.amritsar",
+      value: tenantId,
     },
   };
 

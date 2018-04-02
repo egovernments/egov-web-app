@@ -18,6 +18,7 @@ const formConfig = {
     },
   },
   action: "_update",
+  redirectionRoute: "/citizen/feedback-acknowledgement",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

@@ -52,12 +52,6 @@ class Feedback extends Component {
       this.props.form.fields.selectedSevice.value = this.props.form.fields.selectedSevice.value.toString();
     }
     this.props.submitForm(this.props.formKey);
-    setRoute("/citizen/feedback-acknowledgement");
-    // if (this.state.submitted === false) {
-    //   this.setState({ submitted: true });
-    // this.props.submitForm(this.props.formKey);
-    //} else {
-    //setRoute("/citizen/complaint-details?status=resolved");
   };
 
   render() {
