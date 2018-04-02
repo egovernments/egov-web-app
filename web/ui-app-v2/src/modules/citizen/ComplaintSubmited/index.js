@@ -5,11 +5,14 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "modules/common/Screen";
 import Label from "utils/translationNode";
 import { setRoute } from "redux/app/actions";
+import { resetForm } from "redux/form/actions";
 import "./index.css";
 
 class ComplaintSubmitted extends Component {
   continueComplaintSubmit = () => {
+    const { formKey } = this.props;
     this.props.setRoute("/citizen");
+    this.props.resetForm(formKey);
   };
 
   // the retrival logic to be changed!
@@ -57,6 +60,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setRoute: (route) => dispatch(setRoute(route)),
+    resetForm: (form) => dispatch(resetForm(form)),
   };
 };
 
