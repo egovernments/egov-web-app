@@ -20,7 +20,7 @@ class ComplaintResolved extends Component {
         <div>
           <ImageUpload />
           <div style={{ padding: "24px 16px 350px 1px" }}>
-            <TextArea />
+            <TextArea hintText="Type your comments" />
           </div>
         </div>
 

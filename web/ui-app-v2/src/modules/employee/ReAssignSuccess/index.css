@@ -11,3 +11,14 @@
   left: 0;
   padding: 0 16px;
 }
+
+.reassign-success-main-screen .thankyou-text,
+.reassign-success-main-screen .secondary-text,
+.reassign-success-main-screen .tertiary-text {
+  display: inline-block;
+}
+
+.reassign-success-main-screen .secondary-text .label-text {
+  color: #484848 !important;
+  margin-left: 5px;
+}
