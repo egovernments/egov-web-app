@@ -1,5 +1,6 @@
 import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
+import some from "lodash/some";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -34,17 +35,22 @@ const wrapRequestBody = (requestBody, action) => {
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
   let apiError = "Api Error";
-  const tenantId = fetchFromLocalStorage("tenant-id") || "default";
+  const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
 
   if (headers)
     instance.defaults = Object.assign(instance.defaults, {
       headers,
     });
 
-  queryObject.push({
-    key: "tenantId",
-    value: tenantId,
-  });
+  if(!some(queryObject,["key","tenantId"])) 
+  {
+    queryObject.push({
+      key: "tenantId",
+      value: tenantId,
+    });
+  }
+
+
   endPoint = addQueryArg(endPoint, queryObject);
   try {
     const response = await instance.post(endPoint, wrapRequestBody(requestBody, action));
