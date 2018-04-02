@@ -16,19 +16,26 @@ const formSubmit = (store) => (next) => (action) => {
     const state = store.getState();
     let { redirectionRoute, idJsonPath } = state.form[formKey];
 
-    // only execute for login intent
+    // for login/submit
     if (formKey === "otp") {
-      delete payload.ResponseInfo;
+      const { previousRoute } = state.app;
       redirectionRoute = "/citizen";
-      dispatch(authenticated(payload));
+
+      if (previousRoute.endsWith("register")) {
+        redirectionRoute = "/user/citizen/login";
+      } else {
+        delete payload.ResponseInfo;
+        dispatch(authenticated(payload));
+      }
+    }
+    if (formKey !== "login" && formKey !== "register") {
+      dispatch(resetForm(formKey));
     }
 
     if (redirectionRoute && redirectionRoute.length) {
       redirectionRoute = idJsonPath ? addQueryArg(redirectionRoute, [{ key: "id", value: get(payload, idJsonPath) }]) : redirectionRoute;
       dispatch(setRoute(redirectionRoute));
     }
-    // reset form after successful submission
-    // dispatch(resetForm(formKey));
   } else {
     next(action);
   }

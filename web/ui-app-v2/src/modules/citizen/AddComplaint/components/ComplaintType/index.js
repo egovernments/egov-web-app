@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextFieldIcon } from "../../../../../components";
+import { Card, TextFieldIcon } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 

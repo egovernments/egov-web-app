@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "../../common/Screen";
-import ImageUpload from "../../common/ImageUpload";
+import { Button } from "components";
+import Screen from "modules/common/Screen";
+import ImageUpload from "modules/common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
-import { Button } from "../../../components";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class AddComplaints extends Component {
+  state = {
+    openMap: false,
+  };
+
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/complaint").default;
@@ -19,10 +23,6 @@ class AddComplaints extends Component {
   componentDidMount() {
     this.props.initForm(this.formConfig);
   }
-
-  state = {
-    openMap: false,
-  };
 
   handleLandmarkChange = (e, value) => {
     this.props.handleFieldChange(this.props.formKey, "landmark", value);
