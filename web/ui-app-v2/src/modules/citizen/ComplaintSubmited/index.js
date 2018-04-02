@@ -7,12 +7,19 @@ import Label from "utils/translationNode";
 import { setRoute } from "redux/app/actions";
 import "./index.css";
 
-class ComplaintDetails extends Component {
+class ComplaintSubmitted extends Component {
   continueComplaintSubmit = () => {
     this.props.setRoute("/citizen");
   };
+
+  // the retrival logic to be changed!
+  getComplaintNumber = () => {
+    const { search } = this.props.location;
+    return (search && search.length && search.split("=").length && search.split("=")[1]) || null;
+  };
+
   render() {
-    let complaintnumber = this.props.form.redirectionRoute.split("=")[1];
+    const complaintnumber = this.getComplaintNumber();
     return (
       <div>
         <Screen className="complaint-submitted-card">
@@ -42,12 +49,15 @@ class ComplaintDetails extends Component {
 const mapStateToProps = (state) => {
   const formKey = "complaint";
   return {
+    formKey,
     form: state.form[formKey],
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  setRoute: (route) => dispatch(setRoute(route));
+  return {
+    setRoute: (route) => dispatch(setRoute(route)),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintSubmitted);
