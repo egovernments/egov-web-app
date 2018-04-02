@@ -4,7 +4,7 @@ import VerticalCenterWrapper from "../../../../common/VerticalCenterWrapper";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const Updates = ({ updates,history }) => {
+const Updates = ({ updates, setRoute }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
     return (
@@ -13,9 +13,12 @@ const Updates = ({ updates,history }) => {
         key={index}
         id={`home-notification${index}`}
         textChildren={
-          <div className="update" onClick={()=>{
-            history.push(`/citizen/complaint-details/${encodeURIComponent(update.number)}`)
-          }}>
+          <div
+            className="update"
+            onClick={() => {
+              setRoute(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
+            }}
+          >
             <div className="notification-top-content">
               <Label
                 leftWrapperStyle

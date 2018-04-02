@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
@@ -62,7 +63,8 @@ class PrivateRoute extends Component {
   _handleBackNavigation = () => {
     const { previousRoute, setRoute } = this.props;
     // go back to previous route
-    setRoute(previousRoute);
+    // setRoute(previousRoute);
+    this.props.history.goBack();
   };
 
   _onTabChange = (tabIndex) => {
@@ -152,4 +154,4 @@ const mapStateToProps = (state) => {
   return { authenticated, previousRoute, authenticating, authenticationFailed };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));

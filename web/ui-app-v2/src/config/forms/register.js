@@ -28,7 +28,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_PHONE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
-      pattern: "^([0-9])+$",
+      pattern: "^([0-9]){10}$",
       value: "",
     },
     type: {

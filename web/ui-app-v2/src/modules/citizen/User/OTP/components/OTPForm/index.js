@@ -3,7 +3,7 @@ import { Button, TextField, Card } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const OTP = ({ formKey, form, onChange, submitForm, number }) => {
+const OTP = ({ formKey, form, onChange, phoneNumber, submitForm }) => {
   const fields = form.fields || {};
   const submit = form.submit;
 
@@ -14,7 +14,7 @@ const OTP = ({ formKey, form, onChange, submitForm, number }) => {
         <div>
           <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
           <Label label="CORE_OTP_SENT_MESSAGE" />
-          <Label label="9968739374" />
+          <Label label={phoneNumber} />
           <form>
             <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} />
             <div style={{ marginBottom: "24px" }} className="text-right">

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Label, TextField, Card } from "../../../../../components";
+import { Button, Label, TextField, Card } from "components";
 import "./index.css";
 
 const OTP = ({ onOtpChanged, onOtpSubmit, disabled, otp, btnText }) => {

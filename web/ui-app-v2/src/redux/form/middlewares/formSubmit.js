@@ -22,7 +22,7 @@ const formSubmit = (store) => (next) => (action) => {
       redirectionRoute = "/citizen";
 
       if (previousRoute.endsWith("register")) {
-        redirectionRoute = "/user/citizen/login";
+        redirectionRoute = "/citizen/user/login";
       } else {
         delete payload.ResponseInfo;
         dispatch(authenticated(payload));

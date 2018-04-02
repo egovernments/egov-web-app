@@ -27,12 +27,12 @@ class OTP extends Component {
   }
 
   render() {
-    const { form, handleFieldChange, submitForm, number } = this.props;
+    const { form, handleFieldChange, submitForm, phoneNumber } = this.props;
     const { name: formKey } = this.formConfig;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <OTPForm submitForm={submitForm} form={form} formKey={formKey} onChange={handleFieldChange} number={number || ""} />
+        <OTPForm submitForm={submitForm} form={form} formKey={formKey} phoneNumber={phoneNumber} onChange={handleFieldChange} />
       </Banner>
     );
   }
@@ -41,7 +41,14 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
-  return { form };
+  const { previousRoute } = state.app;
+  const previousForm = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
+  let phoneNumber = null;
+  if (previousForm) {
+    phoneNumber = state.form[previousForm].fields.phone.value;
+  }
+  // const state[]
+  return { form, phoneNumber };
 };
 
 const mapDispatchToProps = (dispatch) => {
