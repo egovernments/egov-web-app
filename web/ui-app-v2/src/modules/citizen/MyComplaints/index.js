@@ -41,7 +41,7 @@ class MyComplaints extends Component {
           </div>
         ) : (
           <Screen>
-            <Complaints complaints={transformedComplaints} onClick={this.imageOnClick} track={true} role={"citizen"} />
+            <Complaints setRoute={setRoute} complaints={transformedComplaints} onClick={this.imageOnClick} track={true} role={"citizen"} />
           </Screen>
         )}
         <div className="floating-button-cont">

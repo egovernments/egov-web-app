@@ -141,13 +141,13 @@ const getStatusAndChangeColor = (status, assignee) => {
   return statusObj;
 };
 
-const Complaints = ({ index, complaints, history, onClick, complaintLocation, track, role }) => {
+const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role }) => {
   return complaints.map((complaint, complaintIndex) => {
     return (
       <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
         <Card
           onClick={(e) => {
-            history.push(`/citizen/complaint-details/${encodeURIComponent(complaint.complaintNo)}`);
+            setRoute(`/citizen/complaint-details/${encodeURIComponent(complaint.complaintNo)}`);
           }}
           className="complaint-card"
           textChildren={
