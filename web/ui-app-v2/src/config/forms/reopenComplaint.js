@@ -1,5 +1,6 @@
 const formConfig = {
   name: "reopenComplaint",
+  idJsonPath: "services[0].serviceRequestId",
   fields: {
     question: {
       id: "question",
@@ -18,6 +19,7 @@ const formConfig = {
     },
   },
   action: "_update",
+  redirectionRoute: "/citizen/complaint-submitted",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

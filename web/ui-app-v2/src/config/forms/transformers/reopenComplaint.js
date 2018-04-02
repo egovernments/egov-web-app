@@ -32,6 +32,10 @@ const viewModelToBusinessModelTransformer = (form, state) => {
       jsonPath: "services[0].serviceCode",
       value: complaint.serviceCode,
     },
+    serviceTenantId: {
+      jsonPath: "services[0].tenantId",
+      value: "pb.amritsar",
+    },
   };
 
   return prepareFormData({ ...form, fields });
