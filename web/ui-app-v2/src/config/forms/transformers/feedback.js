@@ -7,7 +7,25 @@ const viewModelToBusinessModelTransformer = (form, state) => {
   const { fields: reopenFields } = form;
   let fields;
   const complaint = state.complaints.byId[id];
-
+  let status = complaint.actions[complaint.actions.length - 1].status;
+  let compstatus;
+  switch (status) {
+    case "open":
+      compstatus = "assign";
+      break;
+    case "assigned":
+      compstatus = "resolve";
+      break;
+    case "resolved":
+      compstatus = "reopen";
+      break;
+    case "rejected":
+      compstatus = "reopen";
+      break;
+    default:
+      compstatus = "assign";
+      break;
+  }
   fields = state.form["feedback"].fields;
   fields = {
     ...reopenFields,
@@ -17,7 +35,7 @@ const viewModelToBusinessModelTransformer = (form, state) => {
     },
     status: {
       jsonPath: "actionInfo[0].action",
-      value: "assign",
+      value: compstatus,
     },
     description: {
       jsonPath: "services[0].description",

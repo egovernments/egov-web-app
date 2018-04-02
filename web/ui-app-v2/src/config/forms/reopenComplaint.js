@@ -2,20 +2,16 @@ const formConfig = {
   name: "reopenComplaint",
   idJsonPath: "services[0].serviceRequestId",
   fields: {
-    question: {
-      id: "question",
-      jsonPath: "actionInfo[0].comments",
-    },
     media: {
       id: "media-upload",
       file: true,
-      jsonPath: "actionInfo.media",
+      jsonPath: "actionInfo[0].media",
       errorMessage: "CS_FILE_UPLOAD_FAILED",
     },
-    reopencomments: {
-      id: "reopen-comments",
+
+    comments: {
+      id: "comments-reopen",
       jsonPath: "actionInfo[0].comments",
-      hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
     },
   },
   action: "_update",

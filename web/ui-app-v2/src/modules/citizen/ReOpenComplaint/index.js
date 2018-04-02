@@ -29,17 +29,31 @@ class ReOpenComplaint extends Component {
     { value: "Employee did not turn up", label: <Label label="CS_REOPEN_OPTION_THREE" /> },
     { value: "No permanent solution", label: <Label label="CS_REOPEN_OPTION_FOUR" /> },
   ];
-
+  commentsValue = {};
   handleComplaintSubmit = () => {
     const { formKey, submitForm } = this.props;
     submitForm(formKey);
   };
   handleCommentChange = (e) => {
-    this.props.handleFieldChange(this.props.formKey, "reopencomments", e.target.value);
+    this.commentsValue.textVal = e.target.value;
+    this.concatComments(this.commentsValue);
   };
   handleOptionsChange = (event, value) => {
     this.setState({ valueSelected: value });
-    this.props.handleFieldChange(this.props.formKey, "question", value);
+    this.commentsValue.radioValue = value;
+    this.concatComments(this.commentsValue);
+  };
+  concatComments = (val) => {
+    let com1 = "";
+    let com2 = "";
+    if (val.radioValue) {
+      com1 = val.radioValue + ";";
+    }
+    if (val.textVal) {
+      com2 = val.textVal;
+    }
+    let concatvalue = com1 + com2;
+    this.props.handleFieldChange(this.props.formKey, "comments", concatvalue);
   };
 
   render() {
