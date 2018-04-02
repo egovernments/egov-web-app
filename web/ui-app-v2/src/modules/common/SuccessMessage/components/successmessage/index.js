@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Label, Icon } from "../../../../../components";
+import { Icon } from "../../../../../components";
+import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 
@@ -14,7 +15,7 @@ class SuccessMessage extends Component {
               <Icon action="navigation" name="check" />
             </FloatingActionButton>
           </div>
-          <span className="thankyou-text">{successmessage}</span>
+          <Label labelStyle="thankyou-text" label={successmessage} color="#767676" />
         </div>
       </div>
     );

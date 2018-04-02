@@ -9,7 +9,7 @@ const FeedbackAcknowledge = ({ setRoute }) => {
   return (
     <div>
       <div className="feedback-main-screen">
-        <SuccessMessage successmessage={"Thank you for you feedback"} />
+        <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" />
       </div>
       <div className="feedback-popup-button-cont ">
         <Button id="feedback-acknowledgement" onClick={() => setRoute("/citizen")} primary={true} label="CONTINUE" fullWidth={true} />
