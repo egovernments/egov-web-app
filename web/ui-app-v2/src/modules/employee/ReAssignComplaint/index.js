@@ -14,45 +14,27 @@ class ReAssignComplaint extends Component {
     { value: "Not a valid Complaint", label: "Not a valid Complaint" },
   ];
 
-  state = {
-    submitted: false,
-  };
-
   onSubmit = () => {
-    if (this.state.submitted === false) {
-      this.setState({ submitted: true });
-    } else {
-      this.props.history.push("/citizen");
-    }
+    this.props.history.push("/employee/reassign-success");
   };
 
   render() {
     const { onSubmit } = this;
-    const { submitted } = this.state;
     let officerName = "Amrinder Singh";
     let department = "Department 1";
     return (
       <Screen className="reassign-complaint-main-container">
-        {!submitted ? (
-          <div>
-            <div className="reassign-complaint-question">
-              <Question options={this.options} label={"Why do you want this complaint to be Re-Assined?"} />
-            </div>
-            <div className="reassign-complaint-textArea">
-              <TextArea />
-            </div>
+        <div>
+          <div className="reassign-complaint-question">
+            <Question options={this.options} label={"Why do you want this complaint to be Re-Assined?"} />
           </div>
-        ) : (
-          <SuccessMessage successmessage={`You have assigned this complaint to ${officerName} ${department}`} />
-        )}
+          <div className="reassign-complaint-textArea">
+            <TextArea />
+          </div>
+        </div>
+
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reassign-complaint-button">
-          <Button
-            id="reassigncomplaint-submit-action"
-            primary={true}
-            label={submitted ? "CONTINUE" : "REQUEST RE-ASSIGN"}
-            fullWidth={true}
-            onClick={onSubmit}
-          />
+          <Button id="reassigncomplaint-submit-action" primary={true} label={"REQUEST RE-ASSIGN"} fullWidth={true} onClick={onSubmit} />
         </div>
       </Screen>
     );
