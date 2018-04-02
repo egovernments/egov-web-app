@@ -1,8 +1,13 @@
-.reassignsuccess-button {
-  padding: 8px !important;
-  position: fixed !important;
-  left: 0px;
-  bottom: 8px;
+.reassign-success-main-screen {
+  padding: 0 !important;
+  height: calc(100vh - 64px);
+  background: #ffffff;
+}
+
+.reassign-success-continue {
+  position: fixed;
   width: 100%;
-  background-color: #ffffff;
+  bottom: 15px;
+  left: 0;
+  padding: 0 16px;
 }

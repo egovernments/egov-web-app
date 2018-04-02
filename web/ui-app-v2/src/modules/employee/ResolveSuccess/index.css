@@ -1,7 +1,13 @@
-.resolvesuccess-button {
-  position: fixed !important;
-  left: 0px;
+.resolve-success-main-screen {
+  padding: 0 !important;
+  height: calc(100vh - 64px);
+  background: #ffffff;
+}
+
+.resolve-success-continue {
+  position: fixed;
   width: 100%;
-  bottom: 8px;
-  padding: 8px !important;
+  bottom: 15px;
+  left: 0;
+  padding: 0 16px;
 }
