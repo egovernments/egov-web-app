@@ -16,6 +16,14 @@ const formConfig = {
       jsonPath: "actionInfo[0].comments",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
     },
+    textarea: {
+      id: "textarea",
+      hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
+    },
+  },
+  submit: {
+    label: "CS_COMMON_SUBMIT",
+    id: "feedback-submit-action",
   },
   action: "_update",
   redirectionRoute: "/citizen/feedback-acknowledgement",

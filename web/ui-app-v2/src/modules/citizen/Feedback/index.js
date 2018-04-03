@@ -59,6 +59,11 @@ class Feedback extends Component {
     const { formConfig } = this;
     const { form, handleFieldChange, submitForm } = this.props;
     const { name: formKey } = formConfig;
+    const { fields, submit } = form;
+    let textArea;
+    if (fields) {
+      textArea = fields.textarea;
+    }
 
     return (
       <Screen className="feedback-main-screen">
@@ -67,18 +72,12 @@ class Feedback extends Component {
             <div className="feedback-form">
               <RatingsComponent onChange={this.onClick} />
               <CheckBoxGroup selected={value} onCheck={this.onCheck} />
-              <TextAreaComponent onChange={this.handleChange} />
+              <TextAreaComponent onChange={this.handleChange} {...textArea} />
             </div>
           </div>
         }
         <div className="feedback-popup-button-cont">
-          <Button
-            id={submitted ? "feedback-continue" : "feedback-submit"}
-            label={submitted ? "CONTINUE" : "SUBMIT"}
-            primary={true}
-            fullWidth={true}
-            onClick={this.onSubmit}
-          />
+          <Button {...submit} primary={true} fullWidth={true} onClick={this.onSubmit} />
         </div>
       </Screen>
     );

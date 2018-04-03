@@ -2,11 +2,11 @@ import React from "react";
 import "./index.css";
 import { TextArea } from "../../../../../components";
 
-const TextAreaComponent = ({ onChange }) => {
+const TextAreaComponent = ({ hintText, onChange }) => {
   return (
     <TextArea
       id="feedback-comments"
-      hintText="Type your comments"
+      hintText={hintText}
       style={{ marginTop: "10px" }}
       underlineShow={true}
       hintStyle={{ letterSpacing: "0.7px" }}
