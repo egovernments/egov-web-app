@@ -4,7 +4,7 @@ import VerticalCenterWrapper from "modules/common/VerticalCenterWrapper";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const Updates = ({ updates, setRoute }) => {
+const Updates = ({ updates, history }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
     // const titleKey =
@@ -23,7 +23,7 @@ const Updates = ({ updates, setRoute }) => {
           <div
             className="update"
             onClick={() => {
-              setRoute(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
+              history.push(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
             }}
           >
             <div className="notification-top-content">

@@ -4,8 +4,7 @@ import Banner from "modules/common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
-import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, transformById,displayStatus } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, transformById, displayStatus } from "utils/commons";
 import "./index.css";
 
 class Home extends Component {
@@ -15,13 +14,13 @@ class Home extends Component {
   };
 
   render() {
-    const { setRoute, updates } = this.props;
+    const { updates, history } = this.props;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
           <div className="row">
-            <NewAndOldComplaints setRoute={setRoute} />
-            <Notifications updates={updates} setRoute={setRoute} />
+            <NewAndOldComplaints history={history} />
+            <Notifications updates={updates} history={history} />
           </div>
         </div>
       </Banner>
@@ -29,14 +28,11 @@ class Home extends Component {
   }
 }
 
-
-
 const displayDate = (rawData) => {
   let split = rawData.split("/");
   split.splice(split.length - 1, 1);
   return split.join("-");
 };
-
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
@@ -55,7 +51,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

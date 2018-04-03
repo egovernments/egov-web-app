@@ -84,13 +84,11 @@ class TrackLocation extends Component {
   };
 
   onClickPick = () => {
-    const { setRoute, previousRoute } = this.props;
-    setRoute(previousRoute);
+    this.props.history.goBack();
   };
 
   onCLickMapBackBtn = () => {
-    const { setRoute, previousRoute } = this.props;
-    setRoute(previousRoute);
+    this.props.history.goBack();
   };
 
   render() {
@@ -135,16 +133,10 @@ class TrackLocation extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { previousRoute } = state.app;
-  return { previousRoute };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrackLocation);
+export default connect(null, mapDispatchToProps)(TrackLocation);
