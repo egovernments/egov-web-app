@@ -15,6 +15,8 @@ class Register extends Component {
     this.props.initForm(this.formConfig);
   };
 
+  componentWillReceiveProps = (nextProps) => {};
+
   navigateToLogin = () => {
     this.props.setRoute("/citizen/user/login");
   };

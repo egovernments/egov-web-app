@@ -62,9 +62,7 @@ class PrivateRoute extends Component {
   };
 
   _handleBackNavigation = () => {
-    const { previousRoute, setRoute } = this.props;
-    // go back to previous route
-    // setRoute(previousRoute);
+    const { setRoute } = this.props;
     this.props.history.goBack();
   };
 
@@ -151,8 +149,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { authenticated, authenticating, authenticationFailed } = state.auth;
-  const { previousRoute } = state.app;
-  return { authenticated, previousRoute, authenticating, authenticationFailed };
+  return { authenticated, authenticating, authenticationFailed };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));

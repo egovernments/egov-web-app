@@ -13,7 +13,6 @@ class App extends Component {
 
     props.history.listen((location, action) => {
       const { pathname: nextPath } = location;
-      // add body classes
       removeBodyClass(currentPath);
       addBodyClass(nextPath);
       // clear any toasters
@@ -23,8 +22,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel } = this.props;
-    fetchLocalizationLabel("en_IN");
+    const { fetchLocalizationLabel, locale } = this.props;
+    fetchLocalizationLabel(locale || "en_IN");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,7 +62,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { route, toast } = state.app;
+  const { route, toast, locale } = state.app;
   return { route, toast };
 };
 

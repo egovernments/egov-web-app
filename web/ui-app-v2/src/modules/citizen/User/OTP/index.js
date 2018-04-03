@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "../../../common/Banner";
+import Banner from "modules/common/Banner";
 import OTPForm from "./components/OTPForm";
-import { handleFieldChange, initForm, submitForm } from "../../../../redux/form/actions";
-import { setRoute } from "../../../../redux/app/actions";
+import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
+import { setRoute } from "redux/app/actions";
 import isEmpty from "lodash/isEmpty";
 
 class OTP extends Component {
@@ -12,13 +12,23 @@ class OTP extends Component {
     this.formConfig = require("config/forms/otp").default;
   }
 
+  componentWillMount() {
+    const { setRoute, previousRoute } = this.props;
+    if (previousRoute.length === 0) {
+      setRoute("/citizen/user/register");
+    }
+  }
+
   componentDidMount() {
-    this.props.initForm(this.formConfig);
+    const { initForm, handleFieldChange } = this.props;
+
     const otpElement = document.getElementById("otp");
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
-      this.props.handleFieldChange("otp", "otp", otp);
+      handleFieldChange("otp", "otp", otp);
     });
+
+    initForm(this.formConfig);
   }
 
   componentWillUnmount() {
@@ -47,8 +57,7 @@ const mapStateToProps = (state) => {
   if (previousForm) {
     phoneNumber = state.form[previousForm].fields.phone.value;
   }
-  // const state[]
-  return { form, phoneNumber };
+  return { form, previousRoute, phoneNumber };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -56,6 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

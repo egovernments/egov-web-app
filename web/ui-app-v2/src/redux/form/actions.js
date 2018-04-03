@@ -60,17 +60,17 @@ export const submitForm = (formKey) => {
         const { saveUrl, action } = form;
         let formData = null;
         try {
-          let transformer = require(`../../config/forms/transformers/${formKey}`).default;
+          let transformer = require(`config/forms/transformers/${formKey}`).default;
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);
           }
         } catch (error) {
-          console.log(error);
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
         }
         let formResponse = {};
+        // this will eventually moved out to the auth action
         if (formData.hasOwnProperty("login")) {
           formResponse = await loginRequest(formData.login.username, formData.login.password);
         } else {
