@@ -7,13 +7,13 @@ import "./index.css";
 const Updates = ({ updates, setRoute }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
-    const titleKey =
-      "COMMON_" +
-      title
-        .trim()
-        .toUpperCase()
-        .split(" ")
-        .join("_");
+    // const titleKey =
+    //   "COMMON_" +
+    //   title
+    //     .trim()
+    //     .toUpperCase()
+    //     .split(" ")
+    //     .join("_");
     return (
       <Card
         style={{ margin: "8px 0px" }}
@@ -32,7 +32,7 @@ const Updates = ({ updates, setRoute }) => {
                 fontSize={16}
                 dark={true}
                 bold={true}
-                label={titleKey}
+                label={title}
                 containerStyle={{ width: "80%" }}
                 labelStyle={{ width: "100%", wordWrap: "break-word" }}
               />
