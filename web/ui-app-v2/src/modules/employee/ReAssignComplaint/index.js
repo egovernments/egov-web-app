@@ -29,7 +29,7 @@ class ReAssignComplaint extends Component {
             <Question options={this.options} label={"Why do you want this complaint to be Re-Assined?"} />
           </div>
           <div className="reassign-complaint-textArea">
-            <TextArea />
+            <TextArea hintText={"Type your comments"} />
           </div>
         </div>
 
