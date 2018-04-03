@@ -32,7 +32,6 @@ class Details extends Component {
     icon.style = {
       display: "block",
     };
-    console.log(this.props);
     return (
       <div>
         <Card
@@ -58,33 +57,52 @@ class Details extends Component {
                 </div>
                 <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
-                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                      <Image
-                        style={{
-                          width: "97px",
-                          height: "93px",
-                        }}
-                        source={garbageOne}
-                      />
-                    </div>
-                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                      <Image
-                        style={{
-                          width: "97px",
-                          height: "93px",
-                        }}
-                        source={garbageTwo}
-                      />
-                    </div>
-                    <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                      <Image
-                        style={{
-                          width: "97px",
-                          height: "93px",
-                        }}
-                        source={garbageThree}
-                      />
-                    </div>
+                    {this.props.role !== "AO" ? (
+                      images &&
+                      images.map((image, index) => {
+                        return (
+                          <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                            <Image
+                              style={{
+                                width: "97px",
+                                height: "93px",
+                              }}
+                              source={image}
+                            />
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div>
+                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                          <Image
+                            style={{
+                              width: "97px",
+                              height: "93px",
+                            }}
+                            source={garbageOne}
+                          />
+                        </div>
+                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                          <Image
+                            style={{
+                              width: "97px",
+                              height: "93px",
+                            }}
+                            source={garbageTwo}
+                          />
+                        </div>
+                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
+                          <Image
+                            style={{
+                              width: "97px",
+                              height: "93px",
+                            }}
+                            source={garbageThree}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

@@ -2,8 +2,7 @@ import { prepareFormData } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
   const tenantId = window.localStorage.getItem("tenant-id");
-  // pass complaint id as an argument to the transformer
-  const id = decodeURIComponent(window.location.href.split("/")[5]);
+  const id = decodeURIComponent(window.location.href.split("/")).pop();
   const { fields: reopenFields } = form;
   let fields;
 
