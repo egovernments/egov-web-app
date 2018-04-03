@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
-  return { updates };
+  return { updates:updates.reverse() };
 };
 
 const mapDispatchToProps = (dispatch) => {

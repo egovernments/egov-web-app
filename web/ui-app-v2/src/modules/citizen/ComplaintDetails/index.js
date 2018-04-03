@@ -66,17 +66,21 @@ class ComplaintDetails extends Component {
   }
 
   render() {
-    let { complaint, timeLine } = this.props.transformedComplaint;
+    let { complaint,timeLine} = this.props.transformedComplaint;
     let { status, details, comments } = this.state;
     return (
       <Screen>
-        {complaint && (
+        {
+          complaint &&
           <div>
             <Details {...complaint} />
-            <ComplaintTimeLine status={status.status} timeLine={timeLine} complaintNo={complaint.applicationNo} />
+            <ComplaintTimeLine
+              status={status.status}
+              timeLine={timeLine}
+            />
             <Comments comments={comments} hasComments={true} />
           </div>
-        )}
+        }
       </Screen>
     );
   }
@@ -96,10 +100,10 @@ const mapStateToProps = (state, ownProps) => {
       images: selectedComplaint.actions[0].media,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine = selectedComplaint.actions.filter((action)=>action.status && action.status);
     let transformedComplaint = {
       complaint: details,
-      timeLine,
+      timeLine
     };
     return { transformedComplaint };
   } else {
