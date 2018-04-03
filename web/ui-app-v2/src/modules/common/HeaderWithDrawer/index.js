@@ -257,7 +257,7 @@ class HeaderWithDrawer extends Component {
       case "language-selection":
         break;
       default:
-        this.props.setRoute(route);
+        this.props.history.push(route);
         break;
     }
   };
@@ -281,7 +281,7 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
-    const { onUpdateMenuStatus, toggleMenu, className, role, setRoute, logout, userInfo, ...appBarProps } = this.props;
+    const { onUpdateMenuStatus, toggleMenu, className, role, history, logout, userInfo, ...appBarProps } = this.props;
     return (
       <div>
         <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />

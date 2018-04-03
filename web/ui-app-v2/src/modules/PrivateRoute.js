@@ -6,7 +6,6 @@ import { Redirect, Route } from "react-router-dom";
 import IconButton from "material-ui/IconButton";
 import { BottomNavigation, Icon, LoadingIndicator } from "components";
 import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
-import { setRoute } from "redux/app/actions";
 import { fetchComplaintCategories } from "redux/complaints/actions";
 import { logout, searchUser } from "redux/auth/actions";
 import Label from "utils/translationNode";
@@ -76,7 +75,7 @@ class PrivateRoute extends Component {
     this.setState({
       tabIndex,
     });
-    if (route.length) this.props.setRoute(route);
+    if (route.length) this.props.history.push(route);
   };
 
   _appBarProps = () => {
@@ -113,7 +112,7 @@ class PrivateRoute extends Component {
       authenticating,
       authenticated,
       authenticationFailed,
-      setRoute,
+      history,
       ...rest
     } = this.props;
     const { _appBarProps, _updateMenuState, _onTabChange } = this;
@@ -126,8 +125,8 @@ class PrivateRoute extends Component {
           {..._appBarProps()}
           className={hideAppBar ? "hide" : ""}
           title={rest.title}
+          history={history}
           userInfo={rest.userInfo}
-          setRoute={setRoute}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
           role={role}
@@ -147,7 +146,6 @@ class PrivateRoute extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setRoute: (route) => dispatch(setRoute(route)),
     fetchComplaintCategories: () => dispatch(fetchComplaintCategories()),
     logout: () => dispatch(logout()),
     searchUser: () => dispatch(searchUser()),
