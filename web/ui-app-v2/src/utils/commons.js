@@ -1,6 +1,19 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 
+export const statusToMessageMapping = {
+  rejected: "Rejected",
+  closed: "Closed",
+  open: "Opened",
+  "re-assign": "Re-assigned",
+  assigned: "Assigned"
+};
+
+export const displayStatus = (status) => {
+  return status ? statusToMessageMapping[status.toLowerCase()] : "";
+};
+
+
 export const transformById = (payload, id) => {
   return payload.reduce((result, item) => {
     result[item[id]] = {

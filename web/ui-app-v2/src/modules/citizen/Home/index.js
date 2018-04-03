@@ -5,7 +5,7 @@ import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, transformById } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, transformById,displayStatus } from "utils/commons";
 import "./index.css";
 
 class Home extends Component {
@@ -29,13 +29,7 @@ class Home extends Component {
   }
 }
 
-const statusToMessageMapping = {
-  new: "Opened",
-  rejected: "Rejected",
-  closed: "Closed",
-  open: "Opened",
-  "re-assign": "Re-assigned",
-};
+
 
 const displayDate = (rawData) => {
   let split = rawData.split("/");
@@ -43,9 +37,6 @@ const displayDate = (rawData) => {
   return split.join("-");
 };
 
-const displayStatus = (status) => {
-  return status ? statusToMessageMapping[status.toLowerCase()] : "";
-};
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
