@@ -48,6 +48,7 @@ class AddComplaints extends Component {
     const { navigateToComplaintType, submitComplaint, sendFile } = this;
     const { formKey, fileUpload, categories } = this.props;
     const fields = this.props.form.fields || {};
+    const submit = this.props.form.submit;
     return (
       <Screen>
         <div className="add-complaint-main-cont">
@@ -61,14 +62,7 @@ class AddComplaints extends Component {
           />
           <AdditionalDetailsCard additionalDetails={fields.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
-            <Button
-              id="addComplaint-submit-complaint"
-              onClick={submitComplaint}
-              className="add-complaint-submit-button"
-              label="SUBMIT COMPLAINT"
-              fullWidth={true}
-              primary={true}
-            />
+            <Button {...submit} onClick={submitComplaint} className="add-complaint-submit-button" fullWidth={true} primary={true} />
           </div>
         </div>
       </Screen>

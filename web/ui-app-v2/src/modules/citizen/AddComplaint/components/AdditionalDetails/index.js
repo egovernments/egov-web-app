@@ -15,9 +15,7 @@ const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
               onChange={onChange}
               name="additional-details"
               isRequired={false}
-              hintText="Enter Additional Details"
               fullWidth={true}
-              floatingLabelText="Additional Details"
             />
           </div>
         }

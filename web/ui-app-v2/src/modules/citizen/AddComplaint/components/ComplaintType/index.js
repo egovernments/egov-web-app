@@ -11,12 +11,9 @@ const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
         textChildren={
           <div>
             <TextFieldIcon
-              id="addComplaint-complaint-type"
               onClick={onClick}
               {...complaintType}
               value={(complaintType && complaintType.value && categories[complaintType.value] && categories[complaintType.value].serviceName) || ""}
-              floatingLabelText="Complaint Type"
-              hintText="Select Complaint Type"
               iconPosition="after"
               fullWidth={true}
               Icon={DownArrow}
