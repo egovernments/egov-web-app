@@ -26,7 +26,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, images } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, images, onImageClick } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -68,6 +68,7 @@ class Details extends Component {
                                 height: "93px",
                               }}
                               source={image}
+                              onClick={() => onImageClick(image)}
                             />
                           </div>
                         );

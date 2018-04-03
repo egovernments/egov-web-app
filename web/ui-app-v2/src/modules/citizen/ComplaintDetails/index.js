@@ -5,6 +5,7 @@ import ComplaintTimeLine from "modules/common/complaintDetails/components/Compla
 import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
+import { ImageModal } from "components";
 import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import "./index.css";
 
@@ -32,6 +33,8 @@ class ComplaintDetails extends Component {
       ],
       location: "Sector 32, 1 main, Amritsar",
     },
+    source: "",
+    hideImageModal: true,
   };
 
   componentDidMount() {
@@ -65,6 +68,15 @@ class ComplaintDetails extends Component {
     }
   }
 
+  onImageClick = (source) => {
+    this.setState({ source });
+    this.setState({ hideImageModal: false });
+  };
+
+  onCloseClick = () => {
+    this.setState({ hideImageModal: true });
+  };
+
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { status, details, comments } = this.state;
@@ -72,7 +84,8 @@ class ComplaintDetails extends Component {
       <Screen>
         {complaint && (
           <div>
-            <Details {...complaint} />
+            <Details {...complaint} onImageClick={this.onImageClick} />
+            <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
             <ComplaintTimeLine status={status.status} timeLine={timeLine} complaintNo={complaint.applicationNo} />
             <Comments comments={comments} hasComments={true} />
           </div>
