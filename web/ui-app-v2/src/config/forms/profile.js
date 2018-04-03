@@ -31,7 +31,7 @@ const formConfig = {
     label: "CS_PROFILE_SAVE",
     id: "profile-save-action",
   },
-  saveUrl: "/user/register",
+  saveUrl: "/user/profile/_update",
 };
 
 export default formConfig;

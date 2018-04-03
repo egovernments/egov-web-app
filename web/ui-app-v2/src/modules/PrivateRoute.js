@@ -8,7 +8,7 @@ import { BottomNavigation, Icon, LoadingIndicator } from "components";
 import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
 import { setRoute } from "redux/app/actions";
 import { fetchComplaintCategories } from "redux/complaints/actions";
-import { logout } from "redux/auth/actions";
+import { logout, searchUser } from "redux/auth/actions";
 import Label from "utils/translationNode";
 
 const options = [
@@ -43,6 +43,11 @@ class PrivateRoute extends Component {
     toggleMenu: false,
     tabIndex: 0,
   };
+
+  componentWillMount() {
+    const { searchUser } = this.props;
+    searchUser();
+  }
 
   componentDidMount() {
     const { fetchComplaintCategories } = this.props;
@@ -144,6 +149,7 @@ const mapDispatchToProps = (dispatch) => {
     setRoute: (route) => dispatch(setRoute(route)),
     fetchComplaintCategories: () => dispatch(fetchComplaintCategories()),
     logout: () => dispatch(logout()),
+    searchUser: () => dispatch(searchUser()),
   };
 };
 

@@ -178,3 +178,13 @@ export const getImageUrlByFile = (file) => {
     };
   });
 };
+
+export const getUserInfo = () => {
+  let userInfo = localStorage.getItem("user-info");
+  try {
+    userInfo = JSON.parse(userInfo);
+  } catch (error) {
+    userInfo = null;
+  }
+  return userInfo;
+};

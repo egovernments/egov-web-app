@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Icon } from "../../../../../components";
-import VerticalCenterWrapper from "../../../../common/VerticalCenterWrapper";
+import { Card, Icon } from "components";
+import VerticalCenterWrapper from "modules/common/VerticalCenterWrapper";
 import Label from "utils/translationNode";
 import "./index.css";
 

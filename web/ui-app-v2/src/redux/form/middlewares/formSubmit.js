@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import { resetForm } from "../actions";
-import { authenticated } from "redux/auth/actions";
+import { authenticated, userProfileUpdated } from "redux/auth/actions";
 import { addQueryArg } from "utils/commons";
 import { setRoute } from "redux/app/actions";
 import get from "lodash/get";
@@ -28,7 +28,15 @@ const formSubmit = (store) => (next) => (action) => {
         dispatch(authenticated(payload));
       }
     }
-    if (formKey !== "login" && formKey !== "register") {
+
+    // for profile update
+    if (formKey === "profile") {
+      delete payload.responseInfo;
+      dispatch(userProfileUpdated(payload));
+    }
+
+    // use a flag reset true or false
+    if (formKey !== "login" && formKey !== "register" && formKey !== "profile") {
       dispatch(resetForm(formKey));
     }
 

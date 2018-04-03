@@ -1,13 +1,7 @@
 import * as actionTypes from "./actionTypes";
+import { getUserInfo } from "utils/commons";
 
-let userInfo = localStorage.getItem("user-info");
-
-try {
-  userInfo = JSON.parse(userInfo);
-} catch (error) {
-  userInfo = null;
-}
-
+const userInfo = getUserInfo();
 const authenticated = userInfo ? true : false;
 const tenantId = localStorage.getItem("tenant-id");
 const token = localStorage.getItem("token");
@@ -38,6 +32,9 @@ const auth = (state = intialState, action) => {
       };
     case actionTypes.AUTHENTICATION_FAILED:
       return { ...state, authenticated: false, authenticationFailed: true, authenticating: false };
+
+    case actionTypes.USER_PROFILE_UPDATED:
+      return { ...state, userInfo: action.user };
     case actionTypes.LOGOUT:
       return {
         ...state,

@@ -38,3 +38,14 @@ export const AUTH = {
     ACTION: "_logout",
   },
 };
+
+export const USER = {
+  SEARCH: {
+    URL: "/user/_search",
+    ACTION: "search",
+  },
+  UPDATE: {
+    URL: "/profile/_update",
+    ACTION: "create",
+  },
+};

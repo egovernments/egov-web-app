@@ -18,11 +18,16 @@ class Profile extends Component {
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
-    const { name, mobileNumber, tenantId } = this.props.userInfo;
+    const { name, mobileNumber, emailId, tenantId } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
       ...formConfig,
-      fields: { ...formConfig.fields, city: { ...formConfig.fields.city, value: tenantId }, name: { ...formConfig.fields.name, value: name } },
+      fields: {
+        ...formConfig.fields,
+        email: { ...formConfig.fields.email, value: emailId },
+        city: { ...formConfig.fields.city, value: tenantId },
+        name: { ...formConfig.fields.name, value: name },
+      },
     };
     this.props.initForm(formConfig);
   }
@@ -30,6 +35,7 @@ class Profile extends Component {
   setProfilePic = (file = null, imageUri = "") => {
     if (imageUri === "") imageUri = img;
     if (imageUri.length) {
+      const { fileUpload } = this.props;
       fileUpload("profile", "photo", { module: "rainmaker-pgr", file, imageUri });
     }
   };
@@ -43,6 +49,11 @@ class Profile extends Component {
     this.setState({
       openUploadSlide: isOpen,
     });
+  };
+
+  submitForm = () => {
+    const { formKey, submitForm } = this.props;
+    submitForm(formKey);
   };
 
   render() {
@@ -68,7 +79,13 @@ const mapStateToProps = (state) => {
   const { userInfo } = auth;
   const form = state.form[formKey] || {};
   const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
-  return { form, formKey, userInfo, profilePic: images[0] };
+
+  return {
+    form,
+    formKey,
+    userInfo,
+    profilePic: (images.length && images[0].imageUri) || userInfo.photo,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,7 +1,13 @@
 import * as authType from "./actionTypes";
 import { httpRequest } from "utils/api";
-import { AUTH } from "utils/endPoints";
+import { AUTH, USER } from "utils/endPoints";
 import { setRoute } from "../app/actions";
+
+export const userProfileUpdated = (payload) => {
+  const user = payload.user[0];
+  window.localStorage.setItem("user-info", JSON.stringify(user));
+  return { type: authType.USER_PROFILE_UPDATED, user };
+};
 
 export const authenticated = (payload) => {
   const userInfo = payload["UserRequest"];
@@ -18,6 +24,16 @@ export const authenticated = (payload) => {
   localStorage.setItem("last-login-time", lastLoginTime);
 
   return { type: authType.AUTHENTICATED, userInfo, accessToken };
+};
+
+export const searchUser = () => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const { userName, tenantId } = state.auth.userInfo;
+    const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
+    delete user.responseInfo;
+    window.localStorage.setItem("user-info", JSON.stringify(user.user[0]));
+  };
 };
 
 export const logout = () => async (dispatch) => {
