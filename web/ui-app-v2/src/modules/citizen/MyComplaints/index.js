@@ -93,6 +93,16 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
+//better implementaion ==> to be done later
+const fetchImages = (actionArray) => {
+  let imageArray = [];
+  actionArray.forEach((action, index) => {
+    action.media && imageArray.push(action.media);
+  });
+  console.log(imageArray);
+  return imageArray[0] ? imageArray[0] : null;
+};
+
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
   let transformedComplaints = [];
@@ -102,7 +112,7 @@ const mapStateToProps = (state) => {
     complaintObj.date = getDateFromEpoch(complaints.byId[complaint].auditDetails.createdTime);
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
-    complaintObj.images = complaints.byId[complaint].actions[0].media.map((imageSource, index) => {
+    complaintObj.images = fetchImages(complaints.byId[complaint].actions).map((imageSource, index) => {
       return { source: imageSource };
     });
     transformedComplaints.push(complaintObj);

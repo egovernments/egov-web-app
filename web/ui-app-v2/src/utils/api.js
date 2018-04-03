@@ -42,14 +42,12 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
       headers,
     });
 
-  if(!some(queryObject,["key","tenantId"])) 
-  {
+  if (!some(queryObject, ["key", "tenantId"])) {
     queryObject.push({
       key: "tenantId",
       value: tenantId,
     });
   }
-
 
   endPoint = addQueryArg(endPoint, queryObject);
   try {

@@ -3,6 +3,7 @@ import { resetForm } from "../actions";
 import { authenticated, userProfileUpdated } from "redux/auth/actions";
 import { addQueryArg } from "utils/commons";
 import { setRoute } from "redux/app/actions";
+import { fetchComplaints } from "redux/complaints/actions";
 import get from "lodash/get";
 
 const formSubmit = (store) => (next) => (action) => {
@@ -38,6 +39,10 @@ const formSubmit = (store) => (next) => (action) => {
     // use a flag reset true or false
     if (formKey !== "login" && formKey !== "register" && formKey !== "profile") {
       dispatch(resetForm(formKey));
+    }
+
+    if (formKey === "comment") {
+      dispatch(fetchComplaints([{ serviceRequestId: decodeURIComponent(window.location.href.split("/").pop()) }]));
     }
 
     if (redirectionRoute && redirectionRoute.length) {

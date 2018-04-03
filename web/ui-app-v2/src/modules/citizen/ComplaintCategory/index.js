@@ -39,7 +39,6 @@ export default class ComplaintCategory extends Component {
 
   onComplaintTypeChosen = (item, index) => {
     const complaintType = item.primaryText;
-    console.log(complaintType);
     this.props.history.goBack();
   };
 
