@@ -126,6 +126,7 @@ class PrivateRoute extends Component {
           {..._appBarProps()}
           className={hideAppBar ? "hide" : ""}
           title={rest.title}
+          userInfo={rest.userInfo}
           setRoute={setRoute}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
@@ -154,8 +155,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-  const { authenticated, authenticating, authenticationFailed } = state.auth;
-  return { authenticated, authenticating, authenticationFailed };
+  const { authenticated, authenticating, authenticationFailed, userInfo } = state.auth;
+  return { authenticated, authenticating, authenticationFailed, userInfo };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));

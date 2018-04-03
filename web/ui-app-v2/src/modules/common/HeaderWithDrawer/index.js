@@ -5,8 +5,8 @@ import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
 import Label from "utils/translationNode";
 import "./index.css";
-import {connect} from "react-redux";
-import {fetchLocalizationLabel} from "redux/app/actions"
+import { connect } from "react-redux";
+import { fetchLocalizationLabel } from "redux/app/actions";
 
 const listInnerDivStyle = {
   padding: "16px 0px 16px 60px",
@@ -80,9 +80,7 @@ const locationStyle = {
   fontWeight: 500,
 };
 
-const _label_Name = "Jaswinder";
 const _label_Location = "Amritsar";
-const _label_emailId = "jaswinder@gmail.com";
 
 class HeaderWithDrawer extends Component {
   state = {
@@ -98,7 +96,7 @@ class HeaderWithDrawer extends Component {
       {
         label: "ਪੰਜਾਬੀ",
         value: "pn_IN",
-      }
+      },
     ],
     logoutPopupOpen: false,
     value: localStorage.getItem("locale"),
@@ -283,7 +281,7 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
-    const { onUpdateMenuStatus, toggleMenu, className, role, setRoute, logout, ...appBarProps } = this.props;
+    const { onUpdateMenuStatus, toggleMenu, className, role, setRoute, logout, userInfo, ...appBarProps } = this.props;
     return (
       <div>
         <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />
@@ -295,11 +293,11 @@ class HeaderWithDrawer extends Component {
             nameStyle={nameStyle}
             locationStyle={locationStyle}
             emailIdStyle={nameStyle}
-            name={_label_Name}
-            emailId={_label_emailId}
+            name={userInfo.name}
+            emailId={userInfo.emailId}
             location={_label_Location}
             iconStyle={iconStyle}
-            imgSrc={profileImage}
+            imgSrc={userInfo.photo || profileImage}
           />
 
           <div className="drawer-list-poweredBy-wrapper">
@@ -374,4 +372,4 @@ class HeaderWithDrawer extends Component {
   }
 }
 
-export default connect(null,{fetchLocalizationLabel})(HeaderWithDrawer);
+export default connect(null, { fetchLocalizationLabel })(HeaderWithDrawer);
