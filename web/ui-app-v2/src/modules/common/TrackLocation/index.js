@@ -66,7 +66,6 @@ class TrackLocation extends Component {
 
   setPickedLocation = (lati, long, index) => {
     if (isUndefined(index)) index = 0;
-    console.log(lati, long, index);
 
     this.convertToAddress(lati, long);
   };
