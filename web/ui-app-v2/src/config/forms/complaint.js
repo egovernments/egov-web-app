@@ -46,6 +46,10 @@ const formConfig = {
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
     },
   },
+  submit: {
+    label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_SUBMIT_COMPLAINT",
+    id: "addComplaint-submit-complaint",
+  },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",
   redirectionRoute: "/citizen/complaint-submitted",

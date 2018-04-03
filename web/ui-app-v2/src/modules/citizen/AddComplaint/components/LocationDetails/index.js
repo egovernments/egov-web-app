@@ -15,8 +15,6 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
                 <TextFieldIcon
                   id="addComplaint-location-details"
                   {...locationDetails}
-                  floatingLabelText="Location"
-                  hintText="Search Location"
                   iconPosition="after"
                   fullWidth={true}
                   Icon={TrackIcon}
@@ -30,9 +28,7 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
                 onChange={onChange}
                 name="landmark-details"
                 isRequired={false}
-                hintText="Enter Landmark"
                 fullWidth={true}
-                floatingLabelText="Landmark"
               />
             </div>
           </div>
