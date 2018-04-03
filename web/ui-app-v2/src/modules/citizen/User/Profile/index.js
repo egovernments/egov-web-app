@@ -18,14 +18,14 @@ class Profile extends Component {
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
-    const { name, mobileNumber, emailId, tenantId } = this.props.userInfo;
+    const { name, mobileNumber, emailId, permanentCity, tenantId } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
       ...formConfig,
       fields: {
         ...formConfig.fields,
         email: { ...formConfig.fields.email, value: emailId },
-        city: { ...formConfig.fields.city, value: tenantId },
+        city: { ...formConfig.fields.city, value: permanentCity || tenantId },
         name: { ...formConfig.fields.name, value: name },
       },
     };
