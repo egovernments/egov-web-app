@@ -66,6 +66,7 @@ class Comments extends Component {
     let items =selectedComplaint.actions.filter((action,index)=>{
       return action.comments && !action.status;
     })
+    items.reverse();
     items=items.map((action, index) => {
 
         if (action.by.split(":")[1].toLowerCase() === "citizen") {
