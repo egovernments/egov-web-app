@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidMount() {
     const { fetchLocalizationLabel, locale } = this.props;
-    fetchLocalizationLabel(locale || "en_IN");
+    fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
   }
 
   componentWillReceiveProps(nextProps) {

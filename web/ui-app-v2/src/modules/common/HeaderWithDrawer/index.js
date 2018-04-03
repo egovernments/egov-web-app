@@ -5,6 +5,8 @@ import profileImage from "../../../assets/people1.png";
 import logoMseva from "../../../assets/images/logo_black.png";
 import Label from "utils/translationNode";
 import "./index.css";
+import {connect} from "react-redux";
+import {fetchLocalizationLabel} from "redux/app/actions"
 
 const listInnerDivStyle = {
   padding: "16px 0px 16px 60px",
@@ -87,19 +89,19 @@ class HeaderWithDrawer extends Component {
     languageItems: [
       {
         label: "ENGLISH",
-        value: "English",
+        value: "en_IN",
       },
       {
         label: "हिंदी",
-        value: "Hindi",
+        value: "hi_IN",
       },
       {
         label: "ਪੰਜਾਬੀ",
-        value: "Marati",
-      },
+        value: "pn_IN",
+      }
     ],
     logoutPopupOpen: false,
-    value: "English",
+    value: localStorage.getItem("locale"),
     role: "employee",
   };
 
@@ -242,6 +244,7 @@ class HeaderWithDrawer extends Component {
 
   onClick = (value) => {
     this.setState({ value });
+    this.props.fetchLocalizationLabel(value);
   };
 
   handleItem = (item, index) => {
@@ -253,7 +256,6 @@ class HeaderWithDrawer extends Component {
         this.setState({
           logoutPopupOpen: true,
         });
-        break;
       case "language-selection":
         break;
       default:
@@ -372,4 +374,4 @@ class HeaderWithDrawer extends Component {
   }
 }
 
-export default HeaderWithDrawer;
+export default connect(null,{fetchLocalizationLabel})(HeaderWithDrawer);
