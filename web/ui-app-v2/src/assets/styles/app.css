@@ -120,3 +120,11 @@ body.citizen-reopen-complaint,
 body.citizen-complaint-submitted {
   background: #ffffff !important;
 }
+
+.screenHeaderLabelStyle .label-text {
+  font-size: 20px !important;
+  font-weight: 500;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

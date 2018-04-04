@@ -2,6 +2,7 @@ import React from "react";
 import { Button, TextField, MobileNumberField, Card } from "../../../../../../components";
 import Label from "../../../../../../utils/translationNode";
 import CityPicker from "../../../../../common/CityPicker";
+import "./index.css";
 
 const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) => {
   const fields = form.fields || {};

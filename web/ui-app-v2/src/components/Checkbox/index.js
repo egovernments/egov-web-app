@@ -46,7 +46,7 @@ const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, ch
 CheckboxUi.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.node.isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     }).isRequired
   ),
