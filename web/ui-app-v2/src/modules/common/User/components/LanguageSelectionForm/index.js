@@ -1,5 +1,6 @@
 import React from "react";
-import { ButtonGroup, Button, Label, Card } from "../../../../../components";
+import { ButtonGroup, Button, Card } from "../../../../../components";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const selectedLabelStyle = {
@@ -56,7 +57,13 @@ const LanguageSelectionForm = ({ items, onLanguageSelect, value, onClick }) => {
               />
             </div>
             <div className="button-container">
-              <Button id="continue-action" onClick={onLanguageSelect} primary={true} label="Continue" fullWidth={true} />
+              <Button
+                id="continue-action"
+                onClick={onLanguageSelect}
+                primary={true}
+                label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
+                fullWidth={true}
+              />
             </div>
           </form>
         </div>

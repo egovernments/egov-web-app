@@ -38,7 +38,13 @@ class ComplaintSubmitted extends Component {
             <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" />
           </div>
           <div className="complaintsubmit-button col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
-            <Button id="complaint-submitted-continue" primary={true} label="CONTINUE" fullWidth={true} onClick={this.continueComplaintSubmit} />
+            <Button
+              id="complaint-submitted-continue"
+              primary={true}
+              label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
+              fullWidth={true}
+              onClick={this.continueComplaintSubmit}
+            />
           </div>
         </Screen>
       </div>

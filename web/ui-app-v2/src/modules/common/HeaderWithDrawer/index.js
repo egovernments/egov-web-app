@@ -350,18 +350,16 @@ class HeaderWithDrawer extends Component {
                 <Button
                   id="logout-no-button"
                   className="logout-no-button"
-                  label={"NO"}
+                  label={<Label buttonLabel={true} label={"CORE_LOGOUTPOPUP_NO"} />}
                   backgroundColor={"#969696"}
                   onClick={this.handleNo}
-                  labelColor="#ffffff"
                 />
                 <Button
                   id="logout-yes-button"
                   className="logout-yes-button"
-                  label={"YES"}
+                  label={<Label buttonLabel={true} label={"CORE_LOGOUTPOPUP_YES"} />}
                   primary={true}
                   onClick={this.handleYes}
-                  labelColor="#ffffff"
                 />
               </div>
             </div>,

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "components";
 import { setRoute } from "redux/app/actions";
 import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
+import Label from "utils/translationNode";
 import "./index.css";
 
 const FeedbackAcknowledge = ({ setRoute }) => {
@@ -12,7 +13,13 @@ const FeedbackAcknowledge = ({ setRoute }) => {
         <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" />
       </div>
       <div className="feedback-popup-button-cont ">
-        <Button id="feedback-acknowledgement" onClick={() => setRoute("/citizen")} primary={true} label="CONTINUE" fullWidth={true} />
+        <Button
+          id="feedback-acknowledgement"
+          onClick={() => setRoute("/citizen")}
+          primary={true}
+          label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
+          fullWidth={true}
+        />
       </div>
     </div>
   );

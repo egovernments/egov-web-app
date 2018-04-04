@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { List, Icon, TextField } from "../../../../../components";
 import MaterialUITextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
+import Label from "utils/translationNode";
 
 import "./index.css";
 
@@ -33,7 +34,7 @@ const itemsOne = [
     primaryText: (
       <div className="write-comment-align-ComplaintTimeLine rainmaker-list-right-item-overide-style">
         <MaterialUITextField
-          hintText="Write your comments..."
+          hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
           style={textFieldStyle}
           onChange={() => {
             console.log("test");
@@ -57,7 +58,7 @@ const WriteComment = ({ form, formKey, onChange, submitForm }) => {
       <Avatar size={33} src={faceOne} style={{ marginRight: "5px" }} />
       <TextField
         {...fields.comment}
-        hintText="Write your comments..."
+        hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
         style={textFieldStyle}
         onChange={(e, value) => onChange(formKey, "comment", value)}
         className="write-complaint-chat-field"

@@ -21,7 +21,7 @@ Button.propTypes = {
   primary: PropTypes.bool,
   fullWidth: PropTypes.bool,
   disabled: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   style: PropTypes.object,
 };
 
