@@ -105,7 +105,7 @@ const mapStateToProps = (state) => {
     });
     transformedComplaints.push(complaintObj);
   });
-  return { complaints, transformedComplaints: transformedComplaints.reverse() };
+  return { complaints, transformedComplaints};
 };
 
 const mapDispatchToProps = (dispatch) => {
