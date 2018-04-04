@@ -8,9 +8,7 @@ const hintStyle = {
   fontWeight: "400",
   letterSpacing: "0.3px",
 };
-const handleCommentChange = () => {
-  //console.log("changed");
-};
+const handleCommentChange = () => {};
 const TextAreaUi = () => {
   return (
     <TextArea

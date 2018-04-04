@@ -10,10 +10,9 @@ const Updates = ({ updates, history }) => {
     const titleKey =
       "COMMON_" +
       title
-        .trim()
-        .toUpperCase()
-        .split(" ")
-        .join("_");
+        .match(/\w+/g)
+        .join("_")
+        .toUpperCase();
     return (
       <Card
         style={{ margin: "8px 0px" }}
