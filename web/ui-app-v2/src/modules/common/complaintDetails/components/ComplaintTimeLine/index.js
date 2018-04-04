@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import Label from "utils/translationNode";
 import garbageOne from "assets/images/Garbage_3.jpg";
 import "./index.css";
-import {getDateFromEpoch} from "utils/commons";
+import { getDateFromEpoch } from "utils/commons";
 
 const timelineButtonLabelStyle = {
   height: 12,
@@ -54,14 +54,14 @@ const callIconStyle = {
   borderRadius: "50%",
 };
 
-const StatusIcon = ({status}) => {
+const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
       return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "assigned":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "re-assign":
-        return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
+      return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "rejected":
       return <Icon action="content" name="clear" style={statusCommonIconStyle} color={"#f5a623"} />;
     default:
@@ -69,8 +69,8 @@ const StatusIcon = ({status}) => {
   }
 };
 
-const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
-  var { when:date,media,status,name,designation,department,role,resolveImage,resolveFeedback,reason,businessKey:complaintNo} = stepData;
+const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
+  var { when: date, media, status, name, designation, department, role, resolveImage, resolveFeedback, reason, businessKey: complaintNo } = stepData;
   switch (status) {
     case "open":
       return (
@@ -78,12 +78,7 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_FILED" />
           {currentStatus === "Opened" && (
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
+            <div className="complaint-details-timline-button" onClick={(e) => {}}>
               <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
               CALL
             </div>
@@ -102,12 +97,7 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
             label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
           />
           {role === "AO" && (
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
+            <div className="complaint-details-timline-button" onClick={(e) => {}}>
               <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
               CALL
             </div>
@@ -158,7 +148,6 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
     //       <div
     //         className="complaint-details-timline-button"
     //         onClick={(e) => {
-    //           console.log("clicked");
     //         }}
     //       >
     //         <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
@@ -231,27 +220,23 @@ const DueDate = ({ status, role, duedateText }) => {
 
 class ComplaintTimeLine extends Component {
   render() {
-    let { status, history, role,timeLine } = this.props;
-    console.log(timeLine);
-    let steps = timeLine.map((step,key)=>{
+    let { status, history, role, timeLine } = this.props;
+    let steps = timeLine.map((step, key) => {
       return {
-          props: {
-            active: true,
+        props: {
+          active: true,
+        },
+        labelProps: {
+          icon: <StatusIcon status={step.status} />,
+        },
+        contentProps: {
+          style: {
+            marginTop: "-50px",
           },
-          labelProps: {
-            icon: <StatusIcon status={step.status} />,
-          },
-          contentProps: {
-            style: {
-              marginTop: "-50px",
-            },
-          },
-          contentChildren: (
-            <StatusContent stepData={step} currentStatus={status} changeRoute={history}/>
-          ),
-        }
+        },
+        contentChildren: <StatusContent stepData={step} currentStatus={status} changeRoute={history} />,
+      };
     });
-
 
     return (
       <div>
@@ -286,223 +271,221 @@ export default withRouter(ComplaintTimeLine);
 
 //props types check yet to add
 
-
-
-    // [
-    //   {
-    //     props: {
-    //       active: true,
-    //     },
-    //     labelProps: {
-    //       icon: <StatusIcon status="RESOLVED" />,
-    //     },
-    //     contentProps: {
-    //       style: {
-    //         marginTop: "-50px",
-    //       },
-    //     },
-    //     contentChildren: (
-    //       <StatusContent status="RESOLVED" content={{}} history={history}  complaintNo={complaintNo} />
-    //     ),
-    //   },
-    //   {
-    //     props: {
-    //       active: true,
-    //     },
-    //     labelProps: {
-    //       icon: <StatusIcon status="ASSIGNED" />,
-    //     },
-    //     contentProps: {
-    //       style: {
-    //         marginTop: "-50px",
-    //       },
-    //     },
-    //     contentChildren: <StatusContent status="REASSIGNED" content={{}}  role={role} />,
-    //   },
-    //   {
-    //     props: {
-    //       active: true,
-    //     },
-    //     labelProps: {
-    //       icon: <StatusIcon status="ASSIGNED" />,
-    //     },
-    //     contentProps: {
-    //       style: {
-    //         marginTop: "-50px",
-    //       },
-    //     },
-    //     contentChildren: <StatusContent status="ASSIGNED" content={{}}  />,
-    //   },
-    //   {
-    //     props: {
-    //       active: true,
-    //     },
-    //     labelProps: {
-    //       icon: <StatusIcon status="SUBMITTED" />,
-    //     },
-    //     contentProps: {
-    //       style: {
-    //         marginTop: "-50px",
-    //       },
-    //     },
-    //     contentChildren: <StatusContent status="SUBMITTED" content={{}}  />,
-    //   },
-    //   {
-    //     props: {
-    //       active: true,
-    //     },
-    //     labelProps: {
-    //       icon: <StatusIcon status="UNASSIGNED" />,
-    //     },
-    //     contentProps: {
-    //       style: {
-    //         marginTop: "-50px",
-    //       },
-    //     },
-    //     contentChildren: <StatusContent status="UNASSIGNED" content={{}}  />,
-    //   },
-    // ];
-    // if (status === "Submitted") {
-    //   steps = [
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="SUBMITTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent currentStatus={status} status="SUBMITTED" content={{}}  />,
-    //     },
-    //   ];
-    // } else if (status === "Rejected") {
-    //   steps = [
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="REJECTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: (
-    //         <StatusContent status="REJECTED" content={{}} history={history}  complaintNo={complaintNo} />
-    //       ),
-    //     },
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="SUBMITTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="SUBMITTED" content={{}}  />,
-    //     },
-    //   ];
-    // } else if (status === "Unassigned") {
-    //   steps = [
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="ASSIGNED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
-    //     },
-    //   ];
-    // } else if (status === "Reassign") {
-    //   steps = [
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="SUBMITTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="REASSIGN-REQUESTED" content={{}} history={history}  />,
-    //     },
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="SUBMITTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="ASSIGNED" content={{}} history={history}  role={role} />,
-    //     },
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="ASSIGNED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
-    //     },
-    //   ];
-    // } else if (status === "Assign") {
-    //   steps = [
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="SUBMITTED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="ASSIGNED" content={{}} history={history}  role={role} />,
-    //     },
-    //     {
-    //       props: {
-    //         active: true,
-    //       },
-    //       labelProps: {
-    //         icon: <StatusIcon status="ASSIGNED" />,
-    //       },
-    //       contentProps: {
-    //         style: {
-    //           marginTop: "-50px",
-    //         },
-    //       },
-    //       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
-    //     },
-    //   ];
-    // }
+// [
+//   {
+//     props: {
+//       active: true,
+//     },
+//     labelProps: {
+//       icon: <StatusIcon status="RESOLVED" />,
+//     },
+//     contentProps: {
+//       style: {
+//         marginTop: "-50px",
+//       },
+//     },
+//     contentChildren: (
+//       <StatusContent status="RESOLVED" content={{}} history={history}  complaintNo={complaintNo} />
+//     ),
+//   },
+//   {
+//     props: {
+//       active: true,
+//     },
+//     labelProps: {
+//       icon: <StatusIcon status="ASSIGNED" />,
+//     },
+//     contentProps: {
+//       style: {
+//         marginTop: "-50px",
+//       },
+//     },
+//     contentChildren: <StatusContent status="REASSIGNED" content={{}}  role={role} />,
+//   },
+//   {
+//     props: {
+//       active: true,
+//     },
+//     labelProps: {
+//       icon: <StatusIcon status="ASSIGNED" />,
+//     },
+//     contentProps: {
+//       style: {
+//         marginTop: "-50px",
+//       },
+//     },
+//     contentChildren: <StatusContent status="ASSIGNED" content={{}}  />,
+//   },
+//   {
+//     props: {
+//       active: true,
+//     },
+//     labelProps: {
+//       icon: <StatusIcon status="SUBMITTED" />,
+//     },
+//     contentProps: {
+//       style: {
+//         marginTop: "-50px",
+//       },
+//     },
+//     contentChildren: <StatusContent status="SUBMITTED" content={{}}  />,
+//   },
+//   {
+//     props: {
+//       active: true,
+//     },
+//     labelProps: {
+//       icon: <StatusIcon status="UNASSIGNED" />,
+//     },
+//     contentProps: {
+//       style: {
+//         marginTop: "-50px",
+//       },
+//     },
+//     contentChildren: <StatusContent status="UNASSIGNED" content={{}}  />,
+//   },
+// ];
+// if (status === "Submitted") {
+//   steps = [
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="SUBMITTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent currentStatus={status} status="SUBMITTED" content={{}}  />,
+//     },
+//   ];
+// } else if (status === "Rejected") {
+//   steps = [
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="REJECTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: (
+//         <StatusContent status="REJECTED" content={{}} history={history}  complaintNo={complaintNo} />
+//       ),
+//     },
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="SUBMITTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="SUBMITTED" content={{}}  />,
+//     },
+//   ];
+// } else if (status === "Unassigned") {
+//   steps = [
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="ASSIGNED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
+//     },
+//   ];
+// } else if (status === "Reassign") {
+//   steps = [
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="SUBMITTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="REASSIGN-REQUESTED" content={{}} history={history}  />,
+//     },
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="SUBMITTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="ASSIGNED" content={{}} history={history}  role={role} />,
+//     },
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="ASSIGNED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
+//     },
+//   ];
+// } else if (status === "Assign") {
+//   steps = [
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="SUBMITTED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="ASSIGNED" content={{}} history={history}  role={role} />,
+//     },
+//     {
+//       props: {
+//         active: true,
+//       },
+//       labelProps: {
+//         icon: <StatusIcon status="ASSIGNED" />,
+//       },
+//       contentProps: {
+//         style: {
+//           marginTop: "-50px",
+//         },
+//       },
+//       contentChildren: <StatusContent status="UNASSIGNED" content={{}} history={history}  />,
+//     },
+//   ];
+// }

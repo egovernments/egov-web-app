@@ -96,7 +96,7 @@ TextField.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  hintText: PropTypes.string,
+  hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   required: PropTypes.bool,
   hide: PropTypes.bool,
   floatingLabelText: PropTypes.string,

@@ -73,7 +73,6 @@ const displayStatus = (status = "", assignee) => {
   } else {
     statusObj.status = "CS_COMMON_OPEN_UCASE";
   }
-  console.log(status);
   if (status.toLowerCase() == "open") {
     statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
   } else {
@@ -89,7 +88,6 @@ const fetchImages = (actionArray) => {
   actionArray.forEach((action, index) => {
     action.media && imageArray.push(action.media);
   });
-  console.log(imageArray);
   return imageArray[0] ? imageArray[0] : null;
 };
 

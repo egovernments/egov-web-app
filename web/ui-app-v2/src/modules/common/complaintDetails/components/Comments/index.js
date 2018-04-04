@@ -8,6 +8,7 @@ import faceOne from "../../../../../assets/images/faceOne.jpg";
 import faceTwo from "../../../../../assets/images/faceTwo.jpg";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import isEqual from "lodash/isEqual";
 import "./index.css";
 
 // Don't Delete!!
@@ -60,47 +61,49 @@ class Comments extends Component {
     initForm(this.formConfig);
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    let { initForm, selectedComplaint } = this.props;
+    if (!isEqual(nextProps.selectedComplaint, this.props.selectedComplaint)) {
+      initForm(this.formConfig);
+    }
+  };
+
   render() {
     const { form, handleFieldChange, submitForm, selectedComplaint } = this.props;
     const { name: formKey } = this.formConfig;
-    let items =selectedComplaint.actions.filter((action,index)=>{
+    let items = selectedComplaint.actions.filter((action, index) => {
       return action.comments && !action.status;
-    })
+    });
     items.reverse();
-    items=items.map((action, index) => {
-
-        if (action.by.split(":")[1].toLowerCase() === "citizen") {
-          return {
-            leftAvatar: (
-              <div>
-                {" "}
-                <Avatar size={33} src={faceOne} />
-              </div>
-            ),
-            primaryText: (
-              <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
-                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
-              </div>
-            )
-          }
-        } else {
-            return {
-              primaryText: (
-                <div className="complaint-details-comments-section">
-                  {" "}
-                  <Label
-                    containerStyle={{ marginBottom: "8px" }}
-                    labelStyle={{ color: "#464646" }}
-                    label={action.comments}
-                  />
-                  <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
-                </div>
-              ),
-              rightAvatar: <Avatar size={33} src={faceTwo} />
-            }
-        }
-    })
+    items = items.map((action, index) => {
+      if (action.by.split(":")[1].toLowerCase() === "citizen") {
+        return {
+          leftAvatar: (
+            <div>
+              {" "}
+              <Avatar size={33} src={faceOne} />
+            </div>
+          ),
+          primaryText: (
+            <div className="complaint-details-comments-section">
+              <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
+              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
+            </div>
+          ),
+        };
+      } else {
+        return {
+          primaryText: (
+            <div className="complaint-details-comments-section">
+              {" "}
+              <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
+              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
+            </div>
+          ),
+          rightAvatar: <Avatar size={33} src={faceTwo} />,
+        };
+      }
+    });
 
     return (
       <div>

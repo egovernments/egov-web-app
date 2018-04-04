@@ -281,8 +281,8 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
-    const { onUpdateMenuStatus, toggleMenu, className, role, history, logout, ...appBarProps } = this.props;
-    const userInfo = this.props.userInfo || {};
+    let { onUpdateMenuStatus, toggleMenu, className, role, history, logout, fetchLocalizationLabel, userInfo, ...appBarProps } = this.props;
+    userInfo = userInfo || {};
     return (
       <div>
         <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />

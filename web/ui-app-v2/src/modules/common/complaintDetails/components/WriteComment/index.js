@@ -28,29 +28,6 @@ const textFieldStyle = {
   fontSize: "14px",
 };
 
-const itemsOne = [
-  {
-    leftAvatar: <Avatar size={33} src={faceOne} />,
-    primaryText: (
-      <div className="write-comment-align-ComplaintTimeLine rainmaker-list-right-item-overide-style">
-        <MaterialUITextField
-          hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
-          style={textFieldStyle}
-          onChange={() => {
-            console.log("test");
-          }}
-          className="write-complaint-chat-field"
-          fullWidth={true}
-          multiLine={true}
-          underlineShow={false}
-          hintStyle={{ bottom: "8px" }}
-        />
-        <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} />
-      </div>
-    ),
-  },
-];
-
 const WriteComment = ({ form, formKey, onChange, submitForm }) => {
   const fields = form.fields || {};
   return (
@@ -72,12 +49,6 @@ const WriteComment = ({ form, formKey, onChange, submitForm }) => {
     </div>
   );
 };
-
-// class WriteComment extends Component {
-//   render() {
-//     return <List items={itemsOne} />;
-//   }
-// }
 
 export default WriteComment;
 
