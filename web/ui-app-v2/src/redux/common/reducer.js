@@ -15,6 +15,12 @@ const commonReducer = (state = intialState, action) => {
         },
       };
 
+    case commonTypes.SET_CITIES:
+      return {
+        ...state,
+        cities: action.cities,
+      };
+
     default:
       return state;
   }

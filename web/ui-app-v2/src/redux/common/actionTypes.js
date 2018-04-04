@@ -1,1 +1,2 @@
 export const SET_DROPDOWN_DATA = "SET_DROPDOWN_DATA";
+export const SET_CITIES = "SET_CITIES";

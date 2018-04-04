@@ -8,7 +8,7 @@ export const userProfileUpdated = (payload) => {
   window.localStorage.setItem("user-info", JSON.stringify(user));
   return { type: authType.USER_PROFILE_UPDATED, user };
 };
-//
+
 export const userProfileUpdateError = (error) => {
   return { type: authType.USER_PROFILE_UPDATE_ERROR, error };
 };

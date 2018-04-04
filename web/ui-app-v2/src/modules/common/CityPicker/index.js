@@ -1,42 +1,21 @@
 import React, { Component } from "react";
-import { List, Dialog, TextFieldIcon, AutoSuggest } from "../../../components";
+import { connect } from "react-redux";
+import { getCityNameByCode } from "utils/commons";
+import { List, Dialog, TextFieldIcon, AutoSuggest } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
-import { TENANT } from "utils/endPoints";
-import { httpRequest } from "utils/api";
 
-export default class CityPickerDialog extends Component {
-  state = { results: [], searchTerm: "", open: false, cities: [] };
+class CityPickerDialog extends Component {
+  state = { results: [], searchTerm: "", open: false };
 
   componentDidMount = async () => {
     document.getElementById("person-city").addEventListener("focus", function() {
       this.blur();
     });
-    try {
-      const payload = await httpRequest(TENANT.GET.URL, TENANT.GET.ACTION, [
-        { key: "moduleName", value: "tenant" },
-        { key: "masterName", value: "tenants" },
-      ]);
-      const cities = payload.MdmsRes["tenant"]["tenants"].map((item) => {
-        return {
-          key: item.code,
-          text: item.city.name,
-        };
-      });
-      this.setState({ cities });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   componentWillUnmount() {
     document.getElementById("person-city").removeEventListener("focus", null);
   }
-
-  getCityNameByCode = (code) => {
-    const { cities } = this.state;
-    const city = (cities || []).filter((city) => city.key === code);
-    return (city && city.length && city[0].text) || "";
-  };
 
   prepareResultsForDisplay = (results = []) => {
     return results.map((result, index) => {
@@ -76,15 +55,15 @@ export default class CityPickerDialog extends Component {
   };
 
   render() {
-    const { autoSuggestCallback, prepareResultsForDisplay, onClose, getCityNameByCode, onCityFieldClicked, onItemClick } = this;
-    const { cities, results, searchTerm, open } = this.state;
-    const { field } = this.props;
+    const { autoSuggestCallback, prepareResultsForDisplay, onClose, onCityFieldClicked, onItemClick } = this;
+    const { results, searchTerm, open } = this.state;
+    const { field, cities } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
 
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon {...field} value={getCityNameByCode((field || {}).value)} id="person-city" iconPosition="after" Icon={DownArrow} />
+          <TextFieldIcon {...field} value={getCityNameByCode((field || {}).value, cities)} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}
@@ -109,3 +88,10 @@ export default class CityPickerDialog extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const cities = state.common.cities || [];
+  return { cities };
+};
+
+export default connect(mapStateToProps)(CityPickerDialog);
