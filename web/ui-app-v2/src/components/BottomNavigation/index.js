@@ -24,7 +24,7 @@ BottomNavigation.propTypes = {
   selectedIndex: PropTypes.number,
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.node.isRequired,
       icon: PropTypes.node,
       route: PropTypes.string.isRequired,
     })
