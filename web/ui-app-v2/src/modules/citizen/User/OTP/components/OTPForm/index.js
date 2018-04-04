@@ -16,7 +16,7 @@ const OTP = ({ formKey, form, onChange, phoneNumber, submitForm }) => {
           <Label label="CORE_OTP_SENT_MESSAGE" />
           <Label label={phoneNumber} />
           <form>
-            <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} />
+            <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} type={"number"} />
             <div style={{ marginBottom: "24px" }} className="text-right">
               <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
               <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />

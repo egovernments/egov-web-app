@@ -54,6 +54,7 @@ const TextField = ({
   inputStyle = {},
   underlineFocusStyle = {},
   required,
+  type,
 }) => {
   return (
     <MaterialUITextField
@@ -83,6 +84,7 @@ const TextField = ({
       underlineFocusStyle={{ ...underlineFocusBaseStyle, underlineFocusStyle }}
       underlineShow={underlineShow}
       floatingLabelFixed={true}
+      type={type}
     />
   );
 };
