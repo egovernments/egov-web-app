@@ -23,7 +23,7 @@ const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
   return (
     <div className={`${className} upload-placeholder`} style={hide ? { visibility: "hidden" } : {}}>
       <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
-        <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
+        <FilePicker inputProps={{ ...inputProps, multiple: false }} handleimage={onFilePicked}>
           <Icon id="image-upload" name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} color={"#ffffff"} />
         </FilePicker>
       </FloatingActionButton>
@@ -56,7 +56,7 @@ class ImageUpload extends Component {
   render() {
     const { onFilePicked, removeImage } = this;
     const { images } = this.props;
-    const inputProps = { accept: "image/*", multiple: true };
+    const inputProps = { accept: "image/*", maxFiles: 3, multiple: true };
 
     return (
       <div className="upload-photo-overlay">

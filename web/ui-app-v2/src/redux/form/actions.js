@@ -79,8 +79,8 @@ export const submitForm = (formKey) => {
         }
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
-        dispatch(submitFormError(formKey, error));
-        toggleSnackbarAndSetText(false, error, false, true);
+        dispatch(submitFormError(formKey, error.message));
+        toggleSnackbarAndSetText(false, error.message, false, true);
       }
     } else {
       dispatch(displayFormErrors(formKey));
@@ -113,7 +113,7 @@ export const fileUpload = (formKey, fieldKey, fileObject) => {
       const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
       dispatch(fileUploadCompleted(formKey, fieldKey, { ...fileObject, fileStoreId }));
     } catch (error) {
-      dispatch(fileUploadError(formKey, fieldKey, error));
+      dispatch(fileUploadError(formKey, fieldKey, error.message));
     }
   };
 };

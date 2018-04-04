@@ -5,14 +5,17 @@ import { getImageUrlByFile } from "utils/commons";
 class FilePicker extends Component {
   handleFileChange = (event) => {
     let input = event.target;
+    let { maxFiles } = this.props.inputProps;
+
     if (input.files && input.files.length > 0) {
       let files = input.files;
-
-      Object.keys(files).forEach(async (key, index) => {
-        const file = files[key];
-        const imageUri = await getImageUrlByFile(file);
-        this.props.handleimage(file, imageUri);
-      });
+      Object.keys(files)
+        .slice(0, maxFiles)
+        .forEach(async (key, index) => {
+          const file = files[key];
+          const imageUri = await getImageUrlByFile(file);
+          this.props.handleimage(file, imageUri);
+        });
     }
   };
 
@@ -33,6 +36,7 @@ class FilePicker extends Component {
 }
 
 FilePicker.propTypes = {
+  "inputProps.maxFiles": PropTypes.integer,
   "inputProps.accept": PropTypes.string,
   "inputProps.id": PropTypes.string,
   "inputProps.multiple": PropTypes.bool,

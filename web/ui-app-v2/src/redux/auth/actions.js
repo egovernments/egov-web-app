@@ -8,6 +8,21 @@ export const userProfileUpdated = (payload) => {
   window.localStorage.setItem("user-info", JSON.stringify(user));
   return { type: authType.USER_PROFILE_UPDATED, user };
 };
+//
+export const userProfileUpdateError = (error) => {
+  return { type: authType.USER_PROFILE_UPDATE_ERROR, error };
+};
+
+//user search success/failure
+export const searchUserSuccess = (user) => {
+  user = user.user[0];
+  window.localStorage.setItem("user-info", JSON.stringify(user));
+  return { type: authType.USER_SEARCH_SUCCESS, user };
+};
+
+export const searchUserError = (error) => {
+  return { type: authType.USER_SEARCH_ERROR, error };
+};
 
 export const authenticated = (payload) => {
   const userInfo = payload["UserRequest"];
@@ -29,24 +44,26 @@ export const authenticated = (payload) => {
 export const searchUser = () => {
   return async (dispatch, getState) => {
     const state = getState();
-    const userInfo = (state.auth && state.auth.userInfo) || {};
-    const { userName, tenantId } = userInfo;
+    const { userName, tenantId } = state.auth.userInfo;
     try {
       const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
       delete user.responseInfo;
-      window.localStorage.setItem("user-info", JSON.stringify(user.user[0]));
-    } catch (error) {}
+      dispatch(searchUserSuccess(user));
+    } catch (error) {
+      dispatch(searchUserError(error.message));
+    }
   };
 };
 
 export const logout = () => async (dispatch) => {
-  var locale = localStorage.getItem("locale");
-  var localization = localStorage.getItem(`localization_${locale}`);
   try {
-    const payload = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: localStorage.getItem("token") }]);
-    localStorage.clear();
-    localStorage.setItem("locale", locale);
-    localStorage.setItem("localization", localization);
-    dispatch({ type: authType.LOGOUT });
+    await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: localStorage.getItem("token") }]);
   } catch (error) {}
+  // whatever happens the client should clear the user details
+  const locale = localStorage.getItem("locale");
+  const localization = localStorage.getItem(`localization_${locale}`);
+  localStorage.clear();
+  localStorage.setItem("locale", locale);
+  localStorage.setItem("localization", localization);
+  dispatch({ type: authType.LOGOUT });
 };

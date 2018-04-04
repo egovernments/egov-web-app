@@ -2,34 +2,50 @@ import * as actionTypes from "./actionTypes";
 import { COMPLAINT, CATEGORY } from "../../utils/endPoints";
 import { httpRequest } from "../../utils/api";
 
-const complaintFetchPending = (type) => {
+// complaint categories success
+const complaintCategoriesFetchSucess = (payload) => {
   return {
-    type,
-  };
-};
-
-const complaintFetchComplete = (type, payload) => {
-  return {
-    type,
+    type: actionTypes.COMPLAINTS_CATEGORIES_FETCH_SUCCESS,
     payload,
   };
 };
 
-const complaintFetchError = (type, error) => {
+const complaintCategoriesFetchError = (error) => {
   return {
-    type,
+    type: actionTypes.COMPLAINTS_CATEGORIES_FETCH_ERROR,
+    error,
+  };
+};
+
+// complaints actions
+const complaintFetchPending = () => {
+  return {
+    type: actionTypes.COMPLAINTS_FETCH_PENDING,
+  };
+};
+
+const complaintFetchComplete = (payload) => {
+  return {
+    type: actionTypes.COMPLAINTS_FETCH_COMPLETE,
+    payload,
+  };
+};
+
+const complaintFetchError = (error) => {
+  return {
+    type: actionTypes.COMPLAINTS_FETCH_ERROR,
     error,
   };
 };
 
 export const fetchComplaints = (queryObject) => {
   return async (dispatch) => {
-    dispatch(complaintFetchPending(actionTypes.COMPLAINTS_FETCH_PENDING));
+    dispatch(complaintFetchPending());
     try {
       const payload = await httpRequest(COMPLAINT.GET.URL, COMPLAINT.GET.ACTION, queryObject);
-      dispatch(complaintFetchComplete(actionTypes.COMPLAINTS_FETCH_COMPLETE, payload));
+      dispatch(complaintFetchComplete(payload));
     } catch (error) {
-      dispatch(complaintFetchError(actionTypes.COMPLAINTS_FETCH_ERROR, error));
+      dispatch(complaintFetchError(error.message));
     }
   };
 };
@@ -55,9 +71,9 @@ export const fetchComplaintCategories = () => {
   return async (dispatch) => {
     try {
       const payload = await httpRequest(CATEGORY.GET.URL, CATEGORY.GET.ACTION, [], requestBody);
-      dispatch({ type: actionTypes.SET_COMPLAINTS_CATEGORIS, payload });
+      dispatch(complaintCategoriesFetchSucess(payload));
     } catch (error) {
-      console.log(error);
+      dispatch(complaintCategoriesFetchError(error.message));
     }
   };
 };
