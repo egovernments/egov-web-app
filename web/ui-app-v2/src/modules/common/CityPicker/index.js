@@ -49,7 +49,10 @@ export default class CityPickerDialog extends Component {
   };
 
   onCityFieldClicked = () => {
-    this.setState({ open: true });
+    this.setState({
+      open: true,
+      searchTerm: "",
+    });
   };
 
   onClose = () => {
