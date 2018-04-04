@@ -42,7 +42,7 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     if (formKey === "comment") {
-      dispatch(fetchComplaints([{ serviceRequestId: decodeURIComponent(window.location.href.split("/").pop()) }]));
+      dispatch(fetchComplaints([{ key:"serviceRequestId",value: decodeURIComponent(window.location.href.split("/").pop()) }]));
     }
 
     if (redirectionRoute && redirectionRoute.length) {

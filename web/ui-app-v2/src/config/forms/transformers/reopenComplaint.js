@@ -2,20 +2,11 @@ import { prepareFormData } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
   const tenantId = window.localStorage.getItem("tenant-id");
-  const id = decodeURIComponent(window.location.href.split("/")).pop();
+  const id = decodeURIComponent(window.location.href.split("/").pop());
   const { fields: reopenFields } = form;
   let fields;
 
   const complaint = state.complaints.byId[id];
-
-  const status = complaint.actions[complaint.actions.length - 1].status;
-  const statusMapping = {
-    open: "assign",
-    assigned: "resolve",
-    resolved: "reopen",
-    rejected: "reopen",
-  };
-  const complaintStatus = statusMapping[status] || "assign";
 
   fields = state.form["reopenComplaint"].fields;
   fields = {
@@ -26,7 +17,7 @@ const viewModelToBusinessModelTransformer = (form, state) => {
     },
     status: {
       jsonPath: "actionInfo[0].action",
-      value: complaintStatus,
+      value: "reopen",
     },
     description: {
       jsonPath: "services[0].description",

@@ -20,17 +20,6 @@ class ComplaintDetails extends Component {
       complaint: "Overflow of bins",
       applicationNo: "1234566",
       description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
-      images: [
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-      ],
       location: "Sector 32, 1 main, Amritsar",
     },
     source: "",
@@ -78,18 +67,19 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { complaint, timeLine } = this.props.transformedComplaint;
+    let { complaint,timeLine} = this.props.transformedComplaint;
     let { status, details, comments } = this.state;
     return (
       <Screen>
-        {complaint && (
+        {
+          complaint &&
           <div>
             <Details {...complaint} onImageClick={this.onImageClick} />
             <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
             <ComplaintTimeLine status={status.status} timeLine={timeLine} complaintNo={complaint.applicationNo} />
             <Comments comments={comments} hasComments={true} />
           </div>
-        )}
+        }
       </Screen>
     );
   }
@@ -109,10 +99,10 @@ const mapStateToProps = (state, ownProps) => {
       images: selectedComplaint.actions[0].media,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine = selectedComplaint.actions.filter((action)=>action.status && action.status);
     let transformedComplaint = {
       complaint: details,
-      timeLine,
+      timeLine
     };
     return { transformedComplaint };
   } else {

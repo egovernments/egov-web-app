@@ -33,7 +33,7 @@ class AddComplaints extends Component {
   };
 
   navigateToComplaintType = () => {
-    this.props.setRoute("/citizen/complaint-type");
+    this.props.history.push("/citizen/complaint-type");
   };
 
   submitComplaint = () => {
@@ -41,7 +41,7 @@ class AddComplaints extends Component {
   };
 
   locationOnClick = () => {
-    this.props.setRoute(`/citizen/map?${this.props.formKey}`);
+    this.props.history.push(`/citizen/map?${this.props.formKey}`);
   };
 
   render() {

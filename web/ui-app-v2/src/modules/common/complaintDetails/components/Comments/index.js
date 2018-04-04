@@ -63,28 +63,14 @@ class Comments extends Component {
   render() {
     const { form, handleFieldChange, submitForm, selectedComplaint } = this.props;
     const { name: formKey } = this.formConfig;
-    const itemsOne = selectedComplaint.actions.map((action, index) => {
-      return action.comments && action.by && action.by.split(":")[1].toLowerCase() === "citizen"
-        ? {
-            leftAvatar: (
-              <div>
-                {" "}
-                <Avatar size={33} src={faceOne} />
-              </div>
-            ),
-            primaryText: (
-              <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
-                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
-              </div>
-            ),
-          }
-        : {};
-    });
+    let items =selectedComplaint.actions.filter((action,index)=>{
+      return action.comments && !action.status;
+    })
+    items.reverse();
+    items=items.map((action, index) => {
 
-    const itemsTwoNew = selectedComplaint.actions.map((action, index) => {
-      return action.comments && action.by && action.by.split(":")[1].toLowerCase() === "employee"
-        ? {
+        if (action.by.split(":")[1].toLowerCase() === "citizen") {
+          return {
             leftAvatar: (
               <div>
                 {" "}
@@ -96,11 +82,26 @@ class Comments extends Component {
                 <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
                 <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
               </div>
-            ),
+            )
           }
-        : {};
-    });
-    const itemsTwo = [{}];
+        } else {
+            return {
+              primaryText: (
+                <div className="complaint-details-comments-section">
+                  {" "}
+                  <Label
+                    containerStyle={{ marginBottom: "8px" }}
+                    labelStyle={{ color: "#464646" }}
+                    label={action.comments}
+                  />
+                  <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
+                </div>
+              ),
+              rightAvatar: <Avatar size={33} src={faceTwo} />
+            }
+        }
+    })
+
     return (
       <div>
         {this.props.hasComments && (
@@ -114,8 +115,8 @@ class Comments extends Component {
                   <Icon action="communication" name="forum" color="#969696" />{" "}
                   <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 </div>
-                <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={itemsOne} />
-                <List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwo} />
+                <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
+                {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}
                 <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
               </div>
             }
