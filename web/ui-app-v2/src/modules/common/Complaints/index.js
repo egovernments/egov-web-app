@@ -203,7 +203,8 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
               </div>
               {role === "citizen" && (
                 <div className="complaint-status-cont">
-                  <Label label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
+                  <Label label={"CS_HOME_STATUS_PREFIX"} />
+                  <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
                 </div>
               )}
               {bottomInfoTemplate(complaint, role)}
