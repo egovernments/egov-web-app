@@ -83,7 +83,7 @@ const getStatusAndChangeColor = (status, assignee) => {
     message: "",
   };
   switch (status) {
-    case "OPEN":
+    case "CS_COMMON_OPEN_UCASE":
       statusObj.style = {
         color: "#f89a3f",
       };
@@ -108,7 +108,7 @@ const getStatusAndChangeColor = (status, assignee) => {
         </div>
       );
       break;
-    case "REJECTED":
+    case "CS_COMMON_REJECTED_UCASE":
       statusObj.style = {
         color: "#5385a6",
       };

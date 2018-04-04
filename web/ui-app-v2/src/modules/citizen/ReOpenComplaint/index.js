@@ -62,7 +62,6 @@ class ReOpenComplaint extends Component {
     const { valueSelected } = this.state;
     const { fields, submit } = form;
     const submitprops = submit;
-    console.log(form.fields);
     let textarea;
     if (fields) {
       textarea = fields.textarea;

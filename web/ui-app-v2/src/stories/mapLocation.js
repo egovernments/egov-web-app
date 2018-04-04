@@ -20,7 +20,6 @@ if (showMyAddress === true && myLocation) {
 
 const setPickedLocation = (lat, lng, index) => {
   if (_.isUndefined(index)) index = 0;
-  console.log(lat, lng, index);
 };
 
 const styles = {

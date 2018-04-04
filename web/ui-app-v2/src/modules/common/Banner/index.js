@@ -10,8 +10,10 @@ const Banner = ({ children, setRoute, previousRoute = "", className = "" }) => {
     <div>
       <div className={`${className} user-screens-wrapper`}>
         <div className="row">
-          {previousRoute.length && (
+          {previousRoute.length ? (
             <Icon onClick={() => setRoute(previousRoute)} className="banner-back-button" action="navigation" name="arrow-back" />
+          ) : (
+            ""
           )}
           <div className="banner-image" />
           <div className="banner-overlay" />
