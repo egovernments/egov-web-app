@@ -32,6 +32,13 @@ class Details extends Component {
     icon.style = {
       display: "block",
     };
+    const statusKey = "CS_COMMON_" + status.toUpperCase();
+    const titleKey =
+      "COMMON_" +
+      complaint
+        .match(/\w+/g)
+        .join("_")
+        .toUpperCase();
     return (
       <div>
         <Card
@@ -42,14 +49,14 @@ class Details extends Component {
                 <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
               <div key={10} className="complaint-detail-full-width">
-                <Label labelClassName="dark-heading rainmaker-big-font" label={complaint} />
+                <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMMON_COMPLAINT_NO" />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label={applicationNo} />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
-                  <Label className="col-xs-6 status-result-color" labelStyle={{ color: "inherit" }} label={status} />
+                  <Label className="col-xs-6 status-result-color" labelStyle={{ color: "inherit" }} label={statusKey} />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />

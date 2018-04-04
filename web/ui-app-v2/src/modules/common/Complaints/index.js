@@ -143,6 +143,12 @@ const getStatusAndChangeColor = (status, assignee) => {
 
 const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role }) => {
   return complaints.map((complaint, complaintIndex) => {
+    const complaintHeader =
+      "COMMON_" +
+      complaint.header
+        .match(/\w+/g)
+        .join("_")
+        .toUpperCase();
     return (
       <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
         <Card
@@ -158,7 +164,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                   fontSize="16px"
                   dark={true}
                   bold={true}
-                  label={complaint.header}
+                  label={complaintHeader}
                   containerStyle={{ width: "80%" }}
                   labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
                 />
