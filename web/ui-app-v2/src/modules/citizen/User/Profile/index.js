@@ -18,7 +18,7 @@ class Profile extends Component {
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
-    const { name, mobileNumber, emailId, permanentCity, tenantId } = this.props.userInfo;
+    const { name, emailId, permanentCity, tenantId } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
       ...formConfig,
@@ -61,7 +61,6 @@ class Profile extends Component {
     const { openUploadSlide } = this.state;
     const { formConfig, setProfilePic, onClickAddPic } = this;
     const { name: formKey } = formConfig;
-    const { submitting } = form;
 
     return (
       <Screen>

@@ -1,4 +1,4 @@
-import { prepareFormData, getUserInfo } from "utils/commons";
+import { getUserInfo } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
   const { fields } = form;
