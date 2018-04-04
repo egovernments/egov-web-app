@@ -29,10 +29,13 @@ export const authenticated = (payload) => {
 export const searchUser = () => {
   return async (dispatch, getState) => {
     const state = getState();
-    const { userName, tenantId } = state.auth.userInfo;
-    const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
-    delete user.responseInfo;
-    window.localStorage.setItem("user-info", JSON.stringify(user.user[0]));
+    const userInfo = (state.auth && state.auth.userInfo) || {};
+    const { userName, tenantId } = userInfo;
+    try {
+      const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
+      delete user.responseInfo;
+      window.localStorage.setItem("user-info", JSON.stringify(user.user[0]));
+    } catch (error) {}
   };
 };
 

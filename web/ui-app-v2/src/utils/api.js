@@ -61,7 +61,8 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
   } catch (error) {
     apiError = error;
   }
-  throw new Error(apiError);
+  // unhandled error
+  // throw new Error(apiError);
 };
 
 export const uploadFile = async (endPoint, module, file) => {
