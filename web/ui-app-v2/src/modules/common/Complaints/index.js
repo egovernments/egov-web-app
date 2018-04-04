@@ -144,7 +144,7 @@ const getStatusAndChangeColor = (status, assignee) => {
 const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role }) => {
   return complaints.map((complaint, complaintIndex) => {
     const complaintHeader =
-      "COMMON_" +
+      "SERVICEDEFS.SERVICENAME." +
       complaint.header
         .match(/\w+/g)
         .join("_")

@@ -39,7 +39,7 @@ class Details extends Component {
       statusKey = `CS_COMMON_${status.toUpperCase()}`;
     }
     const titleKey =
-      "COMMON_" +
+      "SERVICEDEFS.SERVICENAME." +
       complaint
         .match(/\w+/g)
         .join("_")
