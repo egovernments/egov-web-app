@@ -66,15 +66,15 @@ class CityPickerDialog extends Component {
           <TextFieldIcon {...field} value={getCityNameByCode((field || {}).value, cities)} id="person-city" iconPosition="after" Icon={DownArrow} />
         </div>
         <Dialog
+          className="citipicker-dialog"
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}
           handleClose={onClose}
-          bodyStyle={{ padding: "0px" }}
+          bodyStyle={{ padding: "0px", overflowY: "none" }}
           title="Choose City"
           modal={false}
           open={open}
           autoScrollBodyContent={true}
           onRequestClose={onClose}
-          autoScrollBodyContent={true}
         >
           <AutoSuggest
             id="city-picker-search"

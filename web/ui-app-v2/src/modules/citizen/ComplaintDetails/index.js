@@ -67,26 +67,30 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { complaint,timeLine} = this.props.transformedComplaint;
+    let { complaint, timeLine } = this.props.transformedComplaint;
     let { status, details, comments } = this.state;
     return (
       <Screen>
-        {
-          complaint &&
+        {complaint && (
           <div>
             <Details {...complaint} onImageClick={this.onImageClick} />
             <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
-            <ComplaintTimeLine
-              status={complaint.status}
-              timeLine={timeLine}
-            />
+            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} />
             <Comments comments={comments} hasComments={true} />
           </div>
-        }
+        )}
       </Screen>
     );
   }
 }
+
+const fetchImages = (actionArray) => {
+  let imageArray = [];
+  actionArray.forEach((action, index) => {
+    action.media && imageArray.push(action.media);
+  });
+  return imageArray[0] ? imageArray[0] : null;
+};
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
@@ -99,14 +103,21 @@ const mapStateToProps = (state, ownProps) => {
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
-      images: selectedComplaint.actions[0].media,
+      images: fetchImages(selectedComplaint.actions).map((imageSource, index) => {
+        var imageExtension = imageSource
+          .split("?")[0]
+          .split(".")
+          .pop();
+        return imageExtension === "png" || imageExtension === "jpg" ? imageSource : "";
+      }),
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action)=>action.status && action.status);
+    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
     let transformedComplaint = {
       complaint: details,
-      timeLine
+      timeLine,
     };
+    console.log(transformedComplaint);
     return { transformedComplaint };
   } else {
     return { transformedComplaint: {} };

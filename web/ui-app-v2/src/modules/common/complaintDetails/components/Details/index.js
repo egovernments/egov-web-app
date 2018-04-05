@@ -73,16 +73,18 @@ class Details extends Component {
                       images &&
                       images.map((image, index) => {
                         return (
-                          <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
-                            <Image
-                              style={{
-                                width: "97px",
-                                height: "93px",
-                              }}
-                              source={image}
-                              onClick={() => this.props.onImageClick(image)}
-                            />
-                          </div>
+                          image && (
+                            <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                              <Image
+                                style={{
+                                  width: "97px",
+                                  height: "93px",
+                                }}
+                                source={image}
+                                onClick={() => this.props.onImageClick(image)}
+                              />
+                            </div>
+                          )
                         );
                       })
                     ) : (
