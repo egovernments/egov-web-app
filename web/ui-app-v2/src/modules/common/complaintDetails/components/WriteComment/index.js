@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Icon, TextField } from "../../../../../components";
+import { List, Icon, TextArea } from "../../../../../components";
 import MaterialUITextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
@@ -15,7 +15,7 @@ const iconStyle = {
   marginBottom: "5px",
   position: "absolute",
   right: 16,
-  top: 8,
+  top: 12,
 };
 
 const textFieldStyle = {
@@ -23,7 +23,6 @@ const textFieldStyle = {
   display: "flex",
   alignItems: "center",
   border: "none",
-  height: "38px",
   border: "solid 1px #e6e6e6",
   fontSize: "14px",
 };
@@ -31,9 +30,9 @@ const textFieldStyle = {
 const WriteComment = ({ form, formKey, onChange, submitForm }) => {
   const fields = form.fields || {};
   return (
-    <div style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative" }}>
+    <div style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
       <Avatar size={33} src={faceOne} style={{ marginRight: "5px" }} />
-      <TextField
+      <TextArea
         {...fields.comment}
         hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
         style={textFieldStyle}
@@ -42,8 +41,9 @@ const WriteComment = ({ form, formKey, onChange, submitForm }) => {
         fullWidth={true}
         multiLine={true}
         underlineShow={false}
-        hintStyle={{ left: 5, bottom: "initial", fontSize: 14 }}
-        inputStyle={{ fontSize: 14, paddingLeft: 5, paddingBottom: 15 }}
+        hintStyle={{ left: 5, bottom: "initial", fontSize: 14, top: 12 }}
+        inputStyle={{ fontSize: 14, paddingLeft: 5, paddingRight: 40 }}
+        rowsMax={3}
       />
       <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm(formKey)} />
     </div>

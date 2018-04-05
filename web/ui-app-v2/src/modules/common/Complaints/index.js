@@ -189,15 +189,17 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
               {complaintLocation && (
                 <div className="complaint-address-cont">
                   <Icon action="maps" name="place" style={{ height: 14, width: 14, marginRight: 5 }} color={"#767676"} />
-                  <span className="complaint-address">{complaint.address}</span>
+                  <Label fontSize="12px" label={complaint.address} className="complaint-address" />
                 </div>
               )}
               <div className="complaint-image-cont">
                 {complaint.images.map((image, index) => {
                   return (
-                    <div className="complaint-image-wrapper" key={index}>
-                      <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
-                    </div>
+                    image && (
+                      <div className="complaint-image-wrapper" key={index}>
+                        <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
+                      </div>
+                    )
                   );
                 })}
               </div>

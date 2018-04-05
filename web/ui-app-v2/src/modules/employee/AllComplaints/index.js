@@ -8,6 +8,9 @@ import Garbage_3 from "../../../assets/images/Garbage_3.jpg";
 import Potholes_1 from "../../../assets/images/Potholes_1.png";
 import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
+import { fetchComplaints } from "redux/complaints/actions";
+import { transformById, getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { connect } from "react-redux";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -192,58 +195,42 @@ class AllComplaints extends Component {
     ];
   }
 
-  state = {
-    complaints: [],
-    role: "ao",
-  };
-
   componentDidMount() {
-    let { allComplaints, employeeComplaints } = this;
-    const filteredComplaints =
-      this.state.role === "ao"
-        ? allComplaints.filter((complaint) => {
-            return complaint.complaintStatus === "UNASSIGNED";
-          })
-        : employeeComplaints;
-    this.setState({
-      complaints: filteredComplaints,
-    });
+    let { fetchComplaints } = this.props;
+    fetchComplaints([]);
   }
 
+  //Don't Delete
   handleTabChange = (label) => {
-    let { allComplaints } = this;
-    const filteredComplaints = allComplaints.filter((complaint) => {
-      return complaint.complaintStatus === label.props.label.split(" ")[0];
-    });
-
-    this.setState({ complaints: filteredComplaints });
+    console.log(label);
   };
 
   render() {
     const tabStyle = {
       letterSpacing: "0.6px",
     };
-    return this.state.role === "ao" ? (
+    const { assignedComplaints, unassignedComplaints, userInfo, role } = this.props;
+    return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
         onActive={this.handleTabChange}
         tabs={[
           {
-            label: <Label color={"#ffffff"} bold={true} label="UNASSIGNED (10)" labelStyle={tabStyle} />,
+            label: <Label color={"#ffffff"} bold={true} label={`UNASSIGNED (${unassignedComplaints.length})`} labelStyle={tabStyle} />,
             children: (
               <Screen>
                 <div className="tab1-content">
-                  <Complaints complaints={this.state.complaints} complaintLocation={true} role={this.state.role} />
+                  <Complaints complaints={unassignedComplaints} complaintLocation={true} role={role} />
                 </div>
               </Screen>
             ),
           },
           {
-            label: <Label color={"#ffffff"} bold={true} label="ASSIGNED (12)" labelStyle={tabStyle} />,
+            label: <Label color={"#ffffff"} bold={true} label={`ASSIGNED (${assignedComplaints.length})`} labelStyle={tabStyle} />,
             children: (
               <Screen>
                 <div className="tab2-content">
-                  <Complaints complaints={this.state.complaints} complaintLocation={true} role={this.state.role} />
+                  <Complaints complaints={assignedComplaints} complaintLocation={true} role={role} />
                 </div>
               </Screen>
             ),
@@ -252,10 +239,87 @@ class AllComplaints extends Component {
       />
     ) : (
       <Screen>
-        <Complaints complaints={this.state.complaints} role={this.state.role} complaintLocation={true} />
+        <Complaints complaints={assignedComplaints} role={role} complaintLocation={true} />
       </Screen>
     );
   }
 }
 
-export default AllComplaints;
+//better implementation ==> to be done later
+const fetchImages = (actionArray) => {
+  let imageArray = [];
+  actionArray.forEach((action, index) => {
+    action.media && imageArray.push(action.media);
+  });
+  return imageArray[0] ? imageArray[0] : [];
+};
+
+const getLatestStatus = (status) => {
+  let transformedStatus = "";
+  switch (status.toLowerCase()) {
+    case "open" || "new":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "closed":
+      transformedStatus = "CLOSED";
+      break;
+    case "assigned":
+      transformedStatus = "ASSIGNED";
+      break;
+    default:
+      transformedStatus = "CLOSED";
+      break;
+  }
+  return transformedStatus;
+};
+
+const isAssigningOfficer = (roles) => {
+  const roleCodes = roles.map((role, index) => {
+    return role.code;
+  });
+  return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
+};
+
+const mapStateToProps = (state) => {
+  const { complaints } = state;
+  const { userInfo } = state.auth;
+  const role = isAssigningOfficer(userInfo.UserRequest.roles) ? "ao" : "employee";
+  const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
+    return {
+      header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
+      date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
+      status: complaintDetail.actions[0].status,
+      complaintNo: complaintDetail.serviceRequestId,
+      images: fetchImages(complaintDetail.actions).map((imageSource, index) => {
+        return imageSource &&
+          imageSource
+            .split("?")[0]
+            .split(".")
+            .pop() === ("png" || "jpg" || "jpeg")
+          ? { source: imageSource }
+          : "";
+      }),
+      complaintStatus: complaintDetail.actions[0].status && getLatestStatus(complaintDetail.actions[0].status),
+      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+    };
+  });
+  const assignedComplaints = isAssigningOfficer(userInfo.UserRequest.roles)
+    ? transformedComplaints.filter((complaint) => {
+        return complaint.complaintStatus === "ASSIGNED";
+      })
+    : transformedComplaints;
+  const unassignedComplaints = isAssigningOfficer(userInfo.UserRequest.roles)
+    ? transformedComplaints.filter((complaint) => {
+        return complaint.complaintStatus === "UNASSIGNED";
+      })
+    : transformedComplaints;
+  return { userInfo, assignedComplaints, unassignedComplaints, role };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllComplaints);
