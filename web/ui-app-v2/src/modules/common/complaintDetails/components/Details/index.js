@@ -33,11 +33,14 @@ class Details extends Component {
       display: "block",
     };
     let statusKey = "";
-    if (status.toLowerCase() == "open") {
-      statusKey = `CS_COMMON_SUBMITTED`;
-    } else {
-      statusKey = `CS_COMMON_${status.toUpperCase()}`;
+    if (status) {
+      if (status.toLowerCase() == "open") {
+        statusKey = `CS_COMMON_SUBMITTED`;
+      } else {
+        statusKey = `CS_COMMON_${status.toUpperCase()}`;
+      }
     }
+
     const titleKey =
       "SERVICEDEFS.SERVICENAME." +
       complaint
