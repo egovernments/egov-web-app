@@ -1,31 +1,35 @@
 import React, { Component } from "react";
 import Banner from "../../../common/Banner";
-import LanguageSelectionForm from "../../../common/User/components/LanguageSelectionForm";
+import { connect } from "react-redux";
+import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
+import { setRoute, fetchLocalizationLabel } from "redux/app/actions";
 
 class LanguageSelection extends Component {
   state = {
+    value: localStorage.getItem("locale"),
     items: [
       {
         label: "ENGLISH",
-        value: "English",
+        value: "en_IN",
       },
       {
         label: "हिंदी",
-        value: "Hindi",
+        value: "hi_IN",
       },
       {
         label: "ਪੰਜਾਬੀ",
-        value: "Marati",
+        value: "pn_IN",
       },
     ],
   };
 
   onClick = (value) => {
     this.setState({ value });
+    this.props.fetchLocalizationLabel(value);
   };
 
   onLanguageSelect = () => {
-    this.props.history.push("/employee/user/login");
+    this.props.setRoute("/employee/user/login");
   };
 
   render() {
@@ -40,4 +44,11 @@ class LanguageSelection extends Component {
   }
 }
 
-export default LanguageSelection;
+const dispatchToProps = (dispatch) => {
+  return {
+    fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
+    setRoute: (route) => dispatch(setRoute(route)),
+  };
+};
+
+export default connect(null, dispatchToProps)(LanguageSelection);
