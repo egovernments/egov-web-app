@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { List, Icon, AutoSuggest } from "../../../components";
 import { handleFieldChange } from "redux/form/actions";
 import Label from "utils/translationNode";
+import { getComplaintTypeData } from "./complaintTypeDataMaker";
 
 const customIconStyles = {
   height: 36,
@@ -19,27 +20,13 @@ class ComplaintType extends Component {
   }
   state = { results: [], searchTerm: "" };
 
-  dataSource = [
-    {
-      id: 0,
-      text: "Garbage",
-      icon: { action: "custom", name: "accumulation-of-litter" },
-      nestedItems: [],
-    },
-  ];
-
-  generateDataSource = (dataSource) => {
+  generateDataSource = () => {
     const { categories } = this.props;
-    Object.values(categories).map((category, index) => {
-      dataSource[0].nestedItems.push({
-        id: category.serviceCode,
-        text: category.serviceName,
-        icon: { action: "custom", name: "accumulation-of-litter" },
-      });
-    });
-    return dataSource.reduce((transformedDataSource, source) => {
+    const categoryList = getComplaintTypeData(categories);
+    var transformedDataSource = categoryList.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
+    return { dataSource: categoryList, transformedDataSource: transformedDataSource };
   };
 
   onComplaintTypeChosen = (item, index) => {
@@ -52,7 +39,6 @@ class ComplaintType extends Component {
   };
 
   prepareResultsForDisplay = (results = []) => {
-    console.log(results);
     return results.map((result) => {
       const listItem = {};
       const groupName =
@@ -112,11 +98,10 @@ class ComplaintType extends Component {
   };
 
   render() {
-    const { autoSuggestCallback, dataSource, prepareResultsForDisplay, generateDataSource } = this;
+    const { autoSuggestCallback, prepareResultsForDisplay, generateDataSource } = this;
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
-    const transformedDataSource = generateDataSource(dataSource);
-
+    const { transformedDataSource, dataSource } = generateDataSource();
     return (
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest
