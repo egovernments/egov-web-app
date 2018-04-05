@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import Label from "utils/translationNode";
 import garbageOne from "assets/images/Garbage_3.jpg";
 import "./index.css";
-import {getDateFromEpoch} from "utils/commons";
+import { getDateFromEpoch } from "utils/commons";
 import filter from "lodash/filter";
 
 const timelineButtonLabelStyle = {
@@ -55,9 +55,7 @@ const callIconStyle = {
   borderRadius: "50%",
 };
 
-
-
-const StatusIcon = ({status}) => {
+const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
       return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />;
@@ -75,14 +73,28 @@ const StatusIcon = ({status}) => {
 };
 
 //prventing number of times showing button for duplicate status
-var openStatusCount=0;
-var openStatusCountForStatement=0;
-var rejectStatusCount=0;
-var resolveStatusCount=0;
-var assigneeStatusCount=0;
+var openStatusCount = 0;
+var openStatusCountForStatement = 0;
+var rejectStatusCount = 0;
+var resolveStatusCount = 0;
+var assigneeStatusCount = 0;
 
-const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
-  var { when:date,media,status,comments,name,designation,department,role,resolveImage,resolveFeedback,reason,businessKey:complaintNo} = stepData;
+const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
+  var {
+    when: date,
+    media,
+    status,
+    comments,
+    name,
+    designation,
+    department,
+    role,
+    resolveImage,
+    resolveFeedback,
+    reason,
+    businessKey: complaintNo,
+  } = stepData;
+  let employeephonenumber = 8940028343;
   switch (status) {
     case "open":
       openStatusCount++;
@@ -90,22 +102,28 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" label={`${openStatusCountForStatement?"Complaint Re-opened":"CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`} />
-          {currentStatus === "open" && openStatusCount===1 && (
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
-              <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-              CALL
-            </div>
-          )}
+          <Label
+            labelClassName="dark-color"
+            label={`${openStatusCountForStatement ? "Complaint Re-opened" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`}
+          />
+          {currentStatus === "open" &&
+            openStatusCount === 1 && (
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  console.log("clicked");
+                }}
+              >
+                <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+                  <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+                  <span className="timeline-call-text">CALL</span>
+                </a>
+              </div>
+            )}
         </div>
       );
     case "assigned":
-    assigneeStatusCount++;
+      assigneeStatusCount++;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
@@ -116,17 +134,20 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
             containerStyle={{ width: "192px" }}
             label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
           />
-          {(role === "AO"||currentStatus==="assigned") && assigneeStatusCount===1 && (
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                console.log("clicked");
-              }}
-            >
-              <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-              CALL
-            </div>
-          )}
+          {(role === "AO" || currentStatus === "assigned") &&
+            assigneeStatusCount === 1 && (
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  console.log("clicked");
+                }}
+              >
+                <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+                  <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+                  <span className="timeline-call-text">CALL</span>
+                </a>
+              </div>
+            )}
         </div>
       );
 
@@ -150,19 +171,22 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={department || "Amritsar Municipal Corporation"} />
-          {currentStatus==="Rejected" && rejectStatusCount===1 && <div
-            className="complaint-details-timline-button"
-            onClick={(e) => {
-              changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
-            }}
-          >
-            <Label
-              label="CS_COMPLAINT_DETAILS_REOPEN"
-              fontSize="12px"
-              labelStyle={timelineButtonLabelStyle}
-              containerStyle={timelineButtonContainerStyle}
-            />
-          </div>}
+          {currentStatus === "Rejected" &&
+            rejectStatusCount === 1 && (
+              <div
+                className="complaint-details-timline-button"
+                onClick={(e) => {
+                  changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                }}
+              >
+                <Label
+                  label="CS_COMPLAINT_DETAILS_REOPEN"
+                  fontSize="12px"
+                  labelStyle={timelineButtonLabelStyle}
+                  containerStyle={timelineButtonContainerStyle}
+                />
+              </div>
+            )}
         </div>
       );
     // case "UNASSIGNED":
@@ -196,57 +220,56 @@ const StatusContent = ({ stepData,currentStatus,changeRoute }) => {
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />
           {media &&
-          media.map((image, index) => {
-            return (
-              <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
-                <Image
-                  style={{
-                    width: "97px",
-                    height: "93px",
+            media.map((image, index) => {
+              return (
+                <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                  <Image
+                    style={{
+                      width: "97px",
+                      height: "93px",
+                    }}
+                    source={image}
+                  />
+                </div>
+              );
+            })}
+          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
+          {currentStatus === "Resolved" &&
+            resolveStatusCount === 1 && (
+              <div className="rainmaker-displayInline">
+                <div
+                  className="complaint-details-timline-button"
+                  onClick={(e) => {
+                    changeRoute.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
                   }}
-                  source={image}
-                />
+                >
+                  <Label
+                    label="CS_COMPLAINT_DETAILS_RATE"
+                    fontSize="12px"
+                    labelStyle={timelineButtonLabelStyle}
+                    containerStyle={timelineButtonContainerStyle}
+                  />
+                </div>
+                <div
+                  className="complaint-details-timline-button"
+                  onClick={(e) => {
+                    changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                  }}
+                >
+                  <Label
+                    label="CS_COMPLAINT_DETAILS_REOPEN"
+                    fontSize="12px"
+                    labelStyle={timelineButtonLabelStyle}
+                    containerStyle={timelineButtonContainerStyle}
+                  />
+                </div>
               </div>
-            );
-          })}
-          <Label
-            labelClassName="rainmaker-small-font"
-            containerStyle={{ width: "192px" }}
-            label={comments}
-          />
-          {currentStatus==="Resolved" && resolveStatusCount===1 && <div className="rainmaker-displayInline">
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                changeRoute.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
-              }}
-            >
-              <Label
-                label="CS_COMPLAINT_DETAILS_RATE"
-                fontSize="12px"
-                labelStyle={timelineButtonLabelStyle}
-                containerStyle={timelineButtonContainerStyle}
-              />
-            </div>
-            <div
-              className="complaint-details-timline-button"
-              onClick={(e) => {
-                changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
-              }}
-            >
-              <Label
-                label="CS_COMPLAINT_DETAILS_REOPEN"
-                fontSize="12px"
-                labelStyle={timelineButtonLabelStyle}
-                containerStyle={timelineButtonContainerStyle}
-              />
-            </div>
-          </div>}
+            )}
         </div>
       );
 
-      // default:
-      //   return <div></div>
+    // default:
+    //   return <div></div>
   }
 };
 
@@ -256,16 +279,16 @@ const DueDate = ({ status, role, duedateText }) => {
 
 class ComplaintTimeLine extends Component {
   render() {
-    openStatusCount=0;
-    rejectStatusCount=0;
-    resolveStatusCount=0;
-    assigneeStatusCount=0;
-    let { status, history, role,timeLine } = this.props;
-    openStatusCountForStatement=filter(timeLine,{status:"open"}).length;
+    openStatusCount = 0;
+    rejectStatusCount = 0;
+    resolveStatusCount = 0;
+    assigneeStatusCount = 0;
+    let { status, history, role, timeLine } = this.props;
+    openStatusCountForStatement = filter(timeLine, { status: "open" }).length;
 
     // console.log(timeLine);
 
-    let steps = timeLine.map((step,key)=>{
+    let steps = timeLine.map((step, key) => {
       return {
         props: {
           active: true,

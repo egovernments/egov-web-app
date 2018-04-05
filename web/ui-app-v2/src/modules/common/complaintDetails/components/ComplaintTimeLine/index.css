@@ -57,7 +57,10 @@
   position: absolute;
   right: 22px;
 }
-
+.timeline-call-text {
+  color: #ffffff !important;
+  font-size: 12px;
+}
 /* @media screen and (min-width: 360px) and (max-width: 375px) {
   .stepLabelAlignment {
       margin-left: -80px;
