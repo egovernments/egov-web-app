@@ -101,7 +101,7 @@ class PrivateRoute extends Component {
     return { style, iconElementLeft, onLeftIconButtonClick };
   };
 
-  prepareUserInfo = (userInfo, cities = []) => {
+  prepareUserInfo = (userInfo = {}, cities = []) => {
     const { photo, name, emailId, permanentCity, tenantId } = userInfo;
     return { photo, name, emailId, location: getCityNameByCode(permanentCity, cities) || getCityNameByCode(tenantId, cities) };
   };
@@ -132,7 +132,7 @@ class PrivateRoute extends Component {
           className={hideAppBar ? "hide" : ""}
           title={rest.title}
           history={history}
-          userInfo={prepareUserInfo(userInfo, cities)}
+          userInfo={(userInfo && prepareUserInfo(userInfo, cities)) || {}}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
           role={role}

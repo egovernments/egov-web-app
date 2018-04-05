@@ -44,7 +44,7 @@ export const authenticated = (payload) => {
 export const searchUser = () => {
   return async (dispatch, getState) => {
     const state = getState();
-    const { userName, tenantId } = state.auth.userInfo;
+    const { userName, tenantId } = state.auth.userInfo || {};
     try {
       const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
       delete user.responseInfo;
