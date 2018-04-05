@@ -141,7 +141,7 @@ class PrivateRoute extends Component {
         <Route
           {...rest}
           render={(props) =>
-            authenticated ? <Component {...props} /> : authenticating ? <LoadingIndicator loading={true} /> : <Redirect to="/citizen/user/register" />
+            authenticated ? <Component {...props} /> : authenticating ? <LoadingIndicator loading={true} /> : <Redirect to="/citizen/user/login" />
           }
         />
         <BottomNavigation className={hideBottomNavigation ? "hide" : ""} selectedIndex={tabIndex} options={options} handleChange={_onTabChange} />
