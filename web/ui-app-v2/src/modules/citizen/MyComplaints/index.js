@@ -17,7 +17,7 @@ class MyComplaints extends Component {
   };
 
   render() {
-    let { setRoute, transformedComplaints } = this.props;
+    let { setRoute, transformedComplaints, history } = this.props;
     return (
       <div className="complaints-main-container clearfix">
         {this.props.complaints.loading ? (
@@ -48,7 +48,7 @@ class MyComplaints extends Component {
           <FloatingActionButton
             id="mycomplaints-add"
             onClick={(e) => {
-              setRoute("/citizen/add-complaint");
+              history.push("/citizen/add-complaint");
             }}
             className="floating-button"
           >
@@ -59,12 +59,6 @@ class MyComplaints extends Component {
     );
   }
 }
-
-// const displayDate = (rawData) => {
-//   let split = rawData.split("/");
-//   split.splice(split.length - 1, 1);
-//   return split.join("-");
-// };
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};

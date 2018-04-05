@@ -21,8 +21,10 @@ class AddComplaints extends Component {
   }
 
   componentDidMount() {
+    // api call
     this.props.initForm(this.formConfig);
   }
+  // formConfig Configiat
 
   handleLandmarkChange = (e, value) => {
     this.props.handleFieldChange(this.props.formKey, "landmark", value);

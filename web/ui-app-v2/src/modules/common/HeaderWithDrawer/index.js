@@ -97,7 +97,7 @@ class HeaderWithDrawer extends Component {
     ],
     logoutPopupOpen: false,
     value: localStorage.getItem("locale"),
-    role: "employee",
+    role: "citizen",
   };
 
   citizenItemsPartOne = {
@@ -125,7 +125,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
-        route: "/citizen/user/language-selection",
+        route: "/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",
