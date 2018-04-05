@@ -85,7 +85,8 @@ export default class ComplaintCategory extends Component {
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const transformedDataSource = generateDataSource(dataSource);
-
+    console.log("Complaint category is .......");
+    console.log(transformedDataSource);
     return (
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest

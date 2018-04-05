@@ -8,7 +8,7 @@ const Updates = ({ updates, history }) => {
     const { title, date, status } = update;
     let transformedstatus = "";
     const titleKey =
-      "COMMON_" +
+      "SERVICEDEFS.SERVICENAME." +
       title
         .match(/\w+/g)
         .join("_")
