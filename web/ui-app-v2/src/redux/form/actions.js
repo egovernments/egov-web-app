@@ -75,6 +75,8 @@ export const submitForm = (formKey) => {
         // this will eventually moved out to the auth action
         if (formData.hasOwnProperty("login")) {
           formResponse = await loginRequest(formData.login.username, formData.login.password);
+        }else if (formData.hasOwnProperty("employee")) {
+          formResponse = await loginRequest(formData.employee.username, formData.employee.password);
         } else {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }

@@ -1,54 +1,48 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
-import LoginForm from "../../../common/User/components/LoginForm";
+import LoginForm from "./components/LoginForm";
+import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
 class Login extends Component {
-  state = {
-    phoneNumber: "",
-    username: "",
-    passwd: "",
-  };
+  constructor(props) {
+    super(props);
+    this.formConfig = require("config/forms/employeeLogin").default;
+  }
 
-  login = () => {
-    this.props.history.push("/employee/all-complaints");
-  };
+  componentDidMount() {
+    this.props.initForm(this.formConfig);
+  }
 
-  onPhoneNumberChanged = (e, value) => {
-    this.setState({ phoneNumber: value });
-  };
-
-  onUnameChange = (e, value) => {
-    this.setState({ username: value });
-  };
-
-  onPsswdChange = (e, value) => {
-    this.setState({ passwd: value });
-  };
-
-  onForgotPasswdCLick = () => {
+  handleForgotPasswdCLick = () => {
     this.props.history.push("/employee/user/forgot-password");
   };
 
   render() {
-    const { login, onPhoneNumberChanged, onUnameChange, onPsswdChange, onForgotPasswdCLick } = this;
-    const { phoneNumber, username, passwd } = this.state;
+    const { form, handleFieldChange, submitForm } = this.props;
+    const { name: formKey } = this.formConfig;
+    const {handleForgotPasswdCLick} =this;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <LoginForm
-          login={login}
-          onPhoneNumberChanged={onPhoneNumberChanged}
-          phoneNumber={phoneNumber}
-          onUnameChange={onUnameChange}
-          username={username}
-          onPsswdChange={onPsswdChange}
-          passwd={passwd}
-          isEmployee={true}
-          onForgotPasswdCLick={onForgotPasswdCLick}
-        />
+        <LoginForm form={form} submitForm={submitForm} formKey={formKey} onChange={handleFieldChange} onForgotPasswdCLick={handleForgotPasswdCLick}/>
       </Banner>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  const formKey = "employeeLogin";
+  const form = state.form[formKey] || {};
+  return { form };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
