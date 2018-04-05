@@ -22,10 +22,8 @@ class AddComplaints extends Component {
   }
 
   componentDidMount() {
-    // api call
     this.props.initForm(this.formConfig);
   }
-  // formConfig Configiat
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.form.fields && nextProps.form.fields.address && !nextProps.form.fields.address.value) {
