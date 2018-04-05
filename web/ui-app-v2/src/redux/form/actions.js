@@ -67,6 +67,7 @@ export const submitForm = (formKey) => {
             formData = transformer(form, state);
           }
         } catch (error) {
+          // console.log(error);
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
         }

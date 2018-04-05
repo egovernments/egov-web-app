@@ -1,11 +1,10 @@
-import { prepareFormData, getUserInfo } from "utils/commons";
-
 const viewModelToBusinessModelTransformer = (form, state) => {
   const { fields } = form;
-  let user = getUserInfo();
+  let { userInfo: user } = state.auth;
   user = { ...user, name: fields.name.value, permanentCity: fields.city.value, emailId: fields.email.value };
   const photos = form.files && form.files["photo"];
-  const photo = (photos && photos.length && photos[0].fileStoreId) || null;
+  let photo = (photos && photos.length && photos[0]) || null;
+  photo = photo ? photo.fileStoreId || photo.imageUri : null;
   user = { ...user, photo };
   return { user };
 };
