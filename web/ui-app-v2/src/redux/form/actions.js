@@ -93,6 +93,7 @@ const fileUploadPending = (formKey, fieldKey) => {
   return { type: actionTypes.FILE_UPLOAD_STARTED, formKey, fieldKey };
 };
 
+// for profile if a file exists, dispatch
 const fileUploadCompleted = (formKey, fieldKey, fileObject) => {
   return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileObject };
 };

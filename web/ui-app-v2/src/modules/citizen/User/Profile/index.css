@@ -2,7 +2,7 @@
   background-color: #fff;
   background-repeat: no-repeat;
   background-position: center;
-  padding: 8px;
+  padding: 16px !important;
 }
 
 .profileBtn {

@@ -25,10 +25,18 @@ class FilePicker extends Component {
 
   render() {
     const { inputProps, children } = this.props;
+    const { multiple, accept } = inputProps;
     const { handleFileChange, openFileDialog } = this;
     return (
       <div onClick={openFileDialog}>
-        <input type="file" {...inputProps} ref={(ref) => (this.upload = ref)} style={{ display: "none" }} onChange={handleFileChange} />
+        <input
+          type="file"
+          multiple={multiple}
+          accept={accept}
+          ref={(ref) => (this.upload = ref)}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
         {children}
       </div>
     );
@@ -36,7 +44,6 @@ class FilePicker extends Component {
 }
 
 FilePicker.propTypes = {
-  "inputProps.maxFiles": PropTypes.integer,
   "inputProps.accept": PropTypes.string,
   "inputProps.id": PropTypes.string,
   "inputProps.multiple": PropTypes.bool,
