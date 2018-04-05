@@ -76,13 +76,13 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
-//better implementaion ==> to be done later
+//better implementation ==> to be done later
 const fetchImages = (actionArray) => {
   let imageArray = [];
   actionArray.forEach((action, index) => {
     action.media && imageArray.push(action.media);
   });
-  return imageArray[0] ? imageArray[0] : null;
+  return imageArray[0] ? imageArray[0] : [];
 };
 
 const mapStateToProps = (state) => {
@@ -95,7 +95,13 @@ const mapStateToProps = (state) => {
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
     complaintObj.images = fetchImages(complaints.byId[complaint].actions).map((imageSource, index) => {
-      return { source: imageSource };
+      return imageSource &&
+        imageSource
+          .split("?")[0]
+          .split(".")
+          .pop() === ("png" || "jpg" || "jpeg")
+        ? { source: imageSource }
+        : "";
     });
     transformedComplaints.push(complaintObj);
   });

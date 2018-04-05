@@ -9,6 +9,7 @@ const TextAreaUi = ({
   className,
   style,
   underlineShow,
+  inputStyle,
   onChange,
   errorMessage,
   value = "",
@@ -36,6 +37,7 @@ const TextAreaUi = ({
       onChange={onChange}
       style={{ ...defaultStyle, ...style }}
       hintText={hintText}
+      inputStyle={inputStyle}
       hintStyle={hintStyle}
       textareaStyle={textareaStyle}
       underlineShow={underlineShow}
