@@ -124,7 +124,7 @@ class Details extends Component {
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
-                    <Label label={"27th Main HSR Layout"} className="status-result-color" labelStyle={{ color: "inherit" }} />
+                    <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                   {this.props.role === "AO" && (
                     <div
