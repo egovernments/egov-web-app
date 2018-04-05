@@ -12,14 +12,6 @@ const customIconStyles = {
   left: 12,
 };
 
-const customIconStylesAlternate = {
-  height: 24,
-  width: 24,
-  margin: 0,
-  top: 12,
-  left: 15,
-};
-
 class ComplaintType extends Component {
   constructor(props) {
     super(props);

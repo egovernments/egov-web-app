@@ -34,8 +34,8 @@ const wrapRequestBody = (requestBody, action) => {
 };
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
-  let apiError = "Api Error";
   const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
+  let apiError = "Api Error";
 
   if (headers)
     instance.defaults = Object.assign(instance.defaults, {
@@ -59,10 +59,13 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
       apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
-    apiError = error;
+    const { data, status } = error.response;
+    if (status == 400 && data == "") {
+      apiError = "INVALID_TOKEN";
+    }
   }
   // unhandled error
-  // throw new Error(apiError);
+  throw new Error(apiError);
 };
 
 export const uploadFile = async (endPoint, module, file) => {

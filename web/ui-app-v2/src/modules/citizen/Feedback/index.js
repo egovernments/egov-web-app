@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Icon } from "components";
+import { Button } from "components";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import Label from "utils/translationNode";
-import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "modules/common/Screen";
-import { withRouter } from "react-router-dom";
-import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import "./index.css";
@@ -55,9 +51,9 @@ class Feedback extends Component {
   };
 
   render() {
-    let { value, submitted } = this.state;
+    let { value } = this.state;
     const { formConfig } = this;
-    const { form, handleFieldChange, submitForm } = this.props;
+    const { form } = this.props;
     const { name: formKey } = formConfig;
     const { fields, submit } = form;
     let textArea;

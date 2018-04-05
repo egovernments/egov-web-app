@@ -1,6 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import PrivateRoute from "../../PrivateRoute";
 
 // routes
 import Login from "./Login";
@@ -16,7 +15,6 @@ const Citizen = ({ match }) => {
       <Route exact path={`${match.url}/otp`} component={OTP} />
       <Route exact path={`${match.url}/forgot-password`} component={ForgotPassword} />
       <Route exact path={`${match.url}/language-selection`} component={LanguageSelection} />
-      {/* <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Profile" component={Profile} /> */}
     </div>
   );
 };

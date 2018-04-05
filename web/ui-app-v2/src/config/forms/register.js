@@ -8,7 +8,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_NAME",
       errorMessage: "CORE_COMMON_NAME_VALIDMSG",
       hintText: "CORE_COMMON_NAME_PLACEHOLDER",
-      pattern: "^[A-z]+\\s?[A-z]*$",
+      pattern: "^[A-z]+(\\s?[A-z])*$",
     },
     city: {
       id: "person-city",

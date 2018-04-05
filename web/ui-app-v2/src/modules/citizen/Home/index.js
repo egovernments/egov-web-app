@@ -4,7 +4,7 @@ import Banner from "modules/common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, transformById, displayStatus } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, displayStatus } from "utils/commons";
 import "./index.css";
 
 class Home extends Component {
@@ -28,11 +28,11 @@ class Home extends Component {
   }
 }
 
-const displayDate = (rawData) => {
-  let split = rawData.split("/");
-  split.splice(split.length - 1, 1);
-  return split.join("-");
-};
+// const displayDate = (rawData) => {
+//   let split = rawData.split("/");
+//   split.splice(split.length - 1, 1);
+//   return split.join("-");
+// };
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
@@ -45,7 +45,8 @@ const mapStateToProps = (state) => {
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
-  return { updates };
+
+  return { updates: updates.reverse() };
 };
 
 const mapDispatchToProps = (dispatch) => {

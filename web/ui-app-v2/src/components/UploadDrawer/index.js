@@ -30,12 +30,8 @@ const galleryIconBtn = (
 );
 
 class UploadDrawer extends Component {
-  onCameraClick = () => {
-    //onCameraClick
-    //this.props.uploadfile(url);
-  };
   onRemoveClick = () => {
-    this.props.uploadfile("");
+    this.props.removeFile();
     this.props.closeDrawer(false);
   };
   picUpload = (file, url) => {
