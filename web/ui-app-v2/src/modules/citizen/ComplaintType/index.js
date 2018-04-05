@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { List, Icon, AutoSuggest } from "../../../components";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { handleFieldChange } from "redux/form/actions";
 
 const customIconStyles = {
   height: 36,
@@ -9,14 +9,6 @@ const customIconStyles = {
   margin: 0,
   top: 5,
   left: 12,
-};
-
-const customIconStylesAlternate = {
-  height: 24,
-  width: 24,
-  margin: 0,
-  top: 12,
-  left: 15,
 };
 
 class ComplaintType extends Component {

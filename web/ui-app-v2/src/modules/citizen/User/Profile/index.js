@@ -66,7 +66,6 @@ class Profile extends Component {
     const { openUploadSlide } = this.state;
     const { formConfig, setProfilePic, onClickAddPic, removeProfilePic } = this;
     const { name: formKey } = formConfig;
-    const { submitting } = form;
 
     return (
       <Screen>

@@ -4,7 +4,6 @@ import Banner from "modules/common/Banner";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
-import isEmpty from "lodash/isEmpty";
 
 class OTP extends Component {
   constructor(props) {

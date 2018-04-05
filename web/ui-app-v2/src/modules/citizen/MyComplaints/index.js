@@ -7,7 +7,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { transformById, getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -17,7 +17,7 @@ class MyComplaints extends Component {
   };
 
   render() {
-    let { setRoute, transformedComplaints, complaints } = this.props;
+    let { setRoute, transformedComplaints } = this.props;
     return (
       <div className="complaints-main-container clearfix">
         {this.props.complaints.loading ? (
@@ -60,11 +60,11 @@ class MyComplaints extends Component {
   }
 }
 
-const displayDate = (rawData) => {
-  let split = rawData.split("/");
-  split.splice(split.length - 1, 1);
-  return split.join("-");
-};
+// const displayDate = (rawData) => {
+//   let split = rawData.split("/");
+//   split.splice(split.length - 1, 1);
+//   return split.join("-");
+// };
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
@@ -105,7 +105,7 @@ const mapStateToProps = (state) => {
     });
     transformedComplaints.push(complaintObj);
   });
-  return { complaints, transformedComplaints};
+  return { complaints, transformedComplaints: transformedComplaints.reverse() };
 };
 
 const mapDispatchToProps = (dispatch) => {

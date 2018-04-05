@@ -3,7 +3,6 @@ import { Button } from "../../../components";
 import Screen from "../../common/Screen";
 import Question from "../../common/ReOpenComplaint/components/Question";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
-import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
 import "./index.css";
 
 class ReAssignComplaint extends Component {
@@ -20,8 +19,6 @@ class ReAssignComplaint extends Component {
 
   render() {
     const { onSubmit } = this;
-    let officerName = "Amrinder Singh";
-    let department = "Department 1";
     return (
       <Screen className="reassign-complaint-main-container">
         <div>

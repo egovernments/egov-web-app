@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { MapLocation, Button, Icon } from "../../../components";
 import pinIcon from "../../../assets/Location_pin.svg";
 import { handleFieldChange } from "redux/form/actions";
-import { setRoute } from "redux/app/actions";
 import isUndefined from "lodash/isUndefined";
 import "./index.css";
 

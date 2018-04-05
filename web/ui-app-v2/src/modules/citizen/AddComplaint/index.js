@@ -45,8 +45,8 @@ class AddComplaints extends Component {
   };
 
   render() {
-    const { navigateToComplaintType, submitComplaint, sendFile } = this;
-    const { formKey, fileUpload, categories } = this.props;
+    const { navigateToComplaintType, submitComplaint } = this;
+    const { formKey, categories } = this.props;
     const fields = this.props.form.fields || {};
     const submit = this.props.form.submit;
     return (

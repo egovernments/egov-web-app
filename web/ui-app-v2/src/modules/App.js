@@ -64,7 +64,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { route, toast, locale } = state.app;
+  const { route, toast } = state.app;
   return { route, toast };
 };
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import IconButton from "material-ui/IconButton";
 import { Redirect, Route } from "react-router-dom";
@@ -67,7 +66,6 @@ class PrivateRoute extends Component {
   };
 
   _handleBackNavigation = () => {
-    const { setRoute } = this.props;
     this.props.history.goBack();
   };
 

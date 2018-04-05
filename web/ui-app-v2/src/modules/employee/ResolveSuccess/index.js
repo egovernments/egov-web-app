@@ -1,18 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "../../../components";
-import Screen from "../../common/Screen";
-import Label from "utils/translationNode";
 import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
 import "./index.css";
-
-const statusContainerStyle = {
-  display: "inline-block",
-};
-
-const nameContainerStyle = {
-  display: "inline-block",
-  marginLeft: "3px",
-};
 
 class ResolveSuccess extends Component {
   continueComplaintSubmit = () => {
