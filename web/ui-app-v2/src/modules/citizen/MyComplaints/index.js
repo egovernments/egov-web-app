@@ -68,28 +68,17 @@ class MyComplaints extends Component {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  switch (status.toLowerCase()) {
-    case "new" || "open":
-      statusObj.status = "CS_COMMON_OPEN_UCASE";
-      statusObj.statusMessage = `Your complaint has been opened`;
-      break;
-    case "rejected":
-      statusObj.status = "CS_COMMON_REJECTED_UCASE";
-      statusObj.statusMessage = `Your complaint has been rejected`;
-      break;
-    case "closed":
-      statusObj.status = "OPEN";
-      statusObj.statusMessage = `Complaint Resolved. Please Rate`;
-      break;
-    case "reassigned":
-      statusObj.status = "RE-ASSIGNED";
-      statusObj.statusMessage = `Your complaint has been re-assigned to ${assignee}`;
-      break;
-    default:
-      statusObj.status = "CS_COMMON_OPEN_UCASE";
-      statusObj.statusMessage = `Your complaint has been opened`;
-      break;
+  if (status.toLowerCase() == "closed") {
+    statusObj.status = "CS_COMMON_CLOSED_UCASE";
+  } else {
+    statusObj.status = "CS_COMMON_OPEN_UCASE";
   }
+  if (status.toLowerCase() == "open") {
+    statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
+  } else {
+    statusObj.statusMessage = `CS_COMMON_${status.toUpperCase()}`;
+  }
+
   return statusObj;
 };
 
@@ -99,7 +88,6 @@ const fetchImages = (actionArray) => {
   actionArray.forEach((action, index) => {
     action.media && imageArray.push(action.media);
   });
-  console.log(imageArray);
   return imageArray[0] ? imageArray[0] : null;
 };
 

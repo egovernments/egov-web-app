@@ -6,13 +6,12 @@ export const statusToMessageMapping = {
   closed: "Closed",
   open: "Opened",
   "re-assign": "Re-assigned",
-  assigned: "Assigned"
+  assigned: "Assigned",
 };
 
 export const displayStatus = (status) => {
   return status ? statusToMessageMapping[status.toLowerCase()] : "";
 };
-
 
 export const transformById = (payload, id) => {
   return payload.reduce((result, item) => {
@@ -187,4 +186,9 @@ export const getUserInfo = () => {
     userInfo = null;
   }
   return userInfo;
+};
+
+export const getCityNameByCode = (code, cities) => {
+  const city = (cities || []).filter((city) => city.key === code);
+  return (city && city.length && city[0].text) || "";
 };

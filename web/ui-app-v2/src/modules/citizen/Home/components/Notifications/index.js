@@ -6,12 +6,18 @@ import "./index.css";
 const Updates = ({ updates, history }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
+    let transformedstatus = "";
     const titleKey =
       "COMMON_" +
       title
         .match(/\w+/g)
         .join("_")
         .toUpperCase();
+    if (status.toLowerCase() == "opened") {
+      transformedstatus = `CS_COMMON_SUBMITTED`;
+    } else {
+      transformedstatus = `CS_COMMON_${status.toUpperCase()}`;
+    }
     return (
       <Card
         style={{ margin: "8px 0px" }}
@@ -42,7 +48,7 @@ const Updates = ({ updates, history }) => {
             </div>
             <div className="complaint-status" style={{ marginTop: "16px" }}>
               <Label containerStyle={{ display: "inline-block" }} label="CS_HOME_STATUS_PREFIX" />
-              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={`${status}`} />
+              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={`${transformedstatus}`} />
             </div>
           </div>
         }

@@ -52,7 +52,7 @@ export default class ButtonToggle extends Component {
       _items[i].style["background"] = "transparent";
     }
     _items[index].style["background"] = "orange";
-    this.setState({ items: _items }, console.log(this.state.items));
+    this.setState({ items: _items });
   };
 
   renderButtonGroups = () => {

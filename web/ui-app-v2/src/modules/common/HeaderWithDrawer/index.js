@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-//App bar imports starts
-import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Button } from "../../../components";
-import profileImage from "../../../assets/people1.png";
-import logoMseva from "../../../assets/images/logo_black.png";
-import Label from "utils/translationNode";
-import "./index.css";
 import { connect } from "react-redux";
+import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Button } from "components";
+import profileImage from "assets/people1.png";
+import logoMseva from "assets/images/logo_black.png";
+import Label from "utils/translationNode";
 import { fetchLocalizationLabel } from "redux/app/actions";
+import "./index.css";
 
 const listInnerDivStyle = {
   padding: "16px 0px 16px 60px",
@@ -79,8 +78,6 @@ const locationStyle = {
   fontSize: 7,
   fontWeight: 500,
 };
-
-const _label_Location = "Amritsar";
 
 class HeaderWithDrawer extends Component {
   state = {
@@ -281,8 +278,8 @@ class HeaderWithDrawer extends Component {
   render() {
     const { languageItems, value, logoutPopupOpen } = this.state;
     const { onClick } = this;
-    const { onUpdateMenuStatus, toggleMenu, className, role, history, logout, ...appBarProps } = this.props;
-    const userInfo = this.props.userInfo || {};
+    let { onUpdateMenuStatus, toggleMenu, className, role, history, logout, fetchLocalizationLabel, userInfo, ...appBarProps } = this.props;
+    userInfo = userInfo || {};
     return (
       <div>
         <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />
@@ -296,7 +293,7 @@ class HeaderWithDrawer extends Component {
             emailIdStyle={nameStyle}
             name={userInfo.name || ""}
             emailId={userInfo.emailId || ""}
-            location={_label_Location}
+            location={userInfo.location || ""}
             iconStyle={iconStyle}
             imgSrc={userInfo.photo || profileImage}
           />

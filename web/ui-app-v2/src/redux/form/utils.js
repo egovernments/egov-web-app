@@ -19,6 +19,19 @@ export const validateField = (field) => {
   return { isFieldValid, errorText };
 };
 
+export const validateForm = (form) => {
+  let isFormValid = true;
+  const formFields = getFormFields(form);
+  for (let key in formFields) {
+    const field = formFields[key];
+    if (!validateField(field, field.value).isFieldValid) {
+      isFormValid = false;
+      break;
+    }
+  }
+  return isFormValid;
+};
+
 export const getFormFields = (form) => {
   return form.fields || {};
 };

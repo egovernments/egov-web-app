@@ -6,7 +6,7 @@ import { setRoute, fetchLocalizationLabel } from "redux/app/actions";
 
 class LanguageSelection extends Component {
   state = {
-    value: "en_IN",
+    value: localStorage.getItem("locale"),
     items: [
       {
         label: "ENGLISH",

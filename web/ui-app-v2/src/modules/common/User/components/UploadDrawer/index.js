@@ -1,5 +1,5 @@
 import React from "react";
-import { UploadDrawer } from "../../../../../components";
+import { UploadDrawer } from "components";
 
 const UploadDrawerLabelStyle = {
   fontFamily: "Roboto",
@@ -7,12 +7,13 @@ const UploadDrawerLabelStyle = {
   letterSpacing: "0.3px",
 };
 
-const UploadDrawerView = ({ setProfilePic, onClickAddPic, openUploadSlide }) => {
+const UploadDrawerView = ({ setProfilePic, removeFile, onClickAddPic, openUploadSlide }) => {
   return (
     <UploadDrawer
       openUploadSlide={openUploadSlide}
       galleryIcon={true}
       removeIcon={true}
+      removeFile={removeFile}
       labelStyle={UploadDrawerLabelStyle}
       uploadfile={setProfilePic}
       closeDrawer={onClickAddPic}

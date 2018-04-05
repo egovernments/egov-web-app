@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
 import IconButton from "material-ui/IconButton";
+import { Redirect, Route } from "react-router-dom";
 import { BottomNavigation, Icon, LoadingIndicator } from "components";
 import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
 import { fetchComplaintCategories } from "redux/complaints/actions";
+import { getCityNameByCode } from "utils/commons";
 import { logout, searchUser } from "redux/auth/actions";
 import Label from "utils/translationNode";
 
@@ -100,6 +101,11 @@ class PrivateRoute extends Component {
     return { style, iconElementLeft, onLeftIconButtonClick };
   };
 
+  prepareUserInfo = (userInfo, cities = []) => {
+    const { photo, name, emailId, permanentCity, tenantId } = userInfo;
+    return { photo, name, emailId, location: getCityNameByCode(permanentCity, cities) || getCityNameByCode(tenantId, cities) };
+  };
+
   render() {
     const {
       component: Component,
@@ -107,13 +113,15 @@ class PrivateRoute extends Component {
       hideAppBar,
       toast,
       logout,
+      userInfo,
+      cities,
       authenticating,
       authenticated,
       authenticationFailed,
       history,
       ...rest
     } = this.props;
-    const { _appBarProps, _updateMenuState, _onTabChange } = this;
+    const { _appBarProps, _updateMenuState, _onTabChange, prepareUserInfo } = this;
     const { toggleMenu, tabIndex } = this.state;
     const role = window.location.pathname.includes("citizen") ? "citizen" : "employee";
 
@@ -124,7 +132,7 @@ class PrivateRoute extends Component {
           className={hideAppBar ? "hide" : ""}
           title={rest.title}
           history={history}
-          userInfo={rest.userInfo}
+          userInfo={prepareUserInfo(userInfo, cities)}
           onUpdateMenuStatus={_updateMenuState}
           toggleMenu={toggleMenu}
           role={role}
@@ -152,7 +160,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { authenticated, authenticating, authenticationFailed, userInfo } = state.auth;
-  return { authenticated, authenticating, authenticationFailed, userInfo };
+  const cities = state.common.cities || [];
+  return { authenticated, authenticating, authenticationFailed, userInfo, cities };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PrivateRoute));

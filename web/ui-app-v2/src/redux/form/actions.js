@@ -4,6 +4,7 @@ import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "redux/app/actio
 import { httpRequest, loginRequest, uploadFile } from "utils/api";
 import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
+import { validateForm } from "./utils";
 
 export const initForm = (form) => {
   return {
@@ -53,7 +54,7 @@ export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
     const state = getState();
     const form = state.form[formKey];
-    const { isFormValid } = form;
+    const isFormValid = validateForm(form);
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
       try {
@@ -66,7 +67,7 @@ export const submitForm = (formKey) => {
             formData = transformer(form, state);
           }
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
         }
@@ -79,8 +80,8 @@ export const submitForm = (formKey) => {
         }
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
-        dispatch(submitFormError(formKey, error));
-        toggleSnackbarAndSetText(false, error, false, true);
+        dispatch(submitFormError(formKey, error.message));
+        toggleSnackbarAndSetText(false, error.message, false, true);
       }
     } else {
       dispatch(displayFormErrors(formKey));
@@ -93,6 +94,7 @@ const fileUploadPending = (formKey, fieldKey) => {
   return { type: actionTypes.FILE_UPLOAD_STARTED, formKey, fieldKey };
 };
 
+// for profile if a file exists, dispatch
 const fileUploadCompleted = (formKey, fieldKey, fileObject) => {
   return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileObject };
 };
@@ -113,7 +115,7 @@ export const fileUpload = (formKey, fieldKey, fileObject) => {
       const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
       dispatch(fileUploadCompleted(formKey, fieldKey, { ...fileObject, fileStoreId }));
     } catch (error) {
-      dispatch(fileUploadError(formKey, fieldKey, error));
+      dispatch(fileUploadError(formKey, fieldKey, error.message));
     }
   };
 };

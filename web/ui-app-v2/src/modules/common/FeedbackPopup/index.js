@@ -22,7 +22,6 @@ const checkboxOptions = [
 
 const actions = [];
 const FeedbackPopup = ({ open, handleClose, submitted = false, onSubmit, selected, onCheck }) => {
-  console.log("open");
   return (
     <div>
       <Dialog

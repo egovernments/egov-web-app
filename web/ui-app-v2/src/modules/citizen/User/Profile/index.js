@@ -18,7 +18,7 @@ class Profile extends Component {
     this.formConfig = require("config/forms/profile").default;
   }
   componentDidMount() {
-    const { name, emailId, permanentCity, tenantId } = this.props.userInfo;
+    const { name, mobileNumber, emailId, permanentCity, tenantId, photo: imageUri } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
       ...formConfig,
@@ -28,21 +28,26 @@ class Profile extends Component {
         city: { ...formConfig.fields.city, value: permanentCity || tenantId },
         name: { ...formConfig.fields.name, value: name },
       },
+      files: {
+        ["photo"]: [
+          {
+            imageUri,
+          },
+        ],
+      },
     };
     this.props.initForm(formConfig);
   }
 
   setProfilePic = (file = null, imageUri = "") => {
-    if (imageUri === "") imageUri = img;
-    if (imageUri.length) {
-      const { fileUpload } = this.props;
-      fileUpload("profile", "photo", { module: "rainmaker-pgr", file, imageUri });
-    }
+    const { fileUpload } = this.props;
+    this.removeProfilePic();
+    fileUpload("profile", "photo", { module: "rainmaker-pgr", file, imageUri });
   };
 
-  removeImage = (imageIndex) => {
+  removeProfilePic = () => {
     const { removeFile } = this.props;
-    removeFile("profile", "photo", imageIndex);
+    removeFile("profile", "photo", 0);
   };
 
   onClickAddPic = (isOpen) => {
@@ -59,14 +64,23 @@ class Profile extends Component {
   render() {
     const { form, handleFieldChange, submitForm, profilePic } = this.props;
     const { openUploadSlide } = this.state;
-    const { formConfig, setProfilePic, onClickAddPic } = this;
+    const { formConfig, setProfilePic, onClickAddPic, removeProfilePic } = this;
     const { name: formKey } = formConfig;
 
     return (
       <Screen>
-        <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
-        <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
-        {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
+        <div className="row">
+          <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
+          <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
+          {openUploadSlide && (
+            <UploadDrawer
+              removeFile={removeProfilePic}
+              setProfilePic={setProfilePic}
+              onClickAddPic={onClickAddPic}
+              openUploadSlide={openUploadSlide}
+            />
+          )}
+        </div>
       </Screen>
     );
   }
@@ -83,7 +97,7 @@ const mapStateToProps = (state) => {
     form,
     formKey,
     userInfo,
-    profilePic: (images.length && images[0].imageUri) || userInfo.photo,
+    profilePic: (images.length && images[0].imageUri) || img,
   };
 };
 

@@ -26,13 +26,18 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, images, onImageClick } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, images } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
       display: "block",
     };
-    const statusKey = "CS_COMMON_" + status.toUpperCase();
+    let statusKey = "";
+    if (status.toLowerCase() == "open") {
+      statusKey = `CS_COMMON_SUBMITTED`;
+    } else {
+      statusKey = `CS_COMMON_${status.toUpperCase()}`;
+    }
     const titleKey =
       "COMMON_" +
       complaint
@@ -75,7 +80,7 @@ class Details extends Component {
                                 height: "93px",
                               }}
                               source={image}
-                              onClick={() => onImageClick(image)}
+                              onClick={() => this.props.onImageClick(image)}
                             />
                           </div>
                         );

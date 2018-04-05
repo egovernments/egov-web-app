@@ -76,7 +76,10 @@ class ComplaintDetails extends Component {
           <div>
             <Details {...complaint} onImageClick={this.onImageClick} />
             <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
-            <ComplaintTimeLine status={status.status} timeLine={timeLine} complaintNo={complaint.applicationNo} />
+            <ComplaintTimeLine
+              status={complaint.status}
+              timeLine={timeLine}
+            />
             <Comments comments={comments} hasComments={true} />
           </div>
         }

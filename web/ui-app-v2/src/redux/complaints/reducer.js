@@ -1,21 +1,21 @@
 import * as actionTypes from "./actionTypes";
 import { transformById } from "../../utils/commons";
 
-const mergeServiceWithActions=(payload)=>{
-  return payload.actionHistory.map((item,index)=>{
+const mergeServiceWithActions = (payload) => {
+  return payload.actionHistory.map((item, index) => {
     return {
       ...payload.services[index],
-      actions:payload.actionHistory[index].actions
-    }
+      actions: payload.actionHistory[index].actions,
+    };
   });
-}
+};
 
 const intialState = {
   loading: false,
   error: false,
   errorMessage: "",
   byId: {},
-  categoriesById:{}
+  categoriesById: {},
 };
 
 const complaintsReducer = (state = intialState, action) => {
@@ -46,16 +46,16 @@ const complaintsReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
-    case actionTypes.SET_COMPLAINTS_CATEGORIS:
-        let categoriesById = transformById(action.payload.MdmsRes["RAINMAKER-PGR"].ServiceDefs, "serviceCode");
-        return {
-          ...state,
-          loading: false,
-          categoriesById: {
-            ...state.categoriesById,
-            ...categoriesById,
-          },
-        };
+    case actionTypes.COMPLAINTS_CATEGORIES_FETCH_SUCCESS:
+      let categoriesById = transformById(action.payload.MdmsRes["RAINMAKER-PGR"].ServiceDefs, "serviceCode");
+      return {
+        ...state,
+        loading: false,
+        categoriesById: {
+          ...state.categoriesById,
+          ...categoriesById,
+        },
+      };
     default:
       return state;
   }
