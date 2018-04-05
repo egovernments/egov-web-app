@@ -1,5 +1,7 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
+import axios from "axios";
+import commonConfig from "config/common";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -109,6 +111,39 @@ const getMonthName = (monthIndex) => {
       return "Dec";
     default:
       return "";
+  }
+};
+
+const getCurrLocation = () => {
+  var currLoc = {};
+  return new Promise((resolve) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        currLoc.lat = position.coords.latitude.toFixed(6);
+        currLoc.lng = position.coords.longitude.toFixed(6);
+        resolve(currLoc);
+      });
+    }
+  });
+};
+
+export const getCurrentAddress = async () => {
+  var currLoc = await getCurrLocation();
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${currLoc.lat},${currLoc.lng}&key=${commonConfig.MAP_API_KEY}`;
+  try {
+    return axios.get(url).then((res) => {
+      if (res.data.status === "OK") {
+        if (res.data.results[0]) {
+          var currAddress = {};
+          currAddress.lat = currLoc.lat;
+          currAddress.lng = currLoc.lng;
+          currAddress.address = res.data.results[0].formatted_address;
+          return currAddress;
+        }
+      }
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 

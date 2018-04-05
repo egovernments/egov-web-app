@@ -3,6 +3,7 @@ import _ from "lodash";
 import SearchBox from "react-google-maps/lib/components/places/SearchBox";
 import "./index.css";
 import Icon from "../Icon";
+import commonConfig from "config/common";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
@@ -10,7 +11,7 @@ const API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
 
 const MapLocation = compose(
   withProps({
-    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${commonConfig.MAP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div className="map-container" />,
     mapElement: <div style={{ height: `100%` }} />,

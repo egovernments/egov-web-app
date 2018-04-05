@@ -8,6 +8,7 @@ import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
+import { getCurrentAddress } from "utils/commons";
 import "./index.css";
 
 class AddComplaints extends Component {
@@ -25,6 +26,16 @@ class AddComplaints extends Component {
     this.props.initForm(this.formConfig);
   }
   // formConfig Configiat
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.form.fields && nextProps.form.fields.address && !nextProps.form.fields.address.value) {
+      getCurrentAddress().then((currAddress) => {
+        this.props.handleFieldChange(this.props.formKey, "address", currAddress.address);
+        this.props.handleFieldChange(this.props.formKey, "latitude", currAddress.lat);
+        this.props.handleFieldChange(this.props.formKey, "longitude", currAddress.lng);
+      });
+    }
+  };
 
   handleLandmarkChange = (e, value) => {
     this.props.handleFieldChange(this.props.formKey, "landmark", value);
@@ -51,6 +62,7 @@ class AddComplaints extends Component {
     const { formKey, categories } = this.props;
     const fields = this.props.form.fields || {};
     const submit = this.props.form.submit;
+
     return (
       <Screen>
         <div className="add-complaint-main-cont">
