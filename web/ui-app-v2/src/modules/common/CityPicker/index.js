@@ -76,7 +76,14 @@ class CityPickerDialog extends Component {
           onRequestClose={onClose}
           autoScrollBodyContent={true}
         >
-          <AutoSuggest id="city-picker-search" dataSource={cities} searchInputText="Search" searchKey="text" callback={autoSuggestCallback} />
+          <AutoSuggest
+            id="city-picker-search"
+            dataSource={cities}
+            searchInputText="Search"
+            searchKey="text"
+            autoFocus={true}
+            callback={autoSuggestCallback}
+          />
           <List
             onItemClick={onItemClick}
             innerDivStyle={{ paddingLeft: "50px" }}

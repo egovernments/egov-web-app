@@ -132,6 +132,7 @@ class ComplaintType extends Component {
           searchInputText="Search"
           searchKey="text"
           callback={autoSuggestCallback}
+          autoFocus={true}
         />
         {displayInitialList ? this.renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results), true)}
       </div>

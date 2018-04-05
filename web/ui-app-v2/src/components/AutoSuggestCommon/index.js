@@ -36,7 +36,7 @@ export default class AutoSuggest extends Component {
   render() {
     const { onChange, styles } = this;
     const { inputValue } = this.state;
-    const { containerStyle, textFieldStyle, iconStyle, searchInputText, hintStyle, iconPosition } = this.props;
+    const { containerStyle, textFieldStyle, iconStyle, searchInputText, hintStyle, iconPosition, autoFocus } = this.props;
 
     return (
       <div style={{ ...styles.defaultContainerStyle, ...containerStyle }} className="search-field-container">
@@ -53,6 +53,7 @@ export default class AutoSuggest extends Component {
           onChange={onChange}
           value={inputValue}
           id={this.props.id}
+          autoFocus={autoFocus}
         />
       </div>
     );
