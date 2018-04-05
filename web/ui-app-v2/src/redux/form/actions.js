@@ -4,6 +4,7 @@ import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "redux/app/actio
 import { httpRequest, loginRequest, uploadFile } from "utils/api";
 import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
+import { validateForm } from "./utils";
 
 export const initForm = (form) => {
   return {
@@ -53,7 +54,7 @@ export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
     const state = getState();
     const form = state.form[formKey];
-    const { isFormValid } = form;
+    const isFormValid = validateForm(form);
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
       try {
@@ -66,7 +67,6 @@ export const submitForm = (formKey) => {
             formData = transformer(form, state);
           }
         } catch (error) {
-          console.log(error);
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
         }
