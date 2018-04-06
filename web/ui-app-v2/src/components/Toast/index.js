@@ -8,14 +8,13 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message })
       open={open}
       message={message}
       autoHideDuration={autoHideDuration}
-      style={{ pointerEvents: "none", width: "95%", top: "0px", whiteSpace: "nowrap" }}
+      style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap" }}
       bodyStyle={{
         pointerEvents: "initial",
         maxWidth: "none",
-        backgroundColor: error ? "#a94442" : "#3c763d",
         lineHeight: "20px",
         height: "auto",
-        maxHeight: "65px",
+        maxHeight: "60px",
         padding: "5px",
         whiteSpace: "pre-line",
         textAlign: "center",
