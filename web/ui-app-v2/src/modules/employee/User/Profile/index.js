@@ -3,7 +3,7 @@ import UploadDrawer from "../../../common/User/components/UploadDrawer";
 import ProfileSection from "../../../common/User/components/ProfileSection";
 import ProfileForm from "../../../common/User/components/ProfileForm";
 import Screen from "../../../common/Screen";
-import img from "../../../../assets/images/people.jpg";
+import img from "../../../../assets/images/people.png";
 import "./index.css";
 
 class Profile extends Component {

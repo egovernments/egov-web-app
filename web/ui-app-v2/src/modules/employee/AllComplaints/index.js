@@ -10,7 +10,7 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { transformById, getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import { connect } from "react-redux";
 import "./index.css";
 
@@ -216,7 +216,7 @@ class AllComplaints extends Component {
       letterSpacing: "0.6px",
     };
     const { onComplaintClick } = this;
-    const { assignedComplaints, unassignedComplaints, userInfo, employeeComplaints, role } = this.props;
+    const { assignedComplaints, unassignedComplaints, employeeComplaints, role } = this.props;
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"

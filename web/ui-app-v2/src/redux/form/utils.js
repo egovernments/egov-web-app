@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 export const validateField = (field) => {
   const { required, pattern, minLength, maxLength, minValue, maxValue } = field;
 

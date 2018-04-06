@@ -4,7 +4,7 @@ import { muiTheme } from "storybook-addon-material-ui";
 import { action } from "@storybook/addon-actions";
 import { ProfileSection } from "../components";
 import theme from "../config/theme";
-import img from "../assets/people.jpg";
+import img from "../assets/people.png";
 
 storiesOf("ProfileSection", module)
   .addDecorator(muiTheme([theme]))

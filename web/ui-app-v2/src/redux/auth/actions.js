@@ -2,7 +2,6 @@ import * as authType from "./actionTypes";
 import { httpRequest, loginRequest } from "utils/api";
 import { AUTH, USER, OTP } from "utils/endPoints";
 import { prepareFormData } from "utils/commons";
-import { toggleSnackbarAndSetText } from "../app/actions";
 
 export const userProfileUpdated = (payload) => {
   const user = payload.user[0];
@@ -84,7 +83,7 @@ export const sendOTP = (intent) => {
     const state = getState();
     const form = state.form[intent];
     const formData = prepareFormData(form);
-    const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
+    //const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
   };
 };
 

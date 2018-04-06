@@ -3,8 +3,6 @@ import { Image, Card, Icon, Button } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const status = { OPEN: "filed", CLOSED: "resolved", REJECTED: "rejected" };
-
 const imageStyles = {
   minHeight: "87px",
 };

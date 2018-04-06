@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Card, TimeLine, Icon, Image } from "components/";
 import { withRouter } from "react-router-dom";
 import Label from "utils/translationNode";
-import garbageOne from "assets/images/Garbage_3.jpg";
 import "./index.css";
 import { getDateFromEpoch } from "utils/commons";
 import filter from "lodash/filter";
