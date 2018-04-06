@@ -16,6 +16,7 @@ const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
               name="additional-details"
               isRequired={false}
               fullWidth={true}
+              maxLength="300"
             />
           </div>
         }

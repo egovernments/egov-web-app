@@ -145,13 +145,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
   return (
     complaints &&
     complaints.map((complaint, complaintIndex) => {
-      const complaintHeader =
-        complaint.header &&
-        "SERVICEDEFS.SERVICENAME." +
-          complaint.header
-            .match(/\w+/g)
-            .join("_")
-            .toUpperCase();
+      const complaintHeader = complaint.header && "SERVICEDEFS.SERVICECODE." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
           <Card

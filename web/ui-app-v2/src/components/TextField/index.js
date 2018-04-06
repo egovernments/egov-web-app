@@ -56,6 +56,7 @@ const TextField = ({
   required,
   type,
   autoFocus,
+  maxLength,
 }) => {
   return (
     <MaterialUITextField
@@ -87,6 +88,7 @@ const TextField = ({
       floatingLabelFixed={true}
       type={type}
       autoFocus={autoFocus}
+      maxLength={maxLength}
     />
   );
 };

@@ -7,12 +7,7 @@ const Updates = ({ updates, history }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
     let transformedstatus = "";
-    const titleKey =
-      "SERVICEDEFS.SERVICENAME." +
-      title
-        .match(/\w+/g)
-        .join("_")
-        .toUpperCase();
+    const titleKey = title && "SERVICEDEFS.SERVICECODE." + title.toUpperCase();
     if (status.toLowerCase() == "opened") {
       transformedstatus = `CS_COMMON_SUBMITTED`;
     } else {
