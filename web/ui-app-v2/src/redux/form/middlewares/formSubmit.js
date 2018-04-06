@@ -31,7 +31,7 @@ const formSubmit = (store) => (next) => (action) => {
       }
     }
     //employee login authenticated
-    if (formKey ==="employeeLogin") {
+    if (formKey === "employeeLogin") {
       delete payload.ResponseInfo;
       dispatch(authenticated(payload));
     }
@@ -43,7 +43,7 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     // use a flag reset true or false
-    if (formKey !== "login" && formKey !== "register" && formKey !== "profile" && formKey!=="employeeLogin") {
+    if (formKey !== "login" && formKey !== "register" && formKey !== "profile" && formKey !== "employeeLogin") {
       dispatch(resetForm(formKey));
     }
 

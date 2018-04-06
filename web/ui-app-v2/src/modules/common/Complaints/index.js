@@ -141,81 +141,85 @@ const getStatusAndChangeColor = (status, assignee) => {
   return statusObj;
 };
 
-const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role }) => {
-  return complaints.map((complaint, complaintIndex) => {
-    const complaintHeader =
-      "SERVICEDEFS.SERVICENAME." +
-      complaint.header
-        .match(/\w+/g)
-        .join("_")
-        .toUpperCase();
-    return (
-      <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
-        <Card
-          onClick={(e) => {
-            setRoute(`/citizen/complaint-details/${encodeURIComponent(complaint.complaintNo)}`);
-          }}
-          className="complaint-card"
-          textChildren={
-            <div className="complaint-card-wrapper">
-              <div className="complaint-header-cont">
-                <Label
-                  className="complaint-header text-bold dark-color"
-                  fontSize="16px"
-                  dark={true}
-                  bold={true}
-                  label={complaintHeader}
-                  containerStyle={{ width: "80%" }}
-                  labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
-                />
+const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role, onComplaintClick }) => {
+  return (
+    complaints &&
+    complaints.map((complaint, complaintIndex) => {
+      const complaintHeader =
+        complaint.header &&
+        "SERVICEDEFS.SERVICENAME." +
+          complaint.header
+            .match(/\w+/g)
+            .join("_")
+            .toUpperCase();
+      return (
+        <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
+          <Card
+            onClick={(e) => {
+              onComplaintClick(encodeURIComponent(complaint.complaintNo));
+            }}
+            className="complaint-card"
+            textChildren={
+              <div className="complaint-card-wrapper">
+                <div className="complaint-header-cont">
+                  <Label
+                    className="complaint-header text-bold dark-color"
+                    fontSize="16px"
+                    dark={true}
+                    bold={true}
+                    label={complaintHeader ? complaintHeader : "Default"}
+                    containerStyle={{ width: "80%" }}
+                    labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
+                  />
 
-                <Label
-                  className="complaint-status-text text-bold"
-                  labelStyle={{ letterSpacing: 0.7, ...getStatusAndChangeColor(complaint.status.status).style }}
-                  label={complaint.status.status}
-                />
-              </div>
-              <div className="complaint-date-cont">
-                <Icon action="action" name="date-range" />
-                <span className="complaint-date">{complaint.date}</span>
-              </div>
-              <div className="complaint-number-cont">
-                <div className="complaint-number complaint-date">
-                  <Label fontSize="12px" label={"CS_COMMON_COMPLAINT_NO"} />
-                  <Label fontSize="12px" label={" : "} />
-                  <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
+                  <Label
+                    className="complaint-status-text text-bold"
+                    labelStyle={{ letterSpacing: 0.7, ...getStatusAndChangeColor(complaint.status.status).style }}
+                    label={complaint.status.status}
+                  />
                 </div>
-              </div>
-              {complaintLocation && (
-                <div className="complaint-address-cont">
-                  <Icon action="maps" name="place" style={{ height: 14, width: 14, marginRight: 5 }} color={"#767676"} />
-                  <Label fontSize="12px" label={complaint.address} className="complaint-address" />
+                <div className="complaint-date-cont">
+                  <Icon action="action" name="date-range" />
+                  <span className="complaint-date">{complaint.date}</span>
                 </div>
-              )}
-              <div className="complaint-image-cont">
-                {complaint.images.map((image, index) => {
-                  return (
-                    image && (
-                      <div className="complaint-image-wrapper" key={index}>
-                        <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
-                      </div>
-                    )
-                  );
-                })}
-              </div>
-              {role === "citizen" && (
-                <div className="complaint-status-cont">
-                  <Label label={"CS_HOME_STATUS_PREFIX"} />
-                  <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
+                <div className="complaint-number-cont">
+                  <div className="complaint-number complaint-date">
+                    <Label fontSize="12px" label={"CS_COMMON_COMPLAINT_NO"} />
+                    <Label fontSize="12px" label={" : "} />
+                    <Label fontSize="12px" label={complaint.complaintNo} className="complaint-complaint-number" />
+                  </div>
                 </div>
-              )}
-              {bottomInfoTemplate(complaint, role)}
-            </div>
-          }
-        />
-      </div>
-    );
-  });
+                {complaintLocation && (
+                  <div className="complaint-address-cont">
+                    <Icon action="maps" name="place" style={{ height: 14, width: 14, marginRight: 5 }} color={"#767676"} />
+                    <Label fontSize="12px" label={complaint.address} className="complaint-address" />
+                  </div>
+                )}
+                <div className="complaint-image-cont">
+                  {complaint.images.map((image, index) => {
+                    return (
+                      image && (
+                        <div className="complaint-image-wrapper" key={index}>
+                          <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image.source} />{" "}
+                        </div>
+                      )
+                    );
+                  })}
+                </div>
+                {role === "citizen" && (
+                  <div className="complaint-status-cont">
+                    <Label label={"CS_HOME_STATUS_PREFIX"} />
+                    <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
+                  </div>
+                )}
+                {bottomInfoTemplate(complaint, role)}
+              </div>
+            }
+          />
+        </div>
+      );
+    })
+  );
 };
 
 export default Complaints;
