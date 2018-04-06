@@ -1,9 +1,10 @@
 import set from "lodash/set";
 
 export const validateField = (field) => {
-  const { required, pattern } = field;
+  const { required, pattern, minLength, maxLength, minValue, maxValue } = field;
 
   const value = field.value || "";
+  const fieldLength = value.length;
   let errorText = "",
     isFieldValid = true;
 
@@ -11,10 +12,18 @@ export const validateField = (field) => {
     isFieldValid = false;
     errorText = field.requiredMessage;
   }
-  if (isFieldValid && (pattern && !new RegExp(pattern).test(value))) {
+
+  if (pattern && !new RegExp(pattern).test(value)) {
     isFieldValid = false;
-    errorText = field.errorMessage;
   }
+  if (minLength && maxLength && !(fieldLength >= minLength && fieldLength <= maxLength)) {
+    isFieldValid = false;
+  }
+  if (minValue && maxValue && !(value >= minValue && value <= maxValue)) {
+    isFieldValid = false;
+  }
+
+  errorText = !isFieldValid ? (!errorText.length ? field.errorMessage : "") : "";
 
   return { isFieldValid, errorText };
 };
