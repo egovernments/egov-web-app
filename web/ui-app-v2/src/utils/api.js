@@ -55,13 +55,13 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
-    } else {
-      apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
     const { data, status } = error.response;
     if (status == 400 && data == "") {
       apiError = "INVALID_TOKEN";
+    } else {
+      apiError = data.hasOwnProperty("error") && data.error.fields && data.error.fields.length ? data.error.fields[0].message : apiError;
     }
   }
   // unhandled error
@@ -122,11 +122,13 @@ export const loginRequest = async (username, password) => {
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;
-    } else {
-      apiError = response.hasOwnProperty("Errors") && response.Errors.length ? response.Errors[0].message : apiError;
     }
   } catch (error) {
-    apiError = error;
+    const { data, status } = error.response;
+    if (status === 400) {
+      apiError = data.hasOwnProperty("error") && data.error.fields && data.error.fields.length ? data.error.fields[0].message : apiError;
+    }
   }
+
   throw new Error(apiError);
 };

@@ -30,6 +30,7 @@ import InfoTable from "./InfoTable";
 import ImageModal from "./ImageModal";
 import UploadDrawer from "./UploadDrawer";
 import RadioButton from "./RadioButton";
+import Toast from "./Toast";
 
 export {
   Label,
@@ -64,4 +65,5 @@ export {
   ImageModal,
   UploadDrawer,
   RadioButton,
+  Toast,
 };

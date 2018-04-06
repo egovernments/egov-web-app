@@ -4,8 +4,7 @@ body {
 
 body,
 body p,
-body div,
-body span {
+body div {
   color: #767676;
   font-size: 14px;
   font-weight: 400;

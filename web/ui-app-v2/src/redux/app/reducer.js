@@ -11,11 +11,10 @@ const initialState = {
   route: "",
   locale,
   previousRoute: "",
-  toster: {
-    msg: "",
-    status: false,
-    isSuccess: false,
-    isError: false,
+  toast: {
+    message: "",
+    open: false,
+    error: true,
   },
   showToster: false,
   localizationLabels,
@@ -36,11 +35,10 @@ const appReducer = (state = initialState, action) => {
     case actionTypes.SHOW_TOAST:
       return {
         ...state,
-        toster: {
-          msg: action.msg,
-          status: action.snackbarState,
-          isSuccess: action.isSuccess || false,
-          isError: action.isError || false,
+        toast: {
+          message: action.message,
+          open: action.open,
+          error: action.error,
         },
       };
     default:

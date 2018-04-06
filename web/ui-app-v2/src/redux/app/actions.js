@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import { LOCALATION } from "../../utils/endPoints";
-import { httpRequest } from "../../utils/api";
+import { LOCALATION } from "utils/endPoints";
+import { httpRequest } from "utils/api";
 
 export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
@@ -12,14 +12,13 @@ const setLocalizationLabels = (locale, localizationLabels) => {
   return { type: actionTypes.ADD_LOCALIZATION, locale, localizationLabels };
 };
 
-export const toggleSnackbarAndSetText = (status, msg, isSuccess, isError) => (dispatch) => {
-  dispatch({
+export const toggleSnackbarAndSetText = (open, message, error) => {
+  return {
     type: actionTypes.SHOW_TOAST,
-    status,
-    msg,
-    isSuccess,
-    isError,
-  });
+    open,
+    message,
+    error,
+  };
 };
 
 export const fetchLocalizationLabel = (locale) => {
@@ -28,7 +27,7 @@ export const fetchLocalizationLabel = (locale) => {
       const payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
         { key: "module", value: "rainmaker-pgr" },
         { key: "locale", value: locale },
-        { key: "tenantId", value: "default" }
+        { key: "tenantId", value: "default" },
       ]);
 
       dispatch(setLocalizationLabels(locale, payload.messages));

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
+import { Toast } from "components";
 import { addBodyClass, removeBodyClass } from "utils/commons";
 import { fetchLocalizationLabel, toggleSnackbarAndSetText } from "redux/app/actions";
 import { fetchCities } from "redux/common/actions";
-import Snackbar from "material-ui/Snackbar";
 import Router from "./Router";
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
       const { pathname: nextPath } = location;
       removeBodyClass(currentPath);
       addBodyClass(nextPath);
-      // clear any toasters
+      props.toggleSnackbarAndSetText(false, "");
     });
 
     addBodyClass(currentPath);
@@ -24,6 +24,7 @@ class App extends Component {
 
   componentDidMount() {
     const { fetchLocalizationLabel, fetchCities, locale } = this.props;
+    // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchCities();
   }
@@ -37,27 +38,11 @@ class App extends Component {
   }
 
   render() {
-    const { toast, toggleSnackbarAndSetText } = this.props;
-
+    const { toast } = this.props;
     return (
       <div>
         <Router />
-        {toast &&
-          toast.msg && (
-            <Snackbar
-              open={toast.status}
-              message={toast.msg}
-              style={{ pointerEvents: "none", whiteSpace: "nowrap" }}
-              bodyStyle={{
-                pointerEvents: "initial",
-                maxWidth: "none",
-                backgroundColor: toast.isSuccess ? "#3ca23c" : toast.isError ? "#e83e36" : "rgb(95, 92, 98)",
-                textAlign: "center",
-              }}
-              autoHideDuration={6000}
-              onRequestClose={() => toggleSnackbarAndSetText(false, "", false, false)}
-            />
-          )}
+        {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
       </div>
     );
   }
@@ -68,12 +53,12 @@ const mapStateToProps = (state) => {
   return { route, toast };
 };
 
-const dispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
-    toggleSnackbarAndSetText: (status, msg, isSuccess, isError) => dispatch(fetchLocalizationLabel(status, msg, isSuccess, isError)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fetchCities: () => dispatch(fetchCities()),
   };
 };
 
-export default withRouter(connect(mapStateToProps, dispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
