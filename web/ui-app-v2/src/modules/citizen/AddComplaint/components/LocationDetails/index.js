@@ -29,6 +29,7 @@ const LocationDetailsCard = ({ locationDetails, landmark, onChange, locationOnCl
                 name="landmark-details"
                 isRequired={false}
                 fullWidth={true}
+                maxLength="100"
               />
             </div>
           </div>

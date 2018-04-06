@@ -42,11 +42,12 @@ class ComplaintType extends Component {
     return results.map((result) => {
       const listItem = {};
       const groupName =
-        "SERVICEDEFS.SERVICENAME." +
-        result.text
-          .match(/\w+/g)
-          .join("_")
-          .toUpperCase();
+        result.text &&
+        "SERVICEDEFS.KEYWORDS." +
+          result.text
+            .match(/\w+/g)
+            .join("_")
+            .toUpperCase();
 
       listItem.primaryText = <Label label={groupName} />;
       listItem.id = result.id;
@@ -61,12 +62,7 @@ class ComplaintType extends Component {
         listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
         listItem.nestedItems = result.nestedItems.map((nestedItem) => {
           const item = {};
-          const serviceName =
-            "SERVICEDEFS.SERVICENAME." +
-            nestedItem.text
-              .match(/\w+/g)
-              .join("_")
-              .toUpperCase();
+          const serviceName = nestedItem.id && "SERVICEDEFS.SERVICECODE." + nestedItem.id.toUpperCase();
           item.primaryText = <Label label={serviceName} />;
           item.id = nestedItem.id;
           if (nestedItem.hasOwnProperty("icon") && nestedItem.icon) {

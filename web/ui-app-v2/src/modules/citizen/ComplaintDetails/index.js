@@ -89,7 +89,7 @@ const fetchImages = (actionArray) => {
   actionArray.forEach((action, index) => {
     action.media && imageArray.push(action.media);
   });
-  return imageArray[0] ? imageArray[0] : null;
+  return imageArray[0] ? imageArray[0] : [];
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -104,11 +104,13 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).map((imageSource, index) => {
-        var imageExtension = imageSource
-          .split("?")[0]
-          .split(".")
-          .pop();
-        return imageExtension === "png" || imageExtension === "jpg" ? imageSource : "";
+        if (imageSource) {
+          var imageExtension = imageSource
+            .split("?")[0]
+            .split(".")
+            .pop();
+          return imageExtension === "png" || imageExtension === "jpg" ? imageSource : "";
+        }
       }),
     };
     let timeLine = [];

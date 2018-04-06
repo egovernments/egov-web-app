@@ -41,12 +41,7 @@ class Details extends Component {
       }
     }
 
-    const titleKey =
-      "SERVICEDEFS.SERVICENAME." +
-      complaint
-        .match(/\w+/g)
-        .join("_")
-        .toUpperCase();
+    const titleKey = complaint && "SERVICEDEFS.SERVICECODE." + complaint.toUpperCase();
     return (
       <div>
         <Card
