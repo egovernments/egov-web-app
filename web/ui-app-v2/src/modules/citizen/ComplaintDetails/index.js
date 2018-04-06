@@ -68,7 +68,7 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { status, details, comments } = this.state;
+    let { details, comments } = this.state;
     return (
       <Screen>
         {complaint && (

@@ -7,7 +7,7 @@ import commonConfig from "config/common";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
-const API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
+//const API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
 
 const MapLocation = compose(
   withProps({

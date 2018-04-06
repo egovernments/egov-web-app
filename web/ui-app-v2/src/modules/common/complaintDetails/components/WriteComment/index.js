@@ -1,6 +1,5 @@
 import React from "react";
-import { List, Icon, TextArea } from "../../../../../components";
-import MaterialUITextField from "material-ui/TextField";
+import { Icon, TextArea } from "../../../../../components";
 import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
 import Label from "utils/translationNode";
@@ -22,7 +21,6 @@ const textFieldStyle = {
   backgroundColor: "#f2f2f2",
   display: "flex",
   alignItems: "center",
-  border: "none",
   border: "solid 1px #e6e6e6",
   fontSize: "14px",
 };

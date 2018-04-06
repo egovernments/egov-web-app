@@ -3,10 +3,6 @@ import { Button } from "../../../../../components";
 import "./index.css";
 
 class ActionButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let { btnOneLabel, btnOneOnClick, btnTwoLabel, btnTwoOnClick } = this.props;
     return (

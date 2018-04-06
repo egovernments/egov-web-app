@@ -52,9 +52,7 @@ class Feedback extends Component {
 
   render() {
     let { value } = this.state;
-    const { formConfig } = this;
     const { form } = this.props;
-    const { name: formKey } = formConfig;
     const { fields, submit } = form;
     let textArea;
     if (fields) {

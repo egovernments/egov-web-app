@@ -7,7 +7,7 @@ import Avatar from "material-ui/Avatar";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
 import faceTwo from "../../../../../assets/images/faceTwo.jpg";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
 
@@ -63,7 +63,7 @@ class Comments extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     let { initForm, selectedComplaint } = this.props;
-    if (!isEqual(nextProps.selectedComplaint, this.props.selectedComplaint)) {
+    if (!isEqual(nextProps.selectedComplaint, selectedComplaint)) {
       initForm(this.formConfig);
     }
   };

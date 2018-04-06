@@ -16,7 +16,7 @@ const intialState = {
 };
 
 const auth = (state = intialState, action) => {
-  const { type, field } = action;
+  const { type } = action;
 
   switch (type) {
     case actionTypes.USER_SEARCH_SUCCESS:
