@@ -23,7 +23,7 @@ export const validateField = (field) => {
     isFieldValid = false;
   }
 
-  errorText = !isFieldValid ? (!errorText.length ? field.errorMessage : "") : "";
+  errorText = !isFieldValid ? (errorText.length ? errorText : field.errorMessage) : "";
 
   return { isFieldValid, errorText };
 };
