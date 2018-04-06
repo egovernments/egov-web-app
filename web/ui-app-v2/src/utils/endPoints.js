@@ -49,3 +49,10 @@ export const USER = {
     ACTION: "create",
   },
 };
+
+export const OTP = {
+  RESEND: {
+    URL: "/user-otp/v1/_send",
+    ACTION: "_send",
+  },
+};

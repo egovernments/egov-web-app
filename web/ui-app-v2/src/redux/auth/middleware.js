@@ -1,4 +1,4 @@
-import { logout } from "redux/auth/actions";
+import { refreshTokenRequest } from "redux/auth/actions";
 import { setRoute } from "redux/app/actions";
 
 const auth = (store) => (next) => (action) => {
@@ -10,8 +10,7 @@ const auth = (store) => (next) => (action) => {
   if (/(_ERROR|_FAILURE)$/.test(type)) {
     const { error } = action;
     if (error === "INVALID_TOKEN") {
-      // call refresh token flow here instead of logout
-      dispatch(logout());
+      dispatch(refreshTokenRequest());
       return;
     }
   }

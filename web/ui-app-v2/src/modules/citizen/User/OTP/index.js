@@ -4,6 +4,7 @@ import Banner from "modules/common/Banner";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
+import { sendOTP } from "redux/auth/actions";
 
 class OTP extends Component {
   constructor(props) {
@@ -35,13 +36,19 @@ class OTP extends Component {
     otpElement.removeEventListener("smsReceived", null);
   }
 
+  resendOTP = () => {
+    const { sendOTP, intent } = this.props;
+    sendOTP(intent);
+  };
+
   render() {
     const { form, handleFieldChange, submitForm, phoneNumber } = this.props;
+    const { resendOTP } = this;
     const { name: formKey } = this.formConfig;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <OTPForm submitForm={submitForm} form={form} formKey={formKey} phoneNumber={phoneNumber} onChange={handleFieldChange} />
+        <OTPForm submitForm={submitForm} resendOTP={resendOTP} form={form} formKey={formKey} phoneNumber={phoneNumber} onChange={handleFieldChange} />
       </Banner>
     );
   }
@@ -51,12 +58,12 @@ const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
   const { previousRoute } = state.app;
-  const previousForm = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
+  const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
   let phoneNumber = null;
-  if (previousForm) {
-    phoneNumber = state.form[previousForm].fields.phone.value;
+  if (intent) {
+    phoneNumber = state.form[intent].fields.phone.value;
   }
-  return { form, previousRoute, phoneNumber };
+  return { form, previousRoute, intent, phoneNumber };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -65,6 +72,7 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
     setRoute: (route) => dispatch(setRoute(route)),
+    sendOTP: (otp) => dispatch(sendOTP(otp)),
   };
 };
 

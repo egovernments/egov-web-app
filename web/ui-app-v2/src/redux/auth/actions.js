@@ -1,7 +1,8 @@
 import * as authType from "./actionTypes";
-import { httpRequest } from "utils/api";
-import { AUTH, USER } from "utils/endPoints";
-import { setRoute } from "../app/actions";
+import { httpRequest, loginRequest } from "utils/api";
+import { AUTH, USER, OTP } from "utils/endPoints";
+import { prepareFormData } from "utils/commons";
+import { toggleSnackbarAndSetText } from "../app/actions";
 
 export const userProfileUpdated = (payload) => {
   const user = payload.user[0];
@@ -24,6 +25,10 @@ export const searchUserError = (error) => {
   return { type: authType.USER_SEARCH_ERROR, error };
 };
 
+export const authenticating = () => {
+  return { type: authType.AUTHENTICATING };
+};
+
 export const authenticated = (payload) => {
   const userInfo = payload["UserRequest"];
   const accessToken = payload.access_token;
@@ -41,6 +46,10 @@ export const authenticated = (payload) => {
   return { type: authType.AUTHENTICATED, userInfo, accessToken };
 };
 
+export const authenticationFailed = () => {
+  return { type: authType.AUTHENTICATION_FAILED };
+};
+
 export const searchUser = () => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -48,7 +57,6 @@ export const searchUser = () => {
     try {
       const user = await httpRequest(USER.SEARCH.URL, USER.SEARCH.ACTION, [], { userName, tenantId });
       delete user.responseInfo;
-      //
       dispatch(searchUserSuccess(user));
     } catch (error) {
       dispatch(searchUserError(error.message));
@@ -56,9 +64,29 @@ export const searchUser = () => {
   };
 };
 
-export const otp = (intent) => {};
+export const refreshTokenRequest = () => {
+  return async (dispatch) => {
+    const refreshToken = window.localStorage.getItem("refresh-token");
+    const grantType = "refresh-token";
+    try {
+      const response = loginRequest(null, null, refreshToken, grantType);
+      delete response.ResponseInfo;
+      dispatch(authenticated(response));
+    } catch (error) {
+      dispatch(logout());
+    }
+  };
+};
 
-export const login = () => {};
+// in future if you want to keep a track the number of times otp is sent
+export const sendOTP = (intent) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const form = state.form[intent];
+    const formData = prepareFormData(form);
+    const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
+  };
+};
 
 export const logout = () => async (dispatch) => {
   try {

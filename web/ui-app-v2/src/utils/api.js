@@ -100,7 +100,7 @@ export const uploadFile = async (endPoint, module, file) => {
   }
 };
 
-export const loginRequest = async (username, password) => {
+export const loginRequest = async (username, password, refreshToken, grantType = "password") => {
   const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
   const loginInstance = axios.create({
     baseURL: window.location.origin,
@@ -112,11 +112,13 @@ export const loginRequest = async (username, password) => {
 
   let apiError = "Api Error";
   var params = new URLSearchParams();
-  params.append("username", username);
-  params.append("password", password);
-  params.append("grant_type", "password");
+  username && params.append("username", username);
+  password && params.append("password", password);
+  refreshToken && params.append("refresh-token", refreshToken);
+  params.append("grant_type", grantType);
   params.append("scope", "read");
   params.append("tenantId", tenantId);
+
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
     const responseStatus = parseInt(response.status, 10);

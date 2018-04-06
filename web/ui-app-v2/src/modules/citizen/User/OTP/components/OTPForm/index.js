@@ -3,7 +3,7 @@ import { Button, TextField, Card } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const OTP = ({ formKey, form, onChange, phoneNumber, submitForm }) => {
+const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) => {
   const fields = form.fields || {};
   const submit = form.submit;
 
@@ -19,7 +19,9 @@ const OTP = ({ formKey, form, onChange, phoneNumber, submitForm }) => {
             <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} type={"number"} />
             <div style={{ marginBottom: "24px" }} className="text-right">
               <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
-              <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
+              <span style={{ cursor: "pointer" }} onClick={() => resendOTP()}>
+                <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
+              </span>
             </div>
             <Button onClick={() => submitForm(formKey)} {...submit} primary={true} fullWidth={true} />
           </form>

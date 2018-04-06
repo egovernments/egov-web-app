@@ -1,4 +1,4 @@
-import { prepareFormData } from "../../../utils/commons";
+import { prepareFormData } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
   const { previousRoute } = state.app;
