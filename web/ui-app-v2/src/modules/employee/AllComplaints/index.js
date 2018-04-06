@@ -237,7 +237,7 @@ class AllComplaints extends Component {
             children: (
               <Screen>
                 <div className="tab2-content">
-                  <Complaints onComplaintClick={onComplaintClick} complaints={employeeComplaints} complaintLocation={true} role={role} />
+                  <Complaints onComplaintClick={onComplaintClick} complaints={assignedComplaints} complaintLocation={true} role={role} />
                 </div>
               </Screen>
             ),
@@ -246,7 +246,7 @@ class AllComplaints extends Component {
       />
     ) : (
       <Screen>
-        <Complaints onComplaintClick={onComplaintClick} complaints={assignedComplaints} role={role} complaintLocation={true} />
+        <Complaints onComplaintClick={onComplaintClick} complaints={employeeComplaints} role={role} complaintLocation={true} />
       </Screen>
     );
   }
@@ -326,19 +326,9 @@ const mapStateToProps = (state) => {
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
     };
   });
-  const assignedComplaints = isAssigningOfficer(userInfo.roles)
-    ? transformedComplaints.filter((complaint) => {
-        return complaint.complaintStatus === "ASSIGNED";
-      })
-    : transformedComplaints;
-  const unassignedComplaints = isAssigningOfficer(userInfo.roles)
-    ? transformedComplaints.filter((complaint) => {
-        return complaint.complaintStatus === "UNASSIGNED";
-      })
-    : transformedComplaints;
-  const employeeComplaints = transformedComplaints.filter((complaint) => {
-    return (complaint.complaintStatus = "ASSIGNED");
-  });
+  const assignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
+  const unassignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED");
+  const employeeComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
 };
 
