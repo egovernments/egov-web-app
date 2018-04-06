@@ -117,7 +117,6 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    console.log(transformedComplaint);
     return { transformedComplaint };
   } else {
     return { transformedComplaint: {} };

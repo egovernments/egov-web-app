@@ -16,8 +16,14 @@ class MyComplaints extends Component {
     fetchComplaints([]);
   };
 
+  onComplaintClick = (complaintNo) => {
+    let { setRoute } = this.props;
+    setRoute(`/citizen/complaint-details/${complaintNo}`);
+  };
+
   render() {
     let { setRoute, transformedComplaints, history } = this.props;
+    let { onComplaintClick } = this;
     return (
       <div className="complaints-main-container clearfix">
         {this.props.complaints.loading ? (
@@ -41,7 +47,14 @@ class MyComplaints extends Component {
           </div>
         ) : (
           <Screen>
-            <Complaints setRoute={setRoute} complaints={transformedComplaints} onClick={this.imageOnClick} track={true} role={"citizen"} />
+            <Complaints
+              onComplaintClick={onComplaintClick}
+              setRoute={setRoute}
+              complaints={transformedComplaints}
+              onClick={this.imageOnClick}
+              track={true}
+              role={"citizen"}
+            />
           </Screen>
         )}
         <div className="floating-button-cont">

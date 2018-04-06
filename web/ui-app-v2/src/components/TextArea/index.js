@@ -43,6 +43,7 @@ const TextAreaUi = ({
       underlineShow={underlineShow}
       underlineStyle={underlineStyle}
       underlineFocusStyle={underlineFocusStyle}
+      value={value}
     />
   );
 };

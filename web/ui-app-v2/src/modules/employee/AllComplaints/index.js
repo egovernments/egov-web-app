@@ -9,6 +9,7 @@ import Potholes_1 from "../../../assets/images/Potholes_1.png";
 import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
+import { setRoute } from "redux/app/actions";
 import { transformById, getDateFromEpoch, mapCompIDToName } from "utils/commons";
 import { connect } from "react-redux";
 import "./index.css";
@@ -205,11 +206,17 @@ class AllComplaints extends Component {
     console.log(label);
   };
 
+  onComplaintClick = (complaintNo) => {
+    let { setRoute } = this.props;
+    setRoute(`/employee/complaint-details/${complaintNo}`);
+  };
+
   render() {
     const tabStyle = {
       letterSpacing: "0.6px",
     };
-    const { assignedComplaints, unassignedComplaints, userInfo, role } = this.props;
+    const { onComplaintClick } = this;
+    const { assignedComplaints, unassignedComplaints, userInfo, employeeComplaints, role } = this.props;
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
@@ -220,7 +227,7 @@ class AllComplaints extends Component {
             children: (
               <Screen>
                 <div className="tab1-content">
-                  <Complaints complaints={unassignedComplaints} complaintLocation={true} role={role} />
+                  <Complaints onComplaintClick={onComplaintClick} complaints={unassignedComplaints} complaintLocation={true} role={role} />
                 </div>
               </Screen>
             ),
@@ -230,7 +237,7 @@ class AllComplaints extends Component {
             children: (
               <Screen>
                 <div className="tab2-content">
-                  <Complaints complaints={assignedComplaints} complaintLocation={true} role={role} />
+                  <Complaints onComplaintClick={onComplaintClick} complaints={employeeComplaints} complaintLocation={true} role={role} />
                 </div>
               </Screen>
             ),
@@ -239,7 +246,7 @@ class AllComplaints extends Component {
       />
     ) : (
       <Screen>
-        <Complaints complaints={assignedComplaints} role={role} complaintLocation={true} />
+        <Complaints onComplaintClick={onComplaintClick} complaints={assignedComplaints} role={role} complaintLocation={true} />
       </Screen>
     );
   }
@@ -280,15 +287,31 @@ const isAssigningOfficer = (roles) => {
   return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
 };
 
+const displayStatus = (status = "", assignee) => {
+  let statusObj = {};
+  if (status.toLowerCase() == "closed") {
+    statusObj.status = "CS_COMMON_CLOSED_UCASE";
+  } else {
+    statusObj.status = "CS_COMMON_OPEN_UCASE";
+  }
+  if (status.toLowerCase() == "open") {
+    statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
+  } else {
+    statusObj.statusMessage = `CS_COMMON_${status.toUpperCase()}`;
+  }
+
+  return statusObj;
+};
+
 const mapStateToProps = (state) => {
   const { complaints } = state;
   const { userInfo } = state.auth;
-  const role = isAssigningOfficer(userInfo.UserRequest.roles) ? "ao" : "employee";
+  const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
       date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
-      status: complaintDetail.actions[0].status,
+      status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).map((imageSource, index) => {
         return imageSource &&
@@ -303,22 +326,26 @@ const mapStateToProps = (state) => {
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
     };
   });
-  const assignedComplaints = isAssigningOfficer(userInfo.UserRequest.roles)
+  const assignedComplaints = isAssigningOfficer(userInfo.roles)
     ? transformedComplaints.filter((complaint) => {
         return complaint.complaintStatus === "ASSIGNED";
       })
     : transformedComplaints;
-  const unassignedComplaints = isAssigningOfficer(userInfo.UserRequest.roles)
+  const unassignedComplaints = isAssigningOfficer(userInfo.roles)
     ? transformedComplaints.filter((complaint) => {
         return complaint.complaintStatus === "UNASSIGNED";
       })
     : transformedComplaints;
-  return { userInfo, assignedComplaints, unassignedComplaints, role };
+  const employeeComplaints = transformedComplaints.filter((complaint) => {
+    return (complaint.complaintStatus = "ASSIGNED");
+  });
+  return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 
