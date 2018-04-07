@@ -83,7 +83,7 @@ export const sendOTP = (intent) => {
     const state = getState();
     const form = state.form[intent];
     const formData = prepareFormData(form);
-    //const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
+    const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
   };
 };
 
