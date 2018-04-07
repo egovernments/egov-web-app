@@ -18,17 +18,11 @@ const formSubmit = (store) => (next) => (action) => {
     const state = store.getState();
     let { redirectionRoute, idJsonPath, toast } = state.form[formKey];
 
-    // for login/submit
+    // for login/register flow
     if (formKey === "otp") {
-      const { previousRoute } = state.app;
       redirectionRoute = "/citizen";
-
-      if (previousRoute.endsWith("register")) {
-        redirectionRoute = "/citizen/user/login";
-      } else {
-        delete payload.ResponseInfo;
-        dispatch(authenticated(payload));
-      }
+      delete payload.ResponseInfo;
+      dispatch(authenticated(payload));
     }
     //employee login authenticated
     if (formKey === "employeeLogin") {

@@ -2,17 +2,12 @@ import { refreshTokenRequest } from "redux/auth/actions";
 
 const auth = (store) => (next) => (action) => {
   const { type } = action;
-  //const state = store.getState();
-  const dispatch = store.dispatch;
 
-  if (/(_ERROR|_FAILURE)$/.test(type)) {
-    const { error } = action;
-    if (error === "INVALID_TOKEN") {
-      dispatch(refreshTokenRequest());
-      return;
-    }
+  if (/(_ERROR|_FAILURE)$/.test(type) && action.error === "INVALID_TOKEN") {
+    store.dispatch(refreshTokenRequest());
+  } else {
+    next(action);
   }
-  next(action);
 };
 
 export default auth;

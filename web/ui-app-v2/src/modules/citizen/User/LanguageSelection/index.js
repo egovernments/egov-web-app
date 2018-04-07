@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "modules/common/Banner";
 import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
-import { setRoute, fetchLocalizationLabel } from "redux/app/actions";
+import { fetchLocalizationLabel } from "redux/app/actions";
 
 class LanguageSelection extends Component {
   state = {
@@ -29,7 +29,7 @@ class LanguageSelection extends Component {
   };
 
   onLanguageSelect = () => {
-    this.props.setRoute("/citizen/user/register");
+    this.props.history.push("/citizen/user/register");
   };
 
   render() {
@@ -47,7 +47,6 @@ class LanguageSelection extends Component {
 const dispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

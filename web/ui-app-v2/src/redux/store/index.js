@@ -6,11 +6,11 @@ import authMiddleware from "redux/auth/middleware";
 
 const middlewares = [];
 
+middlewares.push(authMiddleware);
 middlewares.push(translateFieldText);
 middlewares.push(validation);
 middlewares.push(formSubmit);
 middlewares.push(thunk);
-middlewares.push(authMiddleware);
 
 if (process.env.NODE_ENV === "development") {
   const { logger } = require("redux-logger");

@@ -32,7 +32,7 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
     const { route: currentRoute, history } = this.props;
-    if (nextRoute && currentRoute !== nextRoute) {
+    if (currentRoute !== nextRoute) {
       history.push(nextRoute);
     }
   }

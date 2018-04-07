@@ -66,9 +66,9 @@ export const searchUser = () => {
 export const refreshTokenRequest = () => {
   return async (dispatch) => {
     const refreshToken = window.localStorage.getItem("refresh-token");
-    const grantType = "refresh-token";
+    const grantType = "refresh_token";
     try {
-      const response = loginRequest(null, null, refreshToken, grantType);
+      const response = await loginRequest(null, null, refreshToken, grantType);
       delete response.ResponseInfo;
       dispatch(authenticated(response));
     } catch (error) {
@@ -87,15 +87,18 @@ export const sendOTP = (intent) => {
   };
 };
 
-export const logout = () => async (dispatch) => {
-  try {
-    await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: localStorage.getItem("token") }]);
-  } catch (error) {}
-  // whatever happenrs the client should clear the user details
-  const locale = localStorage.getItem("locale");
-  const localization = localStorage.getItem(`localization_${locale}`);
-  localStorage.clear();
-  localStorage.setItem("locale", locale);
-  localStorage.setItem("localization", localization);
-  dispatch({ type: authType.LOGOUT });
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      const authToken = localStorage.getItem("token");
+      const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
+    } catch (error) {}
+    // whatever happenrs the client should clear the user details
+    const locale = localStorage.getItem("locale");
+    const localization = localStorage.getItem(`localization_${locale}`);
+    localStorage.clear();
+    localStorage.setItem("locale", locale);
+    localStorage.setItem("localization", localization);
+    dispatch({ type: authType.LOGOUT });
+  };
 };
