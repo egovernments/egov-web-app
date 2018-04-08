@@ -1,48 +1,49 @@
+import complaintsDataSet from "./complaintsDataSet";
+import set from "lodash/set";
+
 export const getComplaintTypeData = (categories) => {
-  const groupedArr = groupSimilarCategory(Object.values(categories));
-  var categoryList = [];
-  categoryList = formCategories(groupedArr, categoryList);
-  return categoryList;
+  var categoryList = getAllServeceDefsInObj(categories);
+  var nestedCategoryList = getNestedObjFormat(categoryList, complaintsDataSet.categoryTypes);
+  return nestedCategoryList;
 };
 
-const formCategories = (groupedArr, categoryList) => {
-  groupedArr.map((item, index) => {
-    var categoryObj = {
-      id: index,
-      text: item[0].keywords,
+const getNestedObjFormat = (categoryList, categoryTypes) => {
+  categoryList.map((item) => {
+    var index = categoryTypes.dataSet.findIndex((x) => x.id === item.parent);
+    if (index > -1) {
+      var jP = item.jsonPath.replace(item.jsonPath.split(".")[0], `dataSet[${index}]`);
+      set(categoryTypes, jP, item);
+    } else {
+      categoryTypes.dataSet.push(item);
+    }
+  });
+  return categoryTypes.dataSet;
+};
+
+const formJsonPath = (menuPath) => {
+  var jsonPath = menuPath.split("[")[0];
+  if (menuPath.length > 0) {
+    var indexArr = menuPath.match(/\[.*?\]/g);
+    indexArr.length &&
+      indexArr.map((ind) => {
+        jsonPath = jsonPath + ".nestedItems" + ind;
+      });
+  }
+  return jsonPath;
+};
+
+const getAllServeceDefsInObj = (categories) => {
+  var categoryList = [];
+  Object.values(categories).map((item, index) => {
+    var catObj = {
+      id: item.serviceCode,
+      text: item.serviceCode,
       nestedItems: [],
+      icon: { action: "custom", name: "accumulation-of-litter" },
+      parent: item.menuPath.split("[").shift(),
+      jsonPath: formJsonPath(item.menuPath),
     };
-    item.map((i, ind) => {
-      var subCategoryObj = {
-        id: i.serviceCode,
-        text: i.serviceName,
-        icon: { action: "custom", name: "accumulation-of-litter" },
-      };
-      categoryObj.nestedItems.push(subCategoryObj);
-    });
-    categoryList.push(categoryObj);
+    categoryList.push(catObj);
   });
   return categoryList;
-};
-
-const groupSimilarCategory = (categories) => {
-  return groupBy(categories, "keywords");
-};
-
-const groupBy = (collection, property) => {
-  var i = 0,
-    val,
-    index,
-    values = [],
-    result = [];
-  for (; i < collection.length; i++) {
-    val = collection[i][property];
-    index = values.indexOf(val);
-    if (index > -1) result[index].push(collection[i]);
-    else {
-      values.push(val);
-      result.push([collection[i]]);
-    }
-  }
-  return result;
 };
