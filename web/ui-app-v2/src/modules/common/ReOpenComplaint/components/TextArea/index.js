@@ -9,7 +9,7 @@ const hintStyle = {
   letterSpacing: "0.3px",
 };
 
-const TextAreaUi = ({ onChange, hintText }) => {
+const TextAreaUi = ({ onChange, hintText, value }) => {
   return (
     <TextArea
       id="reopencomplaint-comment-field"
@@ -20,6 +20,7 @@ const TextAreaUi = ({ onChange, hintText }) => {
       underlineShow={true}
       underlineStyle={{ borderColor: "#e0e0e0" }}
       underlineFocusStyle={{ borderColor: "#e0e0e0" }}
+      value={value}
     />
   );
 };

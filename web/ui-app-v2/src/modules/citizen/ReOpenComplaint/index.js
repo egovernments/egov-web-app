@@ -7,6 +7,7 @@ import Question from "modules/common/ReOpenComplaint/components/Question";
 import TextArea from "modules/common/ReOpenComplaint/components/TextArea";
 import Label from "utils/translationNode";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
 import "./index.css";
 
@@ -20,6 +21,8 @@ class ReOpenComplaint extends Component {
     this.formConfig = require("config/forms/reopenComplaint").default;
   }
   componentDidMount() {
+    let { fetchComplaints, match } = this.props;
+    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     this.props.initForm(this.formConfig);
   }
 
@@ -75,7 +78,7 @@ class ReOpenComplaint extends Component {
           <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
         </div>
         <div className="reopencomplaint-textArea">
-          <TextArea onChange={handleCommentChange} {...textarea} />
+          <TextArea onChange={handleCommentChange} {...textarea} value={this.commentsValue.textVal} />
         </div>
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reopencomplaint-button">
           <Button {...submitprops} primary={true} fullWidth={true} onClick={handleComplaintSubmit} />
@@ -95,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
     fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
 

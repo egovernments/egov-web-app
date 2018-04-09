@@ -1,76 +1,115 @@
 import React, { Component } from "react";
-import UploadDrawer from "../../../common/User/components/UploadDrawer";
-import ProfileSection from "../../../common/User/components/ProfileSection";
-import ProfileForm from "../../../common/User/components/ProfileForm";
-import Screen from "../../../common/Screen";
-import img from "../../../../assets/images/people.png";
+import { connect } from "react-redux";
+import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
+import { fileUpload, removeFile } from "redux/form/actions";
+import UploadDrawer from "modules/common/User/components/UploadDrawer";
+import ProfileSection from "modules/common/User/components/ProfileSection";
+import ProfileForm from "./components/ProfileForm";
+import Screen from "modules/common/Screen";
+import img from "assets/people1.png";
 import "./index.css";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Jaswinder",
-      emailId: "abc@gmail.com",
-      city: 1,
       openUploadSlide: false,
-      img: img,
     };
+    this.formConfig = require("config/forms/profileEmployee").default;
+  }
+  componentDidMount() {
+    const { name, mobileNumber, emailId, tenantId, photo: imageUri } = this.props.userInfo;
+    let { formConfig } = this;
+    formConfig = {
+      ...formConfig,
+      fields: {
+        ...formConfig.fields,
+        email: { ...formConfig.fields.email, value: emailId },
+        phonenumber: { ...formConfig.fields.phonenumber, value: mobileNumber },
+        name: { ...formConfig.fields.name, value: name },
+      },
+      files: {
+        ["photo"]: [
+          {
+            imageUri,
+          },
+        ],
+      },
+    };
+    this.props.initForm(formConfig);
   }
 
-  dropDownData = [
-    {
-      value: 1,
-      label: "Amritsar",
-    },
-    {
-      value: 2,
-      label: "Patiala",
-    },
-  ];
+  setProfilePic = (file = null, imageUri = "") => {
+    const { fileUpload } = this.props;
+    this.removeProfilePic();
 
-  /* Set/remove profile picture */
-  setProfilePic = (url) => {
-    if (url === "") url = img;
-    this.setState({
-      img: url,
-    });
+    fileUpload("profileEmployee", "photo", { module: "rainmaker-pgr", file, imageUri });
   };
+
+  removeProfilePic = () => {
+    const { removeFile } = this.props;
+    removeFile("profileEmployee", "photo", 0);
+  };
+
   onClickAddPic = (isOpen) => {
     this.setState({
       openUploadSlide: isOpen,
     });
   };
-  handleNameChange = (event) => {
-    this.setState({
-      name: event.target.value,
-    });
+
+  submitForm = () => {
+    const { formKey, submitForm } = this.props;
+    submitForm(formKey);
   };
-  handleMailChange = (event) => {
-    this.setState({
-      emailId: event.target.value,
-    });
-  };
-  onDDChange = (event, key, value) => {
-    this.setState({
-      city: value,
-    });
-  };
-  onSaveClick = (event) => {
-    //To save/send the data from the Form
-  };
+
   render() {
-    const { name, emailId, img, openUploadSlide } = this.state;
-    const { setProfilePic, onClickAddPic, handleMailChange, handleNameChange } = this;
+    const { form, handleFieldChange, submitForm, profilePic } = this.props;
+    const { openUploadSlide } = this.state;
+    const { formConfig, setProfilePic, onClickAddPic, removeProfilePic } = this;
+    const { name: formKey } = formConfig;
 
     return (
       <Screen>
-        <ProfileSection img={img} onClickAddPic={onClickAddPic} />
-        <ProfileForm name={name} emailId={emailId} handleNameChange={handleNameChange} handleMailChange={handleMailChange} />
-        {openUploadSlide && <UploadDrawer setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />}
+        <div className="row">
+          <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
+          <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
+          {openUploadSlide && (
+            <UploadDrawer
+              removeFile={removeProfilePic}
+              setProfilePic={setProfilePic}
+              onClickAddPic={onClickAddPic}
+              openUploadSlide={openUploadSlide}
+            />
+          )}
+        </div>
       </Screen>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  const formKey = "profileEmployee";
+  const { auth } = state;
+  const { userInfo } = auth;
+  const form = state.form[formKey] || {};
+  const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
+
+  return {
+    form,
+    formKey,
+    userInfo,
+    profilePic: (images.length && images[0].imageUri) || img,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
+    fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
+    removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
