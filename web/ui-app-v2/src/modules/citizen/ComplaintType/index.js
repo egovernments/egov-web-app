@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { List, Icon, AutoSuggest } from "../../../components";
+import { List, Icon, AutoSuggest } from "components";
 import { handleFieldChange } from "redux/form/actions";
 import Label from "utils/translationNode";
 import { getNestedObjFormat } from "./complaintTypeDataMaker";

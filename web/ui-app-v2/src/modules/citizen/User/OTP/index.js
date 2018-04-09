@@ -20,12 +20,12 @@ class OTP extends Component {
   }
 
   componentDidMount() {
-    const { initForm, handleFieldChange } = this.props;
-
+    const { initForm, submitForm, handleFieldChange } = this.props;
     const otpElement = document.getElementById("otp");
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       handleFieldChange("otp", "otp", otp);
+      // submitForm("otp");
     });
 
     initForm(this.formConfig);
