@@ -25,7 +25,7 @@ class OTP extends Component {
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       handleFieldChange("otp", "otp", otp);
-      // submitForm("otp");
+      submitForm("otp");
     });
 
     initForm(this.formConfig);

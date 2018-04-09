@@ -8,6 +8,9 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/register").default;
+    if (typeof androidAppProxy !== "undefined") {
+      window.androidAppProxy.requestSMS();
+    }
   }
 
   componentDidMount = () => {

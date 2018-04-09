@@ -1,4 +1,4 @@
-package com.rainmaker.egov.myapplication;
+package org.egovernment.rainmaker;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.rainmaker.egov.myapplication", appContext.getPackageName());
+        assertEquals("org.infeeds.org.egovernment.org.egovernment.org.egovernment.rainmaker", appContext.getPackageName());
     }
 }

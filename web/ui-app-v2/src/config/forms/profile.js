@@ -19,7 +19,6 @@ const formConfig = {
     },
     email: {
       id: "profile-form-email",
-      required: true,
       jsonPath: "user.contact.email",
       floatingLabelText: "CS_PROFILE_EMAIL",
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",

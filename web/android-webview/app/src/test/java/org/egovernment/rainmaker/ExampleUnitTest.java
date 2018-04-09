@@ -1,4 +1,4 @@
-package com.rainmaker.egov.myapplication;
+package org.egovernment.rainmaker;
 
 import org.junit.Test;
 

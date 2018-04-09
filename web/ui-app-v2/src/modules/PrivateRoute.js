@@ -38,10 +38,18 @@ const options = [
 ];
 
 class PrivateRoute extends Component {
-  state = {
-    toggleMenu: false,
-    tabIndex: 0,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      toggleMenu: false,
+      tabIndex: 0,
+    };
+
+    if (typeof androidAppProxy !== "undefined" && window.androidAppProxy.smsReceiverRunning()) {
+      window.androidAppProxy.stopSMSReceiver();
+    }
+  }
 
   componentWillMount() {
     const { searchUser } = this.props;
