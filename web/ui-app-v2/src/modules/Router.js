@@ -33,6 +33,7 @@ import ReAssignSuccess from "modules/employee/ReAssignSuccess";
 import ComplaintSummary from "modules/employee/ComplaintDetails";
 import EmpUser from "modules/employee/User";
 import AssignComplaint from "modules/employee/AssignComplaint";
+import EmployeeDirectory from "modules/employee/EmployeeDirectory";
 import "assets/styles/app.css";
 
 const Main = () => {
@@ -164,6 +165,13 @@ const Main = () => {
           path="/employee/assign-complaint"
           title={<Label className="screenHeaderLabelStyle" label="Assign Complaint" />}
           component={AssignComplaint}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/employee-directory"
+          title={<Label className="screenHeaderLabelStyle" label="Employee Directory" />}
+          component={EmployeeDirectory}
         />
       </Switch>
     </main>

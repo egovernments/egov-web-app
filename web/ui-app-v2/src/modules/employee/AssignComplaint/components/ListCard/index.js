@@ -23,7 +23,7 @@ class ListCard extends Component {
     height: 16,
     top: 16,
     right: 28,
-    margin: "0 12px",
+    margin: "0px",
   };
 
   dataSource = [
@@ -31,7 +31,7 @@ class ListCard extends Component {
       id: 0,
       primaryText: (
         <Label
-          label="Department 1"
+          label="Engineering Department"
           dark={true}
           bold={true}
           containerStyle={{ position: "absolute", top: 0, left: 0 }}
@@ -45,21 +45,21 @@ class ListCard extends Component {
           primaryText: <Label label="Amandeep Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
         {
           id: 2,
           primaryText: <Label label="Bhavneet Singh (15)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
         {
           id: 3,
           primaryText: <Label label="Chirag Kapoor (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
       ],
     },
@@ -67,7 +67,7 @@ class ListCard extends Component {
       id: 5,
       primaryText: (
         <Label
-          label="Department 2"
+          label="Health & Sanitation Department"
           dark={true}
           bold={true}
           containerStyle={{ position: "absolute", top: 0, left: 0 }}
@@ -81,21 +81,21 @@ class ListCard extends Component {
           primaryText: <Label label="Khushwant Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
         {
           id: 7,
           primaryText: <Label label="Kunwar Sandhu (15)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
         {
           id: 8,
           primaryText: <Label label="Mandeep Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
           leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
           secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#417505" />,
+          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
         },
       ],
     },
@@ -152,16 +152,23 @@ class ListCard extends Component {
     const transformedDataSource = generateDataSource(dataSource);
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
+    const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
     return (
       <Card
+        className="assign-complaint-main-card"
         textChildren={
           <div>
             <div className="employee-search-cont">
-              <Label
-                label="Choose Employee to re-assign complaint to from the list"
-                labelStyle={this.mainLabelStyle}
-                containerStyle={{ padding: "0 40px 0 0" }}
-              />
+              {isEmployeeDirectory ? (
+                ""
+              ) : (
+                <Label
+                  label="Choose Employee to re-assign complaint to from the list"
+                  labelStyle={this.mainLabelStyle}
+                  containerStyle={{ padding: "0 40px 0 0" }}
+                />
+              )}
+
               <AutoSuggest
                 id="employee-search"
                 containerStyle={{
