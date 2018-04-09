@@ -32,7 +32,7 @@ class Feedback extends Component {
       valueArray.push(value);
     }
     this.setState({ value: valueArray });
-    this.props.handleFieldChange(this.props.formKey, "selectedSevice", valueArray);
+    this.props.handleFieldChange(this.props.formKey, "selectedSevice", valueArray.toString());
   };
 
   onClick = (value) => {
@@ -44,9 +44,6 @@ class Feedback extends Component {
   };
 
   onSubmit = () => {
-    if (this.props.formKey === "feedback") {
-      this.props.form.fields.selectedSevice.value = this.props.form.fields.selectedSevice.value.toString();
-    }
     this.props.submitForm(this.props.formKey);
   };
 

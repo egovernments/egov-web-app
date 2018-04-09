@@ -24,7 +24,7 @@ const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, ch
           value={option.value}
           label={option.label}
           onCheck={() => {
-            onCheck(option.label);
+            onCheck(option.value);
           }}
           style={{ ...defaultStyle, ...style }}
           iconStyle={iconStyle}
