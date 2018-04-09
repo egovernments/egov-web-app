@@ -1,24 +1,4 @@
-.resolve-success-main-screen {
-  padding: 0 !important;
-  height: calc(100vh - 64px);
-  background: #ffffff;
-}
-
-.resolve-success-continue {
-  position: fixed;
-  width: 100%;
-  bottom: 15px;
-  left: 0;
-  padding: 0 16px;
-}
-
-.resolve-success-main-screen .thankyou-text,
-.resolve-success-main-screen .secondary-text,
-.resolve-success-main-screen .tertiary-text {
+.resolve-success .thankyou-text,
+.resolve-success .secondary-text {
   display: inline-block;
-}
-
-.resolve-success-main-screen .secondary-text .label-text {
-  margin-left: 5px;
-  color: #484848 !important;
 }

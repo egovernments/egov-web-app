@@ -28,12 +28,19 @@ import Citizen from "modules/citizen/User";
 import ReAssignComplaint from "modules/employee/ReAssignComplaint";
 import AllComplaints from "modules/employee/AllComplaints";
 import ComplaintResolved from "modules/employee/ComplaintResolved";
-import ResolveSuccess from "modules/employee/ResolveSuccess";
-import ReAssignSuccess from "modules/employee/ReAssignSuccess";
 import ComplaintSummary from "modules/employee/ComplaintDetails";
 import EmpUser from "modules/employee/User";
 import AssignComplaint from "modules/employee/AssignComplaint";
 import EmployeeDirectory from "modules/employee/EmployeeDirectory";
+import ClosedComplaints from "modules/employee/ClosedComplaints";
+
+//Employee static screens
+import ComplaintRejected from "modules/employee/ComplaintRejected";
+import ComplaintAssigned from "modules/employee/ComplaintAssigned";
+import ComplaintReassigned from "modules/employee/ComplaintReassigned";
+import ResolveSuccess from "modules/employee/ResolveSuccess";
+import ReassignSuccess from "modules/employee/ReassignSuccess";
+
 import "assets/styles/app.css";
 
 const Main = () => {
@@ -144,6 +151,37 @@ const Main = () => {
           title={<Label className="screenHeaderLabelStyle" label="Complaint Summary" />}
           component={ComplaintSummary}
         />
+
+        <Route path="/employee/user" component={EmpUser} />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/assign-complaint"
+          title={<Label className="screenHeaderLabelStyle" label="Assign Complaint" />}
+          component={AssignComplaint}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/employee-directory"
+          title={<Label className="screenHeaderLabelStyle" label="Employee Directory" />}
+          component={EmployeeDirectory}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/closed-complaints"
+          title={<Label className="screenHeaderLabelStyle" label="Closed Complaints" />}
+          component={ClosedComplaints}
+        />
+        {/*Employee static screens */}
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/complaint-reassigned"
+          title={<Label className="screenHeaderLabelStyle" label="Complaint Re-Assigned" />}
+          component={ComplaintReassigned}
+        />
         <PrivateRoute
           exact
           hideBottomNavigation={true}
@@ -155,16 +193,22 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/reassign-success"
-          title={<Label className="screenHeaderLabelStyle" label="Re-Assign Complaint" />}
-          component={ReAssignSuccess}
+          title={<Label className="screenHeaderLabelStyle" label="Re-Assign requested" />}
+          component={ReassignSuccess}
         />
-        <Route path="/employee/user" component={EmpUser} />
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/assign-complaint"
-          title={<Label className="screenHeaderLabelStyle" label="Assign Complaint" />}
-          component={AssignComplaint}
+          path="/employee/complaint-assigned"
+          title={<Label className="screenHeaderLabelStyle" label="Complaint Assigned" />}
+          component={ComplaintAssigned}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/complaint-rejected"
+          title={<Label className="screenHeaderLabelStyle" label="Complaint Rejected" />}
+          component={ComplaintRejected}
         />
         <PrivateRoute
           exact
