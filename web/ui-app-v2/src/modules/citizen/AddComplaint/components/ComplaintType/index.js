@@ -13,7 +13,7 @@ const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
             <TextFieldIcon
               onClick={onClick}
               {...complaintType}
-              value={(complaintType && complaintType.value && categories[complaintType.value] && categories[complaintType.value].serviceName) || ""}
+              // value={(complaintType && complaintType.value && categories[complaintType.value] && categories[complaintType.value].serviceName) || ""}
               iconPosition="after"
               fullWidth={true}
               Icon={DownArrow}

@@ -1,49 +1,26 @@
-import complaintsDataSet from "./complaintsDataSet";
 import set from "lodash/set";
 
-export const getComplaintTypeData = (categories) => {
-  var categoryList = getAllServeceDefsInObj(categories);
-  var nestedCategoryList = getNestedObjFormat(categoryList, complaintsDataSet.categoryTypes);
-  return nestedCategoryList;
-};
-
-const getNestedObjFormat = (categoryList, categoryTypes) => {
-  categoryList.map((item) => {
-    var index = categoryTypes.dataSet.findIndex((x) => x.id === item.parent);
-    if (index > -1) {
-      var jP = item.jsonPath.replace(item.jsonPath.split(".")[0], `dataSet[${index}]`);
-      set(categoryTypes, jP, item);
-    } else {
-      categoryTypes.dataSet.push(item);
-    }
+export const getNestedObjFormat = (categories) => {
+  var categoryList = {};
+  Object.values(categories).map((item) => {
+    set(categoryList, item.menuPath ? item.menuPath + "." + item.serviceCode : item.serviceCode, item);
   });
-  return categoryTypes.dataSet;
+  var categoryTypes = transform(categoryList);
+  return categoryTypes;
 };
 
-const formJsonPath = (menuPath) => {
-  var jsonPath = menuPath.split("[")[0];
-  if (menuPath.length > 0) {
-    var indexArr = menuPath.match(/\[.*?\]/g);
-    indexArr.length &&
-      indexArr.map((ind) => {
-        jsonPath = jsonPath + ".nestedItems" + ind;
-      });
-  }
-  return jsonPath;
+const transform = (input) => {
+  return Object.keys(input).reduce((result, itemKey) => {
+    const item = input[itemKey];
+    const nestedItemKeys = Object.keys(item).filter((childItemKey) => typeof item[childItemKey] === "object");
+    const nestedItems = nestedItemKeys.map((key) => completeDetails(item[key], key));
+    nestedItemKeys.forEach((key) => delete item[key]);
+    item.nestedItems = transform(nestedItems, []);
+    result.push(completeDetails(item, itemKey));
+    return result;
+  }, []);
 };
 
-const getAllServeceDefsInObj = (categories) => {
-  var categoryList = [];
-  Object.values(categories).map((item, index) => {
-    var catObj = {
-      id: item.serviceCode,
-      text: item.serviceCode,
-      nestedItems: [],
-      icon: { action: "custom", name: "accumulation-of-litter" },
-      parent: item.menuPath.split("[").shift(),
-      jsonPath: formJsonPath(item.menuPath),
-    };
-    categoryList.push(catObj);
-  });
-  return categoryList;
+const completeDetails = (item, key) => {
+  return Object.assign({}, item, { id: item.text || key, text: item.text || key, leftIcon: item.text || key.toLowerCase().replace(/\\s+/, "-") });
 };

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { List, Icon, AutoSuggest } from "../../../components";
 import { handleFieldChange } from "redux/form/actions";
 import Label from "utils/translationNode";
-import { getComplaintTypeData } from "./complaintTypeDataMaker";
+import { getNestedObjFormat } from "./complaintTypeDataMaker";
 
 const customIconStyles = {
   height: 36,
@@ -22,7 +22,7 @@ class ComplaintType extends Component {
 
   generateDataSource = () => {
     const { categories } = this.props;
-    const categoryList = getComplaintTypeData(categories);
+    const categoryList = getNestedObjFormat(categories);
     var transformedDataSource = categoryList.reduce((transformedDataSource, source) => {
       return transformedDataSource.concat(source.nestedItems);
     }, []);
