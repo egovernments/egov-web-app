@@ -25,7 +25,7 @@ import ContactUs from "modules/citizen/ContactUs";
 import Citizen from "modules/citizen/User";
 
 // Employee
-import ReAssignComplaint from "modules/employee/ReAssignComplaint";
+import RequestReAssign from "modules/employee/RequestReAssign";
 import AllComplaints from "modules/employee/AllComplaints";
 import ComplaintResolved from "modules/employee/ComplaintResolved";
 import ComplaintSummary from "modules/employee/ComplaintDetails";
@@ -33,6 +33,7 @@ import EmpUser from "modules/employee/User";
 import AssignComplaint from "modules/employee/AssignComplaint";
 import EmployeeDirectory from "modules/employee/EmployeeDirectory";
 import ClosedComplaints from "modules/employee/ClosedComplaints";
+import RejectComplaint from "modules/employee/RejectComplaint";
 
 //Employee static screens
 import ComplaintRejected from "modules/employee/ComplaintRejected";
@@ -133,9 +134,9 @@ const Main = () => {
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/reassign-complaint"
+          path="/employee/request-reassign"
           title={<Label className="screenHeaderLabelStyle" label="Request Re-Assign" />}
-          component={ReAssignComplaint}
+          component={RequestReAssign}
         />
         <PrivateRoute
           exact
@@ -216,6 +217,13 @@ const Main = () => {
           path="/employee/employee-directory"
           title={<Label className="screenHeaderLabelStyle" label="Employee Directory" />}
           component={EmployeeDirectory}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/reject-complaint"
+          title={<Label className="screenHeaderLabelStyle" label="Reason to Reject" />}
+          component={RejectComplaint}
         />
       </Switch>
     </main>
