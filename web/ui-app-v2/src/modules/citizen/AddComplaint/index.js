@@ -57,12 +57,12 @@ class AddComplaints extends Component {
 
   render() {
     const { navigateToComplaintType, submitComplaint } = this;
-    const { formKey, categories } = this.props;
+    const { formKey, categories, loading } = this.props;
     const fields = this.props.form.fields || {};
     const submit = this.props.form.submit;
 
     return (
-      <Screen>
+      <Screen loading={loading}>
         <div className="add-complaint-main-cont">
           <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
           <ComplaintTypeCard categories={categories} complaintType={fields.complaintType} onClick={navigateToComplaintType} />
@@ -86,7 +86,8 @@ const mapStateToProps = (state) => {
   const formKey = "complaint";
   const categories = state.complaints.categoriesById;
   const form = state.form[formKey] || {};
-  return { form, categories, formKey };
+  const { loading } = state.form || false;
+  return { form, categories, formKey, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

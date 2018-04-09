@@ -18,10 +18,14 @@ const style = {
   },
   refresh: {
     display: "block",
-    position: "relative",
+    position: "absolute",
     zIndex: 9999,
-    marginLeft: "48%",
-    marginTop: "23%",
+    margin: "auto",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    transform: "none",
     color: "#FF9800",
   },
 };

@@ -5,6 +5,7 @@ import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import { sendOTP } from "redux/auth/actions";
+import Screen from "modules/common/Screen";
 
 class OTP extends Component {
   constructor(props) {
@@ -42,14 +43,23 @@ class OTP extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, phoneNumber } = this.props;
+    const { form, handleFieldChange, submitForm, phoneNumber, loading } = this.props;
     const { resendOTP } = this;
     const { name: formKey } = this.formConfig;
 
     return (
-      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <OTPForm submitForm={submitForm} resendOTP={resendOTP} form={form} formKey={formKey} phoneNumber={phoneNumber} onChange={handleFieldChange} />
-      </Banner>
+      <Screen loading={loading}>
+        <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+          <OTPForm
+            submitForm={submitForm}
+            resendOTP={resendOTP}
+            form={form}
+            formKey={formKey}
+            phoneNumber={phoneNumber}
+            onChange={handleFieldChange}
+          />
+        </Banner>
+      </Screen>
     );
   }
 }
@@ -57,13 +67,14 @@ class OTP extends Component {
 const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
+  const { loading } = state.form || false;
   const { previousRoute } = state.app;
   const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
   let phoneNumber = null;
   if (intent) {
     phoneNumber = state.form[intent].fields.phone.value;
   }
-  return { form, previousRoute, intent, phoneNumber };
+  return { form, previousRoute, intent, phoneNumber, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

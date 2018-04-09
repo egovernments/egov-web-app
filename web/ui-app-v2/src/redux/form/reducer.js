@@ -1,13 +1,17 @@
 import * as actionTypes from "./actionTypes";
 import { validateField, getFormFields, getFiles } from "./utils";
 
+const intialState = {
+  loading: false,
+};
+
 const setForm = (state, formKey, form) => {
   return { ...state, [formKey]: form };
 };
 
-const setFormProperty = (state, formKey, propertyKey, propertyValue) => {
+const setFormProperty = (state, formKey, propertyKey, propertyValue, loading = false) => {
   const form = state[formKey] || {};
-  return { ...state, [formKey]: { ...form, [propertyKey]: propertyValue } };
+  return { ...state, loading: loading, [formKey]: { ...form, [propertyKey]: propertyValue } };
 };
 
 const setFieldProperty = (state, formKey, fieldKey, propertyKey, propertyValue) => {
@@ -46,9 +50,9 @@ const mergeFields = (oldFields = {}, newFields = {}) => {
   }, {});
 };
 
-const setFile = (state, formKey, fieldKey, fileObject) => {
+const setFile = (state, formKey, fieldKey, fileObject, loading = false) => {
   const files = getFiles(state, formKey, fieldKey);
-  return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat(fileObject) } } };
+  return { ...state, loading, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat(fileObject) } } };
 };
 
 const removeFile = (state, formKey, fieldKey, fileIndex) => {
@@ -56,7 +60,7 @@ const removeFile = (state, formKey, fieldKey, fileIndex) => {
   return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.filter((f, index) => index !== fileIndex) } } };
 };
 
-const form = (state = {}, action) => {
+const form = (state = intialState, action) => {
   const { type, formKey, fieldKey } = action;
   switch (type) {
     case actionTypes.INIT_FORM:
@@ -81,16 +85,16 @@ const form = (state = {}, action) => {
     case actionTypes.DISPLAY_FORM_ERRORS:
       return displayFieldErrors(state, formKey);
     case actionTypes.SUBMIT_FORM_PENDING:
-      return setFormProperty(state, formKey, "submitting", true);
+      return setFormProperty(state, formKey, "submitting", true, true);
     case actionTypes.SUBMIT_FORM_COMPLETE:
-      return setFormProperty(state, formKey, "submitting", false);
+      return setFormProperty(state, formKey, "submitting", false, false);
     case actionTypes.SUBMIT_FORM_ERROR:
       state = setFormProperty(state, formKey, "submitting", false);
       return setFormProperty(state, formKey, "error", true);
     case actionTypes.FILE_UPLOAD_STARTED:
-      return setFormProperty(state, formKey, "submitting", true);
+      return setFormProperty(state, formKey, "submitting", true, true);
     case actionTypes.FILE_UPLOAD_COMPLETED:
-      return setFile(state, formKey, fieldKey, action.fileObject);
+      return setFile(state, formKey, fieldKey, action.fileObject, false);
     case actionTypes.FILE_UPLOAD_ERROR:
       // TODO
       return state;
