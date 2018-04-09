@@ -8,10 +8,12 @@ const Updates = ({ updates, history }) => {
     const { title, date, status } = update;
     let transformedstatus = "";
     const titleKey = title && "SERVICEDEFS.SERVICECODE." + title.toUpperCase();
-    if (status.toLowerCase() == "opened") {
-      transformedstatus = `CS_COMMON_SUBMITTED`;
-    } else {
-      transformedstatus = `CS_COMMON_${status.toUpperCase()}`;
+    if (status) {
+      if (status.toLowerCase() == "opened") {
+        transformedstatus = `CS_COMMON_SUBMITTED`;
+      } else {
+        transformedstatus = `CS_COMMON_${status.toUpperCase()}`;
+      }
     }
     return (
       <Card

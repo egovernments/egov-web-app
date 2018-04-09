@@ -6,6 +6,7 @@ import TextAreaComponent from "./components/TextArea";
 import CheckBoxGroup from "./components/CheckBoxGroup";
 import Screen from "modules/common/Screen";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import "./index.css";
 
@@ -21,6 +22,8 @@ class Feedback extends Component {
   };
 
   componentDidMount = () => {
+    let { fetchComplaints, match } = this.props;
+    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     this.props.initForm(this.formConfig);
   };
 
@@ -87,6 +90,7 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
     setRoute: (route) => dispatch(setRoute(route)),
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
 

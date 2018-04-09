@@ -202,7 +202,7 @@ class HeaderWithDrawer extends Component {
 
       {
         primaryText: "Edit Profile",
-        route: "/citizen/user/profile",
+        route: "/employee/user/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
           paddingBottom: "3px",
@@ -292,7 +292,7 @@ class HeaderWithDrawer extends Component {
             locationStyle={locationStyle}
             emailIdStyle={nameStyle}
             name={userInfo.name || ""}
-            emailId={userInfo.emailId || ""}
+            emailId={role === "citizen" ? userInfo.emailId || "" : ""}
             location={userInfo.location || ""}
             iconStyle={iconStyle}
             imgSrc={userInfo.photo || profileImage}
