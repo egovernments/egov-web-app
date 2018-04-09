@@ -2,19 +2,16 @@ import React, { Component } from "react";
 import { Button, Icon } from "../../../components";
 import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
 import "modules/common/SuccessMessage/components/successmessage/index.css";
-import "./index.css";
 
-class ResolveSuccess extends Component {
+class ReassignSuccess extends Component {
   continueComplaintSubmit = () => {
     this.props.history.push("/employee/all-complaints");
   };
   render() {
     return (
-      <div className="reassign-success-main-screen resolve-success">
+      <div className="reassign-success-main-screen">
         <SuccessMessage
-          successmessage="You have marked the complaint as"
-          secondaryLabel="Resolved"
-          containerStyle={{ display: "inline-block" }}
+          successmessage="Your Re-Assign request has been sent."
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
@@ -26,4 +23,4 @@ class ResolveSuccess extends Component {
   }
 }
 
-export default ResolveSuccess;
+export default ReassignSuccess;
