@@ -185,7 +185,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Closed Complaints",
-        route: "/citizen/contact-us",
+        route: "/employee/closed-complaints",
         leftIcon: <Icon action="custom" name="file-check" />,
         id: "header-closed-complaint",
       },
