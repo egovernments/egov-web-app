@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver  {
 
-	final private String SENDER_NUM = "HP-EGOVFS";
+	private String SENDER_NUM = "HP-EGOVFS";
 
 	private String getMessageOTP(String messagePayload){
 		return messagePayload.replaceAll("[^0-9]", "");
@@ -54,6 +54,5 @@ public class SmsReceiver extends BroadcastReceiver  {
 		} catch (Exception e) {
 		}
 	}
-
 
 }
