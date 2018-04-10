@@ -1,41 +1,72 @@
 import React, { Component } from "react";
-import { Button } from "../../../components";
-import ImageUpload from "../../common/ImageUpload";
-import TextArea from "../../common/ReOpenComplaint/components/TextArea";
-import Screen from "../../common/Screen";
+import { connect } from "react-redux";
+import { Button } from "components";
+import ImageUpload from "modules/common/ImageUpload";
+import TextArea from "modules/common/ReOpenComplaint/components/TextArea";
+import Screen from "modules/common/Screen";
+import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import { fetchComplaints } from "redux/complaints/actions";
+import { fileUpload } from "redux/form/actions";
 import "./index.css";
 
 class ComplaintResolved extends Component {
-  onSubmit = () => {
-    this.props.history.push("/employee/resolve-success");
+  constructor(props) {
+    super(props);
+    this.formConfig = require("config/forms/complaintResolved").default;
+  }
+  componentDidMount() {
+    let { fetchComplaints, match } = this.props;
+    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    this.props.initForm(this.formConfig);
+  }
+  handleComplaintSubmit = () => {
+    const { formKey, submitForm } = this.props;
+    submitForm(formKey);
+  };
+  handleCommentChange = (e, value) => {
+    this.props.handleFieldChange(this.props.formKey, "textarea", value);
   };
 
   render() {
-    let { history } = this.props;
+    const { handleComplaintSubmit, handleCommentChange } = this;
+    const { formKey, form } = this.props;
+
+    const { fields, submit } = form;
+    const submitprops = submit;
+    let textarea;
+    if (fields) {
+      textarea = fields.textarea;
+    }
 
     return (
       <Screen className="complaint-resolved-main-container">
         <div>
-          <ImageUpload />
+          <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
           <div style={{ padding: "24px 16px 350px 1px" }}>
-            <TextArea hintText="Type your comments" />
+            <TextArea onChange={handleCommentChange} {...textarea} />
           </div>
         </div>
 
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 complaint-resolved-button-cont">
-          <Button
-            id={"complaint-resolved-mark-resolved"}
-            label={"MARK RESOLVED"}
-            primary={true}
-            fullWidth={true}
-            onClick={(e) => {
-              this.onSubmit(history);
-            }}
-          />
+          <Button id={"complaint-resolved-mark-resolved"} {...submitprops} primary={true} fullWidth={true} onClick={handleComplaintSubmit} />
         </div>
       </Screen>
     );
   }
 }
+const mapStateToProps = (state) => {
+  const formKey = "complaintResolved";
+  const form = state.form[formKey] || {};
+  return { form, formKey };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
+    fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+  };
+};
 
-export default ComplaintResolved;
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintResolved);
