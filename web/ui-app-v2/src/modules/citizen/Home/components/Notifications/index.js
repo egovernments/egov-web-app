@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "utils/translationNode";
+import {getDateFromEpoch} from "utils/commons";
 import "./index.css";
 
 const Updates = ({ updates, history }) => {
@@ -41,7 +42,7 @@ const Updates = ({ updates, history }) => {
             </div>
             <div className="notification-top-content" style={{ justifyContent: "flex-start" }}>
               <Icon style={{ width: "16px", height: "16px" }} action="custom" name="calendar" />
-              <Label fontSize={12} label={date} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
+              <Label fontSize={12} label={getDateFromEpoch(date)} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
             <div className="complaint-status" style={{ marginTop: "16px" }}>
               <Label containerStyle={{ display: "inline-block" }} label="CS_HOME_STATUS_PREFIX" />

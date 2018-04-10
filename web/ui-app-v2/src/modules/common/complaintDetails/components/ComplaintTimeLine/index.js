@@ -64,22 +64,22 @@ const StatusIcon = ({ status }) => {
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "rejected":
       return <Icon action="content" name="clear" style={statusCommonIconStyle} color={"#f5a623"} />;
-    default:
+    case "resolved":
       return <Icon action="action" name="done" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
-    // default:
-    //   return <div></div>
+    default:
+      return <Icon action="action" name="stars" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
   }
 };
 
 //prventing number of times showing button for duplicate status
 var openStatusCount = 0;
-var openStatusCountForStatement = 0;
 var rejectStatusCount = 0;
 var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 
 const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
   var {
+    action,
     when: date,
     media,
     status,
@@ -97,14 +97,33 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
   switch (status) {
     case "open":
       openStatusCount++;
-      openStatusCountForStatement--;
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label
             labelClassName="dark-color"
-            label={`${openStatusCountForStatement ? "Complaint Re-opened" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`}
+            label={`${action==="reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`}
           />
+          {
+            action==="reopen" && <div>
+            <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments.split(";")[0]} />
+            {media &&
+                    media.map((image, index) => {
+                      return (
+                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                          <Image
+                            style={{
+                              width: "97px",
+                              height: "93px",
+                            }}
+                            source={image}
+                          />
+                        </div>
+                      );
+                    })}
+              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments.split(";")[1]?`" ${comments.split(";")[1]} "`:""} />
+              </div>
+          }
           {currentStatus === "open" &&
             openStatusCount === 1 && (
               <div
@@ -126,7 +145,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_ASSIGNED_TO" />
+          <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${action=="assign"?"CS_COMMON_ASSIGNED_TO":"CS_COMMON_REASSIGNED_TO"}`} />
           <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
           <Label
             labelClassName="rainmaker-small-font"
@@ -150,19 +169,19 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
         </div>
       );
 
-    case "re-assign":
-      return (
-        <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_REASSIGNED_TO" />
-          <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
-          <Label
-            labelClassName="rainmaker-small-font"
-            containerStyle={{ width: "192px" }}
-            label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
-          />
-        </div>
-      );
+    // case "re-assign":
+    //   return (
+    //     <div className="complaint-timeline-content-section">
+    //       <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+    //       <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label="CS_COMMON_REASSIGNED_TO" />
+    //       <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
+    //       <Label
+    //         labelClassName="rainmaker-small-font"
+    //         containerStyle={{ width: "192px" }}
+    //         label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
+    //       />
+    //     </div>
+    //   );
     case "rejected":
       rejectStatusCount++;
       return (
@@ -212,7 +231,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
     //       <Label labelClassName="rainmaker-small-font" label={`Reason - ${reason || "Not my responsibility"}`} />
     //     </div>
     //   );
-    default:
+    case "resolved":
       resolveStatusCount++;
       return (
         <div className="complaint-timeline-content-section">
@@ -267,8 +286,15 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
         </div>
       );
 
-    // default:
-    //   return <div></div>
+    default:
+      return (
+        <div className="complaint-timeline-content-section">
+          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+          <Label labelClassName="dark-color" label="CS_COMMON_CITIZEN_FEEDBACK" />
+          <div style={{display:"flex"}}> <Label labelClassName="rainmaker-small-font" labelStyle={{color:"#22b25f"}} label={`3/5 `} /> <Label labelClassName="rainmaker-small-font" label={` ( Service, Resolution Time )`} /></div>
+          <Label labelClassName="rainmaker-small-font" label={`" ${comments} "`} />
+        </div>
+      );
   }
 };
 
@@ -283,7 +309,6 @@ class ComplaintTimeLine extends Component {
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
     let { status, history, role, timeLine } = this.props;
-    openStatusCountForStatement = filter(timeLine, { status: "open" }).length;
 
     // console.log(timeLine);
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Card, Icon, Button } from "components";
 import Label from "utils/translationNode";
+import {getDateFromEpoch} from "utils/commons";
 import "./index.css";
 
 const imageStyles = {
@@ -172,7 +173,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                 </div>
                 <div className="complaint-date-cont">
                   <Icon action="action" name="date-range" />
-                  <span className="complaint-date">{complaint.date}</span>
+                  <span className="complaint-date">{getDateFromEpoch(complaint.date)}</span>
                 </div>
                 <div className="complaint-number-cont">
                   <div className="complaint-number complaint-date">

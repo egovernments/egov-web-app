@@ -7,7 +7,8 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
+import {mapCompIDToName, isImage } from "utils/commons";
+import orderby from "lodash/orderBy"
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -104,14 +105,16 @@ const mapStateToProps = (state) => {
   Object.keys(complaints.byId).forEach((complaint, index) => {
     let complaintObj = {};
     complaintObj.header = mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode);
-    complaintObj.date = getDateFromEpoch(complaints.byId[complaint].auditDetails.createdTime);
+    complaintObj.date = complaints.byId[complaint].auditDetails.createdTime;
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
     complaintObj.images = fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource));
 
     transformedComplaints.push(complaintObj);
   });
-  return { complaints, transformedComplaints: transformedComplaints.reverse() };
+  var closedComplaints =orderby(transformedComplaints.filter((complaint)=>complaint.status==="Closed"),["date"],["desc"]);
+  var nonClosedComplaints=orderby(transformedComplaints.filter((complaint)=>complaint.status!="Closed"),["date"],["desc"]);
+  return { complaints, transformedComplaints: [...nonClosedComplaints,...closedComplaints] };
 };
 
 const mapDispatchToProps = (dispatch) => {

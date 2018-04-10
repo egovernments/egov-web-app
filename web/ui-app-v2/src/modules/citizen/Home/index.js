@@ -4,7 +4,8 @@ import Banner from "modules/common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, displayStatus } from "utils/commons";
+import { mapCompIDToName, displayStatus } from "utils/commons";
+import orderby from "lodash/orderBy"
 import "./index.css";
 
 class Home extends Component {
@@ -41,12 +42,14 @@ const mapStateToProps = (state) => {
     let complaintObj = {};
     complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
     complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
-    complaintObj.date = getDateFromEpoch(complaints.byId[complaintKey].auditDetails.createdTime);
+    complaintObj.date = complaints.byId[complaintKey].auditDetails.createdTime;
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
-
-  return { updates: updates.reverse() };
+ // debugger;
+  var closedComplaints =orderby(updates.filter((complaint)=>complaint.status==="Closed"),["date"],["desc"]);
+  var nonClosedComplaints=orderby(updates.filter((complaint)=>complaint.status!="Closed"),["date"],["desc"]);
+  return { updates: [...nonClosedComplaints,...closedComplaints] };
 };
 
 const mapDispatchToProps = (dispatch) => {

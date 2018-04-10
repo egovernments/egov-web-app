@@ -231,7 +231,7 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: selectedComplaint.actions[0].status && getLatestStatus(selectedComplaint.actions[0].status),
+      complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);

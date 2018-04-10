@@ -69,7 +69,7 @@ class Comments extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, selectedComplaint } = this.props;
+    const { form, handleFieldChange, submitForm, selectedComplaint,userImage} = this.props;
     const { name: formKey } = this.formConfig;
     let items = selectedComplaint.actions.filter((action, index) => {
       return action.comments && !action.status;
@@ -120,7 +120,7 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
                 {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}
-                <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
+                <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} userImage={userImage}/>
               </div>
             }
           />
@@ -135,7 +135,8 @@ const mapStateToProps = (state, ownProps) => {
   const form = state.form[formKey] || {};
   const { complaints } = state;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
-  return { form, selectedComplaint };
+  const userImage=state.auth.userInfo.photo || "";
+  return { form, selectedComplaint,userImage };
 };
 
 const mapDispatchToProps = (dispatch) => {

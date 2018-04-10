@@ -10,8 +10,9 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
+import { mapCompIDToName,isImage } from "utils/commons";
 import { connect } from "react-redux";
+import orderby from "lodash/orderBy";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -317,7 +318,7 @@ const mapStateToProps = (state) => {
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
-      date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
+      date: complaintDetail.auditDetails.createdTime,
       status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
@@ -326,10 +327,9 @@ const mapStateToProps = (state) => {
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
     };
   });
-  const assignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
-  const unassignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED");
-  const employeeComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
-
+  const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),["date"],["desc"]);
+  const unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),["date"],["desc"]);
+  const employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),["date"],["desc"]);
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
 };
 
