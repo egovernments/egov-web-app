@@ -174,7 +174,7 @@ class HeaderWithDrawer extends Component {
     items: [
       {
         primaryText: "Home",
-        route: "/citizen",
+        route: "/employee/all-complaints",
         leftIcon: <Icon action="action" name="home" />,
         style: {
           paddingBottom: "1px",
@@ -191,7 +191,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Employee Directory",
-        route: "/citizen/contact-us",
+        route: "/employee/employee-directory",
         leftIcon: <Icon action="communication" name="call" />,
         style: {
           paddingBottom: "2px",
@@ -212,7 +212,7 @@ class HeaderWithDrawer extends Component {
       },
       {
         primaryText: "Language",
-        route: "/citizen/user/language-selection",
+        route: "/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
           borderBottom: "none",
