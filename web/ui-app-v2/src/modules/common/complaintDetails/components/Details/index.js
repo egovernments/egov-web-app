@@ -26,7 +26,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, images } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, images, mapAction } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -67,8 +67,7 @@ class Details extends Component {
                 </div>
                 <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
-                    {this.props.role !== "AO" ? (
-                      images &&
+                    {images &&
                       images.map((image, index) => {
                         return (
                           image && (
@@ -84,38 +83,7 @@ class Details extends Component {
                             </div>
                           )
                         );
-                      })
-                    ) : (
-                      <div>
-                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                          <Image
-                            style={{
-                              width: "97px",
-                              height: "93px",
-                            }}
-                            source={garbageOne}
-                          />
-                        </div>
-                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                          <Image
-                            style={{
-                              width: "97px",
-                              height: "93px",
-                            }}
-                            source={garbageTwo}
-                          />
-                        </div>
-                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero">
-                          <Image
-                            style={{
-                              width: "97px",
-                              height: "93px",
-                            }}
-                            source={garbageThree}
-                          />
-                        </div>
-                      </div>
-                    )}
+                      })}
                   </div>
                 </div>
 
@@ -126,7 +94,7 @@ class Details extends Component {
                   <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
                     <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
-                  {this.props.role === "AO" && (
+                  {mapAction && (
                     <div
                       className="complaint-details-timline-button complaint-map-btn"
                       onClick={(e) => {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass, removeBodyClass } from "utils/commons";
 import { fetchLocalizationLabel, toggleSnackbarAndSetText } from "redux/app/actions";
-import { fetchCities } from "redux/common/actions";
+import { fetchCities, fetchCitizens } from "redux/common/actions";
 import Router from "./Router";
 
 class App extends Component {
@@ -23,10 +23,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchCities, locale } = this.props;
+    const { fetchLocalizationLabel, fetchCities, locale, fetchCitizens } = this.props;
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchCities();
+    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,6 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fetchCities: () => dispatch(fetchCities()),
+    fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
   };
 };
 
