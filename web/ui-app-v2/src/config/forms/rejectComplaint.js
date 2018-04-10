@@ -1,5 +1,5 @@
 const formConfig = {
-  name: "requestReassign",
+  name: "rejectComplaint",
   //idJsonPath: "services[0].serviceRequestId",
   fields: {
     comments: {
@@ -9,15 +9,14 @@ const formConfig = {
     textarea: {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-      value: "",
     },
   },
   submit: {
-    label: "REQUEST RE_ASSIGN",
+    label: "SUBMIT",
     id: "reopencomplaint-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/employee/reassign-success",
+  redirectionRoute: "/employee/all-complaints",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

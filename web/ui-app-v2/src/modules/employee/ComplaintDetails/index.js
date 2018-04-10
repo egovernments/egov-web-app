@@ -118,8 +118,10 @@ class ComplaintDetails extends Component {
     switch (label) {
       case "REJECT":
         setRoute(`/employee/reject-complaint/${complaintNo}`);
+        break;
       case "REQUEST RE-ASSIGN":
         setRoute(`/employee/request-reassign/${complaintNo}`);
+        break;
     }
   };
   btnTwoOnClick = (complaintNo, label) => {
