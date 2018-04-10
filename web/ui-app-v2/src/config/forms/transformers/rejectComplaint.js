@@ -3,21 +3,21 @@ import { prepareFormData } from "utils/commons";
 const viewModelToBusinessModelTransformer = (form, state) => {
   const tenantId = window.localStorage.getItem("tenant-id");
   const id = decodeURIComponent(window.location.href.split("/").pop());
-  const { fields: reassignFields } = form;
+  const { fields: rejectFields } = form;
   let fields;
-  console.log("inside form");
+
   const complaint = state.complaints.byId[id];
 
-  fields = state.form["requestReassign"].fields;
+  fields = state.form["rejectComplaint"].fields;
   fields = {
-    ...reassignFields,
+    ...rejectFields,
     complaintno: {
       jsonPath: "services[0].serviceRequestId",
       value: complaint.serviceRequestId,
     },
     status: {
       jsonPath: "actionInfo[0].action",
-      value: "requestforreassign",
+      value: "reject",
     },
     description: {
       jsonPath: "services[0].description",
