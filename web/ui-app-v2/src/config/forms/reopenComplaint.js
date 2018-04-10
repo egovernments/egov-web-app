@@ -16,6 +16,7 @@ const formConfig = {
     textarea: {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
+      value: "",
     },
   },
   submit: {

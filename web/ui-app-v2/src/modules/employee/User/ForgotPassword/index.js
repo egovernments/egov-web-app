@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Banner from "../../../common/Banner";
-import ForgotPasswd from "../../../common/User/components/ForgotPasswd";
+import ForgotPasswd from "./components/ForgotPasswd";
 
 class ForgotPassword extends Component {
   state = {

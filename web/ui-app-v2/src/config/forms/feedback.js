@@ -15,10 +15,7 @@ const formConfig = {
       required: true,
       jsonPath: "actionInfo[0].comments",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-    },
-    textarea: {
-      id: "textarea",
-      hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
+      value: "",
     },
   },
   submit: {
