@@ -1,12 +1,11 @@
 import React from "react";
-import { Button, Icon } from "components";
-import { setRoute } from "redux/app/actions";
+import { Button } from "components";
 import "./index.css";
 
-const ButtonComponent = ({ label }) => {
+const ButtonComponent = ({ label, onClick }) => {
   return (
     <div className="assign-complaint-button-cont">
-      <Button id="assign-complaint-button" onClick={() => setRoute("/citizen")} primary={true} label={label} fullWidth={true} />;
+      <Button id="assign-complaint-button" onClick={onClick} primary={true} label={label} fullWidth={true} />;
     </div>
   );
 };

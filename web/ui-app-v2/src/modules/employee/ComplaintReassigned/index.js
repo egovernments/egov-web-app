@@ -9,7 +9,6 @@ class ComplaintReassigned extends Component {
   };
 
   render() {
-    let officerName = "Amrinder Singh";
     let designation = "Senior Inspector";
     let department = "Health & Sanitation Department";
     return (

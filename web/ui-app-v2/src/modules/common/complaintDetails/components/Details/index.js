@@ -3,10 +3,6 @@ import { Card, Image, Icon } from "../../../../../components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-import garbageOne from "../../../../../assets/images/Garbage_3.jpg";
-import garbageTwo from "../../../../../assets/images/Garbage_4.jpg";
-import garbageThree from "../../../../../assets/images/Garbage_6.jpg";
-
 const iconStyle = {
   marginRight: "13px",
   height: "18px",

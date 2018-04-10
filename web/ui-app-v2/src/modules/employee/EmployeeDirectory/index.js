@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Screen from "../../common/Screen";
 import ListCard from "../AssignComplaint/components/ListCard";
 import "./index.css";
 

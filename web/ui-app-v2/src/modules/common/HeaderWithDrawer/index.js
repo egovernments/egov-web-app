@@ -251,6 +251,7 @@ class HeaderWithDrawer extends Component {
         this.setState({
           logoutPopupOpen: true,
         });
+        break;
       case "language-selection":
         break;
       default:

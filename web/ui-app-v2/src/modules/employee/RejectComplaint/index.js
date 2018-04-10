@@ -4,7 +4,6 @@ import { Button } from "../../../components";
 import Screen from "../../common/Screen";
 import Question from "../../common/ReOpenComplaint/components/Question";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";
-import Label from "utils/translationNode";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
@@ -61,7 +60,7 @@ class RejectComplaint extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentsChange, handleOptionsChange } = this;
-    const { formKey, form } = this.props;
+    const { form } = this.props;
     const { valueSelected } = this.state;
     const { fields, submit } = form;
     const submitprops = submit;
@@ -87,14 +86,7 @@ class RejectComplaint extends Component {
         </div>
 
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reject-complaint-button">
-          <Button
-            id="rejectcomplaint-submit-action"
-            primary={true}
-            {...submitprops}
-            primary={true}
-            fullWidth={true}
-            onClick={handleComplaintSubmit}
-          />
+          <Button id="rejectcomplaint-submit-action" primary={true} {...submitprops} fullWidth={true} onClick={handleComplaintSubmit} />
         </div>
       </Screen>
     );

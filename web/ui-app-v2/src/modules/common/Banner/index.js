@@ -1,7 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { setRoute } from "redux/app/actions";
 import { Image, Icon } from "components";
 import logo from "assets/images/logo.png";
 import "./index.css";

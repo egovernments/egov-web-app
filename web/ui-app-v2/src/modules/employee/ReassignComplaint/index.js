@@ -6,12 +6,16 @@ import Button from "../AssignComplaint/components/Button";
 import Label from "utils/translationNode";
 
 class ReassignComplaint extends Component {
+  onReassignClick = () => {
+    let { history } = this.props;
+    history.push("/employee/complaint-reassigned");
+  };
   render() {
     return (
       <Screen>
         <HeaderCard />
         <ListCard />
-        <Button label={<Label buttonLabel={true} label="RE-ASSIGN" />} />
+        <Button label={<Label buttonLabel={true} label="RE-ASSIGN" />} onClick={this.onReassignClick} />
       </Screen>
     );
   }
