@@ -267,7 +267,7 @@ const fetchImages = (actionArray) => {
 const getLatestStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
-    case "open" || "new":
+    case "open" || "new" || "reassignrequested":
       transformedStatus = "UNASSIGNED";
       break;
     case "closed":
@@ -276,8 +276,11 @@ const getLatestStatus = (status) => {
     case "assigned":
       transformedStatus = "ASSIGNED";
       break;
+    case "resolved":
+      transformedStatus = "RESOLVED";
+      break;
     default:
-      transformedStatus = "CLOSED";
+      transformedStatus = "UNASSIGNED";
       break;
   }
   return transformedStatus;
@@ -322,7 +325,7 @@ const mapStateToProps = (state) => {
       status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: complaintDetail.actions[0].status && getLatestStatus(complaintDetail.actions[0].status),
+      complaintStatus: complaintDetail.status && getLatestStatus(complaintDetail.status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
     };

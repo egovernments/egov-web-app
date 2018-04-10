@@ -87,7 +87,7 @@ class Details extends Component {
                   <div className="col-xs-2">
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
-                  <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
+                  <div className="col-xs-8" style={{ paddingLeft: "0px", marginLeft: "-25px", paddingRight: 10 }}>
                     <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                   {mapAction && (
