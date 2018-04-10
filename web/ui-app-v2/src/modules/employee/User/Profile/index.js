@@ -57,6 +57,10 @@ class Profile extends Component {
     });
   };
 
+  onClickChangePasswd = () => {
+    this.props.history.push("/employee/user/change-password");
+  };
+
   submitForm = () => {
     const { formKey, submitForm } = this.props;
     submitForm(formKey);
@@ -65,14 +69,14 @@ class Profile extends Component {
   render() {
     const { form, handleFieldChange, submitForm, profilePic } = this.props;
     const { openUploadSlide } = this.state;
-    const { formConfig, setProfilePic, onClickAddPic, removeProfilePic } = this;
+    const { formConfig, setProfilePic, onClickAddPic, removeProfilePic, onClickChangePasswd } = this;
     const { name: formKey } = formConfig;
 
     return (
       <Screen>
         <div className="row">
           <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
-          <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} />
+          <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} onClickChangePasswd={onClickChangePasswd} submitForm={submitForm} />
           {openUploadSlide && (
             <UploadDrawer
               removeFile={removeProfilePic}
