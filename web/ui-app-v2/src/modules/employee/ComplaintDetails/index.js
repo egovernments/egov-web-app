@@ -4,11 +4,12 @@ import ComplaintTimeLine from "../../common/complaintDetails/components/Complain
 import Comments from "../../common/complaintDetails/components/Comments";
 import Actions from "../../common/complaintDetails/components/ActionButton";
 import Screen from "../../common/Screen";
-import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
+import { setRoute } from "redux/app/actions";
+import { fetchEmployees } from "redux/common/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -40,8 +41,9 @@ class ComplaintDetails extends Component {
   };
 
   componentDidMount() {
-    let { fetchComplaints, match } = this.props;
+    let { fetchComplaints, match, fetchEmployees } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    fetchEmployees();
     let { details } = this.state;
     if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
       this.setState({
@@ -110,37 +112,67 @@ class ComplaintDetails extends Component {
     }
   }
 
-  btnOneOnClick = () => {
+  btnOneOnClick = (complaintNo, label) => {
     //Action for first button
+    let { setRoute } = this.props;
+    switch (label) {
+      case "REJECT":
+        setRoute(`/employee/reject-complaint/${complaintNo}`);
+      case "REQUEST RE-ASSIGN":
+        setRoute(`/employee/request-reassign/${complaintNo}`);
+    }
   };
-  btnTwoOnClick = () => {
+  btnTwoOnClick = (complaintNo, label) => {
     //Action for second button
+    let { setRoute } = this.props;
+    switch (label) {
+      case "ASSIGN":
+        setRoute(`/employee/assign-complaint/${complaintNo}`);
+      case "RE-ASSIGN":
+        setRoute(`/employee/reassign-complaint/${complaintNo}`);
+      case "MARK RESOLVED":
+        setRoute(`/employee/complaint-resolved/${complaintNo}`);
+    }
   };
 
   render() {
-    let btnOneLabel, btnTwoLabel;
-    let { status, details, comments, role, hasComments } = this.state;
-    if (role === "AO" && status.status === "Unassigned") {
-      btnOneLabel = "REJECT";
-      btnTwoLabel = "ASSIGN";
-    } else if (role === "AO" && status.status === "Reassign") {
-      btnOneLabel = "REJECT";
-      btnTwoLabel = "RE-ASSIGN";
-    } else if (role === "AO" && status.status === "Assign") {
-      btnOneLabel = "REQUEST RE-ASSIGN";
-      btnTwoLabel = "MARK RESOLVED";
-    }
+    let { status, details, comments, hasComments } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
+    let { role, serviceRequestId } = this.props;
+    let btnOneLabel = "";
+    let btnTwoLabel = "";
+    if (complaint && role === "ao") {
+      if (complaint.complaintStatus.toLowerCase() === "unassigned") {
+        btnOneLabel = "REJECT";
+        btnTwoLabel = "ASSIGN";
+      } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
+        btnOneLabel = "REJECT";
+        btnTwoLabel = "RE-ASSIGN";
+      }
+    } else if (complaint && role === "employee") {
+      if (complaint.complaintStatus.toLowerCase() === "assigned") {
+        btnOneLabel = "REQUEST RE-ASSIGN";
+        btnTwoLabel = "MARK RESOLVED";
+      }
+    }
     return (
       <Screen>
         {complaint && (
           <div>
-            <Details {...complaint} role={role} />
+            <Details {...complaint} role={role} mapAction={true} />
             <ComplaintTimeLine status={complaint.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} role={role} />
             <Comments comments={comments} hasComments={true} />
             <div>
-              {role === "AO" && (
-                <Actions btnOneLabel={btnOneLabel} btnOneOnClick={this.btnOneOnClick} btnTwoLabel={btnTwoLabel} btnTwoOnClick={this.btnTwoOnClick} />
+              {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned") ||
+              (role === "employee" && complaint.complaintStatus.toLowerCase() === "assigned") ? (
+                <Actions
+                  btnOneLabel={btnOneLabel}
+                  btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                  btnTwoLabel={btnTwoLabel}
+                  btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                />
+              ) : (
+                ""
               )}
             </div>
           </div>
@@ -150,6 +182,13 @@ class ComplaintDetails extends Component {
   }
 }
 
+const isAssigningOfficer = (roles) => {
+  const roleCodes = roles.map((role, index) => {
+    return role.code;
+  });
+  return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
+};
+
 const fetchImages = (actionArray) => {
   let imageArray = [];
   actionArray.forEach((action, index) => {
@@ -158,9 +197,31 @@ const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : null;
 };
 
+const getLatestStatus = (status) => {
+  let transformedStatus = "";
+  switch (status.toLowerCase()) {
+    case "open" || "new":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "closed":
+      transformedStatus = "CLOSED";
+      break;
+    case "assigned":
+      transformedStatus = "ASSIGNED";
+      break;
+    default:
+      transformedStatus = "CLOSED";
+      break;
+  }
+  return transformedStatus;
+};
+
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
+  const { userInfo } = state.auth;
+  const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
+  const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   if (selectedComplaint) {
     let details = {
       status: selectedComplaint.status,
@@ -169,13 +230,8 @@ const mapStateToProps = (state, ownProps) => {
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
-      images: fetchImages(selectedComplaint.actions).map((imageSource, index) => {
-        var imageExtension = imageSource
-          .split("?")[0]
-          .split(".")
-          .pop();
-        return imageExtension === "png" || imageExtension === "jpg" ? imageSource : "";
-      }),
+      images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
+      complaintStatus: selectedComplaint.actions[0].status && getLatestStatus(selectedComplaint.actions[0].status),
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
@@ -183,15 +239,17 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { transformedComplaint };
+    return { transformedComplaint, role, serviceRequestId };
   } else {
-    return { transformedComplaint: {} };
+    return { transformedComplaint: {}, role, serviceRequestId };
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    fetchEmployees: () => dispatch(fetchEmployees()),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

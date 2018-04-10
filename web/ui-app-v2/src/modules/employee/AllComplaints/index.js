@@ -10,7 +10,7 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import { connect } from "react-redux";
 import "./index.css";
 
@@ -201,6 +201,8 @@ class AllComplaints extends Component {
     fetchComplaints([]);
   }
 
+  componentWillReceiveProps = (nextProps) => {};
+
   //Don't Delete
   handleTabChange = (label) => {
     console.log(label);
@@ -303,8 +305,13 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
+const mapCitizenIdToName = (citizenObjById, id) => {
+  return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
+};
+
 const mapStateToProps = (state) => {
-  const { complaints } = state;
+  const { complaints, common } = state || {};
+  const { citizenById } = common || {};
   const { userInfo } = state.auth;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
@@ -313,22 +320,16 @@ const mapStateToProps = (state) => {
       date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
       status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
-      images: fetchImages(complaintDetail.actions).map((imageSource, index) => {
-        return imageSource &&
-          imageSource
-            .split("?")[0]
-            .split(".")
-            .pop() === ("png" || "jpg" || "jpeg")
-          ? { source: imageSource }
-          : "";
-      }),
+      images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.actions[0].status && getLatestStatus(complaintDetail.actions[0].status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+      submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
     };
   });
   const assignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
   const unassignedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED");
   const employeeComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED");
+
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
 };
 

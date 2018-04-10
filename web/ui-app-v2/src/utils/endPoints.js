@@ -56,3 +56,17 @@ export const OTP = {
     ACTION: "_send",
   },
 };
+
+export const EMPLOYEE = {
+  GET: {
+    URL: "/hr-employee/employees/_search",
+    ACTION: "_search",
+  },
+};
+
+export const CITIZEN = {
+  GET: {
+    URL: "/user/v1/_search",
+    ACTION: "_search",
+  },
+};
