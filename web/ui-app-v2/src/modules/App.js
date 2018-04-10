@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass, removeBodyClass } from "utils/commons";
 import { fetchLocalizationLabel, toggleSnackbarAndSetText } from "redux/app/actions";
-import { fetchCities, fetchCitizens } from "redux/common/actions";
+import { fetchCities, fetchCitizens, fetchEmployees } from "redux/common/actions";
 import Router from "./Router";
 
 class App extends Component {
@@ -23,11 +23,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchCities, locale, fetchCitizens } = this.props;
+    const { fetchLocalizationLabel, fetchCities, locale, fetchCitizens, userInfo } = this.props;
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchCities();
-    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
+    if (userInfo && userInfo.type === "EMPLOYEE") {
+      fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
+      fetchEmployees();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +54,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   const { route, toast } = state.app;
-  return { route, toast };
+  const { userInfo } = state.auth;
+  return { route, toast, userInfo };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -60,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fetchCities: () => dispatch(fetchCities()),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
+    fetchEmployees: () => dispatch(fetchEmployees()),
   };
 };
 

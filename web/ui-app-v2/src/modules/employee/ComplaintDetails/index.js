@@ -7,7 +7,6 @@ import Screen from "../../common/Screen";
 import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { fetchEmployees } from "redux/common/actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./index.css";
@@ -43,7 +42,6 @@ class ComplaintDetails extends Component {
   componentDidMount() {
     let { fetchComplaints, match, fetchEmployees } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
-    fetchEmployees();
     let { details } = this.state;
     if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
       this.setState({
@@ -125,15 +123,19 @@ class ComplaintDetails extends Component {
     }
   };
   btnTwoOnClick = (complaintNo, label) => {
+    console.log(label);
     //Action for second button
     let { setRoute } = this.props;
     switch (label) {
       case "ASSIGN":
         setRoute(`/employee/assign-complaint/${complaintNo}`);
+        break;
       case "RE-ASSIGN":
         setRoute(`/employee/reassign-complaint/${complaintNo}`);
+        break;
       case "MARK RESOLVED":
         setRoute(`/employee/complaint-resolved/${complaintNo}`);
+        break;
     }
   };
 
@@ -143,18 +145,20 @@ class ComplaintDetails extends Component {
     let { role, serviceRequestId } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
-    if (complaint && role === "ao") {
-      if (complaint.complaintStatus.toLowerCase() === "unassigned") {
-        btnOneLabel = "REJECT";
-        btnTwoLabel = "ASSIGN";
-      } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
-        btnOneLabel = "REJECT";
-        btnTwoLabel = "RE-ASSIGN";
-      }
-    } else if (complaint && role === "employee") {
-      if (complaint.complaintStatus.toLowerCase() === "assigned") {
-        btnOneLabel = "REQUEST RE-ASSIGN";
-        btnTwoLabel = "MARK RESOLVED";
+    if (complaint) {
+      if (role === "ao") {
+        if (complaint.complaintStatus.toLowerCase() === "unassigned") {
+          btnOneLabel = "REJECT";
+          btnTwoLabel = "ASSIGN";
+        } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
+          btnOneLabel = "REJECT";
+          btnTwoLabel = "RE-ASSIGN";
+        }
+      } else if (role === "employee") {
+        if (complaint.complaintStatus.toLowerCase() === "assigned") {
+          btnOneLabel = "REQUEST RE-ASSIGN";
+          btnTwoLabel = "MARK RESOLVED";
+        }
       }
     }
     return (
@@ -162,7 +166,14 @@ class ComplaintDetails extends Component {
         {complaint && (
           <div>
             <Details {...complaint} role={role} mapAction={true} />
-            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} role={role} feedback={complaint?complaint.feedback:""} rating={complaint?complaint.rating:""}/>
+            <ComplaintTimeLine
+              status={complaint.status}
+              timeLine={timeLine}
+              handleFeedbackOpen={this.handleFeedbackOpen}
+              role={role}
+              feedback={complaint ? complaint.feedback : ""}
+              rating={complaint ? complaint.rating : ""}
+            />
             <Comments comments={comments} hasComments={true} />
             <div>
               {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned") ||
@@ -234,8 +245,8 @@ const mapStateToProps = (state, ownProps) => {
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
-      feedback:selectedComplaint.feedback,
-      rating:selectedComplaint.rating
+      feedback: selectedComplaint.feedback,
+      rating: selectedComplaint.rating,
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
@@ -252,7 +263,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    fetchEmployees: () => dispatch(fetchEmployees()),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };
