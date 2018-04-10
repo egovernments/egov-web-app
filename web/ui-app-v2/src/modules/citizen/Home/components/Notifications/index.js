@@ -8,7 +8,7 @@ const Updates = ({ updates, history }) => {
   const renderUpdate = (update, index) => {
     const { title, date, status } = update;
     let transformedstatus = "";
-    const titleKey = title && "SERVICEDEFS.SERVICECODE." + title.toUpperCase();
+    const titleKey = title && "SERVICEDEFS." + title.toUpperCase();
     if (status) {
       if (status.toLowerCase() == "opened") {
         transformedstatus = `CS_COMMON_SUBMITTED`;

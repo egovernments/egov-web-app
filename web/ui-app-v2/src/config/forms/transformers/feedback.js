@@ -1,7 +1,7 @@
 import { prepareFormData } from "utils/commons";
 
 const viewModelToBusinessModelTransformer = (form, state) => {
-  const id = "decodeURIComponent(window.location.href.split(" / ").pop())";
+  const id = decodeURIComponent(window.location.href.split("/").pop());
   const tenantId = window.localStorage.getItem("tenant-id");
   const { fields: reopenFields } = form;
   let fields;

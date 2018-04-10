@@ -34,6 +34,7 @@ import AssignComplaint from "modules/employee/AssignComplaint";
 import EmployeeDirectory from "modules/employee/EmployeeDirectory";
 import ClosedComplaints from "modules/employee/ClosedComplaints";
 import RejectComplaint from "modules/employee/RejectComplaint";
+import ReassignComplaint from "modules/employee/ReassignComplaint";
 
 //Employee static screens
 import ComplaintRejected from "modules/employee/ComplaintRejected";
@@ -160,6 +161,13 @@ const Main = () => {
           path="/employee/closed-complaints"
           title={<Label className="screenHeaderLabelStyle" label="Closed Complaints" />}
           component={ClosedComplaints}
+        />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/reassign-complaint"
+          title={<Label className="screenHeaderLabelStyle" label="Re-Assign to Employee" />}
+          component={ReassignComplaint}
         />
         {/*Employee static screens */}
         <PrivateRoute

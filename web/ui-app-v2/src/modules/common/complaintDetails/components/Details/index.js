@@ -41,7 +41,7 @@ class Details extends Component {
       }
     }
 
-    const titleKey = complaint && "SERVICEDEFS.SERVICECODE." + complaint.toUpperCase();
+    const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
     return (
       <div>
         <Card
