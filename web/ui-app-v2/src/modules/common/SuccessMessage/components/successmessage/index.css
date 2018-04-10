@@ -45,3 +45,18 @@
   color: #484848 !important;
   margin-left: 5px;
 }
+
+/*static page button styles */
+.feedback-main-screen {
+  padding: 0 !important;
+  height: calc(100vh - 120px);
+  background: #ffffff;
+}
+
+.feedback-popup-button-cont {
+  position: fixed;
+  width: 100%;
+  bottom: 71px;
+  left: 0;
+  padding: 0 16px;
+}
