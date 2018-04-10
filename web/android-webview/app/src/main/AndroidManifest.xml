@@ -52,7 +52,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
+                <data android:scheme="https"
                     android:host="egov-micro-dev.egovernments.org"
                     android:pathPrefix="/" /> <!-- if you want only a specific directory from your website to be opened in the app through external links -->
             </intent-filter>

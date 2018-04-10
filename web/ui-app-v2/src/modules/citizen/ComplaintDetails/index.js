@@ -6,7 +6,7 @@ import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
 import { ImageModal } from "components";
-import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -103,15 +103,7 @@ const mapStateToProps = (state, ownProps) => {
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
-      images: fetchImages(selectedComplaint.actions).map((imageSource, index) => {
-        if (imageSource) {
-          var imageExtension = imageSource
-            .split("?")[0]
-            .split(".")
-            .pop();
-          return imageExtension === "png" || imageExtension === "jpg" ? imageSource : "";
-        }
-      }),
+      images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);

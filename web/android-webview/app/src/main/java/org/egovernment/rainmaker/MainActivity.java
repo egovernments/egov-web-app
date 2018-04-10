@@ -9,31 +9,26 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -50,14 +45,12 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
 
-	private static String ASWV_URL   = "http://egov-micro-dev.egovernments.org/app/v3/citizen/user/language-selection"; //complete URL of your website or webpage
+	private static String ASWV_URL   = "https://egov-micro-dev.egovernments.org/app/v3/citizen/user/language-selection"; //complete URL of your website or webpage
 	private String ASWV_F_TYPE       = "image/*";  //to upload any file type using "*/*"; check file type references for more
 
 
 	//Careful with these variable names if altering
     private WebView webView;
-    private	NotificationManager asw_notification;
-    private Notification asw_notification_new;
 
     private String asw_cam_message;
     private ValueCallback<Uri> asw_file_message;
@@ -116,12 +109,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Getting basic device information
-		//Move this to Javascript Proxy
-		get_info();
+        //Move this to Javascript Proxy
 
 		//Getting GPS location of device if given permission
-		get_location();
+		getLocation();
 
         webView = (WebView) findViewById(R.id.webview);
 		webView.addJavascriptInterface(proxy, "androidAppProxy");
@@ -235,13 +226,13 @@ public class MainActivity extends AppCompatActivity {
             taskDesc = new ActivityManager.TaskDescription(getString(R.string.app_name), bm, getColor(R.color.colorPrimary));
             MainActivity.this.setTaskDescription(taskDesc);
         }
-        get_location();
+        getLocation();
     }
 
     //Setting activity layout visibility
 	private class CustomWebView extends WebViewClient {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			get_location();
+			getLocation();
         }
 
         public void onPageFinished(WebView view, String url) {
@@ -265,6 +256,29 @@ public class MainActivity extends AppCompatActivity {
 			return url_actions(view, url);
         }
 
+		@Override
+		public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+			String message = "SSL Certificate error.";
+			switch (error.getPrimaryError()) {
+				case SslError.SSL_UNTRUSTED:
+					message = "The certificate authority is not trusted.";
+					break;
+				case SslError.SSL_EXPIRED:
+					message = "The certificate has expired.";
+					break;
+				case SslError.SSL_IDMISMATCH:
+					message = "The certificate Hostname mismatch.";
+					break;
+				case SslError.SSL_NOTYETVALID:
+					message = "The certificate is not yet valid.";
+					break;
+			}
+			Log.d("SSL Error",message);
+			// Lets continue to ignore the message anyway! Will have to fix this when we
+			// need to payments we need to fix it!
+			handler.proceed(); // Ignore SSL certificate errors
+		}
+
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs for API 23+ [suggested by github.com/JakePou]
 		@TargetApi(Build.VERSION_CODES.N)
 		@Override
@@ -273,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 		}
     }
 
-    //Opening URLs inside org.egovernment.org.egovernment.org.egovernment.rainmaker with request
+    //Opening URLs inside org.egovernment.org
     void aswm_view(String url) {
         webView.loadUrl(url);
     }
@@ -299,13 +313,6 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 
-	//Getting device basic information
-	public void get_info(){
-		CookieManager cookieManager = CookieManager.getInstance();
-		cookieManager.setAcceptCookie(true);
-		cookieManager.setCookie(ASWV_URL, "DEVICE=android");
-		cookieManager.setCookie(ASWV_URL, "DEV_API=" + Build.VERSION.SDK_INT);
-	}
 
 	//Checking permission for storage and camera for writing and uploading images
 	public void get_file(){
@@ -326,29 +333,24 @@ public class MainActivity extends AppCompatActivity {
 	}
 
     //Using cookies to update user locations
-    public void get_location(){
-		CookieManager cookieManager = CookieManager.getInstance();
-		cookieManager.setAcceptCookie(true);
+    public void getLocation(){
 		//Checking for location permissions
 		if (Build.VERSION.SDK_INT >= 23 && !check_permission(1)) {
 				ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, loc_perm);
-				show_notification(2, 2);
-
-            } else {
+				// if permissions are not granted notify the user.
+			} else {
                 GPSTrack gps;
                 gps = new GPSTrack(MainActivity.this);
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
                 if (gps.canGetLocation()) {
                     if (latitude != 0 || longitude != 0) {
-                        cookieManager.setCookie(ASWV_URL, "lat=" + latitude);
-                        cookieManager.setCookie(ASWV_URL, "long=" + longitude);
-                        //Log.w("New Updated Location:", latitude + "," + longitude);  //enable to test dummy latitude and longitude
+                        Log.w("New Updated Location:", latitude + "," + longitude);  //enable to test dummy latitude and longitude
                     } else {
                         Log.w("New Updated Location:", "NULL");
                     }
                 } else {
-                    show_notification(1, 1);
+                   // show suitable location
                     Log.w("New Updated Location:", "FAIL");
                 }
             }
@@ -381,53 +383,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Creating custom notifications with IDs
-    public void show_notification(int type, int id) {
-        long when = System.currentTimeMillis();
-        asw_notification = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent i = new Intent();
-        if (type == 1) {
-            i.setClass(MainActivity.this, MainActivity.class);
-        } else if (type == 2) {
-            i.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        } else {
-            i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            i.addCategory(Intent.CATEGORY_DEFAULT);
-            i.setData(Uri.parse("package:" + MainActivity.this.getPackageName()));
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        }
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-        switch(type){
-            case 1:
-                builder.setTicker(getString(R.string.app_name));
-                builder.setContentTitle(getString(R.string.loc_fail));
-                builder.setContentText(getString(R.string.loc_fail_text));
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.loc_fail_more)));
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-            break;
-
-            case 2:
-                builder.setTicker(getString(R.string.app_name));
-                builder.setContentTitle(getString(R.string.app_name));
-                builder.setContentText(getString(R.string.loc_perm_text));
-                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(getString(R.string.loc_perm_more)));
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-            break;
-        }
-        builder.setOngoing(false);
-        builder.setAutoCancel(true);
-        builder.setContentIntent(pendingIntent);
-        builder.setWhen(when);
-        builder.setContentIntent(pendingIntent);
-        asw_notification_new = builder.getNotification();
-        asw_notification.notify(id, asw_notification_new);
-    }
 
 	//Checking if users allowed the requested permissions or not
 	@Override
@@ -435,9 +390,8 @@ public class MainActivity extends AppCompatActivity {
 		switch (requestCode){
 			case 1: {
 				if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-					get_location();
+					getLocation();
 				}else{
-					show_notification(2, 2);
 					Toast.makeText(MainActivity.this, R.string.loc_req, Toast.LENGTH_LONG).show();
 				}
 			}

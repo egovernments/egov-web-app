@@ -7,7 +7,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -107,15 +107,8 @@ const mapStateToProps = (state) => {
     complaintObj.date = getDateFromEpoch(complaints.byId[complaint].auditDetails.createdTime);
     complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
-    complaintObj.images = fetchImages(complaints.byId[complaint].actions).map((imageSource, index) => {
-      return imageSource &&
-        imageSource
-          .split("?")[0]
-          .split(".")
-          .pop() === ("png" || "jpg" || "jpeg")
-        ? { source: imageSource }
-        : "";
-    });
+    complaintObj.images = fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource));
+
     transformedComplaints.push(complaintObj);
   });
   return { complaints, transformedComplaints: transformedComplaints.reverse() };

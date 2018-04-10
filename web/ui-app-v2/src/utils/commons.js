@@ -227,3 +227,10 @@ export const getCityNameByCode = (code, cities) => {
   const city = (cities || []).filter((city) => city.key === code);
   return (city && city.length && city[0].text) || "";
 };
+
+export const isImage = (url) => {
+  const acceptedImageTypes = ["jpg", "jpeg", "png"];
+  const urlParts = url && url.split("?");
+  const imageType = urlParts && urlParts.length && urlParts[0].split(".") && urlParts[0].split(".").length && urlParts[0].split(".").pop();
+  return (imageType && acceptedImageTypes.indexOf(imageType) !== -1) || false;
+};
