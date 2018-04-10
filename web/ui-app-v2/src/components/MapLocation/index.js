@@ -7,7 +7,6 @@ import commonConfig from "config/common";
 
 const { compose, withProps, lifecycle, withStateHandlers } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker } = require("react-google-maps");
-//const API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
 
 const MapLocation = compose(
   withProps({
@@ -29,6 +28,8 @@ const MapLocation = compose(
           this.setState({
             bounds: refs.map.getBounds(),
             center: refs.map.getCenter(),
+            lat: refs.map.getCenter().lat(),
+            lng: refs.map.getCenter().lng(),
           });
         },
         onSearchBoxMounted: (ref) => {
@@ -71,7 +72,13 @@ const MapLocation = compose(
   withScriptjs,
   withGoogleMap
 )((props) => (
-  <GoogleMap ref={props.onMapMounted} defaultZoom={13} center={props.currLoc} onBoundsChanged={props.onBoundsChanged}>
+  <GoogleMap
+    ref={props.onMapMounted}
+    defaultZoom={13}
+    center={props.currLoc ? props.currLoc : props.center}
+    onBoundsChanged={props.onBoundsChanged}
+    draggable={true}
+  >
     <div className="search-icon">
       <Icon
         id="searchIcon"
@@ -100,12 +107,6 @@ const MapLocation = compose(
         onClick={props.getMyLoc}
       />
     </div>
-    {props.dragInfoBox && (
-      <div className="dragInfoBox">
-        {" "}
-        <span>Move this pin to select your location</span>{" "}
-      </div>
-    )}
     <SearchBox
       ref={props.onSearchBoxMounted}
       bounds={props.bounds}
@@ -117,30 +118,12 @@ const MapLocation = compose(
 
     {props.markers.length > 0 ? (
       props.markers.map((marker, index) => {
-        props.setLocation(marker.position.lat(), marker.position.lng(), index);
-        return (
-          <Marker
-            key={index}
-            position={marker.position}
-            draggable={true}
-            icon={props.icon}
-            onDragEnd={(e) => {
-              props.setLocation(e.latLng.lat(), e.latLng.lng());
-            }}
-          />
-        );
+        return <Marker key={index} position={props.center} draggable={false} icon={props.icon} />;
       })
     ) : (
-      <Marker
-        position={props.center}
-        icon={props.icon}
-        draggable={true}
-        animation={window.google.maps.Animation.DROP}
-        onDragEnd={(e) => {
-          props.setLocation(e.latLng.lat(), e.latLng.lng());
-        }}
-      />
+      <Marker position={props.center} icon={props.icon} draggable={false} animation={window.google.maps.Animation.DROP} />
     )}
+    {props.setLocation(props.lat, props.lng)}
     {props.showMyLoc && <Marker position={props.currLoc} icon={props.icon} />}
   </GoogleMap>
 ));

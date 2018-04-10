@@ -19,6 +19,8 @@ const pickBtn = {
   fontStyle: "normal",
 };
 
+var add = {};
+
 class TrackLocation extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +59,7 @@ class TrackLocation extends Component {
           });
         },
         function(error) {
-          //use error.code to determine what went wrong
+          console.log(error.code);
         }
       );
     }
@@ -65,15 +67,16 @@ class TrackLocation extends Component {
 
   setPickedLocation = (lati, long, index) => {
     if (isUndefined(index)) index = 0;
-
-    this.convertToAddress(lati, long);
+    add.lat = lati;
+    add.lng = long;
   };
 
-  convertToAddress = (lati, long) => {
-    this.props.handleFieldChange(this.state.formKey, "latitude", lati.toFixed(6));
-    this.props.handleFieldChange(this.state.formKey, "longitude", long.toFixed(6));
+  convertToAddress = (add) => {
+    const { lat, lng } = add;
+    lat && this.props.handleFieldChange(this.state.formKey, "latitude", parseFloat(lat).toFixed(6));
+    lng && this.props.handleFieldChange(this.state.formKey, "longitude", parseFloat(lng).toFixed(6));
     var geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: { lat: lati, lng: long } }, (results, status) => {
+    geocoder.geocode({ location: { lat: lat, lng: lng } }, (results, status) => {
       if (status === "OK") {
         if (results[0]) {
           this.props.handleFieldChange(this.state.formKey, "address", results[0].formatted_address);
@@ -83,6 +86,7 @@ class TrackLocation extends Component {
   };
 
   onClickPick = () => {
+    this.convertToAddress(add);
     this.props.history.goBack();
   };
 
