@@ -22,5 +22,10 @@ const transform = (input) => {
 };
 
 const completeDetails = (item, key) => {
-  return Object.assign({}, item, { id: item.text || key, text: item.text || key, leftIcon: item.text || key.toLowerCase().replace(/\\s+/, "-") });
+  return Object.assign({}, item, {
+    id: item.text || key,
+    text: item.text || key,
+    displayKey: (item.text && "SERVICEDEFS." + item.id.toUpperCase()) || "SERVICEDEFS." + key.toUpperCase(),
+    leftIcon: item.text || key.toLowerCase().replace(/\\s+/, "-"),
+  });
 };

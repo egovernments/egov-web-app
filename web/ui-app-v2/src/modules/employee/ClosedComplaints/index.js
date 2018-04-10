@@ -30,7 +30,6 @@ class ClosedComplaints extends Component {
     };
     const { onComplaintClick } = this;
     const { closedComplaints, role } = this.props;
-    console.log(this.props.closedComplaints);
     return (
       <Screen>
         <Complaints onComplaintClick={onComplaintClick} complaints={closedComplaints} role={role} complaintLocation={true} />
@@ -79,7 +78,6 @@ const isAssigningOfficer = (roles) => {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  console.log("status is...." + status);
   if (status.toLowerCase() == "closed") {
     statusObj.status = "CS_COMMON_CLOSED_UCASE";
   } else {

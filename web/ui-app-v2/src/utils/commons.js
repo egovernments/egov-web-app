@@ -148,7 +148,7 @@ export const getCurrentAddress = async () => {
 };
 
 export const mapCompIDToName = (IDObj, compID) => {
-  return IDObj[compID] ? IDObj[compID].serviceName : "Default";
+  return IDObj[compID] ? IDObj[compID].serviceCode : "Default";
 };
 
 export const getDateFromEpoch = (epoch) => {
