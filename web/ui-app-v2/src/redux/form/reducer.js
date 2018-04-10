@@ -97,7 +97,7 @@ const form = (state = intialState, action) => {
       return setFile(state, formKey, fieldKey, action.fileObject, false);
     case actionTypes.FILE_UPLOAD_ERROR:
       // TODO
-      return state;
+      return { ...state, loading: false };
     case actionTypes.FILE_REMOVE:
       return removeFile(state, formKey, fieldKey, action.index);
     default:
