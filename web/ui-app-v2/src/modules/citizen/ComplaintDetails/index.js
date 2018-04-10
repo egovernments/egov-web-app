@@ -75,7 +75,7 @@ class ComplaintDetails extends Component {
           <div>
             <Details {...complaint} onImageClick={this.onImageClick} />
             <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
-            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} />
+            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} feedback={complaint?complaint.feedback:""} rating={complaint?complaint.rating:""}/>
             <Comments comments={comments} hasComments={true} />
           </div>
         )}
@@ -104,6 +104,8 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
+      feedback:selectedComplaint.feedback,
+      rating:selectedComplaint.rating
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);

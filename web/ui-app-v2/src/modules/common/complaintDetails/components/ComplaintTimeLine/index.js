@@ -47,6 +47,13 @@ const statusResolvedIconStyle = {
   border: "solid 1px #22b25f",
 };
 
+const statusRejectedIconStyle = {
+  ...timelineIconCommonStyle,
+  backgroundColor: "#e74c3c",
+  // boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.22)",
+  border: "solid 1px #e74c3c",
+};
+
 const callIconStyle = {
   marginRight: "7px",
   height: "12px",
@@ -63,7 +70,7 @@ const StatusIcon = ({ status }) => {
     case "re-assign":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "rejected":
-      return <Icon action="content" name="clear" style={statusCommonIconStyle} color={"#f5a623"} />;
+      return <Icon action="content" name="clear" style={statusRejectedIconStyle} color={"#FFFFFF"} />;
     case "resolved":
       return <Icon action="action" name="done" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
     default:
@@ -77,7 +84,7 @@ var rejectStatusCount = 0;
 var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 
-const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
+const StatusContent = ({ stepData, currentStatus, changeRoute,feedback,rating }) => {
   var {
     action,
     when: date,
@@ -106,11 +113,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
           />
           {
             action==="reopen" && <div>
-            <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments.split(";")[0]} />
-            {media &&
-                    media.map((image, index) => {
+            <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments?comments.split(";")[0]:""} />
+            {media && <div style={{display:"flex"}}>
+                    {media.map((image, index) => {
                       return (
-                        <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                        <div className="complaint-detail-detail-section-padding-zero" key={index}>
                           <Image
                             style={{
                               width: "97px",
@@ -120,8 +127,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
                           />
                         </div>
                       );
-                    })}
-              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments.split(";")[1]?`" ${comments.split(";")[1]} "`:""} />
+                    })}</div>}
+              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={(comments && comments.split(";")[1])?`" ${comments.split(";")[1]} "`:""} />
               </div>
           }
           {currentStatus === "open" &&
@@ -188,7 +195,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
-          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={department || "Amritsar Municipal Corporation"} />
+          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments?comments.split(";")[0]:""}/>
+          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={(comments && comments.split(";")[1])?`" ${comments.split(";")[1]} "`:""} />
           {currentStatus === "Rejected" &&
             rejectStatusCount === 1 && (
               <div
@@ -237,10 +245,10 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />
-          {media &&
-            media.map((image, index) => {
+          {media && <div style={{display:"flex"}}>
+            {media.map((image, index) => {
               return (
-                <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                <div className="complaint-detail-detail-section-padding-zero" key={index}>
                   <Image
                     style={{
                       width: "97px",
@@ -251,6 +259,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
                 </div>
               );
             })}
+            </div>}
+
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
           {currentStatus === "Resolved" &&
             resolveStatusCount === 1 && (
@@ -283,6 +293,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
                 </div>
               </div>
             )}
+
         </div>
       );
 
@@ -291,7 +302,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute }) => {
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_COMMON_CITIZEN_FEEDBACK" />
-          <div style={{display:"flex"}}> <Label labelClassName="rainmaker-small-font" labelStyle={{color:"#22b25f"}} label={`3/5 `} /> <Label labelClassName="rainmaker-small-font" label={` ( Service, Resolution Time )`} /></div>
+          <div style={{display:"flex"}}> <Label labelClassName="rainmaker-small-font" labelStyle={{color:"#22b25f"}} label={`${rating}/5 `} /> <Label labelClassName="rainmaker-small-font" label={` ( ${feedback})`} /></div>
           <Label labelClassName="rainmaker-small-font" label={`" ${comments} "`} />
         </div>
       );
@@ -308,10 +319,9 @@ class ComplaintTimeLine extends Component {
     rejectStatusCount = 0;
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
-    let { status, history, role, timeLine } = this.props;
+    let { status, history, role, timeLine,feedback,rating } = this.props;
 
     // console.log(timeLine);
-
     let steps = timeLine.map((step, key) => {
       return {
         props: {
@@ -325,7 +335,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent stepData={step} currentStatus={status} changeRoute={history} />,
+        contentChildren: <StatusContent stepData={step} currentStatus={status} changeRoute={history} feedback={feedback} rating={rating}/>,
       };
     });
 
@@ -348,6 +358,7 @@ class ComplaintTimeLine extends Component {
                     orientation: "vertical",
                   }}
                   steps={steps}
+
                 />
               </div>
             </div>

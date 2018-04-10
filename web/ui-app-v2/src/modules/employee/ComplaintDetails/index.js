@@ -162,7 +162,7 @@ class ComplaintDetails extends Component {
         {complaint && (
           <div>
             <Details {...complaint} role={role} mapAction={true} />
-            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} role={role} />
+            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} handleFeedbackOpen={this.handleFeedbackOpen} role={role} feedback={complaint?complaint.feedback:""} rating={complaint?complaint.rating:""}/>
             <Comments comments={comments} hasComments={true} />
             <div>
               {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned") ||
@@ -234,6 +234,8 @@ const mapStateToProps = (state, ownProps) => {
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
+      feedback:selectedComplaint.feedback,
+      rating:selectedComplaint.rating
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
