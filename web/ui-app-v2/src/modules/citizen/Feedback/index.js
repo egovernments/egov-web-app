@@ -42,8 +42,9 @@ class Feedback extends Component {
     this.props.handleFieldChange(this.props.formKey, "rating", value);
   };
 
-  handleChange = (e) => {
-    this.props.handleFieldChange(this.props.formKey, "comments", e.target.value);
+  handleChange = (e, value) => {
+    console.log(value);
+    this.props.handleFieldChange(this.props.formKey, "comments", value);
   };
 
   onSubmit = () => {
@@ -54,9 +55,9 @@ class Feedback extends Component {
     let { value } = this.state;
     const { form } = this.props;
     const { fields, submit } = form;
-    let textArea;
+    let comments;
     if (fields) {
-      textArea = fields.textarea;
+      comments = fields.comments;
     }
 
     return (
@@ -66,7 +67,7 @@ class Feedback extends Component {
             <div className="feedback-form">
               <RatingsComponent onChange={this.onClick} />
               <CheckBoxGroup selected={value} onCheck={this.onCheck} />
-              <TextAreaComponent onChange={this.handleChange} {...textArea} />
+              <TextAreaComponent onChange={this.handleChange} {...comments} />
             </div>
           </div>
         }
