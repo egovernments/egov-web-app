@@ -17,7 +17,6 @@ class ChangePassword extends Component {
   render() {
     const { form, handleFieldChange, submitForm } = this.props;
     const { name: formKey } = this.formConfig;
-    const { handleForgotPasswdCLick } = this;
 
     return (
       <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">

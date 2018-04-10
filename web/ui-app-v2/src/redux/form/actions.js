@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { authenticated } from "redux/auth/actions";
-import { toggleSnackbarAndSetText, setRoute, setUserInfo } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { httpRequest, loginRequest, uploadFile } from "utils/api";
 import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
