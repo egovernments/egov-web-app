@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Card, Icon, Button } from "components";
 import Label from "utils/translationNode";
-import {getDateFromEpoch} from "utils/commons";
+import { getDateFromEpoch } from "utils/commons";
 import "./index.css";
 
 const imageStyles = {
@@ -144,7 +144,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
   return (
     complaints &&
     complaints.map((complaint, complaintIndex) => {
-      const complaintHeader = complaint.header && "SERVICEDEFS.SERVICECODE." + complaint.header.toUpperCase();
+      const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
           <Card
