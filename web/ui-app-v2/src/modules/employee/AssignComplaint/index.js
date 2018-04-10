@@ -16,7 +16,7 @@ class AssignComplaint extends Component {
       <Screen>
         <HeaderCard />
         <ListCard />
-        <Button label={<Label buttonLabel={true} label="ASSIGN" />} onClick={this.onAssignClick} />
+        <Button label={<Label buttonLabel={true} label="ES_COMMON_ASSIGN" />} onClick={this.onAssignClick} />
       </Screen>
     );
   }

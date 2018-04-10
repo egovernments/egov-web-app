@@ -15,7 +15,7 @@ class ReassignComplaint extends Component {
       <Screen>
         <HeaderCard />
         <ListCard />
-        <Button label={<Label buttonLabel={true} label="RE-ASSIGN" />} onClick={this.onReassignClick} />
+        <Button label={<Label buttonLabel={true} label="ES_COMMON_REASSIGN" />} onClick={this.onReassignClick} />
       </Screen>
     );
   }
