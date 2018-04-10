@@ -45,8 +45,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
 
-	private static String ASWV_URL   = "https://egov-micro-dev.egovernments.org/app/v3/citizen/user/language-selection"; //complete URL of your website or webpage
-	private String ASWV_F_TYPE       = "image/*";  //to upload any file type using "*/*"; check file type references for more
+	private static String URL   = "https://egov-micro-dev.egovernments.org/app/v3/citizen/user/language-selection"; //complete URL of your website or webpage
+	private String FILE_TYPE       = "image/*";  //to upload any file type using "*/*"; check file type references for more
 
 
 	//Careful with these variable names if altering
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     // permissions code
     private final static int asw_file_req = 1;
-	private final static int loc_perm = 1;
 	private final static int file_perm = 2;
 	private final static int sms_receive_perm = 3;
 
@@ -111,10 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Move this to Javascript Proxy
 
-		//Getting GPS location of device if given permission
-		getLocation();
-
-        webView = (WebView) findViewById(R.id.webview);
+		webView = (WebView) findViewById(R.id.webview);
 		webView.addJavascriptInterface(proxy, "androidAppProxy");
 
 
@@ -142,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(new CustomWebView());
 
         //Rendering the default URL
-        aswm_view(ASWV_URL);
+        aswm_view(URL);
 
         webView.setWebChromeClient(new WebChromeClient() {
             //Handling input[type="file"] requests for android API 16+
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 		  			asw_file_message = uploadMsg;
                     Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                     i.addCategory(Intent.CATEGORY_OPENABLE);
-                    i.setType(ASWV_F_TYPE);
+                    i.setType(FILE_TYPE);
                     startActivityForResult(Intent.createChooser(i, "File Chooser"), asw_file_req);
 
             }
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     asw_file_path = filePathCallback;
                     Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
                     contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                    contentSelectionIntent.setType(ASWV_F_TYPE);
+                    contentSelectionIntent.setType(FILE_TYPE);
                     Intent[] intentArray;
 
 					Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -226,13 +222,13 @@ public class MainActivity extends AppCompatActivity {
             taskDesc = new ActivityManager.TaskDescription(getString(R.string.app_name), bm, getColor(R.color.colorPrimary));
             MainActivity.this.setTaskDescription(taskDesc);
         }
-        getLocation();
+
     }
 
     //Setting activity layout visibility
 	private class CustomWebView extends WebViewClient {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			getLocation();
+
         }
 
         public void onPageFinished(WebView view, String url) {
@@ -332,30 +328,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-    //Using cookies to update user locations
-    public void getLocation(){
-		//Checking for location permissions
-		if (Build.VERSION.SDK_INT >= 23 && !check_permission(1)) {
-				ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, loc_perm);
-				// if permissions are not granted notify the user.
-			} else {
-                GPSTrack gps;
-                gps = new GPSTrack(MainActivity.this);
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
-                if (gps.canGetLocation()) {
-                    if (latitude != 0 || longitude != 0) {
-                        Log.w("New Updated Location:", latitude + "," + longitude);  //enable to test dummy latitude and longitude
-                    } else {
-                        Log.w("New Updated Location:", "NULL");
-                    }
-                } else {
-                   // show suitable location
-                    Log.w("New Updated Location:", "FAIL");
-                }
-            }
-
-    }
 
 	//Checking if particular permission is given or not
 	public boolean check_permission(int permission){
@@ -383,20 +355,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-	//Checking if users allowed the requested permissions or not
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults){
-		switch (requestCode){
-			case 1: {
-				if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-					getLocation();
-				}else{
-					Toast.makeText(MainActivity.this, R.string.loc_req, Toast.LENGTH_LONG).show();
-				}
-			}
-		}
-	}
 
 
 	@Override
