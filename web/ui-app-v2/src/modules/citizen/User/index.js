@@ -16,7 +16,7 @@ const Citizen = ({ match }) => {
       <Route exact path={`${match.url}/login`} component={Login} />
       <Route exact path={`${match.url}/otp`} component={OTP} />
       <Route exact path={`${match.url}/language-selection`} component={LanguageSelection} />
-      <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Profile" component={Profile} />
+      <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Edit Profile" component={Profile} />
     </Switch>
   );
 };

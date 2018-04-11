@@ -11,13 +11,14 @@ class ComplaintRejected extends Component {
 
   render() {
     return (
-      <div className="reassign-success-main-screen">
+      <div className="success-message-main-screen">
         <SuccessMessage
           successmessage="You have Rejected this complaint"
           icon={<Icon action="navigation" name="close" />}
           backgroundColor={"#e74c3c"}
         />
-        <div className="reassign-success-continue">
+
+        <div className="success-message-continue">
           <Button
             id="resolve-success-continue"
             primary={true}
@@ -25,6 +26,7 @@ class ComplaintRejected extends Component {
             fullWidth={true}
             onClick={this.handleComplaintReassigned}
           />
+          =
         </div>
       </div>
     );

@@ -6,18 +6,18 @@ import SuccessMessage from "modules/common/SuccessMessage/components/successmess
 import Label from "utils/translationNode";
 import "./index.css";
 
-const FeedbackAcknowledge = ({ setRoute }) => {
+const ReopenAcknowledgement = ({ setRoute }) => {
   return (
-    <div className="feedback-success-container">
+    <div className="reopen-success-container">
       <div className="success-message-main-screen">
-        <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" icon={<Icon action="navigation" name="check" />} backgroundColor={"#22b25f"} />
+        <SuccessMessage successmessage="CS_REOPEN_SUCCESS_MESSAGE" icon={<Icon action="navigation" name="check" />} backgroundColor={"#22b25f"} />
       </div>
       <div className="success-message-continue">
         <Button
-          id="feedback-acknowledgement"
+          id="success-message-acknowledgement"
           onClick={() => setRoute("/citizen")}
           primary={true}
-          label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
+          label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
           fullWidth={true}
         />
       </div>
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(FeedbackAcknowledge);
+export default connect(null, mapDispatchToProps)(ReopenAcknowledgement);

@@ -21,13 +21,13 @@
 
 /* comment */
 
-.reassign-success-main-screen {
+.success-message-main-screen {
   padding: 0 !important;
   height: calc(100vh - 64px);
   background: #ffffff;
 }
 
-.reassign-success-continue {
+.success-message-continue {
   position: fixed;
   width: 100%;
   bottom: 15px;
@@ -35,28 +35,7 @@
   padding: 0 16px;
 }
 
-/* .reassign-success-main-screen .thankyou-text,
-.reassign-success-main-screen .secondary-text,
-.reassign-success-main-screen .tertiary-text {
-  display: inline-block;
-} */
-
-.reassign-success-main-screen .secondary-text .label-text {
+.success-message-main-screen .secondary-text .label-text {
   color: #484848 !important;
   margin-left: 5px;
-}
-
-/*static page button styles */
-.feedback-main-screen {
-  padding: 0 !important;
-  height: calc(100vh - 120px);
-  background: #ffffff;
-}
-
-.feedback-popup-button-cont {
-  position: fixed;
-  width: 100%;
-  bottom: 71px;
-  left: 0;
-  padding: 0 16px;
 }

@@ -201,7 +201,7 @@ class HeaderWithDrawer extends Component {
       },
 
       {
-        primaryText: "Edit Profile",
+        primaryText: <Label label="CS_HOME_HEADER_PROFILE" />,
         route: "/employee/user/profile",
         leftIcon: <Icon action="social" name="person" />,
         style: {
