@@ -20,7 +20,7 @@ const formConfig = {
     id: "complaintresolved-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/citizen/resolve-success",
+  redirectionRoute: "/employee/resolve-success",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 
