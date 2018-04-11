@@ -63,7 +63,14 @@ class CityPickerDialog extends Component {
     return (
       <div>
         <div onClick={onCityFieldClicked}>
-          <TextFieldIcon {...field} value={getCityNameByCode((field || {}).value, cities)} id="person-city" iconPosition="after" Icon={DownArrow} />
+          <TextFieldIcon
+            {...field}
+            errorStyle={{ bottom: "0px" }}
+            value={getCityNameByCode((field || {}).value, cities)}
+            id="person-city"
+            iconPosition="after"
+            Icon={DownArrow}
+          />
         </div>
         <Dialog
           className="citipicker-dialog"

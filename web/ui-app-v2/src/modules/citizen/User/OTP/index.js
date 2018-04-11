@@ -16,7 +16,7 @@ class OTP extends Component {
   componentWillMount() {
     const { setRoute, previousRoute } = this.props;
     if (previousRoute.length === 0) {
-      setRoute("/citizen/user/register");
+      this.props.history.push("/citizen/user/register");
     }
   }
 
@@ -68,13 +68,14 @@ const mapStateToProps = (state) => {
   const formKey = "otp";
   const form = state.form[formKey] || {};
   const { loading } = state.form || false;
+  const { authenticating } = state.auth;
   const { previousRoute } = state.app;
   const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;
   let phoneNumber = null;
   if (intent) {
     phoneNumber = state.form[intent].fields.phone.value;
   }
-  return { form, previousRoute, intent, phoneNumber, loading };
+  return { form, previousRoute, intent, phoneNumber, loading: loading || authenticating };
 };
 
 const mapDispatchToProps = (dispatch) => {

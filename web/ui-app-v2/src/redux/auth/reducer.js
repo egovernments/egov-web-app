@@ -34,7 +34,6 @@ const auth = (state = intialState, action) => {
       };
     case actionTypes.AUTHENTICATION_FAILED:
       return { ...state, authenticated: false, authenticationFailed: true, authenticating: false };
-
     case actionTypes.USER_PROFILE_UPDATED:
       return { ...state, userInfo: action.user };
     case actionTypes.LOGOUT:
@@ -46,6 +45,10 @@ const auth = (state = intialState, action) => {
         userInfo: {},
         token: "",
       };
+    case actionTypes.SEND_OTP_STARTED:
+      return { ...state, authenticating: true };
+    case actionTypes.SEND_OTP_COMPLETED:
+      return { ...state, authenticating: false };
     default:
       return state;
   }

@@ -21,3 +21,8 @@
 .citizen-otp-sent-message .label-text {
   display: inline;
 }
+
+input#otp {
+  height: 56px !important;
+  padding-bottom: 0px !important;
+}

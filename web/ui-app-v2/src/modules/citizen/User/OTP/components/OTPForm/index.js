@@ -19,7 +19,14 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
           </div>
           <Label label="CORE_COMMON_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
           <form>
-            <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} type={"number"} />
+            <TextField
+              errorStyle={{ bottom: "0px" }}
+              onChange={(e, value) => onChange(formKey, "otp", value)}
+              id="otp"
+              {...fields.otp}
+              fullWidth={true}
+              type={"number"}
+            />
             <div style={{ marginBottom: "24px" }} className="text-right">
               <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
               <span style={{ cursor: "pointer" }} onClick={() => resendOTP()}>

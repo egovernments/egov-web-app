@@ -49,6 +49,15 @@ export const authenticationFailed = () => {
   return { type: authType.AUTHENTICATION_FAILED };
 };
 
+// sending otp
+export const sendOtpStarted = () => {
+  return { type: authType.SEND_OTP_STARTED };
+};
+
+export const sendOtpCompleted = () => {
+  return { type: authType.SEND_OTP_COMPLETED };
+};
+
 export const searchUser = () => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -83,7 +92,11 @@ export const sendOTP = (intent) => {
     const state = getState();
     const form = state.form[intent];
     const formData = prepareFormData(form);
-    const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
+    dispatch(sendOtpStarted());
+    try {
+      const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
+    } catch (error) {}
+    dispatch(sendOtpCompleted());
   };
 };
 
