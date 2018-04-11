@@ -1,7 +1,7 @@
 import * as authType from "./actionTypes";
 import { httpRequest, loginRequest } from "utils/api";
-import { AUTH, USER } from "utils/endPoints";
-//import { prepareFormData } from "utils/commons";
+import { AUTH, USER, OTP } from "utils/endPoints";
+import { prepareFormData } from "utils/commons";
 
 export const userProfileUpdated = (payload) => {
   const user = payload.user[0];
