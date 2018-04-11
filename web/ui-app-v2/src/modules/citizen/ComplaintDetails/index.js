@@ -5,7 +5,6 @@ import ComplaintTimeLine from "modules/common/complaintDetails/components/Compla
 import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
-import { ImageModal } from "components";
 import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import "./index.css";
 
@@ -57,15 +56,6 @@ class ComplaintDetails extends Component {
     }
   }
 
-  onImageClick = (source) => {
-    this.setState({ source });
-    this.setState({ hideImageModal: false });
-  };
-
-  onCloseClick = () => {
-    this.setState({ hideImageModal: true });
-  };
-
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { details, comments } = this.state;
@@ -73,9 +63,13 @@ class ComplaintDetails extends Component {
       <Screen>
         {complaint && (
           <div>
-            <Details {...complaint} onImageClick={this.onImageClick} />
-            <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
-            <ComplaintTimeLine status={complaint.status} timeLine={timeLine} feedback={complaint?complaint.feedback:""} rating={complaint?complaint.rating:""}/>
+            <Details {...complaint} />
+            <ComplaintTimeLine
+              status={complaint.status}
+              timeLine={timeLine}
+              feedback={complaint ? complaint.feedback : ""}
+              rating={complaint ? complaint.rating : ""}
+            />
             <Comments comments={comments} hasComments={true} />
           </div>
         )}
@@ -104,8 +98,8 @@ const mapStateToProps = (state, ownProps) => {
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
-      feedback:selectedComplaint.feedback,
-      rating:selectedComplaint.rating
+      feedback: selectedComplaint.feedback,
+      rating: selectedComplaint.rating,
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);

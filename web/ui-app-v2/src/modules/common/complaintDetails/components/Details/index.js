@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon } from "../../../../../components";
+import { Card, Image, Icon, ImageModal } from "../../../../../components";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -19,6 +19,19 @@ const mapIconStyle = {
 class Details extends Component {
   redirectToMap = () => {
     //Redirect to Map
+  };
+  state = {
+    source: "",
+    hideImageModal: true,
+  };
+
+  onImageClick = (source) => {
+    this.setState({ source });
+    this.setState({ hideImageModal: false });
+  };
+
+  onCloseClick = () => {
+    this.setState({ hideImageModal: true });
   };
 
   render() {
@@ -40,6 +53,7 @@ class Details extends Component {
     const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
     return (
       <div>
+        <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
         <Card
           textChildren={
             <div>
@@ -74,7 +88,7 @@ class Details extends Component {
                                   height: "93px",
                                 }}
                                 source={image}
-                                onClick={() => this.props.onImageClick(image)}
+                                onClick={() => this.onImageClick(image)}
                               />
                             </div>
                           )

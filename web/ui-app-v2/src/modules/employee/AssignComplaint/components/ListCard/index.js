@@ -417,8 +417,10 @@ class ListCard extends Component {
   };
 
   onEmployeeChosen = (item, index) => {
+    console.log(item);
+    console.log(index);
     let { handleFieldChange } = this.props;
-    let { dataSource } = this.state;
+    const dataSource = this.prepareRawDataToFormat(this.APIData);
     const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
     handleFieldChange(this.formConfig.name, "assignee", item.id);
     isReassignScreen ? handleFieldChange(this.formConfig.name, "action", "reassign") : handleFieldChange(this.formConfig.name, "action", "assign");
