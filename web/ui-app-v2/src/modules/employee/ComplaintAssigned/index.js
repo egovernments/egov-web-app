@@ -13,7 +13,7 @@ class ComplaintAssigned extends Component {
     let designation = "Senior Inspector";
     let department = "Health & Sanitation Department";
     return (
-      <div className="reassign-success-main-screen">
+      <div className="success-message-main-screen">
         <SuccessMessage
           successmessage="Assigned to Amrinder Singh"
           secondaryLabel={designation}
@@ -21,7 +21,7 @@ class ComplaintAssigned extends Component {
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
-        <div className="reassign-success-continue">
+        <div className="success-message-continue">
           <Button
             id="resolve-success-continue"
             primary={true}

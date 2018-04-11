@@ -455,10 +455,10 @@ class ListCard extends Component {
     selectedEmployeeId && submitForm(formKey);
     switch (label) {
       case "ASSIGN":
-        setRoute("/employee/complaint-assigned");
+        selectedEmployeeId && setRoute("/employee/complaint-assigned");
         break;
       case "RE-ASSIGN":
-        setRoute("/employee/complaint-reassigned");
+        selectedEmployeeId && setRoute("/employee/complaint-reassigned");
         break;
     }
   };

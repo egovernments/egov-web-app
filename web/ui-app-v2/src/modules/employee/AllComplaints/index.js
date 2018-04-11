@@ -10,7 +10,7 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName,isImage } from "utils/commons";
+import { mapCompIDToName, isImage } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -277,7 +277,7 @@ const getLatestStatus = (status) => {
       transformedStatus = "ASSIGNED";
       break;
     case "resolved":
-      transformedStatus = "RESOLVED";
+      transformedStatus = "ASSIGNED";
       break;
     default:
       transformedStatus = "UNASSIGNED";
@@ -330,9 +330,9 @@ const mapStateToProps = (state) => {
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
     };
   });
-  const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),["date"],["desc"]);
-  const unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),["date"],["desc"]);
-  const employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),["date"],["desc"]);
+  const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
+  const unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
+  const employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
 };
 

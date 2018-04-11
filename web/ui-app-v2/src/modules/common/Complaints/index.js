@@ -5,7 +5,8 @@ import { getDateFromEpoch } from "utils/commons";
 import "./index.css";
 
 const imageStyles = {
-  minHeight: "87px",
+  maxHeight: "100px",
+  minHeight: "100px",
 };
 
 const bottomInfoTemplate = (item, role) => {
