@@ -8,7 +8,7 @@ const initialState = {
   name: "Mseva",
   showMenu: false,
   showDailog: false,
-  route: window.location.pathname,
+  route: "",
   locale,
   previousRoute: "",
   toast: {
