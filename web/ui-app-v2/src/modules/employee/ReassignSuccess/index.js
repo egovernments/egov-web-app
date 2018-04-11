@@ -10,13 +10,14 @@ class ReassignSuccess extends Component {
   };
   render() {
     return (
-      <div className="reassign-success-main-screen">
+      <div className="success-message-main-screen">
         <SuccessMessage
           successmessage="Your Re-Assign request has been sent."
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
-        <div className="reassign-success-continue">
+
+        <div className="success-message-continue">
           <Button
             id="resolve-success-continue"
             primary={true}

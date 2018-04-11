@@ -16,6 +16,7 @@ import ReOpenComplaint from "modules/citizen/ReOpenComplaint";
 import ComplaintType from "modules/citizen/ComplaintType";
 import AddComplaint from "modules/citizen/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/FeedbackAcknowledgement";
+import ReopenAcknowledgement from "modules/citizen/ReopenAcknowledgement";
 
 // static pages
 import HowItWorks from "modules/citizen/HowItWorks";
@@ -100,6 +101,7 @@ const Main = () => {
         <PrivateRoute
           exact
           path="/citizen/feedback-acknowledgement"
+          hideBottomNavigation={true}
           title={<Label className="screenHeaderLabelStyle" label="CS_HOME_MY_COMPLAINTS" />}
           component={FeedbackAcknowledge}
         />
@@ -225,6 +227,13 @@ const Main = () => {
           path="/employee/reject-complaint/:serviceRequestId?"
           title={<Label className="screenHeaderLabelStyle" label="Reason to Reject" />}
           component={RejectComplaint}
+        />
+        <PrivateRoute
+          exact
+          path="/citizen/reopen-acknowledgement"
+          hideBottomNavigation={true}
+          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_MY_COMPLAINTS" />}
+          component={ReopenAcknowledgement}
         />
       </Switch>
     </main>

@@ -11,7 +11,7 @@ class ResolveSuccess extends Component {
   };
   render() {
     return (
-      <div className="reassign-success-main-screen resolve-success">
+      <div className="success-message-main-screen resolve-success">
         <SuccessMessage
           successmessage="You have marked the complaint as"
           secondaryLabel="Resolved"
@@ -19,7 +19,7 @@ class ResolveSuccess extends Component {
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
-        <div className="reassign-success-continue">
+        <div className="success-message-continue">
           <Button
             id="resolve-success-continue"
             primary={true}

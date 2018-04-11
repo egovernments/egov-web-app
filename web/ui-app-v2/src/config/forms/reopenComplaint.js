@@ -1,6 +1,5 @@
 const formConfig = {
   name: "reopenComplaint",
-  idJsonPath: "services[0].serviceRequestId",
   fields: {
     media: {
       id: "media-upload",
@@ -24,7 +23,7 @@ const formConfig = {
     id: "reopencomplaint-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/citizen/complaint-submitted",
+  redirectionRoute: "/citizen/reopen-acknowledgement",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

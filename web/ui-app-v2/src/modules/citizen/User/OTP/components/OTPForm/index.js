@@ -13,8 +13,11 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
       textChildren={
         <div>
           <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
-          <Label label="CORE_OTP_SENT_MESSAGE" />
-          <Label label={phoneNumber} />
+          <div className="citizen-otp-sent-message">
+            <Label label="CORE_OTP_SENT_MESSAGE" />
+            <Label label={phoneNumber} />
+          </div>
+          <Label label="CORE_COMMON_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
           <form>
             <TextField onChange={(e, value) => onChange(formKey, "otp", value)} id="otp" {...fields.otp} fullWidth={true} type={"number"} />
             <div style={{ marginBottom: "24px" }} className="text-right">

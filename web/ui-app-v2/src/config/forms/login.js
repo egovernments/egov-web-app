@@ -5,7 +5,7 @@ const formConfig = {
       id: "person-phone",
       jsonPath: "otp.mobileNumber",
       required: true,
-      floatingLabelText: "CORE_COMMON_PHONE_NUMBER",
+      floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
       pattern: "^([0-9])+$",
@@ -23,7 +23,7 @@ const formConfig = {
     },
   },
   submit: {
-    label: "CORE_COMMON_LOGIN",
+    label: "CORE_COMMON_CONTINUE",
     id: "login-submit-action",
   },
   saveUrl: "/user-otp/v1/_send",
