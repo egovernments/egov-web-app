@@ -14,7 +14,6 @@ class App extends Component {
 
     props.history.listen((location, action) => {
       const { pathname: nextPath } = location;
-      removeBodyClass(currentPath);
       addBodyClass(nextPath);
       props.toggleSnackbarAndSetText(false, "");
     });

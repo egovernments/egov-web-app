@@ -177,11 +177,6 @@ export const addBodyClass = (path) => {
   bodyClass && document.body.classList.add(bodyClass);
 };
 
-export const removeBodyClass = (path) => {
-  const bodyClass = getBodyClassFromPath(path);
-  document.body.classList.remove(bodyClass);
-};
-
 export const prepareFormData = (form) => {
   const formFields = form.fields;
   return Object.keys(formFields).reduce((formData, fieldKey) => {
