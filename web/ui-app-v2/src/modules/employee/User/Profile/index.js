@@ -7,6 +7,7 @@ import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/Screen";
 import img from "assets/people1.png";
+import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class Profile extends Component {
@@ -58,7 +59,7 @@ class Profile extends Component {
   };
 
   onClickChangePasswd = () => {
-    this.props.history.push("/employee/user/change-password");
+    this.props.setRoute("/employee/user/change-password");
   };
 
   submitForm = () => {
@@ -112,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
     fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
+    setRoute: (route) => dispatch(setRoute(route)),
     removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
   };
 };
