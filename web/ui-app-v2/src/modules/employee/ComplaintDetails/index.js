@@ -176,8 +176,10 @@ class ComplaintDetails extends Component {
             />
             <Comments comments={comments} hasComments={true} />
             <div>
-              {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned") ||
-              (role === "employee" && complaint.complaintStatus.toLowerCase() === "assigned") ? (
+              {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned" && complaint.complaintStatus.toLowerCase() !== "closed") ||
+              (role === "employee" &&
+                complaint.complaintStatus.toLowerCase() === "assigned" &&
+                complaint.complaintStatus.toLowerCase() !== "closed") ? (
                 <Actions
                   btnOneLabel={btnOneLabel}
                   btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
