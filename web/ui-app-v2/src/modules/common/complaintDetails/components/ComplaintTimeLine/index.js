@@ -197,7 +197,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute,feedback,rating })
           <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments?comments.split(";")[0]:""}/>
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={(comments && comments.split(";")[1])?`" ${comments.split(";")[1]} "`:""} />
-          {currentStatus === "Rejected" &&
+          {currentStatus === "rejected" &&
             rejectStatusCount === 1 && (
               <div
                 className="complaint-details-timline-button"
@@ -262,7 +262,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute,feedback,rating })
             </div>}
 
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
-          {currentStatus === "Resolved" &&
+          {currentStatus === "resolved" &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
                 <div
@@ -335,7 +335,7 @@ class ComplaintTimeLine extends Component {
             marginTop: "-50px",
           },
         },
-        contentChildren: <StatusContent stepData={step} currentStatus={status} changeRoute={history} feedback={feedback} rating={rating}/>,
+        contentChildren: <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating}/>,
       };
     });
 

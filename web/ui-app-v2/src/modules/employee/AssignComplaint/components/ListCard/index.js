@@ -509,19 +509,22 @@ class ListCard extends Component {
               <div className="employee-list-cont">
                 {displayInitialList
                   ? renderList(prepareResultsForDisplay(dataSource))
-                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results), true)}
+                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(results)) : this.renderList(prepareResultsForDisplay(results), true)}
               </div>
             </div>
           }
         />
-        <div className="assign-complaint-button-cont">
-          <Button
-            primary={true}
-            fullWidth={true}
-            label={<Label buttonLabel={true} label={isReassignScreen ? "RE-ASSIGN" : "ASSIGN"} />}
-            onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN")}
-          />
-        </div>
+        {
+          !isEmployeeDirectory &&
+          <div className="assign-complaint-button-cont">
+            <Button
+              primary={true}
+              fullWidth={true}
+              label={<Label buttonLabel={true} label={isReassignScreen ? "RE-ASSIGN" : "ASSIGN"} />}
+              onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN")}
+            />
+            </div>
+         }
       </div>
     );
   }
