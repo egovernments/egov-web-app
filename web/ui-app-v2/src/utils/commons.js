@@ -172,7 +172,9 @@ export const getBodyClassFromPath = (path) => {
 
 export const addBodyClass = (path) => {
   const bodyClass = getBodyClassFromPath(path);
-  document.body.classList.add(bodyClass);
+  // remove the previous tokens; temp fix
+  document.body.classList.forEach((className) => document.body.classList.remove(className));
+  bodyClass && document.body.classList.add(bodyClass);
 };
 
 export const removeBodyClass = (path) => {
