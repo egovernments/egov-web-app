@@ -73,7 +73,7 @@ const StatusIcon = ({ status }) => {
       return <Icon action="content" name="clear" style={statusRejectedIconStyle} color={"#FFFFFF"} />;
     case "resolved":
       return <Icon action="action" name="done" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
-    default:
+    case "closed":
       return <Icon action="action" name="stars" style={statusResolvedIconStyle} color={"#FFFFFF"} />;
   }
 };
@@ -297,7 +297,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute,feedback,rating })
         </div>
       );
 
-    default:
+    case "closed":
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
