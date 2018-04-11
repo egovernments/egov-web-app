@@ -18,15 +18,29 @@ class ComplaintType extends Component {
     super(props);
     this.formConfig = require("config/forms/complaint").default;
   }
-  state = { results: [], searchTerm: "" };
+  state = { results: [], searchTerm: "", dataSource: [], transformedDataSource: [] };
 
+  componentDidMount = () => {
+    this.generateDataSource();
+  };
+
+  generateResultsForAutoComplete = (categoryList, transformedDataSource) => {
+    categoryList.forEach((item) => {
+      if (item.hasOwnProperty("nestedItems") && item.nestedItems.length) {
+        this.generateResultsForAutoComplete(item.nestedItems, transformedDataSource);
+      } else {
+        transformedDataSource.push(item);
+      }
+    });
+  };
+
+  // this logic has to change
   generateDataSource = () => {
     const { categories } = this.props;
     const categoryList = getNestedObjFormat(categories);
-    var transformedDataSource = categoryList.reduce((transformedDataSource, source) => {
-      return transformedDataSource.concat(source.nestedItems);
-    }, []);
-    return { dataSource: categoryList, transformedDataSource: transformedDataSource };
+    const transformedDataSource = [];
+    this.generateResultsForAutoComplete(categoryList, transformedDataSource);
+    this.setState({ dataSource: categoryList, transformedDataSource });
   };
 
   onComplaintTypeChosen = (item, index) => {
@@ -38,36 +52,24 @@ class ComplaintType extends Component {
     this.setState({ results, searchTerm });
   };
 
+  prepareListItem = (item) => {
+    const listItem = {};
+    const { displayKey, id, icon } = item;
+    listItem.primaryText = <Label label={displayKey} />;
+    listItem.id = id;
+    listItem.leftIcon = <Icon style={customIconStyles} action="custom" name={icon} color="#f89a3f" />;
+    return listItem;
+  };
+
   prepareResultsForDisplay = (results = []) => {
     return results.map((result) => {
-      const listItem = {};
-
-      listItem.primaryText = <Label label={result.displayKey} />;
-      listItem.id = result.id;
-      if (result.hasOwnProperty("icon") && result.icon) {
-        const { action, name, style } = result.icon;
-        listItem.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
-      } else {
-        listItem.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
-      }
-
-      if (result.nestedItems) {
+      const listItem = this.prepareListItem(result);
+      if (result.nestedItems && result.nestedItems.length) {
         listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
-        listItem.nestedItems = result.nestedItems.map((nestedItem) => {
-          const item = {};
-          item.primaryText = <Label label={nestedItem.displayKey} />;
-          item.id = nestedItem.id;
-          if (nestedItem.hasOwnProperty("icon") && nestedItem.icon) {
-            const { action, name, style } = nestedItem.icon;
-            item.leftIcon = <Icon style={style || customIconStyles} action={action} name={name} color="#f89a3f" />;
-          } else {
-            item.leftIcon = <Icon style={customIconStyles} action="custom" name="accumulation-of-litter" color="#f89a3f" />;
-          }
-          item.onClick = this.onComplaintTypeChosen.bind(null, item);
-          return item;
-        });
+        listItem.nestedItems = this.prepareResultsForDisplay(result.nestedItems);
+      } else {
+        listItem.onClick = this.onComplaintTypeChosen.bind(null, result);
       }
-
       return listItem;
     });
   };
@@ -89,7 +91,7 @@ class ComplaintType extends Component {
     const { autoSuggestCallback, prepareResultsForDisplay, generateDataSource } = this;
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
-    const { transformedDataSource, dataSource } = generateDataSource();
+    const { transformedDataSource, dataSource } = this.state;
     return (
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest

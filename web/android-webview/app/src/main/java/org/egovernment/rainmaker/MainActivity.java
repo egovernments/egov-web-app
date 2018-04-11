@@ -252,28 +252,6 @@ public class MainActivity extends AppCompatActivity {
 			return url_actions(view, url);
         }
 
-		@Override
-		public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-			String message = "SSL Certificate error.";
-			switch (error.getPrimaryError()) {
-				case SslError.SSL_UNTRUSTED:
-					message = "The certificate authority is not trusted.";
-					break;
-				case SslError.SSL_EXPIRED:
-					message = "The certificate has expired.";
-					break;
-				case SslError.SSL_IDMISMATCH:
-					message = "The certificate Hostname mismatch.";
-					break;
-				case SslError.SSL_NOTYETVALID:
-					message = "The certificate is not yet valid.";
-					break;
-			}
-			Log.d("SSL Error",message);
-			// Lets continue to ignore the message anyway! Will have to fix this when we
-			// need to payments we need to fix it!
-			handler.proceed(); // Ignore SSL certificate errors
-		}
 
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs for API 23+ [suggested by github.com/JakePou]
 		@TargetApi(Build.VERSION_CODES.N)
