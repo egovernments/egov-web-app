@@ -7,30 +7,33 @@ const addressStyle = {
 
 const iconStyle = {
   display: "inline-block",
-  width: 14,
-  height: 14,
+  width: 24,
+  height: 24,
   marginRight: 7,
+  marginTop: -3,
 };
 
 const headerStyle = {
   letterSpacing: "0.7px",
 };
 
-const HeaderCard = () => {
+const HeaderCard = ({ complaint }) => {
   return (
     <Card
       textChildren={[
         <Label
           key={1}
-          label="Overflow of Garbage Bins"
+          label={complaint.header}
           dark={true}
           bold={true}
           fontSize={16}
           labelStyle={headerStyle}
           containerStyle={{ marginBottom: 10 }}
         />,
-        <Icon key={2} action="maps" name="place" style={iconStyle} color={"#969696"} />,
-        <Label containerStyle={addressStyle} dark={true} key={3} label="1st main road, Sector 32, Amritsar" />,
+        <div key={2} style={{ display: "flex", alignItems: "flex-start" }}>
+          <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+          <Label containerStyle={addressStyle} dark={true} label={complaint.address} />
+        </div>,
       ]}
     />
   );
