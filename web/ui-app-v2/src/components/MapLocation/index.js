@@ -124,7 +124,6 @@ const MapLocation = compose(
       <Marker position={props.center} icon={props.icon} draggable={false} animation={window.google.maps.Animation.DROP} />
     )}
     {props.setLocation(props.lat, props.lng)}
-    {props.showMyLoc && <Marker position={props.currLoc} icon={props.icon} />}
   </GoogleMap>
 ));
 

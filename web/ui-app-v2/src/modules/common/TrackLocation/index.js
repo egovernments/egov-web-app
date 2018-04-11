@@ -27,7 +27,6 @@ class TrackLocation extends Component {
     this.state = {
       showMyAddress: false,
       currLoc: { lat: 12.9715987, lng: 77.5945699998 },
-      showMyLoc: false,
       pickedLoc: {},
       formKey: window.location.href.split("?")[1],
     };
@@ -55,7 +54,6 @@ class TrackLocation extends Component {
         (position) => {
           this.setState({
             currLoc: { lat: position.coords.latitude, lng: position.coords.longitude },
-            showMyLoc: true,
           });
         },
         function(error) {
@@ -65,8 +63,7 @@ class TrackLocation extends Component {
     }
   };
 
-  setPickedLocation = (lati, long, index) => {
-    if (isUndefined(index)) index = 0;
+  setPickedLocation = (lati, long) => {
     add.lat = lati;
     add.lng = long;
   };
@@ -79,6 +76,7 @@ class TrackLocation extends Component {
     geocoder.geocode({ location: { lat: lat, lng: lng } }, (results, status) => {
       if (status === "OK") {
         if (results[0]) {
+          //Results[0] gives the nearest address
           this.props.handleFieldChange(this.state.formKey, "address", results[0].formatted_address);
         }
       }
