@@ -13,9 +13,9 @@ class AssignComplaint extends Component {
   // };
 
   render() {
-    let { transformedComplaint } = this.props;
+    let { transformedComplaint, loading } = this.props;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <HeaderCard complaint={transformedComplaint} />
         <ListCard />
       </Screen>
@@ -25,12 +25,13 @@ class AssignComplaint extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
+  const { loading } = state.form || false;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
   const transformedComplaint = {
     header: selectedComplaint && selectedComplaint.serviceCode,
     address: selectedComplaint && selectedComplaint.address,
   };
-  return { transformedComplaint };
+  return { transformedComplaint, loading };
 };
 
 export default connect(mapStateToProps, null)(AssignComplaint);

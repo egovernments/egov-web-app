@@ -2,7 +2,7 @@ const formConfig = {
   name: "employeeChangePassword",
   fields: {
     existingPassword: {
-      id: "employee-password",
+      id: "employee-current-password",
       jsonPath: "existingPassword",
       required: true,
       type: "password",
@@ -13,7 +13,7 @@ const formConfig = {
       value: "",
     },
     newpassword: {
-      id: "employee-password",
+      id: "employee-new-password",
       jsonPath: "newPassword",
       required: true,
       type: "password",
@@ -24,7 +24,7 @@ const formConfig = {
       value: "",
     },
     confirmnewpassword: {
-      id: "employee-password",
+      id: "employee-confirm-new-password",
       jsonPath: "newPassword",
       required: true,
       type: "password",

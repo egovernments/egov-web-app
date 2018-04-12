@@ -53,7 +53,7 @@ class Feedback extends Component {
 
   render() {
     let { value } = this.state;
-    const { form } = this.props;
+    const { form, loading } = this.props;
     const { fields, submit } = form;
     let comments;
     if (fields) {
@@ -61,7 +61,7 @@ class Feedback extends Component {
     }
 
     return (
-      <Screen className="feedback-main-screen">
+      <Screen className="feedback-main-screen" loading={loading}>
         {
           <div className="feedback-main-container">
             <div className="feedback-form">
@@ -82,7 +82,8 @@ class Feedback extends Component {
 const mapStateToProps = (state) => {
   const formKey = "feedback";
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  const { loading } = state.form || false;
+  return { form, formKey, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

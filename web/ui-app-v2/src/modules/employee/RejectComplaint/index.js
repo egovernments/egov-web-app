@@ -37,7 +37,6 @@ class RejectComplaint extends Component {
   };
   handleCommentsChange = (e) => {
     this.commentsValue.textVal = e.target.value;
-    console.log(this.commentsValue.textVal);
     this.concatComments(this.commentsValue);
   };
   handleOptionsChange = (event, value) => {
@@ -60,7 +59,7 @@ class RejectComplaint extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentsChange, handleOptionsChange } = this;
-    const { form } = this.props;
+    const { form, loading } = this.props;
     const { valueSelected } = this.state;
     const { fields, submit } = form;
     const submitprops = submit;
@@ -70,7 +69,7 @@ class RejectComplaint extends Component {
     }
 
     return (
-      <Screen className="reject-complaint-main-container">
+      <Screen className="reject-complaint-main-container" loading={loading}>
         <div>
           <div className="reject-complaint-question">
             <Question
@@ -95,7 +94,8 @@ class RejectComplaint extends Component {
 const mapStateToProps = (state) => {
   const formKey = "rejectComplaint";
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  const { loading } = state.form || false;
+  return { form, formKey, loading };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

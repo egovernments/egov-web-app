@@ -61,7 +61,7 @@ class RequestReAssign extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentsChange, handleOptionsChange } = this;
-    const { form } = this.props;
+    const { form, loading } = this.props;
     const { valueSelected } = this.state;
     const { fields, submit } = form;
     const submitprops = submit;
@@ -70,7 +70,7 @@ class RequestReAssign extends Component {
       textarea = fields.textarea;
     }
     return (
-      <Screen className="request-reaasign-main-container">
+      <Screen className="request-reaasign-main-container" loading={loading}>
         <div>
           <div className="request-reaasign-question">
             <Question
@@ -95,7 +95,8 @@ class RequestReAssign extends Component {
 const mapStateToProps = (state) => {
   const formKey = "requestReassign";
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  const { loading } = state.form || false;
+  return { form, formKey, loading };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

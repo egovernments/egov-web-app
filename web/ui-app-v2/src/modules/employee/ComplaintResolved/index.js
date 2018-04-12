@@ -29,7 +29,7 @@ class ComplaintResolved extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentChange } = this;
-    const { formKey, form } = this.props;
+    const { formKey, form, loading } = this.props;
 
     const { fields, submit } = form;
     const submitprops = submit;
@@ -39,7 +39,7 @@ class ComplaintResolved extends Component {
     }
 
     return (
-      <Screen className="complaint-resolved-main-container">
+      <Screen className="complaint-resolved-main-container" loading={loading}>
         <div>
           <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
           <div style={{ padding: "24px 16px 350px 1px" }}>
@@ -57,7 +57,8 @@ class ComplaintResolved extends Component {
 const mapStateToProps = (state) => {
   const formKey = "complaintResolved";
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  const { loading } = state.form || false;
+  return { form, formKey, loading };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

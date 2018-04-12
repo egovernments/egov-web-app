@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "../../../common/Banner";
+import Screen from "modules/common/Screen";
 import LoginForm from "./components/LoginForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
@@ -19,14 +20,22 @@ class Login extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm } = this.props;
+    const { form, handleFieldChange, submitForm, loading } = this.props;
     const { name: formKey } = this.formConfig;
-    const {handleForgotPasswdCLick} =this;
+    const { handleForgotPasswdCLick } = this;
 
     return (
-      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-        <LoginForm form={form} submitForm={submitForm} formKey={formKey} onChange={handleFieldChange} onForgotPasswdCLick={handleForgotPasswdCLick}/>
-      </Banner>
+      <Screen loading={loading}>
+        <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+          <LoginForm
+            form={form}
+            submitForm={submitForm}
+            formKey={formKey}
+            onChange={handleFieldChange}
+            onForgotPasswdCLick={handleForgotPasswdCLick}
+          />
+        </Banner>
+      </Screen>
     );
   }
 }
@@ -34,7 +43,8 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   const formKey = "employeeLogin";
   const form = state.form[formKey] || {};
-  return { form };
+  const { loading } = state.form || false;
+  return { form, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

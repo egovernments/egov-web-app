@@ -215,6 +215,7 @@ class AllComplaints extends Component {
   };
 
   render() {
+    const { loading } = this.props;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
@@ -228,7 +229,7 @@ class AllComplaints extends Component {
           {
             label: <Label color={"#ffffff"} bold={true} label={`UNASSIGNED (${unassignedComplaints.length})`} labelStyle={tabStyle} />,
             children: (
-              <Screen>
+              <Screen loading={loading}>
                 <div className="tab1-content">
                   <Complaints onComplaintClick={onComplaintClick} complaints={unassignedComplaints} complaintLocation={true} role={role} />
                 </div>
@@ -238,7 +239,7 @@ class AllComplaints extends Component {
           {
             label: <Label color={"#ffffff"} bold={true} label={`ASSIGNED (${assignedComplaints.length})`} labelStyle={tabStyle} />,
             children: (
-              <Screen>
+              <Screen loading={loading}>
                 <div className="tab2-content">
                   <Complaints onComplaintClick={onComplaintClick} complaints={assignedComplaints} complaintLocation={true} role={role} />
                 </div>
@@ -248,7 +249,7 @@ class AllComplaints extends Component {
         ]}
       />
     ) : (
-      <Screen>
+      <Screen loading={loading}>
         <Complaints onComplaintClick={onComplaintClick} complaints={employeeComplaints} role={role} complaintLocation={true} />
       </Screen>
     );
@@ -315,6 +316,7 @@ const mapCitizenIdToName = (citizenObjById, id) => {
 
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
+  const { loading } = complaints || false;
   const { citizenById } = common || {};
   const { userInfo } = state.auth;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
@@ -333,7 +335,7 @@ const mapStateToProps = (state) => {
   const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
   const unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
   const employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
-  return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role };
+  return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -14,12 +14,12 @@ import { withRouter } from "react-router-dom";
 import "./index.css";
 
 class ComplaintDetails extends Component {
-  state={
-    isOpen:false,
-    location:""
-  }
+  state = {
+    isOpen: false,
+    location: "",
+  };
   componentDidMount() {
-    let { fetchComplaints, match} = this.props;
+    let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
   }
 
@@ -62,10 +62,10 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let {openMap,location} =this.state;
+    let { openMap, location } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId } = this.props;
-    const {redirectToMap} =this;
+    let { role, serviceRequestId, loading } = this.props;
+    const { redirectToMap } = this;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -90,7 +90,7 @@ class ComplaintDetails extends Component {
     }
     return (
       <div>
-        <Screen>
+        <Screen loading={loading}>
           {complaint &&
             !openMap && (
               <div>
@@ -105,25 +105,20 @@ class ComplaintDetails extends Component {
                 />
                 <Comments hasComments={true} />
                 <div>
-                  {(role === "ao" &&
-                    complaint.status.toLowerCase() !== "assigned" &&
-                    complaint.status.toLowerCase() !== "closed") ||
-                  (role === "employee" &&
-                    complaint.status.toLowerCase() === "assigned" &&
-                    complaint.status.toLowerCase() !== "closed") ?(
-                <Actions
-                  btnOneLabel={btnOneLabel}
-                  btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
-                  btnTwoLabel={btnTwoLabel}
-                  btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
-
-                />):""
-              }
+                  {(role === "ao" && complaint.status.toLowerCase() !== "assigned" && complaint.status.toLowerCase() !== "closed") ||
+                  (role === "employee" && complaint.status.toLowerCase() === "assigned" && complaint.status.toLowerCase() !== "closed") ? (
+                    <Actions
+                      btnOneLabel={btnOneLabel}
+                      btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                      btnTwoLabel={btnTwoLabel}
+                      btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
-
-
-          </div>
-          )}
+            )}
         </Screen>
 
         {openMap && (
@@ -166,9 +161,9 @@ const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : null;
 };
 
-
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
+  const { loading } = complaints || false;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
@@ -193,9 +188,9 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { transformedComplaint, role, serviceRequestId };
+    return { transformedComplaint, role, serviceRequestId, loading };
   } else {
-    return { transformedComplaint: {}, role, serviceRequestId };
+    return { transformedComplaint: {}, role, serviceRequestId, loading };
   }
 };
 

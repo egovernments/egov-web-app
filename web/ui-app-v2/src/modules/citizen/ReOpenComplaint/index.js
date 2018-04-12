@@ -62,7 +62,7 @@ class ReOpenComplaint extends Component {
 
   render() {
     const { handleComplaintSubmit, handleCommentChange, handleOptionsChange } = this;
-    const { formKey, form } = this.props;
+    const { formKey, form, loading } = this.props;
     const { valueSelected } = this.state;
     const { fields, submit } = form;
     const submitprops = submit;
@@ -71,7 +71,7 @@ class ReOpenComplaint extends Component {
       textarea = fields.textarea;
     }
     return (
-      <Screen className="reopencomplaint-field">
+      <Screen className="reopencomplaint-field" loading={loading}>
         <div className="reopencomplaint-question">
           <Question options={this.options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionsChange} valueSelected={valueSelected} />
         </div>
@@ -91,7 +91,8 @@ class ReOpenComplaint extends Component {
 const mapStateToProps = (state) => {
   const formKey = "reopenComplaint";
   const form = state.form[formKey] || {};
-  return { form, formKey };
+  const { loading } = state.form || false;
+  return { form, formKey, loading };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

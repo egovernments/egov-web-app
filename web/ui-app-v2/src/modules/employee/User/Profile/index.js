@@ -68,13 +68,13 @@ class Profile extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, profilePic } = this.props;
+    const { form, handleFieldChange, submitForm, profilePic, loading } = this.props;
     const { openUploadSlide } = this.state;
     const { formConfig, setProfilePic, onClickAddPic, removeProfilePic, onClickChangePasswd } = this;
     const { name: formKey } = formConfig;
 
     return (
-      <Screen>
+      <Screen loading={loading}>
         <div className="row">
           <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
           <ProfileForm form={form} formKey={formKey} onChange={handleFieldChange} onClickChangePasswd={onClickChangePasswd} submitForm={submitForm} />
@@ -97,11 +97,13 @@ const mapStateToProps = (state) => {
   const { auth } = state;
   const { userInfo } = auth;
   const form = state.form[formKey] || {};
+  const { loading } = state.form || false;
   const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
 
   return {
     form,
     formKey,
+    loading,
     userInfo,
     profilePic: (images.length && images[0].imageUri) || img,
   };
