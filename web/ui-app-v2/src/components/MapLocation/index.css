@@ -2,6 +2,10 @@
   display: none;
 }
 
+.gm-style > button {
+  background: transparent !important;
+}
+
 .gmnoprint {
   z-index: -1;
 }

@@ -24,19 +24,20 @@
   box-shadow: none;
 }
 
-.contactus-main-cont .searchBoxStyles,
-.contactus-main-cont .search-icon,
-.contactus-main-cont .myLoc {
+.citizen-contact-us .searchBoxStyles,
+.citizen-contact-us .search-icon,
+.citizen-contact-us .myLoc {
   display: none;
 }
 
-.contactus-main-cont .back-btn {
+.citizen-contact-us .back-btn {
   position: absolute !important;
   top: 76px;
   background: transparent;
   margin-left: 15px;
   z-index: 3;
 }
+
 .phoneNumberStyle {
   color: #767676;
 }

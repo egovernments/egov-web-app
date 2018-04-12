@@ -283,7 +283,7 @@ class HeaderWithDrawer extends Component {
     userInfo = userInfo || {};
     return (
       <div>
-        <AppBar className={className} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />
+        <AppBar className={className || "header-with-drawer"} titleStyle={{ fontSize: "20px", fontWeight: 500 }} {...appBarProps} />
         {/* Navigation Drawer */}
         <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
           <ProfileSection

@@ -52,6 +52,8 @@ class ContactUs extends Component {
     this.setState({
       openMap: isOpen,
     });
+    var element = document.getElementsByClassName("header-with-drawer")[0];
+    isOpen ? element.classList.toggle("hide") : element.classList.remove("hide");
   };
 
   onItemClick = (item, index) => {};
@@ -125,36 +127,38 @@ class ContactUs extends Component {
   };
   render() {
     return (
-      <Screen className="contactus-main-cont">
-        <Card
-          id="contactus-card"
-          className="contactus-main-card"
-          textChildren={
-            <div>
-              <Image className="mseva-logo" source={`${Logo}`} />
-              <div className="contactus-list-container">
-                <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+      <div>
+        <Screen className="contactus-main-cont">
+          <Card
+            id="contactus-card"
+            className="contactus-main-card"
+            textChildren={
+              <div>
+                <Image className="mseva-logo" source={`${Logo}`} />
+                <div className="contactus-list-container">
+                  <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+                </div>
+                <div style={{ textAlign: "center", paddingBottom: "8px" }}>
+                  <a href="https://twitter.com/eGovFoundation">
+                    {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
+                  </a>
+                  <a href="https://www.facebook.com/egfindia">
+                    {
+                      <Icon
+                        id="contactus-facebook"
+                        className="contactus-facebook"
+                        style={facebookStyle}
+                        action="custom"
+                        name="facebook"
+                        color="ffffff"
+                      />
+                    }
+                  </a>
+                </div>
               </div>
-              <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                <a href="https://twitter.com/eGovFoundation">
-                  {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
-                </a>
-                <a href="https://www.facebook.com/egfindia">
-                  {
-                    <Icon
-                      id="contactus-facebook"
-                      className="contactus-facebook"
-                      style={facebookStyle}
-                      action="custom"
-                      name="facebook"
-                      color="ffffff"
-                    />
-                  }
-                </a>
-              </div>
-            </div>
-          }
-        />
+            }
+          />
+        </Screen>
         {this.state.openMap && (
           <div>
             <div className="back-btn" style={{ top: 24 }}>
@@ -175,7 +179,7 @@ class ContactUs extends Component {
             <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
           </div>
         )}
-      </Screen>
+      </div>
     );
   }
 }

@@ -119,6 +119,8 @@ class ComplaintDetails extends Component {
       openMap: isOpen,
       location: location,
     });
+    var element = document.getElementsByClassName("header-with-drawer")[0];
+    isOpen ? element.classList.toggle("hide") : element.classList.remove("hide");
   };
 
   btnOneOnClick = (complaintNo, label) => {
@@ -209,7 +211,7 @@ class ComplaintDetails extends Component {
         </Screen>
         {openMap && (
           <div>
-            <div className="back-btn" style={{ top: 82 }}>
+            <div className="back-btn" style={{ top: 32 }}>
               <Icon
                 className="mapBackBtn"
                 onClick={() => {
@@ -288,7 +290,7 @@ const mapStateToProps = (state, ownProps) => {
       rating: selectedComplaint.rating,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status!="reassignrequested" && action.status);
+    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status != "reassignrequested" && action.status);
     let transformedComplaint = {
       complaint: details,
       timeLine,
