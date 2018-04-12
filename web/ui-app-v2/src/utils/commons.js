@@ -115,9 +115,16 @@ const getMonthName = (monthIndex) => {
 };
 
 const getCurrLocation = () => {
-  var currLoc = {};
+  let currLoc = {};
   return new Promise((resolve) => {
-    if (navigator.geolocation) {
+    if (localStorage.location) {
+      try {
+        currLoc = JSON.parse(localStorage.location);
+        resolve(currLoc);
+      } catch (error) {
+        currLoc = {};
+      }
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         currLoc.lat = position.coords.latitude.toFixed(6);
         currLoc.lng = position.coords.longitude.toFixed(6);

@@ -9,18 +9,26 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/login").default;
-    if (typeof androidAppProxy !== "undefined") {
-      window.androidAppProxy.requestSMS();
-    }
   }
 
   componentDidMount() {
     this.props.initForm(this.formConfig);
   }
 
+  submitForm = (formKey) => {
+    try {
+      if (typeof androidAppProxy !== "undefined") {
+        window.androidAppProxy.requestSMS();
+      }
+    } catch (error) {}
+
+    this.props.submitForm(formKey);
+  };
+
   render() {
-    const { form, handleFieldChange, submitForm, loading } = this.props;
-    const { name: formKey } = this.formConfig;
+    const { form, handleFieldChange, loading } = this.props;
+    const { submitForm, formConfig } = this;
+    const { name: formKey } = formConfig;
 
     return (
       <Screen loading={loading}>
