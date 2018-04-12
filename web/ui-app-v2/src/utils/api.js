@@ -116,6 +116,7 @@ export const loginRequest = async (username = null, password = null, refreshToke
   password && params.append("password", password);
   refreshToken && params.append("refresh_token", refreshToken);
   params.append("grant_type", grantType);
+  params.append("scope", "read");
   params.append("tenantId", tenantId);
 
   try {
