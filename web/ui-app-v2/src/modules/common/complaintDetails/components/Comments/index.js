@@ -12,6 +12,12 @@ import { getDateFromEpoch } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
 
+const commentLabelStyle = {
+  marginBottom: "8px",
+  width: "100%",
+  wordBreak: "break-word",
+};
+
 // Don't Delete!!
 // const itemsOne = [
 //   {
@@ -70,7 +76,7 @@ class Comments extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, selectedComplaint,userImage,userId,userName} = this.props;
+    const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName } = this.props;
     const { name: formKey } = this.formConfig;
     let items = selectedComplaint.actions.filter((action, index) => {
       return action.comments && !action.status;
@@ -82,13 +88,13 @@ class Comments extends Component {
           leftAvatar: (
             <div>
               {" "}
-              <Avatar size={33} src={action.by.split(":")[0]==userId?userImage:emptyFace} />
+              <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />
             </div>
           ),
           primaryText: (
             <div className="complaint-details-comments-section">
-              <Label containerStyle={{ marginBottom: "8px" }} label={action.by.split(":")[0]==userId?userName:""} />{" "}
-              <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
+              <Label containerStyle={commentLabelStyle} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
+              <Label containerStyle={commentLabelStyle} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
               <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
             </div>
           ),
@@ -98,11 +104,11 @@ class Comments extends Component {
           primaryText: (
             <div className="complaint-details-comments-section">
               {" "}
-              <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
+              <Label containerStyle={commentLabelStyle} labelStyle={{ color: "#464646" }} label={action.comments} />
               <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
             </div>
           ),
-          rightAvatar: <Avatar size={33} src={action.by.split(":")[0]==userId?userImage:emptyFace} />,
+          rightAvatar: <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />,
         };
       }
     });
@@ -122,7 +128,7 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
                 {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}
-                <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} userImage={userImage}/>
+                <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} userImage={userImage} />
               </div>
             }
           />
@@ -137,10 +143,10 @@ const mapStateToProps = (state, ownProps) => {
   const form = state.form[formKey] || {};
   const { complaints } = state;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
-  const userImage=state.auth.userInfo.photo || "";
-  const userId=state.auth.userInfo.id || "";
-  const userName=state.auth.userInfo.name || "";
-  return { form, selectedComplaint,userImage,userId,userName};
+  const userImage = state.auth.userInfo.photo || "";
+  const userId = state.auth.userInfo.id || "";
+  const userName = state.auth.userInfo.name || "";
+  return { form, selectedComplaint, userImage, userId, userName };
 };
 
 const mapDispatchToProps = (dispatch) => {
