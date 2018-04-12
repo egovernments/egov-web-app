@@ -9,56 +9,14 @@ import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
-  state = {
-    status: {
-      bgColor: "#f5a623",
-      status: "Resolved",
-    },
-    details: {
-      status: "Resolved",
-      complaint: "Overflow of bins",
-      applicationNo: "1234566",
-      description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
-      location: "Sector 32, 1 main, Amritsar",
-    },
-    source: "",
-    hideImageModal: true,
-  };
 
   componentDidMount() {
     let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
-    let { details } = this.state;
-    if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
-      this.setState({
-        status: {
-          status: "Rejected",
-          message: "JR.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
-        },
-        details: {
-          ...details,
-          status: "Rejected",
-        },
-      });
-    } else if (this.props.location && this.props.location.search.split("=")[1] == "filed") {
-      this.setState({
-        status: {
-          status: "Submitted",
-          message: "JR.INSPECTOR - J KUMAR",
-          bgColor: "#f5a623",
-        },
-        details: {
-          ...details,
-          status: "Submitted",
-        },
-      });
-    }
   }
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { details, comments } = this.state;
     return (
       <Screen>
         {complaint && (
@@ -70,7 +28,7 @@ class ComplaintDetails extends Component {
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
             />
-            <Comments comments={comments} hasComments={true} />
+            <Comments  hasComments={true} />
           </div>
         )}
       </Screen>

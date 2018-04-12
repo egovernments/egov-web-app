@@ -74,7 +74,7 @@ class ImageUpload extends Component {
             {images.map((image, index) => {
               return (
                 <div key={index} className="upload-image-cont">
-                  <Image source={image.imageUri} style={{ height: "100%" }} />
+                  <Image source={image.imageUri} style={{ height: "100px" }} />
                   <div className="image-remove" onClick={() => removeImage(index)}>
                     <Icon id="image-close-icon" action="navigation" name="close" color="#ffffff" style={{ width: "14px", height: "14px" }} />
                   </div>
