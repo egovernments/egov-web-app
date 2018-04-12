@@ -15,12 +15,13 @@ const formConfig = {
       id: "employee-password",
       jsonPath: "employee.password",
       required: true,
+      type: "password",
       floatingLabelText: "CORE_LOGIN_PASSWORD",
       errorMessage: "CORE_LOGIN_PASSWORD_ERRORMSG",
       hintText: "CORE_LOGIN_PASSWORD_PLACEHOLDER",
       pattern: "^([a-zA-Z0-9@])+$",
       value: "",
-    }
+    },
   },
   submit: {
     label: "CORE_COMMON_LOGIN",
