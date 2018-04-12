@@ -89,6 +89,7 @@ const TextField = ({
       type={type}
       autoFocus={autoFocus}
       maxLength={maxLength}
+      autoComplete="off"
     />
   );
 };
