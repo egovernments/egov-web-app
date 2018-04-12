@@ -46,25 +46,9 @@ class UploadDrawer extends Component {
       <div>
         <div className="overlayBody" onClick={this.onOverlayBodyClick} />
         <div className="drawerContainer">
-          <div className="iconContainer">
-            {this.props.cameraIcon && (
-              <div className="labelIconBox">
-                <Icon
-                  className="camera-upload-drawer"
-                  id="uploadDrawerCameraIcon"
-                  style={iconStyle}
-                  action="image"
-                  name={"photo-camera"}
-                  onClick={this.onCameraClick}
-                />
-                <Label className="cameraUploadlabel" label="Camera" color={"#484848"} labelStyle={this.props.labelStyle} />
-              </div>
-            )}
-            {this.props.videoCamIcon && (
-              <Icon className="video-upload-drawer" id="uploadDrawerVideoCamIcon" style={iconStyle} action="image" name={"photo-camera"} />
-            )}
+          <div className="iconContainer col-xs-12">
             {this.props.galleryIcon && (
-              <div className="labelIconBox">
+              <div className="labelIconBox col-xs-6 text-center">
                 <FilePicker inputProps={inputProps} handleimage={this.picUpload}>
                   {galleryIconBtn}
                 </FilePicker>
@@ -72,15 +56,17 @@ class UploadDrawer extends Component {
               </div>
             )}
             {this.props.removeIcon && (
-              <div className="labelIconBox">
-                <Icon
-                  className="remove-upload-drawer"
-                  id="uploadDrawerRemoveIcon"
-                  style={iconStyle}
-                  action="action"
-                  name={"delete"}
-                  onClick={this.onRemoveClick}
-                />
+              <div className="labelIconBox col-xs-6 text-center">
+                <div>
+                  <Icon
+                    className="remove-upload-drawer"
+                    id="uploadDrawerRemoveIcon"
+                    style={iconStyle}
+                    action="action"
+                    name={"delete"}
+                    onClick={this.onRemoveClick}
+                  />
+                </div>
                 <Label className="removeUploadlabel" label="Remove" color={"#484848"} labelStyle={this.props.labelStyle} />
               </div>
             )}
