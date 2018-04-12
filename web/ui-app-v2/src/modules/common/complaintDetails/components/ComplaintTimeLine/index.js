@@ -84,7 +84,7 @@ var rejectStatusCount = 0;
 var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 
-const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating }) => {
+const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,role }) => {
   var {
     action,
     when: date,
@@ -94,10 +94,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating 
     name,
     designation,
     department,
-    role,
-    resolveImage,
-    resolveFeedback,
-    reason,
     businessKey: complaintNo,
   } = stepData;
   let employeephonenumber = 8940028343;
@@ -210,7 +206,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating 
           <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments?comments.split(";")[0]:""}/>
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={(comments && comments.split(";")[1])?`" ${comments.split(";")[1]} "`:""} />
-          {currentStatus === "rejected" &&
+          {currentStatus === "rejected" && !role &&
             rejectStatusCount === 1 && (
               <div
                 className="complaint-details-timline-button"
@@ -279,7 +275,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating 
           )}
 
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
-          {currentStatus === "resolved" &&
+          {currentStatus === "resolved" && !role &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
                 <div
@@ -341,7 +337,6 @@ class ComplaintTimeLine extends Component {
     assigneeStatusCount = 0;
     let { status, history, role, timeLine, feedback, rating } = this.props;
 
-    // console.log(timeLine);
     let steps = timeLine.map((step, key) => {
       return {
         props: {
@@ -356,7 +351,7 @@ class ComplaintTimeLine extends Component {
             paddingRight: 0,
           },
         },
-        contentChildren: <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating}/>,
+        contentChildren: <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating} role={role}/>,
       };
     });
 
@@ -390,4 +385,3 @@ class ComplaintTimeLine extends Component {
 }
 
 export default withRouter(ComplaintTimeLine);
-
