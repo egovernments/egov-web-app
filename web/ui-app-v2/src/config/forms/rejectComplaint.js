@@ -17,11 +17,11 @@ const formConfig = {
     },
   },
   submit: {
-    label: "SUBMIT",
+    label: "CS_COMMON_SUBMIT",
     id: "reopencomplaint-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/employee/all-complaints",
+  redirectionRoute: "/employee/complaint-rejected",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

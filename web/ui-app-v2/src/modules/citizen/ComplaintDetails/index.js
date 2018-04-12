@@ -17,11 +17,16 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
+
+    let action;
+    if (timeLine && timeLine[0]) {
+      action = timeLine[0].action;
+    }
     return (
       <Screen>
         {complaint && (
           <div>
-            <Details {...complaint} />
+            <Details {...complaint} action={action} />
             <ComplaintTimeLine
               status={complaint.status}
               timeLine={timeLine}

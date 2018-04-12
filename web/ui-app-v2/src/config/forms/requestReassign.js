@@ -17,7 +17,7 @@ const formConfig = {
     },
   },
   submit: {
-    label: "REQUEST RE_ASSIGN",
+    label: "ES_REQUEST_REQUEST_RE_ASSIGN",
     id: "reopencomplaint-submit-action",
   },
   action: "_update",

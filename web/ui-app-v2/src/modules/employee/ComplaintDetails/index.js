@@ -68,6 +68,7 @@ class ComplaintDetails extends Component {
     const {redirectToMap} =this;
     let btnOneLabel = "";
     let btnTwoLabel = "";
+    let action;
     if (complaint) {
       if (role === "ao") {
         if (complaint.status.toLowerCase() === "open") {
@@ -84,26 +85,29 @@ class ComplaintDetails extends Component {
         }
       }
     }
-    debugger;
+    if (timeLine && timeLine[0]) {
+      action = timeLine[0].action;
+    }
     return (
       <div>
-      <Screen>
-        {complaint && !openMap && (
-          <div>
-            <Details {...complaint} role={role} mapAction={true} redirectToMap={redirectToMap}/>
-            <ComplaintTimeLine
-              status={complaint.status}
-              timeLine={timeLine}
-              handleFeedbackOpen={this.handleFeedbackOpen}
-              role={role}
-              feedback={complaint ? complaint.feedback : ""}
-              rating={complaint ? complaint.rating : ""}
-            />
-            <Comments hasComments={true} />
-
-
-              {
-                (role === "ao" && complaint.status.toLowerCase() !== "assigned" && complaint.status.toLowerCase() !== "closed") ||
+        <Screen>
+          {complaint &&
+            !openMap && (
+              <div>
+                <Details {...complaint} role={role} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
+                <ComplaintTimeLine
+                  status={complaint.status}
+                  timeLine={timeLine}
+                  handleFeedbackOpen={this.handleFeedbackOpen}
+                  role={role}
+                  feedback={complaint ? complaint.feedback : ""}
+                  rating={complaint ? complaint.rating : ""}
+                />
+                <Comments hasComments={true} />
+                <div>
+                  {(role === "ao" &&
+                    complaint.status.toLowerCase() !== "assigned" &&
+                    complaint.status.toLowerCase() !== "closed") ||
                   (role === "employee" &&
                     complaint.status.toLowerCase() === "assigned" &&
                     complaint.status.toLowerCase() !== "closed") ?(
@@ -115,6 +119,7 @@ class ComplaintDetails extends Component {
 
                 />):""
               }
+              </div>
 
 
           </div>
