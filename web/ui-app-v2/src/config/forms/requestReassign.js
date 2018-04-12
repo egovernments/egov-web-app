@@ -1,6 +1,5 @@
 const formConfig = {
   name: "requestReassign",
-  //idJsonPath: "services[0].serviceRequestId",
   fields: {
     comments: {
       id: "comments-reopen",
@@ -10,6 +9,11 @@ const formConfig = {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
       value: "",
+    },
+    action: {
+      id: "action",
+      jsonPath: "actionInfo[0].action",
+      value: "requestforreassign",
     },
   },
   submit: {
