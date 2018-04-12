@@ -1,17 +1,21 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "utils/translationNode";
-import {getDateFromEpoch} from "utils/commons";
+import { getDateFromEpoch } from "utils/commons";
 import "./index.css";
 
 const Updates = ({ updates, history }) => {
   const renderUpdate = (update, index) => {
-    const { title, date, status } = update;
+    const { title, date, status, action } = update;
     let transformedstatus = "";
     const titleKey = title && "SERVICEDEFS." + title.toUpperCase();
     if (status) {
       if (status.toLowerCase() == "opened") {
-        transformedstatus = `CS_COMMON_SUBMITTED`;
+        if (action && action === "reopen") {
+          transformedstatus = `CS_COMMON_REOPENED`;
+        } else {
+          transformedstatus = `CS_COMMON_SUBMITTED`;
+        }
       } else {
         transformedstatus = `CS_COMMON_${status.toUpperCase()}`;
       }

@@ -35,16 +35,21 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction, action } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
       display: "block",
     };
     let statusKey = "";
+
     if (status) {
       if (status.toLowerCase() == "open") {
-        statusKey = `CS_COMMON_SUBMITTED`;
+        if (action && action === "reopen") {
+          statusKey = `CS_COMMON_REOPENED`;
+        } else {
+          statusKey = `CS_COMMON_SUBMITTED`;
+        }
       } else {
         statusKey = `CS_COMMON_${status.toUpperCase()}`;
       }
