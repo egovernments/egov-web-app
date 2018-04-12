@@ -10,7 +10,7 @@ class ActionButton extends Component {
         <Button
           label={btnOneLabel}
           onClick={btnOneOnClick}
-          style={{ width: "auto", height: "38px" }}
+          style={{ width: "45%", height: "38px" }}
           id="actionOne"
           backgroundColor="#969696"
           labelColor="#ffffff"
@@ -18,7 +18,7 @@ class ActionButton extends Component {
         <Button
           label={btnTwoLabel}
           onClick={btnTwoOnClick}
-          style={{ width: "146px", height: "38px", boxShadow: "none" }}
+          style={{ width: "45%", height: "38px", boxShadow: "none" }}
           id="actionTwo"
           backgroundColor="#00bbd3"
           labelColor="#ffffff"

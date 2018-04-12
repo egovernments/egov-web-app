@@ -21,3 +21,8 @@
 .write-comment-time-cont {
   margin-top: 4px;
 }
+
+.timeline-comment-style .TextArea .TextField .label-text {
+  width: 100%;
+  word-break: break-word;
+}

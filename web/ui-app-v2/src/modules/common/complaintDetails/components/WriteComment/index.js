@@ -25,11 +25,11 @@ const textFieldStyle = {
   fontSize: "14px",
 };
 
-const WriteComment = ({ form, formKey, onChange, submitForm,userImage }) => {
+const WriteComment = ({ form, formKey, onChange, submitForm, userImage }) => {
   const fields = form.fields || {};
   return (
     <div style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
-      <Avatar size={33} src={userImage?userImage:emptyFace} style={{ marginRight: "5px" }} />
+      <Avatar size={33} src={userImage ? userImage : emptyFace} style={{ marginRight: "5px" }} />
       <TextArea
         {...fields.comment}
         hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
