@@ -21,7 +21,8 @@ public class SmsReceiver extends BroadcastReceiver  {
 	}
 
 	private boolean shouldBroadcastSMS(String senderNum){
-		return true || (SENDER_NUM == senderNum.trim());
+		Log.d("SMS sender", senderNum);
+		return (senderNum.trim().endsWith("EGOVFS"));
 	}
 
 	@Override

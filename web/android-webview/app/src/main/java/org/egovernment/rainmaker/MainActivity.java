@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -55,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
     private ValueCallback<Uri> asw_file_message;
     private ValueCallback<Uri[]> asw_file_path;
 
+
     // permissions code
     private final static int asw_file_req = 1;
 	private final static int file_perm = 2;
 	private final static int sms_receive_perm = 3;
+	private final static int loc_perm = 4;
+
 
 	final AppJavaScriptProxy proxy = new AppJavaScriptProxy(this);
 
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 		webView = (WebView) findViewById(R.id.webview);
 		webView.addJavascriptInterface(proxy, "androidAppProxy");
 
-
+		//get_location();
 		//Webview settings; defaults are customized for best performance
         WebSettings webSettings = webView.getSettings();
 
@@ -330,8 +334,6 @@ public class MainActivity extends AppCompatActivity {
         File sd_directory   = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(new_name, ".jpg", sd_directory);
     }
-
-
 
 
 	@Override

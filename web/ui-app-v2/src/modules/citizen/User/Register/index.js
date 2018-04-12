@@ -9,9 +9,6 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/register").default;
-    if (typeof androidAppProxy !== "undefined") {
-      window.androidAppProxy.requestSMS();
-    }
   }
 
   componentDidMount = () => {
@@ -22,9 +19,19 @@ class Register extends Component {
     this.props.history.push("/citizen/user/login");
   };
 
+  submitForm = (formKey) => {
+    try {
+      if (typeof androidAppProxy !== "undefined") {
+        window.androidAppProxy.requestSMS();
+      }
+    } catch (error) {}
+
+    this.props.submitForm(formKey);
+  };
+
   render() {
-    const { formConfig, navigateToLogin } = this;
-    const { form, loading, handleFieldChange, submitForm } = this.props;
+    const { formConfig, submitForm, navigateToLogin } = this;
+    const { form, loading, handleFieldChange } = this.props;
     const { name: formKey } = formConfig;
     const { submitting } = form;
 
