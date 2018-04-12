@@ -17,10 +17,6 @@ const callIconStyle = {
 
 let employeephonenumber = 8940028343;
 
-
-
-
-
 const bottomInfoTemplate = (item, role) => {
   return role !== "citizen" ? (
     <div>
@@ -221,7 +217,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                     return (
                       image && (
                         <div className="complaint-image-wrapper" key={index}>
-                          <Image style={imageStyles} className="complaint-image" width="100%" height={46} source={image}/>{" "}
+                          <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
                         </div>
                       )
                     );
