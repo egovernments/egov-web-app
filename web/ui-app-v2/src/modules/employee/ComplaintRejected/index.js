@@ -26,7 +26,6 @@ class ComplaintRejected extends Component {
             fullWidth={true}
             onClick={this.handleComplaintReassigned}
           />
-          =
         </div>
       </div>
     );

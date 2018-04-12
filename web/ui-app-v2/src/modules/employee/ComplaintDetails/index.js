@@ -155,6 +155,7 @@ class ComplaintDetails extends Component {
     let { role, serviceRequestId } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
+    let action;
     if (complaint) {
       if (role === "ao") {
         if (complaint.complaintStatus.toLowerCase() === "unassigned") {
@@ -171,13 +172,16 @@ class ComplaintDetails extends Component {
         }
       }
     }
+    if (timeLine && timeLine[0]) {
+      action = timeLine[0].action;
+    }
     return (
       <div>
         <Screen>
           {complaint &&
             !openMap && (
               <div>
-                <Details {...complaint} role={role} mapAction={true} redirectToMap={this.redirectToMap} />
+                <Details {...complaint} role={role} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
                 <ComplaintTimeLine
                   status={complaint.status}
                   timeLine={timeLine}
@@ -288,7 +292,7 @@ const mapStateToProps = (state, ownProps) => {
       rating: selectedComplaint.rating,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status!="reassignrequested" && action.status);
+    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status != "reassignrequested" && action.status);
     let transformedComplaint = {
       complaint: details,
       timeLine,

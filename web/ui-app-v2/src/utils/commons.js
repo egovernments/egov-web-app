@@ -9,6 +9,8 @@ export const statusToMessageMapping = {
   open: "Opened",
   "re-assign": "Re-assigned",
   assigned: "Assigned",
+  resolved: "Resolved",
+  reassignrequested: "Re-assign Requested",
 };
 
 export const displayStatus = (status) => {

@@ -84,18 +84,8 @@ var rejectStatusCount = 0;
 var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 
-const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,role }) => {
-  var {
-    action,
-    when: date,
-    media,
-    status,
-    comments,
-    name,
-    designation,
-    department,
-    businessKey: complaintNo,
-  } = stepData;
+const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role }) => {
+  var { action, when: date, media, status, comments, name, designation, department, businessKey: complaintNo } = stepData;
   let employeephonenumber = 8940028343;
   switch (status) {
     case "open":
@@ -204,9 +194,14 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
-          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments?comments.split(";")[0]:""}/>
-          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={(comments && comments.split(";")[1])?`" ${comments.split(";")[1]} "`:""} />
-          {currentStatus === "rejected" && !role &&
+          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
+          <Label
+            labelClassName="rainmaker-small-font"
+            containerStyle={{ width: "192px" }}
+            label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
+          />
+          {currentStatus === "rejected" &&
+            !role &&
             rejectStatusCount === 1 && (
               <div
                 className="complaint-details-timline-button"
@@ -275,7 +270,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
 
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
-          {currentStatus === "resolved" && !role &&
+          {currentStatus === "resolved" &&
+            !role &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
                 <div
@@ -351,7 +347,9 @@ class ComplaintTimeLine extends Component {
             paddingRight: 0,
           },
         },
-        contentChildren: <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating} role={role}/>,
+        contentChildren: (
+          <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating} role={role} />
+        ),
       };
     });
 

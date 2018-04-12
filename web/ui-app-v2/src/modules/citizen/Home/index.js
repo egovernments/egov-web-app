@@ -5,7 +5,7 @@ import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
 import { mapCompIDToName, displayStatus } from "utils/commons";
-import orderby from "lodash/orderBy"
+import orderby from "lodash/orderBy";
 import "./index.css";
 
 class Home extends Component {
@@ -41,15 +41,17 @@ const mapStateToProps = (state) => {
   Object.keys(complaints.byId).forEach((complaintKey, index) => {
     let complaintObj = {};
     complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
+    complaintObj.action =
+      complaints.byId[complaintKey].actions && complaints.byId[complaintKey].actions[0] && complaints.byId[complaintKey].actions[0].action;
     complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
     complaintObj.date = complaints.byId[complaintKey].auditDetails.createdTime;
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
- // debugger;
-  var closedComplaints =orderby(updates.filter((complaint)=>complaint.status==="Closed"),["date"],["desc"]);
-  var nonClosedComplaints=orderby(updates.filter((complaint)=>complaint.status!="Closed"),["date"],["desc"]);
-  return { updates: [...nonClosedComplaints,...closedComplaints] };
+  // debugger;
+  var closedComplaints = orderby(updates.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(updates.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
+  return { updates: [...nonClosedComplaints, ...closedComplaints] };
 };
 
 const mapDispatchToProps = (dispatch) => {
