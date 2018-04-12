@@ -5,3 +5,16 @@
   left: 0;
   padding: 0 14px;
 }
+
+.assign-complaint-main-card {
+  padding: 12px 0 !important;
+}
+.avatar-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employee-search-cont {
+  padding: 0 8px;
+}

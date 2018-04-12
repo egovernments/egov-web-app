@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Card, Icon, List, Label, AutoSuggest, Button } from "../../../../../components";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import { connect } from "react-redux";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import Avatar from "material-ui/Avatar";
+import _ from "lodash";
 import "./index.css";
 
 class ListCard extends Component {
@@ -399,6 +401,7 @@ class ListCard extends Component {
       listItem.secondaryText = result.secondaryText;
       listItem.leftAvatar = result.leftAvatar;
       listItem.rightIcon = result.rightIcon;
+      listItem.style = result.style && result.style;
       if (result.nestedItems) {
         listItem.nestedItems = result.nestedItems.map((nestedItem, index) => {
           const item = {};
@@ -407,6 +410,7 @@ class ListCard extends Component {
           item.secondaryText = nestedItem.secondaryText;
           item.leftAvatar = nestedItem.leftAvatar;
           item.rightIcon = nestedItem.rightIcon;
+          item.style = nestedItem.style && nestedItem.style;
           item.onClick = this.onEmployeeChosen.bind(null, item);
           return item;
         });
@@ -416,33 +420,96 @@ class ListCard extends Component {
     });
   };
 
+  flatten = (arr) => {
+    return arr.reduce((flat, toFlatten) => {
+      return flat.concat(Array.isArray(toFlatten) ? this.flatten(toFlatten) : toFlatten);
+    }, []);
+  };
+
+  changeClickedItem = (dataSource, id) => {
+    // let _dataSource = dataSource.map((item) => ({ ...item }));
+    for (var i = 0; i < dataSource.length; i++) {
+      if (dataSource[i].nestedItems) {
+        this.changeClickedItem(dataSource[i].nestedItems, id);
+      }
+      if (dataSource[i].id === id) {
+        dataSource[i] = {
+          ...dataSource[i],
+          style: { background: "#f8f8f8", borderLeft: "3px solid #f89a3f" },
+          leftAvatar: (
+            <div className="avatar-selected" style={{ width: 33, height: 33, background: "#f89a3f", borderRadius: "50%", top: 8, left: 17 }}>
+              <Icon action="navigation" name="check" color={"#ffffff"} style={{ width: 16, height: 16 }} />
+            </div>
+          ),
+        };
+      }
+    }
+    return dataSource;
+  };
+
+  returnResults = (searchTerm, dataSource) => {
+    searchTerm = searchTerm.toLowerCase();
+    if (searchTerm.length > 0) {
+      return dataSource.filter((result) => {
+        return typeof result["primaryText"] === "object"
+          ? result["primaryText"].props.label.toLowerCase().indexOf(searchTerm) !== -1
+          : result["primaryText"].toLowerCase().indexOf(searchTerm) !== -1;
+      });
+    }
+  };
+
+  changeDataSourceAndResultsOnClick = () => {
+    let { selectedEmployeeId, searchTerm } = this.state;
+    const { prepareRawDataToFormat, APIData, generateDataSource, returnResults } = this;
+    const rawDataSource = prepareRawDataToFormat(APIData);
+    const allResultData = generateDataSource(prepareRawDataToFormat(APIData));
+    const realResults = returnResults(searchTerm, allResultData);
+    if (searchTerm) {
+      const resultsAfterClick = this.changeClickedItem(realResults, selectedEmployeeId);
+      this.setState({ results: resultsAfterClick });
+    }
+
+    const dataSourceAfterClick = this.changeClickedItem(rawDataSource, selectedEmployeeId);
+    this.setState({ dataSource: dataSourceAfterClick });
+  };
+
   onEmployeeChosen = (item, index) => {
-    console.log(item);
-    console.log(index);
     let { handleFieldChange } = this.props;
+    const { results, searchTerm } = this.state;
+    const displayInitialList = searchTerm.length === 0 ? true : false;
     const dataSource = this.prepareRawDataToFormat(this.APIData);
-    const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
-    handleFieldChange(this.formConfig.name, "assignee", item.id);
-    isReassignScreen ? handleFieldChange(this.formConfig.name, "action", "reassign") : handleFieldChange(this.formConfig.name, "action", "assign");
-    this.setState({ selectedEmployeeId: item.id });
+    this.setState({ dataSource });
+    const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
+    if (!isEmployeeDirectory) {
+      const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
+      handleFieldChange(this.formConfig.name, "assignee", item.id);
+      isReassignScreen ? handleFieldChange(this.formConfig.name, "action", "reassign") : handleFieldChange(this.formConfig.name, "action", "assign");
+      this.setState({ selectedEmployeeId: item.id }, () => this.changeDataSourceAndResultsOnClick());
+    }
   };
 
   renderList = (dataSource, enableClick) => {
     return (
       <List
         onItemClick={enableClick && this.onEmployeeChosen}
-        listItemStyle={{ paddingTop: "8px", paddingBottom: "8px" }}
-        nestedListStyle={{ padding: "0px", background: "#ffffff" }}
+        listItemStyle={{ paddingTop: "8px", paddingBottom: "8px", paddingLeft: "8px", background: "#ffffff" }}
+        nestedListStyle={{ padding: "0px" }}
         autoGenerateNestedIndicator={false}
         primaryTogglesNestedList={true}
-        innerDivStyle={{ padding: "8px 0 8px 72px", margin: 0 }}
+        innerDivStyle={{
+          paddingTop: "8px",
+          paddingRight: "0px",
+          paddingBottom: "8px",
+          paddingLeft: "72px",
+          margin: 0,
+        }}
         items={dataSource}
       />
     );
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {
-    this.setState({ results, searchTerm });
+    this.setState({ results, searchTerm }, () => this.changeDataSourceAndResultsOnClick());
   };
 
   generateDataSource = (dataSource) => {
@@ -468,6 +535,7 @@ class ListCard extends Component {
   render() {
     let { prepareResultsForDisplay, renderList, APIData, generateDataSource, prepareRawDataToFormat } = this;
     const { dataSource } = this.state;
+    const realDataSource = generateDataSource(prepareRawDataToFormat(APIData));
     const transformedDataSource = generateDataSource(dataSource);
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
@@ -505,19 +573,18 @@ class ListCard extends Component {
                   hintStyle={{ letterSpacing: 0, bottom: 10, fontSize: 14 }}
                   iconPosition="after"
                   callback={this.autoSuggestCallback}
-                  dataSource={transformedDataSource}
+                  dataSource={realDataSource}
                 />
               </div>
               <div className="employee-list-cont">
                 {displayInitialList
-                  ? renderList(prepareResultsForDisplay(dataSource))
-                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(results)) : this.renderList(prepareResultsForDisplay(results), true)}
+                  ? renderList(prepareResultsForDisplay(dataSource), false)
+                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(results), false) : renderList(prepareResultsForDisplay(results), true)}
               </div>
             </div>
           }
         />
-        {
-          !isEmployeeDirectory &&
+        {!isEmployeeDirectory && (
           <div className="assign-complaint-button-cont">
             <Button
               primary={true}
@@ -525,8 +592,8 @@ class ListCard extends Component {
               label={<Label buttonLabel={true} label={isReassignScreen ? "RE-ASSIGN" : "ASSIGN"} />}
               onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN")}
             />
-            </div>
-         }
+          </div>
+        )}
       </div>
     );
   }
