@@ -10,16 +10,20 @@ class ActionButton extends Component {
         <Button
           label={btnOneLabel}
           onClick={btnOneOnClick}
-          style={{ width: "45%", height: "38px" }}
+          style={{ width: "45%", height: "38px", boxShadow: "none" }}
           id="actionOne"
-          backgroundColor="#969696"
+          backgroundColor="#767676"
           labelColor="#ffffff"
+          labelStyle={{ padding: 0 }}
+          overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         />
         <Button
           label={btnTwoLabel}
           onClick={btnTwoOnClick}
           style={{ width: "45%", height: "38px", boxShadow: "none" }}
           id="actionTwo"
+          labelStyle={{ padding: 0 }}
+          overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
           backgroundColor="#00bbd3"
           labelColor="#ffffff"
         />

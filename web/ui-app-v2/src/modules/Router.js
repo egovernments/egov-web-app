@@ -167,7 +167,7 @@ const Main = () => {
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/reassign-complaint"
+          path="/employee/reassign-complaint/:serviceRequestId?"
           title={<Label className="screenHeaderLabelStyle" label="Re-Assign to Employee" />}
           component={ReassignComplaint}
         />

@@ -7,25 +7,25 @@ import Label from "utils/translationNode";
 import { connect } from "react-redux";
 
 class ReassignComplaint extends Component {
-  onReassignClick = () => {
-    let { history } = this.props;
-    history.push("/employee/complaint-reassigned");
-  };
   render() {
-    const { loading } = this.props;
+    let { transformedComplaint, loading } = this.props;
     return (
       <Screen loading={loading}>
-        <HeaderCard />
+        <HeaderCard complaint={transformedComplaint} />
         <ListCard />
-        <Button label={<Label buttonLabel={true} label="ES_COMMON_REASSIGN" />} onClick={this.onReassignClick} />
       </Screen>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const { complaints } = state;
   const { loading } = state.form || false;
-  return { loading };
+  let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  const transformedComplaint = {
+    header: selectedComplaint && selectedComplaint.serviceCode,
+    address: selectedComplaint && selectedComplaint.address,
+  };
+  return { transformedComplaint, loading };
 };
-
 export default connect(mapStateToProps, null)(ReassignComplaint);
