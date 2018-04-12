@@ -268,7 +268,13 @@ const fetchImages = (actionArray) => {
 const getLatestStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
-    case "open" || "new" || "reassignrequested":
+    case "open":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "new":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "reassignrequested":
       transformedStatus = "UNASSIGNED";
       break;
     case "closed":

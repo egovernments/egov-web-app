@@ -23,7 +23,7 @@ const HeaderCard = ({ complaint }) => {
       textChildren={[
         <Label
           key={1}
-          label={complaint.header}
+          label={complaint && complaint.header}
           dark={true}
           bold={true}
           fontSize={16}
@@ -32,7 +32,7 @@ const HeaderCard = ({ complaint }) => {
         />,
         <div key={2} style={{ display: "flex", alignItems: "flex-start" }}>
           <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-          <Label containerStyle={addressStyle} dark={true} label={complaint.address} />
+          <Label containerStyle={addressStyle} dark={true} label={complaint && complaint.address} />
         </div>,
       ]}
     />

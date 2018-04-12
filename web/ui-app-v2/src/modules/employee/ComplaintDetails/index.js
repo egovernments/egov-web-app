@@ -15,12 +15,102 @@ import "./index.css";
 
 class ComplaintDetails extends Component {
   state = {
-    isOpen: false,
-    location: "",
+    openMap: false,
+    status: {
+      bgColor: "#f5a623",
+      status: "Resolved",
+    },
+    details: {
+      status: "Resolved",
+      complaint: "Overflow of bins",
+      applicationNo: "1234566",
+      description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
+      images: [
+        {
+          src: "",
+        },
+        {
+          src: "",
+        },
+        {
+          src: "",
+        },
+      ],
+      location: "Sector 32, 1 main, Amritsar",
+    },
+    role: "",
+    hasComments: true,
   };
+
   componentDidMount() {
-    let { fetchComplaints, match } = this.props;
+    let { fetchComplaints, match, fetchEmployees } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    let { details } = this.state;
+    if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
+      this.setState({
+        status: {
+          status: "Rejected",
+          message: "JR.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Rejected",
+        },
+      });
+    } else if (this.props.location && this.props.location.search.split("=")[1] == "filed") {
+      this.setState({
+        status: {
+          status: "Submitted",
+          message: "JR.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Submitted",
+        },
+      });
+    } else if (this.props.location && this.props.location.search.split("=")[1] === "unassigned") {
+      this.setState({
+        status: {
+          status: "Unassigned",
+          message: "Jr.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Unassigned",
+        },
+        role: "AO",
+        hasComments: false,
+      });
+    } else if (this.props.location && this.props.location.search.split("=")[1] === "unassigned&reassign") {
+      this.setState({
+        status: {
+          status: "Reassign",
+          message: "Jr.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Reassign",
+        },
+        role: "AO",
+      });
+    } else if (this.props.location && this.props.location.search.split("=")[1] === "assigned") {
+      this.setState({
+        status: {
+          status: "Assign",
+          message: "Jr.INSPECTOR - J KUMAR",
+          bgColor: "#f5a623",
+        },
+        details: {
+          ...details,
+          status: "Assign",
+        },
+        role: "AO",
+      });
+    }
   }
 
   redirectToMap = (isOpen, location) => {
@@ -53,7 +143,7 @@ class ComplaintDetails extends Component {
         setRoute(`/employee/assign-complaint/${complaintNo}`);
         break;
       case "RE-ASSIGN":
-        setRoute(`/employee/assign-complaint/${complaintNo}`);
+        setRoute(`/employee/reassign-complaint/${complaintNo}`);
         break;
       case "MARK RESOLVED":
         setRoute(`/employee/complaint-resolved/${complaintNo}`);
@@ -62,24 +152,23 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { openMap, location } = this.state;
+    let { status, details, comments, hasComments, location, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId, loading } = this.props;
-    const { redirectToMap } = this;
+    let { role, serviceRequestId } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
     if (complaint) {
       if (role === "ao") {
-        if (complaint.status.toLowerCase() === "open") {
+        if (complaint.complaintStatus.toLowerCase() === "unassigned") {
           btnOneLabel = "REJECT";
           btnTwoLabel = "ASSIGN";
-        } else if (complaint.status.toLowerCase() === "reassignrequested") {
+        } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
           btnOneLabel = "REJECT";
           btnTwoLabel = "RE-ASSIGN";
         }
       } else if (role === "employee") {
-        if (complaint.status.toLowerCase() === "assigned") {
+        if (complaint.complaintStatus.toLowerCase() === "assigned") {
           btnOneLabel = "REQUEST RE-ASSIGN";
           btnTwoLabel = "MARK RESOLVED";
         }
@@ -90,7 +179,7 @@ class ComplaintDetails extends Component {
     }
     return (
       <div>
-        <Screen loading={loading}>
+        <Screen>
           {complaint &&
             !openMap && (
               <div>
@@ -103,10 +192,14 @@ class ComplaintDetails extends Component {
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
                 />
-                <Comments hasComments={true} />
+                <Comments comments={comments} hasComments={true} />
                 <div>
-                  {(role === "ao" && complaint.status.toLowerCase() !== "assigned" && complaint.status.toLowerCase() !== "closed") ||
-                  (role === "employee" && complaint.status.toLowerCase() === "assigned" && complaint.status.toLowerCase() !== "closed") ? (
+                  {(role === "ao" &&
+                    complaint.complaintStatus.toLowerCase() !== "assigned" &&
+                    complaint.complaintStatus.toLowerCase() !== "closed") ||
+                  (role === "employee" &&
+                    complaint.complaintStatus.toLowerCase() === "assigned" &&
+                    complaint.complaintStatus.toLowerCase() !== "closed") ? (
                     <Actions
                       btnOneLabel={btnOneLabel}
                       btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
@@ -120,7 +213,6 @@ class ComplaintDetails extends Component {
               </div>
             )}
         </Screen>
-
         {openMap && (
           <div>
             <div className="back-btn" style={{ top: 32 }}>
@@ -161,9 +253,33 @@ const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : null;
 };
 
+const getLatestStatus = (status) => {
+  let transformedStatus = "";
+  switch (status.toLowerCase()) {
+    case "open":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "new":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "closed":
+      transformedStatus = "CLOSED";
+      break;
+    case "assigned":
+      transformedStatus = "ASSIGNED";
+      break;
+    case "reassignrequested":
+      transformedStatus = "REASSIGN";
+      break;
+    default:
+      transformedStatus = "CLOSED";
+      break;
+  }
+  return transformedStatus;
+};
+
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
-  const { loading } = complaints || false;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
@@ -179,6 +295,7 @@ const mapStateToProps = (state, ownProps) => {
       latitude: selectedComplaint.lat,
       longitude: selectedComplaint.long,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
+      complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
     };
@@ -188,9 +305,9 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { transformedComplaint, role, serviceRequestId, loading };
+    return { transformedComplaint, role, serviceRequestId };
   } else {
-    return { transformedComplaint: {}, role, serviceRequestId, loading };
+    return { transformedComplaint: {}, role, serviceRequestId };
   }
 };
 

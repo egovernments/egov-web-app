@@ -12,10 +12,9 @@
 }
 .compalint-details-action-buttons button {
   height: 38px;
-  padding-top: 11px !important;
+  line-height: 38px;
   min-width: 146px;
 }
 #actionOne span {
   padding: 0px !important;
-  margin-left: -10px !important;
 }
