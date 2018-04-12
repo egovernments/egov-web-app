@@ -6,6 +6,8 @@ import Logo from "../../../assets/images/logo_black.png";
 import Label from "utils/translationNode";
 import "./index.css";
 
+const eGovphonenumber = 9686987977;
+
 const listInnerDivStyle = {
   padding: "0px 0px 0px 40px",
 };
@@ -71,7 +73,11 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="call" />,
-        primaryText: "080 71243544",
+        primaryText: (
+          <a className="phoneNumberStyle" href={`tel:+91${eGovphonenumber}`} style={{ textDecoration: "none" }}>
+            80 4125 5708
+          </a>
+        ),
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -105,7 +111,11 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
-        primaryText: "egovernmentsfoundation.com",
+        primaryText: (
+          <a className="phoneNumberStyle" href="https://www.egovernments.org">
+            https://www.egovernments.org
+          </a>
+        ),
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -126,8 +136,21 @@ class ContactUs extends Component {
                 <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
               </div>
               <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                <Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />
-                <Icon id="contactus-facebook" className="contactus-facebook" style={facebookStyle} action="custom" name="facebook" color="ffffff" />
+                <a href="https://twitter.com/eGovFoundation">
+                  {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
+                </a>
+                <a href="https://www.facebook.com/egfindia">
+                  {
+                    <Icon
+                      id="contactus-facebook"
+                      className="contactus-facebook"
+                      style={facebookStyle}
+                      action="custom"
+                      name="facebook"
+                      color="ffffff"
+                    />
+                  }
+                </a>
               </div>
             </div>
           }

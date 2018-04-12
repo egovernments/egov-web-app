@@ -13,7 +13,7 @@ class Register extends Component {
   };
 
   navigateToLogin = () => {
-    this.props.history.push("/citizen/user/login");
+    this.props.history.push("/employee/user/login");
   };
 
   onNameChanged = (e, value) => {
