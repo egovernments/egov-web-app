@@ -1,4 +1,5 @@
 import * as authType from "./actionTypes";
+import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { httpRequest, loginRequest } from "utils/api";
 import { AUTH, USER, OTP } from "utils/endPoints";
 import { prepareFormData } from "utils/commons";
@@ -97,6 +98,7 @@ export const sendOTP = (intent) => {
       const formResponse = await httpRequest(OTP.RESEND.URL, OTP.RESEND.ACTION, [], formData);
     } catch (error) {}
     dispatch(sendOtpCompleted());
+    dispatch(toggleSnackbarAndSetText(true, "OTP has been Resent"));
   };
 };
 

@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import { COMPLAINT, CATEGORY } from "../../utils/endPoints";
-import { httpRequest } from "../../utils/api";
+import { COMPLAINT, CATEGORY } from "utils/endPoints";
+import { httpRequest } from "utils/api";
 
 // complaint categories success
 const complaintCategoriesFetchSucess = (payload) => {
