@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass, removeBodyClass } from "utils/commons";
-import { fetchLocalizationLabel, toggleSnackbarAndSetText } from "redux/app/actions";
+import { fetchLocalizationLabel, toggleSnackbarAndSetText,setRoute } from "redux/app/actions";
 import { fetchCities, fetchCitizens, fetchEmployees } from "redux/common/actions";
 import Router from "./Router";
 
@@ -14,7 +14,6 @@ class App extends Component {
 
     props.history.listen((location, action) => {
       const { pathname: nextPath } = location;
-      removeBodyClass(currentPath);
       addBodyClass(nextPath);
       props.toggleSnackbarAndSetText(false, "");
     });
@@ -35,9 +34,10 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
-    const { route: currentRoute, history } = this.props;
-    if (currentRoute !== nextRoute) {
+    const { route: currentRoute, history,setRoute } = this.props;
+    if (nextRoute && currentRoute !== nextRoute) {
       history.push(nextRoute);
+      setRoute("");
     }
   }
 
@@ -65,6 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCities: () => dispatch(fetchCities()),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
     fetchEmployees: () => dispatch(fetchEmployees()),
+    setRoute:(route) => dispatch(setRoute(route))
   };
 };
 

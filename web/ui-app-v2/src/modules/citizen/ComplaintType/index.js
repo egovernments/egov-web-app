@@ -34,7 +34,6 @@ class ComplaintType extends Component {
     });
   };
 
-  // this logic has to change
   generateDataSource = () => {
     const { categories } = this.props;
     const categoryList = getNestedObjFormat(categories);
@@ -88,7 +87,7 @@ class ComplaintType extends Component {
   };
 
   render() {
-    const { autoSuggestCallback, prepareResultsForDisplay, generateDataSource } = this;
+    const { autoSuggestCallback, prepareResultsForDisplay } = this;
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const { transformedDataSource, dataSource } = this.state;

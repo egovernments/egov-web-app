@@ -20,7 +20,7 @@ const formConfig = {
       floatingLabelText: "CS_PROFILE_EMAIL",
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",
       errorMessage: "CS_PROFILE_EMAIL_ERRORMSG",
-      pattern: "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(.\\w{2,3})+$|^$",
+      pattern: "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
     },
   },
   submit: {
