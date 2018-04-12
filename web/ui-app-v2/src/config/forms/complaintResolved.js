@@ -14,6 +14,11 @@ const formConfig = {
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
       value: "",
     },
+    action: {
+      id: "action",
+      jsonPath: "actionInfo[0].action",
+      value: "resolve",
+    },
   },
   submit: {
     label: "MARK_RESOLVED",

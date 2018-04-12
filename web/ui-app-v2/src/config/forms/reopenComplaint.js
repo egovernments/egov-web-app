@@ -7,7 +7,6 @@ const formConfig = {
       jsonPath: "actionInfo[0].media",
       errorMessage: "CS_FILE_UPLOAD_FAILED",
     },
-
     comments: {
       id: "comments-reopen",
       jsonPath: "actionInfo[0].comments",
@@ -16,6 +15,11 @@ const formConfig = {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
       value: "",
+    },
+    action: {
+      id: "action",
+      jsonPath: "actionInfo[0].action",
+      value: "reopen",
     },
   },
   submit: {

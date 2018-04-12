@@ -10,6 +10,11 @@ const formConfig = {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
     },
+    action: {
+      id: "action",
+      jsonPath: "actionInfo[0].action",
+      value: "reject",
+    },
   },
   submit: {
     label: "SUBMIT",
