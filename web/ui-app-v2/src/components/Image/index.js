@@ -3,20 +3,46 @@ import PropTypes from "prop-types";
 import ImageLoader from "react-load-image";
 import CircularProgress from "material-ui/CircularProgress";
 
-function Preloader(props) {
+const Preloader = () => {
   return <CircularProgress size={80} thickness={5} />;
-}
-// uses bootstrap classes img-responsive img-circle
-const Image = ({ circular = false, className = "", style, source, height, width, onClick,isLazyLoading=true }) => {
+};
+
+const getImageSource = (imageSource, size) => {
+  const images = imageSource.split(",");
+  if (!images.length) {
+    return null;
+  }
+  switch (size) {
+    case "small":
+      imageSource = images[2];
+      break;
+    case "medium":
+      imageSource = images[1];
+      break;
+    case "large":
+    default:
+      imageSource = images[0];
+  }
+  return imageSource || images[0];
+};
+
+const isImageSourceUrl = (imageSource) => {
+  return /https?/.test(imageSource);
+};
+
+const Image = ({ circular = false, size = "large", className = "", style, source, height, width, onClick, isLazyLoading = true }) => {
   let classNames = circular ? `img-responsive img-circle` : `img-responsive`;
+  const imageSource = (isImageSourceUrl(source) && getImageSource(source, size)) || source;
   classNames = className ? `${classNames} ${className}` : classNames;
-  return isLazyLoading?(
-    <ImageLoader src={source}>
+  return isLazyLoading ? (
+    <ImageLoader src={imageSource}>
       <img className={classNames} style={style} height={height} width={width} onClick={onClick} />
       <div>Error!</div>
       <Preloader />
     </ImageLoader>
-  ):<img className={classNames} src={source} style={style} height={height} width={width} onClick={onClick} />
+  ) : (
+    <img className={classNames} src={imageSource} style={style} height={height} width={width} onClick={onClick} />
+  );
 };
 
 Image.propTypes = {
