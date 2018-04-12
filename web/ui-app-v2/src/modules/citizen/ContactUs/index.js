@@ -157,7 +157,7 @@ class ContactUs extends Component {
         />
         {this.state.openMap && (
           <div>
-            <div className="back-btn">
+            <div className="back-btn" style={{ top: 24 }}>
               <Icon
                 className="mapBackBtn"
                 onClick={() => {
@@ -172,7 +172,7 @@ class ContactUs extends Component {
                 name={"arrow-back"}
               />
             </div>
-            <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} />
+            <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
           </div>
         )}
       </Screen>

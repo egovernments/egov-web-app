@@ -31,6 +31,16 @@ const MapLocation = compose(
             lat: refs.map.getCenter().lat(),
             lng: refs.map.getCenter().lng(),
           });
+          // var geocoder = new window.google.maps.Geocoder();
+          // geocoder.geocode({ location: { lat: this.state.lat, lng: this.state.lng } }, (results, status) => {
+          //   if (status === "OK") {
+          //     if (results[0]) {
+          //       this.setState({
+          //         address: results[0].formatted_address,
+          //       });
+          //     }
+          //   }
+          // });
         },
         onSearchBoxMounted: (ref) => {
           refs.searchBox = ref;
@@ -121,9 +131,14 @@ const MapLocation = compose(
         return <Marker key={index} position={props.center} draggable={false} icon={props.icon} />;
       })
     ) : (
-      <Marker position={props.center} icon={props.icon} draggable={false} animation={window.google.maps.Animation.DROP} />
+      <Marker
+        position={props.viewLocation ? props.currLoc : props.center}
+        icon={props.icon}
+        draggable={false}
+        animation={window.google.maps.Animation.DROP}
+      />
     )}
-    {props.setLocation(props.lat, props.lng)}
+    {props.setLocation && props.setLocation(props.lat, props.lng)}
   </GoogleMap>
 ));
 

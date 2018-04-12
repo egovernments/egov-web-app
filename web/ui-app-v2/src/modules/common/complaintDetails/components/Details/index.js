@@ -35,7 +35,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, images, mapAction } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -101,21 +101,21 @@ class Details extends Component {
                   <div className="col-xs-2">
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
-                  <div className="col-xs-8" style={{ paddingLeft: "0px", marginLeft: "-25px", paddingRight: 10 }}>
+                  <div className="col-xs-8" style={{ paddingLeft: "0px", marginLeft: "-20px", paddingRight: 10 }}>
                     <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
-                  {mapAction && (
-                    <div
-                      className="complaint-details-timline-button complaint-map-btn"
-                      onClick={(e) => {
-                        this.redirectToMap();
-                      }}
-                    >
-                      <Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />
-                      MAP
-                    </div>
-                  )}
                 </div>
+                {mapAction && (
+                  <div
+                    className="complaint-details-timline-button complaint-map-btn"
+                    onClick={(e) => {
+                      this.props.redirectToMap(true, { lat: latitude, lng: longitude });
+                    }}
+                  >
+                    <Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />
+                    MAP
+                  </div>
+                )}
 
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">

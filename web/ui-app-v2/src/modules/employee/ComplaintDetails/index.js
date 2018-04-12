@@ -3,7 +3,9 @@ import Details from "../../common/complaintDetails/components/Details";
 import ComplaintTimeLine from "../../common/complaintDetails/components/ComplaintTimeLine";
 import Comments from "../../common/complaintDetails/components/Comments";
 import Actions from "../../common/complaintDetails/components/ActionButton";
+import { Icon, MapLocation } from "components";
 import Screen from "../../common/Screen";
+import pinIcon from "assets/Location_pin.svg";
 import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
@@ -13,6 +15,7 @@ import "./index.css";
 
 class ComplaintDetails extends Component {
   state = {
+    openMap: false,
     status: {
       bgColor: "#f5a623",
       status: "Resolved",
@@ -110,6 +113,14 @@ class ComplaintDetails extends Component {
     }
   }
 
+  redirectToMap = (isOpen, location) => {
+    //Redirect to Map
+    this.setState({
+      openMap: isOpen,
+      location: location,
+    });
+  };
+
   btnOneOnClick = (complaintNo, label) => {
     //Action for first button
     let { setRoute } = this.props;
@@ -123,7 +134,6 @@ class ComplaintDetails extends Component {
     }
   };
   btnTwoOnClick = (complaintNo, label) => {
-    console.log(label);
     //Action for second button
     let { setRoute } = this.props;
     switch (label) {
@@ -140,7 +150,7 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { status, details, comments, hasComments } = this.state;
+    let { status, details, comments, hasComments, location, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { role, serviceRequestId } = this.props;
     let btnOneLabel = "";
@@ -162,37 +172,62 @@ class ComplaintDetails extends Component {
       }
     }
     return (
-      <Screen>
-        {complaint && (
-          <div>
-            <Details {...complaint} role={role} mapAction={true} />
-            <ComplaintTimeLine
-              status={complaint.status}
-              timeLine={timeLine}
-              handleFeedbackOpen={this.handleFeedbackOpen}
-              role={role}
-              feedback={complaint ? complaint.feedback : ""}
-              rating={complaint ? complaint.rating : ""}
-            />
-            <Comments comments={comments} hasComments={true} />
-            <div>
-              {(role === "ao" && complaint.complaintStatus.toLowerCase() !== "assigned" && complaint.complaintStatus.toLowerCase() !== "closed") ||
-              (role === "employee" &&
-                complaint.complaintStatus.toLowerCase() === "assigned" &&
-                complaint.complaintStatus.toLowerCase() !== "closed") ? (
-                <Actions
-                  btnOneLabel={btnOneLabel}
-                  btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
-                  btnTwoLabel={btnTwoLabel}
-                  btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+      <div>
+        <Screen>
+          {complaint &&
+            !openMap && (
+              <div>
+                <Details {...complaint} role={role} mapAction={true} redirectToMap={this.redirectToMap} />
+                <ComplaintTimeLine
+                  status={complaint.status}
+                  timeLine={timeLine}
+                  handleFeedbackOpen={this.handleFeedbackOpen}
+                  role={role}
+                  feedback={complaint ? complaint.feedback : ""}
+                  rating={complaint ? complaint.rating : ""}
                 />
-              ) : (
-                ""
-              )}
+                <Comments comments={comments} hasComments={true} />
+                <div>
+                  {(role === "ao" &&
+                    complaint.complaintStatus.toLowerCase() !== "assigned" &&
+                    complaint.complaintStatus.toLowerCase() !== "closed") ||
+                  (role === "employee" &&
+                    complaint.complaintStatus.toLowerCase() === "assigned" &&
+                    complaint.complaintStatus.toLowerCase() !== "closed") ? (
+                    <Actions
+                      btnOneLabel={btnOneLabel}
+                      btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
+                      btnTwoLabel={btnTwoLabel}
+                      btnTwoOnClick={() => this.btnTwoOnClick(serviceRequestId, btnTwoLabel)}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            )}
+        </Screen>
+        {openMap && (
+          <div>
+            <div className="back-btn" style={{ top: 82 }}>
+              <Icon
+                className="mapBackBtn"
+                onClick={() => {
+                  this.redirectToMap(false);
+                }}
+                style={{
+                  height: 24,
+                  width: 24,
+                  color: "#484848",
+                }}
+                action="navigation"
+                name={"arrow-back"}
+              />
             </div>
+            <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
           </div>
         )}
-      </Screen>
+      </div>
     );
   }
 }
@@ -245,6 +280,8 @@ const mapStateToProps = (state, ownProps) => {
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
       address: selectedComplaint.address,
+      latitude: selectedComplaint.lat,
+      longitude: selectedComplaint.long,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
       feedback: selectedComplaint.feedback,

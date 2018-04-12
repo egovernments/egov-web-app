@@ -25,7 +25,8 @@
 }
 
 .contactus-main-cont .searchBoxStyles,
-.contactus-main-cont .search-icon {
+.contactus-main-cont .search-icon,
+.contactus-main-cont .myLoc {
   display: none;
 }
 

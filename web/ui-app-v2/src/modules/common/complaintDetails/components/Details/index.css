@@ -19,11 +19,8 @@
 } */
 
 .complaint-map-btn {
-  margin-top: 0 !important;
-  float: right;
-  height: 22px !important;
-  width: 72px !important;
-  padding: 4px 15px 4px 6px !important;
+  margin-left: 23px;
+  padding: 10px 15px 4px 6px !important;
 }
 
 .status-result-color {
@@ -69,4 +66,14 @@
   .complaint-detail-detail-section-expanded-status-negative-margin {
     padding-left: 131px !important;
   }
+}
+
+body[class^="employee-complaint-details"] .map-container .searchBoxStyles,
+body[class^="employee-complaint-details"] .map-container .search-icon,
+body[class^="employee-complaint-details"] .map-container .myLoc {
+  display: none;
+}
+
+body[class^="employee-complaint-details"] .map-container {
+  z-index: 1;
 }
