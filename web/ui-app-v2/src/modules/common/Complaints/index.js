@@ -8,6 +8,14 @@ const imageStyles = {
   maxHeight: "100px",
   minHeight: "100px",
 };
+const callIconStyle = {
+  marginRight: "7px",
+  height: "12px",
+  width: "12px",
+  borderRadius: "50%",
+};
+
+let employeephonenumber = 8940028343;
 
 const bottomInfoTemplate = (item, role) => {
   return role !== "citizen" ? (
@@ -27,6 +35,19 @@ const bottomInfoTemplate = (item, role) => {
               </div>
             )}
           </div>
+          {/* <div className="complaint-details-timline-button">
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(e.target);
+              }}
+              href={`tel:+91${employeephonenumber}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+              <span className="timeline-call-text">CALL</span>
+            </a>
+          </div> */}
           <Button
             primary={true}
             label={"CALL"}
@@ -57,7 +78,9 @@ const bottomInfoTemplate = (item, role) => {
               />
             }
             onClick={(e) => {
-              console.log("clicked");
+              e.stopPropagation();
+              var link = `tel:+91${employeephonenumber}`;
+              window.location.href = link;
             }}
           />
         </div>
