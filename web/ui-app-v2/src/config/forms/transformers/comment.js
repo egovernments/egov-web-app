@@ -10,9 +10,9 @@ const viewModelToBusinessModelTransformer = (form, state) => {
   const formData = prepareFormData(form);
   const serviceRequestId = decodeURIComponent(window.location.pathname.split("/").pop());
   const serviceData = state.complaints.byId[serviceRequestId];
-  var filteredSeriveData = filterObjByKey(serviceData, (key) => key !== "actions");
+  var filteredServiceData = filterObjByKey(serviceData, (key) => key !== "actions");
   if (!formData.services) formData.services = [];
-  formData.services[0] = filteredSeriveData;
+  formData.services[0] = filteredServiceData;
   return formData;
 };
 
