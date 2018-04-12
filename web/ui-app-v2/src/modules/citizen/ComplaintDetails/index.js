@@ -102,7 +102,7 @@ const mapStateToProps = (state, ownProps) => {
       rating: selectedComplaint.rating,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status!="reassignrequested" && action.status);
     let transformedComplaint = {
       complaint: details,
       timeLine,
