@@ -269,21 +269,16 @@ const getLatestStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
     case "open":
-      transformedStatus = "UNASSIGNED";
-      break;
     case "new":
-      transformedStatus = "UNASSIGNED";
-      break;
     case "reassignrequested":
       transformedStatus = "UNASSIGNED";
       break;
+    case "resolved":
+    case "rejected":
     case "closed":
       transformedStatus = "CLOSED";
       break;
     case "assigned":
-      transformedStatus = "ASSIGNED";
-      break;
-    case "resolved":
       transformedStatus = "ASSIGNED";
       break;
     default:
@@ -297,7 +292,7 @@ const isAssigningOfficer = (roles) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
   });
-  return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
+  return roleCodes.indexOf("GRO") > -1 ? true : false;
 };
 
 const displayStatus = (status = "", assignee) => {
