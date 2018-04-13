@@ -248,3 +248,27 @@ export const isImage = (url) => {
   const imageType = urlParts && urlParts.length && urlParts[0].split(".") && urlParts[0].split(".").length && urlParts[0].split(".").pop();
   return (imageType && acceptedImageTypes.indexOf(imageType) !== -1) || false;
 };
+
+//using in Employee Screens
+export const getTransformedStatus = (status) => {
+  let transformedStatus = "";
+  switch (status.toLowerCase()) {
+    case "open":
+    case "new":
+    case "reassignrequested":
+      transformedStatus = "UNASSIGNED";
+      break;
+    case "resolved":
+    case "rejected":
+    case "closed":
+      transformedStatus = "CLOSED";
+      break;
+    case "assigned":
+      transformedStatus = "ASSIGNED";
+      break;
+    default:
+      transformedStatus = "UNASSIGNED";
+      break;
+  }
+  return transformedStatus;
+};

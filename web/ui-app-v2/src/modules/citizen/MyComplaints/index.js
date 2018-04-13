@@ -23,31 +23,16 @@ class MyComplaints extends Component {
   };
 
   render() {
-    let { setRoute, transformedComplaints, history } = this.props;
+    let { setRoute, transformedComplaints, history, loading } = this.props;
     let { onComplaintClick } = this;
     return (
-      <div className="complaints-main-container clearfix">
-        {this.props.complaints.loading ? (
-          <div className="loading-container">
-            <Label
-              label="Loading"
-              fontSize={16}
-              containerStyle={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              labelStyle={{ letterSpacing: 0.7, zIndex: 2000, color: "#ffffff" }}
-            />
-          </div>
-        ) : transformedComplaints.length === 0 ? (
-          <div className="no-complaints-message-cont">
-            <Label label={"CS_MYCOMPLAINTS_NO_COMPLAINTS"} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
-          </div>
-        ) : (
-          <Screen>
+      <Screen loading={loading}>
+        <div className="complaints-main-container clearfix">
+          {transformedComplaints.length === 0 ? (
+            <div className="no-complaints-message-cont">
+              <Label label={"CS_MYCOMPLAINTS_NO_COMPLAINTS"} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
+            </div>
+          ) : (
             <Complaints
               onComplaintClick={onComplaintClick}
               setRoute={setRoute}
@@ -56,20 +41,20 @@ class MyComplaints extends Component {
               track={true}
               role={"citizen"}
             />
-          </Screen>
-        )}
-        <div className="floating-button-cont">
-          <FloatingActionButton
-            id="mycomplaints-add"
-            onClick={(e) => {
-              history.push("/citizen/add-complaint");
-            }}
-            className="floating-button"
-          >
-            <Icon action="content" name="add" />
-          </FloatingActionButton>
+          )}
+          <div className="floating-button-cont">
+            <FloatingActionButton
+              id="mycomplaints-add"
+              onClick={(e) => {
+                history.push("/citizen/add-complaint");
+              }}
+              className="floating-button"
+            >
+              <Icon action="content" name="add" />
+            </FloatingActionButton>
+          </div>
         </div>
-      </div>
+      </Screen>
     );
   }
 }
@@ -94,6 +79,7 @@ const displayStatus = (status = "", assignee) => {
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
+  const { loading } = complaints || false;
   let transformedComplaints = [];
   Object.keys(complaints.byId).forEach((complaint, index) => {
     let complaintObj = {};
@@ -107,7 +93,7 @@ const mapStateToProps = (state) => {
   });
   var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
   var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
-  return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints] };
+  return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints], loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

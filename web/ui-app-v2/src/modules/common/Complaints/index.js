@@ -35,19 +35,6 @@ const bottomInfoTemplate = (item, role) => {
               </div>
             )}
           </div>
-          {/* <div className="complaint-details-timline-button">
-            <a
-              onClick={(e) => {
-                e.stopPropagation();
-                console.log(e.target);
-              }}
-              href={`tel:+91${employeephonenumber}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-              <span className="timeline-call-text">CALL</span>
-            </a>
-          </div> */}
           <Button
             primary={true}
             label={"CALL"}
@@ -92,7 +79,7 @@ const bottomInfoTemplate = (item, role) => {
       )}
       {item.reassign && (
         <div className="employee-bottom-msg">
-          <Label label={role === "ao" ? "Dharmendra Pal requested for re-assign" : "You have requested for re-assign"} dark={true} />
+          <Label label={role === "ao" ? `${item.reassignRequestedBy} requested for re-assign` : "You have requested for re-assign"} dark={true} />
         </div>
       )}
     </div>
