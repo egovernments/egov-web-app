@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Card, Icon, List, Label, AutoSuggest, Button } from "../../../../../components";
+import { Card, Icon, List, AutoSuggest, Button } from "../../../../../components";
 import faceOne from "../../../../../assets/images/faceOne.jpg";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { connect } from "react-redux";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import Avatar from "material-ui/Avatar";
+import Label from "utils/translationNode";
 import _ from "lodash";
 import "./index.css";
 
@@ -542,6 +543,7 @@ class ListCard extends Component {
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
     const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
     const { name: formKey } = this.formConfig;
+    const assignstatus = isReassignScreen ? "ES_ASSIGN_STATUS_REASSIGN" : "ES_ASSIGN_STATUS_ASSIGN";
     return (
       <div>
         <Card
@@ -552,11 +554,7 @@ class ListCard extends Component {
                 {isEmployeeDirectory ? (
                   ""
                 ) : (
-                  <Label
-                    label="Choose Employee to re-assign complaint to from the list"
-                    labelStyle={this.mainLabelStyle}
-                    containerStyle={{ padding: "0 40px 0 0" }}
-                  />
+                  <Label label={`${assignstatus}`} labelStyle={this.mainLabelStyle} containerStyle={{ padding: "0 40px 0 0" }} />
                 )}
 
                 <AutoSuggest
