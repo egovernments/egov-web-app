@@ -191,8 +191,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           {role && (
             <div>
               <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Re-Assign requested"}`} />
-              {currentStatus === "reassignrequested") &&
-                assigneeStatusCount === 1 && (
+              {currentStatus === "reassignrequested" &&
+                reassignRequestedCount === 1 && (
                   <div
                     className="complaint-details-timline-button"
                     onClick={(e) => {
