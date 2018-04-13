@@ -163,13 +163,6 @@ const Main = () => {
           title={<Label className="screenHeaderLabelStyle" label="Closed Complaints" />}
           component={ClosedComplaints}
         />
-        <PrivateRoute
-          exact
-          hideBottomNavigation={true}
-          path="/employee/reassign-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="Re-Assign to Employee" />}
-          component={AssignComplaint}
-        />
         {/*Employee static screens */}
         <PrivateRoute
           exact
@@ -206,6 +199,7 @@ const Main = () => {
           title={<Label className="screenHeaderLabelStyle" label="Complaint Rejected" />}
           component={ComplaintRejected}
         />
+        {/* assijgn */}
         <PrivateRoute
           exact
           hideBottomNavigation={true}
@@ -213,6 +207,14 @@ const Main = () => {
           title={<Label className="screenHeaderLabelStyle" label="Assign Complaint" />}
           component={AssignComplaint}
         />
+        <PrivateRoute
+          exact
+          hideBottomNavigation={true}
+          path="/employee/reassign-complaint/:serviceRequestId?"
+          title={<Label className="screenHeaderLabelStyle" label="Re-Assign to Employee" />}
+          component={AssignComplaint}
+        />
+
         <PrivateRoute
           exact
           hideBottomNavigation={true}
