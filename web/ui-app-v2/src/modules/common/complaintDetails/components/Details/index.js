@@ -35,7 +35,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction, action } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction, action, role } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -49,6 +49,12 @@ class Details extends Component {
           statusKey = `CS_COMMON_REOPENED`;
         } else {
           statusKey = `CS_COMMON_SUBMITTED`;
+        }
+      } else if (status.toLowerCase() == "reassignrequested") {
+        if (role) {
+          statusKey = `CS_COMMON_${status.toUpperCase()}`;
+        } else {
+          statusKey = `CS_COMMON_CITIZEN_REQUEST_REASSIGN`;
         }
       } else {
         statusKey = `CS_COMMON_${status.toUpperCase()}`;

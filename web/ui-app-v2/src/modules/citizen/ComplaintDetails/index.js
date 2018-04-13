@@ -9,7 +9,6 @@ import { getDateFromEpoch, mapCompIDToName, isImage,fetchImages } from "utils/co
 import "./index.css";
 
 class ComplaintDetails extends Component {
-
   componentDidMount() {
     let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
@@ -33,7 +32,7 @@ class ComplaintDetails extends Component {
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
             />
-            <Comments  hasComments={true} />
+            <Comments hasComments={true} />
           </div>
         )}
       </Screen>
@@ -58,7 +57,7 @@ const mapStateToProps = (state, ownProps) => {
       rating: selectedComplaint.rating,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status!="reassignrequested" && action.status);
+    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
     let transformedComplaint = {
       complaint: details,
       timeLine,
