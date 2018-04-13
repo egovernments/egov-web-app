@@ -4,8 +4,6 @@ import { Card, List, Icon } from "../../../../../components";
 import Label from "utils/translationNode";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
-import faceOne from "../../../../../assets/images/faceOne.jpg";
-import faceTwo from "../../../../../assets/images/faceTwo.jpg";
 import emptyFace from "../../../../../assets/images/download.png";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { getDateFromEpoch } from "utils/commons";

@@ -164,16 +164,16 @@ class ComplaintDetails extends Component {
     if (complaint) {
       if (role === "ao") {
         if (complaint.complaintStatus.toLowerCase() === "unassigned") {
-          btnOneLabel = "REJECT";
-          btnTwoLabel = "ASSIGN";
+          btnOneLabel = "ES_REJECT_BUTTON";
+          btnTwoLabel = "ES_COMMON_ASSIGN";
         } else if (complaint.complaintStatus.toLowerCase() === "reassign") {
-          btnOneLabel = "REJECT";
-          btnTwoLabel = "RE-ASSIGN";
+          btnOneLabel = "ES_REJECT_BUTTON";
+          btnTwoLabel = "ES_COMMON_REASSIGN";
         }
       } else if (role === "employee") {
         if (complaint.complaintStatus.toLowerCase() === "assigned") {
-          btnOneLabel = "REQUEST RE-ASSIGN";
-          btnTwoLabel = "MARK RESOLVED";
+          btnOneLabel = "ES_REQUEST_REQUEST_RE_ASSIGN";
+          btnTwoLabel = "ES_RESOLVE_MARK_RESOLVED";
         }
       }
     }

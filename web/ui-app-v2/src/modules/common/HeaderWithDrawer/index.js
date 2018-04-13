@@ -173,7 +173,7 @@ class HeaderWithDrawer extends Component {
   employeeItemsPartOne = {
     items: [
       {
-        primaryText: "Home",
+        primaryText: <Label label="CS_HOME_HOMEHEADER" />,
         route: "/employee/all-complaints",
         leftIcon: <Icon action="action" name="home" />,
         style: {
@@ -211,7 +211,7 @@ class HeaderWithDrawer extends Component {
         id: "header-profile",
       },
       {
-        primaryText: "Language",
+        primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
         route: "/language-selection",
         leftIcon: <Icon action="action" name="language" />,
         style: {
@@ -225,7 +225,7 @@ class HeaderWithDrawer extends Component {
   employeeItemsPartTwo = {
     items: [
       {
-        primaryText: "Logout",
+        primaryText: <Label label="CORE_COMMON_LOGOUT" />,
         route: "/logout",
         leftIcon: <Icon action="action" name="power-settings-new" />,
         style: {

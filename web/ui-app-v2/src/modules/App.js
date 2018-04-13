@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Toast } from "components";
-import { addBodyClass, removeBodyClass } from "utils/commons";
-import { fetchLocalizationLabel, toggleSnackbarAndSetText,setRoute } from "redux/app/actions";
+import { addBodyClass } from "utils/commons";
+import { fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchCities, fetchCitizens, fetchEmployees } from "redux/common/actions";
 import Router from "./Router";
 
@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchCities, locale, fetchCitizens, userInfo } = this.props;
+    const { fetchLocalizationLabel, fetchCities, fetchCitizens, userInfo } = this.props;
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchCities();
@@ -34,7 +34,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { route: nextRoute } = nextProps;
-    const { route: currentRoute, history,setRoute } = this.props;
+    const { route: currentRoute, history, setRoute } = this.props;
     if (nextRoute && currentRoute !== nextRoute) {
       history.push(nextRoute);
       setRoute("");
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchCities: () => dispatch(fetchCities()),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
     fetchEmployees: () => dispatch(fetchEmployees()),
-    setRoute:(route) => dispatch(setRoute(route))
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 
