@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { Card, Icon, List, AutoSuggest, Button } from "../../../../../components";
-import faceOne from "../../../../../assets/images/faceOne.jpg";
+import { Card, Icon, List, AutoSuggest, Button } from "components";
+import faceOne from "assets/images/faceOne.jpg";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import { connect } from "react-redux";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { setRoute } from "redux/app/actions";
 import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
-import _ from "lodash";
 import "./index.css";
 
-class ListCard extends Component {
+export default class ListCard extends Component {
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/assignComplaint").default;
@@ -520,15 +517,15 @@ class ListCard extends Component {
   };
 
   submitAssignee = (formKey, label) => {
-    let { submitForm, setRoute } = this.props;
+    let { submitForm, history } = this.props;
     let { selectedEmployeeId } = this.state;
     selectedEmployeeId && submitForm(formKey);
     switch (label) {
       case "ASSIGN":
-        selectedEmployeeId && setRoute("/employee/complaint-assigned");
+        selectedEmployeeId && history.push("/employee/complaint-assigned");
         break;
       case "RE-ASSIGN":
-        selectedEmployeeId && setRoute("/employee/complaint-reassigned");
+        selectedEmployeeId && history.push("/employee/complaint-reassigned");
         break;
     }
   };
@@ -596,13 +593,3 @@ class ListCard extends Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
-    setRoute: (route) => dispatch(setRoute(route)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ListCard);

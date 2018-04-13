@@ -86,7 +86,7 @@ const mapStateToProps = (state) => {
   const formKey = "complaint";
   const categories = state.complaints.categoriesById;
   const form = state.form[formKey] || {};
-  const { loading } = state.form || false;
+  const { loading } = form || false;
   return { form, categories, formKey, loading };
 };
 

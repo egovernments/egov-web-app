@@ -108,12 +108,13 @@ export const logout = () => {
       const authToken = localStorage.getItem("token");
       const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
     } catch (error) {}
-    // whatever happenrs the client should clear the user details
-    const locale = localStorage.getItem("locale");
-    const localization = localStorage.getItem(`localization_${locale}`);
+    // whatever happens the client should clear the user details
+    const locale = localStorage.getItem("locale") || "en_IN";
+    const localizationCacheKey = `localization_${locale}`;
+    const localization = localStorage.getItem(localizationCacheKey);
     localStorage.clear();
     localStorage.setItem("locale", locale);
-    localStorage.setItem("localization", localization);
+    localStorage.setItem(localizationCacheKey, localization);
     dispatch({ type: authType.LOGOUT });
   };
 };

@@ -9,7 +9,6 @@ const formConfig = {
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
       pattern: "^([0-9])+$",
-      value: "",
     },
     type: {
       id: "otp-type",

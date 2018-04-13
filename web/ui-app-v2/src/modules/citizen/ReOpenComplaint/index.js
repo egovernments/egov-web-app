@@ -91,7 +91,7 @@ class ReOpenComplaint extends Component {
 const mapStateToProps = (state) => {
   const formKey = "reopenComplaint";
   const form = state.form[formKey] || {};
-  const { loading } = state.form || false;
+  const { loading } = form || false;
   return { form, formKey, loading };
 };
 const mapDispatchToProps = (dispatch) => {

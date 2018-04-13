@@ -33,16 +33,11 @@ class Register extends Component {
     const { formConfig, submitForm, navigateToLogin } = this;
     const { form, loading, handleFieldChange } = this.props;
     const { name: formKey } = formConfig;
-    const { submitting } = form;
 
     return (
       <Screen loading={loading}>
         <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-          {submitting ? (
-            <div>Loading...</div>
-          ) : (
-            <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} navigateToLogin={navigateToLogin} />
-          )}
+          <RegisterForm form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} navigateToLogin={navigateToLogin} />
         </Banner>
       </Screen>
     );
@@ -52,7 +47,7 @@ class Register extends Component {
 const mapStateToProps = (state) => {
   const formKey = "register";
   const form = state.form[formKey] || {};
-  const { loading } = state.form || false;
+  const { loading } = form || false;
   return { form, loading };
 };
 
