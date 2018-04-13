@@ -7,8 +7,8 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import {mapCompIDToName, isImage } from "utils/commons";
-import orderby from "lodash/orderBy"
+import { mapCompIDToName, isImage } from "utils/commons";
+import orderby from "lodash/orderBy";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -76,7 +76,7 @@ class MyComplaints extends Component {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  if (status.toLowerCase() == "closed") {
+  if (status.toLowerCase() == "closed" || status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
     statusObj.status = "CS_COMMON_CLOSED_UCASE";
   } else {
     statusObj.status = "CS_COMMON_OPEN_UCASE";
@@ -112,9 +112,9 @@ const mapStateToProps = (state) => {
 
     transformedComplaints.push(complaintObj);
   });
-  var closedComplaints =orderby(transformedComplaints.filter((complaint)=>complaint.status==="Closed"),["date"],["desc"]);
-  var nonClosedComplaints=orderby(transformedComplaints.filter((complaint)=>complaint.status!="Closed"),["date"],["desc"]);
-  return { complaints, transformedComplaints: [...nonClosedComplaints,...closedComplaints] };
+  var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
+  return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints] };
 };
 
 const mapDispatchToProps = (dispatch) => {

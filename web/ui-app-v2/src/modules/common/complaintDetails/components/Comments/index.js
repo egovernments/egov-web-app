@@ -12,12 +12,6 @@ import { getDateFromEpoch } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
 
-const commentLabelStyle = {
-  marginBottom: "8px",
-  width: "100%",
-  wordBreak: "break-word",
-};
-
 // Don't Delete!!
 // const itemsOne = [
 //   {
@@ -93,8 +87,8 @@ class Comments extends Component {
           ),
           primaryText: (
             <div className="complaint-details-comments-section">
-              <Label containerStyle={commentLabelStyle} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
-              <Label containerStyle={commentLabelStyle} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
+              <Label containerStyle={{ marginBbottom: "8px" }} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
+              <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
               <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
             </div>
           ),
@@ -104,7 +98,7 @@ class Comments extends Component {
           primaryText: (
             <div className="complaint-details-comments-section">
               {" "}
-              <Label containerStyle={commentLabelStyle} labelStyle={{ color: "#464646" }} label={action.comments} />
+              <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
               <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
             </div>
           ),
@@ -122,7 +116,7 @@ class Comments extends Component {
             }}
             textChildren={
               <div>
-                <div className="rainmaker-displayInline">
+                <div className="rainmakcommunicationer-displayInline">
                   <Icon action="communication" name="forum" color="#969696" />{" "}
                   <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 </div>
