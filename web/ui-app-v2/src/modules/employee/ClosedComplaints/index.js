@@ -81,7 +81,7 @@ const isAssigningOfficer = (roles) => {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  if (status.toLowerCase() == "closed") {
+  if (status.toLowerCase() == "closed" || status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
     statusObj.status = "CS_COMMON_CLOSED_UCASE";
   } else {
     statusObj.status = "CS_COMMON_OPEN_UCASE";
