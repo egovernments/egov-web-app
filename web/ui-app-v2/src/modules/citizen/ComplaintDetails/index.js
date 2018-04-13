@@ -5,7 +5,7 @@ import ComplaintTimeLine from "modules/common/complaintDetails/components/Compla
 import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage,fetchImages } from "utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -41,13 +41,6 @@ class ComplaintDetails extends Component {
   }
 }
 
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : [];
-};
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;

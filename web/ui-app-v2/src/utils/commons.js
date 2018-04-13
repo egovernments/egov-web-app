@@ -219,6 +219,14 @@ export const getImageUrlByFile = (file) => {
   });
 };
 
+export const fetchImages = (actionArray) => {
+  let imageArray = [];
+  actionArray.forEach((action, index) => {
+    action.action==="open" && action.media && imageArray.push(action.media);
+  });
+  return imageArray[0] ? imageArray[0] : [];
+};
+
 export const getUserInfo = () => {
   let userInfo = localStorage.getItem("user-info");
   try {

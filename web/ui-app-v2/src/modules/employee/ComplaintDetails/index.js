@@ -6,7 +6,7 @@ import Actions from "../../common/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
 import Screen from "../../common/Screen";
 import pinIcon from "assets/Location_pin.svg";
-import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage,fetchImages } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { connect } from "react-redux";
@@ -248,13 +248,7 @@ const isAssigningOfficer = (roles) => {
   return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
 };
 
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : null;
-};
+
 
 const getLatestStatus = (status) => {
   let transformedStatus = "";

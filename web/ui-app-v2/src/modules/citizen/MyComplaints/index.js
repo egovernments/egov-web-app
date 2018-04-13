@@ -7,7 +7,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage } from "utils/commons";
+import { mapCompIDToName, isImage,fetchImages } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -90,14 +90,7 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
-//better implementation ==> to be done later
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : [];
-};
+
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};

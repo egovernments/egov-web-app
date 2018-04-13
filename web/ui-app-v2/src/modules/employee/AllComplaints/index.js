@@ -10,7 +10,7 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage } from "utils/commons";
+import { mapCompIDToName, isImage,fetchImages } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -255,15 +255,6 @@ class AllComplaints extends Component {
     );
   }
 }
-
-//better implementation ==> to be done later
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : [];
-};
 
 const getLatestStatus = (status) => {
   let transformedStatus = "";
