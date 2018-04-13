@@ -113,8 +113,11 @@ class ComplaintDetails extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.redirectToMap(false);
+  }
+
   redirectToMap = (isOpen, location) => {
-    //Redirect to Map
     this.setState({
       openMap: isOpen,
       location: location,

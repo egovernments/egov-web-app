@@ -48,6 +48,10 @@ class ContactUs extends Component {
     };
   }
 
+  componentWillUnmount() {
+    this.openMapHandler(false);
+  }
+
   openMapHandler = (isOpen) => {
     this.setState({
       openMap: isOpen,
