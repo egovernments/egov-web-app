@@ -50,10 +50,13 @@ const fetchImages = (actionArray) => {
 const getLatestStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
-    case "open" || "new":
+    case "open":
+    case "new":
       transformedStatus = "UNASSIGNED";
       break;
     case "closed":
+    case "rejected":
+    case "resolved":
       transformedStatus = "CLOSED";
       break;
     case "assigned":
