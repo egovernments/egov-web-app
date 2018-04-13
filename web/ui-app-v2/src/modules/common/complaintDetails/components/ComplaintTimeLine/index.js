@@ -66,7 +66,7 @@ const StatusIcon = ({ status }) => {
     case "open":
       return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "assigned":
-      return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
+    case "reassignrequested":
     case "re-assign":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
     case "rejected":
@@ -83,10 +83,12 @@ var openStatusCount = 0;
 var rejectStatusCount = 0;
 var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
+var reassignRequestedCount = 0;
 
 const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role }) => {
   var { action, when: date, media, status, comments, name, designation, department, businessKey: complaintNo } = stepData;
-  let employeephonenumber = 8940028343;
+  let employeephonenumber = 9090909091;
+  console.log(currentStatus);
   switch (status) {
     case "open":
       openStatusCount++;
@@ -172,6 +174,45 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 </a>
               </div>
             )}
+        </div>
+      );
+    case "reassignrequested":
+      reassignRequestedCount++;
+      return (
+        <div className="complaint-timeline-content-section">
+          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+          {!role && (
+            <Label
+              labelClassName="dark-color"
+              containerStyle={statusContainerStyle}
+              label={`${"Complaint is being re-assigned by Chiranjeet Anand"}`}
+            />
+          )}
+          {role && (
+            <div>
+              <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Re-Assign requested"}`} />
+              {currentStatus === "reassignrequested" &&
+                reassignRequestedCount === 1 && (
+                  <div
+                    className="complaint-details-timline-button"
+                    onClick={(e) => {
+                      console.log("clicked");
+                    }}
+                  >
+                    <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+                      <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+                      <span className="timeline-call-text">CALL</span>
+                    </a>
+                  </div>
+                )}
+              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
+              <Label
+                labelClassName="rainmaker-small-font"
+                containerStyle={{ width: "192px" }}
+                label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
+              />
+            </div>
+          )}
         </div>
       );
 
@@ -331,6 +372,7 @@ class ComplaintTimeLine extends Component {
     rejectStatusCount = 0;
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
+    reassignRequestedCount = 0;
     let { status, history, role, timeLine, feedback, rating } = this.props;
 
     let steps = timeLine.map((step, key) => {
