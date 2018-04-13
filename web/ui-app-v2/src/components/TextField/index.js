@@ -57,6 +57,7 @@ const TextField = ({
   type,
   autoFocus,
   maxLength,
+  multiLine,
 }) => {
   return (
     <MaterialUITextField
@@ -90,6 +91,7 @@ const TextField = ({
       autoFocus={autoFocus}
       maxLength={maxLength}
       autoComplete="off"
+      multiLine={multiLine}
     />
   );
 };

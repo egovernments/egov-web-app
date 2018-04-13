@@ -17,6 +17,7 @@ const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {
               isRequired={false}
               fullWidth={true}
               maxLength="250"
+              multiLine={true}
             />
           </div>
         }
