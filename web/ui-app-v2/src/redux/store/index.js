@@ -6,7 +6,7 @@ import authMiddleware from "redux/auth/middleware";
 
 const middlewares = [];
 
-// middlewares.push(authMiddleware);
+middlewares.push(authMiddleware);
 middlewares.push(translateFieldText);
 middlewares.push(validation);
 middlewares.push(formSubmit);
