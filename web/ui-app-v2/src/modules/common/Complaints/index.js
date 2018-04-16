@@ -73,7 +73,7 @@ const bottomInfoTemplate = (item, role) => {
       )}
       {item.reassign && (
         <div className="employee-bottom-msg">
-          <Label label={role === "ao" ? "Dharmendra Pal requested for re-assign" : "You have requested for re-assign"} dark={true} />
+          <Label label={role === "ao" ? `${item.reassignRequestedBy} requested for re-assign` : "You have requested for re-assign"} dark={true} />
         </div>
       )}
     </div>

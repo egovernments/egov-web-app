@@ -56,6 +56,7 @@ class PrivateRoute extends Component {
     searchUser();
   }
 
+  //why the need to call this at every route?
   componentDidMount() {
     const { fetchComplaintCategories } = this.props;
     fetchComplaintCategories();

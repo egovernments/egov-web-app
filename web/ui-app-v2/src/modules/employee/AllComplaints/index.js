@@ -10,7 +10,7 @@ import Potholes_2 from "../../../assets/images/Potholes_2.jpg";
 import Potholes_3 from "../../../assets/images/Potholes_3.jpg";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage,fetchImages } from "utils/commons";
+import { mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -79,27 +79,13 @@ class AllComplaints extends Component {
   }
 }
 
-const getLatestStatus = (status) => {
-  let transformedStatus = "";
-  switch (status.toLowerCase()) {
-    case "open":
-    case "new":
-    case "reassignrequested":
-      transformedStatus = "UNASSIGNED";
-      break;
-    case "resolved":
-    case "rejected":
-    case "closed":
-      transformedStatus = "CLOSED";
-      break;
-    case "assigned":
-      transformedStatus = "ASSIGNED";
-      break;
-    default:
-      transformedStatus = "UNASSIGNED";
-      break;
-  }
-  return transformedStatus;
+//better implementation ==> to be done later
+const fetchImages = (actionArray) => {
+  let imageArray = [];
+  actionArray.forEach((action, index) => {
+    action.media && imageArray.push(action.media);
+  });
+  return imageArray[0] ? imageArray[0] : [];
 };
 
 const isAssigningOfficer = (roles) => {
@@ -142,8 +128,10 @@ const mapStateToProps = (state) => {
       status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: complaintDetail.status && getLatestStatus(complaintDetail.status),
+      complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
+      reassign: complaintDetail.status === "reassignrequested" ? true : false,
+      reassignRequestedBy: complaintDetail.status === "reassignrequested" ? complaintDetail.actions[0].by.split(":")[0] : "",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
     };
   });

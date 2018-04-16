@@ -4,7 +4,7 @@ import Complaints from "../../common/Complaints";
 
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
 import { connect } from "react-redux";
 import "./index.css";
 
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => {
       status: displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: complaintDetail.actions[0].status && getLatestStatus(complaintDetail.actions[0].status),
+      complaintStatus: complaintDetail.actions[0].status && getTransformedStatus(complaintDetail.actions[0].status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
     };
   });
