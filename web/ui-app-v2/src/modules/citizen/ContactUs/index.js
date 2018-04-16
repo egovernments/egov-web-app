@@ -118,7 +118,7 @@ class ContactUs extends Component {
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
         primaryText: (
-          <a className="phoneNumberStyle" target="_blank" href="https://www.egovernments.org">
+          <a className="phoneNumberStyle" target="_blank" href="https://egovernments.org">
             https://www.egovernments.org
           </a>
         ),
