@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Card, Icon, List, AutoSuggest, Button } from "components";
 import faceOne from "assets/images/faceOne.jpg";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import { setRoute } from "redux/app/actions";
 import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
 import "./index.css";
@@ -384,7 +382,7 @@ export default class ListCard extends Component {
 
   componentDidMount() {
     let { initForm } = this.props;
-    let { prepareRawDataToFormat, generateDataSource, APIData } = this;
+    let { prepareRawDataToFormat, APIData } = this;
     initForm(this.formConfig);
     const dataSource = prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
@@ -474,7 +472,7 @@ export default class ListCard extends Component {
   onEmployeeChosen = (item, index) => {
     let { handleFieldChange } = this.props;
     const { results, searchTerm } = this.state;
-    const displayInitialList = searchTerm.length === 0 ? true : false;
+    //const displayInitialList = searchTerm.length === 0 ? true : false;
     const dataSource = this.prepareRawDataToFormat(this.APIData);
     this.setState({ dataSource });
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;

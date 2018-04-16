@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "../../../../../components";
+import Label from "utils/translationNode";
 import "./index.css";
 
 class ActionButton extends Component {
@@ -8,7 +9,7 @@ class ActionButton extends Component {
     return (
       <div className="compalint-details-action-buttons">
         <Button
-          label={btnOneLabel}
+          label={<Label buttonLabel={true} label={btnOneLabel} />}
           onClick={btnOneOnClick}
           style={{ width: "45%", height: "38px", boxShadow: "none" }}
           id="actionOne"
@@ -18,7 +19,7 @@ class ActionButton extends Component {
           overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         />
         <Button
-          label={btnTwoLabel}
+          label={<Label buttonLabel={true} label={btnTwoLabel} />}
           onClick={btnTwoOnClick}
           style={{ width: "45%", height: "38px", boxShadow: "none" }}
           id="actionTwo"

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Tabs, Label } from "../../../components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 
@@ -10,10 +9,6 @@ import { connect } from "react-redux";
 import "./index.css";
 
 class ClosedComplaints extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     let { fetchComplaints } = this.props;
     fetchComplaints([]);
@@ -25,9 +20,6 @@ class ClosedComplaints extends Component {
   };
 
   render() {
-    const tabStyle = {
-      letterSpacing: "0.6px",
-    };
     const { onComplaintClick } = this;
     const { closedComplaints, role } = this.props;
     return (
@@ -61,9 +53,6 @@ const getLatestStatus = (status) => {
       break;
     case "assigned":
       transformedStatus = "ASSIGNED";
-      break;
-    case "resolved":
-      transformedStatus = "RESOLVED";
       break;
     default:
       transformedStatus = "UNASSIGNED";
