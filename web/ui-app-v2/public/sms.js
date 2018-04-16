@@ -10,10 +10,3 @@ function messageReceieved(otp) {
   });
   otpElement.dispatchEvent(smsReceievedEvent);
 }
-
-try {
-  if (typeof androidAppProxy !== "undefined") {
-    let location = window.androidAppProxy.requestLocation();
-    window.localStorage.setItem("location", location);
-  }
-} catch (error) {}

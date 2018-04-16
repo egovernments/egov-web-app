@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getImageUrlByFile } from "utils/commons";
 
+// pass the index
 class FilePicker extends Component {
   handleFileChange = (event) => {
     let input = event.target;

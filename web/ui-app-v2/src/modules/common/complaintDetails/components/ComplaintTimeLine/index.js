@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import Label from "utils/translationNode";
 import "./index.css";
 import { getDateFromEpoch, isImage } from "utils/commons";
-import filter from "lodash/filter";
 
 const timelineButtonLabelStyle = {
   height: 12,

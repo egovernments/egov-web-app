@@ -8,12 +8,6 @@ const imageStyles = {
   maxHeight: "100px",
   minHeight: "100px",
 };
-const callIconStyle = {
-  marginRight: "7px",
-  height: "12px",
-  width: "12px",
-  borderRadius: "50%",
-};
 
 let employeephonenumber = 8940028343;
 

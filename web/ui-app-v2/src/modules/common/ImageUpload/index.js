@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FilePicker, Icon, Image } from "components";
+import { FilePicker, Icon, Image, LoadingIndicator } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fileUpload, removeFile } from "redux/form/actions";
@@ -41,9 +41,9 @@ class ImageUpload extends Component {
     return placeholders;
   };
 
-  removeImage = (imageIndex) => {
+  removeImage = (fileIndex) => {
     const { formKey, fieldKey, removeFile } = this.props;
-    removeFile(formKey, fieldKey, imageIndex);
+    removeFile(formKey, fieldKey, fileIndex);
   };
 
   onFilePicked = (file, imageUri) => {
@@ -55,11 +55,12 @@ class ImageUpload extends Component {
 
   render() {
     const { onFilePicked, removeImage } = this;
-    const { images } = this.props;
+    const { images, loading } = this.props;
     const inputProps = { accept: "image/*", maxFiles: 3, multiple: true };
 
     return (
       <div className="upload-photo-overlay">
+        {loading && <LoadingIndicator />}
         {!images.length ? (
           <div>
             <div className="upload-icon-cont">
@@ -91,7 +92,10 @@ class ImageUpload extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const images = (state.form[ownProps.formKey] && state.form[ownProps.formKey].files && state.form[ownProps.formKey].files[ownProps.fieldKey]) || [];
-  return { images };
+  const loading = images.reduce((loading, file) => {
+    return loading || file.loading;
+  }, false);
+  return { images, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -92,32 +92,34 @@ export const submitForm = (formKey) => {
 };
 
 // file actions
-const fileUploadPending = (formKey, fieldKey) => {
-  return { type: actionTypes.FILE_UPLOAD_STARTED, formKey, fieldKey };
+const fileUploadPending = (formKey, fieldKey, fileObject) => {
+  return { type: actionTypes.FILE_UPLOAD_STARTED, formKey, fieldKey, fileObject };
 };
 
 // for profile if a file exists, dispatch
-const fileUploadCompleted = (formKey, fieldKey, fileObject) => {
-  return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileObject };
+const fileUploadCompleted = (formKey, fieldKey, fileStoreId, fileName) => {
+  return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileStoreId, fileName };
 };
 
-const fileUploadError = (fieldKey, formKey, error) => {
-  return { type: actionTypes.FILE_UPLOAD_ERROR, formKey, fieldKey, error };
+const fileUploadError = (formKey, fieldKey, error, fileName) => {
+  return { type: actionTypes.FILE_UPLOAD_ERROR, formKey, fieldKey, error, fileName };
 };
 
-export const removeFile = (formKey, fieldKey, index) => {
-  return { type: actionTypes.FILE_REMOVE, fieldKey, formKey, index };
+export const removeFile = (formKey, fieldKey, fileIndex) => {
+  return { type: actionTypes.FILE_REMOVE, fieldKey, formKey, fileIndex };
 };
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload
-export const fileUpload = (formKey, fieldKey, fileObject) => {
+export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
+  const { name: fileName } = fileObject.file;
   return async (dispatch, getState) => {
-    dispatch(fileUploadPending(formKey, fieldKey));
+    dispatch(fileUploadPending(formKey, fieldKey, fileObject));
     try {
       const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
-      dispatch(fileUploadCompleted(formKey, fieldKey, { ...fileObject, fileStoreId }));
+      dispatch(fileUploadCompleted(formKey, fieldKey, fileStoreId, fileName));
     } catch (error) {
-      dispatch(fileUploadError(formKey, fieldKey, error.message));
+      dispatch(fileUploadError(formKey, fieldKey, error.message, fileName));
+      dispatch(toggleSnackbarAndSetText(true, `Upload of file ${fileName} failed`, true));
     }
   };
 };
