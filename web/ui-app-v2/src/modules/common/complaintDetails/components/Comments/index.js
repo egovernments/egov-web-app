@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, List, Icon } from "../../../../../components";
+import { Card, List, Icon, Image } from "components";
 import Label from "utils/translationNode";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
@@ -46,6 +46,12 @@ import "./index.css";
 //   },
 // ];
 
+const imageStyles = {
+  width: "33px",
+  height: "33px",
+  marginRight: "8px",
+};
+
 class Comments extends Component {
   // onChange = () => {
   //   this.props.onChange();
@@ -79,8 +85,7 @@ class Comments extends Component {
         return {
           leftAvatar: (
             <div>
-              {" "}
-              <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />
+              <Image style={imageStyles} className="img-circle" size="medium" source={userId ? userImage : emptyFace} />
             </div>
           ),
           primaryText: (
