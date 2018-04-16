@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Icon } from "components";
+import { Icon, LoadingIndicator } from "components";
 import Complaints from "modules/common/Complaints";
 import Screen from "modules/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage,fetchImages } from "utils/commons";
+import { mapCompIDToName, isImage, fetchImages } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -29,7 +29,7 @@ class MyComplaints extends Component {
       <div className="complaints-main-container clearfix">
         {this.props.complaints.loading ? (
           <div className="loading-container">
-            <Label
+            {/* <Label
               label="Loading"
               fontSize={16}
               containerStyle={{
@@ -40,7 +40,8 @@ class MyComplaints extends Component {
                 justifyContent: "center",
               }}
               labelStyle={{ letterSpacing: 0.7, zIndex: 2000, color: "#ffffff" }}
-            />
+            /> */}
+            <LoadingIndicator loading={true} />
           </div>
         ) : transformedComplaints.length === 0 ? (
           <div className="no-complaints-message-cont">
@@ -89,8 +90,6 @@ const displayStatus = (status = "", assignee) => {
 
   return statusObj;
 };
-
-
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
