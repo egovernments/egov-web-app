@@ -118,7 +118,7 @@ class ContactUs extends Component {
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
         primaryText: (
-          <a className="phoneNumberStyle" href="https://www.egovernments.org">
+          <a className="phoneNumberStyle" target="_blank" href="https://www.egovernments.org">
             https://www.egovernments.org
           </a>
         ),
@@ -143,10 +143,10 @@ class ContactUs extends Component {
                   <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
                 </div>
                 <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                  <a href="https://twitter.com/eGovFoundation">
+                  <a href="https://twitter.com/eGovFoundation" target="_blank">
                     {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
                   </a>
-                  <a href="https://www.facebook.com/egfindia">
+                  <a href="https://www.facebook.com/egfindia" target="_blank">
                     {
                       <Icon
                         id="contactus-facebook"
