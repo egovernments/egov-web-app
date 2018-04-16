@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, TextArea } from "../../../../../components";
+import { Icon, TextArea, Image } from "components";
 import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
 import emptyFace from "../../../../../assets/images/download.png";
@@ -24,11 +24,18 @@ const textFieldStyle = {
   fontSize: "14px",
 };
 
+const imageStyles = {
+  width: "33px",
+  height: "33px",
+  marginRight: "8px",
+};
+
 const WriteComment = ({ form, formKey, onChange, submitForm, userImage }) => {
   const fields = form.fields || {};
   return (
     <div style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
-      <Avatar size={33} src={userImage ? userImage : emptyFace} style={{ marginRight: "5px" }} />
+      <Image style={imageStyles} className="img-circle" size="medium" source={userImage ? userImage : emptyFace} />
+
       <TextArea
         {...fields.comment}
         hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
