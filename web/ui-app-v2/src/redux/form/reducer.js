@@ -48,9 +48,36 @@ const mergeFields = (oldFields = {}, newFields = {}) => {
   }, {});
 };
 
-const setFile = (state, formKey, fieldKey, fileObject) => {
+const fileUploadStarted = (state, formKey, fieldKey, fileObject) => {
   const files = getFiles(state, formKey, fieldKey);
-  return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat(fileObject) } } };
+  return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat({ ...fileObject, loading: true }) } } };
+};
+const fileUploadCompleted = (state, formKey, fieldKey, fileStoreId, fileName) => {
+  const files = getFiles(state, formKey, fieldKey);
+  return {
+    ...state,
+    [formKey]: {
+      ...state[formKey],
+      files: {
+        [fieldKey]: files.map((fileObject) => (fileObject.file.name === fileName ? { ...fileObject, fileStoreId, loading: false } : fileObject)),
+      },
+    },
+  };
+};
+
+const fileUploadError = (state, formKey, fieldKey, error, fileName) => {
+  const files = getFiles(state, formKey, fieldKey);
+  return {
+    ...state,
+    [formKey]: {
+      ...state[formKey],
+      files: {
+        [fieldKey]: files.map(
+          (fileObject) => (fileObject.file.name === fileName ? { ...fileObject, imageUri: null, error, loading: false } : fileObject)
+        ),
+      },
+    },
+  };
 };
 
 const removeFile = (state, formKey, fieldKey, fileIndex) => {
@@ -89,15 +116,16 @@ const form = (state = intialState, action) => {
     case actionTypes.SUBMIT_FORM_ERROR:
       state = setFormProperty(state, formKey, "loading", false);
       return setFormProperty(state, formKey, "error", true);
+    // file related reducers
     case actionTypes.FILE_UPLOAD_STARTED:
-      return setFormProperty(state, formKey, "loading", true);
+      return fileUploadStarted(state, formKey, fieldKey, action.fileObject);
     case actionTypes.FILE_UPLOAD_COMPLETED:
-      state = setFormProperty(state, formKey, "loading", false);
-      return setFile(state, formKey, fieldKey, action.fileObject);
+      return fileUploadCompleted(state, formKey, fieldKey, action.fileStoreId, action.fileName);
     case actionTypes.FILE_UPLOAD_ERROR:
-      return setFormProperty(state, formKey, "loading", false);
+      return fileUploadError(state, formKey, fieldKey, action.error, action.fileName);
     case actionTypes.FILE_REMOVE:
-      return removeFile(state, formKey, fieldKey, action.index);
+      return removeFile(state, formKey, fieldKey, action.fileIndex);
+    // end of file reducers
     default:
       return state;
   }
