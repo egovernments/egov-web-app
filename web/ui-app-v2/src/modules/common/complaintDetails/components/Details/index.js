@@ -25,17 +25,40 @@ class Details extends Component {
     hideImageModal: true,
   };
 
-  onImageClick = (source) => {
+  onImageClick = (source, hideImageModal) => {
+    let { history } = this.props;
     this.setState({ source });
-    this.setState({ hideImageModal: false });
+    if (hideImageModal === false) {
+      history.push(`${history.location.pathname}?modal=true`);
+    } else if (hideImageModal === true) {
+      history.goBack();
+    }
   };
 
-  onCloseClick = () => {
-    this.setState({ hideImageModal: true });
+  componentWillReceiveProps = (nextProps) => {
+    if (!nextProps.history.location.search) {
+      this.setState({ hideImageModal: true });
+    } else {
+      this.setState({ hideImageModal: false });
+    }
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, mapAction, action, role } = this.props;
+    let {
+      status,
+      complaint,
+      applicationNo,
+      description,
+      submittedDate,
+      address,
+      latitude,
+      longitude,
+      images,
+      mapAction,
+      action,
+      role,
+      history,
+    } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -64,7 +87,7 @@ class Details extends Component {
     const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
     return (
       <div>
-        <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={this.onCloseClick} />
+        <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={() => this.onImageClick("", true)} />
         <Card
           textChildren={
             <div>
@@ -99,7 +122,7 @@ class Details extends Component {
                                   height: "93px",
                                 }}
                                 source={image}
-                                onClick={() => this.onImageClick(image)}
+                                onClick={() => this.onImageClick(image, false)}
                               />
                             </div>
                           )

@@ -5,7 +5,7 @@ import ComplaintTimeLine from "modules/common/complaintDetails/components/Compla
 import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage,fetchImages } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages } from "utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -16,6 +16,7 @@ class ComplaintDetails extends Component {
 
   render() {
     let { complaint, timeLine } = this.props.transformedComplaint;
+    let { history } = this.props;
 
     let action;
     if (timeLine && timeLine[0]) {
@@ -25,7 +26,7 @@ class ComplaintDetails extends Component {
       <Screen>
         {complaint && (
           <div>
-            <Details {...complaint} action={action} />
+            <Details {...complaint} action={action} history={history} />
             <ComplaintTimeLine
               status={complaint.status}
               timeLine={timeLine}
@@ -39,7 +40,6 @@ class ComplaintDetails extends Component {
     );
   }
 }
-
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;

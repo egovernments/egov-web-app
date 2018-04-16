@@ -76,39 +76,43 @@ class Comments extends Component {
   render() {
     const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName } = this.props;
     const { name: formKey } = this.formConfig;
-    let items = selectedComplaint.actions.filter((action, index) => {
-      return action.comments && !action.status;
-    });
-    items.reverse();
-    items = items.map((action, index) => {
-      if (action.by.split(":")[1].toLowerCase() === "citizen") {
-        return {
-          leftAvatar: (
-            <div>
-              <Image style={imageStyles} className="img-circle" size="medium" source={userId ? userImage : emptyFace} />
-            </div>
-          ),
-          primaryText: (
-            <div className="complaint-details-comments-section">
-              <Label containerStyle={{ marginBbottom: "8px" }} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
-              <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
-              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
-            </div>
-          ),
-        };
-      } else {
-        return {
-          primaryText: (
-            <div className="complaint-details-comments-section">
-              {" "}
-              <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
-              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
-            </div>
-          ),
-          rightAvatar: <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />,
-        };
-      }
-    });
+    let items =
+      selectedComplaint &&
+      selectedComplaint.actions.filter((action, index) => {
+        return action.comments && !action.status;
+      });
+    items && items.reverse();
+    items =
+      items &&
+      items.map((action, index) => {
+        if (action.by.split(":")[1].toLowerCase() === "citizen") {
+          return {
+            leftAvatar: (
+              <div>
+                <Image style={imageStyles} className="img-circle" size="medium" source={userId ? userImage : emptyFace} />
+              </div>
+            ),
+            primaryText: (
+              <div className="complaint-details-comments-section">
+                <Label containerStyle={{ marginBbottom: "8px" }} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
+                <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
+                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
+              </div>
+            ),
+          };
+        } else {
+          return {
+            primaryText: (
+              <div className="complaint-details-comments-section">
+                {" "}
+                <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
+                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
+              </div>
+            ),
+            rightAvatar: <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />,
+          };
+        }
+      });
 
     return (
       <div>

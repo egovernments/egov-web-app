@@ -74,7 +74,14 @@ class AddComplaints extends Component {
           />
           <AdditionalDetailsCard additionalDetails={fields.additionalDetails} onChange={this.handleDetailsChange} />
           <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
-            <Button {...submit} onClick={submitComplaint} className="add-complaint-submit-button" fullWidth={true} primary={true} />
+            <Button
+              style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
+              {...submit}
+              onClick={submitComplaint}
+              className="add-complaint-submit-button"
+              fullWidth={true}
+              primary={true}
+            />
           </div>
         </div>
       </Screen>

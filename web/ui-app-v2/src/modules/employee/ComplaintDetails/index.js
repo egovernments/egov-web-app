@@ -157,7 +157,7 @@ class ComplaintDetails extends Component {
   render() {
     let { status, details, comments, hasComments, location, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId } = this.props;
+    let { role, serviceRequestId, history } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -186,7 +186,7 @@ class ComplaintDetails extends Component {
           {complaint &&
             !openMap && (
               <div>
-                <Details {...complaint} role={role} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
+                <Details {...complaint} role={role} history={history} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
                 <ComplaintTimeLine
                   status={complaint.status}
                   timeLine={timeLine}
@@ -195,7 +195,7 @@ class ComplaintDetails extends Component {
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
                 />
-                <Comments comments={comments} hasComments={true} />
+                {complaint.complaintStatus.toLowerCase() !== "closed" && <Comments comments={comments} hasComments={true} />}
                 <div>
                   {(role === "ao" &&
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&
