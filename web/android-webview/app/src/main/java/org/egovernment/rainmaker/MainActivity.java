@@ -449,15 +449,16 @@ public class MainActivity extends AppCompatActivity {
 			if (permissionsNeeded.size() > 0) {
 
 				for (int i = 1; i < permissionsNeeded.size(); i++)
-				requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-						REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-				return;
+					requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+							REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
 			}
 			requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
 					REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
 			return;
 		}
 
+		Toast.makeText(MainActivity.this, "No new Permission Required- Launching App .You are Awesome!!", Toast.LENGTH_SHORT)
+				.show();
 	}
 
 
