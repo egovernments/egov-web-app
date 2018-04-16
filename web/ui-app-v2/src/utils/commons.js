@@ -117,17 +117,10 @@ const getMonthName = (monthIndex) => {
 };
 
 const getCurrLocation = () => {
-  let currLoc = {};
   return new Promise((resolve) => {
-    if (localStorage.location) {
-      try {
-        currLoc = JSON.parse(localStorage.location);
-        resolve(currLoc);
-      } catch (error) {
-        currLoc = {};
-      }
-    } else if (navigator.geolocation) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        const currLoc = {};
         currLoc.lat = position.coords.latitude.toFixed(6);
         currLoc.lng = position.coords.longitude.toFixed(6);
         resolve(currLoc);
@@ -222,7 +215,7 @@ export const getImageUrlByFile = (file) => {
 export const fetchImages = (actionArray) => {
   let imageArray = [];
   actionArray.forEach((action, index) => {
-    action.action==="open" && action.media && imageArray.push(action.media);
+    action.action === "open" && action.media && imageArray.push(action.media);
   });
   return imageArray[0] ? imageArray[0] : [];
 };
