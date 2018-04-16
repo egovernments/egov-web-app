@@ -81,6 +81,8 @@ export const refreshTokenRequest = () => {
       const response = await loginRequest(null, null, refreshToken, grantType);
       delete response.ResponseInfo;
       dispatch(authenticated(response));
+      // only option for the time being!
+      window.location.reload();
     } catch (error) {
       dispatch(logout());
     }
