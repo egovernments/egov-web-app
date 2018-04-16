@@ -50,11 +50,12 @@ class ImageUpload extends Component {
 
   onFilePicked = (file, imageUri) => {
     const { images, formKey, fieldKey, module, fileUpload, toggleSnackbarAndSetText } = this.props;
+    const MAX_IMAGE_SIZE = 5000;
     const fileSize = getFileSize(file);
     const isImage = isFileImage(file);
     if (!isImage) {
       toggleSnackbarAndSetText(true, `The file ${file.name} is not a valid image`, true);
-    } else if (fileSize > 5000) {
+    } else if (fileSize > MAX_IMAGE_SIZE) {
       toggleSnackbarAndSetText(true, `The file ${file.name} is more than 5mb`, true);
     } else {
       if (images.length < 3) {

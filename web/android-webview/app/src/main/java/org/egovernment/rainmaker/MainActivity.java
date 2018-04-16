@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -46,7 +45,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import android.app.AlertDialog;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -166,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             // handling geolocation
 
 
+
 			@Override
 			public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
 				callback.invoke(origin, true, false);
@@ -275,48 +274,31 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
         }
 
-
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs
 		@SuppressWarnings("deprecation")
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			return url_actions(view, url);
-        }
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			startActivity(intent);
+			return true;
+		}
 
 
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs for API 23+ [suggested by github.com/JakePou]
 		@TargetApi(Build.VERSION_CODES.N)
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-			return url_actions(view, request.getUrl().toString());
-		}
+			String url = request.getUrl().toString();
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			startActivity(intent);
+			return true;
+        }
     }
 
     //Opening URLs inside org.egovernment.org
     void aswm_view(String url) {
         webView.loadUrl(url);
     }
-
-	//Actions based on shouldOverrideUrlLoading
-	public boolean url_actions(WebView view, String url){
-		//Show toast error if not connected to the network
-		if (!DetectConnection.isInternetAvailable(MainActivity.this)) {
-			Toast.makeText(getApplicationContext(), "Please check your Network Connection!", Toast.LENGTH_SHORT).show();
-		}
-		else if (url.startsWith("tel:")) {
-			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
-			startActivity(intent);
-			}
-		 else if (url.startsWith("share:")) {
-			Intent intent = new Intent(Intent.ACTION_SEND);
-			intent.setType("text/plain");
-			intent.putExtra(Intent.EXTRA_SUBJECT, view.getTitle());
-			intent.putExtra(Intent.EXTRA_TEXT, view.getTitle() + "\nVisit: " + (Uri.parse(url).toString()).replace("share:", ""));
-			startActivity(Intent.createChooser(intent, "Share with your Friends"));
-		}
-		return false;
-	}
-
 
 
 	//Checking permission for storage and camera for writing and uploading images
@@ -438,13 +420,9 @@ public class MainActivity extends AppCompatActivity {
 				// Check for ACCESS_FINE_LOCATION
 				if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-
-						) {
+					) {
 					// All Permissions Granted
-
-					// Permission Denied
-					Toast.makeText(MainActivity.this, "All Permissions Granted)", Toast.LENGTH_SHORT)
-							.show();
+					// Do nothing
 
 				} else {
 					// Permission Denied
@@ -470,21 +448,9 @@ public class MainActivity extends AppCompatActivity {
 		if (permissionsList.size() > 0) {
 			if (permissionsNeeded.size() > 0) {
 
-				// Need Rationale
-				String message = "App need access to " + permissionsNeeded.get(0);
-
 				for (int i = 1; i < permissionsNeeded.size(); i++)
-					message = message + ", " + permissionsNeeded.get(i);
-
-				showMessageOKCancel(message,
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-										REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-							}
-						});
+				requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+						REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
 				return;
 			}
 			requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
@@ -492,19 +458,8 @@ public class MainActivity extends AppCompatActivity {
 			return;
 		}
 
-		Toast.makeText(MainActivity.this, "No new Permission Required- Launching App .You are Awesome!!", Toast.LENGTH_SHORT)
-				.show();
 	}
 
-
-	private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-		new AlertDialog.Builder(MainActivity.this)
-				.setMessage(message)
-				.setPositiveButton("OK", okListener)
-				.setNegativeButton("Cancel", null)
-				.create()
-				.show();
-	}
 
 	@TargetApi(Build.VERSION_CODES.M)
 	private boolean addPermission(List<String> permissionsList, String permission) {
