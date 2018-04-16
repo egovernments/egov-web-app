@@ -73,7 +73,7 @@ const displayStatus = (status = "", assignee) => {
   if (status.toLowerCase() == "closed" || status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
     statusObj.status = "CS_COMMON_CLOSED_UCASE";
   } else {
-    statusObj.status = "CS_COMMON_OPEN_UCASE";
+    statusObj.status = status;
   }
   if (status.toLowerCase() == "open") {
     statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
@@ -92,7 +92,7 @@ const mapStateToProps = (state) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
       date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
-      status: displayStatus(complaintDetail.actions[0].status),
+      status: complaintDetail.rating ? displayStatus(`${complaintDetail.rating}/5`) : displayStatus(complaintDetail.actions[0].status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.actions[0].status && getTransformedStatus(complaintDetail.actions[0].status),
