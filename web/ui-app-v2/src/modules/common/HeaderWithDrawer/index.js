@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AppBar, Drawer, List, ProfileSection, Image, ButtonGroup, Icon, Dialog, Button } from "components";
-import profileImage from "assets/people1.png";
+//import profileImage from "assets/people1.png";
+import emptyFace from "assets/images/download.png";
 import logoMseva from "assets/images/logo_black.png";
 import Label from "utils/translationNode";
 import { fetchLocalizationLabel } from "redux/app/actions";
@@ -296,7 +297,7 @@ class HeaderWithDrawer extends Component {
             emailId={role === "citizen" ? userInfo.emailId || "" : ""}
             location={userInfo.location || ""}
             iconStyle={iconStyle}
-            imgSrc={userInfo.photo || profileImage}
+            imgSrc={userInfo.photo || emptyFace}
           />
 
           <div className="drawer-list-poweredBy-wrapper">
