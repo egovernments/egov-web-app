@@ -270,3 +270,8 @@ export const getFileSize = (file) => {
   const size = parseFloat(file.size / 1024).toFixed(2);
   return size;
 };
+
+export const isFileImage = (file) => {
+  const mimeType = file["type"];
+  return (mimeType && mimeType.split("/")[0] == "image") || false;
+};

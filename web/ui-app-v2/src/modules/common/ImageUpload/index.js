@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FilePicker, Icon, Image, LoadingIndicator } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import { getFileSize } from "utils/commons";
+import { getFileSize, isFileImage } from "utils/commons";
 import Label from "utils/translationNode";
 import { fileUpload, removeFile } from "redux/form/actions";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
@@ -51,7 +51,10 @@ class ImageUpload extends Component {
   onFilePicked = (file, imageUri) => {
     const { images, formKey, fieldKey, module, fileUpload, toggleSnackbarAndSetText } = this.props;
     const fileSize = getFileSize(file);
-    if (fileSize > 5000) {
+    const isImage = isFileImage(file);
+    if (!isImage) {
+      toggleSnackbarAndSetText(true, `The file ${file.name} is not a valid image`, true);
+    } else if (fileSize > 5000) {
       toggleSnackbarAndSetText(true, `The file ${file.name} is more than 5mb`, true);
     } else {
       if (images.length < 3) {
