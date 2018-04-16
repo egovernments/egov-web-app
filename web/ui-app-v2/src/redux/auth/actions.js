@@ -17,6 +17,16 @@ export const userProfileUpdateError = (error) => {
 //user search success/failure
 export const searchUserSuccess = (user) => {
   user = user.user[0];
+  //temporary fix for dat of birth format issue in prfile update
+  if (user) {
+    const dob = user.dob;
+    let transformeddob = null;
+    if (dob && dob !== null) {
+      let date = new Date(dob);
+      transformeddob = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+      user.dob = transformeddob;
+    }
+  }
   window.localStorage.setItem("user-info", JSON.stringify(user));
   return { type: authType.USER_SEARCH_SUCCESS, user };
 };
