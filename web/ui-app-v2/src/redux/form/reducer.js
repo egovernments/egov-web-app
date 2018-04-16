@@ -64,7 +64,7 @@ const fileUploadCompleted = (state, formKey, fieldKey, fileStoreId, fileName) =>
     },
   };
 };
-
+// error message
 const fileUploadError = (state, formKey, fieldKey, error, fileName) => {
   const files = getFiles(state, formKey, fieldKey);
   return {
@@ -72,7 +72,7 @@ const fileUploadError = (state, formKey, fieldKey, error, fileName) => {
     [formKey]: {
       ...state[formKey],
       files: {
-        [fieldKey]: files.filter((fileObject) => fileObject.file.name === fileName),
+        [fieldKey]: files.filter((fileObject) => fileObject.file.name !== fileName),
       },
     },
   };

@@ -101,7 +101,7 @@ const fileUploadCompleted = (formKey, fieldKey, fileStoreId, fileName) => {
   return { type: actionTypes.FILE_UPLOAD_COMPLETED, formKey, fieldKey, fileStoreId, fileName };
 };
 
-const fileUploadError = (fieldKey, formKey, error, fileName) => {
+const fileUploadError = (formKey, fieldKey, error, fileName) => {
   return { type: actionTypes.FILE_UPLOAD_ERROR, formKey, fieldKey, error, fileName };
 };
 
@@ -119,6 +119,7 @@ export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
       dispatch(fileUploadCompleted(formKey, fieldKey, fileStoreId, fileName));
     } catch (error) {
       dispatch(fileUploadError(formKey, fieldKey, error.message, fileName));
+      dispatch(toggleSnackbarAndSetText(true, `Upload of file ${fileName} failed`, true));
     }
   };
 };

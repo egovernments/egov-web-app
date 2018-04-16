@@ -97,8 +97,13 @@ const mapStateToProps = (state) => {
   const { auth } = state;
   const { userInfo } = auth;
   const form = state.form[formKey] || {};
-  const { loading } = form || false;
   const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
+  const loading =
+    form.loading ||
+    images.reduce((loading, file) => {
+      return loading || file.loading;
+    }, false) ||
+    false;
 
   return {
     form,
