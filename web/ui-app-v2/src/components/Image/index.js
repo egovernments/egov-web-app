@@ -30,7 +30,7 @@ const isImageSourceUrl = (imageSource) => {
   return /https?/.test(imageSource);
 };
 
-const Image = ({ circular = false, size = "large", className = "", style, source, height, width, onClick, isLazyLoading = false }) => {
+const Image = ({ circular = false, size = "large", className = "", style, source, height, width, onClick, isLazyLoading = true }) => {
   let classNames = circular ? `img-responsive img-circle` : `img-responsive`;
   const imageSource = (isImageSourceUrl(source) && getImageSource(source, size)) || source;
   classNames = className ? `${classNames} ${className}` : classNames;
