@@ -6,7 +6,7 @@ import Actions from "../../common/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
 import Screen from "../../common/Screen";
 import pinIcon from "assets/Location_pin.svg";
-import { getDateFromEpoch, mapCompIDToName, isImage,fetchImages } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { connect } from "react-redux";
@@ -130,10 +130,10 @@ class ComplaintDetails extends Component {
     //Action for first button
     let { setRoute } = this.props;
     switch (label) {
-      case "REJECT":
+      case "ES_REJECT_BUTTON":
         setRoute(`/employee/reject-complaint/${complaintNo}`);
         break;
-      case "REQUEST RE-ASSIGN":
+      case "ES_REQUEST_REQUEST_RE_ASSIGN":
         setRoute(`/employee/request-reassign/${complaintNo}`);
         break;
     }
@@ -142,13 +142,13 @@ class ComplaintDetails extends Component {
     //Action for second button
     let { setRoute } = this.props;
     switch (label) {
-      case "ASSIGN":
+      case "ES_COMMON_ASSIGN":
         setRoute(`/employee/assign-complaint/${complaintNo}`);
         break;
-      case "RE-ASSIGN":
+      case "ES_COMMON_REASSIGN":
         setRoute(`/employee/reassign-complaint/${complaintNo}`);
         break;
-      case "MARK RESOLVED":
+      case "ES_RESOLVE_MARK_RESOLVED":
         setRoute(`/employee/complaint-resolved/${complaintNo}`);
         break;
     }
@@ -247,8 +247,6 @@ const isAssigningOfficer = (roles) => {
   });
   return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
 };
-
-
 
 //Don't Delete this
 const getLatestStatus = (status) => {
