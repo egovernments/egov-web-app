@@ -20,7 +20,7 @@
   margin-right: 0px !important;
 }
 
-.label-text {
+.label-container .label-text {
   width: 100%;
   word-break: break-word;
   word-wrap: break-word;
