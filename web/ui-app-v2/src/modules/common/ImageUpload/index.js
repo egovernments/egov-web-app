@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FilePicker, Icon, Image, LoadingIndicator } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import { getFileSize } from "utils/commons";
 import Label from "utils/translationNode";
 import { fileUpload, removeFile } from "redux/form/actions";
+import { toggleSnackbarAndSetText } from "redux/app/actions";
 import "./index.css";
 
 const iconStyle = {
@@ -47,15 +49,21 @@ class ImageUpload extends Component {
   };
 
   onFilePicked = (file, imageUri) => {
-    const { images, formKey, fieldKey, module, fileUpload } = this.props;
-    if (images.length < 3) {
-      fileUpload(formKey, fieldKey, { module, file, imageUri });
+    const { images, formKey, fieldKey, module, fileUpload, toggleSnackbarAndSetText } = this.props;
+    const fileSize = getFileSize(file);
+    if (fileSize > 5000) {
+      toggleSnackbarAndSetText(true, `The file ${file.name} is more than 5mb`, true);
+    } else {
+      if (images.length < 3) {
+        fileUpload(formKey, fieldKey, { module, file, imageUri });
+      }
     }
   };
 
   render() {
     const { onFilePicked, removeImage } = this;
     const { images, loading } = this.props;
+    // file Size in kb
     const inputProps = { accept: "image/*", maxFiles: 3, multiple: true };
 
     return (
@@ -100,6 +108,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
     removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
   };

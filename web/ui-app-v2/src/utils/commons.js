@@ -265,3 +265,8 @@ export const getTransformedStatus = (status) => {
   }
   return transformedStatus;
 };
+
+export const getFileSize = (file) => {
+  const size = parseFloat(file.size / 1024).toFixed(2);
+  return size;
+};

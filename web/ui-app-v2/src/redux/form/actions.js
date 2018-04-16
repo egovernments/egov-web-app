@@ -119,7 +119,7 @@ export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
       dispatch(fileUploadCompleted(formKey, fieldKey, fileStoreId, fileName));
     } catch (error) {
       dispatch(fileUploadError(formKey, fieldKey, error.message, fileName));
-      dispatch(toggleSnackbarAndSetText(true, `Upload of file ${fileName} failed`, true));
+      dispatch(toggleSnackbarAndSetText(true, error.message, true));
     }
   };
 };
