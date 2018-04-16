@@ -72,9 +72,7 @@ const fileUploadError = (state, formKey, fieldKey, error, fileName) => {
     [formKey]: {
       ...state[formKey],
       files: {
-        [fieldKey]: files.map(
-          (fileObject) => (fileObject.file.name === fileName ? { ...fileObject, imageUri: null, error, loading: false } : fileObject)
-        ),
+        [fieldKey]: files.filter((fileObject) => fileObject.file.name === fileName),
       },
     },
   };
