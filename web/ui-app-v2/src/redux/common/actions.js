@@ -1,12 +1,9 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "utils/api";
-import { TENANT, EMPLOYEE, CITIZEN } from "utils/endPoints";
+import { TENANT, EMPLOYEE, CITIZEN, MDMS } from "utils/endPoints";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
-};
-const setCities = (cities) => {
-  return { type: actionTypes.SET_CITIES, cities };
 };
 
 const employeeFetchSuccess = (payload) => {
@@ -37,22 +34,17 @@ const citizenFetchError = (error) => {
   };
 };
 
-// make this to be a generic mdms call
-export const fetchCities = () => {
-  return async (dispatch) => {
-    try {
-      const payload = await httpRequest(TENANT.GET.URL, TENANT.GET.ACTION, [
-        { key: "moduleName", value: "tenant" },
-        { key: "masterName", value: "tenants" },
-      ]);
-      const cities = payload.MdmsRes["tenant"]["tenants"].map((item) => {
-        return {
-          key: item.code,
-          text: item.city.name,
-        };
-      });
-      dispatch(setCities(cities));
-    } catch (error) {}
+const MDMSFetchSuccess = (payload) => {
+  return {
+    type: actionTypes.MDMS_FETCH_SUCCESS,
+    payload,
+  };
+};
+
+const MDMSFetchError = (error) => {
+  return {
+    type: actionTypes.MDMS_FETCH_ERROR,
+    error,
   };
 };
 
@@ -74,6 +66,44 @@ export const fetchCitizens = (requestBody) => {
       dispatch(citizenFetchSuccess(payload));
     } catch (error) {
       dispatch(citizenFetchError(error.message));
+    }
+  };
+};
+
+export const fetchMDMSData = () => {
+  let requestBody = {
+    MdmsCriteria: {
+      tenantId: "pb",
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            {
+              name: "Department",
+            },
+            {
+              name: "Designation",
+            },
+          ],
+        },
+        {
+          moduleName: "tenant",
+          masterDetails: [
+            {
+              name: "tenants",
+            },
+          ],
+        },
+      ],
+    },
+  };
+
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+      dispatch(MDMSFetchSuccess(payload));
+    } catch (error) {
+      dispatch(MDMSFetchError(error.message));
     }
   };
 };

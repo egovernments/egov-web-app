@@ -12,13 +12,6 @@ export const COMPLAINT = {
   },
 };
 
-export const TENANT = {
-  GET: {
-    URL: "egov-mdms-service/v1/_get",
-    ACTION: "_search",
-  },
-};
-
 export const FILE_UPLOAD = {
   POST: {
     URL: "filestore/v1/files",
@@ -67,6 +60,13 @@ export const EMPLOYEE = {
 export const CITIZEN = {
   GET: {
     URL: "/user/v1/_search",
+    ACTION: "_search",
+  },
+};
+
+export const MDMS = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
     ACTION: "_search",
   },
 };
