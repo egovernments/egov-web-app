@@ -15,12 +15,6 @@ const commonReducer = (state = intialState, action) => {
           [action.key]: action.payload,
         },
       };
-
-    case commonTypes.SET_CITIES:
-      return {
-        ...state,
-        cities: action.cities,
-      };
     case commonTypes.EMPLOYEE_FETCH_SUCCESS:
       console.log(action.payload);
       return {
@@ -46,6 +40,35 @@ const commonReducer = (state = intialState, action) => {
         },
       };
     case commonTypes.CITIZEN_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
+    case commonTypes.MDMS_FETCH_SUCCESS:
+      let departmentsById = transformById(action.payload.MdmsRes["common-masters"].Department, "code");
+      let designationsById = transformById(action.payload.MdmsRes["common-masters"].Designation, "code");
+      const cities = action.payload.MdmsRes["tenant"]["tenants"].map((item) => {
+        return {
+          key: item.code,
+          text: item.city.name,
+        };
+      });
+      return {
+        ...state,
+        loading: false,
+        departmentById: {
+          ...state.departmentsById,
+          ...departmentsById,
+        },
+        designationsById: {
+          ...state.designationsById,
+          ...designationsById,
+        },
+        cities: [...cities],
+      };
+    case commonTypes.MDMS_FETCH_ERROR:
       return {
         ...state,
         loading: false,

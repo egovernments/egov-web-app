@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass } from "utils/commons";
 import { fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
-import { fetchCities, fetchCitizens, fetchEmployees } from "redux/common/actions";
+import { fetchCitizens, fetchEmployees, fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
 
 class App extends Component {
@@ -22,10 +22,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchCities, fetchCitizens, fetchEmployees, userInfo } = this.props;
+    const { fetchLocalizationLabel, fetchCitizens, fetchEmployees, userInfo, fetchMDMSData } = this.props;
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
-    fetchCities();
+    fetchMDMSData();
     if (userInfo && userInfo.type === "EMPLOYEE") {
       fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
       fetchEmployees();
@@ -62,9 +62,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    fetchCities: () => dispatch(fetchCities()),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
     fetchEmployees: () => dispatch(fetchEmployees()),
+    fetchMDMSData: () => dispatch(fetchMDMSData()),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };

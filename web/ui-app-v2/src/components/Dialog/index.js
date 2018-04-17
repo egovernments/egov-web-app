@@ -28,6 +28,7 @@ const closebuttonStyle = {
 
 const DialogUI = ({
   title,
+  modal,
   titleStyle,
   overlayStyle,
   actionsContainerStyle = {},
@@ -36,8 +37,10 @@ const DialogUI = ({
   actions,
   contentStyle = {},
   open,
-  autoScrollBodyContent = false,
+  repositionOnUpdate = false,
+  autoScrollBodyContent,
   handleClose,
+  style,
 }) => {
   return (
     <Dialog
@@ -59,7 +62,10 @@ const DialogUI = ({
       autoDetectWindowHeight={false}
       style={{
         paddingTop: "0 !important",
+        ...style,
       }}
+      repositionOnUpdate={repositionOnUpdate}
+      modal={modal}
     />
   );
 };
