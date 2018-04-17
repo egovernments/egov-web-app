@@ -30,10 +30,15 @@ const imageStyles = {
   marginRight: "8px",
 };
 
-const WriteComment = ({ form, formKey, onChange, submitForm, userImage }) => {
+const WriteComment = ({ form, formKey, onChange, submitForm, userImage, currentstatus }) => {
   const fields = form.fields || {};
+  if (currentstatus && currentstatus === "closed") {
+    iconStyle.pointerEvents = "none";
+  } else {
+    if (iconStyle.pointerEvents) delete iconStyle["pointerEvents"];
+  }
   return (
-    <div style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
+    <div disabled={true} style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
       <Image style={imageStyles} className="img-circle" size="medium" source={userImage ? userImage : emptyFace} />
 
       <TextArea
@@ -48,6 +53,7 @@ const WriteComment = ({ form, formKey, onChange, submitForm, userImage }) => {
         hintStyle={{ left: 5, bottom: "initial", fontSize: 14, top: 12 }}
         inputStyle={{ fontSize: 14, paddingLeft: 5, paddingRight: 40 }}
         rowsMax={3}
+        disabled={currentstatus === "closed" ? true : false}
       />
       <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm(formKey)} />
     </div>

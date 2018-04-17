@@ -49,8 +49,15 @@ const Updates = ({ updates, history }) => {
               <Label fontSize={12} label={getDateFromEpoch(date)} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
             <div className="complaint-status" style={{ marginTop: "16px" }}>
-              <Label containerStyle={{ display: "inline-block" }} label="CS_HOME_STATUS_PREFIX" />
-              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={`${transformedstatus}`} />
+              <Label
+                containerStyle={{ display: "inline-block" }}
+                label={status === `Re-assign Requested` ? `CS_HOME_STATUS_REASSIGN_PREFIX` : `CS_HOME_STATUS_PREFIX`}
+              />
+              <Label
+                containerStyle={{ display: "inline-block", marginLeft: "4px" }}
+                dark={true}
+                label={status === `Re-assign Requested` ? `CS_COMMON_REASSIGNED` : `${transformedstatus}`}
+              />
             </div>
           </div>
         }
