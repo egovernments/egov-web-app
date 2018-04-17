@@ -113,7 +113,12 @@ class Comments extends Component {
           };
         }
       });
-
+    let status =
+      selectedComplaint &&
+      selectedComplaint.actions.filter((action, index) => {
+        return action.status;
+      });
+    let currentstatus = status && status[0].status && status[0].status.toLowerCase();
     return (
       <div>
         {this.props.hasComments && (
@@ -129,7 +134,15 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
                 {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}
-                <WriteComment form={form} formKey={formKey} onChange={handleFieldChange} submitForm={submitForm} userImage={userImage} />
+
+                <WriteComment
+                  form={form}
+                  formKey={formKey}
+                  onChange={handleFieldChange}
+                  submitForm={submitForm}
+                  userImage={userImage}
+                  currentstatus={currentstatus}
+                />
               </div>
             }
           />

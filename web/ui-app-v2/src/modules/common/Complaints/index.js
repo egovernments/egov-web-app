@@ -193,17 +193,21 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                     <Label fontSize="12px" label={complaint.address} className="complaint-address" />
                   </div>
                 )}
-                <div className="complaint-image-cont">
-                  {complaint.images.map((image, index) => {
-                    return (
-                      image && (
-                        <div className="complaint-image-wrapper" key={index}>
-                          <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
-                        </div>
-                      )
-                    );
-                  })}
-                </div>
+                {complaint &&
+                  complaint.images &&
+                  complaint.images.length > 0 && (
+                    <div className="complaint-image-cont">
+                      {complaint.images.map((image, index) => {
+                        return (
+                          image && (
+                            <div className="complaint-image-wrapper" key={index}>
+                              <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
+                            </div>
+                          )
+                        );
+                      })}
+                    </div>
+                  )}
                 {role === "citizen" && (
                   <div className="complaint-status-cont">
                     <Label label={"CS_HOME_STATUS_PREFIX"} />

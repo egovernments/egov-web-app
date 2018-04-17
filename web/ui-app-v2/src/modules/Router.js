@@ -144,7 +144,7 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/complaint-resolved/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />}
+          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE" />}
           component={ComplaintResolved}
         />
         <PrivateRoute
