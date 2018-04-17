@@ -67,7 +67,7 @@ const Main = () => {
         <PrivateRoute
           exact
           path="/citizen/complaint-details/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS" />}
+          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_COMPLAINT_SUMMARY" />}
           component={ComplaintDetails}
         />
         <PrivateRoute

@@ -54,10 +54,12 @@ const statusRejectedIconStyle = {
 };
 
 const callIconStyle = {
-  marginRight: "7px",
-  height: "12px",
-  width: "12px",
+  marginLeft: "17px",
+  height: "17px",
+  width: "17px",
   borderRadius: "50%",
+  position: "absolute",
+  top: "0px",
 };
 
 const StatusIcon = ({ status }) => {
@@ -98,6 +100,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             labelClassName="dark-color"
             label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`}
           />
+          {currentStatus === "open" &&
+            openStatusCount === 1 && (
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
+                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              </a>
+            )}
           {action === "reopen" && (
             <div>
               <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
@@ -127,20 +135,22 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               />
             </div>
           )}
-          {currentStatus === "open" &&
+          {/* {currentStatus === "open" &&
             openStatusCount === 1 && (
-              <div
-                className="complaint-details-timline-button"
-                onClick={(e) => {
-                  console.log("clicked");
-                }}
-              >
-                <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
-                  <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-                  <span className="timeline-call-text">CALL</span>
-                </a>
-              </div>
-            )}
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              </a> 
+              //// <div
+              //   className="complaint-details-timline-button"
+              //   onClick={(e) => {
+              //     console.log("clicked");
+              //   }}
+              // >
+              //   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+              //     <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+              //   </a>
+              // </div>
+           // )}*/}
         </div>
       );
     case "assigned":
@@ -154,25 +164,28 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             label={`${action == "assign" ? "CS_COMMON_ASSIGNED_TO" : "CS_COMMON_REASSIGNED_TO"}`}
           />
           <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
+          {(role === "AO" || currentStatus === "assigned") &&
+            assigneeStatusCount === 1 && (
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
+                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              </a>
+            )}
           <Label
             labelClassName="rainmaker-small-font"
             containerStyle={{ width: "192px" }}
             label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
           />
-          {(role === "AO" || currentStatus === "assigned") &&
-            assigneeStatusCount === 1 && (
-              <div
-                className="complaint-details-timline-button"
-                onClick={(e) => {
-                  console.log("clicked");
-                }}
-              >
-                <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
-                  <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-                  <span className="timeline-call-text">CALL</span>
-                </a>
-              </div>
-            )}
+
+          {/* // <div
+              //   className="complaint-details-timline-button"
+              //   onClick={(e) => {
+              //     console.log("clicked");
+              //   }}
+              // >
+              //   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+              //     <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
+              //   </a>
+              // </div> */}
         </div>
       );
     case "reassignrequested":
@@ -187,23 +200,16 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               label={`${"Complaint is being re-assigned by Chiranjeet Anand"}`}
             />
           )}
+          {currentStatus === "reassignrequested" &&
+            reassignRequestedCount === 1 && (
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
+                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              </a>
+            )}
           {role && (
             <div>
               <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Re-Assign requested"}`} />
-              {currentStatus === "reassignrequested" &&
-                reassignRequestedCount === 1 && (
-                  <div
-                    className="complaint-details-timline-button"
-                    onClick={(e) => {
-                      console.log("clicked");
-                    }}
-                  >
-                    <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
-                      <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-                      <span className="timeline-call-text">CALL</span>
-                    </a>
-                  </div>
-                )}
+
               <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
               <Label
                 labelClassName="rainmaker-small-font"
