@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import android.app.AlertDialog;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,11 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     // permissions code
+	private final static int MY_PERMISSIONS_REQUEST_LOCATION = 21;
     private final static int asw_file_req = 1;
 	private final static int file_perm = 2;
-	private final static int sms_receive_perm = 3;
-	private final static int loc_perm = 4;
+	private final static int loc_perm = 3;
+	private final static int sms_receive_perm = 4;
 
+	private GeolocationPermissions.Callback mGeoLocationCallback = null;
+	private String mGeoLocationRequestOrigin = null;
 
 	final AppJavaScriptProxy proxy = new AppJavaScriptProxy(this);
 
@@ -163,11 +168,34 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             // handling geolocation
 
-
-
 			@Override
-			public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-				callback.invoke(origin, true, false);
+			public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
+
+				if(!check_permission(1)){
+
+					if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)){
+						String message  = "Allow Rainmaker to access location details?";
+						showMessageOKCancel(message,
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										mGeoLocationCallback = callback;
+										mGeoLocationRequestOrigin = origin;
+										ActivityCompat.requestPermissions(MainActivity.this, new  String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_LOCATION);
+									}
+								});
+					}
+					// code is duplication; to be changed!
+					else{
+						mGeoLocationCallback = callback;
+						mGeoLocationRequestOrigin = origin;
+						ActivityCompat.requestPermissions(MainActivity.this, new  String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_LOCATION);
+					}
+				}
+				else{
+					callback.invoke(origin, true, true);
+				}
 			}
 
 			//Handling input[type="file"] requests for android API 16+
@@ -364,7 +392,20 @@ public class MainActivity extends AppCompatActivity {
 			switch (keyCode) {
 				case KeyEvent.KEYCODE_BACK:
 					if (webView.canGoBack()) {
-						webView.goBack();
+						String currentWebViewUrl =  webView.getUrl();
+						String message = "Do you want to exit the App?";
+						if(currentWebViewUrl.endsWith("/citizen")){
+							showMessageOKCancel(message,
+									new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											finish();
+										}
+									});
+						}
+						else{
+							webView.goBack();
+						}
 					} else {
 						finish();
 					}
@@ -432,6 +473,21 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 			break;
+			case MY_PERMISSIONS_REQUEST_LOCATION : {
+				if(grantResults.length  > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+					if(mGeoLocationCallback != null) {
+						mGeoLocationCallback.invoke(mGeoLocationRequestOrigin,true,true);
+					}
+
+				}
+				else{
+					if(mGeoLocationCallback != null){
+						mGeoLocationCallback.invoke(mGeoLocationRequestOrigin,false,false);
+					}
+				}
+
+			}
+			break;
 			default:
 				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
@@ -456,8 +512,15 @@ public class MainActivity extends AppCompatActivity {
 					REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
 			return;
 		}
+	}
 
-		Toast.makeText(MainActivity.this, "No new Permission Required- Launching App .You are Awesome!!", Toast.LENGTH_SHORT)
+
+	private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+		new AlertDialog.Builder(MainActivity.this)
+				.setMessage(message)
+				.setPositiveButton("OK", okListener)
+				.setNegativeButton("Cancel", null)
+				.create()
 				.show();
 	}
 
