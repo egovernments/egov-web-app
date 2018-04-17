@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import ImageLoader from "react-load-image";
 import CircularProgress from "material-ui/CircularProgress";
+import imageLoading from "assets/images/image-loading.png";
+import imageBroken from "assets/images/broken-image.png";
 
-const Preloader = () => {
-  return <CircularProgress size={80} thickness={5} />;
+const Preloader = (props) => {
+  return <img src={imageLoading} {...props} />;
 };
 
 const getImageSource = (imageSource, size) => {
@@ -37,8 +39,8 @@ const Image = ({ circular = false, size = "large", className = "", style, source
   return isLazyLoading ? (
     <ImageLoader src={imageSource}>
       <img className={classNames} style={style} height={height} width={width} onClick={onClick} />
-      <div>Error!</div>
-      <Preloader />
+      <img src={imageBroken} className={classNames} style={style} height={height} width={width} />
+      <Preloader className={classNames} style={style} height={height} width={width}/>
     </ImageLoader>
   ) : (
     <img className={classNames} src={imageSource} style={style} height={height} width={width} onClick={onClick} />
