@@ -86,10 +86,10 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
-const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role }) => {
+const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy }) => {
   var { action, when: date, media, status, comments, name, designation, department, businessKey: complaintNo } = stepData;
   let employeephonenumber = 9090909091;
-  console.log(currentStatus);
+
   switch (status) {
     case "open":
       openStatusCount++;
@@ -98,11 +98,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           <Label
             labelClassName="dark-color"
-            label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"}`}
+            containerStyle={statusContainerStyle}
+            label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role ? `Filed By ${filedBy}` : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`}`}
           />
-          {currentStatus === "open" &&
+          {((role && action !== "reopen" && currentStatus === "open") || (!role && action === "reopen" && currentStatus === "open")) &&
             openStatusCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
               </a>
             )}
@@ -137,9 +138,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
           {/* {currentStatus === "open" &&
             openStatusCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} >
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-              </a> 
+              </a>
               //// <div
               //   className="complaint-details-timline-button"
               //   onClick={(e) => {
@@ -166,7 +167,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
           {(role === "AO" || currentStatus === "assigned") &&
             assigneeStatusCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
+              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
               </a>
             )}
@@ -194,21 +195,29 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           {!role && (
-            <Label
-              labelClassName="dark-color"
-              containerStyle={statusContainerStyle}
-              label={`${"Complaint is being re-assigned by Chiranjeet Anand"}`}
-            />
+            <div>
+              <Label
+                labelClassName="dark-color"
+                containerStyle={statusContainerStyle}
+                label={`${"Complaint is being re-assigned by Chiranjeet Anand"}`}
+              />
+              {currentStatus === "reassignrequested" &&
+                reassignRequestedCount === 1 && (
+                  <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                  </a>
+                )}
+            </div>
           )}
-          {currentStatus === "reassignrequested" &&
-            reassignRequestedCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }} s>
-                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-              </a>
-            )}
           {role && (
             <div>
               <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Re-Assign requested"}`} />
+              {currentStatus === "reassignrequested" &&
+                reassignRequestedCount === 1 && (
+                  <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                  </a>
+                )}
 
               <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
               <Label
@@ -378,7 +387,7 @@ class ComplaintTimeLine extends Component {
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
     reassignRequestedCount = 0;
-    let { status, history, role, timeLine, feedback, rating } = this.props;
+    let { status, history, role, timeLine, feedback, rating, filedBy } = this.props;
 
     let steps = timeLine.map((step, key) => {
       return {
@@ -395,7 +404,15 @@ class ComplaintTimeLine extends Component {
           },
         },
         contentChildren: (
-          <StatusContent stepData={step} currentStatus={status.toLowerCase()} changeRoute={history} feedback={feedback} rating={rating} role={role} />
+          <StatusContent
+            stepData={step}
+            currentStatus={status.toLowerCase()}
+            changeRoute={history}
+            feedback={feedback}
+            rating={rating}
+            role={role}
+            filedBy={filedBy}
+          />
         ),
       };
     });

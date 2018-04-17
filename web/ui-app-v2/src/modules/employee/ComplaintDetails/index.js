@@ -199,6 +199,7 @@ class ComplaintDetails extends Component {
                   role={role}
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
+                  filedBy={complaint ? complaint.filedBy : ""}
                 />
                 <Comments comments={comments} hasComments={true} />
                 <div>
@@ -278,9 +279,13 @@ const getLatestStatus = (status) => {
   }
   return transformedStatus;
 };
+const mapCitizenIdToName = (citizenObjById, id) => {
+  return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
+};
 
 const mapStateToProps = (state, ownProps) => {
-  const { complaints } = state;
+  const { complaints, common } = state;
+  const { citizenById } = common || {};
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
@@ -299,6 +304,10 @@ const mapStateToProps = (state, ownProps) => {
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
+      filedBy:
+        selectedComplaint &&
+        selectedComplaint.actions &&
+        mapCitizenIdToName(citizenById, selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0]),
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
