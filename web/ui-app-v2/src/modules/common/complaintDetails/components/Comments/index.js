@@ -125,7 +125,7 @@ class Comments extends Component {
               <div>
                 <div className="rainmakcommunicationer-displayInline">
                   <Icon action="communication" name="forum" color="#969696" />{" "}
-                  <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+                  <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px", display: "inline-block" }} labelClassName="dark-heading" />
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
                 {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}

@@ -11,3 +11,8 @@
   padding: 8px 6px;
   margin-left: -15px;
 }
+
+.rainmakcommunicationer-displayInline {
+  display: flex;
+  align-items: center;
+}

@@ -70,3 +70,10 @@ export const CITIZEN = {
     ACTION: "_search",
   },
 };
+
+export const DEP_DES = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
+    ACTION: "_search",
+  },
+};

@@ -52,6 +52,28 @@ const commonReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case commonTypes.DEPARTMENT_AND_DESIGNATION_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
+    case commonTypes.DEPARTMENT_AND_DESIGNATION_FETCH_SUCCESS:
+      let departmentsById = transformById(action.payload.MdmsRes["common-masters"].Department, "code");
+      let designationsById = transformById(action.payload.MdmsRes["common-masters"].Designation, "code");
+      return {
+        ...state,
+        loading: false,
+        departmentById: {
+          ...state.departmentsById,
+          ...departmentsById,
+        },
+        designationsById: {
+          ...state.designationsById,
+          ...designationsById,
+        },
+      };
     default:
       return state;
   }

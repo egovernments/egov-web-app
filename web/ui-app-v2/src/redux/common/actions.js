@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "utils/api";
-import { TENANT, EMPLOYEE, CITIZEN } from "utils/endPoints";
+import { TENANT, EMPLOYEE, CITIZEN, DEP_DES } from "utils/endPoints";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
@@ -34,6 +34,20 @@ const citizenFetchError = (error) => {
   return {
     type: actionTypes.CITIZEN_FETCH_ERROR,
     error,
+  };
+};
+
+const departmentAndDesignationFetchError = (error) => {
+  return {
+    type: actionTypes.DEPARTMENT_AND_DESIGNATION_FETCH_ERROR,
+    error,
+  };
+};
+
+const departmentAndDesignationFetchSuccess = (payload) => {
+  return {
+    type: actionTypes.DEPARTMENT_AND_DESIGNATION_FETCH_SUCCESS,
+    payload,
   };
 };
 
@@ -74,6 +88,35 @@ export const fetchCitizens = (requestBody) => {
       dispatch(citizenFetchSuccess(payload));
     } catch (error) {
       dispatch(citizenFetchError(error.message));
+    }
+  };
+};
+
+export const fetchDepartmentAndDesignation = () => {
+  let requestBody = {
+    MdmsCriteria: {
+      tenantId: "pb",
+      moduleDetails: [
+        {
+          moduleName: "common-masters",
+          masterDetails: [
+            {
+              name: "Department",
+            },
+            {
+              name: "Designation",
+            },
+          ],
+        },
+      ],
+    },
+  };
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(DEP_DES.GET.URL, DEP_DES.GET.ACTION, [], requestBody);
+      dispatch(departmentAndDesignationFetchSuccess(payload));
+    } catch (error) {
+      dispatch(departmentAndDesignationFetchError(error.message));
     }
   };
 };
