@@ -114,11 +114,11 @@ class ComplaintDetails extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.history.location.search === "") {
+    if (nextProps.history.location.search === "?map") {
       console.log("hit");
-      this.setState({ openMap: false });
-    } else {
       this.setState({ openMap: true });
+    } else {
+      this.setState({ openMap: false });
     }
   }
 
