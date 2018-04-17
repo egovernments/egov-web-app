@@ -189,7 +189,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                 </div>
                 {complaintLocation && (
                   <div className="complaint-address-cont">
-                    <Icon action="maps" name="place" style={{ height: 14, width: 14, marginRight: 5 }} color={"#767676"} />
+                    <Icon action="maps" name="place" style={{ height: 24, width: 24, marginRight: 10 }} color={"#767676"} />
                     <Label fontSize="12px" label={complaint.address} className="complaint-address" />
                   </div>
                 )}

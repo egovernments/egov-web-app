@@ -6,7 +6,7 @@ import UploadDrawer from "modules/common/User/components/UploadDrawer";
 import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/Screen";
-import img from "assets/people1.png";
+import img from "assets/images/download.png";
 import { setRoute } from "redux/app/actions";
 import "./index.css";
 

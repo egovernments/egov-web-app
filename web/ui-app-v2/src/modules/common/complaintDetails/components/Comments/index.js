@@ -53,9 +53,6 @@ const imageStyles = {
 };
 
 class Comments extends Component {
-  // onChange = () => {
-  //   this.props.onChange();
-  // };
   constructor(props) {
     super(props);
     this.formConfig = require("config/forms/comment").default;
@@ -94,9 +91,9 @@ class Comments extends Component {
             ),
             primaryText: (
               <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBbottom: "8px" }} label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
-                <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />{" "}
-                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />{" "}
+                <Label containerStyle={{ marginBottom: "6px" }} fontSize="12px" label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
+                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />{" "}
+                <Label labelClassName="rainmaker-small-font text-right" label={getDateFromEpoch(action.when)} />{" "}
               </div>
             ),
           };
@@ -128,8 +125,8 @@ class Comments extends Component {
             }}
             textChildren={
               <div>
-                <div className="rainmakcommunicationer-displayInline">
-                  <Icon action="communication" name="forum" color="#969696" />{" "}
+                <div className="rainmaker-displayInline">
+                  <Icon action="communication" name="forum" color="#767676" />
                   <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
