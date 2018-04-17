@@ -36,10 +36,10 @@ class Details extends Component {
   };
 
   componentWillReceiveProps = (nextProps) => {
-    if (!nextProps.history.location.search) {
-      this.setState({ hideImageModal: true });
-    } else {
+    if (nextProps.history.location.search === "?modal=true") {
       this.setState({ hideImageModal: false });
+    } else {
+      this.setState({ hideImageModal: true });
     }
   };
 
