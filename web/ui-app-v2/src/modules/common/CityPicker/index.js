@@ -59,7 +59,6 @@ class CityPickerDialog extends Component {
     const { results, searchTerm, open } = this.state;
     const { field, cities } = this.props;
     const displayInitialList = searchTerm.length === 0 ? true : false;
-
     return (
       <div>
         <div onClick={onCityFieldClicked}>
@@ -76,12 +75,18 @@ class CityPickerDialog extends Component {
           className="citipicker-dialog"
           titleStyle={{ textAlign: "left", padding: "24px 16px" }}
           handleClose={onClose}
-          bodyStyle={{ padding: "0px", overflowY: "none" }}
+          bodyStyle={{ padding: "0px", overflowX: "hidden", maxHeight: "100%", minHeight: "100px" }}
           title="Choose City"
           modal={false}
           open={open}
           autoScrollBodyContent={true}
           onRequestClose={onClose}
+          style={{
+            paddingTop: "0",
+            marginTop: "-30px",
+            bottom: "0",
+            height: "auto",
+          }}
         >
           <AutoSuggest
             id="city-picker-search"
