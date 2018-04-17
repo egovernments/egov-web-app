@@ -44,10 +44,12 @@
 
 .complaint-address-cont {
   padding-bottom: 8px;
+  padding-top: 10px;
 }
 
 .complaint-address {
   font-size: 12px;
+  padding-top: 4px;
 }
 
 .complaint-header-cont {

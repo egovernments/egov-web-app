@@ -426,7 +426,7 @@ class ComplaintTimeLine extends Component {
           textChildren={
             <div>
               <div className="rainmaker-displayInline">
-                <Icon action="action" name="timeline" color="#969696" />{" "}
+                <Icon action="action" name="timeline" color="#767676" />{" "}
                 <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 {this.props.role === "AO" && <DueDate status="UnAssigned" duedateText={"Overdue by 1 day"} role="AO" />}
               </div>

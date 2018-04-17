@@ -25,6 +25,10 @@ class Details extends Component {
     hideImageModal: true,
   };
 
+  navigateToComplaintType = () => {
+    this.props.history.push("/citizen/complaint-type");
+  };
+
   onImageClick = (source, hideImageModal) => {
     let { history } = this.props;
     this.setState({ source });
@@ -92,11 +96,22 @@ class Details extends Component {
           textChildren={
             <div>
               <div className="rainmaker-displayInline">
-                <Icon action="notification" name="sms-failed" color="#969696" />{" "}
+                <Icon action="notification" name="sms-failed" color="#767676" />{" "}
                 <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
               </div>
               <div key={10} className="complaint-detail-full-width">
                 <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
+                {/* Dont delete !! */}
+                {/* {role && role == "ao" ? (
+                  <div className="rainmaker-displayInline">
+                    <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
+                    <div onClick={this.navigateToComplaintType}>
+                      <Icon action="editor" name="mode-edit" style={{ height: 18, width: 18, marginLeft: 16 }} color="#767676" />
+                    </div>
+                  </div>
+                ) : (
+                  <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
+                )} */}
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMMON_COMPLAINT_NO" />
                   <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label={applicationNo} />
@@ -130,7 +145,6 @@ class Details extends Component {
                       })}
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col-xs-2">
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
@@ -150,7 +164,6 @@ class Details extends Component {
                     MAP
                   </div>
                 )}
-
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />

@@ -116,7 +116,8 @@ body h4 {
 body.citizen-user-profile,
 body.citizen-contact-us,
 body.citizen-reopen-complaint,
-body.citizen-complaint-submitted {
+body.citizen-complaint-submitted,
+body.employee-user-profile {
   background: #ffffff !important;
 }
 
