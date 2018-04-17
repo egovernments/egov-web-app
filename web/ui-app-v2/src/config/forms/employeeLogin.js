@@ -26,6 +26,7 @@ const formConfig = {
   submit: {
     label: "CORE_COMMON_LOGIN",
     id: "login-submit-action",
+    type: "submit",
   },
   saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/employee/all-complaints",

@@ -11,13 +11,13 @@ export const validateField = (field) => {
     errorText = field.requiredMessage;
   }
 
-  if (pattern && !new RegExp(pattern).test(value)) {
+  if (isFieldValid && value.length && pattern && !new RegExp(pattern).test(value)) {
     isFieldValid = false;
   }
-  if (minLength && maxLength && !(fieldLength >= minLength && fieldLength <= maxLength)) {
+  if (isFieldValid && minLength && maxLength && !(fieldLength >= minLength && fieldLength <= maxLength)) {
     isFieldValid = false;
   }
-  if (minValue && maxValue && !(value >= minValue && value <= maxValue)) {
+  if (isFieldValid && minValue && maxValue && !(value >= minValue && value <= maxValue)) {
     isFieldValid = false;
   }
 

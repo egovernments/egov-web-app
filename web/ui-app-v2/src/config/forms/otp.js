@@ -14,6 +14,7 @@ const formConfig = {
   submit: {
     label: "CORE_OTP_GET_STARTED",
     id: "otp-start",
+    type: "submit",
   },
   action: "_create",
   saveUrl: "/user/citizen/_create",

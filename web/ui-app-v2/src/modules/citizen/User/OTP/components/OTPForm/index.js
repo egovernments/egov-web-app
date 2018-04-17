@@ -18,7 +18,12 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
             <Label label={phoneNumber} />
           </div>
           <Label label="CORE_COMMON_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitForm(formKey);
+            }}
+          >
             <TextField
               errorStyle={{ bottom: "0px" }}
               onChange={(e, value) => onChange(formKey, "otp", value)}
@@ -33,7 +38,7 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
                 <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
               </span>
             </div>
-            <Button onClick={() => submitForm(formKey)} {...submit} primary={true} fullWidth={true} />
+            <Button {...submit} primary={true} fullWidth={true} />
           </form>
         </div>
       }

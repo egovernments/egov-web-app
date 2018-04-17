@@ -13,7 +13,12 @@ const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) 
       textChildren={
         <div>
           <Label className="heading text-center" bold={true} dark={true} fontSize={16} label="CORE_REGISTER_HEADING" />
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitForm(formKey);
+            }}
+          >
             <MobileNumberField {...fields.phone} onChange={(e, value) => onChange(formKey, "phone", value)} />
             <TextField {...fields.name} onChange={(e, value) => onChange(formKey, "name", value)} />
             <CityPicker onChange={onChange} formKey={formKey} fieldKey="city" field={fields.city} />
@@ -21,7 +26,7 @@ const RegisterForm = ({ formKey, form, onChange, navigateToLogin, submitForm }) 
               <Label id="otp-trigger" className="otp-prompt" label="CORE_REGISTER_HAVE_ACCOUNT" />
               <Label containerStyle={{ cursor: "pointer" }} id="otp-resend" className="otp-resend" label="CORE_COMMON_LOGIN" />
             </div>
-            <Button onClick={() => submitForm(formKey)} primary={true} fullWidth={true} {...submit} />
+            <Button primary={true} fullWidth={true} {...submit} />
           </form>
         </div>
       }

@@ -22,6 +22,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CORE_COMMON_CONTINUE",
     id: "login-submit-action",
   },

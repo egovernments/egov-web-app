@@ -11,9 +11,14 @@ const LoginForm = ({ submitForm, onChange, form, formKey }) => {
       textChildren={
         <div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_LOGIN" />
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              submitForm(formKey);
+            }}
+          >
             <MobileNumberField onChange={(e, value) => onChange(formKey, "phone", value)} {...fields.phone} />
-            <Button {...submit} fullWidth={true} onClick={() => submitForm(formKey)} primary={true} />
+            <Button {...submit} fullWidth={true} primary={true} />
           </form>
         </div>
       }

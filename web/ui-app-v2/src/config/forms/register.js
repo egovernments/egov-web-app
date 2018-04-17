@@ -39,6 +39,7 @@ const formConfig = {
   submit: {
     label: "CORE_COMMON_CONTINUE",
     id: "login-submit-action",
+    type: "submit",
   },
   action: "_send",
   saveUrl: "/user-otp/v1/_send",
