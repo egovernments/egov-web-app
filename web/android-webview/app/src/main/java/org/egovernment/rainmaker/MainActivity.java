@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     // permissions code
 	private final static int MY_PERMISSIONS_REQUEST_LOCATION = 21;
     private final static int asw_file_req = 1;
-	private final static int file_perm = 2;
+	private final static int REQUEST_FILE_PERMISSIONS = 2;
 	private final static int loc_perm = 3;
 	private final static int sms_receive_perm = 4;
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
 				else{
-					callback.invoke(origin, true, true);
+					callback.invoke(origin, true, false);
 				}
 			}
 
@@ -210,46 +210,21 @@ public class MainActivity extends AppCompatActivity {
             //Handling input[type="file"] requests for android API 21+
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,WebChromeClient.FileChooserParams fileChooserParams){
 
-            		get_file();
+				if (asw_file_path != null) {
+					asw_file_path.onReceiveValue(null);
+				}
+				asw_file_path = filePathCallback;
 
-                    if (asw_file_path != null) {
-                        asw_file_path.onReceiveValue(null);
-                    }
-                    asw_file_path = filePathCallback;
-                    Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                    contentSelectionIntent.setType(FILE_TYPE);
-                    Intent[] intentArray;
 
-					Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePictureIntent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
-                            File photoFile = null;
-                            try {
-                                photoFile = create_image();
-                                takePictureIntent.putExtra("PhotoPath", asw_cam_message);
-                            } catch (IOException ex) {
-                                Log.e(TAG, "Image file creation failed", ex);
-                            }
-                            if (photoFile != null) {
-                                asw_cam_message = "file:" + photoFile.getAbsolutePath();
-                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                            } else {
-                                takePictureIntent = null;
-                            }
-                        }
-                        if (takePictureIntent != null) {
-                            intentArray = new Intent[]{takePictureIntent};
-                        } else {
-                            intentArray = new Intent[0];
-                        }
+				String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
-                    Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-                    chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-                    chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-                    startActivityForResult(chooserIntent, asw_file_req);
-
-                return true;
+				if (!check_permission(2) || !check_permission(3)) {
+					ActivityCompat.requestPermissions(MainActivity.this, perms, REQUEST_FILE_PERMISSIONS);
+				}
+				else{
+					showFileDialog();
+				}
+				return true;
             }
 
 
@@ -329,24 +304,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-	//Checking permission for storage and camera for writing and uploading images
-	public void get_file(){
-		String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-
-		//Checking for storage permission to write images for upload
-		if (!check_permission(2) && !check_permission(3)) {
-			ActivityCompat.requestPermissions(MainActivity.this, perms, file_perm);
-
-		//Checking for WRITE_EXTERNAL_STORAGE permission
-		} else if (!check_permission(2)) {
-			ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, file_perm);
-
-		//Checking for CAMERA permissions
-		} else if (!check_permission(3)) {
-			ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, file_perm);
-		}
-	}
-
 
 	//Checking if particular permission is given or not
 	public boolean check_permission(int permission){
@@ -362,6 +319,42 @@ public class MainActivity extends AppCompatActivity {
 
 		}
 		return false;
+	}
+
+	private void showFileDialog(){
+		Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+		contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+		contentSelectionIntent.setType(FILE_TYPE);
+		Intent[] intentArray;
+
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (takePictureIntent.resolveActivity(MainActivity.this.getPackageManager()) != null) {
+			File photoFile = null;
+			try {
+				photoFile = create_image();
+				takePictureIntent.putExtra("PhotoPath", asw_cam_message);
+			} catch (IOException ex) {
+				Log.e(TAG, "Image file creation failed", ex);
+			}
+			if (photoFile != null) {
+				asw_cam_message = "file:" + photoFile.getAbsolutePath();
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+			} else {
+				takePictureIntent = null;
+			}
+		}
+		if (takePictureIntent != null) {
+			intentArray = new Intent[]{takePictureIntent};
+		} else {
+			intentArray = new Intent[0];
+		}
+
+		Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+		chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+		chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
+		chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+		startActivityForResult(chooserIntent, asw_file_req);
+
 	}
 
 	//Creating image file for upload
@@ -476,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
 			case MY_PERMISSIONS_REQUEST_LOCATION : {
 				if(grantResults.length  > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
 					if(mGeoLocationCallback != null) {
-						mGeoLocationCallback.invoke(mGeoLocationRequestOrigin,true,true);
+						mGeoLocationCallback.invoke(mGeoLocationRequestOrigin,true,false);
 					}
 
 				}
@@ -486,6 +479,16 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
 
+			}
+			break;
+
+			case REQUEST_FILE_PERMISSIONS : {
+				if (check_permission(2) && check_permission(3)){
+				 	showFileDialog();
+				}
+				else{
+					Toast.makeText(getApplicationContext(), "Please give access to External Storage and Camera", Toast.LENGTH_SHORT).show();
+				}
 			}
 			break;
 			default:
