@@ -113,17 +113,22 @@ class ComplaintDetails extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.redirectToMap(false);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.history.location.search === "") {
+      console.log("hit");
+      this.setState({ openMap: false });
+    } else {
+      this.setState({ openMap: true });
+    }
   }
 
   redirectToMap = (isOpen, location) => {
     this.setState({
-      openMap: isOpen,
       location: location,
     });
-    var element = document.getElementsByClassName("header-with-drawer")[0];
-    isOpen ? element.classList.toggle("hide") : element.classList.remove("hide");
+    var pathName = this.props.history.location.pathname;
+    if (isOpen === true) this.props.history.push(pathName + "?map");
+    else if (isOpen === false) this.props.history.goBack();
   };
 
   btnOneOnClick = (complaintNo, label) => {

@@ -30,12 +30,16 @@
   display: none;
 }
 
+.citizen-contact-us .map-container {
+  z-index: 1111;
+}
+
 .citizen-contact-us .back-btn {
   position: absolute !important;
   top: 76px;
   background: transparent;
   margin-left: 15px;
-  z-index: 3;
+  z-index: 1112;
 }
 
 .phoneNumberStyle {

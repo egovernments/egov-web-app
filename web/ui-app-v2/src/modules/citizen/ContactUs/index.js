@@ -48,16 +48,18 @@ class ContactUs extends Component {
     };
   }
 
-  componentWillUnmount() {
-    this.openMapHandler(false);
-  }
-
   openMapHandler = (isOpen) => {
-    this.setState({
-      openMap: isOpen,
-    });
-    var element = document.getElementsByClassName("header-with-drawer")[0];
-    isOpen ? element.classList.toggle("hide") : element.classList.remove("hide");
+    var pathName = this.props.history.location.pathname;
+    if (isOpen === true) this.props.history.push(pathName + "?map");
+    else if (isOpen === false) this.props.history.goBack();
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.history.location.search === "") {
+      this.setState({ openMap: false });
+    } else {
+      this.setState({ openMap: true });
+    }
   };
 
   onItemClick = (item, index) => {};
@@ -68,7 +70,7 @@ class ContactUs extends Component {
         leftIcon: <Icon style={iconStyle} action="maps" name="place" />,
         primaryText: <Label label="CS_CONTACTUS_ADDRESS" />,
         secondaryText: (
-          <div onClick={this.openMapHandler}>
+          <div onClick={() => this.openMapHandler(true)}>
             <Label id="contactus-open-map" label="CS_CONTACTUS_OPEN_MAP" className="openMap" labelStyle={{ color: "#00bbd3" }} />
           </div>
         ),

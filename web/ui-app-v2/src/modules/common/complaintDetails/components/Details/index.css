@@ -75,5 +75,9 @@ body[class^="employee-complaint-details"] .map-container .myLoc {
 }
 
 body[class^="employee-complaint-details"] .map-container {
-  z-index: 1;
+  z-index: 1101;
+}
+
+body[class^="employee-complaint-details"] .back-btn {
+  z-index: 1102;
 }
