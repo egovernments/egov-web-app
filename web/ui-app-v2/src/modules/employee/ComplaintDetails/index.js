@@ -200,7 +200,7 @@ class ComplaintDetails extends Component {
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
                 />
-                {complaint.complaintStatus.toLowerCase() !== "closed" && <Comments comments={comments} hasComments={true} />}
+                <Comments comments={comments} hasComments={true} />
                 <div>
                   {(role === "ao" &&
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&
