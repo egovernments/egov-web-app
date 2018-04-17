@@ -19,20 +19,23 @@ const inputProps = {
   multiple: false, //for selecting single or multiple files
 };
 const galleryIconBtn = (
-  <Icon className="gallery-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"image"} onClick={this.onGalleryClick} />
+  <Icon
+    className="gallery-upload-drawer"
+    id="uploadDrawerGallaryIcon"
+    style={iconStyle}
+    action="image"
+    name={"image"}
+    onClick={this.onGalleryClick}
+  />
 );
 
 class UploadDrawer extends Component {
-  onCameraClick = () => {
-    //onCameraClick
-    //this.props.uploadfile(url);
-  };
   onRemoveClick = () => {
-    this.props.uploadfile("");
+    this.props.removeFile();
     this.props.closeDrawer(false);
   };
   picUpload = (file, url) => {
-    this.props.uploadfile(url);
+    this.props.uploadfile(file, url);
     this.props.closeDrawer(false);
   };
   onOverlayBodyClick = () => {
@@ -43,25 +46,9 @@ class UploadDrawer extends Component {
       <div>
         <div className="overlayBody" onClick={this.onOverlayBodyClick} />
         <div className="drawerContainer">
-          <div className="iconContainer">
-            {this.props.cameraIcon && (
-              <div className="labelIconBox">
-                <Icon
-                  className="camera-upload-drawer"
-                  id="uploadDrawerIcon"
-                  style={iconStyle}
-                  action="image"
-                  name={"photo-camera"}
-                  onClick={this.onCameraClick}
-                />
-                <Label className="cameraUploadlabel" label="Camera" color={"#484848"} labelStyle={this.props.labelStyle} />
-              </div>
-            )}
-            {this.props.videoCamIcon && (
-              <Icon className="video-upload-drawer" id="uploadDrawerIcon" style={iconStyle} action="image" name={"photo-camera"} />
-            )}
+          <div className="iconContainer col-xs-12">
             {this.props.galleryIcon && (
-              <div className="labelIconBox">
+              <div className="labelIconBox col-xs-6 text-center">
                 <FilePicker inputProps={inputProps} handleimage={this.picUpload}>
                   {galleryIconBtn}
                 </FilePicker>
@@ -69,15 +56,17 @@ class UploadDrawer extends Component {
               </div>
             )}
             {this.props.removeIcon && (
-              <div className="labelIconBox">
-                <Icon
-                  className="remove-upload-drawer"
-                  id="uploadDrawerIcon"
-                  style={iconStyle}
-                  action="action"
-                  name={"delete"}
-                  onClick={this.onRemoveClick}
-                />
+              <div className="labelIconBox col-xs-6 text-center">
+                <div>
+                  <Icon
+                    className="remove-upload-drawer"
+                    id="uploadDrawerRemoveIcon"
+                    style={iconStyle}
+                    action="action"
+                    name={"delete"}
+                    onClick={this.onRemoveClick}
+                  />
+                </div>
                 <Label className="removeUploadlabel" label="Remove" color={"#484848"} labelStyle={this.props.labelStyle} />
               </div>
             )}

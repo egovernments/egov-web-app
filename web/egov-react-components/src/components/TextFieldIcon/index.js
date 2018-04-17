@@ -11,7 +11,8 @@ const containerStyle = {
 };
 
 const getStyles = (iconPosition, textFieldProps) => {
-  const textFieldStyle = {};
+  const textFieldStyle = {},
+    inputStyle = {};
 
   const iconStyle = {
     position: "absolute",
@@ -21,6 +22,7 @@ const getStyles = (iconPosition, textFieldProps) => {
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
+  inputStyle["width"] = iconPosition === "after" ? "90%" : "100%";
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 30;
@@ -29,15 +31,22 @@ const getStyles = (iconPosition, textFieldProps) => {
   return {
     iconStyle,
     textFieldStyle,
+    inputStyle,
   };
 };
 
-const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, iconPosition = "after", ...textFieldProps }) => {
+const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, iconPosition = "after", autoFocus, ...textFieldProps }) => {
   const style = getStyles(iconPosition, textFieldProps);
   return (
     <div onClick={onClick} style={containerStyle}>
       <Icon style={{ ...style.iconStyle, ...iconStyle }} />
-      <TextField name="textfield-icon" style={{ ...style.textFieldStyle, ...textFieldStyle }} fullWidth={false} {...textFieldProps} />
+      <TextField
+        autoFocus={autoFocus}
+        name="textfield-icon"
+        style={{ ...style.textFieldStyle, ...textFieldStyle }}
+        inputStyle={{ ...style.inputStyle }}
+        {...textFieldProps}
+      />
     </div>
   );
 };

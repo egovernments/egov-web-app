@@ -2,15 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import MaterialUITextField from "material-ui/TextField";
 
-const errorStyle = {
-  marginTop: 5,
-};
-
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
   color: "#b3b3b3",
 };
+
 const floatingLabelBaseStyle = {
   top: 30,
   fontSize: "14px",
@@ -46,18 +43,25 @@ const TextField = ({
   disabled,
   floatingLabelStyle = {},
   hintText,
+  errorText,
+  errorStyle = {},
   fullWidth = true,
   hintStyle = {},
   className = "",
-  value,
+  value = "",
   floatingLabelText,
   underlineShow = true,
   inputStyle = {},
   underlineFocusStyle = {},
-  isRequired,
+  required,
+  type,
+  autoFocus,
+  maxLength,
+  multiLine,
 }) => {
   return (
     <MaterialUITextField
+      errorText={errorText}
       errorStyle={errorStyle}
       value={value}
       onChange={onChange}
@@ -72,7 +76,7 @@ const TextField = ({
       hintStyle={{ ...hintBaseStyle, ...hintStyle }}
       floatingLabelText={[
         floatingLabelText,
-        isRequired ? (
+        required ? (
           <span key={`error-${className}`} style={requiredStyle}>
             {" "}
             *
@@ -83,18 +87,24 @@ const TextField = ({
       underlineFocusStyle={{ ...underlineFocusBaseStyle, underlineFocusStyle }}
       underlineShow={underlineShow}
       floatingLabelFixed={true}
+      type={type}
+      autoFocus={autoFocus}
+      maxLength={maxLength}
+      autoComplete="off"
+      multiLine={multiLine}
     />
   );
 };
 
 TextField.propTypes = {
   onChange: PropTypes.func,
-  errorMessage: PropTypes.string,
+  errorText: PropTypes.string,
+  errorStyle: PropTypes.object,
   value: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  hintText: PropTypes.string,
-  isRequired: PropTypes.bool,
+  hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  required: PropTypes.bool,
   hide: PropTypes.bool,
   floatingLabelText: PropTypes.string,
   className: PropTypes.string,

@@ -14,16 +14,19 @@ export default class AutoSuggest extends Component {
     defaultIconStyle: { left: "5px", bottom: "10px", color: "#767676" },
   };
 
-  fetchSuggestions = inputValue => {
+  fetchSuggestions = (inputValue) => {
     inputValue = inputValue.toLowerCase();
-
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
-      return dataSource.filter(result => result[searchKey].toLowerCase().indexOf(inputValue) !== -1);
+      return dataSource.filter((result) => {
+        return typeof result[searchKey] === "object"
+          ? result[searchKey].props.label.toLowerCase().indexOf(inputValue) !== -1
+          : result[searchKey].toLowerCase().indexOf(inputValue) !== -1;
+      });
     }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     const inputValue = e.target.value;
     const suggestions = this.fetchSuggestions(inputValue);
     this.props.callback(suggestions, inputValue);
@@ -33,23 +36,24 @@ export default class AutoSuggest extends Component {
   render() {
     const { onChange, styles } = this;
     const { inputValue } = this.state;
-    const { containerStyle, textFieldStyle, iconStyle, searchInputText } = this.props;
+    const { containerStyle, textFieldStyle, iconStyle, searchInputText, hintStyle, iconPosition, autoFocus } = this.props;
 
     return (
-
       <div style={{ ...styles.defaultContainerStyle, ...containerStyle }} className="search-field-container">
         <TextFieldIcon
           textFieldStyle={{ ...styles.defaultTextFieldStyle, ...textFieldStyle }}
           inputStyle={{ marginTop: "8px" }}
-          hintStyle={{ bottom: 8 }}
+          hintStyle={{ bottom: 8, ...hintStyle }}
           iconStyle={{ ...styles.defaultIconStyle, ...iconStyle }}
-          iconPosition="before"
+          iconPosition={iconPosition ? iconPosition : "before"}
           underlineShow={false}
           fullWidth={true}
           hintText={searchInputText}
           Icon={SearchIcon}
           onChange={onChange}
           value={inputValue}
+          id={this.props.id}
+          autoFocus={autoFocus}
         />
       </div>
     );

@@ -12,10 +12,12 @@ const ButtonGroup = ({
   selectedStyle = {},
   selectedLabelStyle = {},
   defaultLabelStyle = {},
+  id,
 }) => {
   return items.map((item, index) => {
     return (
       <FlatButton
+        id={"button-item-" + index}
         className="button-item"
         multiple={multiple}
         key={index}

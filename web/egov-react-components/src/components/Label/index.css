@@ -1,6 +1,9 @@
 .label-container {
   display: block;
 }
+.button-label-container {
+  display: inline;
+}
 
 .label-text,
 .label-icon {
@@ -9,10 +12,16 @@
 }
 
 .label-text {
-  letter-spacing: 0.3px; 
+  letter-spacing: 0.3px;
   font-weight: 400;
 }
 
 .label-icon > svg {
   margin-right: 0px !important;
+}
+
+.label-container .label-text {
+  width: 100%;
+  word-break: break-word;
+  word-wrap: break-word;
 }

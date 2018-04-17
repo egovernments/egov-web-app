@@ -16,6 +16,7 @@ const RadioButtonUi = ({
   checkedIcon,
   iconStyle,
   selectedLabelStyle,
+  id,
 }) => {
   const renderRadioButtons = () => {
     return options.map((option, index) => {
@@ -23,6 +24,7 @@ const RadioButtonUi = ({
       return (
         <RadioButton
           key={index}
+          id={id + "-" + index}
           style={value === valueSelected ? { ...radioButtonItemStyle, ...selectedStyle } : radioButtonItemStyle}
           value={value}
           label={label}

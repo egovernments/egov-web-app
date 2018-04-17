@@ -14,16 +14,17 @@ const defaultStyle = {
 const selectedLabelStyle = {
   color: "#00bcd1",
 };
-const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, checkedIcon, iconStyle, containerClassName, selected }) => {
+const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, checkedIcon, iconStyle, containerClassName, selected, id }) => {
   const renderCheckboxOptions = () => {
     return options.map((option, index) => {
       return (
         <Checkbox
           key={index}
+          id={id + index}
           value={option.value}
           label={option.label}
           onCheck={() => {
-            onCheck(option.label);
+            onCheck(option.value);
           }}
           style={{ ...defaultStyle, ...style }}
           iconStyle={iconStyle}
@@ -45,7 +46,7 @@ const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, ch
 CheckboxUi.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
+      label: PropTypes.node.isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     }).isRequired
   ),

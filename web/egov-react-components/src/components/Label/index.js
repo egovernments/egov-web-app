@@ -23,11 +23,16 @@ const Label = ({
   containerStyle = {},
   labelStyle = {},
   labelClassName = "",
+  buttonLabel = false,
+  id,
 }) => {
   let additionalStyles = {};
 
   if (color) {
     additionalStyles.color = color;
+  }
+  if (!color && buttonLabel) {
+    additionalStyles.color = "#ffffff";
   }
   if (dark) {
     additionalStyles.color = "#484848";
@@ -47,7 +52,7 @@ const Label = ({
   }
 
   return (
-    <div style={containerStyle} className={`label-container ${className}`}>
+    <div id={id} style={containerStyle} className={buttonLabel ? `button-label-container ${className}` : `label-container ${className}`}>
       {labelText(label, labelStyle, labelClassName)}
     </div>
   );

@@ -9,6 +9,7 @@ const TextAreaUi = ({
   className,
   style,
   underlineShow,
+  inputStyle,
   onChange,
   errorMessage,
   value = "",
@@ -22,10 +23,12 @@ const TextAreaUi = ({
   rowsMax,
   underlineStyle,
   underlineFocusStyle,
+  id,
 }) => {
   return (
     <TextField
       className={className}
+      id={id}
       fullWidth={true}
       multiLine={true}
       rows={rows}
@@ -34,11 +37,13 @@ const TextAreaUi = ({
       onChange={onChange}
       style={{ ...defaultStyle, ...style }}
       hintText={hintText}
+      inputStyle={inputStyle}
       hintStyle={hintStyle}
       textareaStyle={textareaStyle}
       underlineShow={underlineShow}
       underlineStyle={underlineStyle}
       underlineFocusStyle={underlineFocusStyle}
+      value={value}
     />
   );
 };
