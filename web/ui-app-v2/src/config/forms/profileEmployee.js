@@ -26,6 +26,7 @@ const formConfig = {
   submit: {
     label: "CS_PROFILE_SAVE",
     id: "profile-save-action",
+    type: "submit",
   },
   toast: "Profile is Successfully Updated",
   saveUrl: "/user/profile/_update",
