@@ -43,16 +43,18 @@ var CheckboxUi = function CheckboxUi(_ref) {
       checkedIcon = _ref.checkedIcon,
       iconStyle = _ref.iconStyle,
       containerClassName = _ref.containerClassName,
-      selected = _ref.selected;
+      selected = _ref.selected,
+      id = _ref.id;
 
   var renderCheckboxOptions = function renderCheckboxOptions() {
     return options.map(function (option, index) {
       return _react2.default.createElement(_Checkbox2.default, {
         key: index,
+        id: id + index,
         value: option.value,
         label: option.label,
         onCheck: function onCheck() {
-          _onCheck(option.label);
+          _onCheck(option.value);
         },
         style: _extends({}, defaultStyle, style),
         iconStyle: iconStyle,
@@ -72,7 +74,7 @@ var CheckboxUi = function CheckboxUi(_ref) {
 
 CheckboxUi.propTypes = {
   options: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    label: _propTypes2.default.string.isRequired,
+    label: _propTypes2.default.node.isRequired,
     value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired
   }).isRequired),
   defaultValue: _propTypes2.default.string,

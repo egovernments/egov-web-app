@@ -12,7 +12,7 @@ var _Image = require("../Image");
 
 var _Image2 = _interopRequireDefault(_Image);
 
-var _MsevaLogo = require("../../assets/images/Mseva logo.png");
+var _MsevaLogo = require("assets/images/Mseva logo.png");
 
 var _MsevaLogo2 = _interopRequireDefault(_MsevaLogo);
 

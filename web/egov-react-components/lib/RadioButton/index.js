@@ -33,7 +33,8 @@ var RadioButtonUi = function RadioButtonUi(_ref) {
       handleChange = _ref.handleChange,
       checkedIcon = _ref.checkedIcon,
       iconStyle = _ref.iconStyle,
-      selectedLabelStyle = _ref.selectedLabelStyle;
+      selectedLabelStyle = _ref.selectedLabelStyle,
+      id = _ref.id;
 
   var renderRadioButtons = function renderRadioButtons() {
     return options.map(function (option, index) {
@@ -42,6 +43,7 @@ var RadioButtonUi = function RadioButtonUi(_ref) {
 
       return _react2.default.createElement(_RadioButton.RadioButton, {
         key: index,
+        id: id + "-" + index,
         style: value === valueSelected ? _extends({}, radioButtonItemStyle, selectedStyle) : radioButtonItemStyle,
         value: value,
         label: label,

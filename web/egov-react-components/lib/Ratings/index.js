@@ -232,6 +232,7 @@ var ReactStars = function (_Component) {
           char = config.char,
           half = config.half,
           edit = config.edit;
+      var id = this.props.id;
 
       return stars.map(function (star, i) {
         var starClass = "";
@@ -249,6 +250,7 @@ var ReactStars = function (_Component) {
             className: starClass,
             style: style,
             key: i,
+            id: id + i,
             "data-index": i,
             "data-forhalf": char,
             onMouseOver: _this2.mouseOver.bind(_this2),
@@ -263,12 +265,14 @@ var ReactStars = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var className = this.props.className;
+      var _props = this.props,
+          className = _props.className,
+          id = _props.id;
 
 
       return _react2.default.createElement(
         "div",
-        { className: className, style: parentStyles },
+        { className: className, style: parentStyles, id: id },
         this.state.config.half ? this.renderHalfStarStyleElement() : "",
         this.renderStars()
       );

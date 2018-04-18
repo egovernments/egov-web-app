@@ -23,18 +23,19 @@ var Icon = function Icon(_ref) {
       _ref$style = _ref.style,
       style = _ref$style === undefined ? {} : _ref$style,
       color = _ref.color,
-      onClick = _ref.onClick;
+      onClick = _ref.onClick,
+      id = _ref.id;
 
   var error = "";
   try {
     var WrappedIcon = null;
 
     if (action === "custom") {
-      WrappedIcon = require("../../custom-icons/" + name).default;
+      WrappedIcon = require("custom-icons/" + name).default;
     } else {
       WrappedIcon = require("material-ui/svg-icons/" + action + "/" + name).default;
     }
-    return _react2.default.createElement(WrappedIcon, { className: className, style: _extends({}, style), color: color, onClick: onClick });
+    return _react2.default.createElement(WrappedIcon, { id: id, className: className, style: _extends({}, style), color: color, onClick: onClick });
   } catch (error) {}
   throw new Error("Icon with action " + action + " and name " + name + " not found");
 };

@@ -6,6 +6,7 @@
   "proxy": "http://egov-micro-dev.egovernments.org/",
   "dependencies": {
     "axios": "^0.17.1",
+    "egov-react-components": "0.0.4",
     "jsonpath": "^1.0.0",
     "lodash": "^4.17.5",
     "material-ui": "^0.20.0",

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "../Image";
-import logoMseva from "../../assets/images/Mseva logo.png";
+import logoMseva from "assets/images/Mseva logo.png";
 import "./index.css";
 
 const imageStyle = {

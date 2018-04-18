@@ -20,10 +20,11 @@ var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 var Button = function Button(props) {
   var label = props.label,
-      _props$icon = props.icon,
-      icon = _props$icon === undefined ? {} : _props$icon,
+      icon = props.icon,
       className = props.className,
       onClick = props.onClick,
       backgroundColor = props.backgroundColor,
@@ -34,10 +35,11 @@ var Button = function Button(props) {
       primary = _props$primary === undefined ? false : _props$primary,
       _props$style = props.style,
       style = _props$style === undefined ? {} : _props$style,
-      id = props.id;
+      id = props.id,
+      rest = _objectWithoutProperties(props, ["label", "icon", "className", "onClick", "backgroundColor", "labelColor", "fullWidth", "disabled", "primary", "style", "id"]);
 
   return _react2.default.createElement(_RaisedButton2.default, _extends({
-    icon: _react2.default.createElement(
+    icon: icon && _react2.default.createElement(
       "i",
       { style: icon.style, className: "material-icons" },
       icon.name
@@ -50,7 +52,7 @@ Button.propTypes = {
   primary: _propTypes2.default.bool,
   fullWidth: _propTypes2.default.bool,
   disabled: _propTypes2.default.bool,
-  label: _propTypes2.default.string,
+  label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   style: _propTypes2.default.object
 };
 

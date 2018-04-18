@@ -20,7 +20,9 @@ var _Label = require("../Label");
 
 var _Label2 = _interopRequireDefault(_Label);
 
-var _components = require("../../components");
+var _Icon = require("../Icon");
+
+var _Icon2 = _interopRequireDefault(_Icon);
 
 require("./index.css");
 
@@ -46,15 +48,23 @@ var ProfileSection = function ProfileSection(_ref) {
     _react2.default.createElement(
       "div",
       { className: "profileContainer", style: { textAlign: "center" } },
-      _react2.default.createElement(_Image2.default, { className: "img-Profile", circular: true, style: imgStyle, source: imgSrc }),
+      _react2.default.createElement(_Image2.default, { id: "profile-photo", className: "img-Profile", circular: true, style: imgStyle, source: imgSrc }),
       addIconName && _react2.default.createElement(
         "div",
         { style: addIconStyle },
-        _react2.default.createElement(_components.Icon, { id: "profile-upload-icon", action: "image", name: addIconName, onClick: onClickAddPic, color: "#ffffff" })
+        _react2.default.createElement(_Icon2.default, { id: "profile-upload-icon", action: "image", name: addIconName, onClick: onClickAddPic, color: "#ffffff" })
       ),
-      name && _react2.default.createElement(_Label2.default, { className: "name-Profile", label: name, style: nameStyle }),
-      location && _react2.default.createElement(_Label2.default, { className: "loc-Profile", labelPosition: "after", label: location, style: locationStyle }),
-      emailId && _react2.default.createElement(_Label2.default, { className: "loc-Profile", label: emailId, style: emailIdStyle })
+      name && _react2.default.createElement(_Label2.default, {
+        id: "profile-name",
+        className: "name-Profile",
+        label: name,
+        style: nameStyle,
+        labelStyle: { letterSpacing: 0.6 },
+        dark: true,
+        bold: true
+      }),
+      location && _react2.default.createElement(_Label2.default, { id: "profile-location", className: "loc-Profile", labelPosition: "after", label: location, style: locationStyle }),
+      emailId && _react2.default.createElement(_Label2.default, { id: "profile-emailid", className: "loc-Profile", label: emailId, style: emailIdStyle })
     )
   );
 };

@@ -2,7 +2,7 @@ import TextField from "./TextField";
 import TextFieldIcon from "./TextFieldIcon";
 import MobileNumberField from "./MobileNumberField";
 import SelectField from "./DropDown";
-import Label from "./Label";
+import {Label} from "egov-react-components/lib";
 import Checkbox from "./Checkbox";
 import TextArea from "./TextArea";
 import Button from "./Button";

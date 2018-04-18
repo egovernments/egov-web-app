@@ -20,15 +20,12 @@ var _TextField2 = _interopRequireDefault(_TextField);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var errorStyle = {
-  marginTop: 5
-};
-
 var hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
   color: "#b3b3b3"
 };
+
 var floatingLabelBaseStyle = {
   top: 30,
   fontSize: "14px",
@@ -65,13 +62,17 @@ var TextField = function TextField(_ref) {
       _ref$floatingLabelSty = _ref.floatingLabelStyle,
       floatingLabelStyle = _ref$floatingLabelSty === undefined ? {} : _ref$floatingLabelSty,
       hintText = _ref.hintText,
+      errorText = _ref.errorText,
+      _ref$errorStyle = _ref.errorStyle,
+      errorStyle = _ref$errorStyle === undefined ? {} : _ref$errorStyle,
       _ref$fullWidth = _ref.fullWidth,
       fullWidth = _ref$fullWidth === undefined ? true : _ref$fullWidth,
       _ref$hintStyle = _ref.hintStyle,
       hintStyle = _ref$hintStyle === undefined ? {} : _ref$hintStyle,
       _ref$className = _ref.className,
       className = _ref$className === undefined ? "" : _ref$className,
-      value = _ref.value,
+      _ref$value = _ref.value,
+      value = _ref$value === undefined ? "" : _ref$value,
       floatingLabelText = _ref.floatingLabelText,
       _ref$underlineShow = _ref.underlineShow,
       underlineShow = _ref$underlineShow === undefined ? true : _ref$underlineShow,
@@ -79,9 +80,14 @@ var TextField = function TextField(_ref) {
       inputStyle = _ref$inputStyle === undefined ? {} : _ref$inputStyle,
       _ref$underlineFocusSt = _ref.underlineFocusStyle,
       underlineFocusStyle = _ref$underlineFocusSt === undefined ? {} : _ref$underlineFocusSt,
-      isRequired = _ref.isRequired;
+      required = _ref.required,
+      type = _ref.type,
+      autoFocus = _ref.autoFocus,
+      maxLength = _ref.maxLength,
+      multiLine = _ref.multiLine;
 
   return _react2.default.createElement(_TextField2.default, {
+    errorText: errorText,
     errorStyle: errorStyle,
     value: value,
     onChange: onChange,
@@ -94,7 +100,7 @@ var TextField = function TextField(_ref) {
     fullWidth: fullWidth,
     hintText: hintText,
     hintStyle: _extends({}, hintBaseStyle, hintStyle),
-    floatingLabelText: [floatingLabelText, isRequired ? _react2.default.createElement(
+    floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
       "span",
       { key: "error-" + className, style: requiredStyle },
       " ",
@@ -103,18 +109,24 @@ var TextField = function TextField(_ref) {
     floatingLabelStyle: _extends({}, floatingLabelBaseStyle, floatingLabelStyle),
     underlineFocusStyle: _extends({}, underlineFocusBaseStyle, { underlineFocusStyle: underlineFocusStyle }),
     underlineShow: underlineShow,
-    floatingLabelFixed: true
+    floatingLabelFixed: true,
+    type: type,
+    autoFocus: autoFocus,
+    maxLength: maxLength,
+    autoComplete: "off",
+    multiLine: multiLine
   });
 };
 
 TextField.propTypes = {
   onChange: _propTypes2.default.func,
-  errorMessage: _propTypes2.default.string,
+  errorText: _propTypes2.default.string,
+  errorStyle: _propTypes2.default.object,
   value: _propTypes2.default.string,
   disabled: _propTypes2.default.bool,
   label: _propTypes2.default.string,
-  hintText: _propTypes2.default.string,
-  isRequired: _propTypes2.default.bool,
+  hintText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
+  required: _propTypes2.default.bool,
   hide: _propTypes2.default.bool,
   floatingLabelText: _propTypes2.default.string,
   className: _propTypes2.default.string

@@ -49,7 +49,14 @@ var inputProps = {
   accept: "image/*",
   multiple: false //for selecting single or multiple files
 };
-var galleryIconBtn = _react2.default.createElement(_Icon2.default, { className: "gallery-upload-drawer", id: "uploadDrawerIcon", style: iconStyle, action: "image", name: "image", onClick: undefined.onGalleryClick });
+var galleryIconBtn = _react2.default.createElement(_Icon2.default, {
+  className: "gallery-upload-drawer",
+  id: "uploadDrawerGallaryIcon",
+  style: iconStyle,
+  action: "image",
+  name: "image",
+  onClick: undefined.onGalleryClick
+});
 
 var UploadDrawer = function (_Component) {
   _inherits(UploadDrawer, _Component);
@@ -65,14 +72,11 @@ var UploadDrawer = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = UploadDrawer.__proto__ || Object.getPrototypeOf(UploadDrawer)).call.apply(_ref, [this].concat(args))), _this), _this.onCameraClick = function () {
-      //onCameraClick
-      //this.props.uploadfile(url);
-    }, _this.onRemoveClick = function () {
-      _this.props.uploadfile("");
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = UploadDrawer.__proto__ || Object.getPrototypeOf(UploadDrawer)).call.apply(_ref, [this].concat(args))), _this), _this.onRemoveClick = function () {
+      _this.props.removeFile();
       _this.props.closeDrawer(false);
     }, _this.picUpload = function (file, url) {
-      _this.props.uploadfile(url);
+      _this.props.uploadfile(file, url);
       _this.props.closeDrawer(false);
     }, _this.onOverlayBodyClick = function () {
       _this.props.closeDrawer(false);
@@ -91,24 +95,10 @@ var UploadDrawer = function (_Component) {
           { className: "drawerContainer" },
           _react2.default.createElement(
             "div",
-            { className: "iconContainer" },
-            this.props.cameraIcon && _react2.default.createElement(
-              "div",
-              { className: "labelIconBox" },
-              _react2.default.createElement(_Icon2.default, {
-                className: "camera-upload-drawer",
-                id: "uploadDrawerIcon",
-                style: iconStyle,
-                action: "image",
-                name: "photo-camera",
-                onClick: this.onCameraClick
-              }),
-              _react2.default.createElement(_Label2.default, { className: "cameraUploadlabel", label: "Camera", color: "#484848", labelStyle: this.props.labelStyle })
-            ),
-            this.props.videoCamIcon && _react2.default.createElement(_Icon2.default, { className: "video-upload-drawer", id: "uploadDrawerIcon", style: iconStyle, action: "image", name: "photo-camera" }),
+            { className: "iconContainer col-xs-12" },
             this.props.galleryIcon && _react2.default.createElement(
               "div",
-              { className: "labelIconBox" },
+              { className: "labelIconBox col-xs-6 text-center" },
               _react2.default.createElement(
                 _FilePicker2.default,
                 { inputProps: inputProps, handleimage: this.picUpload },
@@ -118,15 +108,19 @@ var UploadDrawer = function (_Component) {
             ),
             this.props.removeIcon && _react2.default.createElement(
               "div",
-              { className: "labelIconBox" },
-              _react2.default.createElement(_Icon2.default, {
-                className: "remove-upload-drawer",
-                id: "uploadDrawerIcon",
-                style: iconStyle,
-                action: "action",
-                name: "delete",
-                onClick: this.onRemoveClick
-              }),
+              { className: "labelIconBox col-xs-6 text-center" },
+              _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(_Icon2.default, {
+                  className: "remove-upload-drawer",
+                  id: "uploadDrawerRemoveIcon",
+                  style: iconStyle,
+                  action: "action",
+                  name: "delete",
+                  onClick: this.onRemoveClick
+                })
+              ),
               _react2.default.createElement(_Label2.default, { className: "removeUploadlabel", label: "Remove", color: "#484848", labelStyle: this.props.labelStyle })
             )
           )

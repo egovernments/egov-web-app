@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
@@ -52,14 +54,13 @@ var AutoSuggest = function (_Component) {
       defaultIconStyle: { left: "5px", bottom: "10px", color: "#767676" }
     }, _this.fetchSuggestions = function (inputValue) {
       inputValue = inputValue.toLowerCase();
-
       if (inputValue.length > 0) {
         var _this$props = _this.props,
             searchKey = _this$props.searchKey,
             dataSource = _this$props.dataSource;
 
         return dataSource.filter(function (result) {
-          return result[searchKey].toLowerCase().indexOf(inputValue) !== -1;
+          return _typeof(result[searchKey]) === "object" ? result[searchKey].props.label.toLowerCase().indexOf(inputValue) !== -1 : result[searchKey].toLowerCase().indexOf(inputValue) !== -1;
         });
       }
     }, _this.onChange = function (e) {
@@ -80,7 +81,10 @@ var AutoSuggest = function (_Component) {
           containerStyle = _props.containerStyle,
           textFieldStyle = _props.textFieldStyle,
           iconStyle = _props.iconStyle,
-          searchInputText = _props.searchInputText;
+          searchInputText = _props.searchInputText,
+          hintStyle = _props.hintStyle,
+          iconPosition = _props.iconPosition,
+          autoFocus = _props.autoFocus;
 
 
       return _react2.default.createElement(
@@ -89,15 +93,17 @@ var AutoSuggest = function (_Component) {
         _react2.default.createElement(_TextFieldIcon2.default, {
           textFieldStyle: _extends({}, styles.defaultTextFieldStyle, textFieldStyle),
           inputStyle: { marginTop: "8px" },
-          hintStyle: { bottom: 8 },
+          hintStyle: _extends({ bottom: 8 }, hintStyle),
           iconStyle: _extends({}, styles.defaultIconStyle, iconStyle),
-          iconPosition: "before",
+          iconPosition: iconPosition ? iconPosition : "before",
           underlineShow: false,
           fullWidth: true,
           hintText: searchInputText,
           Icon: _search2.default,
           onChange: onChange,
-          value: inputValue
+          value: inputValue,
+          id: this.props.id,
+          autoFocus: autoFocus
         })
       );
     }

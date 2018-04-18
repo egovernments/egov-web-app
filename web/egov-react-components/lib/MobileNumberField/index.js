@@ -37,7 +37,7 @@ var prefixBaseStyle = {
   position: "absolute",
   color: "#969696",
   zIndex: 2,
-  bottom: 15,
+  top: 35,
   paddingRight: 5,
   borderRight: "1px solid #eee"
 };
@@ -61,17 +61,18 @@ var MobileNumberField = function MobileNumberField(_ref) {
     { style: containerStyle },
     _react2.default.createElement(
       "div",
-      { style: _extends({}, prefixBaseStyle, { prefixStyle: prefixStyle }) },
+      { style: _extends({}, prefixBaseStyle, prefixStyle) },
       prefix
     ),
     _react2.default.createElement(_TextField2.default, _extends({
       className: "mobile-number-field " + className,
       id: "mobile-number-field",
       name: "mobile-number-field",
-      style: _extends({}, textFieldBaseStyle, textFieldStyle),
-      fullWidth: true
+      errorStyle: { marginLeft: "-35px" },
+      style: _extends({}, textFieldBaseStyle, textFieldStyle)
     }, textFieldProps, {
-      floatingLabelStyle: floatingLabelStyle
+      floatingLabelStyle: floatingLabelStyle,
+      type: "number"
     }))
   );
 };

@@ -52,6 +52,7 @@ var closebuttonStyle = {
 
 var DialogUI = function DialogUI(_ref) {
   var title = _ref.title,
+      modal = _ref.modal,
       titleStyle = _ref.titleStyle,
       overlayStyle = _ref.overlayStyle,
       _ref$actionsContainer = _ref.actionsContainerStyle,
@@ -63,9 +64,11 @@ var DialogUI = function DialogUI(_ref) {
       _ref$contentStyle = _ref.contentStyle,
       contentStyle = _ref$contentStyle === undefined ? {} : _ref$contentStyle,
       open = _ref.open,
-      _ref$autoScrollBodyCo = _ref.autoScrollBodyContent,
-      autoScrollBodyContent = _ref$autoScrollBodyCo === undefined ? false : _ref$autoScrollBodyCo,
-      handleClose = _ref.handleClose;
+      _ref$repositionOnUpda = _ref.repositionOnUpdate,
+      repositionOnUpdate = _ref$repositionOnUpda === undefined ? false : _ref$repositionOnUpda,
+      autoScrollBodyContent = _ref.autoScrollBodyContent,
+      handleClose = _ref.handleClose,
+      style = _ref.style;
 
   return _react2.default.createElement(_Dialog2.default, {
     title: title,
@@ -83,9 +86,11 @@ var DialogUI = function DialogUI(_ref) {
     bodyStyle: _extends({}, defaultBodyStyle, bodyStyle),
     open: open,
     autoDetectWindowHeight: false,
-    style: {
+    style: _extends({
       paddingTop: "0 !important"
-    }
+    }, style),
+    repositionOnUpdate: repositionOnUpdate,
+    modal: modal
   });
 };
 

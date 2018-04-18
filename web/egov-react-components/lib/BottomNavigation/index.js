@@ -24,12 +24,14 @@ var BottomNavigation = function BottomNavigation(_ref) {
       style = _ref$style === undefined ? {} : _ref$style,
       options = _ref.options,
       handleChange = _ref.handleChange,
-      selectedIndex = _ref.selectedIndex;
+      selectedIndex = _ref.selectedIndex,
+      id = _ref.id;
   return _react2.default.createElement(
     _BottomNavigation.BottomNavigation,
     { className: className + " bottom-navigation", style: style, selectedIndex: selectedIndex },
     options.map(function (item, index) {
       return _react2.default.createElement(_BottomNavigation.BottomNavigationItem, {
+        id: item.id,
         key: index,
         label: item.label,
         icon: item.icon,
@@ -45,7 +47,7 @@ BottomNavigation.propTypes = {
   style: _propTypes2.default.object,
   selectedIndex: _propTypes2.default.number,
   options: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    label: _propTypes2.default.string.isRequired,
+    label: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]).isRequired,
     icon: _propTypes2.default.node,
     route: _propTypes2.default.string.isRequired
   })).isRequired,

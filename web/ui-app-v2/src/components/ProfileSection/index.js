@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "../Image";
 import Label from "../Label";
-import { Icon } from "../../components";
+import Icon from "../Icon";
 import "./index.css";
 
 const ProfileSection = ({

@@ -32,7 +32,8 @@ var containerStyle = {
 };
 
 var getStyles = function getStyles(iconPosition, textFieldProps) {
-  var textFieldStyle = {};
+  var textFieldStyle = {},
+      inputStyle = {};
 
   var iconStyle = {
     position: "absolute",
@@ -42,6 +43,7 @@ var getStyles = function getStyles(iconPosition, textFieldProps) {
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
+  inputStyle["width"] = iconPosition === "after" ? "90%" : "100%";
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 30;
@@ -49,7 +51,8 @@ var getStyles = function getStyles(iconPosition, textFieldProps) {
 
   return {
     iconStyle: iconStyle,
-    textFieldStyle: textFieldStyle
+    textFieldStyle: textFieldStyle,
+    inputStyle: inputStyle
   };
 };
 
@@ -62,14 +65,20 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       textFieldStyle = _ref$textFieldStyle === undefined ? {} : _ref$textFieldStyle,
       _ref$iconPosition = _ref.iconPosition,
       iconPosition = _ref$iconPosition === undefined ? "after" : _ref$iconPosition,
-      textFieldProps = _objectWithoutProperties(_ref, ["Icon", "iconStyle", "onClick", "textFieldStyle", "iconPosition"]);
+      autoFocus = _ref.autoFocus,
+      textFieldProps = _objectWithoutProperties(_ref, ["Icon", "iconStyle", "onClick", "textFieldStyle", "iconPosition", "autoFocus"]);
 
   var style = getStyles(iconPosition, textFieldProps);
   return _react2.default.createElement(
     "div",
     { onClick: onClick, style: containerStyle },
     _react2.default.createElement(Icon, { style: _extends({}, style.iconStyle, iconStyle) }),
-    _react2.default.createElement(_TextField2.default, _extends({ name: "textfield-icon", style: _extends({}, style.textFieldStyle, textFieldStyle), fullWidth: false }, textFieldProps))
+    _react2.default.createElement(_TextField2.default, _extends({
+      autoFocus: autoFocus,
+      name: "textfield-icon",
+      style: _extends({}, style.textFieldStyle, textFieldStyle),
+      inputStyle: _extends({}, style.inputStyle)
+    }, textFieldProps))
   );
 };
 

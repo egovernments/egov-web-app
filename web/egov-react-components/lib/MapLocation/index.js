@@ -22,6 +22,10 @@ var _Icon = require("../Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _common = require("config/common");
+
+var _common2 = _interopRequireDefault(_common);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _require = require("recompose"),
@@ -36,10 +40,8 @@ var _require2 = require("react-google-maps"),
     GoogleMap = _require2.GoogleMap,
     Marker = _require2.Marker;
 
-var API_KEY = "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0";
-
 var MapLocation = compose(withProps({
-  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + API_KEY + "&v=3.exp&libraries=geometry,drawing,places",
+  googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + _common2.default.MAP_API_KEY + "&v=3.exp&libraries=geometry,drawing,places",
   loadingElement: _react2.default.createElement("div", { style: { height: "100%" } }),
   containerElement: _react2.default.createElement("div", { className: "map-container" }),
   mapElement: _react2.default.createElement("div", { style: { height: "100%" } }),
@@ -57,8 +59,20 @@ var MapLocation = compose(withProps({
       onBoundsChanged: function onBoundsChanged() {
         _this.setState({
           bounds: refs.map.getBounds(),
-          center: refs.map.getCenter()
+          center: refs.map.getCenter(),
+          lat: refs.map.getCenter().lat(),
+          lng: refs.map.getCenter().lng()
         });
+        // var geocoder = new window.google.maps.Geocoder();
+        // geocoder.geocode({ location: { lat: this.state.lat, lng: this.state.lng } }, (results, status) => {
+        //   if (status === "OK") {
+        //     if (results[0]) {
+        //       this.setState({
+        //         address: results[0].formatted_address,
+        //       });
+        //     }
+        //   }
+        // });
       },
       onSearchBoxMounted: function onSearchBoxMounted(ref) {
         refs.searchBox = ref;
@@ -104,7 +118,13 @@ var MapLocation = compose(withProps({
 }), withScriptjs, withGoogleMap)(function (props) {
   return _react2.default.createElement(
     GoogleMap,
-    { ref: props.onMapMounted, defaultZoom: 13, center: props.currLoc, onBoundsChanged: props.onBoundsChanged },
+    {
+      ref: props.onMapMounted,
+      defaultZoom: 13,
+      center: props.currLoc ? props.currLoc : props.center,
+      onBoundsChanged: props.onBoundsChanged,
+      draggable: true
+    },
     _react2.default.createElement(
       "div",
       { className: "search-icon" },
@@ -137,17 +157,6 @@ var MapLocation = compose(withProps({
         onClick: props.getMyLoc
       })
     ),
-    props.dragInfoBox && _react2.default.createElement(
-      "div",
-      { className: "dragInfoBox" },
-      " ",
-      _react2.default.createElement(
-        "span",
-        null,
-        "Move this pin to select your location"
-      ),
-      " "
-    ),
     _react2.default.createElement(
       _SearchBox2.default,
       {
@@ -159,26 +168,14 @@ var MapLocation = compose(withProps({
       _react2.default.createElement("input", { type: "text", className: "searchBoxStyles", placeholder: "Search address", style: props.searchBoxStyles })
     ),
     props.markers.length > 0 ? props.markers.map(function (marker, index) {
-      props.setLocation(marker.position.lat(), marker.position.lng(), index);
-      return _react2.default.createElement(Marker, {
-        key: index,
-        position: marker.position,
-        draggable: true,
-        icon: props.icon,
-        onDragEnd: function onDragEnd(e) {
-          props.setLocation(e.latLng.lat(), e.latLng.lng());
-        }
-      });
+      return _react2.default.createElement(Marker, { key: index, position: props.center, draggable: false, icon: props.icon });
     }) : _react2.default.createElement(Marker, {
-      position: props.center,
+      position: props.viewLocation ? props.currLoc : props.center,
       icon: props.icon,
-      draggable: true,
-      animation: window.google.maps.Animation.DROP,
-      onDragEnd: function onDragEnd(e) {
-        props.setLocation(e.latLng.lat(), e.latLng.lng());
-      }
+      draggable: false,
+      animation: window.google.maps.Animation.DROP
     }),
-    props.showMyLoc && _react2.default.createElement(Marker, { position: props.currLoc, icon: props.icon })
+    props.setLocation && props.setLocation(props.lat, props.lng)
   );
 });
 

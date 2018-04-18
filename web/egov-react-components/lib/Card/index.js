@@ -23,11 +23,12 @@ var CardUi = function CardUi(_ref) {
       style = _ref$style === undefined ? {} : _ref$style,
       textChildren = _ref.textChildren,
       _ref$className = _ref.className,
-      className = _ref$className === undefined ? "" : _ref$className;
+      className = _ref$className === undefined ? "" : _ref$className,
+      onClick = _ref.onClick;
 
   return _react2.default.createElement(
     "div",
-    { style: style, id: id, className: "rainmaker-card " + className },
+    { style: style, id: id, className: "rainmaker-card " + className, onClick: onClick },
     textChildren
   );
 };

@@ -42,12 +42,18 @@ var Label = function Label(_ref) {
       _ref$labelStyle = _ref.labelStyle,
       labelStyle = _ref$labelStyle === undefined ? {} : _ref$labelStyle,
       _ref$labelClassName = _ref.labelClassName,
-      labelClassName = _ref$labelClassName === undefined ? "" : _ref$labelClassName;
+      labelClassName = _ref$labelClassName === undefined ? "" : _ref$labelClassName,
+      _ref$buttonLabel = _ref.buttonLabel,
+      buttonLabel = _ref$buttonLabel === undefined ? false : _ref$buttonLabel,
+      id = _ref.id;
 
   var additionalStyles = {};
 
   if (color) {
     additionalStyles.color = color;
+  }
+  if (!color && buttonLabel) {
+    additionalStyles.color = "#ffffff";
   }
   if (dark) {
     additionalStyles.color = "#484848";
@@ -68,7 +74,7 @@ var Label = function Label(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { style: containerStyle, className: "label-container " + className },
+    { id: id, style: containerStyle, className: buttonLabel ? "button-label-container " + className : "label-container " + className },
     labelText(label, labelStyle, labelClassName)
   );
 };

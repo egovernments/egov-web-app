@@ -27,6 +27,7 @@ var TextAreaUi = function TextAreaUi(_ref) {
   var className = _ref.className,
       style = _ref.style,
       underlineShow = _ref.underlineShow,
+      inputStyle = _ref.inputStyle,
       onChange = _ref.onChange,
       errorMessage = _ref.errorMessage,
       _ref$value = _ref.value,
@@ -40,10 +41,12 @@ var TextAreaUi = function TextAreaUi(_ref) {
       textareaStyle = _ref.textareaStyle,
       rowsMax = _ref.rowsMax,
       underlineStyle = _ref.underlineStyle,
-      underlineFocusStyle = _ref.underlineFocusStyle;
+      underlineFocusStyle = _ref.underlineFocusStyle,
+      id = _ref.id;
 
   return _react2.default.createElement(_TextField2.default, {
     className: className,
+    id: id,
     fullWidth: true,
     multiLine: true,
     rows: rows,
@@ -52,11 +55,13 @@ var TextAreaUi = function TextAreaUi(_ref) {
     onChange: onChange,
     style: _extends({}, defaultStyle, style),
     hintText: hintText,
+    inputStyle: inputStyle,
     hintStyle: hintStyle,
     textareaStyle: textareaStyle,
     underlineShow: underlineShow,
     underlineStyle: underlineStyle,
-    underlineFocusStyle: underlineFocusStyle
+    underlineFocusStyle: underlineFocusStyle,
+    value: value
   });
 };
 

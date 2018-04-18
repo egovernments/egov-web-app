@@ -34,10 +34,12 @@ var ButtonGroup = function ButtonGroup(_ref) {
       _ref$selectedLabelSty = _ref.selectedLabelStyle,
       selectedLabelStyle = _ref$selectedLabelSty === undefined ? {} : _ref$selectedLabelSty,
       _ref$defaultLabelStyl = _ref.defaultLabelStyle,
-      defaultLabelStyle = _ref$defaultLabelStyl === undefined ? {} : _ref$defaultLabelStyl;
+      defaultLabelStyle = _ref$defaultLabelStyl === undefined ? {} : _ref$defaultLabelStyl,
+      id = _ref.id;
 
   return items.map(function (item, index) {
     return _react2.default.createElement(_FlatButton2.default, {
+      id: "button-item-" + index,
       className: "button-item",
       multiple: multiple,
       key: index,
