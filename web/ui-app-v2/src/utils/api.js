@@ -61,7 +61,10 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     if (status == 400 && data == "") {
       apiError = "INVALID_TOKEN";
     } else {
-      apiError = data.hasOwnProperty("error") && data.error.fields && data.error.fields.length ? data.error.fields[0].message : apiError;
+      apiError =
+        (data.hasOwnProperty("error") && data.error.fields && data.error.fields.length && data.error.fields[0].message) ||
+        (data.hasOwnProperty("error_description") && data.error_description) ||
+        apiError;
     }
   }
   // unhandled error
@@ -128,7 +131,7 @@ export const loginRequest = async (username = null, password = null, refreshToke
   } catch (error) {
     const { data, status } = error.response;
     if (status === 400) {
-      apiError = data.hasOwnProperty("error") && data.error.fields && data.error.fields.length ? data.error.fields[0].message : apiError;
+      apiError = (data.hasOwnProperty("error_description") && data.error_description) || apiError;
     }
   }
 
