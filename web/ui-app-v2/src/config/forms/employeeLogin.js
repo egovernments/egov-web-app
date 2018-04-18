@@ -8,7 +8,7 @@ const formConfig = {
       floatingLabelText: "CORE_LOGIN_USERNAME",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_LOGIN_USERNAME_PLACEHOLDER",
-      pattern: "^([0-9])+$",
+      pattern: "^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$",
       value: "",
     },
     password: {
