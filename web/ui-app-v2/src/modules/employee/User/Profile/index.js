@@ -59,7 +59,7 @@ class Profile extends Component {
   };
 
   onClickChangePasswd = () => {
-    this.props.setRoute("/employee/user/change-password");
+    this.props.history.push("/employee/user/change-password");
   };
 
   submitForm = () => {

@@ -37,7 +37,14 @@ const formSubmit = (store) => (next) => (action) => {
     }
 
     // use a flag reset true or false
-    if (formKey !== "login" && formKey !== "register" && formKey !== "profile" && formKey !== "employeeLogin" && formKey !== "profileEmployee") {
+    if (
+      formKey !== "login" &&
+      formKey !== "register" &&
+      formKey !== "profile" &&
+      formKey !== "employeeLogin" &&
+      formKey !== "profileEmployee" &&
+      formKey !== "employeeForgotPasswd"
+    ) {
       dispatch(resetForm(formKey));
     }
 

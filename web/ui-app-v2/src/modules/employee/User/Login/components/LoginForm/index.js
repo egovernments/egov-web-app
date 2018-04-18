@@ -12,15 +12,13 @@ const LoginForm = ({ submitForm, onChange, form, formKey, onForgotPasswdCLick })
       textChildren={
         <div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              submitForm(formKey);
-            }}
-          >
+          <form>
             <TextField onChange={(e, value) => onChange(formKey, "username", value)} {...fields.username} />
             <TextField onChange={(e, value) => onChange(formKey, "password", value)} {...fields.password} />
-            <Button {...submit} fullWidth={true} primary={true} />
+            <div onClick={onForgotPasswdCLick}>
+              <Label style={{ marginBottom: "12px" }} className=" forgot-passwd" fontSize={14} label="FORGOT PASSWORD?" onCLick />
+            </div>
+            <Button {...submit} fullWidth={true} onClick={() => submitForm(formKey)} primary={true} />
           </form>
         </div>
       }
