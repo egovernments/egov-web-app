@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "utils/translationNode";
-import { getDateFromEpoch } from "utils/commons";
+import { getDateFromEpoch, displayLocalizedStatusMessage } from "utils/commons";
 import "./index.css";
 
 const Updates = ({ updates, history }) => {
@@ -10,16 +10,15 @@ const Updates = ({ updates, history }) => {
     let transformedstatus = "";
     const titleKey = title && "SERVICEDEFS." + title.toUpperCase();
     if (status) {
-      if (status.toLowerCase() == "opened") {
-        if (action && action === "reopen") {
-          transformedstatus = `CS_COMMON_REOPENED`;
-        } else {
-          transformedstatus = `CS_COMMON_SUBMITTED`;
-        }
+      if (status === "open" && action && action === "reopen") {
+        transformedstatus = displayLocalizedStatusMessage("reopened");
+      } else if (status === "assigned" && action && action === "reassign") {
+        transformedstatus = displayLocalizedStatusMessage("reassigned");
       } else {
-        transformedstatus = `CS_COMMON_${status.toUpperCase()}`;
+        transformedstatus = displayLocalizedStatusMessage(status);
       }
     }
+
     return (
       <Card
         style={{ margin: "8px 0px" }}
@@ -49,15 +48,7 @@ const Updates = ({ updates, history }) => {
               <Label fontSize={12} label={getDateFromEpoch(date)} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
             <div className="complaint-status" style={{ marginTop: "16px" }}>
-              <Label
-                containerStyle={{ display: "inline-block" }}
-                label={status === `Re-assign Requested` ? `CS_HOME_STATUS_REASSIGN_PREFIX` : `CS_HOME_STATUS_PREFIX`}
-              />
-              <Label
-                containerStyle={{ display: "inline-block", marginLeft: "4px" }}
-                dark={true}
-                label={status === `Re-assign Requested` ? `CS_COMMON_REASSIGNED` : `${transformedstatus}`}
-              />
+              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={transformedstatus} />
             </div>
           </div>
         }

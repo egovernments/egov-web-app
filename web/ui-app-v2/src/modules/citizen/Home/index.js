@@ -4,7 +4,7 @@ import Banner from "modules/common/Banner";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "redux/complaints/actions";
-import { mapCompIDToName, displayStatus } from "utils/commons";
+import { mapCompIDToName } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -40,17 +40,21 @@ const mapStateToProps = (state) => {
   let updates = [];
   Object.keys(complaints.byId).forEach((complaintKey, index) => {
     let complaintObj = {};
-    complaintObj.status = displayStatus(complaints.byId[complaintKey].status);
-    complaintObj.action =
-      complaints.byId[complaintKey].actions && complaints.byId[complaintKey].actions[0] && complaints.byId[complaintKey].actions[0].action;
+    let complaintactions = complaints.byId[complaintKey].actions && complaints.byId[complaintKey].actions.filter((complaint) => complaint.status);
+    complaintObj.status = complaints.byId[complaintKey].status;
+    complaintObj.action = complaintactions && complaintactions[0].action;
     complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
     complaintObj.date = complaints.byId[complaintKey].auditDetails.createdTime;
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
   // debugger;
-  var closedComplaints = orderby(updates.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
-  var nonClosedComplaints = orderby(updates.filter((complaint) => complaint.status !== "Closed"), ["date"], ["desc"]);
+  var closedComplaints = orderby(updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() === "closed"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(
+    updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() != "closed"),
+    ["date"],
+    ["desc"]
+  );
   return { updates: [...nonClosedComplaints, ...closedComplaints] };
 };
 

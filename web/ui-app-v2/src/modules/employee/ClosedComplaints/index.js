@@ -71,8 +71,8 @@ const isAssigningOfficer = (roles) => {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  if (status.toLowerCase() == "closed" || status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
-    statusObj.status = "CS_COMMON_CLOSED_UCASE";
+  if (status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
+    statusObj.status = `CS_COMMON_${status.toUpperCase()}_UCASE`;
   } else {
     statusObj.status = status;
   }
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
     };
   });
-  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"),"date","desc");
+  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "date", "desc");
 
   return { userInfo, closedComplaints, role };
 };
