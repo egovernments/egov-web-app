@@ -6,6 +6,7 @@ import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
 import { connect } from "react-redux";
+import orderby from "lodash/orderBy";
 import "./index.css";
 
 class ClosedComplaints extends Component {
@@ -99,7 +100,7 @@ const mapStateToProps = (state) => {
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
     };
   });
-  const closedComplaints = transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED");
+  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"),"date","desc");
 
   return { userInfo, closedComplaints, role };
 };
