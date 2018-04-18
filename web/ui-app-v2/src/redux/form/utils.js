@@ -1,7 +1,7 @@
 export const validateField = (field) => {
   const { required, pattern, minLength, maxLength, minValue, maxValue } = field;
 
-  const value = field.value || "";
+  const value = field.value ? (typeof field.value === "string" ? field.value.trim() : field.value) : "";
   const fieldLength = value.length;
   let errorText = "",
     isFieldValid = true;
