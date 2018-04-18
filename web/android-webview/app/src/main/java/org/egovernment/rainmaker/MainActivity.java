@@ -40,6 +40,8 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
 	final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 	private static String URL   = "https://egov-micro-dev.egovernments.org/app/v3/citizen/user/language-selection"; //complete URL of your website or webpage
-	private String FILE_TYPE       = "image/*";  //to upload any file type using "*/*"; check file type references for more
+	private String FILE_TYPE    = "image/*";  //to upload any file type using "*/*"; check file type references for more
+	public static String HOST	= getHost(URL);
 
 	//Careful with these variable names if altering
     private WebView webView;
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 	private final static int REQUEST_FILE_PERMISSIONS = 2;
 	private final static int loc_perm = 3;
 	private final static int sms_receive_perm = 4;
+
+
+	private SecureRandom random = new SecureRandom();
+
 
 	private GeolocationPermissions.Callback mGeoLocationCallback = null;
 	private String mGeoLocationRequestOrigin = null;
@@ -163,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 		webView.getSettings().setGeolocationDatabasePath(getFilesDir().getPath());
 
         //Rendering the default URL
-        aswm_view(URL);
+        loadView(URL,false);
 
         webView.setWebChromeClient(new WebChromeClient() {
             // handling geolocation
@@ -240,9 +247,12 @@ public class MainActivity extends AppCompatActivity {
             List<String> pr = data.getPathSegments();
             String param1   = pr.get(0);
             */
-            aswm_view(path);
+            loadView(path,false);
         }
     }
+
+
+
 
     @Override
     public void onResume() {
@@ -270,20 +280,20 @@ public class MainActivity extends AppCompatActivity {
 		@Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Toast.makeText(getApplicationContext(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
-        }
+			loadView("file:///android_res/raw/error.html", false);
+		}
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             Toast.makeText(getApplicationContext(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
-        }
+			loadView("file:///android_res/raw/error.html", false);
+		}
 
 		//Overriding org.egovernment.org.egovernment.org.egovernment.rainmaker URLs
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			startActivity(intent);
-			return true;
+			return url_actions(view, url);
 		}
 
 
@@ -291,18 +301,86 @@ public class MainActivity extends AppCompatActivity {
 		@TargetApi(Build.VERSION_CODES.N)
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-			String url = request.getUrl().toString();
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-			startActivity(intent);
-			return true;
+			return url_actions(view, request.getUrl().toString());
         }
     }
 
-    //Opening URLs inside org.egovernment.org
-    void aswm_view(String url) {
-        webView.loadUrl(url);
-    }
+	//Actions based on shouldOverrideUrlLoading
+	public boolean url_actions(WebView view, String url){
+		boolean returnValue = true;
+		//Show toast error if not connected to the network
+		if (!DetectConnection.isInternetAvailable(MainActivity.this)) {
+			Toast.makeText(getApplicationContext(), "Please check your Network Connection!", Toast.LENGTH_SHORT).show();
+			//Use this in a hyperlink to redirect back to default URL :: href="refresh:android"
+		} else if (url.startsWith("refresh:")) {
+			loadView(URL, false);
+	//Use this in a hyperlink to launch default phone dialer for specific number :: href="tel:+919876543210"
+		} else if (url.startsWith("tel:")) {
+			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+			startActivity(intent);
 
+			//Use this to open your apps page on google play store app :: href="rate:android"
+		} else if (url.startsWith("share:")) {
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(Intent.EXTRA_SUBJECT, view.getTitle());
+			intent.putExtra(Intent.EXTRA_TEXT, view.getTitle()+"\nVisit: "+(Uri.parse(url).toString()).replace("share:",""));
+			startActivity(Intent.createChooser(intent, "Share with your Friends"));
+
+			//Use this in a hyperlink to exit your app :: href="exit:android"
+		} else if (url.startsWith("exit:")) {
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+
+			//Opening external URLs in android default web browser
+		} else if (!getHost(url).equals(HOST)) {
+			loadView(url,true);
+		} else {
+			returnValue  = false;
+		}
+		return returnValue;
+	}
+
+
+	//Getting host name; move these to utils later
+	private static String getHost(String url){
+		if (url == null || url.length() == 0) {
+			return "";
+		}
+		int dslash = url.indexOf("//");
+		if (dslash == -1) {
+			dslash = 0;
+		} else {
+			dslash += 2;
+		}
+		int end = url.indexOf('/', dslash);
+		end = end >= 0 ? end : url.length();
+		int port = url.indexOf(':', dslash);
+		end = (port > 0 && port < end) ? port : end;
+		Log.w("URL Host: ",url.substring(dslash, end));
+		return url.substring(dslash, end);
+	}
+
+
+	//Random ID creation function to help get fresh cache every-time webview reloaded
+	private String random_id() {
+		return new BigInteger(130, random).toString(32);
+	}
+
+
+
+	//Opening URLs inside webview with request
+	void loadView(String url, Boolean tab) {
+		if (tab) {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(url));
+			startActivity(intent);
+		} else {
+			webView.loadUrl(url+"?rid="+random_id());
+		}
+	}
 
 
 	//Checking if particular permission is given or not
