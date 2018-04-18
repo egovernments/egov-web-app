@@ -53,7 +53,11 @@ export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
     const state = getState();
     const form = state.form[formKey];
+    const { loading } = form;
     const isFormValid = validateForm(form);
+    if (loading) {
+      return;
+    }
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
       try {
