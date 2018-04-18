@@ -4,8 +4,20 @@ import { httpRequest, loginRequest } from "utils/api";
 import { AUTH, USER, OTP } from "utils/endPoints";
 import { prepareFormData } from "utils/commons";
 
-export const userProfileUpdated = (payload) => {
-  const user = payload.user[0];
+// temp fix
+const fixUserDob = (user = {}) => {
+  const dob = user.dob;
+  let transformeddob = null;
+  if (dob && dob !== null) {
+    let date = new Date(dob);
+    transformeddob = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    user = { ...user, dob: transformeddob };
+  }
+  return user;
+};
+
+export const userProfileUpdated = (payload = {}) => {
+  const user = fixUserDob(payload.user[0]);
   window.localStorage.setItem("user-info", JSON.stringify(user));
   return { type: authType.USER_PROFILE_UPDATED, user };
 };
@@ -15,18 +27,9 @@ export const userProfileUpdateError = (error) => {
 };
 
 //user search success/failure
-export const searchUserSuccess = (user) => {
-  user = user.user[0];
+export const searchUserSuccess = (user = {}) => {
+  user = fixUserDob(user.user[0]);
   //temporary fix for dat of birth format issue in prfile update
-  if (user) {
-    const dob = user.dob;
-    let transformeddob = null;
-    if (dob && dob !== null) {
-      let date = new Date(dob);
-      transformeddob = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-      user.dob = transformeddob;
-    }
-  }
   window.localStorage.setItem("user-info", JSON.stringify(user));
   return { type: authType.USER_SEARCH_SUCCESS, user };
 };
@@ -39,8 +42,8 @@ export const authenticating = () => {
   return { type: authType.AUTHENTICATING };
 };
 
-export const authenticated = (payload) => {
-  const userInfo = payload["UserRequest"];
+export const authenticated = (payload = {}) => {
+  const userInfo = fixUserDob(payload["UserRequest"]);
   const accessToken = payload.access_token;
   const refreshToken = payload.refresh_token;
   const expiresIn = payload.expires_in;
