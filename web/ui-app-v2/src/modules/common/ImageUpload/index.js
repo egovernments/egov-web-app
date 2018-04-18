@@ -24,12 +24,12 @@ const labelStyle = {
 const Placeholder = ({ className, onFilePicked, inputProps, hide }) => {
   return (
     <div className={`${className} upload-placeholder`} style={hide ? { visibility: "hidden" } : {}}>
-      <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
-        <FilePicker inputProps={{ ...inputProps, multiple: false }} handleimage={onFilePicked}>
+      <FilePicker inputProps={{ ...inputProps, multiple: false }} handleimage={onFilePicked}>
+        <FloatingActionButton backgroundColor="#767676" iconStyle={{ height: "40px", width: "40px" }} style={{ boxShadow: 0, marginBottom: "4px" }}>
           <Icon id="image-upload" name="add-a-photo" action="image" style={{ height: "20px", width: "20px" }} color={"#ffffff"} />
-        </FilePicker>
-      </FloatingActionButton>
-      <Label label="CS_COMMON_UPLOAD_PHOTOS" labelStyle={labelStyle} fontSize="12px" />
+        </FloatingActionButton>
+        <Label label="CS_COMMON_UPLOAD_PHOTOS" labelStyle={labelStyle} fontSize="12px" />
+      </FilePicker>
     </div>
   );
 };
@@ -74,14 +74,12 @@ class ImageUpload extends Component {
       <div className="upload-photo-overlay">
         {loading && <LoadingIndicator />}
         {!images.length ? (
-          <div>
+          <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
             <div className="upload-icon-cont">
-              <FilePicker inputProps={inputProps} handleimage={onFilePicked}>
-                <Icon id="image-upload" action="image" name="add-a-photo" style={iconStyle} color={"#ffffff"} />
-              </FilePicker>
+              <Icon id="image-upload" action="image" name="add-a-photo" style={iconStyle} color={"#ffffff"} />
             </div>
             <Label label="CS_COMMON_UPLOAD_PHOTOS" labelStyle={labelStyle} fontSize="12px" />
-          </div>
+          </FilePicker>
         ) : (
           <div className="upload-images-cont">
             {images.map((image, index) => {
