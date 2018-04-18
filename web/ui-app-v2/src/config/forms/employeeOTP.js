@@ -34,7 +34,7 @@ const formConfig = {
     },
   },
   submit: {
-    label: "CORE_COMMON_FORGOT_PASSWORD_LABEL",
+    label: "CORE_COMMON_CHANGE_PASSWORD",
     id: "forgot-password-submit-action",
   },
   saveUrl: "/user/password/nologin/_update",

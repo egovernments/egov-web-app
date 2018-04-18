@@ -15,7 +15,7 @@ const OTPForm = ({ submitOTPForm, onChange, form, resendOTP, formKey, phoneNumbe
       className="user-screens-card"
       textChildren={
         <div>
-          <Label className="text-center" bold={true} dark={true} fontSize={16} label="CHANGE PASSWORD" />
+          <Label className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_FORGOT_PASSWORD_LABEL" />
           <div className="citizen-otp-sent-message" style={{ marginTop: 24 }}>
             <Label label="CORE_OTP_SENT_MESSAGE" />
             <Label label={" " + phoneNumber} />
