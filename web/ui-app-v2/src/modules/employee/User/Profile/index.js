@@ -19,7 +19,7 @@ class Profile extends Component {
     this.formConfig = require("config/forms/profileEmployee").default;
   }
   componentDidMount() {
-    const { name, mobileNumber, emailId, tenantId, photo: imageUri } = this.props.userInfo;
+    const { name, mobileNumber, emailId, photo: imageUri } = this.props.userInfo;
     let { formConfig } = this;
     formConfig = {
       ...formConfig,

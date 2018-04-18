@@ -1,6 +1,5 @@
 import React from "react";
 import { Icon, TextArea, Image } from "components";
-import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
 import emptyFace from "../../../../../assets/images/download.png";
 import "./index.css";
