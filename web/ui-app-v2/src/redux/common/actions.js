@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "utils/api";
-import { TENANT, EMPLOYEE, CITIZEN, MDMS } from "utils/endPoints";
+import { EMPLOYEE, CITIZEN, MDMS } from "utils/endPoints";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };

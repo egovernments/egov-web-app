@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, MobileNumberField, TextField } from "components";
+import { Button, Card, TextField } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 

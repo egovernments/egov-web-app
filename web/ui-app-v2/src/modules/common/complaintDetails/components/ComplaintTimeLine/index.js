@@ -211,7 +211,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
           {role && (
             <div>
-              <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Re-Assign requested"}`} />
+              <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`} />
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 && (
                   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>

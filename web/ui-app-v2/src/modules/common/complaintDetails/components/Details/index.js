@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon, ImageModal } from "../../../../../components";
+import { Card, Image, Icon, ImageModal, Button } from "../../../../../components";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -48,21 +48,7 @@ class Details extends Component {
   };
 
   render() {
-    let {
-      status,
-      complaint,
-      applicationNo,
-      description,
-      submittedDate,
-      address,
-      latitude,
-      longitude,
-      images,
-      mapAction,
-      action,
-      role,
-      history,
-    } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, action, role } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -153,7 +139,7 @@ class Details extends Component {
                     <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
                   </div>
                 </div>
-                {mapAction && (
+                {/* {mapAction && (
                   <div
                     className="complaint-details-timline-button complaint-map-btn"
                     onClick={(e) => {
@@ -163,7 +149,31 @@ class Details extends Component {
                     <Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />
                     MAP
                   </div>
-                )}
+                )} */}
+                {
+                  <Button
+                    buttonLabel={true}
+                    className="employee-complaint-summary-mapBtn"
+                    primary={true}
+                    label={<Label label={"ES_COMPLAINT_SUMMARY_MAP"} fonstSize="12px" color="#ffffff" />}
+                    style={{
+                      height: "auto",
+                      lineHeight: "auto",
+                      minWidth: "inherit",
+                    }}
+                    labelStyle={{
+                      padding: "0 12px 0 0 ",
+                      letterSpacing: "0.6px",
+                      display: "inline-block",
+                      height: "35px",
+                      lineHeight: "35px",
+                    }}
+                    icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
+                    onClick={(e) => {
+                      this.props.redirectToMap(true, { lat: latitude, lng: longitude });
+                    }}
+                  />
+                }
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />

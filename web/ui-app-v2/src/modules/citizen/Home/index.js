@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
   });
   // debugger;
   var closedComplaints = orderby(updates.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
-  var nonClosedComplaints = orderby(updates.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(updates.filter((complaint) => complaint.status !== "Closed"), ["date"], ["desc"]);
   return { updates: [...nonClosedComplaints, ...closedComplaints] };
 };
 

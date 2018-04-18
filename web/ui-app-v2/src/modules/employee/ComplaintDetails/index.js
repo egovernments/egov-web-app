@@ -10,7 +10,6 @@ import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages } from "utils/c
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -43,7 +42,7 @@ class ComplaintDetails extends Component {
   };
 
   componentDidMount() {
-    let { fetchComplaints, match, fetchEmployees } = this.props;
+    let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     let { details } = this.state;
     if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
@@ -58,7 +57,7 @@ class ComplaintDetails extends Component {
           status: "Rejected",
         },
       });
-    } else if (this.props.location && this.props.location.search.split("=")[1] == "filed") {
+    } else if (this.props.location && this.props.location.search.split("=")[1] === "filed") {
       this.setState({
         status: {
           status: "Submitted",
@@ -160,7 +159,7 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { status, details, comments, hasComments, location, openMap } = this.state;
+    let { comments, location, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { role, serviceRequestId, history } = this.props;
     let btnOneLabel = "";
