@@ -6,7 +6,7 @@ const formConfig = {
       jsonPath: "employee.username",
       required: true,
       floatingLabelText: "CORE_LOGIN_USERNAME",
-      errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
+      errorMessage: "CORE_COMMON_USERNAME_INVALIDMSG",
       hintText: "CORE_LOGIN_USERNAME_PLACEHOLDER",
       pattern: "^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$",
       value: "",
