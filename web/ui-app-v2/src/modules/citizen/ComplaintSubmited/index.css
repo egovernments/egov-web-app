@@ -1,6 +1,8 @@
 .complaint-submitted-card {
   text-align: center;
   background-color: #ffffff;
+  position: absolute !important;
+  top: 25%;
 }
 .complaint-submitted-boldlabel {
   padding-top: 20px;
@@ -8,7 +10,7 @@
 .complaint-submitted-boldlabel .label-text {
   color: #484848;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .complaint-submitted-label .label-text {
   padding: 0px 50px 24px 50px;
@@ -17,13 +19,8 @@
   position: fixed !important;
   left: 0px;
   width: 100%;
-  bottom: 16px;
+  bottom: 10px;
   padding: 8px !important;
-}
-
-.complaint-submitted-card {
-  position: absolute !important;
-  top: 30%;
 }
 
 .complaint-submitted-complaintNo-cont {
