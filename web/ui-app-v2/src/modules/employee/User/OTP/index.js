@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Banner from "modules/common/Banner";
-import OTPForm from "./components/OTPForm";
+import OTPForm from "modules/common/User/components/OTPForm";
 
 class OTP extends Component {
   state = {

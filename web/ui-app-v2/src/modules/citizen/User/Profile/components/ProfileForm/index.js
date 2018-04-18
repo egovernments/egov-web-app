@@ -17,10 +17,10 @@ const ProfileForm = ({ formKey, form, onChange, submitForm }) => {
         <TextField {...fields.name} onChange={(e, value) => onChange(formKey, "name", value)} />
         <CityPicker onChange={onChange} formKey={formKey} fieldKey="city" field={fields.city} />
         <TextField {...fields.email} onChange={(e, value) => onChange(formKey, "email", value)} />
+        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
+          <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
+        </div>
       </form>
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
-        <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
-      </div>
     </div>
   );
 };
