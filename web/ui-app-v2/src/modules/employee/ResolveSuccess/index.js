@@ -13,8 +13,8 @@ class ResolveSuccess extends Component {
     return (
       <div className="success-message-main-screen resolve-success">
         <SuccessMessage
-          successmessage="You have marked the complaint as"
-          secondaryLabel="Resolved"
+          successmessage="ES_COMPLAINT_RESOLVED_SUCCESS_MESSAGE"
+          secondaryLabel="CS_COMMON_RESOLVED"
           containerStyle={{ display: "inline-block" }}
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
