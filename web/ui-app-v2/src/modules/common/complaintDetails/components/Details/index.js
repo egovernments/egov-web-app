@@ -48,7 +48,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, images, action, role } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, mapAction, images, action, role } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {
@@ -150,7 +150,7 @@ class Details extends Component {
                     MAP
                   </div>
                 )} */}
-                {
+                {mapAction && (
                   <Button
                     buttonLabel={true}
                     className="employee-complaint-summary-mapBtn"
@@ -173,7 +173,7 @@ class Details extends Component {
                       this.props.redirectToMap(true, { lat: latitude, lng: longitude });
                     }}
                   />
-                }
+                )}
                 <div className="row" style={{ marginTop: "25px" }}>
                   <div className="col-xs-2">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />

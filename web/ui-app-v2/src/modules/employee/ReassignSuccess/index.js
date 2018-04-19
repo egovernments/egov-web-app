@@ -12,7 +12,7 @@ class ReassignSuccess extends Component {
     return (
       <div className="success-message-main-screen">
         <SuccessMessage
-          successmessage="Your Re-Assign request has been sent."
+          successmessage="ES_REASSIGN_REQUEST_SUCCESS_MESSAGE"
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
