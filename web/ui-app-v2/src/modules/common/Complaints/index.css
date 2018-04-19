@@ -104,7 +104,7 @@
 .employee-bottom-info-cont {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .submitted-by-text {

@@ -114,7 +114,6 @@ class ComplaintDetails extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.history.location.search === "?map") {
-      console.log("hit");
       this.setState({ openMap: true });
     } else {
       this.setState({ openMap: false });
@@ -258,11 +257,11 @@ const getLatestStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
     case "open":
-      transformedStatus = "UNASSIGNED";
-      break;
     case "new":
       transformedStatus = "UNASSIGNED";
       break;
+    case "resolved":
+    case "rejected":
     case "closed":
       transformedStatus = "CLOSED";
       break;

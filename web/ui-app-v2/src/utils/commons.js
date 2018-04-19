@@ -290,3 +290,7 @@ export const isFileImage = (file) => {
   const mimeType = file["type"];
   return (mimeType && mimeType.split("/")[0] == "image") || false;
 };
+
+export const getNameFromId = (obj, id, defaultValue) => {
+  return obj && id && obj[id] ? obj[id].name : defaultValue;
+};

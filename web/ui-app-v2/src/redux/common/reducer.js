@@ -16,11 +16,14 @@ const commonReducer = (state = intialState, action) => {
         },
       };
     case commonTypes.EMPLOYEE_FETCH_SUCCESS:
-      console.log(action.payload);
+      let employeeById = transformById(action.payload.Employee, "id");
       return {
         ...state,
         loading: false,
-        employees: action.payload,
+        employeeById: {
+          ...state.employeeById,
+          ...employeeById,
+        },
       };
     case commonTypes.EMPLOYEE_FETCH_ERROR:
       return {

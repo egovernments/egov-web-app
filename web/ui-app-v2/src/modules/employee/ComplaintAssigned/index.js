@@ -2,22 +2,29 @@ import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "utils/translationNode";
 import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import { fetchComplaints } from "redux/complaints/actions";
+import { connect } from "react-redux";
 import "modules/common/SuccessMessage/components/successmessage/index.css";
 
 class ComplaintAssigned extends Component {
+  componentDidMount = () => {
+    let { fetchComplaints, match } = this.props;
+    fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+  };
+
   handleComplaintReassigned = () => {
     this.props.history.push("/employee/all-complaints");
   };
 
   render() {
-    let designation = "Senior Inspector";
-    let department = "Health & Sanitation Department";
+    let { employeeDetails } = this.props;
+    const isReassign = window.location.href.includes("complaint-reassigned") ? true : false;
     return (
       <div className="success-message-main-screen">
         <SuccessMessage
-          successmessage="Assigned to Amrinder Singh"
-          secondaryLabel={designation}
-          tertiaryLabel={department}
+          successmessage={(isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
+          secondaryLabel={employeeDetails && employeeDetails.employeeDesignation}
+          tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment + " Department"}
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
@@ -35,4 +42,29 @@ class ComplaintAssigned extends Component {
   }
 }
 
-export default ComplaintAssigned;
+const getNameFromId = (obj, id, defaultValue) => {
+  return obj && id && obj[id] ? obj[id].name : defaultValue;
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const { complaints } = state;
+  const { history } = ownProps;
+  const { loading } = state.form || false;
+  const { departmentById, designationsById, employeeById } = state.common;
+  let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  const selectedEmployee = employeeById[selectedComplaint.actions[0].assignee];
+  const employeeDetails = {
+    employeeName: selectedEmployee && selectedEmployee.name,
+    employeeDesignation: selectedEmployee && getNameFromId(designationsById, selectedEmployee.assignments[0].designation, "Engineer"),
+    employeeDepartment: selectedEmployee && getNameFromId(departmentById, selectedEmployee.assignments[0].department, "Administration"),
+  };
+  return { employeeDetails };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComplaintAssigned);
