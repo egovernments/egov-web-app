@@ -7,6 +7,7 @@ import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
+import Label from "utils/translationNode";
 import "./index.css";
 
 class RequestReAssign extends Component {
@@ -23,12 +24,11 @@ class RequestReAssign extends Component {
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     this.props.initForm(this.formConfig);
   }
-
   options = [
-    { value: "Not my Department", label: "Not my Department" },
-    { value: "Not my Jurisdiction", label: "Not my Jurisdiction" },
-    { value: "Absent or Leave", label: "Absent or Leave" },
-    { value: "Not a valid Complaint", label: "Not a valid Complaint" },
+    { value: "Not my Department", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
+    { value: "Not my Jurisdiction", label: <Label label="ES_REASSIGN_OPTION_TWO" /> },
+    { value: "Absent or Leave", label: <Label label="ES_REASSIGN_OPTION_THREE" /> },
+    { value: "Not a valid Complaint", label: <Label label="ES_REASSIGN_OPTION_FOUR" /> },
   ];
 
   commentsValue = {};
@@ -75,7 +75,7 @@ class RequestReAssign extends Component {
           <div className="request-reaasign-question">
             <Question
               options={this.options}
-              label={"Why do you want this complaint to be Re-Assined?"}
+              label={"ES_REASSIGN_REQUEST_QUESTION"}
               handleChange={handleOptionsChange}
               valueSelected={valueSelected}
             />
