@@ -114,7 +114,7 @@ const getStatusAndChangeColor = (status, assignee) => {
       break;
     case "CS_COMMON_REJECTED_UCASE":
       statusObj.style = {
-        color: "#5385a6",
+        color: "#484848",
       };
       statusObj.message = (
         <div>
@@ -172,7 +172,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
 
                   <Label
                     className="complaint-status-text text-bold"
-                    labelStyle={{ letterSpacing: 0.7, ...getStatusAndChangeColor(complaint.status.status).style }}
+                    labelStyle={{ letterSpacing: 0.7, wordBreak: "normal", ...getStatusAndChangeColor(complaint.status.status).style }}
                     label={complaint.status.status}
                   />
                 </div>
@@ -209,10 +209,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                     </div>
                   )}
                 {role === "citizen" && (
-                  <div className="complaint-status-cont">
-                    <Label label={"CS_HOME_STATUS_PREFIX"} />
-                    <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
-                  </div>
+                  <Label labelStyle={{ marginLeft: "3px" }} label={complaint.status.statusMessage} className="complaint-status-text dark-color" />
                 )}
                 {bottomInfoTemplate(complaint, role)}
               </div>

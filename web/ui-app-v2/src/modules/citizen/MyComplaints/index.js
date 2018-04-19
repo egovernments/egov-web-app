@@ -7,7 +7,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage,fetchImages } from "utils/commons";
+import { mapCompIDToName, isImage, fetchImages, displayLocalizedStatusMessage } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -59,23 +59,26 @@ class MyComplaints extends Component {
   }
 }
 
-const displayStatus = (status = "", assignee) => {
+const displayStatus = (status = "", assignee, action) => {
   let statusObj = {};
   if (status.toLowerCase() == "closed" || status.toLowerCase() == "rejected" || status.toLowerCase() == "resolved") {
     statusObj.status = "CS_COMMON_CLOSED_UCASE";
   } else {
     statusObj.status = "CS_COMMON_OPEN_UCASE";
   }
-  if (status.toLowerCase() == "open") {
-    statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
-  } else {
-    statusObj.statusMessage = `CS_COMMON_${status.toUpperCase()}`;
+
+  if (status) {
+    if (status === "open" && action && action === "reopen") {
+      statusObj.statusMessage = displayLocalizedStatusMessage("reopened");
+    } else if (status === "assigned" && action && action === "reassign") {
+      statusObj.statusMessage = displayLocalizedStatusMessage("reassigned");
+    } else {
+      statusObj.statusMessage = displayLocalizedStatusMessage(status);
+    }
   }
 
   return statusObj;
 };
-
-
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
@@ -83,9 +86,10 @@ const mapStateToProps = (state) => {
   let transformedComplaints = [];
   Object.keys(complaints.byId).forEach((complaint, index) => {
     let complaintObj = {};
+    let complaintactions = complaints.byId[complaint].actions && complaints.byId[complaint].actions.filter((complaint) => complaint.status);
     complaintObj.header = mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode);
     complaintObj.date = complaints.byId[complaint].auditDetails.createdTime;
-    complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee);
+    complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee, complaintactions[0].action);
     complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
     complaintObj.images = fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource));
 
