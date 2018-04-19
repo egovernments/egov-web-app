@@ -7,6 +7,7 @@ import TextArea from "../../common/ReOpenComplaint/components/TextArea";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
+import Label from "utils/translationNode";
 import "./index.css";
 
 class RejectComplaint extends Component {
@@ -23,11 +24,12 @@ class RejectComplaint extends Component {
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
     this.props.initForm(this.formConfig);
   }
+
   options = [
-    { value: "Not a valid complaint", label: "Not a valid complaint" },
-    { value: "Out of operational scope", label: "Out of operational scope" },
-    { value: "Operation already underway", label: "Operation already underway" },
-    { value: "Other", label: "Other " },
+    { value: "Not a valid complaint", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
+    { value: "Out of operational scope", label: <Label label="ES_REJECT_OPTION_TWO" /> },
+    { value: "Operation already underway", label: <Label label="ES_REJECT_OPTION_THREE" /> },
+    { value: "Other", label: <Label label="ES_REJECT_OPTION_FOUR" /> },
   ];
 
   commentsValue = {};
@@ -74,7 +76,7 @@ class RejectComplaint extends Component {
           <div className="reject-complaint-question">
             <Question
               options={this.options}
-              label={"Why do you want to Reject this complaint ?"}
+              label={"ES_REJECT_COMPLAINT_QUESTION"}
               handleChange={handleOptionsChange}
               valueSelected={valueSelected}
             />

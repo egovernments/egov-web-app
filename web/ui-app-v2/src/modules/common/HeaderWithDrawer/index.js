@@ -185,13 +185,13 @@ class HeaderWithDrawer extends Component {
         id: "header-home",
       },
       {
-        primaryText: "Closed Complaints",
+        primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
         route: "/employee/closed-complaints",
         leftIcon: <Icon action="custom" name="file-check" />,
         id: "header-closed-complaint",
       },
       {
-        primaryText: "Employee Directory",
+        primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
         route: "/employee/employee-directory",
         leftIcon: <Icon action="communication" name="call" />,
         style: {

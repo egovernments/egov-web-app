@@ -121,7 +121,7 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/citizen/add-complaint"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_SUMMARY_HEADER" />}
+          title={<Label className="screenHeaderLabelStyle" label="CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" />}
           component={AddComplaint}
         />
         {/* Employee routes */}
@@ -136,7 +136,7 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/request-reassign/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="Request Re-Assign" />}
+          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_REQUEST_REASSIGN" />}
           component={RequestReAssign}
         />
         <PrivateRoute
@@ -167,7 +167,7 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/complaint-reassigned/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="Complaint Re-Assigned" />}
+          title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_REASSIGNED_HEADER" />}
           component={ComplaintAssigned}
         />
         <PrivateRoute
@@ -181,7 +181,7 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/reassign-success"
-          title={<Label className="screenHeaderLabelStyle" label="Re-Assign requested" />}
+          title={<Label className="screenHeaderLabelStyle" label="CS_COMMON_RE-ASSIGN REQUESTED" />}
           component={ReassignSuccess}
         />
         <PrivateRoute
@@ -218,14 +218,14 @@ const Main = () => {
           exact
           hideBottomNavigation={true}
           path="/employee/employee-directory"
-          title={<Label className="screenHeaderLabelStyle" label="Employee Directory" />}
+          title={<Label className="screenHeaderLabelStyle" label="ES_EMPLOYEE_DIRECTORY_HEADER" />}
           component={EmployeeDirectory}
         />
         <PrivateRoute
           exact
           hideBottomNavigation={true}
           path="/employee/reject-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="Reason to Reject" />}
+          title={<Label className="screenHeaderLabelStyle" label="ES_REASON_TO_REJECT_HEADER" />}
           component={RejectComplaint}
         />
         <PrivateRoute
