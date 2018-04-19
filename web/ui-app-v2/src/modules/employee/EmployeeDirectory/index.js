@@ -23,4 +23,14 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(EmployeeDirectory);
+const mapStateToProps = (state, ownProps) => {
+  const { loading } = state.form || false;
+  const { departmentById, designationsById, employeeById } = state.common;
+  const APIData = Object.keys(employeeById).map((item, index) => {
+    return employeeById[item];
+  });
+
+  return { designationsById, departmentById, APIData };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeDirectory);

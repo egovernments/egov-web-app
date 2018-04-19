@@ -52,7 +52,7 @@ export const OTP = {
 
 export const EMPLOYEE = {
   GET: {
-    URL: "/hr-employee/employees/_search",
+    URL: "/hr-employee-v2/employees/_search",
     ACTION: "_search",
   },
 };

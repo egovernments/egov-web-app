@@ -3,6 +3,7 @@ import { Card, Icon, List, AutoSuggest, Button } from "components";
 import faceOne from "assets/images/faceOne.jpg";
 import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
+import { getNameFromId } from "utils/commons";
 import "./index.css";
 
 export default class ListCard extends Component {
@@ -10,227 +11,7 @@ export default class ListCard extends Component {
     super(props);
     this.formConfig = require("config/forms/assignComplaint").default;
   }
-  APIData = [
-    {
-      id: 23204,
-      code: "658039",
-      salutation: "MR.",
-      name: "narsappa",
-      userName: "narsappa",
-      gender: null,
-      maritalStatus: null,
-      bloodGroup: null,
-      permanentAddress: null,
-      permanentCity: null,
-      permanentPinCode: null,
-      correspondenceAddress: null,
-      correspondenceCity: null,
-      correspondencePinCode: null,
-      guardian: null,
-      mobileNumber: "0123456789",
-      altContactNumber: null,
-      emailId: "mail@gmail.com",
-      pan: null,
-      aadhaarNumber: null,
-      placeOfBirth: null,
-      active: true,
-      type: "EMPLOYEE",
-      languagesKnown: null,
-      employeeStatus: 4,
-      employeeType: 4,
-      group: null,
-      motherTongue: null,
-      identificationMark: null,
-      passportNo: null,
-      gpfNo: null,
-      recruitmentMode: null,
-      recruitmentType: null,
-      recruitmentQuota: null,
-      assignments: [
-        {
-          id: 1,
-          position: 1,
-          fund: null,
-          functionary: null,
-          function: null,
-          department: 1,
-          designation: 1,
-          hod: [],
-          isPrimary: true,
-          fromDate: "01/04/2015",
-          toDate: "31/03/2020",
-          grade: null,
-          govtOrderNumber: null,
-          documents: null,
-          createdBy: 1,
-          createdDate: "30/05/2017",
-          lastModifiedBy: 1,
-          lastModifiedDate: null,
-          tenantId: null,
-        },
-      ],
-      jurisdictions: [],
-      bank: null,
-      bankBranch: null,
-      dateOfRetirement: null,
-      dateOfAppointment: null,
-      dateOfJoining: null,
-      dob: null,
-      retirementAge: null,
-      dateOfResignation: null,
-      dateOfTermination: null,
-      bankAccount: null,
-      ifscCode: null,
-      documents: null,
-      tenantId: "default",
-    },
-    {
-      id: 23205,
-      code: "658039",
-      salutation: "MR.",
-      name: "murali",
-      userName: "murali",
-      gender: null,
-      maritalStatus: null,
-      bloodGroup: null,
-      permanentAddress: null,
-      permanentCity: null,
-      permanentPinCode: null,
-      correspondenceAddress: null,
-      correspondenceCity: null,
-      correspondencePinCode: null,
-      guardian: null,
-      mobileNumber: "0123456789",
-      altContactNumber: null,
-      emailId: "mail@gmail.com",
-      pan: null,
-      aadhaarNumber: null,
-      placeOfBirth: null,
-      active: true,
-      type: "EMPLOYEE",
-      languagesKnown: null,
-      employeeStatus: 4,
-      employeeType: 4,
-      group: null,
-      motherTongue: null,
-      identificationMark: null,
-      passportNo: null,
-      gpfNo: null,
-      recruitmentMode: null,
-      recruitmentType: null,
-      recruitmentQuota: null,
-      assignments: [
-        {
-          id: 1,
-          position: 1,
-          fund: null,
-          functionary: null,
-          function: null,
-          department: 2,
-          designation: 1,
-          hod: [],
-          isPrimary: true,
-          fromDate: "01/04/2015",
-          toDate: "31/03/2020",
-          grade: null,
-          govtOrderNumber: null,
-          documents: null,
-          createdBy: 1,
-          createdDate: "30/05/2017",
-          lastModifiedBy: 1,
-          lastModifiedDate: null,
-          tenantId: null,
-        },
-      ],
-      jurisdictions: [],
-      bank: null,
-      bankBranch: null,
-      dateOfRetirement: null,
-      dateOfAppointment: null,
-      dateOfJoining: null,
-      dob: null,
-      retirementAge: null,
-      dateOfResignation: null,
-      dateOfTermination: null,
-      bankAccount: null,
-      ifscCode: null,
-      documents: null,
-      tenantId: "default",
-    },
-    {
-      id: 23207,
-      code: "658039",
-      salutation: "MR.",
-      name: "manu",
-      userName: "manu",
-      gender: null,
-      maritalStatus: null,
-      bloodGroup: null,
-      permanentAddress: null,
-      permanentCity: null,
-      permanentPinCode: null,
-      correspondenceAddress: null,
-      correspondenceCity: null,
-      correspondencePinCode: null,
-      guardian: null,
-      mobileNumber: "0123456789",
-      altContactNumber: null,
-      emailId: "mail@gmail.com",
-      pan: null,
-      aadhaarNumber: null,
-      placeOfBirth: null,
-      active: true,
-      type: "EMPLOYEE",
-      languagesKnown: null,
-      employeeStatus: 4,
-      employeeType: 4,
-      group: null,
-      motherTongue: null,
-      identificationMark: null,
-      passportNo: null,
-      gpfNo: null,
-      recruitmentMode: null,
-      recruitmentType: null,
-      recruitmentQuota: null,
-      assignments: [
-        {
-          id: 1,
-          position: 1,
-          fund: null,
-          functionary: null,
-          function: null,
-          department: 1,
-          designation: 1,
-          hod: [],
-          isPrimary: true,
-          fromDate: "01/04/2015",
-          toDate: "31/03/2020",
-          grade: null,
-          govtOrderNumber: null,
-          documents: null,
-          createdBy: 1,
-          createdDate: "30/05/2017",
-          lastModifiedBy: 1,
-          lastModifiedDate: null,
-          tenantId: null,
-        },
-      ],
-      jurisdictions: [],
-      bank: null,
-      bankBranch: null,
-      dateOfRetirement: null,
-      dateOfAppointment: null,
-      dateOfJoining: null,
-      dob: null,
-      retirementAge: null,
-      dateOfResignation: null,
-      dateOfTermination: null,
-      bankAccount: null,
-      ifscCode: null,
-      documents: null,
-      tenantId: "default",
-    },
-  ];
+
   state = {
     results: [],
     searchTerm: "",
@@ -255,98 +36,8 @@ export default class ListCard extends Component {
     margin: "0px",
   };
 
-  dataSource = [
-    {
-      id: 0,
-      primaryText: (
-        <Label
-          label="Engineering Department"
-          dark={true}
-          bold={true}
-          containerStyle={{ position: "absolute", top: 0, left: 0 }}
-          labelStyle={this.mainLabelStyle}
-        />
-      ),
-      open: true,
-      nestedItems: [
-        {
-          id: 1,
-          primaryText: <Label label="Amandeep Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-        {
-          id: 2,
-          primaryText: <Label label="Bhavneet Singh (15)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-        {
-          id: 3,
-          primaryText: <Label label="Chirag Kapoor (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-      ],
-    },
-    {
-      id: 5,
-      primaryText: (
-        <Label
-          label="Health & Sanitation Department"
-          dark={true}
-          bold={true}
-          containerStyle={{ position: "absolute", top: 0, left: 0 }}
-          labelStyle={this.mainLabelStyle}
-        />
-      ),
-      open: true,
-      nestedItems: [
-        {
-          id: 6,
-          primaryText: <Label label="Khushwant Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-        {
-          id: 7,
-          primaryText: <Label label="Kunwar Sandhu (15)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-        {
-          id: 8,
-          primaryText: <Label label="Mandeep Singh (10)" dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-          leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
-          secondaryText: <Label label="Junior Engineer" style={{ letterSpacing: 0 }} />,
-          rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
-        },
-      ],
-    },
-  ];
-
-  getDesignation = (status) => {
-    return "Engineer";
-  };
-
-  getDepartment = (deptId) => {
-    switch (deptId) {
-      case 1:
-        return "Department 1";
-        break;
-      case 2:
-        return "Department 2";
-        break;
-    }
-  };
-
   prepareRawDataToFormat = (rawData) => {
-    let { getDepartment, getDesignation } = this;
+    let { designationsById, departmentById } = this.props;
     const seperateByDepartment = rawData.reduce((result, item) => {
       if (!result[item.assignments[0].department]) result[item.assignments[0].department] = [];
       result[item.assignments[0].department].push(item);
@@ -357,7 +48,7 @@ export default class ListCard extends Component {
         id: seperateByDepartment[depDetails][0].assignments[0].department,
         primaryText: (
           <Label
-            label={getDepartment(seperateByDepartment[depDetails][0].assignments[0].department)}
+            label={getNameFromId(departmentById, seperateByDepartment[depDetails][0].assignments[0].department, "Administration")}
             dark={true}
             bold={true}
             containerStyle={{ position: "absolute", top: 0, left: 0 }}
@@ -369,11 +60,26 @@ export default class ListCard extends Component {
           return {
             id: depItem.id,
             primaryText: <Label label={depItem && depItem.name} dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-            leftAvatar: <Avatar size={33} src={faceOne} style={this.avatarStyle} />,
+            leftAvatar: <Avatar size={33} src={depItem.photo ? depItem.photo : faceOne} style={this.avatarStyle} />,
             secondaryText: (
-              <Label label={depItem && depItem.assignments && getDesignation(depItem.assignments[0].designation)} style={{ letterSpacing: 0 }} />
+              <Label
+                label={depItem && depItem.assignments && getNameFromId(designationsById, depItem.assignments[0].designation, "Engineer")}
+                style={{ letterSpacing: 0 }}
+              />
             ),
-            rightIcon: <Icon action="communication" name="call" style={this.callIconStyle} color="#22b25f" />,
+            rightIcon: (
+              <Icon
+                action="communication"
+                name="call"
+                style={this.callIconStyle}
+                color="#22b25f"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const link = `tel:+91${depItem && depItem.mobileNumber}`;
+                  window.location.href = link;
+                }}
+              />
+            ),
           };
         }),
       };
@@ -381,8 +87,8 @@ export default class ListCard extends Component {
   };
 
   componentDidMount() {
-    let { initForm } = this.props;
-    let { prepareRawDataToFormat, APIData } = this;
+    let { initForm, APIData } = this.props;
+    let { prepareRawDataToFormat } = this;
     initForm(this.formConfig);
     const dataSource = prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
@@ -456,7 +162,8 @@ export default class ListCard extends Component {
 
   changeDataSourceAndResultsOnClick = () => {
     let { selectedEmployeeId, searchTerm } = this.state;
-    const { prepareRawDataToFormat, APIData, generateDataSource, returnResults } = this;
+    const { prepareRawDataToFormat, generateDataSource, returnResults } = this;
+    const { APIData } = this.props;
     const rawDataSource = prepareRawDataToFormat(APIData);
     const allResultData = generateDataSource(prepareRawDataToFormat(APIData));
     const realResults = returnResults(searchTerm, allResultData);
@@ -470,9 +177,10 @@ export default class ListCard extends Component {
   };
 
   onEmployeeChosen = (item, index) => {
-    let { handleFieldChange } = this.props;
+    let { handleFieldChange, APIData } = this.props;
+    const { results, searchTerm } = this.state;
     //const displayInitialList = searchTerm.length === 0 ? true : false;
-    const dataSource = this.prepareRawDataToFormat(this.APIData);
+    const dataSource = this.prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
     if (!isEmployeeDirectory) {
@@ -486,7 +194,7 @@ export default class ListCard extends Component {
   renderList = (dataSource, enableClick) => {
     return (
       <List
-        onItemClick={enableClick && this.onEmployeeChosen}
+        onItemClick={this.onEmployeeChosen}
         listItemStyle={{ paddingTop: "8px", paddingBottom: "8px", paddingLeft: "8px", background: "#ffffff" }}
         nestedListStyle={{ padding: "0px" }}
         autoGenerateNestedIndicator={false}
@@ -513,22 +221,15 @@ export default class ListCard extends Component {
     }, []);
   };
 
-  submitAssignee = (formKey, label) => {
-    let { submitForm, history } = this.props;
+  submitAssignee = (formKey, label, serviceRequestId) => {
+    let { submitForm } = this.props;
     let { selectedEmployeeId } = this.state;
     selectedEmployeeId && submitForm(formKey);
-    switch (label) {
-      case "ASSIGN":
-        selectedEmployeeId && history.push("/employee/complaint-assigned");
-        break;
-      case "RE-ASSIGN":
-        selectedEmployeeId && history.push("/employee/complaint-reassigned");
-        break;
-    }
   };
 
   render() {
-    let { prepareResultsForDisplay, renderList, APIData, generateDataSource, prepareRawDataToFormat } = this;
+    let { APIData } = this.props;
+    let { prepareResultsForDisplay, renderList, generateDataSource, prepareRawDataToFormat } = this;
     const { dataSource } = this.state;
     const realDataSource = generateDataSource(prepareRawDataToFormat(APIData));
     // const transformedDataSource = generateDataSource(dataSource);
@@ -538,6 +239,7 @@ export default class ListCard extends Component {
     const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
     const { name: formKey } = this.formConfig;
     const assignstatus = isReassignScreen ? "ES_ASSIGN_STATUS_REASSIGN" : "ES_ASSIGN_STATUS_ASSIGN";
+    const { serviceRequestId } = this.props;
     return (
       <div>
         <Card
@@ -571,9 +273,7 @@ export default class ListCard extends Component {
               <div className="employee-list-cont">
                 {displayInitialList
                   ? renderList(prepareResultsForDisplay(dataSource), false)
-                  : isEmployeeDirectory
-                    ? renderList(prepareResultsForDisplay(results), false)
-                    : renderList(prepareResultsForDisplay(results), true)}
+                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(results), false) : renderList(prepareResultsForDisplay(results), true)}
               </div>
             </div>
           }
@@ -584,7 +284,7 @@ export default class ListCard extends Component {
               primary={true}
               fullWidth={true}
               label={<Label buttonLabel={true} label={isReassignScreen ? "RE-ASSIGN" : "ASSIGN"} />}
-              onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN")}
+              onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN", serviceRequestId)}
             />
           </div>
         )}

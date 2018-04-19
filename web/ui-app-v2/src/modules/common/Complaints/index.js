@@ -9,6 +9,14 @@ const imageStyles = {
   minHeight: "100px",
 };
 
+const callIconStyle = {
+  marginLeft: "17px",
+  height: "17px",
+  width: "17px",
+  borderRadius: "50%",
+  top: "0px",
+};
+
 let employeephonenumber = 8940028343;
 
 const bottomInfoTemplate = (item, role) => {
@@ -29,41 +37,16 @@ const bottomInfoTemplate = (item, role) => {
               </div>
             )}
           </div>
-          <Button
-            primary={true}
-            label={"CALL"}
-            style={{
-              height: "auto",
-              lineHeight: "auto",
-              minWidth: "inherit",
-            }}
-            labelStyle={{
-              color: "#ffffff",
-              padding: "0 12px 0 0 ",
-              letterSpacing: "0.6px",
-              display: "inline-block",
-              height: "35px",
-              fontSize: "12px",
-              lineHeight: "35px",
-            }}
-            icon={
-              <Icon
-                action="communication"
-                name="call"
-                style={{
-                  height: "12px",
-                  width: "12px",
-                  marginRight: "7px",
-                }}
-                color={"#ffffff"}
-              />
-            }
+          <div
+            style={{ display: "inline-block" }}
             onClick={(e) => {
               e.stopPropagation();
-              var link = `tel:+91${employeephonenumber}`;
+              const link = `tel:+91${employeephonenumber}`;
               window.location.href = link;
             }}
-          />
+          >
+            <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+          </div>
         </div>
       )}
       {item.escalatedTo && (

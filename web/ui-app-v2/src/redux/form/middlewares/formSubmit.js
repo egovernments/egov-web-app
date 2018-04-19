@@ -52,6 +52,14 @@ const formSubmit = (store) => (next) => (action) => {
       dispatch(fetchComplaints([{ key: "serviceRequestId", value: decodeURIComponent(window.location.href.split("/").pop()) }]));
     }
 
+    if (formKey === "assignComplaint") {
+      if (payload && payload.actionHistory && payload.actionHistory[0].actions[0].action === "assign") {
+        dispatch(setRoute(`/employee/complaint-assigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
+      } else if (payload && payload.actionHistory && payload.actionHistory[0].actions[0].action === "reassign") {
+        dispatch(setRoute(`/employee/complaint-reassigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
+      }
+    }
+
     if (redirectionRoute && redirectionRoute.length) {
       redirectionRoute = idJsonPath ? addQueryArg(redirectionRoute, [{ key: "id", value: get(payload, idJsonPath) }]) : redirectionRoute;
       dispatch(setRoute(redirectionRoute));

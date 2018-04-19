@@ -39,7 +39,6 @@ import RejectComplaint from "modules/employee/RejectComplaint";
 //Employee static screens
 import ComplaintRejected from "modules/employee/ComplaintRejected";
 import ComplaintAssigned from "modules/employee/ComplaintAssigned";
-import ComplaintReassigned from "modules/employee/ComplaintReassigned";
 import ResolveSuccess from "modules/employee/ResolveSuccess";
 import ReassignSuccess from "modules/employee/ReassignSuccess";
 
@@ -167,9 +166,9 @@ const Main = () => {
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/complaint-reassigned"
+          path="/employee/complaint-reassigned/:serviceRequestId?"
           title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_REASSIGNED_HEADER" />}
-          component={ComplaintReassigned}
+          component={ComplaintAssigned}
         />
         <PrivateRoute
           exact
@@ -188,7 +187,7 @@ const Main = () => {
         <PrivateRoute
           exact
           hideBottomNavigation={true}
-          path="/employee/complaint-assigned"
+          path="/employee/complaint-assigned/:serviceRequestId?"
           title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_ASSIGNED_HEADER" />}
           component={ComplaintAssigned}
         />
