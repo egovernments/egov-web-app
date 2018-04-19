@@ -17,10 +17,10 @@ class AllComplaints extends Component {
   }
 
   componentDidMount() {
-    let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
-    fetchEmployees();
-    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
-    fetchComplaints([]);
+    let { fetchComplaints, fetchCitizens, fetchEmployees, } = this.props;
+    // fetchEmployees();
+    // fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
+    fetchComplaints([{key:"status",value:"assigned,open,reassignrequested"}]);
   }
 
   componentWillReceiveProps = (nextProps) => {};
@@ -159,9 +159,14 @@ const mapStateToProps = (state) => {
         : defaultPhoneNumber,
     };
   });
-  const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
-  const unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
-  const employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
+  let assignedComplaints=[],unassignedComplaints=[],employeeComplaints=[];
+  if (role==="ao") {
+    assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
+    unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
+  } else {
+    employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
+  }
+
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role, loading };
 };
 

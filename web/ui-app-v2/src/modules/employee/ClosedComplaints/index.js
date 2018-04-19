@@ -12,7 +12,7 @@ import "./index.css";
 class ClosedComplaints extends Component {
   componentDidMount() {
     let { fetchComplaints } = this.props;
-    fetchComplaints([]);
+    fetchComplaints([{key:"status",value:"rejected,resolved,closed"}]);
   }
 
   onComplaintClick = (complaintNo) => {
