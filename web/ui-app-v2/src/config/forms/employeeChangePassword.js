@@ -37,7 +37,7 @@ const formConfig = {
   },
   submit: {
     label: "CORE_COMMON_CHANGE_PASSWORD",
-    id: "password-submit-action",
+    id: "employee-change-password-submit-action",
   },
   saveUrl: "/user/password/_update",
   redirectionRoute: "/employee/all-complaints",
