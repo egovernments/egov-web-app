@@ -13,7 +13,7 @@ class ComplaintRejected extends Component {
     return (
       <div className="success-message-main-screen">
         <SuccessMessage
-          successmessage="You have Rejected this complaint"
+          successmessage="ES_COMPLAINT_REJECT_SUCCESS_MESSAGE"
           icon={<Icon action="navigation" name="close" />}
           backgroundColor={"#e74c3c"}
         />

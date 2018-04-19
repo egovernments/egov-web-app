@@ -128,3 +128,7 @@ body.employee-user-profile {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.inline-Localization-text .label-container {
+  display: inline-block;
+}

@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Icon, Label } from "../../../../../components";
+import { Card, Icon } from "../../../../../components";
+import Label from "utils/translationNode";
 
 const addressStyle = {
   display: "inline-block",
@@ -18,12 +19,16 @@ const headerStyle = {
 };
 
 const HeaderCard = ({ complaint }) => {
+  let transformedcomplaint = "";
+  if (complaint && complaint.header) {
+    transformedcomplaint = "SERVICEDEFS." + complaint.header.toUpperCase();
+  }
   return (
     <Card
       textChildren={[
         <Label
           key={1}
-          label={complaint && complaint.header}
+          label={transformedcomplaint}
           dark={true}
           bold={true}
           fontSize={16}
