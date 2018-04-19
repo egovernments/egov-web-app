@@ -26,10 +26,6 @@ class App extends Component {
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchMDMSData();
-    if (userInfo && userInfo.type === "EMPLOYEE") {
-      fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
-      fetchEmployees();
-    }
   }
 
   componentWillReceiveProps(nextProps) {

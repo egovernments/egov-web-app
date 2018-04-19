@@ -3,6 +3,7 @@ import { Tabs, Label } from "../../../components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
+import { fetchEmployees, fetchCitizens } from "redux/common/actions";
 import { setRoute } from "redux/app/actions";
 import { mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
 import { connect } from "react-redux";
@@ -15,7 +16,9 @@ class AllComplaints extends Component {
   }
 
   componentDidMount() {
-    let { fetchComplaints } = this.props;
+    let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
+    fetchEmployees();
+    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
     fetchComplaints([]);
   }
 
@@ -139,6 +142,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
     setRoute: (route) => dispatch(setRoute(route)),
+    fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
+    fetchEmployees: () => dispatch(fetchEmployees()),
   };
 };
 
