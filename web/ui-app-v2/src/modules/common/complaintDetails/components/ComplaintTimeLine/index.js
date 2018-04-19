@@ -99,8 +99,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label
             labelClassName="dark-color"
             containerStyle={statusContainerStyle}
-            label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role ? `Filed By ${filedBy}` : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`}`}
+            label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role ? "ES_COMMON_FILED_BY" : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`}`}
           />
+          {action !== "reopen" && role && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
           {((role && action !== "reopen" && currentStatus === "open") || (!role && action === "reopen" && currentStatus === "open")) &&
             openStatusCount === 1 && (
               <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>

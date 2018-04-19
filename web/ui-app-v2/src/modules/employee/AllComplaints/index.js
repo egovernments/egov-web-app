@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Tabs, Label } from "../../../components";
+import { Tabs } from "../../../components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fetchEmployees, fetchCitizens } from "redux/common/actions";
 import { setRoute } from "redux/app/actions";
 import { mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
+import Label from "utils/translationNode";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -47,7 +48,12 @@ class AllComplaints extends Component {
         onActive={this.handleTabChange}
         tabs={[
           {
-            label: <Label color={"#ffffff"} bold={true} label={`UNASSIGNED (${unassignedComplaints.length})`} labelStyle={tabStyle} />,
+            label: (
+              <div className="inline-Localization-text">
+                <Label color={"#ffffff"} bold={true} label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`} labelStyle={tabStyle} />
+                <Label color={"#ffffff"} bold={true} label={`(${unassignedComplaints.length})`} labelStyle={tabStyle} />
+              </div>
+            ),
             children: (
               <Screen loading={loading}>
                 <div className="tab1-content">
@@ -57,7 +63,12 @@ class AllComplaints extends Component {
             ),
           },
           {
-            label: <Label color={"#ffffff"} bold={true} label={`ASSIGNED (${assignedComplaints.length})`} labelStyle={tabStyle} />,
+            label: (
+              <div className="inline-Localization-text">
+                <Label color={"#ffffff"} bold={true} label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`} labelStyle={tabStyle} />
+                <Label color={"#ffffff"} bold={true} label={`(${assignedComplaints.length})`} labelStyle={tabStyle} />
+              </div>
+            ),
             children: (
               <Screen loading={loading}>
                 <div className="tab2-content">

@@ -261,7 +261,7 @@ export default class ListCard extends Component {
                     background: "#f8f8f8",
                   }}
                   textFieldStyle={{ border: 0 }}
-                  searchInputText="Search Employee"
+                  searchInputText={<Label label="ES_COMMON_SEARCH_EMPLOYEE" />}
                   searchKey="primaryText"
                   iconStyle={{ right: 15, left: "inherit" }}
                   hintStyle={{ letterSpacing: 0, bottom: 10, fontSize: 14 }}
@@ -283,7 +283,7 @@ export default class ListCard extends Component {
             <Button
               primary={true}
               fullWidth={true}
-              label={<Label buttonLabel={true} label={isReassignScreen ? "RE-ASSIGN" : "ASSIGN"} />}
+              label={<Label buttonLabel={true} label={isReassignScreen ? "ES_COMMON_REASSIGN" : "ES_COMMON_ASSIGN"} />}
               onClick={() => this.submitAssignee(formKey, isReassignScreen ? "RE-ASSIGN" : "ASSIGN", serviceRequestId)}
             />
           </div>

@@ -27,13 +27,13 @@ const bottomInfoTemplate = (item, role) => {
           <div className="submitted-by-text">
             {role === "ao" ? (
               <div>
-                <span>Assigned To : </span>
+                <Label label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
                 <span style={{ color: "#464646" }}>{item.assignedTo}</span>
               </div>
             ) : (
-              <div>
-                <span>Submitted By : </span>
-                <span style={{ color: "#464646" }}>{item.submittedBy}</span>
+              <div className="inline-Localization-text">
+                <Label label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
+                <Label color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.submittedBy} />
               </div>
             )}
           </div>
