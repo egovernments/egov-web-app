@@ -3,6 +3,7 @@ import { Card, TextFieldIcon } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 
+
 const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
   return (
     <div className="complaint-type-main-cont">
@@ -18,6 +19,7 @@ const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
               Icon={DownArrow}
               name="complaint-type"
               isRequired={true}
+              disabled={true}
             />
           </div>
         }
