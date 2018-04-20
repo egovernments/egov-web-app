@@ -154,7 +154,7 @@ const mapStateToProps = (state) => {
         complaintDetail.status === "reassignrequested" ? getNameFromId(employeeById, complaintDetail.actions[0].by.split(":")[0], "NA") : "NA",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
       assignedTo: complaintDetail && getNameFromId(employeeById, findLatestAssignee(complaintDetail.actions), "NA"),
-      employeePhoneNumber: employeeById[findLatestAssignee(complaintDetail.actions)]
+      employeePhoneNumber:employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
         ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
         : defaultPhoneNumber,
     };
