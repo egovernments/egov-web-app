@@ -216,17 +216,6 @@ export const getTranslatedLabel = (labelKey, localizationLabels) => {
   return translatedLabel || labelKey;
 };
 
-export const getImageUrlByFile = (file) => {
-  return new Promise((resolve) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      const fileurl = e.target.result;
-      resolve(fileurl);
-    };
-  });
-};
-
 export const fetchImages = (actionArray) => {
   let imageArray = [];
   actionArray.forEach((action, index) => {
