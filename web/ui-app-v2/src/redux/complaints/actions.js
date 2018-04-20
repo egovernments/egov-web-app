@@ -1,6 +1,54 @@
 import * as actionTypes from "./actionTypes";
+import * as commonActions from "../common/actions";
 import { COMPLAINT, CATEGORY } from "utils/endPoints";
 import { httpRequest } from "utils/api";
+
+//checking users there in aciton history
+//need to refactor this code
+const checkUsers=(dispatch,actionHistory,hasUsers)=>
+{
+  if (hasUsers) {
+    let employeeIds="",userIds="";
+    actionHistory.forEach(actions=>{
+      actions.actions.forEach(action=>{
+        let splitArray=[];
+        if (action.by) {
+          splitArray=action.by.split(":");
+          if (splitArray[1].toLowerCase()==="citizen") {
+            if (userIds.search(splitArray[0])===-1) {
+              userIds+=`${splitArray[0]},`;
+            }
+          }
+          else {
+            if (employeeIds.search(splitArray[0])===-1) {
+              employeeIds+=`${splitArray[0]},`;
+            }
+          }
+        }
+        else if (action.assignee) {
+          splitArray=action.assignee.split(":");
+          if (splitArray[1].toLowerCase()==="citizen") {
+            if (userIds.search(splitArray[0])===-1) {
+              userIds+=`${splitArray[0]},`;
+            }
+          }
+          else {
+            if (employeeIds.search(splitArray[0])===-1) {
+              employeeIds+=`${splitArray[0]},`;
+            }
+          }
+        }
+      })
+    })
+    if (employeeIds) {
+      dispatch(commonActions.fetchEmployees([{key:"id",value:employeeIds}]));
+    }
+    if(userIds) {
+      dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: userIds.split(",")}));
+    }
+  }
+}
+
 
 // complaint categories success
 const complaintCategoriesFetchSucess = (payload) => {
@@ -38,11 +86,12 @@ const complaintFetchError = (error) => {
   };
 };
 
-export const fetchComplaints = (queryObject) => {
+export const fetchComplaints = (queryObject,hasUsers=true) => {
   return async (dispatch) => {
     dispatch(complaintFetchPending());
     try {
       const payload = await httpRequest(COMPLAINT.GET.URL, COMPLAINT.GET.ACTION, queryObject);
+      checkUsers(dispatch,payload.actionHistory,hasUsers);
       dispatch(complaintFetchComplete(payload));
     } catch (error) {
       dispatch(complaintFetchError(error.message));

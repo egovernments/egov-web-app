@@ -48,10 +48,10 @@ const MDMSFetchError = (error) => {
   };
 };
 
-export const fetchEmployees = () => {
+export const fetchEmployees = (requestBody) => {
   return async (dispatch) => {
     try {
-      const payload = await httpRequest(EMPLOYEE.GET.URL, EMPLOYEE.GET.ACTION);
+      const payload = await httpRequest(EMPLOYEE.GET.URL, EMPLOYEE.GET.ACTION,requestBody);
       dispatch(employeeFetchSuccess(payload));
     } catch (error) {
       dispatch(employeeFetchError(error.message));
@@ -59,10 +59,10 @@ export const fetchEmployees = () => {
   };
 };
 
-export const fetchCitizens = (requestBody) => {
+export const fetchCitizens = (requestBody=[],requestParams=[]) => {
   return async (dispatch) => {
     try {
-      const payload = await httpRequest(CITIZEN.GET.URL, CITIZEN.GET.ACTION, [], requestBody);
+      const payload = await httpRequest(CITIZEN.GET.URL, CITIZEN.GET.ACTION, requestParams, requestBody);
       dispatch(citizenFetchSuccess(payload));
     } catch (error) {
       dispatch(citizenFetchError(error.message));
