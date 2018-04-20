@@ -6,7 +6,7 @@ import { fetchComplaints } from "redux/complaints/actions";
 import { fetchEmployees, fetchCitizens } from "redux/common/actions";
 import { setRoute } from "redux/app/actions";
 import Label from "utils/translationNode";
-import { mapCompIDToName, isImage, getTransformedStatus, getNameFromId } from "utils/commons";
+import { mapCompIDToName, isImage, getTransformedStatus, returnSLAStatus, getPropertyFromObj, getLatestCreationTime } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -117,36 +117,11 @@ const mapCitizenIdToName = (citizenObjById, id) => {
 };
 
 const findLatestAssignee = (actionArray) => {
-  for (var i = 0; i < actionArray.length; i++) {
+  for (let i = 0; i < actionArray.length; i++) {
     if (actionArray[i].status === "assigned") {
-      var assignee = actionArray[i].assignee;
-      break;
+      return actionArray[i].assignee;
     }
   }
-  return assignee;
-};
-
-const getPropertyFromObj = (obj, id, property, defaultValue) => {
-  return obj && obj[id] ? obj[id][property] : defaultValue;
-};
-
-const returnSLAStatus = (slaHours, submittedTime) => {
-  const millsToAdd = slaHours * 60 * 60 * 100;
-  const toBeFinishedBy = millsToAdd + submittedTime;
-  const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
-  if (daysCount < 0) {
-    return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
-  } else {
-    return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
-  }
-};
-
-const dateDiffInDays = (a, b) => {
-  var millsPerDay = 1000 * 60 * 60 * 24;
-  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-  return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
 const mapStateToProps = (state) => {
@@ -161,22 +136,24 @@ const mapStateToProps = (state) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
       date: complaintDetail.auditDetails.createdTime,
-      newStatus: displayStatus(complaintDetail.status),
+      latestCreationTime: getLatestCreationTime(complaintDetail),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy:
-        complaintDetail.status === "reassignrequested" ? getNameFromId(employeeById, complaintDetail.actions[0].by.split(":")[0], "NA") : "NA",
+        complaintDetail.status === "reassignrequested"
+          ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA")
+          : "NA",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
-      assignedTo: complaintDetail && getNameFromId(employeeById, findLatestAssignee(complaintDetail.actions), "NA"),
+      assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
       employeePhoneNumber:
         employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
           ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
           : defaultPhoneNumber,
       status: displayStatus(
-        returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), complaintDetail.auditDetails.createdTime)
+        returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail))
       ),
     };
   });
@@ -184,10 +161,22 @@ const mapStateToProps = (state) => {
     unassignedComplaints = [],
     employeeComplaints = [];
   if (role === "ao") {
-    assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
-    unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
+    assignedComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+      ["latestCreationTime"],
+      ["desc"]
+    );
+    unassignedComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
+      ["latestCreationTime"],
+      ["desc"]
+    );
   } else {
-    employeeComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
+    employeeComplaints = orderby(
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+      ["latestCreationTime"],
+      ["desc"]
+    );
   }
 
   return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role, loading };

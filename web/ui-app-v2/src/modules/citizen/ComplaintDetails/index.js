@@ -32,6 +32,7 @@ class ComplaintDetails extends Component {
               timeLine={timeLine}
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
+              role={"citizen"}
             />
             <Comments hasComments={true} />
           </div>

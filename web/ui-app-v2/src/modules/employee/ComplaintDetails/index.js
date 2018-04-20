@@ -6,7 +6,7 @@ import Actions from "../../common/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
 import Screen from "../../common/Screen";
 import pinIcon from "assets/Location_pin.svg";
-import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { connect } from "react-redux";
@@ -192,6 +192,7 @@ class ComplaintDetails extends Component {
                 <Details {...complaint} role={role} history={history} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
                 <ComplaintTimeLine
                   status={complaint.status}
+                  timelineSLAStatus={complaint.timelineSLAStatus}
                   timeLine={timeLine}
                   handleFeedbackOpen={this.handleFeedbackOpen}
                   role={role}
@@ -284,6 +285,7 @@ const mapCitizenIdToName = (citizenObjById, id) => {
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common } = state;
   const { citizenById } = common || {};
+  const { categoriesById } = complaints;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
@@ -306,6 +308,10 @@ const mapStateToProps = (state, ownProps) => {
         selectedComplaint &&
         selectedComplaint.actions &&
         mapCitizenIdToName(citizenById, selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0]),
+      timelineSLAStatus: returnSLAStatus(
+        getPropertyFromObj(categoriesById, selectedComplaint.serviceCode, "slaHours", "NA"),
+        selectedComplaint.auditDetails.createdTime
+      ),
     };
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);

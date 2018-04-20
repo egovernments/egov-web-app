@@ -70,34 +70,7 @@ export const fetchCitizens = (requestBody) => {
   };
 };
 
-export const fetchMDMSData = () => {
-  let requestBody = {
-    MdmsCriteria: {
-      tenantId: "pb",
-      moduleDetails: [
-        {
-          moduleName: "common-masters",
-          masterDetails: [
-            {
-              name: "Department",
-            },
-            {
-              name: "Designation",
-            },
-          ],
-        },
-        {
-          moduleName: "tenant",
-          masterDetails: [
-            {
-              name: "tenants",
-            },
-          ],
-        },
-      ],
-    },
-  };
-
+export const fetchMDMSData = (requestBody) => {
   return async (dispatch) => {
     try {
       const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
