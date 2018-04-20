@@ -377,8 +377,14 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
   }
 };
 
-const DueDate = ({ status, role, duedateText }) => {
-  return <div className="Complaint-details-duedate">{duedateText}</div>;
+const DueDate = ({ duedateText }) => {
+  return (
+    <Label
+      labelStyle={duedateText.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" }}
+      className="Complaint-details-duedate"
+      label={duedateText}
+    />
+  );
 };
 
 class ComplaintTimeLine extends Component {
@@ -388,7 +394,7 @@ class ComplaintTimeLine extends Component {
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
     reassignRequestedCount = 0;
-    let { status, history, role, timeLine, feedback, rating, filedBy } = this.props;
+    let { status, history, role, timeLine, feedback, rating, filedBy, timelineSLAStatus } = this.props;
 
     let steps = timeLine.map((step, key) => {
       return {
@@ -429,7 +435,7 @@ class ComplaintTimeLine extends Component {
               <div className="rainmaker-displayInline">
                 <Icon action="action" name="timeline" color="#767676" />{" "}
                 <Label label="CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
-                {this.props.role === "AO" && <DueDate status="UnAssigned" duedateText={"Overdue by 1 day"} role="AO" />}
+                {timelineSLAStatus && role && role !== "citizen" && <DueDate duedateText={timelineSLAStatus} />}
               </div>
               <div className="complaintTimeLineContainer">
                 <TimeLine

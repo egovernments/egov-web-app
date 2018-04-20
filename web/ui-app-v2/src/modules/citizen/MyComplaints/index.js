@@ -83,17 +83,15 @@ const displayStatus = (status = "", assignee, action) => {
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
   const { loading } = complaints || false;
-  let transformedComplaints = [];
-  Object.keys(complaints.byId).forEach((complaint, index) => {
-    let complaintObj = {};
+  const transformedComplaints = Object.keys(complaints.byId).map((complaint, index) => {
     let complaintactions = complaints.byId[complaint].actions && complaints.byId[complaint].actions.filter((complaint) => complaint.status);
-    complaintObj.header = mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode);
-    complaintObj.date = complaints.byId[complaint].auditDetails.createdTime;
-    complaintObj.status = displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee, complaintactions[0].action);
-    complaintObj.complaintNo = complaints.byId[complaint].serviceRequestId;
-    complaintObj.images = fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource));
-
-    transformedComplaints.push(complaintObj);
+    return {
+      header: mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode),
+      date: complaints.byId[complaint].auditDetails.createdTime,
+      status: displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee, complaintactions[0].action),
+      complaintNo: complaints.byId[complaint].serviceRequestId,
+      images: fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource)),
+    };
   });
   var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
   var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);

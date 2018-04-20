@@ -247,6 +247,15 @@ export const isImage = (url) => {
 };
 
 //using in Employee Screens
+
+const dateDiffInDays = (a, b) => {
+  var millsPerDay = 1000 * 60 * 60 * 24;
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / millsPerDay);
+};
+
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
@@ -282,4 +291,28 @@ export const isFileImage = (file) => {
 
 export const getNameFromId = (obj, id, defaultValue) => {
   return obj && id && obj[id] ? obj[id].name : defaultValue;
+};
+
+export const getPropertyFromObj = (obj, id, property, defaultValue) => {
+  return obj && obj[id] ? obj[id][property] : defaultValue;
+};
+
+export const returnSLAStatus = (slaHours, submittedTime) => {
+  const millsToAdd = slaHours * 60 * 60 * 100;
+  const toBeFinishedBy = millsToAdd + submittedTime;
+  const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
+  if (daysCount < 0) {
+    return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
+  } else {
+    return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
+  }
+};
+
+export const getLatestCreationTime = (complaint) => {
+  for (let i = 0; i < complaint.actions.length; i++) {
+    if (complaint.actions[i].action === "reopen") {
+      return complaint.actions[i].when;
+    }
+  }
+  return complaint.auditDetails.createdTime;
 };

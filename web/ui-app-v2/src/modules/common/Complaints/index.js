@@ -24,14 +24,14 @@ const bottomInfoTemplate = (item, role) => {
         <div className="employee-bottom-info-cont">
           <div className="submitted-by-text">
             {role === "ao" ? (
-              <div className="inline-Localization-text">
-                <Label label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
-                <Label color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.assignedTo} />
+              <div>
+                <Label containerStyle={{ display: "inline-block" }} label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
+                <Label containerStyle={{ display: "inline-block" }} color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.assignedTo} />
               </div>
             ) : (
               <div className="inline-Localization-text">
-                <Label label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
-                <Label color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.submittedBy} />
+                <Label containerStyle={{ display: "inline-block" }} label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
+                <Label containerStyle={{ display: "inline-block" }} color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.submittedBy} />
               </div>
             )}
           </div>
@@ -105,18 +105,6 @@ const getStatusAndChangeColor = (status, assignee) => {
         </div>
       );
       break;
-    case "Overdue by 1 day":
-      statusObj.style = {
-        color: "#e74c3c",
-      };
-      statusObj.message = ``;
-      break;
-    case "2 days left":
-      statusObj.style = {
-        color: "#22b25f",
-      };
-      statusObj.message = ``;
-      break;
     default:
       statusObj.style = {
         color: "#484848",
@@ -155,7 +143,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                     dark={true}
                     bold={true}
                     label={complaintHeader ? complaintHeader : "Default"}
-                    containerStyle={{ width: "65%" }}
+                    containerStyle={{ maxWidth: "60%" }}
                     labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
                   />
 

@@ -23,9 +23,35 @@ class App extends Component {
 
   componentDidMount() {
     const { fetchLocalizationLabel, fetchMDMSData } = this.props;
+    let requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "common-masters",
+            masterDetails: [
+              {
+                name: "Department",
+              },
+              {
+                name: "Designation",
+              },
+            ],
+          },
+          {
+            moduleName: "tenant",
+            masterDetails: [
+              {
+                name: "tenants",
+              },
+            ],
+          },
+        ],
+      },
+    };
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
-    fetchMDMSData();
+    fetchMDMSData(requestBody);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
     fetchEmployees: () => dispatch(fetchEmployees()),
-    fetchMDMSData: () => dispatch(fetchMDMSData()),
+    fetchMDMSData: (requestBody) => dispatch(fetchMDMSData(requestBody)),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };
