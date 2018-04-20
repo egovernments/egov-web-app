@@ -17,6 +17,7 @@
   bottom: 12px;
   left: 0px;
   padding: 8px !important;
+  z-index: 1000;
 }
 
 .profileContainer {
