@@ -18,8 +18,8 @@ class AllComplaints extends Component {
 
   componentDidMount() {
     let { fetchComplaints, fetchCitizens, fetchEmployees, } = this.props;
-    // fetchEmployees();
-    // fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
+    fetchEmployees();
+    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
     fetchComplaints([{key:"status",value:"assigned,open,reassignrequested"}]);
   }
 
