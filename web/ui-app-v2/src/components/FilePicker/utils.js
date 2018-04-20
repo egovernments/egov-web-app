@@ -93,11 +93,12 @@ const resetOrientation = (srcBase64, srcOrientation, callback) => {
 export const getImageUrlByFile = (file) => {
   return new Promise((resolve) => {
     getOrientation(file, (orientation) => {
+      const originalBase64 = URL.createObjectURL(file);
       if (orientation == 1) {
-        resolve(URL.createObjectURL(file));
+        resolve(originalBase64);
       } else {
-        resetOrientation(URL.createObjectURL(file), orientation, function(resetBase64Image) {
-          resolve(URL.createObjectURL(file));
+        resetOrientation(originalBase64, orientation, (resetBase64Image) => {
+          resolve(resetBase64Image);
         });
       }
     });
