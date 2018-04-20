@@ -81,7 +81,7 @@ const getStatusAndChangeColor = (status, assignee) => {
         </div>
       );
       break;
-    case "CLOSED":
+    case "CS_COMMON_CLOSED_UCASE":
       statusObj.style = {
         color: "#5385a6",
       };
@@ -123,6 +123,14 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = `Complaint Re-assigned to ${assignee}`;
   }
+  if (status && status.includes("Overdue")) {
+    statusObj.style = { color: "#e74c3c" };
+    statusObj.message = "";
+  }
+  if (status && status.includes("left")) {
+    statusObj.style = { color: "#22b25f" };
+    statusObj.message = "";
+  }
   return statusObj;
 };
 
@@ -147,7 +155,7 @@ const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, t
                     dark={true}
                     bold={true}
                     label={complaintHeader ? complaintHeader : "Default"}
-                    containerStyle={{ width: "80%" }}
+                    containerStyle={{ width: "65%" }}
                     labelStyle={{ letterSpacing: 0.7, wordWrap: "break-word", width: "100%" }}
                   />
 

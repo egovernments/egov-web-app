@@ -5,6 +5,7 @@ import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
 import { getNameFromId } from "utils/commons";
 import "./index.css";
+import isEqual from "lodash/isEqual";
 
 export default class ListCard extends Component {
   constructor(props) {
@@ -38,61 +39,73 @@ export default class ListCard extends Component {
 
   prepareRawDataToFormat = (rawData) => {
     let { designationsById, departmentById } = this.props;
-    const seperateByDepartment = rawData.reduce((result, item) => {
-      if (!result[item.assignments[0].department]) result[item.assignments[0].department] = [];
-      result[item.assignments[0].department].push(item);
-      return result;
-    }, {});
-    return Object.keys(seperateByDepartment).map((depDetails, index) => {
-      return {
-        id: seperateByDepartment[depDetails][0].assignments[0].department,
-        primaryText: (
-          <Label
-            label={getNameFromId(departmentById, seperateByDepartment[depDetails][0].assignments[0].department, "Administration")}
-            dark={true}
-            bold={true}
-            containerStyle={{ position: "absolute", top: 0, left: 0 }}
-            labelStyle={this.mainLabelStyle}
-          />
-        ),
-        open: true,
-        nestedItems: seperateByDepartment[depDetails].map((depItem, depItemIndex) => {
-          return {
-            id: depItem.id,
-            primaryText: <Label label={depItem && depItem.name} dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-            leftAvatar: <Avatar size={33} src={depItem.photo ? depItem.photo : faceOne} style={this.avatarStyle} />,
-            secondaryText: (
-              <Label
-                label={depItem && depItem.assignments && getNameFromId(designationsById, depItem.assignments[0].designation, "Engineer")}
-                style={{ letterSpacing: 0 }}
-              />
-            ),
-            rightIcon: (
-              <Icon
-                action="communication"
-                name="call"
-                style={this.callIconStyle}
-                color="#22b25f"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const link = `tel:+91${depItem && depItem.mobileNumber}`;
-                  window.location.href = link;
-                }}
-              />
-            ),
-          };
-        }),
-      };
-    });
+    const seperateByDepartment =
+      rawData &&
+      rawData.reduce((result, item) => {
+        if (!result[item.assignments[0].department]) result[item.assignments[0].department] = [];
+        result[item.assignments[0].department].push(item);
+        return result;
+      }, {});
+    return (
+      seperateByDepartment &&
+      Object.keys(seperateByDepartment).map((depDetails, index) => {
+        return {
+          id: seperateByDepartment[depDetails][0].assignments[0].department,
+          primaryText: (
+            <Label
+              label={getNameFromId(departmentById, seperateByDepartment[depDetails][0].assignments[0].department, "Administration")}
+              dark={true}
+              bold={true}
+              containerStyle={{ position: "absolute", top: 0, left: 0 }}
+              labelStyle={this.mainLabelStyle}
+            />
+          ),
+          open: true,
+          nestedItems: seperateByDepartment[depDetails].map((depItem, depItemIndex) => {
+            return {
+              id: depItem.id,
+              primaryText: <Label label={depItem && depItem.name} dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
+              leftAvatar: <Avatar size={33} src={depItem.photo ? depItem.photo : faceOne} style={this.avatarStyle} />,
+              secondaryText: (
+                <Label
+                  label={depItem && depItem.assignments && getNameFromId(designationsById, depItem.assignments[0].designation, "Engineer")}
+                  style={{ letterSpacing: 0 }}
+                />
+              ),
+              rightIcon: (
+                <Icon
+                  action="communication"
+                  name="call"
+                  style={this.callIconStyle}
+                  color="#22b25f"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const link = `tel:+91${depItem && depItem.mobileNumber}`;
+                    window.location.href = link;
+                  }}
+                />
+              ),
+            };
+          }),
+        };
+      })
+    );
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     let { initForm, APIData } = this.props;
     let { prepareRawDataToFormat } = this;
     initForm(this.formConfig);
     const dataSource = prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
-  }
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    if (!isEqual(this.props.APIData, nextProps.APIData)) {
+      const dataSource = this.prepareRawDataToFormat(nextProps.APIData);
+      this.setState({ dataSource });
+    }
+  };
 
   prepareResultsForDisplay = (results = []) => {
     return results.map((result) => {
@@ -214,9 +227,12 @@ export default class ListCard extends Component {
   };
 
   generateDataSource = (dataSource) => {
-    return dataSource.reduce((transformedDataSource, source) => {
-      return transformedDataSource.concat(source.nestedItems);
-    }, []);
+    return (
+      dataSource &&
+      dataSource.reduce((transformedDataSource, source) => {
+        return transformedDataSource.concat(source.nestedItems);
+      }, [])
+    );
   };
 
   submitAssignee = (formKey, label, serviceRequestId) => {
@@ -226,7 +242,7 @@ export default class ListCard extends Component {
   };
 
   render() {
-    let { APIData } = this.props;
+    let { APIData } = this.props || [];
     let { prepareResultsForDisplay, renderList, generateDataSource, prepareRawDataToFormat } = this;
     const { dataSource } = this.state;
     const realDataSource = generateDataSource(prepareRawDataToFormat(APIData));

@@ -14,7 +14,7 @@ import "./index.css";
 class AllComplaints extends Component {
   componentDidMount() {
     let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
-    fetchEmployees();
+    // fetchEmployees();
     fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
@@ -101,17 +101,14 @@ const isAssigningOfficer = (roles) => {
 
 const displayStatus = (status = "", assignee) => {
   let statusObj = {};
-  if (status.toLowerCase() == "closed") {
-    statusObj.status = "CS_COMMON_CLOSED_UCASE";
-  } else {
-    statusObj.status = "CS_COMMON_OPEN_UCASE";
+  if (status.includes("Overdue")) {
+    statusObj.status = status; //Replace by localisation label
+    statusObj.statusMessage = "";
   }
-  if (status.toLowerCase() == "open") {
-    statusObj.statusMessage = `CS_COMMON_SUBMITTED`;
-  } else {
-    statusObj.statusMessage = `CS_COMMON_${status.toUpperCase()}`;
+  if (status.includes("left")) {
+    statusObj.status = status; //Replace by localisation label
+    statusObj.statusMessage = "";
   }
-
   return statusObj;
 };
 
@@ -129,8 +126,32 @@ const findLatestAssignee = (actionArray) => {
   return assignee;
 };
 
+const getPropertyFromObj = (obj, id, property, defaultValue) => {
+  return obj && obj[id] ? obj[id][property] : defaultValue;
+};
+
+const returnSLAStatus = (slaHours, submittedTime) => {
+  const millsToAdd = slaHours * 60 * 60 * 100;
+  const toBeFinishedBy = millsToAdd + submittedTime;
+  const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
+  if (daysCount < 0) {
+    return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
+  } else {
+    return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
+  }
+};
+
+const dateDiffInDays = (a, b) => {
+  var millsPerDay = 1000 * 60 * 60 * 24;
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / millsPerDay);
+};
+
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
+  const { categoriesById } = complaints;
   const { loading } = complaints || false;
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
@@ -140,7 +161,7 @@ const mapStateToProps = (state) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
       date: complaintDetail.auditDetails.createdTime,
-      status: displayStatus(complaintDetail.status),
+      newStatus: displayStatus(complaintDetail.status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
@@ -154,6 +175,9 @@ const mapStateToProps = (state) => {
         employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
           ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
           : defaultPhoneNumber,
+      status: displayStatus(
+        returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), complaintDetail.auditDetails.createdTime)
+      ),
     };
   });
   let assignedComplaints = [],
