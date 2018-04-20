@@ -174,14 +174,16 @@ class Details extends Component {
                     }}
                   />
                 )}
-                <div className="row" style={{ marginTop: "25px" }}>
-                  <div className="col-xs-2">
-                    <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
+                {description && (
+                  <div className="row" style={{ marginTop: "25px" }}>
+                    <div className="col-xs-2">
+                      <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
+                    </div>
+                    <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
+                      <Label label={description} className="status-result-color" labelStyle={{ color: "inherit" }} />
+                    </div>
                   </div>
-                  <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
-                    <Label label={description} className="status-result-color" labelStyle={{ color: "inherit" }} />
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           }

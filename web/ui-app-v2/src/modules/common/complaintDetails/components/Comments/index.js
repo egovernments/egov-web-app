@@ -73,6 +73,8 @@ class Comments extends Component {
   render() {
     const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName } = this.props;
     const { name: formKey } = this.formConfig;
+
+    console.log(this.props);
     let items =
       selectedComplaint &&
       selectedComplaint.actions.filter((action, index) => {
@@ -91,9 +93,9 @@ class Comments extends Component {
             ),
             primaryText: (
               <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBottom: "6px" }} fontSize="12px" label={action.by.split(":")[0] == userId ? userName : ""} />{" "}
-                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />{" "}
-                <Label labelClassName="rainmaker-small-font text-right" label={getDateFromEpoch(action.when)} />{" "}
+                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={action.by.split(":")[0] == userId ? userName : ""} />
+                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />
+                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(action.when)} />
               </div>
             ),
           };
@@ -101,9 +103,8 @@ class Comments extends Component {
           return {
             primaryText: (
               <div className="complaint-details-comments-section">
-                {" "}
-                <Label containerStyle={{ marginBbottom: "8px" }} labelStyle={{ color: "#464646" }} label={action.comments} />
-                <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(action.when)} />
+                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />
+                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(action.when)} />
               </div>
             ),
             rightAvatar: <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />,
