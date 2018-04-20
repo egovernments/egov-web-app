@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getImageUrlByFile } from "utils/commons";
+import { getImageUrlByFile } from "./utils";
 
 // pass the index
 class FilePicker extends Component {
   handleFileChange = (event) => {
-    let input = event.target;
-    let { maxFiles } = this.props.inputProps;
+    const input = event.target;
+    const { maxFiles } = this.props.inputProps;
 
     if (input.files && input.files.length > 0) {
-      let files = input.files;
+      const files = input.files;
       Object.keys(files)
         .slice(0, maxFiles)
         .forEach(async (key, index) => {
           const file = files[key];
-          const imageUri = await getImageUrlByFile(file);
-          this.props.handleimage(file, imageUri);
+          if (file.type.match(/^image\//)) {
+            const imageUri = await getImageUrlByFile(file);
+            this.props.handleimage(file, imageUri);
+          }
         });
     }
   };
