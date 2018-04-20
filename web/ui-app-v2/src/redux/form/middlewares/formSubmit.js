@@ -10,7 +10,6 @@ import get from "lodash/get";
 const formSubmit = (store) => (next) => (action) => {
   const { type, formKey, payload } = action;
   const dispatch = store.dispatch;
-  let redirectionRoute = "";
 
   if (type == actionTypes.SUBMIT_FORM_COMPLETE) {
     // complete the form submit complete action

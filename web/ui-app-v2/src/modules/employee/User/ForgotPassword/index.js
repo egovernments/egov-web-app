@@ -19,7 +19,7 @@ class ForgotPassword extends Component {
   }
 
   onContinueClick = () => {
-    const { submitForm, formKey, history } = this.props;
+    const { submitForm, formKey } = this.props;
     submitForm(formKey);
   };
 
@@ -30,7 +30,6 @@ class ForgotPassword extends Component {
 
   render() {
     const { onPhoneNumberChanged, onContinueClick } = this;
-    const { phoneNumber } = this.state;
     const { loading, form } = this.props;
     const fields = form.fields || {};
 

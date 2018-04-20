@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Screen from "modules/common/Screen";
 import HeaderCard from "./components/HeaderCard";
 import ListCard from "./components/ListCard";
-import faceOne from "assets/images/faceOne.jpg";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 
 class AssignComplaint extends Component {

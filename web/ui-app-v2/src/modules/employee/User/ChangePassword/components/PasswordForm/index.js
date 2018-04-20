@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Card, TextField } from "components";
-import Label from "utils/translationNode";
+import { Button, TextField } from "components";
 import "./index.css";
 
 const PasswordForm = ({ onChange, form, formKey, submitChangePasswdForm }) => {

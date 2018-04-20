@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchCitizens, fetchEmployees, userInfo, fetchMDMSData } = this.props;
+    const { fetchLocalizationLabel, fetchMDMSData } = this.props;
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
     fetchMDMSData();

@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { TextArea } from "../../../../../components";
+import { TextArea } from "components";
 
 const TextAreaComponent = ({ hintText, onChange, value }) => {
   return (

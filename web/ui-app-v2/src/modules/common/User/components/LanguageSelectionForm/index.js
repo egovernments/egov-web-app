@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonGroup, Button, Card } from "../../../../../components";
+import { ButtonGroup, Button, Card } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 

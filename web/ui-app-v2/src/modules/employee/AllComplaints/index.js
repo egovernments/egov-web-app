@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs } from "../../../components";
+import { Tabs } from "components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
@@ -12,15 +12,11 @@ import orderby from "lodash/orderBy";
 import "./index.css";
 
 class AllComplaints extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    let { fetchComplaints, fetchCitizens, fetchEmployees, } = this.props;
+    let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
     fetchEmployees();
     fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
-    fetchComplaints([{key:"status",value:"assigned,open,reassignrequested"}]);
+    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
 
   componentWillReceiveProps = (nextProps) => {};
@@ -154,13 +150,16 @@ const mapStateToProps = (state) => {
         complaintDetail.status === "reassignrequested" ? getNameFromId(employeeById, complaintDetail.actions[0].by.split(":")[0], "NA") : "NA",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
       assignedTo: complaintDetail && getNameFromId(employeeById, findLatestAssignee(complaintDetail.actions), "NA"),
-      employeePhoneNumber:employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
-        ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
-        : defaultPhoneNumber,
+      employeePhoneNumber:
+        employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
+          ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
+          : defaultPhoneNumber,
     };
   });
-  let assignedComplaints=[],unassignedComplaints=[],employeeComplaints=[];
-  if (role==="ao") {
+  let assignedComplaints = [],
+    unassignedComplaints = [],
+    employeeComplaints = [];
+  if (role === "ao") {
     assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
     unassignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"), ["date"], ["desc"]);
   } else {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextField } from "../../../../../components";
+import { Card, TextField } from "components";
 import "./index.css";
 
 const AdditionalDetailsCard = ({ additionalDetails = "", onChange }) => {

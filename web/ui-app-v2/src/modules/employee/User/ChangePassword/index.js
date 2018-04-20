@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "modules/common/Banner";
 import Screen from "modules/common/Screen";
 import PasswordForm from "./components/PasswordForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
@@ -27,7 +26,7 @@ class ChangePassword extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, loading } = this.props;
+    const { form, handleFieldChange, loading } = this.props;
     const { name: formKey } = this.formConfig;
 
     return (

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { List, Icon, AutoSuggest, Label } from "../../../components";
+import { List, Icon, AutoSuggest, Label } from "components";
 import { red500 } from "material-ui/styles/colors";
 
 const customIconStyles = {

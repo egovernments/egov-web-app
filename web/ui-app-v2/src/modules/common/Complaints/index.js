@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Card, Icon, Button } from "components";
+import { Image, Card, Icon } from "components";
 import Label from "utils/translationNode";
 import { getDateFromEpoch } from "utils/commons";
 import "./index.css";
@@ -16,8 +16,6 @@ const callIconStyle = {
   borderRadius: "50%",
   top: "0px",
 };
-
-let employeephonenumber = 8940028343;
 
 const bottomInfoTemplate = (item, role) => {
   return role !== "citizen" ? (

@@ -24,7 +24,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { loading } = state.form || false;
   const { departmentById, designationsById, employeeById } = state.common;
   const APIData = Object.keys(employeeById).map((item, index) => {
     return employeeById[item];
