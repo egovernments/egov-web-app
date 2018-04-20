@@ -7,8 +7,6 @@ import ComplaintTypeCard from "./components/ComplaintType";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { setRoute } from "redux/app/actions";
-import { getCurrentAddress } from "utils/commons";
 import "./index.css";
 
 class AddComplaints extends Component {
@@ -26,12 +24,11 @@ class AddComplaints extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.form.fields && nextProps.form.fields.address && !nextProps.form.fields.address.value) {
-      getCurrentAddress().then((currAddress) => {
-        this.props.handleFieldChange(this.props.formKey, "address", currAddress.address);
-        this.props.handleFieldChange(this.props.formKey, "latitude", currAddress.lat);
-        this.props.handleFieldChange(this.props.formKey, "longitude", currAddress.lng);
-      });
+    const { form, handleFieldChange, formKey, currentLocation } = this.props;
+    if (form.fields && form.fields.address && !form.fields.address.value && nextProps.currentLocation.lat) {
+      handleFieldChange(formKey, "latitude", nextProps.currentLocation.lat);
+      handleFieldChange(formKey, "longitude", nextProps.currentLocation.lng);
+      handleFieldChange(formKey, "address", nextProps.currentLocation.address);
     }
   };
 
@@ -94,7 +91,8 @@ const mapStateToProps = (state) => {
   const categories = state.complaints.categoriesById;
   const form = state.form[formKey] || {};
   const { loading } = form || false;
-  return { form, categories, formKey, loading };
+  const currentLocation = state.app.currentLocation || {};
+  return { form, categories, formKey, loading, currentLocation };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -102,7 +100,6 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

@@ -43,7 +43,14 @@ class TrackLocation extends Component {
 
   //For Compass Click -- set map to current location
   getMyLocation = () => {
-    if (navigator.geolocation) {
+    const { currentLocation } = this.props;
+    if (!isEmpty(currentLocation)) {
+      const { lat, lng } = currentLocation;
+      this.setState({
+        currLoc: { lat: parseFloat(lat), lng: parseFloat(lng) },
+      });
+    } else if (navigator.geolocation) {
+      // can be resused
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.setState({
@@ -136,10 +143,11 @@ class TrackLocation extends Component {
 const mapStateToProps = (state) => {
   const formKey = window.location.href.split("?")[1];
   const form = state.form[formKey];
-  const fields = form && form.fields;
+  const fields = (form && form.fields) || {};
+  const currentLocation = state.app.currentLocation || {};
   var location = {};
-  if (fields.latitude.value) location = { lat: parseFloat(fields.latitude.value), lng: parseFloat(fields.longitude.value) };
-  return { location, formKey };
+  if (fields.latitude && fields.latitude.value) location = { lat: parseFloat(fields.latitude.value), lng: parseFloat(fields.longitude.value) };
+  return { location, formKey, currentLocation };
 };
 
 const mapDispatchToProps = (dispatch) => {

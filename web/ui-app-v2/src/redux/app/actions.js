@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import { LOCALATION } from "utils/endPoints";
 import { httpRequest } from "utils/api";
+import { getCurrentAddress } from "utils/commons";
 
 export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
@@ -32,5 +33,19 @@ export const fetchLocalizationLabel = (locale) => {
 
       dispatch(setLocalizationLabels(locale, payload.messages));
     } catch (error) {}
+  };
+};
+
+const setCurrentLocation = (currentLocation) => {
+  return {
+    type: actionTypes.SET_USER_CURRENT_LOCATION,
+    currentLocation,
+  };
+};
+
+export const fetchCurrentLocation = () => {
+  return async (dispatch) => {
+    const currAddress = await getCurrentAddress();
+    dispatch(setCurrentLocation(currAddress));
   };
 };

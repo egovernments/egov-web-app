@@ -29,7 +29,7 @@ const appReducer = (state = initialState, action) => {
         localizationLabels: transformLocalizationLabels(action.localizationLabels),
       };
     case actionTypes.SET_ROUTE:
-      return { ...state, previousRoute:action.route?window.location.pathname:state.previousRoute, route: action.route };
+      return { ...state, previousRoute: action.route ? window.location.pathname : state.previousRoute, route: action.route };
     case actionTypes.SHOW_TOAST:
       return {
         ...state,
@@ -39,6 +39,8 @@ const appReducer = (state = initialState, action) => {
           error: action.error,
         },
       };
+    case actionTypes.SET_USER_CURRENT_LOCATION:
+      return { ...state, currentLocation: action.currentLocation };
     default:
       return state;
   }

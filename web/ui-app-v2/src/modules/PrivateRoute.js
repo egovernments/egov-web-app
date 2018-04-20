@@ -6,8 +6,9 @@ import { Redirect, Route } from "react-router-dom";
 import { BottomNavigation, Icon, LoadingIndicator } from "components";
 import HeaderWithDrawer from "modules/common/HeaderWithDrawer";
 import { fetchComplaintCategories } from "redux/complaints/actions";
-import { getCityNameByCode } from "utils/commons";
+import { getCityNameByCode, getCurrentAddress } from "utils/commons";
 import { logout, searchUser } from "redux/auth/actions";
+import { fetchCurrentLocation } from "redux/app/actions";
 import Label from "utils/translationNode";
 
 const options = [
@@ -52,7 +53,8 @@ class PrivateRoute extends Component {
   }
 
   componentWillMount() {
-    const { searchUser } = this.props;
+    const { searchUser, fetchCurrentLocation } = this.props;
+    fetchCurrentLocation();
     searchUser();
   }
 
@@ -170,6 +172,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchComplaintCategories: () => dispatch(fetchComplaintCategories()),
     logout: () => dispatch(logout()),
     searchUser: () => dispatch(searchUser()),
+    fetchCurrentLocation: () => dispatch(fetchCurrentLocation()),
   };
 };
 
