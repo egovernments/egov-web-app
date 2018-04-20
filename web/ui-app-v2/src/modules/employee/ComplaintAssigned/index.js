@@ -48,8 +48,6 @@ const getNameFromId = (obj, id, defaultValue) => {
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
-  const { history } = ownProps;
-  const { loading } = state.form || false;
   const { departmentById, designationsById, employeeById } = state.common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
   const selectedEmployee = employeeById[selectedComplaint.actions[0].assignee];

@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes";
-import { setFieldValidation, setFormValidation } from "../actions";
+import { setFieldValidation } from "../actions";
 import { validateField, getFormField } from "../utils";
 
 const formValidation = (store) => (next) => (action) => {

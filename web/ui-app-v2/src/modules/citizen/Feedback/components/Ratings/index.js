@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import Ratings from "../../../../../components/Ratings";
+import Ratings from "components/Ratings";
 
 const RatingsComponent = ({ size, count, onChange }) => {
   return (

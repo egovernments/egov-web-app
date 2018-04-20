@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "../../../components";
+import { Button } from "components";
 import Screen from "../../common/Screen";
 import Question from "../../common/ReOpenComplaint/components/Question";
 import TextArea from "../../common/ReOpenComplaint/components/TextArea";

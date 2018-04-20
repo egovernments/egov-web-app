@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ImageLoader from "react-load-image";
-import CircularProgress from "material-ui/CircularProgress";
 import imageLoading from "assets/images/image-loading.png";
 import imageBroken from "assets/images/broken-image.png";
 
@@ -40,7 +39,7 @@ const Image = ({ circular = false, size = "large", className = "", style, source
     <ImageLoader src={imageSource}>
       <img className={classNames} style={style} height={height} width={width} onClick={onClick} />
       <img src={imageBroken} className={classNames} style={style} height={height} width={width} />
-      <Preloader className={classNames} style={style} height={height} width={width}/>
+      <Preloader className={classNames} style={style} height={height} width={width} />
     </ImageLoader>
   ) : (
     <img className={classNames} src={imageSource} style={style} height={height} width={width} onClick={onClick} />

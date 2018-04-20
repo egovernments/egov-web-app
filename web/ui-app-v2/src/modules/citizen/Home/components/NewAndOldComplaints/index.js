@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Icon } from "../../../../../components";
+import { Card, Icon } from "components";
 import Label from "../../../../../utils/translationNode";
 import "./index.css";
 

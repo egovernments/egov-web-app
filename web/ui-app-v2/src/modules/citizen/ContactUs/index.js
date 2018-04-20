@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, List, Image, Card, MapLocation } from "../../../components";
+import { Icon, List, Image, Card, MapLocation } from "components";
 import Screen from "../../common/Screen";
 import pinIcon from "../../../assets/Location_pin.svg";
 import Logo from "../../../assets/images/logo_black.png";

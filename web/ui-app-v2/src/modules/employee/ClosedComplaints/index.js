@@ -12,7 +12,7 @@ import "./index.css";
 class ClosedComplaints extends Component {
   componentDidMount() {
     let { fetchComplaints } = this.props;
-    fetchComplaints([{key:"status",value:"rejected,resolved,closed"}]);
+    fetchComplaints([{ key: "status", value: "rejected,resolved,closed" }]);
   }
 
   onComplaintClick = (complaintNo) => {
@@ -38,28 +38,6 @@ const fetchImages = (actionArray) => {
     action.media && imageArray.push(action.media);
   });
   return imageArray[0] ? imageArray[0] : [];
-};
-
-const getLatestStatus = (status) => {
-  let transformedStatus = "";
-  switch (status.toLowerCase()) {
-    case "open":
-    case "new":
-      transformedStatus = "UNASSIGNED";
-      break;
-    case "closed":
-    case "rejected":
-    case "resolved":
-      transformedStatus = "CLOSED";
-      break;
-    case "assigned":
-      transformedStatus = "ASSIGNED";
-      break;
-    default:
-      transformedStatus = "UNASSIGNED";
-      break;
-  }
-  return transformedStatus;
 };
 
 const isAssigningOfficer = (roles) => {

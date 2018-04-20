@@ -178,8 +178,6 @@ export default class ListCard extends Component {
 
   onEmployeeChosen = (item, index) => {
     let { handleFieldChange, APIData } = this.props;
-    const { results, searchTerm } = this.state;
-    //const displayInitialList = searchTerm.length === 0 ? true : false;
     const dataSource = this.prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
@@ -273,7 +271,9 @@ export default class ListCard extends Component {
               <div className="employee-list-cont">
                 {displayInitialList
                   ? renderList(prepareResultsForDisplay(dataSource), false)
-                  : isEmployeeDirectory ? renderList(prepareResultsForDisplay(results), false) : renderList(prepareResultsForDisplay(results), true)}
+                  : isEmployeeDirectory
+                    ? renderList(prepareResultsForDisplay(results), false)
+                    : renderList(prepareResultsForDisplay(results), true)}
               </div>
             </div>
           }

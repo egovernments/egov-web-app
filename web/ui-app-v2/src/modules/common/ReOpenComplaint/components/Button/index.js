@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../../../../../components";
+import { Button } from "components";
 
 const hintStyle = {
   color: "#b3b3b3",

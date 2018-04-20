@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { Dialog, Ratings, Checkbox, TextArea, Button, Icon, Label } from "../../../components";
+import { Dialog, Ratings, Checkbox, TextArea, Button, Icon, Label } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 
 const titleStyle = {

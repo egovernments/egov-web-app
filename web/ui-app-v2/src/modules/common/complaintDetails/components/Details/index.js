@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon, ImageModal, Button } from "../../../../../components";
+import { Card, Image, Icon, ImageModal, Button } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 

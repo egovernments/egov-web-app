@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, TextField } from "../../../../../components";
+import { Button, TextField } from "components";
 import CityPicker from "../../../CityPicker";
 
 const ProfileForm = ({ name, emailId, handleMailChange, handleNameChange }) => {
