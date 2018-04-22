@@ -41,7 +41,7 @@ const bottomInfoTemplate = (item, role) => {
             style={{ display: "inline-block" }}
             onClick={(e) => {
               e.stopPropagation();
-              const link = `tel:+91${employeephonenumber}`;
+              const link = `tel:+91${item.employeePhoneNumber}`;
               window.location.href = link;
             }}
           >
