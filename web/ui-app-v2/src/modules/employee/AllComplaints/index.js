@@ -5,8 +5,8 @@ import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fetchEmployees, fetchCitizens } from "redux/common/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
 import Label from "utils/translationNode";
+import { mapCompIDToName, isImage, getTransformedStatus, getNameFromId } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -123,24 +123,40 @@ const mapCitizenIdToName = (citizenObjById, id) => {
   return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
 };
 
+const findLatestAssignee = (actionArray) => {
+  for (var i = 0; i < actionArray.length; i++) {
+    if (actionArray[i].status === "assigned") {
+      var assignee = actionArray[i].assignee;
+      break;
+    }
+  }
+  return assignee;
+};
+
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
   const { loading } = complaints || false;
-  const { citizenById } = common || {};
+  const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
+  const defaultPhoneNumber = "";
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
     return {
       header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
       date: complaintDetail.auditDetails.createdTime,
-      status: displayStatus(complaintDetail.actions[0].status),
+      status: displayStatus(complaintDetail.status),
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
-      reassignRequestedBy: complaintDetail.status === "reassignrequested" ? complaintDetail.actions[0].by.split(":")[0] : "",
+      reassignRequestedBy:
+        complaintDetail.status === "reassignrequested" ? getNameFromId(employeeById, complaintDetail.actions[0].by.split(":")[0], "NA") : "NA",
       submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
+      assignedTo: complaintDetail && getNameFromId(employeeById, findLatestAssignee(complaintDetail.actions), "NA"),
+      employeePhoneNumber: employeeById[findLatestAssignee(complaintDetail.actions)]
+        ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
+        : defaultPhoneNumber,
     };
   });
   const assignedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"), ["date"], ["desc"]);
