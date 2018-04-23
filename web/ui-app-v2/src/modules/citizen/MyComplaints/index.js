@@ -28,20 +28,16 @@ class MyComplaints extends Component {
     return (
       <Screen loading={loading}>
         <div className="complaints-main-container clearfix">
-          {transformedComplaints.length === 0 ? (
-            <div className="no-complaints-message-cont">
-              <Label label={"CS_MYCOMPLAINTS_NO_COMPLAINTS"} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
-            </div>
-          ) : (
-            <Complaints
-              onComplaintClick={onComplaintClick}
-              setRoute={setRoute}
-              complaints={transformedComplaints}
-              onClick={this.imageOnClick}
-              track={true}
-              role={"citizen"}
-            />
-          )}
+          <Complaints
+            onComplaintClick={onComplaintClick}
+            setRoute={setRoute}
+            complaints={transformedComplaints}
+            onClick={this.imageOnClick}
+            track={true}
+            role={"citizen"}
+            noComplaintMessage={"CS_MYCOMPLAINTS_NO_COMPLAINTS"}
+          />
+
           <div className="floating-button-cont">
             <FloatingActionButton
               id="mycomplaints-add"

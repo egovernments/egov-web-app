@@ -122,9 +122,12 @@ const getStatusAndChangeColor = (status, assignee) => {
   return statusObj;
 };
 
-const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role, onComplaintClick }) => {
-  return (
-    complaints &&
+const Complaints = ({ index, complaints, setRoute, onClick, complaintLocation, track, role, onComplaintClick, noComplaintMessage }) => {
+  return complaints.length === 0 ? (
+    <div className="no-complaints-message-cont">
+      <Label label={noComplaintMessage} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
+    </div>
+  ) : (
     complaints.map((complaint, complaintIndex) => {
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (

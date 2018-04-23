@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
-
+import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
@@ -25,7 +25,13 @@ class ClosedComplaints extends Component {
     const { closedComplaints, role } = this.props;
     return (
       <Screen>
-        <Complaints onComplaintClick={onComplaintClick} complaints={closedComplaints} role={role} complaintLocation={true} />
+        <Complaints
+          noComplaintMessage={"No complaints here !!!"}
+          onComplaintClick={onComplaintClick}
+          complaints={closedComplaints}
+          role={role}
+          complaintLocation={true}
+        />
       </Screen>
     );
   }

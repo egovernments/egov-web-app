@@ -119,3 +119,13 @@
 .complaint-status-text .label-text {
   display: inline;
 }
+
+.no-complaints-message-cont {
+  padding: 0 34px;
+  text-align: center;
+  height: calc(100vh - 121px);
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
