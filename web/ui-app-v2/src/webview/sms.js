@@ -5,8 +5,10 @@ function messageReceieved(otp) {
   // check the browser compatibility
   const smsReceievedEvent = new CustomEvent("smsReceived", {
     detail: {
-      otp,
+      otp: otp,
     },
   });
   otpElement.dispatchEvent(smsReceievedEvent);
 }
+
+window.messageReceieved = messageReceieved;
