@@ -15,11 +15,6 @@ class AllComplaints extends Component {
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
 
-  //Don't Delete
-  handleTabChange = (label) => {
-    console.log(label);
-  };
-
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/employee/complaint-details/${complaintNo}`);
   };
@@ -34,7 +29,6 @@ class AllComplaints extends Component {
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
-        onActive={this.handleTabChange}
         tabs={[
           {
             label: (
@@ -103,7 +97,6 @@ const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : [];
 };
 
-// too many defaults should change
 const isAssigningOfficer = (roles = []) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;

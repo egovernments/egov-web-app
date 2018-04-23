@@ -1,44 +1,19 @@
 import React, { Component } from "react";
-import Details from "../../common/complaintDetails/components/Details";
-import ComplaintTimeLine from "../../common/complaintDetails/components/ComplaintTimeLine";
-import Comments from "../../common/complaintDetails/components/Comments";
-import Actions from "../../common/complaintDetails/components/ActionButton";
+import Details from "modules/common/complaintDetails/components/Details";
+import ComplaintTimeLine from "modules/common/complaintDetails/components/ComplaintTimeLine";
+import Comments from "modules/common/complaintDetails/components/Comments";
+import Actions from "modules/common/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
-import Screen from "../../common/Screen";
+import Screen from "modules/common/Screen";
 import pinIcon from "assets/Location_pin.svg";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
-import { setRoute } from "redux/app/actions";
 import { connect } from "react-redux";
 import "./index.css";
 
 class ComplaintDetails extends Component {
   state = {
     openMap: false,
-    status: {
-      bgColor: "#f5a623",
-      status: "Resolved",
-    },
-    details: {
-      status: "Resolved",
-      complaint: "Overflow of bins",
-      applicationNo: "1234566",
-      description: "Sterilization is scheduled in March. We are doing our best to resolve your issue at this time",
-      images: [
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-        {
-          src: "",
-        },
-      ],
-      location: "Sector 32, 1 main, Amritsar",
-    },
-    role: "",
-    hasComments: true,
   };
 
   componentDidMount() {
@@ -128,28 +103,28 @@ class ComplaintDetails extends Component {
 
   btnOneOnClick = (complaintNo, label) => {
     //Action for first button
-    let { setRoute } = this.props;
+    let { history } = this.props;
     switch (label) {
       case "ES_REJECT_BUTTON":
-        setRoute(`/employee/reject-complaint/${complaintNo}`);
+        history.push(`/employee/reject-complaint/${complaintNo}`);
         break;
       case "ES_REQUEST_REQUEST_RE_ASSIGN":
-        setRoute(`/employee/request-reassign/${complaintNo}`);
+        history.push(`/employee/request-reassign/${complaintNo}`);
         break;
     }
   };
   btnTwoOnClick = (complaintNo, label) => {
     //Action for second button
-    let { setRoute } = this.props;
+    let { history } = this.props;
     switch (label) {
       case "ES_COMMON_ASSIGN":
-        setRoute(`/employee/assign-complaint/${complaintNo}`);
+        history.push(`/employee/assign-complaint/${complaintNo}`);
         break;
       case "ES_COMMON_REASSIGN":
-        setRoute(`/employee/reassign-complaint/${complaintNo}`);
+        history.push(`/employee/reassign-complaint/${complaintNo}`);
         break;
       case "ES_RESOLVE_MARK_RESOLVED":
-        setRoute(`/employee/complaint-resolved/${complaintNo}`);
+        history.push(`/employee/complaint-resolved/${complaintNo}`);
         break;
     }
   };
@@ -330,7 +305,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

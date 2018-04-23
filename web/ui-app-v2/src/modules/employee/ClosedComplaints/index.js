@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Screen from "../../common/Screen";
-import Complaints from "../../common/Complaints";
+import Screen from "modules/common/Screen";
+import Complaints from "modules/common/Complaints";
 import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
