@@ -20,8 +20,14 @@ const LoginForm = ({ submitForm, onChange, form, formKey, onForgotPasswdCLick })
           >
             <TextField onChange={(e, value) => onChange(formKey, "username", value)} {...fields.username} />
             <TextField onChange={(e, value) => onChange(formKey, "password", value)} {...fields.password} />
-            <div onClick={onForgotPasswdCLick}>
-              <Label style={{ marginBottom: "12px" }} className=" forgot-passwd" fontSize={14} label="FORGOT PASSWORD?" onCLick />
+            <div style={{ float: "right" }} onClick={onForgotPasswdCLick}>
+              <Label
+                containerStyle={{ cursor: "pointer" }}
+                labelStyle={{ marginBottom: "12px" }}
+                className=" forgot-passwd"
+                fontSize={14}
+                label="FORGOT PASSWORD?"
+              />
             </div>
             <Button {...submit} fullWidth={true} onClick={() => submitForm(formKey)} primary={true} />
           </form>
