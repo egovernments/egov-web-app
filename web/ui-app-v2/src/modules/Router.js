@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "modules/PrivateRoute";
+import withAuthorization from "hocs/withAuthorization";
 import Label from "utils/translationNode";
 
 // Home page
@@ -42,198 +42,196 @@ import ComplaintAssigned from "modules/employee/ComplaintAssigned";
 import ResolveSuccess from "modules/employee/ResolveSuccess";
 import ReassignSuccess from "modules/employee/ReassignSuccess";
 
-import "assets/styles/app.css";
+//Redirection Url
+const citizenRedirectionUrl = "/citizen/user/login";
+const employeeRedirectionUrl = "/employee/user/login";
 
 const Main = () => {
   return (
     <main>
       <Switch>
         <Route path="/citizen/user" component={Citizen} />
-        <PrivateRoute exact path="/citizen/" title={<Label className="screenHeaderLabelStyle" label="CS_HOME_HEADER_HOME" />} component={Home} />
-        <PrivateRoute
-          exact
-          hideBottomNavigation={true}
-          path="/citizen/contact-us"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_HEADER_CONTACT_US" />}
-          component={ContactUs}
-        />
-        <PrivateRoute
-          exact
-          path="/citizen/my-complaints"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_MY_COMPLAINTS" />}
-          component={MyComplaints}
-        />
-        <PrivateRoute
+        <Route exact path="/citizen/" component={withAuthorization(Home, { title: "CS_HOME_HEADER_HOME" })} />
+        <Route exact path="/citizen/contact-us" component={withAuthorization(ContactUs, { title: "CS_HOME_HEADER_CONTACT_US", hideFooter: true })} />
+        <Route exact path="/citizen/my-complaints" component={withAuthorization(MyComplaints, { title: "CS_HOME_MY_COMPLAINTS" })} />
+        <Route
           exact
           path="/citizen/complaint-details/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_COMPLAINT_SUMMARY" />}
-          component={ComplaintDetails}
+          component={withAuthorization(ComplaintDetails, { title: "CS_HEADER_COMPLAINT_SUMMARY" })}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/citizen/map"
-          hideBottomNavigation={true}
-          hideAppBar={true}
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_TRACK_LOCATION" />}
-          component={TrackLocation}
+          component={withAuthorization(TrackLocation, { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" })}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/citizen/complaint-submitted"
-          hideBottomNavigation={true}
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_COMPLAINT_SUBMITTED" />}
-          component={ComplaintSubmited}
+          component={withAuthorization(ComplaintSubmited, { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" })}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/citizen/reopen-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_REOPEN_COMPLAINT" />}
-          component={ReOpenComplaint}
+          component={withAuthorization(ReOpenComplaint, { title: "CS_HEADER_REOPEN_COMPLAINT" })}
         />
-        <PrivateRoute
-          exact
-          path="/citizen/feedback/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_FEEDBACK" />}
-          component={Feedback}
-        />
-        <PrivateRoute
+        <Route exact path="/citizen/feedback/:serviceRequestId?" component={withAuthorization(Feedback, { title: "CS_HEADER_FEEDBACK" })} />
+        <Route
           exact
           path="/citizen/feedback-acknowledgement"
-          hideBottomNavigation={true}
-          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_MY_COMPLAINTS" />}
-          component={FeedbackAcknowledge}
+          component={withAuthorization(FeedbackAcknowledge, { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/citizen/complaint-type"
-          title={<Label className="screenHeaderLabelStyle" label="CS_ADDCOMPLAINT_COMPLAINT_TYPE" />}
-          component={ComplaintType}
+          component={withAuthorization(ComplaintType, { hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/citizen/how-it-works"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_HEADER_HOW_IT_WORKS" />}
-          component={HowItWorks}
+          component={withAuthorization(HowItWorks, { hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/citizen/add-complaint"
-          title={<Label className="screenHeaderLabelStyle" label="CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" />}
-          component={AddComplaint}
+          component={withAuthorization(AddComplaint, { hideFooter: true, title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" })}
         />
         {/* Employee routes */}
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/all-complaints"
-          title={<Label className="screenHeaderLabelStyle" label="ES_ALL_COMPLAINTS_HEADER" />}
-          component={AllComplaints}
+          component={withAuthorization(AllComplaints, {
+            hideFooter: true,
+            title: "ES_ALL_COMPLAINTS_HEADER",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/request-reassign/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_REQUEST_REASSIGN" />}
-          component={RequestReAssign}
+          component={withAuthorization(RequestReAssign, {
+            hideFooter: true,
+            title: "CS_HEADER_REQUEST_REASSIGN",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/complaint-resolved/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE" />}
-          component={ComplaintResolved}
+          component={withAuthorization(ComplaintResolved, {
+            hideFooter: true,
+            title: "CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
-          path="/employee/complaint-details/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="CS_HEADER_COMPLAINT_SUMMARY" />}
-          component={ComplaintSummary}
+          path="/employee/complaint-details/:serviceRequestId"
+          component={withAuthorization(ComplaintSummary, {
+            hideFooter: true,
+            title: "CS_HEADER_COMPLAINT_SUMMARY",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
 
         <Route path="/employee/user" component={EmpUser} />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/closed-complaints"
-          title={<Label className="screenHeaderLabelStyle" label="ES_CLOSED_COMPLAINTS_HEADER" />}
-          component={ClosedComplaints}
+          component={withAuthorization(ClosedComplaints, {
+            hideFooter: true,
+            title: "ES_CLOSED_COMPLAINTS_HEADER",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        {/*Employee static screens */}
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/complaint-reassigned/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_REASSIGNED_HEADER" />}
-          component={ComplaintAssigned}
+          component={withAuthorization(ComplaintAssigned, {
+            hideFooter: true,
+            title: "ES_COMPLAINT_REASSIGNED_HEADER",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/resolve-success"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />}
-          component={ResolveSuccess}
+          component={withAuthorization(ResolveSuccess, {
+            hideFooter: true,
+            title: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/reassign-success"
-          title={<Label className="screenHeaderLabelStyle" label="CS_COMMON_RE-ASSIGN REQUESTED" />}
-          component={ReassignSuccess}
+          component={withAuthorization(ReassignSuccess, {
+            hideFooter: true,
+            title: "CS_COMMON_RE-ASSIGN REQUESTED",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/complaint-assigned/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_ASSIGNED_HEADER" />}
-          component={ComplaintAssigned}
+          component={withAuthorization(ComplaintAssigned, {
+            hideFooter: true,
+            title: "ES_COMPLAINT_ASSIGNED_HEADER",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/complaint-rejected"
-          title={<Label className="screenHeaderLabelStyle" label="ES_COMPLAINT_REJECTED_HEADER" />}
-          component={ComplaintRejected}
+          component={withAuthorization(ComplaintRejected, {
+            title: "ES_COMPLAINT_REJECTED_HEADER",
+            hideFooter: true,
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        {/* assijgn */}
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/assign-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="ES_ASSIGN_TO_EMPLOYEE_HEADER" />}
-          component={AssignComplaint}
+          component={withAuthorization(AssignComplaint, {
+            title: "ES_ASSIGN_TO_EMPLOYEE_HEADER",
+            hideFooter: true,
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/reassign-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="ES_REASSIGN_TO_EMPLOYEE_HEADER" />}
-          component={AssignComplaint}
+          component={withAuthorization(AssignComplaint, {
+            title: "ES_REASSIGN_TO_EMPLOYEE_HEADER",
+            hideFooter: true,
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/employee-directory"
-          title={<Label className="screenHeaderLabelStyle" label="ES_EMPLOYEE_DIRECTORY_HEADER" />}
-          component={EmployeeDirectory}
+          component={withAuthorization(EmployeeDirectory, {
+            title: "ES_EMPLOYEE_DIRECTORY_HEADER",
+            hideFooter: true,
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
-          hideBottomNavigation={true}
           path="/employee/reject-complaint/:serviceRequestId?"
-          title={<Label className="screenHeaderLabelStyle" label="ES_REASON_TO_REJECT_HEADER" />}
-          component={RejectComplaint}
+          component={withAuthorization(RejectComplaint, {
+            title: "ES_REASON_TO_REJECT_HEADER",
+            hideFooter: true,
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
-        <PrivateRoute
+        <Route
           exact
           path="/citizen/reopen-acknowledgement"
-          hideBottomNavigation={true}
-          title={<Label className="screenHeaderLabelStyle" label="CS_HOME_MY_COMPLAINTS" />}
-          component={ReopenAcknowledgement}
+          component={withAuthorization(ReopenAcknowledgement, {
+            hideFooter: true,
+            title: "CS_HOME_MY_COMPLAINTS",
+            redirectionUrl: employeeRedirectionUrl,
+          })}
         />
       </Switch>
     </main>

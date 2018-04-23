@@ -4,7 +4,6 @@ import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fetchEmployees, fetchCitizens } from "redux/common/actions";
-import { setRoute } from "redux/app/actions";
 import Label from "utils/translationNode";
 import { mapCompIDToName, isImage, getTransformedStatus, returnSLAStatus, getPropertyFromObj, getLatestCreationTime } from "utils/commons";
 import { connect } from "react-redux";
@@ -14,12 +13,9 @@ import "./index.css";
 class AllComplaints extends Component {
   componentDidMount() {
     let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
-    // fetchEmployees();
     fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
-
-  componentWillReceiveProps = (nextProps) => {};
 
   //Don't Delete
   handleTabChange = (label) => {
@@ -27,8 +23,7 @@ class AllComplaints extends Component {
   };
 
   onComplaintClick = (complaintNo) => {
-    let { setRoute } = this.props;
-    setRoute(`/employee/complaint-details/${complaintNo}`);
+    this.props.history.push(`/employee/complaint-details/${complaintNo}`);
   };
 
   render() {
@@ -92,11 +87,12 @@ const fetchImages = (actionArray) => {
   return imageArray[0] ? imageArray[0] : [];
 };
 
-const isAssigningOfficer = (roles) => {
+// too many defaults should change
+const isAssigningOfficer = (roles = []) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
   });
-  return roleCodes.indexOf("GRO") > -1 ? true : false;
+  return roleCodes && roleCodes.length && roleCodes.indexOf("GRO") > -1 ? true : false;
 };
 
 const displayStatus = (status = "", assignee) => {
@@ -179,13 +175,12 @@ const mapStateToProps = (state) => {
     );
   }
 
-  return { userInfo, assignedComplaints, unassignedComplaints, employeeComplaints, role, loading };
+  return { assignedComplaints, unassignedComplaints, employeeComplaints, role, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    setRoute: (route) => dispatch(setRoute(route)),
     fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
     fetchEmployees: () => dispatch(fetchEmployees()),
   };

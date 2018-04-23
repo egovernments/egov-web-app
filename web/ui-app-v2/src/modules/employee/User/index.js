@@ -1,8 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "modules/PrivateRoute";
 import withoutAuthorization from "hocs/withoutAuthorization";
-import Label from "utils/translationNode";
+import withAuthorization from "hocs/withAuthorization";
 
 // routes
 import Login from "./Login";
@@ -21,14 +20,13 @@ const Employee = ({ match }) => {
       <Route exact path={`${match.url}/otp`} component={withoutAuthorization(OTP, redirectionUrl)} />
       <Route exact path={`${match.url}/language-selection`} component={withoutAuthorization(LanguageSelection, redirectionUrl)} />
       <Route exact path={`${match.url}/forgot-password`} component={withoutAuthorization(ForgotPassword, redirectionUrl)} />
-      <PrivateRoute
+      <Route
         exact
         path={`${match.url}/change-password`}
-        component={ChangePassword}
-        hideBottomNavigation={true}
-        title={<Label className="screenHeaderLabelStyle" label="Change Password" />}
+        component={withAuthorization(ChangePassword, { hideFooter: true, title: "Change Password" })}
       />
-      <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Edit Profile" component={Profile} />
+      />
+      <Route exact path={`${match.url}/profile`} component={withAuthorization(Profile, { hideFooter: true, title: "Edit Profile" })} />
     </Switch>
   );
 };

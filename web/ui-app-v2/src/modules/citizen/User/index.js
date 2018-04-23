@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "modules/PrivateRoute";
 import withoutAuthorization from "hocs/withoutAuthorization";
+import withAuthorization from "hocs/withAuthorization";
 
 // routes
 import Register from "./Register";
@@ -19,7 +19,7 @@ const Citizen = ({ match }) => {
       <Route exact path={`${match.url}/login`} component={withoutAuthorization(Login, redirectionUrl)} />
       <Route exact path={`${match.url}/otp`} component={withoutAuthorization(OTP, redirectionUrl)} />
       <Route exact path={`${match.url}/language-selection`} component={withoutAuthorization(LanguageSelection, redirectionUrl)} />
-      <PrivateRoute exact path={`${match.url}/profile`} hideBottomNavigation={true} title="Edit Profile" component={Profile} />
+      <Route exact path={`${match.url}/profile`} component={withAuthorization(Profile, { hideFooter: true, title: "Edit Profile" })} />
     </Switch>
   );
 };

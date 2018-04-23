@@ -3,6 +3,7 @@ import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { httpRequest, loginRequest } from "utils/api";
 import { AUTH, USER, OTP } from "utils/endPoints";
 import { prepareFormData } from "utils/commons";
+import { setRoute } from "redux/app/actions";
 
 // temp fix
 const fixUserDob = (user = {}) => {
@@ -118,18 +119,21 @@ export const sendOTP = (intent) => {
 };
 
 export const logout = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
     } catch (error) {}
     // whatever happens the client should clear the user details
+    const state = getState();
     const locale = localStorage.getItem("locale") || "en_IN";
+    const userRole = state.auth.userInfo.roles[0].code;
     const localizationCacheKey = `localization_${locale}`;
     const localization = localStorage.getItem(localizationCacheKey);
     localStorage.clear();
     localStorage.setItem("locale", locale);
     localStorage.setItem(localizationCacheKey, localization);
     dispatch({ type: authType.LOGOUT });
+    dispatch(setRoute(userRole === "CITIZEN" ? "/citizen/user/login" : "/employee/user/login"));
   };
 };

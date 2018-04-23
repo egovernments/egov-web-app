@@ -6,15 +6,7 @@ import "./index.css";
 const BottomNavigation = ({ className, style = {}, options, handleChange, selectedIndex, id }) => (
   <MaterialUiBottomNavigation className={`${className} bottom-navigation`} style={style} selectedIndex={selectedIndex}>
     {options.map((item, index) => (
-      <BottomNavigationItem
-        id={item.id}
-        key={index}
-        label={item.label}
-        icon={item.icon}
-        onClick={() => {
-          handleChange(index, item.route);
-        }}
-      />
+      <BottomNavigationItem id={item.id} key={index} label={item.label} icon={item.icon} onClick={() => handleChange(index)} />
     ))}
   </MaterialUiBottomNavigation>
 );

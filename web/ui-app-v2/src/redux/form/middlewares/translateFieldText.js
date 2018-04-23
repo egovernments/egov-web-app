@@ -40,7 +40,7 @@ const translateFieldText = (store) => (next) => (action) => {
     next(action);
     const newState = store.getState();
     localizationLabels = newState.app.localizationLabels;
-    const { form: forms } = store.getState();
+    const { form: forms } = newState;
     Object.keys(forms).forEach((formKey) => {
       let translatedForm = translatedFormFields(localizationLabels, forms[formKey]);
       translatedForm = { ...translatedForm, name: formKey };

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass } from "utils/commons";
 import { fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
-import { fetchCitizens, fetchEmployees, fetchMDMSData } from "redux/common/actions";
+import { fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
 
 class App extends Component {
@@ -76,17 +76,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   const { route, toast } = state.app;
-  const { userInfo } = state.auth;
-  return { route, toast, userInfo };
+  return { route, toast };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
-    fetchEmployees: () => dispatch(fetchEmployees()),
-    fetchMDMSData: (requestBody) => dispatch(fetchMDMSData(requestBody)),
+    fetchMDMSData: () => dispatch(fetchMDMSData()),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };

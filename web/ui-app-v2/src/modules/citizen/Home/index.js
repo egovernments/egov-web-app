@@ -10,7 +10,7 @@ import "./index.css";
 
 class Home extends Component {
   componentDidMount = () => {
-    let { fetchComplaints } = this.props;
+    const { fetchComplaints } = this.props;
     fetchComplaints([]);
   };
 
@@ -28,13 +28,6 @@ class Home extends Component {
     );
   }
 }
-
-// const displayDate = (rawData) => {
-//   let split = rawData.split("/");
-//   split.splice(split.length - 1, 1);
-//   return split.join("-");
-// };
-
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
   let updates = [];
@@ -48,7 +41,6 @@ const mapStateToProps = (state) => {
     complaintObj.number = complaintKey;
     updates.push(complaintObj);
   });
-  // debugger;
   var closedComplaints = orderby(updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() === "closed"), ["date"], ["desc"]);
   var nonClosedComplaints = orderby(
     updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() != "closed"),

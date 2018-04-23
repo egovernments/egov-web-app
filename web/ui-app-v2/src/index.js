@@ -2,6 +2,9 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+// sms listener
+import "./webview/sms";
+
 import App from "modules/App";
 import store from "./redux/store";
 import theme from "./config/theme";
@@ -11,7 +14,6 @@ import WebFont from "webfontloader";
 // styles
 import "./assets/styles/bootstrap-customized.css";
 import "./assets/styles/app.css";
-
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
