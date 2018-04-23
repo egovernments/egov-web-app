@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tabs } from "components";
-import Screen from "../../common/Screen";
-import Complaints from "../../common/Complaints";
+import Screen from "modules/common/Screen";
+import Complaints from "modules/common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
 import { mapCompIDToName, isImage, getTransformedStatus, returnSLAStatus, getPropertyFromObj, getLatestCreationTime } from "utils/commons";
@@ -11,7 +11,7 @@ import "./index.css";
 
 class AllComplaints extends Component {
   componentDidMount() {
-    let { fetchComplaints} = this.props;
+    let { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
 
@@ -196,7 +196,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria))
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
 

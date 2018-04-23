@@ -126,14 +126,13 @@ export const logout = () => {
     } catch (error) {}
     // whatever happens the client should clear the user details
     const state = getState();
-    const locale = localStorage.getItem("locale") || "en_IN";
     const userRole = state.auth.userInfo.roles[0].code;
-    const localizationCacheKey = `localization_${locale}`;
-    const localization = localStorage.getItem(localizationCacheKey);
-    localStorage.clear();
-    localStorage.setItem("locale", locale);
-    localStorage.setItem(localizationCacheKey, localization);
+    Object.keys(localStorage).forEach((key) => {
+      if (!key.startsWith("localization")) {
+        localStorage.removeItem(key);
+      }
+    });
     dispatch({ type: authType.LOGOUT });
-    dispatch(setRoute(userRole === "CITIZEN" ? "/citizen/user/login" : "/employee/user/login"));
+    window.location.replace(userRole === "citzen" ? "/citizen/user/login" : "/employee/user/login");
   };
 };
