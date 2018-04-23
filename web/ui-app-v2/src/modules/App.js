@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Toast } from "components";
 import { addBodyClass } from "utils/commons";
-import { fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
+import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
 
@@ -51,6 +51,8 @@ class App extends Component {
     };
     // can be combined into one mdms call
     fetchLocalizationLabel(localStorage.getItem("locale") || "en_IN");
+    // current location
+    fetchCurrentLocation();
     fetchMDMSData(requestBody);
   }
 
@@ -84,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     fetchMDMSData: (criteria) => dispatch(fetchMDMSData(criteria)),
+    fetchCurrentLocation: () => dispatch(fetchCurrentLocation()),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };
