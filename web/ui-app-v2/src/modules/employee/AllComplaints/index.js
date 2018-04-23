@@ -3,7 +3,6 @@ import { Tabs } from "components";
 import Screen from "../../common/Screen";
 import Complaints from "../../common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
-import { fetchEmployees, fetchCitizens } from "redux/common/actions";
 import Label from "utils/translationNode";
 import { mapCompIDToName, isImage, getTransformedStatus, returnSLAStatus, getPropertyFromObj, getLatestCreationTime } from "utils/commons";
 import { connect } from "react-redux";
@@ -12,8 +11,7 @@ import "./index.css";
 
 class AllComplaints extends Component {
   componentDidMount() {
-    let { fetchComplaints, fetchCitizens, fetchEmployees } = this.props;
-    fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: [] });
+    let { fetchComplaints} = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }
 
@@ -180,9 +178,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    fetchCitizens: (requestBody) => dispatch(fetchCitizens(requestBody)),
-    fetchEmployees: () => dispatch(fetchEmployees()),
+    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria))
   };
 };
 
