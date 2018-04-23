@@ -30,11 +30,13 @@ WebFont.load({
   },
 });
 
+// move it to a env file
+window.basename = process.env.NODE_ENV === "production" ? "/app/v3" : "";
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Router basename={process.env.NODE_ENV === "production" ? "/app/v3" : ""}>
+      <Router basename={window.basename}>
         <App />
       </Router>
     </MuiThemeProvider>

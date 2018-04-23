@@ -125,13 +125,12 @@ export const logout = () => {
     } catch (error) {}
     // whatever happens the client should clear the user details
     const state = getState();
-    const userRole = state.auth.userInfo.roles[0].code;
+    const userRole = state.auth.userInfo.roles[0].code.toLowerCase();
     Object.keys(localStorage).forEach((key) => {
       if (!key.startsWith("localization")) {
         localStorage.removeItem(key);
       }
     });
-    dispatch({ type: authType.LOGOUT });
-    window.location.replace(userRole === "citzen" ? "/citizen/user/login" : "/employee/user/login");
+    window.location.replace(userRole === "citizen" ? `${window.basename}/citizen/user/login` : `${window.basename}/employee/user/login`);
   };
 };
