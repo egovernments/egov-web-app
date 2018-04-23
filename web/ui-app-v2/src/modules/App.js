@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { fetchLocalizationLabel, fetchMDMSData } = this.props;
+    const { fetchLocalizationLabel, fetchCurrentLocation, fetchMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
