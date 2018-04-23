@@ -99,10 +99,15 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label
             labelClassName="dark-color"
             containerStyle={statusContainerStyle}
-            label={`${action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role ? "ES_COMMON_FILED_BY" : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`}`}
+            label={`${
+              action === "reopen"
+                ? "CS_COMMON_COMPLAINT_REOPENED"
+                : role !== "citizen" ? "ES_COMMON_FILED_BY" : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
+            }`}
           />
-          {action !== "reopen" && role && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
-          {((role && action !== "reopen" && currentStatus === "open") || (!role && action === "reopen" && currentStatus === "open")) &&
+          {action !== "reopen" && role !== "citizen" && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
+          {((role !== "citizen" && action !== "reopen" && currentStatus === "open") ||
+            (role === "citizen" && action === "reopen" && currentStatus === "open")) &&
             openStatusCount === 1 && (
               <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
@@ -195,7 +200,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       return (
         <div className="complaint-timeline-content-section">
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          {!role && (
+          {role === "citizen" && (
             <div>
               <Label
                 labelClassName="dark-color"
@@ -210,7 +215,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 )}
             </div>
           )}
-          {role && (
+          {role !== "citizen" && (
             <div>
               <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`} />
               {currentStatus === "reassignrequested" &&
@@ -257,7 +262,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
           />
           {currentStatus === "rejected" &&
-            !role &&
+            role === "citizen" &&
             rejectStatusCount === 1 && (
               <div
                 className="complaint-details-timline-button"
@@ -327,7 +332,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
 
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
           {currentStatus === "resolved" &&
-            !role &&
+            role === "citizen" &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
                 <div
