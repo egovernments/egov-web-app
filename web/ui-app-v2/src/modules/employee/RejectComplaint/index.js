@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "components";
-import Screen from "../../common/Screen";
-import Question from "../../common/ReOpenComplaint/components/Question";
-import TextArea from "../../common/ReOpenComplaint/components/TextArea";
+import Screen from "modules/common/Screen";
+import Question from "modules/common/ReOpenComplaint/components/Question";
+import TextArea from "modules/common/ReOpenComplaint/components/TextArea";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
-import { fileUpload } from "redux/form/actions";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -104,7 +103,6 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
