@@ -74,7 +74,6 @@ class Comments extends Component {
     const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName } = this.props;
     const { name: formKey } = this.formConfig;
 
-    console.log(this.props);
     let items =
       selectedComplaint &&
       selectedComplaint.actions.filter((action, index) => {

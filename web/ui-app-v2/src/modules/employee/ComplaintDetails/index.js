@@ -120,10 +120,7 @@ class ComplaintDetails extends Component {
     }
   }
 
-  redirectToMap = (isOpen, location) => {
-    this.setState({
-      location: location,
-    });
+  redirectToMap = (isOpen) => {
     var pathName = this.props.history.location.pathname;
     if (isOpen === true) this.props.history.push(pathName + "?map");
     else if (isOpen === false) this.props.history.goBack();
@@ -158,12 +155,16 @@ class ComplaintDetails extends Component {
   };
 
   render() {
-    let { comments, location, openMap } = this.state;
+    let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
     let { role, serviceRequestId, history } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
+    let complaintLoc = {};
+    if (complaint && complaint.latitude) {
+      complaintLoc = { lat: complaint.latitude, lng: complaint.longitude };
+    }
     if (complaint) {
       if (role === "ao") {
         if (complaint.complaintStatus.toLowerCase() === "unassigned") {
@@ -221,26 +222,27 @@ class ComplaintDetails extends Component {
               </div>
             )}
         </Screen>
-        {openMap && (
-          <div>
-            <div className="back-btn" style={{ top: 32 }}>
-              <Icon
-                className="mapBackBtn"
-                onClick={() => {
-                  this.redirectToMap(false);
-                }}
-                style={{
-                  height: 24,
-                  width: 24,
-                  color: "#484848",
-                }}
-                action="navigation"
-                name={"arrow-back"}
-              />
+        {complaintLoc.lat &&
+          openMap && (
+            <div>
+              <div className="back-btn" style={{ top: 32 }}>
+                <Icon
+                  className="mapBackBtn"
+                  onClick={() => {
+                    this.redirectToMap(false);
+                  }}
+                  style={{
+                    height: 24,
+                    width: 24,
+                    color: "#484848",
+                  }}
+                  action="navigation"
+                  name={"arrow-back"}
+                />
+              </div>
+              <MapLocation currLoc={complaintLoc} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
             </div>
-            <MapLocation currLoc={location} icon={pinIcon} hideTerrainBtn={true} viewLocation={true} />
-          </div>
-        )}
+          )}
       </div>
     );
   }

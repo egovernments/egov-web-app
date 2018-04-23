@@ -17,9 +17,6 @@ const mapIconStyle = {
 };
 
 class Details extends Component {
-  redirectToMap = () => {
-    //Redirect to Map
-  };
   state = {
     source: "",
     hideImageModal: true,
@@ -170,7 +167,7 @@ class Details extends Component {
                     }}
                     icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
                     onClick={(e) => {
-                      this.props.redirectToMap(true, { lat: latitude, lng: longitude });
+                      this.props.redirectToMap(true);
                     }}
                   />
                 )}
