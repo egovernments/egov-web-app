@@ -78,7 +78,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   const { route, toast } = state.app;
-  return { route, toast };
+  const props = {};
+  if (route && route.length) {
+    props.route = route;
+  }
+  if (toast && toast.open && toast.message && toast.message.length) {
+    props.toast = toast;
+  }
+  return props;
 };
 
 const mapDispatchToProps = (dispatch) => {
