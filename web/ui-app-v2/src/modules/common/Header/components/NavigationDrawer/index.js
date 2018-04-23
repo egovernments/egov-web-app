@@ -11,10 +11,10 @@ const styles = {
   },
 };
 
-const NavigationDrawer = ({ handleItemClick, role, toggleMenu, onUpdateMenuStatus, userInfo, fetchLocalizationLabel }) => {
+const NavigationDrawer = ({ handleItemClick, role, toggleMenu, onUpdateMenuStatus, userInfo, cities, fetchLocalizationLabel }) => {
   return (
     <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
-      <UserProfile role={role} userInfo={userInfo} />
+      <UserProfile role={role} cities={cities} userInfo={userInfo} />
       <div className="drawer-list-poweredBy-wrapper">
         <List
           onItemClick={handleItemClick}

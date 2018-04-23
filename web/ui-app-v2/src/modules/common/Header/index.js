@@ -101,6 +101,7 @@ class Header extends Component {
           onUpdateMenuStatus={_onUpdateMenuStatus}
           toggleMenu={toggleMenu}
           history={history}
+          cities={cities}
           userInfo={userInfo}
           fetchLocalizationLabel={fetchLocalizationLabel}
           role={role && role === "citizen" ? "citizen" : "employee"}

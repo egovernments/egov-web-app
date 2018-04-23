@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchLocalizationLabel: (locale) => dispatch(fetchLocalizationLabel(locale)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    fetchMDMSData: () => dispatch(fetchMDMSData()),
+    fetchMDMSData: (criteria) => dispatch(fetchMDMSData(criteria)),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };
