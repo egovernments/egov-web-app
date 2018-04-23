@@ -46,7 +46,13 @@ class AllComplaints extends Component {
             children: (
               <Screen loading={loading}>
                 <div className="tab1-content">
-                  <Complaints onComplaintClick={onComplaintClick} complaints={unassignedComplaints} complaintLocation={true} role={role} />
+                  <Complaints
+                    noComplaintMessage={"No complaints to Assign"}
+                    onComplaintClick={onComplaintClick}
+                    complaints={unassignedComplaints}
+                    complaintLocation={true}
+                    role={role}
+                  />
                 </div>
               </Screen>
             ),
@@ -61,7 +67,13 @@ class AllComplaints extends Component {
             children: (
               <Screen loading={loading}>
                 <div className="tab2-content">
-                  <Complaints onComplaintClick={onComplaintClick} complaints={assignedComplaints} complaintLocation={true} role={role} />
+                  <Complaints
+                    noComplaintMessage={"No assigned complaints"}
+                    onComplaintClick={onComplaintClick}
+                    complaints={assignedComplaints}
+                    complaintLocation={true}
+                    role={role}
+                  />
                 </div>
               </Screen>
             ),
@@ -70,7 +82,13 @@ class AllComplaints extends Component {
       />
     ) : (
       <Screen loading={loading}>
-        <Complaints onComplaintClick={onComplaintClick} complaints={employeeComplaints} role={role} complaintLocation={true} />
+        <Complaints
+          noComplaintMessage={"No complaints assigned to you !!"}
+          onComplaintClick={onComplaintClick}
+          complaints={employeeComplaints}
+          role={role}
+          complaintLocation={true}
+        />
       </Screen>
     );
   }
