@@ -3,7 +3,6 @@ import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { httpRequest, loginRequest } from "utils/api";
 import { AUTH, USER, OTP } from "utils/endPoints";
 import { prepareFormData } from "utils/commons";
-import { setRoute } from "redux/app/actions";
 
 // temp fix
 const fixUserDob = (user = {}) => {
