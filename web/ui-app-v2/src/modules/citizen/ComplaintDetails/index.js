@@ -5,7 +5,7 @@ import ComplaintTimeLine from "modules/common/complaintDetails/components/Compla
 import Comments from "modules/common/complaintDetails/components/Comments";
 import Screen from "modules/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -41,9 +41,10 @@ class ComplaintDetails extends Component {
     );
   }
 }
-
+let gro = "";
 const mapStateToProps = (state, ownProps) => {
-  const { complaints } = state;
+  const { complaints, common } = state;
+  const { employeeById, departmentById, designationsById } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
     let details = {
@@ -58,11 +59,25 @@ const mapStateToProps = (state, ownProps) => {
       rating: selectedComplaint.rating,
     };
     let timeLine = [];
-    timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine = selectedComplaint && selectedComplaint.actions.filter((action) => action.status && action.status);
+    timeLine.map((action) => {
+      if (action && action.status && action.status === "assigned") {
+        let assignee = action.assignee;
+        gro = action.by.split(":")[0];
+        const selectedEmployee = employeeById && assignee && employeeById[assignee];
+        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "NA");
+        action.employeeDesignation =
+          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "NA");
+        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "NA");
+      }
+
+      action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "NA");
+    });
     let transformedComplaint = {
       complaint: details,
       timeLine,
     };
+
     return { transformedComplaint };
   } else {
     return { transformedComplaint: {} };

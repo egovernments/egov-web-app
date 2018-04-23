@@ -87,7 +87,18 @@ var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
 const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy }) => {
-  var { action, when: date, media, status, comments, name, designation, department, businessKey: complaintNo } = stepData;
+  var {
+    action,
+    when: date,
+    media,
+    status,
+    comments,
+    employeeName,
+    employeeDesignation,
+    employeeDepartment,
+    businessKey: complaintNo,
+    groName,
+  } = stepData;
   let employeephonenumber = 9090909091;
 
   switch (status) {
@@ -170,7 +181,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             containerStyle={statusContainerStyle}
             label={`${action == "assign" ? "CS_COMMON_ASSIGNED_TO" : "CS_COMMON_REASSIGNED_TO"}`}
           />
-          <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${name || "Satpal Singh"}`} />
+          <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName || "NA"}`} />
           {(role === "AO" || currentStatus === "assigned") &&
             assigneeStatusCount === 1 && (
               <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
@@ -180,7 +191,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label
             labelClassName="rainmaker-small-font"
             containerStyle={{ width: "192px" }}
-            label={`${designation || "Jr.Inspector"} - ${department || "Health & Sanitation"}`}
+            label={`${employeeDesignation || "NA"} - ${employeeDepartment || "NA"}`}
           />
 
           {/* // <div
@@ -202,11 +213,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
           {role === "citizen" && (
             <div>
-              <Label
-                labelClassName="dark-color"
-                containerStyle={statusContainerStyle}
-                label={`${"Complaint is being re-assigned by Chiranjeet Anand"}`}
-              />
+              <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"Complaint is being re-assigned by"}`} />
+              <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 && (
                   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>

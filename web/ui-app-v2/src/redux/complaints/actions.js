@@ -23,9 +23,10 @@ const checkUsers = (dispatch, actionHistory, hasUsers) => {
               employeeIds += `${splitArray[0]},`;
             }
           }
-        } else if (action.assignee) {
+        }
+        if (action.assignee) {
           splitArray = action.assignee.split(":");
-          if (splitArray[1].toLowerCase() === "citizen") {
+          if (splitArray[1] && splitArray[1].toLowerCase() === "citizen") {
             if (userIds.search(splitArray[0]) === -1) {
               userIds += `${splitArray[0]},`;
             }

@@ -258,16 +258,28 @@ const getLatestStatus = (status) => {
 const mapCitizenIdToName = (citizenObjById, id) => {
   return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
 };
+const findLatestAssignee = (actionArray) => {
+  for (let i = 0; i < actionArray.length; i++) {
+    if (actionArray[i].status === "assigned") {
+      return actionArray[i];
+    }
+  }
+  // actionArray.filter((action) => {
+  //   return action.status === "assigned";
+  // });
+};
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common } = state;
   const { citizenById } = common || {};
+  const { employeeById, departmentById, designationsById } = common || {};
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   if (selectedComplaint) {
+    //let complaintActions=
     let details = {
       status: selectedComplaint.status,
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
@@ -290,8 +302,21 @@ const mapStateToProps = (state, ownProps) => {
         selectedComplaint.auditDetails.createdTime
       ),
     };
+
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
+
+    timeLine.map((action) => {
+      if (action && action.status && action.status === "assigned") {
+        let assignee = action.assignee;
+        const selectedEmployee = employeeById && assignee && employeeById[assignee];
+        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "NA");
+        action.employeeDesignation =
+          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "NA");
+        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "NA");
+      }
+    });
+
     let transformedComplaint = {
       complaint: details,
       timeLine,
