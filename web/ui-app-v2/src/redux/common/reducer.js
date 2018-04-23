@@ -56,6 +56,7 @@ const commonReducer = (state = intialState, action) => {
         return {
           key: item.code,
           text: item.city.name,
+          ...item
         };
       });
       return {
