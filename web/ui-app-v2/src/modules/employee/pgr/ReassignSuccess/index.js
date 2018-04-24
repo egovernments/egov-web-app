@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "utils/translationNode";
-import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
-import "modules/common/SuccessMessage/components/successmessage/index.css";
+import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 
 class ReassignSuccess extends Component {
   continueComplaintSubmit = () => {

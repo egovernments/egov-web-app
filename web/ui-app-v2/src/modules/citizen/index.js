@@ -2,20 +2,23 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import withAuthorization from "hocs/withAuthorization";
 
-import Home from "modules/citizen/Home";
-import MyComplaints from "modules/citizen/MyComplaints";
-import ComplaintDetails from "modules/citizen/ComplaintDetails";
-import ComplaintSubmited from "modules/citizen/ComplaintSubmited";
-import TrackLocation from "modules/common/TrackLocation";
-import Feedback from "modules/citizen/Feedback";
-import ReOpenComplaint from "modules/citizen/ReOpenComplaint";
-import ComplaintType from "modules/citizen/ComplaintType";
-import AddComplaint from "modules/citizen/AddComplaint";
-import FeedbackAcknowledge from "modules/citizen/FeedbackAcknowledgement";
-import ReopenAcknowledgement from "modules/citizen/ReopenAcknowledgement";
-import HowItWorks from "modules/citizen/HowItWorks";
-import ContactUs from "modules/citizen/ContactUs";
+// Common Screen
+import Home from "./Home";
+import HowItWorks from "./HowItWorks";
+import ContactUs from "./ContactUs";
 import User from "./User";
+
+// pgr specific screens
+import MyComplaints from "./pgr/MyComplaints";
+import ComplaintDetails from "./pgr/ComplaintDetails";
+import ComplaintSubmited from "./pgr/ComplaintSubmited";
+import TrackLocation from "modules/common/TrackLocation";
+import Feedback from "./pgr/Feedback";
+import ReOpenComplaint from "./pgr/ReOpenComplaint";
+import ComplaintType from "./pgr/ComplaintType";
+import AddComplaint from "./pgr/AddComplaint";
+import FeedbackAcknowledge from "./pgr/FeedbackAcknowledgement";
+import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 
 const redirectionUrl = "/citizen/user/login";
 

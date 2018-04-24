@@ -3,22 +3,18 @@ import { Route } from "react-router-dom";
 import withAuthorization from "hocs/withAuthorization";
 
 // Employee
-import RequestReAssign from "modules/employee/RequestReAssign";
-import AllComplaints from "modules/employee/AllComplaints";
-import ComplaintResolved from "modules/employee/ComplaintResolved";
-import ComplaintSummary from "modules/employee/ComplaintDetails";
-import EmpUser from "modules/employee/User";
-import AssignComplaint from "modules/employee/AssignComplaint";
-import EmployeeDirectory from "modules/employee/EmployeeDirectory";
-import ClosedComplaints from "modules/employee/ClosedComplaints";
-import RejectComplaint from "modules/employee/RejectComplaint";
-
-//Employee static screens
-import ComplaintRejected from "modules/employee/ComplaintRejected";
-import ComplaintAssigned from "modules/employee/ComplaintAssigned";
-import ResolveSuccess from "modules/employee/ResolveSuccess";
-import ReassignSuccess from "modules/employee/ReassignSuccess";
-
+import RequestReAssign from "./pgr/RequestReAssign";
+import AllComplaints from "./pgr/AllComplaints";
+import ComplaintResolved from "./pgr/ComplaintResolved";
+import ComplaintSummary from "./pgr/ComplaintDetails";
+import AssignComplaint from "./pgr/AssignComplaint";
+import EmployeeDirectory from "./pgr/EmployeeDirectory";
+import ClosedComplaints from "./pgr/ClosedComplaints";
+import RejectComplaint from "./pgr/RejectComplaint";
+import ComplaintRejected from "./pgr/ComplaintRejected";
+import ComplaintAssigned from "./pgr/ComplaintAssigned";
+import ResolveSuccess from "./pgr/ResolveSuccess";
+import ReassignSuccess from "./pgr/ReassignSuccess";
 import User from "./User";
 
 //Redirection Url
