@@ -4,7 +4,6 @@ import { Icon } from "components";
 import Complaints from "modules/common/Complaints";
 import Screen from "modules/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import Label from "utils/translationNode";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
 import { mapCompIDToName, isImage, fetchImages, displayLocalizedStatusMessage } from "utils/commons";

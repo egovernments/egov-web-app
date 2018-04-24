@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Image, Drawer, List } from "components";
 import UserProfile from "./UserProfile";
 import LanguageSelection from "./LanguageSelection";

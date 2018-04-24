@@ -6,7 +6,7 @@ import { fetchComplaintCategories } from "redux/complaints/actions";
 const withData = (Component) => {
   class Wrapper extends React.Component {
     componentDidMount() {
-      const { searchUser, fetchCurrentLocation, fetchComplaintCategories } = this.props;
+      const { searchUser, fetchComplaintCategories } = this.props;
       fetchComplaintCategories();
       searchUser();
     }

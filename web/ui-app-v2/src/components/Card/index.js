@@ -15,5 +15,5 @@ export default CardUi;
 CardUi.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string,
-  textChildren: PropTypes.element,
+  textChildren: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
 };
