@@ -4,6 +4,7 @@ import { Button } from "components";
 import Screen from "modules/common/Screen";
 import ImageUpload from "modules/common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
+import { getTenantForLatLng } from "utils/commons";
 import LocationDetailsCard from "./components/LocationDetails";
 import AdditionalDetailsCard from "./components/AdditionalDetails";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
@@ -29,6 +30,7 @@ class AddComplaints extends Component {
       handleFieldChange(formKey, "latitude", nextProps.currentLocation.lat);
       handleFieldChange(formKey, "longitude", nextProps.currentLocation.lng);
       handleFieldChange(formKey, "address", nextProps.currentLocation.address);
+      getTenantForLatLng(currentLocation).then((tenantId) => this.props.handleFieldChange(this.props.formKey, "tenantId", tenantId));
     }
   };
 

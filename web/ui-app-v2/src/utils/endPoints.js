@@ -70,3 +70,10 @@ export const MDMS = {
     ACTION: "_search",
   },
 };
+
+export const TENANT = {
+  POST: {
+    URL: "egov-location/location/v11/tenant/_search",
+    ACTION: "_search",
+  },
+};

@@ -47,6 +47,10 @@ const formConfig = {
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorMessage: "Landmark should be less than 300 characters",
     },
+    tenantId: {
+      id: "add-complaint-tenantid",
+      jsonPath: "services[0].tenantId",
+    },
   },
   submit: {
     label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_SUBMIT_COMPLAINT",

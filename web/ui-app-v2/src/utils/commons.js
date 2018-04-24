@@ -2,6 +2,8 @@ import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import axios from "axios";
 import commonConfig from "config/common";
+import { httpRequest } from "utils/api";
+import { TENANT } from "utils/endPoints";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -323,4 +325,17 @@ export const getLatestCreationTime = (complaint) => {
 export const transformLocalizationLabels = (localizationLabels) => {
   let labelsById = transformById(localizationLabels, "code");
   return labelsById;
+};
+
+export const getTenantForLatLng = async (location) => {
+  var latLng = {};
+  let { lat, lng } = location;
+  let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: "pb" }];
+  let response;
+  try {
+    response = await httpRequest(TENANT.POST.URL, TENANT.POST.ACTION, queryObjList);
+    return response.Tenant.code;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
