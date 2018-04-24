@@ -71,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
         action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
       }
 
-      action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "NA");
+      action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "");
     });
     let transformedComplaint = {
       complaint: details,
