@@ -1,3 +1,6 @@
+// support for older browsers
+import "babel-polyfill";
+import "url-search-params-polyfill";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";

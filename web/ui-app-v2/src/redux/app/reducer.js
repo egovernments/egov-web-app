@@ -16,7 +16,6 @@ const initialState = {
     open: false,
     error: true,
   },
-  showToster: false,
   localizationLabels,
 };
 
@@ -26,7 +25,7 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         locale: action.locale,
-        localizationLabels: transformLocalizationLabels(action.localizationLabels),
+        localizationLabels: action.localizationLabels,
       };
     case actionTypes.SET_ROUTE:
       return { ...state, previousRoute: action.route ? window.location.pathname : state.previousRoute, route: action.route };

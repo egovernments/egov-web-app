@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import withAuthorization from "hocs/withAuthorization";
 
 // Employee
@@ -26,7 +26,7 @@ const redirectionUrl = "/employee/user/login";
 
 const Employee = ({ match }) => {
   return (
-    <Switch>
+    <div>
       <Route path={`${match.url}/user/`} component={User} />
       {/* Employee routes */}
       <Route
@@ -156,7 +156,7 @@ const Employee = ({ match }) => {
           redirectionUrl,
         })}
       />
-    </Switch>
+    </div>
   );
 };
 

@@ -187,11 +187,14 @@ export const getBodyClassFromPath = (path) => {
   return bodyClass;
 };
 
+// remove the previous tokens; temp fix
+// forEach not present in the prototype chain of some older browsers
 export const addBodyClass = (path) => {
   const bodyClass = getBodyClassFromPath(path);
-  // remove the previous tokens; temp fix
-  document.body.classList.forEach((className) => document.body.classList.remove(className));
-  bodyClass && document.body.classList.add(bodyClass);
+  try {
+    document.body.classList.forEach((className) => document.body.classList.remove(className));
+    bodyClass && document.body.classList.add(bodyClass);
+  } catch (error) {}
 };
 
 export const prepareFormData = (form) => {
@@ -315,4 +318,9 @@ export const getLatestCreationTime = (complaint) => {
     }
   }
   return complaint.auditDetails.createdTime;
+};
+
+export const transformLocalizationLabels = (localizationLabels) => {
+  let labelsById = transformById(localizationLabels, "code");
+  return labelsById;
 };
