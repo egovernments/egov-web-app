@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { transformById } from "../../utils/commons";
+import { transformById } from "utils/commons";
 
 const mergeServiceWithActions = (payload) => {
   return payload.actionHistory.map((item, index) => {

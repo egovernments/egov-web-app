@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "utils/translationNode";
-import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import "modules/common/SuccessMessage/components/successmessage/index.css";
 
 class ComplaintReassigned extends Component {

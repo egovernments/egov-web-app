@@ -1,5 +1,5 @@
 import * as commonTypes from "./actionTypes";
-import { transformById } from "../../utils/commons";
+import { transformById } from "utils/commons";
 
 const intialState = {
   dropDownData: {},
@@ -56,7 +56,7 @@ const commonReducer = (state = intialState, action) => {
         return {
           key: item.code,
           text: item.city.name,
-          ...item
+          ...item,
         };
       });
       return {

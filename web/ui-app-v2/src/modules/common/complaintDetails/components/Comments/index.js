@@ -4,7 +4,7 @@ import { Card, List, Icon, Image } from "components";
 import Label from "utils/translationNode";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
-import emptyFace from "../../../../../assets/images/download.png";
+import emptyFace from "assets/images/download.png";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { getDateFromEpoch } from "utils/commons";
 import isEqual from "lodash/isEqual";
