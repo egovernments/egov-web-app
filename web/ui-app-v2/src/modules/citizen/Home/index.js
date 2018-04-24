@@ -11,7 +11,7 @@ import "./index.css";
 class Home extends Component {
   componentDidMount = () => {
     const { fetchComplaints } = this.props;
-    fetchComplaints([]);
+    fetchComplaints([],false);
   };
 
   render() {

@@ -2,51 +2,58 @@ import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
 import { COMPLAINT, CATEGORY } from "utils/endPoints";
 import { httpRequest } from "utils/api";
+import {difference,uniq} from "lodash";
 
 //checking users there in aciton history
-//need to refactor this code
-const checkUsers = (dispatch, actionHistory, hasUsers) => {
+const checkUsers = (dispatch,state,actionHistory, hasUsers) => {
   if (hasUsers) {
-    let employeeIds = "",
-      userIds = "";
+    let employeeIds = [],userIds = [];
     actionHistory.forEach((actions) => {
       actions.actions.forEach((action) => {
         let splitArray = [];
         if (action.by) {
-          splitArray = action.by.split(":");
-          if (splitArray[1].toLowerCase() === "citizen") {
-            if (userIds.search(splitArray[0]) === -1) {
-              userIds += `${splitArray[0]},`;
-            }
-          } else {
-            if (employeeIds.search(splitArray[0]) === -1) {
-              employeeIds += `${splitArray[0]},`;
-            }
-          }
+          let {userId,employeeId}=getUserEmployeeId(action.by);
+          if(userId) userIds.push(userId);
+          if(employeeId) employeeIds.push(employeeId);
         }
         if (action.assignee) {
-          splitArray = action.assignee.split(":");
-          if (splitArray[1] && splitArray[1].toLowerCase() === "citizen") {
-            if (userIds.search(splitArray[0]) === -1) {
-              userIds += `${splitArray[0]},`;
-            }
-          } else {
-            if (employeeIds.search(splitArray[0]) === -1) {
-              employeeIds += `${splitArray[0]},`;
-            }
-          }
+          let {userId,employeeId}=getUserEmployeeId(action.by);
+          if(userId) userIds.push(userId);
+          if(employeeId) employeeIds.push(employeeId);
         }
       });
     });
-    // why are we doing this?
-    if (employeeIds) {
-      dispatch(commonActions.fetchEmployees([{ key: "id", value: employeeIds }]));
+    let {common}=state;
+    if (employeeIds.length>0) {
+      let cachedEmployeeIds=[]
+      if (common && common.employeeById) {
+        cachedEmployeeIds=Object.keys(common.employeeById);
+      }
+      let value=uniq(difference(employeeIds,cachedEmployeeIds)).join(",");
+      if(value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value}]));
     }
-    if (userIds) {
-      dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: userIds.split(",") }));
+    if (userIds.length>0) {
+      let cachedUserIds=[]
+      if (common && common.citizenById) {
+        cachedUserIds=Object.keys(common.citizenById);
+      }
+      let id=uniq(difference(userIds));
+      if(id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id }));
     }
   }
 };
+
+//get user and employee id from action
+const getUserEmployeeId=(user)=>{
+  const splitArray = user.split(":");
+  const id=splitArray[0];
+  const role=splitArray[1];
+  if (role && role.toLowerCase() === "citizen") {
+      return {userId:parseInt(id)}
+  } else {
+      return {employeeId:parseInt(id)}
+  }
+}
 
 // complaint categories success
 const complaintCategoriesFetchSucess = (payload) => {
@@ -85,11 +92,11 @@ const complaintFetchError = (error) => {
 };
 
 export const fetchComplaints = (queryObject, hasUsers = true) => {
-  return async (dispatch) => {
+  return async (dispatch,getState) => {
     dispatch(complaintFetchPending());
     try {
       const payload = await httpRequest(COMPLAINT.GET.URL, COMPLAINT.GET.ACTION, queryObject);
-      checkUsers(dispatch, payload.actionHistory, hasUsers);
+      checkUsers(dispatch,getState(),payload.actionHistory, hasUsers);
       dispatch(complaintFetchComplete(payload));
     } catch (error) {
       dispatch(complaintFetchError(error.message));
