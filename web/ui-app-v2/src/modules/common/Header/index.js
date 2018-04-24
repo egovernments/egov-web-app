@@ -90,7 +90,7 @@ class Header extends Component {
 
   render() {
     const { toggleMenu, logoutPopupOpen } = this.state;
-    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _closeNavigationDrawer, _appBarProps } = this;
+    const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps } = this;
     const appBarProps = _appBarProps();
     const { className, role, cities, history, title, fetchLocalizationLabel, userInfo } = this.props;
     return (

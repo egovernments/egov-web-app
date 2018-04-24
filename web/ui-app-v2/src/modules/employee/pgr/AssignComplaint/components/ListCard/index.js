@@ -61,7 +61,7 @@ export default class ListCard extends Component {
             />
           ),
           open: true,
-          topLevel: true,
+          toplevel: "true",
           nestedItems: seperateByDepartment[depDetails].map((depItem, depItemIndex) => {
             return {
               id: depItem.id,
@@ -114,7 +114,7 @@ export default class ListCard extends Component {
       listItem.id = result.id;
       listItem.primaryText = result.primaryText;
       listItem.open = result.open;
-      listItem.topLevel = result.topLevel;
+      listItem.toplevel = result.toplevel;
       listItem.secondaryText = result.secondaryText;
       listItem.leftAvatar = result.leftAvatar;
       listItem.rightIcon = result.rightIcon;
@@ -193,9 +193,9 @@ export default class ListCard extends Component {
   };
 
   onEmployeeChosen = (item, index) => {
-    let { handleFieldChange, APIData } = this.props;
+    let { handleFieldChange } = this.props;
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
-    if (!item.topLevel && !isEmployeeDirectory) {
+    if (item.toplevel !== "true" && !isEmployeeDirectory) {
       const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
       handleFieldChange(this.formConfig.name, "assignee", item.id);
       isReassignScreen ? handleFieldChange(this.formConfig.name, "action", "reassign") : handleFieldChange(this.formConfig.name, "action", "assign");

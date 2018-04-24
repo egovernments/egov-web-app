@@ -1,6 +1,7 @@
 import axios from "axios";
 import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
+import commonConfig from "config/common.js";
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -34,7 +35,7 @@ const wrapRequestBody = (requestBody, action) => {
 };
 
 export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
-  const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
+  const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 
   if (headers)
@@ -104,7 +105,7 @@ export const uploadFile = async (endPoint, module, file) => {
 };
 
 export const loginRequest = async (username = null, password = null, refreshToken, grantType = "password") => {
-  const tenantId = fetchFromLocalStorage("tenant-id") || "pb";
+  const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   const loginInstance = axios.create({
     baseURL: window.location.origin,
     headers: {

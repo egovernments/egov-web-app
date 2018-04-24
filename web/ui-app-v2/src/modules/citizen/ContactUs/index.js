@@ -8,8 +8,6 @@ import Label from "utils/translationNode";
 import { fetchFromLocalStorage } from "utils/commons";
 import "./index.css";
 
-const eGovphonenumber = 9686987977;
-
 const listInnerDivStyle = {
   padding: "0px 0px 0px 40px",
 };

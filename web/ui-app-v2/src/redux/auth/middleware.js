@@ -1,5 +1,4 @@
 import { refreshTokenRequest } from "redux/auth/actions";
-import { LOGOUT } from "./actions";
 
 const auth = (store) => (next) => (action) => {
   const { type } = action;

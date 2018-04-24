@@ -33,19 +33,6 @@ const viewModelToBusinessModelTransformer = (form, state) => {
         jsonPath: "login.username",
         value: fields.phone.value,
       },
-      // ,
-      // scope: {
-      //   jsonPath: "login.scope",
-      //   value: "read",
-      // },
-      // grant_type: {
-      //   jsonPath: "login.grant_type",
-      //   value: "password",
-      // },
-      // tenantId: {
-      //   jsonPath: "login.tenantId",
-      //   value: "pb",
-      // },
     };
   }
   return prepareFormData({ ...form, fields });

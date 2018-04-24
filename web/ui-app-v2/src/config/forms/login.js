@@ -1,3 +1,5 @@
+import commonConfig from "config/common.js";
+
 const formConfig = {
   name: "login",
   fields: {
@@ -18,7 +20,7 @@ const formConfig = {
     city: {
       id: "person-city",
       jsonPath: "otp.tenantId",
-      value: "pb",
+      value: commonConfig.tenantId,
     },
   },
   submit: {

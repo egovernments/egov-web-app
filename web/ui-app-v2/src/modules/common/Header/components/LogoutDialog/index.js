@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Dialog, Button } from "components";
 import Label from "utils/translationNode";
 

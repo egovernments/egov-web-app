@@ -1,3 +1,5 @@
+import commonConfig from "config/common.js";
+
 const formConfig = {
   name: "employeeForgotPasswd",
   fields: {
@@ -18,7 +20,7 @@ const formConfig = {
     tenantId: {
       id: "employee-forgot-password-tenantId",
       jsonPath: "otp.tenantId",
-      value: "pb",
+      value: commonConfig.tenantId,
     },
   },
   submit: {

@@ -6,6 +6,7 @@ import { addBodyClass } from "utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
+import commonConfig from "config/common";
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends Component {
     const { fetchLocalizationLabel, fetchCurrentLocation, fetchMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
-        tenantId: "pb",
+        tenantId: commonConfig.tenantId,
         moduleDetails: [
           {
             moduleName: "common-masters",

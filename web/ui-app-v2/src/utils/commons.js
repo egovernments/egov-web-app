@@ -1,9 +1,9 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import axios from "axios";
-import commonConfig from "config/common";
 import { httpRequest } from "utils/api";
 import { TENANT } from "utils/endPoints";
+import commonConfig from "config/common.js";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -328,9 +328,8 @@ export const transformLocalizationLabels = (localizationLabels) => {
 };
 
 export const getTenantForLatLng = async (location) => {
-  var latLng = {};
   let { lat, lng } = location;
-  let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: "pb" }];
+  let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: commonConfig.tenantId }];
   let response;
   if (lat && lng) {
     try {

@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { transformLocalizationLabels, initLocalizationLabels } from "./utils";
+import { initLocalizationLabels } from "./utils";
 
 const locale = window.localStorage.getItem("locale") || "en_IN";
 const localizationLabels = initLocalizationLabels(locale);

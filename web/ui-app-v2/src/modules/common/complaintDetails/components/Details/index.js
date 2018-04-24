@@ -45,7 +45,7 @@ class Details extends Component {
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, latitude, longitude, mapAction, images, action, role } = this.props;
+    let { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role } = this.props;
     let icon = {};
     icon.name = "location";
     icon.style = {

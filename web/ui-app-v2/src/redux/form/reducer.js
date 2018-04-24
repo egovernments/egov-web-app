@@ -3,9 +3,9 @@ import { validateField, getFormFields, getFiles } from "./utils";
 
 const intialState = {};
 
-const setForm = (state, formKey, form) => {
-  return { ...state, [formKey]: form };
-};
+// const setForm = (state, formKey, form) => {
+//   return { ...state, [formKey]: form };
+// };
 
 const setFormProperty = (state, formKey, propertyKey, propertyValue) => {
   const form = state[formKey] || {};

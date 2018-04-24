@@ -1,3 +1,5 @@
+import commonConfig from "config/common.js";
+
 const formConfig = {
   name: "register",
   fields: {
@@ -19,7 +21,7 @@ const formConfig = {
     },
     tenant: {
       jsonPath: "otp.tenantId",
-      value: "pb",
+      value: commonConfig.tenantId,
     },
     phone: {
       id: "person-phone",
