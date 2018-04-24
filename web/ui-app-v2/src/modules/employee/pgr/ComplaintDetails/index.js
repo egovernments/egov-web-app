@@ -256,7 +256,7 @@ const getLatestStatus = (status) => {
   return transformedStatus;
 };
 const mapCitizenIdToName = (citizenObjById, id) => {
-  return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
+  return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "";
 };
 const findLatestAssignee = (actionArray) => {
   for (let i = 0; i < actionArray.length; i++) {
@@ -310,10 +310,10 @@ const mapStateToProps = (state, ownProps) => {
       if (action && action.status && action.status === "assigned") {
         let assignee = action.assignee;
         const selectedEmployee = employeeById && assignee && employeeById[assignee];
-        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "NA");
+        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "");
         action.employeeDesignation =
-          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "NA");
-        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "NA");
+          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
+        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
       }
     });
 
