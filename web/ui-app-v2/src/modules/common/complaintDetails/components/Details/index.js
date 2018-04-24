@@ -149,10 +149,9 @@ class Details extends Component {
                 )} */}
                 {mapAction && (
                   <Button
-                    buttonLabel={true}
                     className="employee-complaint-summary-mapBtn"
                     primary={true}
-                    label={<Label label={"ES_COMPLAINT_SUMMARY_MAP"} fonstSize="12px" color="#ffffff" />}
+                    label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} fonstSize="12px" color="#ffffff" />}
                     style={{
                       height: "auto",
                       lineHeight: "auto",
