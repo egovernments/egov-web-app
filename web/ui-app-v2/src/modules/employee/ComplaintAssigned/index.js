@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "utils/translationNode";
-import SuccessMessage from "../../common/SuccessMessage/components/successmessage";
+import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import { fetchComplaints } from "redux/complaints/actions";
 import { connect } from "react-redux";
 import "modules/common/SuccessMessage/components/successmessage/index.css";

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "components";
-import Screen from "../../common/Screen";
-import pinIcon from "../../../assets/Location_pin.svg";
-import Logo from "../../../assets/images/logo_black.png";
+import { connect } from "react-redux";
+import Screen from "modules/common/Screen";
+import pinIcon from "assets/Location_pin.svg";
+import Logo from "assets/images/logo_black.png";
 import Label from "utils/translationNode";
+import { fetchFromLocalStorage } from "utils/commons";
 import "./index.css";
 
 const eGovphonenumber = 9686987977;
@@ -17,7 +19,7 @@ const iconStyle = {
   height: "20px",
   padding: "0px",
   fill: "#f5a623",
-  top: "0px",
+  top: "-3px",
   margin: "0px 0px 0px 8px",
 };
 
@@ -47,6 +49,7 @@ class ContactUs extends Component {
       openMap: false,
     };
   }
+  fetchCurrentTenant = () => {};
 
   openMapHandler = (isOpen) => {
     var pathName = this.props.history.location.pathname;
@@ -64,12 +67,14 @@ class ContactUs extends Component {
 
   onItemClick = (item, index) => {};
 
-  ListItems = {
-    items: [
+  returnListItems = () => {
+    let { emailId, contactNumber, address } = this.props.currentTenant;
+
+    return [
       {
         leftIcon: <Icon style={iconStyle} action="maps" name="place" />,
-        primaryText: <Label label="CS_CONTACTUS_ADDRESS" />,
-        secondaryText: (
+        primaryText: <Label label={address ? address : "NA"} />,
+        secondaryText: address && (
           <div onClick={() => this.openMapHandler(true)}>
             <Label id="contactus-open-map" label="CS_CONTACTUS_OPEN_MAP" className="openMap" labelStyle={{ color: "#00bbd3" }} />
           </div>
@@ -77,13 +82,14 @@ class ContactUs extends Component {
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
+          marginTtop: "10px",
         },
       },
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="call" />,
         primaryText: (
-          <a className="phoneNumberStyle" href={`tel:+91${eGovphonenumber}`} style={{ textDecoration: "none" }}>
-            80 4125 5708
+          <a className="phoneNumberStyle" href={`tel:+91${contactNumber}`} style={{ textDecoration: "none" }}>
+            {contactNumber ? contactNumber : "NA"}
           </a>
         ),
         style: {
@@ -111,7 +117,7 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="email" />,
-        primaryText: "contact@egovernments.org",
+        primaryText: emailId ? emailId : "NA",
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -129,9 +135,12 @@ class ContactUs extends Component {
           paddingTop: "8px",
         },
       },
-    ],
+    ];
   };
+
   render() {
+    let { facebookUrl, twitterUrl } = this.props.currentTenant;
+
     return (
       <div>
         <Screen className="contactus-main-cont">
@@ -142,13 +151,13 @@ class ContactUs extends Component {
               <div>
                 <Image className="mseva-logo" source={`${Logo}`} />
                 <div className="contactus-list-container">
-                  <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.ListItems.items} />
+                  <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.returnListItems()} />
                 </div>
                 <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                  <a href="https://twitter.com/eGovFoundation" target="_blank">
+                  <a href={twitterUrl} target="_blank">
                     {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
                   </a>
-                  <a href="https://www.facebook.com/egfindia" target="_blank">
+                  <a href={facebookUrl} target="_blank">
                     {
                       <Icon
                         id="contactus-facebook"
@@ -190,4 +199,11 @@ class ContactUs extends Component {
   }
 }
 
-export default ContactUs;
+const mapStateToProps = (state) => {
+  const cities = state.common.cities || [];
+  const tenant = fetchFromLocalStorage("tenant-id");
+  const currentTenant = cities && cities.filter((city) => city.key === tenant);
+  return { currentTenant };
+};
+
+export default connect(mapStateToProps, null)(ContactUs);

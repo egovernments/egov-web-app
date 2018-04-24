@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "../../../common/Banner";
+import Banner from "modules/common/Banner";
 import Screen from "modules/common/Screen";
 import ForgotPasswd from "./components/ForgotPasswd";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
