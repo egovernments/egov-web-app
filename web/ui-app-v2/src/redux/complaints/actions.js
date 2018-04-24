@@ -17,7 +17,7 @@ const checkUsers = (dispatch,state,actionHistory, hasUsers) => {
           if(employeeId) employeeIds.push(employeeId);
         }
         if (action.assignee) {
-          let {userId,employeeId}=getUserEmployeeId(action.by);
+          let {userId,employeeId}=getUserEmployeeId(action.assignee);
           if(userId) userIds.push(userId);
           if(employeeId) employeeIds.push(employeeId);
         }
