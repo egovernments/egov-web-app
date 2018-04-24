@@ -61,7 +61,7 @@ class Details extends Component {
           statusKey = `CS_COMMON_SUBMITTED`;
         }
       } else if (status.toLowerCase() == "reassignrequested") {
-        if (role) {
+        if (role !== "citizen") {
           statusKey = `CS_COMMON_${status.toUpperCase()}`;
         } else {
           statusKey = `CS_COMMON_CITIZEN_REQUEST_REASSIGN`;
