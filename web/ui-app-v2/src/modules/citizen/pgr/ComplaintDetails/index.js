@@ -65,10 +65,10 @@ const mapStateToProps = (state, ownProps) => {
         let assignee = action.assignee;
         gro = action.by.split(":")[0];
         const selectedEmployee = employeeById && assignee && employeeById[assignee];
-        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "NA");
+        action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "");
         action.employeeDesignation =
-          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "NA");
-        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "NA");
+          selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
+        action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
       }
 
       action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "NA");
