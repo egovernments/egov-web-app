@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BottomNavigation, Icon } from "components";
 import { navigationItems } from "./navigationItems";
 import Label from "utils/translationNode";
+import "./index.css";
 
 export default class Footer extends Component {
   state = {
@@ -20,7 +21,11 @@ export default class Footer extends Component {
     return navigationItems.map((item) => {
       const { label, icon } = item;
       const { action, name } = icon;
-      return { ...item, label: <Label fontSize="12px" label={label} color="#969696" />, icon: <Icon action={action} name={name} /> };
+      return {
+        ...item,
+        label: <Label className="citizen-footer-text" fontSize="12px" label={label} color="#969696" />,
+        icon: <Icon action={action} name={name} />,
+      };
     });
   };
 
