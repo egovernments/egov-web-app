@@ -191,16 +191,10 @@ export const getBodyClassFromPath = (path) => {
 // forEach not present in the prototype chain of some older browsers
 export const addBodyClass = (path) => {
   const bodyClass = getBodyClassFromPath(path);
-  const bodyClassList = document.body.classList;
   try {
-    for (let i = 0; i < bodyClassList.length; i++) {
-      const className = bodyClassList[i];
-      document.body.classList.remove(className);
-      bodyClass && document.body.classList.add(bodyClass);
-    }
-  } catch (error) {
-    console.log(error);
-  }
+    document.body.classList.forEach((className) => document.body.classList.remove(className));
+    bodyClass && document.body.classList.add(bodyClass);
+  } catch (error) {}
 };
 
 export const prepareFormData = (form) => {
