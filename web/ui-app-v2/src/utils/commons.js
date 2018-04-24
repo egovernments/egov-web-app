@@ -332,10 +332,12 @@ export const getTenantForLatLng = async (location) => {
   let { lat, lng } = location;
   let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: "pb" }];
   let response;
-  try {
-    response = await httpRequest(TENANT.POST.URL, TENANT.POST.ACTION, queryObjList);
-    return response.Tenant.code;
-  } catch (error) {
-    console.log(error.message);
+  if (lat && lng) {
+    try {
+      response = await httpRequest(TENANT.POST.URL, TENANT.POST.ACTION, queryObjList);
+      return response.Tenant.code;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
