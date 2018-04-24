@@ -159,6 +159,7 @@ class ComplaintDetails extends Component {
     if (timeLine && timeLine[0]) {
       action = timeLine[0].action;
     }
+
     return (
       <div>
         <Screen>
@@ -175,6 +176,7 @@ class ComplaintDetails extends Component {
                   feedback={complaint ? complaint.feedback : ""}
                   rating={complaint ? complaint.rating : ""}
                   filedBy={complaint ? complaint.filedBy : ""}
+                  filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
                 />
                 <Comments comments={comments} hasComments={true} />
                 <div>
@@ -258,15 +260,8 @@ const getLatestStatus = (status) => {
 const mapCitizenIdToName = (citizenObjById, id) => {
   return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "";
 };
-const findLatestAssignee = (actionArray) => {
-  for (let i = 0; i < actionArray.length; i++) {
-    if (actionArray[i].status === "assigned") {
-      return actionArray[i];
-    }
-  }
-  // actionArray.filter((action) => {
-  //   return action.status === "assigned";
-  // });
+const mapCitizenIdToMobileNumber = (citizenObjById, id) => {
+  return citizenObjById && citizenObjById[id] ? citizenObjById[id].mobileNumber : "";
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -278,8 +273,9 @@ const mapStateToProps = (state, ownProps) => {
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
+
   if (selectedComplaint) {
-    //let complaintActions=
+    let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
       status: selectedComplaint.status,
       complaint: mapCompIDToName(complaints.categoriesById, selectedComplaint.serviceCode),
@@ -293,10 +289,8 @@ const mapStateToProps = (state, ownProps) => {
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
-      filedBy:
-        selectedComplaint &&
-        selectedComplaint.actions &&
-        mapCitizenIdToName(citizenById, selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0]),
+      filedBy: userId && mapCitizenIdToName(citizenById, userId),
+      filedUserMobileNumber: userId && mapCitizenIdToMobileNumber(citizenById, userId),
       timelineSLAStatus: returnSLAStatus(
         getPropertyFromObj(categoriesById, selectedComplaint.serviceCode, "slaHours", "NA"),
         selectedComplaint.auditDetails.createdTime
@@ -311,9 +305,13 @@ const mapStateToProps = (state, ownProps) => {
         let assignee = action.assignee;
         const selectedEmployee = employeeById && assignee && employeeById[assignee];
         action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "");
+        action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
         action.employeeDesignation =
           selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
         action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
+      } else if (action && action.status && action.status === "reassignrequested") {
+        let assignee = action.by.split(":")[0];
+        action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
       }
     });
 

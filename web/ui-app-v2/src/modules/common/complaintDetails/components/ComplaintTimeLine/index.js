@@ -86,7 +86,7 @@ var resolveStatusCount = 0;
 var assigneeStatusCount = 0;
 var reassignRequestedCount = 0;
 
-const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy }) => {
+const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating, role, filedBy, filedUserMobileNumber }) => {
   var {
     action,
     when: date,
@@ -98,8 +98,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     employeeDepartment,
     businessKey: complaintNo,
     groName,
+    employeeMobileNumber,
+    groMobileNumber,
   } = stepData;
-  let employeephonenumber = 9090909091;
 
   switch (status) {
     case "open":
@@ -121,10 +122,19 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           {action !== "reopen" &&
             role !== "citizen" &&
             filedBy && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
-          {((role !== "citizen" && action !== "reopen" && currentStatus === "open") ||
-            (role === "citizen" && action === "reopen" && currentStatus === "open")) &&
+          {role !== "citizen" &&
+            action !== "reopen" &&
+            currentStatus === "open" &&
             openStatusCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+              <a href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+              </a>
+            )}
+          {role === "citizen" &&
+            action === "reopen" &&
+            currentStatus === "open" &&
+            openStatusCount === 1 && (
+              <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
               </a>
             )}
@@ -194,7 +204,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
               {(role === "AO" || currentStatus === "assigned") &&
                 assigneeStatusCount === 1 && (
-                  <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                  <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                   </a>
                 )}
@@ -237,7 +247,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 &&
                 groName && (
-                  <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                  <a href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                   </a>
                 )}
@@ -248,7 +258,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`} />
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 && (
-                  <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                  <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                   </a>
                 )}
@@ -427,7 +437,7 @@ class ComplaintTimeLine extends Component {
     resolveStatusCount = 0;
     assigneeStatusCount = 0;
     reassignRequestedCount = 0;
-    let { status, history, role, timeLine, feedback, rating, filedBy, timelineSLAStatus } = this.props;
+    let { status, history, role, timeLine, feedback, rating, filedBy, filedUserMobileNumber, timelineSLAStatus } = this.props;
 
     let steps = timeLine.map((step, key) => {
       return {
@@ -452,6 +462,7 @@ class ComplaintTimeLine extends Component {
             rating={rating}
             role={role}
             filedBy={filedBy}
+            filedUserMobileNumber={filedUserMobileNumber}
           />
         ),
       };

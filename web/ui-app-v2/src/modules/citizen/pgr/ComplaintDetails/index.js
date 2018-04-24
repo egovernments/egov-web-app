@@ -69,9 +69,12 @@ const mapStateToProps = (state, ownProps) => {
         action.employeeDesignation =
           selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
         action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
+        action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
       }
-
-      action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "");
+      if (action && action.status && action.status === "reassignrequested") {
+        action.groName = gro && getPropertyFromObj(employeeById, gro, "name", "");
+        action.groMobileNumber = gro && getPropertyFromObj(employeeById, gro, "mobileNumber", "");
+      }
     });
     let transformedComplaint = {
       complaint: details,
