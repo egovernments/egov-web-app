@@ -1,9 +1,4 @@
-import { transformById } from "utils/commons";
-
-export const transformLocalizationLabels = (localizationLabels) => {
-  let labelsById = transformById(localizationLabels, "code");
-  return labelsById;
-};
+import { transformLocalizationLabels } from "utils/commons";
 
 export const initLocalizationLabels = (locale) => {
   let localizationLabels;

@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import { ADD_LOCALIZATION } from "redux/app/actionTypes";
-import { getTranslatedLabel } from "utils/commons";
+import { transformLocalizationLabels, getTranslatedLabel } from "utils/commons";
 import { initForm } from "../actions";
 
 const translatedFormFields = (localizationLabels, form) => {
@@ -37,22 +37,20 @@ const translateFieldText = (store) => (next) => (action) => {
   let { localizationLabels } = state.app;
 
   if (type === ADD_LOCALIZATION) {
-    next(action);
     const newState = store.getState();
-    localizationLabels = newState.app.localizationLabels;
+    const localizationLabels = transformLocalizationLabels(action.localizationLabels);
     const { form: forms } = newState;
     Object.keys(forms).forEach((formKey) => {
       let translatedForm = translatedFormFields(localizationLabels, forms[formKey]);
       translatedForm = { ...translatedForm, name: formKey };
       store.dispatch(initForm(translatedForm));
     });
+    action.localizationLabels = localizationLabels;
   }
   if (type === actionTypes.INIT_FORM) {
     action.form = translatedFormFields(localizationLabels, form);
-    next(action);
-  } else {
-    next(action);
   }
+  next(action);
 };
 
 export default translateFieldText;
