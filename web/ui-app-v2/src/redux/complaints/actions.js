@@ -37,7 +37,7 @@ const checkUsers = (dispatch,state,actionHistory, hasUsers) => {
       if (common && common.citizenById) {
         cachedUserIds=Object.keys(common.citizenById);
       }
-      let id=uniq(difference(userIds));
+      let id=uniq(difference(userIds,cachedUserIds));
       if(id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id }));
     }
   }
@@ -49,9 +49,9 @@ const getUserEmployeeId=(user)=>{
   const id=splitArray[0];
   const role=splitArray[1];
   if (role && role.toLowerCase() === "citizen") {
-      return {userId:parseInt(id)}
+      return {userId:id}
   } else {
-      return {employeeId:parseInt(id)}
+      return {employeeId:id}
   }
 }
 

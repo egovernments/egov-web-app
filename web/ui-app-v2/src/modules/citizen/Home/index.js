@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    fetchComplaints: (criteria,hasUsers) => dispatch(fetchComplaints(criteria,hasUsers)),
   };
 };
 
