@@ -131,16 +131,17 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
 
-                {currentstatus.toLowerCase() !== "closed" && (
-                  <WriteComment
-                    form={form}
-                    formKey={formKey}
-                    onChange={handleFieldChange}
-                    submitForm={submitForm}
-                    userImage={userImage}
-                    currentstatus={currentstatus}
-                  />
-                )}
+                {currentstatus &&
+                  currentstatus.toLowerCase() !== "closed" && (
+                    <WriteComment
+                      form={form}
+                      formKey={formKey}
+                      onChange={handleFieldChange}
+                      submitForm={submitForm}
+                      userImage={userImage}
+                      currentstatus={currentstatus}
+                    />
+                  )}
               </div>
             }
           />
