@@ -90,7 +90,7 @@ const TextField = ({
       type={type}
       autoFocus={autoFocus}
       maxLength={maxLength}
-      autoComplete="off"
+      autoComplete={type === "password" ? "new-password" : "off"}
       multiLine={multiLine}
     />
   );
