@@ -50,13 +50,14 @@
 }
 
 .Complaint-details-duedate {
+  margin-top: 1px;
   display: block;
   font-family: Roboto;
   font-size: 12px;
   font-weight: 500;
   color: #e74c3c;
   position: absolute;
-  right: 22px;
+  right: 15px;
 }
 .timeline-call-text {
   color: #ffffff !important;

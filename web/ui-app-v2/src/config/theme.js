@@ -28,9 +28,9 @@ const theme = {
   bottomNavigation: {
     backgroundColor: "#ffffff",
   },
-  stepper:{
+  stepper: {
     connectorLineColor: "#f5a623",
-  }
+  },
 };
 
 export default theme;
