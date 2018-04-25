@@ -59,10 +59,12 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     }
   } catch (error) {
     const { data, status } = error.response;
+    console.log(data);
     if (status == 400 && data == "") {
       apiError = "INVALID_TOKEN";
     } else {
       apiError =
+        (data.hasOwnProperty("Errors") && data.Errors && data.Errors.length && data.Errors[0].message) ||
         (data.hasOwnProperty("error") && data.error.fields && data.error.fields.length && data.error.fields[0].message) ||
         (data.hasOwnProperty("error_description") && data.error_description) ||
         apiError;

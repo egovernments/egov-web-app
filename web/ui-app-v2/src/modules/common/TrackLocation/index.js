@@ -4,7 +4,6 @@ import { MapLocation, Button, Icon } from "components";
 import pinIcon from "assets/Location_pin.svg";
 import { handleFieldChange } from "redux/form/actions";
 import isEmpty from "lodash/isEmpty";
-import { getTenantForLatLng } from "utils/commons";
 import "./index.css";
 
 const pickBtn = {
@@ -72,7 +71,6 @@ class TrackLocation extends Component {
 
   onClickPick = () => {
     this.convertToAddress(add);
-    getTenantForLatLng(add).then((tenantId) => this.props.handleFieldChange(this.props.formKey, "tenantId", tenantId));
     this.props.history.goBack();
   };
 
