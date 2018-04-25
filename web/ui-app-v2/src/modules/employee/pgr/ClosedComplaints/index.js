@@ -3,7 +3,7 @@ import Screen from "modules/common/Screen";
 import Complaints from "modules/common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage, getTransformedStatus } from "utils/commons";
+import { transformComplaintForComponent } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -36,15 +36,6 @@ class ClosedComplaints extends Component {
   }
 }
 
-//better implementation ==> to be done later
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : [];
-};
-
 const isAssigningOfficer = (roles) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
@@ -69,20 +60,12 @@ const displayStatus = (status = "", assignee) => {
 };
 
 const mapStateToProps = (state) => {
-  const { complaints } = state;
+  const { complaints, common } = state;
+  const { categoriesById } = complaints;
   const { userInfo } = state.auth;
+  const { citizenById, employeeById } = common || {};
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
-  const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
-    return {
-      header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
-      date: getDateFromEpoch(complaintDetail.auditDetails.createdTime),
-      status: complaintDetail.rating ? displayStatus(`${complaintDetail.rating}/5`) : displayStatus(complaintDetail.actions[0].status),
-      complaintNo: complaintDetail.serviceRequestId,
-      images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: complaintDetail.actions[0].status && getTransformedStatus(complaintDetail.actions[0].status),
-      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
-    };
-  });
+  const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "date", "desc");
 
   return { userInfo, closedComplaints, role };
