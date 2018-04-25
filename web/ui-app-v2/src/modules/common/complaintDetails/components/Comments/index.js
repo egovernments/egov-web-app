@@ -130,16 +130,17 @@ class Comments extends Component {
                   <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
-                {/*<List listItemStyle={{ marginBottom: "-8.5px" }} items={itemsTwoNew} />*/}
 
-                <WriteComment
-                  form={form}
-                  formKey={formKey}
-                  onChange={handleFieldChange}
-                  submitForm={submitForm}
-                  userImage={userImage}
-                  currentstatus={currentstatus}
-                />
+                {currentstatus.toLowerCase() !== "closed" && (
+                  <WriteComment
+                    form={form}
+                    formKey={formKey}
+                    onChange={handleFieldChange}
+                    submitForm={submitForm}
+                    userImage={userImage}
+                    currentstatus={currentstatus}
+                  />
+                )}
               </div>
             }
           />
