@@ -263,7 +263,7 @@ const mapCitizenIdToName = (citizenObjById, id) => {
 const mapCitizenIdToMobileNumber = (citizenObjById, id) => {
   return citizenObjById && citizenObjById[id] ? citizenObjById[id].mobileNumber : "";
 };
-
+let gro = "";
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common } = state;
   const { citizenById } = common || {};
@@ -303,12 +303,18 @@ const mapStateToProps = (state, ownProps) => {
     timeLine.map((action) => {
       if (action && action.status && action.status === "assigned") {
         let assignee = action.assignee;
+        gro = action.by.split(":")[0];
         const selectedEmployee = employeeById && assignee && employeeById[assignee];
         action.employeeName = assignee && getPropertyFromObj(employeeById, assignee, "name", "");
         action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");
         action.employeeDesignation =
           selectedEmployee && getPropertyFromObj(designationsById, selectedEmployee.assignments[0].designation, "name", "");
         action.employeeDepartment = selectedEmployee && getPropertyFromObj(departmentById, selectedEmployee.assignments[0].department, "name", "");
+        action.groName = assignee && getPropertyFromObj(employeeById, gro, "name", "");
+        action.groDesignation =
+          assignee &&
+          getPropertyFromObj(designationsById, employeeById && employeeById[gro] && employeeById[gro].assignments[0].designation, "name", "");
+        action.groMobileNumber = assignee && getPropertyFromObj(employeeById, gro, "mobileNumber", "");
       } else if (action && action.status && action.status === "reassignrequested") {
         let assignee = action.by.split(":")[0];
         action.employeeMobileNumber = assignee && getPropertyFromObj(employeeById, assignee, "mobileNumber", "");

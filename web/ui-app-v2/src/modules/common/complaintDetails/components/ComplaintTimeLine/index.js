@@ -100,6 +100,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     groName,
     employeeMobileNumber,
     groMobileNumber,
+    groDesignation,
   } = stepData;
 
   switch (status) {
@@ -123,21 +124,13 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             role !== "citizen" &&
             filedBy && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
           {role !== "citizen" &&
-            action !== "reopen" &&
-            currentStatus === "open" &&
-            openStatusCount === 1 && (
+            openStatusCount == 1 &&
+            (currentStatus === "open" || currentStatus === "assigned") && (
               <a href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
               </a>
             )}
-          {role === "citizen" &&
-            action === "reopen" &&
-            currentStatus === "open" &&
-            openStatusCount === 1 && (
-              <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
-                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-              </a>
-            )}
+
           {action === "reopen" && (
             <div>
               <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
@@ -187,20 +180,21 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       );
     case "assigned":
       assigneeStatusCount++;
-      return (
-        <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label
-            labelClassName="dark-color"
-            containerStyle={statusContainerStyle}
-            label={`${
-              action == "assign"
-                ? employeeName ? "CS_COMMON_ASSIGNED_TO" : "ES_COMPLAINT_ASSIGNED_HEADER"
-                : employeeName ? "CS_COMMON_REASSIGNED_TO" : "ES_COMPLAINT_REASSIGNED_HEADER"
-            }`}
-          />
-          {employeeName && (
-            <div style={nameContainerStyle}>
+      switch (role && role.toLowerCase()) {
+        case "ao":
+        case "citizen":
+          return (
+            <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label
+                labelClassName="dark-color"
+                containerStyle={statusContainerStyle}
+                label={`${
+                  action == "assign"
+                    ? employeeName ? "CS_COMMON_ASSIGNED_TO" : "ES_COMPLAINT_ASSIGNED_HEADER"
+                    : employeeName ? "CS_COMMON_REASSIGNED_TO" : "ES_COMPLAINT_REASSIGNED_HEADER"
+                }`}
+              />
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
               {(role === "AO" || currentStatus === "assigned") &&
                 assigneeStatusCount === 1 && (
@@ -208,28 +202,52 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                   </a>
                 )}
+              <Label
+                labelClassName="rainmaker-small-font"
+                containerStyle={{ width: "192px" }}
+                label={`${employeeDesignation} - ${employeeDepartment}`}
+              />
             </div>
-          )}
-          {employeeName && (
-            <Label
-              labelClassName="rainmaker-small-font"
-              containerStyle={{ width: "192px" }}
-              label={`${employeeDesignation} - ${employeeDepartment}`}
-            />
-          )}
+          );
+          break;
+        case "employee":
+          return (
+            <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label
+                labelClassName="dark-color"
+                containerStyle={statusContainerStyle}
+                label={`${
+                  action == "assign"
+                    ? groName ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY" : "ES_COMPLAINT_ASSIGNED_HEADER"
+                    : groName ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY" : "ES_COMPLAINT_REASSIGNED_HEADER"
+                }`}
+              />
+              {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
+              {currentStatus === "assigned" &&
+                assigneeStatusCount === 1 &&
+                groName && (
+                  <a href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                    <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                  </a>
+                )}
+              {groName && <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={`${groDesignation}`} />}
+            </div>
+          );
+          break;
+        default:
+          return (
+            <div className="complaint-timeline-content-section">
+              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label
+                labelClassName="dark-color"
+                containerStyle={statusContainerStyle}
+                label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
+              />
+            </div>
+          );
+      }
 
-          {/* // <div
-              //   className="complaint-details-timline-button"
-              //   onClick={(e) => {
-              //     console.log("clicked");
-              //   }}
-              // >
-              //   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
-              //     <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-              //   </a>
-              // </div> */}
-        </div>
-      );
     case "reassignrequested":
       reassignRequestedCount++;
 
