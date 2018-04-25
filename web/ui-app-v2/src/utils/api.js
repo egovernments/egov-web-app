@@ -59,7 +59,6 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     }
   } catch (error) {
     const { data, status } = error.response;
-    console.log(data);
     if (status == 400 && data == "") {
       apiError = "INVALID_TOKEN";
     } else {
