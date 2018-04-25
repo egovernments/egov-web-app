@@ -131,6 +131,7 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
 
+
                 {currentstatus &&
                   currentstatus.toLowerCase() !== "closed" && (
                     <WriteComment
@@ -142,6 +143,7 @@ class Comments extends Component {
                       currentstatus={currentstatus}
                     />
                   )}
+
               </div>
             }
           />

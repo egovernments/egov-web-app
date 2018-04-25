@@ -327,8 +327,7 @@ export const transformLocalizationLabels = (localizationLabels) => {
   return labelsById;
 };
 
-export const getTenantForLatLng = async (location) => {
-  let { lat, lng } = location;
+export const getTenantForLatLng = async (lat, lng) => {
   let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: commonConfig.tenantId }];
   let response;
   if (lat && lng) {
@@ -336,7 +335,7 @@ export const getTenantForLatLng = async (location) => {
       response = await httpRequest(TENANT.POST.URL, TENANT.POST.ACTION, queryObjList);
       return response.Tenant.code;
     } catch (error) {
-      console.log(error.message);
+      //throw and error
     }
   }
 };

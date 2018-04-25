@@ -68,6 +68,7 @@ export const submitForm = (formKey) => {
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);
+            formData = typeof formData.then === "function" ? await formData : formData;
           }
         } catch (error) {
           // console.log(error);
