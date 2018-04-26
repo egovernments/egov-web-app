@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,Redirect} from "react-router-dom";
 import withoutAuthorization from "hocs/withoutAuthorization";
 import withAuthorization from "hocs/withAuthorization";
 
@@ -20,6 +20,7 @@ const Citizen = ({ match }) => {
       <Route exact path={`${match.url}/otp`} component={withoutAuthorization(OTP, redirectionUrl)} />
       <Route exact path={`${match.url}/language-selection`} component={withoutAuthorization(LanguageSelection, redirectionUrl)} />
       <Route exact path={`${match.url}/profile`} component={withAuthorization(Profile, { hideFooter: true, title: "Edit Profile" })} />
+      <Redirect from={match.url} to={`${match.url}/register`}/>
     </Switch>
   );
 };

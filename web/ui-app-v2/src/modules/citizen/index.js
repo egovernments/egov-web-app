@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import withAuthorization from "hocs/withAuthorization";
 
 // Common Screen
@@ -83,6 +83,7 @@ const Citizen = ({ match }) => {
           redirectionUrl,
         })}
       />
+      <Redirect from={match.url} to={`${match.url}/user/`}/>
     </Switch>
   );
 };
