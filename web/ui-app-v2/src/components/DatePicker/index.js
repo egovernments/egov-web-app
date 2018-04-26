@@ -1,6 +1,6 @@
 import React from "react";
 import DatePicker from "material-ui/DatePicker";
-import "./style.css";
+import "./index.css";
 import PropTypes from "prop-types";
 
 const DatePickerUi = (props) => {

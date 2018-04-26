@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Image from "../Image";
 import Label from "../Label";
 import Icon from "../Icon";
-import "./index.css";
 
 const ProfileSection = ({
   imgStyle,

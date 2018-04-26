@@ -8,21 +8,14 @@
   /* opacity: 0.74; */
   height: 36px;
   margin-left: -15px;
-  margin-top: -11px;
-}
-
-.write-complaint-chat-field textarea {
-}
+  margin-top: -11px; }
 
 .write-complaint-profile-cont {
-  padding: 0 !important;
-}
+  padding: 0 !important; }
 
 .write-comment-time-cont {
-  margin-top: 4px;
-}
+  margin-top: 4px; }
 
 .timeline-comment-style .TextArea .TextField .label-text {
   width: 100%;
-  word-break: break-word;
-}
+  word-break: break-word; }

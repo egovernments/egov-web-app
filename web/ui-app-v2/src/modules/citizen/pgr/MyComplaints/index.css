@@ -1,22 +1,18 @@
 .home-page-content {
   padding-left: 2%;
   padding-right: 2%;
-  margin-bottom: 70px;
-}
+  margin-bottom: 70px; }
 
 .home-page-content-card-margin {
-  margin-top: 20px;
-}
+  margin-top: 20px; }
 
 .floating-button-cont {
   position: fixed;
   right: 3%;
-  bottom: 65px;
-}
+  bottom: 65px; }
 
 .complaints-top-level-wrapper {
-  padding: 0 8px;
-}
+  padding: 0 8px; }
 
 .loading-container {
   position: absolute;
@@ -24,5 +20,4 @@
   width: 100%;
   top: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 2000;
-}
+  z-index: 2000; }
