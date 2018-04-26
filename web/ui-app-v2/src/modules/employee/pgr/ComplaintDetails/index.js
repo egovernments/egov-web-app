@@ -6,7 +6,7 @@ import Actions from "modules/common/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
 import Screen from "modules/common/Screen";
 import pinIcon from "assets/Location_pin.svg";
-import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj, findLatestAssignee } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { connect } from "react-redux";
 import "./index.css";
@@ -132,7 +132,7 @@ class ComplaintDetails extends Component {
   render() {
     let { comments, openMap } = this.state;
     let { complaint, timeLine } = this.props.transformedComplaint;
-    let { role, serviceRequestId, history } = this.props;
+    let { role, serviceRequestId, history, isAssignedToEmployee } = this.props;
     let btnOneLabel = "";
     let btnTwoLabel = "";
     let action;
@@ -184,6 +184,7 @@ class ComplaintDetails extends Component {
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&
                     complaint.complaintStatus.toLowerCase() !== "closed") ||
                   (role === "employee" &&
+                    isAssignedToEmployee &&
                     complaint.complaintStatus.toLowerCase() === "assigned" &&
                     complaint.complaintStatus.toLowerCase() !== "closed") ? (
                     <Actions
@@ -265,7 +266,8 @@ const mapCitizenIdToMobileNumber = (citizenObjById, id) => {
 };
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
-  const { complaints, common } = state;
+  const { complaints, common, auth } = state;
+  const { id } = auth.userInfo;
   const { citizenById } = common || {};
   const { employeeById, departmentById, designationsById } = common || {};
   const { categoriesById } = complaints;
@@ -273,7 +275,7 @@ const mapStateToProps = (state, ownProps) => {
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
-
+  let isAssignedToEmployee = true;
   if (selectedComplaint) {
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
@@ -299,7 +301,7 @@ const mapStateToProps = (state, ownProps) => {
 
     let timeLine = [];
     timeLine = selectedComplaint.actions.filter((action) => action.status && action.status);
-
+    isAssignedToEmployee = id == findLatestAssignee(timeLine) ? true : false; //not checking for type equality due to mismatch
     timeLine.map((action) => {
       if (action && action.status && action.status === "assigned") {
         let assignee = action.assignee;
@@ -325,9 +327,9 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { transformedComplaint, role, serviceRequestId };
+    return { transformedComplaint, role, serviceRequestId, isAssignedToEmployee };
   } else {
-    return { transformedComplaint: {}, role, serviceRequestId };
+    return { transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
   }
 };
 
