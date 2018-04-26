@@ -83,7 +83,7 @@ const Citizen = ({ match }) => {
           redirectionUrl,
         })}
       />
-      <Redirect from={match.url} to={`${match.url}/user/`}/>
+      {/*<Redirect from={match.url} to={`${match.url}/user/`}/>*/}
     </Switch>
   );
 };
