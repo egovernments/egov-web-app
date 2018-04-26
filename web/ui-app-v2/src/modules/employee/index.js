@@ -153,7 +153,7 @@ const Employee = ({ match }) => {
         })}
       />
 
-      <Redirect from={match.url} to={`${match.url}/user/`}/>
+      {/*<Redirect from={match.url} to={`${match.url}/user/`}/>*/}
     </div>
   );
 };

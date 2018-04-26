@@ -27,7 +27,7 @@ const Employee = ({ match }) => {
       />
       />
       <Route exact path={`${match.url}/profile`} component={withAuthorization(Profile, { hideFooter: true, title: "Edit Profile" })} />
-      <Redirect from={match.url} to={`${match.url}/login`} />
+      {/*<Redirect from={match.url} to={`${match.url}/login`} />*/}
     </Switch>
   );
 };

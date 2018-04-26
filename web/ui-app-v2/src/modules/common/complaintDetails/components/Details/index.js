@@ -18,7 +18,7 @@ const mapIconStyle = {
 
 class Details extends Component {
   state = {
-    source: "",
+    source:localStorage.getItem("imageSource") || "",
     hideImageModal: true,
   };
 
@@ -29,6 +29,7 @@ class Details extends Component {
   onImageClick = (source, hideImageModal) => {
     let { history } = this.props;
     this.setState({ source });
+    localStorage.setItem("imageSource",source);
     if (hideImageModal === false) {
       history.push(`${history.location.pathname}?modal=true`);
     } else if (hideImageModal === true) {
