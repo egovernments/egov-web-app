@@ -340,7 +340,7 @@ export const getTenantForLatLng = async (lat, lng) => {
   }
 };
 
-const findLatestAssignee = (actionArray) => {
+export const findLatestAssignee = (actionArray) => {
   for (let i = 0; i < actionArray.length; i++) {
     if (actionArray[i].status === "assigned") {
       return actionArray[i].assignee;
