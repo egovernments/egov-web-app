@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route,Redirect } from "react-router-dom";
 import withAuthorization from "hocs/withAuthorization";
 
 // Employee
@@ -152,6 +152,8 @@ const Employee = ({ match }) => {
           redirectionUrl,
         })}
       />
+
+      {/*<Redirect from={match.url} to={`${match.url}/user/`}/>*/}
     </div>
   );
 };

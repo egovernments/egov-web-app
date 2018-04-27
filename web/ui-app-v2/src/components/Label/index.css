@@ -1,27 +1,22 @@
 .label-container {
-  display: block;
-}
+  display: block; }
+
 .button-label-container {
-  display: inline;
-}
+  display: inline; }
 
 .label-text,
 .label-icon {
   display: inline-block;
-  vertical-align: middle;
-}
+  vertical-align: middle; }
 
 .label-text {
   letter-spacing: 0.3px;
-  font-weight: 400;
-}
+  font-weight: 400; }
 
 .label-icon > svg {
-  margin-right: 0px !important;
-}
+  margin-right: 0px !important; }
 
 .label-container .label-text {
   width: 100%;
   word-break: break-word;
-  word-wrap: break-word;
-}
+  word-wrap: break-word; }

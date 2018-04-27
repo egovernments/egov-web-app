@@ -4,9 +4,11 @@ import Screen from "modules/common/Screen";
 import Complaints from "modules/common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
-import { mapCompIDToName, isImage, getTransformedStatus, returnSLAStatus, getPropertyFromObj, getLatestCreationTime } from "utils/commons";
+import { transformComplaintForComponent } from "utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
+import differenceWith from "lodash/differenceWith";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -88,15 +90,6 @@ class AllComplaints extends Component {
   }
 }
 
-//better implementation ==> to be done later
-const fetchImages = (actionArray) => {
-  let imageArray = [];
-  actionArray.forEach((action, index) => {
-    action.media && imageArray.push(action.media);
-  });
-  return imageArray[0] ? imageArray[0] : [];
-};
-
 const isAssigningOfficer = (roles = []) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
@@ -117,18 +110,6 @@ const displayStatus = (status = "", assignee) => {
   return statusObj;
 };
 
-const mapCitizenIdToName = (citizenObjById, id) => {
-  return citizenObjById && citizenObjById[id] ? citizenObjById[id].name : "NA";
-};
-
-const findLatestAssignee = (actionArray) => {
-  for (let i = 0; i < actionArray.length; i++) {
-    if (actionArray[i].status === "assigned") {
-      return actionArray[i].assignee;
-    }
-  }
-};
-
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
   const { categoriesById } = complaints;
@@ -137,31 +118,8 @@ const mapStateToProps = (state) => {
   const { userInfo } = state.auth;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const defaultPhoneNumber = "";
-  const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
-    return {
-      header: mapCompIDToName(complaints.categoriesById, complaintDetail.serviceCode),
-      date: complaintDetail.auditDetails.createdTime,
-      latestCreationTime: getLatestCreationTime(complaintDetail),
-      complaintNo: complaintDetail.serviceRequestId,
-      images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
-      complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
-      address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
-      reassign: complaintDetail.status === "reassignrequested" ? true : false,
-      reassignRequestedBy:
-        complaintDetail.status === "reassignrequested"
-          ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA")
-          : "NA",
-      submittedBy: complaintDetail && mapCitizenIdToName(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0]),
-      assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
-      employeePhoneNumber:
-        employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]
-          ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber
-          : defaultPhoneNumber,
-      status: displayStatus(
-        returnSLAStatus(getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"), getLatestCreationTime(complaintDetail))
-      ),
-    };
-  });
+  const defaultMobileNumber = "";
+  const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   let assignedComplaints = [],
     unassignedComplaints = [],
     employeeComplaints = [];

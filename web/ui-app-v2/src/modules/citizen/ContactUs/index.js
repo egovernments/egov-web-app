@@ -9,7 +9,10 @@ import { fetchFromLocalStorage } from "utils/commons";
 import "./index.css";
 
 const listInnerDivStyle = {
-  padding: "0px 0px 0px 40px",
+  paddingTop: "0px",
+  paddingRight: "0px",
+  paddingBottom: "0px",
+  paddingLeft: "40px",
 };
 
 const iconStyle = {
@@ -66,7 +69,7 @@ class ContactUs extends Component {
   onItemClick = (item, index) => {};
 
   returnListItems = () => {
-    let { emailId, contactNumber, address } = this.props.currentTenant;
+    let { emailId, contactNumber, address, OfficeTimings, domainUrl } = this.props.currentTenant[0] || {};
 
     return [
       {
@@ -97,8 +100,8 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="device" name="access-time" />,
-        primaryText: <Label label="CS_CONTACTUS_WEEKDAY" />,
-        secondaryText: "9.00 AM - 6.00 PM",
+        primaryText: OfficeTimings && Object.keys(OfficeTimings)[0],
+        secondaryText: OfficeTimings && OfficeTimings[Object.keys(OfficeTimings)[0]],
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -106,13 +109,14 @@ class ContactUs extends Component {
       },
       {
         insetChildren: true,
-        primaryText: <Label label="CS_CONTACTUS_WEEKEND" />,
-        secondaryText: "9.00 AM - 12 PM",
+        primaryText: OfficeTimings && Object.keys(OfficeTimings)[1],
+        secondaryText: OfficeTimings && OfficeTimings[Object.keys(OfficeTimings)[1]],
         style: {
           paddingBottom: "5px",
           paddingTop: "8px",
         },
       },
+
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="email" />,
         primaryText: emailId ? emailId : "NA",
@@ -123,9 +127,14 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
-        primaryText: (
-          <a className="phoneNumberStyle" target="_blank" href="https://egovernments.org">
-            https://www.egovernments.org
+        primaryText: domainUrl && (
+          <a
+            className="phoneNumberStyle"
+            target="_blank"
+            href={domainUrl.includes("http") ? domainUrl : `http://${domainUrl}`}
+            style={{ textDecoration: "none" }}
+          >
+            {domainUrl}
           </a>
         ),
         style: {
@@ -137,7 +146,7 @@ class ContactUs extends Component {
   };
 
   render() {
-    let { facebookUrl, twitterUrl } = this.props.currentTenant;
+    let { facebookUrl, twitterUrl } = this.props.currentTenant[0] || {};
 
     return (
       <div>

@@ -23,27 +23,53 @@ const bottomInfoTemplate = (item, role) => {
       {item.complaintStatus === "ASSIGNED" && (
         <div className="employee-bottom-info-cont">
           <div className="submitted-by-text">
-            {role === "ao" ? (
-              <div>
-                <Label containerStyle={{ display: "inline-block" }} label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
-                <Label containerStyle={{ display: "inline-block" }} color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.assignedTo} />
-              </div>
-            ) : (
-              <div className="inline-Localization-text">
-                <Label containerStyle={{ display: "inline-block" }} label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
-                <Label containerStyle={{ display: "inline-block" }} color="#464646" labelStyle={{ marginLeft: "3px" }} label={item.submittedBy} />
-              </div>
-            )}
-          </div>
-          <div
-            style={{ display: "inline-block" }}
-            onClick={(e) => {
-              e.stopPropagation();
-              const link = `tel:+91${item.employeePhoneNumber}`;
-              window.location.href = link;
-            }}
-          >
-            <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+            {role === "ao"
+              ? item.assignedTo !== "NA" && (
+                  <div className="clearfix">
+                    <div className="inline-Localization-text">
+                      <Label containerStyle={{ display: "inline-block" }} label="ES_ALL_COMPLAINTS_ASSIGNED_TO" />
+                      <Label
+                        containerStyle={{ display: "inline-block" }}
+                        color="#464646"
+                        labelStyle={{ marginLeft: "3px" }}
+                        label={item.assignedTo}
+                      />
+                    </div>
+                    <div
+                      style={{ display: "inline-block" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const link = `tel:+91${item.employeePhoneNumber}`;
+                        window.location.href = link;
+                      }}
+                    >
+                      <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    </div>
+                  </div>
+                )
+              : item.submittedBy !== "NA" && (
+                  <div className="clearfix">
+                    <div className="inline-Localization-text">
+                      <Label containerStyle={{ display: "inline-block" }} label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
+                      <Label
+                        containerStyle={{ display: "inline-block" }}
+                        color="#464646"
+                        labelStyle={{ marginLeft: "3px" }}
+                        label={item.submittedBy}
+                      />
+                    </div>
+                    <div
+                      style={{ float: "left" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const link = `tel:+91${item.citizenPhoneNumber}`;
+                        window.location.href = link;
+                      }}
+                    >
+                      <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    </div>
+                  </div>
+                )}
           </div>
         </div>
       )}

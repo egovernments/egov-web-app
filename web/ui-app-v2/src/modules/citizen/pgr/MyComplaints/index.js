@@ -6,7 +6,7 @@ import Screen from "modules/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "redux/complaints/actions";
 import { setRoute } from "redux/app/actions";
-import { mapCompIDToName, isImage, fetchImages, displayLocalizedStatusMessage } from "utils/commons";
+import { displayLocalizedStatusMessage, transformComplaintForComponent } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -77,17 +77,12 @@ const displayStatus = (status = "", assignee, action) => {
 
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
+  const { categoriesById } = complaints;
+  const { common } = state;
+  const { employeeById, citizenById } = common;
+  const role = "citizen";
   const { loading } = complaints || false;
-  const transformedComplaints = Object.keys(complaints.byId).map((complaint, index) => {
-    let complaintactions = complaints.byId[complaint].actions && complaints.byId[complaint].actions.filter((complaint) => complaint.status);
-    return {
-      header: mapCompIDToName(complaints.categoriesById, complaints.byId[complaint].serviceCode),
-      date: complaints.byId[complaint].auditDetails.createdTime,
-      status: displayStatus(complaints.byId[complaint].status, complaints.byId[complaint].assignee, complaintactions[0].action),
-      complaintNo: complaints.byId[complaint].serviceRequestId,
-      images: fetchImages(complaints.byId[complaint].actions).filter((imageSource) => isImage(imageSource)),
-    };
-  });
+  const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
   var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
   return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints], loading };
