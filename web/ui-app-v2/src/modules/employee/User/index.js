@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import withoutAuthorization from "hocs/withoutAuthorization";
 import withAuthorization from "hocs/withAuthorization";
 
@@ -26,7 +26,7 @@ const Employee = ({ match }) => {
         component={withAuthorization(ChangePassword, { hideFooter: true, title: "Change Password" })}
       />
       />
-      <Route exact path={`${match.url}/profile`} component={withAuthorization(Profile, { hideFooter: true, title: "Edit Profile" })} />
+      <Route exact path={`${match.url}/profile`} component={withAuthorization({ hideFooter: true, title: "Edit Profile" })(Profile)} />
       {/*<Redirect from={match.url} to={`${match.url}/login`} />*/}
     </Switch>
   );

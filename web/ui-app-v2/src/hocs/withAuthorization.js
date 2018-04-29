@@ -5,7 +5,7 @@ import withData from "./withData";
 import Header from "modules/common/Header";
 import Footer from "modules/common/Footer";
 
-const withAuthorization = (Component, options = {}) => {
+const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
     constructor(props) {
       super(props);
@@ -44,7 +44,7 @@ const withAuthorization = (Component, options = {}) => {
     const { authenticated, userInfo } = state.auth;
     return { authenticated, userInfo };
   };
-  // use recompose to make this more readable
+  // use recompose/compose to make this more readable
   return withRouter(withData(connect(mapStateToProps)(Wrapper)));
 };
 
