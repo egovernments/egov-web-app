@@ -26,64 +26,63 @@ const Citizen = ({ match }) => {
   return (
     <Switch>
       <Route path={`${match.url}/user/`} component={User} />
-      <Route exact path={`${match.url}/`} component={withAuthorization(Home, { title: "CS_HOME_HEADER_HOME" })} />
+      <Route exact path={`${match.url}/`} component={withAuthorization({ title: "CS_HOME_HEADER_HOME" })(Home)} />
       <Route
         exact
         path={`${match.url}/contact-us`}
-        component={withAuthorization(ContactUs, { title: "CS_HOME_HEADER_CONTACT_US", hideFooter: true })}
+        component={withAuthorization({ title: "CS_HOME_HEADER_CONTACT_US", hideFooter: true })(ContactUs)}
       />
-      <Route exact path={`${match.url}/my-complaints`} component={withAuthorization(MyComplaints, { title: "CS_HOME_MY_COMPLAINTS" })} />
+      <Route exact path={`${match.url}/my-complaints`} component={withAuthorization({ title: "CS_HOME_MY_COMPLAINTS" })(MyComplaints)} />
       <Route
         exact
         path={`${match.url}/complaint-details/:serviceRequestId?`}
-        component={withAuthorization(ComplaintDetails, { title: "CS_HEADER_COMPLAINT_SUMMARY" })}
+        component={withAuthorization({ title: "CS_HEADER_COMPLAINT_SUMMARY" })(ComplaintDetails)}
       />
       <Route
         exact
         path={`${match.url}/map`}
-        component={withAuthorization(TrackLocation, { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" })}
+        component={withAuthorization({ hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" })(TrackLocation)}
       />
       <Route
         exact
         path={`${match.url}/complaint-submitted`}
-        component={withAuthorization(ComplaintSubmited, { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" })}
+        component={withAuthorization({ hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" })(ComplaintSubmited)}
       />
       <Route
         exact
         path={`${match.url}/reopen-complaint/:serviceRequestId?`}
-        component={withAuthorization(ReOpenComplaint, { title: "CS_HEADER_REOPEN_COMPLAINT" })}
+        component={withAuthorization({ title: "CS_HEADER_REOPEN_COMPLAINT" })(ReOpenComplaint)}
       />
-      <Route exact path={`${match.url}/feedback/:serviceRequestId?`} component={withAuthorization(Feedback, { title: "CS_HEADER_FEEDBACK" })} />
+      <Route exact path={`${match.url}/feedback/:serviceRequestId?`} component={withAuthorization({ title: "CS_HEADER_FEEDBACK" })(Feedback)} />
       <Route
         exact
         path={`${match.url}/feedback-acknowledgement`}
-        component={withAuthorization(FeedbackAcknowledge, { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" })}
+        component={withAuthorization({ hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" })(FeedbackAcknowledge)}
       />
       <Route
         exact
         path={`${match.url}/complaint-type`}
-        component={withAuthorization(ComplaintType, { hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" })}
+        component={withAuthorization({ hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" })(ComplaintType)}
       />
       <Route
         exact
         path={`${match.url}/how-it-works`}
-        component={withAuthorization(HowItWorks, { hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" })}
+        component={withAuthorization({ hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" })(HowItWorks)}
       />
       <Route
         exact
         path={`${match.url}/add-complaint`}
-        component={withAuthorization(AddComplaint, { hideFooter: true, title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" })}
+        component={withAuthorization({ hideFooter: true, title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" })(AddComplaint)}
       />
       <Route
         exact
         path={`${match.url}/reopen-acknowledgement`}
-        component={withAuthorization(ReopenAcknowledgement, {
+        component={withAuthorization({
           hideFooter: true,
           title: "CS_HOME_MY_COMPLAINTS",
           redirectionUrl,
-        })}
+        })(ReopenAcknowledgement)}
       />
-      {/*<Redirect from={match.url} to={`${match.url}/user/`}/>*/}
     </Switch>
   );
 };
