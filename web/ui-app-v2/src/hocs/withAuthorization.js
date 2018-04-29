@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { withRouter } from "react-router";
 import withData from "./withData";
 import Header from "modules/common/Header";
@@ -33,7 +34,7 @@ const withAuthorization = (options = {}) => (Component) => {
       return (
         <div>
           {!hideHeader && authenticated ? <Header title={title} userInfo={userInfo} role={role} history={history} /> : null}
-          <Component {...this.props} />
+          {authenticated ? <Component {...this.props} /> : null}
           {!hideFooter && authenticated ? <Footer history={history} /> : null}
         </div>
       );
@@ -44,8 +45,7 @@ const withAuthorization = (options = {}) => (Component) => {
     const { authenticated, userInfo } = state.auth;
     return { authenticated, userInfo };
   };
-  // use recompose/compose to make this more readable
-  return withRouter(withData(connect(mapStateToProps)(Wrapper)));
+  return compose(withRouter, withData, connect(mapStateToProps))(Wrapper);
 };
 
 export default withAuthorization;
