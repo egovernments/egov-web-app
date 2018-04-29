@@ -11,10 +11,14 @@ export default class Footer extends Component {
 
   _onTabChange = (tabIndex) => {
     const route = navigationItems[tabIndex].route;
-    if (route.length) this.props.history.push(route);
-    this.setState({
-      selectedIndex: tabIndex,
-    });
+    this.setState(
+      {
+        selectedIndex: tabIndex,
+      },
+      () => {
+        if (route.length) this.props.history.push(route);
+      }
+    );
   };
 
   _bottomNavigationOptions = () => {
