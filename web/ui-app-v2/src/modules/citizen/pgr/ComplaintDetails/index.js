@@ -29,6 +29,7 @@ class ComplaintDetails extends Component {
             <ComplaintTimeLine
               status={complaint.status}
               timeLine={timeLine}
+              history={history}
               feedback={complaint ? complaint.feedback : ""}
               rating={complaint ? complaint.rating : ""}
               role={"citizen"}
