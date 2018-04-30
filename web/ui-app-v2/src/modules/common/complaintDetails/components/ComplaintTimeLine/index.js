@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, TimeLine, Icon, Image } from "components/";
-import { withRouter } from "react-router-dom";
 import Label from "utils/translationNode";
 import "./index.css";
 import { getDateFromEpoch, isImage } from "utils/commons";
@@ -116,7 +115,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               action === "reopen"
                 ? "CS_COMMON_COMPLAINT_REOPENED"
                 : role !== "citizen"
-                  ? filedBy ? "ES_COMMON_FILED_BY" : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
+                  ? filedBy
+                    ? "ES_COMMON_FILED_BY"
+                    : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
                   : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
             }`}
           />
@@ -146,6 +147,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                               height: "93px",
                             }}
                             source={image}
+                            onClick={() => changeRoute.push(`/image?source=${image}`)}
                           />
                         </div>
                       )
@@ -160,22 +162,6 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               />
             </div>
           )}
-          {/* {currentStatus === "open" &&
-            openStatusCount === 1 && (
-              <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} >
-                <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-              </a>
-              //// <div
-              //   className="complaint-details-timline-button"
-              //   onClick={(e) => {
-              //     console.log("clicked");
-              //   }}
-              // >
-              //   <a href={`tel:+91${employeephonenumber}`} style={{ textDecoration: "none" }} s>
-              //     <Icon action="communication" name="call" style={callIconStyle} color={"#ffffff"} />
-              //   </a>
-              // </div>
-           // )}*/}
         </div>
       );
     case "assigned":
@@ -191,8 +177,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 containerStyle={statusContainerStyle}
                 label={`${
                   action == "assign"
-                    ? employeeName ? "CS_COMMON_ASSIGNED_TO" : "ES_COMPLAINT_ASSIGNED_HEADER"
-                    : employeeName ? "CS_COMMON_REASSIGNED_TO" : "ES_COMPLAINT_REASSIGNED_HEADER"
+                    ? employeeName
+                      ? "CS_COMMON_ASSIGNED_TO"
+                      : "ES_COMPLAINT_ASSIGNED_HEADER"
+                    : employeeName
+                      ? "CS_COMMON_REASSIGNED_TO"
+                      : "ES_COMPLAINT_REASSIGNED_HEADER"
                 }`}
               />
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
@@ -219,8 +209,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 containerStyle={statusContainerStyle}
                 label={`${
                   action == "assign"
-                    ? groName ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY" : "ES_COMPLAINT_ASSIGNED_HEADER"
-                    : groName ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY" : "ES_COMPLAINT_REASSIGNED_HEADER"
+                    ? groName
+                      ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY"
+                      : "ES_COMPLAINT_ASSIGNED_HEADER"
+                    : groName
+                      ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY"
+                      : "ES_COMPLAINT_REASSIGNED_HEADER"
                 }`}
               />
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
@@ -378,6 +372,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                           height: "93px",
                         }}
                         source={image}
+                        onClick={() => changeRoute.push(`/image?source=${image}`)}
                       />
                     </div>
                   )
@@ -515,4 +510,4 @@ class ComplaintTimeLine extends Component {
   }
 }
 
-export default withRouter(ComplaintTimeLine);
+export default ComplaintTimeLine;

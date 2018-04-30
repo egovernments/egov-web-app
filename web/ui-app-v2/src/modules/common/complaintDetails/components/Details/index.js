@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon, ImageModal, Button } from "components";
+import { Card, Image, Icon, Button } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -17,37 +17,17 @@ const mapIconStyle = {
 };
 
 class Details extends Component {
-  state = {
-    source:localStorage.getItem("imageSource") || "",
-    hideImageModal: true,
-  };
-
   navigateToComplaintType = () => {
     this.props.history.push("/citizen/complaint-type");
   };
 
-  onImageClick = (source, hideImageModal) => {
-    let { history } = this.props;
-    this.setState({ source });
-    localStorage.setItem("imageSource",source);
-    if (hideImageModal === false) {
-      history.push(`${history.location.pathname}?modal=true`);
-    } else if (hideImageModal === true) {
-      history.goBack();
-    }
-  };
-
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.history.location.search === "?modal=true") {
-      this.setState({ hideImageModal: false });
-    } else {
-      this.setState({ hideImageModal: true });
-    }
+  onImageClick = (source) => {
+    this.props.history.push(`/image?source=${source}`);
   };
 
   render() {
-    let { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role } = this.props;
-    let icon = {};
+    const { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role } = this.props;
+    const icon = {};
     icon.name = "location";
     icon.style = {
       display: "block",
@@ -71,11 +51,10 @@ class Details extends Component {
         statusKey = `CS_COMMON_${status.toUpperCase()}`;
       }
     }
-
     const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
+
     return (
       <div>
-        <ImageModal imageSource={this.state.source} hide={this.state.hideImageModal} onCloseClick={() => this.onImageClick("", true)} />
         <Card
           textChildren={
             <div>
@@ -121,7 +100,7 @@ class Details extends Component {
                                   height: "93px",
                                 }}
                                 source={image}
-                                onClick={() => this.onImageClick(image, false)}
+                                onClick={() => this.onImageClick(image)}
                               />
                             </div>
                           )
@@ -191,5 +170,3 @@ class Details extends Component {
 }
 
 export default Details;
-
-//props types check yet to add
