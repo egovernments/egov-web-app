@@ -5,7 +5,6 @@ import Complaints from "modules/common/Complaints";
 import Screen from "modules/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "redux/complaints/actions";
-import { setRoute } from "redux/app/actions";
 import { displayLocalizedStatusMessage, transformComplaintForComponent } from "utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
@@ -17,19 +16,17 @@ class MyComplaints extends Component {
   };
 
   onComplaintClick = (complaintNo) => {
-    let { setRoute } = this.props;
-    setRoute(`/citizen/complaint-details/${complaintNo}`);
+    this.props.history.push(`/citizen/complaint-details/${complaintNo}`);
   };
 
   render() {
-    let { setRoute, transformedComplaints, history, loading } = this.props;
+    let { transformedComplaints, history, loading } = this.props;
     let { onComplaintClick } = this;
     return (
       <Screen loading={loading}>
         <div className="complaints-main-container clearfix">
           <Complaints
             onComplaintClick={onComplaintClick}
-            setRoute={setRoute}
             complaints={transformedComplaints}
             onClick={this.imageOnClick}
             track={true}
@@ -91,7 +88,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 
