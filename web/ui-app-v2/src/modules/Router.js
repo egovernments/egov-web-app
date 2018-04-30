@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Citizen from "modules/citizen";
 import Employee from "modules/employee";
+import ImageModalDisplay from "modules/common/ImageModalDisplay";
 
 const Main = () => {
   return (
@@ -9,6 +10,7 @@ const Main = () => {
       <Switch>
         <Route path={`/citizen/`} component={Citizen} />
         <Route path={`/employee/`} component={Employee} />
+        <Route path={`/image`} component={ImageModalDisplay} />
       </Switch>
     </main>
   );

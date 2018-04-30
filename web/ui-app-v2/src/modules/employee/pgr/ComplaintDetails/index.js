@@ -171,6 +171,7 @@ class ComplaintDetails extends Component {
                   status={complaint.status}
                   timelineSLAStatus={complaint.timelineSLAStatus}
                   timeLine={timeLine}
+                  history={history}
                   handleFeedbackOpen={this.handleFeedbackOpen}
                   role={role}
                   feedback={complaint ? complaint.feedback : ""}
