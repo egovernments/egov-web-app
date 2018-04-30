@@ -207,9 +207,10 @@ class ContactUs extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const { userInfo: user, tenantId } = state.auth;
   const cities = state.common.cities || [];
-  const tenant = fetchFromLocalStorage("tenant-id");
-  const currentTenant = cities && cities.filter((city) => city.key === tenant);
+  const searchKey = user.permanentCity || tenantId;
+  const currentTenant = cities && cities.filter((city) => city.key === searchKey);
   return { currentTenant };
 };
 
