@@ -55,13 +55,13 @@ const routes = [
     path: "user/change-password",
     component: ChangePassword,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "Change Password" },
+    options: { hideFooter: true, title: "CORE_COMMON_CHANGE_PASSWORD" },
   },
   {
     path: "user/profile",
     component: Profile,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "Edit Profile" },
+    options: { hideFooter: true, title: "CS_HOME_HEADER_PROFILE" },
   },
   {
     path: "all-complaints",
