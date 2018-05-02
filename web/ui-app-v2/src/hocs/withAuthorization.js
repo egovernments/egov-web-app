@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { withRouter } from "react-router";
 import withData from "./withData";
 import Header from "modules/common/Header";
 import Footer from "modules/common/Footer";
@@ -45,7 +44,7 @@ const withAuthorization = (options = {}) => (Component) => {
     const { authenticated, userInfo } = state.auth;
     return { authenticated, userInfo };
   };
-  return compose(withRouter, withData, connect(mapStateToProps))(Wrapper);
+  return compose(withData, connect(mapStateToProps))(Wrapper);
 };
 
 export default withAuthorization;

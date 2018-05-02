@@ -1,12 +1,17 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import withAuthorization from "hocs/withAuthorization";
+import RenderRoutes from "modules/common/RenderRoutes";
+
+// user routes
+import Register from "./User/Register";
+import Login from "./User/Login";
+import OTP from "./User/OTP";
+import LanguageSelection from "./User/LanguageSelection";
+import Profile from "./User/Profile";
 
 // Common Screen
 import Home from "./Home";
 import HowItWorks from "./HowItWorks";
 import ContactUs from "./ContactUs";
-import User from "./User";
 
 // pgr specific screens
 import MyComplaints from "./pgr/MyComplaints";
@@ -20,71 +25,119 @@ import AddComplaint from "./pgr/AddComplaint";
 import FeedbackAcknowledge from "./pgr/FeedbackAcknowledgement";
 import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 
-const redirectionUrl = "/citizen/user/login";
+const routes = [
+  {
+    path: "user/register",
+    component: Register,
+    needsAuthentication: false,
+    redirectionUrl: "/citizen",
+  },
+  {
+    path: "user/login",
+    component: Login,
+    needsAuthentication: false,
+    redirectionUrl: "/citizen",
+  },
+  {
+    path: "user/otp",
+    component: OTP,
+    needsAuthentication: false,
+    redirectionUrl: "/citizen",
+  },
+  {
+    path: "user/language-selection",
+    component: LanguageSelection,
+    needsAuthentication: false,
+    redirectionUrl: "/citizen",
+  },
+  {
+    path: "user/profile",
+    component: Profile,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Edit Profile" },
+  },
+  {
+    path: "",
+    component: Home,
+    needsAuthentication: true,
+    options: { title: "CS_HOME_HEADER_HOME" },
+  },
+  {
+    path: "my-complaints",
+    component: MyComplaints,
+    needsAuthentication: true,
+    options: { title: "CS_HOME_MY_COMPLAINTS" },
+  },
+  {
+    path: "contact-us",
+    component: ContactUs,
+    needsAuthentication: true,
+    options: { title: "CS_HOME_HEADER_CONTACT_US", hideFooter: true },
+  },
+  {
+    path: "complaint-details/:serviceRequestId?",
+    component: ComplaintDetails,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUMMARY" },
+  },
+  {
+    path: "map",
+    component: TrackLocation,
+    needsAuthentication: true,
+    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" },
+  },
+  {
+    path: "complaint-submitted",
+    component: ComplaintSubmited,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" },
+  },
+  {
+    path: "reopen-complaint/:serviceRequestId?",
+    component: ReOpenComplaint,
+    needsAuthentication: true,
+    options: { title: "CS_HEADER_REOPEN_COMPLAINT" },
+  },
+  {
+    path: "feedback/:serviceRequestId?",
+    component: Feedback,
+    needsAuthentication: true,
+    options: { title: "CS_HEADER_FEEDBACK" },
+  },
+  {
+    path: "feedback-acknowledgement",
+    component: FeedbackAcknowledge,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" },
+  },
+  {
+    path: "complaint-type",
+    component: ComplaintType,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" },
+  },
+  {
+    path: "how-it-works",
+    component: HowItWorks,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" },
+  },
+  {
+    path: "add-complaint",
+    component: AddComplaint,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" },
+  },
+  {
+    path: "reopen-acknowledgement",
+    component: ReopenAcknowledgement,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" },
+  },
+];
 
 const Citizen = ({ match }) => {
-  return (
-    <Switch>
-      <Route path={`${match.url}/user/`} component={User} />
-      <Route exact path={`${match.url}/`} component={withAuthorization({ title: "CS_HOME_HEADER_HOME" })(Home)} />
-      <Route
-        exact
-        path={`${match.url}/contact-us`}
-        component={withAuthorization({ title: "CS_HOME_HEADER_CONTACT_US", hideFooter: true })(ContactUs)}
-      />
-      <Route exact path={`${match.url}/my-complaints`} component={withAuthorization({ title: "CS_HOME_MY_COMPLAINTS" })(MyComplaints)} />
-      <Route
-        exact
-        path={`${match.url}/complaint-details/:serviceRequestId?`}
-        component={withAuthorization({ title: "CS_HEADER_COMPLAINT_SUMMARY" })(ComplaintDetails)}
-      />
-      <Route
-        exact
-        path={`${match.url}/map`}
-        component={withAuthorization({ hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" })(TrackLocation)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-submitted`}
-        component={withAuthorization({ hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" })(ComplaintSubmited)}
-      />
-      <Route
-        exact
-        path={`${match.url}/reopen-complaint/:serviceRequestId?`}
-        component={withAuthorization({ title: "CS_HEADER_REOPEN_COMPLAINT" })(ReOpenComplaint)}
-      />
-      <Route exact path={`${match.url}/feedback/:serviceRequestId?`} component={withAuthorization({ title: "CS_HEADER_FEEDBACK" })(Feedback)} />
-      <Route
-        exact
-        path={`${match.url}/feedback-acknowledgement`}
-        component={withAuthorization({ hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" })(FeedbackAcknowledge)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-type`}
-        component={withAuthorization({ hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" })(ComplaintType)}
-      />
-      <Route
-        exact
-        path={`${match.url}/how-it-works`}
-        component={withAuthorization({ hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" })(HowItWorks)}
-      />
-      <Route
-        exact
-        path={`${match.url}/add-complaint`}
-        component={withAuthorization({ hideFooter: true, title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION" })(AddComplaint)}
-      />
-      <Route
-        exact
-        path={`${match.url}/reopen-acknowledgement`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_HOME_MY_COMPLAINTS",
-          redirectionUrl,
-        })(ReopenAcknowledgement)}
-      />
-    </Switch>
-  );
+  return <RenderRoutes match={match} routes={routes} />;
 };
 
 export default Citizen;

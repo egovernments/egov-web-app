@@ -1,14 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const withoutAuthorization = (Component, redirectionUrl) => {
+const withoutAuthorization = (redirectionUrl) => (Component) => {
   class Wrapper extends React.Component {
     componentDidMount() {
       if (this.props.authenticated) {
         this.props.history.push(redirectionUrl);
       }
     }
-
     render() {
       return <Component {...this.props} />;
     }
