@@ -92,15 +92,26 @@ const resetOrientation = (srcBase64, srcOrientation, callback) => {
 
 export const getImageUrlByFile = (file) => {
   return new Promise((resolve) => {
-    getOrientation(file, (orientation) => {
-      const originalBase64 = URL.createObjectURL(file);
-      if (orientation == 1) {
-        resolve(originalBase64);
-      } else {
-        resetOrientation(originalBase64, orientation, (resetBase64Image) => {
-          resolve(resetBase64Image);
-        });
-      }
-    });
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const fileurl = e.target.result;
+      resolve(fileurl);
+    };
   });
 };
+
+// export const getImageUrlByFile = (file) => {
+//   return new Promise((resolve) => {
+//     getOrientation(file, (orientation) => {
+//       const originalBase64 = URL.createObjectURL(file);
+//       if (orientation == 1) {
+//         resolve(originalBase64);
+//       } else {
+//         resetOrientation(originalBase64, orientation, (resetBase64Image) => {
+//           resolve(resetBase64Image);
+//         });
+//       }
+//     });
+//   });
+// };
