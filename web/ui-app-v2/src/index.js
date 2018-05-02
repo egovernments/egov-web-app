@@ -19,7 +19,6 @@ import "./assets/styles/bootstrap-customized.css";
 import "./assets/styles/app.css";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import registerServiceWorker from "./registerServiceWorker";
 
 const muiTheme = getMuiTheme(theme);
 
@@ -46,5 +45,3 @@ render(
   </Provider>,
   document.getElementById("root")
 );
-
-registerServiceWorker();
