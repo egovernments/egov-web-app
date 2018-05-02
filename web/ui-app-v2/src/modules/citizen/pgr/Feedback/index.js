@@ -7,7 +7,6 @@ import CheckBoxGroup from "./components/CheckBoxGroup";
 import Screen from "modules/common/Screen";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
-import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class Feedback extends Component {
@@ -43,7 +42,6 @@ class Feedback extends Component {
   };
 
   handleChange = (e, value) => {
-    console.log(value);
     this.props.handleFieldChange(this.props.formKey, "comments", value);
   };
 
@@ -91,7 +89,6 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    setRoute: (route) => dispatch(setRoute(route)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };

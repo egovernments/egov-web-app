@@ -68,15 +68,17 @@ export const submitForm = (formKey) => {
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);
+            // check if a transformer returns a promise in which case wait for the promise to resolve
             formData = typeof formData.then === "function" ? await formData : formData;
           }
         } catch (error) {
           // console.log(error);
+          // TODO: handle the errors appropriately
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
         }
         let formResponse = {};
-        // this will eventually moved out to the auth action
+        // this will eventually moved out to the auth action; bit messy
         if (formData.hasOwnProperty("login")) {
           formResponse = await loginRequest(formData.login.username, formData.login.password);
         } else if (formData.hasOwnProperty("employee")) {
@@ -115,6 +117,7 @@ export const removeFile = (formKey, fieldKey, fileIndex) => {
 };
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload
+// TODO : can the upload happen at a later point in time? Challenge is to intimate the user if in case of a failure
 export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
   const { name: fileName } = fileObject.file;
   return async (dispatch, getState) => {

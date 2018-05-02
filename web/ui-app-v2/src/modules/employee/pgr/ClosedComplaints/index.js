@@ -1,10 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Screen from "modules/common/Screen";
 import Complaints from "modules/common/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
-import { setRoute } from "redux/app/actions";
 import { transformComplaintForComponent } from "utils/commons";
-import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -15,8 +14,7 @@ class ClosedComplaints extends Component {
   }
 
   onComplaintClick = (complaintNo) => {
-    let { setRoute } = this.props;
-    setRoute(`/employee/complaint-details/${complaintNo}`);
+    this.props.history.push(`/employee/complaint-details/${complaintNo}`);
   };
 
   render() {
@@ -74,7 +72,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
-    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

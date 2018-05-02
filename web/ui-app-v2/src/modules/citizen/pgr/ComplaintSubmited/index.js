@@ -4,12 +4,11 @@ import { Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Screen from "modules/common/Screen";
 import Label from "utils/translationNode";
-import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class ComplaintSubmitted extends Component {
   continueComplaintSubmit = () => {
-    this.props.setRoute("/citizen");
+    this.props.history.push("/citizen");
   };
 
   // the retrival logic to be changed!
@@ -60,10 +59,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setRoute: (route) => dispatch(setRoute(route)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintSubmitted);
+export default connect(mapStateToProps, null)(ComplaintSubmitted);

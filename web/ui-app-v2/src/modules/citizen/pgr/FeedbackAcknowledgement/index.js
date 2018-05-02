@@ -1,12 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Button, Icon } from "components";
-import { setRoute } from "redux/app/actions";
 import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const FeedbackAcknowledge = ({ setRoute }) => {
+const FeedbackAcknowledge = ({ history }) => {
   return (
     <div className="feedback-success-container">
       <div className="success-message-main-screen">
@@ -15,7 +13,7 @@ const FeedbackAcknowledge = ({ setRoute }) => {
       <div className="success-message-continue">
         <Button
           id="feedback-acknowledgement"
-          onClick={() => setRoute("/citizen")}
+          onClick={() => history.push("/citizen")}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
           fullWidth={true}
@@ -25,10 +23,4 @@ const FeedbackAcknowledge = ({ setRoute }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setRoute: (route) => dispatch(setRoute(route)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(FeedbackAcknowledge);
+export default FeedbackAcknowledge;
