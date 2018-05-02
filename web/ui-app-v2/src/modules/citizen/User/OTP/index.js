@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Banner from "modules/common/Banner";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
-import { setRoute } from "redux/app/actions";
 import { sendOTP } from "redux/auth/actions";
 import Screen from "modules/common/Screen";
 
@@ -83,7 +82,6 @@ const mapDispatchToProps = (dispatch) => {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
-    setRoute: (route) => dispatch(setRoute(route)),
     sendOTP: (otp) => dispatch(sendOTP(otp)),
   };
 };

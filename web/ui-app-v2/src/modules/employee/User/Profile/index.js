@@ -7,7 +7,6 @@ import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/Screen";
 import img from "assets/images/download.png";
-import { setRoute } from "redux/app/actions";
 import "./index.css";
 
 class Profile extends Component {
@@ -43,7 +42,6 @@ class Profile extends Component {
   setProfilePic = (file = null, imageUri = "") => {
     const { fileUpload } = this.props;
     this.removeProfilePic();
-
     fileUpload("profileEmployee", "photo", { module: "rainmaker-pgr", file, imageUri });
   };
 
@@ -120,7 +118,6 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (formKey) => dispatch(submitForm(formKey)),
     initForm: (form) => dispatch(initForm(form)),
     fileUpload: (formKey, fieldKey, module, fileObject) => dispatch(fileUpload(formKey, fieldKey, module, fileObject)),
-    setRoute: (route) => dispatch(setRoute(route)),
     removeFile: (formKey, fieldKey, index) => dispatch(removeFile(formKey, fieldKey, index)),
   };
 };
