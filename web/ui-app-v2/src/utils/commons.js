@@ -356,6 +356,7 @@ export const findLatestAssignee = (actionArray) => {
       return actionArray[i].assignee;
     }
   }
+  return null;
 };
 
 export const transformComplaintForComponent = (complaints, role, employeeById, citizenById, categoriesById, displayStatus) => {

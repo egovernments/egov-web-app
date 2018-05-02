@@ -179,7 +179,7 @@ class ComplaintDetails extends Component {
                   filedBy={complaint ? complaint.filedBy : ""}
                   filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
                 />
-                <Comments comments={comments} hasComments={true} />
+                <Comments comments={comments} hasComments={true} isAssignedToEmployee={isAssignedToEmployee} />
                 <div>
                   {(role === "ao" &&
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&
