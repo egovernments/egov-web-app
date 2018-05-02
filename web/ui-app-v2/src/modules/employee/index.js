@@ -1,6 +1,13 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import withAuthorization from "hocs/withAuthorization";
+import RenderRoutes from "modules/common/RenderRoutes";
+
+//user routes
+import Login from "./User/Login";
+import OTP from "./User/OTP";
+import LanguageSelection from "./User/LanguageSelection";
+import ChangePassword from "./User/ChangePassword";
+import ForgotPassword from "./User/ForgotPassword";
+import Profile from "./User/Profile";
 
 // Employee
 import RequestReAssign from "./pgr/RequestReAssign";
@@ -15,145 +22,181 @@ import ComplaintRejected from "./pgr/ComplaintRejected";
 import ComplaintAssigned from "./pgr/ComplaintAssigned";
 import ResolveSuccess from "./pgr/ResolveSuccess";
 import ReassignSuccess from "./pgr/ReassignSuccess";
-import User from "./User";
 
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
 
-const Employee = ({ match }) => {
-  return (
-    <div>
-      <Route path={`${match.url}/user/`} component={User} />
-      {/* Employee routes */}
-      <Route
-        exact
-        path={`${match.url}/all-complaints`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "ES_ALL_COMPLAINTS_HEADER",
-          redirectionUrl,
-        })(AllComplaints)}
-      />
-      <Route
-        exact
-        path={`${match.url}/request-reassign/:serviceRequestId?`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_HEADER_REQUEST_REASSIGN",
-          redirectionUrl,
-        })(RequestReAssign)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-resolved/:serviceRequestId?`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE",
-          redirectionUrl,
-        })(ComplaintResolved)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-details/:serviceRequestId`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_HEADER_COMPLAINT_SUMMARY",
-          redirectionUrl,
-        })(ComplaintSummary)}
-      />
+const routes = [
+  {
+    path: "user/login",
+    component: Login,
+    needsAuthentication: false,
+    redirectionUrl: "/employee/all-complaints",
+  },
+  {
+    path: "user/otp",
+    component: OTP,
+    needsAuthentication: false,
+    redirectionUrl: "/employee/all-complaints",
+  },
+  {
+    path: "user/language-selection",
+    component: LanguageSelection,
+    needsAuthentication: false,
+    redirectionUrl: "/employee/all-complaints",
+  },
+  {
+    path: "user/forgot-password",
+    component: ForgotPassword,
+    needsAuthentication: false,
+    redirectionUrl: "/employee/all-complaints",
+  },
+  {
+    path: "user/change-password",
+    component: ChangePassword,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Change Password" },
+  },
+  {
+    path: "user/profile",
+    component: Profile,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Edit Profile" },
+  },
+  {
+    path: "all-complaints",
+    component: AllComplaints,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "ES_ALL_COMPLAINTS_HEADER",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "complaint-resolved/:serviceRequestId?",
+    component: ComplaintResolved,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "complaint-details/:serviceRequestId",
+    component: ComplaintSummary,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_HEADER_COMPLAINT_SUMMARY",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "closed-complaints",
+    component: ClosedComplaints,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "ES_CLOSED_COMPLAINTS_HEADER",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "complaint-reassigned/:serviceRequestId?",
+    component: ComplaintAssigned,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "ES_COMPLAINT_REASSIGNED_HEADER",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "resolve-success",
+    component: ResolveSuccess,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "reassign-success",
+    component: ReassignSuccess,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_COMMON_RE-ASSIGN REQUESTED",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "complaint-assigned/:serviceRequestId?",
+    component: ComplaintAssigned,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "ES_COMPLAINT_ASSIGNED_HEADER",
+      redirectionUrl,
+    },
+  },
+  {
+    path: "complaint-rejected",
+    component: ComplaintRejected,
+    needsAuthentication: true,
+    options: {
+      title: "ES_COMPLAINT_REJECTED_HEADER",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+  {
+    path: "assign-complaint/:serviceRequestId?",
+    component: AssignComplaint,
+    needsAuthentication: true,
+    options: {
+      title: "ES_ASSIGN_TO_EMPLOYEE_HEADER",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+  {
+    path: "reassign-complaint/:serviceRequestId?",
+    component: AssignComplaint,
+    needsAuthentication: true,
+    options: {
+      title: "ES_REASSIGN_TO_EMPLOYEE_HEADER",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+  {
+    path: "employee-directory",
+    component: EmployeeDirectory,
+    needsAuthentication: true,
+    options: {
+      title: "ES_EMPLOYEE_DIRECTORY_HEADER",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+  {
+    path: "reject-complaint/:serviceRequestId?",
+    component: RejectComplaint,
+    needsAuthentication: true,
+    options: {
+      title: "ES_REASON_TO_REJECT_HEADER",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+];
 
-      <Route
-        exact
-        path={`${match.url}/closed-complaints`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "ES_CLOSED_COMPLAINTS_HEADER",
-          redirectionUrl,
-        })(ClosedComplaints)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-reassigned/:serviceRequestId?`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "ES_COMPLAINT_REASSIGNED_HEADER",
-          redirectionUrl,
-        })(ComplaintAssigned)}
-      />
-      <Route
-        exact
-        path={`${match.url}/resolve-success`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
-          redirectionUrl,
-        })(ResolveSuccess)}
-      />
-      <Route
-        exact
-        path={`${match.url}/reassign-success`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "CS_COMMON_RE-ASSIGN REQUESTED",
-          redirectionUrl,
-        })(ReassignSuccess)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-assigned/:serviceRequestId?`}
-        component={withAuthorization({
-          hideFooter: true,
-          title: "ES_COMPLAINT_ASSIGNED_HEADER",
-          redirectionUrl,
-        })(ComplaintAssigned)}
-      />
-      <Route
-        exact
-        path={`${match.url}/complaint-rejected`}
-        component={withAuthorization({
-          title: "ES_COMPLAINT_REJECTED_HEADER",
-          hideFooter: true,
-          redirectionUrl,
-        })(ComplaintRejected)}
-      />
-      <Route
-        exact
-        path={`${match.url}/assign-complaint/:serviceRequestId?`}
-        component={withAuthorization({
-          title: "ES_ASSIGN_TO_EMPLOYEE_HEADER",
-          hideFooter: true,
-          redirectionUrl,
-        })(AssignComplaint)}
-      />
-      <Route
-        exact
-        path={`${match.url}/reassign-complaint/:serviceRequestId?`}
-        component={withAuthorization({
-          title: "ES_REASSIGN_TO_EMPLOYEE_HEADER",
-          hideFooter: true,
-          redirectionUrl,
-        })(AssignComplaint)}
-      />
-      <Route
-        exact
-        path={`${match.url}/employee-directory`}
-        component={withAuthorization({
-          title: "ES_EMPLOYEE_DIRECTORY_HEADER",
-          hideFooter: true,
-          redirectionUrl,
-        })(EmployeeDirectory)}
-      />
-      <Route
-        exact
-        path={`${match.url}/reject-complaint/:serviceRequestId?`}
-        component={withAuthorization({
-          title: "ES_REASON_TO_REJECT_HEADER",
-          hideFooter: true,
-          redirectionUrl,
-        })(RejectComplaint)}
-      />
-    </div>
-  );
+const Employee = ({ match }) => {
+  return <RenderRoutes match={match} routes={routes} />;
 };
 
 export default Employee;
