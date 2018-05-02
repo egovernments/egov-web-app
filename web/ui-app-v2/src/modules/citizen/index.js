@@ -108,7 +108,7 @@ const routes = [
     path: "feedback-acknowledgement",
     component: FeedbackAcknowledge,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" },
+    options: { hideFooter: true, title: "CS_HEADER_FEEDBACK_ACKNOWLEDGEMENT" },
   },
   {
     path: "complaint-type",
@@ -132,7 +132,7 @@ const routes = [
     path: "reopen-acknowledgement",
     component: ReopenAcknowledgement,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HOME_MY_COMPLAINTS" },
+    options: { hideFooter: true, title: "CS_COMMON_COMPLAINT_REOPENED" },
   },
 ];
 
