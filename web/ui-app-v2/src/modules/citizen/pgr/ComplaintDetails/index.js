@@ -34,7 +34,7 @@ class ComplaintDetails extends Component {
               rating={complaint ? complaint.rating : ""}
               role={"citizen"}
             />
-            <Comments hasComments={true} />
+            <Comments hasComments={true} role={"citizen"} />
           </div>
         )}
       </Screen>

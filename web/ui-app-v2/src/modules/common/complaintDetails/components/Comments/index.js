@@ -71,7 +71,7 @@ class Comments extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName, isAssignedToEmployee } = this.props;
+    const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName, role, isAssignedToEmployee } = this.props;
     const { name: formKey } = this.formConfig;
 
     let items =
@@ -131,18 +131,19 @@ class Comments extends Component {
                 </div>
                 <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
 
-                {isAssignedToEmployee &&
-                  currentstatus &&
-                  currentstatus.toLowerCase() !== "closed" && (
-                    <WriteComment
-                      form={form}
-                      formKey={formKey}
-                      onChange={handleFieldChange}
-                      submitForm={submitForm}
-                      userImage={userImage}
-                      currentstatus={currentstatus}
-                    />
-                  )}
+                {(isAssignedToEmployee && role === "employee") || role === "citizen" || role === "ao"
+                  ? currentstatus &&
+                    currentstatus.toLowerCase() !== "closed" && (
+                      <WriteComment
+                        form={form}
+                        formKey={formKey}
+                        onChange={handleFieldChange}
+                        submitForm={submitForm}
+                        userImage={userImage}
+                        currentstatus={currentstatus}
+                      />
+                    )
+                  : ""}
               </div>
             }
           />
