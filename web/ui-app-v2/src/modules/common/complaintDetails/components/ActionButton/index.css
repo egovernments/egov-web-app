@@ -5,7 +5,7 @@
   bottom: 0px;
   left: 0px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding-top: 9px;
   background-color: white;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1), 0 -2px 5px 0 transparent; }
