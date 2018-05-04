@@ -6,9 +6,10 @@ import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
 import emptyFace from "assets/images/download.png";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { getDateFromEpoch } from "utils/commons";
+import { getDateFromEpoch, getPropertyFromObj } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
+import { transformById } from "../../../../../utils/commons";
 
 // Don't Delete!!
 // const itemsOne = [
@@ -71,30 +72,35 @@ class Comments extends Component {
   };
 
   render() {
-    const { form, handleFieldChange, submitForm, selectedComplaint, userImage, userId, userName, role, isAssignedToEmployee } = this.props;
+    const {
+      form,
+      handleFieldChange,
+      submitForm,
+      selectedComplaint,
+      userImage,
+      userId,
+      userName,
+      role,
+      isAssignedToEmployee,
+      transformedCommentList,
+    } = this.props;
     const { name: formKey } = this.formConfig;
 
-    let items =
-      selectedComplaint &&
-      selectedComplaint.actions.filter((action, index) => {
-        return action.comments && !action.status;
-      });
-    items && items.reverse();
-    items =
-      items &&
-      items.map((action, index) => {
-        if (action.by.split(":")[1].toLowerCase() === "citizen") {
+    const items =
+      transformedCommentList &&
+      transformedCommentList.map((comment, index) => {
+        if (comment.role === "Citizen") {
           return {
             leftAvatar: (
               <div>
-                <Image style={imageStyles} className="img-circle" size="medium" source={userId ? userImage : emptyFace} />
+                <Image style={imageStyles} className="img-circle" size="medium" source={comment.avatar ? comment.avatar : emptyFace} />
               </div>
             ),
             primaryText: (
               <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={action.by.split(":")[0] == userId ? userName : ""} />
-                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />
-                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(action.when)} />
+                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.name ? comment.name : ""} />
+                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
+                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />
               </div>
             ),
           };
@@ -102,11 +108,17 @@ class Comments extends Component {
           return {
             primaryText: (
               <div className="complaint-details-comments-section">
-                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={action.comments} />
-                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(action.when)} />
+                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.name ? comment.name : ""} />
+                <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
+                <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />
               </div>
             ),
-            rightAvatar: <Avatar size={33} src={action.by.split(":")[0] == userId ? userImage : emptyFace} />,
+
+            rightAvatar: (
+              <div>
+                <Image style={imageStyles} className="img-circle" size="medium" source={comment.avatar ? comment.avatar : emptyFace} />
+              </div>
+            ),
           };
         }
       });
@@ -156,12 +168,32 @@ class Comments extends Component {
 const mapStateToProps = (state, ownProps) => {
   const formKey = "comment";
   const form = state.form[formKey] || {};
-  const { complaints } = state;
+  const { complaints, common } = state;
+  const { employeeById, citizenById } = common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  let commentList =
+    selectedComplaint &&
+    selectedComplaint.actions.filter((action, index) => {
+      return action.comments && !action.status;
+    });
+  commentList && commentList.reverse();
+  const transformedCommentList =
+    commentList &&
+    commentList.map((comment, commentIndex) => {
+      let role = comment.by.split(":")[1];
+      let id = comment.by.split(":")[0];
+      return {
+        role,
+        avatar: role === "Citizen" ? getPropertyFromObj(citizenById, id, "photo", "") : getPropertyFromObj(employeeById, id, "photo", ""),
+        name: role === "Citizen" ? getPropertyFromObj(citizenById, id, "name", "") : getPropertyFromObj(employeeById, id, "name", ""),
+        comment: comment.comments,
+        when: comment.when,
+      };
+    });
   const userImage = state.auth.userInfo.photo || "";
   const userId = state.auth.userInfo.id || "";
   const userName = state.auth.userInfo.name || "";
-  return { form, selectedComplaint, userImage, userId, userName };
+  return { form, selectedComplaint, userImage, userId, userName, transformedCommentList };
 };
 
 const mapDispatchToProps = (dispatch) => {

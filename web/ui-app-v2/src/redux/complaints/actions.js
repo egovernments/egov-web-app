@@ -5,7 +5,7 @@ import { httpRequest } from "utils/api";
 import { difference, uniq } from "lodash";
 import commonConfig from "config/common.js";
 
-//checking users there in aciton history
+//checking users there in action history
 const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
   if (hasUsers) {
     let employeeIds = [],
