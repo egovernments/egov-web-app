@@ -346,6 +346,7 @@ export const getTenantForLatLng = async (lat, lng) => {
       return response.Tenant.code;
     } catch (error) {
       //throw and error
+      throw new Error(error.message);
     }
   }
 };

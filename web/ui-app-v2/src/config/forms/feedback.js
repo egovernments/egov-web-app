@@ -4,7 +4,7 @@ const formConfig = {
     rating: {
       id: "complaint-rating",
       jsonPath: "services[0].rating",
-      required: false,
+      required: true,
     },
     selectedSevice: {
       id: "feedback-service",
