@@ -193,6 +193,17 @@ const routes = [
       redirectionUrl,
     },
   },
+
+  {
+    path: "request-reassign/:serviceRequestId?",
+    component: RequestReAssign,
+    needsAuthentication: true,
+    options: {
+      title: "CS_HEADER_REQUEST_REASSIGN",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
 ];
 
 const Employee = ({ match }) => {
