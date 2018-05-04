@@ -14,7 +14,7 @@ const viewModelToBusinessModelTransformer = async (form, state) => {
     const tenantId = await getTenantForLatLng(latitude.value, longitude.value);
     formData.services[0].tenantId = tenantId;
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   }
   return formData;
 };

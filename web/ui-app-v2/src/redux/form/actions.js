@@ -69,7 +69,11 @@ export const submitForm = (formKey) => {
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);
             // check if a transformer returns a promise in which case wait for the promise to resolve
-            formData = typeof formData.then === "function" ? await formData : formData;
+            try {
+              formData = typeof formData.then === "function" ? await formData : formData;
+            } catch (error) {
+              dispatch(toggleSnackbarAndSetText(true, error.message, true));
+            }
           }
         } catch (error) {
           // console.log(error);
@@ -84,9 +88,9 @@ export const submitForm = (formKey) => {
         } else if (formData.hasOwnProperty("employee")) {
           formResponse = await loginRequest(formData.employee.username, formData.employee.password);
         } else {
-          formResponse = await httpRequest(saveUrl, action, [], formData);
+          // formResponse = await httpRequest(saveUrl, action, [], formData);
         }
-        dispatch(submitFormComplete(formKey, formResponse));
+        // dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
         const { message } = error;
         dispatch(submitFormError(formKey, message));
