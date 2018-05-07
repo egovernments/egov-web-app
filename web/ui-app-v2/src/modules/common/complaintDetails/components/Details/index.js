@@ -100,6 +100,7 @@ class Details extends Component {
                                   height: "93px",
                                 }}
                                 source={image}
+                                size="medium"
                                 onClick={() => this.onImageClick(image)}
                               />
                             </div>
