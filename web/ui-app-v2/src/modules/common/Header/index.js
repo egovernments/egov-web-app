@@ -46,7 +46,7 @@ class Header extends Component {
   };
 
   _appBarProps = () => {
-    const isHomeScreen = /(citizen|employee\/all-complaints)\/?$/.test(window.location.pathname);
+    const { isHomeScreen, hideBackButton } = this.props.options;
     const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
 
     const style = { overflowX: "hidden", width: "initial" };
@@ -58,13 +58,13 @@ class Header extends Component {
       <IconButton id="icon-hamburger">
         {isHomeScreen ? (
           <Icon id="icon-hamburger" action="custom" name="hamburger" />
-        ) : (
+        ) : hideBackButton ? null : (
           <Icon id="back-navigator" action="navigation" name="arrow-back" />
         )}
       </IconButton>
     );
 
-    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : this._handleBackNavigation;
+    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
 
     return { style, iconElementLeft, onLeftIconButtonClick };
   };

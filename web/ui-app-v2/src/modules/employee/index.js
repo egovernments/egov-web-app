@@ -68,6 +68,7 @@ const routes = [
     component: AllComplaints,
     needsAuthentication: true,
     options: {
+      isHomeScreen: true,
       hideFooter: true,
       title: "ES_ALL_COMPLAINTS_HEADER",
       redirectionUrl,
@@ -118,6 +119,7 @@ const routes = [
     component: ResolveSuccess,
     needsAuthentication: true,
     options: {
+      hideBackButton: true,
       hideFooter: true,
       title: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
       redirectionUrl,
@@ -128,6 +130,7 @@ const routes = [
     component: ReassignSuccess,
     needsAuthentication: true,
     options: {
+      hideBackButton: true,
       hideFooter: true,
       title: "CS_COMMON_RE-ASSIGN REQUESTED",
       redirectionUrl,
@@ -138,6 +141,7 @@ const routes = [
     component: ComplaintAssigned,
     needsAuthentication: true,
     options: {
+      hideBackButton: true,
       hideFooter: true,
       title: "ES_COMPLAINT_ASSIGNED_HEADER",
       redirectionUrl,

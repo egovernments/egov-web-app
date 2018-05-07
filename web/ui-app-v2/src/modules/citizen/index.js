@@ -60,7 +60,7 @@ const routes = [
     path: "",
     component: Home,
     needsAuthentication: true,
-    options: { title: "CS_HOME_HEADER_HOME" },
+    options: { title: "CS_HOME_HEADER_HOME", isHomeScreen: true },
   },
   {
     path: "my-complaints",
@@ -90,7 +90,7 @@ const routes = [
     path: "complaint-submitted",
     component: ComplaintSubmited,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED" },
+    options: { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED", hideBackButton: true },
   },
   {
     path: "reopen-complaint/:serviceRequestId?",
@@ -108,7 +108,7 @@ const routes = [
     path: "feedback-acknowledgement",
     component: FeedbackAcknowledge,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HEADER_FEEDBACK_ACKNOWLEDGEMENT" },
+    options: { hideFooter: true, hideBackButton: true, title: "CS_HEADER_FEEDBACK_ACKNOWLEDGEMENT" },
   },
   {
     path: "complaint-type",
@@ -132,7 +132,7 @@ const routes = [
     path: "reopen-acknowledgement",
     component: ReopenAcknowledgement,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_COMMON_COMPLAINT_REOPENED" },
+    options: { hideFooter: true, hideBackButton: true, title: "CS_COMMON_COMPLAINT_REOPENED" },
   },
 ];
 
