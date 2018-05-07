@@ -1,17 +1,21 @@
 export const validateField = (field) => {
   const { required, pattern, minLength, maxLength, minValue, maxValue } = field;
 
-  const value = field.value ? (typeof field.value === "string" ? field.value.trim() : field.value) : "";
-  const fieldLength = value.length;
+  const value = field.value ? (typeof field.value === "string" ? field.value.trim() : field.value) : null;
   let errorText = "",
-    isFieldValid = true;
+    isFieldValid = true,
+    fieldLength = 0;
 
-  if (required && !value.length) {
+  if (required && !value) {
     isFieldValid = false;
     errorText = field.requiredMessage;
   }
 
-  if (isFieldValid && value.length && pattern && !new RegExp(pattern).test(value)) {
+  if (value) {
+    fieldLength = value.length;
+  }
+
+  if (isFieldValid && fieldLength && pattern && !new RegExp(pattern).test(value)) {
     isFieldValid = false;
   }
   if (isFieldValid && minLength && maxLength && !(fieldLength >= minLength && fieldLength <= maxLength)) {
