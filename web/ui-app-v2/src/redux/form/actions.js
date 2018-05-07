@@ -76,7 +76,6 @@ export const submitForm = (formKey) => {
             }
           }
         } catch (error) {
-          // console.log(error);
           // TODO: handle the errors appropriately
           // the assumption is that the error occured only because a transformer was not found
           formData = prepareFormData(form);
@@ -88,9 +87,9 @@ export const submitForm = (formKey) => {
         } else if (formData.hasOwnProperty("employee")) {
           formResponse = await loginRequest(formData.employee.username, formData.employee.password);
         } else {
-          // formResponse = await httpRequest(saveUrl, action, [], formData);
+          formResponse = await httpRequest(saveUrl, action, [], formData);
         }
-        // dispatch(submitFormComplete(formKey, formResponse));
+        dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
         const { message } = error;
         dispatch(submitFormError(formKey, message));
