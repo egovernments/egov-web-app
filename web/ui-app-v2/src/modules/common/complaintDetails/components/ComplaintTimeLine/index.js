@@ -146,6 +146,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                               width: "97px",
                               height: "93px",
                             }}
+                            size="medium"
                             source={image}
                             onClick={() => changeRoute.push(`/image?source=${image}`)}
                           />
@@ -371,6 +372,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                           width: "97px",
                           height: "93px",
                         }}
+                        size="medium"
                         source={image}
                         onClick={() => changeRoute.push(`/image?source=${image}`)}
                       />
