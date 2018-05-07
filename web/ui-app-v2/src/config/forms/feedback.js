@@ -12,10 +12,8 @@ const formConfig = {
     },
     comments: {
       id: "feedback-comments",
-      required: true,
       jsonPath: "actionInfo[0].comments",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-      value: "",
     },
     action: {
       id: "action",

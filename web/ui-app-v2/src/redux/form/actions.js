@@ -72,7 +72,10 @@ export const submitForm = (formKey) => {
             try {
               formData = typeof formData.then === "function" ? await formData : formData;
             } catch (error) {
-              dispatch(toggleSnackbarAndSetText(true, error.message, true));
+              const { message } = error;
+              dispatch(submitFormError(formKey, message));
+              dispatch(toggleSnackbarAndSetText(true, message, true));
+              return;
             }
           }
         } catch (error) {
