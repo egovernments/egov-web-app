@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import { BarChart, XAxis, YAxis, Bar, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ContainerDimension from 'react-container-dimensions';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -40,21 +41,25 @@ const StackedBarChart = (props) => {
   }
 
   return (
-    <Card raised className={props.classes.card}>
-      <CardContent>
-        <Typography className={props.classes.pos}>{props.heading}</Typography>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart isAnimationActive data={closed}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="closed" name="Closed" legendType="circle" fill="#0088FE" />
-            <Bar dataKey="open" name="Open" legendType="circle" fill="#00C49F" />
-          </BarChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    <ContainerDimension>
+      {({ width, height }) => (
+        <Card raised className={props.classes.card} style={{ height, width }}>
+          <CardContent>
+            <Typography className={props.classes.pos}>{props.heading}</Typography>
+            <ResponsiveContainer width="100%" height={height - 50}>
+              <BarChart isAnimationActive data={closed}>
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="closed" name="Closed" legendType="circle" fill="#0088FE" />
+                <Bar dataKey="open" name="Open" legendType="circle" fill="#00C49F" />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
+    </ContainerDimension>
   );
 };
 

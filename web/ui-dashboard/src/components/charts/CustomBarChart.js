@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import { BarChart, XAxis, YAxis, Bar, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import ContainerDimension from 'react-container-dimensions';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -28,25 +29,29 @@ const styles = theme => ({
 const CustomBarChart = (props) => {
   const { classes, data } = props;
   return (
-    <Card raised className={classes.card}>
-      <CardContent>
-        <Typography className={classes.pos}>{props.heading}</Typography>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart isAnimationActive layout="vertical" data={data}>
-            <XAxis type="number" />
-            <YAxis dataKey={!props.labelKey && 'name'} type="category" />
-            <Tooltip />
-            <Legend />
-            <Bar
-              dataKey={!props.valueKey && 'value'}
-              name="Complaints"
-              legendType="circle"
-              fill="#0088FE"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    <ContainerDimension>
+      {({ width, height }) => (
+        <Card raised className={classes.card} style={{ height, width }}>
+          <CardContent>
+            <Typography className={classes.pos}>{props.heading}</Typography>
+            <ResponsiveContainer width="100%" height={height - 50}>
+              <BarChart isAnimationActive layout="vertical" data={data}>
+                <XAxis type="number" />
+                <YAxis dataKey={!props.labelKey && 'name'} type="category" />
+                <Tooltip />
+                <Legend />
+                <Bar
+                  dataKey={!props.valueKey && 'value'}
+                  name="Complaints"
+                  legendType="circle"
+                  fill="#0088FE"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
+    </ContainerDimension>
   );
 };
 

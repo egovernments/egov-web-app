@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card, { CardContent } from 'material-ui/Card';
+import TrendingUpIcon from 'material-ui-icons/TrendingUp';
+import ContainerDimension from 'react-container-dimensions';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
   card: {
-    minWidth: 180,
+    minWidth: 100,
+    minHeight: 50,
     marginBottom: 12,
   },
   pos: {
@@ -26,14 +29,19 @@ const StatBox = (props) => {
     if (typeof dataTransformer === 'function') value = dataTransformer(value);
   }
   return (
-    <Card raised className={classes.card}>
-      <CardContent>
-        <Typography className={classes.title} variant="headline" component="h2">
-          {value}
-        </Typography>
-        <Typography className={classes.pos}>{props.heading}</Typography>
-      </CardContent>
-    </Card>
+    <ContainerDimension>
+      {({ width, height }) => (
+        <Card raised className={classes.card} style={{ height, width }}>
+          <CardContent>
+            <TrendingUpIcon color="secondary" />
+            <Typography className={classes.title} variant="headline" component="h2">
+              {value}
+            </Typography>
+            <Typography className={classes.pos}>{props.heading}</Typography>
+          </CardContent>
+        </Card>
+      )}
+    </ContainerDimension>
   );
 };
 

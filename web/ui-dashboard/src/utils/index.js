@@ -45,3 +45,14 @@ export const formatComplaintsOpenClosed = (data) => {
 };
 
 export const extractUniqItems = items => items.map(item => item.key);
+
+export const formatNestedAggregation = data =>
+  data.map((obj) => {
+    const curr = obj;
+    Object.keys(curr).forEach((key) => {
+      if (typeof curr[key] === 'object') {
+        curr[key] = curr[key].value;
+      }
+    });
+    return curr;
+  });

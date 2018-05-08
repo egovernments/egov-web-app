@@ -12,7 +12,7 @@ export default class StatsMapControl extends MapControl {
 
     statsControl.onAdd = function genContent() {
       const div = L.DomUtil.create('div', 'info legend');
-      const ranges = [0, 20, 50, 100, 200, 500, 1000];
+      const ranges = [0, 50, 100];
 
       div.innerHTML = '<div style="font-weight:bold; padding-bottom:5px;">SLA Breached</div>';
 

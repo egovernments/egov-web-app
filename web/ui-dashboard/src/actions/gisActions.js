@@ -35,10 +35,10 @@ export const fetchGeoJsonData = (url, constraints) => (dispatch) => {
   const finalUrl = `${API_URL_LOC}/location/v11/geography/_search`;
   let tenantId = camelCase(STATE);
   if (
-    Object.prototype.hasOwnProperty.call(constraints, ES_MAP.DISTRICT) &&
-    constraints[ES_MAP.DISTRICT]
+    Object.prototype.hasOwnProperty.call(constraints, ES_MAP.DISTRICT.esKey) &&
+    constraints[ES_MAP.DISTRICT.esKey]
   ) {
-    tenantId = `${tenantId}.${camelCase(constraints[ES_MAP.DISTRICT]).toLowerCase()}`;
+    tenantId = `${tenantId}.${camelCase(constraints[ES_MAP.DISTRICT.esKey]).toLowerCase()}`;
     // dispatch(requestGeoJsonData());
     // if (Object.prototype.hasOwnProperty.call(GIS_DATA_BY_DISTRICT, tenantId.toUpperCase())) {
     //   dispatch(receiveGeoJsonData(GIS_DATA_BY_DISTRICT[tenantId.toUpperCase()]));
@@ -67,10 +67,10 @@ export const fetchGeoJsonData = (url, constraints) => (dispatch) => {
 export const fetchGraphData = (url, constraints) => (dispatch) => {
   let finalQuery = '';
   if (
-    Object.prototype.hasOwnProperty.call(constraints, ES_MAP.DISTRICT) &&
-    constraints[ES_MAP.DISTRICT]
+    Object.prototype.hasOwnProperty.call(constraints, ES_MAP.DISTRICT.esKey) &&
+    constraints[ES_MAP.DISTRICT.esKey]
   ) {
-    finalQuery = cloneDeep(GIS_GRAPH_DATA_QUERY[ES_MAP.DISTRICT]);
+    finalQuery = cloneDeep(GIS_GRAPH_DATA_QUERY[ES_MAP.DISTRICT.esKey]);
   } else {
     finalQuery = cloneDeep(GIS_GRAPH_DATA_QUERY.state);
   }

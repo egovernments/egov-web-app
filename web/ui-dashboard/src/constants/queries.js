@@ -15,7 +15,7 @@ const OPEN_COMPLAINTS_QRY = {
       must: [
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_CLOSED]: false,
+            [ES_MAP.COMPLAINT_IS_CLOSED.esKey]: false,
           },
         },
       ],
@@ -30,12 +30,12 @@ const SLA_BREACHED_QRY = {
       must: [
         {
           match: {
-            [ES_MAP.SLA_IS_BREACHED]: 1,
+            [ES_MAP.SLA_IS_BREACHED.esKey]: 1,
           },
         },
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_CLOSED]: false,
+            [ES_MAP.COMPLAINT_IS_CLOSED.esKey]: false,
           },
         },
       ],
@@ -50,12 +50,12 @@ const REOPENED_COMPLAINTS_QRY = {
       must: [
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_CLOSED]: false,
+            [ES_MAP.COMPLAINT_IS_CLOSED.esKey]: false,
           },
         },
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_REOPENED]: 1,
+            [ES_MAP.COMPLAINT_IS_REOPENED.esKey]: 1,
           },
         },
       ],
@@ -68,7 +68,7 @@ const SLA_COUNT_QRY = {
   aggs: {
     sla: {
       terms: {
-        field: ES_MAP.SLA_IS_BREACHED,
+        field: ES_MAP.SLA_IS_BREACHED.esKey,
       },
     },
   },
@@ -79,7 +79,7 @@ const RECEIVING_MODE_QRY = {
   aggs: {
     complaintSource: {
       terms: {
-        field: ES_MAP.COMPLAINT_SOURCE,
+        field: ES_MAP.COMPLAINT_SOURCE.esKey,
       },
     },
   },
@@ -90,7 +90,7 @@ const CATEGORIES_QRY = {
   aggs: {
     categories: {
       terms: {
-        field: ES_MAP.COMPLAINT_CATEGORY,
+        field: ES_MAP.COMPLAINT_CATEGORY.esKey,
       },
     },
   },
@@ -101,7 +101,7 @@ const CITY_STATS_QRY = {
   aggs: {
     city: {
       terms: {
-        field: ES_MAP.CITY,
+        field: ES_MAP.CITY.esKey,
       },
     },
   },
@@ -112,7 +112,7 @@ const COMPLAINTS_STATUS_QRY = {
   aggs: {
     complaintsOpenClosed: {
       terms: {
-        field: ES_MAP.COMPLAINT_IS_CLOSED,
+        field: ES_MAP.COMPLAINT_IS_CLOSED.esKey,
         size: 20,
         order: {
           _count: 'desc',
@@ -121,7 +121,7 @@ const COMPLAINTS_STATUS_QRY = {
       aggs: {
         by_date_range: {
           date_histogram: {
-            field: ES_MAP.COMPLAINT_CREATED_DATE,
+            field: ES_MAP.COMPLAINT_CREATED_DATE.esKey,
             interval: '1M',
             time_zone: 'Asia/Kolkata',
             min_doc_count: 1,
@@ -137,7 +137,7 @@ const UNIQ_DISTRICTS_QRY = {
   aggs: {
     uniq_districts: {
       terms: {
-        field: ES_MAP.DISTRICT,
+        field: ES_MAP.DISTRICT.esKey,
         size: 20,
       },
     },
@@ -149,7 +149,7 @@ const UNIQ_CITIES_QRY = {
   aggs: {
     uniq_cities: {
       terms: {
-        field: ES_MAP.CITY,
+        field: ES_MAP.CITY.esKey,
       },
     },
   },
@@ -160,7 +160,7 @@ const UNIQ_SOURCES_QRY = {
   aggs: {
     uniq_sources: {
       terms: {
-        field: ES_MAP.COMPLAINT_SOURCE,
+        field: ES_MAP.COMPLAINT_SOURCE.esKey,
       },
     },
   },
@@ -171,7 +171,7 @@ const SLA_BREACHED_BY_DISTRICT_QRY = {
   aggs: {
     placeholder: {
       terms: {
-        field: ES_MAP.DISTRICT,
+        field: ES_MAP.DISTRICT.esKey,
         size: 20,
       },
     },
@@ -181,12 +181,12 @@ const SLA_BREACHED_BY_DISTRICT_QRY = {
       must: [
         {
           match: {
-            [ES_MAP.SLA_IS_BREACHED]: 1,
+            [ES_MAP.SLA_IS_BREACHED.esKey]: 1,
           },
         },
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_CLOSED]: false,
+            [ES_MAP.COMPLAINT_IS_CLOSED.esKey]: false,
           },
         },
       ],
@@ -199,7 +199,7 @@ const SLA_BREACHED_BY_CITY_QRY = {
   aggs: {
     placeholder: {
       terms: {
-        field: ES_MAP.CITY,
+        field: ES_MAP.CITY.esKey,
         size: 20,
       },
     },
@@ -209,15 +209,42 @@ const SLA_BREACHED_BY_CITY_QRY = {
       must: [
         {
           match: {
-            [ES_MAP.SLA_IS_BREACHED]: 1,
+            [ES_MAP.SLA_IS_BREACHED.esKey]: 1,
           },
         },
         {
           match: {
-            [ES_MAP.COMPLAINT_IS_CLOSED]: false,
+            [ES_MAP.COMPLAINT_IS_CLOSED.esKey]: false,
           },
         },
       ],
+    },
+  },
+};
+
+const SLA_BREACH_AGG_QRY = {
+  size: 0,
+  aggs: {
+    baseGrouping: {
+      terms: {
+        field: 'cityDistrictName',
+        size: 8,
+        order: {
+          _count: 'desc',
+        },
+      },
+      aggs: {
+        closedComplaints: {
+          sum: {
+            field: 'ifClosed',
+          },
+        },
+        slaBreachedComplaints: {
+          sum: {
+            field: 'ifSLA',
+          },
+        },
+      },
     },
   },
 };
@@ -232,6 +259,7 @@ export const DASHBOARD_QUERIES = [
   { name: 'categories', query: CATEGORIES_QRY },
   { name: 'cities', query: CITY_STATS_QRY },
   { name: 'complaintStatusByMonth', query: COMPLAINTS_STATUS_QRY },
+  { name: 'slaBreachTabData', query: SLA_BREACH_AGG_QRY },
 ];
 
 export const FILTER_QUERIES = [
@@ -242,5 +270,5 @@ export const FILTER_QUERIES = [
 
 export const GIS_GRAPH_DATA_QUERY = {
   state: SLA_BREACHED_BY_DISTRICT_QRY,
-  [ES_MAP.DISTRICT]: SLA_BREACHED_BY_CITY_QRY,
+  [ES_MAP.DISTRICT.esKey]: SLA_BREACHED_BY_CITY_QRY,
 };

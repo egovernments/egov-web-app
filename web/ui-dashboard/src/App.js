@@ -3,11 +3,12 @@ import Button from 'material-ui/Button';
 import { ListItem } from 'material-ui/List';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Grid from 'material-ui/Grid';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import { layout, layoutProps } from './constants/layout';
 import StatBox from './components/StatBox';
-import CustomPieChart from './components/CustomPieChart';
-import CustomBarChart from './components/CustomBarChart';
-import StackedBarChart from './components/StackedBarChart';
+import CustomPieChart from './components/charts/CustomPieChart';
+import CustomBarChart from './components/charts/CustomBarChart';
+import StackedBarChart from './components/charts/StackedBarChart';
 import {
   fetchFilterData,
   refreshDashboardData,
@@ -15,12 +16,21 @@ import {
   addConstraint,
 } from './actions/pgrActions';
 import ES_MAPPING from './constants/esMapping';
-import ResponsiveDrawer from './components/ResponsiveDrawer';
+import PersistentDrawer from './components/drawer/PersistentDrawer';
 import CustomSelectBox from './components/CustomSelectBox';
 import CustomDatePicker from './components/CustomDatePicker';
-import CustomMap from './components/CustomMap';
+import CustomMap from './components/gis/CustomMap';
 import CustomTooltip from './components/CustomTooltip';
-import { formatChartData, formatComplaintsOpenClosed, calcSlaBreachPerc, extractUniqItems } from './utils/index';
+import CustomTable from './components/CustomTable';
+import {
+  formatChartData,
+  formatComplaintsOpenClosed,
+  calcSlaBreachPerc,
+  extractUniqItems,
+  formatNestedAggregation,
+} from './utils/index';
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class App extends Component {
   constructor(props) {
@@ -42,7 +52,9 @@ class App extends Component {
   handleChange(event) {
     const { dispatch } = this.props;
     dispatch(inputChange(event.target.name, event.target.value));
-    if (event.target.type !== 'date') dispatch(addConstraint(event.target.name, event.target.value));
+    if (event.target.type !== 'date') {
+      dispatch(addConstraint(event.target.name, event.target.value));
+    }
   }
 
   handleSubmit() {
@@ -52,21 +64,24 @@ class App extends Component {
 
   handleSlaBreachPieClick(data) {
     const { dispatch } = this.props;
-    dispatch(addConstraint(ES_MAPPING.SLA_IS_BREACHED, data.name.toString()));
+    dispatch(inputChange(ES_MAPPING.SLA_IS_BREACHED.esKey, data.name.toString()));
+    dispatch(addConstraint(ES_MAPPING.SLA_IS_BREACHED.esKey, data.name.toString()));
     dispatch(refreshDashboardData('complaint'));
   }
 
   handleComplaintSourcePieClick(data) {
     const { dispatch } = this.props;
-    dispatch(addConstraint(ES_MAPPING.COMPLAINT_SOURCE, data.name.toString()));
+    dispatch(inputChange(ES_MAPPING.SLA_IS_BREACHED.esKey, data.name.toString()));
+    dispatch(addConstraint(ES_MAPPING.COMPLAINT_SOURCE.esKey, data.name.toString()));
     dispatch(refreshDashboardData('complaint'));
   }
 
   handleGisNav(event) {
     const { dispatch } = this.props;
     const { properties } = event.target.feature;
-    const field = ES_MAPPING[properties.type.toUpperCase()];
-    if (field === ES_MAPPING.DISTRICT) {
+    const field = ES_MAPPING[properties.type.toUpperCase()].esKey;
+    if (field === ES_MAPPING.DISTRICT.esKey) {
+      dispatch(inputChange(field, properties.name));
       dispatch(addConstraint(field, properties.name));
       dispatch(refreshDashboardData('complaint'));
     }
@@ -85,59 +100,71 @@ class App extends Component {
     ) {
       return null;
     }
+    console.log(JSON.stringify(form));
     const slaBreachedPerc = calcSlaBreachPerc(data.slaBreached.count, data.totalComplaints.count);
+    const layouts = JSON.parse(layout);
     return (
       <div>
-        <Grid container spacing={24}>
-          <Grid item lg={2} sm={12} xs={12}>
-            <ResponsiveDrawer>
-              <CustomSelectBox
-                id="cityDistrictName"
-                name="District"
-                data={extractUniqItems(filter.data.uniqDistricts.aggregations)}
-                handleChange={this.handleChange}
-                value={form.cityDistrictName}
-              />
-              <CustomSelectBox
-                id="cityName"
-                name="City"
-                data={extractUniqItems(filter.data.uniqCities.aggregations)}
-                handleChange={this.handleChange}
-                value={form.cityName}
-              />
-              <CustomDatePicker
-                id="startDate"
-                handleChange={this.handleChange}
-                name="Start Date"
-                value={form.startDate}
-              />
-              <CustomDatePicker
-                id="endDate"
-                handleChange={this.handleChange}
-                name="End Date"
-                value={form.endDate}
-              />
-              <CustomSelectBox
-                id="receivingMode"
-                name="Source"
-                data={extractUniqItems(filter.data.uniqSources.aggregations)}
-                handleChange={this.handleChange}
-                value={form.receivingMode}
-              />
-              <ListItem>
-                <Button variant="raised" color="secondary" onClick={this.handleSubmit}>
-                  Submit
-                </Button>
-              </ListItem>
-            </ResponsiveDrawer>
-          </Grid>
-          <Grid item lg={2} sm={12} xs={12}>
+        <PersistentDrawer>
+          <CustomSelectBox
+            id="cityDistrictName"
+            name="District"
+            data={extractUniqItems(filter.data.uniqDistricts.aggregations)}
+            handleChange={this.handleChange}
+            value={form.cityDistrictName}
+          />
+          <CustomSelectBox
+            id="cityName"
+            name="City"
+            data={extractUniqItems(filter.data.uniqCities.aggregations)}
+            handleChange={this.handleChange}
+            value={form.cityName}
+          />
+          <CustomDatePicker
+            id="startDate"
+            handleChange={this.handleChange}
+            name="Start Date"
+            value={form.startDate}
+          />
+          <CustomDatePicker
+            id="endDate"
+            handleChange={this.handleChange}
+            name="End Date"
+            value={form.endDate}
+          />
+          <CustomSelectBox
+            id="receivingMode"
+            name="Source"
+            data={extractUniqItems(filter.data.uniqSources.aggregations)}
+            handleChange={this.handleChange}
+            value={form.receivingMode}
+          />
+          <ListItem>
+            <Button variant="raised" color="secondary" onClick={this.handleSubmit}>
+              Submit
+            </Button>
+          </ListItem>
+        </PersistentDrawer>
+
+        <ResponsiveReactGridLayout
+          className="layout"
+          layouts={layouts}
+          onLayoutChange={(lyt, lyts) => console.log(JSON.stringify(lyts))}
+          {...layoutProps}
+        >
+          <div key="totalComplaints">
             <StatBox value={data.totalComplaints.count} heading="Total Complaints" />
+          </div>
+          <div key="openComplaints">
             <StatBox value={data.openComplaints.count} heading="Open Complaints" />
+          </div>
+          <div key="reopenedComplaints">
             <StatBox value={data.reopenedComplaints.count} heading="Reopened Complaints" />
+          </div>
+          <div key="slaBreached">
             <StatBox value={slaBreachedPerc} heading="SLA Breached" />
-          </Grid>
-          <Grid item lg={8} sm={12} xs={12} style={{ paddingRight: '2%' }}>
+          </div>
+          <div key="map">
             {gisReady && (
               <CustomMap
                 plots={gis.plots.data}
@@ -145,10 +172,9 @@ class App extends Component {
                 handleGisNav={this.handleGisNav}
               />
             )}
-          </Grid>
+          </div>
 
-          <Grid item lg={2} style={{ paddingRight: '2%' }} />
-          <Grid item lg={3} sm={12} xs={12}>
+          <div key="slaBreachPie">
             <CustomPieChart
               onClick={this.handleSlaBreachPieClick}
               data={formatChartData(data.slaCount.aggregations)}
@@ -159,30 +185,34 @@ class App extends Component {
                 />
               }
             />
-          </Grid>
-          <Grid item lg={3} sm={12} xs={12}>
+          </div>
+          <div key="complaintSourcesPie">
             <CustomPieChart
               onClick={this.handleComplaintSourcePieClick}
               data={formatChartData(data.complaintSources.aggregations)}
               heading="Complaint Sources"
             />
-          </Grid>
-          <Grid item lg={4} sm={12} xs={12} style={{ paddingRight: '2%' }}>
+          </div>
+          <div key="complaintStatusBar">
             <StackedBarChart
               data={data.complaintStatusByMonth.aggregations}
               dataTransformer={formatComplaintsOpenClosed}
               heading="Complaint Status"
             />
-          </Grid>
-
-          <Grid item lg={3} />
-          <Grid item lg={4} sm={12} xs={12}>
+          </div>
+          <div key="complaintCategoriesBar">
             <CustomBarChart
               data={formatChartData(data.categories.aggregations)}
-              heading="Complaint Category"
+              heading="Complaint Categories"
             />
-          </Grid>
-        </Grid>
+          </div>
+          <div key="tableAggregation">
+            <CustomTable
+              data={formatNestedAggregation(data.slaBreachTabData.aggregations)}
+              heading="Division Details"
+            />
+          </div>
+        </ResponsiveReactGridLayout>
       </div>
     );
   }

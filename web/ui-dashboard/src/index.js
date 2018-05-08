@@ -1,4 +1,6 @@
 import 'leaflet/dist/leaflet.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';

@@ -5,12 +5,10 @@ export const checkStatus = (res) => {
   return res;
 };
 
+// Process elastic search responses to the below format
+// {count:121321,aggregations:{}}
 export const processElasticResponse = (res, baseQueries) => {
   const { responses } = res.data;
-  // const queryArr = finalQuery
-  //   .split('\n')
-  //   .filter((ele, index) => index % 2 !== 0)
-  //   .map(ele => JSON.parse(ele));
 
   const parsedResponse = {};
   baseQueries.forEach((ele, index) => {
