@@ -14,15 +14,22 @@ export default class AutoSuggest extends Component {
     defaultIconStyle: { left: "5px", bottom: "10px", color: "#767676" },
   };
 
+  filterSuggestion = (suggestion, searchTerm, searchKey) => {
+    let searchValue = suggestion[searchKey];
+    typeof searchValue === "object" ? suggestion[searchKey].props.label : searchValue;
+    return (
+      searchValue
+        .toLowerCase()
+        .replace(/\s+/, "")
+        .indexOf(searchTerm) !== -1
+    );
+  };
+
   fetchSuggestions = (inputValue) => {
-    inputValue = inputValue.toLowerCase();
+    inputValue = inputValue.replace(/\s+/, "").toLowerCase();
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
-      return dataSource.filter((result) => {
-        return typeof result[searchKey] === "object"
-          ? result[searchKey].props.label.toLowerCase().indexOf(inputValue) !== -1
-          : result[searchKey].toLowerCase().indexOf(inputValue) !== -1;
-      });
+      return dataSource.filter((result) => this.filterSuggestion(result, inputValue, searchKey));
     }
   };
 
