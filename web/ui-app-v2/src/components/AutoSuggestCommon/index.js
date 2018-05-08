@@ -20,13 +20,13 @@ export default class AutoSuggest extends Component {
     return (
       searchValue
         .toLowerCase()
-        .replace(/\s+/, "")
+        .replace(/\s+/g, "")
         .indexOf(searchTerm) !== -1
     );
   };
 
   fetchSuggestions = (inputValue) => {
-    inputValue = inputValue.replace(/\s+/, "").toLowerCase();
+    inputValue = inputValue.replace(/\s+/g, "").toLowerCase();
     if (inputValue.length > 0) {
       const { searchKey, dataSource } = this.props;
       return dataSource.filter((result) => this.filterSuggestion(result, inputValue, searchKey));
