@@ -25,7 +25,7 @@ const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContaine
   };
 
   return (
-    <div>
+    <div className="list-main-card">
       <MaterialUiList style={{ ...baseListContainerStyle, ...listContainerStyle }}>{renderListItems(items)}</MaterialUiList>
     </div>
   );
