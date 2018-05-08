@@ -54,7 +54,7 @@ const WriteComment = ({ form, formKey, onChange, submitForm, userImage, currents
         rowsMax={3}
         // disabled={currentstatus === "closed" ? true : false}
       />
-      <Icon action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm(formKey)} />
+      <Icon className="comment-send" action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm(formKey)} />
     </div>
   );
 };
