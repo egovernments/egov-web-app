@@ -35,7 +35,13 @@ class AllComplaints extends Component {
           {
             label: (
               <div className="inline-Localization-text">
-                <Label color={"#ffffff"} bold={true} label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`} labelStyle={tabStyle} />
+                <Label
+                  labelClassName="unassigned-label-text"
+                  color={"#ffffff"}
+                  bold={true}
+                  label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
+                  labelStyle={tabStyle}
+                />
                 <Label color={"#ffffff"} bold={true} label={`(${unassignedComplaints.length})`} labelStyle={tabStyle} />
               </div>
             ),
@@ -56,7 +62,13 @@ class AllComplaints extends Component {
           {
             label: (
               <div className="inline-Localization-text">
-                <Label color={"#ffffff"} bold={true} label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`} labelStyle={tabStyle} />
+                <Label
+                  labelClassName="assigned-label-text"
+                  color={"#ffffff"}
+                  bold={true}
+                  label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
+                  labelStyle={tabStyle}
+                />
                 <Label color={"#ffffff"} bold={true} label={`(${assignedComplaints.length})`} labelStyle={tabStyle} />
               </div>
             ),
