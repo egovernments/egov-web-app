@@ -23,14 +23,20 @@ class ComplaintSubmitted extends Component {
       <div>
         <Screen className="complaint-submitted-card">
           <div className="complaint-submitted-boldlabel">
-            <Label label="CS_COMPLAINT_SUBMITTED_LABEL1" fontSize="16px" />
+            <Label labelClassName="complaint-submitted-label" label="CS_COMPLAINT_SUBMITTED_LABEL1" fontSize="16px" />
             <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "16px" }}>
               <Icon name={"check"} action={"navigation"} />
             </FloatingActionButton>
-            <Label id="thank-you-text" label="CS_COMPLAINT_SUBMITTED_THANKYOU" fontSize="16px" />
+            <Label labelClassName="thank-you-label" id="thank-you-text" label="CS_COMPLAINT_SUBMITTED_THANKYOU" fontSize="16px" />
             <div className="complaint-submitted-complaintNo-cont">
-              <Label label="CS_COMMON_COMPLAINT_NO" fontSize="16px" />
-              <Label className="complaint-number-value" label={complaintnumber} containerStyle={{ marginLeft: 5 }} labelStyle={{ lineHeight: 1.5 }} />
+              <Label labelClassName="complaint-number-label" label="CS_COMMON_COMPLAINT_NO" fontSize="16px" />
+              <Label
+                labelClassName="complaint-number-value-label"
+                className="complaint-number-value"
+                label={complaintnumber}
+                containerStyle={{ marginLeft: 5 }}
+                labelStyle={{ lineHeight: 1.5 }}
+              />
             </div>
           </div>
           <div className="complaint-submitted-label">

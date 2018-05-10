@@ -49,7 +49,7 @@ class UploadDrawer extends Component {
           <div className="iconContainer col-xs-12">
             {this.props.galleryIcon && (
               <div className="labelIconBox col-xs-6 text-center">
-                <FilePicker inputProps={inputProps} handleimage={this.picUpload}>
+                <FilePicker id="photo-picker" inputProps={inputProps} handleimage={this.picUpload}>
                   {galleryIconBtn}
                 </FilePicker>
                 <Label className="galleryUploadlabel" label="Gallery" color={"#484848"} labelStyle={this.props.labelStyle} />
