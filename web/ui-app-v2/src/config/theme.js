@@ -4,7 +4,7 @@ const theme = {
   backgroundColor: "#fff",
   palette: {
     primary1Color: "#00bcd1",
-    primary2Color: "#f58720",
+    primary2Color: "#fe7a51",
     textColor: "#5f5c62",
     canvasColor: "#F7F7F7",
     borderColor: "#e6e6e6",
@@ -13,7 +13,7 @@ const theme = {
     height: 48,
   },
   raisedButton: {
-    primaryColor: "#00bcd1",
+    primaryColor: "#fe7a51",
   },
   textField: {
     backgroundColor: "#ffffff",

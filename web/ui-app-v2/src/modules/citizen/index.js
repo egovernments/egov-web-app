@@ -12,6 +12,7 @@ import Profile from "./User/Profile";
 import Home from "./Home";
 import HowItWorks from "./HowItWorks";
 import ContactUs from "./ContactUs";
+import NewScreen from "./NewScreen";
 
 // pgr specific screens
 import MyComplaints from "./pgr/MyComplaints";
@@ -26,6 +27,12 @@ import FeedbackAcknowledge from "./pgr/FeedbackAcknowledgement";
 import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 
 const routes = [
+  {
+    path: "new-screen",
+    component: NewScreen,
+    needsAuthentication: true,
+    options: { title: "CS_HOME_HEADER_HOME", isHomeScreen: true },
+  },
   {
     path: "user/register",
     component: Register,
