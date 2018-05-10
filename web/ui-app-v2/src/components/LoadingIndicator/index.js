@@ -32,7 +32,7 @@ const style = {
 
 const LoadingIndicator = ({ status = "loading", loadingColor, size = 40, left = 10, top = 40 }) => {
   return (
-    <div style={status === "hide" ? style.containerHide : style.container}>
+    <div id="loading-indicator" style={status === "hide" ? style.containerHide : style.container}>
       <RefreshIndicator size={size} left={left} top={top} status={status} style={style.refresh} />
     </div>
   );
