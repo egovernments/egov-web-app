@@ -1,43 +1,26 @@
 import React from "react";
 import { Card, Icon } from "components";
 import Label from "utils/translationNode";
-import { getDateFromEpoch, displayLocalizedStatusMessage } from "utils/commons";
 import "./index.css";
 
-const Updates = ({ updates, history }) => {
-  const renderUpdate = (update, index) => {
-    const { title, date, status, action } = update;
-    let transformedstatus = "";
-    const titleKey = title && "SERVICEDEFS." + title.toUpperCase();
-    if (status) {
-      if (status === "open" && action && action === "reopen") {
-        transformedstatus = displayLocalizedStatusMessage("reopened");
-      } else if (status === "assigned" && action && action === "reassign") {
-        transformedstatus = displayLocalizedStatusMessage("reassigned");
-      } else {
-        transformedstatus = displayLocalizedStatusMessage(status);
-      }
-    }
-
+const Updates = ({ notifications = [] }) => {
+  const renderUpdate = (notification, index) => {
+    const { title, date, status, amountDue, dueDate } = notification;
     return (
       <Card
+        className="col-xs-12"
         style={{ margin: "8px 0px" }}
         key={index}
         id={`home-notification${index}`}
         textChildren={
-          <div
-            className="update"
-            onClick={() => {
-              history.push(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
-            }}
-          >
+          <div className="update">
             <div className="notification-top-content">
               <Label
                 leftWrapperStyle
                 fontSize={16}
                 dark={true}
                 bold={true}
-                label={titleKey}
+                label={title}
                 containerStyle={{ width: "80%" }}
                 labelStyle={{ width: "100%", wordWrap: "break-word" }}
               />
@@ -45,10 +28,10 @@ const Updates = ({ updates, history }) => {
             </div>
             <div className="notification-top-content" style={{ justifyContent: "flex-start" }}>
               <Icon style={{ width: "16px", height: "16px" }} action="custom" name="calendar" />
-              <Label fontSize={12} label={getDateFromEpoch(date)} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
+              <Label fontSize={12} label={date} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
             <div className="complaint-status" style={{ marginTop: "16px" }}>
-              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={transformedstatus} />
+              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={status} />
             </div>
           </div>
         }
@@ -56,7 +39,7 @@ const Updates = ({ updates, history }) => {
     );
   };
 
-  return <div>{updates.map((update, index) => renderUpdate(update, index))}</div>;
+  return <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>;
 };
 
 export default Updates;
