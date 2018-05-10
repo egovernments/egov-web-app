@@ -8,7 +8,7 @@ import OTP from "./User/OTP";
 import LanguageSelection from "./User/LanguageSelection";
 import Profile from "./User/Profile";
 
-// Common Screen
+// common screens
 import Home from "./Home";
 import HowItWorks from "./HowItWorks";
 import ContactUs from "./ContactUs";
@@ -60,7 +60,7 @@ const routes = [
     path: "",
     component: Home,
     needsAuthentication: true,
-    options: { title: "CS_HOME_HEADER_HOME", isHomeScreen: true },
+    options: { title: "CS_HOME_HEADER_HOME", hideHeader: true, isHomeScreen: true },
   },
   {
     path: "my-complaints",
