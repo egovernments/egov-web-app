@@ -181,7 +181,12 @@ class Details extends Component {
                       <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     </div>
                     <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
-                      <Label label={description} className="status-result-color" labelStyle={{ color: "inherit" }} />
+                      <Label
+                        label={description}
+                        id="complaint-details-complaint-description"
+                        className="status-result-color"
+                        labelStyle={{ color: "inherit" }}
+                      />
                     </div>
                   </div>
                 )}
