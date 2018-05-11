@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "modules/common/Banner";
 import Notifications from "./components/Notifications";
+import Events from "./components/Events";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
 import "./index.css";
@@ -18,8 +19,18 @@ class Home extends Component {
     },
   ];
 
+  events = [
+    {
+      name: "Ward 10 council meeting",
+      location: "Ward 10 Municipal office",
+      time: "11 AM to 1PM",
+      day: "10",
+      month: "March",
+    },
+  ];
+
   render() {
-    const { notifications } = this;
+    const { notifications, events } = this;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
@@ -27,6 +38,7 @@ class Home extends Component {
             <SearchService />
             <ServiceList />
             <Notifications notifications={notifications} />
+            <Events events={events} />
           </div>
         </div>
       </Banner>

@@ -27,6 +27,7 @@ const theme = {
   },
   bottomNavigation: {
     backgroundColor: "#ffffff",
+    selectedColor: "#fe7a51",
   },
   stepper: {
     connectorLineColor: "#f5a623",
