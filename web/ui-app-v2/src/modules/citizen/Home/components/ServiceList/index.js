@@ -38,7 +38,7 @@ const ServiceList = () => {
           </div>
           <div className="row lower-row">
             <Link to="/citizen/my-complaints">
-              <div className="col-xs-4 service-item text-center">
+              <div className="col-xs-4 service-item text-center file-complaint">
                 <div>
                   <Icon className="service-icon" action="alert" name="warning" />
                 </div>
