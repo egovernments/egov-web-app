@@ -77,15 +77,30 @@ class Details extends Component {
                 )} */}
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMMON_COMPLAINT_NO" />
-                  <Label labelStyle={{ color: "inherit" }} className="col-xs-6 status-result-color" label={applicationNo} />
+                  <Label
+                    labelStyle={{ color: "inherit" }}
+                    className="col-xs-6 status-result-color"
+                    id="complaint-details-complaint-number"
+                    label={applicationNo}
+                  />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
-                  <Label className="col-xs-6 status-result-color" labelStyle={{ color: "inherit" }} label={statusKey} />
+                  <Label
+                    className="col-xs-6 status-result-color"
+                    id="complaint-details-current-status"
+                    labelStyle={{ color: "inherit" }}
+                    label={statusKey}
+                  />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
                   <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
-                  <Label className="col-xs-6 status-result-color" label={submittedDate} labelStyle={{ color: "inherit" }} />
+                  <Label
+                    className="col-xs-6 status-result-color"
+                    label={submittedDate}
+                    id="complaint-details-submission-date"
+                    labelStyle={{ color: "inherit" }}
+                  />
                 </div>
                 <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
@@ -93,7 +108,11 @@ class Details extends Component {
                       images.map((image, index) => {
                         return (
                           image && (
-                            <div className="col-xs-4 complaint-detail-detail-section-padding-zero" key={index}>
+                            <div
+                              className="col-xs-4 complaint-detail-detail-section-padding-zero"
+                              id={`complaint-details-image-section-${index}`}
+                              key={index}
+                            >
                               <Image
                                 style={{
                                   width: "97px",
@@ -114,7 +133,12 @@ class Details extends Component {
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   </div>
                   <div className="col-xs-8" style={{ paddingLeft: "0px", marginLeft: "-20px", paddingRight: 10 }}>
-                    <Label label={address} className="status-result-color" labelStyle={{ color: "inherit" }} />
+                    <Label
+                      label={address}
+                      className="status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                    />
                   </div>
                 </div>
                 {/* {mapAction && (
