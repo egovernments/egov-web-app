@@ -8,6 +8,7 @@ const containerStyle = {
   display: "inline-block",
   width: "100%",
   boxSizing: "border-box",
+  fontSize: 0,
 };
 
 const getStyles = (iconPosition, textFieldProps) => {
@@ -18,7 +19,9 @@ const getStyles = (iconPosition, textFieldProps) => {
     position: "absolute",
     color: "#969696",
     zIndex: 2,
-    bottom: 15,
+    bottom: 0,
+    top: 0,
+    margin: "auto",
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;

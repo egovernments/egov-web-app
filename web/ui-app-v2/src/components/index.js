@@ -31,6 +31,7 @@ import ImageModal from "./ImageModal";
 import UploadDrawer from "./UploadDrawer";
 import RadioButton from "./RadioButton";
 import Toast from "./Toast";
+import Carousel from "./Carousel";
 
 export {
   Label,
@@ -66,4 +67,5 @@ export {
   UploadDrawer,
   RadioButton,
   Toast,
+  Carousel,
 };

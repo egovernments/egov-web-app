@@ -18,7 +18,12 @@ export default class SearchService extends Component {
     return (
       <TextFieldIcon
         textFieldStyle={{ height: "48px" }}
-        inputStyle={{ marginTop: "8px" }}
+        inputStyle={{
+          marginTop: "8px",
+          left: 0,
+          textIndent: 40,
+          position: "absolute",
+        }}
         iconPosition="before"
         underlineShow={false}
         fullWidth={true}
