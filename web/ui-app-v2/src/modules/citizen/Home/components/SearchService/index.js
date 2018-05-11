@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import { TextFieldIcon } from "components";
 import SearchIcon from "material-ui/svg-icons/action/search";
 
+const iconStyle = {
+  paddingLeft: "10px",
+  height: "20px",
+  width: "35px",
+  fill: "#767676",
+};
+
 export default class SearchService extends Component {
   state = {
     inputValue: "",
@@ -19,6 +26,7 @@ export default class SearchService extends Component {
         Icon={SearchIcon}
         value={inputValue}
         id="find-services"
+        iconStyle={iconStyle}
       />
     );
   }

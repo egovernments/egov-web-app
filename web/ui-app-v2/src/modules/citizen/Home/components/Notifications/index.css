@@ -1,6 +1,17 @@
 .update-icon {
-  background: #2ecc71; }
+  background: #2ecc71;
+}
 
 .notification-top-content {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+}
+
+.home-notification {
+  padding-left: 10px !important;
+}
+
+.pay-button-cont {
+  text-align: right;
+  margin-top: 5px;
+}
