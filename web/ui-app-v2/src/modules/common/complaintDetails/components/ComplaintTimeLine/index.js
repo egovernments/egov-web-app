@@ -140,7 +140,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   {media.map((image, index) => {
                     return (
                       isImage(image) && (
-                        <div style={{ marginRight: 8 }} className="complaint-detail-detail-section-padding-zero" key={index}>
+                        <div
+                          style={{ marginRight: 8 }}
+                          className="complaint-detail-detail-section-padding-zero"
+                          id={`complaint-timeline-reopen-${openStatusCount}-image-${index}`}
+                          key={index}
+                        >
                           <Image
                             style={{
                               width: "97px",
@@ -366,7 +371,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               {media.map((image, index) => {
                 return (
                   isImage(image) && (
-                    <div style={{ marginRight: 8 }} className="complaint-detail-detail-section-padding-zero" key={index}>
+                    <div
+                      style={{ marginRight: 8 }}
+                      className="complaint-detail-detail-section-padding-zero"
+                      id={`complaint-details-resolved-${resolveStatusCount}-image=${index}`}
+                      key={index}
+                    >
                       <Image
                         style={{
                           width: "97px",
