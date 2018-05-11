@@ -27,11 +27,12 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     render() {
-      const { hideHeader, hideFooter, title } = options;
+      const { hideHeader, hideFooter, title, isHomeScreen } = options;
       const { history, authenticated, userInfo } = this.props;
       const role = this.getUserRole(userInfo);
+
       return (
-        <div>
+        <div style={isHomeScreen ? { position: "relative" } : {}}>
           {!hideHeader && authenticated ? <Header title={title} userInfo={userInfo} role={role} options={options} history={history} /> : null}
           {authenticated ? <Component {...this.props} /> : null}
           {!hideFooter && authenticated ? <Footer history={history} /> : null}

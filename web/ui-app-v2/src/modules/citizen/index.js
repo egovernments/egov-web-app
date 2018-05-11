@@ -60,7 +60,7 @@ const routes = [
     path: "",
     component: Home,
     needsAuthentication: true,
-    options: { title: "CS_HOME_HEADER_HOME", hideHeader: true, isHomeScreen: true },
+    options: { isHomeScreen: true },
   },
   {
     path: "my-complaints",
