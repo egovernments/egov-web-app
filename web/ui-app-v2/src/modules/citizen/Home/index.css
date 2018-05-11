@@ -1,6 +1,6 @@
 .home-page-content {
   position: absolute !important;
-  top: 30%;
+  top: 75%;
   left: 8px;
   right: 8px;
   margin-bottom: 70px;
@@ -26,5 +26,5 @@
 
 .homepage-banner .logo-wrapper {
   position: absolute;
-  top: 5px;
+  top: 30%;
 }
