@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import TextFieldIcon from "../TextFieldIcon";
+import get from "lodash/get";
 
 export default class AutoSuggest extends Component {
   static propTypes = { callback: PropTypes.func, dataSource: PropTypes.array, searchKey: PropTypes.string };
@@ -11,12 +12,11 @@ export default class AutoSuggest extends Component {
   styles = {
     defaultContainerStyle: { background: "#fff", padding: "0px 10px" },
     defaultTextFieldStyle: { border: "1px solid  #e0e0e0", background: "#f7f7f7", height: "48px" },
-    defaultIconStyle: { left: "5px", bottom: "10px", color: "#767676" },
+    defaultIconStyle: { left: "5px", color: "#767676" },
   };
 
   filterSuggestion = (suggestion, searchTerm, searchKey) => {
-    let searchValue = suggestion[searchKey];
-    typeof searchValue === "object" ? suggestion[searchKey].props.label : searchValue;
+    let searchValue = get(suggestion, searchKey);
     return (
       searchValue
         .toLowerCase()

@@ -277,7 +277,7 @@ export default class ListCard extends Component {
                   }}
                   textFieldStyle={{ border: 0 }}
                   searchInputText={<Label label="ES_COMMON_SEARCH_EMPLOYEE" />}
-                  searchKey="primaryText"
+                  searchKey="primaryText.props.label"
                   iconStyle={{ right: 15, left: "inherit" }}
                   hintStyle={{ letterSpacing: 0, bottom: 10, fontSize: 14 }}
                   iconPosition="after"

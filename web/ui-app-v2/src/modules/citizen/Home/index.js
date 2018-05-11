@@ -5,6 +5,7 @@ import Notifications from "./components/Notifications";
 import Events from "./components/Events";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
+import ServicesNearby from "./components/ServicesNearby";
 import "./index.css";
 
 //
@@ -39,6 +40,7 @@ class Home extends Component {
             <ServiceList />
             <Notifications notifications={notifications} />
             <Events events={events} />
+            <ServicesNearby />
           </div>
         </div>
       </Banner>
