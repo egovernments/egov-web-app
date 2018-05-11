@@ -1,6 +1,6 @@
 .home-page-content {
   position: absolute !important;
-  top: 75%;
+  top: 50%;
   left: 8px;
   right: 8px;
   margin-bottom: 70px;
@@ -22,5 +22,9 @@
 
 .homepage-banner .logo-wrapper {
   position: absolute;
-  top: 30%;
+  top: 10px;
+}
+
+.homepage-banner .logo-wrapper .mseva-logo {
+  width: 150px;
 }

@@ -4,12 +4,6 @@ import { Card, Icon } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const iconStyle = {
-  width: "30px",
-  height: "30px",
-  fill: "#00bbd3",
-};
-
 const ServiceList = () => {
   return (
     <Card
@@ -20,7 +14,7 @@ const ServiceList = () => {
             <Link to="/citizen/pt-payment-step-one">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="Property Tax" />
               </div>
@@ -28,7 +22,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="Water Charges" />
               </div>
@@ -36,7 +30,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="Licenses" />
               </div>
@@ -44,9 +38,9 @@ const ServiceList = () => {
           </div>
           <div className="row lower-row">
             <Link to="/citizen/my-complaints">
-              <div className="col-xs-4 service-item text-center">
+              <div className="col-xs-4 service-item text-center file-complaint">
                 <div>
-                  <Icon style={iconStyle} color="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="File Complaint" />
               </div>
@@ -54,7 +48,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="Birth & Death" />
               </div>
@@ -62,7 +56,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="alert" name="warning" />
                 </div>
                 <Label dark={true} className="service-label" label="Fire NOC" />
               </div>
