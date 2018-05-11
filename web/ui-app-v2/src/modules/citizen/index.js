@@ -63,7 +63,7 @@ const routes = [
     path: "",
     component: Home,
     needsAuthentication: true,
-    options: { isHomeScreen: true },
+    options: { title: "CS_HOME_HEADER_HOME", hideHeader: true, isHomeScreen: true },
   },
   {
     path: "my-complaints",
@@ -143,7 +143,7 @@ const routes = [
     component: PropertyTaxPaymentStepOne,
     needsAuthentication: true,
     options: {
-      title: "Property Tax",
+      title: "PT_PAYMENT_STEP_HEADER",
     }
   }
 ];

@@ -16,7 +16,7 @@ const PaymentStepOne=()=>{
             <div>
               <Label
                 color={"#ffffff"}
-                label={`Access & Pay`}
+                label={`PT_PAYMENT_ACCESS_AND_PAY`}
                 labelStyle={tabStyle}
               />
             </div>
@@ -33,22 +33,22 @@ const PaymentStepOne=()=>{
                 items={
                 [
                   {
-                    primaryText:"New Property Assessment",
+                    primaryText:"PT_PAYMENT_NEW_ASSEMENTS",
                     leftIcon:<Icon action="action" name="home"/>,
                     rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
                   },
                   {
-                    primaryText:"Drafts",
+                    primaryText:"PT_PAYMENT_DRAFTS",
                     leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
                     rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
                   },
                   {
-                    primaryText:"Pending Assessments",
+                    primaryText:"PT_PAYMENT_PENDING_ASSESSMENTS",
                     leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
                     rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
                   },
                   {
-                    primaryText:"Paid Assessments",
+                    primaryText:"PT_PAYMENT_PAID_ASSESSMENTS",
                     leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
                     rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
                   }
@@ -64,7 +64,7 @@ const PaymentStepOne=()=>{
               <Label
                 color={"#ffffff"}
                 bold={true}
-                label={`Receipts`}
+                label={`PT_PAYMENT_RECEIPTS`}
                 labelStyle={tabStyle}
               />
             </div>
@@ -83,7 +83,7 @@ const PaymentStepOne=()=>{
               <Label
                 color={"#ffffff"}
                 bold={true}
-                label={`About`}
+                label={`PT_PAYMENT_ABOUT`}
                 labelStyle={tabStyle}
               />
             </div>
