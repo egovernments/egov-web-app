@@ -25,6 +25,9 @@ import AddComplaint from "./pgr/AddComplaint";
 import FeedbackAcknowledge from "./pgr/FeedbackAcknowledgement";
 import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 
+//property tax
+import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
+
 const routes = [
   {
     path: "user/register",
@@ -134,6 +137,15 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true, hideBackButton: true, title: "CS_COMMON_COMPLAINT_REOPENED" },
   },
+  //property tax routes
+  {
+    path: "pt-payment-step-one",
+    component: PropertyTaxPaymentStepOne,
+    needsAuthentication: true,
+    options: {
+      title: "Property Tax",
+    }
+  }
 ];
 
 const Citizen = ({ match }) => {

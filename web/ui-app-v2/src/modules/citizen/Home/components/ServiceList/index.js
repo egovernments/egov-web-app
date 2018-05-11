@@ -17,7 +17,7 @@ const ServiceList = () => {
       textChildren={
         <div>
           <div className="row upper-row">
-            <Link to="/citizen/my-complaints">
+            <Link to="/citizen/pt-payment-step-one">
               <div className="col-xs-4 service-item text-center">
                 <div>
                   <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
