@@ -1,0 +1,34 @@
+.service-cont {
+  display: inline-block;
+}
+
+.servicenearby-carousel-cont {
+  padding-bottom: 2px;
+}
+
+.servicenearby-carousel-cont .control-dots {
+  position: static;
+  padding: 0;
+}
+
+.servicenearby-label-cont {
+  margin-bottom: 23px;
+}
+
+.servicenearby-carousel-cont .dot {
+  box-shadow: none !important;
+  background: #d3d3d3 !important;
+  width: 4px !important;
+  height: 4px !important;
+  margin: 0 4px !important;
+}
+
+.servicenearby-carousel-cont .dot.selected {
+  background-color: #00bbd3 !important;
+}
+
+.servicenearby-carousel-cont a {
+  width: 100%;
+  display: block;
+  padding: 0 15px;
+}
