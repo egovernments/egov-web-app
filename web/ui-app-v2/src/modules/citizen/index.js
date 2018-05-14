@@ -27,6 +27,7 @@ import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 
 //property tax
 import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
+import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard";
 
 const routes = [
   {
@@ -144,8 +145,16 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "PT_PAYMENT_STEP_HEADER",
-    },
+    }
   },
+  {
+    path: "pt-payment-assessment-form-wizard",
+    component: PropertyTaxAssessmentFormWizard,
+    needsAuthentication: true,
+    options: {
+      title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
+    }
+  }
 ];
 
 const Citizen = ({ match }) => {
