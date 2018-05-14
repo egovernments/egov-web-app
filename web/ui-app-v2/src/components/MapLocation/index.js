@@ -64,7 +64,7 @@ const MapLocation = compose(
             center: nextCenter,
             markers: nextMarkers,
           });
-          // refs.map.fitBounds(bounds);
+          refs.map.fitBounds(bounds);
         },
       });
     },
