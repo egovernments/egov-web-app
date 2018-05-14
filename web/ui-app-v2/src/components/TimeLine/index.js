@@ -9,8 +9,8 @@ const TimeLineUi = ({ divStyle, stepperProps, steps }) => {
         {steps.map((step, stepIndex) => {
           return (
             <Step key={stepIndex} {...step.props}>
-              {step.labelChildren && <StepLabel {...step.labelProps}>{step.labelChildren}</StepLabel>}
-              {step.contentChildren && <StepContent {...step.contentProps}>{step.contentChildren}</StepContent>}
+              <StepLabel {...step.labelProps}>{step.labelChildren}</StepLabel>
+              <StepContent {...step.contentProps}>{step.contentChildren}</StepContent>
             </Step>
           );
         })}

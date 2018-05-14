@@ -1,32 +1,22 @@
 import React from "react";
 import {TimeLine} from "components";
 import { Button } from "components";
-
+import "./index.css";
 
 let steps=[{
-  props: {
-    active: false,
-  }
+
 },
 {
-  props: {
-    active: false,
-  }
+
 },
 {
-  props: {
-    active: false,
-  }
+
 },
 {
-  props: {
-    active: false,
-  }
+
 },
 {
-  props: {
-    active: false,
-  }
+
 }]
 
 class AssessmentFormWizard extends React.Component
@@ -79,22 +69,28 @@ class AssessmentFormWizard extends React.Component
 
         <div>
               <p>{this.getStepContent(stepIndex)}</p>
-              <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont">
-                <Button
-                  style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
-                  onClick={this.handlePrev}
-                  className="add-complaint-submit-button"
-                  fullWidth={true}
-                  primary={true}
-                />
-                <Button
-                  style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
-                  onClick={this.handleNext}
-                  className="add-complaint-submit-button"
-                  fullWidth={true}
-                  primary={false}
-                />
+              <div className="container">
+                <div className="row">
+                <div className="col-xs-6">
+                  <Button
+                    style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
+                    onClick={this.handlePrev}
+                    fullWidth={true}
+                    primary={true}
+                    label="GO BACK"
+                  />
+                </div>
+                <div className="col-xs-6">
+                  <Button
+                    style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
+                    onClick={this.handleNext}
+                    fullWidth={true}
+                    primary={false}
+                    label="NEXT"
+                  />
+                </div>
               </div>
+            </div>
         </div>
       </div>
     )

@@ -153,6 +153,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
+      hideFooter: true
     }
   }
 ];
