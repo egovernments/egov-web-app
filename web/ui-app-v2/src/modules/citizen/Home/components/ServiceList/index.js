@@ -14,7 +14,7 @@ const ServiceList = () => {
             <Link to="/citizen/pt-payment-step-one">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="custom" name="property-tax" />
                 </div>
                 <Label dark={true} className="service-label" label="Property Tax" />
               </div>
@@ -22,7 +22,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="custom" name="water-tap" />
                 </div>
                 <Label dark={true} className="service-label" label="Water Charges" />
               </div>
@@ -30,7 +30,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="custom" name="licenses" />
                 </div>
                 <Label dark={true} className="service-label" label="Licenses" />
               </div>
@@ -42,13 +42,13 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="alert" name="warning" />
                 </div>
-                <Label dark={true} className="service-label" label="File Complaint" />
+                <Label dark={true} className="service-label" label="Complaint" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="custom" name="birth-death" />
                 </div>
                 <Label dark={true} className="service-label" label="Birth & Death" />
               </div>
@@ -56,7 +56,7 @@ const ServiceList = () => {
             <Link to="/citizen/my-complaints">
               <div className="col-xs-4 service-item text-center">
                 <div>
-                  <Icon className="service-icon" action="alert" name="warning" />
+                  <Icon className="service-icon" action="custom" name="fire" />
                 </div>
                 <Label dark={true} className="service-label" label="Fire NOC" />
               </div>

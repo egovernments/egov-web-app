@@ -24,7 +24,11 @@ const Updates = ({ notifications = [] }) => {
                 containerStyle={{ width: "80%" }}
                 labelStyle={{ width: "100%", wordWrap: "break-word" }}
               />
-              <Icon style={{ color: "#5385a6" }} action="custom" name="notifications" />
+              <Icon style={{ color: "#fe7a51" }} action="custom" name="water-tap" />
+            </div>
+            <div className="complaint-date-cont">
+              <Icon action="action" name="date-range" />
+              <span className="complaint-date">{date}</span>
             </div>
             <div>
               <Label fontSize={12} label="Amount due : " containerStyle={{ display: "inline-block" }} />

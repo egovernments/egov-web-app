@@ -14,7 +14,7 @@ const servicesNearby = [
   <Link to="">
     <div className="service-cont">
       <div>
-        <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+        <Icon style={iconStyle} className="service-icon" action="custom" name="police-station" />
       </div>
       <Label dark={true} className="service-label" label="Police Station" />
     </div>
@@ -22,7 +22,7 @@ const servicesNearby = [
   <Link to="">
     <div className="service-cont">
       <div>
-        <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+        <Icon style={iconStyle} className="service-icon" action="custom" name="blood-bank" />
       </div>
       <Label dark={true} className="service-label" label="Blood Bank" />
     </div>
@@ -30,7 +30,7 @@ const servicesNearby = [
   <Link to="">
     <div className="service-cont">
       <div>
-        <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+        <Icon style={iconStyle} className="service-icon" action="custom" name="hospital" />
       </div>
       <Label dark={true} className="service-label" label="Hospital" />
     </div>
@@ -38,7 +38,7 @@ const servicesNearby = [
   <Link to="">
     <div className="service-cont">
       <div>
-        <Icon style={iconStyle} className="service-icon" action="alert" name="warning" />
+        <Icon style={iconStyle} className="service-icon" action="custom" name="fire-station" />
       </div>
       <Label dark={true} className="service-label" label="Fire Station" />
     </div>
