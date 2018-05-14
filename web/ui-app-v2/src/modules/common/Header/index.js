@@ -99,7 +99,7 @@ class Header extends Component {
     const { className, role, cities, history, title, fetchLocalizationLabel, userInfo } = this.props;
     return (
       <div>
-        <AppBar className={className} title={title} {...appBarProps} />
+        <AppBar className={className} title={title} role={role} {...appBarProps} />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
           onUpdateMenuStatus={_onUpdateMenuStatus}

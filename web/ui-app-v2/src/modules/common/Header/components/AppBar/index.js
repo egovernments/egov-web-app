@@ -8,10 +8,10 @@ const styles = {
 };
 
 // handle listners
-const EgovAppBar = ({ className, title, isHomeScreen, ...rest }) => {
+const EgovAppBar = ({ className, title, isHomeScreen, role, ...rest }) => {
   return (
     <AppBar
-      className={isHomeScreen ? "home-screen-appbar" : className || "header-with-drawer"}
+      className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
       title={<Label className="screenHeaderLabelStyle" label={title} />}
       titleStyle={styles.titleStyle}
       {...rest}

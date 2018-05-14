@@ -66,22 +66,22 @@ class PaymentStepOne extends Component {
                     items={[
                       {
                         primaryText: "New Property Assessment",
-                        leftIcon: <Icon action="action" name="home" />,
+                        leftIcon: <Icon action="custom" name="property-tax" />,
                         rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
                       },
                       {
                         primaryText: "Drafts",
-                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        leftIcon: <Icon action="image" name="edit" />,
                         rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
                       },
                       {
                         primaryText: "Pending Assessments",
-                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        leftIcon: <Icon action="alert" name="warning" />,
                         rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
                       },
                       {
                         primaryText: "Paid Assessments",
-                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        leftIcon: <Icon action="action" name="check-circle" />,
                         rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
                       },
                     ]}
