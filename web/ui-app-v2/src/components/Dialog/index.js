@@ -41,6 +41,7 @@ const DialogUI = ({
   autoScrollBodyContent,
   handleClose,
   style,
+  isClose,
 }) => {
   return (
     <Dialog
@@ -48,9 +49,11 @@ const DialogUI = ({
       actions={actions}
       titleStyle={{ ...defaultTitleStyle, ...titleStyle }}
       children={[
-        <div className="dialog-close-button" key={"dialog-close-button"}>
-          <Icon action="navigation" name="close" color="#484848" style={closebuttonStyle} onClick={handleClose} />
-        </div>,
+        isClose && (
+          <div className="dialog-close-button" key={"dialog-close-button"}>
+            <Icon action="navigation" name="close" color="#484848" style={closebuttonStyle} onClick={handleClose} />
+          </div>
+        ),
         ...children,
       ]}
       autoScrollBodyContent={autoScrollBodyContent}
