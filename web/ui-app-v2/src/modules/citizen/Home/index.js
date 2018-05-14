@@ -15,7 +15,7 @@ class Home extends Component {
       title: "Pay your water & sewerage tax",
       amountDue: "₹1,732",
       dueDate: "24th May 2018",
-      date: "24th May 2018",
+      date: "24-May-2018",
       status: "Resolved",
     },
   ];
