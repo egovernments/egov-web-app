@@ -35,6 +35,7 @@ const LogoutDialog = ({ logout, closeLogoutDialog, logoutPopupOpen }) => {
         </div>,
       ]}
       handleClose={closeLogoutDialog}
+      isClose={true}
     />
   );
 };

@@ -1,105 +1,124 @@
-import React from "react";
-import {Tabs,Label,List,Icon} from "components";
+import React, { Component } from "react";
+import { Tabs, Label, List, Icon } from "components";
 import Screen from "modules/common/Screen";
+import YearDialogue from "./components/YearDialogue";
 
 const tabStyle = {
   letterSpacing: "0.6px",
 };
 
-const PaymentStepOne=()=>{
-  return (
-    <div>
-    <Tabs
-      tabs={[
-        {
-          label: (
-            <div>
-              <Label
-                color={"#ffffff"}
-                label={`PT_PAYMENT_ACCESS_AND_PAY`}
-                labelStyle={tabStyle}
-              />
-            </div>
-          ),
-          children: (
-            <Screen>
-              <List
-                onItemClick={()=>{console.log("clicked");}}
-                listContainerStyle={{marginTop:"16px"}}
-                listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
-                nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
-                autoGenerateNestedIndicator={false}
-                primaryTogglesNestedList={true}
-                items={
-                [
-                  {
-                    primaryText:"PT_PAYMENT_NEW_ASSEMENTS",
-                    leftIcon:<Icon action="action" name="home"/>,
-                    rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
-                  },
-                  {
-                    primaryText:"PT_PAYMENT_DRAFTS",
-                    leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
-                    rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
-                  },
-                  {
-                    primaryText:"PT_PAYMENT_PENDING_ASSESSMENTS",
-                    leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
-                    rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
-                  },
-                  {
-                    primaryText:"PT_PAYMENT_PAID_ASSESSMENTS",
-                    leftIcon:<Icon action="image" name="brightness-1" color="#d8d8d8"/>,
-                    rightIcon:<Icon action="hardware" name="keyboard-arrow-right"/>,
-                  }
-                ]
-               }
-              />
-            </Screen>
-          ),
-        },
-        {
-          label: (
-            <div>
-              <Label
-                color={"#ffffff"}
-                bold={true}
-                label={`PT_PAYMENT_RECEIPTS`}
-                labelStyle={tabStyle}
-              />
-            </div>
-          ),
-          children: (
-            <Screen>
-              <div className="tab2-content">
-                Receipts
-              </div>
-            </Screen>
-          ),
-        },
-        {
-          label: (
-            <div>
-              <Label
-                color={"#ffffff"}
-                bold={true}
-                label={`PT_PAYMENT_ABOUT`}
-                labelStyle={tabStyle}
-              />
-            </div>
-          ),
-          children: (
-            <Screen>
-              <div className="tab2-content">
-                About
-              </div>
-            </Screen>
-          ),
-        }
-      ]}
-    />
-    </div>
-  )
+class PaymentStepOne extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dialogueOpen: false,
+    };
+  }
+
+  getYearList() {
+    let today = new Date();
+    let month = today.getMonth() + 1;
+    let yearRange = [];
+    var counter = 0;
+    if (month <= 3) {
+      return this.getLastFiveYear(yearRange, today.getFullYear() - 1, counter);
+    } else {
+      return this.getLastFiveYear(yearRange, today.getFullYear(), counter);
+    }
+  }
+
+  getLastFiveYear(yearRange, currentYear, counter) {
+    if (counter < 5) {
+      counter++;
+      yearRange.push(`${currentYear}-${currentYear + 1}`);
+      this.getLastFiveYear(yearRange, currentYear - 1, counter);
+    }
+    return yearRange;
+  }
+
+  closeYearRangeDialogue = () => {
+    this.setState({ dialogueOpen: false });
+  };
+
+  render() {
+    return (
+      <div>
+        <Tabs
+          tabs={[
+            {
+              label: (
+                <div>
+                  <Label color={"#ffffff"} label={`Access & Pay`} labelStyle={tabStyle} />
+                </div>
+              ),
+              children: (
+                <Screen>
+                  <List
+                    onItemClick={() => {
+                      this.setState({ dialogueOpen: true });
+                    }}
+                    listContainerStyle={{ marginTop: "16px" }}
+                    listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
+                    nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
+                    autoGenerateNestedIndicator={false}
+                    primaryTogglesNestedList={true}
+                    items={[
+                      {
+                        primaryText: "New Property Assessment",
+                        leftIcon: <Icon action="action" name="home" />,
+                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+                      },
+                      {
+                        primaryText: "Drafts",
+                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+                      },
+                      {
+                        primaryText: "Pending Assessments",
+                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+                      },
+                      {
+                        primaryText: "Paid Assessments",
+                        leftIcon: <Icon action="image" name="brightness-1" color="#d8d8d8" />,
+                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+                      },
+                    ]}
+                  />
+                  <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
+                </Screen>
+              ),
+            },
+            {
+              label: (
+                <div>
+                  <Label color={"#ffffff"} bold={true} label={`Receipts`} labelStyle={tabStyle} />
+                </div>
+              ),
+              children: (
+                <Screen>
+                  <div className="tab2-content">Receipts</div>
+                </Screen>
+              ),
+            },
+            {
+              label: (
+                <div>
+                  <Label color={"#ffffff"} bold={true} label={`About`} labelStyle={tabStyle} />
+                </div>
+              ),
+              children: (
+                <Screen>
+                  <div className="tab2-content">About</div>
+                </Screen>
+              ),
+            },
+          ]}
+        />
+      </div>
+    );
+  }
 }
 
 export default PaymentStepOne;

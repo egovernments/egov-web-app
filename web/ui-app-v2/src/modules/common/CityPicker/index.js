@@ -87,6 +87,7 @@ class CityPickerDialog extends Component {
             bottom: "0",
             height: "auto",
           }}
+          isClose={true}
         >
           <AutoSuggest
             id="city-picker-search"
