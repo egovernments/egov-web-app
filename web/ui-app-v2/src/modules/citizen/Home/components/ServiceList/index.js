@@ -17,7 +17,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="custom" name="property-tax" />
                 </div>
-                <Label dark={true} className="service-label" label="Property Tax" />
+                <Label dark={true} className="service-label" label="PT_PAYMENT_STEP_HEADER" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
@@ -25,7 +25,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="custom" name="water-tap" />
                 </div>
-                <Label dark={true} className="service-label" label="Water Charges" />
+                <Label dark={true} className="service-label" label="PT_HOME_WATER_CHARGES" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
@@ -33,7 +33,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="custom" name="licenses" />
                 </div>
-                <Label dark={true} className="service-label" label="Licenses" />
+                <Label dark={true} className="service-label" label="PT_HOME_LICENSES" />
               </div>
             </Link>
           </div>
@@ -43,7 +43,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="alert" name="warning" />
                 </div>
-                <Label dark={true} className="service-label" label="Complaints" />
+                <Label dark={true} className="service-label" label="PT_HOME_COMPLAINT" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
@@ -51,7 +51,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="custom" name="birth-death" />
                 </div>
-                <Label dark={true} className="service-label" label="Birth & Death" />
+                <Label dark={true} className="service-label" label="PT_HOME_BIRTH_DEATH" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
@@ -59,7 +59,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="custom" name="fire" />
                 </div>
-                <Label dark={true} className="service-label" label="Fire NOC" />
+                <Label dark={true} className="service-label" label="PT_HOME_FIRE_NOC" />
               </div>
             </Link>
           </div>

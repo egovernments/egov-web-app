@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router";
 import { Image, Icon } from "components";
-import logo from "assets/images/logo.png";
+import logo from "assets/images/logo-payment.png";
 import "./index.css";
 
 const Banner = ({ children, history, className = "" }) => {
