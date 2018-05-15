@@ -22,7 +22,6 @@ const transform = (input) => {
 
 // currently icon hardcoded to accumulation of litter but it should be dynamically formed
 const completeDetails = (item, key) => {
-  // console.log(key.toLowerCase());
   return Object.assign({}, item, {
     id: item.text || key,
     text: item.text || key,

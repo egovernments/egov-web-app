@@ -1,7 +1,7 @@
 import React from "react";
 import SvgIcon from "material-ui/SvgIcon";
 
-const Animals = (props) => {
+const Roads = (props) => {
   return (
     <SvgIcon viewBox="0 0 24 24" className="custom-icon" {...props}>
       <path
@@ -12,4 +12,4 @@ const Animals = (props) => {
   );
 };
 
-export default Animals;
+export default Roads;
