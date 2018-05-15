@@ -12,6 +12,7 @@ const Updates = ({ notifications = [] }) => {
         style={{ margin: "8px 0px" }}
         key={index}
         id={`home-notification${index}`}
+        style={{ padding: "12px 8px" }}
         textChildren={
           <div className="update">
             <div className="notification-top-content">
@@ -31,27 +32,29 @@ const Updates = ({ notifications = [] }) => {
               <span className="complaint-date">{date}</span>
             </div>
             <div>
-              <Label fontSize={12} label="Amount due : " containerStyle={{ display: "inline-block" }} />
-              <Label fontSize={12} label={amountDue} containerStyle={{ display: "inline-block" }} />
+              <Label label="Amount due : " containerStyle={{ display: "inline-block" }} />
+              <Label label={amountDue} containerStyle={{ display: "inline-block" }} />
             </div>
-            <div className="notification-top-content" style={{ justifyContent: "flex-start" }}>
-              <Label fontSize={12} label="Due Date : " containerStyle={{ display: "inline-block" }} />
-              <Label fontSize={12} label={dueDate} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
-            </div>
-            <div className="pay-button-cont">
-              <Button
-                id="home-notification-pay-button"
-                primary={true}
-                style={{
-                  height: "22px",
-                  lineHeight: "auto",
-                  minWidth: "inherit",
-                  width: "72px",
-                }}
-                label={<Label buttonLabel={true} fontSize="12px" label="PAY" />}
-                fullWidth={true}
-                onClick={this.continueComplaintSubmit}
-              />
+            <div className="notification-top-content">
+              <div>
+                <Label label="Due Date : " containerStyle={{ display: "inline-block" }} />
+                <Label label={dueDate} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
+              </div>
+              <div className="pay-button-cont">
+                <Button
+                  id="home-notification-pay-button"
+                  primary={true}
+                  style={{
+                    height: "22px",
+                    lineHeight: "auto",
+                    minWidth: "inherit",
+                    width: "72px",
+                  }}
+                  label={<Label buttonLabel={true} fontSize="12px" label="PAY" />}
+                  fullWidth={true}
+                  onClick={this.continueComplaintSubmit}
+                />
+              </div>
             </div>
           </div>
         }

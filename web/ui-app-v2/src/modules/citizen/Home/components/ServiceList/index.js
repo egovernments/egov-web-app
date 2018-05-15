@@ -8,6 +8,7 @@ const ServiceList = () => {
   return (
     <Card
       className="service-list col-xs-12"
+      style={{ padding: "12px 8px" }}
       textChildren={
         <div>
           <div className="row upper-row">
