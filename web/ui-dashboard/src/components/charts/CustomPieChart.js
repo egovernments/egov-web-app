@@ -77,7 +77,7 @@ CustomPieChart.propTypes = {
   labelKey: PropTypes.string,
   valueKey: PropTypes.string,
   tooltip: PropTypes.element,
-  legendFormatter: Proptypes.func,
+  legendFormatter: PropTypes.func,
 };
 
 CustomPieChart.defaultProps = {
