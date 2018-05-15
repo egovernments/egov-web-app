@@ -31,8 +31,8 @@ class LanguageSelection extends Component {
       color: "#ffffff",
     },
     selectedStyle: {
-      backgroundColor: "#00bcd1",
-      border: "1px solid #00bcd1",
+      backgroundColor: "rgb(254, 122, 81)",
+      border: "1px solid rgb(254, 122, 81)",
     },
     defaultStyle: {
       border: "1px solid #484848",
