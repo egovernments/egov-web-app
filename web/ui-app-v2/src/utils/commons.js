@@ -313,7 +313,7 @@ export const getPropertyFromObj = (obj, id, property, defaultValue) => {
 };
 
 export const returnSLAStatus = (slaHours, submittedTime) => {
-  const millsToAdd = slaHours * 60 * 60 * 100;
+  const millsToAdd = slaHours * 60 * 60 * 1000;
   const toBeFinishedBy = millsToAdd + submittedTime;
   const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
