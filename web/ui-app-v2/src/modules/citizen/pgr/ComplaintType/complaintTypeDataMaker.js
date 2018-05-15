@@ -26,6 +26,6 @@ const completeDetails = (item, key) => {
     id: item.text || key,
     text: item.text || key,
     displayKey: (item.text && "SERVICEDEFS." + item.id.toUpperCase()) || "SERVICEDEFS." + key.toUpperCase(),
-    icon: "accumulation-of-litter" || item.text || key.toLowerCase().replace(/\\s+/, "-"),
+    icon: "radio-button-checked" || item.text || key.toLowerCase().replace(/\\s+/, "-"),
   });
 };
