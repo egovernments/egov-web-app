@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Icon, List, AutoSuggest, Button } from "components";
+import { Card, Icon, List, Image, AutoSuggest, Button } from "components";
 import faceOne from "assets/images/faceOne.jpg";
 import Avatar from "material-ui/Avatar";
 import Label from "utils/translationNode";
@@ -23,6 +23,8 @@ export default class ListCard extends Component {
   avatarStyle = {
     top: 8,
     left: 17,
+    height: 33,
+    width: 33,
   };
 
   mainLabelStyle = {
@@ -66,7 +68,7 @@ export default class ListCard extends Component {
             return {
               id: depItem.id,
               primaryText: <Label label={depItem && depItem.name} dark={true} bold={true} labelStyle={this.mainLabelStyle} />,
-              leftAvatar: <Avatar size={33} src={depItem.photo ? depItem.photo : faceOne} style={this.avatarStyle} />,
+              leftAvatar: <Image circular={true} source={depItem.photo ? depItem.photo : faceOne} style={this.avatarStyle} />,
               secondaryText: (
                 <Label
                   label={depItem && depItem.assignments && getNameFromId(designationsById, depItem.assignments[0].designation, "Engineer")}
