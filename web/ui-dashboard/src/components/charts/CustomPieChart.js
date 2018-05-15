@@ -28,7 +28,7 @@ const styles = theme => ({
 
 const CustomPieChart = (props) => {
   const {
-    classes, labelKey, valueKey, heading, onClick, data, tooltip,
+    classes, labelKey, valueKey, heading, onClick, data, tooltip, legendFormatter
   } = props;
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
   let content;
@@ -56,7 +56,7 @@ const CustomPieChart = (props) => {
                   {content}
                 </Pie>
                 <Tooltip content={tooltip} />
-                <Legend />
+                <Legend formatter={legendFormatter} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
@@ -77,12 +77,14 @@ CustomPieChart.propTypes = {
   labelKey: PropTypes.string,
   valueKey: PropTypes.string,
   tooltip: PropTypes.element,
+  legendFormatter: Proptypes.func,
 };
 
 CustomPieChart.defaultProps = {
   labelKey: undefined,
   valueKey: undefined,
   tooltip: undefined,
+  legendFormatter: undefined
   data: [],
 };
 

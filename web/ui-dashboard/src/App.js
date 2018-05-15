@@ -184,6 +184,7 @@ class App extends Component {
                   formatLabel={label => (label === 0 ? 'Within SLA' : 'SLA Breached')}
                 />
               }
+              legendFormatter={label => (label === 0 ? 'Within SLA' : 'SLA Breached')}
             />
           </div>
           <div key="complaintSourcesPie">
