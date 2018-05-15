@@ -9,7 +9,12 @@ import FullOrPartialExemption from "./components/FullOrPartialExemption";
 import "./index.css";
 
 let steps=[{
-  labelChildren:""
+  labelChildren:"",
+  // prop:{
+  //   style:{
+  //     background:"rgb(254, 122, 81)"
+  //   }
+  // }
 },
 {
 labelChildren:""
@@ -70,7 +75,7 @@ class AssessmentFormWizard extends React.Component
       <div>
         <TimeLine
           stepperProps={{
-            activeStep:{stepIndex},
+            activeStep:stepIndex,
             style:{background:"rgb(0, 188, 209)"}
           }}
           steps={steps}

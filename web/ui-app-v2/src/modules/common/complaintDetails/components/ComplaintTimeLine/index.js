@@ -439,7 +439,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             <Label labelClassName="rainmaker-small-font" labelStyle={{ color: "#22b25f" }} label={`${rating}/5 `} />{" "}
             <Label labelClassName="rainmaker-small-font" label={` ( ${feedback})`} />
           </div>
-          <Label labelClassName="rainmaker-small-font" label={`" ${comments} "`} />
+          <Label labelClassName="rainmaker-small-font" label={comments?`" ${comments} "`:""} />
         </div>
       );
   }
