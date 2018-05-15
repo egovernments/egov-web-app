@@ -64,13 +64,9 @@ class Header extends Component {
       </IconButton>
     );
 
-    const iconElementRight = (
-      <IconButton id="icon-hamburger">{isHomeScreen ? <Icon id="icon-notification" action="custom" name="notifications" /> : ""}</IconButton>
-    );
-
     const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
 
-    return { style, iconElementLeft, onLeftIconButtonClick, iconElementRight, isHomeScreen };
+    return { style, iconElementLeft, onLeftIconButtonClick, isHomeScreen };
   };
 
   _handleItemClick = (item, index) => {
