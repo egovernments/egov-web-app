@@ -1,37 +1,42 @@
 import React from "react";
-import {TimeLine} from "components";
-import { Button } from "components";
+import { Button,TimeLine ,Card} from "components";
+import OwnerDetails from "./components/OwnerDetails";
+import PropertyAddress from "./components/PropertyAddress";
+import TaxAssessmentDetailsOne from "./components/TaxAssessmentDetailsOne";
+import TaxAssessmentDetailsTwo from "./components/TaxAssessmentDetailsTwo";
+import FullOrPartialExemption from "./components/FullOrPartialExemption";
+
 import "./index.css";
 
 let steps=[{
-
+  labelChildren:""
 },
 {
-
+labelChildren:""
 },
 {
-
+labelChildren:""
 },
 {
-
+labelChildren:""
 },
 {
-
+labelChildren:""
 }]
 
 class AssessmentFormWizard extends React.Component
 {
   state = {
-    finished: false,
     stepIndex: 0,
   };
 
   handleNext = () => {
     const {stepIndex} = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    if (stepIndex<5) {
+      this.setState({
+        stepIndex: stepIndex + 1
+      });
+    }
   };
 
   handlePrev = () => {
@@ -40,16 +45,19 @@ class AssessmentFormWizard extends React.Component
       this.setState({stepIndex: stepIndex - 1});
     }
   };
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return 'Select campaign settings...';
+        return <OwnerDetails/>;
       case 1:
-        return 'What is an ad group anyways?';
+        return <PropertyAddress/>;
       case 2:
-        return 'This is the bit I really care about!';
+        return <TaxAssessmentDetailsOne/>;
+      case 3:
+          return <TaxAssessmentDetailsTwo/>;
       default:
-        return 'You\'re a long way from home sonny jim!';
+        return <FullOrPartialExemption/>;
     }
   }
 
@@ -62,34 +70,30 @@ class AssessmentFormWizard extends React.Component
       <div>
         <TimeLine
           stepperProps={{
-            activeIndex:{stepIndex}
+            activeStep:{stepIndex},
+            style:{background:"rgb(0, 188, 209)"}
           }}
           steps={steps}
         />
 
         <div>
-              <p>{this.getStepContent(stepIndex)}</p>
-              <div className="container">
-                <div className="row">
-                <div className="col-xs-6">
+              <Card style={{margin:"24px 8px"}} textChildren={this.getStepContent(stepIndex)}/>
+              <div className="flexbox-container">
+                <div className="flex-item">
                   <Button
-                    style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
                     onClick={this.handlePrev}
                     fullWidth={true}
                     primary={true}
                     label="GO BACK"
                   />
                 </div>
-                <div className="col-xs-6">
+                <div className="flex-item">
                   <Button
-                    style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
                     onClick={this.handleNext}
                     fullWidth={true}
-                    primary={false}
                     label="NEXT"
                   />
                 </div>
-              </div>
             </div>
         </div>
       </div>
