@@ -10,6 +10,7 @@ const initialState = {
   showDailog: false,
   route: "",
   locale,
+  bottomNavigationIndex: 0,
   previousRoute: "",
   toast: {
     message: "",
@@ -26,6 +27,11 @@ const appReducer = (state = initialState, action) => {
         ...state,
         locale: action.locale,
         localizationLabels: action.localizationLabels,
+      };
+    case actionTypes.CHANGE_BOTTOM_NAVIGATION_INDEX:
+      return {
+        ...state,
+        bottomNavigationIndex: action.bottomNavigationIndex,
       };
     case actionTypes.SET_ROUTE:
       return { ...state, previousRoute: action.route ? window.location.pathname : state.previousRoute, route: action.route };

@@ -1,4 +1,5 @@
 export const SHOW_MENU = "SHOW_MENU";
+export const CHANGE_BOTTOM_NAVIGATION_INDEX = "CHANGE_BOTTOM_NAVIGATION_INDEX";
 export const SHOW_DIALOG = "SHOW_DIALOG";
 export const SHOW_TOAST = "SHOW_TOAST";
 export const SET_LOGO = "SET_LOGO";

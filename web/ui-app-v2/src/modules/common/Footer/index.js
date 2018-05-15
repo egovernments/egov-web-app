@@ -1,24 +1,20 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { BottomNavigation, Icon } from "components";
 import { navigationItems } from "./navigationItems";
+import { setBottomNavigationIndex } from "redux/app/actions";
 import Label from "utils/translationNode";
 import "./index.css";
 
-export default class Footer extends Component {
+class Footer extends Component {
   state = {
     selectedIndex: 0,
   };
 
   _onTabChange = (tabIndex) => {
     const route = navigationItems[tabIndex].route;
-    this.setState(
-      {
-        selectedIndex: tabIndex,
-      },
-      () => {
-        if (route.length) this.props.history.push(route);
-      }
-    );
+    this.props.setBottomNavigationIndex(tabIndex);
+    if (route.length) this.props.history.push(route);
   };
 
   _bottomNavigationOptions = () => {
@@ -34,9 +30,22 @@ export default class Footer extends Component {
   };
 
   render() {
-    const { selectedIndex } = this.state;
+    const { bottomNavigationIndex } = this.props;
     const { _onTabChange, _bottomNavigationOptions } = this;
     const options = _bottomNavigationOptions();
-    return <BottomNavigation selectedIndex={selectedIndex} options={options} handleChange={_onTabChange} />;
+    return <BottomNavigation selectedIndex={bottomNavigationIndex} options={options} handleChange={_onTabChange} />;
   }
 }
+
+const mapStateToProps = (state) => {
+  const { bottomNavigationIndex } = state.app;
+  return { bottomNavigationIndex };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setBottomNavigationIndex: (index) => dispatch(setBottomNavigationIndex(index)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

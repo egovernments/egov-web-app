@@ -7,6 +7,10 @@ export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
 };
 
+export const setBottomNavigationIndex = (bottomNavigationIndex) => {
+  return { type: actionTypes.CHANGE_BOTTOM_NAVIGATION_INDEX, bottomNavigationIndex };
+};
+
 const setLocalizationLabels = (locale, localizationLabels) => {
   window.localStorage.setItem(`localization_${locale}`, JSON.stringify(localizationLabels));
   window.localStorage.setItem("locale", locale);
@@ -25,13 +29,13 @@ export const toggleSnackbarAndSetText = (open, message, error) => {
 export const fetchLocalizationLabel = (locale) => {
   return async (dispatch) => {
     try {
-      let payload={messages:JSON.parse(window.localStorage.getItem(`localization_${locale}`)) || []};
+      let payload = { messages: JSON.parse(window.localStorage.getItem(`localization_${locale}`)) || [] };
       if (!payload.messages.length) {
-        payload= await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
-         { key: "module", value: "rainmaker-pgr" },
-         { key: "locale", value: locale },
-         { key: "tenantId", value: "default" },
-       ]);
+        payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
+          { key: "module", value: "rainmaker-pgr" },
+          { key: "locale", value: locale },
+          { key: "tenantId", value: "default" },
+        ]);
       }
       dispatch(setLocalizationLabels(locale, payload.messages));
     } catch (error) {}
