@@ -43,7 +43,7 @@ const ServiceList = () => {
                 <div>
                   <Icon className="service-icon" action="alert" name="warning" />
                 </div>
-                <Label dark={true} className="service-label" label="Complaint" />
+                <Label dark={true} className="service-label" label="PT_HOME_COMPLAINT" />
               </div>
             </Link>
             <Link to="/citizen/my-complaints">
