@@ -4,7 +4,7 @@ import "./index.css";
 
 const CardUi = ({ id, card, style = {}, textChildren, className = "", onClick }) => {
   return (
-    <div style={style} id={id} className={`rainmaker-card ${className}`} onClick={onClick}>
+    <div style={style} id={id} className={`rainmaker-card clearfix ${className}`} onClick={onClick}>
       {textChildren}
     </div>
   );

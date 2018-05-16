@@ -32,6 +32,7 @@ import UploadDrawer from "./UploadDrawer";
 import RadioButton from "./RadioButton";
 import Toast from "./Toast";
 import Carousel from "./Carousel";
+import Divider from "./Divider";
 
 export {
   Label,
@@ -68,4 +69,5 @@ export {
   RadioButton,
   Toast,
   Carousel,
+  Divider,
 };
