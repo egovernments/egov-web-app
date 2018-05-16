@@ -15,7 +15,7 @@ class YearDialog extends Component {
       <Dialog
         open={open}
         children={[
-          <div>
+          <div key={1}>
             <div className="dialogue-question">Which year’s taxes would you like to pay? </div>
             <div className="year-range-botton-cont">
               {yearList.map((item, index) => <SingleButton key={index} label={item} handleClose={closeDialogue} />)}
@@ -24,6 +24,7 @@ class YearDialog extends Component {
         ]}
         bodyStyle={{ backgroundColor: "#ffffff" }}
         isClose={false}
+        onRequestClose={closeDialogue}
       />
     );
   }
