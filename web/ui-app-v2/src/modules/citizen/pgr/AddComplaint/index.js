@@ -93,7 +93,7 @@ class AddComplaints extends Component {
   }
 }
 
-// can be optimized
+// can be optimized; subscribing to localization labels which is probably bad
 const mapStateToProps = (state) => {
   const formKey = "complaint";
   const { localizationLabels } = state.app;

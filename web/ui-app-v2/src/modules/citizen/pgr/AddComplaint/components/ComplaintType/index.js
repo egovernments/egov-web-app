@@ -5,7 +5,7 @@ import "./index.css";
 
 const ComplaintTypeField = ({ onClick, categories, localizationLabels, complaintType = {} }) => {
   const complainTypeMessage =
-    complaintType && complaintType.value && (localizationLabels["SERVICEDEFS." + (complaintType.value || "").toUpperCase()] || {}).message;
+    (complaintType && complaintType.value && (localizationLabels["SERVICEDEFS." + (complaintType.value || "").toUpperCase()] || {}).message) || "";
 
   return (
     <div className="complaint-type-main-cont">
