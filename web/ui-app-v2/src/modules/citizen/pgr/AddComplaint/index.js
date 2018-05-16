@@ -56,7 +56,7 @@ class AddComplaints extends Component {
 
   render() {
     const { navigateToComplaintType, submitComplaint } = this;
-    const { formKey, categories, loading } = this.props;
+    const { formKey, categories, loading, localizationLabels } = this.props;
     const fields = this.props.form.fields || {};
     const submit = this.props.form.submit;
 
@@ -64,7 +64,12 @@ class AddComplaints extends Component {
       <Screen loading={loading}>
         <div className="add-complaint-main-cont">
           <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
-          <ComplaintTypeCard categories={categories} complaintType={fields.complaintType} onClick={navigateToComplaintType} />
+          <ComplaintTypeCard
+            localizationLabels={localizationLabels}
+            categories={categories}
+            complaintType={fields.complaintType}
+            onClick={navigateToComplaintType}
+          />
           <LocationDetailsCard
             landmark={fields.landmark}
             locationDetails={fields.address}
@@ -88,13 +93,15 @@ class AddComplaints extends Component {
   }
 }
 
+// can be optimized
 const mapStateToProps = (state) => {
   const formKey = "complaint";
+  const { localizationLabels } = state.app;
   const categories = state.complaints.categoriesById;
   const form = state.form[formKey] || {};
   const { loading } = form || false;
   const currentLocation = state.app.currentLocation || {};
-  return { form, categories, formKey, loading, currentLocation };
+  return { form, categories, formKey, localizationLabels, loading, currentLocation };
 };
 
 const mapDispatchToProps = (dispatch) => {
