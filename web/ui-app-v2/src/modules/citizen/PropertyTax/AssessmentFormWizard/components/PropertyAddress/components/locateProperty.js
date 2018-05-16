@@ -95,6 +95,7 @@ class LocateProperty extends Component {
   };
 
   onCLickMapBackBtn = () => {
+    sessionStorage.setItem("backFromPTMap", true);
     this.props.history.goBack();
   };
 
