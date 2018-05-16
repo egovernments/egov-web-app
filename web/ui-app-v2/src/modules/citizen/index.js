@@ -28,11 +28,8 @@ import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 //property tax
 import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
 import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard";
-<<<<<<< HEAD
 import Reciept from "./PropertyTax/Reciept";
-=======
 import LocateProperty from "./PropertyTax/AssessmentFormWizard/components/PropertyAddress/components/locateProperty";
->>>>>>> bb22b4469... chnages for step 2
 
 const routes = [
   {
