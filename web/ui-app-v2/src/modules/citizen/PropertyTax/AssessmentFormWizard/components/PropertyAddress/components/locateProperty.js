@@ -71,6 +71,7 @@ class LocateProperty extends Component {
 
   onClickPick = () => {
     this.convertToAddress(add);
+    sessionStorage.setItem("backFromPTMap", true);
     this.props.history.goBack();
   };
 
