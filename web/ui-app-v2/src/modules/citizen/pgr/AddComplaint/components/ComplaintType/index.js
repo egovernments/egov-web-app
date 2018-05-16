@@ -3,7 +3,7 @@ import { Card, TextFieldIcon } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 
-const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
+const ComplaintTypeField = ({ onClick, categories, complaintType = {} }) => {
   return (
     <div className="complaint-type-main-cont">
       <Card
@@ -12,7 +12,7 @@ const ComplaintTypeField = ({ onClick, categories, complaintType }) => {
           <div>
             <TextFieldIcon
               onClick={onClick}
-              {...complaintType}
+              {...{ ...complaintType, value: (complaintType.value || "").replace(/([a-z])([A-Z])/g, "$1 $2") }}
               iconPosition="after"
               fullWidth={true}
               Icon={DownArrow}
