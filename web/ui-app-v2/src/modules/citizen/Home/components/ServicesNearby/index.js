@@ -56,7 +56,7 @@ const ServicesNearby = () => {
             <Label label="NEAR ME" bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }} />
           </div>
           <div className="servicenearby-carousel-cont">
-            <Carousel items={servicesNearby} centerMode={true} centerSlidePercentage={28} />
+            <Carousel items={servicesNearby} />
           </div>
         </div>
       }
