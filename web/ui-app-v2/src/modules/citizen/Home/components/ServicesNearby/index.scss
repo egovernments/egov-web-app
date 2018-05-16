@@ -13,6 +13,8 @@
 
 .servicenearby-label-cont {
   margin-bottom: 23px;
+  padding-bottom: 8px;
+  border-bottom: solid 1px #e0e0e0;
 }
 
 .servicenearby-carousel-cont .dot {
@@ -28,7 +30,17 @@
 }
 
 .servicenearby-carousel-cont a {
-  width: 100%;
-  display: block;
-  padding: 0 15px;
+  width: 55px;
+  display: inline-block;
+  text-align: center;
+}
+
+.servicenearby-carousel-cont .swiper-slide {
+  padding: 0 20px;
+}
+
+.servicenearby-carousel-cont .swiper-pagination-bullet {
+  width: 4px !important;
+  height: 4px !important;
+  margin: 0 2px !important;
 }

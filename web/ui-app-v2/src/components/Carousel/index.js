@@ -1,15 +1,24 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import Swiper from "react-id-swiper";
+import styles from "react-id-swiper/src/styles/css/swiper.css";
 import "./index.css";
 
-const CarouselUI = ({ items, centerSlidePercentage, centerMode }) => {
+const CarouselUI = ({ items }) => {
+  const params = {
+    slidesPerView: 3,
+    spaceBetween: -50,
+    freeMode: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  };
   return (
-    <Carousel showArrows={false} showThumbs={false} showStatus={false} centerMode={centerMode} centerSlidePercentage={centerSlidePercentage}>
+    <Swiper {...params}>
       {items.map((item, index) => {
         return <div key={index}>{item}</div>;
       })}
-    </Carousel>
+    </Swiper>
   );
 };
 
