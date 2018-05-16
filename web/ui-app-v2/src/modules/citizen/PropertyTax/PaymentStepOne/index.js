@@ -16,7 +16,7 @@ class PaymentStepOne extends Component {
     };
   }
 
-  getYearList() {
+  getYearList = () => {
     let today = new Date();
     let month = today.getMonth() + 1;
     let yearRange = [];
@@ -26,7 +26,7 @@ class PaymentStepOne extends Component {
     } else {
       return this.getLastFiveYear(yearRange, today.getFullYear(), counter);
     }
-  }
+  };
 
   getLastFiveYear(yearRange, currentYear, counter) {
     if (counter < 5) {
@@ -97,7 +97,7 @@ class PaymentStepOne extends Component {
                 </div>
               ),
               children: (
-                <Screen>
+                <Screen key={2}>
                   <div className="tab2-content">Receipts</div>
                 </Screen>
               ),
@@ -109,7 +109,7 @@ class PaymentStepOne extends Component {
                 </div>
               ),
               children: (
-                <Screen>
+                <Screen key={3}>
                   <div className="tab2-content">About</div>
                 </Screen>
               ),

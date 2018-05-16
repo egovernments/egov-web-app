@@ -42,6 +42,7 @@ const DialogUI = ({
   handleClose,
   style,
   isClose,
+  onRequestClose,
 }) => {
   return (
     <Dialog
@@ -69,6 +70,7 @@ const DialogUI = ({
       }}
       repositionOnUpdate={repositionOnUpdate}
       modal={modal}
+      onRequestClose={onRequestClose}
     />
   );
 };
