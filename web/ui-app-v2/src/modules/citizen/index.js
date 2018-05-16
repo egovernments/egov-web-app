@@ -28,7 +28,11 @@ import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 //property tax
 import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
 import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard";
+<<<<<<< HEAD
 import Reciept from "./PropertyTax/Reciept";
+=======
+import LocateProperty from "./PropertyTax/AssessmentFormWizard/components/PropertyAddress/components/locateProperty";
+>>>>>>> bb22b4469... chnages for step 2
 
 const routes = [
   {
@@ -161,6 +165,16 @@ const routes = [
     options: {
       title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
       hideFooter: true,
+    },
+  },
+  {
+    path: "pt-locate-property",
+    component: LocateProperty,
+    needsAuthentication: true,
+    options: {
+      title: "PT_LOCATE_PROPERTY",
+      hideFooter: true,
+      hideHeader: true,
     },
   },
 ];
