@@ -28,6 +28,7 @@ import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 //property tax
 import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
 import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard";
+import Reciept from "./PropertyTax/Reciept";
 
 const routes = [
   {
@@ -65,6 +66,12 @@ const routes = [
     component: Home,
     needsAuthentication: true,
     options: { isHomeScreen: true },
+  },
+  {
+    path: "reciepts",
+    component: Reciept,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Reciepts" },
   },
   {
     path: "my-complaints",
@@ -145,7 +152,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "PT_PAYMENT_STEP_HEADER",
-    }
+    },
   },
   {
     path: "pt-payment-assessment-form-wizard",
@@ -153,9 +160,9 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
-      hideFooter: true
-    }
-  }
+      hideFooter: true,
+    },
+  },
 ];
 
 const Citizen = ({ match }) => {
