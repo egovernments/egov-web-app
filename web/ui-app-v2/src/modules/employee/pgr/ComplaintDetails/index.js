@@ -4,7 +4,7 @@ import ComplaintTimeLine from "modules/common/pgr/complaintDetails/components/Co
 import Comments from "modules/common/pgr/complaintDetails/components/Comments";
 import Actions from "modules/common/pgr/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import pinIcon from "assets/Location_pin.svg";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj, findLatestAssignee } from "utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";

@@ -1,5 +1,5 @@
 import React from "react";
-import RenderRoutes from "modules/common/common-components/RenderRoutes";
+import RenderRoutes from "modules/common/common/RenderRoutes";
 
 //user routes
 import Login from "./User/Login";

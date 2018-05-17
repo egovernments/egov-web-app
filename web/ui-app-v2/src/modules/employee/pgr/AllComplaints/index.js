@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Tabs } from "components";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import Complaints from "modules/common/pgr/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";

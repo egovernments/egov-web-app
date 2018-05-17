@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "components";
 import { connect } from "react-redux";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import pinIcon from "assets/Location_pin.svg";
 import Logo from "assets/images/logo_black.png";
 import Label from "utils/translationNode";

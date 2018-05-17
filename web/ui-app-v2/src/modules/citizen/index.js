@@ -1,5 +1,5 @@
 import React from "react";
-import RenderRoutes from "modules/common/common-components/RenderRoutes";
+import RenderRoutes from "modules/common/common/RenderRoutes";
 
 // user routes
 import Register from "./User/Register";
@@ -17,7 +17,7 @@ import ContactUs from "./ContactUs";
 import MyComplaints from "./pgr/MyComplaints";
 import ComplaintDetails from "./pgr/ComplaintDetails";
 import ComplaintSubmited from "./pgr/ComplaintSubmited";
-import TrackLocation from "modules/common/common-components/TrackLocation";
+import TrackLocation from "modules/common/common/TrackLocation";
 import Feedback from "./pgr/Feedback";
 import ReOpenComplaint from "./pgr/ReOpenComplaint";
 import ComplaintType from "./pgr/ComplaintType";

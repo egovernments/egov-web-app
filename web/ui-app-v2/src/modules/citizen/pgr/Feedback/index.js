@@ -4,7 +4,7 @@ import { Button } from "components";
 import RatingsComponent from "./components/Ratings";
 import TextAreaComponent from "./components/TextArea";
 import CheckBoxGroup from "./components/CheckBoxGroup";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import "./index.css";

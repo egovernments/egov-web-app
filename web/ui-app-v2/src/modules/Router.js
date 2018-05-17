@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Citizen from "modules/citizen";
 import Employee from "modules/employee";
-import ImageModalDisplay from "modules/common/common-components/ImageModalDisplay";
+import ImageModalDisplay from "modules/common/common/ImageModalDisplay";
 
 const Main = () => {
   return (

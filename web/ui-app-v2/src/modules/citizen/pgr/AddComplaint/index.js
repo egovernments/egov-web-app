@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "components";
-import Screen from "modules/common/Screen";
-import ImageUpload from "modules/common/common-components/ImageUpload";
+import Screen from "modules/common/common/Screen";
+import ImageUpload from "modules/common/common/ImageUpload";
 import ComplaintTypeCard from "./components/ComplaintType";
 import { getTenantForLatLng } from "utils/commons";
 import LocationDetailsCard from "./components/LocationDetails";

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Details from "modules/common/pgr/complaintDetails/components/Details";
 import ComplaintTimeLine from "modules/common/pgr/complaintDetails/components/ComplaintTimeLine";
 import Comments from "modules/common/pgr/complaintDetails/components/Comments";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "utils/commons";
 import "./index.css";

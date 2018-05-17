@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "modules/common/common-components/Banner";
+import Banner from "modules/common/common/Banner";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { sendOTP } from "redux/auth/actions";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 
 class OTP extends Component {
   constructor(props) {

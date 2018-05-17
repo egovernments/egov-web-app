@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import Label from "utils/translationNode";
 import "./index.css";
 

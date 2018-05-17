@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";
-import Header from "modules/common/common-components/Header";
-import Footer from "modules/common/common-components/Footer";
+import Header from "modules/common/common/Header";
+import Footer from "modules/common/common/Footer";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {

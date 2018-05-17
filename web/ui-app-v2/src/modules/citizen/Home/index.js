@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Events from "modules/citizen/PropertyTax/Events/components/Event";
-import Banner from "modules/common/common-components/Banner";
+import Banner from "modules/common/common/Banner";
 import Notifications from "./components/Notifications";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";

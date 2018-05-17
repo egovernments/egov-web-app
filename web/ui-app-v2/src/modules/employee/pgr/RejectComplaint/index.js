@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "components";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import Question from "modules/common/pgr/ReOpenComplaint/components/Question";
 import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";

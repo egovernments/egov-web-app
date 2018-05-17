@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Event from "./components/Event";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 
 class Events extends Component {
   events = [

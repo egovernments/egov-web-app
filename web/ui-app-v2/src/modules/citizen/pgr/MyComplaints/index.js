@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Icon } from "components";
 import Complaints from "modules/common/pgr/Complaints";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "redux/complaints/actions";
 import { displayLocalizedStatusMessage, transformComplaintForComponent } from "utils/commons";

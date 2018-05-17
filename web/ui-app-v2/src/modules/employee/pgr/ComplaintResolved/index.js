@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "components";
-import ImageUpload from "modules/common/common-components/ImageUpload";
+import ImageUpload from "modules/common/common/ImageUpload";
 import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
