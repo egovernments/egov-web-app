@@ -71,6 +71,7 @@ class TrackLocation extends Component {
 
   onClickPick = () => {
     this.convertToAddress(add);
+    this.setPrevPageFlag();
     this.props.history.goBack();
   };
 
@@ -93,7 +94,14 @@ class TrackLocation extends Component {
   };
 
   onCLickMapBackBtn = () => {
+    this.setPrevPageFlag();
     this.props.history.goBack();
+  };
+
+  setPrevPageFlag = () => {
+    if (this.props.formKey === "propertyTax") {
+      sessionStorage.setItem("backFromPTMap", true);
+    }
   };
 
   render() {

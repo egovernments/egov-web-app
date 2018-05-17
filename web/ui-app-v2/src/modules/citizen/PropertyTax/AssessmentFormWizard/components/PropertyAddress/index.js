@@ -39,7 +39,7 @@ const PropertyAddress = ({ propertyNo, areaName, street, propertyNoOnchange, are
         fullWidth={true}
         maxLength="250"
       />
-      <Link to="/citizen/map">
+      <Link to="/citizen/map?propertyTax">
         <TextFieldIcon
           name="pt-location"
           isRequired={false}
