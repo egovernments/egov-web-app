@@ -16,11 +16,6 @@ const iconStyle = {
 let steps = [
   {
     labelChildren: "",
-    // prop:{
-    //   style:{
-    //     background:"rgb(254, 122, 81)"
-    //   }
-    // }
   },
   {
     labelChildren: "",
@@ -109,7 +104,8 @@ class AssessmentFormWizard extends React.Component {
 
   render() {
     const { finished, stepIndex } = this.state;
-    const contentStyle = { margin: "0 16px" };
+    const { getStepContent } = this;
+    const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex);
 
     return (
       <div>
@@ -126,18 +122,18 @@ class AssessmentFormWizard extends React.Component {
             style={{ margin: "24px 8px" }}
             textChildren={
               <div style={{ position: "relative" }}>
-                <div style={{ left: this.getStepContent(stepIndex).trianglePos }} className="card-triangle" />
+                <div style={{ left: trianglePos }} className="card-triangle" />
                 <div className="pt-form-card-header-cont">
-                  <Icon name={this.getStepContent(stepIndex).iconName} action={this.getStepContent(stepIndex).iconAction} style={iconStyle} />
+                  <Icon name={iconName} action={iconAction} style={iconStyle} />
                   <Label
-                    label={this.getStepContent(stepIndex).header}
+                    label={header}
                     bold={true}
                     dark={true}
                     labelStyle={{ letterSpacing: 0.6 }}
                     containerStyle={{ display: "inline-block", marginLeft: 16 }}
                   />
                 </div>
-                {this.getStepContent(stepIndex).component}
+                {component}
               </div>
             }
           />
