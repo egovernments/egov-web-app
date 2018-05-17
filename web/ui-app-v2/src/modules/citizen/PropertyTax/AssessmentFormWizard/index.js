@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button, TimeLine, Card, Icon } from "components";
 import Label from "utils/translationNode";
 import OwnerDetails from "./components/OwnerDetails";
