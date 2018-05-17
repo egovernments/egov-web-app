@@ -2,18 +2,27 @@ import React from "react";
 import { Step, Stepper, StepLabel, StepContent } from "material-ui/Stepper";
 import PropTypes from "prop-types";
 
-const TimeLineUi = ({ divStyle, stepperProps, steps }) => {
+const TimeLineUi = ({ divStyle, stepperProps, steps, horizontal }) => {
   return (
     <div {...divStyle}>
       <Stepper {...stepperProps}>
-        {steps.map((step, stepIndex) => {
-          return (
-            <Step key={stepIndex} {...step.props}>
-              <StepLabel {...step.labelProps}>{step.labelChildren}</StepLabel>
-              <StepContent {...step.contentProps}>{step.contentChildren}</StepContent>
-            </Step>
-          );
-        })}
+        {horizontal
+          ? //Code duplication to handle annoying warning - Refer https://github.com/mui-org/material-ui/issues/6004
+            steps.map((step, stepIndex) => {
+              return (
+                <Step key={stepIndex} {...step.props}>
+                  <StepLabel {...step.labelProps}>{step.labelChildren}</StepLabel>
+                </Step>
+              );
+            })
+          : steps.map((step, stepIndex) => {
+              return (
+                <Step key={stepIndex} {...step.props}>
+                  <StepLabel {...step.labelProps}>{step.labelChildren}</StepLabel>
+                  <StepContent {...step.contentProps}>{step.contentChildren}</StepContent>
+                </Step>
+              );
+            })}
       </Stepper>
     </div>
   );
@@ -22,10 +31,5 @@ const TimeLineUi = ({ divStyle, stepperProps, steps }) => {
 export default TimeLineUi;
 
 TimeLineUi.propTypes = {
-  header: PropTypes.object,
-  mediaOverlay: PropTypes.element,
-  mediaChildren: PropTypes.element,
-  title: PropTypes.object,
-  textChildren: PropTypes.element,
-  actionChildren: PropTypes.element,
+  divStyle: PropTypes.object,
 };
