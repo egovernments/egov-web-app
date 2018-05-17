@@ -13,24 +13,6 @@ const iconStyle = {
   display: "inline-block",
 };
 
-let steps = [
-  {
-    labelChildren: "",
-  },
-  {
-    labelChildren: "",
-  },
-  {
-    labelChildren: "",
-  },
-  {
-    labelChildren: "",
-  },
-  {
-    labelChildren: "",
-  },
-];
-
 class AssessmentFormWizard extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +44,7 @@ class AssessmentFormWizard extends React.Component {
       case 0:
         return {
           component: <OwnerDetails />,
-          trianglePos: "1%",
+          trianglePos: "2%",
           iconName: "person",
           iconAction: "social",
           header: "Owner Details",
@@ -70,7 +52,7 @@ class AssessmentFormWizard extends React.Component {
       case 1:
         return {
           component: <PropertyAddress />,
-          trianglePos: "24%",
+          trianglePos: "25%",
           iconName: "home",
           iconAction: "action",
           header: "Property Address",
@@ -78,7 +60,7 @@ class AssessmentFormWizard extends React.Component {
       case 2:
         return {
           component: <TaxAssessmentDetailsOne />,
-          trianglePos: "47%",
+          trianglePos: "48%",
           iconName: "person",
           iconAction: "social",
           header: "Tax Assessment Details - 1",
@@ -107,14 +89,54 @@ class AssessmentFormWizard extends React.Component {
     const { getStepContent } = this;
     const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex);
 
+    const activeStepperStyle = {
+      width: 20,
+      height: 20,
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
+      backgroundColor: "#fe7a51",
+      borderRadius: "50%",
+      position: "relative",
+      zIndex: 100,
+    };
+
+    const defaultStepperStyle = {
+      width: 18,
+      height: 18,
+    };
+
+    const steps = [1, 2, 3, 4, 5].map((item, index) => {
+      return {
+        labelChildren: "",
+        labelProps: {
+          icon:
+            this.state.stepIndex === index ? (
+              <div style={activeStepperStyle} />
+            ) : this.state.stepIndex > index ? (
+              <Icon style={defaultStepperStyle} color="#ffffff" action="custom" name="check-circle" />
+            ) : (
+              <Icon style={defaultStepperStyle} color="#ffffff" action="custom" name="circle" />
+            ),
+          style: {
+            padding: 0,
+          },
+          iconContainerStyle: {
+            padding: 0,
+            display: "flex",
+          },
+        },
+      };
+    });
+
     return (
       <div>
         <TimeLine
           stepperProps={{
             activeStep: stepIndex,
-            style: { background: "rgb(0, 188, 209)" },
+            style: { background: "rgb(0, 188, 209)", position: "relative", zIndex: 10000, padding: "0 24px" },
+            connector: <div style={{ border: "1px solid #fff", width: "100%", marginLeft: "-2px", marginRight: "4px" }} />,
           }}
           steps={steps}
+          horizontal={true}
         />
 
         <div>
