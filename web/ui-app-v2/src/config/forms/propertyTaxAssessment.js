@@ -56,7 +56,7 @@ const formConfig = {
       id: "exemption-proof",
       jsonPath: "",
       file: true,
-      floatingLabelext: "PT_EXEMPTION_PROOF",
+      floatingLabelText: "PT_EXEMPTION_PROOF",
       hintText: "PT_EXEMPTION_PROOF_PLACEHOLDER",
     },
     //end of exemption

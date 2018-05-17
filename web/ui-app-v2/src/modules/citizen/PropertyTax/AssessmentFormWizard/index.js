@@ -14,6 +14,21 @@ const iconStyle = {
   display: "inline-block",
 };
 
+const activeStepperStyle = {
+  width: 20,
+  height: 20,
+  boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
+  backgroundColor: "#fe7a51",
+  borderRadius: "50%",
+  position: "relative",
+  zIndex: 100,
+};
+
+const defaultStepperStyle = {
+  width: 18,
+  height: 18,
+};
+
 class AssessmentFormWizard extends React.Component {
   constructor(props) {
     super(props);
@@ -23,24 +38,6 @@ class AssessmentFormWizard extends React.Component {
     };
     isBackFromMap && sessionStorage.removeItem("backFromPTMap");
 
-    this.steps = [
-      {
-        labelChildren: "",
-      },
-      {
-        labelChildren: "",
-      },
-      {
-        labelChildren: "",
-      },
-      {
-        labelChildren: "",
-      },
-      {
-        labelChildren: "",
-      },
-    ];
-
     this.wizardFields = [
       ["name", "fatherHusbandName", "aadharNumber", "mobileNumber", "address"],
       ["propertyNumber", "colony", "street", "location"],
@@ -48,7 +45,17 @@ class AssessmentFormWizard extends React.Component {
       ["builtUpArea1", "builtUpArea2"],
       ["propertcategoryNumber", "referenceId", "proof"],
     ];
+
+    this.formConfig = require(`config/forms/${props.formKey}`).default;
   }
+
+  componentDidMount() {
+    this.props.initForm(this.formConfig);
+  }
+
+  handleFieldChange = (formKey) => (fieldKey, value) => {
+    this.props.handleFieldChange(formKey, fieldKey, value);
+  };
 
   getWizardFields = (index, formFields) => {
     const fields = this.wizardFields[index];
@@ -75,11 +82,13 @@ class AssessmentFormWizard extends React.Component {
     }
   };
 
-  getStepContent(stepIndex, formKey, fields) {
+  getStepContent = (stepIndex, formKey, fields) => {
+    const wizardFields = this.getWizardFields(stepIndex, fields);
+    const handleFieldChange = this.handleFieldChange(formKey);
     switch (stepIndex) {
       case 0:
         return {
-          component: <OwnerDetails />,
+          component: <OwnerDetails handleFieldChange={handleFieldChange} fields={wizardFields} />,
           trianglePos: "2%",
           iconName: "person",
           iconAction: "social",
@@ -87,7 +96,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 1:
         return {
-          component: <PropertyAddress />,
+          component: <PropertyAddress handleFieldChange={handleFieldChange} fields={wizardFields} />,
           trianglePos: "25%",
           iconName: "home",
           iconAction: "action",
@@ -95,7 +104,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 2:
         return {
-          component: <TaxAssessmentDetailsOne />,
+          component: <TaxAssessmentDetailsOne handleFieldChange={handleFieldChange} fields={wizardFields} />,
           trianglePos: "48%",
           iconName: "person",
           iconAction: "social",
@@ -103,7 +112,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 3:
         return {
-          component: <TaxAssessmentDetailsTwo />,
+          component: <TaxAssessmentDetailsTwo handleFieldChange={handleFieldChange} fields={wizardFields} />,
           trianglePos: "70%",
           iconName: "person",
           iconAction: "social",
@@ -111,36 +120,21 @@ class AssessmentFormWizard extends React.Component {
         };
       default:
         return {
-          component: <FullOrPartialExemption />,
+          component: <FullOrPartialExemption handleFieldChange={handleFieldChange} fields={wizardFields} />,
           trianglePos: "93%",
           iconName: "person",
           iconAction: "social",
           header: "Full/ Partial Exemption (if any)",
         };
     }
-  }
+  };
 
   render() {
     const { finished, stepIndex } = this.state;
-    const { getStepContent, steps } = this;
-    const { formKey, form, loading } = this.props;
+    const { getStepContent } = this;
+    const { formKey, form, loading, handleFieldChange } = this.props;
     const fields = form.fields || {};
     const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex, formKey, fields);
-
-    const activeStepperStyle = {
-      width: 20,
-      height: 20,
-      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
-      backgroundColor: "#fe7a51",
-      borderRadius: "50%",
-      position: "relative",
-      zIndex: 100,
-    };
-
-    const defaultStepperStyle = {
-      width: 18,
-      height: 18,
-    };
 
     const steps = [1, 2, 3, 4, 5].map((item, index) => {
       return {
@@ -212,7 +206,7 @@ class AssessmentFormWizard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const formKey = "complaint";
+  const formKey = "propertyTaxAssessment";
   const form = state.form[formKey] || {};
   const { loading } = form || false;
   return { form, formKey, loading };
