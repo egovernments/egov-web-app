@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import PasswordForm from "./components/PasswordForm";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { toggleSnackbarAndSetText } from "redux/app/actions";

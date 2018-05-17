@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "modules/common/Banner";
+import Events from "modules/citizen/PropertyTax/Events/components/Event";
+import Banner from "modules/common/common/Banner";
 import Notifications from "./components/Notifications";
-import Events from "./components/Events";
 import SearchService from "./components/SearchService";
 import ServiceList from "./components/ServiceList";
 import ServicesNearby from "./components/ServicesNearby";

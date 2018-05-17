@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "modules/common/Screen";
-import Complaints from "modules/common/Complaints";
+import Screen from "modules/common/common/Screen";
+import Complaints from "modules/common/pgr/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import { transformComplaintForComponent } from "utils/commons";
 import orderby from "lodash/orderBy";

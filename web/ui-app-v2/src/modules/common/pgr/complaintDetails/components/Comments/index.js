@@ -9,7 +9,7 @@ import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { getDateFromEpoch, getPropertyFromObj } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
-import { transformById } from "../../../../../utils/commons";
+import { transformById } from "utils/commons";
 
 // Don't Delete!!
 // const itemsOne = [
@@ -107,7 +107,7 @@ class Comments extends Component {
         } else {
           return {
             primaryText: (
-              <div className="complaint-details-comments-section" style={{marginRight: "6px"}}>
+              <div className="complaint-details-comments-section" style={{ marginRight: "6px" }}>
                 <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.name ? comment.name : ""} />
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
                 <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />

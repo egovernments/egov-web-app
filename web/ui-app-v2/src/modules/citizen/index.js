@@ -1,5 +1,5 @@
 import React from "react";
-import RenderRoutes from "modules/common/RenderRoutes";
+import RenderRoutes from "modules/common/common/RenderRoutes";
 
 // user routes
 import Register from "./User/Register";
@@ -17,7 +17,7 @@ import ContactUs from "./ContactUs";
 import MyComplaints from "./pgr/MyComplaints";
 import ComplaintDetails from "./pgr/ComplaintDetails";
 import ComplaintSubmited from "./pgr/ComplaintSubmited";
-import TrackLocation from "modules/common/TrackLocation";
+import TrackLocation from "modules/common/common/TrackLocation";
 import Feedback from "./pgr/Feedback";
 import ReOpenComplaint from "./pgr/ReOpenComplaint";
 import ComplaintType from "./pgr/ComplaintType";
@@ -29,7 +29,7 @@ import ReopenAcknowledgement from "./pgr/ReopenAcknowledgement";
 import PropertyTaxPaymentStepOne from "./PropertyTax/PaymentStepOne";
 import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard";
 import Reciept from "./PropertyTax/Reciept";
-import LocateProperty from "./PropertyTax/AssessmentFormWizard/components/PropertyAddress/components/locateProperty";
+import Events from "./PropertyTax/Events";
 
 const routes = [
   {
@@ -73,6 +73,12 @@ const routes = [
     component: Reciept,
     needsAuthentication: true,
     options: { hideFooter: true, title: "Reciepts" },
+  },
+  {
+    path: "events",
+    component: Events,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Events" },
   },
   {
     path: "my-complaints",
@@ -162,16 +168,6 @@ const routes = [
     options: {
       title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
       hideFooter: true,
-    },
-  },
-  {
-    path: "pt-locate-property",
-    component: LocateProperty,
-    needsAuthentication: true,
-    options: {
-      title: "PT_LOCATE_PROPERTY",
-      hideFooter: true,
-      hideHeader: true,
     },
   },
 ];

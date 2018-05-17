@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "modules/common/Banner";
+import Banner from "modules/common/common/Banner";
 import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
 import { fetchLocalizationLabel } from "redux/app/actions";
 

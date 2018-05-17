@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Icon } from "components";
-import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
+import SuccessMessage from "modules/common/common/SuccessMessage/components/successmessage";
 import Label from "utils/translationNode";
 import "./index.css";
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "modules/common/Screen";
+import Screen from "modules/common/common/Screen";
 import HeaderCard from "./components/HeaderCard";
 import ListCard from "./components/ListCard";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
