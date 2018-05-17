@@ -37,9 +37,14 @@ let steps = [
 ];
 
 class AssessmentFormWizard extends React.Component {
-  state = {
-    stepIndex: 0,
-  };
+  constructor(props) {
+    super(props);
+    let isBackFromMap = sessionStorage.getItem("backFromPTMap");
+    this.state = {
+      stepIndex: isBackFromMap ? 1 : 0,
+    };
+    isBackFromMap && sessionStorage.removeItem("backFromPTMap");
+  }
 
   handleNext = () => {
     const { stepIndex } = this.state;
