@@ -31,6 +31,7 @@ import PropertyTaxAssessmentFormWizard from "./PropertyTax/AssessmentFormWizard"
 import Reciept from "./PropertyTax/Reciept";
 import Events from "./PropertyTax/Events";
 import Notifications from "./PropertyTax/Notifications";
+import PoliceStations from "./PropertyTax/PoliceStations";
 
 const routes = [
   {
@@ -86,6 +87,12 @@ const routes = [
     component: Notifications,
     needsAuthentication: true,
     options: { hideFooter: true, title: "Notifications" },
+  },
+  {
+    path: "police-stations",
+    component: PoliceStations,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Police Stations" },
   },
   {
     path: "my-complaints",
