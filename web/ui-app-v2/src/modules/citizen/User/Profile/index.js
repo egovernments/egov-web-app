@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
-import UploadDrawer from "modules/common/common/User/components/UploadDrawer";
-import ProfileSection from "modules/common/common/User/components/ProfileSection";
+import UploadDrawer from "modules/common/User/components/UploadDrawer";
+import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/common/Screen";
 import img from "assets/images/download.png";

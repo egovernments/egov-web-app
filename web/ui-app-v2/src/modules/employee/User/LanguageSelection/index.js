@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Banner from "modules/common/common/Banner";
-import LanguageSelectionForm from "modules/common/common/User/components/LanguageSelectionForm";
+import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
 import { fetchLocalizationLabel } from "redux/app/actions";
 
 class LanguageSelection extends Component {
