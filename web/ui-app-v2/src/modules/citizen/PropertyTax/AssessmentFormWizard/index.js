@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Button, TimeLine, Card, Icon } from "components";
 import Label from "utils/translationNode";
 import OwnerDetails from "./components/OwnerDetails";
@@ -6,8 +7,8 @@ import PropertyAddress from "./components/PropertyAddress";
 import TaxAssessmentDetailsOne from "./components/TaxAssessmentDetailsOne";
 import TaxAssessmentDetailsTwo from "./components/TaxAssessmentDetailsTwo";
 import FullOrPartialExemption from "./components/FullOrPartialExemption";
+import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import "./index.css";
-import { relative } from "path";
 
 const iconStyle = {
   display: "inline-block",
@@ -21,7 +22,42 @@ class AssessmentFormWizard extends React.Component {
       stepIndex: isBackFromMap ? 1 : 0,
     };
     isBackFromMap && sessionStorage.removeItem("backFromPTMap");
+
+    this.steps = [
+      {
+        labelChildren: "",
+      },
+      {
+        labelChildren: "",
+      },
+      {
+        labelChildren: "",
+      },
+      {
+        labelChildren: "",
+      },
+      {
+        labelChildren: "",
+      },
+    ];
+
+    this.wizardFields = [
+      ["name", "fatherHusbandName", "aadharNumber", "mobileNumber", "address"],
+      ["propertyNumber", "colony", "street", "location"],
+      ["propertyType", "plotSize", "floorCount"],
+      ["builtUpArea1", "builtUpArea2"],
+      ["propertcategoryNumber", "referenceId", "proof"],
+    ];
   }
+
+  getWizardFields = (index, formFields) => {
+    const fields = this.wizardFields[index];
+    return fields.reduce((wizardFields, fieldKey) => {
+      const field = formFields[fieldKey];
+      wizardFields[fieldKey] = field;
+      return wizardFields;
+    }, {});
+  };
 
   handleNext = () => {
     const { stepIndex } = this.state;
@@ -39,7 +75,7 @@ class AssessmentFormWizard extends React.Component {
     }
   };
 
-  getStepContent(stepIndex) {
+  getStepContent(stepIndex, formKey, fields) {
     switch (stepIndex) {
       case 0:
         return {
@@ -86,8 +122,10 @@ class AssessmentFormWizard extends React.Component {
 
   render() {
     const { finished, stepIndex } = this.state;
-    const { getStepContent } = this;
-    const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex);
+    const { getStepContent, steps } = this;
+    const { formKey, form, loading } = this.props;
+    const fields = form.fields || {};
+    const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex, formKey, fields);
 
     const activeStepperStyle = {
       width: 20,
@@ -173,4 +211,18 @@ class AssessmentFormWizard extends React.Component {
   }
 }
 
-export default AssessmentFormWizard;
+const mapStateToProps = (state) => {
+  const formKey = "complaint";
+  const form = state.form[formKey] || {};
+  const { loading } = form || false;
+  return { form, formKey, loading };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    initForm: (form) => dispatch(initForm(form)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AssessmentFormWizard);

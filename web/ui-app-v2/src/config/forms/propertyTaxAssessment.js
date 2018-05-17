@@ -1,7 +1,8 @@
 const formConfig = {
   name: "propertyTaxAssessment",
   fields: {
-    propertType: {
+    //start of details 1
+    propertyType: {
       id: "assessment-property-type",
       jsonPath: "",
       required: true,
@@ -21,6 +22,8 @@ const formConfig = {
       floatingLabelText: "PT_ASSESMENT1_NUMBER_OF_FLOORS",
       hintText: "PT_COMMON_SQFT_PLACEHOLDER",
     },
+    //end of details 1
+    // start of details 2
     builtUpArea1: {
       id: "assessment-built-up-area-floor1",
       jsonPath: "",
@@ -34,7 +37,9 @@ const formConfig = {
       hintText: "PT_COMMON_SQFT_PLACEHOLDER",
       errorMessage: "PT_ASSESSMENT2_COMMON_ERRORMSG",
     },
-    propertcategoryyNumber: {
+    // end of details 2
+    //exemption wizard starts
+    propertcategoryNumber: {
       id: "exemption-category",
       jsonPath: "",
       floatingLabelText: "PT_EXEMPTION_EXEMPTION_CATEGORY",
@@ -50,9 +55,12 @@ const formConfig = {
     proof: {
       id: "exemption-proof",
       jsonPath: "",
+      file: true,
       floatingLabelext: "PT_EXEMPTION_PROOF",
       hintText: "PT_EXEMPTION_PROOF_PLACEHOLDER",
     },
+    //end of exemption
+    // owner details start
     name: {
       id: "owner-name",
       jsonPath: "",
@@ -90,6 +98,8 @@ const formConfig = {
       hintText: "PT_OWNER_DETAILS_ADDRESS_PLACEHOLDER",
       errorMessage: "PT_OWNER_DETAILS_ADDRESS_ERRORMSG",
     },
+    // end of owner fields
+    //property address
     propertyNumber: {
       id: "property-number",
       jsonPath: "",
@@ -120,6 +130,7 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_LOCATION",
       hintText: "PT_PROPERTY_DETAILS_LOCATION_PLACEHOLDER",
     },
+    // end of property address
   },
   action: "",
   redirectionRoute: "",
