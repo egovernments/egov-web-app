@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "utils/translationNode";
-import SuccessMessage from "modules/common/SuccessMessage/components/successmessage";
+import SuccessMessage from "modules/common/common-components/SuccessMessage/components/successmessage";
 import "./index.css";
 
 class ErrorScreen extends Component {

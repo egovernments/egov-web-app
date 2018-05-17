@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Details from "modules/common/complaintDetails/components/Details";
-import ComplaintTimeLine from "modules/common/complaintDetails/components/ComplaintTimeLine";
-import Comments from "modules/common/complaintDetails/components/Comments";
-import Actions from "modules/common/complaintDetails/components/ActionButton";
+import Details from "modules/common/pgr/complaintDetails/components/Details";
+import ComplaintTimeLine from "modules/common/pgr/complaintDetails/components/ComplaintTimeLine";
+import Comments from "modules/common/pgr/complaintDetails/components/Comments";
+import Actions from "modules/common/pgr/complaintDetails/components/ActionButton";
 import { Icon, MapLocation } from "components";
 import Screen from "modules/common/Screen";
 import pinIcon from "assets/Location_pin.svg";

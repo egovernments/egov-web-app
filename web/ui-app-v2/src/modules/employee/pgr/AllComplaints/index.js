@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tabs } from "components";
 import Screen from "modules/common/Screen";
-import Complaints from "modules/common/Complaints";
+import Complaints from "modules/common/pgr/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
 import { transformComplaintForComponent } from "utils/commons";

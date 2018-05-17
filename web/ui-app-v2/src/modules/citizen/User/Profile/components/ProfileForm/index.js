@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, TextField } from "components";
-import CityPicker from "modules/common/CityPicker";
+import CityPicker from "modules/common/common-components/CityPicker";
 
 const ProfileForm = ({ formKey, form, onChange, submitForm }) => {
   const fields = form.fields || {};

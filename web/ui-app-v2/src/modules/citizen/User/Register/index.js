@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import RegisterForm from "./components/RegisterForm";
-import Banner from "modules/common/Banner";
+import Banner from "modules/common/common-components/Banner";
 import Screen from "modules/common/Screen";
 import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 
