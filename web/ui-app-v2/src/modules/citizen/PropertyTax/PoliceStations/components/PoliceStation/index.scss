@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
+  padding: 8px 0px 8px 8px;
 }
 
 .police-station-card .date {
@@ -47,23 +48,23 @@
   background-color: #7edfeb;
 }
 
-.police-station-card .info {
+.police-station-card .police-station-info-cont {
   flex-grow: 3;
-  padding: 5px 15px;
+  padding: 5px 12px;
 }
 
-.police-station-card .info .police-station-location-cont {
+.police-station-card .police-station-info-cont .police-station-location-cont {
   display: flex;
 }
 
-.police-station-card .info .police-station-location-cont .location-icon {
+.police-station-card .police-station-info-cont .police-station-location-cont .location-icon {
   height: 15px !important;
   width: 15px !important;
   color: #767676 !important;
   margin-top: 3px;
 }
 
-.police-station-card .info .police-station-location-cont .label-container {
+.police-station-card .police-station-info-cont .police-station-location-cont .label-container {
   display: inline-block;
   margin-left: 10px;
 }
