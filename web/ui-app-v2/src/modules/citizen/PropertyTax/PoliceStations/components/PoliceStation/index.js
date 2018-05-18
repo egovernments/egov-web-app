@@ -18,7 +18,7 @@ const Events = ({ stations = [] }) => {
             <div style={{ backgroundImage: `url(${stationImg})` }} className="station-image-cont">
               {/* <Image source={stationImg} /> */}
             </div>
-            <div className="info">
+            <div className="police-station-info-cont">
               <div className="police-station-name-cont">
                 <Label label={name} />
                 <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />

@@ -32,6 +32,7 @@ import Reciept from "./PropertyTax/Reciept";
 import Events from "./PropertyTax/Events";
 import Notifications from "./PropertyTax/Notifications";
 import PoliceStations from "./PropertyTax/PoliceStations";
+import Payments from "./PropertyTax/Payments";
 
 const routes = [
   {
@@ -93,6 +94,12 @@ const routes = [
     component: PoliceStations,
     needsAuthentication: true,
     options: { hideFooter: true, title: "Police Stations" },
+  },
+  {
+    path: "payments",
+    component: Payments,
+    needsAuthentication: true,
+    options: { hideFooter: true, title: "Payments" },
   },
   {
     path: "my-complaints",
