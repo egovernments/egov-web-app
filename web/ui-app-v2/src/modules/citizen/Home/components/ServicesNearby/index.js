@@ -48,7 +48,7 @@ const servicesNearby = [
 const ServicesNearby = () => {
   return (
     <Card
-      className="service-nearby col-xs-12"
+      className="service-nearby"
       style={{ padding: "12px 8px" }}
       textChildren={
         <div>

@@ -8,7 +8,7 @@ const Updates = ({ notifications = [] }) => {
     const { title, date, status, amountDue, dueDate } = notification;
     return (
       <Card
-        className="col-xs-12 home-notification"
+        className="home-notification"
         style={{ margin: "8px 0px" }}
         key={index}
         id={`home-notification${index}`}

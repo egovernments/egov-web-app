@@ -7,7 +7,7 @@ import "./index.css";
 const ServiceList = () => {
   return (
     <Card
-      className="service-list col-xs-12"
+      className="service-list"
       style={{ padding: "12px 8px" }}
       textChildren={
         <div>

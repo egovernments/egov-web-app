@@ -8,7 +8,7 @@ const Events = ({ events = [] }) => {
     const { day, month, name, location, time } = event;
     return (
       <Card
-        className="col-xs-12 home-event"
+        className="home-event"
         style={{ margin: "8px 0px" }}
         key={index}
         id={`home-event-${index}`}
