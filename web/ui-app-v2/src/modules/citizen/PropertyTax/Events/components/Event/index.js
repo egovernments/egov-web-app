@@ -12,7 +12,7 @@ const Events = ({ events = [] }) => {
         key={index}
         id={`home-event-${index}`}
         textChildren={
-          <div className="event-card row">
+          <div className="event-card">
             <div className="date">
               <div className="day">
                 <Label color="#fff" label={day} />
