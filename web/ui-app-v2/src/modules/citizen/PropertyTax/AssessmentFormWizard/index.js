@@ -136,6 +136,21 @@ class AssessmentFormWizard extends React.Component {
     const fields = form.fields || {};
     const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex, formKey, fields);
 
+    const activeStepperStyle = {
+      width: 20,
+      height: 20,
+      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
+      backgroundColor: "#fe7a51",
+      borderRadius: "50%",
+      position: "relative",
+      zIndex: 100,
+    };
+
+    const defaultStepperStyle = {
+      width: 20,
+      height: 20,
+    };
+
     const steps = [1, 2, 3, 4, 5].map((item, index) => {
       return {
         labelChildren: "",
