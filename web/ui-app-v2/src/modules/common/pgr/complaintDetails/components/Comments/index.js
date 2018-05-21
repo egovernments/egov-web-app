@@ -130,7 +130,7 @@ class Comments extends Component {
     let currentstatus = status && status[0].status && status[0].status.toLowerCase();
     return (
       <div>
-        {this.props.hasComments && (
+        {this.props.hasComments || (currentstatus && currentstatus.toLowerCase() !== "closed") ? (
           <Card
             style={{
               paddingBottom: "0px",
@@ -159,6 +159,8 @@ class Comments extends Component {
               </div>
             }
           />
+        ) : (
+          ""
         )}
       </div>
     );
@@ -190,10 +192,12 @@ const mapStateToProps = (state, ownProps) => {
         when: comment.when,
       };
     });
+
+  const hasComments = transformedCommentList && transformedCommentList.length ? true : false;
   const userImage = state.auth.userInfo.photo || "";
   const userId = state.auth.userInfo.id || "";
   const userName = state.auth.userInfo.name || "";
-  return { form, selectedComplaint, userImage, userId, userName, transformedCommentList };
+  return { form, selectedComplaint, userImage, userId, userName, transformedCommentList, hasComments };
 };
 
 const mapDispatchToProps = (dispatch) => {

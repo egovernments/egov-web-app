@@ -64,7 +64,7 @@ class ComplaintType extends Component {
     return results.map((result) => {
       const listItem = this.prepareListItem(result);
       if (result.nestedItems && result.nestedItems.length) {
-        listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
+        // listItem.rightIcon = <Icon action="hardware" name="keyboard-arrow-right" />;
         listItem.nestedItems = this.prepareResultsForDisplay(result.nestedItems);
       } else {
         listItem.onClick = this.onComplaintTypeChosen.bind(null, result);
@@ -79,7 +79,7 @@ class ComplaintType extends Component {
         onItemClick={enableClick && this.onComplaintTypeChosen}
         listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
         nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
-        autoGenerateNestedIndicator={false}
+        autoGenerateNestedIndicator={true}
         primaryTogglesNestedList={true}
         items={dataSource}
       />
