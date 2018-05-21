@@ -32,12 +32,12 @@ const Updates = ({ notifications = [] }) => {
               <span className="complaint-date">{date}</span>
             </div>
             <div>
-              <Label label="Amount due : " containerStyle={{ display: "inline-block" }} />
-              <Label label={amountDue} containerStyle={{ display: "inline-block" }} />
+              <Label label="Amount due :" containerStyle={{ display: "inline-block" }} />
+              <Label label={amountDue} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
             <div className="notification-top-content">
               <div>
-                <Label label="Due Date : " containerStyle={{ display: "inline-block" }} />
+                <Label label="Due Date :" containerStyle={{ display: "inline-block" }} />
                 <Label label={dueDate} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
               </div>
               <div className="pay-button-cont">
