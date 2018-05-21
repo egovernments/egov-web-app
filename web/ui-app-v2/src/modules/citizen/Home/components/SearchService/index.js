@@ -32,6 +32,7 @@ export default class SearchService extends Component {
         value={inputValue}
         id="find-services"
         iconStyle={iconStyle}
+        className="search-input-style"
       />
     );
   }

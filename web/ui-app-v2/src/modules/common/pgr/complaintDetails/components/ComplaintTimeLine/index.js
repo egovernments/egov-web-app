@@ -107,9 +107,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       openStatusCount++;
       return (
         <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
           <Label
-            labelClassName="dark-color"
+            labelClassName="dark-color complaint-timeline-status"
             containerStyle={statusContainerStyle}
             label={`${
               action === "reopen"
@@ -134,7 +134,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
 
           {action === "reopen" && (
             <div>
-              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
+              <Label
+                labelClassName="rainmaker-small-font complaint-timeline-comments"
+                containerStyle={{ width: "192px" }}
+                label={comments ? comments.split(";")[0] : ""}
+              />
               {media && (
                 <div style={{ display: "flex" }}>
                   {media.map((image, index) => {
@@ -162,7 +166,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 </div>
               )}
               <Label
-                labelClassName="rainmaker-small-font"
+                labelClassName="rainmaker-small-font complaint-timeline-status"
                 containerStyle={{ width: "192px" }}
                 label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
               />
@@ -177,9 +181,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
         case "citizen":
           return (
             <div className="complaint-timeline-content-section">
-              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
               <Label
-                labelClassName="dark-color"
+                labelClassName="dark-color complaint-timeline-status"
                 containerStyle={statusContainerStyle}
                 label={`${
                   action == "assign"
@@ -199,7 +203,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   </a>
                 )}
               <Label
-                labelClassName="rainmaker-small-font"
+                labelClassName="rainmaker-small-font complaint-timeline-department"
                 containerStyle={{ width: "192px" }}
                 label={`${employeeDesignation} - ${employeeDepartment}`}
               />
@@ -209,9 +213,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
         case "employee":
           return (
             <div className="complaint-timeline-content-section">
-              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
               <Label
-                labelClassName="dark-color"
+                labelClassName="dark-color complaint-timeline-status"
                 containerStyle={statusContainerStyle}
                 label={`${
                   action == "assign"
@@ -231,16 +235,22 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                   </a>
                 )}
-              {groName && <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={`${groDesignation}`} />}
+              {groName && (
+                <Label
+                  labelClassName="rainmaker-small-font complaint-timeline-designation"
+                  containerStyle={{ width: "192px" }}
+                  label={`${groDesignation}`}
+                />
+              )}
             </div>
           );
           break;
         default:
           return (
             <div className="complaint-timeline-content-section">
-              <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+              <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
               <Label
-                labelClassName="dark-color"
+                labelClassName="dark-color complaint-timeline-status"
                 containerStyle={statusContainerStyle}
                 label={`${action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"}`}
               />
@@ -253,11 +263,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
 
       return (
         <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
           {role === "citizen" && (
             <div>
               <Label
-                labelClassName="dark-color"
+                labelClassName="dark-color complaint-timeline-status"
                 containerStyle={statusContainerStyle}
                 label={`${groName ? "CS_COMPLAINT_DETAILS_BEING_REASSIGNED" : "CS_COMMON_STATUS_BEING_REASSIGNED"}`}
               />
@@ -273,7 +283,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
           {role !== "citizen" && (
             <div>
-              <Label labelClassName="dark-color" containerStyle={statusContainerStyle} label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`} />
+              <Label
+                labelClassName="dark-color complaint-timeline-status"
+                containerStyle={statusContainerStyle}
+                label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`}
+              />
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 && (
                   <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
@@ -281,9 +295,13 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   </a>
                 )}
 
-              <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
               <Label
-                labelClassName="rainmaker-small-font"
+                labelClassName="rainmaker-small-font complaint-timeline-comments"
+                containerStyle={{ width: "192px" }}
+                label={comments ? comments.split(";")[0] : ""}
+              />
+              <Label
+                labelClassName="rainmaker-small-font complaint-timeline-comments"
                 containerStyle={{ width: "192px" }}
                 label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
               />
@@ -309,11 +327,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       rejectStatusCount++;
       return (
         <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" label="CS_MYCOMPLAINTS_REJECTED" />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+          <Label labelClassName="dark-color complaint-timeline-status" label="CS_MYCOMPLAINTS_REJECTED" />
           <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments ? comments.split(";")[0] : ""} />
           <Label
-            labelClassName="rainmaker-small-font"
+            labelClassName="rainmaker-small-font complaint-timeline-comments"
             containerStyle={{ width: "192px" }}
             label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
           />
@@ -364,8 +382,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
       resolveStatusCount++;
       return (
         <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+          <Label labelClassName="dark-color complaint-timeline-status" label="CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" />
           {media && (
             <div style={{ display: "flex" }}>
               {media.map((image, index) => {
@@ -393,7 +411,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             </div>
           )}
 
-          <Label labelClassName="rainmaker-small-font" containerStyle={{ width: "192px" }} label={comments} />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-comments" containerStyle={{ width: "192px" }} label={comments} />
           {currentStatus === "resolved" &&
             role === "citizen" &&
             resolveStatusCount === 1 && (
@@ -432,14 +450,14 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
     case "closed":
       return (
         <div className="complaint-timeline-content-section">
-          <Label labelClassName="rainmaker-small-font" label={getDateFromEpoch(date)} />
-          <Label labelClassName="dark-color" label="CS_COMMON_CITIZEN_FEEDBACK" />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
+          <Label labelClassName="dark-color complaint-timeline-status" label="CS_COMMON_CITIZEN_FEEDBACK" />
           <div style={{ display: "flex" }}>
             {" "}
-            <Label labelClassName="rainmaker-small-font" labelStyle={{ color: "#22b25f" }} label={`${rating}/5 `} />{" "}
-            <Label labelClassName="rainmaker-small-font" label={` ( ${feedback})`} />
+            <Label labelClassName="rainmaker-small-font complaint-timeline-rating" labelStyle={{ color: "#22b25f" }} label={`${rating}/5 `} />{" "}
+            <Label labelClassName="rainmaker-small-font complaint-timeline-feedback" label={` ( ${feedback})`} />
           </div>
-          <Label labelClassName="rainmaker-small-font" label={comments?`" ${comments} "`:""} />
+          <Label labelClassName="rainmaker-small-font complaint-timeline-comments" label={comments ? `" ${comments} "` : ""} />
         </div>
       );
   }

@@ -38,7 +38,7 @@ const getStyles = (iconPosition, textFieldProps) => {
   };
 };
 
-const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, iconPosition = "after", autoFocus, ...textFieldProps }) => {
+const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, iconPosition = "after", autoFocus, className, ...textFieldProps }) => {
   const style = getStyles(iconPosition, textFieldProps);
   return (
     <div onClick={onClick} style={containerStyle}>
@@ -46,6 +46,7 @@ const TextFieldIcon = ({ Icon, iconStyle = {}, onClick, textFieldStyle = {}, ico
       <TextField
         autoFocus={autoFocus}
         name="textfield-icon"
+        className={className}
         style={{ ...style.textFieldStyle, ...textFieldStyle }}
         inputStyle={{ ...style.inputStyle }}
         {...textFieldProps}
