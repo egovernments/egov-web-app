@@ -3,7 +3,7 @@ import { Button, TextField, Card } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) => {
+const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP }) => {
   const fields = form.fields || {};
   const submit = form.submit;
 
@@ -18,28 +18,21 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
             <Label labelClassName="otp-mobile-number" containerStyle={{ paddingLeft: "5px" }} label={phoneNumber} />
           </div>
           <Label label="CORE_COMMON_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              submitForm(formKey);
-            }}
-          >
-            <TextField
-              errorStyle={{ bottom: "0px" }}
-              onChange={(e, value) => onChange(formKey, "otp", value)}
-              id="otp"
-              {...fields.otp}
-              fullWidth={true}
-              type={"number"}
-            />
-            <div style={{ marginBottom: "24px" }} className="text-right">
-              <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
-              <span style={{ cursor: "pointer" }} onClick={() => resendOTP()}>
-                <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
-              </span>
-            </div>
-            <Button {...submit} primary={true} fullWidth={true} />
-          </form>
+          <TextField
+            errorStyle={{ bottom: "0px" }}
+            onChange={(e, value) => handleFieldChange("otp", value)}
+            id="otp"
+            {...fields.otp}
+            fullWidth={true}
+            type={"number"}
+          />
+          <div style={{ marginBottom: "24px" }} className="text-right">
+            <Label id="otp-trigger" className="otp-prompt" label="CORE_OTP_NOT_RECEIVE" />
+            <span style={{ cursor: "pointer" }} onClick={() => resendOTP()}>
+              <Label id="otp-resend" className="otp-resend" label="CORE_OTP_RESEND" />
+            </span>
+          </div>
+          <Button {...submit} primary={true} fullWidth={true} />
         </div>
       }
     />

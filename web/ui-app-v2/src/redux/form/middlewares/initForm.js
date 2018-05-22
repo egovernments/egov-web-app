@@ -23,11 +23,12 @@ const initFormMiddleware = (store) => (next) => async (action) => {
           dispatch(toggleSnackbarAndSetText(true, message, true));
           return;
         }
+      } else {
+        formData = form;
       }
     } catch (error) {
       formData = form;
     }
-
     action.form = formData;
   }
 
