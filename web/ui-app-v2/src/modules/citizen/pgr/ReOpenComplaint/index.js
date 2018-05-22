@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "components";
-import ImageUpload from "modules/common/common/ImageUpload";
 import Screen from "modules/common/common/Screen";
-import Question from "modules/common/pgr/ReOpenComplaint/components/Question";
-import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
 import Label from "utils/translationNode";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload } from "redux/form/actions";
 import "./index.css";
@@ -16,14 +12,9 @@ class ReOpenComplaint extends Component {
     valueSelected: "",
   };
 
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/reopenComplaint").default;
-  }
   componentDidMount() {
     let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
-    this.props.initForm(this.formConfig);
   }
 
   options = [
@@ -72,7 +63,7 @@ class ReOpenComplaint extends Component {
     }
     return (
       <Screen className="reopencomplaint-field" loading={loading}>
-        <div className="reopencomplaint-question">
+        {/* <div className="reopencomplaint-question">
           <Question options={this.options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionsChange} valueSelected={valueSelected} />
         </div>
         <div className="reopencomplaint-upload-photo">
@@ -83,25 +74,17 @@ class ReOpenComplaint extends Component {
         </div>
         <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reopencomplaint-button">
           <Button {...submitprops} primary={true} fullWidth={true} onClick={handleComplaintSubmit} />
-        </div>
+        </div> */}
       </Screen>
     );
   }
 }
-const mapStateToProps = (state) => {
-  const formKey = "reopenComplaint";
-  const form = state.form[formKey] || {};
-  const { loading } = form || false;
-  return { form, formKey, loading };
-};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
     fileUpload: (formKey, fieldKey, file) => dispatch(fileUpload(formKey, fieldKey, file)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReOpenComplaint);
+export default connect(null, mapDispatchToProps)(ReOpenComplaint);
