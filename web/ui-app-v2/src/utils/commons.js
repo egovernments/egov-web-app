@@ -410,3 +410,11 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
   });
   return transformedComplaints;
 };
+
+export const startSMSRecevier = () => {
+  try {
+    if (typeof androidAppProxy !== "undefined") {
+      window.androidAppProxy.requestSMS();
+    }
+  } catch (error) {}
+};

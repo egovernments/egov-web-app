@@ -18,7 +18,7 @@ const frameworkMiddleware = (store) => (next) => (action) => {
       dispatch(saveForm(createUrl, transformedFormData));
       return;
 
-    case "SET_FORM":
+    case "INIT_FORM":
       transformedFormData = _.clone(action.formData);
       if (transformers && transformers.BToVModelTransform && transformers.BToVModelTransform.length) {
         transformers.BToVModelTransform.forEach((transformer) => {

@@ -5,10 +5,11 @@ import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
 import { validateForm } from "./utils";
 
-export const initForm = (form) => {
+export const initForm = (form, formKey) => {
   return {
     type: actionTypes.INIT_FORM,
     form,
+    formKey,
   };
 };
 
@@ -73,6 +74,7 @@ export const submitForm = (formKey) => {
               formData = typeof formData.then === "function" ? await formData : formData;
             } catch (error) {
               const { message } = error;
+              // this bit of code is duplicated
               dispatch(submitFormError(formKey, message));
               dispatch(toggleSnackbarAndSetText(true, message, true));
               return;
