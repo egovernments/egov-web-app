@@ -34,7 +34,6 @@ const formConfig = {
     landmark: {
       id: "landmark",
       jsonPath: "services[0].landmark",
-      required: false,
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorMessage: "Landmark should be less than 100 characters",
@@ -42,7 +41,6 @@ const formConfig = {
     additionalDetails: {
       id: "additional details",
       jsonPath: "services[0].description",
-      required: false,
       floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorMessage: "Landmark should be less than 300 characters",
@@ -53,6 +51,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_SUBMIT_COMPLAINT",
     id: "addComplaint-submit-complaint",
   },
