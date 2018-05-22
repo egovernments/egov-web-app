@@ -18,12 +18,10 @@ class AddComplaints extends Component {
   }
 }
 
-// can be optimized; subscribing to localization labels which is probably bad
 const mapStateToProps = (state) => {
   const { localizationLabels } = state.app;
   const categories = state.complaints.categoriesById;
-  const currentLocation = state.app.currentLocation || {};
-  return { categories, localizationLabels, currentLocation };
+  return { categories, localizationLabels };
 };
 
 export default connect(mapStateToProps)(AddComplaints);
