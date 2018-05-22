@@ -1,5 +1,6 @@
 import formSubmit from "./formSubmit";
 import validation from "./validation";
 import translateFieldText from "./translateFieldText";
+import initForm from "./initForm";
 
-export { formSubmit, translateFieldText, validation };
+export { initForm, formSubmit, translateFieldText, validation };

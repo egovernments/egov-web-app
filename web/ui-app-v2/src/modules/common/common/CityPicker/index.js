@@ -41,8 +41,8 @@ class CityPickerDialog extends Component {
   onItemClick = (item, index) => {
     const { key } = item;
     if (key) {
-      const { formKey, fieldKey, onChange } = this.props;
-      onChange(formKey, fieldKey, key);
+      const { fieldKey, onChange } = this.props;
+      onChange(fieldKey, key);
       this.onClose();
     }
   };
