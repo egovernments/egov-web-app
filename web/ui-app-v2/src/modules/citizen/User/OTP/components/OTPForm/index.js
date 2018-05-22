@@ -15,7 +15,7 @@ const OTP = ({ formKey, form, onChange, phoneNumber, resendOTP, submitForm }) =>
           <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
           <div className="citizen-otp-sent-message">
             <Label label="CORE_OTP_SENT_MESSAGE" />
-            <Label label={phoneNumber} />
+            <Label labelClassName="otp-mobile-number" containerStyle={{ paddingLeft: "5px" }} label={phoneNumber} />
           </div>
           <Label label="CORE_COMMON_CHECK_MESSAGE" color={"#b3b3b3"} fontSize={"12px"} />
           <form
