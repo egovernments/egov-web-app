@@ -1,9 +1,10 @@
 import React from "react";
 import { Card, TextFieldIcon } from "components";
+import { Link } from "react-router-dom";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 
-const ComplaintTypeField = ({ onClick, categories, localizationLabels, complaintType = {} }) => {
+const ComplaintTypeField = ({ categories, localizationLabels, complaintType = {} }) => {
   const complainTypeMessage =
     (complaintType && complaintType.value && (localizationLabels["SERVICEDEFS." + (complaintType.value || "").toUpperCase()] || {}).message) || "";
 
@@ -12,9 +13,8 @@ const ComplaintTypeField = ({ onClick, categories, localizationLabels, complaint
       <Card
         className="complaint-type-card common-padding-for-new-complaint-card"
         textChildren={
-          <div>
+          <Link to="/citizen/complaint-type">
             <TextFieldIcon
-              onClick={onClick}
               {...{ ...complaintType, value: complainTypeMessage }}
               iconPosition="after"
               fullWidth={true}
@@ -23,7 +23,7 @@ const ComplaintTypeField = ({ onClick, categories, localizationLabels, complaint
               isRequired={true}
               disabled={false}
             />
-          </div>
+          </Link>
         }
       />
     </div>
