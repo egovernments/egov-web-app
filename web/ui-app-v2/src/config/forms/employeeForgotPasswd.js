@@ -24,6 +24,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CORE_COMMON_CONTINUE",
     id: "employee-forgot-password-submit-action",
   },

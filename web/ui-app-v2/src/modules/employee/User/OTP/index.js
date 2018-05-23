@@ -1,56 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import formHoc from "hocs/form";
+import Screen from "modules/common/common/Screen";
 import Banner from "modules/common/common/Banner";
 import OTPForm from "./components/OTPForm";
-import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { sendOTP } from "redux/auth/actions";
-import Screen from "modules/common/common/Screen";
+
+const OTPFormHOC = formHoc(OTPForm, "employeeOTP");
 
 class OTP extends Component {
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/employeeOTP").default;
-  }
-
-  componentDidMount() {
-    const { initForm } = this.props;
-    initForm(this.formConfig);
-  }
-
   resendOTP = () => {
     const { sendOTP, forgotPasswdFormKey } = this.props;
     sendOTP(forgotPasswdFormKey);
   };
 
-  submitOTPForm = (formKey) => {
-    const { form, submitForm, toggleSnackbarAndSetText } = this.props;
-    const { newPassword, confirmnewpassword } = form && form.fields;
-    if (newPassword.value === confirmnewpassword.value) {
-      submitForm(formKey);
-    } else {
-      toggleSnackbarAndSetText(true, "Password do not match", true);
-    }
-  };
-
   render() {
-    const { form, handleFieldChange, submitForm, phoneNumber, loading, history } = this.props;
-    const { resendOTP, submitOTPForm } = this;
-    const { name: formKey } = this.formConfig;
+    const { phoneNumber, loading, toggleSnackbarAndSetText } = this.props;
+    const { resendOTP } = this;
 
     return (
       <Screen loading={loading}>
         <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-          <OTPForm
-            submitForm={submitForm}
-            resendOTP={resendOTP}
-            form={form}
-            formKey={formKey}
-            phoneNumber={phoneNumber}
-            onChange={handleFieldChange}
-            history={history}
-            submitOTPForm={submitOTPForm}
-          />
+          <OTPFormHOC toggleSnackbarAndSetText={toggleSnackbarAndSetText} resendOTP={resendOTP} phoneNumber={phoneNumber} />
         </Banner>
       </Screen>
     );
@@ -58,9 +30,6 @@ class OTP extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const formKey = "employeeOTP";
-  const form = state.form[formKey] || {};
-  const { loading } = form || false;
   const { authenticating } = state.auth;
   const { previousRoute } = state.app;
   let phoneNumber = null;
@@ -69,14 +38,11 @@ const mapStateToProps = (state) => {
   if (forgotPasswdform.fields && forgotPasswdform.fields.username) {
     phoneNumber = forgotPasswdform.fields.username.value;
   }
-  return { form, previousRoute, phoneNumber, loading: loading || authenticating, forgotPasswdFormKey };
+  return { previousRoute, phoneNumber, loading: authenticating, forgotPasswdFormKey };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
     sendOTP: (otp) => dispatch(sendOTP(otp)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
