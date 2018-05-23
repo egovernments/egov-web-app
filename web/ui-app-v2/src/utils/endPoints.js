@@ -77,3 +77,10 @@ export const TENANT = {
     ACTION: "_search",
   },
 };
+
+export const SPEC = {
+  GET: {
+    URL: "spec-directory",
+    ACTION: "_search",
+  },
+};

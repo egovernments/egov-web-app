@@ -78,7 +78,11 @@ class Comments extends Component {
                   <Icon action="communication" name="forum" color="#767676" />
                   <Label label="CS_COMMON_COMMENTS" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
                 </div>
-                <List listContainerStyle={{ marginTop: "24px" }} listItemStyle={{ marginBottom: "-8.5px" }} items={items} />
+                <List
+                  listContainerStyle={{ marginTop: "24px", background: "transparent" }}
+                  listItemStyle={{ marginBottom: "-8.5px" }}
+                  items={items}
+                />
 
                 {(isAssignedToEmployee && role === "employee") || role === "citizen" || role === "ao"
                   ? currentstatus &&

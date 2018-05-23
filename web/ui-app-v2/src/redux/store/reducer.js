@@ -5,6 +5,7 @@ import auth from "../auth/reducer";
 import form from "../form/reducer";
 import complaints from "../complaints/reducer";
 import common from "../common/reducer";
+import mdms from "../mdms/reducer";
 
 const rootReducer = combineReducers({
   app,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   form,
   complaints,
   common,
+  mdms,
 });
 
 export default rootReducer;
