@@ -9,6 +9,31 @@ const viewModelToBusinessModelTransformer = (form, state) => {
   return { user };
 };
 
+const businessModelToViewModelTransformer = (form, state) => {
+  const { userInfo } = state.auth;
+  const { name, mobileNumber, emailId, photo: imageUri } = userInfo;
+
+  const transformedForm = {
+    ...form,
+    fields: {
+      ...form.fields,
+      email: { ...form.fields.email, value: emailId || "" },
+      phonenumber: { ...form.fields.phonenumber, value: mobileNumber },
+      name: { ...form.fields.name, value: name },
+    },
+    files: {
+      ["photo"]: [
+        {
+          imageUri,
+        },
+      ],
+    },
+  };
+
+  return transformedForm;
+};
+
 export default {
   viewModelToBusinessModelTransformer,
+  businessModelToViewModelTransformer,
 };
