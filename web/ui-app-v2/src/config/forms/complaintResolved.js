@@ -21,6 +21,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "ES_RESOLVE_MARK_RESOLVED",
     id: "complaintresolved-submit-action",
   },
