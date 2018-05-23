@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Screen from "modules/common/common/Screen";
-import HeaderCard from "./components/HeaderCard";
-import ListCard from "./components/ListCard";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import formHoc from "hocs/form";
+import AssignComplaintForm from "./components/AssignComplaintForm";
 import { fetchEmployees } from "redux/common/actions";
+
+const AssignComplaintFormHOC = formHoc(AssignComplaintForm, "assignComplaint");
 
 class AssignComplaint extends Component {
   componentDidMount = () => {
@@ -12,11 +13,10 @@ class AssignComplaint extends Component {
     fetchEmployees();
   };
   render() {
-    const { transformedComplaint, loading, ...rest } = this.props;
+    const { transformedComplaint, ...rest } = this.props;
     return (
-      <Screen loading={loading}>
-        <HeaderCard complaint={transformedComplaint} />
-        <ListCard {...rest} />
+      <Screen>
+        <AssignComplaintFormHOC complaint={transformedComplaint} {...rest} />
       </Screen>
     );
   }
@@ -24,9 +24,6 @@ class AssignComplaint extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
     fetchEmployees: () => dispatch(fetchEmployees()),
   };
 };
@@ -34,7 +31,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
   const { history } = ownProps;
-  const { loading } = state.form || false;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   const { departmentById, designationsById, employeeById } = state.common;
   const APIData =
@@ -47,7 +43,7 @@ const mapStateToProps = (state, ownProps) => {
     header: selectedComplaint && selectedComplaint.serviceCode,
     address: selectedComplaint && selectedComplaint.address,
   };
-  return { designationsById, departmentById, APIData, transformedComplaint, loading, history, serviceRequestId };
+  return { designationsById, departmentById, APIData, transformedComplaint, history, serviceRequestId };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssignComplaint);
