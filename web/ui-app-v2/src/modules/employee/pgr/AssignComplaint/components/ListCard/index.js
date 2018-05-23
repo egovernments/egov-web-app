@@ -167,7 +167,7 @@ export default class ListCard extends Component {
   };
 
   returnResults = (searchTerm, dataSource) => {
-    searchTerm = searchTerm.toLowerCase();
+    searchTerm = searchTerm.replace(/\s+/g, "").toLowerCase();
     if (searchTerm.length > 0) {
       return dataSource.filter((result) => {
         return typeof result["primaryText"] === "object"

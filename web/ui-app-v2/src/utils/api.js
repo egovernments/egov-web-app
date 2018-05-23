@@ -34,7 +34,7 @@ const wrapRequestBody = (requestBody, action) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
+export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customEndPoint) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 

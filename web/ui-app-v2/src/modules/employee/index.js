@@ -22,6 +22,7 @@ import ComplaintRejected from "./pgr/ComplaintRejected";
 import ComplaintAssigned from "./pgr/ComplaintAssigned";
 import ResolveSuccess from "./pgr/ResolveSuccess";
 import ReassignSuccess from "./pgr/ReassignSuccess";
+import RenderMDMSScreens from "./PropertyTax/RenderMDMSScreens";
 
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
@@ -201,6 +202,17 @@ const routes = [
   {
     path: "request-reassign/:serviceRequestId?",
     component: RequestReAssign,
+    needsAuthentication: true,
+    options: {
+      title: "CS_HEADER_REQUEST_REASSIGN",
+      hideFooter: true,
+      redirectionUrl,
+    },
+  },
+
+  {
+    path: "mdms/:moduleName/:masterName",
+    component: RenderMDMSScreens,
     needsAuthentication: true,
     options: {
       title: "CS_HEADER_REQUEST_REASSIGN",
