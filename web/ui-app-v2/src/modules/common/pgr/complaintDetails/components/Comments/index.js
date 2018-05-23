@@ -1,51 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import formHoc from "hocs/form";
 import { Card, List, Icon, Image } from "components";
 import Label from "utils/translationNode";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
 import emptyFace from "assets/images/download.png";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import { getDateFromEpoch, getPropertyFromObj } from "utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
 import { transformById } from "utils/commons";
-
-// Don't Delete!!
-// const itemsOne = [
-//   {
-//     leftAvatar: (
-//       <div>
-//         {" "}
-//         <Avatar size={33} src={faceOne} />
-//       </div>
-//     ),
-//     primaryText: (
-//       <div className="complaint-details-comments-section">
-//         <Label containerStyle={{ marginBottom: "8px" }} labelStyle={{ color: "#464646" }} label="please sterilize the dogs in the area." />{" "}
-//         <Label labelClassName="rainmaker-small-font" label="11-MAR-18" />{" "}
-//       </div>
-//     ),
-//   },
-// ];
-
-// Don't Delete!!
-// const itemsTwo = [
-//   {
-//     primaryText: (
-//       <div className="complaint-details-comments-section">
-//         {" "}
-//         <Label
-//           containerStyle={{ marginBottom: "8px" }}
-//           labelStyle={{ color: "#464646" }}
-//           label="Sterilization is scheduled in March. We are doing our best to resolve your issue at this time."
-//         />
-//         <Label labelClassName="rainmaker-small-font" label="11-MAR-18" />
-//       </div>
-//     ),
-//     rightAvatar: <Avatar size={33} src={faceTwo} />,
-//   },
-// ];
 
 const imageStyles = {
   width: "33px",
@@ -53,38 +17,11 @@ const imageStyles = {
   marginRight: "8px",
 };
 
+const WriteCommentHOC = formHoc(WriteComment, "comment");
+
 class Comments extends Component {
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/comment").default;
-  }
-
-  componentDidMount = () => {
-    let { initForm } = this.props;
-    initForm(this.formConfig);
-  };
-
-  componentWillReceiveProps = (nextProps) => {
-    let { initForm, selectedComplaint } = this.props;
-    if (!isEqual(nextProps.selectedComplaint, selectedComplaint)) {
-      initForm(this.formConfig);
-    }
-  };
-
   render() {
-    const {
-      form,
-      handleFieldChange,
-      submitForm,
-      selectedComplaint,
-      userImage,
-      userId,
-      userName,
-      role,
-      isAssignedToEmployee,
-      transformedCommentList,
-    } = this.props;
-    const { name: formKey } = this.formConfig;
+    const { selectedComplaint, userImage, userId, userName, role, isAssignedToEmployee, transformedCommentList } = this.props;
 
     const items =
       transformedCommentList &&
@@ -145,16 +82,7 @@ class Comments extends Component {
 
                 {(isAssignedToEmployee && role === "employee") || role === "citizen" || role === "ao"
                   ? currentstatus &&
-                    currentstatus.toLowerCase() !== "closed" && (
-                      <WriteComment
-                        form={form}
-                        formKey={formKey}
-                        onChange={handleFieldChange}
-                        submitForm={submitForm}
-                        userImage={userImage}
-                        currentstatus={currentstatus}
-                      />
-                    )
+                    currentstatus.toLowerCase() !== "closed" && <WriteCommentHOC userImage={userImage} currentstatus={currentstatus} />
                   : ""}
               </div>
             }
@@ -168,8 +96,6 @@ class Comments extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const formKey = "comment";
-  const form = state.form[formKey] || {};
   const { complaints, common } = state;
   const { employeeById, citizenById } = common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
@@ -197,17 +123,7 @@ const mapStateToProps = (state, ownProps) => {
   const userImage = state.auth.userInfo.photo || "";
   const userId = state.auth.userInfo.id || "";
   const userName = state.auth.userInfo.name || "";
-  return { form, selectedComplaint, userImage, userId, userName, transformedCommentList, hasComments };
+  return { selectedComplaint, userImage, userId, userName, transformedCommentList, hasComments };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
-
-//props types check yet to add
+export default connect(mapStateToProps)(Comments);
