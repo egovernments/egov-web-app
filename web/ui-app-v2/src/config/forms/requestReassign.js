@@ -8,7 +8,6 @@ const formConfig = {
     textarea: {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-      value: "",
     },
     action: {
       id: "action",
@@ -17,6 +16,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "ES_REQUEST_REQUEST_RE_ASSIGN",
     id: "reopencomplaint-submit-action",
   },

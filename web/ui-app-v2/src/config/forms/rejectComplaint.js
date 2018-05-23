@@ -1,6 +1,5 @@
 const formConfig = {
   name: "rejectComplaint",
-  //idJsonPath: "services[0].serviceRequestId",
   fields: {
     comments: {
       id: "comments-reopen",
@@ -17,6 +16,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CS_COMMON_SUBMIT",
     id: "reopencomplaint-submit-action",
   },

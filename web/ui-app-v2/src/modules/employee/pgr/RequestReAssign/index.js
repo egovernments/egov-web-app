@@ -1,27 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "components";
+import formHOC from "hocs/form";
 import Screen from "modules/common/common/Screen";
-import Question from "modules/common/pgr/ReOpenComplaint/components/Question";
-import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import RequestReassignForm from "./components/RequestReassignForm";
+import { handleFieldChange } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
 import "./index.css";
 
+const RequestReassignHOC = formHOC(RequestReassignForm, "requestReassign");
+
 class RequestReAssign extends Component {
   state = {
     valueSelected: "",
+    commentValue: "",
   };
 
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/requestReassign").default;
-  }
   componentDidMount() {
     let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
-    this.props.initForm(this.formConfig);
   }
   options = [
     { value: "Not my Department", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
@@ -31,13 +28,12 @@ class RequestReAssign extends Component {
   ];
 
   commentsValue = {};
-  handleComplaintSubmit = () => {
-    const { formKey, submitForm } = this.props;
-    submitForm(formKey);
-  };
+
   handleCommentsChange = (e, value) => {
     this.commentsValue.textVal = value;
-    this.props.handleFieldChange(this.props.formKey, "textarea", value);
+    this.setState({
+      commentValue: e.target.value,
+    });
     this.concatComments(this.commentsValue);
   };
   handleOptionsChange = (event, value) => {
@@ -55,55 +51,32 @@ class RequestReAssign extends Component {
       com2 = val.textVal;
     }
     let concatvalue = com1 + com2;
-    this.props.handleFieldChange(this.props.formKey, "comments", concatvalue);
+    this.props.handleFieldChange("requestReassign", "comments", concatvalue);
   };
 
   render() {
-    const { handleComplaintSubmit, handleCommentsChange, handleOptionsChange } = this;
-    const { form, loading } = this.props;
-    const { valueSelected } = this.state;
-    const { fields, submit } = form;
-    const submitprops = submit;
-    let textarea;
-    if (fields) {
-      textarea = fields.textarea;
-    }
-    return (
-      <Screen className="request-reaasign-main-container" loading={loading}>
-        <div>
-          <div className="request-reaasign-question">
-            <Question
-              options={this.options}
-              label={"ES_REASSIGN_REQUEST_QUESTION"}
-              handleChange={handleOptionsChange}
-              valueSelected={valueSelected}
-            />
-          </div>
-          <div className="request-reaasign-textArea">
-            <TextArea onChange={handleCommentsChange} {...textarea} />
-          </div>
-        </div>
+    const { handleCommentsChange, handleOptionsChange } = this;
+    const { valueSelected, commentValue } = this.state;
 
-        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 request-reaasign-button">
-          <Button id="requestreassign-submit-action" primary={true} {...submitprops} fullWidth={true} onClick={handleComplaintSubmit} />
-        </div>
+    return (
+      <Screen className="request-reaasign-main-container">
+        <RequestReassignHOC
+          options={this.options}
+          ontextAreaChange={handleCommentsChange}
+          handleOptionChange={handleOptionsChange}
+          optionSelected={valueSelected}
+          commentValue={commentValue}
+        />
       </Screen>
     );
   }
 }
-const mapStateToProps = (state) => {
-  const formKey = "requestReassign";
-  const form = state.form[formKey] || {};
-  const { loading } = form || false;
-  return { form, formKey, loading };
-};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestReAssign);
+export default connect(null, mapDispatchToProps)(RequestReAssign);
