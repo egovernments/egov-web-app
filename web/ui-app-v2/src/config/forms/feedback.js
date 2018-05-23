@@ -22,6 +22,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CS_COMMON_SUBMIT",
     id: "feedback-submit-action",
   },
