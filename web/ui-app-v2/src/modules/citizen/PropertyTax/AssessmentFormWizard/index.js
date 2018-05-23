@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import formHoc from "hocs/form";
 import { Button, TimeLine, Card, Icon } from "components";
 import Label from "utils/translationNode";
 import OwnerDetails from "./components/OwnerDetails";
@@ -7,7 +7,6 @@ import PropertyAddress from "./components/PropertyAddress";
 import TaxAssessmentDetailsOne from "./components/TaxAssessmentDetailsOne";
 import TaxAssessmentDetailsTwo from "./components/TaxAssessmentDetailsTwo";
 import FullOrPartialExemption from "./components/FullOrPartialExemption";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
 import "./index.css";
 
 const iconStyle = {
@@ -29,10 +28,17 @@ const defaultStepperStyle = {
   height: 18,
 };
 
-class AssessmentFormWizard extends React.Component {
+const formKey = "propertyTaxAssessment";
+const OwnerDetailsHOC = formHoc(OwnerDetails, formKey);
+const PropertyAddressHOC = formHoc(PropertyAddress, formKey);
+const TaxAssessmentDetailsOneHOC = formHoc(TaxAssessmentDetailsOne, formKey);
+const TaxAssessmentDetailsTwoHOC = formHoc(TaxAssessmentDetailsTwo, formKey);
+const FullOrPartialExemptionHOC = formHoc(FullOrPartialExemption, formKey);
+
+class AssessmentFormWizard extends Component {
   constructor(props) {
     super(props);
-    let isBackFromMap = sessionStorage.getItem("backFromPTMap");
+    const isBackFromMap = sessionStorage.getItem("backFromPTMap");
     this.state = {
       stepIndex: isBackFromMap ? 1 : 0,
     };
@@ -45,19 +51,9 @@ class AssessmentFormWizard extends React.Component {
       ["builtUpArea1", "builtUpArea2"],
       ["propertcategoryNumber", "referenceId", "proof"],
     ];
-
-    this.formConfig = require(`config/forms/${props.formKey}`).default;
   }
 
-  componentDidMount() {
-    this.props.initForm(this.formConfig);
-  }
-
-  handleFieldChange = (formKey) => (fieldKey, value) => {
-    this.props.handleFieldChange(formKey, fieldKey, value);
-  };
-
-  getWizardFields = (index, formFields) => {
+  getWizardFields = (index) => (formFields) => {
     const fields = this.wizardFields[index];
     return fields.reduce((wizardFields, fieldKey) => {
       const field = formFields[fieldKey];
@@ -82,13 +78,12 @@ class AssessmentFormWizard extends React.Component {
     }
   };
 
-  getStepContent = (stepIndex, formKey, fields) => {
-    const wizardFields = this.getWizardFields(stepIndex, fields);
-    const handleFieldChange = this.handleFieldChange(formKey);
+  getStepContent = (stepIndex, fields) => {
+    const wizardFields = this.getWizardFields(stepIndex);
     switch (stepIndex) {
       case 0:
         return {
-          component: <OwnerDetails handleFieldChange={handleFieldChange} fields={wizardFields} />,
+          component: <OwnerDetailsHOC wizardFields={wizardFields} />,
           trianglePos: "2%",
           iconName: "person",
           iconAction: "social",
@@ -96,7 +91,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 1:
         return {
-          component: <PropertyAddress handleFieldChange={handleFieldChange} fields={wizardFields} />,
+          component: <PropertyAddressHOC wizardFields={wizardFields} />,
           trianglePos: "25%",
           iconName: "home",
           iconAction: "action",
@@ -104,7 +99,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 2:
         return {
-          component: <TaxAssessmentDetailsOne handleFieldChange={handleFieldChange} fields={wizardFields} />,
+          component: <TaxAssessmentDetailsOneHOC wizardFields={wizardFields} />,
           trianglePos: "48%",
           iconName: "person",
           iconAction: "social",
@@ -112,7 +107,7 @@ class AssessmentFormWizard extends React.Component {
         };
       case 3:
         return {
-          component: <TaxAssessmentDetailsTwo handleFieldChange={handleFieldChange} fields={wizardFields} />,
+          component: <TaxAssessmentDetailsTwoHOC wizardFields={wizardFields} />,
           trianglePos: "70%",
           iconName: "person",
           iconAction: "social",
@@ -120,7 +115,7 @@ class AssessmentFormWizard extends React.Component {
         };
       default:
         return {
-          component: <FullOrPartialExemption handleFieldChange={handleFieldChange} fields={wizardFields} />,
+          component: <FullOrPartialExemptionHOC wizardFields={wizardFields} />,
           trianglePos: "93%",
           iconName: "person",
           iconAction: "social",
@@ -132,24 +127,7 @@ class AssessmentFormWizard extends React.Component {
   render() {
     const { finished, stepIndex } = this.state;
     const { getStepContent } = this;
-    const { formKey, form, loading, handleFieldChange } = this.props;
-    const fields = form.fields || {};
-    const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex, formKey, fields);
-
-    const activeStepperStyle = {
-      width: 20,
-      height: 20,
-      boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24)",
-      backgroundColor: "#fe7a51",
-      borderRadius: "50%",
-      position: "relative",
-      zIndex: 100,
-    };
-
-    const defaultStepperStyle = {
-      width: 20,
-      height: 20,
-    };
+    const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex);
 
     const steps = [1, 2, 3, 4, 5].map((item, index) => {
       return {
@@ -220,18 +198,4 @@ class AssessmentFormWizard extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const formKey = "propertyTaxAssessment";
-  const form = state.form[formKey] || {};
-  const { loading } = form || false;
-  return { form, formKey, loading };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentFormWizard);
+export default AssessmentFormWizard;
