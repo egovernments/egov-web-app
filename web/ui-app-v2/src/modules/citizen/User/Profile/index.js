@@ -52,7 +52,8 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
   const formKey = "profile";
-  const images = (state.form[formKey] && state.form[formKey].files && state.form[formKey].files["photo"]) || [];
+  const form = state.form[formKey] || {};
+  const images = (form && form.files && form.files["photo"]) || [];
   const loading =
     images.reduce((loading, file) => {
       return loading || file.loading;
