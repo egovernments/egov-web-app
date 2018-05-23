@@ -36,6 +36,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CORE_COMMON_CHANGE_PASSWORD",
     id: "employee-change-password-submit-action",
   },
