@@ -199,8 +199,9 @@ export default class ListCard extends Component {
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
     if (item.toplevel !== "true" && !isEmployeeDirectory) {
       const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
-      handleFieldChange(this.formConfig.name, "assignee", item.id);
-      isReassignScreen ? handleFieldChange(this.formConfig.name, "action", "reassign") : handleFieldChange(this.formConfig.name, "action", "assign");
+      handleFieldChange("assignee", item.id);
+      const intent = isReassignScreen ? "reassign" : "assign";
+      handleFieldChange("action", intent);
       this.setState({ selectedEmployeeId: item.id }, () => this.changeDataSourceAndResultsOnClick());
     }
   };

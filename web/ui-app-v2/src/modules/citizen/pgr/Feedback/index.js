@@ -29,7 +29,7 @@ class Feedback extends Component {
       valueArray.push(value);
     }
     this.setState({ value: valueArray });
-    this.props.handleFieldChange("feedback", "selectedSevice", valueArray.toString());
+    this.props.handleFieldChange("selectedSevice", valueArray.toString());
   };
 
   render() {
