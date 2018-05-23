@@ -3,7 +3,10 @@ import { Button, Card, MobileNumberField } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const ForgotPasswd = ({ onContinueClick, onPhoneNumberChanged, fields, phoneNumber, isEmployee }) => {
+const ForgotPasswd = ({ form, handleFieldChange }) => {
+  const fields = form.fields || {};
+  const submit = form.submit;
+
   return (
     <Card
       className="user-screens-card forgot-passwd-card"
@@ -17,20 +20,13 @@ const ForgotPasswd = ({ onContinueClick, onPhoneNumberChanged, fields, phoneNumb
             fontSize={16}
             label="CORE_COMMON_FORGOT_PASSWORD_LABEL"
           />
-          <form>
-            {isEmployee && (
-              <MobileNumberField
-                onChange={onPhoneNumberChanged}
-                {...phoneNumber}
-                textFieldStyle={{ bottom: 16 }}
-                prefixStyle={{ top: 21 }}
-                fullWidth={true}
-                isRequired={true}
-                {...fields.username}
-              />
-            )}
-            <Button id="login-submit-action" onClick={onContinueClick} primary={true} label="CONTINUE" fullWidth={true} />
-          </form>
+          <MobileNumberField
+            onChange={(e, value) => handleFieldChange("username", value)}
+            textFieldStyle={{ bottom: 16 }}
+            prefixStyle={{ top: 21 }}
+            {...fields.username}
+          />
+          <Button id="login-submit-action" primary={true} label="CONTINUE" fullWidth={true} />
         </div>
       }
     />
