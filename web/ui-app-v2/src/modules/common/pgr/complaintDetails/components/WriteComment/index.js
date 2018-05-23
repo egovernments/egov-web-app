@@ -29,13 +29,8 @@ const imageStyles = {
   marginRight: "8px",
 };
 
-const WriteComment = ({ form, formKey, onChange, submitForm, userImage, currentstatus }) => {
+const WriteComment = ({ form, handleFieldChange, submitForm, userImage, currentstatus }) => {
   const fields = form.fields || {};
-  // if (currentstatus && currentstatus === "closed") {
-  //   iconStyle.pointerEvents = "none";
-  // } else {
-  //   if (iconStyle.pointerEvents) delete iconStyle["pointerEvents"];
-  // }
   return (
     <div disabled={true} style={{ display: "flex", justifyContent: "center", paddingBottom: 16, position: "relative", alignItems: "center" }}>
       <Image style={imageStyles} className="img-circle" size="medium" source={userImage ? userImage : emptyFace} />
@@ -44,7 +39,7 @@ const WriteComment = ({ form, formKey, onChange, submitForm, userImage, currents
         {...fields.comment}
         hintText={<Label label="CS_COMMON_COMMENTS_PLACEHOLDER2" />}
         style={textFieldStyle}
-        onChange={(e, value) => onChange(formKey, "comment", value)}
+        onChange={(e, value) => handleFieldChange("comment", value)}
         className="write-complaint-chat-field"
         fullWidth={true}
         multiLine={true}
@@ -52,13 +47,10 @@ const WriteComment = ({ form, formKey, onChange, submitForm, userImage, currents
         hintStyle={{ left: 5, bottom: "initial", fontSize: 14, top: 12 }}
         inputStyle={{ fontSize: 14, paddingLeft: 5, paddingRight: 40 }}
         rowsMax={3}
-        // disabled={currentstatus === "closed" ? true : false}
       />
-      <Icon className="comment-send" action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm(formKey)} />
+      <Icon className="comment-send" action="content" name="send" style={iconStyle} color={"#00bcd1"} onClick={() => submitForm()} />
     </div>
   );
 };
 
 export default WriteComment;
-
-//props types check yet to add

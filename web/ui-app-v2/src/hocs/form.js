@@ -34,7 +34,7 @@ const form = (Form, formKey) => {
               submitForm();
             }}
           >
-            <Form {...this.props} formKey={formKey} handleFieldChange={handleFieldChange} />
+            <Form {...this.props} formKey={formKey} submitForm={submitForm} handleFieldChange={handleFieldChange} />
           </form>
           {loading && <LoadingIndicator />}
         </div>
