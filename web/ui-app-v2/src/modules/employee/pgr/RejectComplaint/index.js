@@ -1,27 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "components";
+import formHOC from "hocs/form";
 import Screen from "modules/common/common/Screen";
-import Question from "modules/common/pgr/ReOpenComplaint/components/Question";
-import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
+import RejectComplaintForm from "./components/RejectComplaintForm";
 import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
+import { handleFieldChange } from "redux/form/actions";
 import "./index.css";
+
+const RejectComplaintHOC = formHOC(RejectComplaintForm, "rejectComplaint");
 
 class RejectComplaint extends Component {
   state = {
     valueSelected: "",
+    commentValue: "",
   };
-
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/rejectComplaint").default;
-  }
   componentDidMount() {
     let { fetchComplaints, match } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
-    this.props.initForm(this.formConfig);
   }
 
   options = [
@@ -32,12 +28,12 @@ class RejectComplaint extends Component {
   ];
 
   commentsValue = {};
-  handleComplaintSubmit = () => {
-    const { formKey, submitForm } = this.props;
-    submitForm(formKey);
-  };
-  handleCommentsChange = (e) => {
+
+  handleCommentsChange = (e, value) => {
     this.commentsValue.textVal = e.target.value;
+    this.setState({
+      commentValue: e.target.value,
+    });
     this.concatComments(this.commentsValue);
   };
   handleOptionsChange = (event, value) => {
@@ -55,56 +51,32 @@ class RejectComplaint extends Component {
       com2 = val.textVal;
     }
     let concatvalue = com1 + com2;
-    this.props.handleFieldChange(this.props.formKey, "comments", concatvalue);
+    this.props.handleFieldChange("rejectComplaint", "comments", concatvalue);
   };
 
   render() {
-    const { handleComplaintSubmit, handleCommentsChange, handleOptionsChange } = this;
-    const { form, loading } = this.props;
-    const { valueSelected } = this.state;
-    const { fields, submit } = form;
-    const submitprops = submit;
-    let textarea;
-    if (fields) {
-      textarea = fields.textarea;
-    }
+    const { handleCommentsChange, handleOptionsChange } = this;
+    const { valueSelected, commentValue } = this.state;
 
     return (
-      <Screen className="reject-complaint-main-container" loading={loading}>
-        <div>
-          <div className="reject-complaint-question">
-            <Question
-              options={this.options}
-              label={"ES_REJECT_COMPLAINT_QUESTION"}
-              handleChange={handleOptionsChange}
-              valueSelected={valueSelected}
-            />
-          </div>
-          <div className="reject-complaint-textArea">
-            <TextArea onChange={handleCommentsChange} {...textarea} value={this.commentsValue.textVal} />
-          </div>
-        </div>
-
-        <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reject-complaint-button">
-          <Button id="rejectcomplaint-submit-action" primary={true} {...submitprops} fullWidth={true} onClick={handleComplaintSubmit} />
-        </div>
+      <Screen className="reject-complaint-main-container">
+        <RejectComplaintHOC
+          options={this.options}
+          ontextAreaChange={handleCommentsChange}
+          handleOptionChange={handleOptionsChange}
+          optionSelected={valueSelected}
+          commentValue={commentValue}
+        />
       </Screen>
     );
   }
 }
-const mapStateToProps = (state) => {
-  const formKey = "rejectComplaint";
-  const form = state.form[formKey] || {};
-  const { loading } = form || false;
-  return { form, formKey, loading };
-};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
-    initForm: (form) => dispatch(initForm(form)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RejectComplaint);
+export default connect(null, mapDispatchToProps)(RejectComplaint);
