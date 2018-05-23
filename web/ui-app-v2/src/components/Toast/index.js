@@ -6,6 +6,7 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message })
   return (
     <Snackbar
       open={open}
+      id="toast-message"
       message={message}
       autoHideDuration={autoHideDuration}
       style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap" }}
