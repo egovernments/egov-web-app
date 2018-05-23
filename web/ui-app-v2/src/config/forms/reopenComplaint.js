@@ -14,7 +14,6 @@ const formConfig = {
     textarea: {
       id: "textarea",
       hintText: "CS_COMMON_COMMENTS_PLACEHOLDER",
-      value: "",
     },
     action: {
       id: "action",
@@ -23,6 +22,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CORE_COMMON_CONTINUE",
     id: "reopencomplaint-submit-action",
   },

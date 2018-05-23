@@ -4,6 +4,7 @@ import formHoc from "hocs/form";
 import Screen from "modules/common/common/Screen";
 import { fetchComplaints } from "redux/complaints/actions";
 import FeedbackForm from "./components/FeedbackForm";
+import { handleFieldChange } from "redux/form/actions";
 import "./index.css";
 
 const FeedbackFormHOC = formHoc(FeedbackForm, "feedback");
@@ -28,22 +29,14 @@ class Feedback extends Component {
       valueArray.push(value);
     }
     this.setState({ value: valueArray });
-    // this.props.handleFieldChange(this.props.formKey, "selectedSevice", valueArray.toString());
+    this.props.handleFieldChange("feedback", "selectedSevice", valueArray.toString());
   };
-
-  // onClick = (value) => {
-  //   this.props.handleFieldChange(this.props.formKey, "rating", value);
-  // };
-
-  // handleChange = (e, value) => {
-  //   this.props.handleFieldChange(this.props.formKey, "comments", value);
-  // };
 
   render() {
     let { value } = this.state;
     return (
       <Screen className="feedback-main-screen">
-        <FeedbackFormHOC onCheck={this.onCheck} value={value} />
+        <FeedbackFormHOC onCheck={this.onCheck} checkBoxValue={value} />
       </Screen>
     );
   }
@@ -52,6 +45,7 @@ class Feedback extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 
