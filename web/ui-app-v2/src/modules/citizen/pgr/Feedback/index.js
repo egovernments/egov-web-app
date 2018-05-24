@@ -12,8 +12,6 @@ const FeedbackFormHOC = formHoc(FeedbackForm, "feedback");
 class Feedback extends Component {
   state = {
     value: [],
-    ratingValue: 0,
-    submitted: false,
   };
 
   componentDidMount = () => {
