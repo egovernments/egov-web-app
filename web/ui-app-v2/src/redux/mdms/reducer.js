@@ -6,6 +6,37 @@ const initialState = {
   errorMessage: "",
 };
 
+const transformRawTypeToFormat = (rawType) => {
+  switch (rawType) {
+    case "text":
+      return "textfield";
+    default:
+      return "textfield";
+  }
+};
+
+const transformRawSpecsToFormat = (rawSpecs) => {
+  return {
+    ...rawSpecs,
+    values: rawSpecs.values.reduce((result, current) => {
+      result["fields"] = {
+        ...result["fields"],
+        [current.name]: {
+          id: current.name,
+          type: transformRawTypeToFormat(current.type),
+          required: current.isRequired,
+          jsonPath: current.jsonPath,
+          floatingLabelText: current.label,
+          errorMessage: current.patternErrorMsg,
+          hintText: "",
+          pattern: current.pattern,
+        },
+      };
+      return result;
+    }, {}),
+  };
+};
+
 const mdmsReducer = (state = initialState, action) => {
   const { type, moduleName, masterName } = action;
   switch (type) {
@@ -22,7 +53,7 @@ const mdmsReducer = (state = initialState, action) => {
         loading: false,
         [moduleName]: {
           ...state[moduleName],
-          [masterName]: action.payload,
+          [masterName]: transformRawSpecsToFormat(action.payload),
         },
       };
     case actionTypes.SPECS_FETCH_ERROR:
