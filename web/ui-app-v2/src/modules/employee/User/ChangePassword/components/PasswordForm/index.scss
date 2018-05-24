@@ -4,11 +4,8 @@
 }
 
 .employee-change-passwd-submit {
-  position: fixed !important;
-  bottom: 16px;
-  left: 0;
-  padding: 0px 8px 0px 8px;
   box-shadow: none !important;
+  z-index: 1000;
 }
 
 .employee-change-passwd-screen {

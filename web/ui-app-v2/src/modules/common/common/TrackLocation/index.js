@@ -132,7 +132,7 @@ class TrackLocation extends Component {
           dragInfoBox={false}
           viewLocation={false}
         />
-        <div className="pickBtn">
+        <div className="btn-without-bottom-nav">
           <Button
             id="map-pick-button"
             className="pick"

@@ -23,7 +23,7 @@ const PasswordForm = ({ handleFieldChange, toggleSnackbarAndSetText, form }) => 
 
       <Button
         {...submit}
-        className="employee-change-passwd-submit col-lg-offset-2 col-md-offset-2"
+        className="employee-change-passwd-submit btn-without-bottom-nav col-lg-offset-2 col-md-offset-2"
         fullWidth={true}
         primary={true}
         onClick={(e) => {

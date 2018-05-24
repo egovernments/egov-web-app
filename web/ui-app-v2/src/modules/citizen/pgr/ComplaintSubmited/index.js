@@ -42,7 +42,7 @@ class ComplaintSubmitted extends Component {
           <div className="complaint-submitted-label">
             <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" />
           </div>
-          <div className="complaintsubmit-button col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
+          <div className="btn-without-bottom-nav col-lg-offset-3 col-md-offset-3 col-lg-6 col-md-6">
             <Button
               id="complaint-submitted-continue"
               primary={true}

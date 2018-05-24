@@ -292,7 +292,7 @@ export default class ListCard extends Component {
           }
         />
         {!isEmployeeDirectory && (
-          <div className="assign-complaint-button-cont">
+          <div className="btn-without-bottom-nav">
             <Button
               primary={true}
               fullWidth={true}

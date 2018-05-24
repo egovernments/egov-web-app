@@ -9,24 +9,22 @@ class ActionButton extends Component {
     return (
       <div className="compalint-details-action-buttons">
         <Button
-          label={<Label buttonLabel={true} label={btnOneLabel} />}
+          label={<Label buttonLabel={true} label={btnOneLabel} color="#fe7a51" />}
           onClick={btnOneOnClick}
-          style={{ width: "45%", height: "38px", boxShadow: "none" }}
+          className="action-button-one"
           id="actionOne"
-          backgroundColor="#767676"
-          labelColor="#ffffff"
+          backgroundColor="#ffffff"
           labelStyle={{ padding: 0 }}
           overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         />
         <Button
           label={<Label buttonLabel={true} label={btnTwoLabel} />}
           onClick={btnTwoOnClick}
-          style={{ width: "45%", height: "38px", boxShadow: "none" }}
+          className="action-button-two"
           id="actionTwo"
           labelStyle={{ padding: 0 }}
           overlayStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-          backgroundColor="#00bbd3"
-          labelColor="#ffffff"
+          backgroundColor="#fe7a51"
         />
       </div>
     );
