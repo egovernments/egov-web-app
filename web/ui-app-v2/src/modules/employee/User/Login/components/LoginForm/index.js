@@ -20,7 +20,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
               <Label
                 containerStyle={{ cursor: "pointer" }}
                 labelStyle={{ marginBottom: "12px" }}
-                className=" forgot-passwd"
+                className="forgot-passwd"
                 fontSize={14}
                 label="FORGOT PASSWORD?"
               />

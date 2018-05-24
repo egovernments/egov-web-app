@@ -7,7 +7,7 @@ const form = (Form, formKey) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      this.formConfig = require(`config/forms/${formKey}`).default;
+      this.formConfig = require(`config/forms/specs/${formKey}`).default;
     }
 
     componentDidMount() {

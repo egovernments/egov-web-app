@@ -8,11 +8,6 @@ import "./index.css";
 import isEqual from "lodash/isEqual";
 
 export default class ListCard extends Component {
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/assignComplaint").default;
-  }
-
   state = {
     results: [],
     searchTerm: "",
@@ -96,9 +91,9 @@ export default class ListCard extends Component {
   };
 
   componentDidMount = () => {
-    let { initForm, APIData } = this.props;
+    let { APIData } = this.props;
     let { prepareRawDataToFormat } = this;
-    initForm(this.formConfig);
+    // initForm(this.formConfig);
     const dataSource = prepareRawDataToFormat(APIData);
     this.setState({ dataSource });
   };
@@ -250,14 +245,12 @@ export default class ListCard extends Component {
     let { prepareResultsForDisplay, renderList, generateDataSource, prepareRawDataToFormat } = this;
     const { dataSource } = this.state;
     const realDataSource = generateDataSource(prepareRawDataToFormat(APIData));
-    // const transformedDataSource = generateDataSource(dataSource);
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const isEmployeeDirectory = window.location.href.includes("employee-directory") ? true : false;
     const isReassignScreen = window.location.href.includes("reassign-complaint") ? true : false;
-    const { name: formKey } = this.formConfig;
     const assignstatus = isReassignScreen ? "ES_ASSIGN_STATUS_REASSIGN" : "ES_ASSIGN_STATUS_ASSIGN";
-    const { serviceRequestId } = this.props;
+    const { serviceRequestId, formKey } = this.props;
     return (
       <div>
         <Card
