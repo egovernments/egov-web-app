@@ -1,4 +1,5 @@
 import React from "react";
+import Field from "utils/field";
 import { Button, TextField, MobileNumberField, Card } from "components";
 import { Link } from "react-router-dom";
 import Label from "utils/translationNode";
@@ -15,8 +16,8 @@ const RegisterForm = ({ handleFieldChange, form }) => {
       textChildren={
         <div>
           <Label className="heading text-center" bold={true} dark={true} fontSize={16} label="CORE_REGISTER_HEADING" />
-          <MobileNumberField {...fields.phone} onChange={(e, value) => handleFieldChange("phone", value)} />
-          <TextField {...fields.name} onChange={(e, value) => handleFieldChange("name", value)} />
+          <Field type="mobilenumber" form={form} handleFieldChange={handleFieldChange} fieldKey="phone" />
+          <Field type="textfield" form={form} handleFieldChange={handleFieldChange} fieldKey="name" />
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
           <div style={{ marginBottom: "24px" }} className="text-right">
             <Label id="otp-trigger" className="otp-prompt" label="CORE_REGISTER_HAVE_ACCOUNT" />
