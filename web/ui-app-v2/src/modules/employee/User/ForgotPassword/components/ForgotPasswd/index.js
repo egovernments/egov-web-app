@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, MobileNumberField } from "components";
+import { Button, Card, TextField } from "components";
 import Label from "utils/translationNode";
 import "./index.css";
 
@@ -20,13 +20,13 @@ const ForgotPasswd = ({ form, handleFieldChange }) => {
             fontSize={16}
             label="CORE_COMMON_FORGOT_PASSWORD_LABEL"
           />
-          <MobileNumberField
+          <TextField
             onChange={(e, value) => handleFieldChange("username", value)}
             textFieldStyle={{ bottom: 16 }}
             prefixStyle={{ top: 21 }}
             {...fields.username}
           />
-          <Button id="login-submit-action" primary={true} label="CONTINUE" fullWidth={true} />
+          <Button id="login-submit-action" primary={true} label="CONTINUE" fullWidth={true} {...submit} />
         </div>
       }
     />

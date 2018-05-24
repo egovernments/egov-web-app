@@ -14,10 +14,6 @@ const customIconStyles = {
 };
 
 class ComplaintType extends Component {
-  constructor(props) {
-    super(props);
-    this.formConfig = require("config/forms/complaint").default;
-  }
   state = { results: [], searchTerm: "", dataSource: [], transformedDataSource: [] };
 
   componentDidMount = () => {
@@ -43,7 +39,7 @@ class ComplaintType extends Component {
   };
 
   onComplaintTypeChosen = (item, index) => {
-    this.props.handleFieldChange(this.formConfig.name, "complaintType", item.id);
+    this.props.handleFieldChange("complaint", "complaintType", item.id);
     this.props.history.goBack();
   };
 

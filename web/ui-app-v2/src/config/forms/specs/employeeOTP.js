@@ -34,6 +34,7 @@ const formConfig = {
     },
   },
   submit: {
+    type: "submit",
     label: "CORE_COMMON_CHANGE_PASSWORD",
     id: "forgot-password-submit-action",
   },
