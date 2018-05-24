@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card, MobileNumberField } from "components";
+import Field from "utils/field";
+import { Button, Card } from "components";
 import Label from "utils/translationNode";
 import { startSMSRecevier } from "utils/commons";
 
@@ -12,7 +13,7 @@ const LoginForm = ({ handleFieldChange, form }) => {
       textChildren={
         <div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_LOGIN" />
-          <MobileNumberField onChange={(e, value) => handleFieldChange("phone", value)} {...fields.phone} />
+          <Field type="mobilenumber" form={form} handleFieldChange={handleFieldChange} fieldKey="phone" />
           <Button
             {...submit}
             fullWidth={true}

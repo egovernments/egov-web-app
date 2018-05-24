@@ -38,7 +38,7 @@ const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", pre
         style={{ ...textFieldBaseStyle, ...textFieldStyle }}
         {...textFieldProps}
         floatingLabelStyle={floatingLabelStyle}
-        type={"number"}
+        type="number"
       />
     </div>
   );
