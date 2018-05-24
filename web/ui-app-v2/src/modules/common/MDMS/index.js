@@ -119,7 +119,6 @@ class MDMS extends React.Component {
   }
 }
 
-
 const getTableProps = () => {
   return {
     style: {
@@ -197,7 +196,6 @@ const getTrProps = () => {
     },
   };
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
