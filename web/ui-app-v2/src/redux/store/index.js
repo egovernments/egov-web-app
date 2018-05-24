@@ -1,23 +1,20 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducer";
 import thunk from "redux-thunk";
-import { validation, translateFieldText, formSubmit, initForm } from "redux/form/middlewares";
+import formMiddleware from "redux/form/middlewares";
 import authMiddleware from "redux/auth/middleware";
 import appMiddleware from "redux/app/middleware";
 
-const middlewares = [];
+let middlewares = [];
 
-middlewares.push(authMiddleware);
-middlewares.push(translateFieldText);
-middlewares.push(validation);
-middlewares.push(initForm);
-middlewares.push(formSubmit);
-middlewares.push(appMiddleware);
-middlewares.push(thunk);
+middlewares = middlewares.concat(authMiddleware);
+middlewares = middlewares.concat(formMiddleware);
+middlewares = middlewares.concat(appMiddleware);
+middlewares = middlewares.concat(thunk);
 
 if (process.env.NODE_ENV === "development") {
   const { logger } = require("redux-logger");
-  middlewares.push(logger);
+  middlewares = middlewares.concat(logger);
 }
 
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
