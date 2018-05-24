@@ -4,19 +4,12 @@
   background-position: center;
   padding: 8px;
 }
-
 .profileBtn {
   height: 48px;
-  padding: 0 8px 0 8px;
   box-shadow: none !important;
 }
 
 .profileBtnWrapper {
-  position: fixed !important;
-  width: 100%;
-  bottom: 12px;
-  left: 0px;
-  padding: 8px !important;
   z-index: 1000;
 }
 

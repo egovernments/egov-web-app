@@ -18,7 +18,7 @@ const FeedbackForm = ({ form, handleFieldChange, onCheck, checkBoxValue }) => {
           </div>
         </div>
       }
-      <div className="feedback-popup-button-cont">
+      <div className="btn-with-bottom-nav">
         <Button {...submit} primary={true} fullWidth={true} />
       </div>
     </div>

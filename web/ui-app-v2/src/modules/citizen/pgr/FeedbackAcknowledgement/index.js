@@ -10,7 +10,7 @@ const FeedbackAcknowledge = ({ history }) => {
       <div className="success-message-main-screen">
         <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" icon={<Icon action="navigation" name="check" />} backgroundColor={"#22b25f"} />
       </div>
-      <div className="success-message-continue">
+      <div className="btn-without-bottom-nav">
         <Button
           id="feedback-acknowledgement"
           onClick={() => history.push("/citizen")}

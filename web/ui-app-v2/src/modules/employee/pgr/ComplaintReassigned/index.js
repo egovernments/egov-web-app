@@ -21,7 +21,7 @@ class ComplaintReassigned extends Component {
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
-        <div className="success-message-continue">
+        <div className="btn-without-bottom-nav">
           <Button
             id="resolve-success-continue"
             primary={true}

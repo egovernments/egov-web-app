@@ -18,7 +18,7 @@ class ComplaintRejected extends Component {
           backgroundColor={"#e74c3c"}
         />
 
-        <div className="success-message-continue">
+        <div className="btn-without-bottom-nav">
           <Button
             id="resolve-success-continue"
             primary={true}
