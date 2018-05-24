@@ -6,7 +6,7 @@ import "./index.css";
 const OTPForm = ({ handleFieldChange, toggleSnackbarAndSetText, form, resendOTP, phoneNumber }) => {
   const fields = form.fields || {};
   const submit = form.submit;
-  const { newpassword, confirmnewpassword } = fields;
+  const { newPassword, confirmnewpassword } = fields || {};
 
   return (
     <Card
@@ -45,7 +45,7 @@ const OTPForm = ({ handleFieldChange, toggleSnackbarAndSetText, form, resendOTP,
             <Button
               {...submit}
               onClick={(e) => {
-                if (newpassword.value !== confirmnewpassword.value) {
+                if (newPassword.value !== confirmnewpassword.value) {
                   e.preventDefault();
                   toggleSnackbarAndSetText(true, "Password do not match", true);
                 }
