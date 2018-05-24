@@ -8,9 +8,9 @@ const ProfileForm = ({ form, handleFieldChange }) => {
   const submit = form.submit;
   return (
     <div>
-      <Field type="textfield" form={form} handleFieldChange={handleFieldChange} fieldKey="name" />
+      <Field form={form} handleFieldChange={handleFieldChange} fieldKey="name" />
       <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-      <Field type="textfield" form={form} handleFieldChange={handleFieldChange} fieldKey="email" />
+      <Field form={form} handleFieldChange={handleFieldChange} fieldKey="email" />
       <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
         <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
       </div>

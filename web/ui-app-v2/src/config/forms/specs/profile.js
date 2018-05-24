@@ -3,6 +3,7 @@ const formConfig = {
   fields: {
     name: {
       id: "profile-form-name",
+      type: "textfield",
       jsonPath: "user.name",
       required: true,
       floatingLabelText: "CORE_COMMON_NAME",
@@ -19,6 +20,8 @@ const formConfig = {
     },
     email: {
       id: "profile-form-email",
+      type: "name",
+      type: "textfield",
       jsonPath: "user.contact.email",
       floatingLabelText: "CS_PROFILE_EMAIL",
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",

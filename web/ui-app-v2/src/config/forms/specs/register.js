@@ -5,6 +5,7 @@ const formConfig = {
   fields: {
     name: {
       id: "person-name",
+      type: "textfield",
       jsonPath: "otp.name",
       required: true,
       floatingLabelText: "CORE_COMMON_NAME",
@@ -26,6 +27,7 @@ const formConfig = {
     phone: {
       id: "person-phone",
       required: true,
+      type: "mobilenumber",
       jsonPath: "otp.mobileNumber",
       floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",

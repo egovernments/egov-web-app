@@ -13,7 +13,7 @@ const LoginForm = ({ handleFieldChange, form }) => {
       textChildren={
         <div>
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="CORE_COMMON_LOGIN" />
-          <Field type="mobilenumber" form={form} handleFieldChange={handleFieldChange} fieldKey="phone" />
+          <Field form={form} handleFieldChange={handleFieldChange} fieldKey="phone" />
           <Button
             {...submit}
             fullWidth={true}
