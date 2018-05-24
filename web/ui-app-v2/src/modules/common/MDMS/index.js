@@ -57,7 +57,22 @@ class MDMS extends React.Component {
 
   componentDidMount = () => {
     const { fetchSpecs, match } = this.props;
-    fetchSpecs([], match.params.moduleName, match.params.masterName);
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "testtenant", // To be changed later
+        moduleDetails: [
+          {
+            moduleName: match.params.moduleName,
+            masterDetails: [
+              {
+                name: match.params.masterName,
+              },
+            ],
+          },
+        ],
+      },
+    };
+    fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   };
 
   render() {
@@ -79,7 +94,7 @@ class MDMS extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSpecs: (queryObj, moduleName, masterName) => dispatch(fetchSpecs(queryObj, moduleName, masterName)),
+    fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
   };
 };
 
