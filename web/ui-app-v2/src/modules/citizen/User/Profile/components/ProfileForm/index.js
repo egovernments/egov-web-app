@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, TextField } from "components";
+import Field from "utils/field";
+import { Button } from "components";
 import CityPicker from "modules/common/common/CityPicker";
 
 const ProfileForm = ({ form, handleFieldChange }) => {
@@ -7,9 +8,9 @@ const ProfileForm = ({ form, handleFieldChange }) => {
   const submit = form.submit;
   return (
     <div>
-      <TextField {...fields.name} onChange={(e, value) => handleFieldChange("name", value)} />
+      <Field type="textfield" form={form} handleFieldChange={handleFieldChange} fieldKey="name" />
       <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-      <TextField {...fields.email} onChange={(e, value) => handleFieldChange("email", value)} />
+      <Field type="textfield" form={form} handleFieldChange={handleFieldChange} fieldKey="email" />
       <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
         <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
       </div>
