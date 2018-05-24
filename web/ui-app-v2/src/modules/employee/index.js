@@ -22,7 +22,7 @@ import ComplaintRejected from "./pgr/ComplaintRejected";
 import ComplaintAssigned from "./pgr/ComplaintAssigned";
 import ResolveSuccess from "./pgr/ResolveSuccess";
 import ReassignSuccess from "./pgr/ReassignSuccess";
-import RenderMDMSScreens from "./PropertyTax/RenderMDMSScreens";
+import MDMS from "modules/common/MDMS";
 
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
@@ -209,17 +209,16 @@ const routes = [
       redirectionUrl,
     },
   },
-
   {
     path: "mdms/:moduleName/:masterName",
-    component: RenderMDMSScreens,
+    component: MDMS,
     needsAuthentication: true,
     options: {
-      title: "CS_HEADER_REQUEST_REASSIGN",
+      title: "CS_HEADER_MDMS_COMMON",
       hideFooter: true,
       redirectionUrl,
     },
-  },
+  }
 ];
 
 const Employee = ({ match }) => {
