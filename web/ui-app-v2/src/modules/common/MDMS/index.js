@@ -51,6 +51,18 @@ class MDMS extends React.Component {
           });
         }
       });
+    columns.push({
+      Header: "Actions",
+      Cell: (row) => (
+        <Icon
+          onClick={() => {
+            console.log(row.index);
+          }}
+          action="image"
+          name="edit"
+        />
+      ),
+    });
     return columns;
   };
 
