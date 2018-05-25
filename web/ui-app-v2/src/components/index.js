@@ -33,6 +33,7 @@ import RadioButton from "./RadioButton";
 import Toast from "./Toast";
 import Carousel from "./Carousel";
 import Divider from "./Divider";
+import SingleCheckbox from "./SingleCheckbox";
 
 export {
   Label,
@@ -70,4 +71,5 @@ export {
   Toast,
   Carousel,
   Divider,
+  SingleCheckbox,
 };
