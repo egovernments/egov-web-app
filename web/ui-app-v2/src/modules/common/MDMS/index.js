@@ -15,44 +15,6 @@ class MDMS extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: [
-        {
-          name: "murali",
-          info: "male",
-          stats: "test",
-        },
-        {
-          name: "tharu",
-          info: "female",
-          stats: "test",
-        },
-      ],
-      columns: [
-        {
-          Header: "Name",
-          accessor: "name",
-        },
-        {
-          Header: "Info",
-          accessor: "info",
-        },
-        {
-          Header: "Stats",
-          accessor: "stats",
-        },
-        {
-          Header: "Actions",
-          Cell: (row) => (
-            <Icon
-              onClick={() => {
-                console.log(row.index);
-              }}
-              action="image"
-              name="edit"
-            />
-          ),
-        },
-      ],
       defaultPageSize: 5,
     };
   }
@@ -77,8 +39,41 @@ class MDMS extends React.Component {
     fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   };
 
+  setHeaders = (header) => {
+    let columns = [{ Header: "S. No.", accessor: "SNo" }];
+    header &&
+      header.map((item) => {
+        var label = item.label.split(".").pop();
+        if (label.toLowerCase() !== "tenantid") {
+          columns.push({
+            Header: label[0].toUpperCase() + label.slice(1, label.length),
+            accessor: label,
+          });
+        }
+      });
+    return columns;
+  };
+
+  setData = (rowData) => {
+    let data = [];
+    rowData &&
+      rowData.map((item, index) => {
+        item.SNo = ++index;
+        if (item.active) {
+          if (item.active === true) {
+            item.active = "Yes";
+          } else if (item.active === false) {
+            item.active = "No";
+          }
+        }
+        data.push(item);
+      });
+    return data;
+  };
+
   render() {
-    const { data, defaultPageSize, columns } = this.state;
+    const { defaultPageSize } = this.state;
+    const { header, rowData } = this.props;
     return (
       <div className="container">
         <div className="row" style={{ margingTop: "33px", margingBottom: "12px" }}>
@@ -99,8 +94,8 @@ class MDMS extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <ReactTable
-              data={data}
-              columns={columns}
+              data={this.setData(rowData)}
+              columns={this.setHeaders(header)}
               getTableProps={getTableProps}
               getTdProps={getTdProps}
               getThProps={getThProps}
@@ -197,10 +192,19 @@ const getTrProps = () => {
   };
 };
 
+const mapStateToProps = (state, ownProps) => {
+  const { specs, data } = state.mdms;
+  const { moduleName, masterName } = ownProps && ownProps.match && ownProps.match.params;
+  const { fields } = (specs[moduleName] && specs[moduleName][masterName] && specs[moduleName][masterName].values) || {};
+  const { header } = (specs[moduleName] && specs[moduleName][masterName]) || [];
+  const rowData = (data[moduleName] && data[moduleName][masterName]) || [];
+  return { fields, header, rowData };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(MDMS);
+export default connect(mapStateToProps, mapDispatchToProps)(MDMS);
