@@ -64,8 +64,14 @@ export const submitForm = (formKey) => {
       try {
         const { saveUrl, action } = form;
         let formData = null;
+        let transformer;
         try {
-          let transformer = require(`config/forms/transformers/${formKey}`).default;
+          if (formKey.indexOf("MDMS") > -1) {
+            transformer = require(`config/forms/transformers/mdms`).default;
+          } else {
+            transformer = require(`config/forms/transformers/${formKey}`).default;
+          }
+
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);

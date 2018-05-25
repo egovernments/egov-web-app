@@ -13,7 +13,7 @@ import "react-table/react-table.css";
 
 const addIconStyle = { width: 12, height: 12, marginLeft: 8, color: "#ffffff" };
 
-const MDMSForm = ({ handleFieldChange, form }) => {
+const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   const { fields } = form || {};
   const { submit } = form;
   return (
@@ -21,12 +21,25 @@ const MDMSForm = ({ handleFieldChange, form }) => {
       {Object.keys(fields || []).map((fieldKey, index) => {
         const field = fields[fieldKey];
         return (
-          <div key={index} className="col-xs-6">
+          <div key={index} className="col-xs-6" style={{ marginBottom: 5 }}>
             <Field fieldKey={fieldKey} field={field} handleFieldChange={handleFieldChange} />
           </div>
         );
       })}
-      <Button primary={true} fullWidth={true} {...submit} />
+      <div className="col-xs-12" style={{ marginTop: 40, marginBottom: 36 }}>
+        <div className="col-xs-6" />
+        <div className="col-xs-6" style={{ textAlign: "right" }}>
+          <Button
+            label="CANCEL"
+            onClick={handleClose}
+            labelStyle={{ letterSpacing: 0.7 }}
+            buttonStyle={{ minWidth: 182, border: "1px solid #fe7a51" }}
+            style={{ marginRight: 45 }}
+          />
+          <Button label="ADD" backgroundColor="#fe7a51" labelStyle={{ letterSpacing: 0.7 }} buttonStyle={{ border: 0, minWidth: 182 }} {...submit} />
+        </div>
+      </div>
+      {/* <Button primary={true} fullWidth={true} {...submit} /> */}
     </div>
   );
 };
@@ -118,14 +131,14 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns } = this.state;
     const { masterName } = this.props;
     const { header, rowData } = this.props;
-    const MDMSFormHOC = formHoc(MDMSForm, masterName);
+    const MDMSFormHOC = formHoc(MDMSForm, `MDMS_${masterName}`);
 
     return (
       <div className="container">
         <Dialog
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
-          children={[<MDMSFormHOC key={1} />]}
+          children={[<MDMSFormHOC key={1} handleClose={this.handleClose} />]}
           title="Add Entry"
           isClose={true}
           bodyStyle={{ background: "#ffffff" }}

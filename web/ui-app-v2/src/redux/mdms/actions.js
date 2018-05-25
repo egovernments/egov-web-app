@@ -56,8 +56,6 @@ const transformRawTypeToFormat = (rawType) => {
   switch (rawType) {
     case "text":
       return "textfield";
-    case "checkbox":
-      return "checkbox";
     default:
       return "textfield";
   }
@@ -94,7 +92,12 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
       const payloadSpec = await httpRequest(`${SPEC.GET.URL}/${moduleName}/${masterName}`, SPEC.GET.ACTION, queryObject);
       const specs = transform(payloadSpec);
       const { fields } = specs.values;
-      const formConfig = { fields, name: masterName, submit: { type: "submit", label: "CORE_COMMON_CONTINUE" } };
+      const formConfig = {
+        fields,
+        name: `MDMS_${masterName}`,
+        submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
+        saveUrl: "egov-mdms-create/v1/_create",
+      };
       console.log(formConfig);
       dispatch(initForm(formConfig, masterName));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));
