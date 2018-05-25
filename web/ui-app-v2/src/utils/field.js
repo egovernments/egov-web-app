@@ -1,10 +1,8 @@
 import React from "react";
 import { TextField, MobileNumberField } from "components";
 
-const Field = ({ fieldKey, handleFieldChange, form, ...rest }) => {
+const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const fields = form.fields || {};
-    const field = fields[fieldKey] || {};
     const { type, ...fieldProps } = field;
 
     switch (type) {

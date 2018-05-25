@@ -3,6 +3,7 @@ const formConfig = {
   fields: {
     name: {
       id: "profile-form-name",
+      className: "profile-form-field",
       type: "textfield",
       jsonPath: "user.name",
       required: true,
@@ -20,6 +21,7 @@ const formConfig = {
     },
     email: {
       id: "profile-form-email",
+      className: "profile-form-field",
       type: "name",
       type: "textfield",
       jsonPath: "user.contact.email",
