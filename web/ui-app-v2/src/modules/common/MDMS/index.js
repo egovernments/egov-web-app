@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSpecs } from "redux/mdms/actions";
-import Screen from "modules/common/common/Screen";
-import { Icon, Button } from "components";
 import { upperCaseFirst } from "utils/commons";
 import "./index.css";
 import { Icon, Button, Dialog, TextField } from "components";
