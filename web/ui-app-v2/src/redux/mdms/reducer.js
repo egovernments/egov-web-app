@@ -9,10 +9,16 @@ const initialState = {
   data: {},
 };
 
+const mapFloatingLabelText = (rawText) => {
+  return rawText.split(".").pop();
+};
+
 const transformRawTypeToFormat = (rawType) => {
   switch (rawType) {
     case "text":
       return "textfield";
+    case "checkbox":
+      return "checkbox";
     default:
       return "textfield";
   }
@@ -29,10 +35,11 @@ const transformRawSpecsToFormat = (rawSpecs) => {
           type: transformRawTypeToFormat(current.type),
           required: current.isRequired,
           jsonPath: current.jsonPath,
-          floatingLabelText: current.label,
+          floatingLabelText: mapFloatingLabelText(current.label),
           errorMessage: current.patternErrorMsg,
           hintText: "",
           pattern: current.pattern,
+          value: "",
         },
       };
       return result;
