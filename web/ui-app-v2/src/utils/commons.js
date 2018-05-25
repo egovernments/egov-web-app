@@ -418,3 +418,7 @@ export const startSMSRecevier = () => {
     }
   } catch (error) {}
 };
+
+export const upperCaseFirst = (word) => {
+  return word[0].toUpperCase() + word.slice(1, word.length);
+};
