@@ -68,7 +68,9 @@ class MDMS extends React.Component {
     return (
       <div className="container">
         <div className="row" style={{ margingTop: "33px", margingBottom: "12px" }}>
-          <div className="col-md-6 text-left">Property Tax</div>
+          <div className="col-md-6 text-left" style={{ marginTop: "34px" }}>
+            Property Tax
+          </div>
 
           <div className="col-md-6 text-right">
             <Button
@@ -91,6 +93,7 @@ class MDMS extends React.Component {
               getTheadProps={getTheadProps}
               getTheadTrProps={getTheadTrProps}
               getTheadThProps={getTheadThProps}
+              getTrProps={getTrProps}
               getTrGroupProps={getTrGroupProps}
               defaultPageSize={defaultPageSize}
               className="-stripped -highlight text-center"
@@ -168,6 +171,14 @@ const getTrGroupProps = () => {
     style: {
       height: 0,
       borderBottom: "1px solid #e0e0e0",
+    },
+  };
+};
+
+const getTrProps = () => {
+  return {
+    style: {
+      alignItems: "center",
     },
   };
 };
