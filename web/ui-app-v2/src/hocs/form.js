@@ -7,11 +7,15 @@ const form = (Form, formKey) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      this.formConfig = require(`config/forms/specs/${formKey}`).default;
+      try {
+        this.formConfig = require(`config/forms/specs/${formKey}`).default;
+      } catch (error) {
+        this.formConfig = null;
+      }
     }
 
     componentDidMount() {
-      this.props.initForm(this.formConfig, formKey);
+      this.formConfig && this.props.initForm(this.formConfig, formKey);
     }
 
     submitForm = () => {

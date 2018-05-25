@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
+import { initForm } from "redux/form/actions";
 import { SPEC, MDMS } from "utils/endPoints";
 import { httpRequest } from "utils/api";
 
@@ -47,12 +48,55 @@ const dataFetchError = (error) => {
   };
 };
 
+const mapFloatingLabelText = (rawText) => {
+  return rawText.split(".").pop();
+};
+
+const transformRawTypeToFormat = (rawType) => {
+  switch (rawType) {
+    case "text":
+      return "textfield";
+    case "checkbox":
+      return "checkbox";
+    default:
+      return "textfield";
+  }
+};
+
+const transform = (rawSpecs) => {
+  return {
+    ...rawSpecs,
+    values: rawSpecs.values.reduce((result, current) => {
+      result["fields"] = {
+        ...result["fields"],
+        [current.name]: {
+          id: current.name,
+          type: transformRawTypeToFormat(current.type),
+          required: current.isRequired,
+          jsonPath: current.jsonPath,
+          floatingLabelText: mapFloatingLabelText(current.label),
+          errorMessage: current.patternErrorMsg,
+          hintText: "",
+          pattern: current.pattern,
+          value: "",
+        },
+      };
+      return result;
+    }, {}),
+  };
+};
+
 export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => {
   return async (dispatch, getState) => {
     dispatch(specsFetchPending());
     dispatch(dataFetchPending());
     try {
       const payloadSpec = await httpRequest(`${SPEC.GET.URL}/${moduleName}/${masterName}`, SPEC.GET.ACTION, queryObject);
+      const specs = transform(payloadSpec);
+      const { fields } = specs.values;
+      const formConfig = { fields, name: masterName, submit: { type: "submit", label: "CORE_COMMON_CONTINUE" } };
+      console.log(formConfig);
+      dispatch(initForm(formConfig, masterName));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));
       try {
         const payloadData = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
