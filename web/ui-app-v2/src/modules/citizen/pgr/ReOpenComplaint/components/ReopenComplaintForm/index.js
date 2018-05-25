@@ -18,7 +18,7 @@ const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleO
       <div className="reopencomplaint-textArea">
         <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
       </div>
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 reopencomplaint-button">
+      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 btn-with-bottom-nav">
         <Button {...submit} primary={true} fullWidth={true} />
       </div>
     </div>

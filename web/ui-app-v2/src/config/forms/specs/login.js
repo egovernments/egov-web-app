@@ -5,6 +5,7 @@ const formConfig = {
   fields: {
     phone: {
       id: "person-phone",
+      type: "mobilenumber",
       jsonPath: "otp.mobileNumber",
       required: true,
       floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",

@@ -136,3 +136,17 @@ body.employee-user-profile {
 .search-input-style {
   border-radius: 4px;
 }
+.btn-with-bottom-nav {
+  position: fixed !important;
+  bottom: 56px;
+  left: 0;
+  width: 100%;
+  padding: 0px !important;
+}
+.btn-without-bottom-nav {
+  position: fixed !important;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  padding: 0px !important;
+}

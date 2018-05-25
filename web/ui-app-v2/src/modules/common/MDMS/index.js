@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import { connect } from "react-redux";
 import { fetchSpecs } from "redux/mdms/actions";
 import Screen from "modules/common/common/Screen";
@@ -60,7 +59,22 @@ class MDMS extends React.Component {
 
   componentDidMount = () => {
     const { fetchSpecs, match } = this.props;
-    // fetchSpecs([], match.params.moduleName, match.params.masterName, true);
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "testtenant", // To be changed later
+        moduleDetails: [
+          {
+            moduleName: match.params.moduleName,
+            masterDetails: [
+              {
+                name: match.params.masterName,
+              },
+            ],
+          },
+        ],
+      },
+    };
+    fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   };
 
   render() {
@@ -104,6 +118,7 @@ class MDMS extends React.Component {
     );
   }
 }
+
 
 const getTableProps = () => {
   return {
@@ -183,9 +198,10 @@ const getTrProps = () => {
   };
 };
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSpecs: (queryObj, moduleName, masterName, customEndPoint) => dispatch(fetchSpecs(queryObj, moduleName, masterName, customEndPoint)),
+    fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
   };
 };
 
