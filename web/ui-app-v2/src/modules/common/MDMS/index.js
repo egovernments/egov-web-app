@@ -2,8 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSpecs } from "redux/mdms/actions";
 import Screen from "modules/common/common/Screen";
-import { Icon, Button } from "components";
 import "./index.css";
+import { Icon, Button, Dialog, TextField } from "components";
+import { handleFieldChange } from "redux/form/actions";
+
+import Field from "utils/field";
 
 // Import React Table
 import ReactTable from "react-table";
@@ -11,13 +14,32 @@ import "react-table/react-table.css";
 
 const addIconStyle = { width: 12, height: 12, marginLeft: 8, color: "#ffffff" };
 
+const genericFormHoc = ({ handleFieldChange, fields }) => {
+  // const { fields } = form || {};
+  // const { submit } = form;
+  return Object.keys(fields).map((fieldKey) => {
+    const { field } = fields[fieldKey];
+    return <Field fieldKey={fieldKey} field={field} handleFieldChange={handleFieldChange} />;
+  });
+  // {/* <Button {...submit} /> */}
+};
+
 class MDMS extends React.Component {
   constructor() {
     super();
     this.state = {
+      dialogOpen: false,
       defaultPageSize: 5,
     };
   }
+
+  onAddClick = () => {
+    this.setState({ dialogOpen: true });
+  };
+
+  onDialogClose = () => {
+    this.setState({ dialogOpen: false });
+  };
 
   componentDidMount = () => {
     const { fetchSpecs, match } = this.props;
@@ -84,10 +106,33 @@ class MDMS extends React.Component {
   };
 
   render() {
-    const { defaultPageSize } = this.state;
+    const { genericFormHoc } = this;
+    const { data, defaultPageSize, columns } = this.state;
+    const { fields, handleFieldChange } = this.props;
     const { header, rowData } = this.props;
     return (
       <div className="container">
+        <Dialog
+          open={this.state.dialogOpen}
+          handleClose={this.onDialogClose}
+          children={
+            fields
+              ? Object.keys(fields).map((fieldKey, index) => {
+                  const field = fields[fieldKey];
+                  return (
+                    <div key={index} className="col-xs-6">
+                      <Field fieldKey={fieldKey} field={field} handleFieldChange={handleFieldChange} />
+                    </div>
+                  );
+                })
+              : [<div />]
+          }
+          title="Add Entry"
+          isClose={true}
+          bodyStyle={{ background: "#ffffff" }}
+          contentStyle={{ maxWidth: "none" }}
+          titleStyle={{ textAlign: "left" }}
+        />
         <div className="row" style={{ margingTop: "33px", margingBottom: "12px" }}>
           <div className="col-md-6 text-left" style={{ marginTop: "34px" }}>
             Property Tax
@@ -100,6 +145,7 @@ class MDMS extends React.Component {
               labelPosition="after"
               backgroundColor="#fe7a51"
               icon={<Icon action="content" name="add" color="#ffffff" style={addIconStyle} />}
+              onClick={this.onAddClick}
             />
           </div>
         </div>
@@ -216,6 +262,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
+    handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
   };
 };
 
