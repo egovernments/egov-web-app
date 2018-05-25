@@ -49,7 +49,7 @@ class Header extends Component {
     const { isHomeScreen, hideBackButton } = this.props.options;
     const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
 
-    const style = { overflowX: "hidden", width: "initial" };
+    const style = { overflowX: "hidden", width: "initial", overflowY: "hidden" };
     if (isComplaintType) {
       style.boxShadow = "none";
     }
@@ -57,9 +57,9 @@ class Header extends Component {
     const iconElementLeft = (
       <IconButton id="icon-hamburger">
         {isHomeScreen ? (
-          <Icon id="icon-hamburger" action="custom" name="hamburger" />
+          <Icon id="icon-hamburger" className="appbar-left-icon" action="custom" name="hamburger" />
         ) : hideBackButton ? null : (
-          <Icon id="back-navigator" action="navigation" name="arrow-back" />
+          <Icon id="back-navigator" className="appbar-left-icon" action="navigation" name="arrow-back" />
         )}
       </IconButton>
     );
