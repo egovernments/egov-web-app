@@ -4,8 +4,6 @@ import Field from "utils/field";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fetchSpecs } from "redux/mdms/actions";
-import Screen from "modules/common/common/Screen";
-import { Icon, Button } from "components";
 import { upperCaseFirst } from "utils/commons";
 import "./index.css";
 import { Icon, Button, Dialog, TextField } from "components";
