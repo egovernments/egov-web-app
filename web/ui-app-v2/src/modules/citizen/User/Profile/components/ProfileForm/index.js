@@ -11,7 +11,7 @@ const ProfileForm = ({ form, handleFieldChange }) => {
       <Field fieldKey="name" field={fields.name} handleFieldChange={handleFieldChange} />
       <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
       <Field fieldKey="email" field={fields.email} handleFieldChange={handleFieldChange} />
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 profileBtnWrapper">
+      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 btn-without-bottom-nav profileBtnWrapper">
         <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
       </div>
     </div>
