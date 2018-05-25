@@ -23,6 +23,7 @@ import ComplaintAssigned from "./pgr/ComplaintAssigned";
 import ResolveSuccess from "./pgr/ResolveSuccess";
 import ReassignSuccess from "./pgr/ReassignSuccess";
 import MDMS from "modules/common/MDMS";
+import Home from "./Home";
 
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
@@ -32,25 +33,25 @@ const routes = [
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/employee",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/employee",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/employee",
   },
   {
     path: "user/forgot-password",
     component: ForgotPassword,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/employee",
   },
   {
     path: "user/change-password",
@@ -69,7 +70,6 @@ const routes = [
     component: AllComplaints,
     needsAuthentication: true,
     options: {
-      isHomeScreen: true,
       hideFooter: true,
       title: "ES_ALL_COMPLAINTS_HEADER",
       redirectionUrl,
@@ -218,7 +218,18 @@ const routes = [
       hideFooter: true,
       redirectionUrl,
     },
-  }
+  },
+  {
+    path: "",
+    component: Home,
+    needsAuthentication: true,
+    options: {
+      title: "HOME",
+      hideFooter: false,
+      redirectionUrl,
+      isHomeScreen: true,
+    },
+  },
 ];
 
 const Employee = ({ match }) => {

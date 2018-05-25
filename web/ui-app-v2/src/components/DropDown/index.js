@@ -46,7 +46,7 @@ const DropDownUi = ({
 }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.value} primaryText={option.label} />;
+      return <MenuItem key={index} value={option.value} primaryText={option.label} style={{ marginTop: "0px" }} />;
     });
   };
 
