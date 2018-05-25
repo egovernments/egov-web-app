@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fetchSpecs } from "redux/mdms/actions";
 import Screen from "modules/common/common/Screen";
+import { Icon, Button } from "components";
+import { upperCaseFirst } from "utils/commons";
 import "./index.css";
 import { Icon, Button, Dialog, TextField } from "components";
 
@@ -76,7 +78,7 @@ class MDMS extends React.Component {
         var label = item.label.split(".").pop();
         if (label.toLowerCase() !== "tenantid") {
           columns.push({
-            Header: label[0].toUpperCase() + label.slice(1, label.length),
+            Header: upperCaseFirst(label),
             accessor: label,
           });
         }
