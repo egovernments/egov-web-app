@@ -29,44 +29,6 @@ class MDMS extends React.Component {
     super();
     this.state = {
       dialogOpen: false,
-      data: [
-        {
-          name: "murali",
-          info: "male",
-          stats: "test",
-        },
-        {
-          name: "tharu",
-          info: "female",
-          stats: "test",
-        },
-      ],
-      columns: [
-        {
-          Header: "Name",
-          accessor: "name",
-        },
-        {
-          Header: "Info",
-          accessor: "info",
-        },
-        {
-          Header: "Stats",
-          accessor: "stats",
-        },
-        {
-          Header: "Actions",
-          Cell: (row) => (
-            <Icon
-              onClick={() => {
-                console.log(row.index);
-              }}
-              action="image"
-              name="edit"
-            />
-          ),
-        },
-      ],
       defaultPageSize: 5,
     };
   }
@@ -99,10 +61,55 @@ class MDMS extends React.Component {
     fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   };
 
+  setHeaders = (header) => {
+    let columns = [{ Header: "S. No.", accessor: "SNo" }];
+    header &&
+      header.map((item) => {
+        var label = item.label.split(".").pop();
+        if (label.toLowerCase() !== "tenantid") {
+          columns.push({
+            Header: label[0].toUpperCase() + label.slice(1, label.length),
+            accessor: label,
+          });
+        }
+      });
+    columns.push({
+      Header: "Actions",
+      Cell: (row) => (
+        <Icon
+          onClick={() => {
+            console.log(row.index);
+          }}
+          action="image"
+          name="edit"
+        />
+      ),
+    });
+    return columns;
+  };
+
+  setData = (rowData) => {
+    let data = [];
+    rowData &&
+      rowData.map((item, index) => {
+        item.SNo = ++index;
+        if (item.active) {
+          if (item.active === true) {
+            item.active = "Yes";
+          } else if (item.active === false) {
+            item.active = "No";
+          }
+        }
+        data.push(item);
+      });
+    return data;
+  };
+
   render() {
     const { genericFormHoc } = this;
     const { data, defaultPageSize, columns } = this.state;
     const { fields, handleFieldChange } = this.props;
+    const { header, rowData } = this.props;
     return (
       <div className="container">
         <Dialog
@@ -145,8 +152,8 @@ class MDMS extends React.Component {
         <div className="row">
           <div className="col-md-12">
             <ReactTable
-              data={data}
-              columns={columns}
+              data={this.setData(rowData)}
+              columns={this.setHeaders(header)}
               getTableProps={getTableProps}
               getTdProps={getTdProps}
               getThProps={getThProps}
@@ -244,10 +251,12 @@ const getTrProps = () => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { specs } = state.mdms;
+  const { specs, data } = state.mdms;
   const { moduleName, masterName } = ownProps && ownProps.match && ownProps.match.params;
   const { fields } = (specs[moduleName] && specs[moduleName][masterName] && specs[moduleName][masterName].values) || {};
-  return { fields };
+  const { header } = (specs[moduleName] && specs[moduleName][masterName]) || [];
+  const rowData = (data[moduleName] && data[moduleName][masterName]) || [];
+  return { fields, header, rowData };
 };
 
 const mapDispatchToProps = (dispatch) => {
