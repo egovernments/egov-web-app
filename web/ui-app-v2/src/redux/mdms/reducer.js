@@ -9,10 +9,6 @@ const initialState = {
   data: {},
 };
 
-const mapFloatingLabelText = (rawText) => {
-  return rawText.split(".").pop();
-};
-
 const mdmsReducer = (state = initialState, action) => {
   const { type, moduleName, masterName } = action;
   switch (type) {
