@@ -1,10 +1,9 @@
 import React from "react";
-import { TextField, MobileNumberField } from "components";
+import { TextField, MobileNumberField, SingleCheckbox } from "components";
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
     const { type, ...fieldProps } = field;
-
     switch (type) {
       case "textfield":
       case "textarea":
@@ -14,6 +13,16 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
       case "number":
       case "password":
         return <TextField {...rest} {...fieldProps} type={type} onChange={(e, value) => handleFieldChange(fieldKey, value)} />;
+      case "checkbox":
+        return (
+          <SingleCheckbox
+            {...rest}
+            {...fieldProps}
+            label={fieldProps.floatingLabelText}
+            type={type}
+            onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)}
+          />
+        );
       default:
         return null;
     }
