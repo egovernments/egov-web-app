@@ -64,9 +64,8 @@ export const submitForm = (formKey) => {
       try {
         const { saveUrl, action } = form;
         let formData = null;
-        let transformer;
         try {
-          transformer = require(`config/forms/transformers/${formKey}`).default;
+          let transformer = require(`config/forms/transformers/${formKey}`).default;
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);
