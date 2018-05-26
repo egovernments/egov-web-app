@@ -7,7 +7,7 @@ import { handleFieldChange, submitForm } from "redux/form/actions";
 import { sendOTP } from "redux/auth/actions";
 import Screen from "modules/common/common/Screen";
 
-const OTPFormHOC = formHoc(OTPForm, "otp");
+const OTPFormHOC = formHoc({ formKey: "otp" })(OTPForm);
 
 class OTP extends Component {
   componentWillMount() {

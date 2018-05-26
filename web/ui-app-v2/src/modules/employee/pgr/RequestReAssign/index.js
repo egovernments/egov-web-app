@@ -8,7 +8,7 @@ import { fetchComplaints } from "redux/complaints/actions";
 import Label from "utils/translationNode";
 import "./index.css";
 
-const RequestReassignHOC = formHOC(RequestReassignForm, "requestReassign");
+const RequestReassignHOC = formHOC({ formKey: "requestReassign" })(RequestReassignForm);
 
 class RequestReAssign extends Component {
   state = {

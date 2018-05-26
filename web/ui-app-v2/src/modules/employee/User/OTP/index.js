@@ -7,7 +7,7 @@ import OTPForm from "./components/OTPForm";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { sendOTP } from "redux/auth/actions";
 
-const OTPFormHOC = formHoc(OTPForm, "employeeOTP");
+const OTPFormHOC = formHoc({ formKey: "employeeOTP" })(OTPForm);
 
 class OTP extends Component {
   resendOTP = () => {

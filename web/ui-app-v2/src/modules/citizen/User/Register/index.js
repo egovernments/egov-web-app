@@ -5,7 +5,7 @@ import RegisterForm from "./components/RegisterForm";
 import Banner from "modules/common/common/Banner";
 import Screen from "modules/common/common/Screen";
 
-const RegisterFormHOC = formHoc(RegisterForm, "register");
+const RegisterFormHOC = formHoc({ formKey: "register" })(RegisterForm);
 
 class Register extends Component {
   render() {

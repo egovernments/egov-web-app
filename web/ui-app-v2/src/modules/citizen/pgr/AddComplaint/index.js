@@ -5,7 +5,7 @@ import AddComplaintForm from "./components/AddComplaintForm";
 import Screen from "modules/common/common/Screen";
 import "./index.css";
 
-const ComplaintFormHOC = formHoc(AddComplaintForm, "complaint");
+const ComplaintFormHOC = formHoc({ formKey: "complaint" })(AddComplaintForm);
 
 class AddComplaints extends Component {
   render() {

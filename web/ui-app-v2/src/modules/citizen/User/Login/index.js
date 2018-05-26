@@ -4,7 +4,7 @@ import LoginForm from "./components/LoginForm";
 import Banner from "modules/common/common/Banner";
 import Screen from "modules/common/common/Screen";
 
-const LoginFormHOC = formHoc(LoginForm, "login");
+const LoginFormHOC = formHoc({ formKey: "login" })(LoginForm);
 
 class Login extends Component {
   render() {

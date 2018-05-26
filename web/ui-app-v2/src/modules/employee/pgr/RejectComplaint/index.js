@@ -8,7 +8,7 @@ import Label from "utils/translationNode";
 import { handleFieldChange } from "redux/form/actions";
 import "./index.css";
 
-const RejectComplaintHOC = formHOC(RejectComplaintForm, "rejectComplaint");
+const RejectComplaintHOC = formHOC({ formKey: "rejectComplaint" })(RejectComplaintForm);
 
 class RejectComplaint extends Component {
   state = {

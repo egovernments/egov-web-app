@@ -10,7 +10,7 @@ import img from "assets/images/download.png";
 import "./index.css";
 
 const formKey = "profileEmployee";
-const ProfileFormHOC = formHoc(ProfileForm, formKey);
+const ProfileFormHOC = formHoc({ formKey })(ProfileForm);
 
 class Profile extends Component {
   state = {

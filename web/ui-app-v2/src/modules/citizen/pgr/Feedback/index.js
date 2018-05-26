@@ -7,7 +7,7 @@ import FeedbackForm from "./components/FeedbackForm";
 import { handleFieldChange } from "redux/form/actions";
 import "./index.css";
 
-const FeedbackFormHOC = formHoc(FeedbackForm, "feedback");
+const FeedbackFormHOC = formHoc({ formKey: "feedback" })(FeedbackForm);
 
 class Feedback extends Component {
   state = {

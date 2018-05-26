@@ -9,7 +9,7 @@ import img from "assets/images/download.png";
 import { fileUpload, removeFile } from "redux/form/actions";
 import "./index.css";
 
-const ProfileFormHOC = formHoc(ProfileForm, "profile");
+const ProfileFormHOC = formHoc({ formKey: "profile" })(ProfileForm);
 
 class Profile extends Component {
   state = {

@@ -3,14 +3,14 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
-const form = (Form, formKey) => {
+const form = ({ formKey, formConfig = null }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      try {
+      if (formConfig) {
+        this.formConfig = formConfig;
+      } else {
         this.formConfig = require(`config/forms/specs/${formKey}`).default;
-      } catch (error) {
-        this.formConfig = null;
       }
     }
 

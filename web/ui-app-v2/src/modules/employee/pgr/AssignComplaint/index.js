@@ -5,7 +5,7 @@ import formHoc from "hocs/form";
 import AssignComplaintForm from "./components/AssignComplaintForm";
 import { fetchEmployees } from "redux/common/actions";
 
-const AssignComplaintFormHOC = formHoc(AssignComplaintForm, "assignComplaint");
+const AssignComplaintFormHOC = formHoc({ formKey: "assignComplaint" })(AssignComplaintForm);
 
 class AssignComplaint extends Component {
   componentDidMount = () => {

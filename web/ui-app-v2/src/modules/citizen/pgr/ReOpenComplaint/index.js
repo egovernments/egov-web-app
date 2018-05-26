@@ -8,7 +8,7 @@ import { fileUpload, handleFieldChange } from "redux/form/actions";
 import formHoc from "hocs/form";
 import "./index.css";
 
-const ReopenComplaintFormHOC = formHoc(ReopenComplaintForm, "reopenComplaint");
+const ReopenComplaintFormHOC = formHoc({ formKey: "reopenComplaint" })(ReopenComplaintForm);
 
 class ReOpenComplaint extends Component {
   state = {

@@ -4,7 +4,7 @@ import Banner from "modules/common/common/Banner";
 import Screen from "modules/common/common/Screen";
 import ForgotPasswd from "./components/ForgotPasswd";
 
-const ForgotPasswdHOC = formHoc(ForgotPasswd, "employeeForgotPasswd");
+const ForgotPasswdHOC = formHoc({ formKey: "employeeForgotPasswd" })(ForgotPasswd);
 
 const ForgotPassword = () => {
   return (

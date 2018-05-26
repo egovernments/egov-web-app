@@ -29,11 +29,11 @@ const defaultStepperStyle = {
 };
 
 const formKey = "propertyTaxAssessment";
-const OwnerDetailsHOC = formHoc(OwnerDetails, formKey);
-const PropertyAddressHOC = formHoc(PropertyAddress, formKey);
-const TaxAssessmentDetailsOneHOC = formHoc(TaxAssessmentDetailsOne, formKey);
-const TaxAssessmentDetailsTwoHOC = formHoc(TaxAssessmentDetailsTwo, formKey);
-const FullOrPartialExemptionHOC = formHoc(FullOrPartialExemption, formKey);
+const OwnerDetailsHOC = formHoc({ formKey })(OwnerDetails);
+const PropertyAddressHOC = formHoc({ formKey })(PropertyAddress);
+const TaxAssessmentDetailsOneHOC = formHoc({ formKey })(TaxAssessmentDetailsOne);
+const TaxAssessmentDetailsTwoHOC = formHoc({ formKey })(TaxAssessmentDetailsTwo);
+const FullOrPartialExemptionHOC = formHoc({ formKey })(FullOrPartialExemption);
 
 class AssessmentFormWizard extends Component {
   constructor(props) {

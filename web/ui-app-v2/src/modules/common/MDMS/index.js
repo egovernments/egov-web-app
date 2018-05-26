@@ -54,6 +54,12 @@ class MDMS extends React.Component {
   }
 
   onAddClick = () => {
+    // do init form form here
+    this.setState({ dialogOpen: true });
+  };
+
+  onEditClick = (rowIndex) => {
+    // do init form here
     this.setState({ dialogOpen: true });
   };
 
@@ -96,15 +102,7 @@ class MDMS extends React.Component {
       });
     columns.push({
       Header: "Actions",
-      Cell: (row) => (
-        <Icon
-          onClick={() => {
-            console.log(row.index);
-          }}
-          action="image"
-          name="edit"
-        />
-      ),
+      Cell: (row) => <Icon onClick={this.onEditClick.bind(null, row.index)} action="image" name="edit" />,
     });
     return columns;
   };
@@ -131,7 +129,7 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns } = this.state;
     const { masterName } = this.props;
     const { header, rowData } = this.props;
-    const MDMSFormHOC = formHoc(MDMSForm, `MDMS_${masterName}`);
+    const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
 
     return (
       <div className="container">

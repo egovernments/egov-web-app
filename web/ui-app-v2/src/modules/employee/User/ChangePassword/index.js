@@ -5,7 +5,7 @@ import Screen from "modules/common/common/Screen";
 import PasswordForm from "./components/PasswordForm";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
 
-const PasswordFormHOC = formHoc(PasswordForm, "employeeChangePassword");
+const PasswordFormHOC = formHoc({ formKey: "employeeChangePassword" })(PasswordForm);
 
 class ChangePassword extends Component {
   render() {

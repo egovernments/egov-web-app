@@ -7,7 +7,7 @@ import { fileUpload } from "redux/form/actions";
 import ComplaintResolvedForm from "./components/ComplaintResolvedForm";
 import "./index.css";
 
-const ComplaintResolvedHOC = formHoc(ComplaintResolvedForm, "complaintResolved");
+const ComplaintResolvedHOC = formHoc({ formKey: "complaintResolved" })(ComplaintResolvedForm);
 
 class ComplaintResolved extends Component {
   componentDidMount() {

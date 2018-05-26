@@ -17,7 +17,7 @@ const imageStyles = {
   marginRight: "8px",
 };
 
-const WriteCommentHOC = formHoc(WriteComment, "comment");
+const WriteCommentHOC = formHoc({ formKey: "comment" })(WriteComment);
 
 class Comments extends Component {
   render() {

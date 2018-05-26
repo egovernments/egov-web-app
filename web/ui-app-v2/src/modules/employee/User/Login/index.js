@@ -4,7 +4,7 @@ import Banner from "modules/common/common/Banner";
 import Screen from "modules/common/common/Screen";
 import LoginForm from "./components/LoginForm";
 
-const LoginFormHOC = formHoc(LoginForm, "employeeLogin");
+const LoginFormHOC = formHoc({ formKey: "employeeLogin" })(LoginForm);
 
 const Login = () => {
   return (
