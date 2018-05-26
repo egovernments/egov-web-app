@@ -92,17 +92,12 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
       const payloadSpec = await httpRequest(`${SPEC.GET.URL}/${moduleName}/${masterName}`, SPEC.GET.ACTION, queryObject);
       const specs = transform(payloadSpec);
       const { fields } = specs.values;
-<<<<<<< 23eaa0ac0353dc6cc4a18f32fb0ace3a28b58dab
       const formConfig = {
         fields,
         name: `MDMS_${masterName}`,
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
       };
-      console.log(formConfig);
-=======
-      const formConfig = { fields, name: masterName, submit: { type: "submit", label: "CORE_COMMON_CONTINUE" } };
->>>>>>> removed redundant code
       dispatch(initForm(formConfig, masterName));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));
       try {
