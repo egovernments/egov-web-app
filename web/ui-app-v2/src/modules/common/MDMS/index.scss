@@ -37,3 +37,13 @@
 .mdms-table-search-bar {
   margin-top: 5px;
 }
+
+.mdms-form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mdms-form-wrapper > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
