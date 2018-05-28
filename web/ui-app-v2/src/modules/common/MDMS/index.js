@@ -8,7 +8,6 @@ import { upperCaseFirst } from "utils/commons";
 import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import "./index.css";
-
 // Import React Table
 import "react-table/react-table.css";
 
@@ -24,14 +23,16 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   const { submit } = form;
   return (
     <div>
-      {Object.keys(fields || []).map((fieldKey, index) => {
-        const field = fields[fieldKey];
-        return (
-          <div key={index} className="col-xs-6" style={{ marginBottom: 5 }}>
-            <Field fieldKey={fieldKey} field={field} handleFieldChange={handleFieldChange} />
-          </div>
-        );
-      })}
+      <div className="mdms-form-wrapper">
+        {Object.keys(fields || []).map((fieldKey, index) => {
+          const field = fields[fieldKey];
+          return (
+            <div key={index} className="col-xs-6" style={{ marginBottom: 5 }}>
+              <Field fieldKey={fieldKey} field={field} handleFieldChange={handleFieldChange} />
+            </div>
+          );
+        })}
+      </div>
       <div className="col-xs-12" style={{ marginTop: 40, marginBottom: 36 }}>
         <div className="col-xs-6" />
         <div className="col-xs-6" style={{ textAlign: "right" }}>
@@ -47,6 +48,7 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
             style={{ width: "36%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0 }}
+            onClick={handleClose}
             buttonStyle={{ border: 0 }}
             {...submit}
           />
@@ -157,7 +159,7 @@ class MDMS extends React.Component {
         <Dialog
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
-          children={[<MDMSFormHOC key={1} handleClose={this.handleClose} />]}
+          children={[<MDMSFormHOC key={1} handleClose={this.onDialogClose} />]}
           title="Add Entry"
           isClose={true}
           bodyStyle={{ background: "#ffffff" }}
