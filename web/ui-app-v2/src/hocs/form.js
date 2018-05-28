@@ -3,19 +3,19 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
-const form = ({ formKey, formConfig = null }) => (Form) => {
+const form = ({ formKey }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      if (formConfig) {
-        this.formConfig = formConfig;
-      } else {
+      try {
         this.formConfig = require(`config/forms/specs/${formKey}`).default;
+      } catch (error) {
+        // the error is assumed to have occured due to absence of config; so ignore it!
       }
     }
 
     componentDidMount() {
-      this.formConfig && this.props.initForm(this.formConfig, formKey);
+      this.formConfig && this.props.initForm(this.formConfig);
     }
 
     submitForm = () => {
@@ -56,7 +56,7 @@ const form = ({ formKey, formConfig = null }) => (Form) => {
     return {
       handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
       submitForm: (formKey) => dispatch(submitForm(formKey)),
-      initForm: (form, formKey) => dispatch(initForm(form, formKey)),
+      initForm: (form) => dispatch(initForm(form)),
     };
   };
 

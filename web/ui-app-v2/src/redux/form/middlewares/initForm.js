@@ -1,5 +1,6 @@
 import { INIT_FORM } from "../actionTypes";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
+import transform from "config/forms/transformers";
 
 const initFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
@@ -7,11 +8,12 @@ const initFormMiddleware = (store) => (next) => async (action) => {
   const state = store.getState();
 
   if (type === INIT_FORM) {
-    const { form, formKey } = action;
+    const { form } = action;
+    const { name: formKey } = form;
     let formData = null;
 
     try {
-      let transformer = require(`config/forms/transformers/${formKey}`).default;
+      let transformer = transform(formKey);
       transformer = transformer.businessModelToViewModelTransformer;
       if (transformer && typeof transformer === "function") {
         formData = transformer(form, state);

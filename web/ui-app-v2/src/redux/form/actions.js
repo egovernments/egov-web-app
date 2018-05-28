@@ -4,12 +4,12 @@ import { httpRequest, loginRequest, uploadFile } from "utils/api";
 import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
 import { validateForm } from "./utils";
+import transform from "config/forms/transformers";
 
-export const initForm = (form, formKey) => {
+export const initForm = (form) => {
   return {
     type: actionTypes.INIT_FORM,
     form,
-    formKey,
   };
 };
 
@@ -65,7 +65,7 @@ export const submitForm = (formKey) => {
         const { saveUrl, action } = form;
         let formData = null;
         try {
-          let transformer = require(`config/forms/transformers/${formKey}`).default;
+          let transformer = transform(formKey);
           transformer = transformer.viewModelToBusinessModelTransformer;
           if (transformer && typeof transformer === "function") {
             formData = transformer(form, state);

@@ -129,7 +129,7 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns } = this.state;
     const { masterName } = this.props;
     const { header, rowData } = this.props;
-    const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
+    const MDMSFormHOC = formHoc({ formKey: `MDMS_${masterName}` })(MDMSForm);
 
     return (
       <div className="container">
