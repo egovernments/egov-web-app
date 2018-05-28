@@ -18,11 +18,6 @@ const searchIconStyle = {
   width: "35px",
   fill: "#767676",
 };
-const searchBoxStyles = {
-  defaultContainerStyle: { background: "#fff", padding: "0px 10px" },
-  defaultTextFieldStyle: { border: "1px solid  #e0e0e0", background: "#f7f7f7", height: "48px" },
-  defaultIconStyle: { left: "5px", color: "#767676" },
-};
 
 const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   const { fields } = form || {};
@@ -153,7 +148,7 @@ class MDMS extends React.Component {
     let tableData = setData(rowData);
     if (this.state.search) {
       tableData = tableData.filter((row) => {
-        return row.name.includes(this.state.search) || row.code.includes(this.state.search);
+        return row.name.toLowerCase().includes(this.state.search.toLowerCase()) || row.code.toLowerCase().includes(this.state.search.toLowerCase());
       });
     }
 
@@ -181,9 +176,8 @@ class MDMS extends React.Component {
                 <TextFieldIcon
                   textFieldStyle={{ height: "48px" }}
                   inputStyle={{
-                    marginTop: "8px",
+                    marginTop: "4px",
                     left: 0,
-                    textIndent: 40,
                     position: "absolute",
                   }}
                   iconPosition="after"
