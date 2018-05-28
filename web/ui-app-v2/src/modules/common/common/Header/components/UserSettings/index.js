@@ -1,24 +1,26 @@
 import React, { Component } from "react";
+
 import { DropDown, Icon, Image } from "components";
 import person from "assets/images/faceTwo.jpg";
+
 import "./index.css";
 
 class UserSettings extends Component {
   state = {
-    languageSelected: "English",
+    languageSelected: localStorage.getItem("locale"),
   };
   items = [
     {
-      value: "English",
-      label: "English",
+      label: "ENGLISH",
+      value: "en_IN",
     },
     {
-      value: "Hindi",
-      label: "Hindi",
+      label: "हिंदी",
+      value: "hi_IN",
     },
     {
-      value: "Punjabi",
-      label: "Punjabi",
+      label: "ਪੰਜਾਬੀ",
+      value: "pn_IN",
     },
   ];
   style = {
@@ -32,6 +34,11 @@ class UserSettings extends Component {
     label: {
       color: "#5F5C57",
       fontSize: "12px",
+      paddingRight: "0px",
+    },
+    arrowIconStyle: {
+      marginTop: "7px",
+      marginLeft: "10px",
     },
     iconStyle: {
       marginRight: "30px",
@@ -40,17 +47,22 @@ class UserSettings extends Component {
 
   onChange = (event, index, value) => {
     this.setState({ languageSelected: value });
+    this.props.fetchLocalizationLabel(value);
   };
 
   render() {
     const { languageSelected } = this.state;
     const { items, style } = this;
+    const { onIconClick } = this.props;
 
     return (
       <div className="userSettingsContainer">
         <DropDown onChange={this.onChange} style={style.baseStyle} labelStyle={style.label} dropDownData={items} value={languageSelected} />
-        <Icon action="social" name="notifications" style={style.iconStyle} />
-        <Image height={33} width={33} circular={true} source={person} />
+        <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} />
+        <div onClick={onIconClick} className="userSettingsInnerContainer">
+          <Image height={33} width={33} circular={true} source={person} />
+          <Icon action="navigation" name="arrow-drop-down" color="#767676" style={style.arrowIconStyle} />
+        </div>
       </div>
     );
   }

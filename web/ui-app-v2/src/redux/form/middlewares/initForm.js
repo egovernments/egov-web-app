@@ -11,27 +11,14 @@ const initFormMiddleware = (store) => (next) => async (action) => {
     const { form } = action;
     const { name: formKey } = form;
     let formData = null;
-
     try {
-      let transformer = transform(formKey);
-      transformer = transformer.businessModelToViewModelTransformer;
-      if (transformer && typeof transformer === "function") {
-        formData = transformer(form, state);
-        try {
-          formData = typeof formData.then === "function" ? await formData : formData;
-        } catch (error) {
-          const { message } = error;
-          // this bit of code is duplicated
-          dispatch(toggleSnackbarAndSetText(true, message, true));
-          return;
-        }
-      } else {
-        formData = form;
-      }
+      formData = await transform("businessModelToViewModelTransformer", formKey, form, state);
+      action.form = formData;
     } catch (error) {
-      formData = form;
+      const { message } = error;
+      dispatch(toggleSnackbarAndSetText(true, message, true));
+      return;
     }
-    action.form = formData;
   }
 
   next(action);

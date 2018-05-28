@@ -4,7 +4,7 @@ import { httpRequest, loginRequest, uploadFile } from "utils/api";
 import { prepareFormData } from "utils/commons";
 import { FILE_UPLOAD } from "utils/endPoints";
 import { validateForm } from "./utils";
-import transform from "config/forms/transformers";
+import transformer from "config/forms/transformers";
 
 export const initForm = (form) => {
   return {
@@ -54,37 +54,15 @@ export const submitForm = (formKey) => {
   return async (dispatch, getState) => {
     const state = getState();
     const form = state.form[formKey];
-    const { loading } = form;
-    const isFormValid = validateForm(form);
-    if (loading) {
+    if (form.loading) {
       return;
     }
+    const isFormValid = validateForm(form);
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
+      const { saveUrl, action } = form;
       try {
-        const { saveUrl, action } = form;
-        let formData = null;
-        try {
-          let transformer = transform(formKey);
-          transformer = transformer.viewModelToBusinessModelTransformer;
-          if (transformer && typeof transformer === "function") {
-            formData = transformer(form, state);
-            // check if a transformer returns a promise in which case wait for the promise to resolve
-            try {
-              formData = typeof formData.then === "function" ? await formData : formData;
-            } catch (error) {
-              const { message } = error;
-              // this bit of code is duplicated
-              dispatch(submitFormError(formKey, message));
-              dispatch(toggleSnackbarAndSetText(true, message, true));
-              return;
-            }
-          }
-        } catch (error) {
-          // TODO: handle the errors appropriately
-          // the assumption is that the error occured only because a transformer was not found
-          formData = prepareFormData(form);
-        }
+        const formData = await transformer("viewModelToBusinessModelTransformer", formKey, form, state);
         let formResponse = {};
         // this will eventually moved out to the auth action; bit messy
         if (formData.hasOwnProperty("login")) {

@@ -5,10 +5,8 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
-import "./index.css";
 import { Icon, Button, Dialog, TextField } from "components";
-
-// Import React Table
+import "./index.css";
 import "react-table/react-table.css";
 
 const addIconStyle = { width: 12, height: 12, marginLeft: 8, color: "#ffffff" };
@@ -32,14 +30,20 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
           <Button
             label="CANCEL"
             onClick={handleClose}
-            labelStyle={{ letterSpacing: 0.7 }}
-            buttonStyle={{ minWidth: 182, border: "1px solid #fe7a51" }}
-            style={{ marginRight: 45 }}
+            labelStyle={{ letterSpacing: 0.7, padding: 0 }}
+            buttonStyle={{ border: "1px solid #fe7a51" }}
+            style={{ marginRight: 45, width: "36%" }}
           />
-          <Button label="ADD" backgroundColor="#fe7a51" labelStyle={{ letterSpacing: 0.7 }} buttonStyle={{ border: 0, minWidth: 182 }} {...submit} />
+          <Button
+            label="ADD"
+            style={{ width: "36%" }}
+            backgroundColor="#fe7a51"
+            labelStyle={{ letterSpacing: 0.7, padding: 0 }}
+            buttonStyle={{ border: 0 }}
+            {...submit}
+          />
         </div>
       </div>
-      {/* <Button primary={true} fullWidth={true} {...submit} /> */}
     </div>
   );
 };
@@ -112,6 +116,7 @@ class MDMS extends React.Component {
     rowData &&
       rowData.map((item, index) => {
         item.SNo = ++index;
+
         if (item.active) {
           if (item.active === true) {
             item.active = "Yes";
@@ -119,6 +124,7 @@ class MDMS extends React.Component {
             item.active = "No";
           }
         }
+
         data.push(item);
       });
     return data;
@@ -129,7 +135,7 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns } = this.state;
     const { masterName } = this.props;
     const { header, rowData } = this.props;
-    const MDMSFormHOC = formHoc({ formKey: `MDMS_${masterName}` })(MDMSForm);
+    const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
 
     return (
       <div className="container">

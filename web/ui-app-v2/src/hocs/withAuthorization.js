@@ -37,7 +37,7 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
           {authenticated ? <Component {...this.props} /> : null}
-          {!hideFooter && authenticated ? <Footer history={history} role={role} /> : null}
+          {!hideFooter && authenticated ? <div className="hidden-md"><Footer history={history} role={role} /></div> : null}
         </div>
       );
     }
