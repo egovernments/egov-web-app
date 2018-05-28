@@ -29,7 +29,7 @@ const formConfig = {
     type: "submit",
   },
   saveUrl: "/user-otp/v1/_send",
-  redirectionRoute: "/employee/all-complaints",
+  redirectionRoute: "/employee",
   action: "token",
 };
 

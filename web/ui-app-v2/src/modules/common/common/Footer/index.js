@@ -11,14 +11,14 @@ class Footer extends Component {
     selectedIndex: 0,
   };
 
-  _onTabChange = (tabIndex) => {
-    const route = navigationItems[tabIndex].route;
+  _onTabChange = (tabIndex, role = "citizen") => {
+    const route = navigationItems[role][tabIndex].route;
     this.props.setBottomNavigationIndex(tabIndex);
     if (route.length) this.props.history.push(route);
   };
 
-  _bottomNavigationOptions = () => {
-    return navigationItems.map((item) => {
+  _bottomNavigationOptions = (role = "citizen") => {
+    return navigationItems[role].map((item) => {
       const { label, icon } = item;
       const { action, name } = icon;
       return {
@@ -30,10 +30,10 @@ class Footer extends Component {
   };
 
   render() {
-    const { bottomNavigationIndex } = this.props;
+    const { bottomNavigationIndex, role } = this.props;
     const { _onTabChange, _bottomNavigationOptions } = this;
-    const options = _bottomNavigationOptions();
-    return <BottomNavigation selectedIndex={bottomNavigationIndex} options={options} handleChange={_onTabChange} />;
+    const options = _bottomNavigationOptions(role);
+    return <BottomNavigation selectedIndex={bottomNavigationIndex} options={options} handleChange={(index) => _onTabChange(index, role)} />;
   }
 }
 

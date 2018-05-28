@@ -1,6 +1,8 @@
 import React from "react";
 import { AppBar } from "components";
 import Label from "utils/translationNode";
+import UserSettings from "../UserSettings";
+import Toolbar from "material-ui/Toolbar";
 import "./index.css";
 
 const styles = {
@@ -15,7 +17,11 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, ...rest }) => {
       title={<Label className="screenHeaderLabelStyle" label={title} />}
       titleStyle={styles.titleStyle}
       {...rest}
-    />
+    >
+      <Toolbar className="app-toolbar" style={{ padding: "0px", height: "65px", background: "#ffffff" }}>
+        <UserSettings />
+      </Toolbar>
+    </AppBar>
   );
 };
 

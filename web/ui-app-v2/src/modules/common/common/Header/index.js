@@ -49,7 +49,7 @@ class Header extends Component {
     const { isHomeScreen, hideBackButton } = this.props.options;
     const isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
 
-    const style = { overflowX: "hidden", width: "initial" };
+    const style = { overflowX: "hidden", width: "initial", overflowY: "hidden" };
     if (isComplaintType) {
       style.boxShadow = "none";
     }
