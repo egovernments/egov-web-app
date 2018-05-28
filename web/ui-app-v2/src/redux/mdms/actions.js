@@ -102,14 +102,14 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
             required: true,
             type: null,
             jsonPath: "MasterMetaData.moduleName",
-            value: window.location.pathname.split("/")[3],
+            value: moduleName
           },
           masterName: {
             id: "MDMS_masterName",
             required: true,
             type: null,
             jsonPath: "MasterMetaData.masterName",
-            value: window.location.pathname.split("/").pop(),
+            value: masterName
           },
           topLevelTenantId: {
             id: "MDMS_tenantId",
