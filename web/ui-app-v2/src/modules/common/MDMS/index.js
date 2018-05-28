@@ -153,7 +153,7 @@ class MDMS extends React.Component {
     }
 
     return (
-      <div className="container">
+      <div style={{padding:"16px",width:"100%"}}>
         <Dialog
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
@@ -165,7 +165,7 @@ class MDMS extends React.Component {
           titleStyle={{ textAlign: "left" }}
         />
 
-        <div style={{ margingTop: "33px" }}>
+        <div>
           <div className="title-add-search-bar">
             <div className="col-md-6 text-left table-title" style={{ marginTop: "22px" }}>
               <Label id="mdms-table-title" label={masterName} style={{}} labelStyle={{ letterSpacing: 0.6 }} dark={true} bold={true} />
@@ -211,7 +211,7 @@ class MDMS extends React.Component {
               getTrProps={getTrProps}
               getTrGroupProps={getTrGroupProps}
               defaultPageSize={defaultPageSize}
-              className="-stripped -highlight text-center"
+              className="-stripped -highlight -responsive text-center"
             />
           </div>
         </div>
