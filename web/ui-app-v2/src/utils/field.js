@@ -18,6 +18,7 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
           <SingleCheckbox
             {...rest}
             {...fieldProps}
+            style={{ marginTop: "27px" }}
             label={fieldProps.floatingLabelText}
             type={type}
             onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)}
