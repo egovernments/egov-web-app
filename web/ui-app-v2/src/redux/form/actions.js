@@ -6,10 +6,11 @@ import { FILE_UPLOAD } from "utils/endPoints";
 import { validateForm } from "./utils";
 import transformer from "config/forms/transformers";
 
-export const initForm = (form) => {
+export const initForm = (form, recordData) => {
   return {
     type: actionTypes.INIT_FORM,
     form,
+    recordData,
   };
 };
 
@@ -50,7 +51,7 @@ export const submitFormError = (formKey, error) => {
   return { type: actionTypes.SUBMIT_FORM_ERROR, formKey, error };
 };
 
-export const submitForm = (formKey) => {
+export const submitForm = (formKey, saveUrl) => {
   return async (dispatch, getState) => {
     const state = getState();
     const form = state.form[formKey];
@@ -60,7 +61,7 @@ export const submitForm = (formKey) => {
     const isFormValid = validateForm(form);
     if (isFormValid) {
       dispatch(submitFormPending(formKey));
-      const { saveUrl, action } = form;
+      const { action } = form;
       try {
         const formData = await transformer("viewModelToBusinessModelTransformer", formKey, form, state);
         let formResponse = {};
@@ -75,8 +76,9 @@ export const submitForm = (formKey) => {
         dispatch(submitFormComplete(formKey, formResponse));
       } catch (error) {
         const { message } = error;
-        dispatch(submitFormError(formKey, message));
-        dispatch(toggleSnackbarAndSetText(true, message, true));
+        throw new Error(error);
+        // dispatch(submitFormError(formKey, message));
+        // dispatch(toggleSnackbarAndSetText(true, message, true));
       }
     } else {
       dispatch(displayFormErrors(formKey));

@@ -8,11 +8,11 @@ const initFormMiddleware = (store) => (next) => async (action) => {
   const state = store.getState();
 
   if (type === INIT_FORM) {
-    const { form } = action;
+    const { form, recordData } = action;
     const { name: formKey } = form;
     let formData = null;
     try {
-      formData = await transform("businessModelToViewModelTransformer", formKey, form, state);
+      formData = await transform("businessModelToViewModelTransformer", formKey, form, state, recordData);
       action.form = formData;
     } catch (error) {
       const { message } = error;

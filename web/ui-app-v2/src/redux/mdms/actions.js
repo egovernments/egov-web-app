@@ -128,8 +128,9 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
         name: masterName,
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
+        editUrl: "egov-mdms-create/v1/_update",
       };
-      dispatch(initForm(formConfig, masterName));
+      dispatch(initForm(formConfig));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));
       try {
         const payloadData = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);

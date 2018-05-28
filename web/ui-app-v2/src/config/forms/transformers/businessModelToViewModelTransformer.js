@@ -1,4 +1,4 @@
-const transformer = (formKey, form, state) => {
+const transformer = (formKey, form, state, recordData) => {
   const transformers = {
     profile: () => {
       const { userInfo } = state.auth;

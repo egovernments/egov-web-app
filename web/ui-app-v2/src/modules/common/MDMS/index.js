@@ -3,6 +3,7 @@ import ReactTable from "react-table";
 import Field from "utils/field";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
+import { initForm } from "redux/form/actions";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
 import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
@@ -65,21 +66,39 @@ class MDMS extends React.Component {
       search: "",
       dialogOpen: false,
       defaultPageSize: 5,
+      edit: false,
     };
   }
 
   onAddClick = () => {
-    // do init form form here
     this.setState({ dialogOpen: true });
+  };
+
+  setFieldProperty = (form, fieldKey, propertyKey, propertyValue) => {
+    const fields = form.fields || {};
+    const field = fields[fieldKey] || {};
+    return {
+      ...form,
+      fields: {
+        ...fields,
+        [fieldKey]: { ...field, [propertyKey]: propertyValue },
+      },
+    };
   };
 
   onEditClick = (rowIndex) => {
-    // do init form here
-    this.setState({ dialogOpen: true });
+    let { form, masterName, rowData, initForm } = this.props;
+    rowData = rowData[rowIndex];
+    Object.keys(rowData).forEach((fieldKey) => {
+      form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
+    });
+    form = { ...form, name: masterName };
+    initForm(form);
+    this.setState({ dialogOpen: true, edit: true });
   };
 
   onDialogClose = () => {
-    this.setState({ dialogOpen: false });
+    this.setState({ dialogOpen: false, edit: false });
   };
 
   componentDidMount = () => {
@@ -143,9 +162,9 @@ class MDMS extends React.Component {
 
   render() {
     const { genericFormHoc, setData } = this;
-    const { defaultPageSize } = this.state;
+    const { data, defaultPageSize, columns, edit } = this.state;
     const { header, rowData, masterName } = this.props;
-    const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
+    const MDMSFormHOC = formHoc({ formKey: masterName, edit })(MDMSForm);
 
     let tableData = setData(rowData);
     if (this.state.search) {
@@ -304,14 +323,16 @@ const getTrProps = () => {
 const mapStateToProps = (state, ownProps) => {
   const { specs, data } = state.mdms;
   const { moduleName, masterName } = ownProps && ownProps.match && ownProps.match.params;
+  const form = state.form[masterName] || {};
   const { header } = (specs[moduleName] && specs[moduleName][masterName]) || [];
   const rowData = (data[moduleName] && data[moduleName][masterName]) || [];
-  return { header, masterName, rowData };
+  return { header, form, masterName, rowData };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
+    initForm: (form) => dispatch(initForm(form)),
   };
 };
 

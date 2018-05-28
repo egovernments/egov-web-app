@@ -3,7 +3,7 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
 
-const form = ({ formKey }) => (Form) => {
+const form = ({ formKey, rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
@@ -15,11 +15,13 @@ const form = ({ formKey }) => (Form) => {
     }
 
     componentDidMount() {
-      this.formConfig && this.props.initForm(this.formConfig);
+      this.formConfig && this.props.initForm(this.formConfig, rowData);
     }
 
     submitForm = () => {
-      this.props.submitForm(formKey);
+      const { form } = this.props;
+      const saveUrl = edit ? form.editUrl : form.saveUrl;
+      this.props.submitForm(formKey, saveUrl);
     };
 
     handleFieldChange = (fieldKey, value) => {
@@ -55,7 +57,7 @@ const form = ({ formKey }) => (Form) => {
   const mapDispatchToProps = (dispatch) => {
     return {
       handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-      submitForm: (formKey) => dispatch(submitForm(formKey)),
+      submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
       initForm: (form) => dispatch(initForm(form)),
     };
   };
