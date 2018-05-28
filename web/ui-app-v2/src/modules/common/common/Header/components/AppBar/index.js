@@ -10,7 +10,7 @@ const styles = {
 };
 
 // handle listners
-const EgovAppBar = ({ className, title, isHomeScreen, role, ...rest }) => {
+const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLabel, ...rest }) => {
   return (
     <AppBar
       className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
@@ -19,7 +19,7 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, ...rest }) => {
       {...rest}
     >
       <Toolbar className="app-toolbar" style={{ padding: "0px", height: "65px", background: "#ffffff" }}>
-        <UserSettings />
+        <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} />
       </Toolbar>
     </AppBar>
   );
