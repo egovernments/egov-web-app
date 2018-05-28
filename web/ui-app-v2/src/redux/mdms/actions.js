@@ -56,6 +56,8 @@ const transformRawTypeToFormat = (rawType) => {
   switch (rawType) {
     case "text":
       return "textfield";
+    case "checkbox":
+      return "checkbox";
     default:
       return "textfield";
   }
@@ -71,7 +73,7 @@ const transform = (rawSpecs) => {
           id: current.name,
           type: transformRawTypeToFormat(current.type),
           required: current.isRequired,
-          jsonPath: current.jsonPath,
+          jsonPath: current.jsonPath.replace("MdmsMetadata", "MasterMetaData"),
           floatingLabelText: mapFloatingLabelText(current.label),
           errorMessage: current.patternErrorMsg,
           hintText: "",
@@ -93,8 +95,31 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
       const specs = transform(payloadSpec);
       const { fields } = specs.values;
       const formConfig = {
-        fields,
-        name: `MDMS_${masterName}`,
+        fields: {
+          ...fields,
+          moduleName: {
+            id: "MDMS_moduleName",
+            required: true,
+            type: null,
+            jsonPath: "MasterMetaData.moduleName",
+            value: window.location.pathname.split("/")[3],
+          },
+          masterName: {
+            id: "MDMS_masterName",
+            required: true,
+            type: null,
+            jsonPath: "MasterMetaData.masterName",
+            value: window.location.pathname.split("/").pop(),
+          },
+          topLevelTenantId: {
+            id: "MDMS_tenantId",
+            required: true,
+            type: null,
+            jsonPath: "MasterMetaData.tenantId",
+            value: "testtenant", // TO be changed --> Imp
+          },
+        },
+        name: masterName,
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
       };

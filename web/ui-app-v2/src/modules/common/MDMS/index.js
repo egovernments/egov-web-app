@@ -32,11 +32,18 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
           <Button
             label="CANCEL"
             onClick={handleClose}
-            labelStyle={{ letterSpacing: 0.7 }}
-            buttonStyle={{ minWidth: 182, border: "1px solid #fe7a51" }}
-            style={{ marginRight: 45 }}
+            labelStyle={{ letterSpacing: 0.7, padding: 0 }}
+            buttonStyle={{ border: "1px solid #fe7a51" }}
+            style={{ marginRight: 45, width: "36%" }}
           />
-          <Button label="ADD" backgroundColor="#fe7a51" labelStyle={{ letterSpacing: 0.7 }} buttonStyle={{ border: 0, minWidth: 182 }} {...submit} />
+          <Button
+            label="ADD"
+            style={{ width: "36%" }}
+            backgroundColor="#fe7a51"
+            labelStyle={{ letterSpacing: 0.7, padding: 0 }}
+            buttonStyle={{ border: 0 }}
+            {...submit}
+          />
         </div>
       </div>
       {/* <Button primary={true} fullWidth={true} {...submit} /> */}
@@ -129,7 +136,7 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns } = this.state;
     const { masterName } = this.props;
     const { header, rowData } = this.props;
-    const MDMSFormHOC = formHoc({ formKey: `MDMS_${masterName}` })(MDMSForm);
+    const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
 
     return (
       <div className="container">
