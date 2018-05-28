@@ -32,12 +32,12 @@ const SingleCheckboxUi = ({
       <Checkbox
         id={id}
         value={value}
+        defaultValue={defaultValue}
         label={label}
         onCheck={onCheck}
         style={{ ...defaultStyle, ...style }}
         iconStyle={iconStyle}
         checkedIcon={checkedIcon}
-        selected={selected}
         labelStyle={{ ...defaultLabelStyle, ...labelStyle, ...selectedLabelStyle }}
       />
     );
@@ -48,7 +48,7 @@ const SingleCheckboxUi = ({
 
 SingleCheckboxUi.propTypes = {
   label: PropTypes.node.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   defaultValue: PropTypes.string,
   onCheck: PropTypes.func,
   style: PropTypes.object,
