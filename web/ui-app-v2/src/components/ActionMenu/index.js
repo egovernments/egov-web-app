@@ -183,12 +183,12 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
+              <Link key={index} to={`/employee/${item.navigationURL}`}>
                 <MenuItem
                   style={{ whiteSpace: "initial" }}
                   key={index}
                   onTouchTap={() => {
                     document.title = item.name;
-                    changeRoute(item.navigationURL);
                   }}
                   leftIcon={<i className="material-icons whiteColor">fiber_manual_record</i>}
                   primaryText={
@@ -198,6 +198,7 @@ class ActionMenu extends Component {
                     </div>
                   }
                 />
+              </Link>
               );
             }
           }
