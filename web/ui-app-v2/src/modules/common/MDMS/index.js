@@ -5,10 +5,8 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
-import "./index.css";
 import { Icon, Button, Dialog, TextField } from "components";
-
-// Import React Table
+import "./index.css";
 import "react-table/react-table.css";
 
 const addIconStyle = { width: 12, height: 12, marginLeft: 8, color: "#ffffff" };
@@ -46,7 +44,6 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
           />
         </div>
       </div>
-      {/* <Button primary={true} fullWidth={true} {...submit} /> */}
     </div>
   );
 };
@@ -119,6 +116,7 @@ class MDMS extends React.Component {
     rowData &&
       rowData.map((item, index) => {
         item.SNo = ++index;
+
         if (item.active) {
           if (item.active === true) {
             item.active = "Yes";
@@ -126,6 +124,7 @@ class MDMS extends React.Component {
             item.active = "No";
           }
         }
+
         data.push(item);
       });
     return data;
