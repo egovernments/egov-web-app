@@ -63,6 +63,32 @@ const transformRawTypeToFormat = (rawType) => {
   }
 };
 
+const createMDMSGenericSpecs = (moduleName, masterName) => {
+  return {
+    moduleName: {
+      id: "MDMS_moduleName",
+      required: true,
+      type: null,
+      jsonPath: "MasterMetaData.moduleName",
+      value: moduleName,
+    },
+    masterName: {
+      id: "MDMS_masterName",
+      required: true,
+      type: null,
+      jsonPath: "MasterMetaData.masterName",
+      value: masterName,
+    },
+    topLevelTenantId: {
+      id: "MDMS_tenantId",
+      required: true,
+      type: null,
+      jsonPath: "MasterMetaData.tenantId",
+      value: "testtenant", // TO be changed --> Imp
+    },
+  };
+};
+
 const transform = (rawSpecs) => {
   return {
     ...rawSpecs,
@@ -97,27 +123,7 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
       const formConfig = {
         fields: {
           ...fields,
-          moduleName: {
-            id: "MDMS_moduleName",
-            required: true,
-            type: null,
-            jsonPath: "MasterMetaData.moduleName",
-            value: moduleName
-          },
-          masterName: {
-            id: "MDMS_masterName",
-            required: true,
-            type: null,
-            jsonPath: "MasterMetaData.masterName",
-            value: masterName
-          },
-          topLevelTenantId: {
-            id: "MDMS_tenantId",
-            required: true,
-            type: null,
-            jsonPath: "MasterMetaData.tenantId",
-            value: "testtenant", // TO be changed --> Imp
-          },
+          ...createMDMSGenericSpecs(moduleName, masterName),
         },
         name: masterName,
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
