@@ -5,11 +5,19 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
-import { Icon, Button, Dialog, TextField } from "components";
+import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
+import SearchIcon from "material-ui/svg-icons/action/search";
 import "./index.css";
+
+// Import React Table
 import "react-table/react-table.css";
 
-const addIconStyle = { width: 12, height: 12, marginLeft: 8, color: "#ffffff" };
+const addIconStyle = { width: 20, height: 20, marginLeft: 8 };
+const searchIconStyle = {
+  height: "20px",
+  width: "35px",
+  fill: "#767676",
+};
 
 const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   const { fields } = form || {};
@@ -52,6 +60,7 @@ class MDMS extends React.Component {
   constructor() {
     super();
     this.state = {
+      search: "",
       dialogOpen: false,
       defaultPageSize: 5,
     };
@@ -131,11 +140,17 @@ class MDMS extends React.Component {
   };
 
   render() {
-    const { genericFormHoc } = this;
-    const { data, defaultPageSize, columns } = this.state;
-    const { masterName } = this.props;
-    const { header, rowData } = this.props;
+    const { genericFormHoc, setData } = this;
+    const { defaultPageSize } = this.state;
+    const { header, rowData, masterName } = this.props;
     const MDMSFormHOC = formHoc({ formKey: masterName })(MDMSForm);
+
+    let tableData = setData(rowData);
+    if (this.state.search) {
+      tableData = tableData.filter((row) => {
+        return row.name.toLowerCase().includes(this.state.search.toLowerCase()) || row.code.toLowerCase().includes(this.state.search.toLowerCase());
+      });
+    }
 
     return (
       <div className="container">
@@ -150,26 +165,42 @@ class MDMS extends React.Component {
           titleStyle={{ textAlign: "left" }}
         />
 
-        <div className="row" style={{ margingTop: "33px", margingBottom: "12px" }}>
-          <div className="col-md-6 text-left" style={{ marginTop: "34px" }}>
-            Property Tax
-          </div>
+        <div style={{ margingTop: "33px" }}>
+          <div className="title-add-search-bar">
+            <div className="col-md-6 text-left table-title" style={{ marginTop: "22px" }}>
+              <Label id="mdms-table-title" label={masterName} style={{}} labelStyle={{ letterSpacing: 0.6 }} dark={true} bold={true} />
+            </div>
 
-          <div className="col-md-6 text-right">
-            <Button
-              label="ADD"
-              className="add-row-mdms-table"
-              labelPosition="after"
-              backgroundColor="#fe7a51"
-              icon={<Icon action="content" name="add" color="#ffffff" style={addIconStyle} />}
-              onClick={this.onAddClick}
-            />
+            <div className="col-md-6 table-top-bar">
+              <div className="mdms-table-search-bar">
+                <TextFieldIcon
+                  textFieldStyle={{ height: "48px" }}
+                  inputStyle={{
+                    marginTop: "4px",
+                    left: 0,
+                    position: "absolute",
+                  }}
+                  iconPosition="after"
+                  onChange={(e) => this.setState({ search: e.target.value })}
+                  underlineShow={true}
+                  fullWidth={false}
+                  hintText="Search"
+                  Icon={SearchIcon}
+                  value={this.state.search}
+                  id="search-mdms"
+                  iconStyle={searchIconStyle}
+                />
+              </div>
+              <div className="mdms-add">
+                <Icon action="content" name="add" color="#767676" onClick={this.onAddClick} style={addIconStyle} />
+              </div>
+            </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <ReactTable
-              data={this.setData(rowData)}
+              data={tableData}
               columns={this.setHeaders(header)}
               getTableProps={getTableProps}
               getTdProps={getTdProps}
@@ -195,6 +226,7 @@ const getTableProps = () => {
       height: "auto",
       minHeight: 370,
       backgroundColor: "#ffffff",
+      boxShadow: "0 1px 5px 0 rgba(0, 0, 0, 0.13), 0 2px 4px 0 rgba(0, 0, 0, 0.2)",
     },
   };
 };
