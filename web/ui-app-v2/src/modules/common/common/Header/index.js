@@ -55,13 +55,15 @@ class Header extends Component {
     }
 
     const iconElementLeft = (
-      <IconButton id="icon-hamburger">
-        {isHomeScreen ? (
-          <Icon id="icon-hamburger" action="custom" name="hamburger" />
-        ) : hideBackButton ? null : (
-          <Icon id="back-navigator" action="navigation" name="arrow-back" />
-        )}
-      </IconButton>
+      <div>
+        <IconButton id="icon-hamburger">
+          {isHomeScreen ? (
+            <Icon id="icon-hamburger" action="custom" name="hamburger" />
+          ) : hideBackButton ? null : (
+            <Icon id="back-navigator" action="navigation" name="arrow-back" />
+          )}
+        </IconButton>
+      </div>
     );
 
     const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
@@ -95,7 +97,7 @@ class Header extends Component {
     const { className, role, cities, history, title, fetchLocalizationLabel, userInfo } = this.props;
     return (
       <div>
-        <AppBar className={className} title={title} role={role} {...appBarProps} />
+        <AppBar className={`${className}`} title={title} role={role} {...appBarProps} />
         <NavigationDrawer
           handleItemClick={_handleItemClick}
           onUpdateMenuStatus={_onUpdateMenuStatus}
