@@ -1,5 +1,7 @@
 import React from "react";
 import RenderRoutes from "modules/common/common/RenderRoutes";
+import withAuthorization from "hocs/withAuthorization";
+import withoutAuthorization from "hocs/withoutAuthorization";
 
 // user routes
 import Register from "./User/Register";
@@ -34,7 +36,7 @@ import Notifications from "./PropertyTax/Notifications";
 import PoliceStations from "./PropertyTax/PoliceStations";
 import Payments from "./PropertyTax/Payments";
 
-const routes = [
+let routes = [
   {
     path: "user/register",
     component: Register,
@@ -192,6 +194,11 @@ const routes = [
     },
   },
 ];
+
+routes.map((route, index) => {
+  const { path, component, options, redirectionUrl, needsAuthentication } = route;
+  return { ...route, component: needsAuthentication ? withAuthorization(options)(component) : withoutAuthorization(redirectionUrl)(component) };
+});
 
 const Citizen = ({ match }) => {
   return <RenderRoutes match={match} routes={routes} />;

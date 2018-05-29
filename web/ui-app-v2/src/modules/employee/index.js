@@ -1,5 +1,7 @@
 import React from "react";
 import RenderRoutes from "modules/common/common/RenderRoutes";
+import withAuthorization from "hocs/withAuthorization";
+import withoutAuthorization from "hocs/withoutAuthorization";
 
 //user routes
 import Login from "./User/Login";
@@ -28,7 +30,7 @@ import Home from "./Home";
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
 
-const routes = [
+let routes = [
   {
     path: "user/login",
     component: Login,
@@ -231,6 +233,11 @@ const routes = [
     },
   },
 ];
+
+routes.map((route, index) => {
+  const { path, component, options, redirectionUrl, needsAuthentication } = route;
+  return { ...route, component: needsAuthentication ? withAuthorization(options)(component) : withoutAuthorization(redirectionUrl)(component) };
+});
 
 const Employee = ({ match }) => {
   return <RenderRoutes match={match} routes={routes} />;
