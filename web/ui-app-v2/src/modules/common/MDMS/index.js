@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactTable from "react-table";
 import Field from "utils/field";
 import { connect } from "react-redux";
@@ -9,7 +9,6 @@ import { upperCaseFirst } from "utils/commons";
 import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import "./index.css";
-// Import React Table
 import "react-table/react-table.css";
 
 const addIconStyle = { width: 20, height: 20, marginLeft: 8 };
@@ -59,7 +58,7 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   );
 };
 
-class MDMS extends React.Component {
+class MDMS extends Component {
   constructor() {
     super();
     this.state = {
@@ -124,7 +123,6 @@ class MDMS extends React.Component {
       form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
     });
     form = { ...form, name: masterName };
-    console.log(form);
     initForm(form);
     this.setState({ dialogOpen: true, edit: true });
   };
@@ -162,6 +160,7 @@ class MDMS extends React.Component {
     const { genericFormHoc, transformData } = this;
     const { data, defaultPageSize, columns, edit } = this.state;
     const { header, rowData, masterName } = this.props;
+    // not a good idea to prepare a hoc in render method
     const MDMSFormHOC = formHoc({ formKey: masterName, edit })(MDMSForm);
     let tableData = transformData(rowData);
     if (this.state.search) {
