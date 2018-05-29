@@ -70,6 +70,37 @@ class MDMS extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { fetchSpecs, match } = this.props;
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "testtenant", // To be changed later
+        moduleDetails: [
+          {
+            moduleName: match.params.moduleName,
+            masterDetails: [
+              {
+                name: match.params.masterName,
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
+  }
+
+  // hack to prevent form re rendering on form update
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      JSON.stringify(nextProps.rowData) != JSON.stringify(this.props.rowData) ||
+      nextState.dialogOpen != this.state.dialogOpen ||
+      nextState.search != this.state.search ||
+      nextState.edit != this.state.edit
+    );
+  }
+
   onAddClick = () => {
     this.setState({ dialogOpen: true });
   };
@@ -93,33 +124,13 @@ class MDMS extends React.Component {
       form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
     });
     form = { ...form, name: masterName };
+    // boolean transformation
     initForm(form);
     this.setState({ dialogOpen: true, edit: true });
   };
 
   onDialogClose = () => {
     this.setState({ dialogOpen: false, edit: false });
-  };
-
-  componentDidMount = () => {
-    const { fetchSpecs, match } = this.props;
-    const requestBody = {
-      MdmsCriteria: {
-        tenantId: "testtenant", // To be changed later
-        moduleDetails: [
-          {
-            moduleName: match.params.moduleName,
-            masterDetails: [
-              {
-                name: match.params.masterName,
-              },
-            ],
-          },
-        ],
-      },
-    };
-
-    fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   };
 
   setHeaders = (header) => {
@@ -165,7 +176,6 @@ class MDMS extends React.Component {
     const { data, defaultPageSize, columns, edit } = this.state;
     const { header, rowData, masterName } = this.props;
     const MDMSFormHOC = formHoc({ formKey: masterName, edit })(MDMSForm);
-
     let tableData = setData(rowData);
     if (this.state.search) {
       tableData = tableData.filter((row) => {
@@ -174,7 +184,7 @@ class MDMS extends React.Component {
     }
 
     return (
-      <div style={{padding:"16px",width:"100%"}}>
+      <div style={{ padding: "16px", width: "100%" }}>
         <Dialog
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
