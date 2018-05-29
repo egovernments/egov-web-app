@@ -9,10 +9,11 @@ import "./index.css";
 
 const styles = {
   menuStyle: {
-    width: "193px",
+    marginLeft: "-40px",
+    width: "100px",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    overflow: "hidden",
+    overflow: "hidden"
   },
   whiteColor: {
     color: "white !important",
@@ -167,7 +168,7 @@ class ActionMenu extends Component {
               <MenuItem
                 key={index}
                 style={{ whiteSpace: "initial" }}
-                leftIcon={<i className="material-icons whiteColor">fiber_manual_record</i>}
+                leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
                 primaryText={
                   <div className="menuStyle whiteColor" style={styles.menuStyle}>
                     <span className="onHoverText hidden-sm hidden-xs">{item.name || ""}</span>
@@ -190,7 +191,7 @@ class ActionMenu extends Component {
                   onTouchTap={() => {
                     document.title = item.name;
                   }}
-                  leftIcon={<i className="material-icons whiteColor">fiber_manual_record</i>}
+                  leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
                   primaryText={
                     <div className="menuStyle whiteColor" style={styles.menuStyle}>
                       <span className="onHoverText hidden-sm hidden-xs">{item.name || ""}</span>
@@ -214,7 +215,7 @@ class ActionMenu extends Component {
                     onTouchTap={() => {
                       document.title = item.displayName;
                     }}
-                    leftIcon={<i className="material-icons whiteColor">fiber_manual_record</i>}
+                    leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
                     primaryText={
                       <div className="menuStyle whiteColor" style={styles.menuStyle}>
                         <span className="onHoverText hidden-sm hidden-xs">{item.displayName || ""}</span>
@@ -269,7 +270,7 @@ class ActionMenu extends Component {
 
           <div className="clearfix" />
 
-          {showMenuItem()}
+          <div style={{paddingLeft:"-24px"}}>{showMenuItem()}</div>
         </Menu>
       </div>
     );
