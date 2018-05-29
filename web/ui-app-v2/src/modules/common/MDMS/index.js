@@ -91,7 +91,7 @@ class MDMS extends React.Component {
     fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
   }
 
-  // hack to prevent form re rendering on form update
+  // hack to prevent form re rendering on form update; necessary because the form hoc is already subscribed to the form
   shouldComponentUpdate(nextProps, nextState) {
     return (
       JSON.stringify(nextProps.rowData) != JSON.stringify(this.props.rowData) ||
@@ -124,7 +124,7 @@ class MDMS extends React.Component {
       form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
     });
     form = { ...form, name: masterName };
-    // boolean transformation
+    console.log(form);
     initForm(form);
     this.setState({ dialogOpen: true, edit: true });
   };
@@ -152,31 +152,18 @@ class MDMS extends React.Component {
     return columns;
   };
 
-  setData = (rowData) => {
-    let data = [];
-    rowData &&
-      rowData.map((item, index) => {
-        item.SNo = ++index;
-
-        if (item.active) {
-          if (item.active === true) {
-            item.active = "Yes";
-          } else if (item.active === false) {
-            item.active = "No";
-          }
-        }
-
-        data.push(item);
-      });
-    return data;
+  transformData = (rowData) => {
+    return rowData.map((item, index) => {
+      return { ...item, SNo: ++index, active: item.active == true ? "Yes" : "No" };
+    });
   };
 
   render() {
-    const { genericFormHoc, setData } = this;
+    const { genericFormHoc, transformData } = this;
     const { data, defaultPageSize, columns, edit } = this.state;
     const { header, rowData, masterName } = this.props;
     const MDMSFormHOC = formHoc({ formKey: masterName, edit })(MDMSForm);
-    let tableData = setData(rowData);
+    let tableData = transformData(rowData);
     if (this.state.search) {
       tableData = tableData.filter((row) => {
         return row.name.toLowerCase().includes(this.state.search.toLowerCase()) || row.code.toLowerCase().includes(this.state.search.toLowerCase());

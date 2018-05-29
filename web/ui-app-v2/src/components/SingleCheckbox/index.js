@@ -17,26 +17,25 @@ const selectedLabelStyle = {
 const SingleCheckboxUi = ({
   defaultValue,
   value,
-  label,
+  floatingLabelText,
   labelStyle,
   onCheck,
   style = {},
   checkedIcon,
   iconStyle,
   containerClassName,
-  selected,
   id,
 }) => {
   const renderCheckbox = () => {
     return (
       <Checkbox
         id={id}
-        value={value}
         defaultValue={defaultValue}
-        label={label}
+        label={floatingLabelText}
         onCheck={onCheck}
         style={{ ...defaultStyle, ...style }}
         iconStyle={iconStyle}
+        checked={typeof value === "boolean" ? value : value === "true" ? true : false}
         checkedIcon={checkedIcon}
         labelStyle={{ ...defaultLabelStyle, ...labelStyle, ...selectedLabelStyle }}
       />
@@ -47,7 +46,7 @@ const SingleCheckboxUi = ({
 };
 
 SingleCheckboxUi.propTypes = {
-  label: PropTypes.node.isRequired,
+  floatingLabelText: PropTypes.node.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   defaultValue: PropTypes.string,
   onCheck: PropTypes.func,

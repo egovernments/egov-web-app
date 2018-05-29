@@ -15,14 +15,7 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
         return <TextField {...rest} {...fieldProps} type={type} onChange={(e, value) => handleFieldChange(fieldKey, value)} />;
       case "checkbox":
         return (
-          <SingleCheckbox
-            {...rest}
-            {...fieldProps}
-            style={{ marginTop: "27px" }}
-            label={fieldProps.floatingLabelText}
-            type={type}
-            onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)}
-          />
+          <SingleCheckbox {...rest} {...fieldProps} style={{ marginTop: "27px" }} onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)} />
         );
       default:
         return null;
