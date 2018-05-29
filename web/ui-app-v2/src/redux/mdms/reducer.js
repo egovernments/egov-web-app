@@ -47,6 +47,8 @@ const mdmsReducer = (state = initialState, action) => {
             [masterName]: action.payload.MdmsRes[moduleName][masterName],
           },
         },
+        moduleName,
+        masterName,
       };
     case actionTypes.SPECS_FETCH_ERROR:
       return {

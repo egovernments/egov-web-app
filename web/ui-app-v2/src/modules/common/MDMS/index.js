@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import Field from "utils/field";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
-import { initForm } from "redux/form/actions";
+import { initForm, resetForm } from "redux/form/actions";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
 import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
@@ -18,7 +18,7 @@ const searchIconStyle = {
   fill: "#767676",
 };
 
-const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
+const MDMSForm = ({ handleFieldChange, form, handleClose, onDialogAddClick }) => {
   const { fields } = form || {};
   const { submit } = form;
   return (
@@ -48,7 +48,6 @@ const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
             style={{ width: "36%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0 }}
-            onClick={handleClose}
             buttonStyle={{ border: 0 }}
             {...submit}
           />
@@ -70,10 +69,10 @@ class MDMS extends Component {
   }
 
   componentDidMount() {
-    const { fetchSpecs, match } = this.props;
+    const { fetchSpecs, match, tenantId } = this.props;
     const requestBody = {
       MdmsCriteria: {
-        tenantId: "testtenant", // To be changed later
+        tenantId: tenantId, // To be changed later
         moduleDetails: [
           {
             moduleName: match.params.moduleName,
@@ -87,7 +86,7 @@ class MDMS extends Component {
       },
     };
 
-    fetchSpecs([], match.params.moduleName, match.params.masterName, requestBody);
+    fetchSpecs([], match.params.moduleName, match.params.masterName, tenantId, requestBody);
   }
 
   // hack to prevent form re rendering on form update; necessary because the form hoc is already subscribed to the form
@@ -102,6 +101,10 @@ class MDMS extends Component {
 
   onAddClick = () => {
     this.setState({ dialogOpen: true });
+  };
+
+  onDialogAddClick = () => {
+    this.setState({ dialogOpen: false, edit: false });
   };
 
   setFieldProperty = (form, fieldKey, propertyKey, propertyValue) => {
@@ -128,7 +131,10 @@ class MDMS extends Component {
   };
 
   onDialogClose = () => {
+    const { resetForm, match } = this.props;
+    const { masterName } = match.params;
     this.setState({ dialogOpen: false, edit: false });
+    resetForm(`MDMS_${masterName}`);
   };
 
   setHeaders = (header) => {
@@ -161,7 +167,7 @@ class MDMS extends Component {
     const { data, defaultPageSize, columns, edit } = this.state;
     const { header, rowData, masterName } = this.props;
     // not a good idea to prepare a hoc in render method
-    const MDMSFormHOC = formHoc({ formKey: masterName, edit })(MDMSForm);
+    const MDMSFormHOC = formHoc({ formKey: `MDMS_${masterName}`, edit })(MDMSForm);
     let tableData = transformData(rowData);
     if (this.state.search) {
       tableData = tableData.filter((row) => {
@@ -174,7 +180,7 @@ class MDMS extends Component {
         <Dialog
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
-          children={[<MDMSFormHOC key={1} handleClose={this.onDialogClose} />]}
+          children={[<MDMSFormHOC key={1} handleClose={this.onDialogClose} onDialogAddClick={this.onDialogAddClick} />]}
           title="Add Entry"
           isClose={true}
           bodyStyle={{ background: "#ffffff" }}
@@ -317,18 +323,21 @@ const getTrProps = () => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  const { tenantId } = state.auth.userInfo;
   const { specs, data } = state.mdms;
   const { moduleName, masterName } = ownProps && ownProps.match && ownProps.match.params;
   const form = state.form[masterName] || {};
   const { header } = (specs[moduleName] && specs[moduleName][masterName]) || [];
   const rowData = (data[moduleName] && data[moduleName][masterName]) || [];
-  return { header, form, masterName, rowData };
+  return { header, form, masterName, rowData, tenantId };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSpecs: (queryObj, moduleName, masterName, requestBody) => dispatch(fetchSpecs(queryObj, moduleName, masterName, requestBody)),
+    fetchSpecs: (queryObj, moduleName, masterName, tenantId, requestBody) =>
+      dispatch(fetchSpecs(queryObj, moduleName, masterName, tenantId, requestBody)),
     initForm: (form) => dispatch(initForm(form)),
+    resetForm: (formKey) => dispatch(resetForm(formKey)),
   };
 };
 

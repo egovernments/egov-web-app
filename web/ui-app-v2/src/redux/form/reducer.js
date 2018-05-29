@@ -44,6 +44,18 @@ const mergeFields = (oldFields = {}, newFields = {}) => {
   }, {});
 };
 
+const resetFields = (fields = {}) => {
+  const constantValueKeys = ["topLevelTenantId", "moduleName", "masterName"]; // Don't reset these fields
+  return Object.keys(fields).reduce((resetFields, fieldKey) => {
+    if (constantValueKeys.indexOf(fieldKey) < 0) {
+      resetFields[fieldKey] = { ...fields[fieldKey], value: "" };
+    } else {
+      resetFields[fieldKey] = { ...fields[fieldKey] };
+    }
+    return resetFields;
+  }, {});
+};
+
 const fileUploadStarted = (state, formKey, fieldKey, fileObject) => {
   const files = getFiles(state, formKey, fieldKey);
   return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.concat({ ...fileObject, loading: true }) } } };
@@ -88,7 +100,9 @@ const form = (state = intialState, action) => {
       const mergedFields = mergeFields(currentForm.fields, action.form.fields);
       return { ...state, [name]: { ...currentForm, ...form, fields: mergedFields } };
     case actionTypes.RESET_FORM:
-      return { ...state, [formKey]: {} };
+      const oldForm = state[formKey] || {};
+      const fieldsAfterReset = resetFields(oldForm.fields);
+      return { ...state, [formKey]: { ...form, fields: fieldsAfterReset } };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);

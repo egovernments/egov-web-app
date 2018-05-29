@@ -32,7 +32,7 @@ const dataFetchPending = () => {
   };
 };
 
-const dataFetchComplete = (payload, moduleName, masterName) => {
+export const dataFetchComplete = (payload, moduleName, masterName) => {
   return {
     type: actionTypes.DATA_FETCH_COMPLETE,
     payload,
@@ -63,7 +63,7 @@ const transformRawTypeToFormat = (rawType) => {
   }
 };
 
-const createMDMSGenericSpecs = (moduleName, masterName) => {
+const createMDMSGenericSpecs = (moduleName, masterName, tenantId) => {
   return {
     moduleName: {
       id: "MDMS_moduleName",
@@ -80,11 +80,18 @@ const createMDMSGenericSpecs = (moduleName, masterName) => {
       value: masterName,
     },
     topLevelTenantId: {
-      id: "MDMS_tenantId",
+      id: "MDMS_tenantIdtopLevel",
       required: true,
       type: null,
       jsonPath: "MasterMetaData.tenantId",
-      value: "testtenant", // TO be changed --> Imp
+      value: tenantId,
+    },
+    tenantId: {
+      id: "MDMS_tenantId",
+      required: true,
+      type: null,
+      jsonPath: "MasterMetaData.masterData[0].tenantId",
+      value: tenantId,
     },
   };
 };
@@ -93,26 +100,28 @@ const transform = (rawSpecs) => {
   return {
     ...rawSpecs,
     values: rawSpecs.values.reduce((result, current) => {
-      result["fields"] = {
-        ...result["fields"],
-        [current.name]: {
-          id: current.name,
-          type: transformRawTypeToFormat(current.type),
-          required: current.isRequired,
-          jsonPath: current.jsonPath.replace("MdmsMetadata", "MasterMetaData"),
-          floatingLabelText: mapFloatingLabelText(current.label),
-          errorMessage: current.patternErrorMsg,
-          hintText: "",
-          pattern: current.pattern,
-          value: "",
-        },
-      };
+      if (current.name != "tenantId") {
+        result["fields"] = {
+          ...result["fields"],
+          [current.name]: {
+            id: current.name,
+            type: transformRawTypeToFormat(current.type),
+            required: current.isRequired,
+            jsonPath: current.jsonPath.replace("MdmsMetadata", "MasterMetaData"),
+            floatingLabelText: mapFloatingLabelText(current.label),
+            errorMessage: current.patternErrorMsg,
+            hintText: "",
+            pattern: current.pattern,
+            value: "",
+          },
+        };
+      }
       return result;
     }, {}),
   };
 };
 
-export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => {
+export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, requestBody) => {
   return async (dispatch, getState) => {
     dispatch(specsFetchPending());
     dispatch(dataFetchPending());
@@ -123,9 +132,9 @@ export const fetchSpecs = (queryObject, moduleName, masterName, requestBody) => 
       const formConfig = {
         fields: {
           ...fields,
-          ...createMDMSGenericSpecs(moduleName, masterName),
+          ...createMDMSGenericSpecs(moduleName, masterName, tenantId),
         },
-        name: masterName,
+        name: `MDMS_${masterName}`,
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
         editUrl: "egov-mdms-create/v1/_update",
