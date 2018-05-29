@@ -4,12 +4,22 @@ import Citizen from "modules/citizen";
 import Employee from "modules/employee";
 import ImageModalDisplay from "modules/common/common/ImageModalDisplay";
 
-const Main = () => {
+const Main = ({ routes }) => {
   return (
     <main>
       <Switch>
-        <Route path={`/citizen/`} component={Citizen} />
-        <Route path={`/employee/`} component={Employee} />
+        <Route
+          path={`/citizen/`}
+          render={(props) => {
+            return <Citizen match={props.match} routes={routes.citizen} />;
+          }}
+        />
+        <Route
+          path={`/employee/`}
+          render={(props) => {
+            return <Employee match={props.match} routes={routes.employee} />;
+          }}
+        />
         <Route path={`/image`} component={ImageModalDisplay} />
       </Switch>
     </main>

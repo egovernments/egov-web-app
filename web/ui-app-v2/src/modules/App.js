@@ -1,161 +1,161 @@
 import React, { Component } from "react";
-import classnames from 'classnames';
+import classnames from "classnames";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { Toast,Drawer,Image,ActionMenu} from "components";
+import { Toast, Drawer, Image, ActionMenu } from "components";
 import { addBodyClass } from "utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
 import logoMseva from "assets/images/logo-white.png";
+import routes from "./Routes";
 
 //it should remove once role action mapping start works
-const actionList=[
+const actionList = [
   {
-     "id": 1535,
-     "name": "PropertyType",
-     "url": "url",
-     "displayName": "Property Type",
-     "orderNumber": 1,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.PropertyType",
-     "navigationURL": "mdms/PropertyTax/PropertyType"
-
-   },
-   {
-     "id": 1536,
-     "name": "PropertySubType",
-     "url": "url",
-     "displayName": "Property Subtype",
-     "orderNumber": 2,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.PropertySubType",
-     "navigationURL": "mdms/PropertyTax/PropertySubType "
-   },
-   {
-     "id": 1537,
-     "name": "ConstructionType",
-     "url": "url",
-     "displayName": "Construction Type",
-     "orderNumber": 3,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.ConstructionType",
-     "navigationURL": "mdms/PropertyTax/ConstructionType "
-   },
-   {
-     "id": 1538,
-     "name": "ConstructionSubType",
-     "url": "url",
-     "displayName": "Construction Subtype",
-     "orderNumber": 4,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.ConstructionSubType",
-     "navigationURL": "mdms/PropertyTax/ConstructionSubType "
-   },
-   {
-     "id": 1539,
-     "name": "OccupanyType",
-     "url": "url",
-     "displayName": "Occupany Type",
-     "orderNumber": 5,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.OccupanyType",
-     "navigationURL": "mdms/PropertyTax/OccupanyType"
-   },
-   {
-     "id": 1540,
-     "name": "OwnershipCategory",
-     "url": "url",
-     "displayName": "Ownership Category",
-     "orderNumber": 6,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.OwnershipCategory",
-     "navigationURL": "mdms/PropertyTax/OwnershipCategory"
-   },
-   {
-     "id": 1541,
-     "name": "SubOwnerShipCategory",
-     "url": "url",
-     "displayName": "Subownerhip Category",
-     "orderNumber": 7,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.SubOwnerShipCategory",
-     "navigationURL": "mdms/PropertyTax/SubOwnerShipCategory"
-   },
-   {
-     "id": 1542,
-     "name": "UsageCategoryDetail",
-     "url": "url",
-     "displayName": "Usage Category Detail",
-     "orderNumber": 8,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.UsageCategoryDetail",
-     "navigationURL": "mdms/PropertyTax/UsageCategoryDetail"
-   },
-   {
-     "id": 1543,
-     "name": "UsageCategoryMajor",
-     "url": "url",
-     "displayName": "Usage Category Major",
-     "orderNumber": 9,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.UsageCategoryMajor",
-     "navigationURL": "mdms/PropertyTax/ UsageCategoryMajor"
-   },
-   {
-     "id": 1544,
-     "name": "UsageCategoryMinor",
-     "url": "url",
-     "displayName": "Usage Category Minor",
-     "orderNumber": 10,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.UsageCategoryMinor",
-     "navigationURL": "mdms/PropertyTax/UsageCategoryMinor"
-   },
-   {
-     "id": 1545,
-     "name": "UsageCategorySubMinor",
-     "url": "url",
-     "displayName": "Usage Category Subminor",
-     "orderNumber": 11,
-     "parentModule": "propertytax",
-     "enabled": true,
-     "serviceCode": "PT",
-     "code": "null",
-     "path": "Property Tax.PT Masters.UsageCategorySubMinor",
-     "navigationURL": "mdms/PropertyTax/UsageCategorySubMinor "
-   }
+    id: 1535,
+    name: "PropertyType",
+    url: "url",
+    displayName: "Property Type",
+    orderNumber: 1,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.PropertyType",
+    navigationURL: "mdms/PropertyTax/PropertyType",
+  },
+  {
+    id: 1536,
+    name: "PropertySubType",
+    url: "url",
+    displayName: "Property Subtype",
+    orderNumber: 2,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.PropertySubType",
+    navigationURL: "mdms/PropertyTax/PropertySubType ",
+  },
+  {
+    id: 1537,
+    name: "ConstructionType",
+    url: "url",
+    displayName: "Construction Type",
+    orderNumber: 3,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.ConstructionType",
+    navigationURL: "mdms/PropertyTax/ConstructionType ",
+  },
+  {
+    id: 1538,
+    name: "ConstructionSubType",
+    url: "url",
+    displayName: "Construction Subtype",
+    orderNumber: 4,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.ConstructionSubType",
+    navigationURL: "mdms/PropertyTax/ConstructionSubType ",
+  },
+  {
+    id: 1539,
+    name: "OccupanyType",
+    url: "url",
+    displayName: "Occupany Type",
+    orderNumber: 5,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.OccupanyType",
+    navigationURL: "mdms/PropertyTax/OccupanyType",
+  },
+  {
+    id: 1540,
+    name: "OwnershipCategory",
+    url: "url",
+    displayName: "Ownership Category",
+    orderNumber: 6,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.OwnershipCategory",
+    navigationURL: "mdms/PropertyTax/OwnershipCategory",
+  },
+  {
+    id: 1541,
+    name: "SubOwnerShipCategory",
+    url: "url",
+    displayName: "Subownerhip Category",
+    orderNumber: 7,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.SubOwnerShipCategory",
+    navigationURL: "mdms/PropertyTax/SubOwnerShipCategory",
+  },
+  {
+    id: 1542,
+    name: "UsageCategoryDetail",
+    url: "url",
+    displayName: "Usage Category Detail",
+    orderNumber: 8,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.UsageCategoryDetail",
+    navigationURL: "mdms/PropertyTax/UsageCategoryDetail",
+  },
+  {
+    id: 1543,
+    name: "UsageCategoryMajor",
+    url: "url",
+    displayName: "Usage Category Major",
+    orderNumber: 9,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.UsageCategoryMajor",
+    navigationURL: "mdms/PropertyTax/ UsageCategoryMajor",
+  },
+  {
+    id: 1544,
+    name: "UsageCategoryMinor",
+    url: "url",
+    displayName: "Usage Category Minor",
+    orderNumber: 10,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.UsageCategoryMinor",
+    navigationURL: "mdms/PropertyTax/UsageCategoryMinor",
+  },
+  {
+    id: 1545,
+    name: "UsageCategorySubMinor",
+    url: "url",
+    displayName: "Usage Category Subminor",
+    orderNumber: 11,
+    parentModule: "propertytax",
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.UsageCategorySubMinor",
+    navigationURL: "mdms/PropertyTax/UsageCategorySubMinor ",
+  },
 ];
 
 class App extends Component {
@@ -219,18 +219,16 @@ class App extends Component {
   render() {
     const { toast } = this.props;
     return (
-      <div className={classnames('app-content', { expanded: true || false })}>
+      <div className={classnames("app-content", { expanded: true || false })}>
         <div>
           <Drawer width={230} containerClassName="drawer-backGround" open={true}>
-          <div className="drawerHeader text-center">
-            <Image className="mseva-logo" source={logoMseva} />
-          </div>
-          <div className="drawerContent">
-            {actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}
-          </div>
+            <div className="drawerHeader text-center">
+              <Image className="mseva-logo" source={logoMseva} />
+            </div>
+            <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
           </Drawer>
         </div>
-        <Router />
+        <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
       </div>
     );
