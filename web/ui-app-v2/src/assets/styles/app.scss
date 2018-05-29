@@ -149,28 +149,27 @@ body.employee-user-profile {
   padding: 0px !important;
 }
 .btn-without-bottom-nav {
-  position: fixed !important;
+  position: fixed;
   bottom: 0px;
   left: 0;
   width: 100%;
   padding: 0px !important;
 }
 
-.app-content{
+.app-content {
   -moz-transition: left 218ms cubic-bezier(0.4, 0, 0.2, 1);
   -o-transition: left 218ms cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-transition: left 218ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: left 218ms cubic-bezier(0.4, 0, 0.2, 1);
-	left: 0;
-	width: auto !important;
-	right: 0 !important;
-	position: relative !important;
+  left: 0;
+  width: auto !important;
+  right: 0 !important;
+  position: relative !important;
 }
 
-
-.app-content.expanded{
+.app-content.expanded {
   padding-left: 230px;
-	overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .drawer-backGround {
@@ -195,25 +194,25 @@ body.employee-user-profile {
 }
 
 .menuStyle .onHoverText {
-    visibility: hidden;
-    width: 193px;
-		float: left;
-    background-color: rgb(245, 135, 32);
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 0px 0px;
+  visibility: hidden;
+  width: 193px;
+  float: left;
+  background-color: rgb(245, 135, 32);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 0px 0px;
 
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-		margin-left: -60px;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
 }
 
 .drawer-backGround a:hover {
-		text-decoration: none;
+  text-decoration: none;
 }
 
 .menuStyle:hover .onHoverText {
-    visibility: visible;
+  visibility: visible;
 }

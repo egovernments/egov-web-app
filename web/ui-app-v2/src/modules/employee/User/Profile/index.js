@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { fileUpload, removeFile } from "redux/form/actions";
 import UploadDrawer from "modules/common/User/components/UploadDrawer";
-import ProfileSection from "modules/common/User/components/ProfileSection";
 import ProfileForm from "./components/ProfileForm";
 import Screen from "modules/common/common/Screen";
 import img from "assets/images/download.png";
@@ -41,8 +40,9 @@ class Profile extends Component {
 
     return (
       <Screen loading={loading}>
-        <ProfileSection img={profilePic || img} onClickAddPic={onClickAddPic} />
-        <ProfileFormHOC />
+        <div className="profile-container">
+          <ProfileFormHOC onClickAddPic={onClickAddPic} img={img} profilePic={profilePic} />
+        </div>
         {openUploadSlide && (
           <UploadDrawer removeFile={removeProfilePic} setProfilePic={setProfilePic} onClickAddPic={onClickAddPic} openUploadSlide={openUploadSlide} />
         )}

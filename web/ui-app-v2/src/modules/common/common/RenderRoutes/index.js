@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-const RenderRoutes = ({ match, routes }) => {
+const RenderRoutes = ({ match, routes = [] }) => {
   return (
     <Switch>
       {routes.map((route, index) => {
