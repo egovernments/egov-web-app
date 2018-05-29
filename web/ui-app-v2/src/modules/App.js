@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { Toast, Drawer, Image, ActionMenu } from "components";
+import { Toast, Drawer, Image} from "components";
 import { addBodyClass } from "utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
@@ -10,6 +10,7 @@ import Router from "./Router";
 import commonConfig from "config/common";
 import logoMseva from "assets/images/logo-white.png";
 import routes from "./Routes";
+import ActionMenu from "./employee/ActionMenu";
 
 //it should remove once role action mapping start works
 const actionList = [

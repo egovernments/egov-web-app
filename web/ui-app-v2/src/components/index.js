@@ -34,7 +34,6 @@ import Toast from "./Toast";
 import Carousel from "./Carousel";
 import Divider from "./Divider";
 import SingleCheckbox from "./SingleCheckbox";
-import ActionMenu from "./ActionMenu";
 
 export {
   Label,
@@ -72,6 +71,5 @@ export {
   Toast,
   Carousel,
   Divider,
-  SingleCheckbox,
-  ActionMenu
+  SingleCheckbox
 };
