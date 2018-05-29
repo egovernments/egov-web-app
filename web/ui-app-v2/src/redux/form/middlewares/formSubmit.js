@@ -5,10 +5,11 @@ import { toggleSnackbarAndSetText } from "redux/app/actions";
 import { addQueryArg } from "utils/commons";
 import { setRoute } from "redux/app/actions";
 import { fetchComplaints } from "redux/complaints/actions";
+import { dataFetchComplete } from "redux/mdms/actions";
 import get from "lodash/get";
 
 const formSubmit = (store) => (next) => (action) => {
-  const { type, formKey, payload } = action;
+  const { type, formKey, payload, form } = action;
   const dispatch = store.dispatch;
 
   if (type == actionTypes.SUBMIT_FORM_COMPLETE) {
@@ -16,6 +17,17 @@ const formSubmit = (store) => (next) => (action) => {
     next(action);
     const state = store.getState();
     let { redirectionRoute, idJsonPath, toast } = state.form[formKey];
+
+    //for Mdms Screens
+    if (formKey.includes("MDMS")) {
+      console.log("dispatched");
+      const { moduleName, masterName } = state.mdms;
+      delete payload.ResponseInfo;
+      const mdmsResponse = payload.MdmsRes;
+      const newMdmsRow = mdmsResponse[moduleName][masterName][0];
+      const currentMdmsData = state.mdms.data[moduleName][masterName];
+      dispatch(dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: [...currentMdmsData, newMdmsRow] } } }, moduleName, masterName));
+    }
 
     // for login/register flow
     if (formKey === "otp") {
