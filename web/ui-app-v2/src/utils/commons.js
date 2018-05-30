@@ -422,3 +422,16 @@ export const startSMSRecevier = () => {
 export const upperCaseFirst = (word) => {
   return word[0].toUpperCase() + word.slice(1, word.length);
 };
+
+//Specific for MDMS Screens
+export const mergeMDMSDataArray = (oldData, newRow) => {
+  const rawData = [...oldData];
+  rawData.forEach((item, index) => {
+    if (item.code === newRow.code) {
+      //Update Case
+      rawData.splice(index, 1);
+    }
+  });
+  const mergedData = [newRow, ...rawData];
+  return mergedData;
+};
