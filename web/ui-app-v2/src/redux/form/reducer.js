@@ -106,6 +106,9 @@ const form = (state = intialState, action) => {
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);
+    case actionTypes.SET_FIELD_PROPERTY:
+      const { propertyName, propertyValue } = action;
+      return setFieldProperty(state, formKey, fieldKey, propertyName, propertyValue);
     case actionTypes.VALIDATE_FIELD:
       const { errorText } = action;
       return setFieldProperty(state, formKey, fieldKey, "errorText", errorText);

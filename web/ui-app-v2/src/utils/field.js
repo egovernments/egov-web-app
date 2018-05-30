@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, MobileNumberField, SingleCheckbox } from "components";
+import { TextField, MobileNumberField, SingleCheckbox, DropDown } from "components";
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
@@ -16,6 +16,15 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
       case "checkbox":
         return (
           <SingleCheckbox {...rest} {...fieldProps} style={{ marginTop: "27px" }} onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)} />
+        );
+      case "singleValueList":
+        return (
+          <DropDown
+            {...rest}
+            {...fieldProps}
+            dropDownData={fieldProps.dropDownData || []}
+            onChange={(e, value, selectedValue) => handleFieldChange(fieldKey, selectedValue)}
+          />
         );
       default:
         return null;

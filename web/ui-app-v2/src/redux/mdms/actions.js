@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
 import { initForm } from "redux/form/actions";
 import { SPEC, MDMS } from "utils/endPoints";
+import { upperCaseFirst } from "utils/commons";
 import { httpRequest } from "utils/api";
 
 const specsFetchPending = () => {
@@ -58,6 +59,8 @@ const transformRawTypeToFormat = (rawType) => {
       return "textfield";
     case "checkbox":
       return "checkbox";
+    case "singleValueList":
+      return "singleValueList";
     default:
       return "textfield";
   }
@@ -96,10 +99,11 @@ const createMDMSGenericSpecs = (moduleName, masterName, tenantId) => {
   };
 };
 
-const transform = (rawSpecs) => {
+const transform = (rawSpecs, moduleName) => {
   return {
     ...rawSpecs,
     values: rawSpecs.values.reduce((result, current) => {
+      console.log(current, moduleName);
       if (current.name != "tenantId") {
         result["fields"] = {
           ...result["fields"],
@@ -113,6 +117,31 @@ const transform = (rawSpecs) => {
             hintText: "",
             pattern: current.pattern,
             value: "",
+            //To make API call and initialise field, if Reqd.
+            dataFetchConfig:
+              current.type === "singleValueList"
+                ? {
+                    url: MDMS.GET.URL,
+                    action: MDMS.GET.ACTION,
+                    queryParams: {},
+                    requestBody: {
+                      MdmsCriteria: {
+                        tenantId: "testtenant",
+                        moduleDetails: [
+                          {
+                            moduleName: moduleName,
+                            masterDetails: [
+                              {
+                                //To get any field data, masterName is field name with upper cased first letter to match API body
+                                name: upperCaseFirst(current.name),
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  }
+                : null,
           },
         };
       }
@@ -127,7 +156,7 @@ export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, reques
     dispatch(dataFetchPending());
     try {
       const payloadSpec = await httpRequest(`${SPEC.GET.URL}/${moduleName}/${masterName}`, SPEC.GET.ACTION, queryObject);
-      const specs = transform(payloadSpec);
+      const specs = transform(payloadSpec, moduleName);
       const { fields } = specs.values;
       const formConfig = {
         fields: {
