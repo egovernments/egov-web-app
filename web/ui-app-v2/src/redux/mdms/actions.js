@@ -107,7 +107,6 @@ const transform = (rawSpecs, moduleName) => {
   return {
     ...rawSpecs,
     values: rawSpecs.values.reduce((result, current) => {
-      console.log(current, moduleName);
       if (current.name != "tenantId") {
         result["fields"] = {
           ...result["fields"],
