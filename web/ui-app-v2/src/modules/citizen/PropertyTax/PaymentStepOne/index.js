@@ -22,17 +22,17 @@ class PaymentStepOne extends Component {
     let yearRange = [];
     var counter = 0;
     if (month <= 3) {
-      return this.getLastFiveYear(yearRange, today.getFullYear() - 1, counter);
+      return this.getLastFourYear(yearRange, today.getFullYear() - 1, counter);
     } else {
-      return this.getLastFiveYear(yearRange, today.getFullYear(), counter);
+      return this.getLastFourYear(yearRange, today.getFullYear(), counter);
     }
   };
 
-  getLastFiveYear(yearRange, currentYear, counter) {
-    if (counter < 5) {
+  getLastFourYear(yearRange, currentYear, counter) {
+    if (counter < 4) {
       counter++;
       yearRange.push(`${currentYear}-${currentYear + 1}`);
-      this.getLastFiveYear(yearRange, currentYear - 1, counter);
+      this.getLastFourYear(yearRange, currentYear - 1, counter);
     }
     return yearRange;
   }
@@ -43,80 +43,46 @@ class PaymentStepOne extends Component {
 
   render() {
     return (
-      <div>
-        <Tabs
-          tabs={[
+      <Screen>
+        <List
+          onItemClick={() => {
+            this.setState({ dialogueOpen: true });
+          }}
+          listContainerStyle={{ marginTop: "16px" }}
+          listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
+          nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
+          autoGenerateNestedIndicator={false}
+          primaryTogglesNestedList={true}
+          items={[
             {
-              label: (
-                <div>
-                  <Label color={"#ffffff"} label={`Access & Pay`} labelStyle={tabStyle} />
-                </div>
-              ),
-              children: (
-                <Screen>
-                  <List
-                    onItemClick={() => {
-                      this.setState({ dialogueOpen: true });
-                    }}
-                    listContainerStyle={{ marginTop: "16px" }}
-                    listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
-                    nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
-                    autoGenerateNestedIndicator={false}
-                    primaryTogglesNestedList={true}
-                    items={[
-                      {
-                        primaryText: "New Property Assessment",
-                        leftIcon: <Icon action="custom" name="property-tax" />,
-                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-                      },
-                      {
-                        primaryText: "Drafts",
-                        leftIcon: <Icon action="image" name="edit" />,
-                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-                      },
-                      {
-                        primaryText: "Pending Assessments",
-                        leftIcon: <Icon action="alert" name="warning" />,
-                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-                      },
-                      {
-                        primaryText: "Paid Assessments",
-                        leftIcon: <Icon action="action" name="check-circle" />,
-                        rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-                      },
-                    ]}
-                  />
-                  <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
-                </Screen>
-              ),
+              primaryText: <Label label="PT_HOME_PAY" />,
+              leftIcon: <Icon action="action" name="credit-card" />,
+              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
             },
             {
-              label: (
-                <div>
-                  <Label color={"#ffffff"} bold={true} label={`Receipts`} labelStyle={tabStyle} />
-                </div>
-              ),
-              children: (
-                <Screen key={2}>
-                  <div className="tab2-content">Receipts</div>
-                </Screen>
-              ),
+              primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
+              leftIcon: <Icon action="image" name="edit" />,
+              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
             },
             {
-              label: (
-                <div>
-                  <Label color={"#ffffff"} bold={true} label={`About`} labelStyle={tabStyle} />
-                </div>
-              ),
-              children: (
-                <Screen key={3}>
-                  <div className="tab2-content">About</div>
-                </Screen>
-              ),
+              primaryText: <Label label="PT_MY_RECEIPTS" />,
+              leftIcon: <Icon action="action" name="receipt" />,
+              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+            },
+            {
+              primaryText: <Label label="PT_EXAMPLES" />,
+              leftIcon: <Icon action="action" name="check-circle" />,
+              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+            },
+            {
+              primaryText: <Label label="PT_HOW_IT_WORKS" />,
+              leftIcon: <Icon action="action" name="help" />,
+              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
             },
           ]}
         />
-      </div>
+        <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
+      </Screen>
     );
   }
 }
