@@ -68,25 +68,36 @@ class MDMS extends Component {
     };
   }
 
-  componentDidMount() {
-    const { fetchSpecs, match, tenantId } = this.props;
+  fetchSpecs = (moduleName, masterName) => {
+    const { fetchSpecs, tenantId } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: tenantId, // To be changed later
         moduleDetails: [
           {
-            moduleName: match.params.moduleName,
+            moduleName,
             masterDetails: [
               {
-                name: match.params.masterName,
+                name: masterName,
               },
             ],
           },
         ],
       },
     };
+    fetchSpecs([], moduleName, masterName, tenantId, requestBody);
+  };
 
-    fetchSpecs([], match.params.moduleName, match.params.masterName, tenantId, requestBody);
+  componentDidMount() {
+    const { match } = this.props;
+    this.fetchSpecs(match.params.moduleName, match.params.masterName);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { match } = nextProps;
+    if (this.props.masterName !== nextProps.masterName) {
+      this.fetchSpecs(match.params.moduleName, match.params.masterName);
+    }
   }
 
   // hack to prevent form re rendering on form update; necessary because the form hoc is already subscribed to the form
@@ -125,7 +136,7 @@ class MDMS extends Component {
     Object.keys(rowData).forEach((fieldKey) => {
       form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
     });
-    form = { ...form, name: masterName };
+    form = { ...form, name: `MDMS_${masterName}` };
     initForm(form);
     this.setState({ dialogOpen: true, edit: true });
   };
@@ -326,7 +337,7 @@ const mapStateToProps = (state, ownProps) => {
   const { tenantId } = state.auth.userInfo;
   const { specs, data } = state.mdms;
   const { moduleName, masterName } = ownProps && ownProps.match && ownProps.match.params;
-  const form = state.form[masterName] || {};
+  const form = state.form[`MDMS_${masterName}`] || {};
   const { header } = (specs[moduleName] && specs[moduleName][masterName]) || [];
   const rowData = (data[moduleName] && data[moduleName][masterName]) || [];
   return { header, form, masterName, rowData, tenantId };

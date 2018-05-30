@@ -2,7 +2,7 @@ import * as actionTypes from "../actionTypes";
 import { resetForm } from "../actions";
 import { authenticated, userProfileUpdated } from "redux/auth/actions";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
-import { addQueryArg } from "utils/commons";
+import { addQueryArg, mergeMDMSDataArray } from "utils/commons";
 import { setRoute } from "redux/app/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { dataFetchComplete } from "redux/mdms/actions";
@@ -20,13 +20,14 @@ const formSubmit = (store) => (next) => (action) => {
 
     //for Mdms Screens
     if (formKey.includes("MDMS")) {
-      console.log("dispatched");
       const { moduleName, masterName } = state.mdms;
       delete payload.ResponseInfo;
       const mdmsResponse = payload.MdmsRes;
       const newMdmsRow = mdmsResponse[moduleName][masterName][0];
       const currentMdmsData = state.mdms.data[moduleName][masterName];
-      dispatch(dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: [...currentMdmsData, newMdmsRow] } } }, moduleName, masterName));
+      dispatch(
+        dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: mergeMDMSDataArray(currentMdmsData, newMdmsRow) } } }, moduleName, masterName)
+      );
     }
 
     // for login/register flow

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { Toast, Drawer, Image} from "components";
+import { Toast, Drawer, Image } from "components";
 import { addBodyClass } from "utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
@@ -38,7 +38,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Property Tax.PT Masters.PropertySubType",
-    navigationURL: "mdms/PropertyTax/PropertySubType ",
+    navigationURL: "mdms/PropertyTax/PropertySubType",
   },
   {
     id: 1537,
@@ -51,7 +51,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Property Tax.PT Masters.ConstructionType",
-    navigationURL: "mdms/PropertyTax/ConstructionType ",
+    navigationURL: "mdms/PropertyTax/ConstructionType",
   },
   {
     id: 1538,
@@ -64,7 +64,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Property Tax.PT Masters.ConstructionSubType",
-    navigationURL: "mdms/PropertyTax/ConstructionSubType ",
+    navigationURL: "mdms/PropertyTax/ConstructionSubType",
   },
   {
     id: 1539,
@@ -129,7 +129,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Property Tax.PT Masters.UsageCategoryMajor",
-    navigationURL: "mdms/PropertyTax/ UsageCategoryMajor",
+    navigationURL: "mdms/PropertyTax/UsageCategoryMajor",
   },
   {
     id: 1544,
@@ -155,7 +155,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Property Tax.PT Masters.UsageCategorySubMinor",
-    navigationURL: "mdms/PropertyTax/UsageCategorySubMinor ",
+    navigationURL: "mdms/PropertyTax/UsageCategorySubMinor",
   },
 ];
 

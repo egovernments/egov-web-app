@@ -45,9 +45,8 @@ const mergeFields = (oldFields = {}, newFields = {}) => {
 };
 
 const resetFields = (fields = {}) => {
-  const constantValueKeys = ["topLevelTenantId", "moduleName", "masterName"]; // Don't reset these fields
   return Object.keys(fields).reduce((resetFields, fieldKey) => {
-    if (constantValueKeys.indexOf(fieldKey) < 0) {
+    if (fields && fields[fieldKey] && !fields[fieldKey].dontReset) {
       resetFields[fieldKey] = { ...fields[fieldKey], value: "" };
     } else {
       resetFields[fieldKey] = { ...fields[fieldKey] };
@@ -102,7 +101,7 @@ const form = (state = intialState, action) => {
     case actionTypes.RESET_FORM:
       const oldForm = state[formKey] || {};
       const fieldsAfterReset = resetFields(oldForm.fields);
-      return { ...state, [formKey]: { ...form, fields: fieldsAfterReset } };
+      return { ...state, [formKey]: { ...oldForm, fields: fieldsAfterReset } };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);
