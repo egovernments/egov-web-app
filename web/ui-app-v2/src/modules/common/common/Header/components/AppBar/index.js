@@ -18,7 +18,7 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
       titleStyle={styles.titleStyle}
       {...rest}
     >
-      <Toolbar className="app-toolbar" style={{ padding: "0px", height: "65px", background: "#ffffff" }}>
+      <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
         <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} />
       </Toolbar>
     </AppBar>

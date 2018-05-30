@@ -3,20 +3,32 @@ import { Link } from "react-router-dom";
 import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
-import TextField from "material-ui/TextField";
+import { TextFieldIcon, Icon } from "components";
+import SearchIcon from "material-ui/svg-icons/action/search";
 import _ from "lodash";
 import "./index.css";
 
 const styles = {
   menuStyle: {
     marginLeft: "-40px",
-    width: "100px",
+    width: "120px",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-    overflow: "hidden"
+    overflow: "hidden",
   },
-  whiteColor: {
+
+  inputStyle: {
     color: "white !important",
+    marginTop: "0px",
+    marginLeft: "-10px",
+  },
+  fibreIconStyle: {
+    height: "10px",
+    width: "10px",
+    margin: "20px 8px 24px 0px",
+  },
+  arrowIconStyle: {
+    right: "-10px",
   },
 };
 
@@ -161,6 +173,7 @@ class ActionMenu extends Component {
     let { changeLevel, menuChange, changeRoute } = this;
 
     const showMenuItem = () => {
+      //console.log(menuItems);
       if (searchText.length == 0) {
         return menuItems.map((item, index) => {
           if (!item.url) {
@@ -168,14 +181,24 @@ class ActionMenu extends Component {
               <MenuItem
                 key={index}
                 style={{ whiteSpace: "initial" }}
-                leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
+                leftIcon={
+                  <Icon name="fiber-manual-record" action="av" color="#ffffff" style={styles.fibreIconStyle} className="material-icons whiteColor" />
+                }
                 primaryText={
                   <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                    <span className="onHoverText hidden-sm hidden-xs">{item.name || ""}</span>
+                    <span className="onHoverText hidden-xs">{item.name || ""}</span>
                     <span>{item.name || ""}</span>
                   </div>
                 }
-                rightIcon={<i className="material-icons whiteColor">keyboard_arrow_right</i>}
+                rightIcon={
+                  <Icon
+                    name="chevron-right"
+                    action="navigation"
+                    color="#ffffff"
+                    className="material-icons whiteColor"
+                    style={styles.arrowIconStyle}
+                  />
+                }
                 onTouchTap={() => {
                   menuChange(!item.path ? item.name : item.path);
                 }}
@@ -184,22 +207,30 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
-              <Link key={index} to={`/employee/${item.navigationURL}`}>
-                <MenuItem
-                  style={{ whiteSpace: "initial" }}
-                  key={index}
-                  onTouchTap={() => {
-                    document.title = item.name;
-                  }}
-                  leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
-                  primaryText={
-                    <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                      <span className="onHoverText hidden-sm hidden-xs">{item.name || ""}</span>
-                      <span>{item.name || ""}</span>
-                    </div>
-                  }
-                />
-              </Link>
+                <Link key={index} to={`/employee/${item.navigationURL}`}>
+                  <MenuItem
+                    style={{ whiteSpace: "initial" }}
+                    key={index}
+                    onTouchTap={() => {
+                      document.title = item.name;
+                    }}
+                    leftIcon={
+                      <Icon
+                        name="fiber-manual-record"
+                        action="av"
+                        color="#ffffff"
+                        style={styles.fibreIconStyle}
+                        className="material-icons whiteColor"
+                      />
+                    }
+                    primaryText={
+                      <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                        <span className="onHoverText hidden-xs">{item.name || ""}</span>
+                        <span>{item.name || ""}</span>
+                      </div>
+                    }
+                  />
+                </Link>
               );
             }
           }
@@ -215,10 +246,18 @@ class ActionMenu extends Component {
                     onTouchTap={() => {
                       document.title = item.displayName;
                     }}
-                    leftIcon={<i style={{marginLeft:"-10px"}} className="material-icons whiteColor">fiber_manual_record</i>}
+                    leftIcon={
+                      <Icon
+                        name="fiber-manual-record"
+                        action="av"
+                        color="#ffffff"
+                        style={styles.fibreIconStyle}
+                        className="material-icons whiteColor"
+                      />
+                    }
                     primaryText={
                       <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                        <span className="onHoverText hidden-sm hidden-xs">{item.displayName || ""}</span>
+                        <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
                         <span>{item.displayName || ""}</span>
                       </div>
                     }
@@ -233,18 +272,24 @@ class ActionMenu extends Component {
 
     return (
       <div ref={this.setWrapperRef}>
-        <span className="whiteColor">Quick Actions</span>
+        <div className="whiteColor" style={{ marginTop: "22px" }}>
+          Quick Actions
+        </div>
         {
-          <TextField
+          <TextFieldIcon
             hintText="Search"
             onChange={this.handleChange}
             value={searchText}
             className="actionMenuSearchBox"
-            inputStyle={styles.whiteColor}
+            inputStyle={styles.inputStyle}
+            iconPosition="before"
+            Icon={SearchIcon}
+            hintStyle={{ color: "#767676", fontSize: "14px", marginLeft: "-10px" }}
+            iconStyle={{ height: "18px", width: "18px", top: "16px" }}
           />
         }
 
-        <Menu disableAutoFocus={true} desktop={true} width="193" menuItemStyle={{ width: "193px", paddingLeft: "0" }}>
+        <Menu disableAutoFocus={true} desktop={true} width="193" className="actionMenuMenu" menuItemStyle={{ width: "193px", paddingLeft: "0" }}>
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
@@ -253,24 +298,24 @@ class ActionMenu extends Component {
                 changeLevel(path);
               }}
             >
-              <i className="material-icons">arrow_back</i>
+              <Icon name="arrow-back" action="navigation" color="#ffffff" />
             </div>
           )}
           {path && (
             <div
-              className="pull-right whiteColor pointerCursor"
+              className="pull-right pointerCursor"
               // style={{ marginRight: 12, marginBottom: 10, cursor: 'pointer' }}
               onTouchTap={() => {
                 changeLevel("");
               }}
             >
-              <i className="material-icons">home</i>
+              <Icon name="home" action="action" color="#ffffff" />
             </div>
           )}
 
           <div className="clearfix" />
 
-          <div style={{paddingLeft:"-24px"}}>{showMenuItem()}</div>
+          <div style={{ paddingLeft: "-24px" }}>{showMenuItem()}</div>
         </Menu>
       </div>
     );
