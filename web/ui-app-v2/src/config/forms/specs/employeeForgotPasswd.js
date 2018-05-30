@@ -20,7 +20,7 @@ const formConfig = {
     tenantId: {
       id: "employee-forgot-password-tenantId",
       jsonPath: "otp.tenantId",
-      value: commonConfig.tenantId,
+      value: commonConfig.forgotPasswordTenant,
     },
   },
   submit: {

@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import { LOCALATION } from "utils/endPoints";
 import { httpRequest } from "utils/api";
 import { getCurrentAddress } from "utils/commons";
+import commonConfig from "config/common";
 
 export const setRoute = (route) => {
   return { type: actionTypes.SET_ROUTE, route };
@@ -34,7 +35,7 @@ export const fetchLocalizationLabel = (locale) => {
         payload = await httpRequest(LOCALATION.GET.URL, LOCALATION.GET.ACTION, [
           { key: "module", value: "rainmaker-pgr" },
           { key: "locale", value: locale },
-          { key: "tenantId", value: "default" },
+          { key: "tenantId", value: commonConfig.tenantId },
         ]);
       }
       dispatch(setLocalizationLabels(locale, payload.messages));
