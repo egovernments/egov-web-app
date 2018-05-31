@@ -13,7 +13,6 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   if (type === INIT_FORM) {
     const { form } = action;
     const { name: formKey, fields } = form;
-    const { moduleName, masterName } = fields;
     let formData = null;
     try {
       Object.keys(fields).map((key) => {
@@ -21,7 +20,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
         if (item.dataFetchConfig) {
           switch (item.type) {
             case "singleValueList":
-              const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, moduleName, masterName);
+              const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key);
           }
         }
       });
@@ -34,7 +33,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   next(action);
 };
 
-const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, moduleName, masterName) => {
+const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey) => {
   const { url, action, requestBody } = dataFetchConfig;
   try {
     const payloadSpec = await httpRequest(url, action, [], requestBody);
