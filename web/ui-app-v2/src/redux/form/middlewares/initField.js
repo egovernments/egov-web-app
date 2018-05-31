@@ -4,6 +4,7 @@ import transform from "config/forms/transformers";
 import { initForm, setFieldProperty } from "redux/form/actions";
 import { httpRequest } from "utils/api";
 import { upperCaseFirst } from "utils/commons";
+import { get } from "lodash";
 
 const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
@@ -17,9 +18,11 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
     try {
       Object.keys(fields).map((key) => {
         let item = fields[key];
-        switch (item.type) {
-          case "singleValueList":
-            const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, moduleName, masterName);
+        if (item.dataFetchConfig) {
+          switch (item.type) {
+            case "singleValueList":
+              const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, moduleName, masterName);
+          }
         }
       });
     } catch (error) {
@@ -33,13 +36,9 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
 
 const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, moduleName, masterName) => {
   const { url, action, requestBody } = dataFetchConfig;
-  const module = moduleName && moduleName.value;
-  const master = upperCaseFirst(fieldKey);
   try {
     const payloadSpec = await httpRequest(url, action, [], requestBody);
-    //if the response is MDMS response. else, send the response normally. (need to refactor)
-    let dropdownData = module ? payloadSpec.MdmsRes[module][master] : payloadSpec;
-
+    let dropdownData = get(payloadSpec, dataFetchConfig.dataPath);
     const ddData = dropdownData.reduce((ddData, item) => {
       ddData.push({ label: item.name, value: item.code });
       return ddData;
