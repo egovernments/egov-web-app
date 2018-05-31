@@ -19,7 +19,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
         let item = fields[key];
         switch (item.type) {
           case "singleValueList":
-            const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, moduleName, masterName, formKey, key);
+            const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key, moduleName, masterName);
         }
       });
     } catch (error) {
@@ -31,13 +31,15 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   next(action);
 };
 
-const fetchDropdownData = async (dispatch, dataFetchConfig, moduleName, masterName, formKey, fieldKey) => {
+const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, moduleName, masterName) => {
   const { url, action, requestBody } = dataFetchConfig;
-  const module = moduleName.value;
+  const module = moduleName && moduleName.value;
   const master = upperCaseFirst(fieldKey);
   try {
     const payloadSpec = await httpRequest(url, action, [], requestBody);
-    const dropdownData = payloadSpec.MdmsRes[module][master];
+    //if the response is MDMS response. else, send the response normally. (need to refactor)
+    let dropdownData = module ? payloadSpec.MdmsRes[module][master] : payloadSpec;
+
     const ddData = dropdownData.reduce((ddData, item) => {
       ddData.push({ label: item.name, value: item.code });
       return ddData;
