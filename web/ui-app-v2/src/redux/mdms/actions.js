@@ -121,6 +121,7 @@ const transform = (rawSpecs, moduleName, tenantId) => {
             hintText: "",
             pattern: current.pattern,
             value: "",
+            disabled: current.isDisabled,
             //To make API call and initialise field, if Reqd.
             dataFetchConfig:
               current.type === "singleValueList"
