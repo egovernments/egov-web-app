@@ -5,7 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
 import { TextFieldIcon, Icon } from "components";
 import SearchIcon from "material-ui/svg-icons/action/search";
-import _ from "lodash";
+import { split, orderBy, some } from "lodash";
 import "./index.css";
 
 const styles = {
@@ -73,7 +73,7 @@ class ActionMenu extends Component {
   addMenuItems = (path, splitArray, menuItems, index) => {
     let { actionList } = this.props;
     if (splitArray.length > 1) {
-      if (!_.some(menuItems, { name: splitArray[0] })) {
+      if (!some(menuItems, { name: splitArray[0] })) {
         menuItems.push({
           path: path != "" ? path + "." + splitArray[0] : "",
           name: splitArray[0],
@@ -93,7 +93,7 @@ class ActionMenu extends Component {
         navigationURL: actionList[index].navigationURL,
       });
     }
-    menuItems = _.orderBy(menuItems, ["orderNumber"], ["asc"]);
+    menuItems = orderBy(menuItems, ["orderNumber"], ["asc"]);
     this.setState({
       menuItems,
       path,
@@ -129,7 +129,7 @@ class ActionMenu extends Component {
 
       setRoute("/employee/all-complaints");
     } else {
-      let splitArray = _.split(path, ".");
+      let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
       if (x != "" && splitArray.length > 1) {
         let pathParam = {
