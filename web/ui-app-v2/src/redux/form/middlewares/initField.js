@@ -4,7 +4,7 @@ import transform from "config/forms/transformers";
 import { initForm, setFieldProperty } from "redux/form/actions";
 import { httpRequest } from "utils/api";
 import { upperCaseFirst } from "utils/commons";
-import { get } from "lodash";
+import get from "lodash/get";
 
 const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
