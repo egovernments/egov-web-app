@@ -38,25 +38,25 @@ const routes = [
     path: "user/register",
     component: Register,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/profile",
@@ -174,10 +174,11 @@ const routes = [
   },
   //property tax routes
   {
-    path: "pt-payment-step-one",
+    path: "pt-payment",
     component: PropertyTaxPaymentStepOne,
     needsAuthentication: true,
     options: {
+      hideFooter: true,
       title: "PT_PAYMENT_STEP_HEADER",
     },
   },
