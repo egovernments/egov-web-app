@@ -34,6 +34,7 @@ import Toast from "./Toast";
 import Carousel from "./Carousel";
 import Divider from "./Divider";
 import SingleCheckbox from "./SingleCheckbox";
+import Tooltip from "./Tooltip";
 
 export {
   Label,
@@ -71,5 +72,6 @@ export {
   Toast,
   Carousel,
   Divider,
-  SingleCheckbox
+  SingleCheckbox,
+  Tooltip,
 };

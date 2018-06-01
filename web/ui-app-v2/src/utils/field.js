@@ -1,13 +1,22 @@
 import React from "react";
-import { TextField, MobileNumberField, SingleCheckbox, DropDown } from "components";
+import { TextField, MobileNumberField, SingleCheckbox, DropDown, Tooltip } from "components";
+
+const ToolTip = ({ placement, show, title, id }) => {
+  return <Tooltip enterDelay={300} id={id} leaveDelay={300} open={show} placement={placement} title={title} />;
+};
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const { type, ...fieldProps } = field;
+    const { type, tooltip, ...fieldProps } = field;
     switch (type) {
       case "textfield":
       case "textarea":
-        return <TextField {...rest} {...fieldProps} onChange={(e, value) => handleFieldChange(fieldKey, value)} multiLine={type === "textarea"} />;
+        return (
+          <div style={{ display: "flex" }}>
+            <TextField {...rest} {...fieldProps} onChange={(e, value) => handleFieldChange(fieldKey, value)} multiLine={type === "textarea"} />
+            {tooltip && <ToolTip {...tooltip} />}
+          </div>
+        );
       case "mobilenumber":
         return <MobileNumberField {...rest} {...fieldProps} onChange={(e, value) => handleFieldChange(fieldKey, value)} />;
       case "number":
@@ -19,12 +28,15 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
         );
       case "singleValueList":
         return (
-          <DropDown
-            {...rest}
-            {...fieldProps}
-            dropDownData={fieldProps.dropDownData || []}
-            onChange={(e, value, selectedValue) => handleFieldChange(fieldKey, selectedValue)}
-          />
+          <div style={{ display: "flex" }}>
+            <DropDown
+              {...rest}
+              {...fieldProps}
+              dropDownData={fieldProps.dropDownData || []}
+              onChange={(e, value, selectedValue) => handleFieldChange(fieldKey, selectedValue)}
+            />
+            {tooltip && <ToolTip {...tooltip} />}
+          </div>
         );
       default:
         return null;
