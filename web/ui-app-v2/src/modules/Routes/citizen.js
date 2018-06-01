@@ -32,6 +32,7 @@ import Events from "modules/citizen/PropertyTax/Events";
 import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
+import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
 
 const routes = [
   {
@@ -180,6 +181,14 @@ const routes = [
     options: {
       hideFooter: true,
       title: "PT_PAYMENT_STEP_HEADER",
+    },
+  },
+  {
+    path: "pt-payment/property-address",
+    component: PropertyAddress,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
     },
   },
   {
