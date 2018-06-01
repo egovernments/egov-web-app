@@ -5,7 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
 import { TextFieldIcon, Icon } from "components";
 import SearchIcon from "material-ui/svg-icons/action/search";
-import _ from "lodash";
+import { split, orderBy, some } from "lodash";
 import "./index.css";
 
 const styles = {
@@ -51,45 +51,12 @@ class ActionMenu extends Component {
   }
 
   componentDidMount() {
-    this.resetMenu();
-  }
-
-  resetMenu = () => {
-    let { actionList } = this.props;
-    let menuItems = [];
-    for (var i = 0; i < actionList.length; i++) {
-      if (actionList[i].path !== "") {
-        let splitArray = actionList[i].path.split(".");
-        if (splitArray.length > 1) {
-          if (!_.some(menuItems, { name: splitArray[0] })) {
-            menuItems.push({
-              path: "",
-              name: splitArray[0],
-              url: "",
-              queryParams: actionList[i].queryParams,
-              orderNumber: actionList[i].orderNumber,
-              navigationURL: actionList[i].navigationURL,
-            });
-          }
-        } else {
-          menuItems.push({
-            path: "",
-            name: actionList.displayName,
-            url: actionList.url,
-            queryParams: actionList[i].queryParams,
-            orderNumber: actionList[i].orderNumber,
-            navigationURL: actionList[i].navigationURL,
-          });
-        }
-      }
-    }
-
-    // console.log(_.orderBy(menuItems, ['orderNumber'], ['asc']));
-    this.setState({
-      menuItems,
+    let pathParam = {
       path: "",
-    });
-  };
+      parentMenu: true,
+    };
+    this.menuChange(pathParam);
+  }
 
   changeModulesActions(modules, items) {
     this.setState({
@@ -103,43 +70,50 @@ class ActionMenu extends Component {
       searchText: e.target.value,
     });
   };
-
-  menuChange = (path) => {
+  addMenuItems = (path, splitArray, menuItems, index) => {
     let { actionList } = this.props;
-    let menuItems = [];
-    for (var i = 0; i < actionList.length; i++) {
-      if (actionList[i].path !== "" && actionList[i].path.startsWith(path + ".")) {
-        let splitArray = actionList[i].path.split(path + ".")[1].split(".");
-        if (splitArray.length > 1) {
-          if (!_.some(menuItems, { name: splitArray[0] })) {
-            menuItems.push({
-              path: path + "." + splitArray[0],
-              name: splitArray[0],
-              url: "",
-              queryParams: actionList[i].queryParams,
-              orderNumber: actionList[i].orderNumber,
-              navigationURL: actionList[i].navigationURL,
-            });
-          }
-        } else {
-          menuItems.push({
-            path: path + "." + splitArray[0],
-            name: actionList[i].displayName,
-            url: actionList[i].url,
-            queryParams: actionList[i].queryParams,
-            orderNumber: actionList[i].orderNumber,
-            navigationURL: actionList[i].navigationURL,
-          });
-        }
+    if (splitArray.length > 1) {
+      if (!some(menuItems, { name: splitArray[0] })) {
+        menuItems.push({
+          path: path != "" ? path + "." + splitArray[0] : "",
+          name: splitArray[0],
+          url: "",
+          queryParams: actionList[index].queryParams,
+          orderNumber: actionList[index].orderNumber,
+          navigationURL: actionList[index].navigationURL,
+        });
       }
+    } else {
+      menuItems.push({
+        path: path != "" ? path + "." + splitArray[0] : "",
+        name: actionList[index].displayName,
+        url: actionList[index].url,
+        queryParams: actionList[index].queryParams,
+        orderNumber: actionList[index].orderNumber,
+        navigationURL: actionList[index].navigationURL,
+      });
     }
-
-    // console.log(_.orderBy(menuItems, ['orderNumber'], ['asc']));
-    menuItems = _.orderBy(menuItems, ["orderNumber"], ["asc"]);
+    menuItems = orderBy(menuItems, ["orderNumber"], ["asc"]);
     this.setState({
       menuItems,
       path,
     });
+  };
+  menuChange = (pathParam) => {
+    let path = pathParam.path;
+    let { actionList } = this.props;
+    let menuItems = [];
+    for (var i = 0; i < actionList.length; i++) {
+      if (actionList[i].path !== "") {
+        if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
+          let splitArray = actionList[i].path.split(path + ".")[1].split(".");
+          this.addMenuItems(path, splitArray, menuItems, i);
+        } else if (pathParam && pathParam.parentMenu) {
+          let splitArray = actionList[i].path.split(".");
+          this.addMenuItems(path, splitArray, menuItems, i);
+        }
+      }
+    }
   };
 
   changeLevel = (path) => {
@@ -147,16 +121,28 @@ class ActionMenu extends Component {
     let { setRoute } = this.props;
 
     if (!path) {
-      this.resetMenu();
-      // console.log("level 0");
+      let pathParam = {
+        path: "",
+        parentMenu: true,
+      };
+      this.menuChange(pathParam);
+
       setRoute("/employee/all-complaints");
     } else {
-      let splitArray = _.split(path, ".");
+      let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
       if (x != "" && splitArray.length > 1) {
-        this.menuChange(x);
+        let pathParam = {
+          path: x,
+          parentMenu: false,
+        };
+        this.menuChange(pathParam);
       } else {
-        this.resetMenu();
+        let pathParam = {
+          path: "",
+          parentMenu: true,
+        };
+        this.menuChange(pathParam);
       }
     }
   };
@@ -167,13 +153,11 @@ class ActionMenu extends Component {
   };
 
   render() {
-    // console.log(this.state.searchText);
     let { handleToggle, actionList } = this.props;
     let { searchText, modules, items, changeModulesActions, path, menuItems } = this.state;
     let { changeLevel, menuChange, changeRoute } = this;
 
     const showMenuItem = () => {
-      //console.log(menuItems);
       if (searchText.length == 0) {
         return menuItems.map((item, index) => {
           if (!item.url) {
@@ -200,7 +184,11 @@ class ActionMenu extends Component {
                   />
                 }
                 onTouchTap={() => {
-                  menuChange(!item.path ? item.name : item.path);
+                  let pathParam = {
+                    path: !item.path ? item.name : item.path,
+                    parentPath: false,
+                  };
+                  menuChange(pathParam);
                 }}
               />
             );

@@ -103,11 +103,12 @@ const createMDMSGenericSpecs = (moduleName, masterName, tenantId) => {
   };
 };
 
-const transform = (rawSpecs, moduleName) => {
+const transform = (rawSpecs, moduleName, tenantId) => {
   return {
     ...rawSpecs,
     values: rawSpecs.values.reduce((result, current) => {
       if (current.name != "tenantId") {
+        let master = upperCaseFirst(current.name);
         result["fields"] = {
           ...result["fields"],
           [current.name]: {
@@ -120,6 +121,7 @@ const transform = (rawSpecs, moduleName) => {
             hintText: "",
             pattern: current.pattern,
             value: "",
+            disabled: current.isDisabled,
             //To make API call and initialise field, if Reqd.
             dataFetchConfig:
               current.type === "singleValueList"
@@ -129,20 +131,20 @@ const transform = (rawSpecs, moduleName) => {
                     queryParams: {},
                     requestBody: {
                       MdmsCriteria: {
-                        tenantId: "testtenant",
+                        tenantId: tenantId,
                         moduleDetails: [
                           {
                             moduleName: moduleName,
                             masterDetails: [
                               {
-                                //To get any field data, masterName is field name with upper cased first letter to match API body
-                                name: upperCaseFirst(current.name),
+                                name: master,
                               },
                             ],
                           },
                         ],
                       },
                     },
+                    dataPath: `MdmsRes[${moduleName}][${master}]`,
                   }
                 : null,
           },
@@ -159,7 +161,7 @@ export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, reques
     dispatch(dataFetchPending());
     try {
       const payloadSpec = await httpRequest(`${SPEC.GET.URL}/${moduleName}/${masterName}`, SPEC.GET.ACTION, queryObject);
-      const specs = transform(payloadSpec, moduleName);
+      const specs = transform(payloadSpec, moduleName, tenantId);
       const { fields } = specs.values;
       const formConfig = {
         fields: {

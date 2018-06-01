@@ -1,26 +1,17 @@
 import React, { Component } from "react";
-import ReactTable from "react-table";
 import Field from "utils/field";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { initForm, resetForm } from "redux/form/actions";
 import { fetchSpecs } from "redux/mdms/actions";
 import { upperCaseFirst } from "utils/commons";
-import { Icon, Label, Button, Dialog, TextField, TextFieldIcon } from "components";
-import SearchIcon from "material-ui/svg-icons/action/search";
+import { Icon, Button } from "components";
 import "./index.css";
-import "react-table/react-table.css";
-
-const addIconStyle = { width: 20, height: 20, marginLeft: 8 };
-const searchIconStyle = {
-  height: "20px",
-  width: "35px",
-  fill: "#767676",
-};
+import MDMSFormUI from "./MDMSForm";
+import MDMSTableUI from "./MDMSTable";
 
 const MDMSForm = ({ handleFieldChange, form, handleClose, onDialogAddClick }) => {
-  const { fields } = form || {};
-  const { submit } = form;
+  const { fields, submit } = form || {};
   return (
     <div>
       <div className="mdms-form-wrapper">
@@ -132,9 +123,13 @@ class MDMS extends Component {
 
   onEditClick = (rowIndex) => {
     let { form, masterName, rowData, initForm } = this.props;
+    const unEditableFields = ["code"];
     rowData = rowData[rowIndex];
     Object.keys(rowData).forEach((fieldKey) => {
       form = this.setFieldProperty(form, fieldKey, "value", rowData[fieldKey]);
+      if (unEditableFields.indexOf(fieldKey) > -1) {
+        form = this.setFieldProperty(form, fieldKey, "disabled", true);
+      }
     });
     form = { ...form, name: `MDMS_${masterName}` };
     initForm(form);
@@ -188,150 +183,25 @@ class MDMS extends Component {
 
     return (
       <div style={{ padding: "16px", width: "100%" }}>
-        <Dialog
+        <MDMSFormUI
           open={this.state.dialogOpen}
           handleClose={this.onDialogClose}
           children={[<MDMSFormHOC key={1} handleClose={this.onDialogClose} onDialogAddClick={this.onDialogAddClick} />]}
           title="Add Entry"
-          isClose={true}
-          bodyStyle={{ background: "#ffffff" }}
-          contentStyle={{ maxWidth: "none" }}
-          titleStyle={{ textAlign: "left" }}
         />
-
-        <div>
-          <div className="title-add-search-bar">
-            <div className="col-md-6 text-left table-title" style={{ marginTop: "22px" }}>
-              <Label id="mdms-table-title" label={masterName} style={{}} labelStyle={{ letterSpacing: 0.6 }} dark={true} bold={true} />
-            </div>
-
-            <div className="col-md-6 table-top-bar">
-              <div className="mdms-table-search-bar">
-                <TextFieldIcon
-                  textFieldStyle={{ height: "48px" }}
-                  inputStyle={{
-                    marginTop: "4px",
-                    left: 0,
-                    position: "absolute",
-                  }}
-                  iconPosition="after"
-                  onChange={(e) => this.setState({ search: e.target.value })}
-                  underlineShow={true}
-                  fullWidth={false}
-                  hintText="Search"
-                  Icon={SearchIcon}
-                  value={this.state.search}
-                  id="search-mdms"
-                  iconStyle={searchIconStyle}
-                />
-              </div>
-              <div className="mdms-add">
-                <Icon action="content" name="add" color="#767676" onClick={this.onAddClick} style={addIconStyle} />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <ReactTable
-              data={tableData}
-              columns={this.setHeaders(header)}
-              getTableProps={getTableProps}
-              getTdProps={getTdProps}
-              getThProps={getThProps}
-              getTheadProps={getTheadProps}
-              getTheadTrProps={getTheadTrProps}
-              getTheadThProps={getTheadThProps}
-              getTrProps={getTrProps}
-              getTrGroupProps={getTrGroupProps}
-              defaultPageSize={defaultPageSize}
-              className="-stripped -highlight -responsive text-center"
-            />
-          </div>
-        </div>
+        <MDMSTableUI
+          masterName={masterName}
+          onSearch={(e) => this.setState({ search: e.target.value })}
+          onAddClick={this.onAddClick}
+          tableData={tableData}
+          columns={this.setHeaders(header)}
+          defaultPageSize={defaultPageSize}
+          searchValue={this.state.value}
+        />
       </div>
     );
   }
 }
-
-const getTableProps = () => {
-  return {
-    style: {
-      height: "auto",
-      minHeight: 370,
-      backgroundColor: "#ffffff",
-      boxShadow: "0 1px 5px 0 rgba(0, 0, 0, 0.13), 0 2px 4px 0 rgba(0, 0, 0, 0.2)",
-    },
-  };
-};
-
-const getTdProps = () => {
-  return {
-    style: {
-      borderRight: "none",
-      fontSize: "13px",
-      fontWeight: "normal",
-    },
-  };
-};
-
-const getThProps = () => {
-  return {
-    style: {
-      lineHeight: 40,
-    },
-  };
-};
-const getTheadTrProps = () => {
-  return {
-    style: {
-      height: 56,
-      boxShadow: "none",
-    },
-  };
-};
-
-const getTheadProps = () => {
-  return {
-    style: {
-      boxShadow: "none",
-      backgroundColor: "#f8f8f8",
-      borderBottom: "1px solid #e0e0e0",
-    },
-  };
-};
-
-const getTheadThProps = () => {
-  return {
-    style: {
-      lineHeight: "40px",
-      borderRight: "none",
-      fontFamily: "Roboto",
-      fontSize: "12px",
-      fontWeight: 500,
-      letterSpacing: "0.5px",
-      textAlign: "center",
-      color: "#767676",
-    },
-  };
-};
-
-const getTrGroupProps = () => {
-  return {
-    style: {
-      height: 0,
-      borderBottom: "1px solid #e0e0e0",
-    },
-  };
-};
-
-const getTrProps = () => {
-  return {
-    style: {
-      alignItems: "center",
-    },
-  };
-};
 
 const mapStateToProps = (state, ownProps) => {
   const { tenantId } = state.auth.userInfo;

@@ -4,6 +4,7 @@ import transform from "config/forms/transformers";
 import { initForm, setFieldProperty } from "redux/form/actions";
 import { httpRequest } from "utils/api";
 import { upperCaseFirst } from "utils/commons";
+import get from "lodash/get";
 
 const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
@@ -12,14 +13,15 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   if (type === INIT_FORM) {
     const { form } = action;
     const { name: formKey, fields } = form;
-    const { moduleName, masterName } = fields;
     let formData = null;
     try {
       Object.keys(fields).map((key) => {
         let item = fields[key];
-        switch (item.type) {
-          case "singleValueList":
-            const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, moduleName, masterName, formKey, key);
+        if (item.dataFetchConfig) {
+          switch (item.type) {
+            case "singleValueList":
+              const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key);
+          }
         }
       });
     } catch (error) {
@@ -31,13 +33,11 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   next(action);
 };
 
-const fetchDropdownData = async (dispatch, dataFetchConfig, moduleName, masterName, formKey, fieldKey) => {
+const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey) => {
   const { url, action, requestBody } = dataFetchConfig;
-  const module = moduleName.value;
-  const master = upperCaseFirst(fieldKey);
   try {
     const payloadSpec = await httpRequest(url, action, [], requestBody);
-    const dropdownData = payloadSpec.MdmsRes[module][master];
+    let dropdownData = get(payloadSpec, dataFetchConfig.dataPath);
     const ddData = dropdownData.reduce((ddData, item) => {
       ddData.push({ label: item.name, value: item.code });
       return ddData;
