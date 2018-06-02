@@ -32,31 +32,32 @@ import Events from "modules/citizen/PropertyTax/Events";
 import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
+import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
 
 const routes = [
   {
     path: "user/register",
     component: Register,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/citizen",
+    redirectionUrl: "/citizen/pt-payment",
   },
   {
     path: "user/profile",
@@ -174,11 +175,20 @@ const routes = [
   },
   //property tax routes
   {
-    path: "pt-payment-step-one",
+    path: "pt-payment",
     component: PropertyTaxPaymentStepOne,
     needsAuthentication: true,
     options: {
+      hideFooter: true,
       title: "PT_PAYMENT_STEP_HEADER",
+    },
+  },
+  {
+    path: "pt-payment/property-address",
+    component: PropertyAddress,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
     },
   },
   {
