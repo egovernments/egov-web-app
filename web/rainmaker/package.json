@@ -1,0 +1,19 @@
+{
+	"name": "rainmaker",
+ "version": "0.0.1",
+ "main": "",
+ "repository": "",
+ "license": "egov",
+ "private": true,
+ "scripts": {
+	 "clean": "lerna clean -f --yes && rm -rf node_modules",
+	 "reset": "npm run clean && npm i",
+	 "citizen": "cd packages/citizen && npm start",
+	 "employee": "cd packages/employee && npm start",
+	 "citizen-build":"cd packages/citizen && npm build",
+	 "employee-build":"cd packages/employee && npm build"
+ },
+	"devDependencies": {
+		"lerna": "^2.11.0"
+	}
+}
