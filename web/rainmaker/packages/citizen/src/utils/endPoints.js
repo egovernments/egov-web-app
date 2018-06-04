@@ -84,3 +84,10 @@ export const SPEC = {
     ACTION: "_search",
   },
 };
+
+export const CITY = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
+    ACTION: "_search",
+  },
+};

@@ -1,3 +1,4 @@
+import { CITY } from "utils/endPoints";
 // const formConfig = {
 //   name: "propertyAddress",
 //   fields: {
@@ -101,9 +102,31 @@ const formConfig = {
       id: "city",
       jsonPath: "",
       required: true,
+      value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "City",
       hintText: "Enter City",
+      dataFetchConfig: {
+        url: CITY.GET.URL,
+        action: CITY.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "tenant",
+                masterDetails: [
+                  {
+                    name: "tenants",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: `MdmsRes.tenant.tenants`,
+      },
     },
     pincode: {
       id: "pincode",
