@@ -14,9 +14,7 @@ const defaultTitleStyle = {
 const defaultActionsContainerStyle = {
   padding: "14px",
 };
-const defaultContentStyle = {
-  width: "20%",
-};
+const defaultContentStyle = {};
 
 const defaultBodyStyle = {
   padding: "0 12px",
