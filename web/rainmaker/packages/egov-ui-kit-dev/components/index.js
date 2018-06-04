@@ -34,6 +34,7 @@ import Toast from "egov-ui-kit/components/Toast";
 import Carousel from "egov-ui-kit/components/Carousel";
 import Divider from "egov-ui-kit/components/Divider";
 import SingleCheckbox from "egov-ui-kit/components/SingleCheckbox";
+import Tooltip from "./Tooltip";
 
 export {
   Label,
@@ -71,5 +72,6 @@ export {
   Toast,
   Carousel,
   Divider,
-  SingleCheckbox
+  SingleCheckbox,
+  Tooltip,
 };
