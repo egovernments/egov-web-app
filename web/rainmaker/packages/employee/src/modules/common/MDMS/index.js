@@ -196,7 +196,7 @@ class MDMS extends Component {
           tableData={tableData}
           columns={this.setHeaders(header)}
           defaultPageSize={defaultPageSize}
-          searchValue={this.state.value}
+          searchValue={this.state.search}
         />
       </div>
     );
