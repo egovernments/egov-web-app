@@ -32,6 +32,7 @@ import Events from "modules/citizen/PropertyTax/Events";
 import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
+import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
 import FormWizard from "modules/citizen/PropertyTax/FormWizard";
 
@@ -204,6 +205,14 @@ const routes = [
   {
     path: "pt-payment/assessment-form",
     component: FormWizard,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+    },
+  },
+  {
+    path: "pt-payment/review-property",
+    component: ReviewForm,
     needsAuthentication: true,
     options: {
       hideFooter: true,
