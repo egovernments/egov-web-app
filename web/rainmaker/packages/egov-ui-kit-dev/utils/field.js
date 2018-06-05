@@ -1,9 +1,13 @@
 import React from "react";
-import { TextField, MobileNumberField, SingleCheckbox, DropDown } from "components";
+import { TextField, MobileNumberField, SingleCheckbox, DropDown, Tooltip, Label } from "components";
+
+const ToolTip = ({ placement, show, title, id }) => {
+  return <Tooltip enterDelay={300} id={id} leaveDelay={300} open={show} placement={placement} title={title} />;
+};
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const { type, ...fieldProps } = field;
+    const { type, tooltip, label, ...fieldProps } = field;
     switch (type) {
       case "textfield":
       case "textarea":
@@ -17,6 +21,8 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
         return (
           <SingleCheckbox {...rest} {...fieldProps} style={{ marginTop: "27px" }} onCheck={(e) => handleFieldChange(fieldKey, e.target.checked)} />
         );
+      case "label":
+        return <Label {...rest} {...fieldProps} />;
       case "singleValueList":
         return (
           <DropDown
