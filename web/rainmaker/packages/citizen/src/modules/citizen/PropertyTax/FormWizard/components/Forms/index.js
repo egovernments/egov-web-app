@@ -1,9 +1,108 @@
-import formHoc from "hocs/form";
+import React from "react";
+import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "../GenericForm";
+import { handleFieldChange } from "redux/form/actions";
+import Field from "egov-ui-kit/utils/field";
+import { RadioButton, Card } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
+
+const options = [
+  { value: "Male", label: <Label label="Male" /> },
+  { value: "Female", label: <Label label="Female" /> },
+  { value: "Transgender", label: <Label label="Transgender" /> },
+];
+
+const guardianOptions = [{ value: "Husband", label: <Label label="Husband" /> }, { value: "Father ", label: <Label label="Father" /> }];
+
+const styles = {
+  labelStyle: {
+    color: "rgb(0, 188, 209)",
+    font: "12px",
+    letterSpacing: 0.6,
+    marginBottom: 5,
+    marginTop: 14,
+  },
+
+  radioButtonItemStyle: {
+    marginBottom: "18px",
+    paddingLeft: "2px",
+    height: "16px",
+  },
+  selectedLabelStyle: {
+    color: "#00bbd3",
+  },
+  radioButtonLabelStyle: {
+    lineHeight: 1,
+    marginBottom: 8,
+  },
+  iconStyle: {
+    width: 16,
+    height: 16,
+  },
+};
+
+const OwnerInformation = ({ form, handleFieldChange, handleChange, handleGuardianChange }) => {
+  const fields = form.fields || {};
+  return (
+    <Card
+      textChildren={
+        <div className="col-xs-12">
+          <div className="col-xs-6">
+            <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} />
+          </div>
+          <div className="col-xs-6" style={{ height: 72 }}>
+            <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+            <RadioButton
+              id="gender-selection"
+              name="gender-selection"
+              options={options}
+              handleChange={handleChange}
+              radioButtonItemStyle={styles.radioButtonItemStyle}
+              labelStyle={styles.radioButtonLabelStyle}
+              selectedLabelStyle={styles.selectedLabelStyle}
+              className={"owner-gender-selection"}
+              iconStyle={styles.iconStyle}
+            />
+          </div>
+          <div className="col-xs-6">
+            <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} />
+          </div>
+          <div className="col-xs-6" style={{ display: "flex", alignItems: "center" }}>
+            <div className="col-xs-8" style={{ padding: 0 }}>
+              <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} />
+            </div>
+            <div className="col-xs-4" style={{ padding: 0 }}>
+              <RadioButton
+                id="guardian-selection"
+                name="guardian-selection"
+                options={guardianOptions}
+                handleChange={handleGuardianChange}
+                className={"owner-guardian-selection"}
+                iconStyle={styles.iconStyle}
+                labelStyle={styles.radioButtonLabelStyle}
+              />
+            </div>
+          </div>
+          <div className="col-xs-6">
+            <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} />
+          </div>
+          <div className="col-xs-6">
+            <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} />
+          </div>
+          <div className="col-xs-6">
+            <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} />
+          </div>
+        </div>
+      }
+    />
+  );
+};
 
 const BasicInformationHOC = formHoc({ formKey: "basicInformation" })(GenericForm);
 const PropertyAddressHOC = formHoc({ formKey: "propertyAddress" })(GenericForm);
 const PlotInformationHOC = formHoc({ formKey: "plotInformation" })(GenericForm);
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType" })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo" })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory" })(GenericForm);
 
-export { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC };
+export { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC };

@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import {Screen} from "modules/common";
-import PropertyAddress from "./components/PropertyAddress";
-import BasicInformation from "./components/BasicInformation";
-import { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC } from "./components/Forms";
+import { Screen } from "modules/common";
+import {
+  BasicInformationHOC,
+  PropertyAddressHOC,
+  PlotInformationHOC,
+  OwnershipTypeHOC,
+  OwnerInfoHOC,
+  ExemptionCategoryHOC,
+} from "./components/Forms";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -27,7 +32,13 @@ class FormWizard extends Component {
         };
       case 3:
         return {
-          component: <OwnershipTypeHOC />,
+          component: (
+            <div>
+              <OwnershipTypeHOC />
+              <OwnerInfoHOC />
+              <ExemptionCategoryHOC />
+            </div>
+          ),
         };
       default:
         return {
