@@ -1,0 +1,14 @@
+.wizard-cont {
+  padding: 0 16px;
+  min-height: calc(100vh - 64px);
+}
+
+.wizard-footer {
+  background-color: #ffffff;
+  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.24);
+  padding: 16px 16px 16px;
+  position: absolute !important;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+}
