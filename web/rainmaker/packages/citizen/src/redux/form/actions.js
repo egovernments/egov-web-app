@@ -43,7 +43,7 @@ export const submitFormPending = (formKey) => {
   return { type: actionTypes.SUBMIT_FORM_PENDING, formKey };
 };
 
-export const submitFormComplete = (formKey, payload) => {
+export const submitFormComplete = (formKey, payload, saveUrl) => {
   return { type: actionTypes.SUBMIT_FORM_COMPLETE, formKey, payload };
 };
 
@@ -73,7 +73,7 @@ export const submitForm = (formKey, saveUrl) => {
         } else {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }
-        dispatch(submitFormComplete(formKey, formResponse));
+        dispatch(submitFormComplete(formKey, formResponse, saveUrl));
       } catch (error) {
         const { message } = error;
         throw new Error(error);
