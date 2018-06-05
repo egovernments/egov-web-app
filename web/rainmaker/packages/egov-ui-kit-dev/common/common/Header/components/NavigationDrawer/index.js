@@ -3,7 +3,7 @@ import { Image, Drawer, List } from "components";
 import UserProfile from "./UserProfile";
 import LanguageSelection from "./LanguageSelection";
 import menuItems from "./menuItems";
-import logoMseva from "assets/images/logo_black.png";
+import logoMseva from "egov-ui-kit/assets/images/logo_black.png";
 
 const styles = {
   listInnerDivStyle: {

@@ -3,8 +3,8 @@ import { Tabs } from "components";
 import Screen from "modules/common/common/Screen";
 import Complaints from "modules/common/pgr/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
-import Label from "utils/translationNode";
-import { transformComplaintForComponent } from "utils/commons";
+import Label from "egov-ui-kit/utils/translationNode";
+import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
 import isEqual from "lodash/isEqual";
@@ -163,4 +163,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllComplaints);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllComplaints);

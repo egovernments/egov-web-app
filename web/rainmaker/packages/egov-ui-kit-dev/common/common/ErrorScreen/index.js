@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import { SuccessMessage } from "modules/common";
 import "./index.css";
 

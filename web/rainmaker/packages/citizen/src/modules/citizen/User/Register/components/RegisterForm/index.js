@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Field from "utils/field";
+import Field from "egov-ui-kit/utils/field";
 import { Button, Card } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import { CityPicker } from "modules/common";
-import { startSMSRecevier } from "utils/commons";
+import { startSMSRecevier } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const RegisterForm = ({ handleFieldChange, form }) => {

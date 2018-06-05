@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Card, TimeLine, Icon, Image } from "components/";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
-import { getDateFromEpoch, isImage } from "utils/commons";
+import { getDateFromEpoch, isImage } from "egov-ui-kit/utils/commons";
 
 const timelineButtonLabelStyle = {
   height: 12,

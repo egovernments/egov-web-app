@@ -21,9 +21,9 @@ var _actions = require("../common/actions");
 
 var commonActions = _interopRequireWildcard(_actions);
 
-var _endPoints = require("utils/endPoints");
+var _endPoints = require("egov-ui-kit/utils/endPoints");
 
-var _api = require("utils/api");
+var _api = require("egov-ui-kit/utils/api");
 
 var _lodash = require("lodash");
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import { initForm, resetForm } from "redux/form/actions";
 import { fetchSpecs } from "redux/mdms/actions";
-import { upperCaseFirst } from "utils/commons";
+import { upperCaseFirst } from "egov-ui-kit/utils/commons";
 import { Icon, Button } from "components";
 import "./index.css";
 import MDMSFormUI from "./MDMSForm";
@@ -222,4 +222,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MDMS);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MDMS);

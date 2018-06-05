@@ -7,7 +7,7 @@ const Icon = ({ action, className, name, style = {}, color, onClick, id }) => {
     let WrappedIcon = null;
 
     if (action === "custom") {
-      WrappedIcon = require(`custom-icons/${name}`).default;
+      WrappedIcon = require(`egov-ui-kit/custom-icons/${name}`).default;
     } else {
       WrappedIcon = require(`material-ui/svg-icons/${action}/${name}`).default;
     }

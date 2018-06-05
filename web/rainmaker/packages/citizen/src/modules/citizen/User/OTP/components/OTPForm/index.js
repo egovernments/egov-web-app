@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, TextField, Card } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP }) => {

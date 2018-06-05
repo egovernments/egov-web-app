@@ -12,7 +12,7 @@ var _reactRouter = require("react-router");
 
 var _components = require("components");
 
-var _logoWhite = require("assets/images/logo-white.png");
+var _logoWhite = require("egov-ui-kit/assets/images/logo-white.png");
 
 var _logoWhite2 = _interopRequireDefault(_logoWhite);
 

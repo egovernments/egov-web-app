@@ -22,7 +22,7 @@ var _menuItems = require("./menuItems");
 
 var _menuItems2 = _interopRequireDefault(_menuItems);
 
-var _logo_black = require("assets/images/logo_black.png");
+var _logo_black = require("egov-ui-kit/assets/images/logo_black.png");
 
 var _logo_black2 = _interopRequireDefault(_logo_black);
 

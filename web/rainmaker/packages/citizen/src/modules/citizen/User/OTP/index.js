@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, submitForm } from "redux/form/actions";
@@ -71,4 +71,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OTP);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OTP);

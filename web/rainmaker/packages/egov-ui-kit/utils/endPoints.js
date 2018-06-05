@@ -89,3 +89,10 @@ var SPEC = exports.SPEC = {
     ACTION: "_search"
   }
 };
+
+var CITY = exports.CITY = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
+    ACTION: "_search"
+  }
+};

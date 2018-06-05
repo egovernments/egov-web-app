@@ -1,8 +1,8 @@
 import React from "react";
-import Field from "utils/field";
+import Field from "egov-ui-kit/utils/field";
 import { Button, Card } from "components";
-import Label from "utils/translationNode";
-import { startSMSRecevier } from "utils/commons";
+import Label from "egov-ui-kit/utils/translationNode";
+import { startSMSRecevier } from "egov-ui-kit/utils/commons";
 
 const LoginForm = ({ handleFieldChange, form }) => {
   const fields = form.fields || {};

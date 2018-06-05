@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { BottomNavigation, Icon } from "components";
 import { navigationItems } from "./navigationItems";
 import { setBottomNavigationIndex } from "redux/app/actions";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 class Footer extends Component {

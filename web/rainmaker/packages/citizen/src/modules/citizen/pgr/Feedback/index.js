@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { Screen } from "modules/common";
 import { fetchComplaints } from "redux/complaints/actions";
 import FeedbackForm from "./components/FeedbackForm";
@@ -47,4 +47,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Feedback);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Feedback);

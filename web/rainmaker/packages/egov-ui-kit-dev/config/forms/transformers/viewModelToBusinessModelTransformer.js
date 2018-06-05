@@ -1,4 +1,4 @@
-import { prepareFormData, getTenantForLatLng } from "utils/commons";
+import { prepareFormData, getTenantForLatLng } from "egov-ui-kit/utils/commons";
 
 const updateComplaintStatus = (state, form) => {
   const formData = prepareFormData(form);

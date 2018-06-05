@@ -18,7 +18,7 @@ var _actions2 = require("redux/auth/actions");
 
 var _actions3 = require("redux/app/actions");
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var _actions4 = require("redux/complaints/actions");
 

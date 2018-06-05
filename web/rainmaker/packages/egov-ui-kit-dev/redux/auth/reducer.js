@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { getUserInfo } from "utils/commons";
+import { getUserInfo } from "egov-ui-kit/utils/commons";
 
 const userInfo = getUserInfo();
 const authenticated = userInfo ? true : false;

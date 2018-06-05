@@ -1,8 +1,8 @@
 import React from "react";
 import { ProfileSection } from "components";
-import { getCityNameByCode } from "utils/commons";
+import { getCityNameByCode } from "egov-ui-kit/utils/commons";
 
-import emptyFace from "assets/images/download.png";
+import emptyFace from "egov-ui-kit/assets/images/download.png";
 
 const styles = {
   imageStyle: { width: 89, height: 88, margin: "0 auto", marginBottom: "16px" },

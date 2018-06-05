@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { Button, TimeLine, Card, Icon } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import OwnerDetails from "./components/OwnerDetails";
 import PropertyAddress from "./components/PropertyAddress";
 import TaxAssessmentDetailsOne from "./components/TaxAssessmentDetailsOne";

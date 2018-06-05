@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 

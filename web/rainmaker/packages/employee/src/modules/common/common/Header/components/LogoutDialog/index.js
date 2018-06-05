@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, Button } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const styles = {
   logoutContentStyle: { textAlign: "center", padding: "24px 20px" },

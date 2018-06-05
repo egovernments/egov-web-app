@@ -4,7 +4,7 @@ import formHOC from "hocs/form";
 import Screen from "modules/common/common/Screen";
 import RejectComplaintForm from "./components/RejectComplaintForm";
 import { fetchComplaints } from "redux/complaints/actions";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import { handleFieldChange } from "redux/form/actions";
 import "./index.css";
 
@@ -79,4 +79,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(RejectComplaint);
+export default connect(
+  null,
+  mapDispatchToProps
+)(RejectComplaint);

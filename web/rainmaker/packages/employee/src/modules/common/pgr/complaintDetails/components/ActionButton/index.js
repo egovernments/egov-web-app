@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 class ActionButton extends Component {

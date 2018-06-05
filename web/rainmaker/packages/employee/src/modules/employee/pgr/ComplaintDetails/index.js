@@ -6,7 +6,15 @@ import Actions from "modules/common/pgr/complaintDetails/components/ActionButton
 import { Icon, MapLocation } from "components";
 import Screen from "modules/common/common/Screen";
 import pinIcon from "assets/Location_pin.svg";
-import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, returnSLAStatus, getPropertyFromObj, findLatestAssignee } from "utils/commons";
+import {
+  getDateFromEpoch,
+  mapCompIDToName,
+  isImage,
+  fetchImages,
+  returnSLAStatus,
+  getPropertyFromObj,
+  findLatestAssignee,
+} from "egov-ui-kit/utils/commons";
 import { fetchComplaints } from "redux/complaints/actions";
 import { connect } from "react-redux";
 import "./index.css";
@@ -340,4 +348,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComplaintDetails);

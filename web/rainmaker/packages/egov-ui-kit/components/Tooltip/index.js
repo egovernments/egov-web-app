@@ -20,7 +20,7 @@ var _Icon = require("@material-ui/core/Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _info = require("assets/info.svg");
+var _info = require("egov-ui-kit/assets/info.svg");
 
 var _info2 = _interopRequireDefault(_info);
 

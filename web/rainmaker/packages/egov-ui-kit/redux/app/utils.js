@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initLocalizationLabels = undefined;
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var initLocalizationLabels = exports.initLocalizationLabels = function initLocalizationLabels(locale) {
   var localizationLabels = void 0;

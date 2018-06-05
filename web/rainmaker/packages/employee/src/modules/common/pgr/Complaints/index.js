@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Card, Icon } from "components";
-import Label from "utils/translationNode";
-import { getDateFromEpoch } from "utils/commons";
+import Label from "egov-ui-kit/utils/translationNode";
+import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const imageStyles = {

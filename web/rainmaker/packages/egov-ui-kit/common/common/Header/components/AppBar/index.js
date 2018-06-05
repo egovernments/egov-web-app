@@ -18,7 +18,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _components = require("components");
 
-var _translationNode = require("utils/translationNode");
+var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 

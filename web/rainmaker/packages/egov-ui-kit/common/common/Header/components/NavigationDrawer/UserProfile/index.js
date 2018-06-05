@@ -10,9 +10,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _components = require("components");
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
-var _download = require("assets/images/download.png");
+var _download = require("egov-ui-kit/assets/images/download.png");
 
 var _download2 = _interopRequireDefault(_download);
 

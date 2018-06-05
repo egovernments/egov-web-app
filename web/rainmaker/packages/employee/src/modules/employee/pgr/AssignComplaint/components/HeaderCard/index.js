@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Icon } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const addressStyle = {
   display: "inline-block",

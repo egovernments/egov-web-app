@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ImageLoader from "react-load-image";
-import imageLoading from "assets/images/image-loading.png";
-import imageBroken from "assets/images/broken-image.png";
+import imageLoading from "egov-ui-kit/assets/images/image-loading.png";
+import imageBroken from "egov-ui-kit/assets/images/broken-image.png";
 
 const Preloader = (props) => {
   return <img src={imageLoading} {...props} />;

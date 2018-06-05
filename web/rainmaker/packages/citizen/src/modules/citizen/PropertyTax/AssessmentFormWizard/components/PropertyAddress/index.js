@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import PropertyAddressForm from "./components/PropertyAddressForm";
 import { Screen } from "modules/common";
 

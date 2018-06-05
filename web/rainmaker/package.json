@@ -12,13 +12,13 @@
     "dev:employee": "cd packages/employee && npm start",
     "prod:citizen": "cd packages/citizen && npm run build",
     "prod:employee": "cd packages/employee && npm run build",
-    "egov-ui-kit-components":
-      "babel packages/egov-ui-kit-dev/components --out-dir packages/egov-ui-kit/components --copy-files",
-    "egov-ui-kit-redux":
-      "babel packages/egov-ui-kit-dev/redux --out-dir packages/egov-ui-kit/redux --copy-files",
-    "egov-ui-kit-utils":
-      "babel packages/egov-ui-kit-dev/utils --out-dir packages/egov-ui-kit/utils --copy-files",
-    "egov-ui-kit-commons": "babel packages/egov-ui-kit-dev/common --out-dir packages/egov-ui-kit/common --copy-files"
+    "egov-ui-kit-components": "babel packages/egov-ui-kit-dev/components --out-dir packages/egov-ui-kit/components --copy-files",
+    "egov-ui-kit-redux": "babel packages/egov-ui-kit-dev/redux --out-dir packages/egov-ui-kit/redux --copy-files",
+    "egov-ui-kit-utils": "babel packages/egov-ui-kit-dev/utils --out-dir packages/egov-ui-kit/utils --copy-files",
+    "egov-ui-kit-commons": "babel packages/egov-ui-kit-dev/common --out-dir packages/egov-ui-kit/common --copy-files",
+    "egov-ui-kit-custom-icons": "babel packages/egov-ui-kit-dev/custom-icons --out-dir packages/egov-ui-kit/custom-icons --copy-files",
+    "egov-ui-kit-hocs": "babel packages/egov-ui-kit-dev/hocs --out-dir packages/egov-ui-kit/hocs --copy-files",
+    "egov-ui-kit": "npm run egov-ui-kit-components && npm run egov-ui-kit-redux && npm run egov-ui-kit-utils && npm run egov-ui-kit-commons && npm run egov-ui-kit-custom-icons && npm run egov-ui-kit-hocs"
   },
   "devDependencies": {
     "lerna": "^2.11.0",

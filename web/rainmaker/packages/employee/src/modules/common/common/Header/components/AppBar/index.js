@@ -1,6 +1,6 @@
 import React from "react";
 import { AppBar } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import UserSettings from "../UserSettings";
 import Toolbar from "material-ui/Toolbar";
 import "./index.css";

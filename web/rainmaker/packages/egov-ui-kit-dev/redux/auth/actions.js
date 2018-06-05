@@ -1,8 +1,8 @@
 import * as authType from "./actionTypes";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
-import { httpRequest, loginRequest } from "utils/api";
-import { AUTH, USER, OTP } from "utils/endPoints";
-import { prepareFormData } from "utils/commons";
+import { httpRequest, loginRequest } from "egov-ui-kit/utils/api";
+import { AUTH, USER, OTP } from "egov-ui-kit/utils/endPoints";
+import { prepareFormData } from "egov-ui-kit/utils/commons";
 
 // temp fix
 const fixUserDob = (user = {}) => {

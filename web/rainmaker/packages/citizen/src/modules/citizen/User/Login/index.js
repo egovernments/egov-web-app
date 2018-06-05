@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import LoginForm from "./components/LoginForm";
 import { Banner } from "modules/common";
 import { Screen } from "modules/common";

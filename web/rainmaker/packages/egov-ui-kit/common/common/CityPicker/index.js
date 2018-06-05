@@ -38,7 +38,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require("react-redux");
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var _components = require("components");
 

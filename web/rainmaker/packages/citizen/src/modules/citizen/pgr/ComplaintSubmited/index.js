@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 class ComplaintSubmitted extends Component {
@@ -65,4 +65,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(ComplaintSubmitted);
+export default connect(
+  mapStateToProps,
+  null
+)(ComplaintSubmitted);
