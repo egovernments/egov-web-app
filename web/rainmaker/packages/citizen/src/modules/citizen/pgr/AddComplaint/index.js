@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import AddComplaintForm from "./components/AddComplaintForm";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import "./index.css";
 
 const ComplaintFormHOC = formHoc({ formKey: "complaint" })(AddComplaintForm);

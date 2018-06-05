@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import formHoc from "hocs/form";
 import LoginForm from "./components/LoginForm";
-import Banner from "modules/common/common/Banner";
-import Screen from "modules/common/common/Screen";
+import { Banner } from "modules/common";
+import { Screen } from "modules/common";
 
 const LoginFormHOC = formHoc({ formKey: "login" })(LoginForm);
 

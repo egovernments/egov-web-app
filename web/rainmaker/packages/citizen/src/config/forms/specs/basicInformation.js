@@ -32,6 +32,27 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of usage",
       hintText: "Select",
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: {},
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "propertyType",
+      //           masterDetails: [
+      //             {
+      //               name: "propertName",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: `MdmsRes[${moduleName}][${master}]`,
+      // },
     },
     typeOfBuilding: {
       id: "typeOfBuilding",

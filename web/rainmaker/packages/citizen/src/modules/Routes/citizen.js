@@ -16,7 +16,7 @@ import ContactUs from "modules/citizen/ContactUs";
 import MyComplaints from "modules/citizen/pgr/MyComplaints";
 import ComplaintDetails from "modules/citizen/pgr/ComplaintDetails";
 import ComplaintSubmited from "modules/citizen/pgr/ComplaintSubmited";
-import TrackLocation from "modules/common/common/TrackLocation";
+import { TrackLocation } from "modules/common";
 import Feedback from "modules/citizen/pgr/Feedback";
 import ReOpenComplaint from "modules/citizen/pgr/ReOpenComplaint";
 import ComplaintType from "modules/citizen/pgr/ComplaintType";

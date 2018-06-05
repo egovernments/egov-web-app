@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Field from "utils/field";
 import { Button, Card } from "components";
 import Label from "utils/translationNode";
-import CityPicker from "modules/common/common/CityPicker";
+import { CityPicker } from "modules/common";
 import { startSMSRecevier } from "utils/commons";
 import "./index.css";
 

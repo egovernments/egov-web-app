@@ -105,7 +105,7 @@ const formConfig = {
       value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "City",
-      hintText: "Enter City",
+      hintText: "",
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
@@ -125,7 +125,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: `MdmsRes.tenant.tenants`,
+        dataPath: "MdmsRes.tenant.tenants",
       },
     },
     pincode: {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import { fetchComplaints } from "redux/complaints/actions";
 import FeedbackForm from "./components/FeedbackForm";
 import { handleFieldChange } from "redux/form/actions";

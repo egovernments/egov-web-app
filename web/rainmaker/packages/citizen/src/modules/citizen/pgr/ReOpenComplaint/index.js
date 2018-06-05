@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import Label from "utils/translationNode";
 import ReopenComplaintForm from "./components/ReopenComplaintForm";
 import { fetchComplaints } from "redux/complaints/actions";

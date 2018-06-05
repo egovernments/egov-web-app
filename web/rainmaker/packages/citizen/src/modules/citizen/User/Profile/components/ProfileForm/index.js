@@ -1,8 +1,8 @@
 import React from "react";
 import Field from "utils/field";
 import { Button, Card } from "components";
-import CityPicker from "modules/common/common/CityPicker";
-import ProfileSection from "modules/common/User/components/ProfileSection";
+import { CityPicker } from "modules/common";
+import { ProfileSection } from "modules/common";
 
 const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }) => {
   const fields = form.fields || {};
