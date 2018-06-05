@@ -26,7 +26,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require("react-redux");
 
-var _form = require("hocs/form");
+var _form = require("egov-ui-kit/hocs/form");
 
 var _form2 = _interopRequireDefault(_form);
 

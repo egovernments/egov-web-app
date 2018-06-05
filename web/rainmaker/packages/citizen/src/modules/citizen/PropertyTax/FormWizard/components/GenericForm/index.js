@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "components";
-import Field from "utils/field";
+import Field from "egov-ui-kit/utils/field";
 
 const GenericForm = ({ form, handleFieldChange, formKey }) => {
   const fields = form.fields || {};
