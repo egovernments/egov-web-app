@@ -172,6 +172,8 @@ export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, reques
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
         editUrl: "egov-mdms-create/v1/_update",
+        editToast: "Updated Successfully",
+        createToast: "Created Successfully",
       };
       dispatch(initForm(formConfig));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));

@@ -33,6 +33,7 @@ import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
 import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
+import FormWizard from "modules/citizen/PropertyTax/FormWizard";
 
 const routes = [
   {
@@ -197,6 +198,14 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
+      hideFooter: true,
+    },
+  },
+  {
+    path: "pt-payment/assessment-form",
+    component: FormWizard,
+    needsAuthentication: true,
+    options: {
       hideFooter: true,
     },
   },
