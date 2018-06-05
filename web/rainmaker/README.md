@@ -1,5 +1,5 @@
 ## Rainmaker
-Below are the steps to run project in dev and production, first time user should install lerna globally, below are the command.
+Below are the steps to run project in dev and production, first time user should install lerna as global dependency, below is the command.
 
 ```
 $ npm install --global lerna
@@ -15,7 +15,7 @@ $ lerna bootstrap
 
 ```
 
-+ Step 2 - if we want to run citizen
++ Step 2 - if you want to run citizen
 
 ```
 $ npm run dev:citizen
@@ -24,7 +24,7 @@ $ npm run dev:citizen
 
 or
 
-+ Step 2 - if we want to run employee
++ Step 2 - if you want to run employee
 
 ```
 $ npm run dev:employee
@@ -39,7 +39,7 @@ $ lerna bootstrap
 
 ```
 
-+ Step 2 - if we want to build citizen
++ Step 2 - if you want to build citizen
 
 ```
 $ npm run prod:citizen
@@ -48,9 +48,12 @@ $ npm run prod:citizen
 
 or
 
-+ Step 2 - if we want to build employee
++ Step 2 - if you want to build employee
 
 ```
 $ npm run prod:employee
 
 ```
+
+### by
+Murali M
