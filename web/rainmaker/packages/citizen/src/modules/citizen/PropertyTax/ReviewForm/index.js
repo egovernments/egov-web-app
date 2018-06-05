@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import formHoc from "hocs/form";
 import { Button, TimeLine, Card, Icon, Label } from "components";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 // import Label from "utils/translationNode";
 import PropertyAddress from "./components/PropertyAddress";
 import BasicInformation from "./components/BasicInformation";

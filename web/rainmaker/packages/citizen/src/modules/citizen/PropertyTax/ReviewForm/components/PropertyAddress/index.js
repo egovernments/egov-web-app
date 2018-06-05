@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import formHoc from "hocs/form";
 import Field from "egov-ui-kit/utils/field";
 import { Card } from "components";
 
