@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { UploadDrawer } from "modules/common";
 import ProfileForm from "./components/ProfileForm";
 import { Screen } from "modules/common";
-import img from "assets/images/download.png";
+import img from "egov-ui-kit/assets/images/download.png";
 import { fileUpload, removeFile } from "redux/form/actions";
 import "./index.css";
 
@@ -72,4 +72,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);

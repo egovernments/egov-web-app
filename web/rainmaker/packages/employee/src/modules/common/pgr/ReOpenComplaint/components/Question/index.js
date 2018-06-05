@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { RadioButton } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const styles = {
   labelStyle: {

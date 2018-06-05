@@ -5,7 +5,7 @@ import { Complaints } from "modules/common";
 import { Screen } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "redux/complaints/actions";
-import { displayLocalizedStatusMessage, transformComplaintForComponent } from "utils/commons";
+import { displayLocalizedStatusMessage, transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -91,4 +91,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyComplaints);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyComplaints);

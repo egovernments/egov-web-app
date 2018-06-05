@@ -5,7 +5,7 @@ import { ComplaintTimeLine } from "modules/common";
 import { Comments } from "modules/common";
 import { Screen } from "modules/common";
 import { fetchComplaints } from "redux/complaints/actions";
-import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "utils/commons";
+import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
@@ -93,4 +93,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintDetails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComplaintDetails);

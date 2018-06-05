@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCityNameByCode } from "utils/commons";
+import { getCityNameByCode } from "egov-ui-kit/utils/commons";
 import { List, Dialog, TextFieldIcon, AutoSuggest } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 

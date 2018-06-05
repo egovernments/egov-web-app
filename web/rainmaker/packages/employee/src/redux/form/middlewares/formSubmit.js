@@ -2,7 +2,7 @@ import * as actionTypes from "../actionTypes";
 import { resetForm } from "../actions";
 import { authenticated, userProfileUpdated } from "redux/auth/actions";
 import { toggleSnackbarAndSetText } from "redux/app/actions";
-import { addQueryArg, mergeMDMSDataArray } from "utils/commons";
+import { addQueryArg, mergeMDMSDataArray } from "egov-ui-kit/utils/commons";
 import { setRoute } from "redux/app/actions";
 import { fetchComplaints } from "redux/complaints/actions";
 import { dataFetchComplete } from "redux/mdms/actions";

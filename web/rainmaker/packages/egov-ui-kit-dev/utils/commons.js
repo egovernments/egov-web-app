@@ -1,8 +1,8 @@
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import axios from "axios";
-import { httpRequest } from "utils/api";
-import { TENANT } from "utils/endPoints";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
 
 export const statusToMessageMapping = {

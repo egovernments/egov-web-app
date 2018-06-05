@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Screen from "modules/common/common/Screen";
 import Complaints from "modules/common/pgr/Complaints";
 import { fetchComplaints } from "redux/complaints/actions";
-import { transformComplaintForComponent } from "utils/commons";
+import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -75,4 +75,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClosedComplaints);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ClosedComplaints);

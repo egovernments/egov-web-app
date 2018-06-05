@@ -20,9 +20,7 @@ var _reactRedux = require("react-redux");
 
 var _commons = require("./commons");
 
-var _Label = require("../components/Label");
-
-var _Label2 = _interopRequireDefault(_Label);
+var _components = require("components");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35,4 +33,4 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return (0, _extends3.default)({}, rest, { label: translatedLabel });
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(_Label2.default);
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(_components.Label);

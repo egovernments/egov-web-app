@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Icon, List, Image, Card, MapLocation } from "components";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
-import pinIcon from "assets/Location_pin.svg";
-import Logo from "assets/images/logo_black.png";
-import Label from "utils/translationNode";
-import { fetchFromLocalStorage } from "utils/commons";
+import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
+import Logo from "egov-ui-kit/assets/images/logo_black.png";
+import Label from "egov-ui-kit/utils/translationNode";
+import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const listInnerDivStyle = {
@@ -214,4 +214,7 @@ const mapStateToProps = (state) => {
   return { currentTenant };
 };
 
-export default connect(mapStateToProps, null)(ContactUs);
+export default connect(
+  mapStateToProps,
+  null
+)(ContactUs);

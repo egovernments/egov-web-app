@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel, Icon, Card } from "components";
 import { Link } from "react-router-dom";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const iconStyle = {

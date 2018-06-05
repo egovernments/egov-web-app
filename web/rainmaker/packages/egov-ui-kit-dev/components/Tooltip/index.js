@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Tooltip from "@material-ui/core/Tooltip";
 import Icon from "@material-ui/core/Icon";
-import info from "assets/info.svg";
+import info from "egov-ui-kit/assets/info.svg";
 import "./index.css";
 
 const defaultStyle = {

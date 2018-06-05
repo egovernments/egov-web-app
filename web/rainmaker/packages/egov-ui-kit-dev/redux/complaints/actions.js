@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
-import { COMPLAINT, CATEGORY } from "utils/endPoints";
-import { httpRequest } from "utils/api";
+import { COMPLAINT, CATEGORY } from "egov-ui-kit/utils/endPoints";
+import { httpRequest } from "egov-ui-kit/utils/api";
 import { difference, uniq } from "lodash";
 import commonConfig from "config/common.js";
 

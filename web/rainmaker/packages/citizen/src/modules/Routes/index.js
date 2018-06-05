@@ -1,6 +1,6 @@
 import React from "react";
-import withAuthorization from "hocs/withAuthorization";
-import withoutAuthorization from "hocs/withoutAuthorization";
+import withAuthorization from "egov-ui-kit/hocs/withAuthorization";
+import withoutAuthorization from "egov-ui-kit/hocs/withoutAuthorization";
 import citizenRoutes from "./citizen";
 
 const mapRoutes = (routes) => {

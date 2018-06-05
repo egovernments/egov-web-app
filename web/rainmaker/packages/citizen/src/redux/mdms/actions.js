@@ -1,9 +1,9 @@
 import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
 import { initForm } from "redux/form/actions";
-import { SPEC, MDMS } from "utils/endPoints";
-import { upperCaseFirst } from "utils/commons";
-import { httpRequest } from "utils/api";
+import { SPEC, MDMS } from "egov-ui-kit/utils/endPoints";
+import { upperCaseFirst } from "egov-ui-kit/utils/commons";
+import { httpRequest } from "egov-ui-kit/utils/api";
 
 const specsFetchPending = () => {
   return {

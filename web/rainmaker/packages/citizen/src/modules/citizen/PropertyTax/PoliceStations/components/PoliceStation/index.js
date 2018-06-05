@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Icon, Divider, Ratings, Image } from "components";
-import Label from "utils/translationNode";
-import stationImg from "assets/images/police-station.png";
+import Label from "egov-ui-kit/utils/translationNode";
+import stationImg from "egov-ui-kit/assets/images/police-station.png";
 import "./index.css";
 
 const Events = ({ stations = [] }) => {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Dialog } from "components";
 import SingleButton from "./components/SingleButton/index";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const styles = {

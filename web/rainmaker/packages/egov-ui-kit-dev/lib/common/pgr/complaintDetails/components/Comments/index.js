@@ -32,7 +32,7 @@ var _form2 = _interopRequireDefault(_form);
 
 var _components = require("components");
 
-var _translationNode = require("utils/translationNode");
+var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
@@ -48,7 +48,7 @@ var _download = require("assets/images/download.png");
 
 var _download2 = _interopRequireDefault(_download);
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var _isEqual = require("lodash/isEqual");
 

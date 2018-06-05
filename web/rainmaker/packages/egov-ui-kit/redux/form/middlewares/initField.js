@@ -22,9 +22,9 @@ var _transformers2 = _interopRequireDefault(_transformers);
 
 var _actions2 = require("redux/form/actions");
 
-var _api = require("utils/api");
+var _api = require("egov-ui-kit/utils/api");
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var _get = require("lodash/get");
 

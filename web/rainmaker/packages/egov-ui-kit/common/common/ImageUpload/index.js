@@ -36,9 +36,9 @@ var _FloatingActionButton = require("material-ui/FloatingActionButton");
 
 var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
-var _translationNode = require("utils/translationNode");
+var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 

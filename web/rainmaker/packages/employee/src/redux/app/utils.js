@@ -1,4 +1,4 @@
-import { transformLocalizationLabels } from "utils/commons";
+import { transformLocalizationLabels } from "egov-ui-kit/utils/commons";
 
 export const initLocalizationLabels = (locale) => {
   let localizationLabels;

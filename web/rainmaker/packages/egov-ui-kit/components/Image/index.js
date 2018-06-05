@@ -20,11 +20,11 @@ var _reactLoadImage = require("react-load-image");
 
 var _reactLoadImage2 = _interopRequireDefault(_reactLoadImage);
 
-var _imageLoading = require("assets/images/image-loading.png");
+var _imageLoading = require("egov-ui-kit/assets/images/image-loading.png");
 
 var _imageLoading2 = _interopRequireDefault(_imageLoading);
 
-var _brokenImage = require("assets/images/broken-image.png");
+var _brokenImage = require("egov-ui-kit/assets/images/broken-image.png");
 
 var _brokenImage2 = _interopRequireDefault(_brokenImage);
 

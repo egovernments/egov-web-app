@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { List, Icon, AutoSuggest } from "components";
 import { handleFieldChange } from "redux/form/actions";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import { getNestedObjFormat } from "./complaintTypeDataMaker";
 
 const customIconStyles = {
@@ -122,4 +122,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintType);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComplaintType);

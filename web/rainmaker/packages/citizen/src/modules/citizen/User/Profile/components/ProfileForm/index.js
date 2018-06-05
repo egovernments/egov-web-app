@@ -1,5 +1,5 @@
 import React from "react";
-import Field from "utils/field";
+import Field from "egov-ui-kit/utils/field";
 import { Button, Card } from "components";
 import { CityPicker } from "modules/common";
 import { ProfileSection } from "modules/common";

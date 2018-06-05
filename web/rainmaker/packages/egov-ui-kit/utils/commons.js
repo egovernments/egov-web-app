@@ -37,9 +37,9 @@ var _axios = require("axios");
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _api = require("utils/api");
+var _api = require("egov-ui-kit/utils/api");
 
-var _endPoints = require("utils/endPoints");
+var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _common = require("config/common.js");
 

@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import { httpRequest } from "utils/api";
-import { EMPLOYEE, CITIZEN, MDMS } from "utils/endPoints";
+import { httpRequest } from "egov-ui-kit/utils/api";
+import { EMPLOYEE, CITIZEN, MDMS } from "egov-ui-kit/utils/endPoints";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };

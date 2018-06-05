@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Icon } from "components";
 import { SuccessMessage } from "modules/common";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const FeedbackAcknowledge = ({ history }) => {

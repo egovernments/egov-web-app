@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Toast, Drawer, Image } from "components";
-import { addBodyClass } from "utils/commons";
+import { addBodyClass } from "egov-ui-kit/utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "redux/app/actions";
 import { fetchMDMSData } from "redux/common/actions";
 import Router from "./Router";
@@ -258,4 +258,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

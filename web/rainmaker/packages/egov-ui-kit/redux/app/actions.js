@@ -17,11 +17,11 @@ var _actionTypes = require("./actionTypes");
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _endPoints = require("utils/endPoints");
+var _endPoints = require("egov-ui-kit/utils/endPoints");
 
-var _api = require("utils/api");
+var _api = require("egov-ui-kit/utils/api");
 
-var _commons = require("utils/commons");
+var _commons = require("egov-ui-kit/utils/commons");
 
 var _common = require("config/common");
 

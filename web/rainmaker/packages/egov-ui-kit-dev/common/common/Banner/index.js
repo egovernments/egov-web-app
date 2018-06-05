@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router";
 import { Image, Icon } from "components";
-import logo from "assets/images/logo-white.png";
+import logo from "egov-ui-kit/assets/images/logo-white.png";
 import "./index.css";
 
 const backgroundImage = {

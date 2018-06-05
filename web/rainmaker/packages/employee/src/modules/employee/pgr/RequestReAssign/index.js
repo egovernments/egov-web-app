@@ -5,7 +5,7 @@ import Screen from "modules/common/common/Screen";
 import RequestReassignForm from "./components/RequestReassignForm";
 import { handleFieldChange } from "redux/form/actions";
 import { fetchComplaints } from "redux/complaints/actions";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const RequestReassignHOC = formHOC({ formKey: "requestReassign" })(RequestReassignForm);
@@ -79,4 +79,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(RequestReAssign);
+export default connect(
+  null,
+  mapDispatchToProps
+)(RequestReAssign);

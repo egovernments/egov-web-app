@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { Card, List, Icon, Image } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import WriteComment from "../WriteComment";
 import Avatar from "material-ui/Avatar";
-import emptyFace from "assets/images/download.png";
-import { getDateFromEpoch, getPropertyFromObj } from "utils/commons";
+import emptyFace from "egov-ui-kit/assets/images/download.png";
+import { getDateFromEpoch, getPropertyFromObj } from "egov-ui-kit/utils/commons";
 import isEqual from "lodash/isEqual";
 import "./index.css";
-import { transformById } from "utils/commons";
+import { transformById } from "egov-ui-kit/utils/commons";
 
 const imageStyles = {
   width: "33px",

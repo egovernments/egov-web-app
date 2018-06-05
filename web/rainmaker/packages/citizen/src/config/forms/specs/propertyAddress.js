@@ -1,4 +1,4 @@
-import { CITY } from "utils/endPoints";
+import { CITY } from "egov-ui-kit/utils/endPoints";
 // const formConfig = {
 //   name: "propertyAddress",
 //   fields: {

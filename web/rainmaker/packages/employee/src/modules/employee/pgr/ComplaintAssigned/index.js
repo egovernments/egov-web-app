@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import SuccessMessage from "modules/common/common/SuccessMessage/components/successmessage";
 import { fetchComplaints } from "redux/complaints/actions";
 import { connect } from "react-redux";
@@ -65,4 +65,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ComplaintAssigned);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComplaintAssigned);

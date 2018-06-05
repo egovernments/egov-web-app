@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Card, Icon, List, Image, AutoSuggest, Button } from "components";
 import faceOne from "assets/images/faceOne.jpg";
 import Avatar from "material-ui/Avatar";
-import Label from "utils/translationNode";
-import { getNameFromId } from "utils/commons";
+import Label from "egov-ui-kit/utils/translationNode";
+import { getNameFromId } from "egov-ui-kit/utils/commons";
 import "./index.css";
 import isEqual from "lodash/isEqual";
 

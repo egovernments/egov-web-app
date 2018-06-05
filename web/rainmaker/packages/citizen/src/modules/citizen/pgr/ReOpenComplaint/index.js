@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
-import Label from "utils/translationNode";
+import Label from "egov-ui-kit/utils/translationNode";
 import ReopenComplaintForm from "./components/ReopenComplaintForm";
 import { fetchComplaints } from "redux/complaints/actions";
 import { fileUpload, handleFieldChange } from "redux/form/actions";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import "./index.css";
 
 const ReopenComplaintFormHOC = formHoc({ formKey: "reopenComplaint" })(ReopenComplaintForm);
@@ -79,4 +79,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ReOpenComplaint);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ReOpenComplaint);
