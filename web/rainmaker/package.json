@@ -8,10 +8,10 @@
   "scripts": {
     "clean": "lerna clean -f --yes && rm -rf node_modules",
     "reset": "npm run clean && npm i",
-    "citizen": "cd packages/citizen && npm start",
-    "employee": "cd packages/employee && npm start",
-    "citizen-build": "cd packages/citizen && npm build",
-    "employee-build": "cd packages/employee && npm build",
+    "dev:citizen": "cd packages/citizen && npm start",
+    "dev:employee": "cd packages/employee && npm start",
+    "prod:citizen": "cd packages/citizen && npm run build",
+    "prod:employee": "cd packages/employee && npm run build",
     "egov-ui-kit-components":
       "babel packages/egov-ui-kit-dev/components --out-dir packages/egov-ui-kit/components --copy-files",
     "egov-ui-kit-redux":
