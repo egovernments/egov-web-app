@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PoliceStation from "./components/PoliceStation";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 
 class PoliceStations extends Component {
   stations = [

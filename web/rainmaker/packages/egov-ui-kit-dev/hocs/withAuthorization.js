@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";
-import Header from "modules/common/common/Header";
-import Footer from "modules/common/common/Footer";
+import { Header } from "modules/common";
+import { Footer } from "modules/common";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -37,7 +37,11 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
           {authenticated ? <Component {...this.props} /> : null}
-          {!hideFooter && authenticated ? <div className="hidden-md"><Footer history={history} role={role} /></div> : null}
+          {!hideFooter && authenticated ? (
+            <div className="hidden-md">
+              <Footer history={history} role={role} />
+            </div>
+          ) : null}
         </div>
       );
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Divider, Icon } from "components";
 import Label from "utils/translationNode";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import "./index.css";
 
 const Updates = ({ notifications = [] }) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Icon, Divider } from "components";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import Label from "utils/translationNode";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";

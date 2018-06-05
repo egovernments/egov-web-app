@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import BasicInformationForm from "./components/BasicInformationForm";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 
 const BasicInformationHOC = formHoc({ formKey: "basicInformation" })(BasicInformationForm);
 

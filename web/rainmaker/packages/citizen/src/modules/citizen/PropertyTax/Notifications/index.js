@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, Icon } from "components";
 import Notification from "./components/Notification";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 
 class Notifications extends Component {
   notifications = [

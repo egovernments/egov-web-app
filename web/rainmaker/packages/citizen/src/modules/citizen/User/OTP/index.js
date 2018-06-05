@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
-import Banner from "modules/common/common/Banner";
+import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
 import { handleFieldChange, submitForm } from "redux/form/actions";
 import { sendOTP } from "redux/auth/actions";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 
 const OTPFormHOC = formHoc({ formKey: "otp" })(OTPForm);
 

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
-import UploadDrawer from "modules/common/User/components/UploadDrawer";
+import { UploadDrawer } from "modules/common";
 import ProfileForm from "./components/ProfileForm";
-import Screen from "modules/common/common/Screen";
+import { Screen } from "modules/common";
 import img from "assets/images/download.png";
 import { fileUpload, removeFile } from "redux/form/actions";
 import "./index.css";
