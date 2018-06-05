@@ -17,7 +17,8 @@
     "egov-ui-kit-redux":
       "babel packages/egov-ui-kit-dev/redux --out-dir packages/egov-ui-kit/redux --copy-files",
     "egov-ui-kit-utils":
-      "babel packages/egov-ui-kit-dev/utils --out-dir packages/egov-ui-kit/utils --copy-files"
+      "babel packages/egov-ui-kit-dev/utils --out-dir packages/egov-ui-kit/utils --copy-files",
+    "egov-ui-kit-commons": "babel packages/egov-ui-kit-dev/common --out-dir packages/egov-ui-kit/common --copy-files"
   },
   "devDependencies": {
     "lerna": "^2.11.0",

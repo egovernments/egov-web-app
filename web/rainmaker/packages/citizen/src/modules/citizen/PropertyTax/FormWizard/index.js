@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import Screen from "modules/common/common/Screen";
+import {Screen} from "modules/common";
 import PropertyAddress from "./components/PropertyAddress";
 import BasicInformation from "./components/BasicInformation";
 import "./index.css";

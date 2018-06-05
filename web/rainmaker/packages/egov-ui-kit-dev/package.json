@@ -44,19 +44,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "egov-ui-kit-components": "babel components --out-dir lib/components --copy-files",
-    "egov-ui-kit-redux": "babel redux --out-dir  lib/redux --copy-files",
-    "egov-ui-kit-utils": "babel utils --out-dir  lib/utils --copy-files",
-    "egov-ui-kit-commons": "babel common --out-dir lib/common --copy-files"
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^3.3.13",
     "@storybook/react": "^3.3.13",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
     "storybook-addon-material-ui": "^0.8.2"
   }
 }
