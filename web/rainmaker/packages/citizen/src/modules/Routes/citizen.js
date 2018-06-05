@@ -181,7 +181,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PT_PAYMENT_STEP_HEADER",
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
     },
   },
   {
@@ -207,6 +208,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
     },
   },
 ];

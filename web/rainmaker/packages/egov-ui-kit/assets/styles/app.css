@@ -107,7 +107,10 @@ body.employee-user-profile {
 
 @media only screen and (min-width: 768px) {
   .screenHeaderLabelStyle .label-text {
-    display: none; } }
+    color: #484848 !important;
+    font-size: 14px !important;
+   } 
+  }
 
 .inline-Localization-text .label-container {
   display: inline-block; }
@@ -176,6 +179,10 @@ body.employee-user-profile {
 
 .drawer-backGround a:hover {
   text-decoration: none; }
+
+  .citizen-drawer .drawer-backGround{
+    top: 64px !important;
+  }
 
 .menuStyle:hover .onHoverText {
   visibility: visible; }

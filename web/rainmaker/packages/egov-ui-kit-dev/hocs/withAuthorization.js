@@ -1,9 +1,62 @@
 import React from "react";
+import { Drawer } from "components";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";
 import { Header } from "modules/common";
 import { Footer } from "modules/common";
+import ActionMenu from "modules/citizen/ActionMenu";
+
+const actionList = [
+  {
+    id: 1535,
+    name: "PropertyType",
+    url: "url",
+    displayName: "Home",
+    orderNumber: 1,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.PropertyType",
+    navigationURL: "mdms/PropertyTax/PropertyType",
+  },
+  {
+    id: 1536,
+    name: "PropertySubType",
+    url: "url",
+    displayName: "Information",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.PropertySubType",
+    navigationURL: "mdms/PropertyTax/PropertySubType",
+  },
+  {
+    id: 1537,
+    name: "ConstructionType",
+    url: "url",
+    displayName: "Payments",
+    orderNumber: 3,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.ConstructionType",
+    navigationURL: "mdms/PropertyTax/ConstructionType",
+  },
+  {
+    id: 1538,
+    name: "ConstructionSubType",
+    url: "url",
+    displayName: "Apply",
+    orderNumber: 4,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "Property Tax.PT Masters.ConstructionSubType",
+    navigationURL: "mdms/PropertyTax/ConstructionSubType",
+  },
+]
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -36,7 +89,19 @@ const withAuthorization = (options = {}) => (Component) => {
           {!hideHeader && authenticated ? (
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
-          {authenticated ? <Component {...this.props} /> : null}
+
+        
+          
+        
+          <div className = "row">
+          
+            <div className = "col-xs-2 citizen-drawer">
+              <Drawer  width={230} containerClassName="drawer-backGround" open={true}>
+                <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
+              </Drawer>
+            </div>
+           <div className = "col-xs-10">{authenticated ? <Component {...this.props} /> : null}</div>
+         </div>
           {!hideFooter && authenticated ? (
             <div className="hidden-md">
               <Footer history={history} role={role} />
