@@ -3,6 +3,7 @@ import WizardComponent from "./components/WizardComponent";
 import {Screen} from "modules/common";
 import PropertyAddress from "./components/PropertyAddress";
 import BasicInformation from "./components/BasicInformation";
+import { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC } from "./components/Forms";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -14,14 +15,20 @@ class FormWizard extends Component {
     switch (index) {
       case 0:
         return {
-          component: <PropertyAddress />,
+          component: <PropertyAddressHOC />,
         };
-        break;
       case 1:
         return {
-          component: <BasicInformation />,
+          component: <BasicInformationHOC />,
         };
-        break;
+      case 2:
+        return {
+          component: <PlotInformationHOC />,
+        };
+      case 3:
+        return {
+          component: <OwnershipTypeHOC />,
+        };
       default:
         return {
           component: null,
