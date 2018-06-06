@@ -52,7 +52,9 @@ var actionList = [{
   serviceCode: "PT",
   code: "null",
   path: "Home",
-  navigationURL: "mdms/PropertyTax/PropertyType"
+  navigationURL: "mdms/PropertyTax/PropertyType",
+  leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
+  rightIcon: ""
 }, {
   id: 1536,
   name: "PropertySubType",
@@ -63,7 +65,9 @@ var actionList = [{
   serviceCode: "PT",
   code: "null",
   path: "Information",
-  navigationURL: "mdms/PropertyTax/PropertySubType"
+  navigationURL: "mdms/PropertyTax/PropertySubType",
+  leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "info" }),
+  rightIcon: ""
 }, {
   id: 1537,
   name: "ConstructionType",
@@ -74,7 +78,9 @@ var actionList = [{
   serviceCode: "PT",
   code: "null",
   path: "Payments",
-  navigationURL: "mdms/PropertyTax/ConstructionType"
+  navigationURL: "mdms/PropertyTax/ConstructionType",
+  leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "rupee" }),
+  rightIcon: ""
 }, {
   id: 1538,
   name: "ConstructionSubType",
@@ -85,7 +91,9 @@ var actionList = [{
   serviceCode: "PT",
   code: "null",
   path: "Apply",
-  navigationURL: "mdms/PropertyTax/ConstructionSubType"
+  navigationURL: "mdms/PropertyTax/ConstructionSubType",
+  leftIcon: _react2.default.createElement(_components.Icon, { action: "content", name: "send" }),
+  rightIcon: ""
 }];
 
 var withAuthorization = function withAuthorization() {
