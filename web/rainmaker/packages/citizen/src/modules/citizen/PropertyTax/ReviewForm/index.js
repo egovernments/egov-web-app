@@ -25,7 +25,7 @@ const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="a
 const BasicInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assignment" />;
 const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
 const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
-const editIcon = <Icon style={defaultIconStyle} color="#ffffff" action="image" name="edit" onClick />;
+const editIcon = <Icon style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
 
 class ReviewForm extends Component {
   constructor(props) {
