@@ -277,7 +277,7 @@ class ActionMenu extends Component {
           />
         }
 
-        <Menu disableAutoFocus={true} desktop={true} width="193" className="actionMenuMenu" menuItemStyle={{ width: "193px", paddingLeft: "0" }}>
+        <Menu disableAutoFocus={true} desktop={true} className="actionMenuMenu" menuItemStyle={{ width: "193px", paddingLeft: "0" }}>
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"

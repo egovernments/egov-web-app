@@ -143,27 +143,25 @@ var withAuthorization = function withAuthorization() {
 
           return _react2.default.createElement(
             "div",
-            { style: { position: "relative" } },
+            { className: "rainmaker-header-cont", style: { position: "relative" } },
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, { title: title, userInfo: userInfo, role: role, options: options, history: history, className: "rainmaker-header" }) : null,
             _react2.default.createElement(
               "div",
-              { className: "row" },
+              { className: "col-xs-12", style: { padding: 0 } },
               _react2.default.createElement(
                 "div",
                 { className: "col-xs-2 citizen-drawer" },
                 _react2.default.createElement(
-                  _components.Drawer,
-                  { width: 230, containerClassName: "drawer-backGround", open: true },
-                  _react2.default.createElement(
-                    "div",
-                    { className: "drawerContent" },
-                    actionList && actionList.length > 0 && _react2.default.createElement(_ActionMenu2.default, { actionList: actionList })
-                  )
+                  "div",
+                  { className: "citizen-action-menu" },
+                  actionList && actionList.length > 0 && _react2.default.createElement(_ActionMenu2.default, { actionList: actionList })
                 )
               ),
+              _react2.default.createElement("div", { className: "col-xs-2" }),
+              " ",
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-10" },
+                { className: "col-xs-10", style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(Component, this.props) : null
               )
             ),

@@ -196,28 +196,35 @@ body.employee-user-profile {
 
 .menuStyle .onHoverText {
   visibility: hidden;
-  width: 193px;
+  width: 100%;
   float: left;
   background-color: #00bbd3;
   color: #fff;
-  text-align: center;
+  // text-align: center;
   border-radius: 2px;
   padding: 0px 0px;
 
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  margin-left: -60px;
+  margin-left: -26px;
+  padding-left: 20px;
 }
 
 .drawer-backGround a:hover {
   text-decoration: none;
 }
 
-.citizen-drawer .drawer-backGround{
+.citizen-drawer .drawer-backGround {
   top: 64px !important;
 }
 
 .menuStyle:hover .onHoverText {
   visibility: visible;
+}
+
+.citizen-drawer {
+  background-color: #3d4951;
+  min-height: calc(100vh - 64px);
+  position: fixed;
 }

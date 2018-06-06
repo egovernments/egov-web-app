@@ -64,7 +64,7 @@ const actionList = [
     leftIcon:<Icon action= "content" name= "send"/>,
     rightIcon:""
   },
-]
+];
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -93,23 +93,20 @@ const withAuthorization = (options = {}) => (Component) => {
       const role = this.getUserRole(userInfo);
 
       return (
-        <div style={{ position: "relative" }}>
+        <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
 
-
-
-
-          <div className = "row">
-
-            <div className = "col-xs-2 citizen-drawer">
-              <Drawer  width={230} containerClassName="drawer-backGround" open={true}>
-                <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
-              </Drawer>
+          <div className="col-xs-12" style={{ padding: 0 }}>
+            <div className="col-xs-2 citizen-drawer">
+              <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
             </div>
-           <div className = "col-xs-10">{authenticated ? <Component {...this.props} /> : null}</div>
-         </div>
+            <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
+            <div className="col-xs-10" style={{ padding: 0 }}>
+              {authenticated ? <Component {...this.props} /> : null}
+            </div>
+          </div>
           {!hideFooter && authenticated ? (
             <div className="hidden-md">
               <Footer history={history} role={role} />
