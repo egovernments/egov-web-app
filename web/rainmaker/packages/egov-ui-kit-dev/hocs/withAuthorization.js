@@ -17,8 +17,10 @@ const actionList = [
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Property Tax.PT Masters.PropertyType",
+    path: "Home",
     navigationURL: "mdms/PropertyTax/PropertyType",
+    leftIcon:"",
+    rightIcon:""
   },
   {
     id: 1536,
@@ -29,8 +31,10 @@ const actionList = [
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Property Tax.PT Masters.PropertySubType",
+    path: "Information",
     navigationURL: "mdms/PropertyTax/PropertySubType",
+    leftIcon:"",
+    rightIcon:""
   },
   {
     id: 1537,
@@ -41,8 +45,10 @@ const actionList = [
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Property Tax.PT Masters.ConstructionType",
+    path: "Payments",
     navigationURL: "mdms/PropertyTax/ConstructionType",
+    leftIcon:"",
+    rightIcon:""
   },
   {
     id: 1538,
@@ -53,8 +59,10 @@ const actionList = [
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Property Tax.PT Masters.ConstructionSubType",
+    path: "Apply",
     navigationURL: "mdms/PropertyTax/ConstructionSubType",
+    leftIcon:"",
+    rightIcon:""
   },
 ]
 
@@ -90,11 +98,11 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
 
-        
-          
-        
+
+
+
           <div className = "row">
-          
+
             <div className = "col-xs-2 citizen-drawer">
               <Drawer  width={230} containerClassName="drawer-backGround" open={true}>
                 <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>

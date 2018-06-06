@@ -51,7 +51,7 @@ var actionList = [{
   enabled: true,
   serviceCode: "PT",
   code: "null",
-  path: "Property Tax.PT Masters.PropertyType",
+  path: "Home",
   navigationURL: "mdms/PropertyTax/PropertyType"
 }, {
   id: 1536,
@@ -62,7 +62,7 @@ var actionList = [{
   enabled: true,
   serviceCode: "PT",
   code: "null",
-  path: "Property Tax.PT Masters.PropertySubType",
+  path: "Information",
   navigationURL: "mdms/PropertyTax/PropertySubType"
 }, {
   id: 1537,
@@ -73,7 +73,7 @@ var actionList = [{
   enabled: true,
   serviceCode: "PT",
   code: "null",
-  path: "Property Tax.PT Masters.ConstructionType",
+  path: "Payments",
   navigationURL: "mdms/PropertyTax/ConstructionType"
 }, {
   id: 1538,
@@ -84,7 +84,7 @@ var actionList = [{
   enabled: true,
   serviceCode: "PT",
   code: "null",
-  path: "Property Tax.PT Masters.ConstructionSubType",
+  path: "Apply",
   navigationURL: "mdms/PropertyTax/ConstructionSubType"
 }];
 
