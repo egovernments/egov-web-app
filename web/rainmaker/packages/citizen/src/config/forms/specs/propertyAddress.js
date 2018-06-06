@@ -90,14 +90,6 @@ const formConfig = {
       hintText: "Enter street name",
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
     },
-    mohalla: {
-      id: "mohalla",
-      jsonPath: "",
-      type: "singleValueList",
-      floatingLabelText: "Locality/Mohalla",
-      hintText: "Select locality",
-      errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-    },
     city: {
       id: "city",
       jsonPath: "",
@@ -126,8 +118,44 @@ const formConfig = {
           },
         },
         dataPath: "MdmsRes.tenant.tenants",
+        dependants: [
+          {
+            fieldKey: "mohalla",
+          },
+        ],
       },
     },
+    mohalla: {
+      id: "mohalla",
+      jsonPath: "",
+      type: "singleValueList",
+      floatingLabelText: "Locality/Mohalla",
+      hintText: "Select locality",
+      errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
+      // dataFetchConfig: {
+      //   isDependent: true,
+      //   url: CITY.GET.URL,
+      //   action: CITY.GET.ACTION,
+      //   queryParams: {},
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "tenant",
+      //           masterDetails: [
+      //             {
+      //               name: "tenants",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: "MdmsRes.tenant.tenants",
+      // },
+    },
+
     pincode: {
       id: "pincode",
       type: "textfield",

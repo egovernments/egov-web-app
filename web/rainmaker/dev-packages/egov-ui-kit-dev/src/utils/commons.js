@@ -4,6 +4,9 @@ import axios from "axios";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
+import { initForm, setFieldProperty } from "redux/form/actions";
+import get from "lodash/get";
+import { toggleSnackbarAndSetText } from "redux/app/actions";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -434,4 +437,21 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
   });
   const mergedData = [newRow, ...rawData];
   return mergedData;
+};
+
+export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey) => {
+  const { url, action, requestBody } = dataFetchConfig;
+  try {
+    const payloadSpec = await httpRequest(url, action, [], requestBody);
+    let dropdownData = get(payloadSpec, dataFetchConfig.dataPath);
+    const ddData = dropdownData.reduce((ddData, item) => {
+      ddData.push({ label: item.name, value: item.code });
+      return ddData;
+    }, []);
+    dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
+  } catch (error) {
+    const { message } = error;
+    dispatch(toggleSnackbarAndSetText(true, message, true));
+    return;
+  }
 };

@@ -20,7 +20,7 @@ const BasicInformation = ({ form, icon, editIcon }) => {
               const field = { ...fields[fieldKey] };
               field.disabled = true;
               return (
-                <div className="col-xs-6">
+                <div key={index} className="col-xs-6">
                   <div className="pt-review-form-field">
                     <Field fieldKey={fieldKey} field={field} />
                   </div>

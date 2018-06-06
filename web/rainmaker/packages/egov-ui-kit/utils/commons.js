@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -44,6 +44,14 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 var _common = require("config/common.js");
 
 var _common2 = _interopRequireDefault(_common);
+
+var _actions = require("redux/form/actions");
+
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
+var _actions2 = require("redux/app/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -510,3 +518,50 @@ var mergeMDMSDataArray = exports.mergeMDMSDataArray = function mergeMDMSDataArra
   var mergedData = [newRow].concat((0, _toConsumableArray3.default)(rawData));
   return mergedData;
 };
+
+var fetchDropdownData = exports.fetchDropdownData = function () {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch, dataFetchConfig, formKey, fieldKey) {
+    var url, action, requestBody, payloadSpec, dropdownData, ddData, message;
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody;
+
+            console.log(dataFetchConfig);
+            _context3.prev = 2;
+            _context3.next = 5;
+            return (0, _api.httpRequest)(url, action, [], requestBody);
+
+          case 5:
+            payloadSpec = _context3.sent;
+            dropdownData = (0, _get2.default)(payloadSpec, dataFetchConfig.dataPath);
+            ddData = dropdownData.reduce(function (ddData, item) {
+              ddData.push({ label: item.name, value: item.code });
+              return ddData;
+            }, []);
+
+            dispatch((0, _actions.setFieldProperty)(formKey, fieldKey, "dropDownData", ddData));
+            _context3.next = 16;
+            break;
+
+          case 11:
+            _context3.prev = 11;
+            _context3.t0 = _context3["catch"](2);
+            message = _context3.t0.message;
+
+            dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
+            return _context3.abrupt("return");
+
+          case 16:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined, [[2, 11]]);
+  }));
+
+  return function fetchDropdownData(_x4, _x5, _x6, _x7) {
+    return _ref3.apply(this, arguments);
+  };
+}();
