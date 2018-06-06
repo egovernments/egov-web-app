@@ -25,7 +25,9 @@ const formValidation = (store) => (next) => (action) => {
       if (fields[fieldKey].dataFetchConfig && fields[fieldKey].dataFetchConfig.dependants) {
         const { dependants } = fields[fieldKey].dataFetchConfig;
         dependants.forEach((item) => {
-          fetchDropdownData(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey);
+          if (fields[item.fieldKey].dataFetchConfig) {
+            fetchDropdownData(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey);
+          }
         });
       }
     } catch (error) {

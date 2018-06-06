@@ -527,13 +527,11 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody;
-
-            console.log(dataFetchConfig);
-            _context3.prev = 2;
-            _context3.next = 5;
+            _context3.prev = 1;
+            _context3.next = 4;
             return (0, _api.httpRequest)(url, action, [], requestBody);
 
-          case 5:
+          case 4:
             payloadSpec = _context3.sent;
             dropdownData = (0, _get2.default)(payloadSpec, dataFetchConfig.dataPath);
             ddData = dropdownData.reduce(function (ddData, item) {
@@ -542,23 +540,23 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
             }, []);
 
             dispatch((0, _actions.setFieldProperty)(formKey, fieldKey, "dropDownData", ddData));
-            _context3.next = 16;
+            _context3.next = 15;
             break;
 
-          case 11:
-            _context3.prev = 11;
-            _context3.t0 = _context3["catch"](2);
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](1);
             message = _context3.t0.message;
 
             dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
             return _context3.abrupt("return");
 
-          case 16:
+          case 15:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[2, 11]]);
+    }, _callee3, undefined, [[1, 10]]);
   }));
 
   return function fetchDropdownData(_x4, _x5, _x6, _x7) {
