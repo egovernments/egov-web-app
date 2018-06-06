@@ -18,8 +18,10 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
     <AppBar
       className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
       title={
-        <div className="header-logo-label">
-          <img src={pbLogo} />
+        <div className="citizen-header-logo-label">
+          <div className="citizen-header-logo">
+            <img src={pbLogo} />
+          </div>
           <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle" label={title} />
         </div>
       }
@@ -29,7 +31,7 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
       <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
         <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} />
       </Toolbar>
-      <div classNmae="appbar-right-logo">
+      <div className="appbar-right-logo">
         <img src={digitLogo} />
       </div>
     </AppBar>

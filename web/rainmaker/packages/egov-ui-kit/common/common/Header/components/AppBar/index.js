@@ -61,8 +61,12 @@ var EgovAppBar = function EgovAppBar(_ref) {
       className: isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer",
       title: _react2.default.createElement(
         "div",
-        { className: "header-logo-label" },
-        _react2.default.createElement("img", { src: _pblogo2.default }),
+        { className: "citizen-header-logo-label" },
+        _react2.default.createElement(
+          "div",
+          { className: "citizen-header-logo" },
+          _react2.default.createElement("img", { src: _pblogo2.default })
+        ),
         _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle", label: title })
       ),
       titleStyle: styles.titleStyle
@@ -74,7 +78,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
     ),
     _react2.default.createElement(
       "div",
-      { classNmae: "appbar-right-logo" },
+      { className: "appbar-right-logo" },
       _react2.default.createElement("img", { src: _Digit_logo2.default })
     )
   );

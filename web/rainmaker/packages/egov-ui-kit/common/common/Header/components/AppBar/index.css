@@ -1,14 +1,24 @@
 .home-screen-appbar {
   background-color: transparent !important;
-  box-shadow: none !important; }
+  box-shadow: none !important;
+}
 
-.header-logo-label {
-  display: flex; }
+.citizen-header-logo-label {
+  display: flex;
+}
 
 .appbar-right-logo {
-  display: flex;
-  align-items: center; }
+  display: flex !important;
+  align-items: center !important;
+}
+
+.citizen-header-logo > img {
+  width: 40px;
+  height: 49px;
+}
 
 @media only screen and (max-width: 768px) {
   .app-toolbar {
-    display: none !important; } }
+    display: none !important;
+  }
+}
