@@ -10,11 +10,11 @@ import "./index.css";
 
 const styles = {
   menuStyle: {
-    marginLeft: "-40px",
-    width: "120px",
+    marginLeft: 15,
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     overflow: "hidden",
+    flex: 1,
   },
 
   inputStyle: {
@@ -25,10 +25,18 @@ const styles = {
   fibreIconStyle: {
     height: "10px",
     width: "10px",
-    margin: "20px 8px 24px 0px",
+    margin: 0,
+    position: "relative",
   },
   arrowIconStyle: {
     right: "-10px",
+  },
+  defaultMenuItemStyle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginLeft: 0,
+    padding: 0,
   },
 };
 
@@ -164,6 +172,7 @@ class ActionMenu extends Component {
             return (
               <MenuItem
                 key={index}
+                innerDivStyle={styles.defaultMenuItemStyle}
                 style={{ whiteSpace: "initial" }}
                 leftIcon={
                   <Icon name="fiber-manual-record" action="av" color="#ffffff" style={styles.fibreIconStyle} className="material-icons whiteColor" />
@@ -197,6 +206,7 @@ class ActionMenu extends Component {
               return (
                 <Link key={index} to={`/employee/${item.navigationURL}`}>
                   <MenuItem
+                    innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
                     key={index}
                     onClick={() => {
@@ -230,6 +240,7 @@ class ActionMenu extends Component {
               return (
                 <Link key={index} to={`/employee/${item.navigationURL}`}>
                   <MenuItem
+                    innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
                     onClick={() => {
                       document.title = item.displayName;
@@ -277,7 +288,14 @@ class ActionMenu extends Component {
           />
         }
 
-        <Menu disableAutoFocus={true} desktop={true} width="193" className="actionMenuMenu" menuItemStyle={{ width: "193px", paddingLeft: "0" }}>
+        <Menu
+          disableAutoFocus={true}
+          desktop={true}
+          autoWidth={false}
+          style={{ width: "100%" }}
+          className="actionMenuMenu"
+          menuItemStyle={{ paddingLeft: "0", width: "100%" }}
+        >
           {(path || searchText) && (
             <div
               className="pull-left whiteColor pointerCursor"
@@ -312,7 +330,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
 });
-export default connect(
-  null,
-  mapDispatchToProps
-)(ActionMenu);
+export default connect(null, mapDispatchToProps)(ActionMenu);

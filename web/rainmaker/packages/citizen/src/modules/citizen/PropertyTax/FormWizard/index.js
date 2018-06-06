@@ -49,8 +49,10 @@ class FormWizard extends Component {
 
   handleNext = () => {
     const { selected } = this.state;
-    if (selected < 4) {
+    if (selected < 3) {
       this.setState({ selected: selected + 1 });
+    } else {
+      this.props.history.push("/citizen/pt-payment/review-property");
     }
   };
 
