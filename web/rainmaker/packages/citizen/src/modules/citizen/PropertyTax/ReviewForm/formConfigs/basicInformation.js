@@ -32,7 +32,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of usage",
       hintText: "Select",
-      value: "Residential",
+      value: "",
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
