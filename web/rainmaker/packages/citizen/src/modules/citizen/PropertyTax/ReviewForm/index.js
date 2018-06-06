@@ -21,7 +21,7 @@ const defaultIconStyle = {
   marginRight: 10,
 };
 
-const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
+const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" />;
 const BasicInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assignment" />;
 const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
 const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
