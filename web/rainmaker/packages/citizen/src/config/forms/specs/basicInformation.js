@@ -22,6 +22,7 @@
 // };
 
 // export default formConfig;
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 
 const formConfig = {
   name: "basicInformation",
@@ -32,27 +33,27 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of usage",
       hintText: "Select",
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: {},
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "propertyType",
-      //           masterDetails: [
-      //             {
-      //               name: "propertName",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: `MdmsRes[${moduleName}][${master}]`,
-      // },
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
+      },
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
@@ -60,6 +61,27 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "PropertyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.PropertyType",
+      },
     },
   },
   action: "",

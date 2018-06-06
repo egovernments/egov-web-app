@@ -12,6 +12,13 @@ const floatingLabelStyle = {
   top: 30,
 };
 
+const floatingLabelBaseShrinkStyle = {
+  fontSize: "12px",
+  color: "#00bcd1",
+  transform: "scale(1) translate(0px, -16px)",
+  fontWeight: 500,
+};
+
 const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
@@ -64,6 +71,8 @@ const DropDownUi = ({
       selected="Select"
       value={value}
       hintText={hintText}
+      floatingLabelShrinkStyle={floatingLabelBaseShrinkStyle}
+      floatingLabelFixed={true}
       floatingLabelText={[
         floatingLabelText,
         required ? (
