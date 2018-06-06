@@ -23,8 +23,8 @@ const styles = {
     marginLeft: "-10px",
   },
   fibreIconStyle: {
-    height: "10px",
-    width: "10px",
+    height: "21px",
+    width: "21px",
     margin: 0,
     position: "relative",
   },
@@ -89,6 +89,7 @@ class ActionMenu extends Component {
           queryParams: actionList[index].queryParams,
           orderNumber: actionList[index].orderNumber,
           navigationURL: actionList[index].navigationURL,
+          leftIcon: actionList[index].leftIcon,
         });
       }
     } else {
@@ -99,6 +100,7 @@ class ActionMenu extends Component {
         queryParams: actionList[index].queryParams,
         orderNumber: actionList[index].orderNumber,
         navigationURL: actionList[index].navigationURL,
+        leftIcon: actionList[index].leftIcon,
       });
     }
     menuItems = orderBy(menuItems, ["orderNumber"], ["asc"]);
@@ -175,19 +177,25 @@ class ActionMenu extends Component {
                 innerDivStyle={styles.defaultMenuItemStyle}
                 style={{ whiteSpace: "initial" }}
                 leftIcon={
-                  <Icon name="fiber-manual-record" action="av" color="#ffffff" style={styles.fibreIconStyle} className="material-icons whiteColor" />
+                  <Icon
+                    name={item.leftIcon.name}
+                    action={item.leftIcon.action}
+                    color="#b3b3b3"
+                    style={styles.fibreIconStyle}
+                    className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                  />
                 }
                 primaryText={
                   <div className="menuStyle whiteColor" style={styles.menuStyle}>
                     <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                    <span>{item.name || ""}</span>
+                    <span style={{ color: "#b3b3b3" }}>{item.name || ""}</span>
                   </div>
                 }
                 rightIcon={
                   <Icon
                     name="chevron-right"
                     action="navigation"
-                    color="#ffffff"
+                    color="#b3b3b3"
                     className="material-icons whiteColor"
                     style={styles.arrowIconStyle}
                   />
@@ -214,17 +222,17 @@ class ActionMenu extends Component {
                     }}
                     leftIcon={
                       <Icon
-                        name="fiber-manual-record"
-                        action="av"
-                        color="#ffffff"
+                        name={item.leftIcon.name}
+                        action={item.leftIcon.action}
+                        color="#b3b3b3"
                         style={styles.fibreIconStyle}
-                        className="material-icons whiteColor"
+                        className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                       />
                     }
                     primaryText={
                       <div className="menuStyle whiteColor" style={styles.menuStyle}>
                         <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                        <span>{item.name || ""}</span>
+                        <span style={{ color: "#b3b3b3" }}>{item.name || ""}</span>
                       </div>
                     }
                   />
@@ -247,17 +255,17 @@ class ActionMenu extends Component {
                     }}
                     leftIcon={
                       <Icon
-                        name="fiber-manual-record"
-                        action="av"
-                        color="#ffffff"
+                        name={item.leftIcon.name}
+                        action={item.leftIcon.action}
+                        color="#b3b3b3"
                         style={styles.fibreIconStyle}
-                        className="material-icons whiteColor"
+                        className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                       />
                     }
                     primaryText={
                       <div className="menuStyle whiteColor" style={styles.menuStyle}>
                         <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
-                        <span>{item.displayName || ""}</span>
+                        <span style={{ color: "#b3b3b3" }}>{item.displayName || ""}</span>
                       </div>
                     }
                   />
@@ -271,10 +279,8 @@ class ActionMenu extends Component {
 
     return (
       <div ref={this.setWrapperRef}>
-        <div className="whiteColor" style={{ marginTop: "22px" }}>
-          Quick Actions
-        </div>
-        {
+        <div className="whiteColor" style={{ marginTop: "22px" }} />
+        {/*
           <TextFieldIcon
             hintText="Search"
             onChange={this.handleChange}
@@ -286,7 +292,7 @@ class ActionMenu extends Component {
             hintStyle={{ color: "#767676", fontSize: "14px", marginLeft: "-10px" }}
             iconStyle={{ height: "18px", width: "18px", top: "16px" }}
           />
-        }
+          */}
 
         <Menu
           disableAutoFocus={true}
@@ -330,4 +336,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
 });
-export default connect(null, mapDispatchToProps)(ActionMenu);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ActionMenu);
