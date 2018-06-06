@@ -23,7 +23,6 @@ const hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
   color: "#b3b3b3",
-  opacity: 1,
 };
 
 const requiredStyle = {

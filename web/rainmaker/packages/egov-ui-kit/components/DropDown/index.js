@@ -46,8 +46,8 @@ var floatingLabelBaseShrinkStyle = {
 var hintBaseStyle = {
   fontSize: "16px",
   letterSpacing: "0.7px",
-  color: "#b3b3b3",
-  opacity: 1
+  color: "#b3b3b3"
+  // opacity: 1,
 };
 
 var requiredStyle = {
