@@ -53,7 +53,7 @@ var actionList = [{
   code: "null",
   path: "Home",
   navigationURL: "mdms/PropertyTax/PropertyType",
-  leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
+  leftIcon: { action: "action", name: "home" },
   rightIcon: ""
 }, {
   id: 1536,
@@ -66,7 +66,7 @@ var actionList = [{
   code: "null",
   path: "Information",
   navigationURL: "mdms/PropertyTax/PropertySubType",
-  leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "info" }),
+  leftIcon: { action: "action", name: "info" },
   rightIcon: ""
 }, {
   id: 1537,
@@ -79,7 +79,7 @@ var actionList = [{
   code: "null",
   path: "Payments",
   navigationURL: "mdms/PropertyTax/ConstructionType",
-  leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "rupee" }),
+  leftIcon: { action: "custom", name: "rupee" },
   rightIcon: ""
 }, {
   id: 1538,
@@ -92,7 +92,7 @@ var actionList = [{
   code: "null",
   path: "Apply",
   navigationURL: "mdms/PropertyTax/ConstructionSubType",
-  leftIcon: _react2.default.createElement(_components.Icon, { action: "content", name: "send" }),
+  leftIcon: { action: "content", name: "send" },
   rightIcon: ""
 }];
 

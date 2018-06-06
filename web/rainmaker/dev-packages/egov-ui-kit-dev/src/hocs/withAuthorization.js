@@ -1,5 +1,5 @@
 import React from "react";
-import { Drawer,Icon } from "components";
+import { Drawer, Icon } from "components";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";
@@ -19,8 +19,8 @@ const actionList = [
     code: "null",
     path: "Home",
     navigationURL: "mdms/PropertyTax/PropertyType",
-    leftIcon:<Icon action= "action" name= "home"/>,
-    rightIcon:""
+    leftIcon: { action: "action", name: "home" },
+    rightIcon: "",
   },
   {
     id: 1536,
@@ -33,8 +33,8 @@ const actionList = [
     code: "null",
     path: "Information",
     navigationURL: "mdms/PropertyTax/PropertySubType",
-    leftIcon:<Icon action= "action" name= "info"/>,
-    rightIcon:""
+    leftIcon: { action: "action", name: "info" },
+    rightIcon: "",
   },
   {
     id: 1537,
@@ -47,8 +47,8 @@ const actionList = [
     code: "null",
     path: "Payments",
     navigationURL: "mdms/PropertyTax/ConstructionType",
-    leftIcon:<Icon action= "custom" name= "rupee"/>,
-    rightIcon:""
+    leftIcon: { action: "custom", name: "rupee" },
+    rightIcon: "",
   },
   {
     id: 1538,
@@ -61,8 +61,8 @@ const actionList = [
     code: "null",
     path: "Apply",
     navigationURL: "mdms/PropertyTax/ConstructionSubType",
-    leftIcon:<Icon action= "content" name= "send"/>,
-    rightIcon:""
+    leftIcon: { action: "content", name: "send" },
+    rightIcon: "",
   },
 ];
 
@@ -121,7 +121,10 @@ const withAuthorization = (options = {}) => (Component) => {
     const { authenticated, userInfo } = state.auth;
     return { authenticated, userInfo };
   };
-  return compose(withData, connect(mapStateToProps))(Wrapper);
+  return compose(
+    withData,
+    connect(mapStateToProps)
+  )(Wrapper);
 };
 
 export default withAuthorization;
