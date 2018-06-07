@@ -63,7 +63,9 @@ var form = function form(_ref) {
         };
 
         try {
-          _this.formConfig = formConfigPath ? require("" + formConfigPath).default : require("config/forms/specs/" + formKey).default;
+          console.log(formConfigPath);
+          _this.formConfig = formConfigPath ? require(formConfigPath.toString()).default : require("config/forms/specs/" + formKey).default;
+          console.log(_this.formConfig);
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
         }

@@ -1,5 +1,5 @@
 const formConfig = {
-  name: "ResidentialIndependantPlotDetails",
+  name: "plotDetails",
   fields: {
     plotSize: {
       id: "assessment-plot-size",

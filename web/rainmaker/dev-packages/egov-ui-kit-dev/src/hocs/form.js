@@ -8,7 +8,9 @@ const form = ({ formKey, formConfigPath, rowData, edit = false }) => (Form) => {
     constructor(props) {
       super(props);
       try {
-        this.formConfig = formConfigPath ? require(`${formConfigPath}`).default : require(`config/forms/specs/${formKey}`).default;
+        console.log(formConfigPath);
+        this.formConfig = formConfigPath ? require(formConfigPath.toString()).default : require(`config/forms/specs/${formKey}`).default;
+        console.log(this.formConfig);
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
       }

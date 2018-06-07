@@ -1,5 +1,5 @@
 const formConfig = {
-  name: "ResidentialSharedPlotDetails",
+  name: "plotDetails",
   fields: {
     floorCount: {
       id: "assessment-number-of-floors",
