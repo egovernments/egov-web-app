@@ -38,10 +38,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var form = function form(_ref) {
   var formKey = _ref.formKey,
+      formConfigPath = _ref.formConfigPath,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit;
   return function (Form) {
+    console.log("hit", formConfigPath);
+
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
 
@@ -62,7 +65,7 @@ var form = function form(_ref) {
         };
 
         try {
-          _this.formConfig = require("config/forms/specs/" + formKey).default;
+          _this.formConfig = formConfigPath ? require("" + formConfigPath).default : require("config/forms/specs/" + formKey).default;
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
         }
