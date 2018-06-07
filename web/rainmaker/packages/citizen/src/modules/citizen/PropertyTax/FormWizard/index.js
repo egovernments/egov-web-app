@@ -9,6 +9,9 @@ import {
   OwnerInfoHOC,
   ExemptionCategoryHOC,
 } from "./components/Forms";
+import DependantFormHOC from "./components/DependantFormsHOC";
+import combinationToFormkeyMapping from "./components/FormManager";
+import { connect } from "react-redux";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -16,15 +19,46 @@ class FormWizard extends Component {
     selected: 0,
   };
 
-  getFormContent = (index) => {
+  renderDynamicForms = (combination) => {
+    const basePath = "config/forms/specs/PropertyTaxPay";
+    console.log(combination);
+    return combination ? (
+      <DependantFormHOC formKeys={combinationToFormkeyMapping[combination]} basePath={basePath} combination={combination} />
+    ) : null;
+  };
+
+  getSelectedCombination = (form, formKey, fieldKeys) => {
+    console.log(fieldKeys);
+    return (
+      form[formKey] &&
+      form[formKey].fields &&
+      fieldKeys.reduce((result, current) => {
+        console.log(form[formKey].fields[current].value);
+        if (form[formKey].fields[current].value) {
+          result += form[formKey].fields[current].value;
+        } else {
+          result = "";
+        }
+        return result;
+      }, "")
+    );
+  };
+
+  getFormContent = (index, form) => {
     switch (index) {
       case 0:
         return {
           component: <PropertyAddressHOC />,
         };
       case 1:
+        let combination = this.getSelectedCombination(form, "basicInformation", ["typeOfUsage", "typeOfBuilding"]);
         return {
-          component: <BasicInformationHOC />,
+          component: (
+            <div>
+              <BasicInformationHOC />
+              {combination && this.renderDynamicForms(combination)}
+            </div>
+          ),
         };
       case 2:
         return {
@@ -69,7 +103,7 @@ class FormWizard extends Component {
 
   render() {
     const { selected } = this.state;
-    const { component } = this.getFormContent(selected);
+    const { component } = this.getFormContent(selected, this.props.form);
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -84,4 +118,9 @@ class FormWizard extends Component {
   }
 }
 
-export default FormWizard;
+const mapStateToProps = (state) => {
+  const { form } = state || {};
+  return { form };
+};
+
+export default connect(mapStateToProps)(FormWizard);

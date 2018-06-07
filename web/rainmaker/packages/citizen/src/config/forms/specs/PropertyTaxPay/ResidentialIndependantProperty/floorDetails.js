@@ -1,5 +1,5 @@
 const formConfig = {
-  name: "ResidentialIndependantfloorDetails",
+  name: "floorDetails",
   fields: {
     floor: {
       id: "assessment-floor",
