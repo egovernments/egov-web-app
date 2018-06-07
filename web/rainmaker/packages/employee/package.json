@@ -2,7 +2,7 @@
   "name": "rainmaker-employee",
   "version": "0.0.1",
   "private": true,
-  "homepage": "http://egov-micro-dev.egovernments.org/app/v3",
+  "homepage": "http://egov-micro-dev.egovernments.org/app/v3/rainmaker-employee",
   "proxy": "http://egov-micro-dev.egovernments.org/",
   "dependencies": {
     "@material-ui/core": "^1.1.0",

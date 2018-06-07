@@ -104,5 +104,8 @@ const PlotInformationHOC = formHoc({ formKey: "plotInformation" })(GenericForm);
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType" })(GenericForm);
 const OwnerInfoHOC = formHoc({ formKey: "ownerInfo" })(OwnerInformation);
 const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory" })(GenericForm);
+const DynamicFormHoc=(formKey,Form) =>{
+  return formHoc({formKey})(Form)
+}
 
-export { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC };
+export { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC,DynamicFormHoc};
