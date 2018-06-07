@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
-import { handleFieldChange, submitForm } from "redux/form/actions";
-import { sendOTP } from "redux/auth/actions";
+import { handleFieldChange, submitForm } from "egov-ui-kit/redux/form/actions";
+import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 import { Screen } from "modules/common";
 
 const OTPFormHOC = formHoc({ formKey: "otp" })(OTPForm);

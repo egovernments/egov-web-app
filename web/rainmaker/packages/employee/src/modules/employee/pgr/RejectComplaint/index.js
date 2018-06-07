@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import formHOC from "hocs/form";
 import Screen from "modules/common/common/Screen";
 import RejectComplaintForm from "./components/RejectComplaintForm";
-import { fetchComplaints } from "redux/complaints/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import { handleFieldChange } from "redux/form/actions";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
 const RejectComplaintHOC = formHOC({ formKey: "rejectComplaint" })(RejectComplaintForm);

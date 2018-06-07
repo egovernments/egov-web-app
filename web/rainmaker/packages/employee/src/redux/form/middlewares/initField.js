@@ -1,7 +1,7 @@
 import { INIT_FORM } from "../actionTypes";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import transform from "config/forms/transformers";
-import { initForm, setFieldProperty } from "redux/form/actions";
+import { initForm, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { upperCaseFirst } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";

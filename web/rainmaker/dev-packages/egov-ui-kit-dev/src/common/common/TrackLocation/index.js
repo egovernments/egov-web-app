@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { MapLocation, Button, Icon } from "components";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
-import { handleFieldChange } from "redux/form/actions";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
@@ -164,4 +164,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrackLocation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TrackLocation);

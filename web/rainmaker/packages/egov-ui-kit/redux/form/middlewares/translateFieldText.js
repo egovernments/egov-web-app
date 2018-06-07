@@ -12,7 +12,7 @@ var _actionTypes = require("../actionTypes");
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _actionTypes2 = require("redux/app/actionTypes");
+var _actionTypes2 = require("egov-ui-kit/redux/app/actionTypes");
 
 var _commons = require("egov-ui-kit/utils/commons");
 

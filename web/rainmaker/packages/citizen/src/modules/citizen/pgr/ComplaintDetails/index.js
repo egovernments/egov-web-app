@@ -4,7 +4,7 @@ import { Details } from "modules/common";
 import { ComplaintTimeLine } from "modules/common";
 import { Comments } from "modules/common";
 import { Screen } from "modules/common";
-import { fetchComplaints } from "redux/complaints/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "egov-ui-kit/utils/commons";
 import "./index.css";
 

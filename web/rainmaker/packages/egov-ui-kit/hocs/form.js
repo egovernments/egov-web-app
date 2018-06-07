@@ -32,7 +32,7 @@ var _components = require("components");
 
 var _reactRedux = require("react-redux");
 
-var _actions = require("redux/form/actions");
+var _actions = require("egov-ui-kit/redux/form/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

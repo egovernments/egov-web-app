@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import ListCard from "../AssignComplaint/components/ListCard";
 import "./index.css";
 import { connect } from "react-redux";
-import { handleFieldChange, submitForm, initForm } from "redux/form/actions";
-import { fetchEmployees } from "redux/common/actions";
+import { handleFieldChange, submitForm, initForm } from "egov-ui-kit/redux/form/actions";
+import { fetchEmployees } from "egov-ui-kit/redux/common/actions";
 
 class EmployeeDirectory extends Component {
   componentDidMount = () => {
@@ -40,4 +40,7 @@ const mapStateToProps = (state, ownProps) => {
   return { designationsById, departmentById, APIData };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeeDirectory);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EmployeeDirectory);

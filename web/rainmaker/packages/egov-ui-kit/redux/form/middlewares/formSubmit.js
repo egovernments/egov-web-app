@@ -14,15 +14,15 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _actions = require("../actions");
 
-var _actions2 = require("redux/auth/actions");
+var _actions2 = require("egov-ui-kit/redux/auth/actions");
 
-var _actions3 = require("redux/app/actions");
+var _actions3 = require("egov-ui-kit/redux/app/actions");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
-var _actions4 = require("redux/complaints/actions");
+var _actions4 = require("egov-ui-kit/redux/complaints/actions");
 
-var _actions5 = require("redux/mdms/actions");
+var _actions5 = require("egov-ui-kit/redux/mdms/actions");
 
 var _get = require("lodash/get");
 
@@ -57,17 +57,27 @@ var formSubmit = function formSubmit(store) {
           var _state$mdms = state.mdms,
               moduleName = _state$mdms.moduleName,
               masterName = _state$mdms.masterName;
+          var saveUrl = action.saveUrl;
 
+          console.log(saveUrl);
+          var _state$form$formKey2 = state.form[formKey],
+              editToast = _state$form$formKey2.editToast,
+              createToast = _state$form$formKey2.createToast;
+
+          var mdmsToast = saveUrl.includes("_create") ? createToast : editToast;
           delete payload.ResponseInfo;
           var mdmsResponse = payload.MdmsRes;
           var newMdmsRow = mdmsResponse[moduleName][masterName][0];
           var currentMdmsData = state.mdms.data[moduleName][masterName];
           dispatch((0, _actions5.dataFetchComplete)({ MdmsRes: (0, _defineProperty3.default)({}, moduleName, (0, _defineProperty3.default)({}, masterName, (0, _commons.mergeMDMSDataArray)(currentMdmsData, newMdmsRow))) }, moduleName, masterName));
+          if (mdmsToast && mdmsToast.length) {
+            dispatch((0, _actions3.toggleSnackbarAndSetText)(true, mdmsToast, false));
+          }
         }
 
         // for login/register flow
         if (formKey === "otp") {
-          redirectionRoute = "/citizen";
+          redirectionRoute = "/citizen/pt-payment";
           delete payload.ResponseInfo;
           dispatch((0, _actions2.authenticated)(payload));
         }

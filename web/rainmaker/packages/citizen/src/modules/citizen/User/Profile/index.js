@@ -5,7 +5,7 @@ import { UploadDrawer } from "modules/common";
 import ProfileForm from "./components/ProfileForm";
 import { Screen } from "modules/common";
 import img from "egov-ui-kit/assets/images/download.png";
-import { fileUpload, removeFile } from "redux/form/actions";
+import { fileUpload, removeFile } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
 const ProfileFormHOC = formHoc({ formKey: "profile" })(ProfileForm);

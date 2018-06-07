@@ -1,5 +1,5 @@
 import * as authType from "./actionTypes";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { httpRequest, loginRequest } from "egov-ui-kit/utils/api";
 import { AUTH, USER, OTP } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData } from "egov-ui-kit/utils/commons";

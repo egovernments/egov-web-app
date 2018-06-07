@@ -4,9 +4,9 @@ import axios from "axios";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { TENANT } from "egov-ui-kit/utils/endPoints";
 import commonConfig from "config/common.js";
-import { initForm, setFieldProperty } from "redux/form/actions";
+import { initForm, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",

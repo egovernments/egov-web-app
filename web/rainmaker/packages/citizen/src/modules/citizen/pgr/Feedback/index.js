@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Screen } from "modules/common";
-import { fetchComplaints } from "redux/complaints/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import FeedbackForm from "./components/FeedbackForm";
-import { handleFieldChange } from "redux/form/actions";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
 const FeedbackFormHOC = formHoc({ formKey: "feedback" })(FeedbackForm);

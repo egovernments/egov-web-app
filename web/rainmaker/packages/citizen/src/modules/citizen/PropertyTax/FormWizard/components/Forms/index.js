@@ -1,7 +1,7 @@
 import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "../GenericForm";
-import { handleFieldChange } from "redux/form/actions";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";

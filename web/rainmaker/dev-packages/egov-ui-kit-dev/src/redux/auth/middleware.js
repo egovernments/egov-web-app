@@ -1,4 +1,4 @@
-import { refreshTokenRequest } from "redux/auth/actions";
+import { refreshTokenRequest } from "egov-ui-kit/redux/auth/actions";
 
 const auth = (store) => (next) => (action) => {
   const { type } = action;

@@ -52,7 +52,7 @@ var actionList = [{
   serviceCode: "PT",
   code: "null",
   path: "Home",
-  navigationURL: "mdms/PropertyTax/PropertyType",
+  navigationURL: "pt-payment",
   leftIcon: { action: "action", name: "home" },
   rightIcon: ""
 }, {

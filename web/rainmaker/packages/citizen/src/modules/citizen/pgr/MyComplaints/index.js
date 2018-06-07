@@ -4,7 +4,7 @@ import { Icon } from "components";
 import { Complaints } from "modules/common";
 import { Screen } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import { fetchComplaints } from "redux/complaints/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { displayLocalizedStatusMessage, transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";

@@ -1,5 +1,5 @@
 import { INIT_FORM } from "../actionTypes";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import transform from "config/forms/transformers";
 
 const initFormMiddleware = (store) => (next) => async (action) => {

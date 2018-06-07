@@ -15,7 +15,7 @@ import {
   getPropertyFromObj,
   findLatestAssignee,
 } from "egov-ui-kit/utils/commons";
-import { fetchComplaints } from "redux/complaints/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
 import "./index.css";
 

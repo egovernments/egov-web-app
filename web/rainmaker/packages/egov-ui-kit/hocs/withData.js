@@ -30,9 +30,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = require("react-redux");
 
-var _actions = require("redux/auth/actions");
+var _actions = require("egov-ui-kit/redux/auth/actions");
 
-var _actions2 = require("redux/complaints/actions");
+var _actions2 = require("egov-ui-kit/redux/complaints/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
