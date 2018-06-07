@@ -43,8 +43,6 @@ var form = function form(_ref) {
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit;
   return function (Form) {
-    console.log("hit", formConfigPath);
-
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
 
