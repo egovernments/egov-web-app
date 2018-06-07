@@ -3,12 +3,12 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, rowData, edit = false }) => (Form) => {
+const form = ({ formKey, formConfigPath, rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
       try {
-        this.formConfig = require(`config/forms/specs/${formKey}`).default;
+        this.formConfig = formConfigPath ? require(`${formConfigPath}`).default : require(`config/forms/specs/${formKey}`).default;
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
       }
