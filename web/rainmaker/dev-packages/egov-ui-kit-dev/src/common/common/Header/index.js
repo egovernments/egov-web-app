@@ -14,6 +14,8 @@ class Header extends Component {
   state = {
     toggleMenu: false,
     logoutPopupOpen: false,
+    right: false,
+    left: false,
   };
 
   _handleToggleMenu = () => {
@@ -56,17 +58,18 @@ class Header extends Component {
 
     const iconElementLeft = (
       <div>
-        <IconButton id="icon-hamburger">
+        {/* <IconButton id="icon-hamburger">
           {isHomeScreen ? (
             <Icon id="icon-hamburger" action="custom" name="hamburger" />
           ) : hideBackButton ? null : (
             <Icon id="back-navigator" action="navigation" name="arrow-back" />
           )}
-        </IconButton>
+        </IconButton> */}
       </div>
     );
 
-    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
+    // const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
+    const onLeftIconButtonClick = this._handleToggleMenu;
 
     return { style, iconElementLeft, onLeftIconButtonClick, isHomeScreen };
   };
@@ -94,7 +97,7 @@ class Header extends Component {
     const { toggleMenu, logoutPopupOpen } = this.state;
     const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps } = this;
     const appBarProps = _appBarProps();
-    const { className, role, cities, history, title, fetchLocalizationLabel, userInfo } = this.props;
+    const { className, role, cities, history, title, fetchLocalizationLabel, userInfo, isHomeScreen } = this.props;
     return (
       <div>
         <AppBar className={className} title={title} role={role} {...appBarProps} fetchLocalizationLabel={fetchLocalizationLabel} />
@@ -107,6 +110,9 @@ class Header extends Component {
           userInfo={userInfo}
           fetchLocalizationLabel={fetchLocalizationLabel}
           role={role && role === "citizen" ? "citizen" : "employee"}
+          openSecondary={true}
+          width={300}
+          containerStyle={{ top: "64px" }}
         />
         <LogoutDialog logoutPopupOpen={logoutPopupOpen} closeLogoutDialog={_closeLogoutDialog} logout={_logout} />
       </div>

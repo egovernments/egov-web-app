@@ -11,9 +11,27 @@ const styles = {
   },
 };
 
-const NavigationDrawer = ({ handleItemClick, role, toggleMenu, onUpdateMenuStatus, userInfo, cities, fetchLocalizationLabel }) => {
+const NavigationDrawer = ({
+  handleItemClick,
+  role,
+  toggleMenu,
+  width,
+  openSecondary,
+  onUpdateMenuStatus,
+  userInfo,
+  cities,
+  fetchLocalizationLabel,
+  containerStyle,
+}) => {
   return (
-    <Drawer docked={false} width="85%" open={toggleMenu} onRequestChange={(open) => onUpdateMenuStatus(open)}>
+    <Drawer
+      containerStyle={containerStyle}
+      docked={true}
+      width={width}
+      openSecondary={openSecondary}
+      open={toggleMenu}
+      onRequestChange={(open) => onUpdateMenuStatus(open)}
+    >
       <UserProfile role={role} cities={cities} userInfo={userInfo} />
       <div className="drawer-list-poweredBy-wrapper">
         <List

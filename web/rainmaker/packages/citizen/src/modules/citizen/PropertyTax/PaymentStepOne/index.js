@@ -71,7 +71,7 @@ class PaymentStepOne extends Component {
             },
             {
               primaryText: <Label label="PT_EXAMPLES" />,
-              leftIcon: <Icon action="action" name="check-circle" />,
+              leftIcon: <Icon action="custom" name="pt-example" />,
               rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
             },
             {

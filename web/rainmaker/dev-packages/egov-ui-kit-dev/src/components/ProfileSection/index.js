@@ -17,6 +17,7 @@ const ProfileSection = ({
   addIconStyle,
   onClickAddPic,
   emailId,
+  className,
 }) => {
   return (
     <div className="profileSection" style={cardStyles}>

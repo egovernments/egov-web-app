@@ -16,7 +16,8 @@ const styles = {
 const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLabel, ...rest }) => {
   return (
     <AppBar
-      className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
+      // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
+      className={className || "header-with-drawer"}
       title={
         <div className="citizen-header-logo-label">
           <div className="citizen-header-logo">
