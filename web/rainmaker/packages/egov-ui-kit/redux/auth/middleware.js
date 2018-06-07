@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _actions = require("redux/auth/actions");
+var _actions = require("egov-ui-kit/redux/auth/actions");
 
 var auth = function auth(store) {
   return function (next) {

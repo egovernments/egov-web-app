@@ -14,7 +14,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _actionTypes = require("../actionTypes");
 
-var _actions = require("redux/app/actions");
+var _actions = require("egov-ui-kit/redux/app/actions");
 
 var _transformers = require("config/forms/transformers");
 

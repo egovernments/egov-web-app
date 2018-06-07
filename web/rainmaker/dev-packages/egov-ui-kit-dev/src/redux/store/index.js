@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducer";
 import thunk from "redux-thunk";
-import formMiddleware from "redux/form/middlewares";
-import authMiddleware from "redux/auth/middleware";
-import appMiddleware from "redux/app/middleware";
+import formMiddleware from "egov-ui-kit/redux/form/middlewares";
+import authMiddleware from "egov-ui-kit/redux/auth/middleware";
+import appMiddleware from "egov-ui-kit/redux/app/middleware";
 
 let middlewares = [];
 

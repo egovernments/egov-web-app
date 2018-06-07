@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
-import { initForm } from "redux/form/actions";
+import { initForm } from "egov-ui-kit/redux/form/actions";
 import { SPEC, MDMS } from "egov-ui-kit/utils/endPoints";
 import { upperCaseFirst } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
@@ -172,6 +172,8 @@ export const fetchSpecs = (queryObject, moduleName, masterName, tenantId, reques
         submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
         saveUrl: "egov-mdms-create/v1/_create",
         editUrl: "egov-mdms-create/v1/_update",
+        editToast: "Updated Successfully",
+        createToast: "Created Successfully",
       };
       dispatch(initForm(formConfig));
       dispatch(specsFetchComplete(payloadSpec, moduleName, masterName));

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { searchUser } from "redux/auth/actions";
-import { fetchComplaintCategories } from "redux/complaints/actions";
+import { searchUser } from "egov-ui-kit/redux/auth/actions";
+import { fetchComplaintCategories } from "egov-ui-kit/redux/complaints/actions";
 
 const withData = (Component) => {
   class Wrapper extends React.Component {
@@ -23,7 +23,10 @@ const withData = (Component) => {
     };
   };
 
-  return connect(null, mapDispatchToProps)(Wrapper);
+  return connect(
+    null,
+    mapDispatchToProps
+  )(Wrapper);
 };
 
 export default withData;

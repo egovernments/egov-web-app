@@ -17,7 +17,7 @@ var _actionTypes = require("./actionTypes");
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _actions = require("redux/app/actions");
+var _actions = require("egov-ui-kit/redux/app/actions");
 
 var _api = require("egov-ui-kit/utils/api");
 
@@ -72,7 +72,7 @@ var submitFormPending = exports.submitFormPending = function submitFormPending(f
   return { type: actionTypes.SUBMIT_FORM_PENDING, formKey: formKey };
 };
 
-var submitFormComplete = exports.submitFormComplete = function submitFormComplete(formKey, payload) {
+var submitFormComplete = exports.submitFormComplete = function submitFormComplete(formKey, payload, saveUrl) {
   return { type: actionTypes.SUBMIT_FORM_COMPLETE, formKey: formKey, payload: payload };
 };
 
@@ -152,7 +152,7 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
               formResponse = _context.sent;
 
             case 28:
-              dispatch(submitFormComplete(formKey, formResponse));
+              dispatch(submitFormComplete(formKey, formResponse, saveUrl));
               _context.next = 35;
               break;
 

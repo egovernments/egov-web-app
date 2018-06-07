@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { httpRequest, loginRequest, uploadFile } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import { FILE_UPLOAD } from "egov-ui-kit/utils/endPoints";
@@ -43,7 +43,7 @@ export const submitFormPending = (formKey) => {
   return { type: actionTypes.SUBMIT_FORM_PENDING, formKey };
 };
 
-export const submitFormComplete = (formKey, payload) => {
+export const submitFormComplete = (formKey, payload, saveUrl) => {
   return { type: actionTypes.SUBMIT_FORM_COMPLETE, formKey, payload };
 };
 
@@ -73,7 +73,7 @@ export const submitForm = (formKey, saveUrl) => {
         } else {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }
-        dispatch(submitFormComplete(formKey, formResponse));
+        dispatch(submitFormComplete(formKey, formResponse, saveUrl));
       } catch (error) {
         const { message } = error;
         throw new Error(error);

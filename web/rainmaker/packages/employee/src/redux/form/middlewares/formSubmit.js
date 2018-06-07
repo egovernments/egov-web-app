@@ -1,11 +1,11 @@
 import * as actionTypes from "../actionTypes";
 import { resetForm } from "../actions";
-import { authenticated, userProfileUpdated } from "redux/auth/actions";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { authenticated, userProfileUpdated } from "egov-ui-kit/redux/auth/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { addQueryArg, mergeMDMSDataArray } from "egov-ui-kit/utils/commons";
-import { setRoute } from "redux/app/actions";
-import { fetchComplaints } from "redux/complaints/actions";
-import { dataFetchComplete } from "redux/mdms/actions";
+import { setRoute } from "egov-ui-kit/redux/app/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { dataFetchComplete } from "egov-ui-kit/redux/mdms/actions";
 import get from "lodash/get";
 
 const formSubmit = (store) => (next) => (action) => {

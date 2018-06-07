@@ -21,7 +21,7 @@ var _actionTypes = require("./actionTypes");
 
 var authType = _interopRequireWildcard(_actionTypes);
 
-var _actions = require("redux/app/actions");
+var _actions = require("egov-ui-kit/redux/app/actions");
 
 var _api = require("egov-ui-kit/utils/api");
 

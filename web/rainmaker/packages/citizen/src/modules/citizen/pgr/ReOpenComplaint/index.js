@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import ReopenComplaintForm from "./components/ReopenComplaintForm";
-import { fetchComplaints } from "redux/complaints/actions";
-import { fileUpload, handleFieldChange } from "redux/form/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { fileUpload, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import "./index.css";
 

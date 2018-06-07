@@ -4,8 +4,8 @@ import formHoc from "hocs/form";
 import Screen from "modules/common/common/Screen";
 import Banner from "modules/common/common/Banner";
 import OTPForm from "./components/OTPForm";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
-import { sendOTP } from "redux/auth/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import { sendOTP } from "egov-ui-kit/redux/auth/actions";
 
 const OTPFormHOC = formHoc({ formKey: "employeeOTP" })(OTPForm);
 
@@ -48,4 +48,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OTP);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OTP);

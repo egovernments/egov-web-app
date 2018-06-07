@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Screen from "modules/common/common/Screen";
 import formHoc from "hocs/form";
 import AssignComplaintForm from "./components/AssignComplaintForm";
-import { fetchEmployees } from "redux/common/actions";
+import { fetchEmployees } from "egov-ui-kit/redux/common/actions";
 
 const AssignComplaintFormHOC = formHoc({ formKey: "assignComplaint" })(AssignComplaintForm);
 
@@ -46,4 +46,7 @@ const mapStateToProps = (state, ownProps) => {
   return { designationsById, departmentById, APIData, transformedComplaint, history, serviceRequestId };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignComplaint);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AssignComplaint);

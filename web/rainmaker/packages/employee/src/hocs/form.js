@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
-import { handleFieldChange, initForm, submitForm } from "redux/form/actions";
+import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
 const form = ({ formKey, rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
@@ -62,7 +62,10 @@ const form = ({ formKey, rowData, edit = false }) => (Form) => {
     };
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(FormWrapper);
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FormWrapper);
 };
 
 export default form;

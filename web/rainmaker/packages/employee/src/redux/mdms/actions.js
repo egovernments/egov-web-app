@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import * as commonActions from "../common/actions";
-import { initForm } from "redux/form/actions";
+import { initForm } from "egov-ui-kit/redux/form/actions";
 import { SPEC, MDMS } from "egov-ui-kit/utils/endPoints";
 import { upperCaseFirst } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";

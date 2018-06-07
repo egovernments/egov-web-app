@@ -5,8 +5,8 @@ import { Icon } from "components";
 import AppBar from "./components/AppBar";
 import LogoutDialog from "./components/LogoutDialog";
 import NavigationDrawer from "./components/NavigationDrawer";
-import { logout } from "redux/auth/actions";
-import { fetchLocalizationLabel } from "redux/app/actions";
+import { logout } from "egov-ui-kit/redux/auth/actions";
+import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
 // get userInfo role

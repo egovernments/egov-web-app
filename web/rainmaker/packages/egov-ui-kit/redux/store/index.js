@@ -18,15 +18,15 @@ var _reduxThunk = require("redux-thunk");
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _middlewares = require("redux/form/middlewares");
+var _middlewares = require("egov-ui-kit/redux/form/middlewares");
 
 var _middlewares2 = _interopRequireDefault(_middlewares);
 
-var _middleware = require("redux/auth/middleware");
+var _middleware = require("egov-ui-kit/redux/auth/middleware");
 
 var _middleware2 = _interopRequireDefault(_middleware);
 
-var _middleware3 = require("redux/app/middleware");
+var _middleware3 = require("egov-ui-kit/redux/app/middleware");
 
 var _middleware4 = _interopRequireDefault(_middleware3);
 

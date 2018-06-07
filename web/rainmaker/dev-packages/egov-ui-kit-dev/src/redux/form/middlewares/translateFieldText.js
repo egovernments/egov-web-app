@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes";
-import { ADD_LOCALIZATION } from "redux/app/actionTypes";
+import { ADD_LOCALIZATION } from "egov-ui-kit/redux/app/actionTypes";
 import { transformLocalizationLabels, getTranslatedLabel } from "egov-ui-kit/utils/commons";
 import { initForm } from "../actions";
 

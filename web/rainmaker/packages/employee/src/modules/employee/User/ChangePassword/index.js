@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import Screen from "modules/common/common/Screen";
 import PasswordForm from "./components/PasswordForm";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 
 const PasswordFormHOC = formHoc({ formKey: "employeeChangePassword" })(PasswordForm);
 
@@ -24,4 +24,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ChangePassword);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ChangePassword);

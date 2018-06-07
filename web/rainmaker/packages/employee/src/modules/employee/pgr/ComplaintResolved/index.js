@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "hocs/form";
 import Screen from "modules/common/common/Screen";
-import { fetchComplaints } from "redux/complaints/actions";
-import { fileUpload } from "redux/form/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { fileUpload } from "egov-ui-kit/redux/form/actions";
 import ComplaintResolvedForm from "./components/ComplaintResolvedForm";
 import "./index.css";
 
@@ -31,4 +31,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ComplaintResolved);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ComplaintResolved);

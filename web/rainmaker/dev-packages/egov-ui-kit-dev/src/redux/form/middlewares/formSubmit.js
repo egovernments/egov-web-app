@@ -1,11 +1,11 @@
 import * as actionTypes from "../actionTypes";
 import { resetForm } from "../actions";
-import { authenticated, userProfileUpdated } from "redux/auth/actions";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { authenticated, userProfileUpdated } from "egov-ui-kit/redux/auth/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { addQueryArg, mergeMDMSDataArray } from "egov-ui-kit/utils/commons";
-import { setRoute } from "redux/app/actions";
-import { fetchComplaints } from "redux/complaints/actions";
-import { dataFetchComplete } from "redux/mdms/actions";
+import { setRoute } from "egov-ui-kit/redux/app/actions";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { dataFetchComplete } from "egov-ui-kit/redux/mdms/actions";
 import get from "lodash/get";
 
 const formSubmit = (store) => (next) => (action) => {
@@ -21,6 +21,10 @@ const formSubmit = (store) => (next) => (action) => {
     //for Mdms Screens
     if (formKey.includes("MDMS")) {
       const { moduleName, masterName } = state.mdms;
+      const { saveUrl } = action;
+      console.log(saveUrl);
+      const { editToast, createToast } = state.form[formKey];
+      const mdmsToast = saveUrl.includes("_create") ? createToast : editToast;
       delete payload.ResponseInfo;
       const mdmsResponse = payload.MdmsRes;
       const newMdmsRow = mdmsResponse[moduleName][masterName][0];
@@ -28,11 +32,14 @@ const formSubmit = (store) => (next) => (action) => {
       dispatch(
         dataFetchComplete({ MdmsRes: { [moduleName]: { [masterName]: mergeMDMSDataArray(currentMdmsData, newMdmsRow) } } }, moduleName, masterName)
       );
+      if (mdmsToast && mdmsToast.length) {
+        dispatch(toggleSnackbarAndSetText(true, mdmsToast, false));
+      }
     }
 
     // for login/register flow
     if (formKey === "otp") {
-      redirectionRoute = "/citizen";
+      redirectionRoute = "/citizen/pt-payment";
       delete payload.ResponseInfo;
       dispatch(authenticated(payload));
     }

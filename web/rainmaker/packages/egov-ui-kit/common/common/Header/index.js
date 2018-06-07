@@ -18,7 +18,9 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _possibleConstructorReturn3 = _interopRequireDefault(
+  _possibleConstructorReturn2
+);
 
 var _inherits2 = require("babel-runtime/helpers/inherits");
 
@@ -48,16 +50,18 @@ var _NavigationDrawer = require("./components/NavigationDrawer");
 
 var _NavigationDrawer2 = _interopRequireDefault(_NavigationDrawer);
 
-var _actions = require("redux/auth/actions");
+var _actions = require("egov-ui-kit/redux/auth/actions");
 
-var _actions2 = require("redux/app/actions");
+var _actions2 = require("egov-ui-kit/redux/app/actions");
 
 require("./index.css");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // get userInfo role
-var Header = function (_Component) {
+var Header = (function(_Component) {
   (0, _inherits3.default)(Header, _Component);
 
   function Header() {
@@ -67,95 +71,145 @@ var Header = function (_Component) {
 
     (0, _classCallCheck3.default)(this, Header);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    for (
+      var _len = arguments.length, args = Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      toggleMenu: false,
-      logoutPopupOpen: false
-    }, _this._handleToggleMenu = function () {
-      var toggleMenu = _this.state.toggleMenu;
-
-      _this.setState({
-        toggleMenu: !toggleMenu
-      });
-    }, _this._onUpdateMenuStatus = function (status) {
-      _this.setState({
-        toggleMenu: status
-      });
-    }, _this._handleBackNavigation = function () {
-      _this.props.history.goBack();
-    }, _this._logout = function () {
-      _this._closeLogoutDialog();
-      _this.props.logout();
-    }, _this._closeLogoutDialog = function () {
-      _this.setState({
+    return (
+      (_ret = ((_temp = ((_this = (0, _possibleConstructorReturn3.default)(
+        this,
+        (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(
+          _ref,
+          [this].concat(args)
+        )
+      )),
+      _this)),
+      (_this.state = {
+        toggleMenu: false,
         logoutPopupOpen: false
-      });
-    }, _this._appBarProps = function () {
-      var _this$props$options = _this.props.options,
+      }),
+      (_this._handleToggleMenu = function() {
+        var toggleMenu = _this.state.toggleMenu;
+
+        _this.setState({
+          toggleMenu: !toggleMenu
+        });
+      }),
+      (_this._onUpdateMenuStatus = function(status) {
+        _this.setState({
+          toggleMenu: status
+        });
+      }),
+      (_this._handleBackNavigation = function() {
+        _this.props.history.goBack();
+      }),
+      (_this._logout = function() {
+        _this._closeLogoutDialog();
+        _this.props.logout();
+      }),
+      (_this._closeLogoutDialog = function() {
+        _this.setState({
+          logoutPopupOpen: false
+        });
+      }),
+      (_this._appBarProps = function() {
+        var _this$props$options = _this.props.options,
           isHomeScreen = _this$props$options.isHomeScreen,
           hideBackButton = _this$props$options.hideBackButton;
 
-      var isComplaintType = /(complaint-type)\/?$/.test(window.location.pathname);
+        var isComplaintType = /(complaint-type)\/?$/.test(
+          window.location.pathname
+        );
 
-      var style = { overflowX: "hidden", width: "initial", overflowY: "hidden" };
-      if (isComplaintType) {
-        style.boxShadow = "none";
-      }
+        var style = {
+          overflowX: "hidden",
+          width: "initial",
+          overflowY: "hidden"
+        };
+        if (isComplaintType) {
+          style.boxShadow = "none";
+        }
 
-      var iconElementLeft = _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(
-          _IconButton2.default,
-          { id: "icon-hamburger" },
-          isHomeScreen ? _react2.default.createElement(_components.Icon, { id: "icon-hamburger", action: "custom", name: "hamburger" }) : hideBackButton ? null : _react2.default.createElement(_components.Icon, { id: "back-navigator", action: "navigation", name: "arrow-back" })
-        )
-      );
+        var iconElementLeft = _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(
+            _IconButton2.default,
+            { id: "icon-hamburger" },
+            isHomeScreen
+              ? _react2.default.createElement(_components.Icon, {
+                  id: "icon-hamburger",
+                  action: "custom",
+                  name: "hamburger"
+                })
+              : hideBackButton
+                ? null
+                : _react2.default.createElement(_components.Icon, {
+                    id: "back-navigator",
+                    action: "navigation",
+                    name: "arrow-back"
+                  })
+          )
+        );
 
-      var onLeftIconButtonClick = isHomeScreen ? _this._handleToggleMenu : hideBackButton ? null : _this._handleBackNavigation;
+        var onLeftIconButtonClick = isHomeScreen
+          ? _this._handleToggleMenu
+          : hideBackButton
+            ? null
+            : _this._handleBackNavigation;
 
-      return { style: style, iconElementLeft: iconElementLeft, onLeftIconButtonClick: onLeftIconButtonClick, isHomeScreen: isHomeScreen };
-    }, _this._handleItemClick = function (item, index) {
-      var route = item.route;
-      // close the navigation bar
+        return {
+          style: style,
+          iconElementLeft: iconElementLeft,
+          onLeftIconButtonClick: onLeftIconButtonClick,
+          isHomeScreen: isHomeScreen
+        };
+      }),
+      (_this._handleItemClick = function(item, index) {
+        var route = item.route;
+        // close the navigation bar
 
-      _this._handleToggleMenu();
-      // this logic is a bit shaky!! might break in future
-      switch (route.slice(1)) {
-        case "logout":
-          _this.setState({
-            logoutPopupOpen: true
-          });
-          break;
-        case "language-selection":
-          break;
-        default:
-          _this.props.history.push(route);
-          break;
-      }
-    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+        _this._handleToggleMenu();
+        // this logic is a bit shaky!! might break in future
+        switch (route.slice(1)) {
+          case "logout":
+            _this.setState({
+              logoutPopupOpen: true
+            });
+            break;
+          case "language-selection":
+            break;
+          default:
+            _this.props.history.push(route);
+            break;
+        }
+      }),
+      _temp)),
+      (0, _possibleConstructorReturn3.default)(_this, _ret)
+    );
   }
 
   //header related actions
 
-
-  (0, _createClass3.default)(Header, [{
-    key: "render",
-    value: function render() {
-      var _state = this.state,
+  (0, _createClass3.default)(Header, [
+    {
+      key: "render",
+      value: function render() {
+        var _state = this.state,
           toggleMenu = _state.toggleMenu,
           logoutPopupOpen = _state.logoutPopupOpen;
-      var _onUpdateMenuStatus = this._onUpdateMenuStatus,
+        var _onUpdateMenuStatus = this._onUpdateMenuStatus,
           _handleItemClick = this._handleItemClick,
           _logout = this._logout,
           _closeLogoutDialog = this._closeLogoutDialog,
           _appBarProps = this._appBarProps;
 
-      var appBarProps = _appBarProps();
-      var _props = this.props,
+        var appBarProps = _appBarProps();
+        var _props = this.props,
           className = _props.className,
           role = _props.role,
           cities = _props.cities,
@@ -164,26 +218,38 @@ var Header = function (_Component) {
           fetchLocalizationLabel = _props.fetchLocalizationLabel,
           userInfo = _props.userInfo;
 
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({ className: className, title: title, role: role }, appBarProps, { fetchLocalizationLabel: fetchLocalizationLabel })),
-        _react2.default.createElement(_NavigationDrawer2.default, {
-          handleItemClick: _handleItemClick,
-          onUpdateMenuStatus: _onUpdateMenuStatus,
-          toggleMenu: toggleMenu,
-          history: history,
-          cities: cities,
-          userInfo: userInfo,
-          fetchLocalizationLabel: fetchLocalizationLabel,
-          role: role && role === "citizen" ? "citizen" : "employee"
-        }),
-        _react2.default.createElement(_LogoutDialog2.default, { logoutPopupOpen: logoutPopupOpen, closeLogoutDialog: _closeLogoutDialog, logout: _logout })
-      );
+        return _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(
+            _AppBar2.default,
+            (0, _extends3.default)(
+              { className: className, title: title, role: role },
+              appBarProps,
+              { fetchLocalizationLabel: fetchLocalizationLabel }
+            )
+          ),
+          _react2.default.createElement(_NavigationDrawer2.default, {
+            handleItemClick: _handleItemClick,
+            onUpdateMenuStatus: _onUpdateMenuStatus,
+            toggleMenu: toggleMenu,
+            history: history,
+            cities: cities,
+            userInfo: userInfo,
+            fetchLocalizationLabel: fetchLocalizationLabel,
+            role: role && role === "citizen" ? "citizen" : "employee"
+          }),
+          _react2.default.createElement(_LogoutDialog2.default, {
+            logoutPopupOpen: logoutPopupOpen,
+            closeLogoutDialog: _closeLogoutDialog,
+            logout: _logout
+          })
+        );
+      }
     }
-  }]);
+  ]);
   return Header;
-}(_react.Component);
+})(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   var cities = state.common.cities || [];
@@ -201,4 +267,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Header);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
+  Header
+);

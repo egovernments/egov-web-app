@@ -4,8 +4,8 @@ import { FilePicker, Icon, Image, LoadingIndicator } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { getFileSize, isFileImage } from "egov-ui-kit/utils/commons";
 import Label from "egov-ui-kit/utils/translationNode";
-import { fileUpload, removeFile } from "redux/form/actions";
-import { toggleSnackbarAndSetText } from "redux/app/actions";
+import { fileUpload, removeFile } from "egov-ui-kit/redux/form/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
 const iconStyle = {

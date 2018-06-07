@@ -29,7 +29,7 @@ var _actions = require("../common/actions");
 
 var commonActions = _interopRequireWildcard(_actions);
 
-var _actions2 = require("redux/form/actions");
+var _actions2 = require("egov-ui-kit/redux/form/actions");
 
 var _endPoints = require("egov-ui-kit/utils/endPoints");
 
@@ -203,7 +203,9 @@ var fetchSpecs = exports.fetchSpecs = function fetchSpecs(queryObject, moduleNam
                 name: "MDMS_" + masterName,
                 submit: { type: "submit", label: "CORE_COMMON_CONTINUE" },
                 saveUrl: "egov-mdms-create/v1/_create",
-                editUrl: "egov-mdms-create/v1/_update"
+                editUrl: "egov-mdms-create/v1/_update",
+                editToast: "Updated Successfully",
+                createToast: "Created Successfully"
               };
 
               dispatch((0, _actions2.initForm)(formConfig));
