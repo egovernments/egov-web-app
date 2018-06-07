@@ -43,6 +43,7 @@
     position: fixed !important;
     width: 100vw !important;
   }
+
   .rainmaker-header-cont > div:first-child {
     height: 64px !important;
   }

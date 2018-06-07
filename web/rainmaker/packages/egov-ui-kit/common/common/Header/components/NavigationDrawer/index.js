@@ -38,16 +38,26 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
   var handleItemClick = _ref.handleItemClick,
       role = _ref.role,
       toggleMenu = _ref.toggleMenu,
+      width = _ref.width,
+      openSecondary = _ref.openSecondary,
       onUpdateMenuStatus = _ref.onUpdateMenuStatus,
       userInfo = _ref.userInfo,
       cities = _ref.cities,
-      fetchLocalizationLabel = _ref.fetchLocalizationLabel;
+      fetchLocalizationLabel = _ref.fetchLocalizationLabel,
+      containerStyle = _ref.containerStyle;
 
   return _react2.default.createElement(
     _components.Drawer,
-    { docked: false, width: "85%", open: toggleMenu, onRequestChange: function onRequestChange(open) {
+    {
+      containerStyle: containerStyle,
+      docked: true,
+      width: width,
+      openSecondary: openSecondary,
+      open: toggleMenu,
+      onRequestChange: function onRequestChange(open) {
         return onUpdateMenuStatus(open);
-      } },
+      }
+    },
     _react2.default.createElement(_UserProfile2.default, { role: role, cities: cities, userInfo: userInfo }),
     _react2.default.createElement(
       "div",

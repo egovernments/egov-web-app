@@ -61,8 +61,8 @@ var LanguageSelection = function (_Component) {
         color: "#ffffff"
       },
       selectedStyle: {
-        backgroundColor: "rgb(254, 122, 81)",
-        border: "1px solid rgb(254, 122, 81)"
+        backgroundColor: "#fe7a51",
+        border: "1px solid #fe7a51"
       },
       defaultStyle: {
         border: "1px solid #484848",

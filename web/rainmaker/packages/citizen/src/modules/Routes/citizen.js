@@ -184,6 +184,7 @@ const routes = [
       hideFooter: true,
       title: "PUNJAB MUNICIPAL CORPORATION",
       hideBackButton: true,
+      isHomeScreen: true,
     },
   },
   {

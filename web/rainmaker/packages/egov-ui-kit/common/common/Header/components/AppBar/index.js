@@ -56,9 +56,10 @@ var EgovAppBar = function EgovAppBar(_ref) {
       rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "isHomeScreen", "role", "fetchLocalizationLabel"]);
 
   return _react2.default.createElement(
-    _components.AppBar,
-    (0, _extends3.default)({
-      className: isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer",
+    _components.AppBar
+    // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
+    ,
+    (0, _extends3.default)({ className: className || "header-with-drawer",
       title: _react2.default.createElement(
         "div",
         { className: "citizen-header-logo-label" },

@@ -203,19 +203,17 @@ body.employee-user-profile {
 
 .menuStyle .onHoverText {
   visibility: hidden;
-  width: 100%;
+  width: 193px;
   float: left;
   background-color: #00bbd3;
   color: #fff;
-  /* text-align: center; */
+  text-align: center;
   border-radius: 2px;
   padding: 0px 0px;
-
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  margin-left: -40px;
-  padding-left: 20px;
+  margin-left: -60px;
 }
 
 .drawer-backGround a:hover {
