@@ -131,6 +131,11 @@ var form = function form() {
       var oldForm = state[formKey] || {};
       var fieldsAfterReset = resetFields(oldForm.fields);
       return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, oldForm, { fields: fieldsAfterReset })));
+    case actionTypes.REMOVE_FORM:
+      var currForm = state[formKey] || {};
+      var newState = (0, _extends14.default)({}, state);
+      delete newState[formKey];
+      return (0, _extends14.default)({}, newState);
     case actionTypes.FIELD_CHANGE:
       var value = action.value;
 

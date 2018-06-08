@@ -8,9 +8,12 @@ const form = ({ formKey, formConfigPath, rowData, edit = false }) => (Form) => {
     constructor(props) {
       super(props);
       try {
-        console.log(formConfigPath);
-        this.formConfig = formConfigPath ? require(formConfigPath.toString()).default : require(`config/forms/specs/${formKey}`).default;
-        console.log(this.formConfig);
+        if (formConfigPath) {
+          const { moduleName, combination } = formConfigPath;
+          this.formConfig = require(`config/forms/specs/${moduleName}/${combination}/${formKey}`).default;
+        } else {
+          this.formConfig = require(`config/forms/specs/${formKey}`).default;
+        }
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
       }

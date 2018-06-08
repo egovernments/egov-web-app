@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Screen } from "modules/common";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import {
   BasicInformationHOC,
   PropertyAddressHOC,
@@ -20,20 +21,24 @@ class FormWizard extends Component {
   };
 
   renderDynamicForms = (combination) => {
-    const basePath = "config/forms/specs/PropertyTaxPay";
-    console.log(combination);
+    // const basePath = "config/forms/specs/PropertyTaxPay";
+
+    const moduleName = "PropertyTaxPay";
     return combination ? (
-      <DependantFormHOC formKeys={combinationToFormkeyMapping[combination]} basePath={basePath} combination={combination} />
+      <DependantFormHOC
+        formsToAdd={combinationToFormkeyMapping[combination]}
+        moduleName={moduleName}
+        combination={combination}
+        removeForm={(formKey) => this.props.removeForm(formKey)}
+      />
     ) : null;
   };
 
   getSelectedCombination = (form, formKey, fieldKeys) => {
-    console.log(fieldKeys);
     return (
       form[formKey] &&
       form[formKey].fields &&
       fieldKeys.reduce((result, current) => {
-        console.log(form[formKey].fields[current].value);
         if (form[formKey].fields[current].value) {
           result += form[formKey].fields[current].value;
         } else {
@@ -123,4 +128,13 @@ const mapStateToProps = (state) => {
   return { form };
 };
 
-export default connect(mapStateToProps)(FormWizard);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeForm: (formKey) => dispatch(removeForm(formKey)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormWizard);

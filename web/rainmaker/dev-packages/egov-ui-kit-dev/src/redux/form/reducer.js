@@ -102,6 +102,11 @@ const form = (state = intialState, action) => {
       const oldForm = state[formKey] || {};
       const fieldsAfterReset = resetFields(oldForm.fields);
       return { ...state, [formKey]: { ...oldForm, fields: fieldsAfterReset } };
+    case actionTypes.REMOVE_FORM:
+      const currForm = state[formKey] || {};
+      const newState = { ...state };
+      delete newState[formKey];
+      return { ...newState };
     case actionTypes.FIELD_CHANGE:
       const { value } = action;
       return setFieldProperty(state, formKey, fieldKey, "value", value);

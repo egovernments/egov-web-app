@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setFieldProperty = exports.fileUpload = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.resetForm = exports.initForm = undefined;
+exports.setFieldProperty = exports.fileUpload = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -45,6 +45,10 @@ var initForm = exports.initForm = function initForm(form, recordData) {
 
 var resetForm = exports.resetForm = function resetForm(formKey) {
   return { type: actionTypes.RESET_FORM, formKey: formKey };
+};
+
+var removeForm = exports.removeForm = function removeForm(formKey) {
+  return { type: actionTypes.REMOVE_FORM, formKey: formKey };
 };
 
 var handleFieldChange = exports.handleFieldChange = function handleFieldChange(formKey, fieldKey, value) {
