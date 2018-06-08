@@ -4,7 +4,6 @@ import Field from "egov-ui-kit/utils/field";
 
 const GenericForm = ({ form, handleFieldChange, formKey }) => {
   const fields = form.fields || {};
-  console.log(form);
   return (
     <Card
       textChildren={

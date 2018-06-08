@@ -18,6 +18,10 @@ export const resetForm = (formKey) => {
   return { type: actionTypes.RESET_FORM, formKey };
 };
 
+export const removeForm = (formKey) => {
+  return { type: actionTypes.REMOVE_FORM, formKey };
+};
+
 export const handleFieldChange = (formKey, fieldKey, value) => {
   return {
     type: actionTypes.FIELD_CHANGE,
