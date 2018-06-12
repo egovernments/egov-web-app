@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Screen } from "modules/common";
+import { Label } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import {
   BasicInformationHOC,
@@ -111,6 +112,14 @@ class FormWizard extends Component {
     const { component } = this.getFormContent(selected, this.props.form);
     return (
       <div className="wizard-form-main-cont">
+        <Label
+          label="Assessment Form"
+          containerStyle={{ padding: "24px 0px 16px 0",marginLeft:"16px" }}
+          dark={true}
+          bold={true}
+          labelStyle={{ letterSpacing: 0 }}
+          fontSize={"20px"}
+        />
         <WizardComponent
           content={component}
           onTabClick={this.onTabClick}

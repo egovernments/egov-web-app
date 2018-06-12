@@ -38,7 +38,8 @@ var ProfileSection = function ProfileSection(_ref) {
       imgSrc = _ref.imgSrc,
       addIconStyle = _ref.addIconStyle,
       onClickAddPic = _ref.onClickAddPic,
-      emailId = _ref.emailId;
+      emailId = _ref.emailId,
+      className = _ref.className;
 
   return _react2.default.createElement(
     "div",

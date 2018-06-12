@@ -110,7 +110,6 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "City",
       hintText: "Enter City",
-      value: "Bangalore",
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,

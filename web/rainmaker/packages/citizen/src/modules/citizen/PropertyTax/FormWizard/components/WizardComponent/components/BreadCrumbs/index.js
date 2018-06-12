@@ -11,16 +11,9 @@ const tabs = [
     },
   },
   {
-    heading: "Basic Information",
+    heading: "Assessment Information",
     icon: {
       name: "assignment",
-      action: "action",
-    },
-  },
-  {
-    heading: "Tax Assessment",
-    icon: {
-      name: "home",
       action: "action",
     },
   },
@@ -29,6 +22,13 @@ const tabs = [
     icon: {
       name: "person",
       action: "social",
+    },
+  },
+  {
+    heading: "Review & Pay",
+    icon: {
+      name: "attach-money",
+      action: "editor",
     },
   },
 ];
