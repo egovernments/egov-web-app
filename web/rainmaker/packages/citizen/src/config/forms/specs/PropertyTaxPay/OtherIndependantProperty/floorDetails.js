@@ -1,46 +1,52 @@
 const formConfig = {
-  name: "CommercialIndependantfloorDetails",
+  name: "floorDetails",
   fields: {
     floor: {
       id: "assessment-floor",
       jsonPath: "",
-      floatingLabelText: "Floor",
-      hintText: "Select floor",
       type: "singleValueList",
-      required: true,
+      value: "Ground Floor",
     },
-    subUsage: {
-      id: "assessment-occupancy",
+    usageType: {
+      id: "assessment-usageType",
+      jsonPath: "",
+      type: "textfield",
+      floatingLabelText: "Usage Type",
+      value: "Other",
+      required: true,
+      disabled: true,
+    },
+    subUsageType: {
+      id: "assessment-subUsageType",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Sub-usage Type",
+      floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       required: true,
     },
-    Occupancy: {
+    occupancy: {
       id: "assessment-occupancy",
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      hintText: "Select Occupancy",
+      value: "Self-Occupied",
       required: true,
     },
-
-    BuiltArea: {
+    builtArea: {
       id: "assessment-built-area",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "Built Area",
+      floatingLabelText: "Built Area(sq yards)",
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
       required: true,
     },
-    AnnualRent: {
-      id: "assessment-built-area",
+    annualRent: {
+      id: "assessment-annual-rent",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "Annual Rent",
-      hintText: "INR",
+      floatingLabelText: "Total Annual Rent",
+      hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
       required: true,
     },

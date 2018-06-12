@@ -10,7 +10,7 @@ const formConfig = {
       errorMessage: "Enter a valid plot size",
       required: true,
     },
-    MeasuringUnit: {
+    measuringUnit: {
       id: "assessment-plot-unit",
       jsonPath: "",
       type: "singleValueList",
@@ -24,7 +24,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "No. of Floors",
       required: true,
-      value: "1",
+      hintText: "Select",
     },
   },
 };

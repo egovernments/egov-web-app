@@ -18,14 +18,6 @@ const formConfig = {
       value: "Sq yards",
       required: true,
     },
-    floorCount: {
-      id: "assessment-number-of-floors",
-      jsonPath: "",
-      type: "textfield",
-      floatingLabelText: "No. of Floors",
-      required: true,
-      value: "1",
-    },
   },
 };
 
