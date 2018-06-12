@@ -1,13 +1,22 @@
 const formConfig = {
   name: "plotDetails",
   fields: {
+    floorCount: {
+      id: "assessment-number-of-floors",
+      jsonPath: "",
+      type: "textfield",
+      floatingLabelText: "No. of Floors",
+      required: true,
+      value: "1",
+    },
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Usage Type",
-      value: "Residential",
+      value: "Commercial",
       required: true,
+      disabled: true,
     },
     subUsageType: {
       id: "assessment-subUsageType",
