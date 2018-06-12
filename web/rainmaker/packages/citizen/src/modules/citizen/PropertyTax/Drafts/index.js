@@ -8,33 +8,33 @@ class MyProperties extends Component {
     super(props);
   }
 
-  properties = [
+  drafts = [
     {
-      address: "E2/14, Hari Nagar",
-      status: "Payment Pending",
+      name: "Draft-1",
+      date: "22-MAR-18",
       rightIcon: <Icon action="alert" name="warning" />,
     },
     {
-      address: "P9/2, Bellandur",
-      status: "",
+      name: "Draft-2",
+      date: "04-JUN-18",
       rightIcon: <Icon action="alert" name="warning" />,
     },
   ];
 
-  getListItems = (properties) => {
-    return properties.map((property, index) => {
+  getListItems = (drafts) => {
+    return drafts.map((draft, index) => {
       return {
-        primaryText: <Label label={property.address} fontSize="16px" color="#484848" />,
-        leftIcon: <Icon action="action" name="home" />,
+        primaryText: <Label label={`${draft.name}(${draft.date})`} fontSize="16px" color="#484848" />,
+        leftIcon: <Icon action="image" name="edit" />,
       };
     });
   };
 
   render() {
-    let { getListItems, properties } = this;
+    let { getListItems, drafts } = this;
     return (
       <Screen>
-        <PTList items={getListItems(properties)} label="My Properties" />
+        <PTList items={getListItems(drafts)} label="Drafts" />
       </Screen>
     );
   }
