@@ -22,6 +22,7 @@ class FormWizard extends Component {
   state = {
     selected: 0,
     ownerInfoArr: [],
+    showOwners: false,
   };
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
@@ -42,9 +43,8 @@ class FormWizard extends Component {
     ) : null;
   };
 
-  renderDuplicateForms = (formKey) => {
-    console.log(formKey);
-    return <DuplicateCardsHOC formKey={formKey} />;
+  renderDuplicateForms = () => {
+    return <DuplicateCardsHOC formKey={"ownerInfo"} />;
   };
 
   getSelectedCombination = (form, formKey, fieldKeys) => {
@@ -75,27 +75,26 @@ class FormWizard extends Component {
           </div>
         );
       case 2:
-        combination = this.getSelectedCombination(form, "ownershipType", ["typeOfOwnership"]);
+        let combination = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
         console.log(combination);
-        return {
-          component: (
-            <div>
-              <OwnershipTypeHOC />
-              {combination === "MUL" ? (
-                <div>
-                  {[...this.formMultipleOwner()]}
-                  <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
-                    + Add Owner
-                  </div>
-                </div>
-              ) : (
+        return (
+          <div>
+            <OwnershipTypeHOC />
+            {combination === "MUL" ? (
+              <div>
                 <OwnerInfoHOC />
-              )}
+                {this.state.showOwners && this.renderDuplicateForms()}
+                <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
+                  + Add Owner
+                </div>
+              </div>
+            ) : (
+              <OwnerInfoHOC />
+            )}
 
-              {/* <ExemptionCategoryHOC /> */}
-            </div>
-          ),
-        };
+            {/* <ExemptionCategoryHOC /> */}
+          </div>
+        );
 
       case 3:
         return (
@@ -109,18 +108,17 @@ class FormWizard extends Component {
   };
 
   addOwner = () => {
-    console.log("clicked");
     this.setState({
-      ownerInfoArr: this.formMultipleOwner(),
+      showOwners: true,
     });
   };
 
   formMultipleOwner = () => {
-    let ownerArr = [this.state.ownerInfoArr];
+    // let ownerArr = [...this.state.ownerInfoArr];
     const owner = this.renderDuplicateForms("ownerInfo");
     // ownerArr.push(<OwnerInfoHOC />);
-    ownerArr.push(owner);
-    return ownerArr;
+    // ownerArr.push(owner);
+    return owner;
   };
 
   handleNext = () => {
