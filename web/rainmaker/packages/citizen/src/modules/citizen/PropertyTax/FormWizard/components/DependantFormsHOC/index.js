@@ -37,7 +37,7 @@ class DependantFormsHOC extends React.Component {
     return (
       formsToAdd &&
       formsToAdd.formKeys.map((formKey, index) => {
-        let DependantForm = formHoc({ formKey: formKey, formConfigPath: { moduleName: moduleName, combination: combination } })(GenericForm);
+        let DependantForm = formHoc({ formKey: formKey, path: `${moduleName}/${combination}` })(GenericForm);
         return (
           <div key={index}>
             <DependantForm />

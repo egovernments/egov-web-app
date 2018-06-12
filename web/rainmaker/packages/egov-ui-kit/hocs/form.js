@@ -40,6 +40,8 @@ var form = function form(_ref) {
   var formKey = _ref.formKey,
       _ref$path = _ref.path,
       path = _ref$path === undefined ? "" : _ref$path,
+      _ref$makeCopy = _ref.makeCopy,
+      makeCopy = _ref$makeCopy === undefined ? false : _ref$makeCopy,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit;
@@ -51,6 +53,17 @@ var form = function form(_ref) {
         (0, _classCallCheck3.default)(this, FormWrapper);
 
         var _this = (0, _possibleConstructorReturn3.default)(this, (FormWrapper.__proto__ || Object.getPrototypeOf(FormWrapper)).call(this, props));
+
+        _this.createCopy = function (formConf) {
+          var formKeys = _this.props.formKeys;
+
+          var existing_count = formKeys.filter(function (formKey) {
+            return formKey.includes(formConf.name);
+          }).length;
+          formConf.name = formConf.name + ("_" + existing_count);
+          formKey = formConf.name;
+          return formConf;
+        };
 
         _this.submitForm = function () {
           var form = _this.props.form;
@@ -64,10 +77,9 @@ var form = function form(_ref) {
         };
 
         try {
-          if (path) {
+          if (path && path !== "") {
             _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
-            console.log(makeCopy);
             _this.formConfig = require("config/forms/specs/" + formKey).default;
           }
         } catch (error) {
@@ -81,9 +93,7 @@ var form = function form(_ref) {
         value: function componentDidMount() {
           if (this.formConfig && makeCopy) {
             var formConf = (0, _extends3.default)({}, this.formConfig);
-            console.log(formConf.name);
-            formConf.name = formConf.name + "_1";
-            formKey = formConf.name;
+            formConf = this.createCopy(formConf);
             this.props.initForm(formConf, rowData);
           } else {
             this.formConfig && this.props.initForm(this.formConfig, rowData);
@@ -96,7 +106,7 @@ var form = function form(_ref) {
               submitForm = this.submitForm;
           var loading = this.props.loading;
 
-
+          console.log(this.props.formKeys);
           return _react2.default.createElement(
             "div",
             null,
@@ -119,11 +129,12 @@ var form = function form(_ref) {
 
     var mapStateToProps = function mapStateToProps(state) {
       var form = state.form[formKey] || {};
+      var formKeys = Object.keys(state.form);
 
       var _ref2 = form || false,
           loading = _ref2.loading;
 
-      return { form: form, loading: loading };
+      return { form: form, formKeys: formKeys, loading: loading };
     };
 
     var mapDispatchToProps = function mapDispatchToProps(dispatch) {
