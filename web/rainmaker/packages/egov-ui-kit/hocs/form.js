@@ -106,7 +106,6 @@ var form = function form(_ref) {
               submitForm = this.submitForm;
           var loading = this.props.loading;
 
-          console.log(this.props.formKeys);
           return _react2.default.createElement(
             "div",
             null,
