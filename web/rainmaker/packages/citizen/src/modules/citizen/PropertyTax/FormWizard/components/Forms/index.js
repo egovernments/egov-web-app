@@ -98,14 +98,14 @@ const OwnerInformation = ({ form, handleFieldChange, handleChange, handleGuardia
   );
 };
 
-const BasicInformationHOC = formHoc({ formKey: "basicInformation" })(GenericForm);
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress" })(GenericForm);
-const PlotInformationHOC = formHoc({ formKey: "plotInformation" })(GenericForm);
-const OwnershipTypeHOC = formHoc({ formKey: "ownershipType" })(GenericForm);
-const OwnerInfoHOC = formHoc({ formKey: "ownerInfo" })(OwnerInformation);
-const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory" })(GenericForm);
+const UsageInformationHOC = formHoc({ formKey: "basicInformation",path:"PropertyTaxPay"})(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress",path:"PropertyTaxPay" })(GenericForm);
+const PlotInformationHOC = formHoc({ formKey: "plotInformation",path:"PropertyTaxPay" })(GenericForm);
+const OwnershipTypeHOC = formHoc({ formKey: "ownershipType",path:"PropertyTaxPay" })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo",path:"PropertyTaxPay" })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory" ,path:"PropertyTaxPay"})(GenericForm);
 const DynamicFormHoc=(formKey,Form) =>{
   return formHoc({formKey})(Form)
 }
 
-export { BasicInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC,DynamicFormHoc};
+export { UsageInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC,DynamicFormHoc};

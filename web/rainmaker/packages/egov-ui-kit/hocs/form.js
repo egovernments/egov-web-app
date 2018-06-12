@@ -38,7 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var form = function form(_ref) {
   var formKey = _ref.formKey,
-      formConfigPath = _ref.formConfigPath,
+      _ref$path = _ref.path,
+      path = _ref$path === undefined ? "" : _ref$path,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit;
@@ -63,11 +64,8 @@ var form = function form(_ref) {
         };
 
         try {
-          if (formConfigPath) {
-            var moduleName = formConfigPath.moduleName,
-                combination = formConfigPath.combination;
-
-            _this.formConfig = require("config/forms/specs/" + moduleName + "/" + combination + "/" + formKey).default;
+          if (path) {
+            _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
             _this.formConfig = require("config/forms/specs/" + formKey).default;
           }
