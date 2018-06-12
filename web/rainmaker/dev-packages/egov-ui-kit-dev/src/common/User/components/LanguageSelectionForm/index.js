@@ -1,6 +1,7 @@
 import React from "react";
-import { ButtonGroup, Button, Card } from "components";
+import { ButtonGroup, Button, Card, Image } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import logo from "egov-ui-kit/assets/images/logo_black.png";
 import "./index.css";
 
 const selectedLabelStyle = {
@@ -33,9 +34,12 @@ const defaultLabelStyle = {
 const LanguageSelectionForm = ({ items, onLanguageSelect, value, onClick }) => {
   return (
     <Card
-      className="user-screens-card language-selection-card"
+      className="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 user-screens-card language-selection-card"
       textChildren={
         <div>
+          <div style={{ marginBottom: "24px" }}>
+            <Image className="mseva-logo" source={`${logo}`} />
+          </div>
           <form>
             <div className="text-center">
               <Label bold={true} label="LANGUAGE" className="language-label" />

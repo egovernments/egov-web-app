@@ -16,9 +16,9 @@ const Banner = ({ children, history, className = "" }) => {
           <Icon onClick={() => history.goBack()} className="banner-back-button" action="navigation" name="arrow-back" />
           <div style={backgroundImage} className="banner-image" />
           <div className="banner-overlay" />
-          <div className="logo-wrapper">
+          {/* <div className="logo-wrapper">
             <Image className="mseva-logo" source={`${logo}`} />
-          </div>
+          </div> */}
           {children}
         </div>
       </div>

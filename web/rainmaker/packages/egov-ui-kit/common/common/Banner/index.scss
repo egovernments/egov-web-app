@@ -24,7 +24,7 @@
 }
 
 .banner-image {
-  // background-image: url(assets/images/banner.png);
+  background-image: url(../../../assets/images/Banner_image.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -44,11 +44,11 @@
 
 .user-screens-wrapper .user-screens-card {
   position: fixed;
-  bottom: 10px;
+  bottom: 175px;
   left: 8px;
   right: 8px;
   padding: 24px 16px;
-  overflow-y: scroll;
+  overflow-y: unset;
   overflow-x: hidden;
 }
 
