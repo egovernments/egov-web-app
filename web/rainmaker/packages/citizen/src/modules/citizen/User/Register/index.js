@@ -10,11 +10,9 @@ const RegisterFormHOC = formHoc({ formKey: "register" })(RegisterForm);
 class Register extends Component {
   render() {
     return (
-      <Screen>
-        <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
-          <RegisterFormHOC />
-        </Banner>
-      </Screen>
+      <Banner>
+        <RegisterFormHOC />
+      </Banner>
     );
   }
 }

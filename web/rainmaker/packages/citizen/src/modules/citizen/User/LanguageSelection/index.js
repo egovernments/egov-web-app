@@ -37,7 +37,7 @@ class LanguageSelection extends Component {
     const { onLanguageSelect, onClick } = this;
 
     return (
-      <Banner className="language-selection col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <Banner className="language-selection">
         <LanguageSelectionForm items={items} value={value} onLanguageSelect={onLanguageSelect} onClick={onClick} />
       </Banner>
     );

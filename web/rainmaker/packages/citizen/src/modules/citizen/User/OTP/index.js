@@ -43,7 +43,7 @@ class OTP extends Component {
 
     return (
       <Screen loading={loading}>
-        <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+        <Banner>
           <OTPFormHOC resendOTP={resendOTP} phoneNumber={phoneNumber} />
         </Banner>
       </Screen>

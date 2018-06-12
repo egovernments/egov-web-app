@@ -44,11 +44,6 @@ var Banner = function Banner(_ref) {
           }, className: "banner-back-button", action: "navigation", name: "arrow-back" }),
         _react2.default.createElement("div", { style: backgroundImage, className: "banner-image" }),
         _react2.default.createElement("div", { className: "banner-overlay" }),
-        _react2.default.createElement(
-          "div",
-          { className: "logo-wrapper" },
-          _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _logoWhite2.default })
-        ),
         children
       )
     )
