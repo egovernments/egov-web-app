@@ -3,15 +3,14 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path = "", rowData, edit = false }) => (Form) => {
+const form = ({ formKey, path = "", makeCopy = false, rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
       try {
-        if (path) {
+        if (path && path !== "") {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
         } else {
-          console.log(makeCopy);
           this.formConfig = require(`config/forms/specs/${formKey}`).default;
         }
       } catch (error) {
@@ -22,14 +21,22 @@ const form = ({ formKey, path = "", rowData, edit = false }) => (Form) => {
     componentDidMount() {
       if (this.formConfig && makeCopy) {
         let formConf = { ...this.formConfig };
-        console.log(formConf.name);
-        formConf.name = formConf.name + "_1";
-        formKey = formConf.name;
+        formConf = this.createCopy(formConf);
         this.props.initForm(formConf, rowData);
       } else {
         this.formConfig && this.props.initForm(this.formConfig, rowData);
       }
     }
+
+    createCopy = (formConf) => {
+      const { formKeys } = this.props;
+      const existing_count = formKeys.filter(function(formKey) {
+        return formKey.includes(formConf.name);
+      }).length;
+      formConf.name = formConf.name + `_${existing_count}`;
+      formKey = formConf.name;
+      return formConf;
+    };
 
     submitForm = () => {
       const { form } = this.props;
@@ -44,7 +51,6 @@ const form = ({ formKey, path = "", rowData, edit = false }) => (Form) => {
     render() {
       const { handleFieldChange, submitForm } = this;
       const { loading } = this.props;
-
       return (
         <div>
           <form
@@ -63,8 +69,9 @@ const form = ({ formKey, path = "", rowData, edit = false }) => (Form) => {
 
   const mapStateToProps = (state) => {
     const form = state.form[formKey] || {};
+    const formKeys = Object.keys(state.form);
     const { loading } = form || false;
-    return { form, loading };
+    return { form, formKeys, loading };
   };
 
   const mapDispatchToProps = (dispatch) => {
