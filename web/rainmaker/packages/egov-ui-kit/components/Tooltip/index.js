@@ -16,6 +16,10 @@ var _Tooltip = require("@material-ui/core/Tooltip");
 
 var _Tooltip2 = _interopRequireDefault(_Tooltip);
 
+var _Info = require("@material-ui/icons/Info");
+
+var _Info2 = _interopRequireDefault(_Info);
+
 var _Icon = require("@material-ui/core/Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
@@ -51,8 +55,8 @@ var ToolTipUi = function ToolTipUi(_ref) {
     { id: id, title: title, placement: placement || "right", PopperProps: PopperProps },
     _react2.default.createElement(
       _Icon2.default,
-      { action: "action", name: "info", style: { fontSize: 22 }, color: "#ffffff" },
-      _react2.default.createElement("img", { src: _info2.default })
+      { color: "disabled", style: { fontSize: 50 } },
+      _react2.default.createElement(_Info2.default, null)
     )
   );
 };
