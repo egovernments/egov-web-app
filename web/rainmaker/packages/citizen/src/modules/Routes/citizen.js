@@ -27,6 +27,7 @@ import ReopenAcknowledgement from "modules/citizen/pgr/ReopenAcknowledgement";
 //property tax
 import PTHome from "modules/citizen/PropertyTax/PTHome";
 import MyProperties from "modules/citizen/PropertyTax/MyProperties";
+import Drafts from "modules/citizen/PropertyTax/Drafts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import Reciept from "modules/citizen/PropertyTax/Reciept";
 import Events from "modules/citizen/PropertyTax/Events";
@@ -200,6 +201,16 @@ const routes = [
     },
   },
   {
+    path: "property-tax/drafts",
+    component: Drafts,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
+    },
+  },
+  {
     path: "property-tax/property-address",
     component: PropertyAddress,
     needsAuthentication: true,
@@ -217,7 +228,7 @@ const routes = [
     },
   },
   {
-    path: "pt-payment/assessment-form",
+    path: "property-tax/assessment-form",
     component: FormWizard,
     needsAuthentication: true,
     options: {
@@ -227,7 +238,7 @@ const routes = [
     },
   },
   {
-    path: "pt-payment/review-property",
+    path: "propert-tax/review-property",
     component: ReviewForm,
     needsAuthentication: true,
     options: {

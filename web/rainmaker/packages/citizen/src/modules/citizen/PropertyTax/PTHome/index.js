@@ -28,6 +28,30 @@ class PTHome extends Component {
     };
   }
 
+  listItems = [
+    {
+      primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
+      route: "/citizen/property-tax/drafts",
+      leftIcon: <Icon action="image" name="edit" />,
+      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    },
+    {
+      primaryText: <Label label="PT_MY_RECEIPTS" />,
+      leftIcon: <Icon action="action" name="receipt" />,
+      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    },
+    {
+      primaryText: <Label label="PT_EXAMPLES" />,
+      leftIcon: <Icon action="custom" name="pt-example" />,
+      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    },
+    {
+      primaryText: <Label label="PT_HOW_IT_WORKS" />,
+      leftIcon: <Icon action="action" name="help" />,
+      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    },
+  ];
+
   getYearList = () => {
     let today = new Date();
     let month = today.getMonth() + 1;
@@ -53,7 +77,13 @@ class PTHome extends Component {
     this.setState({ dialogueOpen: false });
   };
 
+  handleItemClick = (item, index) => {
+    const { route } = item;
+    this.props.history.push(route);
+  };
+
   render() {
+    let { listItems, handleItemClick } = this;
     return (
       <Screen>
         <Card
@@ -88,36 +118,13 @@ class PTHome extends Component {
           }
         />
         <List
-          onItemClick={() => {
-            this.setState({ dialogueOpen: true });
-          }}
+          onItemClick={handleItemClick}
           listContainerStyle={{ marginTop: "16px" }}
           listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
           nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
           autoGenerateNestedIndicator={false}
           primaryTogglesNestedList={true}
-          items={[
-            {
-              primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
-              leftIcon: <Icon action="image" name="edit" />,
-              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-            },
-            {
-              primaryText: <Label label="PT_MY_RECEIPTS" />,
-              leftIcon: <Icon action="action" name="receipt" />,
-              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-            },
-            {
-              primaryText: <Label label="PT_EXAMPLES" />,
-              leftIcon: <Icon action="custom" name="pt-example" />,
-              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-            },
-            {
-              primaryText: <Label label="PT_HOW_IT_WORKS" />,
-              leftIcon: <Icon action="action" name="help" />,
-              rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-            },
-          ]}
+          items={listItems}
         />
         <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
