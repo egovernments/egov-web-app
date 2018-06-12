@@ -1,20 +1,18 @@
 const formConfig = {
-  name: "plotDetails",
+  name: "floorDetails",
   fields: {
-    floorCount: {
-      id: "assessment-number-of-floors",
+    floor: {
+      id: "assessment-floor",
       jsonPath: "",
-      type: "textfield",
-      floatingLabelText: "No. of Floors",
-      required: true,
-      value: "1",
+      type: "singleValueList",
+      value: "Ground Floor",
     },
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Usage Type",
-      value: "Commercial",
+      value: "Industrial",
       required: true,
       disabled: true,
     },
@@ -34,21 +32,13 @@ const formConfig = {
       value: "Self-Occupied",
       required: true,
     },
-    superArea: {
-      id: "assessment-super-area",
+    builtArea: {
+      id: "assessment-built-area",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "Total Super area",
-      hintText: "Enter total super area",
-      ErrorText: "Enter a valid super area size",
-      required: true,
-    },
-    superAreaUnit: {
-      id: "assessment-super-area-unit",
-      jsonPath: "",
-      type: "singleValueList",
-      floatingLabelText: "Built area unit",
-      value: "Sq yards",
+      floatingLabelText: "Built Area(sq yards)",
+      hintText: "Enter built area size",
+      ErrorText: "Enter a valid built area size",
       required: true,
     },
     annualRent: {

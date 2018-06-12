@@ -1,5 +1,5 @@
 const formConfig = {
-  name: "ResidentialIndependantPlotDetails",
+  name: "plotDetails",
   fields: {
     plotSize: {
       id: "assessment-plot-size",
@@ -10,12 +10,12 @@ const formConfig = {
       errorMessage: "Enter a valid plot size",
       required: true,
     },
-    MeasuringUnit: {
+    measuringUnit: {
       id: "assessment-plot-unit",
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
-      hintText: "Sq yards",
+      value: "Sq yards",
       required: true,
     },
     floorCount: {
@@ -24,7 +24,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "No. of Floors",
       required: true,
-      value: "1",
+      hintText: "Select",
     },
   },
 };
