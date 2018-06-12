@@ -77,7 +77,7 @@ var formSubmit = function formSubmit(store) {
 
         // for login/register flow
         if (formKey === "otp") {
-          redirectionRoute = "/citizen/pt-payment";
+          redirectionRoute = "/citizen/property-tax";
           delete payload.ResponseInfo;
           dispatch((0, _actions2.authenticated)(payload));
         }

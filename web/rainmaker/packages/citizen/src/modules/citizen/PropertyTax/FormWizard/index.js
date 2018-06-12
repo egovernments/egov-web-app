@@ -98,7 +98,7 @@ class FormWizard extends Component {
     if (selected < 3) {
       this.setState({ selected: selected + 1 });
     } else {
-      this.props.history.push("/citizen/pt-payment/review-property");
+      this.props.history.push("/citizen/property-tax/review-property");
     }
   };
 
@@ -120,7 +120,7 @@ class FormWizard extends Component {
       <div className="wizard-form-main-cont">
         <Label
           label="Assessment Form"
-          containerStyle={{ padding: "24px 0px 16px 0",marginLeft:"16px" }}
+          containerStyle={{ padding: "24px 0px 16px 0", marginLeft: "16px" }}
           dark={true}
           bold={true}
           labelStyle={{ letterSpacing: 0 }}

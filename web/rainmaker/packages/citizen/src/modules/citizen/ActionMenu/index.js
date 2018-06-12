@@ -137,7 +137,7 @@ class ActionMenu extends Component {
       };
       this.menuChange(pathParam);
 
-      setRoute("/citizen/pt-payment");
+      setRoute("/citizen/property-tax");
     } else {
       let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
