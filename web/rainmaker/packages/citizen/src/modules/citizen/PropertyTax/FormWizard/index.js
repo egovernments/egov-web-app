@@ -57,77 +57,6 @@ class FormWizard extends Component {
     }
   };
 
-  // renderDynamicForms = (combination) => {
-  //   // const basePath = "config/forms/specs/PropertyTaxPay";
-  //
-  //   const moduleName = "PropertyTaxPay";
-  //   return combination ? (
-  //     <DependantFormHOC
-  //       formsToAdd={combinationToFormkeyMapping[combination]}
-  //       moduleName={moduleName}
-  //       combination={combination}
-  //       removeForm={(formKey) => this.props.removeForm(formKey)}
-  //     />
-  //   ) : null;
-  // };
-  //
-  // getSelectedCombination = (form, formKey, fieldKeys) => {
-  //   return (
-  //     form[formKey] &&
-  //     form[formKey].fields &&
-  //     fieldKeys.reduce((result, current) => {
-  //       if (form[formKey].fields[current].value) {
-  //         result += form[formKey].fields[current].value;
-  //       } else {
-  //         result = "";
-  //       }
-  //       return result;
-  //     }, "")
-  //   );
-  // };
-
-  // getFormContent = (index, form) => {
-  //   switch (index) {
-  //     case 0:
-  //       return {
-  //         component: <PropertyAddressHOC />,
-  //       };
-  //     case 1:
-  //       let combination = this.getSelectedCombination(form, "basicInformation", ["typeOfUsage", "typeOfBuilding"]);
-  //       return {
-  //         component: (
-  //           <div>
-  //             <UsageInformationHOC />
-  //             {combination && <PlotInformationHOC />}
-  //             {combination && this.renderDynamicForms(combination)}
-  //           </div>
-  //         ),
-  //       };
-  //     case 2:
-  //       return {
-  //         component: (
-  //           <div>
-  //             <OwnershipTypeHOC />
-  //             <OwnerInfoHOC />
-  //             <ExemptionCategoryHOC />
-  //           </div>
-  //         )
-  //       };
-  //     case 3:
-  //       return {
-  //         component: (
-  //           <div>
-  //             <ReviewForm/>
-  //           </div>
-  //         ),
-  //       };
-  //     default:
-  //       return {
-  //         component: null,
-  //       };
-  //   }
-  // };
-
   handleNext = () => {
     const { selected } = this.state;
     if (selected < 3) {
@@ -151,7 +80,6 @@ class FormWizard extends Component {
   render() {
     const { renderStepperContent } = this;
     const { selected } = this.state;
-    // const { component } = this.getFormContent(selected, this.props.form);
     return (
       <div className="wizard-form-main-cont">
         <Label
