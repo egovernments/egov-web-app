@@ -29,7 +29,7 @@ import PTHome from "modules/citizen/PropertyTax/PTHome";
 import MyProperties from "modules/citizen/PropertyTax/MyProperties";
 import Drafts from "modules/citizen/PropertyTax/Drafts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
-import Reciept from "modules/citizen/PropertyTax/Reciept";
+import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";
 import Events from "modules/citizen/PropertyTax/Events";
 import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
@@ -75,12 +75,7 @@ const routes = [
     needsAuthentication: true,
     options: { isHomeScreen: true },
   },
-  {
-    path: "reciepts",
-    component: Reciept,
-    needsAuthentication: true,
-    options: { hideFooter: true, title: "Reciepts" },
-  },
+
   {
     path: "events",
     component: Events,
@@ -203,6 +198,26 @@ const routes = [
   {
     path: "property-tax/drafts",
     component: Drafts,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
+    },
+  },
+  // {
+  //   path: "property-tax/receipts",
+  //   component: Receipts,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "PUNJAB MUNICIPAL CORPORATION",
+  //     hideBackButton: true,
+  //   },
+  // },
+  {
+    path: "property-tax/payment-success",
+    component: PaymentSuccess,
     needsAuthentication: true,
     options: {
       hideFooter: true,
