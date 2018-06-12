@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Button, TimeLine, Card, Icon, Label } from "components";
-import { Screen } from "modules/common";
+import { Button, TimeLine, Card, Icon } from "components";
 // import Label from "utils/translationNode";
 import PropertyAddress from "./components/PropertyAddress";
 import BasicInformation from "./components/BasicInformation";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
-import ActionFooter from "./components/ActionFooter";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
 
 import propertyAddressConfig from "./formConfigs/propertyAddress";
@@ -36,23 +34,13 @@ class ReviewForm extends Component {
 
   render() {
     return (
-      <Screen>
-        <Label
-          label="Review Form"
-          fontSize="20px"
-          labelStyle={{
-            fontFamily: "Roboto",
-            color: "#484848",
-            margin: "24px 0px 0px 16px",
-          }}
-        />
+      <div>
         <PropertyAddress form={propertyAddressConfig} icon={PropAddressIcon} editIcon={editIcon} />
         <BasicInformation form={basicInformationConfig} icon={BasicInfoIcon} editIcon={editIcon} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={editIcon} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={editIcon} />
         <PropertyTaxDetailsCard />
-        <ActionFooter />
-      </Screen>
+      </div>
     );
   }
 }

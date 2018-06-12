@@ -11,6 +11,7 @@ import {
   OwnerInfoHOC,
   ExemptionCategoryHOC,
 } from "./components/Forms";
+import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import DependantFormHOC from "./components/DependantFormsHOC";
 import combinationToFormkeyMapping from "./components/FormManager";
 import { connect } from "react-redux";
@@ -62,21 +63,26 @@ class FormWizard extends Component {
           component: (
             <div>
               <BasicInformationHOC />
+              <PlotInformationHOC />
               {combination && this.renderDynamicForms(combination)}
             </div>
           ),
         };
       case 2:
         return {
-          component: <PlotInformationHOC />,
-        };
-      case 3:
-        return {
           component: (
             <div>
               <OwnershipTypeHOC />
               <OwnerInfoHOC />
               <ExemptionCategoryHOC />
+            </div>
+          )
+        };
+      case 3:
+        return {
+          component: (
+            <div>
+              <ReviewForm/>
             </div>
           ),
         };
