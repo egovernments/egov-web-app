@@ -39,7 +39,7 @@ const formSubmit = (store) => (next) => (action) => {
 
     // for login/register flow
     if (formKey === "otp") {
-      redirectionRoute = "/citizen/pt-payment";
+      redirectionRoute = "/citizen/property-tax";
       delete payload.ResponseInfo;
       dispatch(authenticated(payload));
     }

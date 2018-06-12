@@ -4,7 +4,12 @@
 }
 
 .pt-new-property,
+.pt-search-property,
+.pt-my-properties {
+  cursor: pointer;
+}
+
+.pt-new-property,
 .pt-search-property {
   border-right: 2px solid #e5e7e9;
-  cursor: pointer;
 }

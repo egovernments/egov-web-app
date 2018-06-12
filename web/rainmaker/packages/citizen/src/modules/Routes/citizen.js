@@ -25,7 +25,8 @@ import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import ReopenAcknowledgement from "modules/citizen/pgr/ReopenAcknowledgement";
 
 //property tax
-import PropertyTaxPaymentStepOne from "modules/citizen/PropertyTax/PaymentStepOne";
+import PTHome from "modules/citizen/PropertyTax/PTHome";
+import MyProperties from "modules/citizen/PropertyTax/MyProperties";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import Reciept from "modules/citizen/PropertyTax/Reciept";
 import Events from "modules/citizen/PropertyTax/Events";
@@ -41,25 +42,25 @@ const routes = [
     path: "user/register",
     component: Register,
     needsAuthentication: false,
-    redirectionUrl: "/citizen/pt-payment",
+    redirectionUrl: "/citizen/property-tax",
   },
   {
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/citizen/pt-payment",
+    redirectionUrl: "/citizen/property-tax",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/citizen/pt-payment",
+    redirectionUrl: "/citizen/property-tax",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/citizen/pt-payment",
+    redirectionUrl: "/citizen/property-tax",
   },
   {
     path: "user/profile",
@@ -177,8 +178,8 @@ const routes = [
   },
   //property tax routes
   {
-    path: "pt-payment",
-    component: PropertyTaxPaymentStepOne,
+    path: "property-tax",
+    component: PTHome,
     needsAuthentication: true,
     options: {
       hideFooter: true,
@@ -187,8 +188,19 @@ const routes = [
       isHomeScreen: true,
     },
   },
+
   {
-    path: "pt-payment/property-address",
+    path: "property-tax/my-properties",
+    component: MyProperties,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
+    },
+  },
+  {
+    path: "property-tax/property-address",
     component: PropertyAddress,
     needsAuthentication: true,
     options: {

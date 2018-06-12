@@ -18,7 +18,7 @@ const actionList = [
     serviceCode: "PT",
     code: "null",
     path: "Home",
-    navigationURL: "pt-payment",
+    navigationURL: "property-tax",
     leftIcon: { action: "action", name: "home" },
     rightIcon: "",
   },
