@@ -67,6 +67,7 @@ var form = function form(_ref) {
           if (path) {
             _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
+            console.log(makeCopy);
             _this.formConfig = require("config/forms/specs/" + formKey).default;
           }
         } catch (error) {
@@ -78,7 +79,15 @@ var form = function form(_ref) {
       (0, _createClass3.default)(FormWrapper, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-          this.formConfig && this.props.initForm(this.formConfig, rowData);
+          if (this.formConfig && makeCopy) {
+            var formConf = (0, _extends3.default)({}, this.formConfig);
+            console.log(formConf.name);
+            formConf.name = formConf.name + "_1";
+            formKey = formConf.name;
+            this.props.initForm(formConf, rowData);
+          } else {
+            this.formConfig && this.props.initForm(this.formConfig, rowData);
+          }
         }
       }, {
         key: "render",

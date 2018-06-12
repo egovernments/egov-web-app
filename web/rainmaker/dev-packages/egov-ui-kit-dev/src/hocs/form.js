@@ -3,7 +3,7 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path="", rowData, edit = false }) => (Form) => {
+const form = ({ formKey, path = "", rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
@@ -11,6 +11,7 @@ const form = ({ formKey, path="", rowData, edit = false }) => (Form) => {
         if (path) {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
         } else {
+          console.log(makeCopy);
           this.formConfig = require(`config/forms/specs/${formKey}`).default;
         }
       } catch (error) {
@@ -19,7 +20,15 @@ const form = ({ formKey, path="", rowData, edit = false }) => (Form) => {
     }
 
     componentDidMount() {
-      this.formConfig && this.props.initForm(this.formConfig, rowData);
+      if (this.formConfig && makeCopy) {
+        let formConf = { ...this.formConfig };
+        console.log(formConf.name);
+        formConf.name = formConf.name + "_1";
+        formKey = formConf.name;
+        this.props.initForm(formConf, rowData);
+      } else {
+        this.formConfig && this.props.initForm(this.formConfig, rowData);
+      }
     }
 
     submitForm = () => {

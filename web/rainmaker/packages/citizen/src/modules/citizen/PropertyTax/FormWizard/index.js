@@ -13,6 +13,7 @@ import {
 } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import DependantFormHOC from "./components/DependantFormsHOC";
+import DuplicateCardsHOC from "./components/DuplicateCardsHOC";
 import combinationToFormkeyMapping from "./components/FormManager";
 import { connect } from "react-redux";
 import "./index.css";
@@ -20,10 +21,45 @@ import "./index.css";
 class FormWizard extends Component {
   state = {
     selected: 0,
+    ownerInfoArr: [],
   };
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
     return null;
+  };
+
+  renderDynamicForms = (combination) => {
+    // const basePath = "config/forms/specs/PropertyTaxPay";
+
+    const moduleName = "PropertyTaxPay";
+    return combination ? (
+      <DependantFormHOC
+        formsToAdd={combinationToFormkeyMapping[combination]}
+        moduleName={moduleName}
+        combination={combination}
+        removeForm={(formKey) => this.props.removeForm(formKey)}
+      />
+    ) : null;
+  };
+
+  renderDuplicateForms = (formKey) => {
+    console.log(formKey);
+    return <DuplicateCardsHOC formKey={formKey} />;
+  };
+
+  getSelectedCombination = (form, formKey, fieldKeys) => {
+    return (
+      form[formKey] &&
+      form[formKey].fields &&
+      fieldKeys.reduce((result, current) => {
+        if (form[formKey].fields[current].value) {
+          result += form[formKey].fields[current].value;
+        } else {
+          result = "";
+        }
+        return result;
+      }, "")
+    );
   };
 
   renderStepperContent = (selected) => {
@@ -39,13 +75,28 @@ class FormWizard extends Component {
           </div>
         );
       case 2:
-        return (
-          <div>
-            <OwnershipTypeHOC />
-            <OwnerInfoHOC />
-            <ExemptionCategoryHOC />
-          </div>
-        );
+        combination = this.getSelectedCombination(form, "ownershipType", ["typeOfOwnership"]);
+        console.log(combination);
+        return {
+          component: (
+            <div>
+              <OwnershipTypeHOC />
+              {combination === "MUL" ? (
+                <div>
+                  {[...this.formMultipleOwner()]}
+                  <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
+                    + Add Owner
+                  </div>
+                </div>
+              ) : (
+                <OwnerInfoHOC />
+              )}
+
+              {/* <ExemptionCategoryHOC /> */}
+            </div>
+          ),
+        };
+
       case 3:
         return (
           <div>
@@ -55,6 +106,21 @@ class FormWizard extends Component {
       default:
         return null;
     }
+  };
+
+  addOwner = () => {
+    console.log("clicked");
+    this.setState({
+      ownerInfoArr: this.formMultipleOwner(),
+    });
+  };
+
+  formMultipleOwner = () => {
+    let ownerArr = [this.state.ownerInfoArr];
+    const owner = this.renderDuplicateForms("ownerInfo");
+    // ownerArr.push(<OwnerInfoHOC />);
+    ownerArr.push(owner);
+    return ownerArr;
   };
 
   handleNext = () => {
@@ -113,4 +179,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormWizard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormWizard);
