@@ -13,10 +13,16 @@ import {
 } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import DependantFormHOC from "./components/DependantFormsHOC";
+
 import DuplicateCardsHOC from "./components/DuplicateCardsHOC";
-import combinationToFormkeyMapping from "./components/FormManager";
+import FloorsDetails from "./components/Forms/FloorsDetails";
+import PlotDetails from "./components/Forms/PlotDetails";
+import {getPlotAndFloorFormConfigPath} from "./utils";
+import isEmpty from "lodash/isEmpty";
 import { connect } from "react-redux";
 import "./index.css";
+
+
 
 class FormWizard extends Component {
   state = {
@@ -26,22 +32,33 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
-    return null;
+    let {basicInformation}=this.props.form;
+    // console.log(basicInformation);
+    if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
+      let pathFormKeyObject=getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value,basicInformation.fields.typeOfBuilding.value);
+      return !isEmpty(pathFormKeyObject)?(<div>
+          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm}/>}
+          {pathFormKeyObject.hasFloor && <FloorsDetails component={pathFormKeyObject.floorForm}  />}
+        </div>):null;
+    }
+    else {
+      return null;
+    }
   };
 
-  renderDynamicForms = (combination) => {
-    // const basePath = "config/forms/specs/PropertyTaxPay";
-
-    const moduleName = "PropertyTaxPay";
-    return combination ? (
-      <DependantFormHOC
-        formsToAdd={combinationToFormkeyMapping[combination]}
-        moduleName={moduleName}
-        combination={combination}
-        removeForm={(formKey) => this.props.removeForm(formKey)}
-      />
-    ) : null;
-  };
+  // renderDynamicForms = (combination) => {
+  //   // const basePath = "config/forms/specs/PropertyTaxPay";
+  //
+  //   const moduleName = "PropertyTaxPay";
+  //   return combination ? (
+  //     <DependantFormHOC
+  //       formsToAdd={combinationToFormkeyMapping[combination]}
+  //       moduleName={moduleName}
+  //       combination={combination}
+  //       removeForm={(formKey) => this.props.removeForm(formKey)}
+  //     />
+  //   ) : null;
+  // };
 
   renderDuplicateForms = () => {
     return <DuplicateCardsHOC formKey={"ownerInfo"} />;

@@ -1,14 +1,19 @@
 import React from "react";
+import formHoc from "egov-ui-kit/hocs/form";
+import GenericForm from "../../GenericForm";
 
-class PlotDetail extends React.Component {
+
+class PlotDetails extends React.Component {
   render()
   {
+    let {component:Component}=this.props;
     return (
       <div>
-          plot details
+          <Component />
       </div>
     )
   }
 }
 
-export default PlotDetail;
+
+export default PlotDetails;

@@ -6,6 +6,7 @@ import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
+
 const options = [
   { value: "Male", label: <Label label="Male" /> },
   { value: "Female", label: <Label label="Female" /> },

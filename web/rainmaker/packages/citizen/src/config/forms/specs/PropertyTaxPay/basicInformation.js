@@ -33,27 +33,37 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of usage",
       hintText: "Select",
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: {},
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategoryMajor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
-      },
+      dropDownData: [
+        { label: "Residesntial", value: "RESIDENTIAL" },
+        { label: "Commercial", value: "COMMERCIAL" },
+        { label: "Institutional", value: "INSTITUTIONAL" },
+        { label: "Industrial", value: "INDUSTRIAL" },
+        { label: "Public Space", value: "PUBLICSPACE" },
+        { label: "Religious", value: "RELIGIOUS" },
+        { label: "Other", value: "OTHER" },
+        { label: "Mixed", value: "MIXED" },
+      ],
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: {},
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "PropertyTax",
+      //           masterDetails: [
+      //             {
+      //               name: "UsageCategoryMajor",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
+      // },
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
@@ -61,27 +71,32 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: {},
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "PropertyType",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: "MdmsRes.PropertyTax.PropertyType",
-      },
+      dropDownData: [
+        { label: "Independent Building", value: "IndependentProperty" },
+        { label: "Flat/Part of Building", value: "SharedProperty" },
+        { label: "Vacant Land", value: "VACANT" }
+      ],
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: {},
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "PropertyTax",
+      //           masterDetails: [
+      //             {
+      //               name: "PropertyType",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: "MdmsRes.PropertyTax.PropertyType",
+      // },
     },
   },
   action: "",
