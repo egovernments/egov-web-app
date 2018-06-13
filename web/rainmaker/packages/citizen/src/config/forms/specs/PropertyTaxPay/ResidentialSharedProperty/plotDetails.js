@@ -1,3 +1,4 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "plotDetails",
   fields: {
@@ -25,6 +26,28 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OccupancyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+      },
     },
     superArea: {
       id: "assessment-super-area",
@@ -39,7 +62,7 @@ const formConfig = {
       id: "assessment-super-area-unit",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Built area unit",
+      floatingLabelText: "Measuring unit",
       value: "Sq yards",
       required: true,
     },
