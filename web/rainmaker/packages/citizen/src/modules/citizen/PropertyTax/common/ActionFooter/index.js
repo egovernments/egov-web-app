@@ -5,12 +5,14 @@ const ActionFooter = ({ label1, label2 }) => {
   return (
     <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
       <div className="col-xs-6" style={{ float: "right" }}>
-        <Button
-          label={label1}
-          labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
-          buttonStyle={{ border: "1px solid #fe7a51" }}
-          style={{ marginRight: 45, width: "50%" }}
-        />
+        {label1 && (
+          <Button
+            label={label1}
+            labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+            buttonStyle={{ border: "1px solid #fe7a51" }}
+            style={{ marginRight: 45, width: "50%" }}
+          />
+        )}
         <Button
           label={label2}
           style={{ width: "36%" }}

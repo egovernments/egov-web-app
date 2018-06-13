@@ -23,7 +23,7 @@ const downloadIconStyle = {
   fill: "#767676",
 };
 
-const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages }) => {
+const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages, buttons }) => {
   return (
     <div>
       <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
@@ -116,7 +116,7 @@ const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages }) 
             </div>
           </div>
         )} */}
-      <ActionFooter label1={receiptDetails.button1} label2={receiptDetails.button2} />
+      <ActionFooter label1={buttons.button1} label2={buttons.button2} />
     </div>
   );
 };

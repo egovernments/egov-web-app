@@ -10,8 +10,10 @@ const receiptDetails = {
   Property: "EB-154, Maya Enclave Harinagar, KT Marg Amritsar - 53",
   PaymentTerm: "2017-18",
   PropertyTaxDue: "1432.47",
-  button1: "Link previous payments",
-  button2: "Finish",
+};
+
+const buttons = {
+  button2: "Retry",
 };
 
 const failureMessages = {
@@ -24,7 +26,7 @@ const icon = <Icon action="navigation" name="close" />;
 const PaymentSuccess = () => {
   return (
     <Screen>
-      <PaymentStatus receiptDetails={receiptDetails} floatingButtonColor="#e74c3c" icon={icon} messages={failureMessages} />
+      <PaymentStatus receiptDetails={receiptDetails} floatingButtonColor="#e74c3c" icon={icon} messages={failureMessages} buttons={buttons} />
     </Screen>
   );
 };

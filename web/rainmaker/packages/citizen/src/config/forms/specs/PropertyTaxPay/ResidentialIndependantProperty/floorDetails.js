@@ -1,12 +1,13 @@
 const formConfig = {
   name: "floorDetails",
   fields: {
-    floor: {
-      id: "assessment-floor",
-      jsonPath: "",
-      type: "singleValueList",
-      value: "Ground Floor",
-    },
+    // floor: {
+    //   id: "assessment-floor",
+    //   jsonPath: "",
+    //   type: "singleValueList",
+    //   floatingLabelText: "Usage Type",
+    //   value: "Ground Floor",
+    // },
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
@@ -14,6 +15,7 @@ const formConfig = {
       floatingLabelText: "Usage Type",
       value: "Residential",
       required: true,
+      numCols: 4,
       disabled: true,
     },
     subUsageType: {
@@ -22,6 +24,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
+      numCols: 4,
       required: true,
     },
     occupancy: {
@@ -30,6 +33,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
+      numCols: 4,
       required: true,
     },
     builtArea: {
@@ -39,6 +43,7 @@ const formConfig = {
       floatingLabelText: "Built Area(sq yards)",
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
+      numCols: 4,
       required: true,
     },
   },
