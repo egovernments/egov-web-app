@@ -31,6 +31,7 @@ import Drafts from "modules/citizen/PropertyTax/Drafts";
 import MyReceipts from "modules/citizen/PropertyTax/MyReceipts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";
+import PaymentFailure from "modules/citizen/PropertyTax/PaymentFailure";
 import Events from "modules/citizen/PropertyTax/Events";
 import Notifications from "modules/citizen/PropertyTax/Notifications";
 import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
@@ -219,6 +220,16 @@ const routes = [
   {
     path: "property-tax/payment-success",
     component: PaymentSuccess,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "PUNJAB MUNICIPAL CORPORATION",
+      hideBackButton: true,
+    },
+  },
+  {
+    path: "property-tax/payment-failure",
+    component: PaymentFailure,
     needsAuthentication: true,
     options: {
       hideFooter: true,
