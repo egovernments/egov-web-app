@@ -6,7 +6,7 @@ const combinationToFormkeyMapping = {
   'RESIDENTIAL-IndependentProperty':{
     path:"PropertyTaxPay/ResidentialIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/ResidentialIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/ResidentialIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/ResidentialIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true,
 
@@ -20,7 +20,7 @@ const combinationToFormkeyMapping = {
   'MIXED-IndependentProperty':{
     path:"PropertyTaxPay/MixedIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/MixedIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/MixedIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/MixedIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
@@ -33,21 +33,21 @@ const combinationToFormkeyMapping = {
   'COMMERCIAL-IndependentProperty':{
     path:"PropertyTaxPay/CommercialIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/CommercialIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/CommercialIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/CommercialIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
   'COMMERCIAL-SharedProperty':{
     path:"PropertyTaxPay/CommercialSharedProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/CommercialSharedProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/CommercialSharedProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/CommercialSharedProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
   'INDUSTRIAL-IndependentProperty':{
     path:"PropertyTaxPay/IndustrialIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/IndustrialIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/IndustrialIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/IndustrialIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
@@ -60,7 +60,7 @@ const combinationToFormkeyMapping = {
   'INSTITUTIONAL-IndependentProperty':{
     path:"PropertyTaxPay/InstitutionalIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/InstitutionalIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/InstitutionalIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/InstitutionalIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
@@ -73,7 +73,7 @@ const combinationToFormkeyMapping = {
   'OTHER-IndependentProperty':{
     path:"PropertyTaxPay/OtherIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/OtherIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/OtherIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/OtherIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },
@@ -86,7 +86,7 @@ const combinationToFormkeyMapping = {
   'PUBLICSPACE-IndependentProperty':{
     path:"PropertyTaxPay/PublicSpaceIndependantProperty",
     plotForm:formHoc({ formKey: "plotDetails",path:"PropertyTaxPay/PublicSpaceIndependantProperty"})(GenericForm),
-    floorForm:formHoc({ formKey: "flootDetails",makeCopy:true,path:"PropertyTaxPay/PublicSpaceIndependantProperty"})(GenericForm),
+    floorForm:formHoc({ formKey: "floorDetails",makeCopy:true,path:"PropertyTaxPay/PublicSpaceIndependantProperty"})(GenericForm),
     hasPlot:true,
     hasFloor:true
   },

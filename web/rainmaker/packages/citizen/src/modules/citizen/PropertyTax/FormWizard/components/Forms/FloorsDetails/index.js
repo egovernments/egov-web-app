@@ -36,7 +36,7 @@ class FloorDetails extends React.Component {
 const mapStateToProps = (state) => {
   const { form } = state || {};
   let {plotDetails} =form;
-  return { noFloors:plotDetails && plotDetails.fields.floorCount.value||1 };
+  return { noFloors:plotDetails && plotDetails.fields && plotDetails.fields.floorCount && plotDetails.fields.floorCount.value || 1 };
 };
 
 
