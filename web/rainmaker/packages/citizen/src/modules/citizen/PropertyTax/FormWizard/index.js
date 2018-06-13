@@ -13,16 +13,14 @@ import {
 } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import DependantFormHOC from "./components/DependantFormsHOC";
-
-import DuplicateCardsHOC from "./components/DuplicateCardsHOC";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
-import {getPlotAndFloorFormConfigPath} from "./utils";
+import { getPlotAndFloorFormConfigPath } from "./utils";
 import isEmpty from "lodash/isEmpty";
+import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
+import combinationToFormkeyMapping from "./components/FormManager";
 import { connect } from "react-redux";
 import "./index.css";
-
-
 
 class FormWizard extends Component {
   state = {
@@ -32,16 +30,17 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
-    let {basicInformation}=this.props.form;
+    let { basicInformation } = this.props.form;
     // console.log(basicInformation);
     if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
-      let pathFormKeyObject=getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value,basicInformation.fields.typeOfBuilding.value);
-      return !isEmpty(pathFormKeyObject)?(<div>
-          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm}/>}
-          {pathFormKeyObject.hasFloor && <FloorsDetails component={pathFormKeyObject.floorForm}  />}
-        </div>):null;
-    }
-    else {
+      let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
+      return !isEmpty(pathFormKeyObject) ? (
+        <div>
+          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} />}
+          {pathFormKeyObject.hasFloor && <FloorsDetails component={pathFormKeyObject.floorForm} />}
+        </div>
+      ) : null;
+    } else {
       return null;
     }
   };
@@ -59,10 +58,6 @@ class FormWizard extends Component {
   //     />
   //   ) : null;
   // };
-
-  renderDuplicateForms = () => {
-    return <DuplicateCardsHOC formKey={"ownerInfo"} />;
-  };
 
   getSelectedCombination = (form, formKey, fieldKeys) => {
     return (
@@ -92,22 +87,11 @@ class FormWizard extends Component {
           </div>
         );
       case 2:
-        let combination = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
-        console.log(combination);
+        let selection = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
         return (
           <div>
             <OwnershipTypeHOC />
-            {combination === "MUL" ? (
-              <div>
-                <OwnerInfoHOC />
-                {this.state.showOwners && this.renderDuplicateForms()}
-                <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
-                  + Add Owner
-                </div>
-              </div>
-            ) : (
-              <OwnerInfoHOC />
-            )}
+            {selection === "MUL" ? <MultipleOwnerInfoHOC /> : <OwnerInfoHOC />}
 
             {/* <ExemptionCategoryHOC /> */}
           </div>
@@ -124,21 +108,7 @@ class FormWizard extends Component {
     }
   };
 
-  addOwner = () => {
-    this.setState({
-      showOwners: true,
-    });
-  };
-
-  formMultipleOwner = () => {
-    // let ownerArr = [...this.state.ownerInfoArr];
-    const owner = this.renderDuplicateForms("ownerInfo");
-    // ownerArr.push(<OwnerInfoHOC />);
-    // ownerArr.push(owner);
-    return owner;
-  };
-
-  updateIndex = (index) => {
+  handleNext = () => {
     const { selected } = this.state;
     this.setState({ selected: index });
   };

@@ -3,7 +3,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "../GenericForm";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import Field from "egov-ui-kit/utils/field";
-import { RadioButton, Card } from "components";
+import { RadioButton, Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
 
@@ -42,12 +42,20 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, handleFieldChange, handleChange, handleGuardianChange }) => {
+const OwnerInformation = ({ form, handleFieldChange, cardTitle, deleteBtn, handleChange, handleGuardianChange }) => {
   const fields = form.fields || {};
   return (
     <Card
       textChildren={
         <div className="col-xs-12">
+          <div className="">
+            <div>{cardTitle}</div>
+            {deleteBtn && (
+              <div className="pt-ownerinfo-deletebtn">
+                <Icon action="content" name="clear" />
+              </div>
+            )}
+          </div>
           <div className="col-xs-6">
             <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} />
           </div>
@@ -99,14 +107,23 @@ const OwnerInformation = ({ form, handleFieldChange, handleChange, handleGuardia
   );
 };
 
-const UsageInformationHOC = formHoc({ formKey: "basicInformation",path:"PropertyTaxPay"})(GenericForm);
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress",path:"PropertyTaxPay" })(GenericForm);
-const PlotInformationHOC = formHoc({ formKey: "plotInformation",path:"PropertyTaxPay" })(GenericForm);
-const OwnershipTypeHOC = formHoc({ formKey: "ownershipType",path:"PropertyTaxPay" })(GenericForm);
-const OwnerInfoHOC = formHoc({ formKey: "ownerInfo",path:"PropertyTaxPay" })(OwnerInformation);
-const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory" ,path:"PropertyTaxPay"})(GenericForm);
-const DynamicFormHoc=(formKey,Form) =>{
-  return formHoc({formKey})(Form)
-}
+const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay" })(GenericForm);
+const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
+const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
+const DynamicFormHoc = (formKey, Form) => {
+  return formHoc({ formKey })(Form);
+};
 
-export { UsageInformationHOC, PropertyAddressHOC, PlotInformationHOC, OwnershipTypeHOC, OwnerInfoHOC, ExemptionCategoryHOC,DynamicFormHoc};
+export {
+  UsageInformationHOC,
+  PropertyAddressHOC,
+  PlotInformationHOC,
+  OwnershipTypeHOC,
+  OwnerInfoHOC,
+  ExemptionCategoryHOC,
+  DynamicFormHoc,
+  OwnerInformation,
+};
