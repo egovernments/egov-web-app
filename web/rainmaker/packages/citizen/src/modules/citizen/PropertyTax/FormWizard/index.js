@@ -18,7 +18,6 @@ import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "./utils";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
-import combinationToFormkeyMapping from "./components/FormManager";
 import { connect } from "react-redux";
 import "./index.css";
 
@@ -108,7 +107,7 @@ class FormWizard extends Component {
     }
   };
 
-  handleNext = () => {
+  updateIndex = (index) => {
     const { selected } = this.state;
     this.setState({ selected: index });
   };
