@@ -3,7 +3,7 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path = "", makeCopy = false, rowData, edit = false }) => (Form) => {
+const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = false }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
@@ -33,7 +33,7 @@ const form = ({ formKey, path = "", makeCopy = false, rowData, edit = false }) =
       const existing_count = formKeys.filter(function(formKey) {
         return formKey.includes(formConf.name);
       }).length;
-      formConf.name = formConf.name + `_${existing_count}`;
+      formConf.name = copyName ? copyName : formConf.name + `_${existing_count}`;
       formKey = formConf.name;
       return formConf;
     };

@@ -42,6 +42,7 @@ var form = function form(_ref) {
       path = _ref$path === undefined ? "" : _ref$path,
       _ref$makeCopy = _ref.makeCopy,
       makeCopy = _ref$makeCopy === undefined ? false : _ref$makeCopy,
+      copyName = _ref.copyName,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit;
@@ -60,7 +61,7 @@ var form = function form(_ref) {
           var existing_count = formKeys.filter(function (formKey) {
             return formKey.includes(formConf.name);
           }).length;
-          formConf.name = formConf.name + ("_" + existing_count);
+          formConf.name = copyName ? copyName : formConf.name + ("_" + existing_count);
           formKey = formConf.name;
           return formConf;
         };
