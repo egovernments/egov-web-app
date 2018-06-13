@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Button, TimeLine, Card, Icon } from "components";
-// import Label from "utils/translationNode";
+import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
 import BasicInformation from "./components/BasicInformation";
 import AssessmentInfo from "./components/AssessmentInfo";
@@ -26,10 +25,6 @@ const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="soc
 const editIcon = <Icon style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
 
 class ReviewForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {}
 
   render() {

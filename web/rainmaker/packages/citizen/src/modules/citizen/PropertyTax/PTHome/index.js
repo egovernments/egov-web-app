@@ -37,7 +37,7 @@ class PTHome extends Component {
     },
     {
       primaryText: <Label label="PT_MY_RECEIPTS" />,
-      route: "/citizen/property-tax/receipts",
+      route: "/citizen/property-tax/my-receipts",
       leftIcon: <Icon action="action" name="receipt" />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },

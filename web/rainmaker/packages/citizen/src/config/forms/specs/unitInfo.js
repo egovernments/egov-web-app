@@ -11,7 +11,7 @@ const formConfig = {
       numCols: 4,
       value: "",
     },
-    floor: {
+    Occupancy: {
       id: "occupancy",
       jsonPath: "",
       type: "singleValueList",
