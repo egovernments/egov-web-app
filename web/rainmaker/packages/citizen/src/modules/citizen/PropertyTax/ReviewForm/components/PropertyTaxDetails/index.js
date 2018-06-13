@@ -25,7 +25,11 @@ const PropertyTaxDetails = ({ form }) => {
       />
       <CardText expandable={true}>
         <div className="pt-rf-detailed-bill">
-          <div className="pt-rf-detailed-bill-text">Detailed Bill</div>
+          <div>
+            <div className="pt-rf-detailed-bill-text col-md-6 col-lg-6">Detailed Bill</div>
+            <div className="pt-rf-detailed-bill-text col-md-6 col-lg-6">Due Date: 20/05/2018</div>
+          </div>
+
           <div className="pt-rf-detailed-bill-table">
             <div className="pt-rf-detailed-bill-points">
               <span className="">Property Tax</span>

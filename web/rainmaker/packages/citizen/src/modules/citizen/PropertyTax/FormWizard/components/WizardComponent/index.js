@@ -3,7 +3,7 @@ import { Button } from "components";
 import BreadCrumbs from "./components/BreadCrumbs";
 import "./index.css";
 
-const WizardComponent = ({ content, onTabClick, selected, handlePrev, handleNext }) => {
+const WizardComponent = ({ content, onTabClick, selected, updateIndex }) => {
   return (
     <div className="wizard-cont">
       <BreadCrumbs onTabClick={onTabClick} selected={selected} />
@@ -12,7 +12,9 @@ const WizardComponent = ({ content, onTabClick, selected, handlePrev, handleNext
         <div className="col-xs-6" style={{ float: "right" }}>
           <Button
             label="GO BACK"
-            onClick={handlePrev}
+            onClick={() => {
+              updateIndex(selected - 1);
+            }}
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
             buttonStyle={{ border: "1px solid #fe7a51" }}
             style={{ marginRight: 45, width: "36%" }}
@@ -23,7 +25,9 @@ const WizardComponent = ({ content, onTabClick, selected, handlePrev, handleNext
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
             buttonStyle={{ border: 0 }}
-            onClick={handleNext}
+            onClick={() => {
+              updateIndex(selected + 1);
+            }}
           />
         </div>
       </div>

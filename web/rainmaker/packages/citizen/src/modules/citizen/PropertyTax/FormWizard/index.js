@@ -99,7 +99,7 @@ class FormWizard extends Component {
       case 3:
         return (
           <div>
-            <ReviewForm />
+            <ReviewForm updateIndex={this.updateIndex} />
           </div>
         );
       default:
@@ -121,20 +121,9 @@ class FormWizard extends Component {
     return owner;
   };
 
-  handleNext = () => {
+  updateIndex = (index) => {
     const { selected } = this.state;
-    if (selected < 3) {
-      this.setState({ selected: selected + 1 });
-    } else {
-      this.props.history.push("/citizen/property-tax/review-property");
-    }
-  };
-
-  handlePrev = () => {
-    const { selected } = this.state;
-    if (selected > 0) {
-      this.setState({ selected: selected - 1 });
-    }
+    this.setState({ selected: index });
   };
 
   onTabClick = (index) => {
@@ -154,13 +143,7 @@ class FormWizard extends Component {
           labelStyle={{ letterSpacing: 0 }}
           fontSize={"20px"}
         />
-        <WizardComponent
-          content={renderStepperContent(selected)}
-          onTabClick={this.onTabClick}
-          selected={selected}
-          handleNext={this.handleNext}
-          handlePrev={this.handlePrev}
-        />
+        <WizardComponent content={renderStepperContent(selected)} onTabClick={this.onTabClick} selected={selected} updateIndex={this.updateIndex} />
       </div>
     );
   }

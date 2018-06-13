@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
-import BasicInformation from "./components/BasicInformation";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
-
 import propertyAddressConfig from "./formConfigs/propertyAddress";
-import basicInformationConfig from "./formConfigs/basicInformation";
+import { connect } from "react-redux";
 
 import "./index.css";
 const defaultIconStyle = {
@@ -19,25 +17,71 @@ const defaultIconStyle = {
 };
 
 const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
-const BasicInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assignment" />;
 const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
 const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
-const editIcon = <Icon style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
 
 class ReviewForm extends Component {
   componentDidMount() {}
 
+  editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
+    let { updateIndex } = this.props;
     return (
       <div>
-        <PropertyAddress form={propertyAddressConfig} icon={PropAddressIcon} editIcon={editIcon} />
-        <BasicInformation form={basicInformationConfig} icon={BasicInfoIcon} editIcon={editIcon} />
-        <AssessmentInfo icon={AssessmentInfoIcon} editIcon={editIcon} />
-        <OwnerInfo icon={OwnerInfoIcon} editIcon={editIcon} />
+        <PropertyAddress
+          form={propertyAddressConfig}
+          icon={PropAddressIcon}
+          editIcon={
+            <Icon
+              onClick={() => {
+                updateIndex(0);
+              }}
+              style={defaultIconStyle}
+              color="#ffffff"
+              action="image"
+              name="edit"
+            />
+          }
+        />
+        <AssessmentInfo
+          icon={AssessmentInfoIcon}
+          editIcon={
+            <Icon
+              onClick={() => {
+                updateIndex(1);
+              }}
+              style={defaultIconStyle}
+              color="#ffffff"
+              action="image"
+              name="edit"
+            />
+          }
+        />
+        <OwnerInfo
+          icon={OwnerInfoIcon}
+          editIcon={
+            <Icon
+              onClick={() => {
+                updateIndex(2);
+              }}
+              style={defaultIconStyle}
+              color="#ffffff"
+              action="image"
+              name="edit"
+            />
+          }
+          form={propertyAddressConfig}
+        />
         <PropertyTaxDetailsCard />
       </div>
     );
   }
 }
 
-export default ReviewForm;
+const mapDispatchToProps = (dispatch) => ({
+  setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
+});
+export default connect(
+  null,
+  mapDispatchToProps
+)(ReviewForm);
