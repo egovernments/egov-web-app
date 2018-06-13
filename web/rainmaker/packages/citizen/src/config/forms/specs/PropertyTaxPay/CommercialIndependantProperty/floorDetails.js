@@ -1,3 +1,4 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "floorDetails",
   fields: {
@@ -22,6 +23,27 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+      },
       required: true,
     },
     occupancy: {
@@ -31,6 +53,27 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OccupancyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+      },
     },
     builtArea: {
       id: "assessment-built-area",

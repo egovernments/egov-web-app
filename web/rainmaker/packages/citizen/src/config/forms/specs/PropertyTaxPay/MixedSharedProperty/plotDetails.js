@@ -1,13 +1,45 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "plotDetails",
   fields: {
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
-      type: "textfield",
+      type: "singleValueList",
       floatingLabelText: "Usage Type",
       value: "Residential",
       required: true,
+      dropDownData: [
+        { label: "Residential", value: "RESIDENTIAL" },
+        { label: "Commercial", value: "COMMERCIAL" },
+        { label: "Institutional", value: "INSTITUTIONAL" },
+        { label: "Industrial", value: "INDUSTRIAL" },
+        { label: "Public Space", value: "PUBLICSPACE" },
+        { label: "Religious", value: "RELIGIOUS" },
+        { label: "Other", value: "OTHER" },
+        { label: "Mixed", value: "MIXED" },
+      ],
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: {},
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "PropertyTax",
+      //           masterDetails: [
+      //             {
+      //               name: "UsageCategoryMajor",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
+      // },
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -24,6 +56,28 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OccupancyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+      },
     },
     superArea: {
       id: "assessment-super-area",

@@ -1,3 +1,4 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "unitInfo",
   fields: {
@@ -11,15 +12,35 @@ const formConfig = {
       numCols: 4,
       value: "",
     },
-    Occupancy: {
-      id: "occupancy",
+    occupancy: {
+      id: "assessment-occupancy",
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      hintText: "",
-      dropDownData: [],
-      numCols: 4,
-      value: "",
+      value: "Self-Occupied",
+      required: true,
+
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OccupancyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+      },
     },
     builtArea: {
       id: "builtArea",
