@@ -22,7 +22,7 @@ const formConfig = {
     email: {
       id: "profile-form-email",
       className: "profile-form-field",
-      type: "name",
+      // type: "name",
       type: "textfield",
       jsonPath: "user.contact.email",
       floatingLabelText: "CS_PROFILE_EMAIL",

@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { Toast, Drawer, Image } from "components";
+import { Toast } from "components";
 import { addBodyClass } from "egov-ui-kit/utils/commons";
 import { fetchCurrentLocation, fetchLocalizationLabel, toggleSnackbarAndSetText, setRoute } from "egov-ui-kit/redux/app/actions";
 import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
-import logoMseva from "egov-ui-kit/assets/images/logo-white.png";
 import routes from "./Routes";
 
 class App extends Component {

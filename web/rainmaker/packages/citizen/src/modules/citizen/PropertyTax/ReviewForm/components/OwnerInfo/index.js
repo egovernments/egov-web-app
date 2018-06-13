@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Field from "egov-ui-kit/utils/field";
 import { Card } from "components";
 

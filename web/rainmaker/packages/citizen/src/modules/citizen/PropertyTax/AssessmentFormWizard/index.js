@@ -125,7 +125,7 @@ class AssessmentFormWizard extends Component {
   };
 
   render() {
-    const { finished, stepIndex } = this.state;
+    const { stepIndex } = this.state;
     const { getStepContent } = this;
     const { component, iconAction, header, iconName, trianglePos } = getStepContent(stepIndex);
 

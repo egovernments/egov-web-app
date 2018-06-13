@@ -1,8 +1,5 @@
-import React, { Component } from "react";
-import Field from "egov-ui-kit/utils/field";
-import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
-import { Button } from "components";
-
+import React from "react";
+import { Card, CardHeader, CardText } from "material-ui/Card";
 import "./index.css";
 
 const PropertyTaxDetails = ({ form }) => {

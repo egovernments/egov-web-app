@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Label, List, Icon } from "components";
+import React from "react";
+import { Label, List } from "components";
 import { Screen } from "modules/common";
 
 const PTList = ({ items, label }) => {
@@ -15,8 +15,10 @@ const PTList = ({ items, label }) => {
       />
       <List
         items={items}
-        listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
+        listItemStyle={{ marginLeft: "10px", borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
         listContainerStyle={{ marginLeft: "16px" }}
+        nestedListStyle={{ marginLeft: "60px", padding: "0px" }}
+        primaryTogglesNestedList={true}
       />
     </Screen>
   );
