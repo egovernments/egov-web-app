@@ -17,7 +17,7 @@ class DependantFormsHOC extends React.Component {
   }
 
   componentDidMount() {
-    const { formsToAdd, combination } = this.props;
+    const { combination } = this.props;
     this.setFormContent(combination);
   }
 
@@ -25,7 +25,7 @@ class DependantFormsHOC extends React.Component {
     const { formsToAdd, removeForm } = this.props;
     formsToAdd &&
       formsToAdd.removeForms.forEach((formKey) => {
-        this.props.removeForm(formKey);
+        removeForm(formKey);
       });
     this.setState({
       dependentForms: this.getAllForms(combination),
@@ -33,7 +33,7 @@ class DependantFormsHOC extends React.Component {
   };
 
   getAllForms = (combination) => {
-    const { formsToAdd, moduleName, removeForm } = this.props;
+    const { formsToAdd, moduleName } = this.props;
     return (
       formsToAdd &&
       formsToAdd.formKeys.map((formKey, index) => {

@@ -69,6 +69,7 @@ const formConfig = {
       jsonPath: "",
       required: true,
       toolTip: true,
+      toolTipMessage: "",
       value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "City",
