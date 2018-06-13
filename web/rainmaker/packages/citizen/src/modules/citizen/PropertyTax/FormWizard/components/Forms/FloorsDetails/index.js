@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 
 class FloorDetails extends React.Component {
 
-  state={
-    floors:{}
-  }
-
-  renderFloors=(noFloors)=>{
+  renderFloors=(noFloors,Component)=>{
     const {renderUnit}=this;
     return [...Array(parseInt(noFloors))].map((item,key)=>{
       return (
@@ -17,7 +13,7 @@ class FloorDetails extends React.Component {
             textChildren={
               <div className={`${key} col-xs-12`}>
                 {
-                  renderUnit(key)
+                  renderUnit(key,Component)
                 }
               </div>
             }
@@ -26,10 +22,10 @@ class FloorDetails extends React.Component {
     })
   }
 
-  renderUnit=(floorNo)=>{
+  renderUnit=(floorNo,Component)=>{
     return (
       <div>
-
+        <Component/>
         <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
           + ADD ONE MORE UNIT
         </div>
