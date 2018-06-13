@@ -5,18 +5,36 @@ import { connect } from "react-redux";
 
 class FloorDetails extends React.Component {
 
-  renderFloors=(noFloors,Component)=>{
+  state={
+    floors:{}
+  }
+
+  renderFloors=(noFloors)=>{
+    const {renderUnit}=this;
     return [...Array(parseInt(noFloors))].map((item,key)=>{
       return (
         <Card key={key}
             textChildren={
               <div className={`${key} col-xs-12`}>
-                <Component/>
+                {
+                  renderUnit(key)
+                }
               </div>
             }
           />
       )
     })
+  }
+
+  renderUnit=(floorNo)=>{
+    return (
+      <div>
+
+        <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
+          + ADD ONE MORE UNIT
+        </div>
+      </div>
+    )
   }
 
   render()

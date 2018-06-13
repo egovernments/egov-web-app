@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "components";
 
-const AssessmentInfo = ({ icon, editIcon }) => {
+const AssessmentInfo = ({ icon, editIcon, component }) => {
   return (
     <Card
       textChildren={
@@ -11,7 +11,9 @@ const AssessmentInfo = ({ icon, editIcon }) => {
             <span className="pt-rf-title-text">Assessment Info</span>
             <span className="pt-rf-edit-icon">{editIcon}</span>
           </div>
-          <div className="pt-review-form col-xs-12" />
+          <div className="pt-review-form col-xs-12" >
+            {component}
+          </div>
         </div>
       }
     />

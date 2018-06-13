@@ -9,6 +9,7 @@ const formConfig = {
       hintText: "Enter plot size",
       errorMessage: "Enter a valid plot size",
       required: true,
+      numCols:4
     },
     measuringUnit: {
       id: "assessment-plot-unit",
@@ -17,6 +18,7 @@ const formConfig = {
       floatingLabelText: "Measuring unit",
       hintText: "Sq yards",
       required: true,
+      numCols:4
     },
     floorCount: {
       id: "assessment-number-of-floors",
@@ -25,6 +27,7 @@ const formConfig = {
       floatingLabelText: "No. of Floors",
       required: true,
       hintText: "Select",
+      numCols:4
     },
   },
 };

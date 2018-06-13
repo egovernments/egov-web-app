@@ -25,7 +25,7 @@ class ReviewForm extends Component {
 
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
-    let { updateIndex } = this.props;
+    let { updateIndex,stepZero,stepTwo,stepOne } = this.props;
     return (
       <div>
         <PropertyAddress
@@ -42,6 +42,7 @@ class ReviewForm extends Component {
               name="edit"
             />
           }
+          component={stepZero}
         />
         <AssessmentInfo
           icon={AssessmentInfoIcon}
@@ -56,6 +57,7 @@ class ReviewForm extends Component {
               name="edit"
             />
           }
+          component={stepOne}
         />
         <OwnerInfo
           icon={OwnerInfoIcon}
@@ -71,6 +73,7 @@ class ReviewForm extends Component {
             />
           }
           form={propertyAddressConfig}
+          component={stepTwo}
         />
         <PropertyTaxDetailsCard />
       </div>

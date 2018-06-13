@@ -4,7 +4,7 @@ import { Card } from "components";
 
 import "./index.css";
 
-const PropertyAddress = ({ form, icon, editIcon }) => {
+const PropertyAddress = ({ form, icon, editIcon, component }) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -15,6 +15,7 @@ const PropertyAddress = ({ form, icon, editIcon }) => {
             <span className="pt-rf-title-text">Property Address</span>
             <span className="pt-rf-edit-icon">{editIcon}</span>
           </div>
+          {component}
           {/* <div className="pt-review-form col-xs-12">
             {Object.keys(fields).map((fieldKey, index) => {
               const field = { ...fields[fieldKey] };

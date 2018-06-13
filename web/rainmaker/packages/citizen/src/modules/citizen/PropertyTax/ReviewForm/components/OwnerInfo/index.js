@@ -2,7 +2,7 @@ import React from "react";
 import Field from "egov-ui-kit/utils/field";
 import { Card } from "components";
 
-const OwnerInfo = ({ form, icon, editIcon }) => {
+const OwnerInfo = ({ form, icon, editIcon, component }) => {
   // const fields = form.fields || {};
   return (
     <Card
@@ -13,6 +13,7 @@ const OwnerInfo = ({ form, icon, editIcon }) => {
             <span className="pt-rf-title-text">Owner Information</span>
             <span className="pt-rf-edit-icon">{editIcon}</span>
           </div>
+          {component}
           {/* <div className="pt-review-form col-xs-12">
             {Object.keys(fields).map((fieldKey, index) => {
               const field = { ...fields[fieldKey] };

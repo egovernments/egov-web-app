@@ -32,14 +32,13 @@ class FormWizard extends Component {
     let { basicInformation } = this.props.form;
     // console.log(basicInformation);
     if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
-      let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
-      return !isEmpty(pathFormKeyObject) ? (
-        <div>
-          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} />}
-          {pathFormKeyObject.hasFloor && <FloorsDetails component={pathFormKeyObject.floorForm} />}
-        </div>
-      ) : null;
-    } else {
+      let pathFormKeyObject=getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value,basicInformation.fields.typeOfBuilding.value);
+      return !isEmpty(pathFormKeyObject)?(<div>
+          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm}/>}
+          {pathFormKeyObject.hasFloor && <FloorsDetails path={pathFormKeyObject.path} component={pathFormKeyObject.floorForm}  />}
+        </div>):null;
+    }
+    else {
       return null;
     }
   };
@@ -99,7 +98,7 @@ class FormWizard extends Component {
       case 3:
         return (
           <div>
-            <ReviewForm updateIndex={this.updateIndex} />
+            <ReviewForm updateIndex={this.updateIndex} stepZero={this.renderStepperContent(0)} stepOne={this.renderStepperContent(1)} stepTwo={this.renderStepperContent(2)}/>
           </div>
         );
       default:
