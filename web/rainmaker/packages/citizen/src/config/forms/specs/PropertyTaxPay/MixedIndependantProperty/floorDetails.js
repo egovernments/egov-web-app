@@ -2,12 +2,6 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "floorDetails",
   fields: {
-    floor: {
-      id: "assessment-floor",
-      jsonPath: "",
-      type: "singleValueList",
-      value: "Ground Floor",
-    },
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
@@ -15,6 +9,7 @@ const formConfig = {
       floatingLabelText: "Usage Type",
       value: "Residential",
       required: true,
+      numCols: 4,
       dropDownData: [
         { label: "Residential", value: "RESIDENTIAL" },
         { label: "Commercial", value: "COMMERCIAL" },
@@ -54,6 +49,7 @@ const formConfig = {
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       required: true,
+      numCols: 4,
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -62,6 +58,7 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+      numCols: 4,
 
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -93,6 +90,7 @@ const formConfig = {
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
       required: true,
+      numCols: 4,
     },
     annualRent: {
       id: "assessment-annual-rent",
@@ -102,6 +100,7 @@ const formConfig = {
       hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
       required: true,
+      numCols: 4,
     },
   },
 };

@@ -8,7 +8,6 @@ const formConfig = {
       floatingLabelText: "Plot Size",
       hintText: "Enter plot size",
       errorMessage: "Enter a valid plot size",
-      required: true,
       numCols: 4,
     },
     measuringUnit: {

@@ -2,22 +2,15 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "plotDetails",
   fields: {
-    floorCount: {
-      id: "assessment-number-of-floors",
-      jsonPath: "",
-      type: "textfield",
-      floatingLabelText: "No. of Floors",
-      required: true,
-      value: "1",
-    },
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Usage Type",
-      value: "Commercial",
+      value: "Industrial",
       required: true,
       disabled: true,
+      numCols: 4,
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -26,6 +19,7 @@ const formConfig = {
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       required: true,
+      numCols: 4,
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -34,6 +28,7 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+      numCols: 4,
 
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -65,6 +60,7 @@ const formConfig = {
       hintText: "Enter total super area",
       ErrorText: "Enter a valid super area size",
       required: true,
+      numCols: 4,
     },
     superAreaUnit: {
       id: "assessment-super-area-unit",
@@ -72,7 +68,9 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Built area unit",
       value: "Sq yards",
+      dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
+      numCols: 4,
     },
     annualRent: {
       id: "assessment-annual-rent",
@@ -82,6 +80,7 @@ const formConfig = {
       hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
       required: true,
+      numCols: 4,
     },
   },
 };

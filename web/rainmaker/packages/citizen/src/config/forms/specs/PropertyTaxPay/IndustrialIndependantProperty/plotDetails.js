@@ -8,6 +8,7 @@ const formConfig = {
       floatingLabelText: "Plot Size",
       hintText: "Enter plot size",
       errorMessage: "Enter a valid plot size",
+      numCols: 4,
     },
     measuringUnit: {
       id: "assessment-plot-unit",
@@ -17,6 +18,7 @@ const formConfig = {
       value: "Sq yards",
       dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
+      numCols: 4,
     },
     floorCount: {
       id: "assessment-number-of-floors",
@@ -25,6 +27,7 @@ const formConfig = {
       floatingLabelText: "No. of Floors",
       required: true,
       hintText: "Select",
+      numCols: 4,
     },
   },
 };

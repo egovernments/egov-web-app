@@ -10,6 +10,7 @@ const formConfig = {
       value: "Residential",
       required: true,
       disabled: true,
+      numCols: 4,
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -18,6 +19,7 @@ const formConfig = {
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       required: true,
+      numCols: 4,
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -26,6 +28,7 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       value: "Self-Occupied",
       required: true,
+      numCols: 4,
 
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -57,6 +60,7 @@ const formConfig = {
       hintText: "Enter total super area",
       ErrorText: "Enter a valid super area size",
       required: true,
+      numCols: 4,
     },
     superAreaUnit: {
       id: "assessment-super-area-unit",
@@ -64,7 +68,9 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
       value: "Sq yards",
+      dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
+      numCols: 4,
     },
   },
 };
