@@ -20,14 +20,20 @@ class MultipleOwnerInfoHOC extends React.Component {
 
   addOwner = () => {
     const { owners } = this.state;
-    const length = owners.length;
+    const index = owners.length + 1;
     const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", makeCopy: true, path: "PropertyTaxPay" })(OwnerInformation);
-    let Component = <OwnerInfoHOC key={length + 1} cardTitle={this.getTitle(length + 2)} deleteBtn={true} />;
+    let Component = <OwnerInfoHOC key={index} cardTitle={this.getTitle(index + 1)} deleteBtn={true} deleteOwner={this.deleteOwner} />;
     ownerArr.push(Component);
     this.setState({
       owners: ownerArr,
       showMultiple: true,
     });
+  };
+
+  deleteOwner = (formKey, form) => {
+    // console.log(this.state.owners, form);
+    // this.props.removeForm(formKey);
+    // console.log(this.state.owners);
   };
 
   getTitle = (length) => {

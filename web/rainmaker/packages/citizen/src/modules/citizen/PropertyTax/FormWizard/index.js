@@ -1,26 +1,19 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Screen } from "modules/common";
 import { Label } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
-import {
-  UsageInformationHOC,
-  PropertyAddressHOC,
-  PlotInformationHOC,
-  OwnershipTypeHOC,
-  OwnerInfoHOC,
-  ExemptionCategoryHOC,
-} from "./components/Forms";
+import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import DependantFormHOC from "./components/DependantFormsHOC";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
-import { getPlotAndFloorFormConfigPath } from "./utils";
+import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
+import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
-import "./index.css";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
+import "./index.css";
 
 class FormWizard extends Component {
   state = {
@@ -31,7 +24,6 @@ class FormWizard extends Component {
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
     let { basicInformation } = this.props.form;
-    // console.log(basicInformation);
     if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
       let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
       return !isEmpty(pathFormKeyObject) ? (
@@ -58,6 +50,11 @@ class FormWizard extends Component {
   //     />
   //   ) : null;
   // };
+
+  getConfigFromCombination = (combination, fetchConfigurationFn) => {
+    let configObject = fetchConfigurationFn(combination);
+    return configObject;
+  };
 
   getSelectedCombination = (form, formKey, fieldKeys) => {
     return (
@@ -87,13 +84,22 @@ class FormWizard extends Component {
           </div>
         );
       case 2:
-        let selection = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
+        const selection = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
+        const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
+        const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
             <OwnershipTypeHOC />
-            {selection === "MUL" ? <MultipleOwnerInfoHOC /> : <OwnerInfoHOC />}
-
-            {/* <ExemptionCategoryHOC /> */}
+            {selection === "MUL" ? (
+              <MultipleOwnerInfoHOC removeForm={this.props.removeForm} />
+            ) : selection === "Institution" ? (
+              <div>
+                <Institution />
+                <OwnerInfoHOC cardTitle={<div>Details of authorised person</div>} />
+              </div>
+            ) : (
+              <OwnerInfoHOC />
+            )}
           </div>
         );
 
