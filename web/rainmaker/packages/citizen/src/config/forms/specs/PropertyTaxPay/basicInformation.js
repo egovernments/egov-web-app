@@ -34,7 +34,7 @@ const formConfig = {
       floatingLabelText: "Type of usage",
       hintText: "Select",
       dropDownData: [
-        { label: "Residesntial", value: "RESIDENTIAL" },
+        { label: "Residential", value: "RESIDENTIAL" },
         { label: "Commercial", value: "COMMERCIAL" },
         { label: "Institutional", value: "INSTITUTIONAL" },
         { label: "Industrial", value: "INDUSTRIAL" },
@@ -74,7 +74,7 @@ const formConfig = {
       dropDownData: [
         { label: "Independent Building", value: "IndependentProperty" },
         { label: "Flat/Part of Building", value: "SharedProperty" },
-        { label: "Vacant Land", value: "VACANT" }
+        { label: "Vacant Land", value: "VACANT" },
       ],
       // dataFetchConfig: {
       //   url: MDMS.GET.URL,
