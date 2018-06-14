@@ -6,7 +6,6 @@ import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
-
 const options = [
   { value: "Male", label: <Label label="Male" /> },
   { value: "Female", label: <Label label="Female" /> },
@@ -42,16 +41,21 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, handleFieldChange, cardTitle, deleteBtn, handleChange, handleGuardianChange }) => {
+const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn, deleteOwner, handleChange, handleGuardianChange }) => {
   const fields = form.fields || {};
   return (
     <Card
       textChildren={
-        <div className="col-xs-12">
-          <div className="">
+        <div className="col-xs-12 pt-owner-info">
+          <div>
             <div>{cardTitle}</div>
             {deleteBtn && (
-              <div className="pt-ownerinfo-deletebtn">
+              <div
+                className="pt-ownerinfo-deletebtn"
+                onClick={() => {
+                  deleteOwner(formKey, form);
+                }}
+              >
                 <Icon action="content" name="clear" />
               </div>
             )}

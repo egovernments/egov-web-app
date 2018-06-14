@@ -9,6 +9,14 @@
 
 .pt-ownerinfo-deletebtn {
   float: right !important;
-  margin-top: 4px;
+  margin-top: -30px;
   display: none;
+}
+
+.pt-owner-info {
+  &:hover {
+    .pt-ownerinfo-deletebtn {
+      display: block;
+    }
+  }
 }

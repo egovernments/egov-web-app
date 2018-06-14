@@ -40,6 +40,9 @@ const formConfig = {
       numCols: 6,
     },
   },
+  action: "",
+  redirectionRoute: "",
+  saveUrl: "",
 };
 
 export default formConfig;

@@ -4,7 +4,6 @@ import BreadCrumbs from "./components/BreadCrumbs";
 import "./index.css";
 
 const WizardComponent = ({ content, onTabClick, selected, updateIndex, backLabel, nextLabel }) => {
-  console.log(backLabel, nextLabel);
   return (
     <div className="wizard-cont">
       <BreadCrumbs onTabClick={onTabClick} selected={selected} />

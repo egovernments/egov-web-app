@@ -12,8 +12,7 @@ const formConfig = {
       dropDownData: [
         { label: "Individual Owner", value: "IND" },
         { label: "Multiple Owners", value: "MUL" },
-        { label: "Organization (Govt.)", value: "ORGGov" },
-        { label: "Organization (Private)", value: "ORGPvt" },
+        { label: "Institution", value: "Institution" },
       ],
       // dataFetchConfig: {
       //   url: MDMS.GET.URL,
