@@ -33,7 +33,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      value: "Self-Occupied",
+      value: "SELFOCCUPIED",
       numCols: 4,
       required: true,
 

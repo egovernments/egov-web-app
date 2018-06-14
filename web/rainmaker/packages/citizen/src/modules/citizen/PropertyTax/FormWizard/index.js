@@ -20,6 +20,7 @@ import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import "./index.css";
+import { setRoute } from "egov-ui-kit/redux/app/actions";
 
 class FormWizard extends Component {
   state = {
@@ -32,13 +33,14 @@ class FormWizard extends Component {
     let { basicInformation } = this.props.form;
     // console.log(basicInformation);
     if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
-      let pathFormKeyObject=getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value,basicInformation.fields.typeOfBuilding.value);
-      return !isEmpty(pathFormKeyObject)?(<div>
-          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm}/>}
-          {pathFormKeyObject.hasFloor && <FloorsDetails path={pathFormKeyObject.path} component={pathFormKeyObject.floorForm}  />}
-        </div>):null;
-    }
-    else {
+      let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
+      return !isEmpty(pathFormKeyObject) ? (
+        <div>
+          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} />}
+          {pathFormKeyObject.hasFloor && <FloorsDetails path={pathFormKeyObject.path} component={pathFormKeyObject.floorForm} />}
+        </div>
+      ) : null;
+    } else {
       return null;
     }
   };
@@ -98,7 +100,12 @@ class FormWizard extends Component {
       case 3:
         return (
           <div>
-            <ReviewForm updateIndex={this.updateIndex} stepZero={this.renderStepperContent(0)} stepOne={this.renderStepperContent(1)} stepTwo={this.renderStepperContent(2)}/>
+            <ReviewForm
+              updateIndex={this.updateIndex}
+              stepZero={this.renderStepperContent(0)}
+              stepOne={this.renderStepperContent(1)}
+              stepTwo={this.renderStepperContent(2)}
+            />
           </div>
         );
       default:
@@ -107,8 +114,13 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
+    const { setRoute } = this.props;
     const { selected } = this.state;
-    this.setState({ selected: index });
+    if (index <= 3) {
+      this.setState({ selected: index });
+    } else if (index === 4) {
+      setRoute("/citizen/property-tax/payment-success");
+    }
   };
 
   onTabClick = (index) => {
@@ -118,6 +130,7 @@ class FormWizard extends Component {
   render() {
     const { renderStepperContent } = this;
     const { selected } = this.state;
+
     return (
       <div className="wizard-form-main-cont">
         <Label
@@ -128,7 +141,14 @@ class FormWizard extends Component {
           labelStyle={{ letterSpacing: 0 }}
           fontSize={"20px"}
         />
-        <WizardComponent content={renderStepperContent(selected)} onTabClick={this.onTabClick} selected={selected} updateIndex={this.updateIndex} />
+        <WizardComponent
+          content={renderStepperContent(selected)}
+          onTabClick={this.onTabClick}
+          selected={selected}
+          updateIndex={this.updateIndex}
+          backLabel="GO BACK"
+          nextLabel={selected === 3 ? "PAY" : "NEXT"}
+        />
       </div>
     );
   }
@@ -142,6 +162,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeForm: (formKey) => dispatch(removeForm(formKey)),
+    setRoute: (route) => dispatch(setRoute(route)),
   };
 };
 

@@ -26,7 +26,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      value: "Self-Occupied",
+      hintText: "Select",
       required: true,
       numCols: 4,
 

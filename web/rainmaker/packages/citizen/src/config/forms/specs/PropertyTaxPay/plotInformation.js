@@ -15,9 +15,9 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Measuring Unit",
       hintText: "",
-      dropDownData: [{ label: "Sq Yards", value: "Sq Yards" }, { label: "Sq Meter", value: "Sq Meter" }, { label: "Sq Feet", value: "Sq Feet" }],
+      dropDownData: [{ label: "Sq Yards", value: "S_Yards" }, { label: "Sq Meter", value: "Sq Meter" }, { label: "Sq Feet", value: "Sq Feet" }],
       numCols: 4,
-      value: "Sq Yards",
+      value: "Sq_Yards",
     },
     noOfFloors: {
       id: "noOfFloors",

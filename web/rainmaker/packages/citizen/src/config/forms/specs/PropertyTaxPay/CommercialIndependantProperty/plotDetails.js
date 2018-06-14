@@ -18,6 +18,7 @@ const formConfig = {
       floatingLabelText: "Measuring unit",
       required: true,
       numCols: 4,
+      value: "SQ_YARDS",
     },
     floorCount: {
       id: "assessment-number-of-floors",
