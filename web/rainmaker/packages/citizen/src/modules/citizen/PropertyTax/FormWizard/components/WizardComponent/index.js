@@ -3,7 +3,8 @@ import { Button } from "components";
 import BreadCrumbs from "./components/BreadCrumbs";
 import "./index.css";
 
-const WizardComponent = ({ content, onTabClick, selected, updateIndex }) => {
+const WizardComponent = ({ content, onTabClick, selected, updateIndex, backLabel, nextLabel }) => {
+  console.log(backLabel, nextLabel);
   return (
     <div className="wizard-cont">
       <BreadCrumbs onTabClick={onTabClick} selected={selected} />
@@ -11,7 +12,7 @@ const WizardComponent = ({ content, onTabClick, selected, updateIndex }) => {
       <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right" }}>
           <Button
-            label="GO BACK"
+            label={backLabel}
             onClick={() => {
               updateIndex(selected - 1);
             }}
@@ -20,7 +21,7 @@ const WizardComponent = ({ content, onTabClick, selected, updateIndex }) => {
             style={{ marginRight: 45, width: "36%" }}
           />
           <Button
-            label="NEXT"
+            label={nextLabel}
             style={{ width: "36%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}

@@ -7,7 +7,7 @@ const ToolTip = ({ placement, show, title, id }) => {
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const { type, tooltip, label, ...fieldProps } = field;
+    const { type, tooltip, label, value, ...fieldProps } = field;
     switch (type) {
       case "textfield":
       case "textarea":
@@ -28,6 +28,7 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
           <DropDown
             {...rest}
             {...fieldProps}
+            value={value}
             dropDownData={fieldProps.dropDownData || []}
             onChange={(e, value, selectedValue) => handleFieldChange(fieldKey, selectedValue)}
           />

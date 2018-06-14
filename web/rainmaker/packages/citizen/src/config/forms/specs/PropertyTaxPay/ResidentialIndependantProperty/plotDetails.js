@@ -18,6 +18,7 @@ const formConfig = {
       dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
       numCols: 4,
+      value: "SQ_YARDS",
     },
     floorCount: {
       id: "assessment-number-of-floors",

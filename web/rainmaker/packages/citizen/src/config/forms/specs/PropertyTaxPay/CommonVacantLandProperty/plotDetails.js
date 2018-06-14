@@ -16,9 +16,9 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
-      value: "Sq yards",
       dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
+      value: "SQ_YARDS",
     },
   },
 };

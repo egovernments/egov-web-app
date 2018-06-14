@@ -27,7 +27,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      value: "Self-Occupied",
+      hintText: "Select",
       required: true,
       numCols: 4,
 
@@ -68,10 +68,10 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
-      value: "Sq yards",
       dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
       numCols: 4,
+      value: "SQ_YARDS",
     },
     annualRent: {
       id: "assessment-annual-rent",

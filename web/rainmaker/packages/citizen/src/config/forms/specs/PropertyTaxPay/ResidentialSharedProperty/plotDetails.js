@@ -26,7 +26,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
-      value: "Self-Occupied",
+      value: "SELFOCCUPIED",
       required: true,
       numCols: 4,
 
@@ -67,7 +67,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
-      value: "Sq yards",
+      value: "SQ_YARDS",
       dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
       required: true,
       numCols: 4,
