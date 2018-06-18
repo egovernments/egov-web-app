@@ -63,7 +63,7 @@ const formConfig = {
       id: "assessment-built-area",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "Built Area(sq yards)",
+      //
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
       numCols: 4,

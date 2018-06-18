@@ -17,7 +17,7 @@ const formConfig = {
       hintText: "",
       dropDownData: [{ label: "Sq Yards", value: "S_Yards" }, { label: "Sq Meter", value: "Sq Meter" }, { label: "Sq Feet", value: "Sq Feet" }],
       numCols: 4,
-      value: "Sq_Yards",
+      value: "sq yards",
     },
     noOfFloors: {
       id: "noOfFloors",
