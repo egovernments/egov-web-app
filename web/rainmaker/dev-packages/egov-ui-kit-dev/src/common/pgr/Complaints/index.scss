@@ -133,3 +133,12 @@
 .inline-Localization-text {
   float: left;
 }
+
+@media only screen and (min-width: 768px) {
+  .complaint-image {
+    min-height: 200px !important;
+  }
+  .complaint-image-wrapper {
+    max-width: 200px;
+  }
+}
