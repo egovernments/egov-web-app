@@ -132,10 +132,10 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6 status-color", label: "CS_COMMON_COMPLAINT_NO" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMMON_COMPLAINT_NO" }),
                 _react2.default.createElement(_translationNode2.default, {
                   labelStyle: { color: "inherit" },
-                  className: "col-xs-6 status-result-color",
+                  className: "col-xs-10 no-padding status-result-color",
                   id: "complaint-details-complaint-number",
                   label: applicationNo
                 })
@@ -143,9 +143,9 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6 status-color", label: "CS_COMPLAINT_DETAILS_CURRENT_STATUS" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMPLAINT_DETAILS_CURRENT_STATUS" }),
                 _react2.default.createElement(_translationNode2.default, {
-                  className: "col-xs-6 status-result-color",
+                  className: "col-xs-10  no-padding status-result-color",
                   id: "complaint-details-current-status",
                   labelStyle: { color: "inherit" },
                   label: statusKey
@@ -154,9 +154,9 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6 status-color", label: "CS_COMPLAINT_DETAILS_SUBMISSION_DATE" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMPLAINT_DETAILS_SUBMISSION_DATE" }),
                 _react2.default.createElement(_translationNode2.default, {
-                  className: "col-xs-6 status-result-color",
+                  className: "col-xs-10 no-padding status-result-color",
                   label: submittedDate,
                   id: "complaint-details-submission-date",
                   labelStyle: { color: "inherit" }
@@ -193,62 +193,46 @@ var Details = function (_Component) {
               ),
               _react2.default.createElement(
                 "div",
-                { className: "row" },
-                _react2.default.createElement(
-                  "div",
-                  { className: "col-xs-2" },
-                  _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" })
-                ),
-                _react2.default.createElement(
-                  "div",
-                  { className: "col-xs-8", style: { paddingLeft: "0px", marginLeft: "-20px", paddingRight: 10 } },
-                  _react2.default.createElement(_translationNode2.default, {
-                    label: address,
-                    className: "status-result-color",
-                    id: "complaint-details-complaint-location",
-                    labelStyle: { color: "inherit" }
-                  })
-                )
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  label: address,
+                  className: "status-result-color",
+                  id: "complaint-details-complaint-location",
+                  labelStyle: { color: "inherit" }
+                }),
+                mapAction && _react2.default.createElement(_components.Button, {
+                  className: "employee-complaint-summary-mapBtn",
+                  primary: true,
+                  label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "ES_COMPLAINT_SUMMARY_MAP", color: "#ffffff" }),
+                  style: {
+                    height: "auto",
+                    lineHeight: "auto",
+                    minWidth: "inherit"
+                  },
+                  labelStyle: {
+                    padding: "0 12px 0 0 ",
+                    letterSpacing: "0.6px",
+                    display: "inline-block",
+                    height: "22px",
+                    lineHeight: "22px"
+                  },
+                  icon: _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: mapIconStyle, color: "#ffffff" }),
+                  onClick: function onClick(e) {
+                    _this2.props.redirectToMap(true);
+                  }
+                })
               ),
-              mapAction && _react2.default.createElement(_components.Button, {
-                className: "employee-complaint-summary-mapBtn",
-                primary: true,
-                label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "ES_COMPLAINT_SUMMARY_MAP", fonstSize: "12px", color: "#ffffff" }),
-                style: {
-                  height: "auto",
-                  lineHeight: "auto",
-                  minWidth: "inherit"
-                },
-                labelStyle: {
-                  padding: "0 12px 0 0 ",
-                  letterSpacing: "0.6px",
-                  display: "inline-block",
-                  height: "35px",
-                  lineHeight: "35px"
-                },
-                icon: _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: mapIconStyle, color: "#ffffff" }),
-                onClick: function onClick(e) {
-                  _this2.props.redirectToMap(true);
-                }
-              }),
               description && _react2.default.createElement(
                 "div",
-                { className: "row", style: { marginTop: "25px" } },
-                _react2.default.createElement(
-                  "div",
-                  { className: "col-xs-2" },
-                  _react2.default.createElement(_components.Icon, { action: "editor", name: "format-quote", style: iconStyle, color: "#969696" })
-                ),
-                _react2.default.createElement(
-                  "div",
-                  { className: "col-xs-10", style: { paddingLeft: "0px", marginLeft: "-16.5px" } },
-                  _react2.default.createElement(_translationNode2.default, {
-                    label: description,
-                    id: "complaint-details-complaint-description",
-                    className: "status-result-color",
-                    labelStyle: { color: "inherit" }
-                  })
-                )
+                { style: { marginTop: "10px" }, className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { action: "editor", name: "format-quote", style: iconStyle, color: "#969696" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  label: description,
+                  id: "complaint-details-complaint-description",
+                  className: "status-result-color",
+                  labelStyle: { color: "inherit" }
+                })
               )
             )
           )
