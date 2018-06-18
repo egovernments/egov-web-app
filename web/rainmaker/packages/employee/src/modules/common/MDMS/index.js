@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Field from "egov-ui-kit/utils/field";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
+import formHoc from "egov-ui-kit/hocs/form";
 import { initForm, resetForm } from "egov-ui-kit/redux/form/actions";
 import { fetchSpecs } from "egov-ui-kit/redux/mdms/actions";
 import { upperCaseFirst } from "egov-ui-kit/utils/commons";

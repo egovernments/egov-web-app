@@ -9,7 +9,7 @@ const ForgotPasswd = ({ form, handleFieldChange }) => {
 
   return (
     <Card
-      className="user-screens-card forgot-passwd-card"
+      className="user-screens-card forgot-passwd-card col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4"
       textChildren={
         <div>
           <Label

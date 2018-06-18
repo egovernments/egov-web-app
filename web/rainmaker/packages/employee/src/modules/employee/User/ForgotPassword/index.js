@@ -9,7 +9,7 @@ const ForgotPasswdHOC = formHoc({ formKey: "employeeForgotPasswd" })(ForgotPassw
 const ForgotPassword = () => {
   return (
     <Screen>
-      <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+      <Banner>
         <ForgotPasswdHOC />
       </Banner>
     </Screen>
