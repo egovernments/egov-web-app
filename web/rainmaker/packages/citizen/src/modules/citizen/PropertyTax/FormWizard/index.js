@@ -23,7 +23,12 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (usage, propertyType) => {
-    let { basicInformation } = this.props.form;
+    let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
+    if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
+      let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;
+      floorDetails_0.fields.builtArea.floatingLabelText = `Built Area(${uom})`;
+    }
+
     if (basicInformation && basicInformation.fields.typeOfUsage.value && basicInformation.fields.typeOfBuilding.value) {
       let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
       return !isEmpty(pathFormKeyObject) ? (

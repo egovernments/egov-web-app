@@ -15,10 +15,10 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Measuring unit",
-      dropDownData: [{ label: "sq ft", value: "SQ_FT" }, { label: "sq yards", value: "SQ_YARDS" }],
+      dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
       required: true,
       numCols: 4,
-      value: "SQ_YARDS",
+      value: "sq yards",
     },
     floorCount: {
       id: "assessment-number-of-floors",
