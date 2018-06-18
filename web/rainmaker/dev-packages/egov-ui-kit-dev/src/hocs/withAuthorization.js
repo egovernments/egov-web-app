@@ -5,7 +5,7 @@ import { compose } from "redux";
 import withData from "./withData";
 import { Header } from "modules/common";
 import { Footer } from "modules/common";
-//import ActionMenu from "modules/citizen/ActionMenu";
+import { ActionMenu } from "modules/common";
 
 const actionList = [
   {
@@ -93,11 +93,19 @@ const withAuthorization = (options = {}) => (Component) => {
       const role = this.getUserRole(userInfo);
 
       return (
-        <div style={{ position: "relative" }}>
+        <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
-          {authenticated ? <Component {...this.props} /> : null}
+          <div className="col-xs-12" style={{ padding: 0 }}>
+            <div className="col-xs-2 citizen-drawer">
+              <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
+            </div>
+            <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
+            <div className="col-xs-10" style={{ padding: 0 }}>
+              {authenticated ? <Component {...this.props} /> : null}
+            </div>
+          </div>
           {!hideFooter && authenticated ? (
             <div className="hidden-md">
               <Footer history={history} role={role} />

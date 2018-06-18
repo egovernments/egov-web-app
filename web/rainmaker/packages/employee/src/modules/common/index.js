@@ -11,6 +11,7 @@ import SuccessMessage from "egov-ui-kit/common/common/SuccessMessage";
 import TrackLocation from "egov-ui-kit/common/common/TrackLocation";
 import VerticalCenterWrapper from "egov-ui-kit/common/common/VerticalCenterWrapper";
 import Screen from "egov-ui-kit/common/common/Screen";
+import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 
 //pgr common components
 import ActionButton from "egov-ui-kit/common/pgr/complaintDetails/components/ActionButton";
@@ -57,4 +58,5 @@ export {
   FeedbackPopup,
   Question,
   TextArea,
+  ActionMenu,
 };

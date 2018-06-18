@@ -1,6 +1,5 @@
 .drawer-list-poweredBy-wrapper {
-  background-color: #ffffff;
-}
+  background-color: #ffffff; }
 
 .drawer-button-toggle-container {
   padding-left: 60px !important;
@@ -9,48 +8,35 @@
   padding-bottom: 16px !important;
   height: auto !important;
   display: flex;
-  justify-content: flex-start;
-}
+  justify-content: flex-start; }
 
 .drawer-image-cont .mseva-logo {
   width: 40% !important;
-  margin-top: 43px !important;
-}
+  margin-top: 43px !important; }
 
 .logout-no-button {
-  margin-right: 14px;
-}
+  margin-right: 14px; }
 
 @media only screen and (max-width: 361px) {
   .drawer-button-toggle-container span {
-    font-size: 13px !important;
-  }
-}
+    font-size: 13px !important; } }
 
 @media only screen and (max-width: 350px) {
   .logout-no-button {
-    margin-right: 3px !important;
-  }
+    margin-right: 3px !important; }
   .logout-no-button,
   .logout-yes-button {
-    min-width: 30px !important;
-  }
-}
+    min-width: 30px !important; } }
 
 @media only screen and (min-width: 768px) {
   .rainmaker-header {
     background-color: #ffffff !important;
     position: fixed !important;
     width: 100vw !important;
-  }
-
+    padding-left: 53px !important; }
   .rainmaker-header-cont > div:first-child {
-    height: 64px !important;
-  }
-}
+    height: 64px !important; } }
 
 @media only screen and (min-width: 768px) {
   .appbar-left-icon {
-    fill: #767676 !important;
-  }
-}
+    fill: #767676 !important; } }

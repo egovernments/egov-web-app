@@ -10,7 +10,7 @@ import Router from "./Router";
 import commonConfig from "config/common";
 import logoMseva from "egov-ui-kit/assets/images/logo-white.png";
 import routes from "./Routes";
-import ActionMenu from "./employee/ActionMenu";
+//import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 
 //it should remove once role action mapping start works
 const actionList = [
@@ -220,7 +220,8 @@ class App extends Component {
   render() {
     const { toast } = this.props;
     return (
-      <div className={classnames("app-content", { expanded: true || false })}>
+      <div>
+        {/* <div className={classnames("app-content", { expanded: true || false })}>
         <div>
           <Drawer width={230} containerClassName="drawer-backGround" open={true}>
             <div className="drawerHeader text-center">
@@ -228,9 +229,10 @@ class App extends Component {
             </div>
             <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
           </Drawer>
-        </div>
+        </div> */}
         <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
+        {/* </div> */}
       </div>
     );
   }
