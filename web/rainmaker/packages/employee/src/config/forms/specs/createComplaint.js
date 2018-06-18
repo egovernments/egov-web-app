@@ -27,6 +27,18 @@ const formConfig = {
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       numCols: 2,
     },
+    city: {
+      id: "city",
+      jsonPath: "services[0].city",
+      floatingLabelText: "City",
+      hintText: "Select",
+    },
+    mohalla: {
+      id: "mohalla",
+      jsonPath: "services[0].mohalla",
+      floatingLabelText: "Mohalla",
+      hintText: "Select",
+    },
     latitude: {
       id: "latitude",
       jsonPath: "services[0].lat",
@@ -37,6 +49,14 @@ const formConfig = {
     },
     address: {
       id: "address",
+      jsonPath: "services[0].address",
+      required: true,
+      floatingLabelText: "Address",
+      hintText: "Enter address",
+      numCols: 2,
+    },
+    location: {
+      id: "location",
       jsonPath: "services[0].address",
       required: true,
       floatingLabelText: "CS_ADDCOMPLAINT_LOCATION",
