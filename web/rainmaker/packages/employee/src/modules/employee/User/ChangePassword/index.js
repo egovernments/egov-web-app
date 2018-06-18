@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
-import Screen from "modules/common/common/Screen";
+import formHoc from "egov-ui-kit/hocs/form";
+import { Screen } from "modules/common";
 import PasswordForm from "./components/PasswordForm";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 

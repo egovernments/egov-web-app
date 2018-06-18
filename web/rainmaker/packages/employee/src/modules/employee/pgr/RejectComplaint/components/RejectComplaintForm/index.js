@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "components";
-import Question from "modules/common/pgr/ReOpenComplaint/components/Question";
-import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
+import { Question } from "modules/common";
+import { TextArea } from "modules/common";
 
 const RejectComplaintForm = ({ form, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {
   const fields = form.fields || {};

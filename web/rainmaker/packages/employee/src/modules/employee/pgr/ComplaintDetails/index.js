@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Details from "modules/common/pgr/complaintDetails/components/Details";
-import ComplaintTimeLine from "modules/common/pgr/complaintDetails/components/ComplaintTimeLine";
-import Comments from "modules/common/pgr/complaintDetails/components/Comments";
-import Actions from "modules/common/pgr/complaintDetails/components/ActionButton";
+import { Details } from "modules/common";
+import { ComplaintTimeLine } from "modules/common";
+import { Comments } from "modules/common";
+import { ActionButton } from "modules/common";
 import { Icon, MapLocation } from "components";
-import Screen from "modules/common/common/Screen";
-import pinIcon from "assets/Location_pin.svg";
+import { Screen } from "modules/common";
+import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
 import {
   getDateFromEpoch,
   mapCompIDToName,
@@ -196,7 +196,7 @@ class ComplaintDetails extends Component {
                     isAssignedToEmployee &&
                     complaint.complaintStatus.toLowerCase() === "assigned" &&
                     complaint.complaintStatus.toLowerCase() !== "closed") ? (
-                    <Actions
+                    <ActionButton
                       btnOneLabel={btnOneLabel}
                       btnOneOnClick={() => this.btnOneOnClick(serviceRequestId, btnOneLabel)}
                       btnTwoLabel={btnTwoLabel}

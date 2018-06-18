@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, TextField, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import ProfileSection from "modules/common/User/components/ProfileSection";
+import { ProfileSection } from "modules/common";
 
 const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }) => {
   const fields = form.fields || {};

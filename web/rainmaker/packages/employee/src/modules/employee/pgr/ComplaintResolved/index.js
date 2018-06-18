@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
-import Screen from "modules/common/common/Screen";
+import formHoc from "egov-ui-kit/hocs/form";
+import { Screen } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { fileUpload } from "egov-ui-kit/redux/form/actions";
 import ComplaintResolvedForm from "./components/ComplaintResolvedForm";

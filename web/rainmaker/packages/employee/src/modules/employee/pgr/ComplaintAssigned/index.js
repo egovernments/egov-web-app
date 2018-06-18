@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import SuccessMessage from "modules/common/common/SuccessMessage/components/successmessage";
+import { SuccessMessage } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
-import "modules/common/common/SuccessMessage/components/successmessage/index.css";
+//import "modules/common/common/SuccessMessage/components/successmessage/index.css";
 
 class ComplaintAssigned extends Component {
   componentDidMount = () => {

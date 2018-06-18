@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Employee from "modules/employee";
-import ImageModalDisplay from "modules/common/common/ImageModalDisplay";
+import { ImageModalDisplay } from "modules/common";
 
 const Main = ({ routes }) => {
   return (

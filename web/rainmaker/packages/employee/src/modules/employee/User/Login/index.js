@@ -1,7 +1,7 @@
 import React from "react";
-import formHoc from "hocs/form";
-import Banner from "modules/common/common/Banner";
-import Screen from "modules/common/common/Screen";
+import formHoc from "egov-ui-kit/hocs/form";
+import { Banner } from "modules/common";
+import { Screen } from "modules/common";
 import LoginForm from "./components/LoginForm";
 
 const LoginFormHOC = formHoc({ formKey: "employeeLogin" })(LoginForm);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "components";
-import ImageUpload from "modules/common/common/ImageUpload";
-import TextArea from "modules/common/pgr/ReOpenComplaint/components/TextArea";
+import { ImageUpload } from "modules/common";
+import { TextArea } from "modules/common";
 
 const ComplaintResolvedForm = ({ formKey, form, handleFieldChange }) => {
   const fields = form.fields || {};

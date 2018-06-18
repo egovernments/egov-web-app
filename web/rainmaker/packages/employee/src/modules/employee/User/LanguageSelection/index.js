@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Banner from "modules/common/common/Banner";
-import LanguageSelectionForm from "modules/common/User/components/LanguageSelectionForm";
+import { Banner } from "modules/common";
+import { LanguageSelectionForm } from "modules/common";
 import { fetchLocalizationLabel } from "egov-ui-kit/redux/app/actions";
 
 class LanguageSelection extends Component {

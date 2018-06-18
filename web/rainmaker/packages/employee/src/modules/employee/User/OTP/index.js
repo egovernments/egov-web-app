@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHoc from "hocs/form";
-import Screen from "modules/common/common/Screen";
-import Banner from "modules/common/common/Banner";
+import formHoc from "egov-ui-kit/hocs/form";
+import { Screen } from "modules/common";
+import { Banner } from "modules/common";
 import OTPForm from "./components/OTPForm";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { sendOTP } from "egov-ui-kit/redux/auth/actions";
