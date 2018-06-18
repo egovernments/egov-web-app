@@ -18,6 +18,7 @@ import ComplaintRejected from "modules/employee/pgr/ComplaintRejected";
 import ComplaintAssigned from "modules/employee/pgr/ComplaintAssigned";
 import ResolveSuccess from "modules/employee/pgr/ResolveSuccess";
 import ReassignSuccess from "modules/employee/pgr/ReassignSuccess";
+import CreateComplaint from "modules/employee/pgr/CreateComplaint";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 
@@ -224,6 +225,16 @@ const routes = [
       hideFooter: false,
       redirectionUrl,
       isHomeScreen: true,
+    },
+  },
+  {
+    path: "create-complaint",
+    component: CreateComplaint,
+    needsAuthentication: true,
+    options: {
+      title: "ES_CREATE_COMPLAINT",
+      hideFooter: true,
+      redirectionUrl,
     },
   },
 ];
