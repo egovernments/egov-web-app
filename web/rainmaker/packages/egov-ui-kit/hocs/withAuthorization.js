@@ -36,11 +36,9 @@ var _withData2 = _interopRequireDefault(_withData);
 
 var _common = require("modules/common");
 
-var _ActionMenu = require("modules/citizen/ActionMenu");
-
-var _ActionMenu2 = _interopRequireDefault(_ActionMenu);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import ActionMenu from "modules/citizen/ActionMenu";
 
 var actionList = [{
   id: 1535,
@@ -143,34 +141,38 @@ var withAuthorization = function withAuthorization() {
 
           return _react2.default.createElement(
             "div",
-            { className: "rainmaker-header-cont", style: { position: "relative" } },
+            { style: { position: "relative" } },
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, { title: title, userInfo: userInfo, role: role, options: options, history: history, className: "rainmaker-header" }) : null,
-            _react2.default.createElement(
-              "div",
-              { className: "col-xs-12", style: { padding: 0 } },
-              _react2.default.createElement(
-                "div",
-                { className: "col-xs-2 citizen-drawer" },
-                _react2.default.createElement(
-                  "div",
-                  { className: "citizen-action-menu" },
-                  actionList && actionList.length > 0 && _react2.default.createElement(_ActionMenu2.default, { actionList: actionList })
-                )
-              ),
-              _react2.default.createElement("div", { className: "col-xs-2" }),
-              " ",
-              _react2.default.createElement(
-                "div",
-                { className: "col-xs-10", style: { padding: 0 } },
-                authenticated ? _react2.default.createElement(Component, this.props) : null
-              )
-            ),
+            authenticated ? _react2.default.createElement(Component, this.props) : null,
             !hideFooter && authenticated ? _react2.default.createElement(
               "div",
               { className: "hidden-md" },
               _react2.default.createElement(_common.Footer, { history: history, role: role })
             ) : null
           );
+
+          // return (
+          //   <div className="rainmaker-header-cont" style={{ position: "relative" }}>
+          //     {!hideHeader && authenticated ? (
+          //       <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
+          //     ) : null}
+
+          //     <div className="col-xs-12" style={{ padding: 0 }}>
+          //       <div className="col-xs-2 citizen-drawer">
+          //         <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
+          //       </div>
+          //       <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
+          //       <div className="col-xs-10" style={{ padding: 0 }}>
+          //         {authenticated ? <Component {...this.props} /> : null}
+          //       </div>
+          //     </div>
+          //     {!hideFooter && authenticated ? (
+          //       <div className="hidden-md">
+          //         <Footer history={history} role={role} />
+          //       </div>
+          //     ) : null}
+          //   </div>
+          // );
         }
       }]);
       return Wrapper;

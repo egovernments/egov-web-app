@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import formHOC from "hocs/form";
-import Screen from "modules/common/common/Screen";
+import formHOC from "egov-ui-kit/hocs/form";
+import { Screen } from "modules/common";
 import RejectComplaintForm from "./components/RejectComplaintForm";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";

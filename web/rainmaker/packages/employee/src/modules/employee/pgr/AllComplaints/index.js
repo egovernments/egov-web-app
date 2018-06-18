@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Tabs } from "components";
-import Screen from "modules/common/common/Screen";
-import Complaints from "modules/common/pgr/Complaints";
+import { Screen } from "modules/common";
+import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";

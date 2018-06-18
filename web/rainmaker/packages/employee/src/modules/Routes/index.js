@@ -1,6 +1,6 @@
 import React from "react";
-import withAuthorization from "hocs/withAuthorization";
-import withoutAuthorization from "hocs/withoutAuthorization";
+import withAuthorization from "egov-ui-kit/hocs/withAuthorization";
+import withoutAuthorization from "egov-ui-kit/hocs/withoutAuthorization";
 import employeeRoutes from "./employee";
 
 const mapRoutes = (routes) => {
@@ -10,5 +10,5 @@ const mapRoutes = (routes) => {
   });
 };
 
-const routes = {employee: mapRoutes(employeeRoutes) };
+const routes = { employee: mapRoutes(employeeRoutes) };
 export default routes;

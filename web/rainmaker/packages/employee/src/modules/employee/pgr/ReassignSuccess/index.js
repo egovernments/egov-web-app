@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import SuccessMessage from "modules/common/common/SuccessMessage/components/successmessage";
+import { SuccessMessage } from "modules/common";
 
 class ReassignSuccess extends Component {
   continueComplaintSubmit = () => {

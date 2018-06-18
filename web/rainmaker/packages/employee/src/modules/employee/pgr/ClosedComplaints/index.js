@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Screen from "modules/common/common/Screen";
-import Complaints from "modules/common/pgr/Complaints";
+import { Screen } from "modules/common";
+import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";

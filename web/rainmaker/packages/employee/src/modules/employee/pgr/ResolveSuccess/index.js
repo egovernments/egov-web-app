@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import SuccessMessage from "modules/common/common/SuccessMessage/components/successmessage";
-import "modules/common/common/SuccessMessage/components/successmessage/index.css";
+import { SuccessMessage } from "modules/common";
+//import "modules/common/common/SuccessMessage/components/successmessage/index.css";
 import "./index.css";
 
 class ResolveSuccess extends Component {
