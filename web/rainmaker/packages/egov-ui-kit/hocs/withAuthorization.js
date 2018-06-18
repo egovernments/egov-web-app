@@ -38,8 +38,6 @@ var _common = require("modules/common");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import ActionMenu from "modules/citizen/ActionMenu";
-
 var actionList = [{
   id: 1535,
   name: "PropertyType",
@@ -141,9 +139,28 @@ var withAuthorization = function withAuthorization() {
 
           return _react2.default.createElement(
             "div",
-            { style: { position: "relative" } },
+            { className: "rainmaker-header-cont", style: { position: "relative" } },
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, { title: title, userInfo: userInfo, role: role, options: options, history: history, className: "rainmaker-header" }) : null,
-            authenticated ? _react2.default.createElement(Component, this.props) : null,
+            _react2.default.createElement(
+              "div",
+              { className: "col-xs-12", style: { padding: 0 } },
+              _react2.default.createElement(
+                "div",
+                { className: "col-xs-2 citizen-drawer" },
+                _react2.default.createElement(
+                  "div",
+                  { className: "citizen-action-menu" },
+                  actionList && actionList.length > 0 && _react2.default.createElement(_common.ActionMenu, { actionList: actionList })
+                )
+              ),
+              _react2.default.createElement("div", { className: "col-xs-2" }),
+              " ",
+              _react2.default.createElement(
+                "div",
+                { className: "col-xs-10", style: { padding: 0 } },
+                authenticated ? _react2.default.createElement(Component, this.props) : null
+              )
+            ),
             !hideFooter && authenticated ? _react2.default.createElement(
               "div",
               { className: "hidden-md" },

@@ -23,7 +23,7 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
           <div className="citizen-header-logo">
             <img src={pbLogo} />
           </div>
-          <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle" label={title} />
+          <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle" label={"PUNJAB MUNICIPAL CORPORATION"} />
         </div>
       }
       titleStyle={styles.titleStyle}
