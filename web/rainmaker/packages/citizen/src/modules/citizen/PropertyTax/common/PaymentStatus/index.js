@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Icon, Divider } from "components";
 import { Screen } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
-import ActionFooter from "../ActionFooter";
+import { ActionFooter } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import "./index.css";
 
