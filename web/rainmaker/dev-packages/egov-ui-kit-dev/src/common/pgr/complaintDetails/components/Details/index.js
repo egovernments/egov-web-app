@@ -76,27 +76,27 @@ class Details extends Component {
                   <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
                 )} */}
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="CS_COMMON_COMPLAINT_NO" />
+                  <Label className="col-xs-2 status-color" label="CS_COMMON_COMPLAINT_NO" />
                   <Label
                     labelStyle={{ color: "inherit" }}
-                    className="col-xs-6 status-result-color"
+                    className="col-xs-10 no-padding status-result-color"
                     id="complaint-details-complaint-number"
                     label={applicationNo}
                   />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
+                  <Label className="col-xs-2 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
                   <Label
-                    className="col-xs-6 status-result-color"
+                    className="col-xs-10  no-padding status-result-color"
                     id="complaint-details-current-status"
                     labelStyle={{ color: "inherit" }}
                     label={statusKey}
                   />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-6 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
+                  <Label className="col-xs-2 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
                   <Label
-                    className="col-xs-6 status-result-color"
+                    className="col-xs-10 no-padding status-result-color"
                     label={submittedDate}
                     id="complaint-details-submission-date"
                     labelStyle={{ color: "inherit" }}
@@ -128,66 +128,48 @@ class Details extends Component {
                       })}
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-xs-2">
-                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-                  </div>
-                  <div className="col-xs-8" style={{ paddingLeft: "0px", marginLeft: "-20px", paddingRight: 10 }}>
+                <div className="rainmaker-displayInline">
+                  <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                  <Label
+                    label={address}
+                    className="status-result-color"
+                    id="complaint-details-complaint-location"
+                    labelStyle={{ color: "inherit" }}
+                  />
+                  {mapAction && (
+                    <Button
+                      className="employee-complaint-summary-mapBtn"
+                      primary={true}
+                      label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
+                      style={{
+                        height: "auto",
+                        lineHeight: "auto",
+                        minWidth: "inherit",
+                      }}
+                      labelStyle={{
+                        padding: "0 12px 0 0 ",
+                        letterSpacing: "0.6px",
+                        display: "inline-block",
+                        height: "22px",
+                        lineHeight: "22px",
+                      }}
+                      icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
+                      onClick={(e) => {
+                        this.props.redirectToMap(true);
+                      }}
+                    />
+                  )}
+                </div>
+
+                {description && (
+                  <div style={{ marginTop: "10px" }} className="rainmaker-displayInline">
+                    <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     <Label
-                      label={address}
+                      label={description}
+                      id="complaint-details-complaint-description"
                       className="status-result-color"
-                      id="complaint-details-complaint-location"
                       labelStyle={{ color: "inherit" }}
                     />
-                  </div>
-                </div>
-                {/* {mapAction && (
-                  <div
-                    className="complaint-details-timline-button complaint-map-btn"
-                    onClick={(e) => {
-                      this.props.redirectToMap(true, { lat: latitude, lng: longitude });
-                    }}
-                  >
-                    <Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />
-                    MAP
-                  </div>
-                )} */}
-                {mapAction && (
-                  <Button
-                    className="employee-complaint-summary-mapBtn"
-                    primary={true}
-                    label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} fonstSize="12px" color="#ffffff" />}
-                    style={{
-                      height: "auto",
-                      lineHeight: "auto",
-                      minWidth: "inherit",
-                    }}
-                    labelStyle={{
-                      padding: "0 12px 0 0 ",
-                      letterSpacing: "0.6px",
-                      display: "inline-block",
-                      height: "35px",
-                      lineHeight: "35px",
-                    }}
-                    icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
-                    onClick={(e) => {
-                      this.props.redirectToMap(true);
-                    }}
-                  />
-                )}
-                {description && (
-                  <div className="row" style={{ marginTop: "25px" }}>
-                    <div className="col-xs-2">
-                      <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
-                    </div>
-                    <div className="col-xs-10" style={{ paddingLeft: "0px", marginLeft: "-16.5px" }}>
-                      <Label
-                        label={description}
-                        id="complaint-details-complaint-description"
-                        className="status-result-color"
-                        labelStyle={{ color: "inherit" }}
-                      />
-                    </div>
                   </div>
                 )}
               </div>
