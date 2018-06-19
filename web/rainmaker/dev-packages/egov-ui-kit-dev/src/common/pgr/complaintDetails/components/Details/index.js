@@ -5,8 +5,13 @@ import "./index.css";
 
 const iconStyle = {
   marginRight: "13px",
-  height: "18px",
-  width: "18px",
+  height: "22px",
+  width: "22px",
+};
+
+const imageStyles = {
+  maxHeight: "100px",
+  minHeight: "100px",
 };
 
 const mapIconStyle = {
@@ -52,6 +57,7 @@ class Details extends Component {
       }
     }
     const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
+    console.log(complaint);
 
     return (
       <div>
@@ -102,7 +108,7 @@ class Details extends Component {
                     labelStyle={{ color: "inherit" }}
                   />
                 </div>
-                <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
+                {/* <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
                   <div className="row">
                     {images &&
                       images.map((image, index) => {
@@ -127,7 +133,21 @@ class Details extends Component {
                         );
                       })}
                   </div>
+                </div> */}
+
+                <div style={{ marginTop: "16px" }} className="complaint-image-cont">
+                  {images &&
+                    images.map((image, index) => {
+                      return (
+                        image && (
+                          <div className="complaint-image-wrapper" key={index}>
+                            <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
+                          </div>
+                        )
+                      );
+                    })}
                 </div>
+
                 <div className="rainmaker-displayInline">
                   <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                   <Label
@@ -162,7 +182,7 @@ class Details extends Component {
                 </div>
 
                 {description && (
-                  <div style={{ marginTop: "10px" }} className="rainmaker-displayInline">
+                  <div style={{ marginTop: "16px" }} className="rainmaker-displayInline">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
                     <Label
                       label={description}

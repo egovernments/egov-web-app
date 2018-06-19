@@ -36,8 +36,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var iconStyle = {
   marginRight: "13px",
-  height: "18px",
-  width: "18px"
+  height: "22px",
+  width: "22px"
+};
+
+var imageStyles = {
+  maxHeight: "100px",
+  minHeight: "100px"
 };
 
 var mapIconStyle = {
@@ -110,6 +115,7 @@ var Details = function (_Component) {
         }
       }
       var titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
+      console.log(complaint);
 
       return _react2.default.createElement(
         "div",
@@ -164,32 +170,15 @@ var Details = function (_Component) {
               ),
               _react2.default.createElement(
                 "div",
-                { style: { marginLeft: "16px", marginTop: "24px", marginBottom: "17px" } },
-                _react2.default.createElement(
-                  "div",
-                  { className: "row" },
-                  images && images.map(function (image, index) {
-                    return image && _react2.default.createElement(
-                      "div",
-                      {
-                        className: "col-xs-4 complaint-detail-detail-section-padding-zero",
-                        id: "complaint-details-image-section-" + index,
-                        key: index
-                      },
-                      _react2.default.createElement(_components.Image, {
-                        style: {
-                          width: "97px",
-                          height: "93px"
-                        },
-                        source: image,
-                        size: "medium",
-                        onClick: function onClick() {
-                          return _this2.onImageClick(image);
-                        }
-                      })
-                    );
-                  })
-                )
+                { style: { marginTop: "16px" }, className: "complaint-image-cont" },
+                images && images.map(function (image, index) {
+                  return image && _react2.default.createElement(
+                    "div",
+                    { className: "complaint-image-wrapper", key: index },
+                    _react2.default.createElement(_components.Image, { style: imageStyles, size: "medium", className: "complaint-image", width: "100%", height: 46, source: image }),
+                    " "
+                  );
+                })
               ),
               _react2.default.createElement(
                 "div",
@@ -225,7 +214,7 @@ var Details = function (_Component) {
               ),
               description && _react2.default.createElement(
                 "div",
-                { style: { marginTop: "10px" }, className: "rainmaker-displayInline" },
+                { style: { marginTop: "16px" }, className: "rainmaker-displayInline" },
                 _react2.default.createElement(_components.Icon, { action: "editor", name: "format-quote", style: iconStyle, color: "#969696" }),
                 _react2.default.createElement(_translationNode2.default, {
                   label: description,
