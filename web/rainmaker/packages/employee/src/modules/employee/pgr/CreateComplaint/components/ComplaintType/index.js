@@ -42,9 +42,13 @@ class ComplaintTypeField extends Component {
           title="Choose ComplaintType"
           titleStyle={{ textAlign: "left", paddingRight: "20px", fontWeight: "500" }}
           children={[
-            <div>
-              <ComplaintType onClose={onClose} employeeScreen={true} containerStyle={{}} textFieldStyle={{ backgroundColor: "#f7f7f7" }} />
-            </div>,
+            <ComplaintType
+              onClose={onClose}
+              key={"complaintType"}
+              employeeScreen={true}
+              containerStyle={{}}
+              textFieldStyle={{ backgroundColor: "#f7f7f7" }}
+            />,
           ]}
           bodyStyle={{ backgroundColor: "#ffffff" }}
           isClose={false}
