@@ -8,6 +8,13 @@
   right: 45px;
 }
 
-.csr-action-buttons .wizard-footer > div {
-  width: 100% !important;
+.csr-action-buttons {
+  text-align: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .csr-action-buttons {
+    text-align: center;
+    padding: 0 !important;
+  }
 }
