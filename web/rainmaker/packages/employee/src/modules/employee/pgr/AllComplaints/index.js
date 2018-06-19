@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Card, TextField, Icon } from "components";
+import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
 import { Complaints, ActionFooter } from "modules/common";
@@ -43,37 +43,21 @@ class AllComplaints extends Component {
     }
   };
 
-  filterComplaints = (complaints) => {
-    const { mobileNo, complaintNo } = this.state;
-    if (mobileNo || complaintNo) {
-      return complaints.filter((result) => {
-        return (
-          result.complaintNo
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .indexOf(complaintNo) !== -1 &&
-          result.citizenPhoneNumber
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .indexOf(mobileNo) !== -1
-        );
-      });
-    } else {
-      return complaints;
-    }
+  clearSearch = () => {
+    const { fetchComplaints } = this.props;
+    fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
+    this.setState({ mobileNo: "", complaintNo: "" });
   };
 
   render() {
     const { loading, history } = this.props;
-    const { mobileNo, complaintNo, complaints } = this.state;
+    const { mobileNo, complaintNo } = this.state;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
 
-    const { onComplaintClick, filterComplaints } = this;
+    const { onComplaintClick } = this;
     const { assignedComplaints, unassignedComplaints, employeeComplaints, role, transformedComplaints } = this.props;
-    //let filteredComplaints = transformedComplaints;
-    // const filteredComplaints = filterComplaints(transformedComplaints);
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
@@ -144,7 +128,7 @@ class AllComplaints extends Component {
               <div className="col-xs-12" style={{ paddingLeft: 8 }}>
                 <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
               </div>
-              <div className="col-xs-3" style={{ paddingLeft: 8 }}>
+              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
                 <TextField
                   id="complaint-no"
                   name="complaint-no"
@@ -156,7 +140,7 @@ class AllComplaints extends Component {
                   underlineFocusStyle={{ bottom: 7 }}
                 />
               </div>
-              <div className="col-xs-3" style={{ paddingLeft: 8 }}>
+              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
                 <TextField
                   id="mobile-no"
                   name="mobile-no"
@@ -168,8 +152,22 @@ class AllComplaints extends Component {
                   underlineFocusStyle={{ bottom: 7 }}
                 />
               </div>
-              <div className="col-xs-6 csr-action-buttons" style={{ marginTop: 10, padding: 0, paddingRight: 8 }}>
-                <ActionFooter label1="CLEAR SEARCH" label2="SEARCH" primaryAction={() => this.onSearch()} />
+              <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
+                <Button
+                  label={"SEARCH"}
+                  style={{ marginRight: 45, width: "36%" }}
+                  backgroundColor="#fe7a51"
+                  labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
+                  buttonStyle={{ border: 0 }}
+                  onClick={() => this.onSearch()}
+                />
+                <Button
+                  label={"CLEAR SEARCH"}
+                  labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+                  buttonStyle={{ border: "1px solid #fe7a51" }}
+                  style={{ width: "36%" }}
+                  onClick={() => this.clearSearch()}
+                />
               </div>
             </div>
           }
