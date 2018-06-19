@@ -1,3 +1,13 @@
 .employee-all-complaints .screen {
   padding: 0px 8px 35px 8px;
 }
+
+.csr-add-button {
+  position: fixed;
+  bottom: 100px;
+  right: 45px;
+}
+
+.csr-action-buttons .wizard-footer > div {
+  width: 100% !important;
+}
