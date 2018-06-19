@@ -39,8 +39,13 @@ class ComplaintType extends Component {
   };
 
   onComplaintTypeChosen = (item, index) => {
+    let { employeeScreen } = this.props;
     this.props.handleFieldChange("complaint", "complaintType", item.id);
-    this.props.history.goBack();
+    if (employeeScreen) {
+      this.props.onClose();
+    } else {
+      this.props.history.goBack();
+    }
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {
@@ -81,9 +86,15 @@ class ComplaintType extends Component {
       />
     );
   };
-
+  baseContainerStyle = {
+    overflowX: "hidden",
+    padding: "0px 16px 16px 16px",
+    background: "#00bcd1",
+    boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)",
+  };
+  baseTextStyle = { boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)", background: "#ffffff" };
   render() {
-    const { autoSuggestCallback, prepareResultsForDisplay } = this;
+    const { autoSuggestCallback, prepareResultsForDisplay, baseContainerStyle, baseTextStyle } = this;
     const { results, searchTerm } = this.state;
     const displayInitialList = searchTerm.length === 0 ? true : false;
     const { transformedDataSource, dataSource } = this.state;
@@ -91,13 +102,8 @@ class ComplaintType extends Component {
       <div style={{ marginBottom: 60 }}>
         <AutoSuggest
           id="complainttype-search"
-          containerStyle={{
-            overflowX: "hidden",
-            padding: "0px 16px 16px 16px",
-            background: "#00bcd1",
-            boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)",
-          }}
-          textFieldStyle={{ boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)", background: "#ffffff" }}
+          containerStyle={this.props.containerStyle || baseContainerStyle}
+          textFieldStyle={this.props.textFieldStyle || baseTextStyle}
           dataSource={transformedDataSource}
           searchInputText="Search"
           searchKey="text"
