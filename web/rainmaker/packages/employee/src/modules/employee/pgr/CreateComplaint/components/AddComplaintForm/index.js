@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, TextField, DropDown } from "components";
+import { Label, Card, TextField, DropDown } from "components";
 import LocationDetailsCard from "../LocationDetails";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
@@ -7,11 +7,12 @@ import { ActionFooter } from "modules/common";
 
 const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories }) => {
   const fields = form.fields || {};
-  const { name, phone, mohalla, city, address } = fields;
+  const { name, phone, mohalla, city, address, landmark } = fields;
   const submit = form.submit;
   console.log(fields);
   return (
     <div className="create-complaint-main-cont">
+      <Label label="Complaint Submission" labelStyle={{ fontSize: 20, color: "#484848", margin: "24px 16px 0px 16px" }} />
       <Card
         id="create-complaint-card"
         className="create-complaint-main-card"
@@ -72,12 +73,15 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
               />
             </div>
             <div className="col-xs-6">
-              <LocationDetailsCard
-                formKey={formKey}
-                handleFieldChange={handleFieldChange}
-                landmark={fields.landmark}
-                locationDetails={fields.location}
+              <TextField
+                id="addComplaint-landmark-details"
+                {...landmark}
+                onChange={(e, value) => handleFieldChange("landmark", value)}
+                name="landmark-details"
               />
+            </div>
+            <div className="col-xs-6">
+              <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} locationDetails={fields.location} />
             </div>
           </div>
         }

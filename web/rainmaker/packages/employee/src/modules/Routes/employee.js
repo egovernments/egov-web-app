@@ -4,6 +4,7 @@ import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
 import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
+import { TrackLocation } from "modules/common";
 
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
@@ -236,6 +237,12 @@ const routes = [
       hideFooter: true,
       redirectionUrl,
     },
+  },
+  {
+    path: "map",
+    component: TrackLocation,
+    needsAuthentication: true,
+    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" },
   },
 ];
 
