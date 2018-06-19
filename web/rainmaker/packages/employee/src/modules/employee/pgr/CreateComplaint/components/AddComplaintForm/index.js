@@ -3,7 +3,6 @@ import { Label, Card, TextField, DropDown, Button } from "components";
 import LocationDetailsCard from "../LocationDetails";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
-import { ActionFooter } from "modules/common";
 
 const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories, history }) => {
   const fields = form.fields || {};
