@@ -68,7 +68,12 @@ var EgovAppBar = function EgovAppBar(_ref) {
           { className: "citizen-header-logo" },
           _react2.default.createElement("img", { src: _pblogo2.default })
         ),
-        _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle", label: "PUNJAB MUNICIPAL CORPORATION" })
+        _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
+        _react2.default.createElement(_translationNode2.default, {
+          containerStyle: { marginLeft: "10px" },
+          className: "screenHeaderLabelStyle appbar-municipal-label",
+          label: "PUNJAB MUNICIPAL CORPORATION"
+        })
       ),
       titleStyle: styles.titleStyle
     }, rest),

@@ -19,7 +19,7 @@ import ComplaintSubmited from "modules/citizen/pgr/ComplaintSubmited";
 import { TrackLocation } from "modules/common";
 import Feedback from "modules/citizen/pgr/Feedback";
 import ReOpenComplaint from "modules/citizen/pgr/ReOpenComplaint";
-import ComplaintType from "modules/citizen/pgr/ComplaintType";
+import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import ReopenAcknowledgement from "modules/citizen/pgr/ReopenAcknowledgement";

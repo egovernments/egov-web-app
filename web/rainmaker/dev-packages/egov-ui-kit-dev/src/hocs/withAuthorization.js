@@ -97,12 +97,12 @@ const withAuthorization = (options = {}) => (Component) => {
           {!hideHeader && authenticated ? (
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
-          <div className="col-xs-12" style={{ padding: 0 }}>
-            <div className="col-xs-2 citizen-drawer">
-              <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
+          <div className=" col-xs-12" style={{ padding: 0 }}>
+            <div className="col-xs-2 action-menu-drawer show-action-menu">
+              <div className="rainmaker-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
             </div>
-            <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
-            <div className="col-xs-10" style={{ padding: 0 }}>
+            <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
+            <div className="col-xs-12 col-sm-10 col-md-10 col-lg-10" style={{ padding: 0 }}>
               {authenticated ? <Component {...this.props} /> : null}
             </div>
           </div>
@@ -113,29 +113,6 @@ const withAuthorization = (options = {}) => (Component) => {
           ) : null}
         </div>
       );
-
-      // return (
-      //   <div className="rainmaker-header-cont" style={{ position: "relative" }}>
-      //     {!hideHeader && authenticated ? (
-      //       <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
-      //     ) : null}
-
-      //     <div className="col-xs-12" style={{ padding: 0 }}>
-      //       <div className="col-xs-2 citizen-drawer">
-      //         <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
-      //       </div>
-      //       <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
-      //       <div className="col-xs-10" style={{ padding: 0 }}>
-      //         {authenticated ? <Component {...this.props} /> : null}
-      //       </div>
-      //     </div>
-      //     {!hideFooter && authenticated ? (
-      //       <div className="hidden-md">
-      //         <Footer history={history} role={role} />
-      //       </div>
-      //     ) : null}
-      //   </div>
-      // );
     }
   }
 

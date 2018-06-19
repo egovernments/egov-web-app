@@ -57,19 +57,19 @@ class Header extends Component {
     }
 
     const iconElementLeft = (
-      <div>
-        {/* <IconButton id="icon-hamburger">
+      <div className="appbar-left-icon">
+        <IconButton id="icon-hamburger">
           {isHomeScreen ? (
             <Icon id="icon-hamburger" action="custom" name="hamburger" />
           ) : hideBackButton ? null : (
             <Icon id="back-navigator" action="navigation" name="arrow-back" />
           )}
-        </IconButton> */}
+        </IconButton>
       </div>
     );
 
-    // const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
-    const onLeftIconButtonClick = this._handleToggleMenu;
+    const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
+    //const onLeftIconButtonClick = this._handleToggleMenu;
 
     return { style, iconElementLeft, onLeftIconButtonClick, isHomeScreen };
   };
