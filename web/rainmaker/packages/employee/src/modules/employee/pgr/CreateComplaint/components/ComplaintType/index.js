@@ -23,7 +23,7 @@ class ComplaintTypeField extends Component {
     let { categories, localizationLabels, complaintType } = this.props;
     let { onClose, onFieldClicked } = this;
     let { open } = this.state;
-    let complainTypeMessage =
+    const complainTypeMessage =
       (complaintType && complaintType.value && (localizationLabels["SERVICEDEFS." + (complaintType.value || "").toUpperCase()] || {}).message) || "";
     return (
       <div className="complaint-type-main-cont">
@@ -34,46 +34,30 @@ class ComplaintTypeField extends Component {
             fullWidth={true}
             Icon={DownArrow}
             name="complaint-type"
-            isRequired={true}
             disabled={false}
           />
         </div>
         <Dialog
           open={open}
           title="Choose ComplaintType"
-          children={[<ComplaintType />]}
+          titleStyle={{ textAlign: "left", paddingRight: "20px", fontWeight: "500" }}
+          children={[
+            <div>
+              <ComplaintType onClose={onClose} employeeScreen={true} containerStyle={{}} textFieldStyle={{ backgroundColor: "#f7f7f7" }} />
+            </div>,
+          ]}
           bodyStyle={{ backgroundColor: "#ffffff" }}
           isClose={false}
           onRequestClose={onClose}
-          contentStyle={{ width: "50%" }}
+          contentStyle={{ width: "34%", height: "65%" }}
           autoScrollBodyContent={true}
           style={{
             paddingTop: "0",
-            marginTop: "-30px",
             bottom: "0",
+            marginTop: "50px",
             height: "auto",
           }}
         />
-        {/* <Dialog
-          className="complaint-type-dialog"
-          titleStyle={{ textAlign: "left", padding: "24px 16px" }}
-          handleClose={onClose}
-          bodyStyle={{ padding: "0px", overflowX: "hidden", maxHeight: "100%", minHeight: "100px" }}
-          title="Choose ComplaintType"
-          modal={false}
-          open={open}
-          autoScrollBodyContent={true}
-          onRequestClose={onClose}
-          style={{
-            paddingTop: "0",
-            marginTop: "-30px",
-            bottom: "0",
-            height: "auto",
-          }}
-          isClose={true}
-        >
-          <p>hiiiiiiii</p>
-        </Dialog> */}
       </div>
     );
   }

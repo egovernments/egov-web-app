@@ -78,8 +78,14 @@ var ComplaintType = function (_Component) {
       _this.generateResultsForAutoComplete(categoryList, transformedDataSource);
       _this.setState({ dataSource: categoryList, transformedDataSource: transformedDataSource });
     }, _this.onComplaintTypeChosen = function (item, index) {
+      var employeeScreen = _this.props.employeeScreen;
+
       _this.props.handleFieldChange("complaint", "complaintType", item.id);
-      _this.props.history.goBack();
+      if (employeeScreen) {
+        _this.props.onClose();
+      } else {
+        _this.props.history.goBack();
+      }
     }, _this.autoSuggestCallback = function () {
       var results = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var searchTerm = arguments[1];
@@ -117,14 +123,21 @@ var ComplaintType = function (_Component) {
         primaryTogglesNestedList: true,
         items: dataSource
       });
-    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+    }, _this.baseContainerStyle = {
+      overflowX: "hidden",
+      padding: "0px 16px 16px 16px",
+      background: "#00bcd1",
+      boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)"
+    }, _this.baseTextStyle = { boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)", background: "#ffffff" }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(ComplaintType, [{
     key: "render",
     value: function render() {
       var autoSuggestCallback = this.autoSuggestCallback,
-          prepareResultsForDisplay = this.prepareResultsForDisplay;
+          prepareResultsForDisplay = this.prepareResultsForDisplay,
+          baseContainerStyle = this.baseContainerStyle,
+          baseTextStyle = this.baseTextStyle;
       var _state = this.state,
           results = _state.results,
           searchTerm = _state.searchTerm;
@@ -139,13 +152,8 @@ var ComplaintType = function (_Component) {
         { style: { marginBottom: 60 } },
         _react2.default.createElement(_components.AutoSuggest, {
           id: "complainttype-search",
-          containerStyle: {
-            overflowX: "hidden",
-            padding: "0px 16px 16px 16px",
-            background: "#00bcd1",
-            boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.24), 0 0 4px 0 rgba(0, 0, 0, 0.12)"
-          },
-          textFieldStyle: { boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)", background: "#ffffff" },
+          containerStyle: this.props.containerStyle || baseContainerStyle,
+          textFieldStyle: this.props.textFieldStyle || baseTextStyle,
           dataSource: transformedDataSource,
           searchInputText: "Search",
           searchKey: "text",
