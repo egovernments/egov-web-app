@@ -115,10 +115,11 @@ var complaintFetchPending = function complaintFetchPending() {
   };
 };
 
-var complaintFetchComplete = function complaintFetchComplete(payload) {
+var complaintFetchComplete = function complaintFetchComplete(payload, overWrite) {
   return {
     type: actionTypes.COMPLAINTS_FETCH_COMPLETE,
-    payload: payload
+    payload: payload,
+    overWrite: overWrite
   };
 };
 
@@ -131,6 +132,7 @@ var complaintFetchError = function complaintFetchError(error) {
 
 var fetchComplaints = exports.fetchComplaints = function fetchComplaints(queryObject) {
   var hasUsers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var overWrite = arguments[2];
 
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch, getState) {
@@ -148,7 +150,7 @@ var fetchComplaints = exports.fetchComplaints = function fetchComplaints(queryOb
               payload = _context.sent;
 
               checkUsers(dispatch, getState(), payload.actionHistory, hasUsers);
-              dispatch(complaintFetchComplete(payload));
+              dispatch(complaintFetchComplete(payload, overWrite));
               _context.next = 12;
               break;
 

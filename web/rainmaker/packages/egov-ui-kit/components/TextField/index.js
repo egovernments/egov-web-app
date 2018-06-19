@@ -8,6 +8,10 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -86,9 +90,10 @@ var TextField = function TextField(_ref) {
       type = _ref.type,
       autoFocus = _ref.autoFocus,
       maxLength = _ref.maxLength,
-      multiLine = _ref.multiLine;
+      multiLine = _ref.multiLine,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine"]);
 
-  return _react2.default.createElement(_TextField2.default, {
+  return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
     errorText: errorText,
     errorStyle: errorStyle,
     value: value,
@@ -117,7 +122,7 @@ var TextField = function TextField(_ref) {
     maxLength: maxLength,
     autoComplete: type === "password" ? "new-password" : "off",
     multiLine: multiLine
-  });
+  }, rest));
 };
 
 TextField.propTypes = {

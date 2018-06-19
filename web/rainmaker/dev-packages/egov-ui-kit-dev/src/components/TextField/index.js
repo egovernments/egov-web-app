@@ -58,6 +58,7 @@ const TextField = ({
   autoFocus,
   maxLength,
   multiLine,
+  ...rest
 }) => {
   return (
     <MaterialUITextField
@@ -92,6 +93,7 @@ const TextField = ({
       maxLength={maxLength}
       autoComplete={type === "password" ? "new-password" : "off"}
       multiLine={multiLine}
+      {...rest}
     />
   );
 };

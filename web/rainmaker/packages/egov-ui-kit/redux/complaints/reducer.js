@@ -37,7 +37,8 @@ var intialState = {
 var complaintsReducer = function complaintsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : intialState;
   var action = arguments[1];
-  var type = action.type;
+  var type = action.type,
+      overWrite = action.overWrite;
 
 
   switch (type) {
@@ -51,7 +52,7 @@ var complaintsReducer = function complaintsReducer() {
       var complaintsById = (0, _commons.transformById)(mergeServiceWithActions(action.payload), "serviceRequestId");
       return (0, _extends3.default)({}, state, {
         loading: false,
-        byId: (0, _extends3.default)({}, state.byId, complaintsById)
+        byId: overWrite ? (0, _extends3.default)({}, complaintsById) : (0, _extends3.default)({}, state.byId, complaintsById)
       });
     case actionTypes.COMPLAINTS_FETCH_ERROR:
       return (0, _extends3.default)({}, state, {

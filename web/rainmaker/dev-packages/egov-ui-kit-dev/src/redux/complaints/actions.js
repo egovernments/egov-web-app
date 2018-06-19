@@ -78,10 +78,11 @@ const complaintFetchPending = () => {
   };
 };
 
-const complaintFetchComplete = (payload) => {
+const complaintFetchComplete = (payload, overWrite) => {
   return {
     type: actionTypes.COMPLAINTS_FETCH_COMPLETE,
     payload,
+    overWrite: overWrite,
   };
 };
 
@@ -92,13 +93,13 @@ const complaintFetchError = (error) => {
   };
 };
 
-export const fetchComplaints = (queryObject, hasUsers = true) => {
+export const fetchComplaints = (queryObject, hasUsers = true, overWrite) => {
   return async (dispatch, getState) => {
     dispatch(complaintFetchPending());
     try {
       const payload = await httpRequest(COMPLAINT.GET.URL, COMPLAINT.GET.ACTION, queryObject);
       checkUsers(dispatch, getState(), payload.actionHistory, hasUsers);
-      dispatch(complaintFetchComplete(payload));
+      dispatch(complaintFetchComplete(payload, overWrite));
     } catch (error) {
       dispatch(complaintFetchError(error.message));
     }

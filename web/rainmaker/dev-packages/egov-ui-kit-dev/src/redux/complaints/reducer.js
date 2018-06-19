@@ -19,7 +19,7 @@ const intialState = {
 };
 
 const complaintsReducer = (state = intialState, action) => {
-  const { type } = action;
+  const { type, overWrite } = action;
 
   switch (type) {
     case actionTypes.COMPLAINTS_FETCH_PENDING:
@@ -34,10 +34,12 @@ const complaintsReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
-        byId: {
-          ...state.byId,
-          ...complaintsById,
-        },
+        byId: overWrite
+          ? { ...complaintsById }
+          : {
+              ...state.byId,
+              ...complaintsById,
+            },
       };
     case actionTypes.COMPLAINTS_FETCH_ERROR:
       return {

@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { Tabs, Card, TextField } from "components";
+import { Tabs, Card, TextField, Icon } from "components";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
-import { Complaints } from "modules/common";
+import { Complaints, ActionFooter } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
-import get from "lodash/get";
-
-import differenceWith from "lodash/differenceWith";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -22,7 +19,6 @@ class AllComplaints extends Component {
   componentDidMount() {
     let { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
-    this.setState({ complaints: this.props.transformedComplaints });
   }
 
   onComplaintClick = (complaintNo) => {
@@ -39,41 +35,18 @@ class AllComplaints extends Component {
     this.setState({ mobileNo: inputValue });
   };
 
-  // fetchSuggestions = () => {
-  //   const { mobileNo, complaintNo } = this.state;
-  //   const { transformedComplaints } = this.props;
-  //   if (mobileNo.length || complaintNo.length) {
-  //     return transformedComplaints.filter((result) => this.filterSuggestions(result, mobileNo, complaintNo));
-  //   }
-  // };
+  onSearch = () => {
+    const { complaintNo, mobileNo } = this.state;
+    const { fetchComplaints } = this.props;
+    if (complaintNo || mobileNo) {
+      fetchComplaints([{ key: "serviceRequestId", value: complaintNo }, { key: "phone", value: mobileNo }], true, true);
+    }
+  };
 
-  // filterSuggestions = (suggestions, mobileNo, complaintNo) => {
-  //   const filteredByComplaintNo = get(suggestions, "complaintNo");
-  //   const filteredByMobileNo = get(suggestions, "citizenPhoneNumber");
-  //   return (
-  //     filteredByComplaintNo
-  //       .toLowerCase()
-  //       .replace(/\s+/g, "")
-  //       .indexOf(complaintNo) !== -1 &&
-  //     filteredByMobileNo
-  //       .toLowerCase()
-  //       .replace(/\s+/g, "")
-  //       .indexOf(mobileNo) !== -1
-  //   );
-  // };
-
-  render() {
-    const { loading } = this.props;
-    const { mobileNo, complaintNo, complaints } = this.state;
-    const tabStyle = {
-      letterSpacing: "0.6px",
-    };
-
-    const { onComplaintClick } = this;
-    const { assignedComplaints, unassignedComplaints, employeeComplaints, role, transformedComplaints } = this.props;
-    let filteredComplaints = transformedComplaints;
+  filterComplaints = (complaints) => {
+    const { mobileNo, complaintNo } = this.state;
     if (mobileNo || complaintNo) {
-      filteredComplaints = filteredComplaints.filter((result) => {
+      return complaints.filter((result) => {
         return (
           result.complaintNo
             .toLowerCase()
@@ -85,7 +58,22 @@ class AllComplaints extends Component {
             .indexOf(mobileNo) !== -1
         );
       });
+    } else {
+      return complaints;
     }
+  };
+
+  render() {
+    const { loading, history } = this.props;
+    const { mobileNo, complaintNo, complaints } = this.state;
+    const tabStyle = {
+      letterSpacing: "0.6px",
+    };
+
+    const { onComplaintClick, filterComplaints } = this;
+    const { assignedComplaints, unassignedComplaints, employeeComplaints, role, transformedComplaints } = this.props;
+    //let filteredComplaints = transformedComplaints;
+    // const filteredComplaints = filterComplaints(transformedComplaints);
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
@@ -148,25 +136,15 @@ class AllComplaints extends Component {
       />
     ) : role === "csr" ? (
       <Screen loading={loading}>
-        <Complaints
-          noComplaintMessage={"No complaints assigned to you !!"}
-          onComplaintClick={onComplaintClick}
-          complaints={employeeComplaints}
-          role={role}
-          complaintLocation={true}
-        />
-      </Screen>
-    ) : (
-      <Screen loading={loading}>
         <Card
           id="complaint-search-card"
           className="complaint-search-main-card"
           textChildren={
-            <div className="complaint-search-cont">
+            <div className="complaint-search-cont clearfix">
               <div className="col-xs-12" style={{ paddingLeft: 8 }}>
                 <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
               </div>
-              <div className="col-xs-6" style={{ paddingLeft: 8 }}>
+              <div className="col-xs-3" style={{ paddingLeft: 8 }}>
                 <TextField
                   id="complaint-no"
                   name="complaint-no"
@@ -174,9 +152,11 @@ class AllComplaints extends Component {
                   hintText="Enter Complaint No"
                   floatingLabelText="Complaint No."
                   onChange={(e, value) => this.onComplaintChange(e)}
+                  underlineStyle={{ bottom: 7 }}
+                  underlineFocusStyle={{ bottom: 7 }}
                 />
               </div>
-              <div className="col-xs-6" style={{ paddingLeft: 8 }}>
+              <div className="col-xs-3" style={{ paddingLeft: 8 }}>
                 <TextField
                   id="mobile-no"
                   name="mobile-no"
@@ -184,7 +164,12 @@ class AllComplaints extends Component {
                   hintText="Enter Complainant Mobile No"
                   floatingLabelText="Complainant Mobile No."
                   onChange={(e, value) => this.onMobileChange(e)}
+                  underlineStyle={{ bottom: 7 }}
+                  underlineFocusStyle={{ bottom: 7 }}
                 />
+              </div>
+              <div className="col-xs-6 csr-action-buttons" style={{ marginTop: 10, padding: 0, paddingRight: 8 }}>
+                <ActionFooter label1="CLEAR SEARCH" label2="SEARCH" primaryAction={() => this.onSearch()} />
               </div>
             </div>
           }
@@ -192,7 +177,29 @@ class AllComplaints extends Component {
         <Complaints
           noComplaintMessage={"No complaints assigned to you !!"}
           onComplaintClick={onComplaintClick}
-          complaints={filteredComplaints}
+          complaints={transformedComplaints}
+          role={role}
+          complaintLocation={true}
+        />
+        <div className="floating-button-cont csr-add-button">
+          <FloatingActionButton
+            id="mycomplaints-add"
+            onClick={(e) => {
+              history.push("/employee/create-complaint");
+            }}
+            className="floating-button"
+            backgroundColor="#fe7a51"
+          >
+            <Icon action="content" name="add" />
+          </FloatingActionButton>
+        </div>
+      </Screen>
+    ) : (
+      <Screen loading={loading}>
+        <Complaints
+          noComplaintMessage={"No complaints assigned to you !!"}
+          onComplaintClick={onComplaintClick}
+          complaints={employeeComplaints}
           role={role}
           complaintLocation={true}
         />
@@ -228,8 +235,6 @@ const mapStateToProps = (state) => {
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
-  const defaultPhoneNumber = "";
-  const defaultMobileNumber = "";
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   let assignedComplaints = [],
     unassignedComplaints = [],
@@ -258,7 +263,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    fetchComplaints: (criteria, hasUsers, overWrite) => dispatch(fetchComplaints(criteria, hasUsers, overWrite)),
   };
 };
 
