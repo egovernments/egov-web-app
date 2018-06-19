@@ -86,7 +86,7 @@ const DropDownUi = ({
       underlineStyle={{ ...underlineFocusBaseStyle, ...underlineStyle }}
       hintStyle={{ ...hintBaseStyle, ...hintStyle }}
     >
-      {renderSelectMenuItems()}
+      {dropDownData && renderSelectMenuItems()}
     </SelectField>
   );
 };

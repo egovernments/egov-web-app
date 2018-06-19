@@ -22,7 +22,6 @@ const formSubmit = (store) => (next) => (action) => {
     if (formKey.includes("MDMS")) {
       const { moduleName, masterName } = state.mdms;
       const { saveUrl } = action;
-      console.log(saveUrl);
       const { editToast, createToast } = state.form[formKey];
       const mdmsToast = saveUrl.includes("_create") ? createToast : editToast;
       delete payload.ResponseInfo;

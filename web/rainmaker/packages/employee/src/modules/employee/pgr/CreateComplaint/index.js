@@ -12,7 +12,7 @@ class AddComplaints extends Component {
     const { categories, localizationLabels } = this.props;
     return (
       <Screen>
-        <ComplaintFormHOC categories={categories} localizationLabels={localizationLabels} />
+        <ComplaintFormHOC categories={categories} localizationLabels={localizationLabels} history={this.props.history} />
       </Screen>
     );
   }

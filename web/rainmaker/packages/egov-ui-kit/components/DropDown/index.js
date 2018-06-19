@@ -110,7 +110,7 @@ var DropDownUi = function DropDownUi(_ref) {
       underlineStyle: (0, _extends3.default)({}, underlineFocusBaseStyle, underlineStyle),
       hintStyle: (0, _extends3.default)({}, hintBaseStyle, hintStyle)
     },
-    renderSelectMenuItems()
+    dropDownData && renderSelectMenuItems()
   );
 };
 
