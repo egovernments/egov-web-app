@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { DropDown, Icon, Image } from "components";
-import person from "egov-ui-kit/assets/images/faceTwo.jpg";
+import emptyFace from "egov-ui-kit/assets/images/download.png";
 
 import "./index.css";
 
@@ -53,14 +53,14 @@ class UserSettings extends Component {
   render() {
     const { languageSelected } = this.state;
     const { items, style } = this;
-    const { onIconClick } = this.props;
+    const { onIconClick, userInfo } = this.props;
 
     return (
       <div className="userSettingsContainer">
         <DropDown onChange={this.onChange} style={style.baseStyle} labelStyle={style.label} dropDownData={items} value={languageSelected} />
         <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} />
         <div onClick={onIconClick} className="userSettingsInnerContainer">
-          <Image height={33} width={33} circular={true} source={person} />
+          <Image width={"33px"} circular={true} source={userInfo.photo || emptyFace} />
           <Icon action="navigation" name="arrow-drop-down" color="#767676" style={style.arrowIconStyle} />
         </div>
       </div>

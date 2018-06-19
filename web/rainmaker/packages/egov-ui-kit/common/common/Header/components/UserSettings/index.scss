@@ -6,4 +6,7 @@
 .userSettingsInnerContainer {
   margin-right: 60px;
   display: flex;
+  .img-responsive {
+    height: 33px !important;
+  }
 }

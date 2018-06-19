@@ -171,7 +171,14 @@ var Header = function (_Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({ className: className, title: title, role: role }, appBarProps, { fetchLocalizationLabel: fetchLocalizationLabel })),
+        _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({
+          className: className,
+          title: title,
+          role: role
+        }, appBarProps, {
+          fetchLocalizationLabel: fetchLocalizationLabel,
+          userInfo: userInfo
+        })),
         _react2.default.createElement(_NavigationDrawer2.default, {
           handleItemClick: _handleItemClick,
           onUpdateMenuStatus: _onUpdateMenuStatus,
