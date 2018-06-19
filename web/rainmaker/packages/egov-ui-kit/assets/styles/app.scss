@@ -215,7 +215,7 @@ body.employee-user-profile {
   text-decoration: none;
 }
 
-.citizen-drawer .drawer-backGround {
+.action-menu-drawer .drawer-backGround {
   top: 64px !important;
 }
 
@@ -223,8 +223,14 @@ body.employee-user-profile {
   visibility: visible;
 }
 
-.citizen-drawer {
+.action-menu-drawer {
   background-color: #3d4951;
   min-height: calc(100vh - 64px);
   position: fixed;
+}
+
+@media only screen and (max-width: 768px) {
+  .show-action-menu {
+    display: none;
+  }
 }

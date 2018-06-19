@@ -107,10 +107,18 @@ var Header = function (_Component) {
         style.boxShadow = "none";
       }
 
-      var iconElementLeft = _react2.default.createElement("div", null);
+      var iconElementLeft = _react2.default.createElement(
+        "div",
+        { className: "appbar-left-icon" },
+        _react2.default.createElement(
+          _IconButton2.default,
+          { id: "icon-hamburger" },
+          isHomeScreen ? _react2.default.createElement(_components.Icon, { id: "icon-hamburger", action: "custom", name: "hamburger" }) : hideBackButton ? null : _react2.default.createElement(_components.Icon, { id: "back-navigator", action: "navigation", name: "arrow-back" })
+        )
+      );
 
-      // const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
-      var onLeftIconButtonClick = _this._handleToggleMenu;
+      var onLeftIconButtonClick = isHomeScreen ? _this._handleToggleMenu : hideBackButton ? null : _this._handleBackNavigation;
+      //const onLeftIconButtonClick = this._handleToggleMenu;
 
       return { style: style, iconElementLeft: iconElementLeft, onLeftIconButtonClick: onLeftIconButtonClick, isHomeScreen: isHomeScreen };
     }, _this._handleItemClick = function (item, index) {

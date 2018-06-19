@@ -11,7 +11,7 @@ import SuccessMessage from "egov-ui-kit/common/common/SuccessMessage";
 import TrackLocation from "egov-ui-kit/common/common/TrackLocation";
 import VerticalCenterWrapper from "egov-ui-kit/common/common/VerticalCenterWrapper";
 import Screen from "egov-ui-kit/common/common/Screen";
-import ActionMenu from "egov-ui-kit/common/common/Screen";
+import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
 
 //pgr common components
@@ -24,6 +24,7 @@ import Complaints from "egov-ui-kit/common/pgr/Complaints";
 import FeedbackPopup from "egov-ui-kit/common/pgr/FeedbackPopup";
 import Question from "egov-ui-kit/common/pgr/ReOpenComplaint/components/Question";
 import TextArea from "egov-ui-kit/common/pgr/ReOpenComplaint/components/TextArea";
+import ComplaintType from "egov-ui-kit/common/pgr/ComplaintType";
 
 //User common components
 import LanguageSelectionForm from "egov-ui-kit/common/User/components/LanguageSelectionForm";
@@ -61,4 +62,5 @@ export {
   TextArea,
   ActionMenu,
   ActionFooter,
+  ComplaintType,
 };

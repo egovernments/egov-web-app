@@ -143,21 +143,21 @@ var withAuthorization = function withAuthorization() {
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, { title: title, userInfo: userInfo, role: role, options: options, history: history, className: "rainmaker-header" }) : null,
             _react2.default.createElement(
               "div",
-              { className: "col-xs-12", style: { padding: 0 } },
+              { className: " col-xs-12", style: { padding: 0 } },
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-2 citizen-drawer" },
+                { className: "col-xs-2 action-menu-drawer show-action-menu" },
                 _react2.default.createElement(
                   "div",
-                  { className: "citizen-action-menu" },
+                  { className: "rainmaker-action-menu" },
                   actionList && actionList.length > 0 && _react2.default.createElement(_common.ActionMenu, { actionList: actionList })
                 )
               ),
-              _react2.default.createElement("div", { className: "col-xs-2" }),
+              _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
               " ",
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-10", style: { padding: 0 } },
+                { className: "col-xs-12 col-sm-10 col-md-10 col-lg-10", style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(Component, this.props) : null
               )
             ),
@@ -167,29 +167,6 @@ var withAuthorization = function withAuthorization() {
               _react2.default.createElement(_common.Footer, { history: history, role: role })
             ) : null
           );
-
-          // return (
-          //   <div className="rainmaker-header-cont" style={{ position: "relative" }}>
-          //     {!hideHeader && authenticated ? (
-          //       <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
-          //     ) : null}
-
-          //     <div className="col-xs-12" style={{ padding: 0 }}>
-          //       <div className="col-xs-2 citizen-drawer">
-          //         <div className="citizen-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
-          //       </div>
-          //       <div className="col-xs-2" /> {/*Dummy div for proper alignment*/}
-          //       <div className="col-xs-10" style={{ padding: 0 }}>
-          //         {authenticated ? <Component {...this.props} /> : null}
-          //       </div>
-          //     </div>
-          //     {!hideFooter && authenticated ? (
-          //       <div className="hidden-md">
-          //         <Footer history={history} role={role} />
-          //       </div>
-          //     ) : null}
-          //   </div>
-          // );
         }
       }]);
       return Wrapper;

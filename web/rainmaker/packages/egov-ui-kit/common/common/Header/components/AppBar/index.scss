@@ -18,7 +18,15 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .app-toolbar {
+  .app-toolbar,
+  .citizen-header-logo,
+  .appbar-right-logo,
+  .appbar-municipal-label {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .appbar-title-label {
     display: none !important;
   }
 }
