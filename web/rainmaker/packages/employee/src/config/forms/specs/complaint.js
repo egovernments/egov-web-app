@@ -32,12 +32,14 @@ const formConfig = {
       jsonPath: "services[0].city",
       floatingLabelText: "City",
       hintText: "Select",
+      dropDownData: [{ label: "Jalandhar", value: "jalandhar" }],
     },
     mohalla: {
       id: "mohalla",
       jsonPath: "services[0].mohalla",
       floatingLabelText: "Mohalla",
       hintText: "Select",
+      dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
     },
     latitude: {
       id: "latitude",
@@ -53,15 +55,6 @@ const formConfig = {
       required: true,
       floatingLabelText: "Address",
       hintText: "Enter address",
-      numCols: 2,
-    },
-    location: {
-      id: "location",
-      jsonPath: "services[0].address",
-      required: true,
-      floatingLabelText: "CS_ADDCOMPLAINT_LOCATION",
-      hintText: "CS_COMPLAINT_DETAILS_LOCATION",
-      numCols: 2,
     },
     landmark: {
       id: "landmark",
@@ -69,7 +62,6 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorMessage: "Landmark should be less than 100 characters",
-      numCols: 2,
     },
     additionalDetails: {
       id: "additional details",
@@ -77,11 +69,11 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorMessage: "Landmark should be less than 300 characters",
-      numCols: 2,
     },
     tenantId: {
       id: "add-complaint-tenantid",
       jsonPath: "services[0].tenantId",
+      value: "pb.amritsar",
     },
   },
   submit: {

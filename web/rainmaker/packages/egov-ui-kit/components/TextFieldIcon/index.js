@@ -68,19 +68,20 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       _ref$iconStyle = _ref.iconStyle,
       iconStyle = _ref$iconStyle === undefined ? {} : _ref$iconStyle,
       onClick = _ref.onClick,
+      onIconClick = _ref.onIconClick,
       _ref$textFieldStyle = _ref.textFieldStyle,
       textFieldStyle = _ref$textFieldStyle === undefined ? {} : _ref$textFieldStyle,
       _ref$iconPosition = _ref.iconPosition,
       iconPosition = _ref$iconPosition === undefined ? "after" : _ref$iconPosition,
       autoFocus = _ref.autoFocus,
       className = _ref.className,
-      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "textFieldStyle", "iconPosition", "autoFocus", "className"]);
+      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className"]);
 
   var style = getStyles(iconPosition, textFieldProps);
   return _react2.default.createElement(
     "div",
     { onClick: onClick, style: containerStyle },
-    _react2.default.createElement(Icon, { style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
+    _react2.default.createElement(Icon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
     _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
       autoFocus: autoFocus,
       name: "textfield-icon",
