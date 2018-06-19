@@ -12,7 +12,7 @@ const ServiceList = () => {
       textChildren={
         <div>
           <div className="row upper-row">
-            <Link to="/citizen/pt-payment-step-one">
+            <Link to="/citizen/property-tax">
               <div className="col-xs-4 service-item text-center">
                 <div>
                   <Icon className="service-icon" action="custom" name="property-tax" />

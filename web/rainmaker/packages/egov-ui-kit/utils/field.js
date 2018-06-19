@@ -40,9 +40,9 @@ var Field = function Field(_ref2) {
     var type = field.type,
         tooltip = field.tooltip,
         label = field.label,
-        value = field.value,
-        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "value"]);
+        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label"]);
 
+    console.log(field);
     switch (type) {
       case "textfield":
       case "textarea":
@@ -66,7 +66,6 @@ var Field = function Field(_ref2) {
         return _react2.default.createElement(_components.Label, (0, _extends3.default)({}, rest, fieldProps));
       case "singleValueList":
         return _react2.default.createElement(_components.DropDown, (0, _extends3.default)({}, rest, fieldProps, {
-          value: value,
           dropDownData: fieldProps.dropDownData || [],
           onChange: function onChange(e, value, selectedValue) {
             return handleFieldChange(fieldKey, selectedValue);
