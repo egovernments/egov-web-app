@@ -26,9 +26,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _components = require("components");
 
-var _faceTwo = require("egov-ui-kit/assets/images/faceTwo.jpg");
+var _download = require("egov-ui-kit/assets/images/download.png");
 
-var _faceTwo2 = _interopRequireDefault(_faceTwo);
+var _download2 = _interopRequireDefault(_download);
 
 require("./index.css");
 
@@ -91,7 +91,9 @@ var UserSettings = function (_Component) {
       var languageSelected = this.state.languageSelected;
       var items = this.items,
           style = this.style;
-      var onIconClick = this.props.onIconClick;
+      var _props = this.props,
+          onIconClick = _props.onIconClick,
+          userInfo = _props.userInfo;
 
 
       return _react2.default.createElement(
@@ -102,7 +104,7 @@ var UserSettings = function (_Component) {
         _react2.default.createElement(
           "div",
           { onClick: onIconClick, className: "userSettingsInnerContainer" },
-          _react2.default.createElement(_components.Image, { height: 33, width: 33, circular: true, source: _faceTwo2.default }),
+          _react2.default.createElement(_components.Image, { width: "33px", circular: true, source: userInfo.photo || _download2.default }),
           _react2.default.createElement(_components.Icon, { action: "navigation", name: "arrow-drop-down", color: "#767676", style: style.arrowIconStyle })
         )
       );

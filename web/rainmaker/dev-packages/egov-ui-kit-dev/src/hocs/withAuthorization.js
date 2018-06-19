@@ -107,7 +107,7 @@ const withAuthorization = (options = {}) => (Component) => {
             </div>
           </div>
           {!hideFooter && authenticated ? (
-            <div className="hidden-md">
+            <div className="hidden-md hidden-sm hidden-lg">
               <Footer history={history} role={role} />
             </div>
           ) : null}

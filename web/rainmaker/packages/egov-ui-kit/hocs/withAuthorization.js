@@ -163,7 +163,7 @@ var withAuthorization = function withAuthorization() {
             ),
             !hideFooter && authenticated ? _react2.default.createElement(
               "div",
-              { className: "hidden-md" },
+              { className: "hidden-md hidden-sm hidden-lg" },
               _react2.default.createElement(_common.Footer, { history: history, role: role })
             ) : null
           );
