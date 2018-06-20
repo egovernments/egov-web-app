@@ -102,7 +102,7 @@ const withAuthorization = (options = {}) => (Component) => {
               <div className="rainmaker-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
             </div>
             <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
-            <div className="col-xs-12 col-sm-10 col-md-10 col-lg-10" style={{ padding: 0 }}>
+            <div className="col-xs-12 col-sm-10" style={{ padding: 0 }}>
               {authenticated ? <Component {...this.props} /> : null}
             </div>
           </div>

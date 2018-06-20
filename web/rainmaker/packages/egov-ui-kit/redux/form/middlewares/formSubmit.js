@@ -58,8 +58,6 @@ var formSubmit = function formSubmit(store) {
               moduleName = _state$mdms.moduleName,
               masterName = _state$mdms.masterName;
           var saveUrl = action.saveUrl;
-
-          console.log(saveUrl);
           var _state$form$formKey2 = state.form[formKey],
               editToast = _state$form$formKey2.editToast,
               createToast = _state$form$formKey2.createToast;

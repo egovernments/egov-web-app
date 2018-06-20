@@ -82,27 +82,27 @@ class Details extends Component {
                   <Label labelClassName="dark-heading rainmaker-big-font" label={titleKey} />
                 )} */}
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-2 status-color" label="CS_COMMON_COMPLAINT_NO" />
+                  <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label="CS_COMMON_COMPLAINT_NO" />
                   <Label
                     labelStyle={{ color: "inherit" }}
-                    className="col-xs-10 no-padding status-result-color"
+                    className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
                     id="complaint-details-complaint-number"
                     label={applicationNo}
                   />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-2 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
+                  <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label="CS_COMPLAINT_DETAILS_CURRENT_STATUS" />
                   <Label
-                    className="col-xs-10  no-padding status-result-color"
+                    className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
                     id="complaint-details-current-status"
                     labelStyle={{ color: "inherit" }}
                     label={statusKey}
                   />
                 </div>
                 <div className="complaint-detail-detail-section-status row">
-                  <Label className="col-xs-2 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
+                  <Label className="col-xs-6  col-sm-4 col-md-2 status-color" label="CS_COMPLAINT_DETAILS_SUBMISSION_DATE" />
                   <Label
-                    className="col-xs-10 no-padding status-result-color"
+                    className="col-xs-6  col-sm-8 col-md-10 no-padding status-result-color"
                     label={submittedDate}
                     id="complaint-details-submission-date"
                     labelStyle={{ color: "inherit" }}
