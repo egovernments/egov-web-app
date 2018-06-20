@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { TextFieldIcon, Dialog } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
-import "./index.css";
 import ComplaintType from "egov-ui-kit/common/pgr/ComplaintType";
+import "./index.css";
 
 class ComplaintTypeField extends Component {
   state = { open: false };
@@ -37,7 +37,8 @@ class ComplaintTypeField extends Component {
         </div>
         <Dialog
           open={open}
-          title="Choose ComplaintType"
+          // title={<Label label="CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER" />}
+          title="Select Complaint Type"
           titleStyle={{ textAlign: "left", paddingRight: "20px", fontWeight: "500" }}
           children={[
             <ComplaintType
