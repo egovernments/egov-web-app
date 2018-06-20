@@ -31,25 +31,25 @@ const routes = [
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/employee",
+    redirectionUrl: "/employee/all-complaints",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/employee",
+    redirectionUrl: "/employee/all-complaints",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/employee",
+    redirectionUrl: "/employee/all-complaints",
   },
   {
     path: "user/forgot-password",
     component: ForgotPassword,
     needsAuthentication: false,
-    redirectionUrl: "/employee",
+    redirectionUrl: "/employee/all-complaints",
   },
   {
     path: "user/change-password",
@@ -71,6 +71,7 @@ const routes = [
       hideFooter: true,
       title: "ES_ALL_COMPLAINTS_HEADER",
       redirectionUrl,
+      isHomeScreen: true,
     },
   },
   {
@@ -225,7 +226,7 @@ const routes = [
       title: "HOME",
       hideFooter: false,
       redirectionUrl,
-      isHomeScreen: true,
+      //isHomeScreen: true,
     },
   },
   {
@@ -236,6 +237,7 @@ const routes = [
       title: "ES_CREATE_COMPLAINT",
       hideFooter: true,
       redirectionUrl,
+      isHomeScreen: true,
     },
   },
   {

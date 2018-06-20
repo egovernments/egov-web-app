@@ -157,7 +157,7 @@ var withAuthorization = function withAuthorization() {
               " ",
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-12 col-sm-10 col-md-10 col-lg-10", style: { padding: 0 } },
+                { className: "col-xs-12 col-sm-10", style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(Component, this.props) : null
               )
             ),

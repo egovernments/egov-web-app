@@ -138,10 +138,10 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMMON_COMPLAINT_NO" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6  col-sm-4 col-md-2 status-color", label: "CS_COMMON_COMPLAINT_NO" }),
                 _react2.default.createElement(_translationNode2.default, {
                   labelStyle: { color: "inherit" },
-                  className: "col-xs-10 no-padding status-result-color",
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
                   id: "complaint-details-complaint-number",
                   label: applicationNo
                 })
@@ -149,9 +149,9 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMPLAINT_DETAILS_CURRENT_STATUS" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6  col-sm-4 col-md-2 status-color", label: "CS_COMPLAINT_DETAILS_CURRENT_STATUS" }),
                 _react2.default.createElement(_translationNode2.default, {
-                  className: "col-xs-10  no-padding status-result-color",
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
                   id: "complaint-details-current-status",
                   labelStyle: { color: "inherit" },
                   label: statusKey
@@ -160,9 +160,9 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { className: "complaint-detail-detail-section-status row" },
-                _react2.default.createElement(_translationNode2.default, { className: "col-xs-2 status-color", label: "CS_COMPLAINT_DETAILS_SUBMISSION_DATE" }),
+                _react2.default.createElement(_translationNode2.default, { className: "col-xs-6  col-sm-4 col-md-2 status-color", label: "CS_COMPLAINT_DETAILS_SUBMISSION_DATE" }),
                 _react2.default.createElement(_translationNode2.default, {
-                  className: "col-xs-10 no-padding status-result-color",
+                  className: "col-xs-6  col-sm-8 col-md-10 no-padding status-result-color",
                   label: submittedDate,
                   id: "complaint-details-submission-date",
                   labelStyle: { color: "inherit" }

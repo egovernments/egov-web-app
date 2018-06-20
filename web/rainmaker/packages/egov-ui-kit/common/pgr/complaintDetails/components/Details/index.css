@@ -65,7 +65,8 @@ body[class^="employee-complaint-details"] .back-btn {
   z-index: 1102; }
 
 .employee-complaint-summary-mapBtn {
-  margin-left: 22px; }
+  margin-left: 22px;
+  margin-bottom: 20px; }
 
 .no-padding {
   padding-right: 0px !important;

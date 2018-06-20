@@ -45,5 +45,26 @@ var navigationItems = exports.navigationItems = {
     icon: { action: "alert", name: "warning" },
     route: "/employee",
     id: "complaints-button"
+  }],
+  csr: [{
+    label: "COMMON_BOTTOM_NAVIGATION_HOME",
+    icon: { action: "action", name: "home" },
+    route: "/employee",
+    id: "home"
+  }, {
+    label: "Modules",
+    icon: { action: "action", name: "info" },
+    route: "",
+    id: "information-button"
+  }, {
+    label: "Profile",
+    icon: { action: "custom", name: "rupee" },
+    route: "/employee/user/profile",
+    id: "payments-button"
+  }, {
+    label: "Contact",
+    icon: { action: "alert", name: "warning" },
+    route: "/employee",
+    id: "complaints-button"
   }]
 };
