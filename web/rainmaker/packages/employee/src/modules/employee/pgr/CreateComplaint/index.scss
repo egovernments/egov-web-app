@@ -9,3 +9,20 @@
 .add-complaint-button-cont {
   z-index: 1000;
 }
+
+.create-complaint-main-cont {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  padding-bottom: 90px;
+}
+
+.create-comp-csr-cont {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.csr-create-comp-main-screen {
+  padding-bottom: 0 !important;
+  max-height: calc(100vh - 64px);
+}

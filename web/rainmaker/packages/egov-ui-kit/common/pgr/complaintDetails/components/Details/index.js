@@ -175,7 +175,17 @@ var Details = function (_Component) {
                   return image && _react2.default.createElement(
                     "div",
                     { className: "complaint-image-wrapper", key: index },
-                    _react2.default.createElement(_components.Image, { style: imageStyles, size: "medium", className: "complaint-image", width: "100%", height: 46, source: image }),
+                    _react2.default.createElement(_components.Image, {
+                      style: imageStyles,
+                      size: "medium",
+                      className: "complaint-image",
+                      width: "100%",
+                      height: 46,
+                      source: image,
+                      onClick: function onClick() {
+                        return _this2.onImageClick(image);
+                      }
+                    }),
                     " "
                   );
                 })

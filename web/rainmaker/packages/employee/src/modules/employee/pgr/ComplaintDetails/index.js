@@ -187,7 +187,7 @@ class ComplaintDetails extends Component {
                   filedBy={complaint ? complaint.filedBy : ""}
                   filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
                 />
-                <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
+                {comments && <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />}
                 <div>
                   {(role === "ao" &&
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&
@@ -235,11 +235,11 @@ class ComplaintDetails extends Component {
   }
 }
 
-const isAssigningOfficer = (roles) => {
+const roleFromUserInfo = (roles = [], role) => {
   const roleCodes = roles.map((role, index) => {
     return role.code;
   });
-  return roleCodes.indexOf("GRO" || "RO") > -1 ? true : false;
+  return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
 };
 
 //Don't Delete this
@@ -283,7 +283,7 @@ const mapStateToProps = (state, ownProps) => {
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
-  const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
+  const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];

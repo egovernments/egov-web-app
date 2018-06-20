@@ -17,8 +17,10 @@ class AllComplaints extends Component {
     complaints: [],
   };
   componentDidMount() {
-    let { fetchComplaints } = this.props;
+    let { fetchComplaints, role } = this.props;
+    console.log(role);
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
+    // fetchComplaints();
   }
 
   onComplaintClick = (complaintNo) => {
@@ -38,8 +40,17 @@ class AllComplaints extends Component {
   onSearch = () => {
     const { complaintNo, mobileNo } = this.state;
     const { fetchComplaints } = this.props;
+    const queryObj = [1, 2].reduce((result, current) => {
+      if (complaintNo) {
+        result.push({ key: "serviceRequestId", value: complaintNo });
+      }
+      if (mobileNo) {
+        result.push({ key: "phone", value: mobileNo });
+      }
+      return result;
+    }, []);
     if (complaintNo || mobileNo) {
-      fetchComplaints([{ key: "serviceRequestId", value: complaintNo }, { key: "phone", value: mobileNo }], true, true);
+      fetchComplaints(queryObj, true, true);
     }
   };
 

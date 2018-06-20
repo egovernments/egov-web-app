@@ -336,7 +336,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             label={comments && comments.split(";")[1] ? `" ${comments.split(";")[1]} "` : ""}
           />
           {currentStatus === "rejected" &&
-            role === "citizen" &&
+            (role === "citizen" || role === "csr") &&
             rejectStatusCount === 1 && (
               <div
                 className="complaint-details-timline-button"
@@ -413,7 +413,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
 
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" containerStyle={{ width: "192px" }} label={comments} />
           {currentStatus === "resolved" &&
-            role === "citizen" &&
+            (role === "citizen" || role === "csr") &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
                 <div
