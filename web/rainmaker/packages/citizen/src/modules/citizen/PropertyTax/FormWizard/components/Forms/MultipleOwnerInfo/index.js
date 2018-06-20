@@ -29,11 +29,7 @@ class MultipleOwnerInfoHOC extends React.Component {
     });
   };
 
-  deleteOwner = () => {
-    // console.log(this.state.owners, form);
-    // this.props.removeForm(formKey);
-    // console.log(this.state.owners);
-  };
+  deleteOwner = () => {};
 
   getTitle = (length) => {
     return (

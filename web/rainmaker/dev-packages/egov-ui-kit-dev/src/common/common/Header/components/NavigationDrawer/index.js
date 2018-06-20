@@ -23,9 +23,6 @@ const NavigationDrawer = ({
   fetchLocalizationLabel,
   containerStyle,
 }) => {
-  console.log(window.innerWidth);
-  console.log(window.innerWidth >= 768);
-  console.log(openSecondary);
   return (
     <Drawer
       containerStyle={containerStyle}

@@ -46,9 +46,6 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
       fetchLocalizationLabel = _ref.fetchLocalizationLabel,
       containerStyle = _ref.containerStyle;
 
-  console.log(window.innerWidth);
-  console.log(window.innerWidth >= 768);
-  console.log(openSecondary);
   return _react2.default.createElement(
     _components.Drawer,
     {
