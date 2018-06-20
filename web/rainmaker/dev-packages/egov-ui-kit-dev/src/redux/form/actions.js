@@ -80,9 +80,9 @@ export const submitForm = (formKey, saveUrl) => {
         dispatch(submitFormComplete(formKey, formResponse, saveUrl));
       } catch (error) {
         const { message } = error;
-        throw new Error(error);
-        // dispatch(submitFormError(formKey, message));
-        // dispatch(toggleSnackbarAndSetText(true, message, true));
+        // throw new Error(error);
+        dispatch(submitFormError(formKey, message));
+        dispatch(toggleSnackbarAndSetText(true, message, true));
       }
     } else {
       dispatch(displayFormErrors(formKey));
