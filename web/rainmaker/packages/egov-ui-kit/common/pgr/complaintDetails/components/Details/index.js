@@ -199,7 +199,11 @@ var Details = function (_Component) {
                   className: "status-result-color",
                   id: "complaint-details-complaint-location",
                   labelStyle: { color: "inherit" }
-                }),
+                })
+              ),
+              _react2.default.createElement(
+                "div",
+                { style: { marginTop: 10 } },
                 mapAction && _react2.default.createElement(_components.Button, {
                   className: "employee-complaint-summary-mapBtn",
                   primary: true,
