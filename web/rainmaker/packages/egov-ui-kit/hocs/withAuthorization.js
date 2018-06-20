@@ -111,7 +111,14 @@ var withAuthorization = function withAuthorization() {
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,
-                  !hideTitle && _react2.default.createElement(_translationNode2.default, { className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label", label: title }),
+                  !hideTitle && _react2.default.createElement(_translationNode2.default, {
+                    className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                    label: title,
+                    containerStyle: { padding: "24px 0 8px 17px" },
+                    dark: true,
+                    bold: true,
+                    fontSize: 20
+                  }),
                   _react2.default.createElement(Component, this.props)
                 ) : null
               )

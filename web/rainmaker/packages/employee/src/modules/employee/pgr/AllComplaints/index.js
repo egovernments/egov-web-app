@@ -18,7 +18,6 @@ class AllComplaints extends Component {
   };
   componentDidMount() {
     let { fetchComplaints, role } = this.props;
-    console.log(role);
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
     // fetchComplaints();
   }

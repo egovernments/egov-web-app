@@ -47,7 +47,14 @@ const withAuthorization = (options = {}) => (Component) => {
               {authenticated ? (
                 <div>
                   {!hideTitle && (
-                    <Label className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"} label={title} />
+                    <Label
+                      className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
+                      label={title}
+                      containerStyle={{ padding: "24px 0 8px 17px" }}
+                      dark={true}
+                      bold={true}
+                      fontSize={20}
+                    />
                   )}
                   <Component {...this.props} />
                 </div>
