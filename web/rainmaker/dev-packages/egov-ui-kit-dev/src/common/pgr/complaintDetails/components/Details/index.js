@@ -164,6 +164,8 @@ class Details extends Component {
                     id="complaint-details-complaint-location"
                     labelStyle={{ color: "inherit" }}
                   />
+                </div>
+                <div style={{ marginTop: 10 }}>
                   {mapAction && (
                     <Button
                       className="employee-complaint-summary-mapBtn"
@@ -188,7 +190,6 @@ class Details extends Component {
                     />
                   )}
                 </div>
-
                 {description && (
                   <div style={{ marginTop: "16px" }} className="rainmaker-displayInline">
                     <Icon action="editor" name="format-quote" style={iconStyle} color={"#969696"} />
