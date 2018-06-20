@@ -1,7 +1,6 @@
 import React from "react";
 import { Screen } from "modules/common";
 import { Icon } from "components";
-import Label from "egov-ui-kit/utils/translationNode";
 import PaymentStatus from "../common/PaymentStatus";
 
 const receiptDetails = {

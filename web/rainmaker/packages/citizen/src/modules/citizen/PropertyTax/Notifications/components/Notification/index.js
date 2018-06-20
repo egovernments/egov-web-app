@@ -1,7 +1,6 @@
 import React from "react";
-import { Divider, Icon } from "components";
+import { Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import { Screen } from "modules/common";
 import "./index.css";
 
 const Updates = ({ notifications = [] }) => {

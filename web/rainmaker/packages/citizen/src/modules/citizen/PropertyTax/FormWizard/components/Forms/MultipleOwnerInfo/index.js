@@ -1,6 +1,5 @@
 import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../../GenericForm";
 import { OwnerInfoHOC, OwnerInformation } from "..";
 import { Icon } from "components";
 
@@ -30,7 +29,7 @@ class MultipleOwnerInfoHOC extends React.Component {
     });
   };
 
-  deleteOwner = (formKey, form) => {
+  deleteOwner = () => {
     // console.log(this.state.owners, form);
     // this.props.removeForm(formKey);
     // console.log(this.state.owners);

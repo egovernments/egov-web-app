@@ -22,7 +22,6 @@
 // };
 
 // export default formConfig;
-import { MDMS } from "egov-ui-kit/utils/endPoints";
 
 const formConfig = {
   name: "basicInformation",

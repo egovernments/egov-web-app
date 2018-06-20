@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Card, Icon, List, Image, AutoSuggest, Button } from "components";
 import faceOne from "egov-ui-kit/assets/images/faceOne.jpg";
-import Avatar from "material-ui/Avatar";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getNameFromId } from "egov-ui-kit/utils/commons";
 import "./index.css";

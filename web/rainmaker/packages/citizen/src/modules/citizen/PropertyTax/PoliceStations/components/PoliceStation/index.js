@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Icon, Divider, Ratings, Image } from "components";
+import { Card, Icon, Divider, Ratings } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import stationImg from "egov-ui-kit/assets/images/police-station.png";
 import "./index.css";

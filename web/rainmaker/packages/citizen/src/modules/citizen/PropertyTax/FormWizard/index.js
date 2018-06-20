@@ -4,7 +4,6 @@ import { Label } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
-import DependantFormHOC from "./components/DependantFormsHOC";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
@@ -22,7 +21,7 @@ class FormWizard extends Component {
     showOwners: false,
   };
 
-  renderPlotAndFloorDetails = (usage, propertyType) => {
+  renderPlotAndFloorDetails = () => {
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
     if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
       let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;
@@ -126,7 +125,6 @@ class FormWizard extends Component {
 
   updateIndex = (index) => {
     const { setRoute } = this.props;
-    const { selected } = this.state;
     if (index <= 3) {
       this.setState({ selected: index });
     } else if (index === 4) {

@@ -18,8 +18,8 @@ class Home extends Component {
     const { updates, history } = this.props;
     return (
       <Banner className="homepage-banner">
-        <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
-          <div className="row">
+        <div className="home-page-cont">
+          <div>
             <NewAndOldComplaints history={history} />
             <Notifications updates={updates} history={history} />
           </div>

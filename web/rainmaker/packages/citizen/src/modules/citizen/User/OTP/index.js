@@ -38,7 +38,7 @@ class OTP extends Component {
   };
 
   render() {
-    const { handleFieldChange, submitForm, phoneNumber, loading } = this.props;
+    const { phoneNumber, loading } = this.props;
     const { resendOTP } = this;
 
     return (
@@ -52,7 +52,6 @@ class OTP extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const formKey = "otp";
   const { authenticating } = state.auth;
   const { previousRoute } = state.app;
   const intent = previousRoute.endsWith("register") ? "register" : previousRoute.endsWith("login") ? "login" : null;

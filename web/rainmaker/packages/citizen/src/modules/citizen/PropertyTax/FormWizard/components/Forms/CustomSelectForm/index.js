@@ -1,6 +1,5 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
-import field from "egov-ui-kit/utils/field";
 
 const getDropDownData = (noFloors) => {
   return [...Array(parseInt(noFloors))].map((item, key) => {

@@ -4,10 +4,6 @@ import PTList from "../common/PTList";
 import { Screen } from "modules/common";
 
 class MyReceipts extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   reciepts = [
     {
       name: "E2/14, Salunke Vihar",
