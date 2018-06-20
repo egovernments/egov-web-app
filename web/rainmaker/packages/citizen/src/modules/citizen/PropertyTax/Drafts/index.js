@@ -4,10 +4,6 @@ import PTList from "../common/PTList";
 import { Screen } from "modules/common";
 
 class MyProperties extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   drafts = [
     {
       name: "Draft-1",

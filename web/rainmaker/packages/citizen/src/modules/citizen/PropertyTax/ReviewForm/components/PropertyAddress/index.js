@@ -1,11 +1,9 @@
 import React from "react";
-import Field from "egov-ui-kit/utils/field";
 import { Card } from "components";
 
 import "./index.css";
 
 const PropertyAddress = ({ form, icon, editIcon, component }) => {
-  const fields = form.fields || {};
   return (
     <Card
       textChildren={

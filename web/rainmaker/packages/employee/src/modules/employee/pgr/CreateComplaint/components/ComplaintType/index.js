@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Card, TextFieldIcon, Dialog } from "components";
-import { Link } from "react-router-dom";
+import { TextFieldIcon, Dialog } from "components";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
-import { Label } from "egov-ui-kit/utils/translationNode";
 import ComplaintType from "egov-ui-kit/common/pgr/ComplaintType";
 
 class ComplaintTypeField extends Component {
@@ -20,7 +18,7 @@ class ComplaintTypeField extends Component {
   };
 
   render() {
-    let { categories, localizationLabels, complaintType } = this.props;
+    let { localizationLabels, complaintType } = this.props;
     let { onClose, onFieldClicked } = this;
     let { open } = this.state;
     const complainTypeMessage =

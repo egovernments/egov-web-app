@@ -1,8 +1,6 @@
 import React from "react";
-import { LabelTextFieldIcon, TextFieldIcon, Icon, Card } from "components";
+import { Card } from "components";
 import Field from "egov-ui-kit/utils/field";
-import { Link } from "react-router-dom";
-import TrackIcon from "material-ui/svg-icons/maps/my-location";
 
 const PropertyAddressForm = ({ form, handleFieldChange }) => {
   const fields = form.fields || {};

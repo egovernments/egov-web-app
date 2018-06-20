@@ -1,5 +1,4 @@
 import React from "react";
-import Field from "egov-ui-kit/utils/field";
 import { Card } from "components";
 
 const OwnerInfo = ({ form, icon, editIcon, component }) => {

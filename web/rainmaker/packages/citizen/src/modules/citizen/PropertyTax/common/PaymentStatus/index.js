@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Icon, Divider } from "components";
-import { Screen } from "modules/common";
+import { Card, Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { ActionFooter } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -8,19 +7,6 @@ import "./index.css";
 
 const labelStyle = {
   fontWeight: 500,
-};
-
-const printIconStyle = {
-  height: "40px",
-  width: "40px",
-  fill: "#767676",
-};
-
-const downloadIconStyle = {
-  marginRight: 70,
-  height: "40px",
-  width: "40px",
-  fill: "#767676",
 };
 
 const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages, buttons }) => {

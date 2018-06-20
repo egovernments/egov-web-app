@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Tabs, Card, TextField, Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
-import { Complaints, ActionFooter } from "modules/common";
+import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";

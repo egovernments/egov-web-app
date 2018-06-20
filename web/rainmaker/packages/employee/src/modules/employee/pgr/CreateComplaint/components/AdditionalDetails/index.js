@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextField } from "components";
+import { TextField } from "components";
 
 const AdditionalDetailsCard = ({ additionalDetails = {}, handleFieldChange }) => {
   return (

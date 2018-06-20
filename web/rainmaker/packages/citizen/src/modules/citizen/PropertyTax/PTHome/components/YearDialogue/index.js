@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { Dialog } from "components";
 import SingleButton from "./components/SingleButton/index";
-import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
-
-const styles = {
-  logoutContentStyle: { textAlign: "center", padding: "24px 20px" },
-};
 
 class YearDialog extends Component {
   render() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextField, MobileNumberField, Icon } from "components";
+import { TextField, MobileNumberField } from "components";
 import "./index.css";
 
 const OwnerDetails = ({ form, wizardFields, handleFieldChange }) => {

@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import { Tabs, Label, List, Icon, Card } from "components";
+import { Label, List, Icon, Card } from "components";
 import { Link } from "react-router-dom";
 import { Screen } from "modules/common";
 import YearDialogue from "./components/YearDialogue";
 import "./index.css";
-
-const tabStyle = {
-  letterSpacing: "0.6px",
-};
 
 const iconStyle = {
   width: "45px",
