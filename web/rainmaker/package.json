@@ -18,7 +18,7 @@
     "egov-ui-kit-commons": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/common --out-dir packages/egov-ui-kit/common --copy-files",
     "egov-ui-kit-custom-icons": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/custom-icons --out-dir packages/egov-ui-kit/custom-icons --copy-files",
     "egov-ui-kit-hocs": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/hocs --out-dir packages/egov-ui-kit/hocs --copy-files",
-    "egov-ui-kit-assets": "babel dev-packages/egov-ui-kit-dev/src/assets --out-dir packages/egov-ui-kit/assets --copy-files",
+    "egov-ui-kit-assets": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/assets --out-dir packages/egov-ui-kit/assets --copy-files",
     "egov-ui-kit": "npm run egov-ui-kit-components && npm run egov-ui-kit-redux && npm run egov-ui-kit-utils && npm run egov-ui-kit-commons && npm run egov-ui-kit-custom-icons && npm run egov-ui-kit-hocs && npm run egov-ui-kit-assets",
     "build-css": "node-sass-chokidar dev-packages/egov-ui-kit-dev/src -o dev-packages/egov-ui-kit-dev/src"
   },

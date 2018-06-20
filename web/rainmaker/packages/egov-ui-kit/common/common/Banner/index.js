@@ -12,9 +12,9 @@ var _reactRouter = require("react-router");
 
 var _components = require("components");
 
-var _logo_white = require("egov-ui-kit/assets/images/logo_white.png");
+var _punjabLogo = require("egov-ui-kit/assets/images/punjab-logo.png");
 
-var _logo_white2 = _interopRequireDefault(_logo_white);
+var _punjabLogo2 = _interopRequireDefault(_punjabLogo);
 
 require("./index.css");
 
@@ -43,7 +43,7 @@ var Banner = function Banner(_ref) {
         _react2.default.createElement(
           "div",
           { className: "logo-wrapper user-logo-wrapper" },
-          _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _logo_white2.default })
+          _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _punjabLogo2.default })
         ),
         children
       )
