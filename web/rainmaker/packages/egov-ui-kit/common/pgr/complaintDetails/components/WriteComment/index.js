@@ -77,9 +77,7 @@ var WriteComment = function WriteComment(_ref) {
       inputStyle: { fontSize: 14, paddingLeft: 5, paddingRight: 40 },
       rowsMax: 3
     })),
-    _react2.default.createElement(_components.Icon, { className: "comment-send", action: "content", name: "send", style: iconStyle, color: "#00bcd1", onClick: function onClick() {
-        return submitForm();
-      } })
+    _react2.default.createElement(_components.Icon, { className: "comment-send", action: "content", name: "send", style: iconStyle, color: "#00bcd1", onClick: submitForm })
   );
 };
 
