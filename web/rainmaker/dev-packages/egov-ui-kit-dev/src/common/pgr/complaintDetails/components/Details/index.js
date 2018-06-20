@@ -141,7 +141,15 @@ class Details extends Component {
                       return (
                         image && (
                           <div className="complaint-image-wrapper" key={index}>
-                            <Image style={imageStyles} size="medium" className="complaint-image" width="100%" height={46} source={image} />{" "}
+                            <Image
+                              style={imageStyles}
+                              size="medium"
+                              className="complaint-image"
+                              width="100%"
+                              height={46}
+                              source={image}
+                              onClick={() => this.onImageClick(image)}
+                            />{" "}
                           </div>
                         )
                       );

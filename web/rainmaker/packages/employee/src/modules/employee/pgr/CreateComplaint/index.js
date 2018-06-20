@@ -11,7 +11,7 @@ class AddComplaints extends Component {
   render() {
     const { categories, localizationLabels } = this.props;
     return (
-      <Screen>
+      <Screen className="csr-create-comp-main-screen">
         <ComplaintFormHOC categories={categories} localizationLabels={localizationLabels} history={this.props.history} />
       </Screen>
     );
