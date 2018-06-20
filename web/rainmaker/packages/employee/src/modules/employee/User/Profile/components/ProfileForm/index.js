@@ -30,7 +30,7 @@ const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }
         }
       />
 
-      <div className="col-xs-12 col-sm-offset-10 col-sm-2 col-lg-offset-10 col-md-offset-10 col-lg-2 col-md-2 profileBtnWrapper btn-without-bottom-nav ">
+      <div className="col-xs-12 col-sm-offset-10 col-sm-2 col-lg-offset-10 col-md -offset-10 col-lg-2 col-md-2 profileBtnWrapper btn-without-bottom-nav ">
         <Button className="profileBtn" {...submit} primary={true} fullWidth={true} />
       </div>
     </div>

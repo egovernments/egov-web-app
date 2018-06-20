@@ -130,37 +130,52 @@ const routes = [
     path: "complaint-submitted",
     component: ComplaintSubmited,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HEADER_COMPLAINT_SUBMITTED", hideBackButton: true },
+    options: {
+      hideFooter: true,
+      title: "CS_HEADER_COMPLAINT_SUBMITTED",
+      hideTitle: true,
+      hideBackButton: true,
+    },
   },
   {
     path: "reopen-complaint/:serviceRequestId?",
     component: ReOpenComplaint,
     needsAuthentication: true,
-    options: { title: "CS_HEADER_REOPEN_COMPLAINT" },
+    options: {
+      title: "CS_HEADER_REOPEN_COMPLAINT",
+      titleBackground: true, // Use this if you need white background for title in web version
+    },
   },
   {
     path: "feedback/:serviceRequestId?",
     component: Feedback,
     needsAuthentication: true,
-    options: { title: "CS_HEADER_FEEDBACK" },
+    options: {
+      title: "CS_HEADER_FEEDBACK",
+      titleBackground: true, // Use this if you need white background for title in web version
+    },
   },
   {
     path: "feedback-acknowledgement",
     component: FeedbackAcknowledge,
     needsAuthentication: true,
-    options: { hideFooter: true, hideBackButton: true, title: "CS_HEADER_FEEDBACK_ACKNOWLEDGEMENT" },
+    options: { hideFooter: true, hideBackButton: true, title: "CS_HEADER_FEEDBACK_ACKNOWLEDGEMENT", hideTitle: true },
   },
   {
     path: "complaint-type",
     component: ComplaintType,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE" },
+    options: { hideFooter: true, title: "CS_ADDCOMPLAINT_COMPLAINT_TYPE", hideTitle: true },
   },
   {
     path: "how-it-works",
     component: HowItWorks,
     needsAuthentication: true,
-    options: { hideFooter: true, title: "CS_HOME_HEADER_HOW_IT_WORKS" },
+    options: {
+      hideFooter: true,
+      title: "CS_HOME_HEADER_HOW_IT_WORKS",
+      titleBackground: true, // Use this if you need white background for title in web version
+    },
   },
   {
     path: "add-complaint",
@@ -172,7 +187,12 @@ const routes = [
     path: "reopen-acknowledgement",
     component: ReopenAcknowledgement,
     needsAuthentication: true,
-    options: { hideFooter: true, hideBackButton: true, title: "CS_COMMON_COMPLAINT_REOPENED" },
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "CS_COMMON_COMPLAINT_REOPENED",
+      hideTitle: true,
+    },
   },
   //property tax routes
   {

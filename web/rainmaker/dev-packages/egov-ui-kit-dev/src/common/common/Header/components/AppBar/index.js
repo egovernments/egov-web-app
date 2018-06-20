@@ -15,32 +15,34 @@ const styles = {
 // handle listners
 const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLabel, userInfo = {}, ...rest }) => {
   return (
-    <AppBar
-      // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
-      className={className || "header-with-drawer"}
-      title={
-        <div className="citizen-header-logo-label">
-          <div className="citizen-header-logo">
-            <img src={pbLogo} />
+    <div>
+      <AppBar
+        // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
+        className={className || "header-with-drawer"}
+        title={
+          <div className="citizen-header-logo-label">
+            <div className="citizen-header-logo">
+              <img src={pbLogo} />
+            </div>
+            <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
+            <Label
+              containerStyle={{ marginLeft: "10px" }}
+              className="screenHeaderLabelStyle appbar-municipal-label"
+              label={"PUNJAB MUNICIPAL CORPORATION"}
+            />
           </div>
-          <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
-          <Label
-            containerStyle={{ marginLeft: "10px" }}
-            className="screenHeaderLabelStyle appbar-municipal-label"
-            label={"PUNJAB MUNICIPAL CORPORATION"}
-          />
+        }
+        titleStyle={styles.titleStyle}
+        {...rest}
+      >
+        <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
+          <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} userInfo={userInfo} />
+        </Toolbar>
+        <div className="appbar-right-logo">
+          <img src={digitLogo} />
         </div>
-      }
-      titleStyle={styles.titleStyle}
-      {...rest}
-    >
-      <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
-        <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} userInfo={userInfo} />
-      </Toolbar>
-      <div className="appbar-right-logo">
-        <img src={digitLogo} />
-      </div>
-    </AppBar>
+      </AppBar>
+    </div>
   );
 };
 

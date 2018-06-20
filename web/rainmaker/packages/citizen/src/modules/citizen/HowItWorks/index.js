@@ -122,21 +122,14 @@ const HowItWorks = (props) => {
     },
   ];
   return (
-    <div>
-      <Card
-        className="howItWorks-main-card"
-        textChildren={
-          <div>
-            <Label labelClassName="dark-color" containerStyle={{ marginBottom: "40px" }} label={"CS_HOWITWORKS_DESCRIPTION"} />
+    <div className="howItWorks-main-card">
+      <Label labelClassName="dark-color" containerStyle={{ marginBottom: "40px" }} label={"CS_HOWITWORKS_DESCRIPTION"} />
 
-            <TimeLine
-              stepperProps={{
-                orientation: "vertical",
-              }}
-              steps={steps}
-            />
-          </div>
-        }
+      <TimeLine
+        stepperProps={{
+          orientation: "vertical",
+        }}
+        steps={steps}
       />
     </div>
   );

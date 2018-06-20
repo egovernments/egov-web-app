@@ -5,65 +5,7 @@ import withData from "./withData";
 import { Header } from "modules/common";
 import { Footer } from "modules/common";
 import { ActionMenu } from "modules/common";
-
-const actionList = [
-  {
-    id: 1535,
-    name: "PropertyType",
-    url: "url",
-    displayName: "Home",
-    orderNumber: 1,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Home",
-    navigationURL: "property-tax",
-    leftIcon: { action: "action", name: "home" },
-    rightIcon: "",
-  },
-  {
-    id: 1536,
-    name: "PropertySubType",
-    url: "url",
-    displayName: "Information",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Information",
-    navigationURL: "mdms/PropertyTax/PropertySubType",
-    leftIcon: { action: "action", name: "info" },
-    rightIcon: "",
-  },
-  {
-    id: 1537,
-    name: "ConstructionType",
-    url: "url",
-    displayName: "Payments",
-    orderNumber: 3,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Payments",
-    navigationURL: "mdms/PropertyTax/ConstructionType",
-    leftIcon: { action: "custom", name: "rupee" },
-    rightIcon: "",
-  },
-  {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Apply",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "mdms/PropertyTax/ConstructionSubType",
-    leftIcon: { action: "content", name: "send" },
-    rightIcon: "",
-  },
-];
+import Label from "egov-ui-kit/utils/translationNode";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -87,7 +29,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     render() {
-      const { hideHeader, hideFooter, title, isHomeScreen } = options;
+      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground } = options;
       const { history, authenticated, userInfo } = this.props;
       const role = this.getUserRole(userInfo);
 
@@ -98,11 +40,18 @@ const withAuthorization = (options = {}) => (Component) => {
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
             <div className="col-xs-2 action-menu-drawer show-action-menu">
-              <div className="rainmaker-action-menu">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
+              <div className="rainmaker-action-menu">{<ActionMenu role={role} />}</div>
             </div>
             <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
             <div className="col-xs-12 col-sm-10" style={{ padding: 0 }}>
-              {authenticated ? <Component {...this.props} /> : null}
+              {authenticated ? (
+                <div>
+                  {!hideTitle && (
+                    <Label className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"} label={title} />
+                  )}
+                  <Component {...this.props} />
+                </div>
+              ) : null}
             </div>
           </div>
           {!hideFooter && authenticated ? (

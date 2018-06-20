@@ -40,6 +40,10 @@ var _components = require("components");
 
 var _lodash = require("lodash");
 
+var _actionList = require("./actionList");
+
+var _actionList2 = _interopRequireDefault(_actionList);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -93,7 +97,9 @@ var ActionMenu = function (_Component) {
     };
 
     _this.addMenuItems = function (path, splitArray, menuItems, index) {
-      var actionList = _this.props.actionList;
+      var role = _this.props.role;
+
+      var actionList = _actionList2.default[role];
 
       if (splitArray.length > 1) {
         if (!(0, _lodash.some)(menuItems, { name: splitArray[0] })) {
@@ -127,8 +133,9 @@ var ActionMenu = function (_Component) {
 
     _this.menuChange = function (pathParam) {
       var path = pathParam.path;
-      var actionList = _this.props.actionList;
+      var role = _this.props.role;
 
+      var actionList = _actionList2.default[role];
       var menuItems = [];
       for (var i = 0; i < actionList.length; i++) {
         if (actionList[i].path !== "") {
@@ -218,7 +225,7 @@ var ActionMenu = function (_Component) {
     value: function render() {
       var _props = this.props,
           handleToggle = _props.handleToggle,
-          actionList = _props.actionList;
+          role = _props.role;
       var _state = this.state,
           searchText = _state.searchText,
           modules = _state.modules,
@@ -230,6 +237,7 @@ var ActionMenu = function (_Component) {
           menuChange = this.menuChange,
           changeRoute = this.changeRoute;
 
+      var actionList = _actionList2.default[role];
 
       var showMenuItem = function showMenuItem() {
         if (searchText.length == 0) {

@@ -5,6 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
 import { Icon } from "components";
 import { split, orderBy, some } from "lodash";
+import actionListArr from "./actionList";
 import "./index.css";
 
 const styles = {
@@ -78,7 +79,9 @@ class ActionMenu extends Component {
     });
   };
   addMenuItems = (path, splitArray, menuItems, index) => {
-    let { actionList } = this.props;
+    let { role } = this.props;
+    let actionList = actionListArr[role];
+
     if (splitArray.length > 1) {
       if (!some(menuItems, { name: splitArray[0] })) {
         menuItems.push({
@@ -110,7 +113,8 @@ class ActionMenu extends Component {
   };
   menuChange = (pathParam) => {
     let path = pathParam.path;
-    let { actionList } = this.props;
+    let { role } = this.props;
+    let actionList = actionListArr[role];
     let menuItems = [];
     for (var i = 0; i < actionList.length; i++) {
       if (actionList[i].path !== "") {
@@ -162,9 +166,10 @@ class ActionMenu extends Component {
   };
 
   render() {
-    let { handleToggle, actionList } = this.props;
+    let { handleToggle, role } = this.props;
     let { searchText, modules, items, changeModulesActions, path, menuItems } = this.state;
     let { changeLevel, menuChange, changeRoute } = this;
+    let actionList = actionListArr[role];
 
     const showMenuItem = () => {
       if (searchText.length == 0) {

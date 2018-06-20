@@ -192,3 +192,18 @@ body.employee-user-profile {
 @media only screen and (max-width: 768px) {
   .show-action-menu {
     display: none; } }
+
+@media only screen and (max-width: 768px) {
+  .screen-title-label {
+    display: none; } }
+
+.screen-title-label .label-text {
+  font-size: 20px !important;
+  font-weight: 400;
+  color: #484848;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 24px 17px 5px; }
+
+.title-white-background {
+  background-color: #ffffff !important; }

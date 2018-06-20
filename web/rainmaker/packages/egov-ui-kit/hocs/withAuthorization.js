@@ -34,61 +34,11 @@ var _withData2 = _interopRequireDefault(_withData);
 
 var _common = require("modules/common");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _translationNode = require("egov-ui-kit/utils/translationNode");
 
-var actionList = [{
-  id: 1535,
-  name: "PropertyType",
-  url: "url",
-  displayName: "Home",
-  orderNumber: 1,
-  enabled: true,
-  serviceCode: "PT",
-  code: "null",
-  path: "Home",
-  navigationURL: "property-tax",
-  leftIcon: { action: "action", name: "home" },
-  rightIcon: ""
-}, {
-  id: 1536,
-  name: "PropertySubType",
-  url: "url",
-  displayName: "Information",
-  orderNumber: 2,
-  enabled: true,
-  serviceCode: "PT",
-  code: "null",
-  path: "Information",
-  navigationURL: "mdms/PropertyTax/PropertySubType",
-  leftIcon: { action: "action", name: "info" },
-  rightIcon: ""
-}, {
-  id: 1537,
-  name: "ConstructionType",
-  url: "url",
-  displayName: "Payments",
-  orderNumber: 3,
-  enabled: true,
-  serviceCode: "PT",
-  code: "null",
-  path: "Payments",
-  navigationURL: "mdms/PropertyTax/ConstructionType",
-  leftIcon: { action: "custom", name: "rupee" },
-  rightIcon: ""
-}, {
-  id: 1538,
-  name: "ConstructionSubType",
-  url: "url",
-  displayName: "Apply",
-  orderNumber: 4,
-  enabled: true,
-  serviceCode: "PT",
-  code: "null",
-  path: "Apply",
-  navigationURL: "mdms/PropertyTax/ConstructionSubType",
-  leftIcon: { action: "content", name: "send" },
-  rightIcon: ""
-}];
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withAuthorization = function withAuthorization() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -127,7 +77,9 @@ var withAuthorization = function withAuthorization() {
           var hideHeader = options.hideHeader,
               hideFooter = options.hideFooter,
               title = options.title,
-              isHomeScreen = options.isHomeScreen;
+              isHomeScreen = options.isHomeScreen,
+              hideTitle = options.hideTitle,
+              titleBackground = options.titleBackground;
           var _props = this.props,
               history = _props.history,
               authenticated = _props.authenticated,
@@ -148,7 +100,7 @@ var withAuthorization = function withAuthorization() {
                 _react2.default.createElement(
                   "div",
                   { className: "rainmaker-action-menu" },
-                  actionList && actionList.length > 0 && _react2.default.createElement(_common.ActionMenu, { actionList: actionList })
+                  _react2.default.createElement(_common.ActionMenu, { role: role })
                 )
               ),
               _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
@@ -156,7 +108,12 @@ var withAuthorization = function withAuthorization() {
               _react2.default.createElement(
                 "div",
                 { className: "col-xs-12 col-sm-10", style: { padding: 0 } },
-                authenticated ? _react2.default.createElement(Component, this.props) : null
+                authenticated ? _react2.default.createElement(
+                  "div",
+                  null,
+                  !hideTitle && _react2.default.createElement(_translationNode2.default, { className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label", label: title }),
+                  _react2.default.createElement(Component, this.props)
+                ) : null
               )
             ),
             !hideFooter && authenticated ? _react2.default.createElement(

@@ -81,6 +81,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "CS_COMPLAINT_DETAILS_RESOLUTION_EVIDENCE",
+      titleBackground: true, // Use this if you need white background for title in web version
       redirectionUrl,
     },
   },
@@ -111,6 +112,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "ES_COMPLAINT_REASSIGNED_HEADER",
+      hideTitle: true,
       redirectionUrl,
     },
   },
@@ -122,6 +124,7 @@ const routes = [
       hideBackButton: true,
       hideFooter: true,
       title: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
+      hideTitle: true,
       redirectionUrl,
     },
   },
@@ -132,6 +135,7 @@ const routes = [
     options: {
       hideBackButton: true,
       hideFooter: true,
+      hideTitle: true,
       title: "CS_COMMON_RE-ASSIGN REQUESTED",
       redirectionUrl,
     },
@@ -143,6 +147,7 @@ const routes = [
     options: {
       hideBackButton: true,
       hideFooter: true,
+      hideTitle: true,
       title: "ES_COMPLAINT_ASSIGNED_HEADER",
       redirectionUrl,
     },
@@ -153,6 +158,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "ES_COMPLAINT_REJECTED_HEADER",
+      hideTitle: true,
       hideFooter: true,
       redirectionUrl,
     },
@@ -193,6 +199,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "ES_REASON_TO_REJECT_HEADER",
+      titleBackground: true, // Use this if you need white background for title in web version
       hideFooter: true,
       redirectionUrl,
     },
@@ -204,6 +211,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       title: "CS_HEADER_REQUEST_REASSIGN",
+      titleBackground: true, // Use this if you need white background for title in web version
       hideFooter: true,
       redirectionUrl,
     },
