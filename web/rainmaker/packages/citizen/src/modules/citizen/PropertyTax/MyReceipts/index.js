@@ -36,8 +36,7 @@ class MyReceipts extends Component {
         leftIcon: <Icon action="action" name="receipt" />,
         nestedItems:
           reciept.years &&
-          reciept.years.map((year, index) => {
-            console.log(year);
+          reciept.years.map((year) => {
             return {
               primaryText: <Label label={year.yearRange} fontSize="16px" color="#484848" />,
             };

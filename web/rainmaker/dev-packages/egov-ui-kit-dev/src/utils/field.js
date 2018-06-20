@@ -8,7 +8,6 @@ import { TextField, MobileNumberField, SingleCheckbox, DropDown, Tooltip, Label 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
     const { type, tooltip, label, ...fieldProps } = field;
-    console.log(field);
     switch (type) {
       case "textfield":
       case "textarea":

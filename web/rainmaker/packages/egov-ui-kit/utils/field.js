@@ -37,7 +37,6 @@ var Field = function Field(_ref) {
         label = field.label,
         fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label"]);
 
-    console.log(field);
     switch (type) {
       case "textfield":
       case "textarea":
