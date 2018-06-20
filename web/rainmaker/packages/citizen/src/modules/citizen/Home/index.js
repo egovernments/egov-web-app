@@ -1,51 +1,62 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Events from "modules/citizen/PropertyTax/Events/components/Event";
 import { Banner } from "modules/common";
+import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
-import SearchService from "./components/SearchService";
-import ServiceList from "./components/ServiceList";
-import ServicesNearby from "./components/ServicesNearby";
+import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { mapCompIDToName } from "egov-ui-kit/utils/commons";
+import orderby from "lodash/orderBy";
 import "./index.css";
 
-//
 class Home extends Component {
-  notifications = [
-    {
-      title: "Pay your water & sewerage tax",
-      amountDue: "₹1,732",
-      dueDate: "24th May 2018",
-      date: "24-May-2018",
-      status: "Resolved",
-    },
-  ];
-
-  events = [
-    {
-      name: "Ward 10 council meeting",
-      location: "Ward 10 Municipal office",
-      time: "11 AM to 1PM",
-      day: "10",
-      month: "March",
-    },
-  ];
+  componentDidMount = () => {
+    const { fetchComplaints } = this.props;
+    fetchComplaints([], false);
+  };
 
   render() {
-    const { notifications, events } = this;
+    const { updates, history } = this.props;
     return (
       <Banner className="homepage-banner">
         <div className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8 home-page-content">
           <div className="row">
-            <SearchService />
-            <ServiceList />
-            <Notifications notifications={notifications} />
-            <Events events={events} />
-            <ServicesNearby />
+            <NewAndOldComplaints history={history} />
+            <Notifications updates={updates} history={history} />
           </div>
         </div>
       </Banner>
     );
   }
 }
+const mapStateToProps = (state) => {
+  const complaints = state.complaints || {};
+  let updates = [];
+  Object.keys(complaints.byId).forEach((complaintKey, index) => {
+    let complaintObj = {};
+    let complaintactions = complaints.byId[complaintKey].actions && complaints.byId[complaintKey].actions.filter((complaint) => complaint.status);
+    complaintObj.status = complaints.byId[complaintKey].status;
+    complaintObj.action = complaintactions && complaintactions[0].action;
+    complaintObj.title = mapCompIDToName(complaints.categoriesById, complaints.byId[complaintKey].serviceCode);
+    complaintObj.date = complaints.byId[complaintKey].auditDetails.createdTime;
+    complaintObj.number = complaintKey;
+    updates.push(complaintObj);
+  });
+  var closedComplaints = orderby(updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() === "closed"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(
+    updates.filter((complaint) => complaint.status && complaint.status.toLowerCase() != "closed"),
+    ["date"],
+    ["desc"]
+  );
+  return { updates: [...nonClosedComplaints, ...closedComplaints] };
+};
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchComplaints: (criteria, hasUsers) => dispatch(fetchComplaints(criteria, hasUsers)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

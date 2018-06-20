@@ -1,60 +1,54 @@
 import React from "react";
-import { Card, Icon, Button } from "components";
+import { Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getDateFromEpoch, displayLocalizedStatusMessage } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
-const Updates = ({ notifications = [] }) => {
-  const renderUpdate = (notification, index) => {
-    const { title, date, status, amountDue, dueDate } = notification;
+const Updates = ({ updates, history }) => {
+  const renderUpdate = (update, index) => {
+    const { title, date, status, action } = update;
+    let transformedstatus = "";
+    const titleKey = title && "SERVICEDEFS." + title.toUpperCase();
+    if (status) {
+      if (status === "open" && action && action === "reopen") {
+        transformedstatus = displayLocalizedStatusMessage("reopened");
+      } else if (status === "assigned" && action && action === "reassign") {
+        transformedstatus = displayLocalizedStatusMessage("reassigned");
+      } else {
+        transformedstatus = displayLocalizedStatusMessage(status);
+      }
+    }
+
     return (
       <Card
-        className="home-notification"
         style={{ margin: "8px 0px" }}
         key={index}
         id={`home-notification${index}`}
-        style={{ padding: "12px 8px" }}
         textChildren={
-          <div className="update">
+          <div
+            className="update"
+            onClick={() => {
+              history.push(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
+            }}
+          >
             <div className="notification-top-content">
               <Label
                 leftWrapperStyle
                 fontSize={16}
                 dark={true}
                 bold={true}
-                label={title}
+                label={titleKey}
                 containerStyle={{ width: "80%" }}
                 labelStyle={{ width: "100%", wordWrap: "break-word" }}
               />
-              <Icon style={{ color: "#fe7a51" }} action="custom" name="water-tap" />
+              <Icon style={{ color: "#5385a6" }} action="custom" name="notifications" />
             </div>
-            <div className="complaint-date-cont">
-              <Icon action="action" name="date-range" />
-              <span className="complaint-date">{date}</span>
+            <div className="notification-top-content" style={{ justifyContent: "flex-start" }}>
+              <Icon style={{ width: "16px", height: "16px" }} action="custom" name="calendar" />
+              <Label fontSize={12} label={getDateFromEpoch(date)} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
             </div>
-            <div>
-              <Label label="Amount due :" containerStyle={{ display: "inline-block" }} />
-              <Label label={amountDue} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
-            </div>
-            <div className="notification-top-content">
-              <div>
-                <Label label="Due Date :" containerStyle={{ display: "inline-block" }} />
-                <Label label={dueDate} labelStyle={{ paddingLeft: "5px" }} containerStyle={{ display: "inline-block" }} />
-              </div>
-              <div className="pay-button-cont">
-                <Button
-                  id="home-notification-pay-button"
-                  primary={true}
-                  style={{
-                    height: "22px",
-                    lineHeight: "auto",
-                    minWidth: "inherit",
-                    width: "72px",
-                  }}
-                  label={<Label buttonLabel={true} fontSize="12px" label="PAY" />}
-                  fullWidth={true}
-                  onClick={this.continueComplaintSubmit}
-                />
-              </div>
+            <div className="complaint-status" style={{ marginTop: "16px" }}>
+              <Label containerStyle={{ display: "inline-block", marginLeft: "4px" }} dark={true} label={transformedstatus} />
             </div>
           </div>
         }
@@ -62,7 +56,7 @@ const Updates = ({ notifications = [] }) => {
     );
   };
 
-  return <div>{notifications.map((notification, index) => renderUpdate(notification, index))}</div>;
+  return <div>{updates.map((update, index) => renderUpdate(update, index))}</div>;
 };
 
 export default Updates;
