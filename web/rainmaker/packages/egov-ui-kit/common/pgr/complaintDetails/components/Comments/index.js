@@ -40,19 +40,11 @@ var _WriteComment = require("../WriteComment");
 
 var _WriteComment2 = _interopRequireDefault(_WriteComment);
 
-var _Avatar = require("material-ui/Avatar");
-
-var _Avatar2 = _interopRequireDefault(_Avatar);
-
 var _download = require("egov-ui-kit/assets/images/download.png");
 
 var _download2 = _interopRequireDefault(_download);
 
 var _commons = require("egov-ui-kit/utils/commons");
-
-var _isEqual = require("lodash/isEqual");
-
-var _isEqual2 = _interopRequireDefault(_isEqual);
 
 require("./index.css");
 

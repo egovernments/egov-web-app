@@ -38,10 +38,6 @@ var _reactRedux = require("react-redux");
 
 var _components = require("components");
 
-var _search = require("material-ui/svg-icons/action/search");
-
-var _search2 = _interopRequireDefault(_search);
-
 var _lodash = require("lodash");
 
 require("./index.css");

@@ -117,7 +117,7 @@ class Header extends Component {
           userInfo={userInfo}
           fetchLocalizationLabel={fetchLocalizationLabel}
           role={role && role === "citizen" ? "citizen" : "employee"}
-          openSecondary={true}
+          openSecondary={window.innerWidth >= 768 ? true : false}
           width={300}
           containerStyle={{ top: "64px" }}
         />

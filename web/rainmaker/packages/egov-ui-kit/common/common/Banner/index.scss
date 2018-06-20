@@ -24,6 +24,7 @@
 }
 
 .banner-image {
+  background-image: url(../../../assets/images/banner.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -43,11 +44,11 @@
 
 .user-screens-wrapper .user-screens-card {
   position: fixed;
-  bottom: 175px;
+  bottom: 10px;
   left: 8px;
   right: 8px;
   padding: 24px 16px;
-  overflow-y: unset;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -56,6 +57,9 @@
     height: 100vh;
   }
 
+  .banner-overlay {
+    background: transparent;
+  }
   .banner-image,
   .banner-overlay {
     background-image: url(../../../assets/images/Banner_image.jpg);
@@ -63,8 +67,15 @@
     height: 100%;
   }
 
-  .user-screens-wrapper .user-screens-card,
+  .user-logo-wrapper {
+    display: none;
+  }
   .logo-wrapper {
     position: absolute;
+  }
+  .user-screens-wrapper .user-screens-card {
+    position: absolute;
+    bottom: 175px;
+    overflow-y: unset;
   }
 }

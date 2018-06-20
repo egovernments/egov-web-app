@@ -1,7 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { httpRequest, loginRequest, uploadFile } from "egov-ui-kit/utils/api";
-import { prepareFormData } from "egov-ui-kit/utils/commons";
 import { FILE_UPLOAD } from "egov-ui-kit/utils/endPoints";
 import { validateForm } from "./utils";
 import transformer from "config/forms/transformers";

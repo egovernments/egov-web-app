@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button } from "components";
+import { Button } from "components";
 
 const ActionFooter = ({ label1, label2, primaryAction, secondaryAction }) => {
   return (

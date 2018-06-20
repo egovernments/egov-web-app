@@ -12,17 +12,13 @@ var _reactRouter = require("react-router");
 
 var _components = require("components");
 
-var _logoWhite = require("egov-ui-kit/assets/images/logo-white.png");
+var _logo_white = require("egov-ui-kit/assets/images/logo_white.png");
 
-var _logoWhite2 = _interopRequireDefault(_logoWhite);
+var _logo_white2 = _interopRequireDefault(_logo_white);
 
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var backgroundImage = {
-  backgroundImage: "url(assets/images/banner.png)"
-};
 
 var Banner = function Banner(_ref) {
   var children = _ref.children,
@@ -42,8 +38,13 @@ var Banner = function Banner(_ref) {
         _react2.default.createElement(_components.Icon, { onClick: function onClick() {
             return history.goBack();
           }, className: "banner-back-button", action: "navigation", name: "arrow-back" }),
-        _react2.default.createElement("div", { style: backgroundImage, className: "banner-image" }),
+        _react2.default.createElement("div", { className: "banner-image" }),
         _react2.default.createElement("div", { className: "banner-overlay" }),
+        _react2.default.createElement(
+          "div",
+          { className: "logo-wrapper user-logo-wrapper" },
+          _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _logo_white2.default })
+        ),
         children
       )
     )

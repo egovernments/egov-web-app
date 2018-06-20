@@ -56,13 +56,13 @@ var LanguageSelectionForm = function LanguageSelectionForm(_ref) {
       onClick = _ref.onClick;
 
   return _react2.default.createElement(_components.Card, {
-    className: "col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 user-screens-card language-selection-card",
+    className: "col-sm-offset-4 col-sm-4 user-screens-card language-selection-card",
     textChildren: _react2.default.createElement(
       "div",
       null,
       _react2.default.createElement(
         "div",
-        { style: { marginBottom: "24px" } },
+        { className: "web-user-logo", style: { marginBottom: "24px" } },
         _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _logo_black2.default })
       ),
       _react2.default.createElement(

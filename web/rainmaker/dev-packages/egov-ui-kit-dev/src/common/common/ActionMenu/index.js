@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";
 import { connect } from "react-redux";
-import { TextFieldIcon, Icon } from "components";
-import SearchIcon from "material-ui/svg-icons/action/search";
+import { Icon } from "components";
 import { split, orderBy, some } from "lodash";
 import "./index.css";
 
