@@ -16,7 +16,6 @@ var _FloatingActionButton2 = _interopRequireDefault(_FloatingActionButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import "./index.css";
 var titleStyle = {
   textAlign: "center",
   fontSize: "16px",

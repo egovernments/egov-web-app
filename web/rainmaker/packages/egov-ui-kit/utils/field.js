@@ -20,21 +20,16 @@ var _components = require("components");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ToolTip = function ToolTip(_ref) {
-  var placement = _ref.placement,
-      show = _ref.show,
-      title = _ref.title,
-      id = _ref.id;
+// const ToolTip = ({ placement, show, title, id }) => {
+//   return <Tooltip enterDelay={300} id={id} leaveDelay={300} open={show} placement={placement} title={title} />;
+// };
 
-  return _react2.default.createElement(_components.Tooltip, { enterDelay: 300, id: id, leaveDelay: 300, open: show, placement: placement, title: title });
-};
-
-var Field = function Field(_ref2) {
-  var fieldKey = _ref2.fieldKey,
-      handleFieldChange = _ref2.handleFieldChange,
-      _ref2$field = _ref2.field,
-      field = _ref2$field === undefined ? {} : _ref2$field,
-      rest = (0, _objectWithoutProperties3.default)(_ref2, ["fieldKey", "handleFieldChange", "field"]);
+var Field = function Field(_ref) {
+  var fieldKey = _ref.fieldKey,
+      handleFieldChange = _ref.handleFieldChange,
+      _ref$field = _ref.field,
+      field = _ref$field === undefined ? {} : _ref$field,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["fieldKey", "handleFieldChange", "field"]);
 
   var renderField = function renderField() {
     var type = field.type,

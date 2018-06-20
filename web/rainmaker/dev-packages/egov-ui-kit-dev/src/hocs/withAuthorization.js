@@ -1,5 +1,4 @@
 import React from "react";
-import { Drawer, Icon } from "components";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";

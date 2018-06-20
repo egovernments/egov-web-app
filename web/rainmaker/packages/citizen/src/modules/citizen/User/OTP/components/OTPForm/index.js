@@ -10,10 +10,10 @@ const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP }) => {
 
   return (
     <Card
-      className="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4  user-screens-card"
+      className="col-sm-offset-4 col-sm-4  user-screens-card"
       textChildren={
         <div>
-          <div style={{ marginBottom: "24px" }}>
+          <div className="web-user-logo" style={{ marginBottom: "24px" }}>
             <Image className="mseva-logo" source={`${logo}`} />
           </div>
           <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
