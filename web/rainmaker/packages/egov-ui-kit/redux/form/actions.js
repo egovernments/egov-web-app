@@ -106,7 +106,7 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
               isFormValid = (0, _utils.validateForm)(form);
 
               if (!isFormValid) {
-                _context.next = 37;
+                _context.next = 38;
                 break;
               }
 
@@ -157,23 +157,26 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
 
             case 28:
               dispatch(submitFormComplete(formKey, formResponse, saveUrl));
-              _context.next = 35;
+              _context.next = 36;
               break;
 
             case 31:
               _context.prev = 31;
               _context.t0 = _context["catch"](8);
               message = _context.t0.message;
-              throw new Error(_context.t0);
+              // throw new Error(error);
 
-            case 35:
-              _context.next = 38;
+              dispatch(submitFormError(formKey, message));
+              dispatch((0, _actions.toggleSnackbarAndSetText)(true, message, true));
+
+            case 36:
+              _context.next = 39;
               break;
 
-            case 37:
+            case 38:
               dispatch(displayFormErrors(formKey));
 
-            case 38:
+            case 39:
             case "end":
               return _context.stop();
           }

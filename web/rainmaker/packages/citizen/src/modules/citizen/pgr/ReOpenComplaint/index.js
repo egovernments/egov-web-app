@@ -51,7 +51,7 @@ class ReOpenComplaint extends Component {
       com2 = val.textVal;
     }
     let concatvalue = com1 + com2;
-    this.props.handleFieldChange("comments", concatvalue);
+    this.props.handleFieldChange("reopenComplaint", "comments", concatvalue);
   };
 
   render() {
