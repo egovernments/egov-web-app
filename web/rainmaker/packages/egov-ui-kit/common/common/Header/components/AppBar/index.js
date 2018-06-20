@@ -58,36 +58,40 @@ var EgovAppBar = function EgovAppBar(_ref) {
       rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo"]);
 
   return _react2.default.createElement(
-    _components.AppBar
-    // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
-    ,
-    (0, _extends3.default)({ className: className || "header-with-drawer",
-      title: _react2.default.createElement(
-        "div",
-        { className: "citizen-header-logo-label" },
-        _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      _components.AppBar
+      // className={isHomeScreen && role === "citizen" ? "home-screen-appbar" : className || "header-with-drawer"}
+      ,
+      (0, _extends3.default)({ className: className || "header-with-drawer",
+        title: _react2.default.createElement(
           "div",
-          { className: "citizen-header-logo" },
-          _react2.default.createElement("img", { src: _pblogo2.default })
+          { className: "citizen-header-logo-label" },
+          _react2.default.createElement(
+            "div",
+            { className: "citizen-header-logo" },
+            _react2.default.createElement("img", { src: _pblogo2.default })
+          ),
+          _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
+          _react2.default.createElement(_translationNode2.default, {
+            containerStyle: { marginLeft: "10px" },
+            className: "screenHeaderLabelStyle appbar-municipal-label",
+            label: "PUNJAB MUNICIPAL CORPORATION"
+          })
         ),
-        _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
-        _react2.default.createElement(_translationNode2.default, {
-          containerStyle: { marginLeft: "10px" },
-          className: "screenHeaderLabelStyle appbar-municipal-label",
-          label: "PUNJAB MUNICIPAL CORPORATION"
-        })
+        titleStyle: styles.titleStyle
+      }, rest),
+      _react2.default.createElement(
+        _Toolbar2.default,
+        { className: "app-toolbar", style: { padding: "0px", height: "64px", background: "#ffffff" } },
+        _react2.default.createElement(_UserSettings2.default, { fetchLocalizationLabel: fetchLocalizationLabel, onIconClick: rest.onLeftIconButtonClick, userInfo: userInfo })
       ),
-      titleStyle: styles.titleStyle
-    }, rest),
-    _react2.default.createElement(
-      _Toolbar2.default,
-      { className: "app-toolbar", style: { padding: "0px", height: "64px", background: "#ffffff" } },
-      _react2.default.createElement(_UserSettings2.default, { fetchLocalizationLabel: fetchLocalizationLabel, onIconClick: rest.onLeftIconButtonClick, userInfo: userInfo })
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "appbar-right-logo" },
-      _react2.default.createElement("img", { src: _Digit_logo2.default })
+      _react2.default.createElement(
+        "div",
+        { className: "appbar-right-logo" },
+        _react2.default.createElement("img", { src: _Digit_logo2.default })
+      )
     )
   );
 };

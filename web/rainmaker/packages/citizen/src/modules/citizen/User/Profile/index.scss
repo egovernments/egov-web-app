@@ -23,3 +23,36 @@
 .profileContainer {
   position: relative;
 }
+
+@media only screen and (max-width: 768px) {
+  .profile-card-container {
+    margin: 0px !important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .profile-card-container {
+    margin: 70px 16px 24px !important;
+  }
+  .profileBtnWrapper {
+    position: relative !important;
+    width: 18% !important;
+    bottom: 0px !important;
+    left: -25px !important;
+    z-index: 1 !important;
+  }
+  .profile-profilesection {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+  .profile-profilesection .profileSection {
+    height: 300px !important;
+  }
+  .profile-profilesection .img-Profile {
+    height: 170px !important;
+    width: 170px !important;
+    margin-top: 30px !important;
+  }
+  .profileFormContainer {
+    padding: 6px 140px 24px 25px !important;
+  }
+}
