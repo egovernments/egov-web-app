@@ -16,29 +16,29 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
         className="create-complaint-main-card"
         textChildren={
           <div className="col-xs-12">
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <TextField {...name} name="create-complaint" onChange={(e, value) => handleFieldChange("name", value)} />
             </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <TextField {...phone} name="complainant-mobile-no" onChange={(e, value) => handleFieldChange("phone", value)} />
             </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
             </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} />
             </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <DropDown {...city} onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)} />
             </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <DropDown {...mohalla} onChange={(e, value, selectedValue) => handleFieldChange("mohalla", selectedValue)} />
             </div>
-            <div className="col-xs-6">
-              <TextField {...landmark} onChange={(e, value) => handleFieldChange("landmark", value)} name="landmark-details" />
-            </div>
-            <div className="col-xs-6">
+            <div className="col-sm-6 col-xs-12">
               <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} locationDetails={address} history={history} />
+            </div>
+            <div className="col-sm-6 col-xs-12">
+              <TextField {...landmark} onChange={(e, value) => handleFieldChange("landmark", value)} name="landmark-details" />
             </div>
           </div>
         }
