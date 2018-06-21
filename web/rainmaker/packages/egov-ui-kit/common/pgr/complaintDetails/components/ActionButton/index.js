@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -51,6 +55,16 @@ var ActionButton = function (_Component) {
           btnTwoLabel = _props.btnTwoLabel,
           btnTwoOnClick = _props.btnTwoOnClick;
 
+      var defaultButtonStyle = {
+        height: "48px",
+        width: "180px",
+        lineHeight: "48px"
+      };
+      var button1Style = {
+        border: "1px solid #fe7a51",
+        marginRight: 16
+      };
+      var button2Style = {};
       return _react2.default.createElement(
         "div",
         { className: "compalint-details-action-buttons" },
@@ -61,7 +75,8 @@ var ActionButton = function (_Component) {
           id: "actionOne",
           backgroundColor: "#ffffff",
           labelStyle: { padding: 0 },
-          overlayStyle: { display: "flex", alignItems: "center", justifyContent: "center" }
+          overlayStyle: { display: "flex", alignItems: "center", justifyContent: "center", height: "inherit" },
+          buttonStyle: (0, _extends3.default)({}, defaultButtonStyle, button1Style)
         }),
         _react2.default.createElement(_components.Button, {
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: btnTwoLabel }),
@@ -69,8 +84,9 @@ var ActionButton = function (_Component) {
           className: "action-button-two",
           id: "actionTwo",
           labelStyle: { padding: 0 },
-          overlayStyle: { display: "flex", alignItems: "center", justifyContent: "center" },
-          backgroundColor: "#fe7a51"
+          overlayStyle: { display: "flex", alignItems: "center", justifyContent: "center", height: "inherit" },
+          backgroundColor: "#fe7a51",
+          buttonStyle: (0, _extends3.default)({}, defaultButtonStyle, button2Style)
         })
       );
     }

@@ -70,6 +70,7 @@ const routes = [
     options: {
       hideFooter: true,
       title: "ES_ALL_COMPLAINTS_HEADER",
+      hideTitle: true,
       redirectionUrl,
       isHomeScreen: true,
     },
