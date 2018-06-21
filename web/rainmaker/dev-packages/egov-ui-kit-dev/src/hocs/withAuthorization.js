@@ -39,11 +39,18 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
-            <div className="col-xs-2 action-menu-drawer show-action-menu">
-              <div className="rainmaker-action-menu">{<ActionMenu role={role} />}</div>
-            </div>
-            <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
-            <div className="col-xs-12 col-sm-10" style={{ padding: 0 }}>
+            {role !== "citizen" && (
+              <div>
+                <div className="col-xs-2 action-menu-drawer show-action-menu">
+                  <div className="rainmaker-action-menu">
+                    <ActionMenu role={role} />
+                  </div>
+                </div>
+                <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
+              </div>
+            )}
+
+            <div className={role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12"} style={{ padding: 0 }}>
               {authenticated ? (
                 <div>
                   {!hideTitle && (
@@ -61,11 +68,11 @@ const withAuthorization = (options = {}) => (Component) => {
               ) : null}
             </div>
           </div>
-          {!hideFooter && authenticated ? (
+          {/* {!hideFooter && authenticated ? (
             <div className="hidden-md hidden-sm hidden-lg">
               <Footer history={history} role={role} />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       );
     }
