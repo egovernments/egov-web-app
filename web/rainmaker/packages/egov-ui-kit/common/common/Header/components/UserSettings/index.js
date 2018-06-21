@@ -100,7 +100,6 @@ var UserSettings = function (_Component) {
         "div",
         { className: "userSettingsContainer" },
         _react2.default.createElement(_components.DropDown, { onChange: this.onChange, style: style.baseStyle, labelStyle: style.label, dropDownData: items, value: languageSelected }),
-        _react2.default.createElement(_components.Icon, { action: "social", name: "notifications", color: "#767676", style: style.iconStyle }),
         _react2.default.createElement(
           "div",
           { onClick: onIconClick, className: "userSettingsInnerContainer" },

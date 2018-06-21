@@ -11,7 +11,14 @@ const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange
         textChildren={
           <div>
             <Link to={`/citizen/map?${formKey}`}>
-              <TextFieldIcon id="addComplaint-location-details" {...locationDetails} iconPosition="after" Icon={TrackIcon} name="location-details" />
+              <TextFieldIcon
+                id="addComplaint-location-details"
+                iconStyle={{ marginTop: "9px" }}
+                {...locationDetails}
+                iconPosition="after"
+                Icon={TrackIcon}
+                name="location-details"
+              />
             </Link>
             <TextField
               id="addComplaint-landmark-details"
