@@ -24,6 +24,8 @@ import Complaints from "egov-ui-kit/common/pgr/Complaints";
 import FeedbackPopup from "egov-ui-kit/common/pgr/FeedbackPopup";
 import Question from "egov-ui-kit/common/pgr/ReOpenComplaint/components/Question";
 import TextArea from "egov-ui-kit/common/pgr/ReOpenComplaint/components/TextArea";
+import ReOpenComplaint from "egov-ui-kit/common/pgr/ReOpenComplaint";
+import ReopenAcknowledgement from "egov-ui-kit/common/pgr/ReopenAcknowledgement";
 import ComplaintType from "egov-ui-kit/common/pgr/ComplaintType";
 
 //User common components
@@ -63,4 +65,6 @@ export {
   ActionMenu,
   ActionFooter,
   ComplaintType,
+  ReOpenComplaint,
+  ReopenAcknowledgement,
 };

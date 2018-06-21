@@ -24,6 +24,8 @@ import Complaints from "egov-ui-kit/common/pgr/Complaints";
 import FeedbackPopup from "egov-ui-kit/common/pgr/FeedbackPopup";
 import Question from "egov-ui-kit/common/pgr/ReOpenComplaint/components/Question";
 import TextArea from "egov-ui-kit/common/pgr/ReOpenComplaint/components/TextArea";
+import ReOpenComplaint from "egov-ui-kit/common/pgr/ReOpenComplaint";
+import ReopenAcknowledgement from "egov-ui-kit/common/pgr/ReopenAcknowledgement";
 
 //User common components
 import LanguageSelectionForm from "egov-ui-kit/common/User/components/LanguageSelectionForm";
@@ -61,4 +63,6 @@ export {
   TextArea,
   ActionMenu,
   ActionFooter,
+  ReOpenComplaint,
+  ReopenAcknowledgement,
 };
