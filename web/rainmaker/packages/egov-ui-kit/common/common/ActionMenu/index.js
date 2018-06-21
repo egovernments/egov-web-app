@@ -237,7 +237,7 @@ var ActionMenu = function (_Component) {
           menuChange = this.menuChange,
           changeRoute = this.changeRoute;
 
-      var actionList = _actionList2.default[role];
+      var actionList = _actionList2.default && _actionList2.default[role];
 
       var showMenuItem = function showMenuItem() {
         if (searchText.length == 0) {
@@ -363,7 +363,7 @@ var ActionMenu = function (_Component) {
         }
       };
 
-      return _react2.default.createElement(
+      return actionList ? _react2.default.createElement(
         "div",
         { ref: this.setWrapperRef },
         _react2.default.createElement("div", { className: "whiteColor", style: { marginTop: "22px" } }),
@@ -404,7 +404,7 @@ var ActionMenu = function (_Component) {
             showMenuItem()
           )
         )
-      );
+      ) : null;
     }
   }]);
   return ActionMenu;
