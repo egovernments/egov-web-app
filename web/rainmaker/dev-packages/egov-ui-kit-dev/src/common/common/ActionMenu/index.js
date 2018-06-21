@@ -169,7 +169,7 @@ class ActionMenu extends Component {
     let { handleToggle, role } = this.props;
     let { searchText, modules, items, changeModulesActions, path, menuItems } = this.state;
     let { changeLevel, menuChange, changeRoute } = this;
-    let actionList = actionListArr[role];
+    let actionList = actionListArr && actionListArr[role];
 
     const showMenuItem = () => {
       if (searchText.length == 0) {
@@ -281,7 +281,7 @@ class ActionMenu extends Component {
       }
     };
 
-    return (
+    return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" style={{ marginTop: "22px" }} />
         {/*
@@ -332,7 +332,7 @@ class ActionMenu extends Component {
           <div style={{ paddingLeft: "-24px" }}>{showMenuItem()}</div>
         </Menu>
       </div>
-    );
+    ) : null;
   }
 }
 

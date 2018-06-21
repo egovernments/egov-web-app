@@ -69,9 +69,9 @@ class Header extends Component {
     );
 
     const onLeftIconButtonClick = isHomeScreen ? this._handleToggleMenu : hideBackButton ? null : this._handleBackNavigation;
-    //const onLeftIconButtonClick = this._handleToggleMenu;
+    const onToolBarIconClick = this._handleToggleMenu;
 
-    return { style, iconElementLeft, onLeftIconButtonClick, isHomeScreen };
+    return { style, iconElementLeft, onLeftIconButtonClick, onToolBarIconClick, isHomeScreen };
   };
 
   _handleItemClick = (item, index) => {

@@ -118,9 +118,9 @@ var Header = function (_Component) {
       );
 
       var onLeftIconButtonClick = isHomeScreen ? _this._handleToggleMenu : hideBackButton ? null : _this._handleBackNavigation;
-      //const onLeftIconButtonClick = this._handleToggleMenu;
+      var onToolBarIconClick = _this._handleToggleMenu;
 
-      return { style: style, iconElementLeft: iconElementLeft, onLeftIconButtonClick: onLeftIconButtonClick, isHomeScreen: isHomeScreen };
+      return { style: style, iconElementLeft: iconElementLeft, onLeftIconButtonClick: onLeftIconButtonClick, onToolBarIconClick: onToolBarIconClick, isHomeScreen: isHomeScreen };
     }, _this._handleItemClick = function (item, index) {
       var route = item.route;
       // close the navigation bar

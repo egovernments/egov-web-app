@@ -36,7 +36,7 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
         {...rest}
       >
         <Toolbar className="app-toolbar" style={{ padding: "0px", height: "64px", background: "#ffffff" }}>
-          <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onLeftIconButtonClick} userInfo={userInfo} />
+          <UserSettings fetchLocalizationLabel={fetchLocalizationLabel} onIconClick={rest.onToolBarIconClick} userInfo={userInfo} />
         </Toolbar>
         <div className="appbar-right-logo">
           <img src={digitLogo} />
