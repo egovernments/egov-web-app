@@ -68,6 +68,13 @@ class AllComplaints extends Component {
 
     const { onComplaintClick } = this;
     const { assignedComplaints, unassignedComplaints, employeeComplaints, role, transformedComplaints } = this.props;
+    const hintTextStyle = {
+      letterSpacing: "0.7px",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      width: "90%",
+      overflow: "hidden",
+    };
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
@@ -143,11 +150,12 @@ class AllComplaints extends Component {
                   id="complaint-no"
                   name="complaint-no"
                   value={complaintNo}
-                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" />}
+                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
                   floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                   onChange={(e, value) => this.onComplaintChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
+                  hintStyle={{ width: "100%" }}
                 />
               </div>
               <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
@@ -155,11 +163,12 @@ class AllComplaints extends Component {
                   id="mobile-no"
                   name="mobile-no"
                   value={mobileNo}
-                  hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" />}
+                  hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
                   floatingLabelText={<Label label="CORE_COMMON_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                   onChange={(e, value) => this.onMobileChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
+                  hintStyle={{ width: "100%" }}
                 />
               </div>
               <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
@@ -243,7 +252,7 @@ const mapStateToProps = (state) => {
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
-  const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
+  let transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   let assignedComplaints = [],
     unassignedComplaints = [],
     employeeComplaints = [];
@@ -265,6 +274,7 @@ const mapStateToProps = (state) => {
       ["desc"]
     );
   }
+  transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
 
   return { assignedComplaints, unassignedComplaints, employeeComplaints, role, loading, transformedComplaints };
 };
