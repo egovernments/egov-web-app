@@ -137,6 +137,7 @@ var ActionMenu = function (_Component) {
 
       var actionList = _actionList2.default && _actionList2.default[role];
       var menuItems = [];
+
       for (var i = 0; i < (actionList && actionList.length); i++) {
         if (actionList[i].path !== "") {
           if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {

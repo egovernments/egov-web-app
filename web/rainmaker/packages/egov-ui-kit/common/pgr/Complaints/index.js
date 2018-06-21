@@ -168,11 +168,15 @@ var getStatusAndChangeColor = function getStatusAndChangeColor(status, assignee)
       };
       statusObj.message = "CS_MYCOMPLAINTS_RE_ASSIGNED " + assignee;
   }
-  if (status && status.includes("OVERDUE")) {
+  console.log("I am here..........");
+  console.log(status);
+  if (status && status.includes("Overdue")) {
+    console.log("I am inside overdue..........");
+    console.log(status);
     statusObj.style = { color: "#e74c3c" };
     statusObj.message = "";
   }
-  if (status && status.includes("LEFT")) {
+  if (status && status.includes("left")) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
   }

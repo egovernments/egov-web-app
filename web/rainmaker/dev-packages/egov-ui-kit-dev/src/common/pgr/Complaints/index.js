@@ -137,11 +137,11 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = `CS_MYCOMPLAINTS_RE_ASSIGNED ${assignee}`;
   }
-  if (status && status.includes("OVERDUE")) {
+  if (status && status.includes(`Overdue`)) {
     statusObj.style = { color: "#e74c3c" };
     statusObj.message = "";
   }
-  if (status && status.includes("LEFT")) {
+  if (status && status.includes(`left`)) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
   }
