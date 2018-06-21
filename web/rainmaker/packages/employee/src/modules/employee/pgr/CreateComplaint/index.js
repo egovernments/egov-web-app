@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import AddComplaintForm from "./components/AddComplaintForm";
+import { Screen } from "modules/common";
 import "./index.css";
 
 const ComplaintFormHOC = formHoc({ formKey: "complaint" })(AddComplaintForm);
