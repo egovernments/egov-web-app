@@ -14,7 +14,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
       <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
       <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} landmark={fields.landmark} locationDetails={fields.address} />
       <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} />
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 add-complaint-button-cont btn-without-bottom-nav">
+      <div className="col-lg-8 col-md-8 add-complaint-button-cont btn-without-bottom-nav">
         <Button
           primary={true}
           fullWidth={true}
