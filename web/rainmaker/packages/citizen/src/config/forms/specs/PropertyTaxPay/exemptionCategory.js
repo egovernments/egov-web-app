@@ -13,7 +13,7 @@ const formConfig = {
         { label: "Organization (Govt.)", value: "ORGGov" },
         { label: "Organization (Private)", value: "ORGPvt" },
       ],
-      numCols: 6,
+      numcols: 6,
     },
     usage: {
       id: "usage",
@@ -27,7 +27,7 @@ const formConfig = {
         { label: "Organization (Govt.)", value: "ORGGov" },
         { label: "Organization (Private)", value: "ORGPvt" },
       ],
-      numCols: 6,
+      numcols: 6,
     },
   },
 };

@@ -13,7 +13,7 @@ const GenericForm = ({ form, handleFieldChange, formKey }) => {
               <div
                 style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
                 key={index}
-                className={fields[fieldKey].numCols ? `col-xs-${fields[fieldKey].numCols}` : `col-xs-6`}
+                className={fields[fieldKey].numcols ? `col-xs-${fields[fieldKey].numcols}` : `col-xs-6`}
               >
                 <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
                 {fields[fieldKey].toolTip && <ToolTipUi title={fields[fieldKey].toolTipMessage} />}

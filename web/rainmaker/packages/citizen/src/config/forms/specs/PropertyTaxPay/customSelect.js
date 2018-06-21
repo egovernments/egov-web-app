@@ -7,7 +7,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "",
       hintText: "Select locality",
-      numCols: 12,
+      numcols: 12,
       errorMessage: "",
     },
   },

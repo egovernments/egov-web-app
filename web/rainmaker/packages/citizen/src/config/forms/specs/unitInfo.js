@@ -9,7 +9,7 @@ const formConfig = {
       floatingLabelText: "Floor",
       hintText: "",
       dropDownData: [],
-      numCols: 4,
+      numcols: 4,
       value: "",
     },
     occupancy: {
@@ -48,7 +48,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Built Area",
       hintText: "Enter built area size",
-      numCols: 4,
+      numcols: 4,
     },
   },
   action: "",

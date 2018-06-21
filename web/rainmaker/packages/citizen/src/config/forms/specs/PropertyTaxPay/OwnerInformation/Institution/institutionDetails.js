@@ -8,7 +8,7 @@ const formConfig = {
       floatingLabelText: "Name of Institution",
       hintText: "Enter Institute's name",
       errorMessage: "Enter a valid name",
-      numCols: 6,
+      numcols: 6,
     },
     type: {
       id: "institution-type",
@@ -16,7 +16,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of Institution",
       required: true,
-      numCols: 6,
+      numcols: 6,
       hintText: "Select",
     },
     authorizedPerson: {
@@ -27,7 +27,7 @@ const formConfig = {
       hintText: "Enter name",
       errorMessage: "Enter a valid name",
       required: true,
-      numCols: 6,
+      numcols: 6,
     },
     designation: {
       id: "institution-authorized-person-designation",
@@ -37,7 +37,7 @@ const formConfig = {
       hintText: "Enter designation",
       errorMessage: "Enter a valid designation",
       required: true,
-      numCols: 6,
+      numcols: 6,
     },
   },
   action: "",

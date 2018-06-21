@@ -7,7 +7,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Plot Size",
       hintText: "Enter Plot Size",
-      numCols: 4,
+      numcols: 4,
     },
     measuringUnit: {
       id: "measuringUnit",
@@ -16,7 +16,7 @@ const formConfig = {
       floatingLabelText: "Measuring Unit",
       hintText: "",
       dropDownData: [{ label: "Sq Yards", value: "S_Yards" }, { label: "Sq Meter", value: "Sq Meter" }, { label: "Sq Feet", value: "Sq Feet" }],
-      numCols: 4,
+      numcols: 4,
       value: "sq yards",
     },
     noOfFloors: {
@@ -25,7 +25,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "No. of Floors",
       hintText: "Enter no. of floors",
-      numCols: 4,
+      numcols: 4,
     },
   },
   action: "",

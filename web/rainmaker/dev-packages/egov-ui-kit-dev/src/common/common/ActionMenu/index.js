@@ -116,6 +116,7 @@ class ActionMenu extends Component {
     let { role } = this.props;
     let actionList = actionListArr && actionListArr[role];
     let menuItems = [];
+
     for (var i = 0; i < (actionList && actionList.length); i++) {
       if (actionList[i].path !== "") {
         if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
@@ -253,6 +254,7 @@ class ActionMenu extends Component {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return (
+
                   <Link key={index} to={`/${role}/${item.navigationURL}`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}

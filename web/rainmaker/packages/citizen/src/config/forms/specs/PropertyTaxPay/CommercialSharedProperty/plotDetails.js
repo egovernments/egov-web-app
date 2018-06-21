@@ -10,8 +10,8 @@ const formConfig = {
       value: "Commercial",
       required: true,
       disabled: true,
-      numCols: 4,
-      numCols: 4,
+      numcols: 4,
+      numcols: 4,
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -20,7 +20,7 @@ const formConfig = {
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -29,7 +29,7 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       hintText: "Select",
       required: true,
-      numCols: 4,
+      numcols: 4,
 
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -61,7 +61,7 @@ const formConfig = {
       hintText: "Enter total super area",
       ErrorText: "Enter a valid super area size",
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
     superAreaUnit: {
       id: "assessment-super-area-unit",
@@ -70,7 +70,7 @@ const formConfig = {
       floatingLabelText: "Measuring unit",
       dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
       required: true,
-      numCols: 4,
+      numcols: 4,
       value: "sq yards",
     },
     annualRent: {
@@ -81,7 +81,7 @@ const formConfig = {
       hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
   },
 };
