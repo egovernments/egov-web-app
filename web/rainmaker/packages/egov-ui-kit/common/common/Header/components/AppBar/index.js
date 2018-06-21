@@ -55,7 +55,8 @@ var EgovAppBar = function EgovAppBar(_ref) {
       fetchLocalizationLabel = _ref.fetchLocalizationLabel,
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo"]);
+      onToolBarIconClick = _ref.onToolBarIconClick,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -85,7 +86,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _react2.default.createElement(
         _Toolbar2.default,
         { className: "app-toolbar", style: { padding: "0px", height: "64px", background: "#ffffff" } },
-        _react2.default.createElement(_UserSettings2.default, { fetchLocalizationLabel: fetchLocalizationLabel, onIconClick: rest.onToolBarIconClick, userInfo: userInfo })
+        _react2.default.createElement(_UserSettings2.default, { fetchLocalizationLabel: fetchLocalizationLabel, onIconClick: onToolBarIconClick, userInfo: userInfo })
       ),
       _react2.default.createElement(
         "div",

@@ -62,59 +62,64 @@ var actionList = {
   //     rightIcon: "",
   //   },
   // ],
-  citizen: [{
-    id: 1535,
-    name: "Home",
-    url: "url",
-    displayName: "Home",
-    orderNumber: 1,
-    enabled: true,
-    serviceCode: "CS",
-    code: "null",
-    path: "Home",
-    navigationURL: "/citizen",
-    leftIcon: { action: "action", name: "home" },
-    rightIcon: ""
-  }, {
-    id: 1536,
-    name: "Information",
-    url: "url",
-    displayName: "Information",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Information",
-    navigationURL: "/citizen",
-    leftIcon: { action: "action", name: "info" },
-    rightIcon: ""
-  }, {
-    id: 1537,
-    name: "Payments",
-    url: "url",
-    displayName: "Payments",
-    orderNumber: 3,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Payments",
-    navigationURL: "/citizen",
-    leftIcon: { action: "custom", name: "rupee" },
-    rightIcon: ""
-  }, {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Apply",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "mdms/PropertyTax/ConstructionSubType",
-    leftIcon: { action: "content", name: "send" },
-    rightIcon: ""
-  }],
+  // citizen: [
+  //   {
+  //     id: 1535,
+  //     name: "Home",
+  //     url: "url",
+  //     displayName: "Home",
+  //     orderNumber: 1,
+  //     enabled: true,
+  //     serviceCode: "CS",
+  //     code: "null",
+  //     path: "Home",
+  //     navigationURL: "all-complaints",
+  //     leftIcon: { action: "action", name: "home" },
+  //     rightIcon: "",
+  //   },
+  //   {
+  //     id: 1536,
+  //     name: "Information",
+  //     url: "url",
+  //     displayName: "Information",
+  //     orderNumber: 2,
+  //     enabled: true,
+  //     serviceCode: "PT",
+  //     code: "null",
+  //     path: "Information",
+  //     navigationURL: "all-complaints",
+  //     leftIcon: { action: "action", name: "info" },
+  //     rightIcon: "",
+  //   },
+  //   {
+  //     id: 1537,
+  //     name: "Payments",
+  //     url: "url",
+  //     displayName: "Payments",
+  //     orderNumber: 3,
+  //     enabled: true,
+  //     serviceCode: "PT",
+  //     code: "null",
+  //     path: "Payments",
+  //     navigationURL: "all-complaints",
+  //     leftIcon: { action: "custom", name: "rupee" },
+  //     rightIcon: "",
+  //   },
+  //   {
+  //     id: 1538,
+  //     name: "ConstructionSubType",
+  //     url: "url",
+  //     displayName: "Apply",
+  //     orderNumber: 4,
+  //     enabled: true,
+  //     serviceCode: "PT",
+  //     code: "null",
+  //     path: "Apply",
+  //     navigationURL: "all-complaints",
+  //     leftIcon: { action: "content", name: "send" },
+  //     rightIcon: "",
+  //   },
+  // ],
   employee: [{
     id: 1535,
     name: "PropertyType",
@@ -125,7 +130,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Home",
-    navigationURL: "property-tax",
+    navigationURL: "all-complaints",
     leftIcon: { action: "action", name: "home" },
     rightIcon: ""
   }, {
@@ -138,7 +143,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Information",
-    navigationURL: "mdms/PropertyTax/PropertySubType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "action", name: "info" },
     rightIcon: ""
   }, {
@@ -151,7 +156,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Payments",
-    navigationURL: "mdms/PropertyTax/ConstructionType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "custom", name: "rupee" },
     rightIcon: ""
   }, {
@@ -164,7 +169,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Apply",
-    navigationURL: "mdms/PropertyTax/ConstructionSubType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "content", name: "send" },
     rightIcon: ""
   }],
@@ -178,7 +183,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Home",
-    navigationURL: "property-tax",
+    navigationURL: "all-complaints",
     leftIcon: { action: "action", name: "home" },
     rightIcon: ""
   }, {
@@ -191,7 +196,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Information",
-    navigationURL: "mdms/PropertyTax/PropertySubType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "action", name: "info" },
     rightIcon: ""
   }, {
@@ -204,7 +209,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Payments",
-    navigationURL: "mdms/PropertyTax/ConstructionType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "custom", name: "rupee" },
     rightIcon: ""
   }, {
@@ -217,7 +222,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "Apply",
-    navigationURL: "mdms/PropertyTax/ConstructionSubType",
+    navigationURL: "all-complaints",
     leftIcon: { action: "content", name: "send" },
     rightIcon: ""
   }]

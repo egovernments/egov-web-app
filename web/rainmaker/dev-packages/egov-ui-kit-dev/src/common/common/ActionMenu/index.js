@@ -114,9 +114,9 @@ class ActionMenu extends Component {
   menuChange = (pathParam) => {
     let path = pathParam.path;
     let { role } = this.props;
-    let actionList = actionListArr[role];
+    let actionList = actionListArr && actionListArr[role];
     let menuItems = [];
-    for (var i = 0; i < actionList && actionList.length; i++) {
+    for (var i = 0; i < (actionList && actionList.length); i++) {
       if (actionList[i].path !== "") {
         if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
           let splitArray = actionList[i].path.split(path + ".")[1].split(".");
@@ -140,7 +140,8 @@ class ActionMenu extends Component {
       };
       this.menuChange(pathParam);
 
-      setRoute("/citizen/property-tax");
+      //setRoute("/citizen/property-tax");
+      setRoute("/employee/all-complaints");
     } else {
       let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
@@ -216,7 +217,7 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
-                <Link key={index} to={`/citizen/${item.navigationURL}`}>
+                <Link key={index} to={`/${role}/${item.navigationURL}`}>
                   <MenuItem
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
@@ -252,7 +253,7 @@ class ActionMenu extends Component {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return (
-                  <Link key={index} to={`/citizen/${item.navigationURL}`}>
+                  <Link key={index} to={`/${role}/${item.navigationURL}`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
                       style={{ whiteSpace: "initial" }}
