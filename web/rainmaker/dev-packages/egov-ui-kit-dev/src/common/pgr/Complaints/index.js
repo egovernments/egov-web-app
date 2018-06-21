@@ -100,9 +100,9 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = (
         <div>
-          <Label label={`Complaint `} />
+          <Label label={"CS_COMMON_COMPLAINT"} />
           <Label className="complaint-status-reassigned" label={`CS_COMMON_RE_ASSIGNED`} />
-          <Label label={` to `} />
+          <Label label={"CS_MYCOMPLAINTS_TO"} />
           <Label className="complaint-assignee" label={`${assignee}`} />
         </div>
       );
@@ -113,9 +113,9 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = (
         <div>
-          <Label label={`Complaint `} />
+          <Label label={"CS_COMMON_COMPLAINT"} />
           <Label className="complaint-status-resolved" label="CS_COMMON_RESOLVED" />
-          <Label label={`. Please rate`} />
+          <Label label={"CS_MYCOMPLAINTS_RATE"} />
         </div>
       );
       break;
@@ -125,9 +125,9 @@ const getStatusAndChangeColor = (status, assignee) => {
       };
       statusObj.message = (
         <div>
-          <Label label={`Complaint has been `} />
+          <Label label={"CS_MYCOMPLAINTS_COMPLAINT_PREFIX"} />
           <Label className="complaint-status-rejected" label={`CS_COMMON_REJECTED`} />
-          <Label label={`. Please rate`} />
+          <Label label={"CS_MYCOMPLAINTS_RATE"} />
         </div>
       );
       break;
@@ -135,20 +135,20 @@ const getStatusAndChangeColor = (status, assignee) => {
       statusObj.style = {
         color: "#484848",
       };
-      statusObj.message = `Complaint Re-assigned to ${assignee}`;
+      statusObj.message = `CS_MYCOMPLAINTS_RE_ASSIGNED ${assignee}`;
   }
-  if (status && status.includes("Overdue")) {
+  if (status && status.includes("OVERDUE")) {
     statusObj.style = { color: "#e74c3c" };
     statusObj.message = "";
   }
-  if (status && status.includes("left")) {
+  if (status && status.includes("LEFT")) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
   }
   return statusObj;
 };
 
-const Complaints = ({ index, complaints, onClick, complaintLocation, track, role, onComplaintClick, noComplaintMessage }) => {
+const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noComplaintMessage }) => {
   return complaints.length === 0 ? (
     <div className="no-complaints-message-cont">
       <Label label={noComplaintMessage} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />

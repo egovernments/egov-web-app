@@ -116,7 +116,7 @@ class ActionMenu extends Component {
     let { role } = this.props;
     let actionList = actionListArr[role];
     let menuItems = [];
-    for (var i = 0; i < actionList.length; i++) {
+    for (var i = 0; i < actionList && actionList.length; i++) {
       if (actionList[i].path !== "") {
         if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
           let splitArray = actionList[i].path.split(path + ".")[1].split(".");
@@ -246,38 +246,41 @@ class ActionMenu extends Component {
           }
         });
       } else {
-        return actionList.map((item, index) => {
-          if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
-            if (item.navigationURL) {
-              return (
-                <Link key={index} to={`/citizen/${item.navigationURL}`}>
-                  <MenuItem
-                    innerDivStyle={styles.defaultMenuItemStyle}
-                    style={{ whiteSpace: "initial" }}
-                    onClick={() => {
-                      document.title = item.displayName;
-                    }}
-                    leftIcon={
-                      <Icon
-                        name={item.leftIcon.name}
-                        action={item.leftIcon.action}
-                        color="#b3b3b3"
-                        style={styles.fibreIconStyle}
-                        className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
-                      />
-                    }
-                    primaryText={
-                      <div className="menuStyle whiteColor" style={styles.menuStyle}>
-                        <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
-                        <span style={{ color: "#b3b3b3" }}>{item.displayName || ""}</span>
-                      </div>
-                    }
-                  />
-                </Link>
-              );
+        return (
+          actionList &&
+          actionList.map((item, index) => {
+            if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+              if (item.navigationURL) {
+                return (
+                  <Link key={index} to={`/citizen/${item.navigationURL}`}>
+                    <MenuItem
+                      innerDivStyle={styles.defaultMenuItemStyle}
+                      style={{ whiteSpace: "initial" }}
+                      onClick={() => {
+                        document.title = item.displayName;
+                      }}
+                      leftIcon={
+                        <Icon
+                          name={item.leftIcon.name}
+                          action={item.leftIcon.action}
+                          color="#b3b3b3"
+                          style={styles.fibreIconStyle}
+                          className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
+                        />
+                      }
+                      primaryText={
+                        <div className="menuStyle whiteColor" style={styles.menuStyle}>
+                          <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
+                          <span style={{ color: "#b3b3b3" }}>{item.displayName || ""}</span>
+                        </div>
+                      }
+                    />
+                  </Link>
+                );
+              }
             }
-          }
-        });
+          })
+        );
       }
     };
 

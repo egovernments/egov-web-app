@@ -4,9 +4,9 @@ const formConfig = {
     comment: {
       id: "citizen-comment",
       jsonPath: "actionInfo[0].comments",
-      hintText: "Write your comments",
+      hintText: "CS_COMMON_COMMENTS_PLACEHOLDER2",
       value: "",
-      required:true
+      required: true,
     },
   },
   saveUrl: "/rainmaker-pgr/v1/requests/_update",

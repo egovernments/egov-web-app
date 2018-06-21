@@ -90,7 +90,7 @@ class AllComplaints extends Component {
               <Screen loading={loading}>
                 <div className="tab1-content">
                   <Complaints
-                    noComplaintMessage={"No complaints to Assign"}
+                    noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}
                     onComplaintClick={onComplaintClick}
                     complaints={unassignedComplaints}
                     complaintLocation={true}
@@ -117,7 +117,7 @@ class AllComplaints extends Component {
               <Screen loading={loading}>
                 <div className="tab2-content">
                   <Complaints
-                    noComplaintMessage={"No assigned complaints"}
+                    noComplaintMessage={"ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"}
                     onComplaintClick={onComplaintClick}
                     complaints={assignedComplaints}
                     complaintLocation={true}
@@ -144,8 +144,8 @@ class AllComplaints extends Component {
                   id="complaint-no"
                   name="complaint-no"
                   value={complaintNo}
-                  hintText="Enter Complaint No"
-                  floatingLabelText="Complaint No."
+                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" />}
+                  floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                   onChange={(e, value) => this.onComplaintChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
@@ -156,8 +156,8 @@ class AllComplaints extends Component {
                   id="mobile-no"
                   name="mobile-no"
                   value={mobileNo}
-                  hintText="Enter Complainant Mobile No"
-                  floatingLabelText="Complainant Mobile No."
+                  hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" />}
+                  floatingLabelText={<Label label="CORE_COMMON_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                   onChange={(e, value) => this.onMobileChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
@@ -165,7 +165,7 @@ class AllComplaints extends Component {
               </div>
               <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
                 <Button
-                  label={"SEARCH"}
+                  label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
                   style={{ marginRight: 45, width: "36%" }}
                   backgroundColor="#fe7a51"
                   labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
@@ -173,7 +173,7 @@ class AllComplaints extends Component {
                   onClick={() => this.onSearch()}
                 />
                 <Button
-                  label={"CLEAR SEARCH"}
+                  label={<Label buttonLabel={true} color="#fe7a51" label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON" />}
                   labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
                   buttonStyle={{ border: "1px solid #fe7a51" }}
                   style={{ width: "36%" }}
@@ -184,7 +184,7 @@ class AllComplaints extends Component {
           }
         />
         <Complaints
-          noComplaintMessage={"No complaints assigned to you !!"}
+          noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
           onComplaintClick={onComplaintClick}
           complaints={transformedComplaints}
           role={role}
@@ -206,7 +206,7 @@ class AllComplaints extends Component {
     ) : (
       <Screen loading={loading}>
         <Complaints
-          noComplaintMessage={"No complaints assigned to you !!"}
+          noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
           onComplaintClick={onComplaintClick}
           complaints={employeeComplaints}
           role={role}
@@ -218,13 +218,13 @@ class AllComplaints extends Component {
 }
 
 const roleFromUserInfo = (roles = [], role) => {
-  const roleCodes = roles.map((role, index) => {
+  const roleCodes = roles.map((role) => {
     return role.code;
   });
   return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
 };
 
-const displayStatus = (status = "", assignee) => {
+const displayStatus = (status = "") => {
   let statusObj = {};
   if (status.includes("Overdue")) {
     statusObj.status = status; //Replace by localisation label
