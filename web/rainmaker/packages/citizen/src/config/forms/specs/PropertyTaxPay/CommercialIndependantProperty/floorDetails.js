@@ -10,7 +10,7 @@ const formConfig = {
       value: "Commercial",
       required: true,
       disabled: true,
-      numCols: 4,
+      numcols: 4,
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -40,7 +40,7 @@ const formConfig = {
         dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
       },
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -49,7 +49,7 @@ const formConfig = {
       floatingLabelText: "Occupancy",
       hintText: "Select",
       required: true,
-      numCols: 4,
+      numcols: 4,
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
@@ -80,7 +80,7 @@ const formConfig = {
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
     annualRent: {
       id: "assessment-annual-rent",
@@ -90,7 +90,7 @@ const formConfig = {
       hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
       required: true,
-      numCols: 4,
+      numcols: 4,
     },
   },
 };

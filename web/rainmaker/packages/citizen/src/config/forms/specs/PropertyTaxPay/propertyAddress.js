@@ -74,7 +74,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "City",
       hintText: "",
-      numCols: 12,
+      numcols: 12,
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
@@ -109,7 +109,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "House No.",
       hintText: "Enter Enter No.",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
     },
     colony: {
@@ -121,7 +121,7 @@ const formConfig = {
       floatingLabelText: "Building/Colony Name",
       toolTipMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
       hintText: "Enter buiding/colony name",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
     },
     street: {
@@ -130,7 +130,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Street Name",
       hintText: "Enter street name",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
     },
     mohalla: {
@@ -139,7 +139,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Locality/Mohalla",
       hintText: "Select locality",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
     },
     pincode: {
@@ -148,7 +148,7 @@ const formConfig = {
       jsonPath: "",
       floatingLabelText: "Pincode",
       hintText: "Enter area pincode",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
     },
     oldPID: {
@@ -157,7 +157,7 @@ const formConfig = {
       jsonPath: "",
       floatingLabelText: "Old Property ID (If applicable)",
       hintText: "Enter old propert ID",
-      numCols: 6,
+      numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
     },
   },

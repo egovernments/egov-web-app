@@ -10,7 +10,7 @@ import "./index.css";
 import MDMSFormUI from "./MDMSForm";
 import MDMSTableUI from "./MDMSTable";
 
-const MDMSForm = ({ handleFieldChange, form, handleClose, onDialogAddClick }) => {
+const MDMSForm = ({ handleFieldChange, form, handleClose }) => {
   const { fields, submit } = form || {};
   return (
     <div>
@@ -169,8 +169,8 @@ class MDMS extends Component {
   };
 
   render() {
-    const { genericFormHoc, transformData } = this;
-    const { data, defaultPageSize, columns, edit } = this.state;
+    const { transformData } = this;
+    const { defaultPageSize, edit } = this.state;
     const { header, rowData, masterName } = this.props;
     // not a good idea to prepare a hoc in render method
     const MDMSFormHOC = formHoc({ formKey: `MDMS_${masterName}`, edit })(MDMSForm);

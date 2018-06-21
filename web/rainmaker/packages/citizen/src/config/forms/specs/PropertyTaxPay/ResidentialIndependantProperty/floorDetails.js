@@ -16,7 +16,7 @@ const formConfig = {
       floatingLabelText: "Usage Type",
       value: "Residential",
       required: true,
-      numCols: 4,
+      numcols: 4,
       disabled: true,
     },
     subUsageType: {
@@ -25,7 +25,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
-      numCols: 4,
+      numcols: 4,
       required: true,
     },
     occupancy: {
@@ -34,7 +34,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Occupancy",
       value: "SELFOCCUPIED",
-      numCols: 4,
+      numcols: 4,
       required: true,
 
       dataFetchConfig: {
@@ -66,7 +66,7 @@ const formConfig = {
       //
       hintText: "Enter built area size",
       ErrorText: "Enter a valid built area size",
-      numCols: 4,
+      numcols: 4,
       required: true,
     },
   },
