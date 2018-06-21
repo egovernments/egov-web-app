@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "components";
-import { Question } from "modules/common";
-import { TextArea } from "modules/common";
+// import { Question } from "modules/common";
+// import { TextArea } from "modules/common";
+import Question from "../Question";
+import TextArea from "../TextArea";
 import { ImageUpload } from "modules/common";
 
 const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {

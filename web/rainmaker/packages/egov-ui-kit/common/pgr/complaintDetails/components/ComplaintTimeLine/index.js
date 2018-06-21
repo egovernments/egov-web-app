@@ -345,7 +345,7 @@ var StatusContent = function StatusContent(_ref2) {
           {
             className: "complaint-details-timline-button",
             onClick: function onClick(e) {
-              changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo));
+              role === "citizen" ? changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/employee/reopen-complaint/" + encodeURIComponent(complaintNo));
             }
           },
           _react2.default.createElement(_translationNode2.default, {
@@ -414,6 +414,7 @@ var StatusContent = function StatusContent(_ref2) {
           })
         ),
         _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", containerStyle: { width: "192px" }, label: comments }),
+        console.log(currentStatus, role),
         currentStatus === "resolved" && (role === "citizen" || role === "csr") && resolveStatusCount === 1 && _react2.default.createElement(
           "div",
           { className: "rainmaker-displayInline" },
@@ -437,7 +438,7 @@ var StatusContent = function StatusContent(_ref2) {
             {
               className: "complaint-details-timline-button",
               onClick: function onClick(e) {
-                changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo));
+                role === "citizen" ? changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/employee/reopen-complaint/" + encodeURIComponent(complaintNo));
               }
             },
             _react2.default.createElement(_translationNode2.default, {

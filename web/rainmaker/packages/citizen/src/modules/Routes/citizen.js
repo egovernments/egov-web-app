@@ -18,11 +18,11 @@ import ComplaintDetails from "modules/citizen/pgr/ComplaintDetails";
 import ComplaintSubmited from "modules/citizen/pgr/ComplaintSubmited";
 import { TrackLocation } from "modules/common";
 import Feedback from "modules/citizen/pgr/Feedback";
-import ReOpenComplaint from "modules/citizen/pgr/ReOpenComplaint";
+import { ReOpenComplaint } from "modules/common";
 import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
-import ReopenAcknowledgement from "modules/citizen/pgr/ReopenAcknowledgement";
+import { ReopenAcknowledgement } from "modules/common";
 
 //property tax
 import PTHome from "modules/citizen/PropertyTax/PTHome";

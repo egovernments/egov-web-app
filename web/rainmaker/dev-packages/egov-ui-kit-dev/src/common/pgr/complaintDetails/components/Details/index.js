@@ -57,7 +57,6 @@ class Details extends Component {
       }
     }
     const titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
-    console.log(complaint);
 
     return (
       <div>

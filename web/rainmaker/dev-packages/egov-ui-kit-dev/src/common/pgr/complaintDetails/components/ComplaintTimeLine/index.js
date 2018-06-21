@@ -341,7 +341,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               <div
                 className="complaint-details-timline-button"
                 onClick={(e) => {
-                  changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                  role === "citizen"
+                    ? changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                    : changeRoute.push(`/employee/reopen-complaint/${encodeURIComponent(complaintNo)}`);
                 }}
               >
                 <Label
@@ -412,6 +414,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
 
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" containerStyle={{ width: "192px" }} label={comments} />
+          {console.log(currentStatus, role)}
           {currentStatus === "resolved" &&
             (role === "citizen" || role === "csr") &&
             resolveStatusCount === 1 && (
@@ -432,7 +435,9 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 <div
                   className="complaint-details-timline-button"
                   onClick={(e) => {
-                    changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                    role === "citizen"
+                      ? changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                      : changeRoute.push(`/employee/reopen-complaint/${encodeURIComponent(complaintNo)}`);
                   }}
                 >
                   <Label

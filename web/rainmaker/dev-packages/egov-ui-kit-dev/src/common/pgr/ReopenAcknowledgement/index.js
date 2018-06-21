@@ -5,6 +5,9 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const ReopenAcknowledgement = ({ history }) => {
+  const userInfo = localStorage.getItem("user-info");
+  const role = (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
+
   return (
     <div className="reopen-success-container">
       <div className="success-message-main-screen">
@@ -13,7 +16,7 @@ const ReopenAcknowledgement = ({ history }) => {
       <div className="btn-without-bottom-nav">
         <Button
           id="success-message-acknowledgement"
-          onClick={() => history.push("/citizen")}
+          onClick={() => (role === "citizen" ? history.push("/citizen") : history.push("/employee/all-complaints"))}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
           fullWidth={true}

@@ -115,7 +115,6 @@ var Details = function (_Component) {
         }
       }
       var titleKey = complaint && "SERVICEDEFS." + complaint.toUpperCase();
-      console.log(complaint);
 
       return _react2.default.createElement(
         "div",

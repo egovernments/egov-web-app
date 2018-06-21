@@ -5,6 +5,8 @@ import ChangePassword from "modules/employee/User/ChangePassword";
 import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
+import { ReOpenComplaint } from "modules/common";
+import { ReopenAcknowledgement } from "modules/common";
 
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
@@ -254,6 +256,26 @@ const routes = [
     component: TrackLocation,
     needsAuthentication: true,
     options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" },
+  },
+  {
+    path: "reopen-complaint/:serviceRequestId?",
+    component: ReOpenComplaint,
+    needsAuthentication: true,
+    options: {
+      title: "CS_HEADER_REOPEN_COMPLAINT",
+      titleBackground: true, // Use this if you need white background for title in web version
+    },
+  },
+  {
+    path: "reopen-acknowledgement",
+    component: ReopenAcknowledgement,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "CS_COMMON_COMPLAINT_REOPENED",
+      hideTitle: true,
+    },
   },
 ];
 
