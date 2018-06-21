@@ -53,7 +53,7 @@ var getStyles = function getStyles(iconPosition, textFieldProps) {
   inputStyle["width"] = iconPosition === "after" ? "90%" : "100%";
 
   if (textFieldProps.floatingLabelText) {
-    iconStyle.top = 30;
+    iconStyle.top = 24;
   }
 
   return {
