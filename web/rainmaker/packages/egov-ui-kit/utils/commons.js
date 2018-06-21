@@ -494,7 +494,7 @@ var returnSLAStatus = (exports.returnSLAStatus = function returnSLAStatus(
   } else {
     return Math.abs(daysCount) === 1
       ? Math.abs(daysCount) + "CS_COMMON_DAY_LEFT"
-      : Math.abs(daysCount) + "CS_COMMON_DAYS_LEFT";
+      : Math.abs(daysCount) + "CS_COMMON_DAYS_LEFT"
   }
 });
 

@@ -16,6 +16,7 @@ const LocationDetails = ({ formKey, locationDetails, handleFieldChange, history 
           onIconClick={onIconClick}
           iconPosition="after"
           Icon={TrackIcon}
+          iconStyle={{ marginTop: "9px" }}
           name="location-details"
           onChange={(e, value) => handleFieldChange("address", value)}
         />

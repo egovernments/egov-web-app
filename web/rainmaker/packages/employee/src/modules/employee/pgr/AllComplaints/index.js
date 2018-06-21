@@ -17,7 +17,7 @@ class AllComplaints extends Component {
     complaints: [],
   };
   componentDidMount() {
-    let { fetchComplaints } = this.props;
+    let { fetchComplaints, role } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
     // fetchComplaints();
   }

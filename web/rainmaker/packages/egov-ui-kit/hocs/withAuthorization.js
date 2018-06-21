@@ -94,33 +94,39 @@ var withAuthorization = function withAuthorization() {
             _react2.default.createElement(
               "div",
               { className: " col-xs-12", style: { padding: 0 } },
-              _react2.default.createElement(
+              role !== "citizen" && _react2.default.createElement(
                 "div",
-                { className: "col-xs-2 action-menu-drawer show-action-menu" },
+                null,
                 _react2.default.createElement(
                   "div",
-                  { className: "rainmaker-action-menu" },
-                  _react2.default.createElement(_common.ActionMenu, { role: role })
-                )
+                  { className: "col-xs-2 action-menu-drawer show-action-menu" },
+                  _react2.default.createElement(
+                    "div",
+                    { className: "rainmaker-action-menu" },
+                    _react2.default.createElement(_common.ActionMenu, { role: role })
+                  )
+                ),
+                _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
+                " "
               ),
-              _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
-              " ",
               _react2.default.createElement(
                 "div",
-                { className: "col-xs-12 col-sm-10", style: { padding: 0 } },
+                { className: role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12", style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,
-                  !hideTitle && _react2.default.createElement(_translationNode2.default, { className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label", label: title }),
+                  !hideTitle && _react2.default.createElement(_translationNode2.default, {
+                    className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                    label: title,
+                    containerStyle: { padding: "24px 0 8px 17px" },
+                    dark: true,
+                    bold: true,
+                    fontSize: 20
+                  }),
                   _react2.default.createElement(Component, this.props)
                 ) : null
               )
-            ),
-            !hideFooter && authenticated ? _react2.default.createElement(
-              "div",
-              { className: "hidden-md hidden-sm hidden-lg" },
-              _react2.default.createElement(_common.Footer, { history: history, role: role })
-            ) : null
+            )
           );
         }
       }]);

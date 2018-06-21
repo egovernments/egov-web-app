@@ -135,9 +135,9 @@ var ActionMenu = function (_Component) {
       var path = pathParam.path;
       var role = _this.props.role;
 
-      var actionList = _actionList2.default[role];
+      var actionList = _actionList2.default && _actionList2.default[role];
       var menuItems = [];
-      for (var i = 0; i < actionList.length; i++) {
+      for (var i = 0; i < (actionList && actionList.length); i++) {
         if (actionList[i].path !== "") {
           if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
             var splitArray = actionList[i].path.split(path + ".")[1].split(".");
@@ -162,7 +162,8 @@ var ActionMenu = function (_Component) {
         };
         _this.menuChange(pathParam);
 
-        setRoute("/citizen/property-tax");
+        //setRoute("/citizen/property-tax");
+        setRoute("/employee/all-complaints");
       } else {
         var splitArray = (0, _lodash.split)(path, ".");
         var x = splitArray.slice(0, splitArray.length - 1).join(".");
@@ -237,7 +238,7 @@ var ActionMenu = function (_Component) {
           menuChange = this.menuChange,
           changeRoute = this.changeRoute;
 
-      var actionList = _actionList2.default[role];
+      var actionList = _actionList2.default && _actionList2.default[role];
 
       var showMenuItem = function showMenuItem() {
         if (searchText.length == 0) {
@@ -287,7 +288,7 @@ var ActionMenu = function (_Component) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/citizen/" + item.navigationURL },
+                  { key: index, to: "/" + role + "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },
@@ -322,12 +323,12 @@ var ActionMenu = function (_Component) {
             }
           });
         } else {
-          return actionList.map(function (item, index) {
+          return actionList && actionList.map(function (item, index) {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/citizen/" + item.navigationURL },
+                  { key: index, to: "/" + role + "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },
@@ -363,7 +364,7 @@ var ActionMenu = function (_Component) {
         }
       };
 
-      return _react2.default.createElement(
+      return actionList ? _react2.default.createElement(
         "div",
         { ref: this.setWrapperRef },
         _react2.default.createElement("div", { className: "whiteColor", style: { marginTop: "22px" } }),
@@ -404,7 +405,7 @@ var ActionMenu = function (_Component) {
             showMenuItem()
           )
         )
-      );
+      ) : null;
     }
   }]);
   return ActionMenu;

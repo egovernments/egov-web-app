@@ -132,9 +132,9 @@ var getStatusAndChangeColor = function getStatusAndChangeColor(status, assignee)
       statusObj.message = _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(_translationNode2.default, { label: "Complaint " }),
+        _react2.default.createElement(_translationNode2.default, { label: "CS_COMMON_COMPLAINT" }),
         _react2.default.createElement(_translationNode2.default, { className: "complaint-status-reassigned", label: "CS_COMMON_RE_ASSIGNED" }),
-        _react2.default.createElement(_translationNode2.default, { label: " to " }),
+        _react2.default.createElement(_translationNode2.default, { label: "CS_MYCOMPLAINTS_TO" }),
         _react2.default.createElement(_translationNode2.default, { className: "complaint-assignee", label: "" + assignee })
       );
       break;
@@ -145,9 +145,9 @@ var getStatusAndChangeColor = function getStatusAndChangeColor(status, assignee)
       statusObj.message = _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(_translationNode2.default, { label: "Complaint " }),
+        _react2.default.createElement(_translationNode2.default, { label: "CS_COMMON_COMPLAINT" }),
         _react2.default.createElement(_translationNode2.default, { className: "complaint-status-resolved", label: "CS_COMMON_RESOLVED" }),
-        _react2.default.createElement(_translationNode2.default, { label: ". Please rate" })
+        _react2.default.createElement(_translationNode2.default, { label: "CS_MYCOMPLAINTS_RATE" })
       );
       break;
     case "CS_COMMON_REJECTED_UCASE":
@@ -157,22 +157,22 @@ var getStatusAndChangeColor = function getStatusAndChangeColor(status, assignee)
       statusObj.message = _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(_translationNode2.default, { label: "Complaint has been " }),
+        _react2.default.createElement(_translationNode2.default, { label: "CS_MYCOMPLAINTS_COMPLAINT_PREFIX" }),
         _react2.default.createElement(_translationNode2.default, { className: "complaint-status-rejected", label: "CS_COMMON_REJECTED" }),
-        _react2.default.createElement(_translationNode2.default, { label: ". Please rate" })
+        _react2.default.createElement(_translationNode2.default, { label: "CS_MYCOMPLAINTS_RATE" })
       );
       break;
     default:
       statusObj.style = {
         color: "#484848"
       };
-      statusObj.message = "Complaint Re-assigned to " + assignee;
+      statusObj.message = "CS_MYCOMPLAINTS_RE_ASSIGNED " + assignee;
   }
-  if (status && status.includes("Overdue")) {
+  if (status && status.includes("OVERDUE")) {
     statusObj.style = { color: "#e74c3c" };
     statusObj.message = "";
   }
-  if (status && status.includes("left")) {
+  if (status && status.includes("LEFT")) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
   }
@@ -180,11 +180,8 @@ var getStatusAndChangeColor = function getStatusAndChangeColor(status, assignee)
 };
 
 var Complaints = function Complaints(_ref) {
-  var index = _ref.index,
-      complaints = _ref.complaints,
-      onClick = _ref.onClick,
+  var complaints = _ref.complaints,
       complaintLocation = _ref.complaintLocation,
-      track = _ref.track,
       role = _ref.role,
       onComplaintClick = _ref.onComplaintClick,
       noComplaintMessage = _ref.noComplaintMessage;

@@ -17,6 +17,7 @@ const formConfig = {
       errormessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
       numcols: 6,
+
     },
     complaintType: {
       id: "complaint-type",

@@ -144,7 +144,8 @@ body.employee-user-profile {
 }
 .btn-with-bottom-nav {
   position: fixed !important;
-  bottom: 56px;
+  //bottom: 56px; use this value if bottom navigation is included in future design
+  bottom: 0px;
   left: 0;
   width: 100%;
   padding: 0px !important;
@@ -239,14 +240,6 @@ body.employee-user-profile {
   .screen-title-label {
     display: none;
   }
-}
-.screen-title-label .label-text {
-  font-size: 20px !important;
-  font-weight: 400;
-  color: #484848;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 24px 17px 5px;
 }
 
 .title-white-background {

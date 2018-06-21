@@ -12,7 +12,7 @@
 
 .create-complaint-main-cont {
   position: relative;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 140px);
   padding-bottom: 90px;
 }
 
@@ -24,5 +24,26 @@
 
 .csr-create-comp-main-screen {
   padding-bottom: 0 !important;
-  max-height: calc(100vh - 64px);
+  max-height: calc(100vh - 140px);
+}
+
+.create-comp-csr-form-cont {
+  padding: 0 8px;
+}
+
+@media only screen and (min-width: 768px) {
+  .create-comp-csr-cont {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 16px 16px;
+  }
+
+  .create-complaint-submit-button {
+    width: 230px !important;
+    min-width: inherit !important;
+  }
 }
