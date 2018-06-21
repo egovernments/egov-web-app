@@ -340,7 +340,7 @@ var StatusContent = function StatusContent(_ref2) {
           containerStyle: { width: "192px" },
           label: comments && comments.split(";")[1] ? "\" " + comments.split(";")[1] + " \"" : ""
         }),
-        currentStatus === "rejected" && role === "citizen" && rejectStatusCount === 1 && _react2.default.createElement(
+        currentStatus === "rejected" && (role === "citizen" || role === "csr") && rejectStatusCount === 1 && _react2.default.createElement(
           "div",
           {
             className: "complaint-details-timline-button",
