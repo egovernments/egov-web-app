@@ -289,7 +289,7 @@ var ActionMenu = function (_Component) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/" + role + "/" + item.navigationURL },
+                  { key: index, to: "/employee/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },

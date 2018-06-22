@@ -37,7 +37,7 @@ var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
     ),
     _react2.default.createElement(
       "div",
-      { className: "btn-without-bottom-nav" },
+      { className: "responsive-action-button-cont" },
       _react2.default.createElement(_components.Button, {
         id: "success-message-acknowledgement",
         onClick: function onClick() {
@@ -45,7 +45,8 @@ var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
         },
         primary: true,
         label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CORE_COMMON_GOTOHOME" }),
-        fullWidth: true
+        fullWidth: true,
+        className: "responsive-action-button"
       })
     )
   );

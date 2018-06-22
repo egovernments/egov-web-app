@@ -13,13 +13,14 @@ const ReopenAcknowledgement = ({ history, userInfo }) => {
       <div className="success-message-main-screen">
         <SuccessMessage successmessage="CS_REOPEN_SUCCESS_MESSAGE" icon={<Icon action="navigation" name="check" />} backgroundColor={"#22b25f"} />
       </div>
-      <div className="btn-without-bottom-nav">
+      <div className="responsive-action-button-cont">
         <Button
           id="success-message-acknowledgement"
           onClick={() => (role === "citizen" ? history.push("/citizen") : history.push("/employee/all-complaints"))}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
           fullWidth={true}
+          className="responsive-action-button"
         />
       </div>
     </div>

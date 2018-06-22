@@ -218,7 +218,7 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
-                <Link key={index} to={`/${role}/${item.navigationURL}`}>
+                <Link key={index} to={`/employee/${item.navigationURL}`}>
                   <MenuItem
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
@@ -254,7 +254,6 @@ class ActionMenu extends Component {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return (
-
                   <Link key={index} to={`/${role}/${item.navigationURL}`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
