@@ -73,7 +73,7 @@ const routes = [
     path: "",
     component: Home,
     needsAuthentication: true,
-    options: { isHomeScreen: true },
+    options: { isHomeScreen: true, title: "Home", hideTitle: true },
   },
 
   {
@@ -122,7 +122,7 @@ const routes = [
     path: "map",
     component: TrackLocation,
     needsAuthentication: true,
-    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" },
+    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION", hideTitle: true },
   },
   // {
   //   path: "complaint-submitted",
