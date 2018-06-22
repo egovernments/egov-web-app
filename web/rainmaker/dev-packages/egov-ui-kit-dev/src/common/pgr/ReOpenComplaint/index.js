@@ -58,7 +58,7 @@ class ReOpenComplaint extends Component {
     const { handleCommentChange, handleOptionsChange } = this;
     const { valueSelected, commentValue } = this.state;
     return (
-      <Screen className="reopencomplaint-field">
+      <Screen className="background-white">
         <ReopenComplaintFormHOC
           options={this.options}
           ontextAreaChange={handleCommentChange}

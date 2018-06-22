@@ -42,23 +42,27 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
     null,
     _react2.default.createElement(
       "div",
-      { className: "reopencomplaint-question" },
-      _react2.default.createElement(_Question2.default, { options: options, label: "CS_REOPEN_COMPLAINT_WHY", handleChange: handleOptionChange, valueSelected: optionSelected })
+      { className: "form-without-button-cont-generic" },
+      _react2.default.createElement(
+        "div",
+        { className: "reopencomplaint-question" },
+        _react2.default.createElement(_Question2.default, { options: options, label: "CS_REOPEN_COMPLAINT_WHY", handleChange: handleOptionChange, valueSelected: optionSelected })
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "reopencomplaint-upload-photo" },
+        _react2.default.createElement(_common.ImageUpload, { module: "rainmaker-pgr", formKey: formKey, fieldKey: "media" })
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "reopencomplaint-textArea" },
+        _react2.default.createElement(_TextArea2.default, (0, _extends3.default)({ onChange: ontextAreaChange, value: commentValue }, fields.textarea))
+      )
     ),
     _react2.default.createElement(
       "div",
-      { className: "reopencomplaint-upload-photo" },
-      _react2.default.createElement(_common.ImageUpload, { module: "rainmaker-pgr", formKey: formKey, fieldKey: "media" })
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "reopencomplaint-textArea" },
-      _react2.default.createElement(_TextArea2.default, (0, _extends3.default)({ onChange: ontextAreaChange, value: commentValue }, fields.textarea))
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "col-lg-8 col-md-8 btn-with-bottom-nav" },
-      _react2.default.createElement(_components.Button, (0, _extends3.default)({}, submit, { primary: true, fullWidth: true }))
+      { className: "responsive-action-button-cont" },
+      _react2.default.createElement(_components.Button, (0, _extends3.default)({ className: "responsive-action-button" }, submit, { primary: true, fullWidth: true }))
     )
   );
 };
