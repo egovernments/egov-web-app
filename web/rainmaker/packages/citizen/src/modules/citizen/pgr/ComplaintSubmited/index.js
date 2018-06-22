@@ -13,6 +13,7 @@ class ComplaintSubmitted extends Component {
 
   // the retrival logic to be changed!
   getComplaintNumber = () => {
+    console.log(this.props);
     const { search } = this.props.location;
     return (search && search.length && search.split("=").length && search.split("=")[1]) || null;
   };

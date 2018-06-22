@@ -15,6 +15,7 @@ import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
 
 //pgr common components
+import ComplaintSubmited from "egov-ui-kit/common/pgr/ComplaintSubmited";
 import ActionButton from "egov-ui-kit/common/pgr/complaintDetails/components/ActionButton";
 import Comments from "egov-ui-kit/common/pgr/complaintDetails/components/Comments";
 import ComplaintTimeLine from "egov-ui-kit/common/pgr/complaintDetails/components/ComplaintTimeLine";
@@ -67,4 +68,5 @@ export {
   ComplaintType,
   ReOpenComplaint,
   ReopenAcknowledgement,
+  ComplaintSubmited,
 };

@@ -12,6 +12,7 @@ import { ReopenAcknowledgement } from "modules/common";
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
 import ComplaintResolved from "modules/employee/pgr/ComplaintResolved";
+import ComplaintCreated from "modules/employee/pgr/ComplaintCreated";
 import ComplaintSummary from "modules/employee/pgr/ComplaintDetails";
 import AssignComplaint from "modules/employee/pgr/AssignComplaint";
 import EmployeeDirectory from "modules/employee/pgr/EmployeeDirectory";
@@ -275,6 +276,17 @@ const routes = [
       hideBackButton: true,
       title: "CS_COMMON_COMPLAINT_REOPENED",
       hideTitle: true,
+    },
+  },
+  {
+    path: "complaint-submitted",
+    component: ComplaintCreated,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_HEADER_COMPLAINT_SUBMITTED",
+      hideTitle: true,
+      hideBackButton: true,
     },
   },
 ];

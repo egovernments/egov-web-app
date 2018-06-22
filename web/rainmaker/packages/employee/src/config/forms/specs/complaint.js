@@ -2,7 +2,7 @@ import { CITY } from "egov-ui-kit/utils/endPoints";
 
 const formConfig = {
   name: "complaint",
-  idjsonPath: "services[0].serviceRequestId",
+  idJsonPath: "services[0].serviceRequestId",
   fields: {
     name: {
       id: "add-complaint",
@@ -16,9 +16,9 @@ const formConfig = {
       id: "complainant-mobile-no",
       jsonPath: "services[0].phone",
       required: true,
-      floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
+      floatingLabelText: "ES_CREATECOMPLAINT_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
-      hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
+      hintText: "ES_CREATECOMPLAINT_MOBILE_NUMBER_PLACEHOLDER",
       numcols: 6,
     },
     complaintType: {
@@ -34,7 +34,8 @@ const formConfig = {
       id: "city",
       jsonPath: "services[0].city",
       floatingLabelText: "CORE_COMMON_CITY",
-      hintText: "CORE_COMMON_CITY_PLACEHOLDER",
+      hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      required: true,
       type: "singleValueList",
       dataFetchConfig: {
         url: CITY.GET.URL,
@@ -65,9 +66,10 @@ const formConfig = {
     },
     mohalla: {
       id: "mohalla",
+      required: true,
       jsonPath: "services[0].mohalla",
       floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
-      hintText: "ES_CREATECOMPLAINT_MOHALLA_PLACEHOLDER",
+      hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
     },
     latitude: {
@@ -83,6 +85,7 @@ const formConfig = {
       jsonPath: "services[0].address",
       required: true,
       floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
+      hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
     },
     landmark: {
       id: "landmark",
@@ -93,8 +96,8 @@ const formConfig = {
     additionalDetails: {
       id: "additional details",
       jsonPath: "services[0].description",
-      floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
-      hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      floatingLabelText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS",
+      hintText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
     },
     tenantId: {
       id: "add-complaint-tenantid",
@@ -109,7 +112,7 @@ const formConfig = {
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",
-  redirectionRoute: "/employee/all-complaints",
+  redirectionRoute: "/employee/complaint-submitted",
 };
 
 export default formConfig;

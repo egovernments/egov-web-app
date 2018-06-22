@@ -73,18 +73,8 @@ class App extends Component {
     const { toast } = this.props;
     return (
       <div>
-        {/* <div className={classnames("app-content", { expanded: true || false })}>
-        <div>
-          <Drawer width={230} containerClassName="drawer-backGround" open={true}>
-            <div className="drawerHeader text-center">
-              <Image className="mseva-logo" source={logoMseva} />
-            </div>
-            <div className="drawerContent">{actionList && actionList.length > 0 && <ActionMenu actionList={actionList} />}</div>
-          </Drawer>
-        </div> */}
         <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
-        {/* </div> */}
       </div>
     );
   }

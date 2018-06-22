@@ -110,6 +110,8 @@ var formSubmit = function formSubmit(store) {
 
         if (redirectionRoute && redirectionRoute.length) {
           redirectionRoute = idJsonPath ? (0, _commons.addQueryArg)(redirectionRoute, [{ key: "id", value: (0, _get2.default)(payload, idJsonPath) }]) : redirectionRoute;
+          console.log(idJsonPath);
+          console.log(payload);
           dispatch((0, _actions3.setRoute)(redirectionRoute));
         }
 
