@@ -38,7 +38,6 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
 
   var fields = form.fields || {};
   var submit = form.submit;
-  console.log(role);
 
   return _react2.default.createElement(
     "div",
@@ -51,7 +50,7 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
         { className: "reopencomplaint-question" },
         _react2.default.createElement(_Question2.default, { options: options, label: "CS_REOPEN_COMPLAINT_WHY", handleChange: handleOptionChange, valueSelected: optionSelected })
       ),
-      _react2.default.createElement(
+      role && role !== "csr" && _react2.default.createElement(
         "div",
         { className: "reopencomplaint-upload-photo" },
         _react2.default.createElement(_common.ImageUpload, { module: "rainmaker-pgr", formKey: formKey, fieldKey: "media" })
@@ -62,7 +61,7 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
         _react2.default.createElement(_TextArea2.default, (0, _extends3.default)({ onChange: ontextAreaChange, value: commentValue }, fields.textarea))
       )
     ),
-    role && role !== "csr" && _react2.default.createElement(
+    _react2.default.createElement(
       "div",
       { className: "responsive-action-button-cont" },
       _react2.default.createElement(_components.Button, (0, _extends3.default)({ className: "responsive-action-button" }, submit, { primary: true, fullWidth: true }))
