@@ -8,6 +8,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
+import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
 class AllComplaints extends Component {
@@ -246,8 +247,8 @@ const displayStatus = (status = "") => {
 
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
-  const { categoriesById } = complaints;
-  const { loading } = complaints || false;
+  const { categoriesById, byId } = complaints;
+  const loading = !isEmpty(categoriesById) ? (!isEmpty(byId) ? false : true) : true;
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
