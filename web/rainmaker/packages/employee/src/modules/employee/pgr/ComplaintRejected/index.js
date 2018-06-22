@@ -18,9 +18,9 @@ class ComplaintRejected extends Component {
           backgroundColor={"#e74c3c"}
         />
 
-        <div className="btn-without-bottom-nav">
+        <div className="responsive-action-button-cont">
           <Button
-            id="resolve-success-continue"
+            id="responsive-action-button"
             primary={true}
             label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
             fullWidth={true}

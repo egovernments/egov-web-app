@@ -15,8 +15,8 @@ const RejectComplaintForm = ({ form, options, ontextAreaChange, handleOptionChan
         <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
       </div>
 
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 btn-without-bottom-nav">
-        <Button id="rejectcomplaint-submit-action" primary={true} {...submit} fullWidth={true} />
+      <div className="responsive-action-button-cont">
+        <Button className="responsive-action-button" id="rejectcomplaint-submit-action" primary={true} {...submit} fullWidth={true} />
       </div>
     </div>
   );

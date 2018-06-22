@@ -29,7 +29,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     render() {
-      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground } = options;
+      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu } = options;
       const { history, authenticated, userInfo } = this.props;
       const role = this.getUserRole(userInfo);
 
@@ -39,16 +39,17 @@ const withAuthorization = (options = {}) => (Component) => {
             <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
-            {role !== "citizen" && (
-              <div>
-                <div className="col-xs-2 action-menu-drawer show-action-menu">
-                  <div className="rainmaker-action-menu">
-                    <ActionMenu role={role} />
+            {role !== "citizen" &&
+              (!hideActionMenu && (
+                <div>
+                  <div className="col-xs-2 action-menu-drawer show-action-menu">
+                    <div className="rainmaker-action-menu">
+                      <ActionMenu role={role} />
+                    </div>
                   </div>
+                  <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
                 </div>
-                <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment*/}
-              </div>
-            )}
+              ))}
 
             <div className={role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12"} style={{ padding: 0 }}>
               {authenticated ? (

@@ -23,7 +23,7 @@ body h4 {
 }
 
 .screen {
-  padding: 0 8px 0px 8px;
+  padding: 0 8px 90px 8px;
 }
 
 .rainmaker-displayInline {
@@ -230,6 +230,12 @@ body.employee-user-profile {
   position: fixed;
 }
 
+.responsive-action-button-cont {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
 @media only screen and (max-width: 768px) {
   .show-action-menu {
     display: none;
@@ -244,4 +250,31 @@ body.employee-user-profile {
 
 .title-white-background {
   background-color: #ffffff !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .responsive-action-button-cont {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 8px;
+    left: 0;
+  }
+
+  .responsive-action-button {
+    width: 230px !important;
+    min-width: inherit !important;
+  }
+
+  .screen {
+    padding: 0 0 60px 0;
+    min-height: calc(100vh - 124px);
+  }
+
+  .form-without-button-cont-generic {
+    padding: 0 8px;
+  }
 }
