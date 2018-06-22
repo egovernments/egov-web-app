@@ -188,7 +188,7 @@ class ComplaintDetails extends Component {
                     filedBy={complaint ? complaint.filedBy : ""}
                     filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
                   />
-                  {comments && <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />}
+                  <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
                 </div>
                 <div>
                   {(role === "ao" &&

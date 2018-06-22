@@ -138,7 +138,7 @@ var Comments = function (_Component) {
               listItemStyle: { marginBottom: "-8.5px" },
               items: items
             }),
-            isAssignedToEmployee && role === "employee" || role === "citizen" || role === "ao" ? currentstatus && currentstatus.toLowerCase() !== "closed" && _react2.default.createElement(WriteCommentHOC, { userImage: userImage, currentstatus: currentstatus }) : ""
+            isAssignedToEmployee && role === "employee" || role === "citizen" || role === "ao" || role === "csr" ? currentstatus && currentstatus.toLowerCase() !== "closed" && _react2.default.createElement(WriteCommentHOC, { userImage: userImage, currentstatus: currentstatus }) : ""
           )
         }) : ""
       );

@@ -8,13 +8,14 @@ const RequestReassignForm = ({ form, options, ontextAreaChange, handleOptionChan
   const submit = form.submit;
   return (
     <div>
-      <div className="request-reaasign-question">
-        <Question options={options} label={"ES_REASSIGN_REQUEST_QUESTION"} handleChange={handleOptionChange} valueSelected={optionSelected} />
+      <div className="custom-padding-for-screens">
+        <div className="request-reaasign-question">
+          <Question options={options} label={"ES_REASSIGN_REQUEST_QUESTION"} handleChange={handleOptionChange} valueSelected={optionSelected} />
+        </div>
+        <div className="request-reaasign-textArea">
+          <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
+        </div>
       </div>
-      <div className="request-reaasign-textArea">
-        <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
-      </div>
-
       <div className="responsive-action-button-cont">
         <Button className="responsive-action-button" id="requestreassign-submit-action" primary={true} {...submit} fullWidth={true} />
       </div>
