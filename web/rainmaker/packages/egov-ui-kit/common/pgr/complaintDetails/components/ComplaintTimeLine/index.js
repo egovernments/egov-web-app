@@ -439,11 +439,10 @@ var StatusContent = function StatusContent(_ref2) {
           })
         ),
         _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", containerStyle: { width: "192px" }, label: comments }),
-        console.log(currentStatus, role),
         currentStatus === "resolved" && (role === "citizen" || role === "csr") && resolveStatusCount === 1 && _react2.default.createElement(
           "div",
           { className: "rainmaker-displayInline" },
-          _react2.default.createElement(
+          role !== "csr" && _react2.default.createElement(
             "div",
             {
               className: "complaint-details-timline-button",
