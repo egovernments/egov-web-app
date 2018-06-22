@@ -17,7 +17,7 @@ class ComplaintResolved extends Component {
 
   render() {
     return (
-      <Screen className="complaint-resolved-main-container">
+      <Screen className="background-white">
         <ComplaintResolvedHOC />
       </Screen>
     );

@@ -59,7 +59,7 @@ class RejectComplaint extends Component {
     const { valueSelected, commentValue } = this.state;
 
     return (
-      <Screen className="reject-complaint-main-container">
+      <Screen className="background-white">
         <RejectComplaintHOC
           options={this.options}
           ontextAreaChange={handleCommentsChange}

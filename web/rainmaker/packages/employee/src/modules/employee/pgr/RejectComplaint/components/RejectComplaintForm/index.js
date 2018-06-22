@@ -8,13 +8,14 @@ const RejectComplaintForm = ({ form, options, ontextAreaChange, handleOptionChan
   const submit = form.submit;
   return (
     <div>
-      <div className="reject-complaint-question">
-        <Question options={options} label={"ES_REJECT_COMPLAINT_QUESTION"} handleChange={handleOptionChange} valueSelected={optionSelected} />
+      <div className="custom-padding-for-screens">
+        <div className="reject-complaint-question">
+          <Question options={options} label={"ES_REJECT_COMPLAINT_QUESTION"} handleChange={handleOptionChange} valueSelected={optionSelected} />
+        </div>
+        <div className="reject-complaint-textArea">
+          <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
+        </div>
       </div>
-      <div className="reject-complaint-textArea">
-        <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
-      </div>
-
       <div className="responsive-action-button-cont">
         <Button className="responsive-action-button" id="rejectcomplaint-submit-action" primary={true} {...submit} fullWidth={true} />
       </div>

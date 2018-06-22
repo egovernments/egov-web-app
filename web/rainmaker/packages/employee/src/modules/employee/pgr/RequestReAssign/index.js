@@ -59,7 +59,7 @@ class RequestReAssign extends Component {
     const { valueSelected, commentValue } = this.state;
 
     return (
-      <Screen className="request-reaasign-main-container">
+      <Screen className="background-white">
         <RequestReassignHOC
           options={this.options}
           ontextAreaChange={handleCommentsChange}

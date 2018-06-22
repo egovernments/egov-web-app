@@ -1,19 +1,9 @@
-.create-complaint-main-cont {
-  // margin-top: 96px;
-}
-
 .common-padding-for-new-complaint-card {
   padding: 0 8px 8px 8px !important;
 }
 
 .add-complaint-button-cont {
   z-index: 1000;
-}
-
-.create-complaint-main-cont {
-  position: relative;
-  min-height: calc(100vh - 140px);
-  padding-bottom: 90px;
 }
 
 .create-comp-csr-cont {
@@ -25,26 +15,4 @@
 .csr-create-comp-main-screen {
   padding-bottom: 0 !important;
   max-height: calc(100vh - 140px);
-}
-
-.create-comp-csr-form-cont {
-  padding: 0 8px;
-}
-
-@media only screen and (min-width: 768px) {
-  .create-comp-csr-cont {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    background: #fff;
-    display: flex;
-    justify-content: flex-end;
-    padding: 16px 16px 16px;
-    left: 0;
-  }
-
-  .create-complaint-submit-button {
-    width: 230px !important;
-    min-width: inherit !important;
-  }
 }

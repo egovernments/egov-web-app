@@ -20,7 +20,7 @@ body h4 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important; }
 
 .screen {
-  padding: 0 8px 90px 8px; }
+  padding: 0 8px 60px 8px; }
 
 .rainmaker-displayInline {
   display: flex; }
@@ -190,9 +190,18 @@ body.employee-user-profile {
   position: fixed; }
 
 .responsive-action-button-cont {
-  position: absolute;
+  position: fixed;
   bottom: 0px;
-  width: 100%; }
+  width: 100%;
+  left: 0; }
+
+.background-white {
+  background: #fff;
+  min-height: calc(100vh - 64px); }
+
+.custom-padding-for-screens {
+  position: relative;
+  padding: 10px 16px 0 16px; }
 
 @media only screen and (max-width: 768px) {
   .show-action-menu {

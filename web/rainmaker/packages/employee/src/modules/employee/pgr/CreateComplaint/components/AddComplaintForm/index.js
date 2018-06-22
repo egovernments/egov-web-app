@@ -11,12 +11,12 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
   return (
     <div className="create-complaint-main-cont">
       {/* <Label label="Complaint Submission" fontSize={20} dark={true} bold={true} containerStyle={{ padding: "24px 0 8px 17px" }} /> */}
-      <div className="create-comp-csr-form-cont">
+      <div className="create-comp-csr-form-cont form-without-button-cont-generic">
         <Card
           id="create-complaint-card"
           className="create-complaint-main-card"
           textChildren={
-            <div className="col-xs-12">
+            <div className="col-xs-12" style={{ padding: 0 }}>
               <div className="col-sm-6 col-xs-12">
                 <TextField {...name} name="create-complaint" onChange={(e, value) => handleFieldChange("name", value)} />
               </div>
@@ -45,13 +45,13 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
           }
         />
       </div>
-      <div className="responsive-action-button-cont create-comp-csr-cont">
+      <div className="responsive-action-button-cont">
         <Button
           primary={true}
           fullWidth={true}
           style={{ width: 230, boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
           {...submit}
-          className="responsive-action-button create-complaint-submit-button"
+          className="responsive-action-button"
         />
       </div>
     </div>
