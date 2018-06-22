@@ -46,12 +46,14 @@ var complaintsReducer = function complaintsReducer() {
       return (0, _extends3.default)({}, state, {
         loading: true,
         error: false,
+        fetchSuccess: false,
         errorMessage: ""
       });
     case actionTypes.COMPLAINTS_FETCH_COMPLETE:
       var complaintsById = (0, _commons.transformById)(mergeServiceWithActions(action.payload), "serviceRequestId");
       return (0, _extends3.default)({}, state, {
         loading: false,
+        fetchSuccess: true,
         byId: overWrite ? (0, _extends3.default)({}, complaintsById) : (0, _extends3.default)({}, state.byId, complaintsById)
       });
     case actionTypes.COMPLAINTS_FETCH_ERROR:
