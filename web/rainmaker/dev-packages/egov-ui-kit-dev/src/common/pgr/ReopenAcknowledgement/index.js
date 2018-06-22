@@ -4,10 +4,10 @@ import { SuccessMessage } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const ReopenAcknowledgement = ({ history }) => {
-  const userInfo = localStorage.getItem("user-info");
+const ReopenAcknowledgement = ({ history, userInfo }) => {
+  // const userInfo = localStorage.getItem("user-info");
   const role = (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
-
+  console.log(role);
   return (
     <div className="reopen-success-container">
       <div className="success-message-main-screen">

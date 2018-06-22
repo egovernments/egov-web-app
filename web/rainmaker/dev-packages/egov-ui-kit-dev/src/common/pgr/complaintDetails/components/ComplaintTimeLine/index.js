@@ -126,9 +126,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             filedBy && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
           {role !== "citizen" &&
             openStatusCount == 1 &&
-            (currentStatus === "open" || currentStatus === "assigned") && (
-              <a href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+            (currentStatus === "open" || currentStatus === "assigned") &&
+            filedUserMobileNumber && (
+              <a className="pgr-call-icon" href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                <span style={{ marginLeft: "43px" }}>{`+91 ${filedUserMobileNumber}`}</span>
               </a>
             )}
 
@@ -197,9 +199,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               />
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
               {(role === "AO" || currentStatus === "assigned") &&
+                employeeMobileNumber &&
                 assigneeStatusCount === 1 && (
-                  <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                  <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "43px" }}>{`+91 ${employeeMobileNumber}`}</span>
                   </a>
                 )}
               <Label
@@ -230,9 +234,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
               {currentStatus === "assigned" &&
                 assigneeStatusCount === 1 &&
-                groName && (
-                  <a href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                groName &&
+                groMobileNumber && (
+                  <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
                   </a>
                 )}
               {groName && (
@@ -274,9 +280,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
               {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 &&
-                groName && (
-                  <a href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                groName &&
+                groMobileNumber && (
+                  <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
                   </a>
                 )}
             </div>
@@ -289,9 +297,11 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`}
               />
               {currentStatus === "reassignrequested" &&
-                reassignRequestedCount === 1 && (
-                  <a href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
+                reassignRequestedCount === 1 &&
+                employeeMobileNumber && (
+                  <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                    <span style={{ marginLeft: "43px" }}>{`+91 ${employeeMobileNumber}`}</span>
                   </a>
                 )}
 

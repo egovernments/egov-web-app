@@ -28,9 +28,10 @@ export default class ListCard extends Component {
   callIconStyle = {
     width: 16,
     height: 16,
-    top: 16,
-    right: 28,
+    top: 0,
+    right: 30,
     margin: "0px",
+    position: "absolute",
   };
 
   prepareRawDataToFormat = (rawData) => {
@@ -69,19 +70,17 @@ export default class ListCard extends Component {
                   style={{ letterSpacing: 0 }}
                 />
               ),
-              rightIcon: (
-                <Icon
-                  action="communication"
-                  name="call"
-                  style={this.callIconStyle}
-                  color="#22b25f"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const link = `tel:+91${depItem && depItem.mobileNumber}`;
-                    window.location.href = link;
-                  }}
-                />
-              ),
+              rightIcon: depItem &&
+                depItem.mobileNumber && (
+                  <a
+                    className="pgr-call-icon emp-directory-call-icon-link"
+                    href={`tel:+91${depItem.mobileNumber}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Icon className="emp-directory-call-icon" action="communication" name="call" style={this.callIconStyle} color="#22b25f" />
+                    <span style={{ color: "#484848" }}>{`+91${depItem.mobileNumber}`}</span>
+                  </a>
+                ),
             };
           }),
         };

@@ -108,6 +108,9 @@ var ReOpenComplaint = function (_Component) {
       var _state = this.state,
           valueSelected = _state.valueSelected,
           commentValue = _state.commentValue;
+      var userInfo = this.props.userInfo;
+
+      var role = userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase() || null;
 
       return _react2.default.createElement(
         _common.Screen,
@@ -117,7 +120,8 @@ var ReOpenComplaint = function (_Component) {
           ontextAreaChange: handleCommentChange,
           handleOptionChange: handleOptionsChange,
           optionSelected: valueSelected,
-          commentValue: commentValue
+          commentValue: commentValue,
+          role: role
         })
       );
     }

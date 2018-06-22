@@ -88,7 +88,7 @@ class ContactUs extends Component {
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="call" />,
         primaryText: (
-          <a className="phoneNumberStyle" href={`tel:+91${contactNumber}`} style={{ textDecoration: "none" }}>
+          <a className="pgr-call-icon phoneNumberStyle" href={`tel:+91${contactNumber}`} style={{ textDecoration: "none" }}>
             {contactNumber ? contactNumber : "NA"}
           </a>
         ),

@@ -1,6 +1,7 @@
 .reopencomplaint-field {
   background-color: #ffffff;
-  padding-top: 16px !important; }
+  padding-top: 16px !important;
+  height: calc(100vh - 64px); }
 
 .reopencomplaint-textArea {
   padding: 24px 16px 100px 1px; }

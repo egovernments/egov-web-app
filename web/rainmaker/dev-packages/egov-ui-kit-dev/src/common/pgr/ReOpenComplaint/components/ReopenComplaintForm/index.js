@@ -6,17 +6,22 @@ import Question from "../Question";
 import TextArea from "../TextArea";
 import { ImageUpload } from "modules/common";
 
-const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {
+const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue, role }) => {
   const fields = form.fields || {};
   const submit = form.submit;
+  console.log(role);
+
   return (
     <div>
       <div className="reopencomplaint-question">
         <Question options={options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionChange} valueSelected={optionSelected} />
       </div>
-      <div className="reopencomplaint-upload-photo">
-        <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
-      </div>
+      {role &&
+        role !== "csr" && (
+          <div className="reopencomplaint-upload-photo">
+            <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
+          </div>
+        )}
       <div className="reopencomplaint-textArea">
         <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
       </div>

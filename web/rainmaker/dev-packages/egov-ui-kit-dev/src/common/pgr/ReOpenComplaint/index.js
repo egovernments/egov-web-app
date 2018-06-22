@@ -57,6 +57,9 @@ class ReOpenComplaint extends Component {
   render() {
     const { handleCommentChange, handleOptionsChange } = this;
     const { valueSelected, commentValue } = this.state;
+    const { userInfo } = this.props;
+    const role = (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
+
     return (
       <Screen className="reopencomplaint-field">
         <ReopenComplaintFormHOC
@@ -65,6 +68,7 @@ class ReOpenComplaint extends Component {
           handleOptionChange={handleOptionsChange}
           optionSelected={valueSelected}
           commentValue={commentValue}
+          role={role}
         />
       </Screen>
     );

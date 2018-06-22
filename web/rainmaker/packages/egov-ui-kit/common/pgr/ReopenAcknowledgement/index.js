@@ -21,11 +21,12 @@ require("./index.css");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
-  var history = _ref.history;
+  var history = _ref.history,
+      userInfo = _ref.userInfo;
 
-  var userInfo = localStorage.getItem("user-info");
+  // const userInfo = localStorage.getItem("user-info");
   var role = userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase() || null;
-
+  console.log(role);
   return _react2.default.createElement(
     "div",
     { className: "reopen-success-container" },
