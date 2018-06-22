@@ -27,6 +27,7 @@ const complaintsReducer = (state = intialState, action) => {
         ...state,
         loading: true,
         error: false,
+        fetchSuccess: false,
         errorMessage: "",
       };
     case actionTypes.COMPLAINTS_FETCH_COMPLETE:
@@ -34,6 +35,7 @@ const complaintsReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
+        fetchSuccess: true,
         byId: overWrite
           ? { ...complaintsById }
           : {

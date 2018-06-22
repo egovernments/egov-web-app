@@ -16,6 +16,7 @@ class AllComplaints extends Component {
     complaintNo: "",
     mobileNo: "",
     complaints: [],
+    search: false,
   };
   componentDidMount() {
     let { fetchComplaints, role } = this.props;
@@ -51,17 +52,18 @@ class AllComplaints extends Component {
     if (complaintNo || mobileNo) {
       fetchComplaints(queryObj, true, true);
     }
+    this.setState({ search: true });
   };
 
   clearSearch = () => {
     const { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
-    this.setState({ mobileNo: "", complaintNo: "" });
+    this.setState({ mobileNo: "", complaintNo: "", search: false });
   };
 
   render() {
     const { loading, history } = this.props;
-    const { mobileNo, complaintNo } = this.state;
+    const { mobileNo, complaintNo, search } = this.state;
     const tabStyle = {
       letterSpacing: "0.6px",
     };
@@ -192,7 +194,7 @@ class AllComplaints extends Component {
           }
         />
         <Complaints
-          noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
+          noComplaintMessage={search ? "ES_NO_SEARCH_RESULTS" : "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
           onComplaintClick={onComplaintClick}
           complaints={transformedComplaints}
           role={role}
@@ -248,7 +250,8 @@ const displayStatus = (status = "") => {
 const mapStateToProps = (state) => {
   const { complaints, common } = state || {};
   const { categoriesById, byId } = complaints;
-  const loading = !isEmpty(categoriesById) ? (!isEmpty(byId) ? false : true) : true;
+  const { fetchSuccess } = complaints;
+  const loading = !isEmpty(categoriesById) ? (fetchSuccess ? false : true) : true;
   const { citizenById, employeeById } = common || {};
   const { userInfo } = state.auth;
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
