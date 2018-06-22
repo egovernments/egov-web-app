@@ -33,10 +33,13 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
       ontextAreaChange = _ref.ontextAreaChange,
       handleOptionChange = _ref.handleOptionChange,
       optionSelected = _ref.optionSelected,
-      commentValue = _ref.commentValue;
+      commentValue = _ref.commentValue,
+      role = _ref.role;
 
   var fields = form.fields || {};
   var submit = form.submit;
+  console.log(role);
+
   return _react2.default.createElement(
     "div",
     null,
@@ -59,7 +62,7 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
         _react2.default.createElement(_TextArea2.default, (0, _extends3.default)({ onChange: ontextAreaChange, value: commentValue }, fields.textarea))
       )
     ),
-    _react2.default.createElement(
+    role && role !== "csr" && _react2.default.createElement(
       "div",
       { className: "responsive-action-button-cont" },
       _react2.default.createElement(_components.Button, (0, _extends3.default)({ className: "responsive-action-button" }, submit, { primary: true, fullWidth: true }))

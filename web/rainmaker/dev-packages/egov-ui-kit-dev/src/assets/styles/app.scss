@@ -287,5 +287,12 @@ body.employee-user-profile {
 
   .form-without-button-cont-generic {
     padding: 0 8px;
+  .pgr-call-icon {
+    pointer-events: none;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .pgr-call-icon span {
+    display: none !important;
   }
 }

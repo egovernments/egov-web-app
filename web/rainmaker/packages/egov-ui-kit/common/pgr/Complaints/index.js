@@ -34,7 +34,8 @@ var callIconStyle = {
   height: "17px",
   width: "17px",
   borderRadius: "50%",
-  top: "0px"
+  position: "relative",
+  top: "2px"
 };
 
 var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
@@ -61,17 +62,19 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
               label: item.assignedTo
             })
           ),
-          _react2.default.createElement(
-            "div",
+          item.employeePhoneNumber && _react2.default.createElement(
+            "a",
             {
-              style: { display: "inline-block" },
-              onClick: function onClick(e) {
-                e.stopPropagation();
-                var link = "tel:+91" + item.employeePhoneNumber;
-                window.location.href = link;
-              }
+              className: "pgr-call-icon",
+              href: "tel:+91" + item.employeePhoneNumber,
+              style: { textDecoration: "none", position: "relative" }
             },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+            _react2.default.createElement(
+              "span",
+              { style: { marginLeft: "10px", color: "#484848" } },
+              "+91 " + item.employeePhoneNumber
+            )
           )
         ) : item.submittedBy !== "NA" && _react2.default.createElement(
           "div",
@@ -87,17 +90,19 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
               label: item.submittedBy
             })
           ),
-          _react2.default.createElement(
-            "div",
+          item.citizenPhoneNumber && _react2.default.createElement(
+            "a",
             {
-              style: { float: "left" },
-              onClick: function onClick(e) {
-                e.stopPropagation();
-                var link = "tel:+91" + item.citizenPhoneNumber;
-                window.location.href = link;
-              }
+              className: "pgr-call-icon",
+              href: "tel:+91" + item.citizenPhoneNumber,
+              style: { textDecoration: "none", position: "relative" }
             },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+            _react2.default.createElement(
+              "span",
+              { style: { marginLeft: "10px", color: "#484848" } },
+              "+91 " + item.citizenPhoneNumber
+            )
           )
         )
       )

@@ -14,7 +14,8 @@ const callIconStyle = {
   height: "17px",
   width: "17px",
   borderRadius: "50%",
-  top: "0px",
+  position: "relative",
+  top: "2px",
 };
 
 const bottomInfoTemplate = (item, role) => {
@@ -35,16 +36,16 @@ const bottomInfoTemplate = (item, role) => {
                         label={item.assignedTo}
                       />
                     </div>
-                    <div
-                      style={{ display: "inline-block" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const link = `tel:+91${item.employeePhoneNumber}`;
-                        window.location.href = link;
-                      }}
-                    >
-                      <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                    </div>
+                    {item.employeePhoneNumber && (
+                      <a
+                        className="pgr-call-icon"
+                        href={`tel:+91${item.employeePhoneNumber}`}
+                        style={{ textDecoration: "none", position: "relative" }}
+                      >
+                        <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                        <span style={{ marginLeft: "10px", color: "#484848" }}>{`+91 ${item.employeePhoneNumber}`}</span>
+                      </a>
+                    )}
                   </div>
                 )
               : item.submittedBy !== "NA" && (
@@ -58,16 +59,16 @@ const bottomInfoTemplate = (item, role) => {
                         label={item.submittedBy}
                       />
                     </div>
-                    <div
-                      style={{ float: "left" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const link = `tel:+91${item.citizenPhoneNumber}`;
-                        window.location.href = link;
-                      }}
-                    >
-                      <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                    </div>
+                    {item.citizenPhoneNumber && (
+                      <a
+                        className="pgr-call-icon"
+                        href={`tel:+91${item.citizenPhoneNumber}`}
+                        style={{ textDecoration: "none", position: "relative" }}
+                      >
+                        <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                        <span style={{ marginLeft: "10px", color: "#484848" }}>{`+91 ${item.citizenPhoneNumber}`}</span>
+                      </a>
+                    )}
                   </div>
                 )}
           </div>

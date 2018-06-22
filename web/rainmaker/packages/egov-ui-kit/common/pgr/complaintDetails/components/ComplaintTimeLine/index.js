@@ -157,10 +157,15 @@ var StatusContent = function StatusContent(_ref2) {
           label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
         }),
         action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, { label: filedBy, containerStyle: nameContainerStyle, labelClassName: "dark-color" }),
-        role !== "citizen" && openStatusCount == 1 && (currentStatus === "open" || currentStatus === "assigned") && _react2.default.createElement(
+        role !== "citizen" && openStatusCount == 1 && (currentStatus === "open" || currentStatus === "assigned") && filedUserMobileNumber && _react2.default.createElement(
           "a",
-          { href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
-          _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+          { className: "pgr-call-icon", href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
+          _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+          _react2.default.createElement(
+            "span",
+            { style: { marginLeft: "43px" } },
+            "+91 " + filedUserMobileNumber
+          )
         ),
         action === "reopen" && _react2.default.createElement(
           "div",
@@ -218,10 +223,15 @@ var StatusContent = function StatusContent(_ref2) {
               label: "" + (action == "assign" ? employeeName ? "CS_COMMON_ASSIGNED_TO" : "ES_COMPLAINT_ASSIGNED_HEADER" : employeeName ? "CS_COMMON_REASSIGNED_TO" : "ES_COMPLAINT_REASSIGNED_HEADER")
             }),
             _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + employeeName }),
-            (role === "AO" || currentStatus === "assigned") && assigneeStatusCount === 1 && _react2.default.createElement(
+            (role === "AO" || currentStatus === "assigned") && employeeMobileNumber && assigneeStatusCount === 1 && _react2.default.createElement(
               "a",
-              { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
-              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              { className: "pgr-call-icon", href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
+              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+              _react2.default.createElement(
+                "span",
+                { style: { marginLeft: "43px" } },
+                "+91 " + employeeMobileNumber
+              )
             ),
             _react2.default.createElement(_translationNode2.default, {
               labelClassName: "rainmaker-small-font complaint-timeline-department",
@@ -241,10 +251,15 @@ var StatusContent = function StatusContent(_ref2) {
               label: "" + (action == "assign" ? groName ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY" : "ES_COMPLAINT_ASSIGNED_HEADER" : groName ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY" : "ES_COMPLAINT_REASSIGNED_HEADER")
             }),
             groName && _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + groName }),
-            currentStatus === "assigned" && assigneeStatusCount === 1 && groName && _react2.default.createElement(
+            currentStatus === "assigned" && assigneeStatusCount === 1 && groName && groMobileNumber && _react2.default.createElement(
               "a",
-              { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
-              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              { className: "pgr-call-icon", href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
+              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+              _react2.default.createElement(
+                "span",
+                { style: { marginLeft: "43px" } },
+                "+91 " + groMobileNumber
+              )
             ),
             groName && _react2.default.createElement(_translationNode2.default, {
               labelClassName: "rainmaker-small-font complaint-timeline-designation",
@@ -282,10 +297,15 @@ var StatusContent = function StatusContent(_ref2) {
             label: "" + (groName ? "CS_COMPLAINT_DETAILS_BEING_REASSIGNED" : "CS_COMMON_STATUS_BEING_REASSIGNED")
           }),
           groName && _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + groName }),
-          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && groName && _react2.default.createElement(
+          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && groName && groMobileNumber && _react2.default.createElement(
             "a",
-            { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+            { className: "pgr-call-icon", href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
+            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+            _react2.default.createElement(
+              "span",
+              { style: { marginLeft: "43px" } },
+              "+91 " + groMobileNumber
+            )
           )
         ),
         role !== "citizen" && _react2.default.createElement(
@@ -296,10 +316,15 @@ var StatusContent = function StatusContent(_ref2) {
             containerStyle: statusContainerStyle,
             label: "CS_COMMON_RE-ASSIGN REQUESTED"
           }),
-          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && _react2.default.createElement(
+          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && employeeMobileNumber && _react2.default.createElement(
             "a",
-            { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+            { className: "pgr-call-icon", href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
+            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+            _react2.default.createElement(
+              "span",
+              { style: { marginLeft: "43px" } },
+              "+91 " + employeeMobileNumber
+            )
           ),
           _react2.default.createElement(_translationNode2.default, {
             labelClassName: "rainmaker-small-font complaint-timeline-comments",

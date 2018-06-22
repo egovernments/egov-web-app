@@ -6,9 +6,11 @@ import Question from "../Question";
 import TextArea from "../TextArea";
 import { ImageUpload } from "modules/common";
 
-const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {
+const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue, role }) => {
   const fields = form.fields || {};
   const submit = form.submit;
+  console.log(role);
+
   return (
     <div>
       <div className="form-without-button-cont-generic">
@@ -22,6 +24,17 @@ const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleO
           <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
         </div>
       </div>
+
+      {role &&
+        role !== "csr" && (
+          <div className="reopencomplaint-upload-photo">
+            <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
+          </div>
+        )}
+      <div className="reopencomplaint-textArea">
+        <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
+      </div>
+      
       <div className="responsive-action-button-cont">
         <Button className="responsive-action-button" {...submit} primary={true} fullWidth={true} />
       </div>
