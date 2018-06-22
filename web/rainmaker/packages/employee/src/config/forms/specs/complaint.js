@@ -1,3 +1,5 @@
+import { CITY } from "egov-ui-kit/utils/endPoints";
+
 const formConfig = {
   name: "complaint",
   idjsonPath: "services[0].serviceRequestId",
@@ -12,7 +14,7 @@ const formConfig = {
     },
     phone: {
       id: "complainant-mobile-no",
-      jsonPath: "services[0].mobile",
+      jsonPath: "services[0].phone",
       floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
@@ -32,7 +34,33 @@ const formConfig = {
       jsonPath: "services[0].city",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "CORE_COMMON_CITY_PLACEHOLDER",
-      dropDownData: [{ label: "Jalandhar", value: "jalandhar" }],
+      type: "singleValueList",
+      dataFetchConfig: {
+        url: CITY.GET.URL,
+        action: CITY.GET.ACTION,
+        queryParams: {},
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "tenant",
+                masterDetails: [
+                  {
+                    name: "tenants",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.tenant.tenants",
+        // dependants: [
+        //   {
+        //     fieldKey: "mohalla",
+        //   },
+        // ],
+      },
     },
     mohalla: {
       id: "mohalla",

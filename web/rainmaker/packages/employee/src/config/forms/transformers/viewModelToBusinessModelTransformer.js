@@ -128,20 +128,13 @@ const transformer = (formKey, form = {}, state = {}) => {
     },
     complaint: async () => {
       const formData = prepareFormData(form);
-      const userInfo = localStorage.getItem("user-info");
-      let userPhone = null;
       try {
-        userPhone = JSON.parse(userInfo).mobileNumber;
-        formData.services[0].phone = userPhone;
-      } catch (error) {}
-
-      try {
-        const { latitude, longitude } = form.fields;
+        const { latitude, longitude, city } = form.fields;
         let tenantId = "";
         if (latitude.value) {
           tenantId = await getTenantForLatLng(latitude.value, longitude.value);
         } else {
-          tenantId = localStorage.getItem("tenant-id");
+          tenantId = city.value && city.value;
         }
         formData.services[0].tenantId = tenantId;
       } catch (error) {

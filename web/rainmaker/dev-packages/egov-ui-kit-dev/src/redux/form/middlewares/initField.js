@@ -5,7 +5,7 @@ import { fetchDropdownData } from "egov-ui-kit/utils/commons";
 const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   const { type } = action;
   const dispatch = store.dispatch;
-  const state = store.getState();
+  // const state = store.getState();
   if (type === INIT_FORM) {
     const { form } = action;
     const { name: formKey, fields } = form;
@@ -16,7 +16,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
         if (item.dataFetchConfig && !item.dataFetchConfig.isDependent) {
           switch (item.type) {
             case "singleValueList":
-              const dropDownData = fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key);
+              fetchDropdownData(dispatch, item.dataFetchConfig, formKey, key);
           }
         }
       });
