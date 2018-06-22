@@ -15,6 +15,7 @@ const formConfig = {
     phone: {
       id: "complainant-mobile-no",
       jsonPath: "services[0].phone",
+      required: true,
       floatingLabelText: "CORE_COMMON_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
