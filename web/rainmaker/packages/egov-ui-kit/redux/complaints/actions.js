@@ -25,7 +25,13 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _api = require("egov-ui-kit/utils/api");
 
-var _lodash = require("lodash");
+var _difference = require("lodash/difference");
+
+var _difference2 = _interopRequireDefault(_difference);
+
+var _uniq = require("lodash/uniq");
+
+var _uniq2 = _interopRequireDefault(_uniq);
 
 var _common = require("config/common.js");
 
@@ -67,7 +73,7 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
       if (common && common.employeeById) {
         cachedEmployeeIds = Object.keys(common.employeeById);
       }
-      var value = (0, _lodash.uniq)((0, _lodash.difference)(employeeIds, cachedEmployeeIds)).join(",");
+      var value = (0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)).join(",");
       if (value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value: value }]));
     }
     if (userIds.length > 0) {
@@ -75,7 +81,7 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
       if (common && common.citizenById) {
         cachedUserIds = Object.keys(common.citizenById);
       }
-      var id = (0, _lodash.uniq)((0, _lodash.difference)(userIds, cachedUserIds));
+      var id = (0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds));
       if (id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: id }));
     }
   }
