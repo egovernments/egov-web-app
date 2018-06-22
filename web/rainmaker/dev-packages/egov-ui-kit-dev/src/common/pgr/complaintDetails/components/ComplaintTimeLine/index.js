@@ -424,24 +424,25 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           )}
 
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" containerStyle={{ width: "192px" }} label={comments} />
-          {console.log(currentStatus, role)}
           {currentStatus === "resolved" &&
             (role === "citizen" || role === "csr") &&
             resolveStatusCount === 1 && (
               <div className="rainmaker-displayInline">
-                <div
-                  className="complaint-details-timline-button"
-                  onClick={(e) => {
-                    changeRoute.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
-                  }}
-                >
-                  <Label
-                    label="CS_COMPLAINT_DETAILS_RATE"
-                    fontSize="12px"
-                    labelStyle={timelineButtonLabelStyle}
-                    containerStyle={timelineButtonContainerStyle}
-                  />
-                </div>
+                {role !== "csr" && (
+                  <div
+                    className="complaint-details-timline-button"
+                    onClick={(e) => {
+                      changeRoute.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
+                    }}
+                  >
+                    <Label
+                      label="CS_COMPLAINT_DETAILS_RATE"
+                      fontSize="12px"
+                      labelStyle={timelineButtonLabelStyle}
+                      containerStyle={timelineButtonContainerStyle}
+                    />
+                  </div>
+                )}
                 <div
                   className="complaint-details-timline-button"
                   onClick={(e) => {
