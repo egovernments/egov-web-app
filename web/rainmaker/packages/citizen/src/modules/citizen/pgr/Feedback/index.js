@@ -33,7 +33,7 @@ class Feedback extends Component {
   render() {
     let { value } = this.state;
     return (
-      <Screen className="feedback-main-screen">
+      <Screen className="background-white">
         <FeedbackFormHOC onCheck={this.onCheck} checkBoxValue={value} />
       </Screen>
     );

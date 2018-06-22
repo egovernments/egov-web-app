@@ -11,17 +11,19 @@ const ReopenComplaintForm = ({ form, formKey, options, ontextAreaChange, handleO
   const submit = form.submit;
   return (
     <div>
-      <div className="reopencomplaint-question">
-        <Question options={options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionChange} valueSelected={optionSelected} />
+      <div className="form-without-button-cont-generic">
+        <div className="reopencomplaint-question">
+          <Question options={options} label="CS_REOPEN_COMPLAINT_WHY" handleChange={handleOptionChange} valueSelected={optionSelected} />
+        </div>
+        <div className="reopencomplaint-upload-photo">
+          <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
+        </div>
+        <div className="reopencomplaint-textArea">
+          <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
+        </div>
       </div>
-      <div className="reopencomplaint-upload-photo">
-        <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
-      </div>
-      <div className="reopencomplaint-textArea">
-        <TextArea onChange={ontextAreaChange} value={commentValue} {...fields.textarea} />
-      </div>
-      <div className="col-lg-8 col-md-8 btn-with-bottom-nav">
-        <Button {...submit} primary={true} fullWidth={true} />
+      <div className="responsive-action-button-cont">
+        <Button className="responsive-action-button" {...submit} primary={true} fullWidth={true} />
       </div>
     </div>
   );

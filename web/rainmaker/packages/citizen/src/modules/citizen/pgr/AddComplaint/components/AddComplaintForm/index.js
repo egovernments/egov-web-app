@@ -14,13 +14,13 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
       <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
       <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} landmark={fields.landmark} locationDetails={fields.address} />
       <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} />
-      <div className="col-lg-8 col-md-8 add-complaint-button-cont btn-without-bottom-nav">
+      <div className="responsive-action-button-cont ">
         <Button
           primary={true}
           fullWidth={true}
           style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
           {...submit}
-          className="add-complaint-submit-button"
+          className="responsive-action-button"
         />
       </div>
     </div>

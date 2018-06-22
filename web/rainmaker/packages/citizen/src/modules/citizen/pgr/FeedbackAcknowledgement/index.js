@@ -10,13 +10,14 @@ const FeedbackAcknowledge = ({ history }) => {
       <div className="success-message-main-screen">
         <SuccessMessage successmessage="CS_FEEDBACK_SUCCESS" icon={<Icon action="navigation" name="check" />} backgroundColor={"#22b25f"} />
       </div>
-      <div className="btn-without-bottom-nav">
+      <div className="responsive-action-button-cont">
         <Button
           id="feedback-acknowledgement"
           onClick={() => history.push("/citizen")}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
           fullWidth={true}
+          className="responsive-action-button"
         />
       </div>
     </div>
