@@ -114,7 +114,7 @@ var ReOpenComplaint = function (_Component) {
 
       return _react2.default.createElement(
         _common.Screen,
-        { className: "reopencomplaint-field" },
+        { className: "background-white" },
         _react2.default.createElement(ReopenComplaintFormHOC, {
           options: this.options,
           ontextAreaChange: handleCommentChange,

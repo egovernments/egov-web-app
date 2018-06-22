@@ -61,7 +61,7 @@ class ReOpenComplaint extends Component {
     const role = (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
 
     return (
-      <Screen className="reopencomplaint-field">
+      <Screen className="background-white">
         <ReopenComplaintFormHOC
           options={this.options}
           ontextAreaChange={handleCommentChange}

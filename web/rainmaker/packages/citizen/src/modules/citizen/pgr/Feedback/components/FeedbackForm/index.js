@@ -18,8 +18,8 @@ const FeedbackForm = ({ form, handleFieldChange, onCheck, checkBoxValue }) => {
           </div>
         </div>
       }
-      <div className="btn-with-bottom-nav">
-        <Button {...submit} primary={true} fullWidth={true} />
+      <div className="responsive-action-button-cont">
+        <Button className="responsive-action-button" {...submit} primary={true} fullWidth={true} />
       </div>
     </div>
   );
