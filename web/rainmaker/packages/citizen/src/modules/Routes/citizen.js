@@ -1,5 +1,3 @@
-import React from "react";
-
 // user routes
 import Register from "modules/citizen/User/Register";
 import Login from "modules/citizen/User/Login";
@@ -15,7 +13,7 @@ import ContactUs from "modules/citizen/ContactUs";
 // pgr specific screens
 import MyComplaints from "modules/citizen/pgr/MyComplaints";
 import ComplaintDetails from "modules/citizen/pgr/ComplaintDetails";
-import ComplaintSubmited from "modules/citizen/pgr/ComplaintSubmited";
+import ComplaintCreated from "modules/citizen/pgr/ComplaintCreated";
 import { TrackLocation } from "modules/common";
 import Feedback from "modules/citizen/pgr/Feedback";
 import { ReOpenComplaint } from "modules/common";
@@ -126,9 +124,20 @@ const routes = [
     needsAuthentication: true,
     options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION" },
   },
+  // {
+  //   path: "complaint-submitted",
+  //   component: ComplaintSubmited,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "CS_HEADER_COMPLAINT_SUBMITTED",
+  //     hideTitle: true,
+  //     hideBackButton: true,
+  //   },
+  // },
   {
     path: "complaint-submitted",
-    component: ComplaintSubmited,
+    component: ComplaintCreated,
     needsAuthentication: true,
     options: {
       hideFooter: true,

@@ -21,6 +21,7 @@ import ComplaintTimeLine from "egov-ui-kit/common/pgr/complaintDetails/component
 import Details from "egov-ui-kit/common/pgr/complaintDetails/components/Details";
 import WriteComment from "egov-ui-kit/common/pgr/complaintDetails/components/WriteComment";
 import Complaints from "egov-ui-kit/common/pgr/Complaints";
+import ComplaintSubmited from "egov-ui-kit/common/pgr/ComplaintSubmited";
 import FeedbackPopup from "egov-ui-kit/common/pgr/FeedbackPopup";
 import Question from "egov-ui-kit/common/pgr/ReOpenComplaint/components/Question";
 import TextArea from "egov-ui-kit/common/pgr/ReOpenComplaint/components/TextArea";
@@ -58,6 +59,7 @@ export {
   ProfileSection,
   UploadDrawer,
   Complaints,
+  ComplaintSubmited,
   FeedbackPopup,
   Question,
   TextArea,

@@ -57,7 +57,7 @@ var ReopenComplaintForm = function ReopenComplaintForm(_ref) {
     ),
     _react2.default.createElement(
       "div",
-      { className: "col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 btn-with-bottom-nav" },
+      { className: "col-lg-8 col-md-8 btn-with-bottom-nav" },
       _react2.default.createElement(_components.Button, (0, _extends3.default)({}, submit, { primary: true, fullWidth: true }))
     )
   );
