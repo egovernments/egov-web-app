@@ -24,54 +24,54 @@ var fieldInitFormMiddleware = function fieldInitFormMiddleware(store) {
   return function (next) {
     return function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(action) {
-        var type, dispatch, state, form, formKey, fields, formData, message;
+        var type, dispatch, form, formKey, fields, formData, message;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 type = action.type;
                 dispatch = store.dispatch;
-                state = store.getState();
+                // const state = store.getState();
 
                 if (!(type === _actionTypes.INIT_FORM)) {
-                  _context.next = 16;
+                  _context.next = 15;
                   break;
                 }
 
                 form = action.form;
                 formKey = form.name, fields = form.fields;
                 formData = null;
-                _context.prev = 7;
+                _context.prev = 6;
 
                 Object.keys(fields).map(function (key) {
                   var item = fields[key];
                   if (item.dataFetchConfig && !item.dataFetchConfig.isDependent) {
                     switch (item.type) {
                       case "singleValueList":
-                        var dropDownData = (0, _commons.fetchDropdownData)(dispatch, item.dataFetchConfig, formKey, key);
+                        (0, _commons.fetchDropdownData)(dispatch, item.dataFetchConfig, formKey, key);
                     }
                   }
                 });
-                _context.next = 16;
+                _context.next = 15;
                 break;
 
-              case 11:
-                _context.prev = 11;
-                _context.t0 = _context["catch"](7);
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](6);
                 message = _context.t0.message;
 
                 dispatch((0, _actions.toggleSnackbarAndSetText)(true, message, true));
                 return _context.abrupt("return");
 
-              case 16:
+              case 15:
                 next(action);
 
-              case 17:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, undefined, [[7, 11]]);
+        }, _callee, undefined, [[6, 10]]);
       }));
 
       return function (_x) {
