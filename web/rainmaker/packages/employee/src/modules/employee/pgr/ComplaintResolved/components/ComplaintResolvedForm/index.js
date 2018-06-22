@@ -13,8 +13,8 @@ const ComplaintResolvedForm = ({ formKey, form, handleFieldChange }) => {
         <TextArea onChange={(e, value) => handleFieldChange("textarea", value)} {...fields.textarea} />
       </div>
 
-      <div className="col-lg-offset-2 col-md-offset-2 col-lg-8 col-md-8 btn-without-bottom-nav">
-        <Button id={"complaint-resolved-mark-resolved"} {...submit} primary={true} fullWidth={true} />
+      <div className="responsive-action-button-cont">
+        <Button className="responsive-action-button" id={"complaint-resolved-mark-resolved"} {...submit} primary={true} fullWidth={true} />
       </div>
     </div>
   );

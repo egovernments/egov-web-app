@@ -320,7 +320,6 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
   const toBeFinishedBy = millsToAdd + submittedTime;
   const daysCount = dateDiffInDays(new Date(Date.now()), new Date(toBeFinishedBy));
   if (daysCount < 0) {
-    console.log(daysCount);
     return Math.abs(daysCount) === 1 ? `Overdue by ${Math.abs(daysCount)} day` : `Overdue by ${Math.abs(daysCount)} days`;
   } else {
     return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;

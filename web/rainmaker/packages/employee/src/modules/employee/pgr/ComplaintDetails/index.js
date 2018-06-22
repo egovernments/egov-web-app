@@ -174,20 +174,22 @@ class ComplaintDetails extends Component {
           {complaint &&
             !openMap && (
               <div>
-                <Details {...complaint} role={role} history={history} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
-                <ComplaintTimeLine
-                  status={complaint.status}
-                  timelineSLAStatus={complaint.timelineSLAStatus}
-                  timeLine={timeLine}
-                  history={history}
-                  handleFeedbackOpen={this.handleFeedbackOpen}
-                  role={role}
-                  feedback={complaint ? complaint.feedback : ""}
-                  rating={complaint ? complaint.rating : ""}
-                  filedBy={complaint ? complaint.filedBy : ""}
-                  filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
-                />
-                {comments && <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />}
+                <div className="form-without-button-cont-generic">
+                  <Details {...complaint} role={role} history={history} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
+                  <ComplaintTimeLine
+                    status={complaint.status}
+                    timelineSLAStatus={complaint.timelineSLAStatus}
+                    timeLine={timeLine}
+                    history={history}
+                    handleFeedbackOpen={this.handleFeedbackOpen}
+                    role={role}
+                    feedback={complaint ? complaint.feedback : ""}
+                    rating={complaint ? complaint.rating : ""}
+                    filedBy={complaint ? complaint.filedBy : ""}
+                    filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
+                  />
+                  {comments && <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />}
+                </div>
                 <div>
                   {(role === "ao" &&
                     complaint.complaintStatus.toLowerCase() !== "assigned" &&

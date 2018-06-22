@@ -4,8 +4,15 @@ import "./index.css";
 
 const ButtonComponent = ({ label, onClick }) => {
   return (
-    <div className="btn-without-bottom-nav">
-      <Button id="assign-complaint-button" onClick={onClick} primary={true} label={<Label buttonLabel={true} label={label} />} fullWidth={true} />;
+    <div className="create-comp-csr-cont">
+      <Button
+        className="create-complaint-submit-button"
+        id="assign-complaint-button"
+        onClick={onClick}
+        primary={true}
+        label={<Label buttonLabel={true} label={label} />}
+        fullWidth={true}
+      />;
     </div>
   );
 };

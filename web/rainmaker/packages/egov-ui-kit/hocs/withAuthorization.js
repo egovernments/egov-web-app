@@ -79,7 +79,8 @@ var withAuthorization = function withAuthorization() {
               title = options.title,
               isHomeScreen = options.isHomeScreen,
               hideTitle = options.hideTitle,
-              titleBackground = options.titleBackground;
+              titleBackground = options.titleBackground,
+              hideActionMenu = options.hideActionMenu;
           var _props = this.props,
               history = _props.history,
               authenticated = _props.authenticated,
@@ -94,7 +95,7 @@ var withAuthorization = function withAuthorization() {
             _react2.default.createElement(
               "div",
               { className: " col-xs-12", style: { padding: 0 } },
-              role !== "citizen" && _react2.default.createElement(
+              role !== "citizen" && !hideActionMenu && _react2.default.createElement(
                 "div",
                 null,
                 _react2.default.createElement(

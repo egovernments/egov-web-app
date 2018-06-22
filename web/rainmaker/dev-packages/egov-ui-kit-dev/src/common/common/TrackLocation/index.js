@@ -109,7 +109,7 @@ class TrackLocation extends Component {
     const { location } = this.props;
     var _currloc = !isEmpty(currLoc) ? currLoc : isEmpty(location) ? { lat: 12.972442, lng: 77.580643 } : location;
     return (
-      <div>
+      <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
         <div className="back-btn">
           <Icon
             id="map-back-btn"
@@ -132,10 +132,10 @@ class TrackLocation extends Component {
           dragInfoBox={false}
           viewLocation={false}
         />
-        <div className="btn-without-bottom-nav">
+        <div className="responsive-action-button-cont">
           <Button
             id="map-pick-button"
-            className="pick"
+            className="pick responsive-action-button"
             label={"Pick"}
             style={pickBtn}
             primary={true}

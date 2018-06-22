@@ -45,13 +45,13 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
           }
         />
       </div>
-      <div className="create-comp-csr-cont">
+      <div className="responsive-action-button-cont create-comp-csr-cont">
         <Button
           primary={true}
           fullWidth={true}
           style={{ width: 230, boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
           {...submit}
-          className="create-complaint-submit-button"
+          className="responsive-action-button create-complaint-submit-button"
         />
       </div>
     </div>

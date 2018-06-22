@@ -19,13 +19,14 @@ class ResolveSuccess extends Component {
           icon={<Icon action="navigation" name="check" />}
           backgroundColor={"#22b25f"}
         />
-        <div className="btn-without-bottom-nav">
+        <div className="responsive-action-button-cont">
           <Button
             id="resolve-success-continue"
             primary={true}
             label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
             fullWidth={true}
             onClick={this.continueComplaintSubmit}
+            className="responsive-action-button"
           />
         </div>
       </div>

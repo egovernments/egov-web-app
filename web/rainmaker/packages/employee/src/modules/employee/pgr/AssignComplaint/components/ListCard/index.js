@@ -255,7 +255,7 @@ export default class ListCard extends Component {
         <Card
           className="assign-complaint-main-card"
           textChildren={
-            <div>
+            <div className="form-without-button-cont-generic">
               <div className="employee-search-cont">
                 {isEmployeeDirectory ? (
                   ""
@@ -291,8 +291,9 @@ export default class ListCard extends Component {
           }
         />
         {!isEmployeeDirectory && (
-          <div className="btn-without-bottom-nav">
+          <div className="responsive-action-button-cont">
             <Button
+              className="responsive-action-button"
               primary={true}
               fullWidth={true}
               label={<Label buttonLabel={true} label={isReassignScreen ? "ES_COMMON_REASSIGN" : "ES_COMMON_ASSIGN"} />}

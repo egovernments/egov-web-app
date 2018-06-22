@@ -160,7 +160,7 @@ var TrackLocation = function (_Component) {
       var _currloc = !(0, _isEmpty2.default)(currLoc) ? currLoc : (0, _isEmpty2.default)(location) ? { lat: 12.972442, lng: 77.580643 } : location;
       return _react2.default.createElement(
         "div",
-        null,
+        { style: { position: "relative", height: "100vh", width: "100vw" } },
         _react2.default.createElement(
           "div",
           { className: "back-btn" },
@@ -187,10 +187,10 @@ var TrackLocation = function (_Component) {
         }),
         _react2.default.createElement(
           "div",
-          { className: "btn-without-bottom-nav" },
+          { className: "responsive-action-button-cont" },
           _react2.default.createElement(_components.Button, {
             id: "map-pick-button",
-            className: "pick",
+            className: "pick responsive-action-button",
             label: "Pick",
             style: pickBtn,
             primary: true,
