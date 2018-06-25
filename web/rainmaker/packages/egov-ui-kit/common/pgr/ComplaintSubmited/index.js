@@ -104,10 +104,10 @@ var ComplaintSubmitted = function (_Component) {
                   labelStyle: { lineHeight: 1.5 }
                 })
               ),
-              _react2.default.createElement(
+              this.props.lastLabel && _react2.default.createElement(
                 "div",
                 { className: "complaint-submitted-label" },
-                _react2.default.createElement(_translationNode2.default, { id: "complaint-submitted-success-message", label: "CS_COMPLAINT_SUBMITTED_LABEL2" })
+                this.props.lastLabel
               )
             )
           ),
