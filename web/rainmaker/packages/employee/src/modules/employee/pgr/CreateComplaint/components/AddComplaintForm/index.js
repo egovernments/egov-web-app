@@ -18,28 +18,67 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
           textChildren={
             <div className="col-xs-12" style={{ padding: 0 }}>
               <div className="col-sm-6 col-xs-12">
-                <TextField {...name} name="create-complaint" onChange={(e, value) => handleFieldChange("name", value)} />
+                <TextField
+                  className="fix-for-layout-break"
+                  {...name}
+                  name="create-complaint"
+                  onChange={(e, value) => handleFieldChange("name", value)}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <TextField {...phone} name="complainant-mobile-no" onChange={(e, value) => handleFieldChange("phone", value)} />
+                <TextField
+                  className="fix-for-layout-break"
+                  {...phone}
+                  name="complainant-mobile-no"
+                  onChange={(e, value) => handleFieldChange("phone", value)}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
+                <ComplaintTypeCard
+                  className="fix-for-layout-break"
+                  localizationLabels={localizationLabels}
+                  categories={categories}
+                  complaintType={fields.complaintType}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <AdditionalDetailsCard handleFieldChange={handleFieldChange} additionalDetails={fields.additionalDetails} />
+                <AdditionalDetailsCard
+                  className="fix-for-layout-break"
+                  handleFieldChange={handleFieldChange}
+                  additionalDetails={fields.additionalDetails}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <TextField {...address} name="complainant-mobile-no" onChange={(e, value) => handleFieldChange("address", value)} />
+                <TextField
+                  className="fix-for-layout-break"
+                  {...address}
+                  name="complainant-mobile-no"
+                  onChange={(e, value) => handleFieldChange("address", value)}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <DropDown {...city} onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)} />
+                <DropDown
+                  className="fix-for-layout-break"
+                  fullWidth={true}
+                  {...city}
+                  onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <DropDown {...mohalla} onChange={(e, value, selectedValue) => handleFieldChange("mohalla", selectedValue)} />
+                <DropDown
+                  className="fix-for-layout-break"
+                  fullWidth={true}
+                  {...mohalla}
+                  onChange={(e, value, selectedValue) => handleFieldChange("mohalla", selectedValue)}
+                />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <TextField {...landmark} onChange={(e, value) => handleFieldChange("landmark", value)} name="landmark-details" />
+                <TextField
+                  className="fix-for-layout-break"
+                  {...landmark}
+                  onChange={(e, value) => handleFieldChange("landmark", value)}
+                  name="landmark-details"
+                />
               </div>
             </div>
           }

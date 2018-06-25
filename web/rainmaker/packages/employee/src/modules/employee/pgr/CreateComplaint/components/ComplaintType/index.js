@@ -31,7 +31,7 @@ class ComplaintTypeField extends Component {
             iconPosition="after"
             fullWidth={true}
             Icon={DownArrow}
-            iconStyle={{ marginTop: "9px" }}
+            iconStyle={{ marginTop: "9px", right: 12 }}
             name="complaint-type"
             disabled={false}
           />
