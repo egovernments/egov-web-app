@@ -31,7 +31,7 @@ class Details extends Component {
   };
 
   render() {
-    const { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role } = this.props;
+    const { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role, complaintLoc } = this.props;
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -165,29 +165,30 @@ class Details extends Component {
                   />
                 </div>
                 <div style={{ marginTop: 10 }}>
-                  {mapAction && (
-                    <Button
-                      className="employee-complaint-summary-mapBtn"
-                      primary={true}
-                      label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
-                      style={{
-                        height: "auto",
-                        lineHeight: "auto",
-                        minWidth: "inherit",
-                      }}
-                      labelStyle={{
-                        padding: "0 12px 0 0 ",
-                        letterSpacing: "0.6px",
-                        display: "inline-block",
-                        height: "22px",
-                        lineHeight: "22px",
-                      }}
-                      icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
-                      onClick={(e) => {
-                        this.props.redirectToMap(true);
-                      }}
-                    />
-                  )}
+                  {mapAction &&
+                    complaintLoc.lat && (
+                      <Button
+                        className="employee-complaint-summary-mapBtn"
+                        primary={true}
+                        label={<Label buttonLabel={true} label={"ES_COMPLAINT_SUMMARY_MAP"} color="#ffffff" />}
+                        style={{
+                          height: "auto",
+                          lineHeight: "auto",
+                          minWidth: "inherit",
+                        }}
+                        labelStyle={{
+                          padding: "0 12px 0 0 ",
+                          letterSpacing: "0.6px",
+                          display: "inline-block",
+                          height: "22px",
+                          lineHeight: "22px",
+                        }}
+                        icon={<Icon action="maps" name="place" style={mapIconStyle} color={"#ffffff"} />}
+                        onClick={(e) => {
+                          this.props.redirectToMap(true);
+                        }}
+                      />
+                    )}
                 </div>
                 {description && (
                   <div style={{ marginTop: "16px" }} className="rainmaker-displayInline">

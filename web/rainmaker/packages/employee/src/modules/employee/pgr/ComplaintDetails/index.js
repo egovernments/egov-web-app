@@ -175,7 +175,15 @@ class ComplaintDetails extends Component {
             !openMap && (
               <div>
                 <div className="form-without-button-cont-generic">
-                  <Details {...complaint} role={role} history={history} mapAction={true} redirectToMap={this.redirectToMap} action={action} />
+                  <Details
+                    {...complaint}
+                    role={role}
+                    history={history}
+                    mapAction={true}
+                    redirectToMap={this.redirectToMap}
+                    action={action}
+                    complaintLoc={complaintLoc}
+                  />
                   <ComplaintTimeLine
                     status={complaint.status}
                     timelineSLAStatus={complaint.timelineSLAStatus}
