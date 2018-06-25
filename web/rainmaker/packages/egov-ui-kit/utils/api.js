@@ -198,16 +198,17 @@ var loginRequest = exports.loginRequest = function () {
   var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
     var username = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var password = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var refreshToken = arguments[2];
-    var grantType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "password";
+    var tenantId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var refreshToken = arguments[3];
+    var grantType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "password";
 
-    var tenantId, loginInstance, apiError, params, response, responseStatus, _error$response2, data, status;
+    var _tenantId, loginInstance, apiError, params, response, responseStatus, _error$response2, data, status;
 
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") || _common2.default.tenantId;
+            _tenantId = tenantId ? tenantId : (0, _commons.fetchFromLocalStorage)("tenant-id") || _common2.default.tenantId;
             loginInstance = _axios2.default.create({
               baseURL: window.location.origin,
               headers: {
@@ -223,7 +224,7 @@ var loginRequest = exports.loginRequest = function () {
             refreshToken && params.append("refresh_token", refreshToken);
             params.append("grant_type", grantType);
             params.append("scope", "read");
-            params.append("tenantId", tenantId);
+            params.append("tenantId", _tenantId);
 
             _context3.prev = 10;
             _context3.next = 13;

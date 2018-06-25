@@ -6,7 +6,7 @@ const formConfig = {
   fields: {
     name: {
       id: "add-complaint",
-      jsonPath: "services[0].name",
+      jsonPath: "services[0].citizen.name",
       required: true,
       floatingLabelText: "ES_CREATECOMPLAINT_COMPLAINT_NAME",
       hintText: "ES_CREATECOMPLAINT_COMPLAINT_NAME_PLACEHOLDER",
@@ -15,7 +15,7 @@ const formConfig = {
     },
     phone: {
       id: "complainant-mobile-no",
-      jsonPath: "services[0].phone",
+      jsonPath: "services[0].citizen.mobileNumber",
       required: true,
       floatingLabelText: "ES_CREATECOMPLAINT_MOBILE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
@@ -85,6 +85,7 @@ const formConfig = {
       required: true,
       jsonPath: "services[0].mohalla",
       floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
+      // errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],

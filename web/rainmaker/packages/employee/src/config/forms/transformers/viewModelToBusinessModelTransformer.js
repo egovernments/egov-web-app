@@ -129,6 +129,11 @@ const transformer = (formKey, form = {}, state = {}) => {
     complaint: async () => {
       const formData = prepareFormData(form);
       try {
+        const { phone } = form.fields;
+        formData.services[0].phone = phone.value;
+      } catch (error) {}
+
+      try {
         const { latitude, longitude, city } = form.fields;
         let tenantId = "";
         if (latitude.value) {
