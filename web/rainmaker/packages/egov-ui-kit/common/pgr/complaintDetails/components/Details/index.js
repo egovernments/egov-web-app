@@ -88,7 +88,8 @@ var Details = function (_Component) {
           mapAction = _props.mapAction,
           images = _props.images,
           action = _props.action,
-          role = _props.role;
+          role = _props.role,
+          complaintLoc = _props.complaintLoc;
 
       var icon = {};
       icon.name = "location";
@@ -203,7 +204,7 @@ var Details = function (_Component) {
               _react2.default.createElement(
                 "div",
                 { style: { marginTop: 10 } },
-                mapAction && _react2.default.createElement(_components.Button, {
+                mapAction && complaintLoc.lat && _react2.default.createElement(_components.Button, {
                   className: "employee-complaint-summary-mapBtn",
                   primary: true,
                   label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "ES_COMPLAINT_SUMMARY_MAP", color: "#ffffff" }),
