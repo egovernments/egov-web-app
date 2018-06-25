@@ -36,7 +36,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                 <DropDown {...mohalla} onChange={(e, value, selectedValue) => handleFieldChange("mohalla", selectedValue)} />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} locationDetails={address} history={history} />
+                <TextField {...address} name="complainant-mobile-no" onChange={(e, value) => handleFieldChange("address", value)} />
               </div>
               <div className="col-sm-6 col-xs-12">
                 <TextField {...landmark} onChange={(e, value) => handleFieldChange("landmark", value)} name="landmark-details" />

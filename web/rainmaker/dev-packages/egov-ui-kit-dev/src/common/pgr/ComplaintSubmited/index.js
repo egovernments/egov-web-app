@@ -42,7 +42,8 @@ class ComplaintSubmitted extends Component {
                 />
               </div>
               <div className="complaint-submitted-label">
-                <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" />
+                {/* <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" /> */}
+                {this.props.lastLabel}
               </div>
             </div>
             {/* <div className="complaint-submitted-label">
