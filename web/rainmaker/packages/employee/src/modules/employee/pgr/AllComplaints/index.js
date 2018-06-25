@@ -149,12 +149,12 @@ class AllComplaints extends Component {
               </div>
               <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
                 <TextField
-                  id="complaint-no"
-                  name="complaint-no"
-                  value={complaintNo}
-                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                  floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
-                  onChange={(e, value) => this.onComplaintChange(e)}
+                  id="mobile-no"
+                  name="mobile-no"
+                  value={mobileNo}
+                  hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                  floatingLabelText={<Label label="CORE_COMMON_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                  onChange={(e, value) => this.onMobileChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
                   hintStyle={{ width: "100%" }}
@@ -162,12 +162,12 @@ class AllComplaints extends Component {
               </div>
               <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
                 <TextField
-                  id="mobile-no"
-                  name="mobile-no"
-                  value={mobileNo}
-                  hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                  floatingLabelText={<Label label="CORE_COMMON_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
-                  onChange={(e, value) => this.onMobileChange(e)}
+                  id="complaint-no"
+                  name="complaint-no"
+                  value={complaintNo}
+                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                  floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
+                  onChange={(e, value) => this.onComplaintChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}
                   hintStyle={{ width: "100%" }}

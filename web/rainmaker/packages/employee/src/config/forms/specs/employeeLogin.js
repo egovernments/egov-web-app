@@ -22,6 +22,13 @@ const formConfig = {
       pattern: "^([a-zA-Z0-9@])+$",
       value: "",
     },
+    city: {
+      id: "person-city",
+      jsonPath: "employee.tenantId",
+      required: true,
+      floatingLabelText: "CORE_COMMON_CITY",
+      hintText: "CORE_COMMON_CITY_PLACEHOLDER",
+    },
   },
   submit: {
     label: "CORE_COMMON_LOGIN",

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, TextField } from "components";
+import { CityPicker } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
@@ -15,6 +16,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
           <Label style={{ marginBottom: "12px" }} className="text-center" bold={true} dark={true} fontSize={16} label="LOGIN" />
           <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
           <TextField onChange={(e, value) => handleFieldChange("password", value)} {...fields.password} />
+          <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
           <Link to="/employee/user/forgot-password">
             <div style={{ float: "right" }}>
               <Label

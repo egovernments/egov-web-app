@@ -30,11 +30,27 @@ const formConfig = {
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       numcols: 2,
     },
+    latitude: {
+      id: "latitude",
+      jsonPath: "services[0].lat",
+    },
+    longitude: {
+      id: "longitude",
+      jsonPath: "services[0].long",
+    },
+    address: {
+      id: "address",
+      jsonPath: "services[0].address",
+      required: true,
+      floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
+      hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
+    },
     city: {
       id: "city",
       jsonPath: "services[0].city",
       floatingLabelText: "CORE_COMMON_CITY",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       type: "singleValueList",
       dataFetchConfig: {
@@ -57,11 +73,6 @@ const formConfig = {
           },
         },
         dataPath: "MdmsRes.tenant.tenants",
-        // dependants: [
-        //   {
-        //     fieldKey: "mohalla",
-        //   },
-        // ],
       },
     },
     mohalla: {
@@ -70,22 +81,8 @@ const formConfig = {
       jsonPath: "services[0].mohalla",
       floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
+      errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
-    },
-    latitude: {
-      id: "latitude",
-      jsonPath: "services[0].lat",
-    },
-    longitude: {
-      id: "longitude",
-      jsonPath: "services[0].long",
-    },
-    address: {
-      id: "address",
-      jsonPath: "services[0].address",
-      required: true,
-      floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
-      hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
     },
     landmark: {
       id: "landmark",
