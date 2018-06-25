@@ -35,6 +35,8 @@ const underlineFocusBaseStyle = {
 
 const DropDownUi = ({
   className,
+  errorText,
+  errorStyle = {},
   value,
   fullWidth = false,
   labelStyle,
@@ -58,6 +60,8 @@ const DropDownUi = ({
 
   return (
     <SelectField
+      errorText={errorText}
+      errorStyle={errorStyle}
       className={`dropdown ${className}`}
       id={id}
       style={style}

@@ -59,6 +59,9 @@ var underlineFocusBaseStyle = {
 
 var DropDownUi = function DropDownUi(_ref) {
   var className = _ref.className,
+      errorText = _ref.errorText,
+      _ref$errorStyle = _ref.errorStyle,
+      errorStyle = _ref$errorStyle === undefined ? {} : _ref$errorStyle,
       value = _ref.value,
       _ref$fullWidth = _ref.fullWidth,
       fullWidth = _ref$fullWidth === undefined ? false : _ref$fullWidth,
@@ -85,6 +88,8 @@ var DropDownUi = function DropDownUi(_ref) {
   return _react2.default.createElement(
     _SelectField2.default,
     {
+      errorText: errorText,
+      errorStyle: errorStyle,
       className: "dropdown " + className,
       id: id,
       style: style,

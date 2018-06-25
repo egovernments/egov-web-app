@@ -41,14 +41,13 @@ class ComplaintSubmitted extends Component {
                   labelStyle={{ lineHeight: 1.5 }}
                 />
               </div>
-              <div className="complaint-submitted-label">
-                {/* <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" /> */}
-                {this.props.lastLabel}
-              </div>
+              {this.props.lastLabel && (
+                <div className="complaint-submitted-label">
+                  {/* <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" /> */}
+                  {this.props.lastLabel}
+                </div>
+              )}
             </div>
-            {/* <div className="complaint-submitted-label">
-              <Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" />
-            </div> */}
           </div>
           <div className="responsive-action-button-cont">
             <Button
