@@ -48,7 +48,8 @@ const bottomInfoTemplate = (item, role) => {
                     )}
                   </div>
                 )
-              : item.submittedBy !== "NA" && (
+              : item.submittedBy !== "NA" &&
+                role !== "csr" && (
                   <div className="clearfix">
                     <div className="inline-Localization-text">
                       <Label containerStyle={{ display: "inline-block" }} label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
@@ -156,6 +157,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     </div>
   ) : (
     complaints.map((complaint, complaintIndex) => {
+      console.log(complaint);
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
@@ -196,11 +198,57 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                 </div>
                 {complaintLocation && (
                   <div className="complaint-address-cont">
-                    <Icon action="maps" name="place" style={{ height: 24, width: 24, marginRight: 10 }} color={"#767676"} />
-                    <Label fontSize="12px" label={complaint.address} className="complaint-address" />
+                    <Icon action="maps" name="place" style={{ height: 18, width: 18, marginRight: 10 }} color={"#767676"} />
+                    <Label fontSize="12px" color="#484848" label={complaint.address} className="complaint-address" />
                   </div>
                 )}
-                {complaint &&
+                {role === "csr" &&
+                  complaint &&
+                  complaint.submittedBy !== "NA" && (
+                    <div className="complaint-number-cont">
+                      <div className="complaint-number complaint-date">
+                        <Label fontSize="12px" label={"Submitted by"} />
+                        <Label fontSize="12px" label={" : "} />
+                        <Label fontSize="12px" label={complaint.submittedBy} className="complaint-complaint-number" />
+
+                        {complaint.citizenPhoneNumber && (
+                          <a
+                            className="pgr-call-icon"
+                            href={`tel:+91${complaint.citizenPhoneNumber}`}
+                            style={{ textDecoration: "none", position: "relative" }}
+                          >
+                            <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                            <span style={{ marginLeft: "10px", color: "#767676" }}>{`+91 ${complaint.citizenPhoneNumber}`}</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                {role === "csr" &&
+                  complaint &&
+                  complaint.assignedTo !== "NA" && (
+                    <div className="complaint-number-cont">
+                      <div className="complaint-number complaint-date">
+                        <Label fontSize="12px" label={"Assigned to"} />
+                        <Label fontSize="12px" label={" : "} />
+                        <Label fontSize="12px" label={complaint.assignedTo} className="complaint-complaint-number" />
+
+                        {complaint.employeePhoneNumber && (
+                          <a
+                            className="pgr-call-icon"
+                            href={`tel:+91${complaint.employeePhoneNumber}`}
+                            style={{ textDecoration: "none", position: "relative" }}
+                          >
+                            <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
+                            <span style={{ marginLeft: "10px", color: "#767676" }}>{`+91 ${complaint.employeePhoneNumber}`}</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                {role !== "csr" &&
+                  complaint &&
                   complaint.images &&
                   complaint.images.length > 0 && (
                     <div className="complaint-image-cont">
