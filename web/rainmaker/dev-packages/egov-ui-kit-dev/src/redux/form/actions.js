@@ -72,7 +72,7 @@ export const submitForm = (formKey, saveUrl) => {
         if (formData.hasOwnProperty("login")) {
           formResponse = await loginRequest(formData.login.username, formData.login.password);
         } else if (formData.hasOwnProperty("employee")) {
-          formResponse = await loginRequest(formData.employee.username, formData.employee.password);
+          formResponse = await loginRequest(formData.employee.username, formData.employee.password, formData.employee.tenantId);
         } else {
           formResponse = await httpRequest(saveUrl, action, [], formData);
         }
