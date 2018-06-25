@@ -76,7 +76,7 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
               "+91 " + item.employeePhoneNumber
             )
           )
-        ) : item.submittedBy !== "NA" && _react2.default.createElement(
+        ) : item.submittedBy !== "NA" && role !== "csr" && _react2.default.createElement(
           "div",
           { className: "clearfix" },
           _react2.default.createElement(
@@ -196,6 +196,7 @@ var Complaints = function Complaints(_ref) {
     { className: "no-complaints-message-cont" },
     _react2.default.createElement(_translationNode2.default, { label: noComplaintMessage, dark: true, fontSize: "16px", labelStyle: { letterSpacing: "0.7px" } })
   ) : complaints.map(function (complaint, complaintIndex) {
+    console.log(complaint);
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
       "div",
@@ -250,10 +251,60 @@ var Complaints = function Complaints(_ref) {
           complaintLocation && _react2.default.createElement(
             "div",
             { className: "complaint-address-cont" },
-            _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: 24, width: 24, marginRight: 10 }, color: "#767676" }),
-            _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: complaint.address, className: "complaint-address" })
+            _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: 18, width: 18, marginRight: 10 }, color: "#767676" }),
+            _react2.default.createElement(_translationNode2.default, { fontSize: "12px", color: "#484848", label: complaint.address, className: "complaint-address" })
           ),
-          complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(
+          role === "csr" && complaint && complaint.submittedBy !== "NA" && _react2.default.createElement(
+            "div",
+            { className: "complaint-number-cont" },
+            _react2.default.createElement(
+              "div",
+              { className: "complaint-number complaint-date" },
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: "Submitted by" }),
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: " : " }),
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: complaint.submittedBy, className: "complaint-complaint-number" }),
+              complaint.citizenPhoneNumber && _react2.default.createElement(
+                "a",
+                {
+                  className: "pgr-call-icon",
+                  href: "tel:+91" + complaint.citizenPhoneNumber,
+                  style: { textDecoration: "none", position: "relative" }
+                },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+                _react2.default.createElement(
+                  "span",
+                  { style: { marginLeft: "10px", color: "#767676" } },
+                  "+91 " + complaint.citizenPhoneNumber
+                )
+              )
+            )
+          ),
+          role === "csr" && complaint && complaint.assignedTo !== "NA" && _react2.default.createElement(
+            "div",
+            { className: "complaint-number-cont" },
+            _react2.default.createElement(
+              "div",
+              { className: "complaint-number complaint-date" },
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: "Assigned to" }),
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: " : " }),
+              _react2.default.createElement(_translationNode2.default, { fontSize: "12px", label: complaint.assignedTo, className: "complaint-complaint-number" }),
+              complaint.employeePhoneNumber && _react2.default.createElement(
+                "a",
+                {
+                  className: "pgr-call-icon",
+                  href: "tel:+91" + complaint.employeePhoneNumber,
+                  style: { textDecoration: "none", position: "relative" }
+                },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
+                _react2.default.createElement(
+                  "span",
+                  { style: { marginLeft: "10px", color: "#767676" } },
+                  "+91 " + complaint.employeePhoneNumber
+                )
+              )
+            )
+          ),
+          role !== "csr" && complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(
             "div",
             { className: "complaint-image-cont" },
             complaint.images.map(function (image, index) {
