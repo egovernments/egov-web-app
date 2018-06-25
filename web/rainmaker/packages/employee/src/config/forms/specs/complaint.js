@@ -11,6 +11,7 @@ const formConfig = {
       floatingLabelText: "ES_CREATECOMPLAINT_COMPLAINT_NAME",
       hintText: "ES_CREATECOMPLAINT_COMPLAINT_NAME_PLACEHOLDER",
       numcols: 6,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     phone: {
       id: "complainant-mobile-no",
@@ -20,6 +21,7 @@ const formConfig = {
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "ES_CREATECOMPLAINT_MOBILE_NUMBER_PLACEHOLDER",
       numcols: 6,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     complaintType: {
       id: "complaint-type",
@@ -29,6 +31,7 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       numcols: 2,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     latitude: {
       id: "latitude",
@@ -44,6 +47,7 @@ const formConfig = {
       required: true,
       floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
       hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     city: {
       id: "city",
@@ -52,6 +56,7 @@ const formConfig = {
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       type: "singleValueList",
       dataFetchConfig: {
         url: CITY.GET.URL,
@@ -83,18 +88,21 @@ const formConfig = {
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     landmark: {
       id: "landmark",
       jsonPath: "services[0].landmark",
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     additionalDetails: {
       id: "additional details",
       jsonPath: "services[0].description",
       floatingLabelText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     tenantId: {
       id: "add-complaint-tenantid",

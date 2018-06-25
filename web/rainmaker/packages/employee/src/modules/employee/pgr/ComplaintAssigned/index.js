@@ -21,13 +21,16 @@ class ComplaintAssigned extends Component {
     const isReassign = window.location.href.includes("complaint-reassigned") ? true : false;
     return (
       <div className="success-message-main-screen">
-        <SuccessMessage
-          successmessage={(isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
-          secondaryLabel={employeeDetails && employeeDetails.employeeDesignation}
-          tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment + " Department"}
-          icon={<Icon action="navigation" name="check" />}
-          backgroundColor={"#22b25f"}
-        />
+        {employeeDetails &&
+          employeeDetails.employeeName && (
+            <SuccessMessage
+              successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
+              secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
+              tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
+              icon={<Icon action="navigation" name="check" />}
+              backgroundColor={"#22b25f"}
+            />
+          )}
         <div className="responsive-action-button-cont">
           <Button
             id="resolve-success-continue"
