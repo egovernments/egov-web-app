@@ -103,6 +103,7 @@ class AllComplaints extends Component {
                     complaints={unassignedComplaints}
                     complaintLocation={true}
                     role={role}
+                    heightOffset="112px"
                   />
                 </div>
               </Screen>
