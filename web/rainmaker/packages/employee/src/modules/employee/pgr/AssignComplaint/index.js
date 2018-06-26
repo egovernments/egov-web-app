@@ -4,6 +4,7 @@ import { Screen } from "modules/common";
 import formHoc from "egov-ui-kit/hocs/form";
 import AssignComplaintForm from "./components/AssignComplaintForm";
 import { fetchEmployees } from "egov-ui-kit/redux/common/actions";
+import filter from "lodash/filter";
 
 const AssignComplaintFormHOC = formHoc({ formKey: "assignComplaint" })(AssignComplaintForm);
 
@@ -33,12 +34,16 @@ const mapStateToProps = (state, ownProps) => {
   const { history } = ownProps;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   const { departmentById, designationsById, employeeById } = state.common;
-  const APIData =
+  const rawAPIData =
     employeeById &&
     Object.keys(employeeById).map((item, index) => {
       return employeeById[item];
     });
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  const complaintTenantId = selectedComplaint && selectedComplaint.tenantId;
+  const APIData = filter(rawAPIData, (item) => {
+    return item.tenantId === complaintTenantId;
+  });
   const transformedComplaint = {
     header: selectedComplaint && selectedComplaint.serviceCode,
     address: selectedComplaint && selectedComplaint.address,

@@ -2,8 +2,8 @@
   position: relative; }
 
 .complaints-card-main-cont:hover {
-  background: #999;
-  cursor: pointer; }
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 0px 6px, rgba(0, 0, 0, 0.12) 0px 5px 4px; }
 
 .complaint-card-wrapper {
   padding: 0; }
@@ -86,9 +86,7 @@
   margin: 0 !important; }
 
 .employee-bottom-info-cont {
-  position: relative;
-  display: flex;
-  justify-content: flex-start; }
+  position: relative; }
 
 .submitted-by-text {
   margin-bottom: 8px; }
@@ -105,11 +103,14 @@
 .no-complaints-message-cont {
   padding: 0 34px;
   text-align: center;
-  height: calc(100vh - 121px);
+  height: calc(100vh - 64px);
   display: inline-flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%; }
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
 
 .inline-Localization-text {
   float: left; }
@@ -118,4 +119,6 @@
   .complaint-image {
     min-height: 200px !important; }
   .complaint-image-wrapper {
-    max-width: 200px; } }
+    max-width: 200px; }
+  .no-complaints-message-cont {
+    height: calc(100vh - 112px); } }
