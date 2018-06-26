@@ -196,7 +196,6 @@ var Complaints = function Complaints(_ref) {
     { className: "no-complaints-message-cont" },
     _react2.default.createElement(_translationNode2.default, { label: noComplaintMessage, dark: true, fontSize: "16px", labelStyle: { letterSpacing: "0.7px" } })
   ) : complaints.map(function (complaint, complaintIndex) {
-    console.log(complaint);
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
       "div",
