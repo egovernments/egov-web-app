@@ -167,7 +167,7 @@ class ComplaintDetails extends Component {
     if (timeLine && timeLine[0]) {
       action = timeLine[0].action;
     }
-
+    console.log(complaint && complaint.filedBy);
     return (
       <div>
         <Screen>
@@ -193,7 +193,7 @@ class ComplaintDetails extends Component {
                     role={role}
                     feedback={complaint ? complaint.feedback : ""}
                     rating={complaint ? complaint.rating : ""}
-                    filedBy={complaint ? complaint.filedBy : ""}
+                    filedBy={complaint && complaint.filedBy ? complaint.filedBy : ""}
                     filedUserMobileNumber={complaint ? complaint.filedUserMobileNumber : ""}
                   />
                   <Comments comments={comments} role={role} isAssignedToEmployee={isAssignedToEmployee} />
@@ -293,8 +293,16 @@ const mapStateToProps = (state, ownProps) => {
   const { userInfo } = state.auth;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
+  let filedUserName = selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.name;
+  let isFiledByCSR =
+    selectedComplaint &&
+    selectedComplaint.actions &&
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by &&
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] &&
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
   let isAssignedToEmployee = true;
+  console.log(filedUserName);
   if (selectedComplaint) {
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
@@ -310,8 +318,11 @@ const mapStateToProps = (state, ownProps) => {
       complaintStatus: selectedComplaint.status && getLatestStatus(selectedComplaint.status),
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
-      filedBy: userId && mapCitizenIdToName(citizenById, userId),
-      filedUserMobileNumber: userId && mapCitizenIdToMobileNumber(citizenById, userId),
+      //filedBy: userId && mapCitizenIdToName(citizenById, userId),
+      filedBy: isFiledByCSR && filedUserName ? `${filedUserName} @CSR` : filedUserName,
+
+      //filedUserMobileNumber: userId && mapCitizenIdToMobileNumber(citizenById, userId),
+      filedUserMobileNumber: selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.mobileNumber,
       timelineSLAStatus: returnSLAStatus(
         getPropertyFromObj(categoriesById, selectedComplaint.serviceCode, "slaHours", "NA"),
         selectedComplaint.auditDetails.createdTime

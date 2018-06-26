@@ -366,7 +366,15 @@ export const findLatestAssignee = (actionArray) => {
 export const transformComplaintForComponent = (complaints, role, employeeById, citizenById, categoriesById, displayStatus) => {
   const defaultPhoneNumber = "";
   const defaultMobileNumber = "";
+
   const transformedComplaints = Object.values(complaints.byId).map((complaintDetail, index) => {
+    let filedUserName = complaintDetail && complaintDetail.citizen && complaintDetail.citizen.name;
+    let isFiledByCSR =
+      complaintDetail &&
+      complaintDetail.actions &&
+      complaintDetail.actions[complaintDetail.actions.length - 1].by &&
+      complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] &&
+      complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
     return {
       header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
       date: complaintDetail.auditDetails.createdTime,
@@ -380,17 +388,19 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
         complaintDetail.status === "reassignrequested"
           ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA")
           : "NA",
-      submittedBy:
-        complaintDetail &&
-        getPropertyFromObj(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0], "name", "NA"),
-      citizenPhoneNumber:
-        complaintDetail &&
-        getPropertyFromObj(
-          citizenById,
-          complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0],
-          "mobileNumber",
-          defaultMobileNumber
-        ),
+      // submittedBy:
+      //   complaintDetail &&
+      //   getPropertyFromObj(citizenById, complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0], "name", "NA"),
+      // citizenPhoneNumber:
+      //   complaintDetail &&
+      //   getPropertyFromObj(
+      //     citizenById,
+      //     complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[0],
+      //     "mobileNumber",
+      //     defaultMobileNumber
+      //   ),
+      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} @CSR` : filedUserName) : "NA",
+      citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
       employeePhoneNumber:
         employeeById && employeeById[findLatestAssignee(complaintDetail.actions)]

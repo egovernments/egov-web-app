@@ -157,7 +157,6 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     </div>
   ) : (
     complaints.map((complaint, complaintIndex) => {
-      console.log(complaint);
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
         <div
