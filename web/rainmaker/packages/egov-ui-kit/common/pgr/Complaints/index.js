@@ -199,12 +199,7 @@ var Complaints = function Complaints(_ref) {
     var complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
     return _react2.default.createElement(
       "div",
-      {
-        style: { cursor: "pointer" },
-        id: "complaint-" + complaintIndex,
-        className: "complaints-card-main-cont",
-        key: "complaint-" + complaintIndex
-      },
+      { id: "complaint-" + complaintIndex, className: "complaints-card-main-cont", key: "complaint-" + complaintIndex },
       _react2.default.createElement(_components.Card, {
         onClick: function onClick(e) {
           onComplaintClick(encodeURIComponent(complaint.complaintNo));

@@ -159,12 +159,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
     complaints.map((complaint, complaintIndex) => {
       const complaintHeader = complaint.header && "SERVICEDEFS." + complaint.header.toUpperCase();
       return (
-        <div
-          style={{ cursor: "pointer" }}
-          id={"complaint-" + complaintIndex}
-          className="complaints-card-main-cont"
-          key={`complaint-${complaintIndex}`}
-        >
+        <div id={"complaint-" + complaintIndex} className="complaints-card-main-cont" key={`complaint-${complaintIndex}`}>
           <Card
             onClick={(e) => {
               onComplaintClick(encodeURIComponent(complaint.complaintNo));

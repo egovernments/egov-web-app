@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, TextField, DropDown, Button } from "components";
-import LocationDetailsCard from "../LocationDetails";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
 

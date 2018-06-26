@@ -1,6 +1,10 @@
 .complaints-main-container {
   position: relative; }
 
+.complaints-card-main-cont:hover {
+  background: #999;
+  cursor: pointer; }
+
 .complaint-card-wrapper {
   padding: 0; }
 
