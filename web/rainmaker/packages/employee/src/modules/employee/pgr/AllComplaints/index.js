@@ -153,7 +153,7 @@ class AllComplaints extends Component {
                   name="mobile-no"
                   value={mobileNo}
                   hintText={<Label label="CORE_COMMON_PHONE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                  floatingLabelText={<Label label="CORE_COMMON_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                  floatingLabelText={<Label label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                   onChange={(e, value) => this.onMobileChange(e)}
                   underlineStyle={{ bottom: 7 }}
                   underlineFocusStyle={{ bottom: 7 }}

@@ -119,7 +119,7 @@ class Header extends Component {
           role={role && role === "citizen" ? "citizen" : "employee"}
           openSecondary={window.innerWidth >= 768 ? true : false}
           width={300}
-          containerStyle={{ top: "64px" }}
+          // containerStyle={{ top: "64px" }}
         />
         <LogoutDialog logoutPopupOpen={logoutPopupOpen} closeLogoutDialog={_closeLogoutDialog} logout={_logout} />
       </div>

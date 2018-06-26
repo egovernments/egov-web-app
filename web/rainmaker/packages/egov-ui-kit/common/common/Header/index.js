@@ -189,8 +189,8 @@ var Header = function (_Component) {
           fetchLocalizationLabel: fetchLocalizationLabel,
           role: role && role === "citizen" ? "citizen" : "employee",
           openSecondary: window.innerWidth >= 768 ? true : false,
-          width: 300,
-          containerStyle: { top: "64px" }
+          width: 300
+          // containerStyle={{ top: "64px" }}
         }),
         _react2.default.createElement(_LogoutDialog2.default, { logoutPopupOpen: logoutPopupOpen, closeLogoutDialog: _closeLogoutDialog, logout: _logout })
       );
