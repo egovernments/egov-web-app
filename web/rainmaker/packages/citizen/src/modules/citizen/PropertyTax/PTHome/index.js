@@ -25,26 +25,32 @@ class PTHome extends Component {
   }
 
   listItems = [
+    // {
+    //   primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
+    //   route: "/citizen/property-tax/drafts",
+    //   leftIcon: <Icon action="image" name="edit" />,
+    //   rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    // },
+    // {
+    //   primaryText: <Label label="PT_MY_RECEIPTS" />,
+    //   route: "/citizen/property-tax/my-receipts",
+    //   leftIcon: <Icon action="action" name="receipt" />,
+    //   rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    // },
     {
-      primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
-      route: "/citizen/property-tax/drafts",
-      leftIcon: <Icon action="image" name="edit" />,
-      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-    },
-    {
-      primaryText: <Label label="PT_MY_RECEIPTS" />,
+      primaryText: <Label label="Completed Assessments" />,
       route: "/citizen/property-tax/my-receipts",
-      leftIcon: <Icon action="action" name="receipt" />,
-      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-    },
-    {
-      primaryText: <Label label="PT_EXAMPLES" />,
-      leftIcon: <Icon action="custom" name="pt-example" />,
+      leftIcon: <Icon action="action" name="done" />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
     {
       primaryText: <Label label="PT_HOW_IT_WORKS" />,
       leftIcon: <Icon action="action" name="help" />,
+      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+    },
+    {
+      primaryText: <Label label="PT_EXAMPLES" />,
+      leftIcon: <Icon action="custom" name="pt-example" />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
   ];
@@ -98,16 +104,16 @@ class PTHome extends Component {
                   className="col-xs-4 text-center pt-new-property"
                 >
                   <Icon style={iconStyle} action="communication" name="business" />
-                  <Label label="New Property" fontSize="20px" containerStyle={labelContainerStyle} />
+                  <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} />
                 </div>
                 <div className="col-xs-4 text-center pt-search-property">
                   <Icon style={iconStyle} action="action" name="search" />
-                  <Label label="Search Property" fontSize="20px" containerStyle={labelContainerStyle} />
+                  <Label label="Incomplete Assessments (2)" fontSize="20px" containerStyle={labelContainerStyle} />
                 </div>
                 <Link to="/citizen/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <Label label="My Properties" fontSize="20px" containerStyle={labelContainerStyle} />
+                    <Label label="My Properties (2)" fontSize="20px" containerStyle={labelContainerStyle} />
                   </div>
                 </Link>
               </div>

@@ -75,16 +75,21 @@ const bottomInfoTemplate = (item, role) => {
           </div>
         </div>
       )}
-      {item.escalatedTo && (
-        <div className="submitted-by-text">
-          Escalated To: <span style={{ color: "#464646" }}>{item.escalatedTo}</span>
-        </div>
-      )}
-      {item.reassign && (
-        <div className="employee-bottom-msg">
-          <Label label={role === "ao" ? `${item.reassignRequestedBy} requested for re-assign` : "You have requested for re-assign"} dark={true} />
-        </div>
-      )}
+      {item.escalatedTo &&
+        role !== "csr" && (
+          <div className="submitted-by-text">
+            Escalated To: <span style={{ color: "#464646" }}>{item.escalatedTo}</span>
+          </div>
+        )}
+      {item.reassign &&
+        role !== "csr" && (
+          <div className="employee-bottom-msg">
+            <Label
+              label={role === "ao" ? `${item.reassignRequestedBy} CS_MYCOMPLAINTS_REASSIGN_MESSAGE` : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2"}
+              dark={true}
+            />
+          </div>
+        )}
     </div>
   ) : (
     ""

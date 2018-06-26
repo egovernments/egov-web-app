@@ -107,7 +107,7 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
         )
       )
     ),
-    item.escalatedTo && _react2.default.createElement(
+    item.escalatedTo && role !== "csr" && _react2.default.createElement(
       "div",
       { className: "submitted-by-text" },
       "Escalated To: ",
@@ -117,10 +117,13 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
         item.escalatedTo
       )
     ),
-    item.reassign && _react2.default.createElement(
+    item.reassign && role !== "csr" && _react2.default.createElement(
       "div",
       { className: "employee-bottom-msg" },
-      _react2.default.createElement(_translationNode2.default, { label: role === "ao" ? item.reassignRequestedBy + " requested for re-assign" : "You have requested for re-assign", dark: true })
+      _react2.default.createElement(_translationNode2.default, {
+        label: role === "ao" ? item.reassignRequestedBy + " CS_MYCOMPLAINTS_REASSIGN_MESSAGE" : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2",
+        dark: true
+      })
     )
   ) : "";
 };
