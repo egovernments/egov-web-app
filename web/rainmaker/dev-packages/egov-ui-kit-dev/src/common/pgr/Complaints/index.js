@@ -213,7 +213,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                     <Label fontSize="12px" color="#484848" label={complaint.address} className="complaint-address" />
                   </div>
                 )}
-                {role !== "csr" &&
+                {role === "citizen" &&
                   complaint &&
                   complaint.images &&
                   complaint.images.length > 0 && (

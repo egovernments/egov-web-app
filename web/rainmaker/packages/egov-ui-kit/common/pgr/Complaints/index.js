@@ -128,7 +128,7 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
       "div",
       { className: "employee-bottom-msg" },
       _react2.default.createElement(_translationNode2.default, {
-        label: role === "ao" ? item.reassignRequestedBy + " requested for re-assign" : "You have requested for re-assign",
+        label: role === "ao" ? item.reassignRequestedBy + " CS_MYCOMPLAINTS_REASSIGN_MESSAGE1" : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2",
         dark: true,
         fontSize: 12
       })
@@ -266,7 +266,7 @@ var Complaints = function Complaints(_ref) {
             _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: { height: 18, width: 18, marginRight: 10 }, color: "#767676" }),
             _react2.default.createElement(_translationNode2.default, { fontSize: "12px", color: "#484848", label: complaint.address, className: "complaint-address" })
           ),
-          role !== "csr" && complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(
+          role === "citizen" && complaint && complaint.images && complaint.images.length > 0 && _react2.default.createElement(
             "div",
             { className: "complaint-image-cont" },
             complaint.images.map(function (image, index) {
