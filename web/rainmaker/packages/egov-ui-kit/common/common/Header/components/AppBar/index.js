@@ -50,13 +50,14 @@ var styles = {
 var EgovAppBar = function EgovAppBar(_ref) {
   var className = _ref.className,
       title = _ref.title,
+      titleAddon = _ref.titleAddon,
       isHomeScreen = _ref.isHomeScreen,
       role = _ref.role,
       fetchLocalizationLabel = _ref.fetchLocalizationLabel,
       _ref$userInfo = _ref.userInfo,
       userInfo = _ref$userInfo === undefined ? {} : _ref$userInfo,
       onToolBarIconClick = _ref.onToolBarIconClick,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "title", "titleAddon", "isHomeScreen", "role", "fetchLocalizationLabel", "userInfo", "onToolBarIconClick"]);
 
   return _react2.default.createElement(
     "div",
@@ -75,6 +76,11 @@ var EgovAppBar = function EgovAppBar(_ref) {
             _react2.default.createElement("img", { src: _pblogo2.default })
           ),
           _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
+          titleAddon && _react2.default.createElement(_translationNode2.default, {
+            containerStyle: { display: "inline-block", marginLeft: 5 },
+            className: "screenHeaderLabelStyle appbar-title-label",
+            label: titleAddon
+          }),
           _react2.default.createElement(_translationNode2.default, {
             containerStyle: { marginLeft: "10px" },
             className: "screenHeaderLabelStyle appbar-municipal-label",

@@ -8,6 +8,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import { connect } from "react-redux";
 import orderby from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import "./index.css";
 
@@ -19,10 +20,17 @@ class AllComplaints extends Component {
     search: false,
   };
   componentDidMount() {
-    let { fetchComplaints, role } = this.props;
+    let { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
-    // fetchComplaints();
   }
+
+  componentWillReceiveProps = (nextProps) => {
+    const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
+    if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
+      const numberOfComplaints = role === "employee" ? numEmpComplaint : role === "csr" ? numCSRComplaint : 0;
+      renderCustomTitle(numberOfComplaints);
+    }
+  };
 
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/employee/complaint-details/${complaintNo}`);
@@ -148,7 +156,7 @@ class AllComplaints extends Component {
               <div className="col-xs-12" style={{ paddingLeft: 8 }}>
                 <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
               </div>
-              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
+              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8, paddingRight: 40 }}>
                 <TextField
                   id="mobile-no"
                   name="mobile-no"
@@ -177,7 +185,7 @@ class AllComplaints extends Component {
               <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
                 <Button
                   label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
-                  style={{ marginRight: 45, width: "36%" }}
+                  style={{ marginRight: 28, width: "36%" }}
                   backgroundColor="#fe7a51"
                   labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
                   buttonStyle={{ border: 0 }}
@@ -279,8 +287,10 @@ const mapStateToProps = (state) => {
     );
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
+  const numEmpComplaint = employeeComplaints.length;
+  const numCSRComplaint = transformedComplaints.length;
 
-  return { assignedComplaints, unassignedComplaints, employeeComplaints, role, loading, transformedComplaints };
+  return { assignedComplaints, unassignedComplaints, numEmpComplaint, numCSRComplaint, employeeComplaints, role, loading, transformedComplaints };
 };
 
 const mapDispatchToProps = (dispatch) => {

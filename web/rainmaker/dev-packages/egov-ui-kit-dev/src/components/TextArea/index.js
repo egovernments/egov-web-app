@@ -5,6 +5,20 @@ import TextField from "material-ui/TextField";
 const defaultStyle = {
   backgroundColor: "transparent",
 };
+
+const floatingLabelBaseStyle = {
+  top: 30,
+  fontSize: "14px",
+  letterSpacing: "0.6px",
+};
+
+const floatingLabelBaseShrinkStyle = {
+  fontSize: "12px",
+  color: "#00bcd1",
+  transform: "scale(1) translate(0px, -16px)",
+  fontWeight: 500,
+};
+
 const TextAreaUi = ({
   className,
   style,
@@ -23,7 +37,9 @@ const TextAreaUi = ({
   rowsMax,
   underlineStyle,
   underlineFocusStyle,
+  floatingLabelStyle = {},
   id,
+  ...rest
 }) => {
   return (
     <TextField
@@ -43,7 +59,9 @@ const TextAreaUi = ({
       underlineShow={underlineShow}
       underlineStyle={underlineStyle}
       underlineFocusStyle={underlineFocusStyle}
+      floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
       value={value}
+      {...rest}
     />
   );
 };

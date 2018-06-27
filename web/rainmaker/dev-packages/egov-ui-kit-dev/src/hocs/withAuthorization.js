@@ -15,6 +15,9 @@ const withAuthorization = (options = {}) => (Component) => {
         window.androidAppProxy.stopSMSReceiver();
       }
     }
+    state = {
+      titleAddon: "",
+    };
 
     componentWillMount() {
       const { authenticated } = this.props;
@@ -24,19 +27,45 @@ const withAuthorization = (options = {}) => (Component) => {
       }
     }
 
+    roleFromUserInfo = (roles = [], role) => {
+      const roleCodes = roles.map((role) => {
+        return role.code;
+      });
+      return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
+    };
+
     getUserRole = (userInfo) => {
       return (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
     };
 
-    render() {
-      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu } = options;
-      const { history, authenticated, userInfo } = this.props;
-      const role = this.getUserRole(userInfo);
+    renderCustomTitle = (numberOfComplaints) => {
+      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "";
+      this.setState({ titleAddon });
+    };
 
+    render() {
+      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu, showNumberOfComplaints } = options;
+      const { history, authenticated, userInfo, complaints } = this.props;
+      const { titleAddon } = this.state;
+      const role = this.roleFromUserInfo(userInfo.roles, "CITIZEN")
+        ? "citizen"
+        : this.roleFromUserInfo(userInfo.roles, "GRO")
+          ? "ao"
+          : this.roleFromUserInfo(userInfo.roles, "CSR")
+            ? "csr"
+            : "employee";
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
-            <Header title={title} userInfo={userInfo} role={role} options={options} history={history} className="rainmaker-header" />
+            <Header
+              title={title}
+              titleAddon={titleAddon && titleAddon}
+              userInfo={userInfo}
+              role={role}
+              options={options}
+              history={history}
+              className="rainmaker-header"
+            />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
             {role !== "citizen" &&
@@ -64,7 +93,7 @@ const withAuthorization = (options = {}) => (Component) => {
                       fontSize={20}
                     />
                   )}
-                  <Component {...this.props} />
+                  <Component {...this.props} renderCustomTitle={this.renderCustomTitle} />
                 </div>
               ) : null}
             </div>
@@ -81,6 +110,7 @@ const withAuthorization = (options = {}) => (Component) => {
 
   const mapStateToProps = (state) => {
     const { authenticated, userInfo } = state.auth;
+    const { complaints } = state || {};
     return { authenticated, userInfo };
   };
   return compose(

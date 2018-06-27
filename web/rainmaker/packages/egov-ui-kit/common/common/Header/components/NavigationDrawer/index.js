@@ -44,7 +44,8 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
       userInfo = _ref.userInfo,
       cities = _ref.cities,
       fetchLocalizationLabel = _ref.fetchLocalizationLabel,
-      containerStyle = _ref.containerStyle;
+      containerStyle = _ref.containerStyle,
+      isCSR = _ref.isCSR;
 
   return _react2.default.createElement(
     _components.Drawer,
@@ -66,7 +67,7 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
         onItemClick: handleItemClick,
         innerDivStyle: styles.listInnerDivStyle,
         className: "drawer-list-style",
-        items: (0, _menuItems2.default)(role, "one"),
+        items: (0, _menuItems2.default)(role, "one", isCSR),
         listContainerStyle: { background: "#ffffff" },
         listItemStyle: { borderBottom: "1px solid #e0e0e0" }
       }),
@@ -75,7 +76,7 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
         onItemClick: handleItemClick,
         innerDivStyle: styles.listInnerDivStyle,
         className: "drawer-list-style",
-        items: (0, _menuItems2.default)(role, "two"),
+        items: (0, _menuItems2.default)(role, "two", isCSR),
         listContainerStyle: { background: "#ffffff" },
         listItemStyle: { borderBottom: "1px solid #e0e0e0" }
       }),

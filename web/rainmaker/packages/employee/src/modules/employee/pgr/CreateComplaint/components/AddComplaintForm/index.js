@@ -51,6 +51,8 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                 <TextField
                   className="fix-for-layout-break"
                   {...address}
+                  multiLine={true}
+                  rowsMax={3}
                   name="complainant-mobile-no"
                   onChange={(e, value) => handleFieldChange("address", value)}
                 />

@@ -8,6 +8,10 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -25,6 +29,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var defaultStyle = {
   backgroundColor: "transparent"
 };
+
+var floatingLabelBaseStyle = {
+  top: 30,
+  fontSize: "14px",
+  letterSpacing: "0.6px"
+};
+
+var floatingLabelBaseShrinkStyle = {
+  fontSize: "12px",
+  color: "#00bcd1",
+  transform: "scale(1) translate(0px, -16px)",
+  fontWeight: 500
+};
+
 var TextAreaUi = function TextAreaUi(_ref) {
   var className = _ref.className,
       style = _ref.style,
@@ -44,9 +62,12 @@ var TextAreaUi = function TextAreaUi(_ref) {
       rowsMax = _ref.rowsMax,
       underlineStyle = _ref.underlineStyle,
       underlineFocusStyle = _ref.underlineFocusStyle,
-      id = _ref.id;
+      _ref$floatingLabelSty = _ref.floatingLabelStyle,
+      floatingLabelStyle = _ref$floatingLabelSty === undefined ? {} : _ref$floatingLabelSty,
+      id = _ref.id,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "style", "underlineShow", "inputStyle", "onChange", "errorMessage", "value", "disabled", "isRequired", "hide", "rows", "hintText", "hintStyle", "textareaStyle", "rowsMax", "underlineStyle", "underlineFocusStyle", "floatingLabelStyle", "id"]);
 
-  return _react2.default.createElement(_TextField2.default, {
+  return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
     className: className,
     id: id,
     fullWidth: true,
@@ -63,8 +84,9 @@ var TextAreaUi = function TextAreaUi(_ref) {
     underlineShow: underlineShow,
     underlineStyle: underlineStyle,
     underlineFocusStyle: underlineFocusStyle,
+    floatingLabelStyle: (0, _extends3.default)({}, floatingLabelBaseStyle, floatingLabelStyle),
     value: value
-  });
+  }, rest));
 };
 
 TextAreaUi.propTypes = {

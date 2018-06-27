@@ -194,6 +194,7 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
                     className="complaint-status-text text-bold"
                     labelStyle={{ letterSpacing: 0.7, wordBreak: "normal", ...getStatusAndChangeColor(complaint.status.status).style }}
                     label={complaint.status.status}
+                    bold={true}
                   />
                 </div>
                 <div className="complaint-date-cont">

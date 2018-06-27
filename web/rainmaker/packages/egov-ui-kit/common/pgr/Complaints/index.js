@@ -236,7 +236,8 @@ var Complaints = function Complaints(_ref) {
             _react2.default.createElement(_translationNode2.default, {
               className: "complaint-status-text text-bold",
               labelStyle: (0, _extends3.default)({ letterSpacing: 0.7, wordBreak: "normal" }, getStatusAndChangeColor(complaint.status.status).style),
-              label: complaint.status.status
+              label: complaint.status.status,
+              bold: true
             })
           ),
           _react2.default.createElement(
