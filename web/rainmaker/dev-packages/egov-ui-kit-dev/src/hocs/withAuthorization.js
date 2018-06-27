@@ -27,10 +27,13 @@ const withAuthorization = (options = {}) => (Component) => {
       }
     }
 
-    roleFromUserInfo = (roles = [], role) => {
-      const roleCodes = roles.map((role) => {
-        return role.code;
-      });
+    roleFromUserInfo = (userInfo, role) => {
+      const roleCodes =
+        userInfo && userInfo.roles
+          ? userInfo.roles.map((role) => {
+              return role.code;
+            })
+          : [];
       return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
     };
 
@@ -47,13 +50,15 @@ const withAuthorization = (options = {}) => (Component) => {
       const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu, showNumberOfComplaints } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
       const { titleAddon } = this.state;
-      const role = this.roleFromUserInfo(userInfo.roles, "CITIZEN")
+      const role = this.roleFromUserInfo(userInfo, "CITIZEN")
         ? "citizen"
-        : this.roleFromUserInfo(userInfo.roles, "GRO")
+        : this.roleFromUserInfo(userInfo, "GRO")
           ? "ao"
-          : this.roleFromUserInfo(userInfo.roles, "CSR")
+          : this.roleFromUserInfo(userInfo, "CSR")
             ? "csr"
-            : "employee";
+            : this.roleFromUserInfo(userInfo, "EMPLOYEE")
+              ? "employee"
+              : "";
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
