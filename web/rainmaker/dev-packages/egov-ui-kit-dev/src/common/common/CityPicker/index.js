@@ -83,7 +83,7 @@ class CityPickerDialog extends Component {
           onRequestClose={onClose}
           style={{
             paddingTop: "0",
-            marginTop: "-30px",
+            // marginTop: "-30px",
             bottom: "0",
             height: "auto",
           }}
@@ -94,7 +94,7 @@ class CityPickerDialog extends Component {
             dataSource={cities}
             searchInputText="Search"
             searchKey="text"
-            autoFocus={true}
+            autoFocus={false}
             callback={autoSuggestCallback}
           />
           <List

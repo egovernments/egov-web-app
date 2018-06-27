@@ -41,7 +41,7 @@ var prefixBaseStyle = {
   position: "absolute",
   color: "#969696",
   zIndex: 2,
-  top: 35,
+  top: 36,
   paddingRight: 5,
   borderRight: "1px solid #eee"
 };
