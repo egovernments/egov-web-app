@@ -59,13 +59,10 @@ var withAuthorization = function withAuthorization() {
           titleAddon: ""
         };
 
-        _this.roleFromUserInfo = function () {
-          var roles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-          var role = arguments[1];
-
-          var roleCodes = roles.map(function (role) {
+        _this.roleFromUserInfo = function (userInfo, role) {
+          var roleCodes = userInfo && userInfo.roles ? userInfo.roles.map(function (role) {
             return role.code;
-          });
+          }) : [];
           return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
         };
 
@@ -112,7 +109,7 @@ var withAuthorization = function withAuthorization() {
               complaints = _props.complaints;
           var titleAddon = this.state.titleAddon;
 
-          var role = this.roleFromUserInfo(userInfo.roles, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : this.roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
+          var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : "";
           return _react2.default.createElement(
             "div",
             { className: "rainmaker-header-cont", style: { position: "relative" } },
