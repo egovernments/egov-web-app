@@ -23,6 +23,7 @@ import ComplaintAssigned from "modules/employee/pgr/ComplaintAssigned";
 import ResolveSuccess from "modules/employee/pgr/ResolveSuccess";
 import ReassignSuccess from "modules/employee/pgr/ReassignSuccess";
 import CreateComplaint from "modules/employee/pgr/CreateComplaint";
+import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 
@@ -281,6 +282,19 @@ const routes = [
   {
     path: "complaint-submitted",
     component: ComplaintCreated,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_HEADER_COMPLAINT_SUBMITTED",
+      hideTitle: true,
+      hideBackButton: true,
+    },
+  },
+
+  //create employee
+  {
+    path: "create",
+    component: CreateEmployee,
     needsAuthentication: true,
     options: {
       hideFooter: true,
