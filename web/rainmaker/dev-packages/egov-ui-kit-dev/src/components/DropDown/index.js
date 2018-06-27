@@ -51,6 +51,7 @@ const DropDownUi = ({
   underlineStyle,
   hintText,
   hintStyle,
+  ...rest
 }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
@@ -89,6 +90,7 @@ const DropDownUi = ({
       iconStyle={{ fill: "#484848" }}
       underlineStyle={{ ...underlineFocusBaseStyle, ...underlineStyle }}
       hintStyle={{ ...hintBaseStyle, ...hintStyle }}
+      {...rest}
     >
       {dropDownData && renderSelectMenuItems()}
     </SelectField>

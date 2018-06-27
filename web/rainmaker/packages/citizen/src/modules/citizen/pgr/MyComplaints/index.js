@@ -7,6 +7,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { displayLocalizedStatusMessage, transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
 import "./index.css";
 
 class MyComplaints extends Component {
@@ -17,6 +18,14 @@ class MyComplaints extends Component {
 
   onComplaintClick = (complaintNo) => {
     this.props.history.push(`/citizen/complaint-details/${complaintNo}`);
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    const { role, transformedComplaints, renderCustomTitle } = this.props;
+    if (!isEqual(transformedComplaints, nextProps.transformedComplaints)) {
+      const numberOfComplaints = transformedComplaints && transformedComplaints.length;
+      renderCustomTitle(numberOfComplaints);
+    }
   };
 
   render() {

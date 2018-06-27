@@ -89,12 +89,14 @@ const items = {
               borderLeft: "3px solid #00bbd3",
             },
             id: "header-home",
+            renderForCSR: true,
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
             route: "/employee/closed-complaints",
             leftIcon: <Icon action="custom" name="file-check" />,
             id: "header-closed-complaint",
+            renderForCSR: false,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
@@ -105,6 +107,7 @@ const items = {
               paddingTop: "2px",
             },
             id: "header-contact-us",
+            renderForCSR: true,
           },
 
           {
@@ -116,6 +119,7 @@ const items = {
               paddingTop: "3px",
             },
             id: "header-profile",
+            renderForCSR: true,
           },
           {
             primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -125,6 +129,7 @@ const items = {
               borderBottom: "none",
             },
             id: "header-language",
+            renderForCSR: true,
           },
         ],
       },
@@ -139,6 +144,7 @@ const items = {
               borderLeft: "red",
             },
             id: "header-logout",
+            renderForCSR: true,
           },
         ],
       },
@@ -146,8 +152,15 @@ const items = {
   },
 };
 
-const menuItems = (role = "citizen", section = "one") => {
-  return items[role].sections[section].items;
+const renderMenuForCSR = (role, section) => {
+  const menuForCSR = items[role].sections[section].items.filter((item) => {
+    return item.renderForCSR === true;
+  });
+  return menuForCSR;
+};
+
+const menuItems = (role = "citizen", section = "one", isCSR) => {
+  return isCSR ? renderMenuForCSR(role, section) : items[role].sections[section].items;
 };
 
 export default menuItems;
