@@ -43,7 +43,8 @@ var customIconStyles = {
   width: 25,
   margin: 0,
   top: 10,
-  left: 12
+  left: 12,
+  fill: "#fe7a51"
 };
 
 var ComplaintType = function (_Component) {

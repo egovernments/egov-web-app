@@ -43,6 +43,9 @@ class UserSettings extends Component {
     iconStyle: {
       marginRight: "30px",
     },
+    listStyle: {
+      display: "block",
+    },
   };
 
   onChange = (event, index, value) => {
@@ -57,7 +60,14 @@ class UserSettings extends Component {
 
     return (
       <div className="userSettingsContainer">
-        <DropDown onChange={this.onChange} style={style.baseStyle} labelStyle={style.label} dropDownData={items} value={languageSelected} />
+        <DropDown
+          onChange={this.onChange}
+          listStyle={style.listStyle}
+          style={style.baseStyle}
+          labelStyle={style.label}
+          dropDownData={items}
+          value={languageSelected}
+        />
         {/* <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} /> */}
         <div onClick={onIconClick} className="userSettingsInnerContainer">
           <Image width={"33px"} circular={true} source={userInfo.photo || emptyFace} />

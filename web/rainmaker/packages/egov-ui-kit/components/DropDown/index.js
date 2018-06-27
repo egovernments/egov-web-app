@@ -8,6 +8,10 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -77,7 +81,8 @@ var DropDownUi = function DropDownUi(_ref) {
       floatingLabelText = _ref.floatingLabelText,
       underlineStyle = _ref.underlineStyle,
       hintText = _ref.hintText,
-      hintStyle = _ref.hintStyle;
+      hintStyle = _ref.hintStyle,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle"]);
 
   var renderSelectMenuItems = function renderSelectMenuItems() {
     return dropDownData.map(function (option, index) {
@@ -87,7 +92,7 @@ var DropDownUi = function DropDownUi(_ref) {
 
   return _react2.default.createElement(
     _SelectField2.default,
-    {
+    (0, _extends3.default)({
       errorText: errorText,
       errorStyle: errorStyle,
       className: "dropdown " + className,
@@ -114,7 +119,7 @@ var DropDownUi = function DropDownUi(_ref) {
       iconStyle: { fill: "#484848" },
       underlineStyle: (0, _extends3.default)({}, underlineFocusBaseStyle, underlineStyle),
       hintStyle: (0, _extends3.default)({}, hintBaseStyle, hintStyle)
-    },
+    }, rest),
     dropDownData && renderSelectMenuItems()
   );
 };

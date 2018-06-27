@@ -97,12 +97,13 @@ class Header extends Component {
     const { toggleMenu, logoutPopupOpen } = this.state;
     const { _onUpdateMenuStatus, _handleItemClick, _logout, _closeLogoutDialog, _appBarProps } = this;
     const appBarProps = _appBarProps();
-    const { className, role, cities, history, title, fetchLocalizationLabel, userInfo, isHomeScreen } = this.props;
+    const { className, role, cities, history, title, titleAddon, fetchLocalizationLabel, userInfo, isHomeScreen } = this.props;
     return (
       <div>
         <AppBar
           className={className}
           title={title}
+          titleAddon={titleAddon}
           role={role}
           {...appBarProps}
           fetchLocalizationLabel={fetchLocalizationLabel}
@@ -117,6 +118,7 @@ class Header extends Component {
           userInfo={userInfo}
           fetchLocalizationLabel={fetchLocalizationLabel}
           role={role && role === "citizen" ? "citizen" : "employee"}
+          isCSR={role === "csr" ? true : false}
           openSecondary={window.innerWidth >= 768 ? true : false}
           width={300}
           // containerStyle={{ top: "64px" }}

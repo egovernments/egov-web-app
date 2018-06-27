@@ -164,6 +164,7 @@ var Header = function (_Component) {
           cities = _props.cities,
           history = _props.history,
           title = _props.title,
+          titleAddon = _props.titleAddon,
           fetchLocalizationLabel = _props.fetchLocalizationLabel,
           userInfo = _props.userInfo,
           isHomeScreen = _props.isHomeScreen;
@@ -174,6 +175,7 @@ var Header = function (_Component) {
         _react2.default.createElement(_AppBar2.default, (0, _extends3.default)({
           className: className,
           title: title,
+          titleAddon: titleAddon,
           role: role
         }, appBarProps, {
           fetchLocalizationLabel: fetchLocalizationLabel,
@@ -188,6 +190,7 @@ var Header = function (_Component) {
           userInfo: userInfo,
           fetchLocalizationLabel: fetchLocalizationLabel,
           role: role && role === "citizen" ? "citizen" : "employee",
+          isCSR: role === "csr" ? true : false,
           openSecondary: window.innerWidth >= 768 ? true : false,
           width: 300
           // containerStyle={{ top: "64px" }}

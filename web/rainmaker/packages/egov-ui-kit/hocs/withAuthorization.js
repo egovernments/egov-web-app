@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -51,8 +55,27 @@ var withAuthorization = function withAuthorization() {
 
         var _this = (0, _possibleConstructorReturn3.default)(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props));
 
+        _this.state = {
+          titleAddon: ""
+        };
+
+        _this.roleFromUserInfo = function () {
+          var roles = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+          var role = arguments[1];
+
+          var roleCodes = roles.map(function (role) {
+            return role.code;
+          });
+          return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
+        };
+
         _this.getUserRole = function (userInfo) {
           return userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase() || null;
+        };
+
+        _this.renderCustomTitle = function (numberOfComplaints) {
+          var titleAddon = numberOfComplaints ? "(" + numberOfComplaints + ")" : "";
+          _this.setState({ titleAddon: titleAddon });
         };
 
         if (typeof androidAppProxy !== "undefined" && window.androidAppProxy.smsReceiverRunning()) {
@@ -80,18 +103,28 @@ var withAuthorization = function withAuthorization() {
               isHomeScreen = options.isHomeScreen,
               hideTitle = options.hideTitle,
               titleBackground = options.titleBackground,
-              hideActionMenu = options.hideActionMenu;
+              hideActionMenu = options.hideActionMenu,
+              showNumberOfComplaints = options.showNumberOfComplaints;
           var _props = this.props,
               history = _props.history,
               authenticated = _props.authenticated,
-              userInfo = _props.userInfo;
+              userInfo = _props.userInfo,
+              complaints = _props.complaints;
+          var titleAddon = this.state.titleAddon;
 
-          var role = this.getUserRole(userInfo);
-
+          var role = this.roleFromUserInfo(userInfo.roles, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : this.roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
           return _react2.default.createElement(
             "div",
             { className: "rainmaker-header-cont", style: { position: "relative" } },
-            !hideHeader && authenticated ? _react2.default.createElement(_common.Header, { title: title, userInfo: userInfo, role: role, options: options, history: history, className: "rainmaker-header" }) : null,
+            !hideHeader && authenticated ? _react2.default.createElement(_common.Header, {
+              title: title,
+              titleAddon: titleAddon && titleAddon,
+              userInfo: userInfo,
+              role: role,
+              options: options,
+              history: history,
+              className: "rainmaker-header"
+            }) : null,
             _react2.default.createElement(
               "div",
               { className: " col-xs-12", style: { padding: 0 } },
@@ -124,7 +157,7 @@ var withAuthorization = function withAuthorization() {
                     bold: true,
                     fontSize: 20
                   }),
-                  _react2.default.createElement(Component, this.props)
+                  _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, { renderCustomTitle: this.renderCustomTitle }))
                 ) : null
               )
             )
@@ -138,6 +171,9 @@ var withAuthorization = function withAuthorization() {
       var _state$auth = state.auth,
           authenticated = _state$auth.authenticated,
           userInfo = _state$auth.userInfo;
+
+      var _ref = state || {},
+          complaints = _ref.complaints;
 
       return { authenticated: authenticated, userInfo: userInfo };
     };

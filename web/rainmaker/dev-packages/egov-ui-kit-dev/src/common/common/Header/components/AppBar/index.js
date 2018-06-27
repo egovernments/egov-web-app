@@ -13,7 +13,7 @@ const styles = {
 };
 
 // handle listners
-const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLabel, userInfo = {}, onToolBarIconClick, ...rest }) => {
+const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLocalizationLabel, userInfo = {}, onToolBarIconClick, ...rest }) => {
   return (
     <div>
       <AppBar
@@ -25,6 +25,13 @@ const EgovAppBar = ({ className, title, isHomeScreen, role, fetchLocalizationLab
               <img src={pbLogo} />
             </div>
             <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
+            {titleAddon && (
+              <Label
+                containerStyle={{ display: "inline-block", marginLeft: 5 }}
+                className="screenHeaderLabelStyle appbar-title-label"
+                label={titleAddon}
+              />
+            )}
             <Label
               containerStyle={{ marginLeft: "10px" }}
               className="screenHeaderLabelStyle appbar-municipal-label"
