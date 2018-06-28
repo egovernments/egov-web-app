@@ -26,6 +26,7 @@ import CreateComplaint from "modules/employee/pgr/CreateComplaint";
 import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
+import Report from "modules/employee/reports/report";
 
 //Redirection Url
 const redirectionUrl = "/employee/user/login";
@@ -295,6 +296,17 @@ const routes = [
   {
     path: "create",
     component: CreateEmployee,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "CS_HEADER_COMPLAINT_SUBMITTED",
+      hideTitle: true,
+      hideBackButton: true,
+    },
+  },
+  {
+    path: "report/:moduleName/:reportName",
+    component: Report,
     needsAuthentication: true,
     options: {
       hideFooter: true,
