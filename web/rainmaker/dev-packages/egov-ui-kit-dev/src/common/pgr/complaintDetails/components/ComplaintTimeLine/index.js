@@ -17,13 +17,17 @@ const timelineButtonContainerStyle = {
 
 const statusContainerStyle = {
   display: "inline-block",
+  marginRight: "3px",
 };
 
 const nameContainerStyle = {
   display: "inline-block",
-  marginLeft: "3px",
 };
 
+const displayBlock = {
+  display: "block",
+  marginBottom: 5,
+};
 const timelineIconCommonStyle = {
   height: "38px",
   width: "38px",
@@ -111,27 +115,36 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <Label labelClassName="rainmaker-small-font complaint-timeline-date" label={getDateFromEpoch(date)} />
           <Label
             labelClassName="dark-color complaint-timeline-status"
-            containerStyle={statusContainerStyle}
+            containerStyle={filedBy && filedBy.includes("@CSR") ? displayBlock : statusContainerStyle}
             label={`${
               action === "reopen"
                 ? "CS_COMMON_COMPLAINT_REOPENED"
                 : role !== "citizen"
                   ? filedBy
-                    ? "ES_COMMON_FILED_BY"
+                    ? filedBy.includes("@CSR")
+                      ? "Complaint Filed at Counter"
+                      : "ES_COMMON_FILED_BY"
                     : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
                   : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
             }`}
           />
           {action !== "reopen" &&
             role !== "citizen" &&
-            filedBy && <Label label={filedBy} containerStyle={nameContainerStyle} labelClassName="dark-color" />}
+            filedBy && (
+              <Label
+                label={filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy}
+                containerStyle={nameContainerStyle}
+                fontSize={filedBy.includes("@CSR") ? 12 : 14}
+                dark={filedBy.includes("@CSR") ? false : true}
+              />
+            )}
           {role !== "citizen" &&
             openStatusCount == 1 &&
             (currentStatus === "open" || currentStatus === "assigned") &&
             filedUserMobileNumber && (
               <a className="pgr-call-icon" href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                <span style={{ marginLeft: "43px" }}>{`+91 ${filedUserMobileNumber}`}</span>
+                <span style={{ fontSize: 12, marginLeft: "43px" }}>{`+91 ${filedUserMobileNumber}`}</span>
               </a>
             )}
 

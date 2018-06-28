@@ -33,7 +33,7 @@ const theme = {
     connectorLineColor: "#f5a623",
   },
   radioButton: {
-    color: "#fe7a51",
+    background: "#fe7a51",
   },
 };
 
