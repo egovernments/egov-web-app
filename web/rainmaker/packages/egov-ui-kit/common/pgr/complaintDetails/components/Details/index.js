@@ -36,8 +36,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var iconStyle = {
   marginRight: "13px",
-  height: "22px",
-  width: "22px"
+  height: "24px",
+  width: "24px"
 };
 
 var imageStyles = {

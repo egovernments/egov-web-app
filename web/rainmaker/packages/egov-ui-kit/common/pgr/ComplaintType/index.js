@@ -100,7 +100,7 @@ var ComplaintType = function (_Component) {
 
       listItem.primaryText = _react2.default.createElement(_translationNode2.default, { label: displayKey });
       listItem.id = id;
-      listItem.leftIcon = _react2.default.createElement(_components.Icon, { style: customIconStyles, action: "custom", name: icon, color: "#f89a3f" });
+      listItem.leftIcon = _react2.default.createElement(_components.Icon, { style: customIconStyles, action: "custom", name: icon, color: "#fe7a51" });
       return listItem;
     }, _this.prepareResultsForDisplay = function () {
       var results = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -159,7 +159,7 @@ var ComplaintType = function (_Component) {
           searchInputText: "Search",
           searchKey: "text",
           callback: autoSuggestCallback,
-          autoFocus: true
+          autoFocus: false
         }),
         displayInitialList ? this.renderList(prepareResultsForDisplay(dataSource)) : this.renderList(prepareResultsForDisplay(results), true)
       );
