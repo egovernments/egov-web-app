@@ -100,7 +100,7 @@ var ActionMenu = function (_Component) {
       var role = _this.props.role;
 
       var transformedRole = role === "citizen" ? "citizen" : "employee";
-      var actionList = _actionList2.default[transformedRole];
+      var actionList = _actionList2.default[role];
 
       if (splitArray.length > 1) {
         if (!(0, _lodash.some)(menuItems, { name: splitArray[0] })) {
@@ -137,7 +137,7 @@ var ActionMenu = function (_Component) {
       var role = _this.props.role;
 
       var transformedRole = role === "citizen" ? "citizen" : "employee";
-      var actionList = _actionList2.default && _actionList2.default[transformedRole];
+      var actionList = _actionList2.default && _actionList2.default[role];
       var menuItems = [];
 
       for (var i = 0; i < (actionList && actionList.length); i++) {
@@ -227,23 +227,17 @@ var ActionMenu = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _props = this.props,
-          handleToggle = _props.handleToggle,
-          role = _props.role;
+      var role = this.props.role;
 
       var transformedRole = role === "citizen" ? "citizen" : "employee";
       var _state = this.state,
           searchText = _state.searchText,
-          modules = _state.modules,
-          items = _state.items,
-          changeModulesActions = _state.changeModulesActions,
           path = _state.path,
           menuItems = _state.menuItems;
       var changeLevel = this.changeLevel,
-          menuChange = this.menuChange,
-          changeRoute = this.changeRoute;
+          menuChange = this.menuChange;
 
-      var actionList = _actionList2.default && _actionList2.default[transformedRole];
+      var actionList = _actionList2.default && _actionList2.default[role];
 
       var showMenuItem = function showMenuItem() {
         if (searchText.length == 0) {
