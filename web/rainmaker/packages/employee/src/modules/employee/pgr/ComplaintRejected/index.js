@@ -20,7 +20,7 @@ class ComplaintRejected extends Component {
 
         <div className="responsive-action-button-cont">
           <Button
-            id="responsive-action-button"
+            className="responsive-action-button"
             primary={true}
             label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
             fullWidth={true}
