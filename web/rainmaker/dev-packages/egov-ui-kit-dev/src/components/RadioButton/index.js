@@ -1,6 +1,9 @@
 import React from "react";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 
+const selectedIconStyle = {
+  fill: "fe7a51",
+};
 const RadioButtonUi = ({
   options,
   valueSelected,
@@ -29,7 +32,7 @@ const RadioButtonUi = ({
           value={value}
           label={label}
           labelStyle={value === valueSelected ? { ...labelStyle, ...selectedLabelStyle } : labelStyle}
-          iconStyle={iconStyle}
+          iconStyle={value === valueSelected ? { ...iconStyle, ...selectedIconStyle } : iconStyle}
           checkedIcon={checkedIcon}
         />
       );

@@ -24,7 +24,7 @@ const EgovAppBar = ({ className, title, titleAddon, isHomeScreen, role, fetchLoc
             <div className="citizen-header-logo">
               <img src={pbLogo} />
             </div>
-            <Label containerStyle={{ marginLeft: "10px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
+            <Label containerStyle={{ marginLeft: "0px" }} className="screenHeaderLabelStyle appbar-title-label" label={title} />
             {titleAddon && (
               <Label
                 containerStyle={{ display: "inline-block", marginLeft: 5 }}

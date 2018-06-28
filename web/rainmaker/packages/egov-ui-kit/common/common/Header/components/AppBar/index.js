@@ -75,7 +75,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
             { className: "citizen-header-logo" },
             _react2.default.createElement("img", { src: _pblogo2.default })
           ),
-          _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "10px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
+          _react2.default.createElement(_translationNode2.default, { containerStyle: { marginLeft: "0px" }, className: "screenHeaderLabelStyle appbar-title-label", label: title }),
           titleAddon && _react2.default.createElement(_translationNode2.default, {
             containerStyle: { display: "inline-block", marginLeft: 5 },
             className: "screenHeaderLabelStyle appbar-title-label",

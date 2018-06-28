@@ -16,6 +16,9 @@ var _RadioButton = require("material-ui/RadioButton");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var selectedIconStyle = {
+  fill: "fe7a51"
+};
 var RadioButtonUi = function RadioButtonUi(_ref) {
   var options = _ref.options,
       valueSelected = _ref.valueSelected,
@@ -50,7 +53,7 @@ var RadioButtonUi = function RadioButtonUi(_ref) {
         value: value,
         label: label,
         labelStyle: value === valueSelected ? (0, _extends3.default)({}, labelStyle, selectedLabelStyle) : labelStyle,
-        iconStyle: iconStyle,
+        iconStyle: value === valueSelected ? (0, _extends3.default)({}, iconStyle, selectedIconStyle) : iconStyle,
         checkedIcon: checkedIcon
       });
     });

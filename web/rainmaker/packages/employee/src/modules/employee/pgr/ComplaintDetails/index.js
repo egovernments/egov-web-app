@@ -148,6 +148,7 @@ class ComplaintDetails extends Component {
     if (complaint && complaint.latitude) {
       complaintLoc = { lat: complaint.latitude, lng: complaint.longitude };
     }
+    console.log(complaint);
     if (complaint) {
       if (role === "ao") {
         if (complaint.complaintStatus.toLowerCase() === "unassigned") {
