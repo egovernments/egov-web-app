@@ -90,12 +90,9 @@ const bottomInfoTemplate = (item, role) => {
         )}
       {item.reassign &&
         role !== "csr" && (
-          <div className="employee-bottom-msg">
-            <Label
-              label={role === "ao" ? `${item.reassignRequestedBy} CS_MYCOMPLAINTS_REASSIGN_MESSAGE1` : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2"}
-              dark={true}
-              fontSize={12}
-            />
+          <div className="employee-bottom-msg rainmaker-displayInline">
+            <Label label={role === "ao" ? `${item.reassignRequestedBy}` : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2"} dark={true} fontSize={12} />
+            <Label label={"CS_MYCOMPLAINTS_REASSIGN_MESSAGE1"} dark={true} containerStyle={{ marginLeft: 4 }} fontSize={12} />
           </div>
         )}
     </div>
@@ -192,7 +189,12 @@ const Complaints = ({ complaints, complaintLocation, role, onComplaintClick, noC
 
                   <Label
                     className="complaint-status-text text-bold"
-                    labelStyle={{ letterSpacing: 0.7, wordBreak: "normal", ...getStatusAndChangeColor(complaint.status.status).style }}
+                    labelStyle={{
+                      whiteSpace: "pre",
+                      letterSpacing: 0.7,
+                      wordBreak: "normal",
+                      ...getStatusAndChangeColor(complaint.status.status).style,
+                    }}
                     label={complaint.status.status}
                     bold={true}
                   />

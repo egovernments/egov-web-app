@@ -248,7 +248,7 @@ const routes = [
     component: CreateComplaint,
     needsAuthentication: true,
     options: {
-      title: "ES_CREATE_COMPLAINT",
+      title: "CS_ADD_COMPLAINT_COMPLAINT_SUBMISSION",
       hideFooter: true,
       redirectionUrl,
       isHomeScreen: true,
