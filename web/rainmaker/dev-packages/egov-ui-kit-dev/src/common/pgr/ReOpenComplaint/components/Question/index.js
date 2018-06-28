@@ -17,7 +17,7 @@ const styles = {
     height: "16px",
   },
   selectedLabelStyle: {
-    color: "#00bbd3",
+    color: "#fe7a51",
   },
   radioButtonLabelStyle: {
     fontSize: "14px",

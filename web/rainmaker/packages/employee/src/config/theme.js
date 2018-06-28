@@ -32,6 +32,9 @@ const theme = {
   stepper: {
     connectorLineColor: "#f5a623",
   },
+  radioButton: {
+    color: "#fe7a51",
+  },
 };
 
 export default theme;

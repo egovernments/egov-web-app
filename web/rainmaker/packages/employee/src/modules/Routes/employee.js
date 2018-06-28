@@ -167,6 +167,7 @@ const routes = [
       hideTitle: true,
       hideFooter: true,
       redirectionUrl,
+      hideBackButton: true,
     },
   },
   {

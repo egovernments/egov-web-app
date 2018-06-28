@@ -25,6 +25,11 @@
   position: relative;
 }
 
+.profile-card-container {
+  position: absolute;
+  left: 0;
+}
+
 @media only screen and (max-width: 768px) {
   .profile-card-container {
     margin: 0px !important;
