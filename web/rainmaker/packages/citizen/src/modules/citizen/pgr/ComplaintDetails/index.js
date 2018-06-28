@@ -22,7 +22,7 @@ class ComplaintDetails extends Component {
       action = timeLine[0].action;
     }
     return (
-      <Screen>
+      <Screen className="citizen-screen-bottom-padding-clear">
         {complaint && (
           <div>
             <Details {...complaint} action={action} history={history} />

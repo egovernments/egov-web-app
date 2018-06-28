@@ -209,8 +209,13 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 )}
               <Label
                 labelClassName="rainmaker-small-font complaint-timeline-department"
-                containerStyle={{ width: "192px" }}
-                label={`${employeeDesignation} - ${employeeDepartment}`}
+                // containerStyle={{ width: "192px" }}
+                label={employeeDesignation}
+              />
+              <Label
+                labelClassName="rainmaker-small-font complaint-timeline-department"
+                // containerStyle={{ width: "192px" }}
+                label={employeeDepartment}
               />
             </div>
           );
