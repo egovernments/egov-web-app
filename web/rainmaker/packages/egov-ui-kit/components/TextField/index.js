@@ -42,7 +42,8 @@ var floatingLabelBaseShrinkStyle = {
   fontSize: "12px",
   color: "#00bcd1",
   transform: "scale(1) translate(0px, -16px)",
-  fontWeight: 500
+  fontWeight: 500,
+  zIndex: 0
 };
 
 var inputBaseStyle = {
