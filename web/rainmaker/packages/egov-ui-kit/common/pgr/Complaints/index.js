@@ -126,12 +126,9 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
     ),
     item.reassign && role !== "csr" && _react2.default.createElement(
       "div",
-      { className: "employee-bottom-msg" },
-      _react2.default.createElement(_translationNode2.default, {
-        label: role === "ao" ? item.reassignRequestedBy + " CS_MYCOMPLAINTS_REASSIGN_MESSAGE1" : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2",
-        dark: true,
-        fontSize: 12
-      })
+      { className: "employee-bottom-msg rainmaker-displayInline" },
+      _react2.default.createElement(_translationNode2.default, { label: role === "ao" ? "" + item.reassignRequestedBy : "CS_MYCOMPLAINTS_REASSIGN_MESSAGE2", dark: true, fontSize: 12 }),
+      _react2.default.createElement(_translationNode2.default, { label: "CS_MYCOMPLAINTS_REASSIGN_MESSAGE1", dark: true, containerStyle: { marginLeft: 4 }, fontSize: 12 })
     )
   ) : null;
 };
@@ -235,7 +232,11 @@ var Complaints = function Complaints(_ref) {
             }),
             _react2.default.createElement(_translationNode2.default, {
               className: "complaint-status-text text-bold",
-              labelStyle: (0, _extends3.default)({ letterSpacing: 0.7, wordBreak: "normal" }, getStatusAndChangeColor(complaint.status.status).style),
+              labelStyle: (0, _extends3.default)({
+                whiteSpace: "pre",
+                letterSpacing: 0.7,
+                wordBreak: "normal"
+              }, getStatusAndChangeColor(complaint.status.status).style),
               label: complaint.status.status,
               bold: true
             })
