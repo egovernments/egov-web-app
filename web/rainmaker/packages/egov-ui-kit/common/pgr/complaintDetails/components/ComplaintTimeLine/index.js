@@ -43,7 +43,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var timelineButtonLabelStyle = {
   height: 12,
   lineHeight: 1,
-  color: "#ffffff"
+  color: "#ffffff",
+  fontWeight: 500
 };
 var timelineButtonContainerStyle = {
   lineHeight: 1,
@@ -70,7 +71,7 @@ var timelineIconCommonStyle = {
 var statusCommonIconStyle = (0, _extends3.default)({}, timelineIconCommonStyle, {
   backgroundColor: "#ffffff",
   boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
-  border: "solid 1px #f89a3f"
+  border: "solid 1px #fe7a51"
 });
 
 var statusResolvedIconStyle = (0, _extends3.default)({}, timelineIconCommonStyle, {
@@ -99,11 +100,11 @@ var StatusIcon = function StatusIcon(_ref) {
 
   switch (status) {
     case "open":
-      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-send", style: statusCommonIconStyle, color: "#f5a623" });
+      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-send", style: statusCommonIconStyle, color: "#fe7a51" });
     case "assigned":
     case "reassignrequested":
     case "re-assign":
-      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-plus", style: statusCommonIconStyle, color: "#f5a623" });
+      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-plus", style: statusCommonIconStyle, color: "#fe7a51" });
     case "rejected":
       return _react2.default.createElement(_components.Icon, { action: "content", name: "clear", style: statusRejectedIconStyle, color: "#FFFFFF" });
     case "resolved":
@@ -582,7 +583,8 @@ var ComplaintTimeLine = function (_Component) {
               { className: "complaintTimeLineContainer" },
               _react2.default.createElement(_components.TimeLine, {
                 stepperProps: {
-                  orientation: "vertical"
+                  orientation: "vertical",
+                  borderLeft: "1px solid #fe7a51"
                 },
                 steps: steps
               })

@@ -5,8 +5,8 @@ import "./index.css";
 
 const iconStyle = {
   marginRight: "13px",
-  height: "22px",
-  width: "22px",
+  height: "24px",
+  width: "24px",
 };
 
 const imageStyles = {
