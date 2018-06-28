@@ -235,9 +235,14 @@ var StatusContent = function StatusContent(_ref2) {
               )
             ),
             _react2.default.createElement(_translationNode2.default, {
-              labelClassName: "rainmaker-small-font complaint-timeline-department",
-              containerStyle: { width: "192px" },
-              label: employeeDesignation + " - " + employeeDepartment
+              labelClassName: "rainmaker-small-font complaint-timeline-department"
+              // containerStyle={{ width: "192px" }}
+              , label: employeeDesignation
+            }),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-department"
+              // containerStyle={{ width: "192px" }}
+              , label: employeeDepartment
             })
           );
           break;

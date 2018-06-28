@@ -19,6 +19,7 @@ const floatingLabelBaseShrinkStyle = {
   color: "#00bcd1",
   transform: "scale(1) translate(0px, -16px)",
   fontWeight: 500,
+  zIndex: 0,
 };
 
 const inputBaseStyle = {
