@@ -34,6 +34,10 @@ var _reducer13 = require("../mdms/reducer");
 
 var _reducer14 = _interopRequireDefault(_reducer13);
 
+var _report = require("../reports/report");
+
+var _report2 = _interopRequireDefault(_report);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
@@ -43,7 +47,8 @@ var rootReducer = (0, _redux.combineReducers)({
   complaints: _reducer8.default,
   common: _reducer10.default,
   mdms: _reducer14.default,
-  formtemp: _reducer12.default
+  formtemp: _reducer12.default,
+  report: _report2.default
 });
 
 exports.default = rootReducer;
