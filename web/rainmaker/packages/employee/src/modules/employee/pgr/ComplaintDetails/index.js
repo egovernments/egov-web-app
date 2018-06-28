@@ -317,7 +317,7 @@ const mapStateToProps = (state, ownProps) => {
       feedback: selectedComplaint.feedback,
       rating: selectedComplaint.rating,
       //filedBy: userId && mapCitizenIdToName(citizenById, userId),
-      filedBy: isFiledByCSR && filedUserName ? `${filedUserName} @CSR` : filedUserName,
+      filedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} @CSR` : filedUserName) : null,
 
       //filedUserMobileNumber: userId && mapCitizenIdToMobileNumber(citizenById, userId),
       filedUserMobileNumber: selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.mobileNumber,
