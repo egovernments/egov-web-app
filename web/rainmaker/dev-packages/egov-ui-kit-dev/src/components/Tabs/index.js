@@ -14,12 +14,12 @@ const inkBarStyle = {
   backgroundColor: "#f89a3f",
 };
 
-const Tabs = ({ tabs = [] }) => {
+const Tabs = ({ tabs = [], onChange }) => {
   const renderTabs = () => {
     return tabs.map((tab, index) => {
       const { route, label, children } = tab;
       return (
-        <Tab key={index} data-route={route} label={label}>
+        <Tab value={index} key={index} data-route={route} label={label}>
           {children}
         </Tab>
       );
@@ -27,7 +27,7 @@ const Tabs = ({ tabs = [] }) => {
   };
 
   return (
-    <MaterialUiTabs tabItemContainerStyle={tabItemContainerStyle} inkBarStyle={inkBarStyle}>
+    <MaterialUiTabs onChange={onChange} tabItemContainerStyle={tabItemContainerStyle} inkBarStyle={inkBarStyle}>
       {renderTabs()}
     </MaterialUiTabs>
   );

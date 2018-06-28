@@ -18,6 +18,7 @@ class AllComplaints extends Component {
     mobileNo: "",
     complaints: [],
     search: false,
+    value: 0,
   };
   componentDidMount() {
     let { fetchComplaints } = this.props;
@@ -69,6 +70,10 @@ class AllComplaints extends Component {
     this.setState({ mobileNo: "", complaintNo: "", search: false });
   };
 
+  onChange = (value) => {
+    this.setState({ value });
+  };
+
   render() {
     const { loading, history } = this.props;
     const { mobileNo, complaintNo, search } = this.state;
@@ -88,18 +93,24 @@ class AllComplaints extends Component {
     return role === "ao" ? (
       <Tabs
         className="employee-complaints-tab"
+        onChange={this.onChange}
         tabs={[
           {
             label: (
               <div className="inline-Localization-text">
                 <Label
                   labelClassName="unassigned-label-text"
-                  color={"#ffffff"}
+                  color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                   bold={true}
                   label={`ES_ALL_COMPLAINTS_UNASSIGNED_TAB_LABEL`}
                   labelStyle={tabStyle}
                 />
-                <Label color={"#ffffff"} bold={true} label={`(${unassignedComplaints.length})`} labelStyle={tabStyle} />
+                <Label
+                  color={this.state.value === 0 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                  bold={true}
+                  label={`(${unassignedComplaints.length})`}
+                  labelStyle={tabStyle}
+                />
               </div>
             ),
             children: (
@@ -122,12 +133,17 @@ class AllComplaints extends Component {
               <div className="inline-Localization-text">
                 <Label
                   labelClassName="assigned-label-text"
-                  color={"#ffffff"}
+                  color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
                   bold={true}
                   label={`ES_ALL_COMPLAINTS_ASSIGNED_TAB_LABEL`}
                   labelStyle={tabStyle}
                 />
-                <Label color={"#ffffff"} bold={true} label={`(${assignedComplaints.length})`} labelStyle={tabStyle} />
+                <Label
+                  color={this.state.value === 1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.7)"}
+                  bold={true}
+                  label={`(${assignedComplaints.length})`}
+                  labelStyle={tabStyle}
+                />
               </div>
             ),
             children: (
