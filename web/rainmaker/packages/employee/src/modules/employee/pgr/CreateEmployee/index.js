@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Screen } from "modules/common";
+import {Button} from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import FlatButton from 'material-ui/FlatButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
@@ -15,6 +18,15 @@ import { translate } from './components/Common';
 import AutoComplete from 'material-ui/AutoComplete';
 import Api from "./components/api"
 import "./index.css"
+
+const headerStyle ={
+  backgroundColor : "#607d8b" ,
+  color : "#fff" ,
+  padding:"10px",
+  fontWeight : "500" ,
+  fontSize : "14px"
+}
+
 
 const datePat = /^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g;
 const checkIfNoDup = function(employee, subObject) {
@@ -1062,9 +1074,9 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <label>
                   {
-                    <span>
+                    <span style={{ fontWeight: 500, }}>
                       {translate('employee.Assignment.fields.primary')}
-                      <span style={{ color: '#FF0000' }}> *</span>
+                      <span style={{ color: '#FF0000', }}> *</span>
                     </span>
                   }{' '}
                 </label>
@@ -1075,24 +1087,25 @@ class Employee extends Component {
                     self.handleStateChange({ target: { value: value } }, 'assignments', 'isPrimary');
                   }}
                 >
-                  <RadioButton value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                  <RadioButton value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                  <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
+                  <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
                 </RadioButtonGroup>
               </div>
               <div className="col-md-6 col-xs-12">
                 <TextField className = "create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
                   floatingLabelText={
                     <span>
                       {translate('employee.Assignment.fields.fromDate')}
-                      <span style={{ color: '#FF0000' }}> *</span>
+                      <span style={{ color: '#FF0000'}}> *</span>
                     </span>
                   }
                   errorText={self.state.errorText['assignments.fromDate']}
@@ -1109,7 +1122,8 @@ class Employee extends Component {
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
-                    'white-space': 'nowrap',
+                    whiteSpace: 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1129,7 +1143,7 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField className="create-employee-text-field-cont"
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['assignments.department']}
@@ -1137,6 +1151,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -1161,7 +1176,7 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField className="create-employee-text-field-cont"
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['assignments.designation']}
@@ -1169,6 +1184,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -1189,14 +1205,15 @@ class Employee extends Component {
                 </SelectField>
               </div>
               <div className="col-md-6 col-xs-12">
-              
-                <AutoComplete
+
+                <AutoComplete className="create-employee-text-field-cont"s
                   errorText={self.state.errorText['assignments.position']}
                   fullWidth={true}
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    fontWeight :500,
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -1230,10 +1247,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.grade')}
@@ -1254,10 +1272,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('wc.create.groups.fields.Funtion')}
@@ -1280,10 +1299,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.functionary')}
@@ -1304,10 +1324,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelText={translate('employee.Assignment.fields.fund')}
@@ -1325,9 +1346,9 @@ class Employee extends Component {
             </div>
             <div className="row">
               <div className="col-md-6 col-xs-12">
-                <label>
+                <label style={{fontWeight : 500}}>
                   {translate('employee.Assignment.fields.hod') + ' ?'}
-                  <span style={{ color: '#FF0000' }}> *</span>
+                  <span style={{ color: '#FF0000', }}> *</span>
                 </label>
                 <RadioButtonGroup
                   name={translate('employee.Assignment.fields.hod')}
@@ -1336,8 +1357,8 @@ class Employee extends Component {
                     self.handleStateChange({ target: { value: value } }, 'assignments', 'hod');
                   }}
                 >
-                  <RadioButton value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                  <RadioButton value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                  <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
+                  <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
                 </RadioButtonGroup>
               </div>
               <div className="col-md-6 col-xs-12">
@@ -1347,10 +1368,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     errorText={self.state.errorText['assignments.mainDepartments']}
@@ -1382,6 +1404,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.Assignment.fields.govtOrderNumber')}
@@ -1392,7 +1415,7 @@ class Employee extends Component {
                 />
               </div>
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.Assignment.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.Assignment.fields.documents')}</label>
                 <input type="file" />
               </div>
             </div>
@@ -1408,10 +1431,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['jurisdictions.jurisdictionsType']}
@@ -1439,10 +1463,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['jurisdictions.boundary']}
@@ -1476,6 +1501,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   errorText={self.state.errorText['serviceHistory.serviceInfo']}
@@ -1498,6 +1524,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1522,6 +1549,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.ServiceHistory.fields.remarks')}
@@ -1537,6 +1565,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.ServiceHistory.fields.orderNo')}
@@ -1549,7 +1578,7 @@ class Employee extends Component {
             </div>
             <div className="row">
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.ServiceHistory.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.ServiceHistory.fields.documents')}</label>
                 <input type="file" />
               </div>
             </div>
@@ -1562,13 +1591,14 @@ class Employee extends Component {
               <div className="col-md-6 col-xs-12">
                 <SelectField className="create-employee-text-field-cont"
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   errorText={self.state.errorText['probation.designation']}
@@ -1591,11 +1621,12 @@ class Employee extends Component {
               </div>
               <div className="col-md-6 col-xs-12">
                 <TextField className="create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1616,11 +1647,12 @@ class Employee extends Component {
             <div className="row">
               <div className="col-md-6 col-xs-12">
                 <TextField className="create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.ServiceHistory.fields.orderNo')}
@@ -1632,11 +1664,12 @@ class Employee extends Component {
               </div>
               <div className="col-md-6 col-xs-12">
                 <TextField className="create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1657,11 +1690,12 @@ class Employee extends Component {
             <div className="row">
               <div className="col-md-6 col-xs-12">
                 <TextField className="create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.Probation.fields.remarks')}
@@ -1672,7 +1706,7 @@ class Employee extends Component {
                 />
               </div>
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.Probation.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.Probation.fields.documents')}</label>
                 <input type="file" multiple />
               </div>
             </div>
@@ -1688,10 +1722,11 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   dropDownMenuProps={{
-                    
+
                     targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                   }}
                   errorText={self.state.errorText['regularisation.designation']}
@@ -1714,11 +1749,12 @@ class Employee extends Component {
               </div>
               <div style={{backgroundColor : "red"}} className="col-md-6 col-xs-12">
                 <TextField className="create-employee-text-field-cont"
-                
+
                   floatingLabelStyle={{
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1743,6 +1779,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.Regularisation.fields.orderNo')}
@@ -1758,6 +1795,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   hintText="21/11/1993"
@@ -1782,6 +1820,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.Regularisation.fields.remarks')}
@@ -1792,7 +1831,7 @@ class Employee extends Component {
                 />
               </div>
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.Regularisation.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.Regularisation.fields.documents')}</label>
                 <input type="file" multiple />
               </div>
             </div>
@@ -1809,6 +1848,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -1829,6 +1869,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.EducationalQualification.fields.majorSubject')}
@@ -1847,6 +1888,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   maxLength="4"
@@ -1869,6 +1911,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.EducationalQualification.fields.university')}
@@ -1881,7 +1924,7 @@ class Employee extends Component {
             </div>
             <div className="row">
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
                 <input type="file" multiple />
               </div>
             </div>
@@ -1898,6 +1941,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -1918,6 +1962,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.TechnicalQualification.fields.grade')}
@@ -1935,6 +1980,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   maxLength="4"
@@ -1952,6 +1998,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.TechnicalQualification.fields.remarks')}
@@ -1964,7 +2011,7 @@ class Employee extends Component {
             </div>
             <div className="row">
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
                 <input type="file" multiple />
               </div>
             </div>
@@ -1981,6 +2028,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={
@@ -2002,6 +2050,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   maxLength="4"
@@ -2026,6 +2075,7 @@ class Employee extends Component {
                     color: '#696969',
                     fontSize: '20px',
                     'white-space': 'nowrap',
+                    
                   }}
                   floatingLabelFixed={true}
                   floatingLabelText={translate('employee.TechnicalQualification.fields.remarks')}
@@ -2036,7 +2086,7 @@ class Employee extends Component {
                 />
               </div>
               <div className="col-md-6 col-xs-12">
-                <label style={{ marginTop: '20px' }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
+                <label style={{ marginTop: '20px',fontWeight : 500 }}>{translate('employee.TechnicalQualification.fields.documents')}</label>
                 <input type="file" multiple />
               </div>
             </div>
@@ -2482,12 +2532,12 @@ class Employee extends Component {
 
   renderEmployee() {
     let {  Employee, fieldErrors, handleChange, handleChangeNextLevel } = this.props;
-  
+
     let self = this;
     return (
-      <Card className="uiCard">
+      <Card className="uiCard create-employee-card">
         <CardText>
-          <Grid>
+          {/* <Grid> */}
             <Row>
               <Col xs={12} sm={4} md={3} lg={3}>
                 {self.state.screenType == 'view' ? (
@@ -2504,6 +2554,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={
@@ -2543,6 +2594,7 @@ class Employee extends Component {
                     floatingLabelStyle={{
                       color: self.state.screenType == 'update' || self.state.autoCode ? '#A9A9A9' : '#696969',
                       fontSize: '20px',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={
@@ -2576,10 +2628,11 @@ class Employee extends Component {
                         color: '#696969',
                         fontSize: '20px',
                         'white-space': 'nowrap',
+                        
                       }}
                       floatingLabelFixed={true}
                       dropDownMenuProps={{
-                        
+
                         targetOrigin: {
                           horizontal: 'left',
                           vertical: 'bottom',
@@ -2620,10 +2673,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -2663,10 +2717,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.group')}
@@ -2698,6 +2753,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -2730,10 +2786,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -2770,10 +2827,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={
@@ -2821,6 +2879,7 @@ class Employee extends Component {
                     floatingLabelStyle={{
                       color: self.state.screenType == 'update' || self.state.autoUName ? '#A9A9A9' : '#696969',
                       fontSize: '20px',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={
@@ -2854,8 +2913,8 @@ class Employee extends Component {
                   </span>
                 ) : (
                   <span>
-                    <label style={{ fontSize: '15px' }}>
-                      {translate('employee.fields.isUserActive')}? <span style={{ color: '#FF0000' }}> *</span>
+                    <label style={{ fontSize: '15px',fontWeight: '500' }}>
+                      {translate('employee.fields.isUserActive')}? <span style={{ color: '#FF0000', }}> *</span>
                     </label>
                     <RadioButtonGroup
                       name="isActive"
@@ -2864,8 +2923,8 @@ class Employee extends Component {
                         handleChangeNextLevel({ target: { value: value } }, 'user', 'active', true, '');
                       }}
                     >
-                      <RadioButton value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton  className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
+                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -2885,6 +2944,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     maxLength="10"
@@ -2918,6 +2978,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.email')}
@@ -2954,6 +3015,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.fatherSpouseName')}
@@ -2980,6 +3042,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.User.birth')}
@@ -3006,10 +3069,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.User.bloodGroup')}
@@ -3041,10 +3105,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.motherTongue')}
@@ -3079,10 +3144,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.religion')}
@@ -3114,10 +3180,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.community')}
@@ -3149,10 +3216,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.category')}
@@ -3184,7 +3252,7 @@ class Employee extends Component {
                   </span>
                 ) : (
                   <span>
-                    <label style={{ fontSize: '15px' }}>{translate('employee.Employee.fields.physicallyDisabled') + '?'}</label>
+                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{translate('employee.Employee.fields.physicallyDisabled') + '?'}</label>
                     <RadioButtonGroup
                       name={translate('employee.Employee.fields.physicallyDisabled')}
                       valueSelected={Employee.physicallyDisabled}
@@ -3192,8 +3260,8 @@ class Employee extends Component {
                         handleChange({ target: { value: value } }, 'physicallyDisabled', false, '');
                       }}
                     >
-                      <RadioButton value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
+                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -3216,7 +3284,7 @@ class Employee extends Component {
                   </span>
                 ) : (
                   <span>
-                    <label style={{ fontSize: '15px' }}>{translate('employee.Employee.fields.medicalReportProduced') + '?'}</label>
+                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{translate('employee.Employee.fields.medicalReportProduced') + '?'}</label>
                     <RadioButtonGroup
                       name={translate('employee.Employee.fields.medicalReportProduced')}
                       valueSelected={Employee.medicalReportProduced}
@@ -3224,8 +3292,8 @@ class Employee extends Component {
                         handleChange({ target: { value: value } }, 'medicalReportProduced', false, '');
                       }}
                     >
-                      <RadioButton value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
+                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -3245,6 +3313,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.identification')}
@@ -3271,6 +3340,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.pan')}
@@ -3298,6 +3368,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.passportNo')}
@@ -3327,6 +3398,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.gpfNo')}
@@ -3353,6 +3425,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     maxLength="12"
@@ -3381,10 +3454,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.bank')}
@@ -3417,10 +3491,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.bankBranch')}
@@ -3455,6 +3530,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.bankAccount')}
@@ -3482,6 +3558,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     maxLength="10"
@@ -3515,6 +3592,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.permanentAddress')}
@@ -3541,6 +3619,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.city')}
@@ -3567,6 +3646,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.parmanentPinNumber')}
@@ -3598,6 +3678,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.correspondenceAddress')}
@@ -3624,6 +3705,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.city')}
@@ -3650,6 +3732,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     floatingLabelText={translate('employee.Employee.fields.correspondencePinNumber')}
@@ -3681,10 +3764,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.languagesKnown')}
@@ -3717,10 +3801,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentMode')}
@@ -3752,10 +3837,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentType')}
@@ -3787,10 +3873,11 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     dropDownMenuProps={{
-                      
+
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
                     floatingLabelText={translate('employee.Employee.fields.recruitmentQuota')}
@@ -3825,6 +3912,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -3857,6 +3945,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -3884,6 +3973,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     type="number"
@@ -3911,6 +4001,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -3941,6 +4032,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -3968,6 +4060,7 @@ class Employee extends Component {
                       color: '#696969',
                       fontSize: '20px',
                       'white-space': 'nowrap',
+                      
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
@@ -3982,7 +4075,7 @@ class Employee extends Component {
               </Col>
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px' }}>{translate('employee.Employee.fields.EmployeePhoto')}</label>
+                  <label style={{ marginTop: '20px',fontWeight : "500" }}>{translate('employee.Employee.fields.EmployeePhoto')}</label>
                   <input type="file" />
                 </Col>
               ) : (
@@ -3990,7 +4083,7 @@ class Employee extends Component {
               )}
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px' }}>{translate('employee.Employee.fields.EmployeeSignature')}</label>
+                  <label style={{ marginTop: '20px',fontWeight : "500" }}>{translate('employee.Employee.fields.EmployeeSignature')}</label>
                   <input type="file" />
                 </Col>
               ) : (
@@ -4001,14 +4094,14 @@ class Employee extends Component {
             <Row>
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px' }}>{translate('employee.Employee.fields.OtherAttachments')}</label>
+                  <label style={{ marginTop: '20px' ,fontWeight : "500"}}>{translate('employee.Employee.fields.OtherAttachments')}</label>
                   <input type="file" multiple />
                 </Col>
               ) : (
                 ''
               )}
             </Row>
-          </Grid>
+          {/* </Grid> */}
         </CardText>
       </Card>
     );
@@ -4072,24 +4165,24 @@ class Employee extends Component {
         : '';
     };
     return (
-      <Card className="uiCard">
+      <Card className="uiCard create-employee-card">
         <CardText>
-          <Table bordered responsive className="table-striped">
+        <Table bordered responsive className="table-striped">
             <thead>
-              <th>{translate('employee.Assignment.fields.fromDate')}</th>
-              <th>{translate('employee.Assignment.fields.toDate')}</th>
-              <th>{translate('employee.Assignment.fields.department')}</th>
-              <th>{translate('employee.Assignment.fields.designation')}</th>
-              <th>{translate('employee.Assignment.fields.position')}</th>
-              <th>{translate('employee.Assignment.fields.primary')}</th>
-              <th>{translate('employee.Assignment.fields.fund')}</th>
-              <th>{translate('employee.Assignment.fields.function')}</th>
-              <th>{translate('employee.Assignment.fields.functionary')}</th>
-              <th>{translate('employee.Assignment.fields.grade')}</th>
-              <th>{translate('employee.Assignment.fields.hod')}</th>
-              <th>{translate('employee.Assignment.fields.govtOrderNumber')}</th>
-              <th>{translate('employee.Assignment.fields.documents')}</th>
-              <th>{translate('reports.common.action')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.fromDate')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.toDate')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.department')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.position')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.primary')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.fund')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.function')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.functionary')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.grade')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.hod')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.govtOrderNumber')}</th>
+              <th style={headerStyle}>{translate('employee.Assignment.fields.documents')}</th>
+              <th style={headerStyle}>{translate('reports.common.action')}</th>
             </thead>
             <tbody>{renderAssignmentBody()}</tbody>
           </Table>
@@ -4099,7 +4192,6 @@ class Employee extends Component {
                 <FloatingActionButton
                   style={{ marginRight: 0 }}
                   mini={true}
-                  secondary={true}
                   onClick={() => {
                     self.setModalOpen('assignment');
                   }}
@@ -4127,13 +4219,13 @@ class Employee extends Component {
         : '';
     };
     return (
-      <Card className="uiCard">
+      <Card className="uiCard create-employee-card">
         <CardText>
           <Table bordered responsive className="table-striped">
             <thead>
-              <th>{translate('employee.jurisdiction.fields.boundaryType')}</th>
-              <th>{translate('employee.jurisdiction.fields.boundary')}</th>
-              <th>{translate('reports.common.action')}</th>
+              <th style={headerStyle}>{translate('employee.jurisdiction.fields.boundaryType')}</th>
+              <th style={headerStyle}>{translate('employee.jurisdiction.fields.boundary')}</th>
+              <th style={headerStyle}>{translate('reports.common.action')}</th>
             </thead>
             <tbody>{renderJurisdictionBody()}</tbody>
           </Table>
@@ -4143,7 +4235,6 @@ class Employee extends Component {
                 <FloatingActionButton
                   style={{ marginRight: 0 }}
                   mini={true}
-                  secondary={true}
                   onClick={() => {
                     self.setModalOpen('jurisdiction');
                   }}
@@ -4271,17 +4362,17 @@ class Employee extends Component {
 
     return (
       <div>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.ServiceHistory.title')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.ServiceHistory.fields.ServiceEntryDescription')}</th>
-                <th>{translate('employee.ServiceHistory.fields.date')}</th>
-                <th>{translate('employee.ServiceHistory.fields.remarks')}</th>
-                <th>{translate('employee.ServiceHistory.fields.orderNo')}</th>
-                <th>{translate('employee.ServiceHistory.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.ServiceEntryDescription')}</th>
+                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.date')}</th>
+                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.remarks')}</th>
+                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.orderNo')}</th>
+                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderServiceBody('service')}</tbody>
             </Table>
@@ -4291,7 +4382,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('serviceDet');
                     }}
@@ -4305,18 +4395,18 @@ class Employee extends Component {
             </Row>
           </CardText>
         </Card>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.Employee.fields.probation')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.Assignment.fields.designation')}</th>
-                <th>{translate('employee.Probation.fields.declaredOn')}</th>
-                <th>{translate('employee.Probation.fields.orderNo')}</th>
-                <th>{translate('employee.Probation.fields.orderDate')}</th>
-                <th>{translate('employee.Probation.fields.remarks')}</th>
-                <th>{translate('employee.Probation.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.declaredOn')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.orderNo')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.orderDate')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.remarks')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderServiceBody('probation')}</tbody>
             </Table>
@@ -4326,7 +4416,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('probation');
                     }}
@@ -4340,18 +4429,18 @@ class Employee extends Component {
             </Row>
           </CardText>
         </Card>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.Employee.fields.regularisation')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.Assignment.fields.designation')}</th>
-                <th>{translate('employee.Regularisation.fields.declaredOn')}</th>
-                <th>{translate('employee.Probation.fields.orderNo')}</th>
-                <th>{translate('employee.Probation.fields.orderDate')}</th>
-                <th>{translate('employee.Probation.fields.remarks')}</th>
-                <th>{translate('employee.Probation.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
+                <th style={headerStyle}>{translate('employee.Regularisation.fields.declaredOn')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.orderNo')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.orderDate')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.remarks')}</th>
+                <th style={headerStyle}>{translate('employee.Probation.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderServiceBody('regularization')}</tbody>
             </Table>
@@ -4361,7 +4450,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('regular');
                     }}
@@ -4487,17 +4575,17 @@ class Employee extends Component {
 
     return (
       <div>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.EducationalQualification.title')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.EducationalQualification.fields.qualification')}</th>
-                <th>{translate('employee.EducationalQualification.fields.majorSubject')}</th>
-                <th>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
-                <th>{translate('employee.EducationalQualification.fields.university')}</th>
-                <th>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.qualification')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.majorSubject')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.university')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('edu')}</tbody>
             </Table>
@@ -4507,7 +4595,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('edu');
                     }}
@@ -4521,17 +4608,17 @@ class Employee extends Component {
             </Row>
           </CardText>
         </Card>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.TechnicalQualification.title')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.TechnicalQualification.fields.skill')}</th>
-                <th>{translate('employee.TechnicalQualification.fields.grade')}</th>
-                <th>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
-                <th>{translate('employee.TechnicalQualification.fields.remarks')}</th>
-                <th>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.skill')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.grade')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.remarks')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('tech')}</tbody>
             </Table>
@@ -4541,7 +4628,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('tech');
                     }}
@@ -4555,16 +4641,16 @@ class Employee extends Component {
             </Row>
           </CardText>
         </Card>
-        <Card className="uiCard">
+        <Card className="uiCard create-employee-card">
           <CardTitle title={translate('employee.DepartmentalTest.title')} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th>{translate('employee.DepartmentalTest.fields.test')}</th>
-                <th>{translate('employee.TechnicalQualification.fields.yearOfPassing')}n</th>
-                <th>{translate('employee.TechnicalQualification.fields.remarks')}</th>
-                <th>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{translate('employee.DepartmentalTest.fields.test')}</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}n</th>
+                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.remarks')}</th>
+                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
+                <th style={headerStyle}>{translate('reports.common.action')}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('dept')}</tbody>
             </Table>
@@ -4574,7 +4660,6 @@ class Employee extends Component {
                   <FloatingActionButton
                     style={{ marginRight: 0 }}
                     mini={true}
-                    secondary={true}
                     onClick={() => {
                       self.setModalOpen('dept');
                     }}
@@ -4657,6 +4742,7 @@ class Employee extends Component {
       console.log(this.props)
     let self = this;
     return (
+      
       <div>
         <form
           onSubmit={e => {
@@ -4683,7 +4769,18 @@ class Employee extends Component {
           <br />
           <div style={{ textAlign: 'center' }}>
             {self.state.screenType != 'view' ? (
-              <RaisedButton type="submit" label={translate('ui.framework.submit')} primary={true} disabled={!self.props.isFormValid} />
+               <RaisedButton type="submit" label={translate('ui.framework.submit')} primary={true} disabled={!self.props.isFormValid} />
+              // <div className="responsive-action-button-cont">
+              //   <Button
+              //     type="submit"
+              //     className="responsive-action-button"
+              //     primary={true}
+              //     label={<Label buttonLabel={true} label="SUBMIT" />}
+              //     fullWidth={true}
+              //     disabled={!self.props.isFormValid}
+              //     onClick={this.handleComplaintReassigned}
+              //   />
+              // </div>
             ) : (
               ''
             )}
@@ -4692,7 +4789,7 @@ class Employee extends Component {
         <Dialog
           title={self.getModalTitle()}
           actions={[
-            <FlatButton label={translate('employee.Cancel.Button')} primary={true} onTouchTap={self.handleClose} />,
+            <FlatButton label={translate('employee.Cancel.Button')} primary={true} onClick={self.handleClose} />,
             <FlatButton
               label={translate('employee.addedit.Button')}
               primary={true}
@@ -4709,6 +4806,7 @@ class Employee extends Component {
           {self.renderContent()}
         </Dialog>
       </div>
+      
     );
   }
 }
@@ -4797,3 +4895,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Employee);
+

@@ -30,7 +30,8 @@ var inkBarStyle = {
 
 var Tabs = function Tabs(_ref) {
   var _ref$tabs = _ref.tabs,
-      tabs = _ref$tabs === undefined ? [] : _ref$tabs;
+      tabs = _ref$tabs === undefined ? [] : _ref$tabs,
+      onChange = _ref.onChange;
 
   var renderTabs = function renderTabs() {
     return tabs.map(function (tab, index) {
@@ -40,7 +41,7 @@ var Tabs = function Tabs(_ref) {
 
       return _react2.default.createElement(
         _Tabs.Tab,
-        { key: index, "data-route": route, label: label },
+        { value: index, key: index, "data-route": route, label: label },
         children
       );
     });
@@ -48,7 +49,7 @@ var Tabs = function Tabs(_ref) {
 
   return _react2.default.createElement(
     _Tabs.Tabs,
-    { tabItemContainerStyle: tabItemContainerStyle, inkBarStyle: inkBarStyle },
+    { onChange: onChange, tabItemContainerStyle: tabItemContainerStyle, inkBarStyle: inkBarStyle },
     renderTabs()
   );
 };
