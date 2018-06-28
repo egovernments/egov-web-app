@@ -8,6 +8,7 @@ const timelineButtonLabelStyle = {
   height: 12,
   lineHeight: 1,
   color: "#ffffff",
+  fontWeight: 500,
 };
 const timelineButtonContainerStyle = {
   lineHeight: 1,
@@ -35,7 +36,7 @@ const statusCommonIconStyle = {
   ...timelineIconCommonStyle,
   backgroundColor: "#ffffff",
   boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
-  border: "solid 1px #f89a3f",
+  border: "solid 1px #fe7a51",
 };
 
 const statusResolvedIconStyle = {
@@ -64,11 +65,11 @@ const callIconStyle = {
 const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
-      return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#f5a623"} />;
+      return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#fe7a51"} />;
     case "assigned":
     case "reassignrequested":
     case "re-assign":
-      return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#f5a623"} />;
+      return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#fe7a51"} />;
     case "rejected":
       return <Icon action="content" name="clear" style={statusRejectedIconStyle} color={"#FFFFFF"} />;
     case "resolved":
@@ -544,6 +545,7 @@ class ComplaintTimeLine extends Component {
                 <TimeLine
                   stepperProps={{
                     orientation: "vertical",
+                    borderLeft: "1px solid #fe7a51",
                   }}
                   steps={steps}
                 />

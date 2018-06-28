@@ -122,7 +122,7 @@ const routes = [
     path: "map",
     component: TrackLocation,
     needsAuthentication: true,
-    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION", hideTitle: true },
+    options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION", hideTitle: true, hideActionMenu: true },
   },
   // {
   //   path: "complaint-submitted",
