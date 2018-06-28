@@ -99,7 +99,8 @@ var ActionMenu = function (_Component) {
     _this.addMenuItems = function (path, splitArray, menuItems, index) {
       var role = _this.props.role;
 
-      var actionList = _actionList2.default[role];
+      var transformedRole = role === "citizen" ? "citizen" : "employee";
+      var actionList = _actionList2.default[transformedRole];
 
       if (splitArray.length > 1) {
         if (!(0, _lodash.some)(menuItems, { name: splitArray[0] })) {
@@ -135,7 +136,8 @@ var ActionMenu = function (_Component) {
       var path = pathParam.path;
       var role = _this.props.role;
 
-      var actionList = _actionList2.default && _actionList2.default[role];
+      var transformedRole = role === "citizen" ? "citizen" : "employee";
+      var actionList = _actionList2.default && _actionList2.default[transformedRole];
       var menuItems = [];
 
       for (var i = 0; i < (actionList && actionList.length); i++) {
@@ -228,6 +230,8 @@ var ActionMenu = function (_Component) {
       var _props = this.props,
           handleToggle = _props.handleToggle,
           role = _props.role;
+
+      var transformedRole = role === "citizen" ? "citizen" : "employee";
       var _state = this.state,
           searchText = _state.searchText,
           modules = _state.modules,
@@ -239,7 +243,7 @@ var ActionMenu = function (_Component) {
           menuChange = this.menuChange,
           changeRoute = this.changeRoute;
 
-      var actionList = _actionList2.default && _actionList2.default[role];
+      var actionList = _actionList2.default && _actionList2.default[transformedRole];
 
       var showMenuItem = function showMenuItem() {
         if (searchText.length == 0) {
@@ -329,7 +333,7 @@ var ActionMenu = function (_Component) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/" + role + "/" + item.navigationURL },
+                  { key: index, to: "/" + transformedRole + "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },
