@@ -42,7 +42,8 @@ class Comments extends Component {
           return {
             primaryText: (
               <div className="complaint-details-comments-section" style={{ marginRight: "6px" }}>
-                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.name ? comment.name : ""} />
+                <Label fontSize="10px" label={comment.name ? comment.name : ""} />
+                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.designation} />
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
                 <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />
               </div>
@@ -98,7 +99,7 @@ class Comments extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { complaints, common } = state;
-  const { employeeById, citizenById } = common;
+  const { employeeById, citizenById, designationsById } = common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
   let commentList =
     selectedComplaint &&
@@ -111,10 +112,13 @@ const mapStateToProps = (state, ownProps) => {
     commentList.map((comment, commentIndex) => {
       let role = comment.by.split(":")[1];
       let id = comment.by.split(":")[0];
+      const assignments = role !== "Citizen" && getPropertyFromObj(employeeById, id, "assignments", "");
+      const designationCode = assignments && assignments[0] && assignments[0].designation;
       return {
         role,
         avatar: role === "Citizen" ? getPropertyFromObj(citizenById, id, "photo", "") : getPropertyFromObj(employeeById, id, "photo", ""),
         name: role === "Citizen" ? getPropertyFromObj(citizenById, id, "name", "") : getPropertyFromObj(employeeById, id, "name", ""),
+        designation: role !== "Citizen" ? getPropertyFromObj(designationsById, designationCode, "name", "") : null,
         comment: comment.comments,
         when: comment.when,
       };

@@ -100,7 +100,8 @@ var Comments = function (_Component) {
             primaryText: _react2.default.createElement(
               "div",
               { className: "complaint-details-comments-section", style: { marginRight: "6px" } },
-              _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, fontSize: "10px", label: comment.name ? comment.name : "" }),
+              _react2.default.createElement(_translationNode2.default, { fontSize: "10px", label: comment.name ? comment.name : "" }),
+              _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, fontSize: "10px", label: comment.designation }),
               _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, labelStyle: { color: "#767676" }, label: comment.comment }),
               _react2.default.createElement(_translationNode2.default, { labelClassName: "text-right", fontSize: "10px", label: (0, _commons.getDateFromEpoch)(comment.when) })
             ),
@@ -151,7 +152,8 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var complaints = state.complaints,
       common = state.common;
   var employeeById = common.employeeById,
-      citizenById = common.citizenById;
+      citizenById = common.citizenById,
+      designationsById = common.designationsById;
 
   var selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
   var commentList = selectedComplaint && selectedComplaint.actions.filter(function (action, index) {
@@ -161,10 +163,13 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var transformedCommentList = commentList && commentList.map(function (comment, commentIndex) {
     var role = comment.by.split(":")[1];
     var id = comment.by.split(":")[0];
+    var assignments = role !== "Citizen" && (0, _commons.getPropertyFromObj)(employeeById, id, "assignments", "");
+    var designationCode = assignments && assignments[0] && assignments[0].designation;
     return {
       role: role,
       avatar: role === "Citizen" ? (0, _commons.getPropertyFromObj)(citizenById, id, "photo", "") : (0, _commons.getPropertyFromObj)(employeeById, id, "photo", ""),
       name: role === "Citizen" ? (0, _commons.getPropertyFromObj)(citizenById, id, "name", "") : (0, _commons.getPropertyFromObj)(employeeById, id, "name", ""),
+      designation: role !== "Citizen" ? (0, _commons.getPropertyFromObj)(designationsById, designationCode, "name", "") : null,
       comment: comment.comments,
       when: comment.when
     };

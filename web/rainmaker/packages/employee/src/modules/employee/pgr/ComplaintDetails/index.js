@@ -148,7 +148,6 @@ class ComplaintDetails extends Component {
     if (complaint && complaint.latitude) {
       complaintLoc = { lat: complaint.latitude, lng: complaint.longitude };
     }
-    console.log(complaint);
     if (complaint) {
       if (role === "ao") {
         if (complaint.complaintStatus.toLowerCase() === "unassigned") {
@@ -168,7 +167,6 @@ class ComplaintDetails extends Component {
     if (timeLine && timeLine[0]) {
       action = timeLine[0].action;
     }
-    console.log(complaint && complaint.filedBy);
     return (
       <div>
         <Screen>
@@ -303,7 +301,6 @@ const mapStateToProps = (state, ownProps) => {
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
   let isAssignedToEmployee = true;
-  console.log(filedUserName);
   if (selectedComplaint) {
     let userId = selectedComplaint && selectedComplaint.actions && selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[0];
     let details = {
