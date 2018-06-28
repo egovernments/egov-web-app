@@ -52,14 +52,18 @@ var timelineButtonContainerStyle = {
 };
 
 var statusContainerStyle = {
-  display: "inline-block"
+  display: "inline-block",
+  marginRight: "3px"
 };
 
 var nameContainerStyle = {
-  display: "inline-block",
-  marginLeft: "3px"
+  display: "inline-block"
 };
 
+var displayBlock = {
+  display: "block",
+  marginBottom: 5
+};
 var timelineIconCommonStyle = {
   height: "38px",
   width: "38px",
@@ -154,17 +158,22 @@ var StatusContent = function StatusContent(_ref2) {
         _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "dark-color complaint-timeline-status",
-          containerStyle: statusContainerStyle,
-          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
+          containerStyle: filedBy && filedBy.includes("@CSR") ? displayBlock : statusContainerStyle,
+          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? filedBy.includes("@CSR") ? "Complaint Filed at Counter" : "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
         }),
-        action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, { label: filedBy, containerStyle: nameContainerStyle, labelClassName: "dark-color" }),
+        action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, {
+          label: filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy,
+          containerStyle: nameContainerStyle,
+          fontSize: filedBy.includes("@CSR") ? 12 : 14,
+          dark: filedBy.includes("@CSR") ? false : true
+        }),
         role !== "citizen" && openStatusCount == 1 && (currentStatus === "open" || currentStatus === "assigned") && filedUserMobileNumber && _react2.default.createElement(
           "a",
           { className: "pgr-call-icon", href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
           _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
           _react2.default.createElement(
             "span",
-            { style: { marginLeft: "43px" } },
+            { style: { fontSize: 12, marginLeft: "43px" } },
             "+91 " + filedUserMobileNumber
           )
         ),
