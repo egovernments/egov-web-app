@@ -133,44 +133,19 @@ var actionList = {
     navigationURL: "all-complaints",
     leftIcon: { action: "action", name: "home" },
     rightIcon: ""
-  }, {
-    id: 1536,
-    name: "PropertySubType",
+  }],
+  ao: [{
+    id: 1535,
+    name: "PropertyType",
     url: "url",
-    displayName: "Information",
-    orderNumber: 2,
+    displayName: "Home",
+    orderNumber: 1,
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Information",
+    path: "Home",
     navigationURL: "all-complaints",
-    leftIcon: { action: "action", name: "info" },
-    rightIcon: ""
-  }, {
-    id: 1537,
-    name: "ConstructionType",
-    url: "url",
-    displayName: "Payments",
-    orderNumber: 3,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Payments",
-    navigationURL: "all-complaints",
-    leftIcon: { action: "custom", name: "rupee" },
-    rightIcon: ""
-  }, {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Apply",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "all-complaints",
-    leftIcon: { action: "content", name: "send" },
+    leftIcon: { action: "action", name: "home" },
     rightIcon: ""
   }],
   csr: [{
@@ -187,43 +162,17 @@ var actionList = {
     leftIcon: { action: "action", name: "home" },
     rightIcon: ""
   }, {
-    id: 1536,
-    name: "PropertySubType",
+    id: 1535,
+    name: "PropertyType",
     url: "url",
-    displayName: "Information",
-    orderNumber: 2,
+    displayName: "Create Complaint",
+    orderNumber: 1,
     enabled: true,
     serviceCode: "PT",
     code: "null",
-    path: "Information",
-    navigationURL: "all-complaints",
-    leftIcon: { action: "action", name: "info" },
-    rightIcon: ""
-  }, {
-    id: 1537,
-    name: "ConstructionType",
-    url: "url",
-    displayName: "Payments",
-    orderNumber: 3,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Payments",
-    navigationURL: "all-complaints",
-    leftIcon: { action: "custom", name: "rupee" },
-    rightIcon: ""
-  }, {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Apply",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "all-complaints",
-    leftIcon: { action: "content", name: "send" },
+    path: "create-complaint",
+    navigationURL: "create-complaint",
+    leftIcon: { action: "content", name: "add" },
     rightIcon: ""
   }]
 };

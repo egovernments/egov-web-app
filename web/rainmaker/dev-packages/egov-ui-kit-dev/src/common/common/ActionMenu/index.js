@@ -81,7 +81,7 @@ class ActionMenu extends Component {
   addMenuItems = (path, splitArray, menuItems, index) => {
     let { role } = this.props;
     const transformedRole = role === "citizen" ? "citizen" : "employee";
-    let actionList = actionListArr[transformedRole];
+    let actionList = actionListArr[role];
 
     if (splitArray.length > 1) {
       if (!some(menuItems, { name: splitArray[0] })) {
@@ -116,7 +116,7 @@ class ActionMenu extends Component {
     let path = pathParam.path;
     let { role } = this.props;
     const transformedRole = role === "citizen" ? "citizen" : "employee";
-    let actionList = actionListArr && actionListArr[transformedRole];
+    let actionList = actionListArr && actionListArr[role];
     let menuItems = [];
 
     for (var i = 0; i < (actionList && actionList.length); i++) {
@@ -170,11 +170,11 @@ class ActionMenu extends Component {
   };
 
   render() {
-    let { handleToggle, role } = this.props;
+    let { role } = this.props;
     const transformedRole = role === "citizen" ? "citizen" : "employee";
-    let { searchText, modules, items, changeModulesActions, path, menuItems } = this.state;
-    let { changeLevel, menuChange, changeRoute } = this;
-    let actionList = actionListArr && actionListArr[transformedRole];
+    let { searchText, path, menuItems } = this.state;
+    let { changeLevel, menuChange } = this;
+    let actionList = actionListArr && actionListArr[role];
 
     const showMenuItem = () => {
       if (searchText.length == 0) {
