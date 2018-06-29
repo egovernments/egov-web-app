@@ -25,7 +25,8 @@ var tabItemContainerStyle = {
 
 var inkBarStyle = {
   zIndex: 1101,
-  backgroundColor: "#f89a3f"
+  backgroundColor: "#fe7a51",
+  height: 4
 };
 
 var Tabs = function Tabs(_ref) {
