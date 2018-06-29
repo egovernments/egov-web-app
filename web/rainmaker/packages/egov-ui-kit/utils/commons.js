@@ -482,6 +482,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
         return isImage(imageSource);
       }),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
+      rawStatus: complaintDetail.status && complaintDetail.status,
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy: complaintDetail.status === "reassignrequested" ? getPropertyFromObj(employeeById, complaintDetail.actions[0].by.split(":")[0], "name", "NA") : "NA",
@@ -496,7 +497,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       //     "mobileNumber",
       //     defaultMobileNumber
       //   ),
-      submittedBy: filedUserName ? isFiledByCSR ? filedUserName + " @CSR" : filedUserName : "NA",
+      submittedBy: filedUserName ? isFiledByCSR ? filedUserName + " (Customer Service Desk)" : filedUserName : "NA",
       citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
       employeePhoneNumber: employeeById && employeeById[findLatestAssignee(complaintDetail.actions)] ? employeeById[findLatestAssignee(complaintDetail.actions)].mobileNumber : defaultPhoneNumber,

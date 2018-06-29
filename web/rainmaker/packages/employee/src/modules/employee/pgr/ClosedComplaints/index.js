@@ -19,9 +19,9 @@ class ClosedComplaints extends Component {
 
   render() {
     const { onComplaintClick } = this;
-    const { closedComplaints, role } = this.props;
+    const { closedComplaints, role, loading } = this.props;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
           <Complaints
             noComplaintMessage={"No complaints here !!!"}
@@ -64,11 +64,13 @@ const mapStateToProps = (state) => {
   const { categoriesById } = complaints;
   const { userInfo } = state.auth;
   const { citizenById, employeeById } = common || {};
+  const { fetchSuccess } = complaints;
+  const loading = fetchSuccess ? false : true;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "date", "desc");
 
-  return { userInfo, closedComplaints, role };
+  return { userInfo, closedComplaints, role, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -382,6 +382,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       complaintNo: complaintDetail.serviceRequestId,
       images: fetchImages(complaintDetail.actions).filter((imageSource) => isImage(imageSource)),
       complaintStatus: complaintDetail.status && getTransformedStatus(complaintDetail.status),
+      rawStatus: complaintDetail.status && complaintDetail.status,
       address: complaintDetail.address ? complaintDetail.address : "Error fetching address",
       reassign: complaintDetail.status === "reassignrequested" ? true : false,
       reassignRequestedBy:
@@ -399,7 +400,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       //     "mobileNumber",
       //     defaultMobileNumber
       //   ),
-      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} @CSR` : filedUserName) : "NA",
+      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Customer Service Desk)` : filedUserName) : "NA",
       citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
       employeePhoneNumber:

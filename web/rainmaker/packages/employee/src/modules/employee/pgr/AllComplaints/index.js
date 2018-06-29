@@ -303,7 +303,7 @@ const mapStateToProps = (state) => {
     );
   } else {
     employeeComplaints = orderby(
-      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
+      transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
       ["latestCreationTime"],
       ["desc"]
     );

@@ -8,6 +8,11 @@
   text-align: right;
 }
 
+.assigned-label-text,
+.unassigned-label-text {
+  margin-right: 7px;
+}
+
 @media only screen and (max-width: 768px) {
   .csr-action-buttons {
     text-align: center;

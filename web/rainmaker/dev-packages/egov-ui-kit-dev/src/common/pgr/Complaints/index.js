@@ -132,7 +132,7 @@ const getStatusAndChangeColor = (status, assignee) => {
       break;
     case "CS_COMMON_REJECTED_UCASE":
       statusObj.style = {
-        color: "#484848",
+        color: "#e74c3c",
       };
       statusObj.message = (
         <div>
@@ -155,6 +155,15 @@ const getStatusAndChangeColor = (status, assignee) => {
   if (status && status.includes(`left`)) {
     statusObj.style = { color: "#22b25f" };
     statusObj.message = "";
+  }
+  if (status && status.includes(`/`)) {
+    if (["0", "1", "2", "3"].indexOf(status.split("/")[0]) > -1) {
+      statusObj.style = { color: "#e74c3c" };
+      statusObj.message = "";
+    } else {
+      statusObj.style = { color: "#22b25f" };
+      statusObj.message = "";
+    }
   }
   return statusObj;
 };
