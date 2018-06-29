@@ -3,7 +3,7 @@ import { Button } from "components";
 import { ImageUpload } from "modules/common";
 import { TextArea } from "modules/common";
 
-const ComplaintResolvedForm = ({ formKey, form, handleFieldChange }) => {
+const ComplaintResolvedForm = ({ formKey, form, handleFieldChange, onSubmit }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -15,7 +15,14 @@ const ComplaintResolvedForm = ({ formKey, form, handleFieldChange }) => {
         </div>
       </div>
       <div className="responsive-action-button-cont">
-        <Button className="responsive-action-button" id={"complaint-resolved-mark-resolved"} {...submit} primary={true} fullWidth={true} />
+        <Button
+          onClick={onSubmit}
+          className="responsive-action-button"
+          id={"complaint-resolved-mark-resolved"}
+          {...submit}
+          primary={true}
+          fullWidth={true}
+        />
       </div>
     </div>
   );

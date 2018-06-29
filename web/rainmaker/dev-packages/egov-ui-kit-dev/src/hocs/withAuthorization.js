@@ -47,7 +47,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     render() {
-      const { hideHeader, hideFooter, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu, showNumberOfComplaints } = options;
+      const { hideHeader, hideFooter, hideFor, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu, showNumberOfComplaints } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
       const { titleAddon } = this.state;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
@@ -88,16 +88,17 @@ const withAuthorization = (options = {}) => (Component) => {
             <div className={role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12"} style={{ padding: 0 }}>
               {authenticated ? (
                 <div>
-                  {!hideTitle && (
-                    <Label
-                      className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
-                      label={title}
-                      containerStyle={{ padding: "24px 0 8px 17px" }}
-                      dark={true}
-                      bold={true}
-                      fontSize={20}
-                    />
-                  )}
+                  {!hideTitle &&
+                    role !== hideFor && (
+                      <Label
+                        className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
+                        label={title}
+                        containerStyle={{ padding: "24px 0 8px 16px" }}
+                        dark={true}
+                        bold={true}
+                        fontSize={20}
+                      />
+                    )}
                   <Component {...this.props} renderCustomTitle={this.renderCustomTitle} />
                 </div>
               ) : null}

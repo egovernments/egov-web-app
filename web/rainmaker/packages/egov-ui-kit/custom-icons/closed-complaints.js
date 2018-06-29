@@ -18,15 +18,12 @@ var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Roads = function Roads(props) {
+var ClosedComplaints = function ClosedComplaints(props) {
   return _react2.default.createElement(
     _SvgIcon2.default,
     (0, _extends3.default)({ viewBox: "0 0 100 125", className: "custom-icon" }, props),
-    _react2.default.createElement("path", {
-      d: "M4.32,86h36l1.57-20.51H58.11L59.68,86h36a3.32,3.32,0,0,0,3.07-4.56l-25.87-64A5.66,5.66,0,0,0,67.64,14H54.15l1,13.67H44.8l1-13.67H32.36a5.66,5.66,0,0,0-5.24,3.54l-25.87,64A3.32,3.32,0,0,0,4.32,86Zm39.84-50.1H55.84l1.49,19.41H42.67Z",
-      id: "path-1"
-    })
+    _react2.default.createElement("path", { d: "M96.4,11h-3.7h-4.5H46.4h-8.1h-0.1c-1.6,0-3,1-3.5,2h0l-3.4,12l0,0H18.9h-4.8h-3.3c-2,0-3.8,1.6-3.8,3.6v3.6v1.1v20.3V89  h85.7h7.3V14.4C100,12.4,98.4,11,96.4,11z M93,25H38.6l2-7h5.8h41.8H93V25z" })
   );
 };
 
-exports.default = Roads;
+exports.default = ClosedComplaints;

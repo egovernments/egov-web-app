@@ -4,6 +4,7 @@ import formHOC from "egov-ui-kit/hocs/form";
 import { Screen } from "modules/common";
 import RequestReassignForm from "./components/RequestReassignForm";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
@@ -54,6 +55,14 @@ class RequestReAssign extends Component {
     this.props.handleFieldChange("requestReassign", "comments", concatvalue);
   };
 
+  onSubmit = (e) => {
+    const { valueSelected } = this.state;
+    if (!valueSelected) {
+      e.preventDefault();
+      this.props.toggleSnackbarAndSetText(true, "Please mention the reason", true);
+    }
+  };
+
   render() {
     const { handleCommentsChange, handleOptionsChange } = this;
     const { valueSelected, commentValue } = this.state;
@@ -62,6 +71,7 @@ class RequestReAssign extends Component {
       <Screen className="background-white">
         <RequestReassignHOC
           options={this.options}
+          onSubmit={this.onSubmit}
           ontextAreaChange={handleCommentsChange}
           handleOptionChange={handleOptionsChange}
           optionSelected={valueSelected}
@@ -76,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
