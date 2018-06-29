@@ -100,8 +100,12 @@ var Comments = function (_Component) {
             primaryText: _react2.default.createElement(
               "div",
               { className: "complaint-details-comments-section", style: { marginRight: "6px" } },
-              _react2.default.createElement(_translationNode2.default, { fontSize: "10px", label: comment.name ? comment.name : "" }),
-              _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, fontSize: "10px", label: comment.designation }),
+              _react2.default.createElement(_translationNode2.default, {
+                containerStyle: { marginBottom: "6px" },
+                fontSize: "10px",
+                labelStyle: { fontWeight: "500" },
+                label: comment.name ? comment.name + " (" + comment.designation + ")" : ""
+              }),
               _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, labelStyle: { color: "#767676" }, label: comment.comment }),
               _react2.default.createElement(_translationNode2.default, { labelClassName: "text-right", fontSize: "10px", label: (0, _commons.getDateFromEpoch)(comment.when) })
             ),

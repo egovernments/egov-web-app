@@ -69,11 +69,12 @@ const callIconStyle = {
 const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
-      return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#fe7a51"} />;
-    case "assigned":
-    case "reassignrequested":
-    case "re-assign":
       return <Icon action="custom" name="file-plus" style={statusCommonIconStyle} color={"#fe7a51"} />;
+    case "reassignrequested":
+      return <Icon action="custom" name="reassign-request" style={statusCommonIconStyle} color={"#fe7a51"} />;
+    case "assigned":
+    case "re-assign":
+      return <Icon action="custom" name="file-send" style={statusCommonIconStyle} color={"#fe7a51"} />;
     case "rejected":
       return <Icon action="content" name="clear" style={statusRejectedIconStyle} color={"#FFFFFF"} />;
     case "resolved":
