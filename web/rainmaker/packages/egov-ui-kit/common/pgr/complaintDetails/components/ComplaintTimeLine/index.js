@@ -160,7 +160,7 @@ var StatusContent = function StatusContent(_ref2) {
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "dark-color complaint-timeline-status",
           containerStyle: filedBy && filedBy.includes("@CSR") ? displayBlock : statusContainerStyle,
-          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? filedBy.includes("@CSR") ? "Complaint Filed at Counter" : "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
+          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? filedBy.includes("@CSR") ? "Complaint Filed at Customer Service Desk" : "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
         }),
         action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, {
           label: filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy,
@@ -174,7 +174,12 @@ var StatusContent = function StatusContent(_ref2) {
           _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" }),
           _react2.default.createElement(
             "span",
-            { style: { fontSize: 12, marginLeft: "43px" } },
+            {
+              style: {
+                fontSize: filedBy.includes("@CSR") ? 12 : 14,
+                marginLeft: "43px"
+              }
+            },
             "+91 " + filedUserMobileNumber
           )
         ),

@@ -11,7 +11,8 @@ const tabItemContainerStyle = {
 
 const inkBarStyle = {
   zIndex: 1101,
-  backgroundColor: "#f89a3f",
+  backgroundColor: "#fe7a51",
+  height: 4,
 };
 
 const Tabs = ({ tabs = [], onChange }) => {

@@ -123,7 +123,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 : role !== "citizen"
                   ? filedBy
                     ? filedBy.includes("@CSR")
-                      ? "Complaint Filed at Counter"
+                      ? "Complaint Filed at Customer Service Desk"
                       : "ES_COMMON_FILED_BY"
                     : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
                   : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
@@ -145,7 +145,12 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
             filedUserMobileNumber && (
               <a className="pgr-call-icon" href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
-                <span style={{ fontSize: 12, marginLeft: "43px" }}>{`+91 ${filedUserMobileNumber}`}</span>
+                <span
+                  style={{
+                    fontSize: filedBy.includes("@CSR") ? 12 : 14,
+                    marginLeft: "43px",
+                  }}
+                >{`+91 ${filedUserMobileNumber}`}</span>
               </a>
             )}
 
