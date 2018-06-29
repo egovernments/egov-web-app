@@ -49,6 +49,7 @@ class ActionMenu extends Component {
       searchText: "",
       path: "",
       menuItems: [],
+      selectedMenuIndex: 0,
     };
     // this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -177,6 +178,7 @@ class ActionMenu extends Component {
     let actionList = actionListArr && actionListArr[role];
 
     const showMenuItem = () => {
+      const navigationURL = window.location.href.split("/").pop();
       if (searchText.length == 0) {
         return menuItems.map((item, index) => {
           if (!item.url) {
@@ -190,14 +192,14 @@ class ActionMenu extends Component {
                     name={item.leftIcon.name}
                     action={item.leftIcon.action}
                     color="#b3b3b3"
-                    style={styles.fibreIconStyle}
+                    style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
                     className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                   />
                 }
                 primaryText={
                   <div className="menuStyle whiteColor" style={styles.menuStyle}>
                     <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                    <span style={{ color: "#b3b3b3" }}>{item.name || ""}</span>
+                    <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
                   </div>
                 }
                 rightIcon={
@@ -233,15 +235,16 @@ class ActionMenu extends Component {
                       <Icon
                         name={item.leftIcon.name}
                         action={item.leftIcon.action}
+                        fill={"#b3b3b3"}
                         color="#b3b3b3"
-                        style={styles.fibreIconStyle}
+                        style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
                         className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                       />
                     }
                     primaryText={
                       <div className="menuStyle whiteColor" style={styles.menuStyle}>
                         <span className="onHoverText hidden-xs">{item.name || ""}</span>
-                        <span style={{ color: "#b3b3b3" }}>{item.name || ""}</span>
+                        <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>{item.name || ""}</span>
                       </div>
                     }
                   />
@@ -268,15 +271,17 @@ class ActionMenu extends Component {
                         <Icon
                           name={item.leftIcon.name}
                           action={item.leftIcon.action}
-                          color="#b3b3b3"
-                          style={styles.fibreIconStyle}
+                          color={"#b3b3b3"}
+                          style={navigationURL === item.navigationURL ? { ...{ fill: "#fff" }, ...styles.fibreIconStyle } : styles.fibreIconStyle}
                           className={`material-icons whiteColor custom-style-for-${item.leftIcon.name}`}
                         />
                       }
                       primaryText={
                         <div className="menuStyle whiteColor" style={styles.menuStyle}>
                           <span className="onHoverText  hidden-xs">{item.displayName || ""}</span>
-                          <span style={{ color: "#b3b3b3" }}>{item.displayName || ""}</span>
+                          <span style={navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" }}>
+                            {item.displayName || ""}
+                          </span>
                         </div>
                       }
                     />

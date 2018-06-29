@@ -96,6 +96,7 @@ var withAuthorization = function withAuthorization() {
         value: function render() {
           var hideHeader = options.hideHeader,
               hideFooter = options.hideFooter,
+              hideFor = options.hideFor,
               title = options.title,
               isHomeScreen = options.isHomeScreen,
               hideTitle = options.hideTitle,
@@ -146,10 +147,10 @@ var withAuthorization = function withAuthorization() {
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,
-                  !hideTitle && _react2.default.createElement(_translationNode2.default, {
+                  !hideTitle && role !== hideFor && _react2.default.createElement(_translationNode2.default, {
                     className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
                     label: title,
-                    containerStyle: { padding: "24px 0 8px 17px" },
+                    containerStyle: { padding: "24px 0 8px 16px" },
                     dark: true,
                     bold: true,
                     fontSize: 20

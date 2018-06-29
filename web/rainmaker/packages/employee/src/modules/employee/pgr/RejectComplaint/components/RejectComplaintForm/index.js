@@ -3,7 +3,7 @@ import { Button } from "components";
 import { Question } from "modules/common";
 import { TextArea } from "modules/common";
 
-const RejectComplaintForm = ({ form, options, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {
+const RejectComplaintForm = ({ form, options, onSubmit, ontextAreaChange, handleOptionChange, optionSelected, commentValue }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -17,7 +17,14 @@ const RejectComplaintForm = ({ form, options, ontextAreaChange, handleOptionChan
         </div>
       </div>
       <div className="responsive-action-button-cont">
-        <Button className="responsive-action-button" id="rejectcomplaint-submit-action" primary={true} {...submit} fullWidth={true} />
+        <Button
+          onClick={onSubmit}
+          className="responsive-action-button"
+          id="rejectcomplaint-submit-action"
+          primary={true}
+          {...submit}
+          fullWidth={true}
+        />
       </div>
     </div>
   );
