@@ -30,6 +30,10 @@
   width: 100%;
   top: 50px;
   padding: 10px; }
+  .logo-wrapper .imageloader {
+    text-align: center;
+    margin: 0 auto;
+    width: 200px; }
 
 .mseva-logo {
   display: block;

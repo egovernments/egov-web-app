@@ -42,8 +42,13 @@ class Comments extends Component {
           return {
             primaryText: (
               <div className="complaint-details-comments-section" style={{ marginRight: "6px" }}>
-                <Label fontSize="10px" label={comment.name ? comment.name : ""} />
-                <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.designation} />
+                <Label
+                  containerStyle={{ marginBottom: "6px" }}
+                  fontSize="10px"
+                  labelStyle={{ fontWeight: "500" }}
+                  label={comment.name ? `${comment.name} (${comment.designation})` : ""}
+                />
+                {/* <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.designation} /> */}
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
                 <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />
               </div>

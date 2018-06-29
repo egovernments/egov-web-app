@@ -104,11 +104,12 @@ var StatusIcon = function StatusIcon(_ref) {
 
   switch (status) {
     case "open":
-      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-send", style: statusCommonIconStyle, color: "#fe7a51" });
-    case "assigned":
-    case "reassignrequested":
-    case "re-assign":
       return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-plus", style: statusCommonIconStyle, color: "#fe7a51" });
+    case "reassignrequested":
+      return _react2.default.createElement(_components.Icon, { action: "custom", name: "reassign-request", style: statusCommonIconStyle, color: "#fe7a51" });
+    case "assigned":
+    case "re-assign":
+      return _react2.default.createElement(_components.Icon, { action: "custom", name: "file-send", style: statusCommonIconStyle, color: "#fe7a51" });
     case "rejected":
       return _react2.default.createElement(_components.Icon, { action: "content", name: "clear", style: statusRejectedIconStyle, color: "#FFFFFF" });
     case "resolved":
