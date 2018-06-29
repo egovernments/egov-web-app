@@ -5,6 +5,7 @@ import { Screen } from "modules/common";
 import RejectComplaintForm from "./components/RejectComplaintForm";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import Label from "egov-ui-kit/utils/translationNode";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
@@ -54,8 +55,17 @@ class RejectComplaint extends Component {
     this.props.handleFieldChange("rejectComplaint", "comments", concatvalue);
   };
 
+  onSubmit = (e) => {
+    const { valueSelected, commentValue } = this.state;
+    const { toggleSnackbarAndSetText } = this.props;
+    if (valueSelected === "Other" && !commentValue) {
+      e.preventDefault();
+      toggleSnackbarAndSetText(true, "Please mention your reason", true);
+    }
+  };
+
   render() {
-    const { handleCommentsChange, handleOptionsChange } = this;
+    const { handleCommentsChange, handleOptionsChange, onSubmit } = this;
     const { valueSelected, commentValue } = this.state;
 
     return (
@@ -66,6 +76,7 @@ class RejectComplaint extends Component {
           handleOptionChange={handleOptionsChange}
           optionSelected={valueSelected}
           commentValue={commentValue}
+          onSubmit={onSubmit}
         />
       </Screen>
     );
@@ -76,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 

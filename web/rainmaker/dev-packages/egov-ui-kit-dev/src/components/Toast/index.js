@@ -9,7 +9,7 @@ const Toast = ({ open = false, autoHideDuration = 4000, error = true, message })
       id="toast-message"
       message={message}
       autoHideDuration={autoHideDuration}
-      style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap" }}
+      style={{ pointerEvents: "none", width: "95%", whiteSpace: "nowrap", justifyContent: "center" }}
       bodyStyle={{
         pointerEvents: "initial",
         maxWidth: "none",

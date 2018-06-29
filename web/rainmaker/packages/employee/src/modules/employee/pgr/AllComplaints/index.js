@@ -115,7 +115,7 @@ class AllComplaints extends Component {
             ),
             children: (
               <Screen loading={loading}>
-                <div className="tab1-content">
+                <div className="tab1-content form-without-button-cont-generic">
                   <Complaints
                     noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_TO_ASSIGN"}
                     onComplaintClick={onComplaintClick}
@@ -148,7 +148,7 @@ class AllComplaints extends Component {
             ),
             children: (
               <Screen loading={loading}>
-                <div className="tab2-content">
+                <div className="tab2-content form-without-button-cont-generic">
                   <Complaints
                     noComplaintMessage={"ES_MYCOMPLAINTS_NO_ASSIGNED_COMPLAINTS"}
                     onComplaintClick={onComplaintClick}
@@ -164,67 +164,71 @@ class AllComplaints extends Component {
       />
     ) : role === "csr" ? (
       <Screen loading={loading}>
-        <Card
-          id="complaint-search-card"
-          className="complaint-search-main-card"
-          textChildren={
-            <div className="complaint-search-cont clearfix">
-              <div className="col-xs-12" style={{ paddingLeft: 8 }}>
-                <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
+        <div className="form-without-button-cont-generic">
+          <Card
+            id="complaint-search-card"
+            className="complaint-search-main-card"
+            textChildren={
+              <div className="complaint-search-cont clearfix">
+                <div className="col-xs-12" style={{ paddingLeft: 8 }}>
+                  <Label label="Search Complaint" fontSize={16} dark={true} bold={true} />
+                </div>
+                <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8, paddingRight: 40 }}>
+                  <TextField
+                    id="mobile-no"
+                    name="mobile-no"
+                    value={mobileNo}
+                    hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                    floatingLabelText={<Label label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                    onChange={(e, value) => this.onMobileChange(e)}
+                    underlineStyle={{ bottom: 7 }}
+                    underlineFocusStyle={{ bottom: 7 }}
+                    hintStyle={{ width: "100%" }}
+                  />
+                </div>
+                <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
+                  <TextField
+                    id="complaint-no"
+                    name="complaint-no"
+                    value={complaintNo}
+                    hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
+                    floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
+                    onChange={(e, value) => this.onComplaintChange(e)}
+                    underlineStyle={{ bottom: 7 }}
+                    underlineFocusStyle={{ bottom: 7 }}
+                    hintStyle={{ width: "100%" }}
+                  />
+                </div>
+                <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
+                  <Button
+                    label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
+                    style={{ marginRight: 28, width: "36%" }}
+                    backgroundColor="#fe7a51"
+                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
+                    buttonStyle={{ border: 0 }}
+                    onClick={() => this.onSearch()}
+                  />
+                  <Button
+                    label={<Label buttonLabel={true} color="#fe7a51" label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON" />}
+                    labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+                    buttonStyle={{ border: "1px solid #fe7a51" }}
+                    style={{ width: "36%" }}
+                    onClick={() => this.clearSearch()}
+                  />
+                </div>
               </div>
-              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8, paddingRight: 40 }}>
-                <TextField
-                  id="mobile-no"
-                  name="mobile-no"
-                  value={mobileNo}
-                  hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                  floatingLabelText={<Label label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
-                  onChange={(e, value) => this.onMobileChange(e)}
-                  underlineStyle={{ bottom: 7 }}
-                  underlineFocusStyle={{ bottom: 7 }}
-                  hintStyle={{ width: "100%" }}
-                />
-              </div>
-              <div className="col-sm-3 col-xs-12" style={{ paddingLeft: 8 }}>
-                <TextField
-                  id="complaint-no"
-                  name="complaint-no"
-                  value={complaintNo}
-                  hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                  floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
-                  onChange={(e, value) => this.onComplaintChange(e)}
-                  underlineStyle={{ bottom: 7 }}
-                  underlineFocusStyle={{ bottom: 7 }}
-                  hintStyle={{ width: "100%" }}
-                />
-              </div>
-              <div className="col-sm-6 col-xs-12 csr-action-buttons" style={{ marginTop: 10, paddingRight: 8 }}>
-                <Button
-                  label={<Label buttonLabel={true} label="ES_MYCOMPLAINTS_SEARCH_BUTTON" />}
-                  style={{ marginRight: 28, width: "36%" }}
-                  backgroundColor="#fe7a51"
-                  labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
-                  buttonStyle={{ border: 0 }}
-                  onClick={() => this.onSearch()}
-                />
-                <Button
-                  label={<Label buttonLabel={true} color="#fe7a51" label="ES_MYCOMPLAINTS_CLEAR_SEARCH_BUTTON" />}
-                  labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
-                  buttonStyle={{ border: "1px solid #fe7a51" }}
-                  style={{ width: "36%" }}
-                  onClick={() => this.clearSearch()}
-                />
-              </div>
-            </div>
-          }
-        />
-        <Complaints
-          noComplaintMessage={search ? "ES_NO_SEARCH_RESULTS" : "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
-          onComplaintClick={onComplaintClick}
-          complaints={transformedComplaints}
-          role={role}
-          complaintLocation={true}
-        />
+            }
+          />
+        </div>
+        <div className="form-without-button-cont-generic">
+          <Complaints
+            noComplaintMessage={search ? "ES_NO_SEARCH_RESULTS" : "ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
+            onComplaintClick={onComplaintClick}
+            complaints={transformedComplaints}
+            role={role}
+            complaintLocation={true}
+          />
+        </div>
         <div className="floating-button-cont csr-add-button">
           <FloatingActionButton
             id="mycomplaints-add"
@@ -240,13 +244,15 @@ class AllComplaints extends Component {
       </Screen>
     ) : (
       <Screen loading={loading}>
-        <Complaints
-          noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
-          onComplaintClick={onComplaintClick}
-          complaints={employeeComplaints}
-          role={role}
-          complaintLocation={true}
-        />
+        <div className="form-without-button-cont-generic">
+          <Complaints
+            noComplaintMessage={"ES_MYCOMPLAINTS_NO_COMPLAINTS_ASSIGNED"}
+            onComplaintClick={onComplaintClick}
+            complaints={employeeComplaints}
+            role={role}
+            complaintLocation={true}
+          />
+        </div>
       </Screen>
     );
   }

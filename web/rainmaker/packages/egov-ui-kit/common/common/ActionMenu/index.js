@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -195,7 +199,8 @@ var ActionMenu = function (_Component) {
     _this.state = {
       searchText: "",
       path: "",
-      menuItems: []
+      menuItems: [],
+      selectedMenuIndex: 0
     };
     // this.handleClickOutside = this.handleClickOutside.bind(this);
     _this.setWrapperRef = _this.setWrapperRef.bind(_this);
@@ -240,6 +245,7 @@ var ActionMenu = function (_Component) {
       var actionList = _actionList2.default && _actionList2.default[role];
 
       var showMenuItem = function showMenuItem() {
+        var navigationURL = window.location.href.split("/").pop();
         if (searchText.length == 0) {
           return menuItems.map(function (item, index) {
             if (!item.url) {
@@ -251,7 +257,7 @@ var ActionMenu = function (_Component) {
                   name: item.leftIcon.name,
                   action: item.leftIcon.action,
                   color: "#b3b3b3",
-                  style: styles.fibreIconStyle,
+                  style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
                   className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
                 }),
                 primaryText: _react2.default.createElement(
@@ -264,7 +270,7 @@ var ActionMenu = function (_Component) {
                   ),
                   _react2.default.createElement(
                     "span",
-                    { style: { color: "#b3b3b3" } },
+                    { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" } },
                     item.name || ""
                   )
                 ),
@@ -298,8 +304,9 @@ var ActionMenu = function (_Component) {
                     leftIcon: _react2.default.createElement(_components.Icon, {
                       name: item.leftIcon.name,
                       action: item.leftIcon.action,
+                      fill: "#b3b3b3",
                       color: "#b3b3b3",
-                      style: styles.fibreIconStyle,
+                      style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
                       className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
                     }),
                     primaryText: _react2.default.createElement(
@@ -312,7 +319,7 @@ var ActionMenu = function (_Component) {
                       ),
                       _react2.default.createElement(
                         "span",
-                        { style: { color: "#b3b3b3" } },
+                        { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" } },
                         item.name || ""
                       )
                     )
@@ -338,7 +345,7 @@ var ActionMenu = function (_Component) {
                       name: item.leftIcon.name,
                       action: item.leftIcon.action,
                       color: "#b3b3b3",
-                      style: styles.fibreIconStyle,
+                      style: navigationURL === item.navigationURL ? (0, _extends3.default)({ fill: "#fff" }, styles.fibreIconStyle) : styles.fibreIconStyle,
                       className: "material-icons whiteColor custom-style-for-" + item.leftIcon.name
                     }),
                     primaryText: _react2.default.createElement(
@@ -351,7 +358,7 @@ var ActionMenu = function (_Component) {
                       ),
                       _react2.default.createElement(
                         "span",
-                        { style: { color: "#b3b3b3" } },
+                        { style: navigationURL === item.navigationURL ? { color: "#fff" } : { color: "#b3b3b3" } },
                         item.displayName || ""
                       )
                     )

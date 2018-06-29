@@ -7,7 +7,7 @@ const localizationLabels = initLocalizationLabels(locale);
 const initialState = {
   name: "Mseva",
   showMenu: false,
-  showActionMenu:true,
+  showActionMenu: true,
   showDailog: false,
   route: "",
   locale,

@@ -22,13 +22,15 @@ class ClosedComplaints extends Component {
     const { closedComplaints, role } = this.props;
     return (
       <Screen>
-        <Complaints
-          noComplaintMessage={"No complaints here !!!"}
-          onComplaintClick={onComplaintClick}
-          complaints={closedComplaints}
-          role={role}
-          complaintLocation={true}
-        />
+        <div className="form-without-button-cont-generic">
+          <Complaints
+            noComplaintMessage={"No complaints here !!!"}
+            onComplaintClick={onComplaintClick}
+            complaints={closedComplaints}
+            role={role}
+            complaintLocation={true}
+          />
+        </div>
       </Screen>
     );
   }

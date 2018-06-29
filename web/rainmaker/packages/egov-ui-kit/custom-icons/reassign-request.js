@@ -18,7 +18,7 @@ var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FiledIcon = function FiledIcon(props) {
+var ReassignRequest = function ReassignRequest(props) {
   return _react2.default.createElement(
     _SvgIcon2.default,
     (0, _extends3.default)({ viewBox: "0 0 24 24" }, props),
@@ -26,4 +26,4 @@ var FiledIcon = function FiledIcon(props) {
   );
 };
 
-exports.default = FiledIcon;
+exports.default = ReassignRequest;
