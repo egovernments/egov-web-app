@@ -18,8 +18,7 @@ const WriteCommentHOC = formHoc({ formKey: "comment" })(WriteComment);
 
 class Comments extends Component {
   render() {
-    const { selectedComplaint, userImage, userId, userName, role, isAssignedToEmployee, transformedCommentList } = this.props;
-
+    const { selectedComplaint, userImage, userId, userName, role, isAssignedToEmployee, transformedCommentList, complainant } = this.props;
     const items =
       transformedCommentList &&
       transformedCommentList.map((comment, index) => {
@@ -46,9 +45,10 @@ class Comments extends Component {
                   containerStyle={{ marginBottom: "6px" }}
                   fontSize="10px"
                   labelStyle={{ fontWeight: "500" }}
-                  label={comment.name ? `${comment.name} (${comment.designation})` : ""}
+                  label={
+                    role === "csr" ? `${complainant} (From customer service desk)` : comment.name ? `${comment.name} (${comment.designation})` : ""
+                  }
                 />
-                {/* <Label containerStyle={{ marginBottom: "6px" }} fontSize="10px" label={comment.designation} /> */}
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />
                 <Label labelClassName="text-right" fontSize="10px" label={getDateFromEpoch(comment.when)} />
               </div>
@@ -106,6 +106,7 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common } = state;
   const { employeeById, citizenById, designationsById } = common;
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  const complainant = selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.name;
   let commentList =
     selectedComplaint &&
     selectedComplaint.actions.filter((action, index) => {
@@ -121,6 +122,7 @@ const mapStateToProps = (state, ownProps) => {
       const designationCode = assignments && assignments[0] && assignments[0].designation;
       return {
         role,
+        complainant,
         avatar: role === "Citizen" ? getPropertyFromObj(citizenById, id, "photo", "") : getPropertyFromObj(employeeById, id, "photo", ""),
         name: role === "Citizen" ? getPropertyFromObj(citizenById, id, "name", "") : getPropertyFromObj(employeeById, id, "name", ""),
         designation: role !== "Citizen" ? getPropertyFromObj(designationsById, designationCode, "name", "") : null,
@@ -133,7 +135,7 @@ const mapStateToProps = (state, ownProps) => {
   const userImage = state.auth.userInfo.photo || "";
   const userId = state.auth.userInfo.id || "";
   const userName = state.auth.userInfo.name || "";
-  return { selectedComplaint, userImage, userId, userName, transformedCommentList, hasComments };
+  return { selectedComplaint, userImage, userId, userName, transformedCommentList, hasComments, complainant };
 };
 
 export default connect(mapStateToProps)(Comments);

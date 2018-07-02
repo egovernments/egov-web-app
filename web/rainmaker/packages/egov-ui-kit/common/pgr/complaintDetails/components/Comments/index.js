@@ -76,8 +76,8 @@ var Comments = function (_Component) {
           userName = _props.userName,
           role = _props.role,
           isAssignedToEmployee = _props.isAssignedToEmployee,
-          transformedCommentList = _props.transformedCommentList;
-
+          transformedCommentList = _props.transformedCommentList,
+          complainant = _props.complainant;
 
       var items = transformedCommentList && transformedCommentList.map(function (comment, index) {
         if (comment.role === "Citizen") {
@@ -104,7 +104,7 @@ var Comments = function (_Component) {
                 containerStyle: { marginBottom: "6px" },
                 fontSize: "10px",
                 labelStyle: { fontWeight: "500" },
-                label: comment.name ? comment.name + " (" + comment.designation + ")" : ""
+                label: role === "csr" ? complainant + " (From customer service desk)" : comment.name ? comment.name + " (" + comment.designation + ")" : ""
               }),
               _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, labelStyle: { color: "#767676" }, label: comment.comment }),
               _react2.default.createElement(_translationNode2.default, { labelClassName: "text-right", fontSize: "10px", label: (0, _commons.getDateFromEpoch)(comment.when) })
@@ -160,6 +160,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
       designationsById = common.designationsById;
 
   var selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
+  var complainant = selectedComplaint && selectedComplaint.citizen && selectedComplaint.citizen.name;
   var commentList = selectedComplaint && selectedComplaint.actions.filter(function (action, index) {
     return action.comments && !action.status;
   });
@@ -171,6 +172,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     var designationCode = assignments && assignments[0] && assignments[0].designation;
     return {
       role: role,
+      complainant: complainant,
       avatar: role === "Citizen" ? (0, _commons.getPropertyFromObj)(citizenById, id, "photo", "") : (0, _commons.getPropertyFromObj)(employeeById, id, "photo", ""),
       name: role === "Citizen" ? (0, _commons.getPropertyFromObj)(citizenById, id, "name", "") : (0, _commons.getPropertyFromObj)(employeeById, id, "name", ""),
       designation: role !== "Citizen" ? (0, _commons.getPropertyFromObj)(designationsById, designationCode, "name", "") : null,
@@ -183,7 +185,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var userImage = state.auth.userInfo.photo || "";
   var userId = state.auth.userInfo.id || "";
   var userName = state.auth.userInfo.name || "";
-  return { selectedComplaint: selectedComplaint, userImage: userImage, userId: userId, userName: userName, transformedCommentList: transformedCommentList, hasComments: hasComments };
+  return { selectedComplaint: selectedComplaint, userImage: userImage, userId: userId, userName: userName, transformedCommentList: transformedCommentList, hasComments: hasComments, complainant: complainant };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Comments);
