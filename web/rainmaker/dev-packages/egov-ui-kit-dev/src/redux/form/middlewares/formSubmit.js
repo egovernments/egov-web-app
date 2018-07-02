@@ -80,8 +80,6 @@ const formSubmit = (store) => (next) => (action) => {
 
     if (redirectionRoute && redirectionRoute.length) {
       redirectionRoute = idJsonPath ? addQueryArg(redirectionRoute, [{ key: "id", value: get(payload, idJsonPath) }]) : redirectionRoute;
-      console.log(idJsonPath);
-      console.log(payload);
       dispatch(setRoute(redirectionRoute));
     }
 
