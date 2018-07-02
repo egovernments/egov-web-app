@@ -9,13 +9,14 @@ import { commonApiPost } from "egov-ui-kit/utils/api";
 import ShowField from "./showField";
 //import { translate } from "../../common/common";
 import { translate } from "./commons/common";
+import Label from "egov-ui-kit/utils/translationNode";
 import jp from "jsonpath";
 import _ from "lodash";
 //import styles from "../../../styles/material-ui";
 import { getResultUrl } from "./commons/url";
 class ShowForm extends Component {
   state = {
-    searchBtnText: "Generate Report",
+    searchBtnText: "APPLY",
   };
 
   checkForDependentSource = async (fieldIndex, field, selectedValue) => {
@@ -160,7 +161,7 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-          dateError: field === "toDate" ? translate("pgr.lbl.dategreater") : translate("pgr.lbl.datelesser"),
+          dateError: field === "toDate" ? <Label label="pgr.lbl.dategreater" /> : <Label label="pgr.lbl.datelesser" />,
         });
       }
     }
@@ -173,16 +174,18 @@ class ShowForm extends Component {
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
         item["value"] = _.isEmpty(searchForm) ? "" : searchForm[item.name];
-        console.log(item["value"]);
+
         return (
-          <ShowField
-            value={item["value"]}
-            key={index}
-            obj={item}
-            dateField={this.state.datefield}
-            dateError={this.state.dateError}
-            handler={this.handleChange}
-          />
+          item.name !== "tenantId" && (
+            <ShowField
+              value={item["value"]}
+              key={index}
+              obj={item}
+              dateField={this.state.datefield}
+              dateError={this.state.dateError}
+              handler={this.handleChange}
+            />
+          )
         );
       });
     }
@@ -191,7 +194,7 @@ class ShowForm extends Component {
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
     if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
-      changeButtonText("Generate Report");
+      changeButtonText("APPLY");
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
       });
@@ -202,7 +205,7 @@ class ShowForm extends Component {
       let { searchParams } = !_.isEmpty(nextProps.metaData) ? nextProps.metaData.reportDetails : { searchParams: [] };
       let required = [];
       for (var i = 0; i < searchParams.length; i++) {
-        if (searchParams[i].isMandatory) {
+        if (searchParams[i].name !== "tenantId" && searchParams[i].isMandatory) {
           required.push(searchParams[i].name);
         }
       }
@@ -218,7 +221,7 @@ class ShowForm extends Component {
 
   componentDidMount() {
     let { metaData, setForm, changeButtonText, clearReportHistory } = this.props;
-    changeButtonText("Generate Report");
+    changeButtonText("APPLY");
     let searchParams = !_.isEmpty(metaData) ? metaData.reportDetails : { searchParams: [] };
     let required = [];
     this.setState({ reportName: this.props.match.params.reportName });
@@ -402,7 +405,7 @@ class ShowForm extends Component {
       }
     }
 
-    changeButtonText("Generate Report");
+    changeButtonText("APPLY");
   };
 
   render() {
@@ -416,18 +419,24 @@ class ShowForm extends Component {
           }}
         >
           <Card
+            style={{ margin: "16px" }}
             textChildren={
               <div>
-                <div style={{ paddingBottom: 0 }}>{!_.isEmpty(metaData) && metaData.reportDetails ? metaData.reportDetails.summary : ""}</div>
+                <div>Modify report by date range</div>
+                {/* <div style={{ paddingBottom: 0 }}>{!_.isEmpty(metaData) && metaData.reportDetails ? metaData.reportDetails.summary : ""}</div> */}
                 <Grid>
-                  <Row>{this.handleFormFields()}</Row>
+                  <Row>
+                    {this.handleFormFields()}
+                    <div style={{ marginTop: "16px" }}>
+                      <RaisedButton type="submit" disabled={!isFormValid} primary={true} label={buttonText} />
+                    </div>
+                  </Row>
                 </Grid>
-                <div style={{ textAlign: "center" }}>
-                  <br />
-                  <RaisedButton type="submit" disabled={!isFormValid} primary={true} label={buttonText} />
-                  <br />
-                  <br />
-                </div>
+
+                <br />
+
+                <br />
+                <br />
               </div>
             }
           />

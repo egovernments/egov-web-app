@@ -25,10 +25,12 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
-import { fonts } from "../pdf-generation/PdfConfig";
+import { fonts } from "../reports/pdf-generation/PdfConfig";
 import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
 import { getResultUrl } from "./commons/url";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
+
 pdfMake.fonts = fonts;
 window.JSZip = JSZip;
 
@@ -219,7 +221,7 @@ class ShowField extends Component {
       },
       {
         extend: "excel",
-        text: "XLS",
+        text: "<span>Download as : </span>XLS",
         className: "report-excel-button",
         exportOptions,
       },
@@ -454,11 +456,15 @@ class ShowField extends Component {
           {reportResult.hasOwnProperty("reportHeader") &&
             reportResult.reportHeader.map((item, i) => {
               if (item.showColumn) {
-                return <th key={i}>{translate(item.label)}</th>;
+                return (
+                  <th key={i}>
+                    <Label label={item.label} />
+                  </th>
+                );
               } else {
                 return (
                   <th style={{ display: "none" }} key={i}>
-                    {translate(item.label)}
+                    <Label label={item.label} />
                   </th>
                 );
               }
@@ -508,7 +514,7 @@ class ShowField extends Component {
 
       searchParams.push({ name: key, input: values });
       let resulturl = getResultUrl(match.params.moduleName);
-      console.log(resulturl);
+
       var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
       let response =
         resulturl &&
@@ -665,11 +671,29 @@ class ShowField extends Component {
     let self = this;
 
     const viewTabel = () => {
+      let { searchForm } = this.props;
+      let fromDate;
+      let toDate;
+      if (searchForm && searchForm.fromDate && searchForm.toDate) {
+        fromDate = new Date(searchForm.fromDate);
+        toDate = new Date(searchForm.toDate);
+      }
+
+      let today = new Date();
+      let date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
       return (
         <div>
           {/* <Card> */}
           {/* <CardHeader title={self.state.reportSubTitle} /> */}
           {/* <CardText> */}
+          {fromDate && toDate ? (
+            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>
+              Showing data for : {fromDate.getDate() + "/" + (fromDate.getMonth() + 1) + "/" + fromDate.getFullYear()} to{" "}
+              {toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}
+            </div>
+          ) : (
+            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{`Showing data upto : ${date}`}</div>
+          )}
           <Table
             id="reportTable"
             style={{
@@ -678,7 +702,6 @@ class ShowField extends Component {
               padding: "0 !important",
               backgroundColor: "#ffffff",
             }}
-            bordered
             responsive
           >
             {self.renderHeader()}
@@ -702,8 +725,7 @@ class ShowField extends Component {
           {/* </CardText> */}
           {/* </Card> */}
           <br />
-
-          {metaData.reportDetails.summary == "Cash Collection Report" && (
+          {/* {metaData.reportDetails.summary == "Cash Collection Report" && (
             <Grid>
               <Row>
                 <Col xs={12} md={8} mdOffset={2}>
@@ -795,7 +817,7 @@ class ShowField extends Component {
                 </Col>
               </Row>
             </Grid>
-          )}
+          )} */}
         </div>
       );
     };
