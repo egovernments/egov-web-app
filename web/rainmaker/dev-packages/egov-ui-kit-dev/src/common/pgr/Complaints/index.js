@@ -58,7 +58,7 @@ const bottomInfoTemplate = (item, role) => {
             {item.submittedBy !== "NA" && (
               <div className="clearfix">
                 <div className="inline-Localization-text">
-                  <Label containerStyle={{ display: "inline-block" }} fontSize={12} label={"ES_ALL_COMPLAINTS_SUBMITTED_BY"} />
+                  <Label containerStyle={{ display: "inline-block" }} fontSize={12} label={"ES_COMMON_FILED_BY"} />
                   <Label
                     containerStyle={{ display: "inline-block" }}
                     fontSize={12}

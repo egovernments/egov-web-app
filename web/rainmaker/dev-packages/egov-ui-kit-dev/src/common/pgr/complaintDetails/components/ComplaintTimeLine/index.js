@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, TimeLine, Icon, Image } from "components/";
+import { Card, TimeLine, Icon, Image } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import { getDateFromEpoch, isImage } from "egov-ui-kit/utils/commons";
@@ -66,6 +66,12 @@ const callIconStyle = {
   top: "0px",
 };
 
+const connectorStyle = {
+  display: "block",
+  border: "solid 1px #fe7a51",
+  minHeight: "28px",
+};
+
 const StatusIcon = ({ status }) => {
   switch (status) {
     case "open":
@@ -123,7 +129,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 : role !== "citizen"
                   ? filedBy
                     ? filedBy.includes("@CSR")
-                      ? "Complaint Filed at Customer Service Desk"
+                      ? "ES_COMPLAINT_FILED_BY_CSR"
                       : "ES_COMMON_FILED_BY"
                     : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
                   : `CS_COMPLAINT_DETAILS_COMPLAINT_FILED`
