@@ -12,7 +12,7 @@ import { translate } from "./commons/common";
 import jp from "jsonpath";
 import _ from "lodash";
 //import styles from "../../../styles/material-ui";
-
+import { getResultUrl } from "./commons/url";
 class ShowForm extends Component {
   state = {
     searchBtnText: "Generate Report",
@@ -72,11 +72,11 @@ class ShowForm extends Component {
   handleChange = (e, property, isRequired, pattern) => {
     const { metaData, setMetaData, handleChange } = this.props;
     const selectedValue = e.target.value;
-    console.log(property);
 
     if (property === "fromDate" || property === "toDate") {
       this.checkDate(selectedValue, property, isRequired, pattern);
     } else {
+      console.log(e.target.value);
       handleChange(e, property, isRequired, pattern);
     }
 
@@ -173,6 +173,7 @@ class ShowForm extends Component {
     if (!_.isEmpty(metaData) && metaData.reportDetails && metaData.reportDetails.searchParams && metaData.reportDetails.searchParams.length > 0) {
       return metaData.reportDetails.searchParams.map((item, index) => {
         item["value"] = _.isEmpty(searchForm) ? "" : searchForm[item.name];
+        console.log(item["value"]);
         return (
           <ShowField
             value={item["value"]}
@@ -188,13 +189,15 @@ class ShowForm extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    let { changeButtonText, clearReportHistory } = this.props;
+    let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
     if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("Generate Report");
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
       });
       this.setState({ moduleName: this.props.match.params.moduleName });
+      console.log(this.props);
+      console.log(nextProps);
       let { setForm } = this.props;
       let { searchParams } = !_.isEmpty(nextProps.metaData) ? nextProps.metaData.reportDetails : { searchParams: [] };
       let required = [];
@@ -207,6 +210,8 @@ class ShowForm extends Component {
       clearReportHistory();
       if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
         this.search(null, true);
+      } else if (needDefaultSearch) {
+        this.search(null);
       }
     }
   }
@@ -233,13 +238,19 @@ class ShowForm extends Component {
   }
 
   getDisplayOnlyFields = (metaData) => {
-    return metaData.reportDetails.searchParams.filter((field) => field.displayOnly).map((field) => field.name);
+    return (
+      metaData &&
+      metaData.reportDetails &&
+      metaData.reportDetails.searchParams &&
+      metaData.reportDetails.searchParams.filter((field) => field.displayOnly).map((field) => field.name)
+    );
   };
 
   search = (e = null, isDrilldown = false) => {
     if (e) {
       e.preventDefault();
     }
+    console.log(e);
 
     let {
       showTable,
@@ -270,6 +281,7 @@ class ShowForm extends Component {
               return acc;
             }, {})
         : searchForm;
+      console.log(searchForm);
 
       // todo remove this!
       if (searchForm) {
@@ -324,64 +336,69 @@ class ShowForm extends Component {
       setSearchParams(searchParams);
 
       clearReportHistory();
-      let response = commonApiPost(
-        "/report/" + this.state.moduleName + "/_get",
-        {},
-        { tenantId: tenantId, reportName: this.state.reportName, searchParams }
-      ).then(
-        function(response) {
-          pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
-          setReportResult(response);
-          showTable(true);
-          setFlag(1);
-        },
-        function(err) {
-          showTable(false);
-          alert("Something went wrong or try again later");
-        }
-      );
+      let resulturl = getResultUrl(this.state.moduleName);
+      let response =
+        resulturl &&
+        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: this.state.reportName, searchParams }).then(
+          function(response) {
+            pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
+            setReportResult(response);
+            showTable(true);
+            setFlag(1);
+          },
+          function(err) {
+            showTable(false);
+            alert("Something went wrong or try again later");
+          }
+        );
     } else {
       if (_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
         let reportData = reportHistory[reportIndex - 1 - 1];
-        let response = commonApiPost("/report/" + this.state.moduleName + "/_get", {}, { ...reportData }).then(
-          function(response) {
-            // console.log(response)
-            decreaseReportIndex();
-            setReportResult(response);
-            // console.log("Show Table");
-            showTable(true);
-            setFlag(1);
-          },
-          function(err) {
-            // console.log(err);
-            showTable(false);
-            alert("Something went wrong or try again later");
-          }
-        );
+        let resulturl = getResultUrl(this.state.moduleName);
+        let response =
+          resulturl &&
+          commonApiPost(resulturl, {}, { ...reportData }).then(
+            function(response) {
+              // console.log(response)
+              decreaseReportIndex();
+              setReportResult(response);
+              // console.log("Show Table");
+              showTable(true);
+              setFlag(1);
+            },
+            function(err) {
+              // console.log(err);
+              showTable(false);
+              alert("Something went wrong or try again later");
+            }
+          );
       } else {
         var reportData = JSON.parse(localStorage.getItem("searchCriteria"));
-        let response = commonApiPost("/report/" + localStorage.getItem("moduleName") + "/_get", {}, { ...reportData }).then(
-          function(response) {
-            // console.log(response)
-            // decreaseReportIndex();
-            localStorage.setItem("returnUrl", "");
-            localStorage.setItem("searchCriteria", JSON.stringify({}));
-            localStorage.setItem("moduleName", "");
-            for (var i = 0; i < reportData.searchParams.length; i++) {
-              self.handleChange({ target: { value: reportData.searchParams[i].name } }, reportData.searchParams[i].input, false, false);
+        let resulturl = getResultUrl(localStorage.getItem("moduleName"));
+        let response =
+          resulturl &&
+          commonApiPost(resulturl, {}, { ...reportData }).then(
+            function(response) {
+              // console.log(response)
+              // decreaseReportIndex();
+              localStorage.setItem("returnUrl", "");
+              localStorage.setItem("searchCriteria", JSON.stringify({}));
+              localStorage.setItem("moduleName", "");
+              for (var i = 0; i < reportData.searchParams.length; i++) {
+                self.handleChange({ target: { value: reportData.searchParams[i].name } }, reportData.searchParams[i].input, false, false);
+              }
+              setSearchParams(reportData.searchParams);
+              setReportResult(response);
+              // console.log("Show Table");
+              showTable(true);
+              setFlag(1);
+            },
+            function(err) {
+              // console.log(err);
+              showTable(false);
+              alert("Something went wrong or try again later");
             }
-            setSearchParams(reportData.searchParams);
-            setReportResult(response);
-            // console.log("Show Table");
-            showTable(true);
-            setFlag(1);
-          },
-          function(err) {
-            // console.log(err);
-            showTable(false);
-            alert("Something went wrong or try again later");
-          }
-        );
+          );
       }
     }
 
@@ -480,6 +497,7 @@ const mapDispatchToProps = (dispatch) => ({
     });
   },
   handleChange: (e, property, isRequired, pattern) => {
+    console.log(e.target.value);
     dispatch({
       type: "HANDLE_CHANGE",
       property,

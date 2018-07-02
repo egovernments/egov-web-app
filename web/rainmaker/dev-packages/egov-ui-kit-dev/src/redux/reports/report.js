@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 
 const defaultState = {
   showTable: false,
@@ -13,13 +13,13 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case 'SET_SEARCH_PARAMS':
+    case "SET_SEARCH_PARAMS":
       return {
         ...state,
         searchParams: action.searchParams,
       };
 
-    case 'PUSH_REPORT_HISTORY':
+    case "PUSH_REPORT_HISTORY":
       var current = { ...state };
       if (
         _.findIndex(current.reportHistory, {
@@ -37,26 +37,26 @@ export default (state = defaultState, action) => {
       }
       return current;
 
-    case 'CLEAR_REPORT_HISTORY':
+    case "CLEAR_REPORT_HISTORY":
       return {
         ...state,
         reportHistory: [],
         reportIndex: 0,
       };
 
-    case 'INCREASE_REPORT_INDEX':
+    case "INCREASE_REPORT_INDEX":
       return {
         ...state,
         reportIndex: state.reportIndex + 1,
       };
 
-    case 'DECREASE_REPORT_INDEX':
+    case "DECREASE_REPORT_INDEX":
       return {
         ...state,
         reportIndex: state.reportIndex - 1,
       };
 
-    case 'SET_META_DATA':
+    case "SET_META_DATA":
       return {
         ...state,
         metaData: {
@@ -66,25 +66,25 @@ export default (state = defaultState, action) => {
         // Object.assign(state.metaData,action.metaData)
       };
 
-    case 'SET_REPORT_RESULT':
+    case "SET_REPORT_RESULT":
       return {
         ...state,
         reportResult: action.reportResult,
       };
 
-    case 'SHOW_TABLE':
+    case "SHOW_TABLE":
       return {
         ...state,
         showTable: action.state,
       };
 
-    case 'SET_FLAG':
+    case "SET_FLAG":
       return {
         ...state,
         flag: action.flag,
       };
 
-    case 'SET_TABLE_SELECTION_DATA':
+    case "SET_TABLE_SELECTION_DATA":
       return {
         ...state,
         tableSelectionData: action.tableSelectionData,
