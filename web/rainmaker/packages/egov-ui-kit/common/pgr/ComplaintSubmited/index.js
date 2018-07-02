@@ -59,7 +59,6 @@ var ComplaintSubmitted = function (_Component) {
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ComplaintSubmitted.__proto__ || Object.getPrototypeOf(ComplaintSubmitted)).call.apply(_ref, [this].concat(args))), _this), _this.continueComplaintSubmit = function () {
       _this.props.history.push(_this.props.homeRoute);
     }, _this.getComplaintNumber = function () {
-      console.log(_this.props);
       var search = _this.props.location.search;
 
       return search && search.length && search.split("=").length && search.split("=")[1] || null;
@@ -91,7 +90,7 @@ var ComplaintSubmitted = function (_Component) {
                 { backgroundColor: "#22b25f", style: { marginBottom: "16px" } },
                 _react2.default.createElement(_components.Icon, { name: "check", action: "navigation" })
               ),
-              _react2.default.createElement(_translationNode2.default, { labelClassName: "thank-you-label", id: "thank-you-text", label: "CS_COMPLAINT_SUBMITTED_THANKYOU", fontSize: "16px" }),
+              this.props.removeGreeting && _react2.default.createElement(_translationNode2.default, { labelClassName: "thank-you-label", id: "thank-you-text", label: "CS_COMPLAINT_SUBMITTED_THANKYOU", fontSize: "16px" }),
               _react2.default.createElement(
                 "div",
                 { className: "complaint-submitted-complaintNo-cont" },
