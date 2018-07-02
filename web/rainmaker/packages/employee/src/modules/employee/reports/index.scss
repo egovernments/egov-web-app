@@ -3,8 +3,17 @@
   color: #fe7a51 !important;
   border: none !important;
 }
+.report-pdf-button {
+  display: none !important;
+}
 .report-result-table {
   color: #484848;
   border: none;
   background-color: #ffffff;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.13), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  margin: 16px;
+}
+
+.report-result-table > tbody {
+  color: red;
 }
