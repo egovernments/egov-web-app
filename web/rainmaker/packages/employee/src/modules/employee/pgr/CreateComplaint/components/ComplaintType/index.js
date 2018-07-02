@@ -53,7 +53,7 @@ class ComplaintTypeField extends Component {
           bodyStyle={{ backgroundColor: "#ffffff" }}
           isClose={false}
           onRequestClose={onClose}
-          contentStyle={{ width: "34%", height: "65%" }}
+          contentStyle={{ width: "34%", minWidth: 336, height: "65%" }}
           autoScrollBodyContent={true}
           style={{
             paddingTop: "0",
