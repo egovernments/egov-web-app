@@ -20,24 +20,26 @@ var _Checkbox = require("material-ui/Checkbox");
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
+var _translationNode = require("../../utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var defaultLabelStyle = {
-  fontFamily: "Roboto, sans-serif"
-};
+var defaultLabelStyle = {};
 
 var defaultStyle = {
   marginBottom: "21px"
 };
 
-var selectedLabelStyle = {
-  color: "#00bcd1"
+var selectedIconStyle = {
+  fill: "#fe7a51"
 };
+
 var CheckboxUi = function CheckboxUi(_ref) {
   var options = _ref.options,
-      defaultValue = _ref.defaultValue,
       labelStyle = _ref.labelStyle,
       _onCheck = _ref.onCheck,
       _ref$style = _ref.style,
@@ -54,15 +56,15 @@ var CheckboxUi = function CheckboxUi(_ref) {
         key: index,
         id: id + index,
         value: option.value,
-        label: option.label,
+        label: _react2.default.createElement(_translationNode2.default, { color: selected.indexOf(option.value) > -1 ? "#fe7a51" : "#767676", label: option.label }),
         onCheck: function onCheck() {
           _onCheck(option.value);
         },
         style: (0, _extends3.default)({}, defaultStyle, style),
-        iconStyle: iconStyle,
+        iconStyle: selected.indexOf(option.value) > -1 ? selectedIconStyle : iconStyle,
         checkedIcon: checkedIcon,
         selected: selected,
-        labelStyle: selected.indexOf(option.label) > -1 ? (0, _extends3.default)({}, defaultLabelStyle, labelStyle, selectedLabelStyle) : (0, _extends3.default)({}, defaultLabelStyle, labelStyle)
+        labelStyle: (0, _extends3.default)({}, defaultLabelStyle, labelStyle)
       });
     });
   };

@@ -3,14 +3,13 @@ import { Checkbox } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-const checkboxOptions = [
-  { value: "Services", label: <Label label="CS_FEEDBACK_SERVICES" /> },
-  { value: "Resolution Time", label: <Label label="CS_FEEDBACK_RESOLUTION_TIME" /> },
-  { value: "Quality of work", label: <Label label="CS_FEEDBACK_QUALITY_OF_WORK" /> },
-  { value: "Others", label: <Label label="CS_FEEDBACK_OTHERS" /> },
-];
-
-const CheckboxGroup = ({ selected, onCheck }) => {
+const CheckboxGroup = ({ selected, onCheck, labelColor }) => {
+  const checkboxOptions = [
+    { value: "Services", label: "CS_FEEDBACK_SERVICES" },
+    { value: "Resolution Time", label: "CS_FEEDBACK_RESOLUTION_TIME" },
+    { value: "Quality of work", label: "CS_FEEDBACK_QUALITY_OF_WORK" },
+    { value: "Others", label: "CS_FEEDBACK_OTHERS" },
+  ];
   return (
     <div>
       <Label className="what-was-good" label="CS_FEEDBACK_WHAT_WAS_GOOD" />
@@ -19,6 +18,7 @@ const CheckboxGroup = ({ selected, onCheck }) => {
         options={checkboxOptions}
         containerClassName={"feedback-checkbox-cont"}
         selected={selected}
+        iconStyle={{ fill: "rgb(95, 92, 98)" }}
         onCheck={onCheck}
         id="feedback-checkbox"
       />

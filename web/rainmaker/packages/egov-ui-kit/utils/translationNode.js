@@ -20,7 +20,7 @@ var _reactRedux = require("react-redux");
 
 var _commons = require("./commons");
 
-var _components = require("components");
+var _components = require("../components");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

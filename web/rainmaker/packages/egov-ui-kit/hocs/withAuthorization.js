@@ -96,6 +96,8 @@ var withAuthorization = function withAuthorization() {
         value: function render() {
           var hideHeader = options.hideHeader,
               hideFooter = options.hideFooter,
+              customTitle = options.customTitle,
+              customFor = options.customFor,
               hideFor = options.hideFor,
               title = options.title,
               isHomeScreen = options.isHomeScreen,
@@ -147,14 +149,25 @@ var withAuthorization = function withAuthorization() {
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,
-                  !hideTitle && role !== hideFor && _react2.default.createElement(_translationNode2.default, {
-                    className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
-                    label: title,
-                    containerStyle: { padding: "24px 0 8px 16px" },
-                    dark: true,
-                    bold: true,
-                    fontSize: 20
-                  }),
+                  !hideTitle && role !== hideFor && _react2.default.createElement(
+                    "div",
+                    { className: "screen-title-label", style: { padding: "24px 0 8px 16px" } },
+                    _react2.default.createElement(_translationNode2.default, {
+                      className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                      label: role === customFor ? customTitle : title,
+                      containerStyle: { marginRight: 3 },
+                      dark: true,
+                      bold: true,
+                      fontSize: 20
+                    }),
+                    titleAddon && _react2.default.createElement(_translationNode2.default, {
+                      className: titleBackground ? "title-white-background screen-title-label" : "screen-title-label",
+                      label: titleAddon,
+                      dark: true,
+                      bold: true,
+                      fontSize: 20
+                    })
+                  ),
                   _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, { renderCustomTitle: this.renderCustomTitle }))
                 ) : null
               )
