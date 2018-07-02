@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _lodash = require('lodash');
+var _lodash = require("lodash");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -30,12 +30,12 @@ exports.default = function () {
   var action = arguments[1];
 
   switch (action.type) {
-    case 'SET_SEARCH_PARAMS':
+    case "SET_SEARCH_PARAMS":
       return (0, _extends3.default)({}, state, {
         searchParams: action.searchParams
       });
 
-    case 'PUSH_REPORT_HISTORY':
+    case "PUSH_REPORT_HISTORY":
       var current = (0, _extends3.default)({}, state);
       if (_lodash2.default.findIndex(current.reportHistory, {
         reportName: action.reportData.reportName
@@ -51,44 +51,44 @@ exports.default = function () {
       }
       return current;
 
-    case 'CLEAR_REPORT_HISTORY':
+    case "CLEAR_REPORT_HISTORY":
       return (0, _extends3.default)({}, state, {
         reportHistory: [],
         reportIndex: 0
       });
 
-    case 'INCREASE_REPORT_INDEX':
+    case "INCREASE_REPORT_INDEX":
       return (0, _extends3.default)({}, state, {
         reportIndex: state.reportIndex + 1
       });
 
-    case 'DECREASE_REPORT_INDEX':
+    case "DECREASE_REPORT_INDEX":
       return (0, _extends3.default)({}, state, {
         reportIndex: state.reportIndex - 1
       });
 
-    case 'SET_META_DATA':
+    case "SET_META_DATA":
       return (0, _extends3.default)({}, state, {
         metaData: (0, _extends3.default)({}, state.metaData, action.metaData)
         // Object.assign(state.metaData,action.metaData)
       });
 
-    case 'SET_REPORT_RESULT':
+    case "SET_REPORT_RESULT":
       return (0, _extends3.default)({}, state, {
         reportResult: action.reportResult
       });
 
-    case 'SHOW_TABLE':
+    case "SHOW_TABLE":
       return (0, _extends3.default)({}, state, {
         showTable: action.state
       });
 
-    case 'SET_FLAG':
+    case "SET_FLAG":
       return (0, _extends3.default)({}, state, {
         flag: action.flag
       });
 
-    case 'SET_TABLE_SELECTION_DATA':
+    case "SET_TABLE_SELECTION_DATA":
       return (0, _extends3.default)({}, state, {
         tableSelectionData: action.tableSelectionData
       });
