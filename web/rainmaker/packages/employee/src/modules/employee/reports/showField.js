@@ -133,6 +133,7 @@ export default class ShowField extends Component {
           </Col>
         );
       case "singlevaluelist":
+        console.log(obj.value);
         return (
           <Col xs={12} sm={4} md={4} lg={4}>
             <DropDown
@@ -278,6 +279,7 @@ export default class ShowField extends Component {
     }
   };
   render() {
+    console.log(this.props.obj);
     return this.renderFields(this.props.obj);
   }
 }

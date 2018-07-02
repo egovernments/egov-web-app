@@ -4,6 +4,7 @@ import { commonApiPost } from "egov-ui-kit/utils/api";
 import SearchForm from "./searchForm";
 import ReportResult from "./reportResult";
 import mockData from "./mockData";
+import { getMetaDataUrl, getReportName, options } from "./commons/url";
 
 class Report extends Component {
   componentWillReceiveProps(nextProps) {
@@ -13,6 +14,7 @@ class Report extends Component {
   }
 
   componentDidMount() {
+    // localStorage.setItem("searchCriteria", "{}");
     this.initData(this.props.match.params.moduleName, this.props.match.params.reportName);
     this.hasReturnUrl();
   }
@@ -33,25 +35,30 @@ class Report extends Component {
     // showTable(false);
     // setReportResult({});
     // setMetaData(mockData);
+    let urlBase = getMetaDataUrl(moduleName);
 
-    commonApiPost("/report/" + moduleName + "/metadata/_get", {}, { tenantId: tenantId, reportName: reportName }).then(
-      function(response) {
-        setFlag(1);
-        showTable(false);
-        setReportResult({});
-        setMetaData(response);
-      },
-      function(err) {
-        alert("Try again later");
-      }
-    );
+    //commonApiPost("/report/" + moduleName + "/metadata/_get", {}, { tenantId: tenantId, reportName: "SourceWiseReport" }).then(
+    urlBase &&
+      commonApiPost(urlBase, {}, { tenantId: tenantId, reportName: getReportName(moduleName, reportName) }).then(
+        function(response) {
+          if (response && response.reportDetails) response.reportDetails.reportName = reportName; //temp soln for custom report name
+          setFlag(1);
+          showTable(false);
+          setReportResult({});
+          setMetaData(response);
+        },
+        function(err) {
+          alert("Try again later");
+        }
+      );
   };
 
   render() {
     let { match } = this.props;
+    let needDefaultSearch = options[this.props.match.params.moduleName] ? options[this.props.match.params.moduleName][0].needDefaultSearch : false;
     return (
       <div className="">
-        <SearchForm match={match} />
+        <SearchForm match={match} needDefaultSearch={needDefaultSearch} />
 
         <ReportResult match={match} />
       </div>

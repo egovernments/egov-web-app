@@ -11,12 +11,13 @@ import { customizePdfPrint } from "./customizePDF.js";
 import "egov-ui-kit/assets/styles/jquery.dataTables.min.css";
 import "datatables-buttons";
 import "datatables";
-//import "datatables.net";
-//import "datatables.net-buttons";
-//import "datatables.net-dt";
-//import "react-jquery-datatables";
+import "datatables.net";
+import "datatables.net-buttons";
+import "datatables.net-dt";
+import "react-jquery-datatables";
 //import "datatables.net-buttons-dt";
 import "datatables.net-buttons-bs";
+import { Icon } from "components";
 
 import $ from "jquery";
 import JSZip from "jszip/dist/jszip";
@@ -26,6 +27,8 @@ import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
 import { fonts } from "../pdf-generation/PdfConfig";
 import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
+import { getResultUrl } from "./commons/url";
+import "./index.css";
 pdfMake.fonts = fonts;
 window.JSZip = JSZip;
 
@@ -198,50 +201,46 @@ class ShowField extends Component {
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
+
     const buttons = [
-      {
-        extend: "copy",
-        exportOptions,
-      },
-      {
-        extend: "csv",
-        exportOptions,
-      },
-      {
-        extend: "excel",
-        exportOptions,
-      },
       {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
         title: _this.state.reportSubTitle,
-        text: "PDF/Print",
+        text: "PDF",
         orientation: "landscape",
         pageSize: "TABLOID",
         footer: true,
         customize: function(doc) {
           _this.PrintingCutomize(doc);
         },
+        className: "report-pdf-button",
+      },
+      {
+        extend: "excel",
+        text: "XLS",
+        className: "report-excel-button",
+        exportOptions,
       },
     ];
 
-    if (reportName == "DumpingGroundDetailReport") {
-      const customizedPrint = {
-        extend: "pdfHtml5",
-        exportOptions,
-        filename: _this.state.reportName,
-        title: _this.state.reportSubTitle,
-        text: "Print Report",
-        orientation: "landscape",
-        pageSize: "A4",
-        footer: true,
-        customize: function(doc) {
-          customizePdfPrint(doc, ulbname, logoBase64, headerLogo, searchForm.wasteprocess, reportResult);
-        },
-      };
-      buttons.push(customizedPrint);
-    }
+    // if (reportName == "DumpingGroundDetailReport") {
+    //   const customizedPrint = {
+    //     extend: "pdfHtml5",
+    //     exportOptions,
+    //     filename: _this.state.reportName,
+    //     title: _this.state.reportSubTitle,
+    //     text: "Print Report",
+    //     orientation: "landscape",
+    //     pageSize: "A4",
+    //     footer: true,
+    //     customize: function(doc) {
+    //       customizePdfPrint(doc, ulbname, logoBase64, headerLogo, searchForm.wasteprocess, reportResult);
+    //     },
+    //   };
+    //   buttons.push(customizedPrint);
+    // }
     return buttons;
   };
 
@@ -258,6 +257,9 @@ class ShowField extends Component {
       select: true,
       displayStart: displayStart,
       buttons: self.getExportOptions(),
+      searching: false,
+      paging: false,
+      bInfo: false,
       //  ordering: false,
       bDestroy: true,
       footerCallback: function(row, data, start, end, display) {
@@ -439,7 +441,7 @@ class ShowField extends Component {
     let { reportResult, metaData } = this.props;
     let { checkAllRows } = this;
     return (
-      <thead style={{ backgroundColor: "#f2f2f2", color: "#767676" }}>
+      <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr>
           <th key={"Sr. No. "}>{"Sr. No."}</th>
           {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
@@ -505,27 +507,32 @@ class ShowField extends Component {
       }
 
       searchParams.push({ name: key, input: values });
+      let resulturl = getResultUrl(match.params.moduleName);
+      console.log(resulturl);
       var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
-      let response = commonApiPost(
-        "/report/" + match.params.moduleName + "/_get",
-        {},
-        {
-          tenantId: tenantId,
-          reportName: splitArray[0].split("=")[1],
-          searchParams,
-        }
-      ).then(
-        function(response) {
-          if (response.viewPath && response.reportData) {
-            localStorage.reportData = JSON.stringify(response.reportData);
-            localStorage.setItem("returnUrl", window.location.hash.split("#/")[1]);
-            setRoute("/print/report/" + response.viewPath);
+      let response =
+        resulturl &&
+        commonApiPost(
+          // "/report/" + match.params.moduleName + "/_get",
+          resulturl,
+          {},
+          {
+            tenantId: tenantId,
+            reportName: splitArray[0].split("=")[1],
+            searchParams,
           }
-        },
-        function(err) {
-          console.log(err);
-        }
-      );
+        ).then(
+          function(response) {
+            if (response.viewPath && response.reportData) {
+              localStorage.reportData = JSON.stringify(response.reportData);
+              localStorage.setItem("returnUrl", window.location.hash.split("#/")[1]);
+              setRoute("/print/report/" + response.viewPath);
+            }
+          },
+          function(err) {
+            console.log(err);
+          }
+        );
     }
   }
 
@@ -660,39 +667,40 @@ class ShowField extends Component {
     const viewTabel = () => {
       return (
         <div>
-          <Card>
-            <CardHeader title={self.state.reportSubTitle} />
-            <CardText>
-              <Table
-                id="reportTable"
-                style={{
-                  color: "black",
-                  fontWeight: "normal",
-                  padding: "0 !important",
+          {/* <Card> */}
+          {/* <CardHeader title={self.state.reportSubTitle} /> */}
+          {/* <CardText> */}
+          <Table
+            id="reportTable"
+            style={{
+              color: "#484848",
+              fontWeight: "normal",
+              padding: "0 !important",
+              backgroundColor: "#ffffff",
+            }}
+            bordered
+            responsive
+          >
+            {self.renderHeader()}
+            {self.renderBody()}
+            {self.renderFooter()}
+          </Table>
+          {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
+            <div style={{ textAlign: "center" }}>
+              <RaisedButton
+                style={{ marginTop: "10px" }}
+                label={translate("reports.print.details")}
+                onClick={() => {
+                  self.printSelectedDetails();
                 }}
-                bordered
-                responsive
-              >
-                {self.renderHeader()}
-                {self.renderBody()}
-                {self.renderFooter()}
-              </Table>
-              {metaData.reportDetails && metaData.reportDetails.viewPath && metaData.reportDetails.selectiveDownload && self.state.showPrintBtn ? (
-                <div style={{ textAlign: "center" }}>
-                  <RaisedButton
-                    style={{ marginTop: "10px" }}
-                    label={translate("reports.print.details")}
-                    onClick={() => {
-                      self.printSelectedDetails();
-                    }}
-                    primary={true}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
-            </CardText>
-          </Card>
+                primary={true}
+              />
+            </div>
+          ) : (
+            ""
+          )}
+          {/* </CardText> */}
+          {/* </Card> */}
           <br />
 
           {metaData.reportDetails.summary == "Cash Collection Report" && (
@@ -792,7 +800,7 @@ class ShowField extends Component {
       );
     };
     return (
-      <div className="PropertyTaxSearch">{isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}</div>
+      <div className="report-result-table">{isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}</div>
     );
   }
 }
