@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { Grid, Row, Col, Table, DropdownButton } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { TextField, DropDown, DatePicker } from "components";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-//import DatePicker from "material-ui/DatePicker";
 import Checkbox from "material-ui/Checkbox";
-//import { translate } from "../../common/common";
 import { translate } from "./commons/common";
 import AutoComplete from "material-ui/AutoComplete";
+import Label from "egov-ui-kit/utils/translationNode";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -43,7 +42,6 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={3} lg={3}>
             <TextField
               value={this.props.value}
-              //className="custom-form-control-for-textfield"
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               disabled={obj.disabled ? true : false}
@@ -62,7 +60,6 @@ export default class ShowField extends Component {
           <Col xs={12} sm={4} md={3} lg={3}>
             <TextField
               value={this.props.value}
-              // className="custom-form-control-for-textfield"
               id={obj.label.split(".").join("-")}
               fullWidth={true}
               floatingLabelFixed={true}
@@ -85,9 +82,10 @@ export default class ShowField extends Component {
               fullWidth={true}
               floatingLabelFixed={true}
               floatingLabelText={
-                <span style={{ color: "#00bcd1" }}>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                <div>
+                  <Label label={description} fontSize="18px" color="#03b0c6" />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               maxDate={maxDate}
               value={typeof obj.value == "object" ? obj.value : {}}
@@ -109,9 +107,10 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               maxDate={maxDate}
               floatingLabelText={
-                <span style={{ color: "#00bcd1" }}>
-                  {description} <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
-                </span>
+                <div>
+                  <Label label={description} fontSize="18px" color="#03b0c6" />
+                  <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
+                </div>
               }
               hintText="dd/mm/yy"
               value={obj.value ? obj.value : {}}
