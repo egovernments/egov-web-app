@@ -88,7 +88,7 @@ var bottomInfoTemplate = function bottomInfoTemplate(item, role) {
           _react2.default.createElement(
             "div",
             { className: "inline-Localization-text" },
-            _react2.default.createElement(_translationNode2.default, { containerStyle: { display: "inline-block" }, fontSize: 12, label: "ES_ALL_COMPLAINTS_SUBMITTED_BY" }),
+            _react2.default.createElement(_translationNode2.default, { containerStyle: { display: "inline-block" }, fontSize: 12, label: "ES_COMMON_FILED_BY" }),
             _react2.default.createElement(_translationNode2.default, {
               containerStyle: { display: "inline-block" },
               fontSize: 12,

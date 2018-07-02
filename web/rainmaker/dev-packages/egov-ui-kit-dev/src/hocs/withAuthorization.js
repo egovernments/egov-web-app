@@ -47,7 +47,19 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     render() {
-      const { hideHeader, hideFooter, hideFor, title, isHomeScreen, hideTitle, titleBackground, hideActionMenu, showNumberOfComplaints } = options;
+      const {
+        hideHeader,
+        hideFooter,
+        customTitle,
+        customFor,
+        hideFor,
+        title,
+        isHomeScreen,
+        hideTitle,
+        titleBackground,
+        hideActionMenu,
+        showNumberOfComplaints,
+      } = options;
       const { history, authenticated, userInfo, complaints } = this.props;
       const { titleAddon } = this.state;
       const role = this.roleFromUserInfo(userInfo, "CITIZEN")
@@ -90,14 +102,25 @@ const withAuthorization = (options = {}) => (Component) => {
                 <div>
                   {!hideTitle &&
                     role !== hideFor && (
-                      <Label
-                        className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
-                        label={title}
-                        containerStyle={{ padding: "24px 0 8px 16px" }}
-                        dark={true}
-                        bold={true}
-                        fontSize={20}
-                      />
+                      <div className={"screen-title-label"} style={{ padding: "24px 0 8px 16px" }}>
+                        <Label
+                          className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
+                          label={role === customFor ? customTitle : title}
+                          containerStyle={{ marginRight: 3 }}
+                          dark={true}
+                          bold={true}
+                          fontSize={20}
+                        />
+                        {titleAddon && (
+                          <Label
+                            className={titleBackground ? "title-white-background screen-title-label" : "screen-title-label"}
+                            label={titleAddon}
+                            dark={true}
+                            bold={true}
+                            fontSize={20}
+                          />
+                        )}
+                      </div>
                     )}
                   <Component {...this.props} renderCustomTitle={this.renderCustomTitle} />
                 </div>

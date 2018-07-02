@@ -105,6 +105,9 @@ body.employee-user-profile {
   overflow: hidden;
   text-overflow: ellipsis; }
 
+.screen-title-label {
+  display: inline-block; }
+
 @media only screen and (min-width: 768px) {
   .screenHeaderLabelStyle .label-text {
     color: #484848 !important;

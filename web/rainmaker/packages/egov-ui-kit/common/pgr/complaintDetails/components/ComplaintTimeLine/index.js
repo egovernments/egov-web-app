@@ -28,7 +28,7 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _components = require("components/");
+var _components = require("components");
 
 var _translationNode = require("egov-ui-kit/utils/translationNode");
 
@@ -99,6 +99,12 @@ var callIconStyle = {
   top: "0px"
 };
 
+var connectorStyle = {
+  display: "block",
+  border: "solid 1px #fe7a51",
+  minHeight: "28px"
+};
+
 var StatusIcon = function StatusIcon(_ref) {
   var status = _ref.status;
 
@@ -160,7 +166,7 @@ var StatusContent = function StatusContent(_ref2) {
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "dark-color complaint-timeline-status",
           containerStyle: filedBy && filedBy.includes("@CSR") ? displayBlock : statusContainerStyle,
-          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? filedBy.includes("@CSR") ? "Complaint Filed at Customer Service Desk" : "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
+          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? filedBy.includes("@CSR") ? "ES_COMPLAINT_FILED_BY_CSR" : "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
         }),
         action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, {
           label: filedBy.includes("@CSR") ? filedBy.replace("@CSR", "") : filedBy,

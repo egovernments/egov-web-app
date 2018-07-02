@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getTranslatedLabel } from "./commons";
-import { Label } from "components";
+import { Label } from "../components";
 
 const mapStateToProps = (state, ownProps) => {
   const { label, ...rest } = ownProps;

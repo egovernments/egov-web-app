@@ -1,20 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Checkbox from "material-ui/Checkbox";
+import Label from "../../utils/translationNode";
 import "./index.css";
 
-const defaultLabelStyle = {
-  fontFamily: "Roboto, sans-serif",
-};
+const defaultLabelStyle = {};
 
 const defaultStyle = {
   marginBottom: "21px",
 };
 
-const selectedLabelStyle = {
-  color: "#00bcd1",
+const selectedIconStyle = {
+  fill: "#fe7a51",
 };
-const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, checkedIcon, iconStyle, containerClassName, selected, id }) => {
+
+const CheckboxUi = ({ options, labelStyle, onCheck, style = {}, checkedIcon, iconStyle, containerClassName, selected, id }) => {
   const renderCheckboxOptions = () => {
     return options.map((option, index) => {
       return (
@@ -22,19 +22,15 @@ const CheckboxUi = ({ options, defaultValue, labelStyle, onCheck, style = {}, ch
           key={index}
           id={id + index}
           value={option.value}
-          label={option.label}
+          label={<Label color={selected.indexOf(option.value) > -1 ? "#fe7a51" : "#767676"} label={option.label} />}
           onCheck={() => {
             onCheck(option.value);
           }}
           style={{ ...defaultStyle, ...style }}
-          iconStyle={iconStyle}
+          iconStyle={selected.indexOf(option.value) > -1 ? selectedIconStyle : iconStyle}
           checkedIcon={checkedIcon}
           selected={selected}
-          labelStyle={
-            selected.indexOf(option.label) > -1
-              ? { ...defaultLabelStyle, ...labelStyle, ...selectedLabelStyle }
-              : { ...defaultLabelStyle, ...labelStyle }
-          }
+          labelStyle={{ ...defaultLabelStyle, ...labelStyle }}
         />
       );
     });
