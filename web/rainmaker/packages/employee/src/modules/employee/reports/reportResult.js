@@ -15,7 +15,6 @@ import "datatables.net";
 import "datatables.net-buttons";
 import "datatables.net-dt";
 import "react-jquery-datatables";
-//import "datatables.net-buttons-dt";
 import "datatables.net-buttons-bs";
 import { Icon } from "components";
 
@@ -25,7 +24,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
-import { fonts } from "../reports/pdf-generation/PdfConfig";
+import { fonts } from "../pdf-generation/PdfConfig";
 import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
