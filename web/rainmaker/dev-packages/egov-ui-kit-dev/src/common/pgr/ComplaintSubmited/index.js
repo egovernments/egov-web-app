@@ -14,7 +14,6 @@ class ComplaintSubmitted extends Component {
 
   // the retrival logic to be changed!
   getComplaintNumber = () => {
-    console.log(this.props);
     const { search } = this.props.location;
     return (search && search.length && search.split("=").length && search.split("=")[1]) || null;
   };
@@ -30,7 +29,9 @@ class ComplaintSubmitted extends Component {
               <FloatingActionButton backgroundColor="#22b25f" style={{ marginBottom: "16px" }}>
                 <Icon name={"check"} action={"navigation"} />
               </FloatingActionButton>
-              <Label labelClassName="thank-you-label" id="thank-you-text" label="CS_COMPLAINT_SUBMITTED_THANKYOU" fontSize="16px" />
+              {this.props.removeGreeting && (
+                <Label labelClassName="thank-you-label" id="thank-you-text" label="CS_COMPLAINT_SUBMITTED_THANKYOU" fontSize="16px" />
+              )}
               <div className="complaint-submitted-complaintNo-cont">
                 <Label labelClassName="complaint-number-label" label="CS_COMMON_COMPLAINT_NO" fontSize="16px" />
                 <Label

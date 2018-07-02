@@ -7,6 +7,7 @@ const ComplaintCreated = (props) => {
     <ComplaintSubmited
       homeRoute="/employee/all-complaints"
       lastLabel={<Label id="complaint-submitted-success-message" label="ES_COMPLAINT_SUCCESS_LASTLABEL" />}
+      removeGreeting={true}
       {...props}
     />
   );
