@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Screen } from "modules/common";
-import {Button} from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import FlatButton from 'material-ui/FlatButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
@@ -25,6 +23,18 @@ const headerStyle ={
   padding:"10px",
   fontWeight : "500" ,
   fontSize : "14px"
+}
+
+const labelStyle = {
+  color : "#ffffff"
+}
+
+const containerStyle = {
+  whiteSpace : "pre"
+}
+
+const textfieldLabelStyle = {
+  fontSize : "20px"
 }
 
 
@@ -1087,8 +1097,8 @@ class Employee extends Component {
                     self.handleStateChange({ target: { value: value } }, 'assignments', 'isPrimary');
                   }}
                 >
-                  <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                  <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                  <RadioButton className="radio-button-style" value={true} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value1" />} />
+                  <RadioButton className="radio-button-style" value={false} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value2" />} />
                 </RadioButtonGroup>
               </div>
               <div className="col-md-6 col-xs-12">
@@ -1357,8 +1367,8 @@ class Employee extends Component {
                     self.handleStateChange({ target: { value: value } }, 'assignments', 'hod');
                   }}
                 >
-                  <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                  <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                  <RadioButton className="radio-button-style" value={true} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value1" />} />
+                  <RadioButton className="radio-button-style" value={false} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value2" />} />
                 </RadioButtonGroup>
               </div>
               <div className="col-md-6 col-xs-12">
@@ -2098,21 +2108,21 @@ class Employee extends Component {
   getModalTitle = () => {
     switch (this.state.modal) {
       case 'assignment':
-        return translate('employee.field.assignments');
+        return <Label fontSize="24px" label="employee.field.assignments" />;
       case 'jurisdiction':
-        return translate('employee.Employee.fields.jurisdictions');
+        return <Label fontSize="24px" label="employee.Employee.fields.jurisdictions" />;
       case 'serviceDet':
-        return translate('employee.ServiceHistory.title');
+        return <Label fontSize="24px" label="employee.ServiceHistory.title" />;
       case 'probation':
-        return translate('employee.Probation.title');
+        return <Label fontSize="24px" label="employee.Probation.title" />;
       case 'regular':
-        return translate('employee.Regularisation.title');
+        return <Label fontSize="24px" label="employee.Regularisation.title" />;
       case 'edu':
-        return translate('employee.EducationalQualification.title');
+        return <Label fontSize="24px" label="employee.EducationalQualification.title" />;
       case 'tech':
-        return translate('employee.TechnicalQualification.title');
+        return <Label fontSize="24px" label="employee.TechnicalQualification.title" />;
       case 'dept':
-        return translate('employee.DepartmentalTest.title');
+        return <Label fontSize="24px" label="employee.DepartmentalTest.title"/>;
     }
   };
 
@@ -2543,7 +2553,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.name')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.User.name" containerStyle={{display : "inline"}} fontSize = "20px" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.name : '-'}</label>
@@ -2559,7 +2571,7 @@ class Employee extends Component {
                     floatingLabelFixed={true}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.User.name')}
+                        {<Label fontSize = "20px" label="employee.Employee.fields.User.name" containerStyle={{display : "inline"}} />}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2583,7 +2595,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.code')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.code" containerStyle={{display : "inline"}}/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.code || '-'}</label>
@@ -2599,7 +2613,7 @@ class Employee extends Component {
                     floatingLabelFixed={true}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.code')}
+                        {<Label fontSize = "20px" containerStyle={{display : "inline"}} label="employee.Employee.fields.code" />}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2616,7 +2630,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.employeeType')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.employeeType" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{getNameById(self.state.employeetypes, Employee.employeeType) || '-'}</label>
@@ -2640,7 +2656,7 @@ class Employee extends Component {
                       }}
                       floatingLabelText={
                         <span>
-                          {translate('employee.Employee.fields.employeeType')}
+                          {<Label fontSize = "20px" label="employee.Employee.fields.employeeType" containerStyle={{display : "inline"}}/>}
                           <span style={{ color: '#FF0000' }}> *</span>
                         </span>
                       }
@@ -2662,7 +2678,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.employeeStatus')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.employeeStatus" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{getNameById(self.state.statuses, Employee.employeeStatus) || '-'}</label>
@@ -2682,7 +2700,7 @@ class Employee extends Component {
                     }}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.employeeStatus')}
+                        {<Label fontSize = "20px" label="employee.Employee.fields.employeeStatus" containerStyle={{display : "inline"}}/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2706,7 +2724,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.group')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize="20px" label="employee.Employee.fields.group" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{getNameById(self.state.groups, Employee.group) || '-'}</label>
@@ -2724,7 +2744,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.group')}
+                    floatingLabelText={<Label fontSize="20px" label="employee.Employee.fields.group" />}
                     errorText={fieldErrors['group']}
                     value={Employee.group}
                     onChange={(event, key, value) => {
@@ -2742,7 +2762,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfBirth')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize="20px" label="employee.Employee.fields.dateOfBirth" containerStyle={{display : "inline"}}/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.dob : '-'}</label>
@@ -2759,7 +2781,7 @@ class Employee extends Component {
                     hintText="21/11/1993"
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.dateOfBirth')}
+                        {<Label fontSize="20px" label="employee.Employee.fields.dateOfBirth" containerStyle={{display : "inline"}}/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2775,7 +2797,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.gender')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.User.gender" fontSize = "20px"/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.gender : '-'}</label>
@@ -2795,7 +2819,7 @@ class Employee extends Component {
                     }}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.User.gender')}
+                        {<Label label="employee.Employee.fields.User.gender" fontSize = "20px" containerStyle={{display : "inline"}}/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2816,7 +2840,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.maritalStatus')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize="24px" label="employee.Employee.fields.maritalStatus" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.maritalStatus || '-'}</label>
@@ -2836,7 +2862,7 @@ class Employee extends Component {
                     }}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.maritalStatus')}
+                        {<Label fontSize="24px" label="employee.Employee.fields.maritalStatus" containerStyle={{display : "inline"}}/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2868,7 +2894,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.userName')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.User.userName" containerStyle={{display : "inline"}}/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.userName : '-'}</label>
@@ -2884,7 +2912,7 @@ class Employee extends Component {
                     floatingLabelFixed={true}
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.User.userName')}
+                        {<Label label="employee.Employee.fields.User.userName" fontSize = "20px" containerStyle={{display : "inline"}}/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2902,7 +2930,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.fields.isUserActive')}?</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "15px" label="employee.fields.isUserActive" />}?</span>
                     </label>
                     <br />
                     <label>
@@ -2914,7 +2942,8 @@ class Employee extends Component {
                 ) : (
                   <span>
                     <label style={{ fontSize: '15px',fontWeight: '500' }}>
-                      {translate('employee.fields.isUserActive')}? <span style={{ color: '#FF0000', }}> *</span>
+                      {<Label fontSize = "15px" label="employee.fields.isUserActive" containerStyle={{display : "inline"}}/>}
+                      <span style={{ color: '#FF0000', }}> *</span>
                     </label>
                     <RadioButtonGroup
                       name="isActive"
@@ -2923,8 +2952,8 @@ class Employee extends Component {
                         handleChangeNextLevel({ target: { value: value } }, 'user', 'active', true, '');
                       }}
                     >
-                      <RadioButton  className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton  className="radio-button-style" value={true} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value1" />} />
+                      <RadioButton className="radio-button-style" value={false} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value2" />} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -2933,7 +2962,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.mobileNumber')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.User.mobileNumber" containerStyle={{display : "inline"}} fontSize = "20px"/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.mobileNumber : '-'}</label>
@@ -2950,7 +2981,7 @@ class Employee extends Component {
                     maxLength="10"
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.User.mobileNumber')}
+                        {<Label label="employee.Employee.fields.User.mobileNumber" containerStyle={{display : "inline"}} fontSize = "20px"/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -2967,7 +2998,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.email')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.email" fontSize = "20px"/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.emailId : '-'}</label>
@@ -2981,7 +3014,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.email')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.email" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['emailId']}
                     type="email"
                     value={Employee.user ? Employee.user.emailId : ''}
@@ -3004,7 +3037,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.fatherSpouseName')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.fatherSpouseName" />}</span>
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.fatherOrHusbandName : '-'}</label>
@@ -3018,7 +3051,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.fatherSpouseName')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.fatherSpouseName" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['fatherOrHusbandName']}
                     value={Employee.user ? Employee.user.fatherOrHusbandName : ''}
                     onChange={e => {
@@ -3031,7 +3064,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.birth')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.User.birth" fontSize = "20px"/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.placeOfBirth || '-'}</label>
@@ -3045,7 +3080,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.User.birth')}
+                    floatingLabelText={<Label label="employee.Employee.fields.User.birth" fontSize = "20px"/>}
                     errorText={fieldErrors['placeOfBirth']}
                     value={Employee.placeOfBirth}
                     onChange={e => {
@@ -3058,7 +3093,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.bloodGroup')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label label="employee.Employee.fields.User.bloodGroup" fontSize = "20px"/>}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.bloodGroup : '-'}</label>
@@ -3076,7 +3113,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.User.bloodGroup')}
+                    floatingLabelText={<Label label="employee.Employee.fields.User.bloodGroup" fontSize = "20px"/>}
                     errorText={fieldErrors['user'] && fieldErrors['user']['bloodGroup']}
                     value={Employee.user ? Employee.user.bloodGroup : ''}
                     onChange={(event, key, value) => {
@@ -3094,7 +3131,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.motherTongue')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.motherTongue" />}</span>
                     </label>
                     <br />
                     <label>{getNameById(self.state.languages, Employee.motherTongue) || '-'}</label>
@@ -3112,7 +3149,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.motherTongue')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.motherTongue" />}
                     errorText={fieldErrors['motherTongue']}
                     value={Employee.motherTongue}
                     onChange={(event, key, value) => {
@@ -3133,7 +3170,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.religion')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.religion" />}</span>
                     </label>
                     <br />
                     <label>{getNameById(self.state.religions, Employee.religion) || '-'}</label>
@@ -3151,7 +3188,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.religion')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.religion" />}
                     errorText={fieldErrors['religion']}
                     value={Employee.religion}
                     onChange={(event, key, value) => {
@@ -3169,7 +3206,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.community')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.community" />}</span>
                     </label>
                     <br />
                     <label>{getNameById(self.state.communities, Employee.community) || '-'}</label>
@@ -3187,7 +3224,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.community')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.community" />}
                     errorText={fieldErrors['community']}
                     value={Employee.community}
                     onChange={(event, key, value) => {
@@ -3205,7 +3242,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.category')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.category" />}</span>
                     </label>
                     <br />
                     <label>{getNameById(self.state.categories, Employee.category) || '-'}</label>
@@ -3223,7 +3260,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.category')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.category" />}
                     errorText={fieldErrors['category']}
                     value={Employee.category}
                     onChange={(event, key, value) => {
@@ -3241,7 +3278,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.physicallyDisabled')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "15px" label="employee.Employee.fields.physicallyDisabled" />}</span>
                     </label>
                     <br />
                     <label>
@@ -3252,16 +3289,16 @@ class Employee extends Component {
                   </span>
                 ) : (
                   <span>
-                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{translate('employee.Employee.fields.physicallyDisabled') + '?'}</label>
+                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{<Label fontSize = "15px" label="employee.Employee.fields.physicallyDisabled" />}</label>
                     <RadioButtonGroup
-                      name={translate('employee.Employee.fields.physicallyDisabled')}
+                      name={<Label fontSize = "20px" label="employee.Employee.fields.physicallyDisabled" />}
                       valueSelected={Employee.physicallyDisabled}
                       onChange={(e, value) => {
                         handleChange({ target: { value: value } }, 'physicallyDisabled', false, '');
                       }}
                     >
-                      <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton className="radio-button-style" value={true} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value1" />} />
+                      <RadioButton className="radio-button-style" value={false} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value2 "/>} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -3273,7 +3310,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.medicalReportProduced')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "15px" label="employee.Employee.fields.medicalReportProduced" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>
@@ -3284,16 +3323,16 @@ class Employee extends Component {
                   </span>
                 ) : (
                   <span>
-                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{translate('employee.Employee.fields.medicalReportProduced') + '?'}</label>
+                    <label style={{ fontSize: '15px',fontWeight: '500' }}>{<Label fontSize = "15px" label="employee.Employee.fields.medicalReportProduced" /> }</label>
                     <RadioButtonGroup
-                      name={translate('employee.Employee.fields.medicalReportProduced')}
+                      name={"medicalReportProduced"}
                       valueSelected={Employee.medicalReportProduced}
                       onChange={(e, value) => {
                         handleChange({ target: { value: value } }, 'medicalReportProduced', false, '');
                       }}
                     >
-                      <RadioButton className="radio-button-style" value={true} label={translate('employee.createPosition.groups.fields.outsourcepost.value1')} />
-                      <RadioButton className="radio-button-style" value={false} label={translate('employee.createPosition.groups.fields.outsourcepost.value2')} />
+                      <RadioButton className="radio-button-style" value={true} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value1" />} />
+                      <RadioButton className="radio-button-style" value={false} label={<Label label="employee.createPosition.groups.fields.outsourcepost.value2" />} />
                     </RadioButtonGroup>
                   </span>
                 )}
@@ -3302,7 +3341,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.identification')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.identification" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.identificationMark : '-'}</label>
@@ -3316,7 +3357,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.identification')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.identification" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['identificationMark']}
                     value={Employee.user ? Employee.user.identificationMark : ''}
                     onChange={e => {
@@ -3329,7 +3370,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.pan')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.pan" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.pan : '-'}</label>
@@ -3343,7 +3386,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.pan')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.pan" />}
                     hintText="DACPZ2154D"
                     errorText={fieldErrors['user'] && fieldErrors['user']['pan']}
                     value={Employee.user ? Employee.user.pan : ''}
@@ -3357,7 +3400,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.passportNo')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.passportNo" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.passportNo || '-'}</label>
@@ -3371,7 +3416,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.passportNo')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.passportNo" />}
                     errorText={fieldErrors['passportNo']}
                     value={Employee.passportNo}
                     onChange={e => {
@@ -3387,7 +3432,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.gpfNo')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.gpfNo" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.gpfNo || '-'}</label>
@@ -3401,7 +3448,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.gpfNo')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.gpfNo" />}
                     errorText={fieldErrors['gpfNo']}
                     value={Employee.gpfNo}
                     onChange={e => {
@@ -3414,7 +3461,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.aadhaarNumber')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label label="employee.Employee.fields.User.aadhaarNumber" fontSize = "20px"/>}</span>
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.aadhaarNumber : '-'}</label>
@@ -3429,7 +3476,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     maxLength="12"
-                    floatingLabelText={translate('employee.Employee.fields.User.aadhaarNumber')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.User.aadhaarNumber" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['aadhaarNumber']}
                     value={Employee.user ? Employee.user.aadhaarNumber : ''}
                     onChange={e => {
@@ -3443,7 +3490,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.bank')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.bank" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{getNameById(self.state.banks, Employee.bank) || '-'}</label>
@@ -3461,7 +3510,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.bank')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.bank" />}
                     errorText={fieldErrors['bank']}
                     value={Employee.bank}
                     onChange={(event, key, value) => {
@@ -3480,7 +3529,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.bankBranch')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.bankBranch" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{getNameById(self.state.bankBranches, Employee.bankBranch) || '-'}</label>
@@ -3498,7 +3549,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.bankBranch')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.bankBranch"/>}
                     errorText={fieldErrors['bankBranch']}
                     value={Employee.bankBranch}
                     onChange={(event, key, value) => {
@@ -3519,7 +3570,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.bankAccount')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label fontSize = "20px" label="employee.Employee.fields.bankAccount" />}</span>
                     </label>
                     <br />
                     <label>{Employee.bankAccount}</label>
@@ -3533,7 +3584,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.bankAccount')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.bankAccount" />}
                     errorText={fieldErrors['bankAccount']}
                     value={Employee.bankAccount}
                     onChange={e => {
@@ -3547,7 +3598,7 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.User.mobileNumber')}</span>
+                      <span style={{ fontWeight: '500' }}>{<Label label="employee.Employee.fields.User.mobileNumber" fontSize = "20px"/>}</span>
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.altContactNumber : '-'}</label>
@@ -3562,7 +3613,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     maxLength="10"
-                    floatingLabelText={translate('employee.Employee.fields.User.mobileNumber')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.User.mobileNumber" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['altContactNumber']}
                     value={Employee.user ? Employee.user.altContactNumber : ''}
                     onChange={e => {
@@ -3581,7 +3632,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.permanentAddress')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.permanentAddress" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.permanentAddress : '-'}</label>
@@ -3595,7 +3648,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.permanentAddress')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.permanentAddress" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['permanentAddress']}
                     value={Employee.user ? Employee.user.permanentAddress : ''}
                     onChange={e => {
@@ -3608,7 +3661,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.city')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.city" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.permanentCity : '-'}</label>
@@ -3622,7 +3677,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.city')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.city" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['permanentCity']}
                     value={Employee.user ? Employee.user.permanentCity : ''}
                     onChange={e => {
@@ -3635,7 +3690,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.parmanentPinNumber')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.parmanentPinNumber" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.permanentPinCode : '-'}</label>
@@ -3649,7 +3706,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.parmanentPinNumber')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.parmanentPinNumber" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['permanentPinCode']}
                     value={Employee.user ? Employee.user.permanentPinCode : ''}
                     onChange={e => {
@@ -3667,7 +3724,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.correspondenceAddress')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.correspondenceAddress" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.correspondenceAddress : '-'}</label>
@@ -3681,7 +3740,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.correspondenceAddress')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.correspondenceAddress" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['correspondenceAddress']}
                     value={Employee.user ? Employee.user.correspondenceAddress : ''}
                     onChange={e => {
@@ -3694,7 +3753,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.city')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.city" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.correspondenceCity : '-'}</label>
@@ -3708,7 +3769,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.city')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.city" />}
                     errorText={fieldErrors['user.correspondenceCity']}
                     value={Employee.user ? Employee.user.correspondenceCity : ''}
                     onChange={e => {
@@ -3721,7 +3782,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.correspondencePinNumber')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.correspondencePinNumber" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.user ? Employee.user.correspondencePinCode : '-'}</label>
@@ -3735,7 +3798,7 @@ class Employee extends Component {
                       
                     }}
                     floatingLabelFixed={true}
-                    floatingLabelText={translate('employee.Employee.fields.correspondencePinNumber')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.correspondencePinNumber" />}
                     errorText={fieldErrors['user'] && fieldErrors['user']['correspondencePinCode']}
                     value={Employee.user ? Employee.user.correspondencePinCode : ''}
                     onChange={e => {
@@ -3753,7 +3816,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.languagesKnown')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.languagesKnown" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.languagesKnown || '-'}</label>
@@ -3771,7 +3836,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.languagesKnown')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.languagesKnown" />}
                     errorText={fieldErrors['languagesKnown']}
                     multiple={true}
                     value={Employee.languagesKnown}
@@ -3790,7 +3855,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.recruitmentMode')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.recruitmentMode" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.recruitmentMode || '-'}</label>
@@ -3808,7 +3875,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.recruitmentMode')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.recruitmentMode" />}
                     errorText={fieldErrors['recruitmentMode']}
                     value={Employee.recruitmentMode}
                     onChange={(event, key, value) => {
@@ -3826,7 +3893,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.recruitmentType')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.recruitmentType" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.recruitmentType || '-'}</label>
@@ -3844,7 +3913,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.recruitmentType')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.recruitmentType" />}
                     errorText={fieldErrors['recruitmentType']}
                     value={Employee.recruitmentType}
                     onChange={(event, key, value) => {
@@ -3862,7 +3931,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.recruitmentQuota')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.recruitmentQuota" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.recruitmentQuota || '-'}</label>
@@ -3880,7 +3951,7 @@ class Employee extends Component {
 
                       targetOrigin: { horizontal: 'left', vertical: 'bottom' },
                     }}
-                    floatingLabelText={translate('employee.Employee.fields.recruitmentQuota')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.recruitmentQuota" />}
                     errorText={fieldErrors['recruitmentQuota']}
                     value={Employee.recruitmentQuota}
                     onChange={(event, key, value) => {
@@ -3901,7 +3972,10 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfAppointment')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.dateOfAppointment" />}
+
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.dateOfAppointment}</label>
@@ -3918,7 +3992,7 @@ class Employee extends Component {
                     hintText="21/11/1993"
                     floatingLabelText={
                       <span>
-                        {translate('employee.Employee.fields.dateOfAppointment')}
+                        {<Label fontSize = "20px" label="employee.Employee.fields.dateOfAppointment"/>}
                         <span style={{ color: '#FF0000' }}> *</span>
                       </span>
                     }
@@ -3934,7 +4008,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfJoining')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.dateOfJoining" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.dateOfJoining || '-'}</label>
@@ -3949,7 +4025,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
-                    floatingLabelText={translate('employee.Employee.fields.dateOfJoining')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.dateOfJoining" />}
                     errorText={fieldErrors['dateOfJoining']}
                     value={Employee.dateOfJoining}
                     onChange={e => {
@@ -3962,7 +4038,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.retirementAge')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.retirementAge" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.retirementAge || '-'}</label>
@@ -3977,7 +4055,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     type="number"
-                    floatingLabelText={translate('employee.Employee.fields.retirementAge')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.retirementAge" />}
                     errorText={fieldErrors['retirementAge']}
                     value={Employee.retirementAge}
                     onChange={e => {
@@ -3990,7 +4068,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfRetirement')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.dateOfRetirement" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.dateOfRetirement || '-'}</label>
@@ -4005,7 +4085,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
-                    floatingLabelText={translate('employee.Employee.fields.dateOfRetirement')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.dateOfRetirement" />}
                     errorText={fieldErrors['dateOfRetirement']}
                     value={Employee.dateOfRetirement}
                     onChange={e => {
@@ -4021,7 +4101,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfTermination')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.dateOfTermination" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.dateOfTermination || '-'}</label>
@@ -4036,7 +4118,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
-                    floatingLabelText={translate('employee.Employee.fields.dateOfTermination')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.dateOfTermination" />}
                     errorText={fieldErrors['dateOfTermination']}
                     value={Employee.dateOfTermination}
                     onChange={e => {
@@ -4049,7 +4131,9 @@ class Employee extends Component {
                 {self.state.screenType == 'view' ? (
                   <span>
                     <label>
-                      <span style={{ fontWeight: '500' }}>{translate('employee.Employee.fields.dateOfResignation')}</span>
+                      {/* <span style={{ fontWeight: '500' }}> */}
+                      {<Label fontSize = "20px" label="employee.Employee.fields.dateOfResignation" />}
+                      {/* </span> */}
                     </label>
                     <br />
                     <label>{Employee.dateOfResignation || '-'}</label>
@@ -4064,7 +4148,7 @@ class Employee extends Component {
                     }}
                     floatingLabelFixed={true}
                     hintText="21/11/1993"
-                    floatingLabelText={translate('employee.Employee.fields.dateOfResignation')}
+                    floatingLabelText={<Label fontSize = "20px" label="employee.Employee.fields.dateOfResignation" />}
                     errorText={fieldErrors['dateOfResignation']}
                     value={Employee.dateOfResignation}
                     onChange={e => {
@@ -4075,7 +4159,9 @@ class Employee extends Component {
               </Col>
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px',fontWeight : "500" }}>{translate('employee.Employee.fields.EmployeePhoto')}</label>
+                  {/* <label style={{ marginTop: '20px',fontWeight : "500" }}> */}
+                  {<Label fontSize = "15px" label="employee.Employee.fields.EmployeePhoto" />}
+                  {/* </label> */}
                   <input type="file" />
                 </Col>
               ) : (
@@ -4083,7 +4169,7 @@ class Employee extends Component {
               )}
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px',fontWeight : "500" }}>{translate('employee.Employee.fields.EmployeeSignature')}</label>
+                  <label style={{ marginTop: '20px',fontWeight : "500" }}>{<Label fontSize = "15px" label="employee.Employee.fields.EmployeeSignature" />}</label>
                   <input type="file" />
                 </Col>
               ) : (
@@ -4094,7 +4180,7 @@ class Employee extends Component {
             <Row>
               {self.state.screenType != 'view' ? (
                 <Col xs={12} sm={4} md={3} lg={3}>
-                  <label style={{ marginTop: '20px' ,fontWeight : "500"}}>{translate('employee.Employee.fields.OtherAttachments')}</label>
+                  <label style={{ marginTop: '20px' ,fontWeight : "500"}}>{<Label fontSize = "15px" label="employee.Employee.fields.OtherAttachments" />}</label>
                   <input type="file" multiple />
                 </Col>
               ) : (
@@ -4169,20 +4255,20 @@ class Employee extends Component {
         <CardText>
         <Table bordered responsive className="table-striped">
             <thead>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.fromDate')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.toDate')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.department')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.position')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.primary')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.fund')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.function')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.functionary')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.grade')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.hod')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.govtOrderNumber')}</th>
-              <th style={headerStyle}>{translate('employee.Assignment.fields.documents')}</th>
-              <th style={headerStyle}>{translate('reports.common.action')}</th>
+              <th style={headerStyle}>{<Label  fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.fromDate" />}</th>
+              <th style={headerStyle}>{<Label  fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.toDate" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.department" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.designation" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.position" />}</th>
+              <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.primary" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.fund" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.function" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.functionary" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.grade" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.hod" />}</th>
+              <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.govtOrderNumber" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.documents" />}</th>
+              <th style={headerStyle}>{<Label containerStyle={containerStyle} fontSize="12px" labelStyle={labelStyle} label="reports.common.action" />}</th>
             </thead>
             <tbody>{renderAssignmentBody()}</tbody>
           </Table>
@@ -4223,9 +4309,13 @@ class Employee extends Component {
         <CardText>
           <Table bordered responsive className="table-striped">
             <thead>
-              <th style={headerStyle}>{translate('employee.jurisdiction.fields.boundaryType')}</th>
+              {/* <th style={headerStyle}>{translate('employee.jurisdiction.fields.boundaryType')}</th>
               <th style={headerStyle}>{translate('employee.jurisdiction.fields.boundary')}</th>
-              <th style={headerStyle}>{translate('reports.common.action')}</th>
+              <th style={headerStyle}>{translate('reports.common.action')}</th> */}
+
+              <th style={headerStyle}>{<Label fontSize="12px" label="employee.jurisdiction.fields.boundaryType" labelStyle={labelStyle}/> }</th>
+              <th style={headerStyle}>{<Label fontSize="12px" label="employee.jurisdiction.fields.boundary" labelStyle={labelStyle}/>}</th>
+              <th style={headerStyle}>{<Label fontSize="12px" label="reports.common.action" labelStyle={labelStyle}/>}</th>
             </thead>
             <tbody>{renderJurisdictionBody()}</tbody>
           </Table>
@@ -4363,16 +4453,16 @@ class Employee extends Component {
     return (
       <div>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.ServiceHistory.title')} />
+          <CardTitle title={<Label fontSize="24px" label="employee.ServiceHistory.title" />} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.ServiceEntryDescription')}</th>
-                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.date')}</th>
-                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.remarks')}</th>
-                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.orderNo')}</th>
-                <th style={headerStyle}>{translate('employee.ServiceHistory.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.ServiceHistory.fields.ServiceEntryDescription" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.ServiceHistory.fields.date" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.ServiceHistory.fields.remarks"/>}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.ServiceHistory.fields.orderNo" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.ServiceHistory.fields.documents"/>}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="reports.common.action" />}</th>
               </thead>
               <tbody>{renderServiceBody('service')}</tbody>
             </Table>
@@ -4396,17 +4486,17 @@ class Employee extends Component {
           </CardText>
         </Card>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.Employee.fields.probation')} />
+          <CardTitle title={<Label fontSize="12px" label="employee.Probation.title" />} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.declaredOn')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.orderNo')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.orderDate')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.remarks')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Assignment.fields.designation" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Probation.fields.declaredOn" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Probation.fields.orderNo" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Probation.fields.orderDate" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Probation.fields.remarks" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.Probation.fields.documents" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="reports.common.action" />}</th>
               </thead>
               <tbody>{renderServiceBody('probation')}</tbody>
             </Table>
@@ -4430,17 +4520,17 @@ class Employee extends Component {
           </CardText>
         </Card>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.Employee.fields.regularisation')} />
+          <CardTitle title={<Label fontSize="24px" label="employee.Regularisation.title" />} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.Assignment.fields.designation')}</th>
-                <th style={headerStyle}>{translate('employee.Regularisation.fields.declaredOn')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.orderNo')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.orderDate')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.remarks')}</th>
-                <th style={headerStyle}>{translate('employee.Probation.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Assignment.fields.designation" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Regularisation.fields.declaredOn" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Probation.fields.orderNo" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Probation.fields.orderDate" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Probation.fields.remarks" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="employee.Probation.fields.documents" />}</th>
+                <th style={headerStyle}>{<Label labelStyle={labelStyle} fontSize="12px" label="reports.common.action" />}</th>
               </thead>
               <tbody>{renderServiceBody('regularization')}</tbody>
             </Table>
@@ -4576,16 +4666,16 @@ class Employee extends Component {
     return (
       <div>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.EducationalQualification.title')} />
+          <CardTitle title={<Label fontSize="24px" label="employee.EducationalQualification.title" />} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.qualification')}</th>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.majorSubject')}</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.university')}</th>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.qualification" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.majorSubject" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.yearOfPassing" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.university" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.documents" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="reports.common.action"/>}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('edu')}</tbody>
             </Table>
@@ -4609,16 +4699,16 @@ class Employee extends Component {
           </CardText>
         </Card>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.TechnicalQualification.title')} />
+          <CardTitle title={<Label fontSize="24px" label="employee.TechnicalQualification.title" />} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.skill')}</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.grade')}</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.remarks')}</th>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.skill" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.grade" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.yearOfPassing" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.remarks" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.documents" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="reports.common.action" />}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('tech')}</tbody>
             </Table>
@@ -4642,15 +4732,15 @@ class Employee extends Component {
           </CardText>
         </Card>
         <Card className="uiCard create-employee-card">
-          <CardTitle title={translate('employee.DepartmentalTest.title')} />
+          <CardTitle title={<Label fontSize="24px" label="employee.DepartmentalTest.title"/>} />
           <CardText>
             <Table bordered responsive className="table-striped">
               <thead>
-                <th style={headerStyle}>{translate('employee.DepartmentalTest.fields.test')}</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.yearOfPassing')}n</th>
-                <th style={headerStyle}>{translate('employee.TechnicalQualification.fields.remarks')}</th>
-                <th style={headerStyle}>{translate('employee.EducationalQualification.fields.documents')}</th>
-                <th style={headerStyle}>{translate('reports.common.action')}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.DepartmentalTest.fields.test" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.yearOfPassing" />}n</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.TechnicalQualification.fields.remarks" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="employee.EducationalQualification.fields.documents" />}</th>
+                <th style={headerStyle}>{<Label fontSize="12px" labelStyle={labelStyle} label="reports.common.action" />}</th>
               </thead>
               <tbody>{renderOtherDetailsBody('dept')}</tbody>
             </Table>
@@ -4750,19 +4840,19 @@ class Employee extends Component {
           }}
         >
           <Tabs >
-            <Tab label={translate('employee.Employee.title')} buttonStyle={{color : "#fff"}}>
+            <Tab label={<Label labelStyle={labelStyle} label="employee.Employee.title" />} buttonStyle={{color : "#fff"}}>
               <div>{self.renderEmployee()}</div>
             </Tab>
-            <Tab label={translate('employee.Assignment.title')} buttonStyle={{color : "#fff"}}>
+            <Tab label={<Label labelStyle={labelStyle} label="employee.Assignment.title" />} buttonStyle={{color : "#fff"}}>
               <div>{self.renderAssignment()}</div>
             </Tab>
-            <Tab label={translate('employee.Jurisdictions.title')} buttonStyle={{color : "#fff"}}>
+            <Tab label={<Label labelStyle={labelStyle} label="employee.Jurisdictions.title" />} buttonStyle={{color : "#fff"}}>
               <div>{self.renderJurisdiction()}</div>
             </Tab>
-            <Tab label={translate('employee.service.title')} buttonStyle={{color : "#fff"}}>
+            <Tab label={<Label labelStyle={labelStyle} label="employee.service.title" />} buttonStyle={{color : "#fff"}}>
               <div>{self.renderService()}</div>
             </Tab>
-            <Tab label={translate('employee.other.title')} buttonStyle={{color : "#fff"}}>
+            <Tab label={<Label labelStyle={labelStyle} label="employee.other.title" />} buttonStyle={{color : "#fff"}}>
               <div>{self.renderOtherDetails()}</div>
             </Tab>
           </Tabs>
