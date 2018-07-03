@@ -17,20 +17,18 @@ import "datatables.net-dt";
 import "react-jquery-datatables";
 import "datatables.net-buttons-bs";
 import { Icon } from "components";
-
 import $ from "jquery";
 import JSZip from "jszip/dist/jszip";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "datatables.net-buttons/js/buttons.html5.js"; // HTML 5 file export
 import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
-import { fonts } from "../pdf-generation/PdfConfig";
 import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
-pdfMake.fonts = fonts;
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.JSZip = JSZip;
 
 var sumColumn = [];
@@ -74,11 +72,8 @@ class ShowField extends Component {
     });
     _this.subHeader(_this.props.match.params.moduleName);
     var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
-    //Api.commonApiPost("/tenant/v1/tenant/_search?tenantId=" + tenantId + "&code=" + tenantId + "&pageSize=200").then(
     commonApiPost("/tenant/v1/tenant/_search?tenantId=" + "default" + "&code=" + "default" + "&pageSize=200").then(
       function(response) {
-        //console.log(moduleName, reportName);
-        //let hello =response.tenant[0].logoId;
         let imgpath = response.tenant[0].logoId.substr(1);
         if (response.tenant && response.tenant[0].logoId) {
           _this.convertImgToBase64URL("https://raw.githubusercontent.com/egovernments/egov-web-app/master/web/ui-app/public/" + imgpath, (data) => {
@@ -88,10 +83,9 @@ class ShowField extends Component {
           });
 
           _this.setState({
-            // logopath:response.tenant[0].logoId,
             ulbname: response.tenant[0].name,
           });
-        } // console.log('hide the loader');
+        }
         // setForm();
       },
       function(err) {
@@ -208,9 +202,10 @@ class ShowField extends Component {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
-        title: _this.state.reportSubTitle,
-        text: "PDF",
-        orientation: "landscape",
+        title: _this.state.reportName.split(/(?=[A-Z])/).join(" "),
+        //title: "Fetches reports based on the source of reception of the complaint",
+        text: "<span>Download as : </span>PDF",
+        orientation: "portrait",
         pageSize: "TABLOID",
         footer: true,
         customize: function(doc) {
@@ -220,7 +215,7 @@ class ShowField extends Component {
       },
       {
         extend: "excel",
-        text: "<span>Download as : </span>XLS",
+        text: "XLS",
         className: "report-excel-button",
         exportOptions,
       },
@@ -443,7 +438,7 @@ class ShowField extends Component {
     let { checkAllRows } = this;
     return (
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
-        <tr>
+        <tr className="report-table-header">
           <th key={"Sr. No. "}>{"Sr. No."}</th>
           {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
             <th key={"testKey"}>
