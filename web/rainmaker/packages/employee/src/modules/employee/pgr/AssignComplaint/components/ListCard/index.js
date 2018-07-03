@@ -164,8 +164,14 @@ export default class ListCard extends Component {
     if (searchTerm.length > 0) {
       return dataSource.filter((result) => {
         return typeof result["primaryText"] === "object"
-          ? result["primaryText"].props.label.toLowerCase().indexOf(searchTerm) !== -1
-          : result["primaryText"].toLowerCase().indexOf(searchTerm) !== -1;
+          ? result["primaryText"].props.label
+              .replace(/\s+/g, "")
+              .toLowerCase()
+              .indexOf(searchTerm) !== -1
+          : result["primaryText"]
+              .toLowerCase()
+              .replace(/\s+/g, "")
+              .indexOf(searchTerm) !== -1;
       });
     }
   };
