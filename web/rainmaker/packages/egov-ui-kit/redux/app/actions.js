@@ -63,34 +63,27 @@ var fetchLocalizationLabel = exports.fetchLocalizationLabel = function fetchLoca
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              payload = { messages: JSON.parse(window.localStorage.getItem("localization_" + locale)) || [] };
-
-              if (payload.messages.length) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 5;
+              _context.next = 3;
               return (0, _api.httpRequest)(_endPoints.LOCALATION.GET.URL, _endPoints.LOCALATION.GET.ACTION, [{ key: "module", value: "rainmaker-pgr" }, { key: "locale", value: locale }, { key: "tenantId", value: _common2.default.tenantId }]);
 
-            case 5:
+            case 3:
               payload = _context.sent;
 
-            case 6:
+              //}
               dispatch(setLocalizationLabels(locale, payload.messages));
-              _context.next = 11;
+              _context.next = 9;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
 
-            case 11:
+            case 9:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 9]]);
+      }, _callee, undefined, [[0, 7]]);
     }));
 
     return function (_x) {

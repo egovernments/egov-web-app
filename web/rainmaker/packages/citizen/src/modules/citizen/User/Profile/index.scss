@@ -24,6 +24,10 @@
   position: relative;
 }
 
+.citizen-profile-screen {
+  padding: 0 !important;
+}
+
 @media only screen and (max-width: 768px) {
   .profile-card-container {
     margin: 0px !important;
