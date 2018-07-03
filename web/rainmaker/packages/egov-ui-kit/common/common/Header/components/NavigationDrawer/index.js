@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -34,6 +38,11 @@ var styles = {
   }
 };
 
+var defaultContainerStyle = {
+  paddingBottom: 30,
+  background: "#fff"
+};
+
 var NavigationDrawer = function NavigationDrawer(_ref) {
   var handleItemClick = _ref.handleItemClick,
       role = _ref.role,
@@ -50,7 +59,7 @@ var NavigationDrawer = function NavigationDrawer(_ref) {
   return _react2.default.createElement(
     _components.Drawer,
     {
-      containerStyle: containerStyle,
+      containerStyle: (0, _extends3.default)({}, defaultContainerStyle, containerStyle),
       docked: false,
       width: width,
       openSecondary: openSecondary,

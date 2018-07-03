@@ -11,6 +11,11 @@ const styles = {
   },
 };
 
+const defaultContainerStyle = {
+  paddingBottom: 30,
+  background: "#fff",
+};
+
 const NavigationDrawer = ({
   handleItemClick,
   role,
@@ -26,7 +31,7 @@ const NavigationDrawer = ({
 }) => {
   return (
     <Drawer
-      containerStyle={containerStyle}
+      containerStyle={{ ...defaultContainerStyle, ...containerStyle }}
       docked={false}
       width={width}
       openSecondary={openSecondary}
