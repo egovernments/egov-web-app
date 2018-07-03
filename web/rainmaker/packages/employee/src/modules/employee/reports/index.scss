@@ -3,9 +3,7 @@
   color: #fe7a51 !important;
   border: none !important;
 }
-.report-pdf-button {
-  display: none !important;
-}
+
 .report-result-table {
   color: #484848;
   border: none;
@@ -14,6 +12,7 @@
   margin: 16px;
 }
 
-.report-result-table > tbody {
-  color: red;
+.report-table-header th {
+  border-top: 1px solid #e0e0e0 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
 }
