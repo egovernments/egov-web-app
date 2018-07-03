@@ -77,7 +77,6 @@ class ShowForm extends Component {
     if (property === "fromDate" || property === "toDate") {
       this.checkDate(selectedValue, property, isRequired, pattern);
     } else {
-      console.log(e.target.value);
       handleChange(e, property, isRequired, pattern);
     }
 
@@ -193,14 +192,16 @@ class ShowForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     let { changeButtonText, clearReportHistory, needDefaultSearch } = this.props;
+
     if (nextProps.metaData.reportDetails && nextProps.metaData.reportDetails !== this.props.metaData.reportDetails) {
       changeButtonText("APPLY");
       this.setState({
         reportName: nextProps.metaData.reportDetails.reportName,
       });
+      let { reportName } = this.state;
+
       this.setState({ moduleName: this.props.match.params.moduleName });
-      console.log(this.props);
-      console.log(nextProps);
+
       let { setForm } = this.props;
       let { searchParams } = !_.isEmpty(nextProps.metaData) ? nextProps.metaData.reportDetails : { searchParams: [] };
       let required = [];
@@ -212,9 +213,9 @@ class ShowForm extends Component {
       setForm(required);
       clearReportHistory();
       if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
-        this.search(null, true);
+        this.search(null, true, nextProps.metaData.reportDetails.reportName);
       } else if (needDefaultSearch) {
-        this.search(null);
+        this.search(null, false, nextProps.metaData.reportDetails.reportName);
       }
     }
   }
@@ -249,11 +250,10 @@ class ShowForm extends Component {
     );
   };
 
-  search = (e = null, isDrilldown = false) => {
+  search = (e = null, isDrilldown = false, rptName) => {
     if (e) {
       e.preventDefault();
     }
-    console.log(e);
 
     let {
       showTable,
@@ -272,7 +272,6 @@ class ShowForm extends Component {
     let searchParams = [];
     var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
     let self = this;
-
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
 
@@ -284,14 +283,6 @@ class ShowForm extends Component {
               return acc;
             }, {})
         : searchForm;
-      console.log(searchForm);
-
-      // todo remove this!
-      if (searchForm) {
-        if (Object.keys(searchForm).indexOf("wastetype") === -1) {
-          searchForm["wastetype"] = "";
-        }
-      }
 
       for (var variable in searchForm) {
         let input;
@@ -330,10 +321,7 @@ class ShowForm extends Component {
           }
         }
 
-        if (variable !== "typeofvehicle") {
-          // if the variable is
-          searchParams.push({ name: variable, input });
-        }
+        searchParams.push({ name: variable, input });
       }
 
       setSearchParams(searchParams);
@@ -342,7 +330,7 @@ class ShowForm extends Component {
       let resulturl = getResultUrl(this.state.moduleName);
       let response =
         resulturl &&
-        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: this.state.reportName, searchParams }).then(
+        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: rptName || this.state.reportName, searchParams }).then(
           function(response) {
             pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
             setReportResult(response);
@@ -362,15 +350,13 @@ class ShowForm extends Component {
           resulturl &&
           commonApiPost(resulturl, {}, { ...reportData }).then(
             function(response) {
-              // console.log(response)
               decreaseReportIndex();
               setReportResult(response);
-              // console.log("Show Table");
+
               showTable(true);
               setFlag(1);
             },
             function(err) {
-              // console.log(err);
               showTable(false);
               alert("Something went wrong or try again later");
             }
@@ -382,7 +368,6 @@ class ShowForm extends Component {
           resulturl &&
           commonApiPost(resulturl, {}, { ...reportData }).then(
             function(response) {
-              // console.log(response)
               // decreaseReportIndex();
               localStorage.setItem("returnUrl", "");
               localStorage.setItem("searchCriteria", JSON.stringify({}));
@@ -392,12 +377,11 @@ class ShowForm extends Component {
               }
               setSearchParams(reportData.searchParams);
               setReportResult(response);
-              // console.log("Show Table");
+
               showTable(true);
               setFlag(1);
             },
             function(err) {
-              // console.log(err);
               showTable(false);
               alert("Something went wrong or try again later");
             }
@@ -432,11 +416,6 @@ class ShowForm extends Component {
                     </div>
                   </Row>
                 </Grid>
-
-                <br />
-
-                <br />
-                <br />
               </div>
             }
           />
@@ -473,7 +452,6 @@ class ShowForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.report);
   return {
     searchForm: state.formtemp.form,
     fieldErrors: state.formtemp.fieldErrors,
@@ -506,7 +484,7 @@ const mapDispatchToProps = (dispatch) => ({
     });
   },
   handleChange: (e, property, isRequired, pattern) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     dispatch({
       type: "HANDLE_CHANGE",
       property,
