@@ -128,7 +128,7 @@ var withAuthorization = function withAuthorization() {
             _react2.default.createElement(
               "div",
               { className: " col-xs-12", style: { padding: 0 } },
-              role !== "citizen" && !hideActionMenu && _react2.default.createElement(
+              !hideActionMenu && _react2.default.createElement(
                 "div",
                 null,
                 _react2.default.createElement(
@@ -145,7 +145,7 @@ var withAuthorization = function withAuthorization() {
               ),
               _react2.default.createElement(
                 "div",
-                { className: role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12", style: { padding: 0 } },
+                { className: "col-xs-12 col-sm-10", style: { padding: 0 } },
                 authenticated ? _react2.default.createElement(
                   "div",
                   null,

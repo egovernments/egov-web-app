@@ -26,7 +26,7 @@ class PTHome extends Component {
   listItems = [
     {
       primaryText: <Label label="Completed Assessments" />,
-      route: "/citizen/property-tax/my-receipts",
+      route: "/citizen/property-tax/completed-assessments",
       leftIcon: <Icon action="action" name="done" />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
@@ -86,14 +86,18 @@ class PTHome extends Component {
             </div>
           }
         />
-        <List
-          onItemClick={handleItemClick}
-          listContainerStyle={{ marginTop: "16px" }}
-          listItemStyle={{ borderBottom: "1px solid #e0e0e0", paddingTop: "8px", paddingBottom: "8px" }}
-          nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
-          autoGenerateNestedIndicator={false}
-          primaryTogglesNestedList={true}
-          items={listItems}
+        <Card
+          textChildren={
+            <List
+              onItemClick={handleItemClick}
+              listContainerStyle={{ marginTop: "16px" }}
+              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+              nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
+              autoGenerateNestedIndicator={false}
+              primaryTogglesNestedList={true}
+              items={listItems}
+            />
+          }
         />
       </Screen>
     );

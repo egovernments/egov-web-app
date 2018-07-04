@@ -223,7 +223,7 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
-                <Link key={index} to={`/employee/${item.navigationURL}`}>
+                <Link key={index} to={role == "citizen" ? `/citizen/${item.navigationURL}` : `/employee/${item.navigationURL}`}>
                   <MenuItem
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
@@ -297,19 +297,6 @@ class ActionMenu extends Component {
     return actionList ? (
       <div ref={this.setWrapperRef}>
         <div className="whiteColor" style={{ marginTop: "22px" }} />
-        {/*
-          <TextFieldIcon
-            hintText="Search"
-            onChange={this.handleChange}
-            value={searchText}
-            className="actionMenuSearchBox"
-            inputStyle={styles.inputStyle}
-            iconPosition="before"
-            Icon={SearchIcon}
-            hintStyle={{ color: "#767676", fontSize: "14px", marginLeft: "-10px" }}
-            iconStyle={{ height: "18px", width: "18px", top: "16px" }}
-          />
-          */}
 
         <Menu
           disableAutoFocus={true}

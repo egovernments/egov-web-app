@@ -29,14 +29,12 @@ import SearchProperty from "modules/citizen/PropertyTax/SearchProperty";
 import CompletedAssessments from "modules/citizen/PropertyTax/CompletedAssessments";
 import IncompleteAssessments from "modules/citizen/PropertyTax/IncompleteAssessments";
 import MyProperties from "modules/citizen/PropertyTax/MyProperties";
-//import Drafts from "modules/citizen/PropertyTax/Drafts";
+import Property from "modules/citizen/PropertyTax/MyProperties/components/Property";
 import MyReceipts from "modules/citizen/PropertyTax/MyReceipts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";
 import PaymentFailure from "modules/citizen/PropertyTax/PaymentFailure";
 import Events from "modules/citizen/PropertyTax/Events";
-//import Notifications from "modules/citizen/PropertyTax/Notifications";
-//import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
@@ -261,6 +259,15 @@ const routes = [
     },
   },
   {
+    path: "property-tax/property",
+    component: Property,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+    },
+  },
+  {
     path: "property-tax/search-property",
     component: SearchProperty,
     needsAuthentication: true,
@@ -270,16 +277,6 @@ const routes = [
       hideBackButton: true,
     },
   },
-  // {
-  //   path: "property-tax/drafts",
-  //   component: Drafts,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "Drafts",
-  //     hideBackButton: true,
-  //   },
-  // },
   {
     path: "property-tax/my-receipts",
     component: MyReceipts,
@@ -296,7 +293,6 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
       hideBackButton: true,
     },
   },
@@ -306,7 +302,6 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
       hideBackButton: true,
     },
   },

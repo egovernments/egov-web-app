@@ -7,10 +7,12 @@ class MyProperties extends Component {
     items: [
       {
         primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
+        route: "property",
         secondaryText: "Property ID: PQL-98-876",
       },
       {
         primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
+        route: "property",
         secondaryText: "Property ID: JML-34-756",
       },
     ],
@@ -18,7 +20,7 @@ class MyProperties extends Component {
   render() {
     return (
       <Screen className="pt-home-screen">
-        <AssessmentList items={this.state.items} />
+        <AssessmentList items={this.state.items} history={this.props.history} />
       </Screen>
     );
   }

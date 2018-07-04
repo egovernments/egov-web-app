@@ -85,19 +85,18 @@ const withAuthorization = (options = {}) => (Component) => {
             />
           ) : null}
           <div className=" col-xs-12" style={{ padding: 0 }}>
-            {role !== "citizen" &&
-              (!hideActionMenu && (
-                <div>
-                  <div className="col-xs-2 action-menu-drawer show-action-menu">
-                    <div className="rainmaker-action-menu">
-                      <ActionMenu role={role} />
-                    </div>
+            {!hideActionMenu && (
+              <div>
+                <div className="col-xs-2 action-menu-drawer show-action-menu">
+                  <div className="rainmaker-action-menu">
+                    <ActionMenu role={role} />
                   </div>
-                  <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
                 </div>
-              ))}
+                <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}
+              </div>
+            )}
 
-            <div className={role !== "citizen" ? "col-xs-12 col-sm-10" : "col-xs-12 col-sm-12"} style={{ padding: 0 }}>
+            <div className={"col-xs-12 col-sm-10"} style={{ padding: 0 }}>
               {authenticated ? (
                 <div>
                   {!hideTitle &&
