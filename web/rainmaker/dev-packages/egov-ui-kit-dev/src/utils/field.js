@@ -1,10 +1,6 @@
 import React from "react";
 import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label } from "components";
 
-// const ToolTip = ({ placement, show, title, id }) => {
-//   return <Tooltip enterDelay={300} id={id} leaveDelay={300} open={show} placement={placement} title={title} />;
-// };
-
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
     const { type, tooltip, label, ...fieldProps } = field;

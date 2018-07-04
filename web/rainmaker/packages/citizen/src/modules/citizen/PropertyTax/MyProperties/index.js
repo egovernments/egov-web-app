@@ -1,36 +1,24 @@
 import React, { Component } from "react";
-import { Label, Icon } from "components";
-import PTList from "../common/PTList";
+import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 
 class MyProperties extends Component {
-  properties = [
-    {
-      address: "E2/14, Hari Nagar",
-      status: "Payment Pending",
-      rightIcon: <Icon action="alert" name="warning" />,
-    },
-    {
-      address: "P9/2, Bellandur",
-      status: "",
-      rightIcon: <Icon action="alert" name="warning" />,
-    },
-  ];
-
-  getListItems = (properties) => {
-    return properties.map((property, index) => {
-      return {
-        primaryText: <Label label={property.address} fontSize="16px" color="#484848" />,
-        leftIcon: <Icon action="action" name="home" />,
-      };
-    });
+  state = {
+    items: [
+      {
+        primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
+        secondaryText: "Property ID: PQL-98-876",
+      },
+      {
+        primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
+        secondaryText: "Property ID: JML-34-756",
+      },
+    ],
   };
-
   render() {
-    let { getListItems, properties } = this;
     return (
-      <Screen>
-        <PTList items={getListItems(properties)} label="My Properties" />
+      <Screen className="pt-home-screen">
+        <AssessmentList items={this.state.items} />
       </Screen>
     );
   }
