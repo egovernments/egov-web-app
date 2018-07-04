@@ -304,21 +304,23 @@ class ShowField extends Component {
                 .column(index, { page: "current" })
                 .data()
                 .reduce(function(a, b, ind) {
+                  let fraction = b.split("/");
                   if (typeof b === "string" && b.match(/[A-za-z]/g)) {
                     return;
-                  } else if (b.split("/") && b.split("/").length === 2) {
+                  } else if (fraction && fraction.length === 2) {
                     if (ind == end - 1) {
                       let sum = intVal(a) + intVal(b);
 
-                      let avg = sum / end;
-                      return avg + "/" + b.split("/")[1];
+                      let avg = (sum / end).toPrecision(3);
+                      return Math.abs(avg) + "/" + fraction[1];
                     } else {
-                      return intVal(a) + intVal(Number(b.split("/")[0]));
+                      return intVal(a) + intVal(Number(fraction[0]));
                     }
                   } else {
                     return intVal(a) + intVal(b);
                   }
                 }, 0);
+              console.log(pageTotal);
 
               // Update footer
               //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
@@ -653,7 +655,7 @@ class ShowField extends Component {
   renderFooter = () => {
     let { reportResult } = this.props;
     let reportHeaderObj = reportResult.reportHeader;
-    footerexist = false;
+    footerexist = true;
 
     {
       reportHeaderObj.map((headerObj, index) => {
@@ -664,9 +666,10 @@ class ShowField extends Component {
           columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
-        if (headerObj.total) {
-          footerexist = true;
-        }
+        console.log(sumColumn);
+        // if (headerObj.total) {
+        //   footerexist = true;
+        // }
       });
       //for 1st column (Sr.No)
       let firstColObj = {};
