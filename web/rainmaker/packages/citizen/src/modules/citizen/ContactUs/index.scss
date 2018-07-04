@@ -1,5 +1,5 @@
 .contactus-list-container {
-  padding: 37px 0px 16px 0px;
+  padding: 37px 0px 40px 0px;
 }
 
 .contactus-main-card > div {
@@ -10,10 +10,6 @@
   height: 100%;
   width: 100%;
   background: #ffffff;
-}
-
-.contactus-main-card .mseva-logo {
-  // width: 40% !important;
 }
 
 .contactus-main-card {
@@ -44,4 +40,9 @@
 
 .phoneNumberStyle {
   color: #767676;
+}
+
+.contact-us-logo {
+  width: 54%;
+  margin: 0 auto;
 }

@@ -29,7 +29,7 @@ class AssessPay extends Component {
     },
     {
       primaryText: "Search Property",
-      route: "/property-tax/search-property",
+      route: "search-property",
       status: "",
       leftIcon: <Icon action="action" name="search" />,
     },

@@ -3,7 +3,7 @@ import { Icon, List, Image, Card, MapLocation } from "components";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
-import Logo from "egov-ui-kit/assets/images/logo_black.png";
+import Logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
@@ -155,7 +155,7 @@ class ContactUs extends Component {
             className="contactus-main-card"
             textChildren={
               <div>
-                <Image className="mseva-logo" source={`${Logo}`} />
+                <Image className="mseva-logo contact-us-logo" source={`${Logo}`} />
                 <div className="contactus-list-container">
                   <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.returnListItems()} />
                 </div>
