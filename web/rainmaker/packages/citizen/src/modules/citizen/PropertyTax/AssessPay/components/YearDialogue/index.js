@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Dialog } from "components";
-import SingleButton from "./components/SingleButton/index";
+import SingleButton from "./components/SingleButton";
 import "./index.css";
 
 class YearDialog extends Component {

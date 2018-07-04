@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Label, List, Icon, Card } from "components";
 import { Link } from "react-router-dom";
 import { Screen } from "modules/common";
-import YearDialogue from "./components/YearDialogue";
 import "./index.css";
 
 const iconStyle = {
@@ -25,18 +24,6 @@ class PTHome extends Component {
   }
 
   listItems = [
-    // {
-    //   primaryText: <Label label="PT_PAYMENT_DRAFTS" />,
-    //   route: "/citizen/property-tax/drafts",
-    //   leftIcon: <Icon action="image" name="edit" />,
-    //   rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-    // },
-    // {
-    //   primaryText: <Label label="PT_MY_RECEIPTS" />,
-    //   route: "/citizen/property-tax/my-receipts",
-    //   leftIcon: <Icon action="action" name="receipt" />,
-    //   rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
-    // },
     {
       primaryText: <Label label="Completed Assessments" />,
       route: "/citizen/property-tax/my-receipts",
@@ -55,31 +42,6 @@ class PTHome extends Component {
     },
   ];
 
-  getYearList = () => {
-    let today = new Date();
-    let month = today.getMonth() + 1;
-    let yearRange = [];
-    var counter = 0;
-    if (month <= 3) {
-      return this.getLastFourYear(yearRange, today.getFullYear() - 1, counter);
-    } else {
-      return this.getLastFourYear(yearRange, today.getFullYear(), counter);
-    }
-  };
-
-  getLastFourYear(yearRange, currentYear, counter) {
-    if (counter < 4) {
-      counter++;
-      yearRange.push(`${currentYear}-${currentYear + 1}`);
-      this.getLastFourYear(yearRange, currentYear - 1, counter);
-    }
-    return yearRange;
-  }
-
-  closeYearRangeDialogue = () => {
-    this.setState({ dialogueOpen: false });
-  };
-
   handleItemClick = (item, index) => {
     const { route } = item;
     this.props.history.push(route);
@@ -88,7 +50,7 @@ class PTHome extends Component {
   render() {
     let { listItems, handleItemClick } = this;
     return (
-      <Screen>
+      <Screen className="pt-home-screen">
         <Card
           textChildren={
             <div>
@@ -97,19 +59,23 @@ class PTHome extends Component {
                 <Label label="PT_HOME_PAY" containerStyle={{ marginLeft: "33px" }} />
               </div>
               <div className="col-xs-12 row pt-service-list">
-                <div
-                  onClick={() => {
-                    this.setState({ dialogueOpen: true });
-                  }}
-                  className="col-xs-4 text-center pt-new-property"
-                >
-                  <Icon style={iconStyle} action="communication" name="business" />
-                  <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} />
-                </div>
-                <div className="col-xs-4 text-center pt-search-property">
-                  <Icon style={iconStyle} action="action" name="search" />
-                  <Label label="Incomplete Assessments (2)" fontSize="20px" containerStyle={labelContainerStyle} />
-                </div>
+                <Link to="/citizen/property-tax/assess-pay">
+                  <div
+                    // onClick={() => {
+                    //   this.setState({ dialogueOpen: true });
+                    // }}
+                    className="col-xs-4 text-center pt-new-property"
+                  >
+                    <Icon style={iconStyle} action="communication" name="business" />
+                    <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} />
+                  </div>
+                </Link>
+                <Link to="/citizen/property-tax/incomplete-assessments">
+                  <div className="col-xs-4 text-center pt-search-property">
+                    <Icon style={iconStyle} action="image" name="edit" />
+                    <Label label="Incomplete Assessments" fontSize="20px" containerStyle={labelContainerStyle} />
+                  </div>
+                </Link>
                 <Link to="/citizen/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
@@ -129,7 +95,6 @@ class PTHome extends Component {
           primaryTogglesNestedList={true}
           items={listItems}
         />
-        <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
     );
   }
