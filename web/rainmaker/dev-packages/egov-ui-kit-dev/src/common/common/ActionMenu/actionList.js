@@ -239,7 +239,7 @@ const actionList = {
       serviceCode: "PT",
       code: "null",
       path: "PGR Reports.Complaint Types",
-      navigationURL: "report/rainmaker-pgr/CompliantTypeWiseReport",
+      navigationURL: "report/rainmaker-pgr/ComplaintTypeWiseReport",
       leftIcon: { action: "action", name: "assignment" },
       rightIcon: "",
     },
