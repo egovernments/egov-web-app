@@ -4,7 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { SuccessMessage } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { connect } from "react-redux";
-//import "modules/common/common/SuccessMessage/components/successmessage/index.css";
+import { Screen } from "modules/common";
 
 class ComplaintAssigned extends Component {
   componentDidMount = () => {
@@ -17,31 +17,33 @@ class ComplaintAssigned extends Component {
   };
 
   render() {
-    let { employeeDetails } = this.props;
+    let { employeeDetails, fetchSuccess } = this.props;
     const isReassign = window.location.href.includes("complaint-reassigned") ? true : false;
     return (
-      <div className="success-message-main-screen">
-        {employeeDetails &&
-          employeeDetails.employeeName && (
-            <SuccessMessage
-              successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
-              secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
-              tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
-              icon={<Icon action="navigation" name="check" />}
-              backgroundColor={"#22b25f"}
+      <Screen loading={fetchSuccess}>
+        <div className="success-message-main-screen">
+          {employeeDetails &&
+            employeeDetails.employeeName && (
+              <SuccessMessage
+                successmessage={employeeDetails.employeeName && (isReassign ? "Re-Assigned to " : "Assigned to ") + employeeDetails.employeeName}
+                secondaryLabel={employeeDetails && employeeDetails.employeeDesignation && employeeDetails.employeeDesignation}
+                tertiaryLabel={employeeDetails && employeeDetails.employeeDepartment && employeeDetails.employeeDepartment + " Department"}
+                icon={<Icon action="navigation" name="check" />}
+                backgroundColor={"#22b25f"}
+              />
+            )}
+          <div className="responsive-action-button-cont">
+            <Button
+              id="resolve-success-continue"
+              primary={true}
+              label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
+              fullWidth={true}
+              onClick={this.handleComplaintReassigned}
+              className="responsive-action-button"
             />
-          )}
-        <div className="responsive-action-button-cont">
-          <Button
-            id="resolve-success-continue"
-            primary={true}
-            label={<Label buttonLabel={true} label="CORE_COMMON_GOTOHOME" />}
-            fullWidth={true}
-            onClick={this.handleComplaintReassigned}
-            className="responsive-action-button"
-          />
+          </div>
         </div>
-      </div>
+      </Screen>
     );
   }
 }
@@ -60,7 +62,8 @@ const mapStateToProps = (state, ownProps) => {
     employeeDesignation: selectedEmployee && getNameFromId(designationsById, selectedEmployee.assignments[0].designation, "Engineer"),
     employeeDepartment: selectedEmployee && getNameFromId(departmentById, selectedEmployee.assignments[0].department, "Administration"),
   };
-  return { employeeDetails };
+  const fetchSuccess = employeeDetails && employeeDetails.employeeName ? true : false;
+  return { employeeDetails, fetchSuccess };
 };
 
 const mapDispatchToProps = (dispatch) => {

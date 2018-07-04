@@ -4,11 +4,9 @@ import ListCard from "../ListCard";
 
 const FeedbackForm = ({ complaint, ...rest }) => {
   return (
-    <div>
-      <div>
-        <HeaderCard complaint={complaint} />
-        <ListCard {...rest} />
-      </div>
+    <div className="form-without-button-cont-generic">
+      <HeaderCard complaint={complaint} />
+      <ListCard {...rest} />
     </div>
   );
 };

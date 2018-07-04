@@ -20,10 +20,6 @@ var _components = require("components");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const ToolTip = ({ placement, show, title, id }) => {
-//   return <Tooltip enterDelay={300} id={id} leaveDelay={300} open={show} placement={placement} title={title} />;
-// };
-
 var Field = function Field(_ref) {
   var fieldKey = _ref.fieldKey,
       handleFieldChange = _ref.handleFieldChange,

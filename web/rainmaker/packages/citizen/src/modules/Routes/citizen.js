@@ -24,15 +24,19 @@ import { ReopenAcknowledgement } from "modules/common";
 
 //property tax
 import PTHome from "modules/citizen/PropertyTax/PTHome";
+import AssessPay from "modules/citizen/PropertyTax/AssessPay";
+import SearchProperty from "modules/citizen/PropertyTax/SearchProperty";
+import CompletedAssessments from "modules/citizen/PropertyTax/CompletedAssessments";
+import IncompleteAssessments from "modules/citizen/PropertyTax/IncompleteAssessments";
 import MyProperties from "modules/citizen/PropertyTax/MyProperties";
-import Drafts from "modules/citizen/PropertyTax/Drafts";
+//import Drafts from "modules/citizen/PropertyTax/Drafts";
 import MyReceipts from "modules/citizen/PropertyTax/MyReceipts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";
 import PaymentFailure from "modules/citizen/PropertyTax/PaymentFailure";
 import Events from "modules/citizen/PropertyTax/Events";
-import Notifications from "modules/citizen/PropertyTax/Notifications";
-import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
+//import Notifications from "modules/citizen/PropertyTax/Notifications";
+//import PoliceStations from "modules/citizen/PropertyTax/PoliceStations";
 import Payments from "modules/citizen/PropertyTax/Payments";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
@@ -82,18 +86,18 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true, title: "Events" },
   },
-  {
-    path: "notifications",
-    component: Notifications,
-    needsAuthentication: true,
-    options: { hideFooter: true, title: "Notifications" },
-  },
-  {
-    path: "police-stations",
-    component: PoliceStations,
-    needsAuthentication: true,
-    options: { hideFooter: true, title: "Police Stations" },
-  },
+  // {
+  //   path: "notifications",
+  //   component: Notifications,
+  //   needsAuthentication: true,
+  //   options: { hideFooter: true, title: "Notifications" },
+  // },
+  // {
+  //   path: "police-stations",
+  //   component: PoliceStations,
+  //   needsAuthentication: true,
+  //   options: { hideFooter: true, title: "Police Stations" },
+  // },
   {
     path: "payments",
     component: Payments,
@@ -210,9 +214,39 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
+      // title: "PUNJAB MUNICIPAL CORPORATION",
       hideBackButton: true,
       isHomeScreen: true,
+    },
+  },
+  {
+    path: "property-tax/assess-pay",
+    component: AssessPay,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "Assess & Pay : Select Property",
+      hideBackButton: true,
+    },
+  },
+  {
+    path: "property-tax/incomplete-assessments",
+    component: IncompleteAssessments,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "Incomplete Assessments",
+      hideBackButton: true,
+    },
+  },
+  {
+    path: "property-tax/completed-assessments",
+    component: CompletedAssessments,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "Completed Assessments",
+      hideBackButton: true,
     },
   },
 
@@ -222,27 +256,37 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
+      title: "My Properties",
       hideBackButton: true,
     },
   },
   {
-    path: "property-tax/drafts",
-    component: Drafts,
+    path: "property-tax/search-property",
+    component: SearchProperty,
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
+      title: "Search Property",
       hideBackButton: true,
     },
   },
+  // {
+  //   path: "property-tax/drafts",
+  //   component: Drafts,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "Drafts",
+  //     hideBackButton: true,
+  //   },
+  // },
   {
     path: "property-tax/my-receipts",
     component: MyReceipts,
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "PUNJAB MUNICIPAL CORPORATION",
+      title: "My Receipts",
       hideBackButton: true,
     },
   },
