@@ -304,10 +304,10 @@ class ShowField extends Component {
                 .column(index, { page: "current" })
                 .data()
                 .reduce(function(a, b, ind) {
-                  let fraction = b.split("/");
                   if (typeof b === "string" && b.match(/[A-za-z]/g)) {
                     return;
-                  } else if (fraction && fraction.length === 2) {
+                  } else if (typeof b === "string" && b.split("/") && b.split("/").length === 2) {
+                    let fraction = b.split("/");
                     if (ind == end - 1) {
                       let sum = intVal(a) + intVal(b);
 
