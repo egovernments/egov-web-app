@@ -266,10 +266,25 @@ class ShowField extends Component {
 
         {
           sumColumn.map((columnObj, index) => {
+            // if (columnObj.total) {
+            //console.log(columnObj.total);
             if (columnObj.total) {
               // Remove the formatting to get integer data for summation
+
               var intVal = function(i) {
-                return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
+                if (typeof i === "string") {
+                  let pat2 = i.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g);
+                  if (pat2) {
+                    let a = i.split(pat2[0])[0];
+                    let inta = a && Number(a);
+                    return inta;
+                  } else {
+                    return Number(i);
+                  }
+                } else if (typeof i === "number") {
+                  return i;
+                }
+                //return typeof i === "string" ? i.replace(/[\$,]/g, "") * 1 : typeof i === "number" ? i : 0;
               };
 
               // Total over all pages
@@ -277,20 +292,40 @@ class ShowField extends Component {
                 .column(index)
                 .data()
                 .reduce(function(a, b) {
-                  return intVal(a) + intVal(b);
+                  if (typeof b === "string" && b.match(/[A-za-z]/g)) {
+                    return;
+                  } else {
+                    return intVal(a) + intVal(b);
+                  }
                 }, 0);
 
               // Total over this page
               pageTotal = api
                 .column(index, { page: "current" })
                 .data()
-                .reduce(function(a, b) {
-                  return intVal(a) + intVal(b);
+                .reduce(function(a, b, ind) {
+                  if (typeof b === "string" && b.match(/[A-za-z]/g)) {
+                    return;
+                  } else if (b.split("/") && b.split("/").length === 2) {
+                    if (ind == end - 1) {
+                      let sum = intVal(a) + intVal(b);
+
+                      let avg = sum / end;
+                      return avg + "/" + b.split("/")[1];
+                    } else {
+                      return intVal(a) + intVal(Number(b.split("/")[0]));
+                    }
+                  } else {
+                    return intVal(a) + intVal(b);
+                  }
                 }, 0);
 
               // Update footer
-              $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
+              //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
+              typeof pageTotal !== "undefined" && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
+              //}
             }
+            // }
           });
         }
       },
@@ -625,13 +660,18 @@ class ShowField extends Component {
         let columnObj = {};
         if (headerObj.showColumn) {
           columnObj["showColumn"] = headerObj.showColumn;
-          columnObj["total"] = headerObj.total;
+          //  columnObj["total"] = headerObj.total;
+          columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
         if (headerObj.total) {
           footerexist = true;
         }
       });
+      //for 1st column (Sr.No)
+      let firstColObj = {};
+      firstColObj["total"] = false;
+      sumColumn.unshift(firstColObj);
     }
 
     if (footerexist) {
@@ -639,7 +679,7 @@ class ShowField extends Component {
         <tfoot>
           <tr>
             {sumColumn.map((columnObj, index) => {
-              return <th key={index}>{index === 0 ? "Total (Grand Total)" : ""}</th>;
+              return <th key={index}>{index === 0 ? "Total" : ""}</th>;
             })}
           </tr>
         </tfoot>
