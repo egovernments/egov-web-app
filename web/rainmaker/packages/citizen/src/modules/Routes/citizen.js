@@ -9,6 +9,7 @@ import Profile from "modules/citizen/User/Profile";
 import Home from "modules/citizen/Home";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
+import { ImageModalDisplay } from "modules/common";
 
 // pgr specific screens
 import MyComplaints from "modules/citizen/pgr/MyComplaints";
@@ -76,6 +77,17 @@ const routes = [
     component: Home,
     needsAuthentication: true,
     options: { isHomeScreen: true, title: "Home", hideTitle: true },
+  },
+
+  {
+    path: "image",
+    component: ImageModalDisplay,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideTitle: true,
+      hideHeader: true,
+    },
   },
 
   {

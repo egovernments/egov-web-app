@@ -7,7 +7,7 @@ import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
 import { ReOpenComplaint } from "modules/common";
 import { ReopenAcknowledgement } from "modules/common";
-
+import { ImageModalDisplay } from "modules/common";
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
@@ -102,6 +102,16 @@ const routes = [
       hideFooter: true,
       title: "CS_HEADER_COMPLAINT_SUMMARY",
       redirectionUrl,
+    },
+  },
+  {
+    path: "image",
+    component: ImageModalDisplay,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideTitle: true,
+      hideHeader: true,
     },
   },
   {
