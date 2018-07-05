@@ -16,6 +16,7 @@ const formConfig = {
     phone: {
       id: "complainant-mobile-no",
       type: "number",
+      pattern: "^([0-9]){10}$",
       jsonPath: "services[0].citizen.mobileNumber",
       required: true,
       floatingLabelText: "ES_CREATECOMPLAINT_MOBILE_NUMBER",

@@ -3,6 +3,7 @@ import TextFieldIcon from "egov-ui-kit/components/TextFieldIcon";
 import MobileNumberField from "egov-ui-kit/components/MobileNumberField";
 import SelectField from "egov-ui-kit/components/DropDown";
 import Label from "egov-ui-kit/components/Label";
+import Receipt from "egov-ui-kit/components/Receipt";
 import Checkbox from "egov-ui-kit/components/Checkbox";
 import TextArea from "egov-ui-kit/components/TextArea";
 import Button from "egov-ui-kit/components/Button";
@@ -76,4 +77,5 @@ export {
   SingleCheckbox,
   ToolTipUi,
   TableUi,
+  Receipt,
 };

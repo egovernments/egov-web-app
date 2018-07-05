@@ -23,7 +23,6 @@ const PTList = ({ items, history, label }) => {
             nestedListStyle={{ marginLeft: "60px", padding: "0px" }}
             primaryTogglesNestedList={true}
             onItemClick={(item, index) => {
-              console.log(item);
               history && history.push(item.route);
             }}
           />

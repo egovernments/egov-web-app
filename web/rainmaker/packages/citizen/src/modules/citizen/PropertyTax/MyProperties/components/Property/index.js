@@ -1,71 +1,38 @@
 import React, { Component } from "react";
 import AssessmentList from "../../../common/AssessmentList";
-import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
-import { Icon } from "components";
+import { Icon, Receipt } from "components";
+import PropertyItems from "./propertyitems";
+
+let { propertyAddressItems, assessmentItems, ownershipItems } = PropertyItems;
 
 class Property extends Component {
   state = {
     items: [
       {
         primaryText: "Property Information",
+        leftIcon: <Icon action="action" name="info" />,
         nestedItems: [
           {
             primaryText: "Property Address",
             leftIcon: <Icon action="action" name="home" />,
-            secondaryText: (
-              <div className="clearfix" style={{ height: "inherit" }}>
-                <div className="clearfix">
-                  <div className="col-xs-12 col-sm-6">
-                    <div className="col-xs-12 col-sm-6">
-                      <Label label="House No:" />
-                      <Label label="Street Name:" />
-                      <Label label="Pincode:" />
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <Label label="E2/14" />
-                      <Label label="Kandwa Road" />
-                      <Label label="560098" />
-                    </div>
-                  </div>
-                  <div className="col-xs-12 col-sm-6">
-                    <div className="col-xs-12 col-sm-6">
-                      <Label label="Colony Name:" />
-                      <Label label="Mohalla:" />
-                      <Label label="Property ID:" />
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <Label label="Salunke Vihar" />
-                      <Label label="Harinagar" />
-                      <Label label="XC-345-76" />
-                    </div>
-                  </div>
-                </div>
-                <div className="clearfix">
-                  <div className="col-xs-12 col-sm-6" />
-                  <div className="col-xs-12 col-sm-6" />
-                </div>
-                <div className="clearfix">
-                  <div className="col-xs-12 col-sm-6" />
-                  <div className="col-xs-12 col-sm-6" />
-                </div>
-              </div>
-            ),
+            secondaryText: <Receipt receiptItems={propertyAddressItems} />,
           },
           {
             primaryText: "Assessment Information",
-            leftIcon: <Icon action="action" name="home" />,
-            secondaryText: <div> </div>,
+            leftIcon: <Icon action="action" name="assignment" />,
+            secondaryText: <Receipt receiptItems={assessmentItems} />,
           },
           {
             primaryText: "OwnershipInformation",
-            leftIcon: <Icon action="action" name="home" />,
-            secondaryText: <div />,
+            leftIcon: <Icon action="social" name="person" />,
+            secondaryText: <Receipt receiptItems={ownershipItems} />,
           },
         ],
       },
       {
         primaryText: "Payment Record",
+        leftIcon: <Icon action="action" name="receipt" />,
         nestedItems: [
           {
             primaryText: "2018 - 2019",
@@ -77,6 +44,7 @@ class Property extends Component {
       },
     ],
   };
+
   render() {
     return (
       <Screen className="pt-home-screen">
