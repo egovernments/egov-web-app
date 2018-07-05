@@ -17,6 +17,7 @@ import { getResultUrl } from "./commons/url";
 class ShowForm extends Component {
   state = {
     searchBtnText: "APPLY",
+    filterApplied: false,
   };
 
   checkForDependentSource = async (fieldIndex, field, selectedValue) => {
@@ -71,9 +72,8 @@ class ShowForm extends Component {
   };
 
   handleChange = (e, property, isRequired, pattern) => {
-    const { metaData, setMetaData, handleChange } = this.props;
+    const { metaData, setMetaData, handleChange, searchForm } = this.props;
     const selectedValue = e.target.value;
-
     if (property === "fromDate" || property === "toDate") {
       this.checkDate(selectedValue, property, isRequired, pattern);
     } else {
@@ -123,6 +123,7 @@ class ShowForm extends Component {
         value: value,
       },
     };
+
     if (name == "fromDate") {
       let startDate = value;
       if (this.props.searchForm) {
@@ -399,6 +400,21 @@ class ShowForm extends Component {
       <div className="">
         <form
           onSubmit={(e) => {
+            let fromDate;
+            let toDate;
+            if (searchForm && searchForm.fromDate && searchForm.toDate) {
+              fromDate = new Date(searchForm.fromDate);
+              toDate = new Date(searchForm.toDate);
+            }
+
+            if (fromDate && toDate) {
+              let tabLabel = `Showing data for : ${fromDate.getDate() +
+                "/" +
+                (fromDate.getMonth() + 1) +
+                "/" +
+                fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
+              this.props.updateTabLabel(tabLabel);
+            }
             search(e);
           }}
         >

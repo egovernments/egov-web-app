@@ -11,8 +11,21 @@
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.13), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   margin: 16px;
 }
-
+.report-title {
+  margin: 16px;
+  color: #484848;
+  font-size: 20px;
+}
 .report-table-header th {
   border-top: 1px solid #e0e0e0 !important;
   border-bottom: 1px solid #e0e0e0 !important;
+}
+.report-download-button-text {
+  border: none !important;
+  pointer-events: none;
+}
+.report-download-button-text:active,
+.report-download-button-text:hover {
+  box-shadow: none !important;
+  background-color: #ffffff !important;
 }
