@@ -1,7 +1,6 @@
 import React from "react";
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Citizen from "modules/citizen";
-import { ImageModalDisplay } from "modules/common";
 
 const Main = ({ routes }) => {
   return (
@@ -13,7 +12,7 @@ const Main = ({ routes }) => {
             return <Citizen match={props.match} routes={routes.citizen} />;
           }}
         />
-        <Route path={`/image`} component={ImageModalDisplay} />
+        {/* <Route exact path={`/image`} component={ImageModalDisplay} /> */}
         <Redirect from="/" to="/user/language-selection" />
       </Switch>
     </main>
