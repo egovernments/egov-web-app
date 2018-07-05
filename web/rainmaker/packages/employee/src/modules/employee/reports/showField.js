@@ -108,7 +108,7 @@ export default class ShowField extends Component {
               maxDate={maxDate}
               floatingLabelText={
                 <div>
-                  <Label label={description} fontSize="18px" color="#03b0c6" />
+                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }

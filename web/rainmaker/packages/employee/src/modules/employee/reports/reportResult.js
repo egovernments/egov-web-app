@@ -206,7 +206,7 @@ class ShowField extends Component {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
-        title: _this.state.reportName.split(/(?=[A-Z])/).join(" "),
+        title: reportName && reportName.split(/(?=[A-Z])/).join(" "),
         text: "PDF",
         orientation: "portrait",
         pageSize: "TABLOID",
@@ -708,7 +708,7 @@ class ShowField extends Component {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult } = this.props;
     let self = this;
-    console.log(metaData);
+    let { reportName } = this.state;
 
     const viewTabel = () => {
       let { searchForm, tabLabel } = this.props;
@@ -858,7 +858,8 @@ class ShowField extends Component {
       <div>
         {isTableShow &&
           !_.isEmpty(reportResult) &&
-          reportResult.hasOwnProperty("reportData") && <div className="report-title">{this.state.reportName.split(/(?=[A-Z])/).join(" ")}</div>}
+          reportResult.hasOwnProperty("reportData") &&
+          reportName && <div className="report-title">{reportName.split(/(?=[A-Z])/).join(" ")}</div>}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>
