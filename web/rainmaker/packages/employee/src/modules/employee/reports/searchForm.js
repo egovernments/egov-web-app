@@ -422,7 +422,7 @@ class ShowForm extends Component {
             style={{ margin: "16px" }}
             textChildren={
               <div>
-                <div>Modify report by date range</div>
+                <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
                 {/* <div style={{ paddingBottom: 0 }}>{!_.isEmpty(metaData) && metaData.reportDetails ? metaData.reportDetails.summary : ""}</div> */}
                 <Grid>
                   <Row>
@@ -442,6 +442,7 @@ class ShowForm extends Component {
             </CardText>
           </Card> */}
         </form>
+
         {reportIndex > 1 && (
           <div
             style={{
