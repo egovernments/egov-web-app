@@ -424,7 +424,13 @@ class ShowForm extends Component {
                   <Row>
                     {this.handleFormFields()}
                     <div style={{ marginTop: "16px" }}>
-                      <Button label={buttonText} primary={true} style={{ height: "50px", lineHeight: "50px", width: "15%" }} />
+                      <RaisedButton
+                        style={{ height: "50px", lineHeight: "50px", width: "15%" }}
+                        type="submit"
+                        disabled={!isFormValid}
+                        primary={true}
+                        label={buttonText}
+                      />
                     </div>
                   </Row>
                 </Grid>

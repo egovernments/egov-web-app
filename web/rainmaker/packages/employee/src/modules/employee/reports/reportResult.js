@@ -244,6 +244,7 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
+    let { reportResult } = this.props;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
@@ -657,8 +658,11 @@ class ShowField extends Component {
   renderFooter = () => {
     let { reportResult } = this.props;
     let reportHeaderObj = reportResult.reportHeader;
-    footerexist = true;
-
+    if (reportResult && reportResult.reportData && reportResult.reportData.length > 0) {
+      footerexist = true;
+    } else {
+      footerexist = false;
+    }
     {
       reportHeaderObj.map((headerObj, index) => {
         let columnObj = {};
@@ -735,7 +739,6 @@ class ShowField extends Component {
               padding: "0 !important",
               backgroundColor: "#ffffff",
             }}
-            responsive
           >
             {self.renderHeader()}
             {self.renderBody()}
