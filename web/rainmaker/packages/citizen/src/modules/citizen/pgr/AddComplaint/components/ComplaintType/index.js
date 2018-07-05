@@ -13,7 +13,7 @@ const ComplaintTypeField = ({ categories, localizationLabels, complaintType = {}
       <Card
         className="complaint-type-card common-padding-for-new-complaint-card"
         textChildren={
-          <Link to="/citizen/complaint-type">
+          <Link to="/complaint-type">
             <TextFieldIcon
               {...{ ...complaintType, value: complainTypeMessage }}
               iconPosition="after"

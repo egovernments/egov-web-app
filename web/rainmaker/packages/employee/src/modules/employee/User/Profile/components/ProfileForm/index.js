@@ -18,7 +18,7 @@ const ProfileForm = ({ form, handleFieldChange, onClickAddPic, img, profilePic }
             <TextField {...fields.name} onChange={(e, value) => handleFieldChange("name", value)} />
             <TextField {...fields.phonenumber} />
             <TextField {...fields.email} onChange={(e, value) => handleFieldChange("email", value)} />
-            <Link to="/employee/user/change-password">
+            <Link to="/user/change-password">
               <div style={{ marginTop: "24px", marginBottom: "24px" }}>
                 <Label label={"CHANGE PASSWORD"} color="#f89a3f" />
               </div>

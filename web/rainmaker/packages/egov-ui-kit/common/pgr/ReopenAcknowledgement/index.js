@@ -41,7 +41,7 @@ var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
       _react2.default.createElement(_components.Button, {
         id: "success-message-acknowledgement",
         onClick: function onClick() {
-          return role === "citizen" ? history.push("/citizen") : history.push("/employee/all-complaints");
+          return role === "citizen" ? history.push("/") : history.push("/all-complaints");
         },
         primary: true,
         label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CORE_COMMON_GOTOHOME" }),

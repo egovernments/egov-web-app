@@ -23,7 +23,7 @@ const mapIconStyle = {
 
 class Details extends Component {
   navigateToComplaintType = () => {
-    this.props.history.push("/citizen/complaint-type");
+    this.props.history.push("/complaint-type");
   };
 
   onImageClick = (source) => {

@@ -4,7 +4,7 @@ import TrackIcon from "material-ui/svg-icons/maps/my-location";
 
 const LocationDetails = ({ formKey, locationDetails, handleFieldChange, history }) => {
   const onIconClick = () => {
-    history.push(`/employee/map?${formKey}`);
+    history.push(`/map?${formKey}`);
   };
 
   return (

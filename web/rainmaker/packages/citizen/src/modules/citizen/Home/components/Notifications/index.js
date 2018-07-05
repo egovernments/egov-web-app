@@ -28,7 +28,7 @@ const Updates = ({ updates, history }) => {
           <div
             className="update"
             onClick={() => {
-              history.push(`/citizen/complaint-details/${encodeURIComponent(update.number)}`);
+              history.push(`/complaint-details/${encodeURIComponent(update.number)}`);
             }}
           >
             <div className="notification-top-content">

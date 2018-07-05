@@ -67,7 +67,7 @@ var Details = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Details.__proto__ || Object.getPrototypeOf(Details)).call.apply(_ref, [this].concat(args))), _this), _this.navigateToComplaintType = function () {
-      _this.props.history.push("/citizen/complaint-type");
+      _this.props.history.push("/complaint-type");
     }, _this.onImageClick = function (source) {
       _this.props.history.push("/image?source=" + source);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);

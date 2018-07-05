@@ -13,7 +13,7 @@ class OTP extends Component {
   componentWillMount() {
     const { previousRoute } = this.props;
     if (previousRoute.length === 0) {
-      this.props.history.push("/citizen/user/register");
+      this.props.history.push("/user/register");
     }
   }
 

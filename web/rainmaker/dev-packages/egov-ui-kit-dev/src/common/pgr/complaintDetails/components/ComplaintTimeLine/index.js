@@ -383,8 +383,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 className="complaint-details-timline-button"
                 onClick={(e) => {
                   role === "citizen"
-                    ? changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`)
-                    : changeRoute.push(`/employee/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                    ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                    : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
                 }}
               >
                 <Label
@@ -463,7 +463,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   <div
                     className="complaint-details-timline-button"
                     onClick={(e) => {
-                      changeRoute.push(`/citizen/feedback/${encodeURIComponent(complaintNo)}`);
+                      changeRoute.push(`/feedback/${encodeURIComponent(complaintNo)}`);
                     }}
                   >
                     <Label
@@ -478,8 +478,8 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                   className="complaint-details-timline-button"
                   onClick={(e) => {
                     role === "citizen"
-                      ? changeRoute.push(`/citizen/reopen-complaint/${encodeURIComponent(complaintNo)}`)
-                      : changeRoute.push(`/employee/reopen-complaint/${encodeURIComponent(complaintNo)}`);
+                      ? changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`)
+                      : changeRoute.push(`/reopen-complaint/${encodeURIComponent(complaintNo)}`);
                   }}
                 >
                   <Label

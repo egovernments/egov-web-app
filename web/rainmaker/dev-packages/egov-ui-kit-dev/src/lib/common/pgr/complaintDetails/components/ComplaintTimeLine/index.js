@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
@@ -38,25 +38,27 @@ require("./index.css");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var timelineButtonLabelStyle = {
   height: 12,
   lineHeight: 1,
-  color: "#ffffff"
+  color: "#ffffff",
 };
 var timelineButtonContainerStyle = {
   lineHeight: 1,
-  height: 12
+  height: 12,
 };
 
 var statusContainerStyle = {
-  display: "inline-block"
+  display: "inline-block",
 };
 
 var nameContainerStyle = {
   display: "inline-block",
-  marginLeft: "3px"
+  marginLeft: "3px",
 };
 
 var timelineIconCommonStyle = {
@@ -64,25 +66,25 @@ var timelineIconCommonStyle = {
   width: "38px",
   borderRadius: "50%",
   padding: "7px",
-  marginLeft: "-7px"
+  marginLeft: "-7px",
 };
 
 var statusCommonIconStyle = (0, _extends3.default)({}, timelineIconCommonStyle, {
   backgroundColor: "#ffffff",
   boxShadow: "0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
-  border: "solid 1px #f89a3f"
+  border: "solid 1px #f89a3f",
 });
 
 var statusResolvedIconStyle = (0, _extends3.default)({}, timelineIconCommonStyle, {
   backgroundColor: "#22b25f",
   boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.22)",
-  border: "solid 1px #22b25f"
+  border: "solid 1px #22b25f",
 });
 
 var statusRejectedIconStyle = (0, _extends3.default)({}, timelineIconCommonStyle, {
   backgroundColor: "#e74c3c",
   // boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.22)",
-  border: "solid 1px #e74c3c"
+  border: "solid 1px #e74c3c",
 });
 
 var callIconStyle = {
@@ -91,7 +93,7 @@ var callIconStyle = {
   width: "17px",
   borderRadius: "50%",
   position: "absolute",
-  top: "0px"
+  top: "0px",
 };
 
 var StatusIcon = function StatusIcon(_ref) {
@@ -122,27 +124,26 @@ var reassignRequestedCount = 0;
 
 var StatusContent = function StatusContent(_ref2) {
   var stepData = _ref2.stepData,
-      currentStatus = _ref2.currentStatus,
-      changeRoute = _ref2.changeRoute,
-      feedback = _ref2.feedback,
-      rating = _ref2.rating,
-      role = _ref2.role,
-      filedBy = _ref2.filedBy,
-      filedUserMobileNumber = _ref2.filedUserMobileNumber;
+    currentStatus = _ref2.currentStatus,
+    changeRoute = _ref2.changeRoute,
+    feedback = _ref2.feedback,
+    rating = _ref2.rating,
+    role = _ref2.role,
+    filedBy = _ref2.filedBy,
+    filedUserMobileNumber = _ref2.filedUserMobileNumber;
   var action = stepData.action,
-      date = stepData.when,
-      media = stepData.media,
-      status = stepData.status,
-      comments = stepData.comments,
-      employeeName = stepData.employeeName,
-      employeeDesignation = stepData.employeeDesignation,
-      employeeDepartment = stepData.employeeDepartment,
-      complaintNo = stepData.businessKey,
-      groName = stepData.groName,
-      employeeMobileNumber = stepData.employeeMobileNumber,
-      groMobileNumber = stepData.groMobileNumber,
-      groDesignation = stepData.groDesignation;
-
+    date = stepData.when,
+    media = stepData.media,
+    status = stepData.status,
+    comments = stepData.comments,
+    employeeName = stepData.employeeName,
+    employeeDesignation = stepData.employeeDesignation,
+    employeeDepartment = stepData.employeeDepartment,
+    complaintNo = stepData.businessKey,
+    groName = stepData.groName,
+    employeeMobileNumber = stepData.employeeMobileNumber,
+    groMobileNumber = stepData.groMobileNumber,
+    groDesignation = stepData.groDesignation;
 
   switch (status) {
     case "open":
@@ -150,58 +151,84 @@ var StatusContent = function StatusContent(_ref2) {
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-date",
+          label: (0, _commons.getDateFromEpoch)(date),
+        }),
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "dark-color complaint-timeline-status",
           containerStyle: statusContainerStyle,
-          label: "" + (action === "reopen" ? "CS_COMMON_COMPLAINT_REOPENED" : role !== "citizen" ? filedBy ? "ES_COMMON_FILED_BY" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED" : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED")
+          label:
+            "" +
+            (action === "reopen"
+              ? "CS_COMMON_COMPLAINT_REOPENED"
+              : role !== "citizen"
+                ? filedBy
+                  ? "ES_COMMON_FILED_BY"
+                  : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"
+                : "CS_COMPLAINT_DETAILS_COMPLAINT_FILED"),
         }),
-        action !== "reopen" && role !== "citizen" && filedBy && _react2.default.createElement(_translationNode2.default, { label: filedBy, containerStyle: nameContainerStyle, labelClassName: "dark-color" }),
-        role !== "citizen" && openStatusCount == 1 && (currentStatus === "open" || currentStatus === "assigned") && _react2.default.createElement(
-          "a",
-          { href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
-          _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
-        ),
-        action === "reopen" && _react2.default.createElement(
-          "div",
-          null,
+        action !== "reopen" &&
+          role !== "citizen" &&
+          filedBy &&
           _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "rainmaker-small-font complaint-timeline-comments",
-            containerStyle: { width: "192px" },
-            label: comments ? comments.split(";")[0] : ""
+            label: filedBy,
+            containerStyle: nameContainerStyle,
+            labelClassName: "dark-color",
           }),
-          media && _react2.default.createElement(
-            "div",
-            { style: { display: "flex" } },
-            media.map(function (image, index) {
-              return (0, _commons.isImage)(image) && _react2.default.createElement(
-                "div",
-                {
-                  style: { marginRight: 8 },
-                  className: "complaint-detail-detail-section-padding-zero",
-                  id: "complaint-timeline-reopen-" + openStatusCount + "-image-" + index,
-                  key: index
-                },
-                _react2.default.createElement(_components.Image, {
-                  style: {
-                    width: "97px",
-                    height: "93px"
-                  },
-                  size: "medium",
-                  source: image,
-                  onClick: function onClick() {
-                    return changeRoute.push("/image?source=" + image);
-                  }
-                })
-              );
-            })
+        role !== "citizen" &&
+          openStatusCount == 1 &&
+          (currentStatus === "open" || currentStatus === "assigned") &&
+          _react2.default.createElement(
+            "a",
+            { href: "tel:+91" + filedUserMobileNumber, style: { textDecoration: "none", position: "relative" } },
+            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
           ),
-          _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "rainmaker-small-font complaint-timeline-status",
-            containerStyle: { width: "192px" },
-            label: comments && comments.split(";")[1] ? "\" " + comments.split(";")[1] + " \"" : ""
-          })
-        )
+        action === "reopen" &&
+          _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-comments",
+              containerStyle: { width: "192px" },
+              label: comments ? comments.split(";")[0] : "",
+            }),
+            media &&
+              _react2.default.createElement(
+                "div",
+                { style: { display: "flex" } },
+                media.map(function(image, index) {
+                  return (
+                    (0, _commons.isImage)(image) &&
+                    _react2.default.createElement(
+                      "div",
+                      {
+                        style: { marginRight: 8 },
+                        className: "complaint-detail-detail-section-padding-zero",
+                        id: "complaint-timeline-reopen-" + openStatusCount + "-image-" + index,
+                        key: index,
+                      },
+                      _react2.default.createElement(_components.Image, {
+                        style: {
+                          width: "97px",
+                          height: "93px",
+                        },
+                        size: "medium",
+                        source: image,
+                        onClick: function onClick() {
+                          return changeRoute.push("/image?source=" + image);
+                        },
+                      })
+                    )
+                  );
+                })
+              ),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-status",
+              containerStyle: { width: "192px" },
+              label: comments && comments.split(";")[1] ? '" ' + comments.split(";")[1] + ' "' : "",
+            })
+          )
       );
     case "assigned":
       assigneeStatusCount++;
@@ -211,22 +238,39 @@ var StatusContent = function StatusContent(_ref2) {
           return _react2.default.createElement(
             "div",
             { className: "complaint-timeline-content-section" },
-            _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-date",
+              label: (0, _commons.getDateFromEpoch)(date),
+            }),
             _react2.default.createElement(_translationNode2.default, {
               labelClassName: "dark-color complaint-timeline-status",
               containerStyle: statusContainerStyle,
-              label: "" + (action == "assign" ? employeeName ? "CS_COMMON_ASSIGNED_TO" : "ES_COMPLAINT_ASSIGNED_HEADER" : employeeName ? "CS_COMMON_REASSIGNED_TO" : "ES_COMPLAINT_REASSIGNED_HEADER")
+              label:
+                "" +
+                (action == "assign"
+                  ? employeeName
+                    ? "CS_COMMON_ASSIGNED_TO"
+                    : "ES_COMPLAINT_ASSIGNED_HEADER"
+                  : employeeName
+                    ? "CS_COMMON_REASSIGNED_TO"
+                    : "ES_COMPLAINT_REASSIGNED_HEADER"),
             }),
-            _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + employeeName }),
-            (role === "AO" || currentStatus === "assigned") && assigneeStatusCount === 1 && _react2.default.createElement(
-              "a",
-              { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
-              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
-            ),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "dark-color",
+              containerStyle: nameContainerStyle,
+              label: "" + employeeName,
+            }),
+            (role === "AO" || currentStatus === "assigned") &&
+              assigneeStatusCount === 1 &&
+              _react2.default.createElement(
+                "a",
+                { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              ),
             _react2.default.createElement(_translationNode2.default, {
               labelClassName: "rainmaker-small-font complaint-timeline-department",
               containerStyle: { width: "192px" },
-              label: employeeDesignation + " - " + employeeDepartment
+              label: employeeDesignation + " - " + employeeDepartment,
             })
           );
           break;
@@ -234,34 +278,57 @@ var StatusContent = function StatusContent(_ref2) {
           return _react2.default.createElement(
             "div",
             { className: "complaint-timeline-content-section" },
-            _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-date",
+              label: (0, _commons.getDateFromEpoch)(date),
+            }),
             _react2.default.createElement(_translationNode2.default, {
               labelClassName: "dark-color complaint-timeline-status",
               containerStyle: statusContainerStyle,
-              label: "" + (action == "assign" ? groName ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY" : "ES_COMPLAINT_ASSIGNED_HEADER" : groName ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY" : "ES_COMPLAINT_REASSIGNED_HEADER")
+              label:
+                "" +
+                (action == "assign"
+                  ? groName
+                    ? "ES_COMPLAINT_DETAILS_ASSIGNED_BY"
+                    : "ES_COMPLAINT_ASSIGNED_HEADER"
+                  : groName
+                    ? "ES_COMPLAINT_DETAILS_REASSIGNED_BY"
+                    : "ES_COMPLAINT_REASSIGNED_HEADER"),
             }),
-            groName && _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + groName }),
-            currentStatus === "assigned" && assigneeStatusCount === 1 && groName && _react2.default.createElement(
-              "a",
-              { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
-              _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
-            ),
-            groName && _react2.default.createElement(_translationNode2.default, {
-              labelClassName: "rainmaker-small-font complaint-timeline-designation",
-              containerStyle: { width: "192px" },
-              label: "" + groDesignation
-            })
+            groName &&
+              _react2.default.createElement(_translationNode2.default, {
+                labelClassName: "dark-color",
+                containerStyle: nameContainerStyle,
+                label: "" + groName,
+              }),
+            currentStatus === "assigned" &&
+              assigneeStatusCount === 1 &&
+              groName &&
+              _react2.default.createElement(
+                "a",
+                { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              ),
+            groName &&
+              _react2.default.createElement(_translationNode2.default, {
+                labelClassName: "rainmaker-small-font complaint-timeline-designation",
+                containerStyle: { width: "192px" },
+                label: "" + groDesignation,
+              })
           );
           break;
         default:
           return _react2.default.createElement(
             "div",
             { className: "complaint-timeline-content-section" },
-            _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-date",
+              label: (0, _commons.getDateFromEpoch)(date),
+            }),
             _react2.default.createElement(_translationNode2.default, {
               labelClassName: "dark-color complaint-timeline-status",
               containerStyle: statusContainerStyle,
-              label: "" + (action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER")
+              label: "" + (action == "assign" ? "ES_COMPLAINT_ASSIGNED_HEADER" : "ES_COMPLAINT_REASSIGNED_HEADER"),
             })
           );
       }
@@ -272,46 +339,61 @@ var StatusContent = function StatusContent(_ref2) {
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
-        role === "citizen" && _react2.default.createElement(
-          "div",
-          null,
-          _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "dark-color complaint-timeline-status",
-            containerStyle: statusContainerStyle,
-            label: "" + (groName ? "CS_COMPLAINT_DETAILS_BEING_REASSIGNED" : "CS_COMMON_STATUS_BEING_REASSIGNED")
-          }),
-          groName && _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color", containerStyle: nameContainerStyle, label: "" + groName }),
-          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && groName && _react2.default.createElement(
-            "a",
-            { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
-          )
-        ),
-        role !== "citizen" && _react2.default.createElement(
-          "div",
-          null,
-          _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "dark-color complaint-timeline-status",
-            containerStyle: statusContainerStyle,
-            label: "CS_COMMON_RE-ASSIGN REQUESTED"
-          }),
-          currentStatus === "reassignrequested" && reassignRequestedCount === 1 && _react2.default.createElement(
-            "a",
-            { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
-            _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-date",
+          label: (0, _commons.getDateFromEpoch)(date),
+        }),
+        role === "citizen" &&
+          _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "dark-color complaint-timeline-status",
+              containerStyle: statusContainerStyle,
+              label: "" + (groName ? "CS_COMPLAINT_DETAILS_BEING_REASSIGNED" : "CS_COMMON_STATUS_BEING_REASSIGNED"),
+            }),
+            groName &&
+              _react2.default.createElement(_translationNode2.default, {
+                labelClassName: "dark-color",
+                containerStyle: nameContainerStyle,
+                label: "" + groName,
+              }),
+            currentStatus === "reassignrequested" &&
+              reassignRequestedCount === 1 &&
+              groName &&
+              _react2.default.createElement(
+                "a",
+                { href: "tel:+91" + groMobileNumber, style: { textDecoration: "none", position: "relative" } },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              )
           ),
-          _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "rainmaker-small-font complaint-timeline-comments",
-            containerStyle: { width: "192px" },
-            label: comments ? comments.split(";")[0] : ""
-          }),
-          _react2.default.createElement(_translationNode2.default, {
-            labelClassName: "rainmaker-small-font complaint-timeline-comments",
-            containerStyle: { width: "192px" },
-            label: comments && comments.split(";")[1] ? "\" " + comments.split(";")[1] + " \"" : ""
-          })
-        )
+        role !== "citizen" &&
+          _react2.default.createElement(
+            "div",
+            null,
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "dark-color complaint-timeline-status",
+              containerStyle: statusContainerStyle,
+              label: "CS_COMMON_RE-ASSIGN REQUESTED",
+            }),
+            currentStatus === "reassignrequested" &&
+              reassignRequestedCount === 1 &&
+              _react2.default.createElement(
+                "a",
+                { href: "tel:+91" + employeeMobileNumber, style: { textDecoration: "none", position: "relative" } },
+                _react2.default.createElement(_components.Icon, { action: "communication", name: "call", style: callIconStyle, color: "#22b25f" })
+              ),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-comments",
+              containerStyle: { width: "192px" },
+              label: comments ? comments.split(";")[0] : "",
+            }),
+            _react2.default.createElement(_translationNode2.default, {
+              labelClassName: "rainmaker-small-font complaint-timeline-comments",
+              containerStyle: { width: "192px" },
+              label: comments && comments.split(";")[1] ? '" ' + comments.split(";")[1] + ' "' : "",
+            })
+          )
       );
 
     // case "re-assign":
@@ -332,29 +414,42 @@ var StatusContent = function StatusContent(_ref2) {
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color complaint-timeline-status", label: "CS_MYCOMPLAINTS_REJECTED" }),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font", containerStyle: { width: "192px" }, label: comments ? comments.split(";")[0] : "" }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-date",
+          label: (0, _commons.getDateFromEpoch)(date),
+        }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "dark-color complaint-timeline-status",
+          label: "CS_MYCOMPLAINTS_REJECTED",
+        }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font",
+          containerStyle: { width: "192px" },
+          label: comments ? comments.split(";")[0] : "",
+        }),
         _react2.default.createElement(_translationNode2.default, {
           labelClassName: "rainmaker-small-font complaint-timeline-comments",
           containerStyle: { width: "192px" },
-          label: comments && comments.split(";")[1] ? "\" " + comments.split(";")[1] + " \"" : ""
+          label: comments && comments.split(";")[1] ? '" ' + comments.split(";")[1] + ' "' : "",
         }),
-        currentStatus === "rejected" && role === "citizen" && rejectStatusCount === 1 && _react2.default.createElement(
-          "div",
-          {
-            className: "complaint-details-timline-button",
-            onClick: function onClick(e) {
-              changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo));
-            }
-          },
-          _react2.default.createElement(_translationNode2.default, {
-            label: "CS_COMPLAINT_DETAILS_REOPEN",
-            fontSize: "12px",
-            labelStyle: timelineButtonLabelStyle,
-            containerStyle: timelineButtonContainerStyle
-          })
-        )
+        currentStatus === "rejected" &&
+          role === "citizen" &&
+          rejectStatusCount === 1 &&
+          _react2.default.createElement(
+            "div",
+            {
+              className: "complaint-details-timline-button",
+              onClick: function onClick(e) {
+                changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo));
+              },
+            },
+            _react2.default.createElement(_translationNode2.default, {
+              label: "CS_COMPLAINT_DETAILS_REOPEN",
+              fontSize: "12px",
+              labelStyle: timelineButtonLabelStyle,
+              containerStyle: timelineButtonContainerStyle,
+            })
+          )
       );
     // case "UNASSIGNED":
     //   return (
@@ -385,86 +480,119 @@ var StatusContent = function StatusContent(_ref2) {
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color complaint-timeline-status", label: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED" }),
-        media && _react2.default.createElement(
-          "div",
-          { style: { display: "flex" } },
-          media.map(function (image, index) {
-            return (0, _commons.isImage)(image) && _react2.default.createElement(
-              "div",
-              {
-                style: { marginRight: 8 },
-                className: "complaint-detail-detail-section-padding-zero",
-                id: "complaint-details-resolved-" + resolveStatusCount + "-image=" + index,
-                key: index
-              },
-              _react2.default.createElement(_components.Image, {
-                style: {
-                  width: "97px",
-                  height: "93px"
-                },
-                size: "medium",
-                source: image,
-                onClick: function onClick() {
-                  return changeRoute.push("/image?source=" + image);
-                }
-              })
-            );
-          })
-        ),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", containerStyle: { width: "192px" }, label: comments }),
-        currentStatus === "resolved" && role === "citizen" && resolveStatusCount === 1 && _react2.default.createElement(
-          "div",
-          { className: "rainmaker-displayInline" },
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-date",
+          label: (0, _commons.getDateFromEpoch)(date),
+        }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "dark-color complaint-timeline-status",
+          label: "CS_COMPLAINT_DETAILS_COMPLAINT_RESOLVED",
+        }),
+        media &&
           _react2.default.createElement(
             "div",
-            {
-              className: "complaint-details-timline-button",
-              onClick: function onClick(e) {
-                changeRoute.push("/citizen/feedback/" + encodeURIComponent(complaintNo));
-              }
-            },
-            _react2.default.createElement(_translationNode2.default, {
-              label: "CS_COMPLAINT_DETAILS_RATE",
-              fontSize: "12px",
-              labelStyle: timelineButtonLabelStyle,
-              containerStyle: timelineButtonContainerStyle
+            { style: { display: "flex" } },
+            media.map(function(image, index) {
+              return (
+                (0, _commons.isImage)(image) &&
+                _react2.default.createElement(
+                  "div",
+                  {
+                    style: { marginRight: 8 },
+                    className: "complaint-detail-detail-section-padding-zero",
+                    id: "complaint-details-resolved-" + resolveStatusCount + "-image=" + index,
+                    key: index,
+                  },
+                  _react2.default.createElement(_components.Image, {
+                    style: {
+                      width: "97px",
+                      height: "93px",
+                    },
+                    size: "medium",
+                    source: image,
+                    onClick: function onClick() {
+                      return changeRoute.push("/image?source=" + image);
+                    },
+                  })
+                )
+              );
             })
           ),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-comments",
+          containerStyle: { width: "192px" },
+          label: comments,
+        }),
+        currentStatus === "resolved" &&
+          role === "citizen" &&
+          resolveStatusCount === 1 &&
           _react2.default.createElement(
             "div",
-            {
-              className: "complaint-details-timline-button",
-              onClick: function onClick(e) {
-                changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo));
-              }
-            },
-            _react2.default.createElement(_translationNode2.default, {
-              label: "CS_COMPLAINT_DETAILS_REOPEN",
-              fontSize: "12px",
-              labelStyle: timelineButtonLabelStyle,
-              containerStyle: timelineButtonContainerStyle
-            })
+            { className: "rainmaker-displayInline" },
+            _react2.default.createElement(
+              "div",
+              {
+                className: "complaint-details-timline-button",
+                onClick: function onClick(e) {
+                  changeRoute.push("/feedback/" + encodeURIComponent(complaintNo));
+                },
+              },
+              _react2.default.createElement(_translationNode2.default, {
+                label: "CS_COMPLAINT_DETAILS_RATE",
+                fontSize: "12px",
+                labelStyle: timelineButtonLabelStyle,
+                containerStyle: timelineButtonContainerStyle,
+              })
+            ),
+            _react2.default.createElement(
+              "div",
+              {
+                className: "complaint-details-timline-button",
+                onClick: function onClick(e) {
+                  changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo));
+                },
+              },
+              _react2.default.createElement(_translationNode2.default, {
+                label: "CS_COMPLAINT_DETAILS_REOPEN",
+                fontSize: "12px",
+                labelStyle: timelineButtonLabelStyle,
+                containerStyle: timelineButtonContainerStyle,
+              })
+            )
           )
-        )
       );
 
     case "closed":
       return _react2.default.createElement(
         "div",
         { className: "complaint-timeline-content-section" },
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-date", label: (0, _commons.getDateFromEpoch)(date) }),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "dark-color complaint-timeline-status", label: "CS_COMMON_CITIZEN_FEEDBACK" }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-date",
+          label: (0, _commons.getDateFromEpoch)(date),
+        }),
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "dark-color complaint-timeline-status",
+          label: "CS_COMMON_CITIZEN_FEEDBACK",
+        }),
         _react2.default.createElement(
           "div",
           { style: { display: "flex" } },
           " ",
-          _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-rating", labelStyle: { color: "#22b25f" }, label: rating + "/5 " }),
+          _react2.default.createElement(_translationNode2.default, {
+            labelClassName: "rainmaker-small-font complaint-timeline-rating",
+            labelStyle: { color: "#22b25f" },
+            label: rating + "/5 ",
+          }),
           " ",
-          _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-feedback", label: " ( " + feedback + ")" })
+          _react2.default.createElement(_translationNode2.default, {
+            labelClassName: "rainmaker-small-font complaint-timeline-feedback",
+            label: " ( " + feedback + ")",
+          })
         ),
-        _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", label: comments ? "\" " + comments + " \"" : "" })
+        _react2.default.createElement(_translationNode2.default, {
+          labelClassName: "rainmaker-small-font complaint-timeline-comments",
+          label: comments ? '" ' + comments + ' "' : "",
+        })
       );
   }
 };
@@ -475,27 +603,31 @@ var DueDate = function DueDate(_ref3) {
   return _react2.default.createElement(_translationNode2.default, {
     labelStyle: duedateText.includes("Overdue") ? { color: "#e74c3c" } : { color: "#22b25f" },
     className: "Complaint-details-duedate",
-    label: duedateText
+    label: duedateText,
   });
 };
 
-var ComplaintTimeLine = function (_Component) {
+var ComplaintTimeLine = (function(_Component) {
   (0, _inherits3.default)(ComplaintTimeLine, _Component);
 
   function ComplaintTimeLine() {
     (0, _classCallCheck3.default)(this, ComplaintTimeLine);
-    return (0, _possibleConstructorReturn3.default)(this, (ComplaintTimeLine.__proto__ || Object.getPrototypeOf(ComplaintTimeLine)).apply(this, arguments));
+    return (0, _possibleConstructorReturn3.default)(
+      this,
+      (ComplaintTimeLine.__proto__ || Object.getPrototypeOf(ComplaintTimeLine)).apply(this, arguments)
+    );
   }
 
-  (0, _createClass3.default)(ComplaintTimeLine, [{
-    key: "render",
-    value: function render() {
-      openStatusCount = 0;
-      rejectStatusCount = 0;
-      resolveStatusCount = 0;
-      assigneeStatusCount = 0;
-      reassignRequestedCount = 0;
-      var _props = this.props,
+  (0, _createClass3.default)(ComplaintTimeLine, [
+    {
+      key: "render",
+      value: function render() {
+        openStatusCount = 0;
+        rejectStatusCount = 0;
+        resolveStatusCount = 0;
+        assigneeStatusCount = 0;
+        reassignRequestedCount = 0;
+        var _props = this.props,
           status = _props.status,
           history = _props.history,
           role = _props.role,
@@ -506,68 +638,72 @@ var ComplaintTimeLine = function (_Component) {
           filedUserMobileNumber = _props.filedUserMobileNumber,
           timelineSLAStatus = _props.timelineSLAStatus;
 
+        var steps = timeLine.map(function(step, key) {
+          return {
+            props: {
+              active: true,
+            },
+            labelProps: {
+              icon: _react2.default.createElement(StatusIcon, { status: step.status }),
+            },
+            contentProps: {
+              style: {
+                marginTop: "-50px",
+                paddingRight: 0,
+              },
+            },
+            contentChildren: _react2.default.createElement(StatusContent, {
+              stepData: step,
+              currentStatus: status.toLowerCase(),
+              changeRoute: history,
+              feedback: feedback,
+              rating: rating,
+              role: role,
+              filedBy: filedBy,
+              filedUserMobileNumber: filedUserMobileNumber,
+            }),
+          };
+        });
 
-      var steps = timeLine.map(function (step, key) {
-        return {
-          props: {
-            active: true
-          },
-          labelProps: {
-            icon: _react2.default.createElement(StatusIcon, { status: step.status })
-          },
-          contentProps: {
+        return _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(_components.Card, {
             style: {
-              marginTop: "-50px",
-              paddingRight: 0
-            }
-          },
-          contentChildren: _react2.default.createElement(StatusContent, {
-            stepData: step,
-            currentStatus: status.toLowerCase(),
-            changeRoute: history,
-            feedback: feedback,
-            rating: rating,
-            role: role,
-            filedBy: filedBy,
-            filedUserMobileNumber: filedUserMobileNumber
-          })
-        };
-      });
-
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(_components.Card, {
-          style: {
-            paddingBottom: "0px"
-          },
-          textChildren: _react2.default.createElement(
-            "div",
-            null,
-            _react2.default.createElement(
+              paddingBottom: "0px",
+            },
+            textChildren: _react2.default.createElement(
               "div",
-              { className: "rainmaker-displayInline" },
-              _react2.default.createElement(_components.Icon, { action: "action", name: "timeline", color: "#767676" }),
-              " ",
-              _react2.default.createElement(_translationNode2.default, { label: "CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE", containerStyle: { marginLeft: "13px" }, labelClassName: "dark-heading" }),
-              timelineSLAStatus && role && role !== "citizen" && _react2.default.createElement(DueDate, { duedateText: timelineSLAStatus })
+              null,
+              _react2.default.createElement(
+                "div",
+                { className: "rainmaker-displayInline" },
+                _react2.default.createElement(_components.Icon, { action: "action", name: "timeline", color: "#767676" }),
+                " ",
+                _react2.default.createElement(_translationNode2.default, {
+                  label: "CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE",
+                  containerStyle: { marginLeft: "13px" },
+                  labelClassName: "dark-heading",
+                }),
+                timelineSLAStatus && role && role !== "citizen" && _react2.default.createElement(DueDate, { duedateText: timelineSLAStatus })
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "complaintTimeLineContainer" },
+                _react2.default.createElement(_components.TimeLine, {
+                  stepperProps: {
+                    orientation: "vertical",
+                  },
+                  steps: steps,
+                })
+              )
             ),
-            _react2.default.createElement(
-              "div",
-              { className: "complaintTimeLineContainer" },
-              _react2.default.createElement(_components.TimeLine, {
-                stepperProps: {
-                  orientation: "vertical"
-                },
-                steps: steps
-              })
-            )
-          )
-        })
-      );
-    }
-  }]);
+          })
+        );
+      },
+    },
+  ]);
   return ComplaintTimeLine;
-}(_react.Component);
+})(_react.Component);
 
 exports.default = ComplaintTimeLine;

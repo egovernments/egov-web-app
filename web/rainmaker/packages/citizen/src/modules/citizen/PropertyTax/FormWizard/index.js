@@ -128,7 +128,7 @@ class FormWizard extends Component {
     if (index <= 3) {
       this.setState({ selected: index });
     } else if (index === 4) {
-      setRoute("/citizen/property-tax/payment-success");
+      setRoute("/property-tax/payment-success");
     }
   };
 

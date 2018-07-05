@@ -17,7 +17,7 @@ class MyComplaints extends Component {
   };
 
   onComplaintClick = (complaintNo) => {
-    this.props.history.push(`/citizen/complaint-details/${complaintNo}`);
+    this.props.history.push(`/complaint-details/${complaintNo}`);
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -47,7 +47,7 @@ class MyComplaints extends Component {
             <FloatingActionButton
               id="mycomplaints-add"
               onClick={(e) => {
-                history.push("/citizen/add-complaint");
+                history.push("/add-complaint");
               }}
               className="floating-button"
               backgroundColor={"#fe7a51"}

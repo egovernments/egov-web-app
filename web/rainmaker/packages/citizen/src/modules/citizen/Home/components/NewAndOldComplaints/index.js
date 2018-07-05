@@ -26,7 +26,7 @@ const NewAndOldComplaints = ({ history }) => {
             id="home-new-complaint"
             className="col-xs-6"
             onClick={(e) => {
-              history.push("/citizen/add-complaint");
+              history.push("/add-complaint");
             }}
           >
             <Icon style={{ ...iconStyle, background: "#fe7a51" }} action="content" name="add" />
@@ -36,7 +36,7 @@ const NewAndOldComplaints = ({ history }) => {
             id="home-old-complaint"
             className="col-xs-6"
             onClick={(e) => {
-              history.push("/citizen/my-complaints");
+              history.push("/my-complaints");
             }}
           >
             <Icon style={{ height: "48px", color: "#fff", width: "48px" }} action="custom" name="my-complaint" />

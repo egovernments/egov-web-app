@@ -7,7 +7,7 @@ import "./index.css";
 
 class ResolveSuccess extends Component {
   continueComplaintSubmit = () => {
-    this.props.history.push("/employee/all-complaints");
+    this.props.history.push("/all-complaints");
   };
   render() {
     return (

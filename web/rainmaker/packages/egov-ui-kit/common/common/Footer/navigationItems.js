@@ -7,7 +7,7 @@ var navigationItems = exports.navigationItems = {
   citizen: [{
     label: "COMMON_BOTTOM_NAVIGATION_HOME",
     icon: { action: "action", name: "home" },
-    route: "/citizen",
+    route: "/home",
     id: "home"
   }, {
     label: "COMMON_BOTTOM_NAVIGATION_INFORMATION",
@@ -22,7 +22,7 @@ var navigationItems = exports.navigationItems = {
   }, {
     label: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
     icon: { action: "alert", name: "warning" },
-    route: "/citizen/my-complaints",
+    route: "/my-complaints",
     id: "complaints-button"
   }],
   employee: [{
@@ -38,7 +38,7 @@ var navigationItems = exports.navigationItems = {
   }, {
     label: "Profile",
     icon: { action: "custom", name: "rupee" },
-    route: "/employee/user/profile",
+    route: "/user/profile",
     id: "payments-button"
   }, {
     label: "Contact",
@@ -59,7 +59,7 @@ var navigationItems = exports.navigationItems = {
   }, {
     label: "Profile",
     icon: { action: "custom", name: "rupee" },
-    route: "/employee/user/profile",
+    route: "/user/profile",
     id: "payments-button"
   }, {
     label: "Contact",

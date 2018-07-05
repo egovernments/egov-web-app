@@ -3,7 +3,7 @@ export const navigationItems = {
     {
       label: "COMMON_BOTTOM_NAVIGATION_HOME",
       icon: { action: "action", name: "home" },
-      route: "/citizen",
+      route: "/home",
       id: "home",
     },
     {
@@ -21,7 +21,7 @@ export const navigationItems = {
     {
       label: "COMMON_BOTTOM_NAVIGATION_COMPLAINTS",
       icon: { action: "alert", name: "warning" },
-      route: "/citizen/my-complaints",
+      route: "/my-complaints",
       id: "complaints-button",
     },
   ],
@@ -41,7 +41,7 @@ export const navigationItems = {
     {
       label: "Profile",
       icon: { action: "custom", name: "rupee" },
-      route: "/employee/user/profile",
+      route: "/user/profile",
       id: "payments-button",
     },
     {
@@ -67,7 +67,7 @@ export const navigationItems = {
     {
       label: "Profile",
       icon: { action: "custom", name: "rupee" },
-      route: "/employee/user/profile",
+      route: "/user/profile",
       id: "payments-button",
     },
     {
