@@ -84,6 +84,7 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true, title: "Events" },
   },
+
   // {
   //   path: "notifications",
   //   component: Notifications,
