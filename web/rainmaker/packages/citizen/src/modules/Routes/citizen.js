@@ -30,7 +30,7 @@ import SearchProperty from "modules/citizen/PropertyTax/SearchProperty";
 import CompletedAssessments from "modules/citizen/PropertyTax/CompletedAssessments";
 import IncompleteAssessments from "modules/citizen/PropertyTax/IncompleteAssessments";
 import MyProperties from "modules/citizen/PropertyTax/MyProperties";
-import Property from "modules/citizen/PropertyTax/MyProperties/components/Property";
+import Property from "modules/citizen/PropertyTax/Property";
 import MyReceipts from "modules/citizen/PropertyTax/MyReceipts";
 import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
 import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";

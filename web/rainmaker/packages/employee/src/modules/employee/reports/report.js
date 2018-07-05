@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { commonApiPost } from "egov-ui-kit/utils/api";
 import SearchForm from "./searchForm";
 import ReportResult from "./reportResult";
-import mockData from "./mockData";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
 
 class Report extends Component {

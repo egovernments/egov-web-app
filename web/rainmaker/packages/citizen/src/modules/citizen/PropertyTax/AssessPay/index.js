@@ -18,12 +18,12 @@ class AssessPay extends Component {
       status: "Payment Pending",
       leftIcon: <Icon action="action" name="home" />,
 
-      Addresses: [
+      nestedItems: [
         {
-          address: "EB-154, Maya Enclave, Harinagar",
+          primaryText: "EB-154, Maya Enclave, Harinagar",
         },
         {
-          address: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
+          primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
         },
       ],
     },
@@ -67,10 +67,10 @@ class AssessPay extends Component {
         leftIcon: item.leftIcon,
         route: item.route,
         nestedItems:
-          item.Addresses &&
-          item.Addresses.map((address) => {
+          item.nestedItems &&
+          item.nestedItems.map((nestedItem) => {
             return {
-              primaryText: <Label label={address.address} fontSize="16px" color="#484848" />,
+              primaryText: <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" />,
             };
           }),
       };
