@@ -8,13 +8,13 @@ const Main = ({ routes }) => {
     <main>
       <Switch>
         <Route
-          path={`/citizen/`}
+          path={`/`}
           render={(props) => {
             return <Citizen match={props.match} routes={routes.citizen} />;
           }}
         />
         <Route path={`/image`} component={ImageModalDisplay} />
-        <Redirect from="/" to="/citizen/user/language-selection" />
+        <Redirect from="/" to="/user/language-selection" />
       </Switch>
     </main>
   );

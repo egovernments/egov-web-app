@@ -33,7 +33,7 @@ WebFont.load({
 });
 
 // move it to a env file
-window.basename = process.env.NODE_ENV === "production" ? "/app/v3/rainmaker-citizen" : "";
+window.basename = process.env.NODE_ENV === "production" ? "/citizen" : "";
 // hardcoded the base; to be changed soon!!!!!
 render(
   <Provider store={store}>

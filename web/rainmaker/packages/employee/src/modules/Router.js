@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,Redirect } from "react-router-dom";
 import Employee from "modules/employee";
 import { ImageModalDisplay } from "modules/common";
 
@@ -14,6 +14,7 @@ const Main = ({ routes }) => {
           }}
         />
         <Route path={`/image`} component={ImageModalDisplay} />
+        <Redirect from="/" to="/user/language-selection" />
       </Switch>
     </main>
   );
