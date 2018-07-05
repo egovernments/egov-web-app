@@ -25,7 +25,7 @@ const RegisterForm = ({ handleFieldChange, form }) => {
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
           <div style={{ marginBottom: "24px" }} className="text-right">
             <Label id="otp-trigger" className="otp-prompt" label="CORE_REGISTER_HAVE_ACCOUNT" />
-            <Link to="/citizen/user/login">
+            <Link to="/user/login">
               <div style={{ display: "inline-block" }}>
                 <Label containerStyle={{ cursor: "pointer" }} id="otp-resend" className="otp-resend" label="CORE_COMMON_LOGIN" />
               </div>

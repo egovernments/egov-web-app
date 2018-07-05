@@ -39,7 +39,7 @@ const formConfig = {
     id: "forgot-password-submit-action",
   },
   saveUrl: "/user/password/nologin/_update",
-  redirectionRoute: "/employee/user/login",
+  redirectionRoute: "/user/login",
   action: "_update",
 };
 

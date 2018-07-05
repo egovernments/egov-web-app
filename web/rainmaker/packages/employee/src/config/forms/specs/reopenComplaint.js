@@ -27,7 +27,7 @@ const formConfig = {
     id: "reopencomplaint-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/employee/reopen-acknowledgement",
+  redirectionRoute: "/reopen-acknowledgement",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

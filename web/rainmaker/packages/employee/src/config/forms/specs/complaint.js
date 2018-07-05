@@ -120,7 +120,7 @@ const formConfig = {
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",
-  redirectionRoute: "/employee/complaint-submitted",
+  redirectionRoute: "/complaint-submitted",
 };
 
 export default formConfig;

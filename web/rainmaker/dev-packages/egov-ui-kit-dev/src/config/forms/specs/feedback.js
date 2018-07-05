@@ -27,7 +27,7 @@ const formConfig = {
     id: "feedback-submit-action",
   },
   action: "_update",
-  redirectionRoute: "/citizen/feedback-acknowledgement",
+  redirectionRoute: "/feedback-acknowledgement",
   saveUrl: "/rainmaker-pgr/v1/requests/_update",
 };
 

@@ -31,7 +31,7 @@ const formConfig = {
     id: "login-submit-action",
   },
   saveUrl: "/user-otp/v1/_send",
-  redirectionRoute: "/citizen/user/otp",
+  redirectionRoute: "/user/otp",
   action: "token",
 };
 

@@ -17,7 +17,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
           <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
           <TextField onChange={(e, value) => handleFieldChange("password", value)} {...fields.password} />
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-          <Link to="/employee/user/forgot-password">
+          <Link to="/user/forgot-password">
             <div style={{ float: "right" }}>
               <Label
                 containerStyle={{ cursor: "pointer" }}

@@ -29,7 +29,7 @@ const formConfig = {
     id: "employee-forgot-password-submit-action",
   },
   saveUrl: "/user-otp/v1/_send",
-  redirectionRoute: "/employee/user/otp",
+  redirectionRoute: "/user/otp",
   action: "token",
 };
 export default formConfig;

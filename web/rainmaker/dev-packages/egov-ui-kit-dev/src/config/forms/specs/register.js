@@ -47,7 +47,7 @@ const formConfig = {
   },
   action: "_send",
   saveUrl: "/user-otp/v1/_send",
-  redirectionRoute: "/citizen/user/otp",
+  redirectionRoute: "/user/otp",
 };
 
 export default formConfig;
