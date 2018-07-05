@@ -40,7 +40,6 @@ import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
 import FormWizard from "modules/citizen/PropertyTax/FormWizard";
 
-
 const routes = [
   {
     path: "user/register",
@@ -73,7 +72,7 @@ const routes = [
     options: { hideFooter: true, title: "Edit Profile" },
   },
   {
-    path: "",
+    path: "/",
     component: Home,
     needsAuthentication: true,
     options: { isHomeScreen: true, title: "Home", hideTitle: true },

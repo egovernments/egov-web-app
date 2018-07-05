@@ -26,7 +26,7 @@ class PTHome extends Component {
   listItems = [
     {
       primaryText: <Label label="Completed Assessments" />,
-      route: "/citizen/property-tax/completed-assessments",
+      route: "/property-tax/completed-assessments",
       leftIcon: <Icon action="action" name="done" />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
@@ -59,7 +59,7 @@ class PTHome extends Component {
                 <Label label="PT_HOME_PAY" containerStyle={{ marginLeft: "33px" }} />
               </div>
               <div className="col-xs-12 row pt-service-list">
-                <Link to="/citizen/property-tax/assess-pay">
+                <Link to="/property-tax/assess-pay">
                   <div
                     // onClick={() => {
                     //   this.setState({ dialogueOpen: true });
@@ -70,13 +70,13 @@ class PTHome extends Component {
                     <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} />
                   </div>
                 </Link>
-                <Link to="/citizen/property-tax/incomplete-assessments">
+                <Link to="/property-tax/incomplete-assessments">
                   <div className="col-xs-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
                     <Label label="Incomplete Assessments" fontSize="20px" containerStyle={labelContainerStyle} />
                   </div>
                 </Link>
-                <Link to="/citizen/property-tax/my-properties">
+                <Link to="/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
                     <Label label="My Properties (2)" fontSize="20px" containerStyle={labelContainerStyle} />

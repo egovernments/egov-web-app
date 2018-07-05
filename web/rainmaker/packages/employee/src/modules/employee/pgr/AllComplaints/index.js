@@ -34,7 +34,7 @@ class AllComplaints extends Component {
   };
 
   onComplaintClick = (complaintNo) => {
-    this.props.history.push(`/employee/complaint-details/${complaintNo}`);
+    this.props.history.push(`/complaint-details/${complaintNo}`);
   };
 
   onComplaintChange = (e) => {
@@ -233,7 +233,7 @@ class AllComplaints extends Component {
           <FloatingActionButton
             id="mycomplaints-add"
             onClick={(e) => {
-              history.push("/employee/create-complaint");
+              history.push("/create-complaint");
             }}
             className="floating-button"
             backgroundColor="#fe7a51"

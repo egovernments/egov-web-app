@@ -397,7 +397,7 @@ var StatusContent = function StatusContent(_ref2) {
           {
             className: "complaint-details-timline-button",
             onClick: function onClick(e) {
-              role === "citizen" ? changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/employee/reopen-complaint/" + encodeURIComponent(complaintNo));
+              role === "citizen" ? changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo));
             }
           },
           _react2.default.createElement(_translationNode2.default, {
@@ -474,7 +474,7 @@ var StatusContent = function StatusContent(_ref2) {
             {
               className: "complaint-details-timline-button",
               onClick: function onClick(e) {
-                changeRoute.push("/citizen/feedback/" + encodeURIComponent(complaintNo));
+                changeRoute.push("/feedback/" + encodeURIComponent(complaintNo));
               }
             },
             _react2.default.createElement(_translationNode2.default, {
@@ -489,7 +489,7 @@ var StatusContent = function StatusContent(_ref2) {
             {
               className: "complaint-details-timline-button",
               onClick: function onClick(e) {
-                role === "citizen" ? changeRoute.push("/citizen/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/employee/reopen-complaint/" + encodeURIComponent(complaintNo));
+                role === "citizen" ? changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo)) : changeRoute.push("/reopen-complaint/" + encodeURIComponent(complaintNo));
               }
             },
             _react2.default.createElement(_translationNode2.default, {

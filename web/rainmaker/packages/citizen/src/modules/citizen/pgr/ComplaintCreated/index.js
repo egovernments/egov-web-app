@@ -5,7 +5,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 const ComplaintCreated = (props) => {
   return (
     <ComplaintSubmited
-      homeRoute="/citizen"
+      homeRoute="/"
       lastLabel={<Label id="complaint-submitted-success-message" label="CS_COMPLAINT_SUBMITTED_LABEL2" />}
       {...props}
     />

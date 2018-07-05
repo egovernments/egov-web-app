@@ -4814,7 +4814,7 @@ class Employee extends Component {
                 self.state.screenType == 'update' ? 'Employee updated successfully.' : 'Employee created successfully.'
               );
               setTimeout(function() {
-                self.props.setRoute('/employee/view/' + res.Employee.id);
+                self.props.setRoute('/view/' + res.Employee.id);
                 //window.location.reload();
               }, 1500);
             },

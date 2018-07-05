@@ -145,7 +145,7 @@ class ActionMenu extends Component {
       this.menuChange(pathParam);
 
       //setRoute("/citizen/property-tax");
-      setRoute("/employee/all-complaints");
+      setRoute("/all-complaints");
     } else {
       let splitArray = split(path, ".");
       var x = splitArray.slice(0, splitArray.length - 1).join(".");
@@ -223,7 +223,7 @@ class ActionMenu extends Component {
           } else {
             if (item.navigationURL) {
               return (
-                <Link key={index} to={role == "citizen" ? `/citizen/${item.navigationURL}` : `/employee/${item.navigationURL}`}>
+                <Link key={index} to={`/${item.navigationURL}`}>
                   <MenuItem
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}

@@ -13,7 +13,7 @@ const FeedbackAcknowledge = ({ history }) => {
       <div className="responsive-action-button-cont">
         <Button
           id="feedback-acknowledgement"
-          onClick={() => history.push("/citizen")}
+          onClick={() => history.push("/")}
           primary={true}
           label={<Label buttonLabel={true} label="CORE_COMMON_CONTINUE" />}
           fullWidth={true}

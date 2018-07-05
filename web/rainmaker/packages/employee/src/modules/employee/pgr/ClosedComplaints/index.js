@@ -15,7 +15,7 @@ class ClosedComplaints extends Component {
   }
 
   onComplaintClick = (complaintNo) => {
-    this.props.history.push(`/employee/complaint-details/${complaintNo}`);
+    this.props.history.push(`/complaint-details/${complaintNo}`);
   };
 
   componentWillReceiveProps = (nextProps) => {

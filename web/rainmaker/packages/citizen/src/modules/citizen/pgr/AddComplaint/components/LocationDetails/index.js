@@ -10,7 +10,7 @@ const LocationDetails = ({ formKey, locationDetails, landmark, handleFieldChange
         className="location-details-card common-padding-for-new-complaint-card"
         textChildren={
           <div>
-            <Link to={`/citizen/map?${formKey}`}>
+            <Link to={`/map?${formKey}`}>
               <TextFieldIcon
                 id="addComplaint-location-details"
                 iconStyle={{ marginTop: "9px" }}

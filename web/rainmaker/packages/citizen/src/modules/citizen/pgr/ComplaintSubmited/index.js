@@ -8,7 +8,7 @@ import "./index.css";
 
 class ComplaintSubmitted extends Component {
   continueComplaintSubmit = () => {
-    this.props.history.push("/citizen");
+    this.props.history.push("/");
   };
 
   // the retrival logic to be changed!

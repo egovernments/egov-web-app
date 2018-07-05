@@ -170,7 +170,7 @@ var ActionMenu = function (_Component) {
         _this.menuChange(pathParam);
 
         //setRoute("/citizen/property-tax");
-        setRoute("/employee/all-complaints");
+        setRoute("/all-complaints");
       } else {
         var splitArray = (0, _lodash.split)(path, ".");
         var x = splitArray.slice(0, splitArray.length - 1).join(".");
@@ -293,7 +293,7 @@ var ActionMenu = function (_Component) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: role == "citizen" ? "/citizen/" + item.navigationURL : "/employee/" + item.navigationURL },
+                  { key: index, to: "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },

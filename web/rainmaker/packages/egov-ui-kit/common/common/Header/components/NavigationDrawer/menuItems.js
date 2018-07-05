@@ -22,7 +22,7 @@ var items = {
       one: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HOMEHEADER" }),
-          route: "/citizen",
+          route: "",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
           style: {
             paddingBottom: "1px",
@@ -32,7 +32,7 @@ var items = {
           id: "header-home"
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_PROFILE" }),
-          route: "/citizen/user/profile",
+          route: "/user/profile",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "social", name: "person" }),
           style: {
             paddingBottom: "3px",
@@ -52,7 +52,7 @@ var items = {
       two: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_CONTACT_US" }),
-          route: "/citizen/contact-us",
+          route: "/contact-us",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "communication", name: "call" }),
           style: {
             paddingBottom: "8px",
@@ -61,7 +61,7 @@ var items = {
           id: "header-contact-us"
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_HOW_IT_WORKS" }),
-          route: "/citizen/how-it-works",
+          route: "/how-it-works",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "help-circle" }),
           style: {
             paddingBottom: "2px",
@@ -86,7 +86,7 @@ var items = {
       one: {
         items: [{
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HOMEHEADER" }),
-          route: "/employee/all-complaints",
+          route: "/all-complaints",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "home" }),
           style: {
             paddingBottom: "1px",
@@ -97,13 +97,13 @@ var items = {
           renderForCSR: true
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_CLOSED_COMPLAINTS_HEADER" }),
-          route: "/employee/closed-complaints",
+          route: "/closed-complaints",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "file-check" }),
           id: "header-closed-complaint",
           renderForCSR: false
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_EMPLOYEE_DIRECTORY_HEADER" }),
-          route: "/employee/employee-directory",
+          route: "/employee-directory",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "communication", name: "call" }),
           style: {
             paddingBottom: "2px",
@@ -113,7 +113,7 @@ var items = {
           renderForCSR: true
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_PROFILE" }),
-          route: "/employee/user/profile",
+          route: "/user/profile",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "social", name: "person" }),
           style: {
             paddingBottom: "3px",

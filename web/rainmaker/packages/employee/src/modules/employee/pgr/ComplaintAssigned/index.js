@@ -13,7 +13,7 @@ class ComplaintAssigned extends Component {
   };
 
   handleComplaintReassigned = () => {
-    this.props.history.push("/employee/all-complaints");
+    this.props.history.push("/all-complaints");
   };
 
   render() {

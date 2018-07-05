@@ -9,7 +9,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HOMEHEADER" />,
-            route: "/citizen",
+            route: "",
             leftIcon: <Icon action="action" name="home" />,
             style: {
               paddingBottom: "1px",
@@ -20,7 +20,7 @@ const items = {
           },
           {
             primaryText: <Label label="CS_HOME_HEADER_PROFILE" />,
-            route: "/citizen/user/profile",
+            route: "/user/profile",
             leftIcon: <Icon action="social" name="person" />,
             style: {
               paddingBottom: "3px",
@@ -43,7 +43,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HEADER_CONTACT_US" />,
-            route: "/citizen/contact-us",
+            route: "/contact-us",
             leftIcon: <Icon action="communication" name="call" />,
             style: {
               paddingBottom: "8px",
@@ -53,7 +53,7 @@ const items = {
           },
           {
             primaryText: <Label label="CS_HOME_HEADER_HOW_IT_WORKS" />,
-            route: "/citizen/how-it-works",
+            route: "/how-it-works",
             leftIcon: <Icon action="custom" name="help-circle" />,
             style: {
               paddingBottom: "2px",
@@ -81,7 +81,7 @@ const items = {
         items: [
           {
             primaryText: <Label label="CS_HOME_HOMEHEADER" />,
-            route: "/employee/all-complaints",
+            route: "/all-complaints",
             leftIcon: <Icon action="action" name="home" />,
             style: {
               paddingBottom: "1px",
@@ -93,14 +93,14 @@ const items = {
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
-            route: "/employee/closed-complaints",
+            route: "/closed-complaints",
             leftIcon: <Icon action="custom" name="file-check" />,
             id: "header-closed-complaint",
             renderForCSR: false,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
-            route: "/employee/employee-directory",
+            route: "/employee-directory",
             leftIcon: <Icon action="communication" name="call" />,
             style: {
               paddingBottom: "2px",
@@ -112,7 +112,7 @@ const items = {
 
           {
             primaryText: <Label label="CS_HOME_HEADER_PROFILE" />,
-            route: "/employee/user/profile",
+            route: "/user/profile",
             leftIcon: <Icon action="social" name="person" />,
             style: {
               paddingBottom: "3px",

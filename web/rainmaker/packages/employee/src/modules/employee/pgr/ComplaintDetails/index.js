@@ -114,10 +114,10 @@ class ComplaintDetails extends Component {
     let { history } = this.props;
     switch (label) {
       case "ES_REJECT_BUTTON":
-        history.push(`/employee/reject-complaint/${complaintNo}`);
+        history.push(`/reject-complaint/${complaintNo}`);
         break;
       case "ES_REQUEST_REQUEST_RE_ASSIGN":
-        history.push(`/employee/request-reassign/${complaintNo}`);
+        history.push(`/request-reassign/${complaintNo}`);
         break;
     }
   };
@@ -126,13 +126,13 @@ class ComplaintDetails extends Component {
     let { history } = this.props;
     switch (label) {
       case "ES_COMMON_ASSIGN":
-        history.push(`/employee/assign-complaint/${complaintNo}`);
+        history.push(`/assign-complaint/${complaintNo}`);
         break;
       case "ES_COMMON_REASSIGN":
-        history.push(`/employee/reassign-complaint/${complaintNo}`);
+        history.push(`/reassign-complaint/${complaintNo}`);
         break;
       case "ES_RESOLVE_MARK_RESOLVED":
-        history.push(`/employee/complaint-resolved/${complaintNo}`);
+        history.push(`/complaint-resolved/${complaintNo}`);
         break;
     }
   };
