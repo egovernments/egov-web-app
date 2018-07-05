@@ -394,50 +394,53 @@ class ShowForm extends Component {
     let { search } = this;
     return (
       <div className="">
-        <form
-          onSubmit={(e) => {
-            let fromDate;
-            let toDate;
-            if (searchForm && searchForm.fromDate && searchForm.toDate) {
-              fromDate = new Date(searchForm.fromDate);
-              toDate = new Date(searchForm.toDate);
-            }
+        {metaData &&
+          metaData.reportDetails && (
+            <form
+              onSubmit={(e) => {
+                let fromDate;
+                let toDate;
+                if (searchForm && searchForm.fromDate && searchForm.toDate) {
+                  fromDate = new Date(searchForm.fromDate);
+                  toDate = new Date(searchForm.toDate);
+                }
 
-            if (fromDate && toDate) {
-              let tabLabel = `Showing data for : ${fromDate.getDate() +
-                "/" +
-                (fromDate.getMonth() + 1) +
-                "/" +
-                fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
-              this.props.updateTabLabel(tabLabel);
-            }
-            search(e);
-          }}
-        >
-          <Card
-            style={{ margin: "16px" }}
-            textChildren={
-              <div>
-                <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
+                if (fromDate && toDate) {
+                  let tabLabel = `Showing data for : ${fromDate.getDate() +
+                    "/" +
+                    (fromDate.getMonth() + 1) +
+                    "/" +
+                    fromDate.getFullYear()} to ${toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}`;
+                  this.props.updateTabLabel(tabLabel);
+                }
+                search(e);
+              }}
+            >
+              <Card
+                style={{ margin: "16px" }}
+                textChildren={
+                  <div>
+                    <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
 
-                <Grid>
-                  <Row>
-                    {this.handleFormFields()}
-                    <div style={{ marginTop: "16px" }}>
-                      <RaisedButton
-                        style={{ height: "50px", lineHeight: "50px", width: "15%" }}
-                        type="submit"
-                        disabled={!isFormValid}
-                        primary={true}
-                        label={buttonText}
-                      />
-                    </div>
-                  </Row>
-                </Grid>
-              </div>
-            }
-          />
-        </form>
+                    <Grid>
+                      <Row>
+                        {this.handleFormFields()}
+                        <div style={{ marginTop: "16px" }}>
+                          <RaisedButton
+                            style={{ height: "50px", lineHeight: "50px", width: "15%" }}
+                            type="submit"
+                            disabled={!isFormValid}
+                            primary={true}
+                            label={buttonText}
+                          />
+                        </div>
+                      </Row>
+                    </Grid>
+                  </div>
+                }
+              />
+            </form>
+          )}
 
         {reportIndex > 1 && (
           <div

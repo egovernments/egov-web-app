@@ -209,7 +209,7 @@ class ShowField extends Component {
         title: reportName && reportName.split(/(?=[A-Z])/).join(" "),
         text: "PDF",
         orientation: "portrait",
-        pageSize: "TABLOID",
+        pageSize: "A4",
         footer: true,
         customize: function(doc) {
           _this.PrintingCutomize(doc);
