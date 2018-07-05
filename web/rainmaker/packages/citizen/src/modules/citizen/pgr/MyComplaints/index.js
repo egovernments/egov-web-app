@@ -29,10 +29,10 @@ class MyComplaints extends Component {
   };
 
   render() {
-    let { transformedComplaints, history, loading } = this.props;
+    let { transformedComplaints, history, fetchSuccess } = this.props;
     let { onComplaintClick } = this;
     return (
-      <Screen loading={loading} className="citizen-screen-bottom-padding-clear">
+      <Screen loading={!fetchSuccess} className="citizen-screen-bottom-padding-clear">
         <div className="complaints-main-container clearfix">
           <Complaints
             onComplaintClick={onComplaintClick}
@@ -88,11 +88,11 @@ const mapStateToProps = (state) => {
   const { common } = state;
   const { employeeById, citizenById } = common;
   const role = "citizen";
-  const { loading } = complaints || false;
+  const { loading, fetchSuccess } = complaints || false;
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
-  var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status === "Closed"), ["date"], ["desc"]);
-  var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.status != "Closed"), ["date"], ["desc"]);
-  return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints], loading };
+  var closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), ["date"], ["desc"]);
+  var nonClosedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus !== "CLOSED"), ["date"], ["desc"]);
+  return { complaints, transformedComplaints: [...nonClosedComplaints, ...closedComplaints], loading, fetchSuccess };
 };
 
 const mapDispatchToProps = (dispatch) => {

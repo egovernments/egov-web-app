@@ -59,6 +59,7 @@ var complaintsReducer = function complaintsReducer() {
     case actionTypes.COMPLAINTS_FETCH_ERROR:
       return (0, _extends3.default)({}, state, {
         loading: false,
+        fetchSuccess: true,
         error: true,
         errorMessage: action.error
       });

@@ -466,6 +466,15 @@ var findLatestAssignee = exports.findLatestAssignee = function findLatestAssigne
   return null;
 };
 
+var getLatestAction = function getLatestAction(actionArr) {
+  return actionArr.reduce(function (result, current) {
+    if (current.when > result) {
+      result = current.when;
+    }
+    return result;
+  }, 0);
+};
+
 var transformComplaintForComponent = exports.transformComplaintForComponent = function transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus) {
   var defaultPhoneNumber = "";
   var defaultMobileNumber = "";
@@ -497,6 +506,7 @@ var transformComplaintForComponent = exports.transformComplaintForComponent = fu
       //     "mobileNumber",
       //     defaultMobileNumber
       //   ),
+      latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
       submittedBy: filedUserName ? isFiledByCSR ? filedUserName + " (Customer Service Desk)" : filedUserName : "NA",
       citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),

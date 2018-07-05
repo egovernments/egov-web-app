@@ -5,6 +5,7 @@ import { Complaints } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { transformComplaintForComponent } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
 import "./index.css";
 
 class ClosedComplaints extends Component {
@@ -17,9 +18,18 @@ class ClosedComplaints extends Component {
     this.props.history.push(`/employee/complaint-details/${complaintNo}`);
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    const { numClosedComplaints, closedComplaints, renderCustomTitle } = this.props;
+    if (!isEqual(closedComplaints, nextProps.closedComplaints)) {
+      const numberOfComplaints = numClosedComplaints ? numClosedComplaints : 0;
+      renderCustomTitle(numberOfComplaints);
+    }
+  };
+
   render() {
     const { onComplaintClick } = this;
     const { closedComplaints, role, loading } = this.props;
+
     return (
       <Screen loading={loading}>
         <div className="form-without-button-cont-generic">
@@ -68,9 +78,9 @@ const mapStateToProps = (state) => {
   const loading = fetchSuccess ? false : true;
   const role = isAssigningOfficer(userInfo.roles) ? "ao" : "employee";
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
-  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "date", "desc");
-
-  return { userInfo, closedComplaints, role, loading };
+  const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
+  const numClosedComplaints = closedComplaints.length;
+  return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
 
 const mapDispatchToProps = (dispatch) => {
