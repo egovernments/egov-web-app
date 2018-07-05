@@ -297,17 +297,17 @@ const routes = [
   },
 
   //create employee
-  {
-    path: "create",
-    component: CreateEmployee,
-    needsAuthentication: true,
-    options: {
-      hideFooter: true,
-      title: "CS_HEADER_COMPLAINT_SUBMITTED",
-      hideTitle: true,
-      hideBackButton: true,
-    },
-  },
+  // {
+  //   path: "create",
+  //   component: CreateEmployee,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "CS_HEADER_COMPLAINT_SUBMITTED",
+  //     hideTitle: true,
+  //     hideBackButton: true,
+  //   },
+  // },
   {
     path: "report/:moduleName/:reportName",
     component: Report,
