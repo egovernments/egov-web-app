@@ -29,32 +29,32 @@ import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
 
 //Redirection Url
-const redirectionUrl = "/employee/user/login";
+const redirectionUrl = "/user/login";
 
 const routes = [
   {
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/all-complaints",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/all-complaints",
   },
   {
     path: "user/language-selection",
     component: LanguageSelection,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/all-complaints",
   },
   {
     path: "user/forgot-password",
     component: ForgotPassword,
     needsAuthentication: false,
-    redirectionUrl: "/employee/all-complaints",
+    redirectionUrl: "/all-complaints",
   },
   {
     path: "user/change-password",

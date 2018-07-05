@@ -10,7 +10,7 @@ const RenderRoutes = ({ match, routes = [] }) => {
           <Route
             key={index}
             exact
-            path={`${match.url}/${path}`}
+            path={match.url==="/"?`/${path}`:`${match.url}/${path}`}
             render={(props) => {
               return <Component {...props} />;
             }}

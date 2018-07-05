@@ -2,11 +2,11 @@
   "name": "rainmaker-employee",
   "version": "0.0.1",
   "private": true,
-  "homepage": "http://egov-micro-dev.egovernments.org/app/v3/rainmaker-employee",
+  "homepage": "http://egov-micro-dev.egovernments.org/employee/",
   "proxy": "http://egov-micro-dev.egovernments.org/",
   "dependencies": {
-    "@material-ui/icons": "^1.1.0",
     "@material-ui/core": "^1.1.0",
+    "@material-ui/icons": "^1.1.0",
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",

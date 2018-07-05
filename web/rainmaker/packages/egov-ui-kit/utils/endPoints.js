@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var LOCALATION = exports.LOCALATION = {
   GET: {
-    URL: "localization/messages/v1/_search",
+    URL: "api/localization/messages/v1/_search",
     ACTION: "_search"
   }
 };

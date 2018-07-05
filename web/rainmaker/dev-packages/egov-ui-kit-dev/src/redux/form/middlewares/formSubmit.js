@@ -38,7 +38,7 @@ const formSubmit = (store) => (next) => (action) => {
 
     // for login/register flow
     if (formKey === "otp") {
-      redirectionRoute = "/citizen";
+      redirectionRoute = "/";
       delete payload.ResponseInfo;
       dispatch(authenticated(payload));
     }
@@ -72,9 +72,9 @@ const formSubmit = (store) => (next) => (action) => {
 
     if (formKey === "assignComplaint") {
       if (payload && payload.actionHistory && payload.actionHistory[0].actions[0].action === "assign") {
-        dispatch(setRoute(`/employee/complaint-assigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
+        dispatch(setRoute(`/complaint-assigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
       } else if (payload && payload.actionHistory && payload.actionHistory[0].actions[0].action === "reassign") {
-        dispatch(setRoute(`/employee/complaint-reassigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
+        dispatch(setRoute(`/complaint-reassigned/${encodeURIComponent(payload.services[0].serviceRequestId)}`));
       }
     }
 

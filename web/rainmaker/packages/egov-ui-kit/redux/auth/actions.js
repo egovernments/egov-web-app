@@ -273,7 +273,7 @@ var logout = exports.logout = function logout() {
                   localStorage.removeItem(key);
                 }
               });
-              window.location.replace(userRole === "citizen" ? window.basename + "/citizen/user/login" : window.basename + "/employee/user/login");
+              window.location.replace(userRole === "citizen" ? window.basename + "/user/login" : window.basename + "/user/login");
 
             case 13:
             case "end":

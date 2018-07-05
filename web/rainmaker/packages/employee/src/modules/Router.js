@@ -8,7 +8,7 @@ const Main = ({ routes }) => {
     <main>
       <Switch>
         <Route
-          path={`/employee/`}
+          path={`/`}
           render={(props) => {
             return <Employee match={props.match} routes={routes.employee} />;
           }}
