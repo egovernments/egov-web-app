@@ -23,7 +23,7 @@ const withAuthorization = (options = {}) => (Component) => {
       const { authenticated } = this.props;
       const { redirectionUrl } = options;
       if (!authenticated) {
-        this.props.history.replace(redirectionUrl || "/citizen/user/login");
+        this.props.history.replace(redirectionUrl || "/user/login");
       }
     }
 
