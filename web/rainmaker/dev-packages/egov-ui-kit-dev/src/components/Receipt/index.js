@@ -1,20 +1,21 @@
 import React from "react";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const Receipt = ({ receiptItems }) => {
+const Receipt = ({ receiptItems, innerDivStyle }) => {
+  let { leftItems, rightItems } = receiptItems && receiptItems[0];
   const getItems = (items) => {
     return (
       <div>
-        <div className="col-xs-12 col-sm-6">
+        <div className={innerDivClass ? innerDivClass : "col-xs-12 col-sm-4"}>
           {items &&
             items.map((item, index) => {
-              return <Label label={item.key} />;
+              return <Label containerStyle={{ marginTop: 10 }} label={item.key} />;
             })}
         </div>
-        <div className="col-xs-12 col-sm-6">
+        <div className={innerDivClass ? innerDivClass : "col-xs-12 col-sm-4"}>
           {items &&
             items.map((item, index) => {
-              return <Label label={item.value} />;
+              return <Label containerStyle={{ marginTop: 10 }} label={item.value} />;
             })}
         </div>
       </div>
@@ -23,9 +24,14 @@ const Receipt = ({ receiptItems }) => {
 
   return (
     receiptItems && (
-      <div className="clearfix" style={{ height: "inherit" }}>
-        {receiptItems[0] && receiptItems[0].leftItems && <div className="col-xs-12 col-sm-6">{getItems(receiptItems[0].leftItems)}</div>}
-        {receiptItems[0] && receiptItems[0].leftItems && <div className="col-xs-12 col-sm-6">{getItems(receiptItems[1].rightItems)}</div>}
+      <div className="clearfix" style={{ height: "inherit", marginTop: "5px" }}>
+        <div className="col-xs-12 col-sm-5" style={{ padding: "0px" }}>
+          {getItems(leftItems)}
+        </div>
+
+        <div className="col-xs-12 col-sm-5" style={{ padding: "0px" }}>
+          {getItems(rightItems)}
+        </div>
       </div>
     )
   );

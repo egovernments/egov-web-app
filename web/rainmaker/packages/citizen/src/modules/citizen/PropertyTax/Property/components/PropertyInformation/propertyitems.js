@@ -15,8 +15,6 @@ const PropertyItems = {
           value: "560098",
         },
       ],
-    },
-    {
       rightItems: [
         {
           key: "Colony Name:",
@@ -50,8 +48,6 @@ const PropertyItems = {
           value: "560098",
         },
       ],
-    },
-    {
       rightItems: [
         {
           key: "Colony Name:",
@@ -85,8 +81,6 @@ const PropertyItems = {
           value: "560098",
         },
       ],
-    },
-    {
       rightItems: [
         {
           key: "Colony Name:",

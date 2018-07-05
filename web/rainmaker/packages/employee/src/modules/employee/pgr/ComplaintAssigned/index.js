@@ -20,7 +20,7 @@ class ComplaintAssigned extends Component {
     let { employeeDetails, fetchSuccess } = this.props;
     const isReassign = window.location.href.includes("complaint-reassigned") ? true : false;
     return (
-      <Screen loading={fetchSuccess}>
+      <Screen loading={!fetchSuccess}>
         <div className="success-message-main-screen">
           {employeeDetails &&
             employeeDetails.employeeName && (

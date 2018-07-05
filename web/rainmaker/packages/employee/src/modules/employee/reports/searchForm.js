@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-import { Card } from "components";
+import { Card, Button } from "components";
 import { CardHeader, CardText } from "material-ui/Card";
 import { brown500, red500, white, orange800 } from "material-ui/styles/colors";
 import RaisedButton from "material-ui/RaisedButton";
@@ -12,7 +12,6 @@ import { translate } from "./commons/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import jp from "jsonpath";
 import _ from "lodash";
-//import styles from "../../../styles/material-ui";
 import { getResultUrl } from "./commons/url";
 class ShowForm extends Component {
   state = {
@@ -238,8 +237,6 @@ class ShowForm extends Component {
 
     setForm(required);
     clearReportHistory();
-
-    //setForm(required);
   }
 
   getDisplayOnlyFields = (metaData) => {
@@ -369,7 +366,6 @@ class ShowForm extends Component {
           resulturl &&
           commonApiPost(resulturl, {}, { ...reportData }).then(
             function(response) {
-              // decreaseReportIndex();
               localStorage.setItem("returnUrl", "");
               localStorage.setItem("searchCriteria", JSON.stringify({}));
               localStorage.setItem("moduleName", "");
@@ -423,24 +419,18 @@ class ShowForm extends Component {
             textChildren={
               <div>
                 <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
-                {/* <div style={{ paddingBottom: 0 }}>{!_.isEmpty(metaData) && metaData.reportDetails ? metaData.reportDetails.summary : ""}</div> */}
+
                 <Grid>
                   <Row>
                     {this.handleFormFields()}
                     <div style={{ marginTop: "16px" }}>
-                      <RaisedButton type="submit" disabled={!isFormValid} primary={true} label={buttonText} />
+                      <Button label={buttonText} primary={true} style={{ height: "50px", lineHeight: "50px", width: "15%" }} />
                     </div>
                   </Row>
                 </Grid>
               </div>
             }
           />
-          {/* <Card style={{ margin: "15px" }}>
-            <CardHeader style={{ paddingBottom: 0 }} title={!_.isEmpty(metaData) && metaData.reportDetails ? metaData.reportDetails.summary : ""} />
-            <CardText style={{ padding: 0 }}>
-              
-            </CardText>
-          </Card> */}
         </form>
 
         {reportIndex > 1 && (
@@ -501,7 +491,6 @@ const mapDispatchToProps = (dispatch) => ({
     });
   },
   handleChange: (e, property, isRequired, pattern) => {
-    // console.log(e.target.value);
     dispatch({
       type: "HANDLE_CHANGE",
       property,

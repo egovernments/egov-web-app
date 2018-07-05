@@ -82,7 +82,7 @@ export default class ShowField extends Component {
               fullWidth={true}
               floatingLabelFixed={true}
               floatingLabelText={
-                <div>
+                <div className="rainmaker-displayInline">
                   <Label label={description} fontSize="18px" color="#03b0c6" />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
@@ -107,8 +107,8 @@ export default class ShowField extends Component {
               floatingLabelFixed={true}
               maxDate={maxDate}
               floatingLabelText={
-                <div>
-                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" />
+                <div className="rainmaker-displayInline">
+                  <Label className="show-field-label" label={description} fontSize="18px" color="#03b0c6" containerStyle={{ marginRight: "5px" }} />
                   <span style={{ color: "#FF0000" }}>{obj.isMandatory ? " *" : ""}</span>
                 </div>
               }

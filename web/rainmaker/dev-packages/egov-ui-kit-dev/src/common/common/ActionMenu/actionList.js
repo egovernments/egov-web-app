@@ -68,7 +68,7 @@ const actionList = {
       serviceCode: "CS",
       code: "null",
       path: "Home",
-      navigationURL: "all-complaints",
+      navigationURL: "",
       leftIcon: { action: "action", name: "home" },
       rightIcon: "",
     },
