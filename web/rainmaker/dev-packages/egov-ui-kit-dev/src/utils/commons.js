@@ -363,6 +363,15 @@ export const findLatestAssignee = (actionArray) => {
   return null;
 };
 
+const getLatestAction = (actionArr) => {
+  return actionArr.reduce((result, current) => {
+    if (current.when > result) {
+      result = current.when;
+    }
+    return result;
+  }, 0);
+};
+
 export const transformComplaintForComponent = (complaints, role, employeeById, citizenById, categoriesById, displayStatus) => {
   const defaultPhoneNumber = "";
   const defaultMobileNumber = "";
@@ -400,6 +409,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       //     "mobileNumber",
       //     defaultMobileNumber
       //   ),
+      latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
       submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Customer Service Desk)` : filedUserName) : "NA",
       citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),

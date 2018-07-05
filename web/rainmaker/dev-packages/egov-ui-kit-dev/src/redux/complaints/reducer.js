@@ -47,6 +47,7 @@ const complaintsReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
+        fetchSuccess: true,
         error: true,
         errorMessage: action.error,
       };

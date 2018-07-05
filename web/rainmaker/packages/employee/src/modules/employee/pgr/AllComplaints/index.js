@@ -294,18 +294,18 @@ const mapStateToProps = (state) => {
     assignedComplaints = orderby(
       transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED"),
       ["latestCreationTime"],
-      ["desc"]
+      ["asc"]
     );
     unassignedComplaints = orderby(
       transformedComplaints.filter((complaint) => complaint.complaintStatus === "UNASSIGNED"),
       ["latestCreationTime"],
-      ["desc"]
+      ["asc"]
     );
   } else {
     employeeComplaints = orderby(
       transformedComplaints.filter((complaint) => complaint.complaintStatus === "ASSIGNED" || complaint.rawStatus === "reassignrequested"),
       ["latestCreationTime"],
-      ["desc"]
+      ["asc"]
     );
   }
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
