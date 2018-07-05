@@ -199,12 +199,15 @@ class ShowField extends Component {
 
     const buttons = [
       {
+        text: "<span>Download as : </span>",
+        className: "report-download-button-text",
+      },
+      {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
         title: _this.state.reportName.split(/(?=[A-Z])/).join(" "),
-        //title: "Fetches reports based on the source of reception of the complaint",
-        text: "<span>Download as : </span>PDF",
+        text: "PDF",
         orientation: "portrait",
         pageSize: "TABLOID",
         footer: true,
@@ -320,7 +323,6 @@ class ShowField extends Component {
                     return intVal(a) + intVal(b);
                   }
                 }, 0);
-              console.log(pageTotal);
 
               // Update footer
               //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
@@ -477,13 +479,13 @@ class ShowField extends Component {
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr className="report-table-header">
           <th key={"Sr. No. "}>{"Sr. No."}</th>
-          {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
-            <th key={"testKey"}>
-              <input type="checkbox" onChange={checkAllRows} />
-            </th>
-          ) : (
-            ""
-          )}
+          {metaData &&
+            metaData.reportDetails &&
+            metaData.reportDetails.selectiveDownload && (
+              <th key={"testKey"}>
+                <input type="checkbox" onChange={checkAllRows} />
+              </th>
+            )}
           {reportResult.hasOwnProperty("reportHeader") &&
             reportResult.reportHeader.map((item, i) => {
               if (item.showColumn) {
@@ -586,35 +588,35 @@ class ShowField extends Component {
             return (
               <tr key={dataIndex} className={this.state.ck[dataIndex] ? "selected" : ""}>
                 <td>{dataIndex + 1}</td>
-                {metaData && metaData.reportDetails && metaData.reportDetails.selectiveDownload ? (
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={this.state.ck[dataIndex] ? true : false}
-                      onClick={(e) => {
-                        let ck = { ...this.state.ck };
-                        ck[dataIndex] = e.target.checked;
-                        let rows = this.state.rows;
-                        if (e.target.checked) {
-                          rows[dataIndex] = dataItem;
-                        } else {
-                          delete rows[dataIndex];
-                        }
+                {metaData &&
+                  metaData.reportDetails &&
+                  metaData.reportDetails.selectiveDownload && (
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={this.state.ck[dataIndex] ? true : false}
+                        onClick={(e) => {
+                          let ck = { ...this.state.ck };
+                          ck[dataIndex] = e.target.checked;
+                          let rows = this.state.rows;
+                          if (e.target.checked) {
+                            rows[dataIndex] = dataItem;
+                          } else {
+                            delete rows[dataIndex];
+                          }
 
-                        let showPrintBtn;
-                        if (Object.keys(rows).length) showPrintBtn = true;
-                        else showPrintBtn = false;
-                        this.setState({
-                          ck,
-                          rows,
-                          showPrintBtn,
-                        });
-                      }}
-                    />
-                  </td>
-                ) : (
-                  ""
-                )}
+                          let showPrintBtn;
+                          if (Object.keys(rows).length) showPrintBtn = true;
+                          else showPrintBtn = false;
+                          this.setState({
+                            ck,
+                            rows,
+                            showPrintBtn,
+                          });
+                        }}
+                      />
+                    </td>
+                  )}
                 {dataItem.map((item, itemIndex) => {
                   var columnObj = {};
                   //array for particular row
@@ -706,15 +708,10 @@ class ShowField extends Component {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult } = this.props;
     let self = this;
+    console.log(metaData);
 
     const viewTabel = () => {
-      let { searchForm } = this.props;
-      let fromDate;
-      let toDate;
-      if (searchForm && searchForm.fromDate && searchForm.toDate) {
-        fromDate = new Date(searchForm.fromDate);
-        toDate = new Date(searchForm.toDate);
-      }
+      let { searchForm, tabLabel } = this.props;
 
       let today = new Date();
       let date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
@@ -723,14 +720,13 @@ class ShowField extends Component {
           {/* <Card> */}
           {/* <CardHeader title={self.state.reportSubTitle} /> */}
           {/* <CardText> */}
-          {fromDate && toDate ? (
-            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>
-              Showing data for : {fromDate.getDate() + "/" + (fromDate.getMonth() + 1) + "/" + fromDate.getFullYear()} to{" "}
-              {toDate.getDate() + "/" + (toDate.getMonth() + 1) + "/" + toDate.getFullYear()}
-            </div>
+
+          {tabLabel ? (
+            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{tabLabel}</div>
           ) : (
             <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{`Showing data upto : ${date}`}</div>
           )}
+
           <Table
             id="reportTable"
             style={{
@@ -859,7 +855,14 @@ class ShowField extends Component {
       );
     };
     return (
-      <div className="report-result-table">{isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}</div>
+      <div>
+        {isTableShow &&
+          !_.isEmpty(reportResult) &&
+          reportResult.hasOwnProperty("reportData") && <div className="report-title">{this.state.reportName.split(/(?=[A-Z])/).join(" ")}</div>}
+        <div className="report-result-table">
+          {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
+        </div>
+      </div>
     );
   }
 }

@@ -7,6 +7,9 @@ import mockData from "./mockData";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
 
 class Report extends Component {
+  state = {
+    tabLabel: "",
+  };
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.reportName !== this.props.match.params.reportName) {
       this.initData(nextProps.match.params.moduleName, nextProps.match.params.reportName);
@@ -52,15 +55,20 @@ class Report extends Component {
         }
       );
   };
+  updateTabLabel = (tabLabel) => {
+    this.setState({
+      tabLabel,
+    });
+  };
 
   render() {
     let { match } = this.props;
     let needDefaultSearch = options[this.props.match.params.moduleName] ? options[this.props.match.params.moduleName][0].needDefaultSearch : false;
     return (
-      <div className="">
-        <SearchForm match={match} needDefaultSearch={needDefaultSearch} />
+      <div>
+        <SearchForm match={match} needDefaultSearch={needDefaultSearch} updateTabLabel={this.updateTabLabel} />
 
-        <ReportResult match={match} />
+        <ReportResult match={match} tabLabel={this.state.tabLabel} />
       </div>
     );
   }
