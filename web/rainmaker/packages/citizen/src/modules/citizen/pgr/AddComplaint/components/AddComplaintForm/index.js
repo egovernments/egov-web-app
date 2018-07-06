@@ -9,7 +9,7 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
   const fields = form.fields || {};
   const submit = form.submit;
   return (
-    <div className="add-complaint-main-cont">
+    <div className="add-complaint-main-cont form-without-button-cont-generic">
       <ImageUpload module="rainmaker-pgr" formKey={formKey} fieldKey="media" />
       <ComplaintTypeCard localizationLabels={localizationLabels} categories={categories} complaintType={fields.complaintType} />
       <LocationDetailsCard formKey={formKey} handleFieldChange={handleFieldChange} landmark={fields.landmark} locationDetails={fields.address} />
