@@ -492,13 +492,13 @@ class ShowField extends Component {
               if (item.showColumn) {
                 return (
                   <th key={i}>
-                    <Label label={item.label} />
+                    <Label className="report-header-row-label" labelStyle={{ wordWrap: "unset", wordBreak: "unset" }} label={item.label} />
                   </th>
                 );
               } else {
                 return (
                   <th style={{ display: "none" }} key={i}>
-                    <Label label={item.label} />
+                    <Label className="report-header-row-label" labelStyle={{ wordWrap: "unset", wordBreak: "unset" }} label={item.label} />
                   </th>
                 );
               }
