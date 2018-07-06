@@ -160,7 +160,7 @@ class ShowForm extends Component {
         this.props.handleChange(e, field, required, "");
         this.setState({ datefield: field });
         this.setState({
-          dateError: field === "toDate" ? <Label label="pgr.lbl.dategreater" /> : <Label label="pgr.lbl.datelesser" />,
+          dateError: field === "toDate" ? <Label label="REPORT_SEARCHFORM_DATE_GREATER" /> : <Label label="REPORT_SEARCHFORM_DATE_LESSER" />,
         });
       }
     }
@@ -427,9 +427,9 @@ class ShowForm extends Component {
                         {this.handleFormFields()}
                         <div style={{ marginTop: "16px" }}>
                           <RaisedButton
-                            style={{ height: "50px", lineHeight: "50px", width: "15%" }}
+                            style={{ height: "50px", lineHeight: "50px", width: "15%", background: "#fe7a51" }}
                             type="submit"
-                            disabled={!isFormValid}
+                            //disabled={!isFormValid}
                             primary={true}
                             label={buttonText}
                           />
