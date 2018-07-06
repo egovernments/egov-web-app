@@ -46,7 +46,13 @@ var formValidation = function formValidation(store) {
 
             dependants.forEach(function (item) {
               if (fields[item.fieldKey].dataFetchConfig) {
-                (0, _commons.fetchDropdownData)(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey);
+                if (fields[item.fieldKey].boundary) {
+                  fields[item.fieldKey].dataFetchConfig.dataPath = "$.TenantBoundary.*.boundary[?(@.label==\"City\"&&@.code==\"DM\")]..children[?(@.label==\"Locality\")]";
+                  fields[item.fieldKey].dataFetchConfig.queryParams = [{ key: "tenantId", value: value }];
+                  (0, _commons.fetchDropdownData)(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey, true);
+                } else {
+                  (0, _commons.fetchDropdownData)(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey);
+                }
               }
             });
           }

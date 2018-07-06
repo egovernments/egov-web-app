@@ -53,6 +53,10 @@ var _get2 = _interopRequireDefault(_get);
 
 var _actions2 = require("egov-ui-kit/redux/app/actions");
 
+var _jsonpath = require("jsonpath");
+
+var _jsonpath2 = _interopRequireDefault(_jsonpath);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var statusToMessageMapping = exports.statusToMessageMapping = {
@@ -545,21 +549,21 @@ var mergeMDMSDataArray = exports.mergeMDMSDataArray = function mergeMDMSDataArra
 };
 
 var fetchDropdownData = exports.fetchDropdownData = function () {
-  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch, dataFetchConfig, formKey, fieldKey) {
-    var url, action, requestBody, payloadSpec, dropdownData, ddData, message;
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch, dataFetchConfig, formKey, fieldKey, boundary) {
+    var url, action, requestBody, queryParams, payloadSpec, dropdownData, ddData, message;
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody;
+            url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody, queryParams = dataFetchConfig.queryParams;
             _context3.prev = 1;
             _context3.next = 4;
-            return (0, _api.httpRequest)(url, action, [], requestBody);
+            return (0, _api.httpRequest)(url, action, queryParams || [], requestBody);
 
           case 4:
             payloadSpec = _context3.sent;
-            dropdownData = (0, _get2.default)(payloadSpec, dataFetchConfig.dataPath);
-            ddData = dropdownData.reduce(function (ddData, item) {
+            dropdownData = boundary ? _jsonpath2.default.query(payloadSpec, dataFetchConfig.dataPath) : (0, _get2.default)(payloadSpec, dataFetchConfig.dataPath);
+            ddData = dropdownData && dropdownData.reduce(function (ddData, item) {
               ddData.push({ label: item.name, value: item.code });
               return ddData;
             }, []);
@@ -584,7 +588,7 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
     }, _callee3, undefined, [[1, 10]]);
   }));
 
-  return function fetchDropdownData(_x4, _x5, _x6, _x7) {
+  return function fetchDropdownData(_x4, _x5, _x6, _x7, _x8) {
     return _ref3.apply(this, arguments);
   };
 }();
