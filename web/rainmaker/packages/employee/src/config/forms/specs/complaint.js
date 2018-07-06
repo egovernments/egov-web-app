@@ -1,5 +1,5 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
-
+const cityCode = "";
 const formConfig = {
   name: "complaint",
   idJsonPath: "services[0].serviceRequestId",
@@ -63,7 +63,7 @@ const formConfig = {
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -80,6 +80,11 @@ const formConfig = {
           },
         },
         dataPath: "MdmsRes.tenant.tenants",
+        dependants: [
+          {
+            fieldKey: "mohalla",
+          },
+        ],
       },
     },
     mohalla: {
@@ -89,22 +94,18 @@ const formConfig = {
       floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
-      dropDownData: [
-        //   { value: "sm", label: "Shashtri Market" },
-        //  { value: "MN", label: "Malind Nagar" },
-        //   { label: "Kishanpura", value: "Kishanpura" },
-        { value: "SUN04", label: "Ajit Nagar" },
-        { value: "SUN11", label: "Back Side 33 KVA Grid Patiala Road" },
-        { value: "SUN12", label: "Back Side 66 KVA Grid Patiala Road" },
-        { value: "SUN13", label: "Back Side Civil Courts Colony" },
-        { value: "SUN20", label: "Backside Brijbala Hospital" },
-        { value: "SUN35", label: "Bigharwal Chowk to Railway Station" },
-        { value: "SUN40", label: "Chandar Colony Biggarwal Road" },
-        { value: "SUN55", label: "Deep Rice Mill Road" },
-        { value: "SUN02", label: "Aggarsain Chowk to Mal Godown - Both Sides" },
-        { value: "SUN08", label: "ATAR SINGH COLONY" },
-        { value: "SUN18", label: "Back Side Naina Devi Mandir" },
-      ],
+      boundary: true,
+      // dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
+      dropDownData: [],
+      dataFetchConfig: {
+        url: "egov-location/location/v11/boundarys/_search",
+        action: "",
+        queryParams: [],
+        requestBody: {},
+        isDependent: true,
+        dataPath: `$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==${cityCode})]..children[?(@.label=='Locality')]`,
+      },
+
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     landmark: {
@@ -124,7 +125,7 @@ const formConfig = {
     tenantId: {
       id: "add-complaint-tenantid",
       jsonPath: "services[0].tenantId",
-      value: "pb.amritsar",
+      value: "pb",
     },
   },
   submit: {

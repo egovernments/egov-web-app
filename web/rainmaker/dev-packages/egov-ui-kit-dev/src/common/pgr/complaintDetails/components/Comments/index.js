@@ -46,7 +46,11 @@ class Comments extends Component {
                   fontSize="10px"
                   labelStyle={{ fontWeight: "500" }}
                   label={
-                    role === "csr" ? `${complainant} (From customer service desk)` : comment.name ? `${comment.name} (${comment.designation})` : ""
+                    comment.role === "Customer Support Representative"
+                      ? `${complainant} (From customer service desk)`
+                      : comment.name
+                        ? `${comment.name} (${comment.designation})`
+                        : ""
                   }
                 />
                 <Label containerStyle={{ marginBottom: "6px" }} labelStyle={{ color: "#767676" }} label={comment.comment} />

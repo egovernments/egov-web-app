@@ -7,6 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import jp from "jsonpath";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -460,15 +461,17 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
   return mergedData;
 };
 
-export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey) => {
-  const { url, action, requestBody } = dataFetchConfig;
+export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
+  const { url, action, requestBody, queryParams } = dataFetchConfig;
   try {
-    const payloadSpec = await httpRequest(url, action, [], requestBody);
-    let dropdownData = get(payloadSpec, dataFetchConfig.dataPath);
-    const ddData = dropdownData.reduce((ddData, item) => {
-      ddData.push({ label: item.name, value: item.code });
-      return ddData;
-    }, []);
+    const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
+    const dropdownData = boundary ? jp.query(payloadSpec, dataFetchConfig.dataPath) : get(payloadSpec, dataFetchConfig.dataPath);
+    const ddData =
+      dropdownData &&
+      dropdownData.reduce((ddData, item) => {
+        ddData.push({ label: item.name, value: item.code });
+        return ddData;
+      }, []);
     dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
   } catch (error) {
     const { message } = error;
