@@ -24,7 +24,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
           <Link to="/user/forgot-password">
             <div style={{ float: "right" }}>
               <Label
-                containerStyle={{ cursor: "pointer" }}
+                containerStyle={{ cursor: "pointer", position: "relative", zIndex: 10 }}
                 labelStyle={{ marginBottom: "12px" }}
                 className="forgot-passwd"
                 fontSize={14}

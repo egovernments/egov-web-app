@@ -23,7 +23,7 @@ const RegisterForm = ({ handleFieldChange, form }) => {
           <Field fieldKey="phone" field={fields.phone} handleFieldChange={handleFieldChange} />
           <Field fieldKey="name" field={fields.name} handleFieldChange={handleFieldChange} />
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-          <div style={{ marginBottom: "24px" }} className="text-right">
+          <div style={{ marginBottom: "24px", position: "relative", zIndex: 10 }} className="text-right">
             <Label id="otp-trigger" className="otp-prompt" label="CORE_REGISTER_HAVE_ACCOUNT" />
             <Link to="/user/login">
               <div style={{ display: "inline-block" }}>
