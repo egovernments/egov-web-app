@@ -32,7 +32,7 @@ class MyComplaints extends Component {
     let { transformedComplaints, history, fetchSuccess } = this.props;
     let { onComplaintClick } = this;
     return (
-      <Screen loading={!fetchSuccess} className="citizen-screen-bottom-padding-clear">
+      <Screen loading={!fetchSuccess} className="citizen-screen-bottom-padding-clear form-without-button-cont-generic">
         <div className="complaints-main-container clearfix">
           <Complaints
             onComplaintClick={onComplaintClick}
