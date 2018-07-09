@@ -6,9 +6,13 @@ import ReportResult from "./reportResult";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
 
 class Report extends Component {
-  state = {
-    tabLabel: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      tabLabel: "",
+    };
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.reportName !== this.props.match.params.reportName) {
       this.initData(nextProps.match.params.moduleName, nextProps.match.params.reportName);
