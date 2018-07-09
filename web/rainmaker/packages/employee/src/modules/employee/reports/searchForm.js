@@ -215,7 +215,7 @@ class ShowForm extends Component {
       if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
         this.search(null, true, nextProps.metaData.reportDetails.reportName);
       } else if (needDefaultSearch) {
-        this.search(null, false, nextProps.metaData.reportDetails.reportName);
+        this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName);
       }
     }
   }
@@ -247,8 +247,58 @@ class ShowForm extends Component {
       metaData.reportDetails.searchParams.filter((field) => field.displayOnly).map((field) => field.name)
     );
   };
+  defautSearch = (e = null, isDrilldown = false, rptName) => {
+    if (e) {
+      e.preventDefault();
+    }
 
-  search = (e = null, isDrilldown = false, rptName) => {
+    let {
+      showTable,
+      changeButtonText,
+      setReportResult,
+      searchForm,
+      metaData,
+      setFlag,
+      setSearchParams,
+      reportHistory,
+      reportIndex,
+      pushReportHistory,
+      clearReportHistory,
+      decreaseReportIndex,
+    } = this.props;
+    let today = new Date();
+    let date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    let tabLabel = `Showing data upto : ${date}`;
+    this.props.updateTabLabel(tabLabel);
+
+    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+    let self = this;
+    if (!isDrilldown) {
+      const displayOnlyFields = this.getDisplayOnlyFields(metaData);
+
+      let searchParams = [];
+
+      clearReportHistory();
+      let resulturl = getResultUrl(this.state.moduleName);
+      let response =
+        resulturl &&
+        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: rptName || this.state.reportName, searchParams }).then(
+          function(response) {
+            pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
+            setReportResult(response);
+            showTable(true);
+            setFlag(1);
+          },
+          function(err) {
+            showTable(false);
+            alert("Something went wrong or try again later");
+          }
+        );
+    }
+
+    changeButtonText("APPLY");
+  };
+  search = (e = null, isDrilldown = false) => {
     if (e) {
       e.preventDefault();
     }
@@ -328,7 +378,7 @@ class ShowForm extends Component {
       let resulturl = getResultUrl(this.state.moduleName);
       let response =
         resulturl &&
-        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: rptName || this.state.reportName, searchParams }).then(
+        commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: this.state.reportName, searchParams }).then(
           function(response) {
             pushReportHistory({ tenantId: tenantId, reportName: self.state.reportName, searchParams });
             setReportResult(response);

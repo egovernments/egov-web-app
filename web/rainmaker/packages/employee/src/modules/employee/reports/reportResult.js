@@ -191,11 +191,12 @@ class ShowField extends Component {
       }
     }
 
-    const { reportResult, searchForm } = _this.props;
+    const { reportResult, searchForm, tabLabel } = _this.props;
     const { reportName, logoBase64, ulbname } = _this.state;
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
+    let reportTitle = reportName && reportName.split(/(?=[A-Z])/).join(" ");
 
     const buttons = [
       {
@@ -206,7 +207,8 @@ class ShowField extends Component {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
-        title: reportName && reportName.split(/(?=[A-Z])/).join(" "),
+        title: reportTitle,
+        messageTop: tabLabel,
         text: "PDF",
         orientation: "portrait",
         pageSize: "A4",
@@ -219,6 +221,10 @@ class ShowField extends Component {
       {
         extend: "excel",
         text: "XLS",
+        filename: _this.state.reportName,
+        title: reportTitle,
+        messageTop: tabLabel,
+        footer: true,
         className: "report-excel-button",
         exportOptions,
       },
@@ -313,8 +319,7 @@ class ShowField extends Component {
                   } else if (typeof b === "string" && b.split("/") && b.split("/").length === 2) {
                     let fraction = b.split("/");
                     if (ind == end - 1) {
-                      let sum = intVal(a) + intVal(b);
-
+                      let sum = intVal(a) + intVal(Number(fraction[0]));
                       let avg = (sum / end).toPrecision(3);
                       return Math.abs(avg) + "/" + fraction[1];
                     } else {
@@ -327,7 +332,7 @@ class ShowField extends Component {
 
               // Update footer
               //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
-              typeof pageTotal !== "undefined" && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
+              typeof pageTotal !== "undefined" && pageTotal !== "NaN" && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
               //}
             }
             // }
@@ -672,7 +677,7 @@ class ShowField extends Component {
           columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
-        console.log(sumColumn);
+
         // if (headerObj.total) {
         //   footerexist = true;
         // }
@@ -717,19 +722,13 @@ class ShowField extends Component {
     const viewTabel = () => {
       let { searchForm, tabLabel } = this.props;
 
-      let today = new Date();
-      let date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
       return (
         <div>
           {/* <Card> */}
           {/* <CardHeader title={self.state.reportSubTitle} /> */}
           {/* <CardText> */}
 
-          {tabLabel ? (
-            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{tabLabel}</div>
-          ) : (
-            <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{`Showing data upto : ${date}`}</div>
-          )}
+          {tabLabel && <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{tabLabel}</div>}
 
           <Table
             id="reportTable"
