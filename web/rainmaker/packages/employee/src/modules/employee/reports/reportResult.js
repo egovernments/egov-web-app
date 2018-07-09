@@ -250,15 +250,18 @@ class ShowField extends Component {
   };
 
   componentDidUpdate() {
-    let { reportResult } = this.props;
+    let { reportResult, tabLabel } = this.props;
     let self = this;
     let displayStart = 0;
     if (rTable && rTable.page && rTable.page.info()) {
       displayStart = rTable.page.info().start;
     }
-
+    let showTabLabel = () => {
+      console.log($(".report-result-table-header"));
+      $(".report-result-table-header").html(`${tabLabel}`);
+    };
     rTable = $("#reportTable").DataTable({
-      dom: '<"col-md-4"l><"col-md-4"B><"col-md-4"f>rtip',
+      dom: '<".col-md-8 report-result-table-header"l><"col-md-4"B><"col-md-4"f>rtip',
       order: [],
       select: true,
       displayStart: displayStart,
@@ -266,7 +269,8 @@ class ShowField extends Component {
       searching: false,
       paging: false,
       bInfo: false,
-      //  ordering: false,
+      // order: [[3, "desc"]],
+      ordering: true,
       bDestroy: true,
       footerCallback: function(row, data, start, end, display) {
         var api = this.api(),
@@ -340,6 +344,7 @@ class ShowField extends Component {
         }
       },
     });
+    showTabLabel();
   }
 
   drillDown = (e, i, i2, item, item1) => {
@@ -484,7 +489,7 @@ class ShowField extends Component {
     return (
       <thead style={{ backgroundColor: "#f8f8f8", color: "#767676", fontSize: "12px", fontWeight: 500 }}>
         <tr className="report-table-header">
-          <th key={"Sr. No. "}>{"Sr. No."}</th>
+          <th key={"S. No."}>{"S. No."}</th>
           {metaData &&
             metaData.reportDetails &&
             metaData.reportDetails.selectiveDownload && (
@@ -497,13 +502,21 @@ class ShowField extends Component {
               if (item.showColumn) {
                 return (
                   <th key={i}>
-                    <Label className="report-header-row-label" labelStyle={{ wordWrap: "unset", wordBreak: "unset" }} label={item.label} />
+                    <Label
+                      className="report-header-row-label"
+                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset" }}
+                      label={item.label}
+                    />
                   </th>
                 );
               } else {
                 return (
                   <th style={{ display: "none" }} key={i}>
-                    <Label className="report-header-row-label" labelStyle={{ wordWrap: "unset", wordBreak: "unset" }} label={item.label} />
+                    <Label
+                      className="report-header-row-label"
+                      labelStyle={{ width: "60%", wordWrap: "unset", wordBreak: "unset" }}
+                      label={item.label}
+                    />
                   </th>
                 );
               }
@@ -715,20 +728,18 @@ class ShowField extends Component {
 
   render() {
     let { drillDown, checkIfDate } = this;
-    let { isTableShow, metaData, reportResult } = this.props;
+    let { isTableShow, metaData, reportResult, tabLabel } = this.props;
     let self = this;
     let { reportName } = this.state;
 
     const viewTabel = () => {
-      let { searchForm, tabLabel } = this.props;
+      let { searchForm } = this.props;
 
       return (
         <div>
           {/* <Card> */}
           {/* <CardHeader title={self.state.reportSubTitle} /> */}
           {/* <CardText> */}
-
-          {tabLabel && <div style={{ paddingTop: "16px", paddingLeft: "16px" }}>{tabLabel}</div>}
 
           <Table
             id="reportTable"
@@ -738,6 +749,7 @@ class ShowField extends Component {
               padding: "0 !important",
               backgroundColor: "#ffffff",
             }}
+            responsive
           >
             {self.renderHeader()}
             {self.renderBody()}
