@@ -6,6 +6,7 @@ import { Header } from "modules/common";
 import { Footer } from "modules/common";
 import { ActionMenu } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
+import { logout } from "egov-ui-kit/redux/auth/actions";
 
 const withAuthorization = (options = {}) => (Component) => {
   class Wrapper extends React.Component {
@@ -71,6 +72,13 @@ const withAuthorization = (options = {}) => (Component) => {
             : this.roleFromUserInfo(userInfo, "EMPLOYEE")
               ? "employee"
               : "";
+
+      if (process.env.NODE_ENV === "production") {
+        if (window.basename.slice(1).toLowerCase() !== role.toLowerCase()) {
+          this.props.logout();
+        }
+      }
+
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
@@ -141,9 +149,17 @@ const withAuthorization = (options = {}) => (Component) => {
     const { complaints } = state || {};
     return { authenticated, userInfo };
   };
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      logout: () => dispatch(logout()),
+    };
+  };
   return compose(
     withData,
-    connect(mapStateToProps)
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )
   )(Wrapper);
 };
 

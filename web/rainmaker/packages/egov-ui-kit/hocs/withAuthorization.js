@@ -42,6 +42,8 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
+var _actions = require("egov-ui-kit/redux/auth/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var withAuthorization = function withAuthorization() {
@@ -113,6 +115,13 @@ var withAuthorization = function withAuthorization() {
           var titleAddon = this.state.titleAddon;
 
           var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : "";
+
+          if (process.env.NODE_ENV === "production") {
+            if (window.basename.slice(1).toLowerCase() !== role.toLowerCase()) {
+              this.props.logout();
+            }
+          }
+
           return _react2.default.createElement(
             "div",
             { className: "rainmaker-header-cont", style: { position: "relative" } },
@@ -188,7 +197,14 @@ var withAuthorization = function withAuthorization() {
 
       return { authenticated: authenticated, userInfo: userInfo };
     };
-    return (0, _redux.compose)(_withData2.default, (0, _reactRedux.connect)(mapStateToProps))(Wrapper);
+    var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+      return {
+        logout: function logout() {
+          return dispatch((0, _actions.logout)());
+        }
+      };
+    };
+    return (0, _redux.compose)(_withData2.default, (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps))(Wrapper);
   };
 };
 
