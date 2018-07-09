@@ -1,4 +1,4 @@
-.compalint-details-action-buttons {
+.complaint-details-action-buttons {
   position: fixed;
   bottom: 0;
   background: white;
@@ -12,7 +12,11 @@
 .action-button-one,
 .action-button-two {
   box-shadow: none !important;
-  background-color: transparent !important; }
+  background-color: transparent !important;
+  width: 45%; }
+
+.action-button-two {
+  margin-left: 20px; }
 
 @media only screen and (min-width: 768px) {
   .compalint-details-action-buttons {

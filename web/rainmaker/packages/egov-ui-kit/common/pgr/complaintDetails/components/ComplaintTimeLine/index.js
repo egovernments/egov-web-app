@@ -598,7 +598,7 @@ var ComplaintTimeLine = function (_Component) {
             null,
             _react2.default.createElement(
               "div",
-              { className: "rainmaker-displayInline" },
+              { className: "rainmaker-displayInline", style: { position: "relative" } },
               _react2.default.createElement(_components.Icon, { action: "action", name: "timeline", color: "#767676" }),
               " ",
               _react2.default.createElement(_translationNode2.default, { label: "CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE", containerStyle: { marginLeft: "13px" }, labelClassName: "dark-heading" }),
