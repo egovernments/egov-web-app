@@ -3,10 +3,6 @@
 var common = require("../Common");
 var axios = require("axios");
 
-// console.log(store.getState);
-
-// var store = require('configureStore').configure();
-
 var instance = axios.create({
   baseURL: window.location.origin,
   // timeout: 5000,

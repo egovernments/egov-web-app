@@ -14,6 +14,10 @@ const labelContainerStyle = {
   marginTop: "25px",
 };
 
+const innerDivStyle = {
+  paddingLeft: 50,
+};
+
 class PTHome extends Component {
   constructor(props) {
     super(props);
@@ -27,17 +31,17 @@ class PTHome extends Component {
     {
       primaryText: <Label label="Completed Assessments" />,
       route: "/property-tax/completed-assessments",
-      leftIcon: <Icon action="action" name="done" />,
+      leftIcon: <Icon action="action" name="done" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
     {
       primaryText: <Label label="PT_HOW_IT_WORKS" />,
-      leftIcon: <Icon action="action" name="help" />,
+      leftIcon: <Icon action="action" name="help" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
     {
       primaryText: <Label label="PT_EXAMPLES" />,
-      leftIcon: <Icon action="custom" name="pt-example" />,
+      leftIcon: <Icon action="custom" name="pt-example" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
   ];
@@ -87,8 +91,10 @@ class PTHome extends Component {
           }
         />
         <Card
+          className="property-tax-card"
           textChildren={
             <List
+              innerDivStyle={innerDivStyle}
               onItemClick={handleItemClick}
               listContainerStyle={{ marginTop: "16px" }}
               listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}

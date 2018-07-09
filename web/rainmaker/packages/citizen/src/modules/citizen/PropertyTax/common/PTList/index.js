@@ -2,25 +2,12 @@ import React from "react";
 import { List, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const PTList = ({ items, history, label, onItemClick }) => {
-  // const onListItemClick = (item, index) => {
-  //   const { route } = item;
-  //   console.log(item);
-  //   console.log(route);
-  //   let path = route && route.slice(1);
+const nestedListStyle = {
+  paddingLeft: 0,
+  marginLeft: 0,
+};
 
-  //   switch (path) {
-  //     case "receipt-dialogue":
-  //       console.log(path);
-  //       this.setState({
-  //         logoutPopupOpen: true,
-  //       });
-  //       break;
-  //     default:
-  //       history.push(path);
-  //       break;
-  //   }
-  // };
+const PTList = ({ items, history, label, onItemClick, innerDivStyle }) => {
   return (
     <div>
       {label && (
@@ -34,8 +21,10 @@ const PTList = ({ items, history, label, onItemClick }) => {
         />
       )}
       <Card
+        className="property-tax-card"
         textChildren={
           <List
+            innerDivStyle={innerDivStyle}
             items={items}
             listItemStyle={{ marginLeft: "10px", borderBottom: "1px solid #e0e0e0" }}
             nestedListStyle={{ marginLeft: "35px", padding: "0px" }}

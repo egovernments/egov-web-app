@@ -753,7 +753,6 @@ class Employee extends Component {
             },
           },
           function() {
-            console.log(self.state.subObject.assignments);
             self.vacantposition('assignments');
           }
         );
@@ -4829,7 +4828,6 @@ class Employee extends Component {
   };
 
   render() {
-      console.log(this.props)
     let self = this;
     return (
       

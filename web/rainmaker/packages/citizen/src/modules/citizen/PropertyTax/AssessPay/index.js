@@ -4,6 +4,10 @@ import PTList from "../common/PTList";
 import YearDialogue from "./components/YearDialogue";
 import { Screen } from "modules/common";
 
+const innerDivStyle = {
+  paddingLeft: 60,
+};
+
 class AssessPay extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +20,7 @@ class AssessPay extends Component {
     {
       primaryText: "My Properties",
       status: "Payment Pending",
-      leftIcon: <Icon action="action" name="home" />,
+      leftIcon: <Icon action="action" name="home" style={{ marginLeft: 0 }} />,
 
       nestedItems: [
         {
@@ -31,7 +35,7 @@ class AssessPay extends Component {
       primaryText: "Search Property",
       route: "search-property",
       status: "",
-      leftIcon: <Icon action="action" name="search" />,
+      leftIcon: <Icon action="action" name="search" style={{ marginLeft: 0 }} />,
     },
   ];
 
@@ -95,7 +99,7 @@ class AssessPay extends Component {
             </div>
           }
         />
-        <PTList items={getListItems(items)} history={this.props.history} />;
+        <PTList items={getListItems(items)} history={this.props.history} innerDivStyle={innerDivStyle} />;
         <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
     );

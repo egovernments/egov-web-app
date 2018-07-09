@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 import { Icon } from "components";
-import ReceiptDialog from "./components/ReceiptDialog";
 import PropertyInformation from "./components/PropertyInformation";
+import ReceiptDialog from "./components/ReceiptDialog";
+
+const innerDivStyle = {
+  paddingLeft: 50,
+};
 
 class Property extends Component {
   constructor(props) {
@@ -14,12 +18,16 @@ class Property extends Component {
       items: [
         {
           primaryText: "Property Information",
-          leftIcon: <Icon action="action" name="info" />,
-          nestedItems: PropertyInformation,
+          leftIcon: <Icon action="action" name="info" color="#484848" style={{ marginLeft: 0 }} />,
+          nestedItems: [
+            {
+              secondaryText: <PropertyInformation />,
+            },
+          ],
         },
         {
           primaryText: "Payment Record",
-          leftIcon: <Icon action="action" name="receipt" />,
+          leftIcon: <Icon action="action" name="receipt" color="#484848" style={{ marginLeft: 0 }} />,
           nestedItems: [
             {
               primaryText: "2018 - 2019",
@@ -62,7 +70,7 @@ class Property extends Component {
   render() {
     return (
       <Screen className="pt-home-screen">
-        <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} history={this.props.history} />
+        <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} innerDivStyle={innerDivStyle} history={this.props.history} />
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>
     );

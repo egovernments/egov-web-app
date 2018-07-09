@@ -13,7 +13,6 @@ class DuplicateCardsHOC extends React.Component {
   }
   componentDidMount() {
     const { formKey } = this.props;
-    // console.log(formKey);
     this.setState({
       DuplicateCard: this.setFormContent(),
     });
@@ -25,7 +24,6 @@ class DuplicateCardsHOC extends React.Component {
   };
 
   render() {
-    // console.log(this.state.DuplicateCard);
     const { DuplicateCard } = this.state;
     return <div>{[...DuplicateCard]}</div>;
   }

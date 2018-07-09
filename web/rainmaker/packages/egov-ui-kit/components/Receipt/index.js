@@ -15,7 +15,8 @@ var _translationNode2 = _interopRequireDefault(_translationNode);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Receipt = function Receipt(_ref) {
-  var receiptItems = _ref.receiptItems;
+  var receiptItems = _ref.receiptItems,
+      innerDivClass = _ref.innerDivClass;
 
   var _ref2 = receiptItems && receiptItems[0],
       leftItems = _ref2.leftItems,
@@ -27,14 +28,14 @@ var Receipt = function Receipt(_ref) {
       null,
       _react2.default.createElement(
         "div",
-        { className: "col-xs-12 col-sm-5" },
+        { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
         items && items.map(function (item, index) {
           return _react2.default.createElement(_translationNode2.default, { containerStyle: { marginTop: 10 }, label: item.key });
         })
       ),
       _react2.default.createElement(
         "div",
-        { className: "col-xs-12 col-sm-5" },
+        { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
         items && items.map(function (item, index) {
           return _react2.default.createElement(_translationNode2.default, { containerStyle: { marginTop: 10 }, label: item.value });
         })
@@ -44,7 +45,7 @@ var Receipt = function Receipt(_ref) {
 
   return receiptItems && _react2.default.createElement(
     "div",
-    { className: "clearfix", style: { height: "inherit", marginTop: "5px" } },
+    { className: "clearfix", style: { height: "inherit", marginTop: "10px", marginBottom: "15px" } },
     _react2.default.createElement(
       "div",
       { className: "col-xs-12 col-sm-5", style: { padding: "0px" } },
