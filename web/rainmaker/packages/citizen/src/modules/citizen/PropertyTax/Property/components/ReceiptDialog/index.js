@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import { Dialog } from "components";
+import { Dialog, Button } from "components";
 import PropertyInformation from "../PropertyInformation";
 import AssessmentList from "../../../common/AssessmentList";
+
+const innerDivStyle = {
+  paddingLeft: 60,
+};
 
 class ReceiptDialog extends Component {
   render() {
@@ -13,9 +17,10 @@ class ReceiptDialog extends Component {
         title="Paid"
         modal={false}
         onRequestClose={closeDialogue}
+        autoScrollBodyContent={true}
         handleClose={closeDialogue}
         open={open}
-        children={[<AssessmentList items={PropertyInformation} />]}
+        children={[<PropertyInformation />]}
         bodyStyle={{ backgroundColor: "#ffffff" }}
         isClose={true}
         contentStyle={{ width: "80%" }}

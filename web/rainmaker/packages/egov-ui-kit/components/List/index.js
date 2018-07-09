@@ -27,16 +27,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var baseListContainerStyle = { background: "#fff", padding: "0px" };
 var baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
+var nestedItemStyle = {
+  paddingLeft: 0,
+  marginLeft: 0
+};
+
 var List = function List(_ref) {
   var listItemContainer = _ref.listItemContainer,
       onItemClick = _ref.onItemClick,
       _ref$listItemStyle = _ref.listItemStyle,
       listItemStyle = _ref$listItemStyle === undefined ? {} : _ref$listItemStyle,
+      innerDivStyle = _ref.innerDivStyle,
       _ref$listContainerSty = _ref.listContainerStyle,
       listContainerStyle = _ref$listContainerSty === undefined ? {} : _ref$listContainerSty,
       _ref$items = _ref.items,
       items = _ref$items === undefined ? [] : _ref$items,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["listItemContainer", "onItemClick", "listItemStyle", "listContainerStyle", "items"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["listItemContainer", "onItemClick", "listItemStyle", "innerDivStyle", "listContainerStyle", "items"]);
 
   var renderListItems = function renderListItems(items) {
     return items.map(function (item, index) {
@@ -51,9 +57,14 @@ var List = function List(_ref) {
         item.nestedItems = renderListItems(nestedItems);
       }
 
-      return _react2.default.createElement(_List.ListItem, (0, _extends3.default)({ onClick: function onClick() {
+      return _react2.default.createElement(_List.ListItem, (0, _extends3.default)({
+        onClick: function onClick() {
           return onItemClick && onItemClick(item, index);
-        }, containerElement: listItemContainer, key: index }, rest, item));
+        },
+        innerDivStyle: item && item.leftIcon ? innerDivStyle ? innerDivStyle : {} : nestedItemStyle,
+        containerElement: listItemContainer,
+        key: index
+      }, rest, item));
     });
   };
 

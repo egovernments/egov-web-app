@@ -177,6 +177,7 @@ class AllComplaints extends Component {
                   <TextField
                     id="mobile-no"
                     name="mobile-no"
+                    type="number"
                     value={mobileNo}
                     hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
                     floatingLabelText={<Label label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}

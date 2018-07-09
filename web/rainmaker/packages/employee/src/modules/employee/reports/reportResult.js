@@ -89,10 +89,7 @@ class ShowField extends Component {
         // setForm();
       },
       function(err) {
-        // console.log(err);
         alert("Try again later");
-        //_this.props.setLoadingStatus('hide');
-        // _this.props.toggleDailogAndSetText(true, 'Try again later');
       }
     );
   }
@@ -280,8 +277,6 @@ class ShowField extends Component {
 
         {
           sumColumn.map((columnObj, index) => {
-            // if (columnObj.total) {
-            //console.log(columnObj.total);
             if (columnObj.total) {
               // Remove the formatting to get integer data for summation
 
@@ -690,7 +685,6 @@ class ShowField extends Component {
           columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
-
         // if (headerObj.total) {
         //   footerexist = true;
         // }

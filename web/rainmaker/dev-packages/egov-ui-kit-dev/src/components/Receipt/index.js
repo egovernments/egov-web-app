@@ -1,7 +1,7 @@
 import React from "react";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const Receipt = ({ receiptItems, innerDivStyle }) => {
+const Receipt = ({ receiptItems, innerDivClass }) => {
   let { leftItems, rightItems } = receiptItems && receiptItems[0];
   const getItems = (items) => {
     return (
@@ -24,7 +24,7 @@ const Receipt = ({ receiptItems, innerDivStyle }) => {
 
   return (
     receiptItems && (
-      <div className="clearfix" style={{ height: "inherit", marginTop: "5px" }}>
+      <div className="clearfix" style={{ height: "inherit", marginTop: "10px", marginBottom: "15px" }}>
         <div className="col-xs-12 col-sm-5" style={{ padding: "0px" }}>
           {getItems(leftItems)}
         </div>

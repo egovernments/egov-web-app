@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 
+const innerDivStyle = {
+  paddingLeft: 0,
+};
+
 class MyProperties extends Component {
   state = {
     items: [
@@ -36,7 +40,7 @@ class MyProperties extends Component {
   render() {
     return (
       <Screen className="pt-home-screen">
-        <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} history={this.props.history} />
+        <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
       </Screen>
     );
   }

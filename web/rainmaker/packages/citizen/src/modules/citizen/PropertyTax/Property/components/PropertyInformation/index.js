@@ -1,32 +1,45 @@
 import React from "react";
-import { Icon, Receipt, Button } from "components";
+import { Receipt, Icon, Divider, Button } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
+import "./index.css";
 import PropertyItems from "./propertyitems";
 
 let { propertyAddressItems, assessmentItems, ownershipItems } = PropertyItems;
 
 const className = "col-xs-12 col-xs-6";
 
-const PropertyInformation = [
-  {
-    primaryText: "Property Address",
-    leftIcon: <Icon action="action" name="home" />,
-    secondaryText: <Receipt receiptItems={propertyAddressItems} innerDivClass={className} />,
-  },
-  {
-    primaryText: "Assessment Information",
-    leftIcon: <Icon action="action" name="assignment" />,
-    secondaryText: <Receipt receiptItems={assessmentItems} innerDivClass={className} />,
-  },
-  {
-    primaryText: "Ownership Information",
-    leftIcon: <Icon action="social" name="person" />,
-    secondaryText: (
-      <div style={{ height: "inherit" }}>
+const ReceiptItems = () => {
+  return (
+    <div style={{ marginLeft: 20 }}>
+      {/* <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} /> */}
+      <div>
+        <div className="receipt-displayInline">
+          <Icon action="action" name="home" color="#767676" />
+          <Label label="Property Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+        </div>
+        <Receipt receiptItems={propertyAddressItems} innerDivClass={className} />
+      </div>
+      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 10, marginRight: 0 }} />
+      <div>
+        <div className="receipt-displayInline">
+          <Icon action="action" name="assignment" color="#767676" />
+          <Label label="Assessment Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+        </div>
+        <Receipt receiptItems={assessmentItems} innerDivClass={className} />
+      </div>
+      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 10, marginRight: 0 }} />
+      <div>
+        <div className="receipt-displayInline">
+          <Icon action="social" name="person" color="#767676" />
+          <Label label="Ownership Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
+        </div>
         <Receipt receiptItems={ownershipItems} innerDivClass={className} />
+      </div>
+      <div className="text-center">
         <Button
-          className="employee-complaint-summary-mapBtn"
+          className="receipt-button"
           primary={true}
-          label="ACCESS & PAY"
+          label="Download Receipt"
           style={{
             height: 36,
             lineHeight: "auto",
@@ -45,8 +58,8 @@ const PropertyInformation = [
           }}
         />
       </div>
-    ),
-  },
-];
+    </div>
+  );
+};
 
-export default PropertyInformation;
+export default ReceiptItems;
