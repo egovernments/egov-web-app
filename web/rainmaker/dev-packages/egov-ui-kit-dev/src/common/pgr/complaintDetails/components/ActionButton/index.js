@@ -8,7 +8,7 @@ class ActionButton extends Component {
     let { btnOneLabel, btnOneOnClick, btnTwoLabel, btnTwoOnClick } = this.props;
     const defaultButtonStyle = {
       height: "48px",
-      width: "180px",
+      width: "100%",
       lineHeight: "48px",
     };
     const button1Style = {
@@ -17,7 +17,7 @@ class ActionButton extends Component {
     };
     const button2Style = {};
     return (
-      <div className="compalint-details-action-buttons">
+      <div className="complaint-details-action-buttons">
         <Button
           label={<Label buttonLabel={true} label={btnOneLabel} color="#fe7a51" />}
           onClick={btnOneOnClick}

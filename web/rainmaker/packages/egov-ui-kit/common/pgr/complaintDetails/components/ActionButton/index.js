@@ -57,7 +57,7 @@ var ActionButton = function (_Component) {
 
       var defaultButtonStyle = {
         height: "48px",
-        width: "180px",
+        width: "100%",
         lineHeight: "48px"
       };
       var button1Style = {
@@ -67,7 +67,7 @@ var ActionButton = function (_Component) {
       var button2Style = {};
       return _react2.default.createElement(
         "div",
-        { className: "compalint-details-action-buttons" },
+        { className: "complaint-details-action-buttons" },
         _react2.default.createElement(_components.Button, {
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: btnOneLabel, color: "#fe7a51" }),
           onClick: btnOneOnClick,
