@@ -17,7 +17,7 @@ class Home extends Component {
   render() {
     const { updates, history } = this.props;
     return (
-      <Banner className="homepage-banner">
+      <Banner className="homepage-banner banner-logo-home">
         <div className="home-page-cont">
           <div>
             <NewAndOldComplaints history={history} />
