@@ -90,7 +90,7 @@ const formConfig = {
     mohalla: {
       id: "mohalla",
       required: true,
-      jsonPath: "services[0].mohalla",
+      jsonPath: "services[0].addressId",
       floatingLabelText: "ES_CREATECOMPLAINT_MOHALLA",
       hintText: "ES_CREATECOMPLAINT_SELECT_PLACEHOLDER",
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
