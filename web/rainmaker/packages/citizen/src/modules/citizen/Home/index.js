@@ -4,14 +4,18 @@ import { Banner } from "modules/common";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
+import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import { mapCompIDToName } from "egov-ui-kit/utils/commons";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
 class Home extends Component {
   componentDidMount = () => {
-    const { fetchComplaints } = this.props;
+    const { fetchComplaints, resetFiles } = this.props;
     fetchComplaints([], false);
+    if (this.props.form && this.props.form.complaint) {
+      resetFiles("complaint");
+    }
   };
 
   render() {
@@ -30,6 +34,7 @@ class Home extends Component {
 }
 const mapStateToProps = (state) => {
   const complaints = state.complaints || {};
+  const { form } = state || {};
   let updates = [];
   Object.keys(complaints.byId).forEach((complaintKey, index) => {
     let complaintObj = {};
@@ -47,12 +52,13 @@ const mapStateToProps = (state) => {
     ["date"],
     ["desc"]
   );
-  return { updates: [...nonClosedComplaints, ...closedComplaints] };
+  return { form, updates: [...nonClosedComplaints, ...closedComplaints] };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria, hasUsers) => dispatch(fetchComplaints(criteria, hasUsers)),
+    resetFiles: (formKey) => dispatch(resetFiles(formKey)),
   };
 };
 
