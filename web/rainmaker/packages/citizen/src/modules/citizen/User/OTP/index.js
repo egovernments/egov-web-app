@@ -18,12 +18,16 @@ class OTP extends Component {
   }
 
   componentDidMount() {
-    const { submitForm, handleFieldChange } = this.props;
+    const { submitForm, handleFieldChange,previousRoute } = this.props;
     const otpElement = document.getElementById("otp");
     otpElement.addEventListener("smsReceived", (e) => {
       const { otp } = e.detail;
       handleFieldChange("otp", "otp", otp);
-      submitForm("otp");
+      if (previousRoute==="/citizen/user/register") {
+        submitForm("otp","/user/citizen/_create");
+      } else {
+        submitForm("otp");
+      }
     });
   }
 
