@@ -12,6 +12,13 @@ export const COMPLAINT = {
   },
 };
 
+export const DRAFTS = {
+  GET: {
+    URL: "pt-services-v2/drafts/_search",
+    ACTION: "_search",
+  },
+};
+
 export const FILE_UPLOAD = {
   POST: {
     URL: "filestore/v1/files",

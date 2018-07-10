@@ -39,14 +39,6 @@ var items = {
             paddingTop: "3px"
           },
           id: "header-profile"
-        }, {
-          primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_LANGUAGE" }),
-          route: "/language-selection",
-          leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "language" }),
-          style: {
-            borderBottom: "none"
-          },
-          id: "header-language"
         }]
       },
       two: {
@@ -120,15 +112,6 @@ var items = {
             paddingTop: "3px"
           },
           id: "header-profile",
-          renderForCSR: true
-        }, {
-          primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_LANGUAGE" }),
-          route: "/language-selection",
-          leftIcon: _react2.default.createElement(_components.Icon, { action: "action", name: "language" }),
-          style: {
-            borderBottom: "none"
-          },
-          id: "header-language",
           renderForCSR: true
         }]
       },

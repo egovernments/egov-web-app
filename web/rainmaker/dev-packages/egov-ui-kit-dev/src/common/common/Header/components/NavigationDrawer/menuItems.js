@@ -28,15 +28,15 @@ const items = {
             },
             id: "header-profile",
           },
-          {
-            primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
-            route: "/language-selection",
-            leftIcon: <Icon action="action" name="language" />,
-            style: {
-              borderBottom: "none",
-            },
-            id: "header-language",
-          },
+          // {
+          //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
+          //   route: "/language-selection",
+          //   leftIcon: <Icon action="action" name="language" />,
+          //   style: {
+          //     borderBottom: "none",
+          //   },
+          //   id: "header-language",
+          // },
         ],
       },
       two: {
@@ -121,16 +121,16 @@ const items = {
             id: "header-profile",
             renderForCSR: true,
           },
-          {
-            primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
-            route: "/language-selection",
-            leftIcon: <Icon action="action" name="language" />,
-            style: {
-              borderBottom: "none",
-            },
-            id: "header-language",
-            renderForCSR: true,
-          },
+          // {
+          //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
+          //   route: "/language-selection",
+          //   leftIcon: <Icon action="action" name="language" />,
+          //   style: {
+          //     borderBottom: "none",
+          //   },
+          //   id: "header-language",
+          //   renderForCSR: true,
+          // },
         ],
       },
       two: {

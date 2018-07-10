@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Drawer, List } from "components";
 import UserProfile from "./UserProfile";
-import LanguageSelection from "./LanguageSelection";
+// import LanguageSelection from "./LanguageSelection";
 import menuItems from "./menuItems";
 import logoMseva from "egov-ui-kit/assets/images/logo_black.png";
 
@@ -48,7 +48,7 @@ const NavigationDrawer = ({
           listContainerStyle={{ background: "#ffffff" }}
           listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
         />
-        <LanguageSelection fetchLocalizationLabel={fetchLocalizationLabel} />
+        {/* <LanguageSelection fetchLocalizationLabel={fetchLocalizationLabel} /> */}
         <List
           onItemClick={handleItemClick}
           innerDivStyle={styles.listInnerDivStyle}

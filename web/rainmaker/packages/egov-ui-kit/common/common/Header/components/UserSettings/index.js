@@ -102,14 +102,6 @@ var UserSettings = function (_Component) {
       return _react2.default.createElement(
         "div",
         { className: "userSettingsContainer" },
-        _react2.default.createElement(_components.DropDown, {
-          onChange: this.onChange,
-          listStyle: style.listStyle,
-          style: style.baseStyle,
-          labelStyle: style.label,
-          dropDownData: items,
-          value: languageSelected
-        }),
         _react2.default.createElement(
           "div",
           { onClick: onIconClick, className: "userSettingsInnerContainer" },
