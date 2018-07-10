@@ -73,8 +73,11 @@ const withAuthorization = (options = {}) => (Component) => {
               ? "employee"
               : "";
 
+      //For restricting citizen to access employee url
+
       if (process.env.NODE_ENV === "production") {
-        if (window.basename.slice(1).toLowerCase() !== role.toLowerCase()) {
+        const _role = role === "citizen" ? "citizen" : "employee";
+        if (window.basename.slice(1).toLowerCase() !== _role) {
           this.props.logout();
         }
       }
