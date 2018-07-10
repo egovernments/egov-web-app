@@ -95,7 +95,10 @@ const form = (state = intialState, action) => {
   switch (type) {
     case actionTypes.INIT_FORM:
       const { name, ...form } = action.form;
-      const currentForm = state[name] || {};
+      let currentForm = state[name] || {};
+      if (currentForm.files && currentForm.files.media && currentForm.files.media.length) {
+        currentForm.files = {};
+      }
       const mergedFields = mergeFields(currentForm.fields, action.form.fields);
       return { ...state, [name]: { ...currentForm, ...form, fields: mergedFields } };
     case actionTypes.RESET_FORM:
