@@ -32,6 +32,24 @@ const commonReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS:
+      let employeeToAssignById = transformById(action.payload.Employee, "id");
+      return {
+        ...state,
+        loading: false,
+        employeeToAssignById: {
+          ...state.employeeToAssignById,
+          ...employeeToAssignById,
+        },
+      };
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
     case commonTypes.CITIZEN_FETCH_SUCCESS:
       let citizenById = transformById(action.payload.user, "id");
       return {
