@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, TextField, Card, Image } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import logo from "egov-ui-kit/assets/images/logo_black.png";
+import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
 
 const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP }) => {
@@ -14,7 +14,7 @@ const OTP = ({ handleFieldChange, form, phoneNumber, resendOTP }) => {
       textChildren={
         <div>
           <div className="web-user-logo" style={{ marginBottom: "24px" }}>
-            <Image className="mseva-logo" source={`${logo}`} />
+            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
           </div>
           <Label className="otp-heading text-center" bold={true} dark={true} fontSize={16} label="CORE_OTP_HEADING" />
           <div className="citizen-otp-sent-message">

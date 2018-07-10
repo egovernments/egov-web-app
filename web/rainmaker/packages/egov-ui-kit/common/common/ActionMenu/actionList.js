@@ -17,19 +17,6 @@ var actionList = {
     navigationURL: "my-complaints",
     leftIcon: { action: "alert", name: "warning" },
     rightIcon: ""
-  }, {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Property Tax",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "property-tax",
-    leftIcon: { action: "custom", name: "property-tax" },
-    rightIcon: ""
   }],
   employee: [{
     id: 1535,

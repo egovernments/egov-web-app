@@ -51,6 +51,10 @@
 @media only screen and (min-width: 768px) {
   .user-screens-wrapper {
     height: 100vh; }
+  .user-logo-wrapper {
+    display: none; }
+  .banner-logo-home .user-logo-wrapper {
+    display: block !important; }
   .banner-overlay {
     background: transparent; }
   .banner-image,
