@@ -22,10 +22,10 @@ class RequestReAssign extends Component {
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
   }
   options = [
-    { value: "Not my Department", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
-    { value: "Not my Jurisdiction", label: <Label label="ES_REASSIGN_OPTION_TWO" /> },
-    { value: "Absent or Leave", label: <Label label="ES_REASSIGN_OPTION_THREE" /> },
-    { value: "Not a valid Complaint", label: <Label label="ES_REASSIGN_OPTION_FOUR" /> },
+    { value: "Not a valid complaint", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
+    { value: "Not my responsibility", label: <Label label="ES_REASSIGN_OPTION_TWO" /> },
+    { value: "Absent or on leave", label: <Label label="ES_REASSIGN_OPTION_THREE" /> },
+    { value: "Other", label: <Label label="ES_REASSIGN_OPTION_FOUR" /> },
   ];
 
   commentsValue = {};
@@ -56,10 +56,13 @@ class RequestReAssign extends Component {
   };
 
   onSubmit = (e) => {
-    const { valueSelected } = this.state;
+    const { valueSelected, commentValue } = this.state;
     if (!valueSelected) {
       e.preventDefault();
       this.props.toggleSnackbarAndSetText(true, "Please mention the reason", true);
+    } else if (valueSelected === "Other" && !commentValue) {
+      e.preventDefault();
+      this.props.toggleSnackbarAndSetText(true, "Please type your comments", true);
     }
   };
 

@@ -146,8 +146,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
               />
             )}
           {role !== "citizen" &&
-            openStatusCount == 1 &&
-            (currentStatus === "open" || currentStatus === "assigned") &&
+            action !== "reopen" &&
             filedUserMobileNumber && (
               <a className="pgr-call-icon" href={`tel:+91${filedUserMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                 <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
@@ -224,8 +223,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 }`}
               />
               <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${employeeName}`} />
-              {(role === "AO" || currentStatus === "assigned") &&
-                employeeMobileNumber &&
+              {employeeMobileNumber &&
                 assigneeStatusCount === 1 && (
                   <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
@@ -263,8 +261,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 }`}
               />
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
-              {currentStatus === "assigned" &&
-                assigneeStatusCount === 1 &&
+              {assigneeStatusCount === 1 &&
                 groName &&
                 groMobileNumber && (
                   <a className="pgr-call-icon" href={`tel:+91${groMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
@@ -309,7 +306,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 label={`${groName ? "CS_COMPLAINT_DETAILS_BEING_REASSIGNED" : "CS_COMMON_STATUS_BEING_REASSIGNED"}`}
               />
               {groName && <Label labelClassName="dark-color" containerStyle={nameContainerStyle} label={`${groName}`} />}
-              {currentStatus === "reassignrequested" &&
+              {/* {currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 &&
                 groName &&
                 groMobileNumber && (
@@ -317,7 +314,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                     <span style={{ marginLeft: "43px" }}>{`+91 ${groMobileNumber}`}</span>
                   </a>
-                )}
+                )} */}
             </div>
           )}
           {role !== "citizen" && (
@@ -327,14 +324,15 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
                 containerStyle={statusContainerStyle}
                 label={`${"CS_COMMON_RE-ASSIGN REQUESTED"}`}
               />
-              {currentStatus === "reassignrequested" &&
+              {/* {role === "ao" &&
+                currentStatus === "reassignrequested" &&
                 reassignRequestedCount === 1 &&
                 employeeMobileNumber && (
                   <a className="pgr-call-icon" href={`tel:+91${employeeMobileNumber}`} style={{ textDecoration: "none", position: "relative" }}>
                     <Icon action="communication" name="call" style={callIconStyle} color={"#22b25f"} />
                     <span style={{ marginLeft: "43px" }}>{`+91 ${employeeMobileNumber}`}</span>
                   </a>
-                )}
+                )} */}
 
               <Label
                 labelClassName="rainmaker-small-font complaint-timeline-comments"
