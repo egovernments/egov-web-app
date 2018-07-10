@@ -148,7 +148,7 @@ class ContactUs extends Component {
     let { facebookUrl, twitterUrl } = this.props.currentTenant[0] || {};
 
     return (
-      <div>
+      <div className="form-without-button-cont-generic">
         <Screen className="contactus-main-cont">
           <Card
             id="contactus-card"

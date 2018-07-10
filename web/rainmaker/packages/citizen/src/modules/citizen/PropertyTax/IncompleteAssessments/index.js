@@ -19,6 +19,11 @@ class IncompleteAssessments extends Component {
       },
     ],
   };
+  // componentDidMount = () => {
+  //   let { fetchDrafts } = this.props;
+  //   fetchComplaints([]);
+  // };
+
   render() {
     return (
       <Screen className="pt-home-screen">

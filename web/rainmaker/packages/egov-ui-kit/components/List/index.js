@@ -27,10 +27,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var baseListContainerStyle = { background: "#fff", padding: "0px" };
 var baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
-var nestedItemStyle = {
-  paddingLeft: 0,
-  marginLeft: 0
-};
+// const nestedItemStyle = {
+//   paddingLeft: 0,
+//   marginLeft: 0,
+// };
 
 var List = function List(_ref) {
   var listItemContainer = _ref.listItemContainer,
@@ -61,8 +61,9 @@ var List = function List(_ref) {
         onClick: function onClick() {
           return onItemClick && onItemClick(item, index);
         },
-        innerDivStyle: item && item.leftIcon ? innerDivStyle ? innerDivStyle : {} : nestedItemStyle,
-        containerElement: listItemContainer,
+        innerDivStyle: innerDivStyle
+        // innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
+        , containerElement: listItemContainer,
         key: index
       }, rest, item));
     });

@@ -60,14 +60,14 @@ class UserSettings extends Component {
 
     return (
       <div className="userSettingsContainer">
-        <DropDown
+        {/* <DropDown
           onChange={this.onChange}
           listStyle={style.listStyle}
           style={style.baseStyle}
           labelStyle={style.label}
           dropDownData={items}
           value={languageSelected}
-        />
+        /> */}
         {/* <Icon action="social" name="notifications" color="#767676" style={style.iconStyle} /> */}
         <div onClick={onIconClick} className="userSettingsInnerContainer">
           <Image width={"33px"} circular={true} source={userInfo.photo || emptyFace} />

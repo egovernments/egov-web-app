@@ -5,10 +5,10 @@ import { List as MaterialUiList, ListItem } from "material-ui/List";
 const baseListContainerStyle = { background: "#fff", padding: "0px" };
 const baseListItemStyle = { color: "#484848", fontWeight: 500 };
 
-const nestedItemStyle = {
-  paddingLeft: 0,
-  marginLeft: 0,
-};
+// const nestedItemStyle = {
+//   paddingLeft: 0,
+//   marginLeft: 0,
+// };
 
 const List = ({ listItemContainer, onItemClick, listItemStyle = {}, innerDivStyle, listContainerStyle = {}, items = [], ...rest }) => {
   const renderListItems = (items) => {
@@ -26,7 +26,8 @@ const List = ({ listItemContainer, onItemClick, listItemStyle = {}, innerDivStyl
       return (
         <ListItem
           onClick={() => onItemClick && onItemClick(item, index)}
-          innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
+          innerDivStyle={innerDivStyle}
+          // innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
           containerElement={listItemContainer}
           key={index}
           {...rest}

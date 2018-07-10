@@ -18,35 +18,21 @@ var _translationNode2 = _interopRequireDefault(_translationNode);
 
 require("./index.css");
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
   var history = _ref.history,
-    userInfo = _ref.userInfo;
+      userInfo = _ref.userInfo;
 
   // const userInfo = localStorage.getItem("user-info");
-  var role =
-    (userInfo &&
-      userInfo.roles &&
-      userInfo.roles.length &&
-      userInfo.roles[0].code.toLowerCase()) ||
-    null;
+  var role = userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase() || null;
   return _react2.default.createElement(
     "div",
     { className: "reopen-success-container" },
     _react2.default.createElement(
       "div",
       { className: "success-message-main-screen" },
-      _react2.default.createElement(_common.SuccessMessage, {
-        successmessage: "CS_REOPEN_SUCCESS_MESSAGE",
-        icon: _react2.default.createElement(_components.Icon, {
-          action: "navigation",
-          name: "check"
-        }),
-        backgroundColor: "#22b25f"
-      })
+      _react2.default.createElement(_common.SuccessMessage, { successmessage: "CS_REOPEN_SUCCESS_MESSAGE", icon: _react2.default.createElement(_components.Icon, { action: "navigation", name: "check" }), backgroundColor: "#22b25f" })
     ),
     _react2.default.createElement(
       "div",
@@ -54,15 +40,10 @@ var ReopenAcknowledgement = function ReopenAcknowledgement(_ref) {
       _react2.default.createElement(_components.Button, {
         id: "success-message-acknowledgement",
         onClick: function onClick() {
-          return role === "citizen"
-            ? history.push("/")
-            : history.push("/all-complaints");
+          return role === "citizen" ? history.push("/") : history.push("/all-complaints");
         },
         primary: true,
-        label: _react2.default.createElement(_translationNode2.default, {
-          buttonLabel: true,
-          label: "CORE_COMMON_GOTOHOME"
-        }),
+        label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "CORE_COMMON_GOTOHOME" }),
         fullWidth: true,
         className: "responsive-action-button"
       })

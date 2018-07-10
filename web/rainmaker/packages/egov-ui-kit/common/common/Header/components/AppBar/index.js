@@ -92,7 +92,7 @@ var EgovAppBar = function EgovAppBar(_ref) {
       _react2.default.createElement(
         _Toolbar2.default,
         { className: "app-toolbar", style: { padding: "0px", height: "64px", background: "#ffffff" } },
-        _react2.default.createElement(_UserSettings2.default, { fetchLocalizationLabel: fetchLocalizationLabel, onIconClick: onToolBarIconClick, userInfo: userInfo })
+        _react2.default.createElement(_UserSettings2.default, { onIconClick: onToolBarIconClick, userInfo: userInfo })
       ),
       _react2.default.createElement(
         "div",
