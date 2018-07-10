@@ -40,7 +40,7 @@ const twitterStyle = {
   background: "#55acee",
 };
 
-const location = { lat: 12.9199988, lng: 77.67078 };
+// const location = { lat: 12.9199988, lng: 77.67078 };
 
 class ContactUs extends Component {
   constructor(props) {
@@ -145,8 +145,11 @@ class ContactUs extends Component {
   };
 
   render() {
-    let { facebookUrl, twitterUrl } = this.props.currentTenant[0] || {};
-
+    let { facebookUrl, twitterUrl, city } = this.props.currentTenant[0] || {};
+    let location = {
+      lat: city && city.latitude,
+      lng: city && city.longitude,
+    };
     return (
       <div className="form-without-button-cont-generic">
         <Screen className="contactus-main-cont">

@@ -298,7 +298,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedComplaint.actions &&
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by &&
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] &&
-    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
