@@ -125,6 +125,9 @@ var form = function form() {
           _form = (0, _objectWithoutProperties3.default)(_action$form, ["name"]);
 
       var currentForm = state[name] || {};
+      if (currentForm.files && currentForm.files.media && currentForm.files.media.length) {
+        currentForm.files = {};
+      }
       var mergedFields = mergeFields(currentForm.fields, action.form.fields);
       return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, name, (0, _extends14.default)({}, currentForm, _form, { fields: mergedFields })));
     case actionTypes.RESET_FORM:
