@@ -64,6 +64,13 @@ export const EMPLOYEE = {
   },
 };
 
+export const EMPLOYEE_ASSIGN = {
+  GET: {
+    URL: "/hr-employee-v2/employees/_search",
+    ACTION: "_search",
+  },
+};
+
 export const CITIZEN = {
   GET: {
     URL: "/user/v1/_search",

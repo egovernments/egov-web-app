@@ -17,6 +17,13 @@ var COMPLAINT = exports.COMPLAINT = {
   }
 };
 
+var DRAFTS = exports.DRAFTS = {
+  GET: {
+    URL: "pt-services-v2/drafts/_search",
+    ACTION: "_search"
+  }
+};
+
 var FILE_UPLOAD = exports.FILE_UPLOAD = {
   POST: {
     URL: "filestore/v1/files"
@@ -56,6 +63,13 @@ var OTP = exports.OTP = {
 };
 
 var EMPLOYEE = exports.EMPLOYEE = {
+  GET: {
+    URL: "/hr-employee-v2/employees/_search",
+    ACTION: "_search"
+  }
+};
+
+var EMPLOYEE_ASSIGN = exports.EMPLOYEE_ASSIGN = {
   GET: {
     URL: "/hr-employee-v2/employees/_search",
     ACTION: "_search"

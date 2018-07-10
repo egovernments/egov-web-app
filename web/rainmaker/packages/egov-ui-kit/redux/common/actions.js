@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.setDropDownData = undefined;
+exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -39,6 +39,20 @@ var employeeFetchSuccess = function employeeFetchSuccess(payload) {
 var employeeFetchError = function employeeFetchError(error) {
   return {
     type: actionTypes.EMPLOYEE_FETCH_ERROR,
+    error: error
+  };
+};
+
+var employeeToAssignFetchSuccess = function employeeToAssignFetchSuccess(payload) {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS,
+    payload: payload
+  };
+};
+
+var employeeToAssignFetchError = function employeeToAssignFetchError(error) {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_ERROR,
     error: error
   };
 };
@@ -187,6 +201,45 @@ var fetchMDMSData = exports.fetchMDMSData = function fetchMDMSData(requestBody) 
 
     return function (_x5) {
       return _ref3.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchEmployeeToAssign = exports.fetchEmployeeToAssign = function fetchEmployeeToAssign(queryObj, requestBody) {
+  return function () {
+    var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
+      var payload;
+      return _regenerator2.default.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return (0, _api.httpRequest)(_endPoints.EMPLOYEE_ASSIGN.GET.URL, _endPoints.EMPLOYEE_ASSIGN.GET.ACTION, queryObj, requestBody);
+
+            case 3:
+              payload = _context4.sent;
+
+              dispatch(employeeToAssignFetchSuccess(payload));
+              _context4.next = 10;
+              break;
+
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+
+              dispatch(employeeToAssignFetchError(_context4.t0.message));
+
+            case 10:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, undefined, [[0, 7]]);
+    }));
+
+    return function (_x6) {
+      return _ref4.apply(this, arguments);
     };
   }();
 };
