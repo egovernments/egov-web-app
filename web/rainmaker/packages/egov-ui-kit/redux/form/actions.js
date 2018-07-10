@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setFieldProperty = exports.fileUpload = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
+exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -204,6 +204,10 @@ var fileUploadError = function fileUploadError(formKey, fieldKey, error, fileNam
 
 var removeFile = exports.removeFile = function removeFile(formKey, fieldKey, fileIndex) {
   return { type: actionTypes.FILE_REMOVE, fieldKey: fieldKey, formKey: formKey, fileIndex: fileIndex };
+};
+
+var resetFiles = exports.resetFiles = function resetFiles(formKey) {
+  return { type: actionTypes.RESET_FILES, formKey: formKey };
 };
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload

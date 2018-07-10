@@ -85,6 +85,10 @@ const fileUploadError = (state, formKey, fieldKey, error, fileName) => {
   };
 };
 
+const resetFiles = (state, formKey) => {
+  return { ...state, [formKey]: { ...state[formKey], files: {} } };
+};
+
 const removeFile = (state, formKey, fieldKey, fileIndex) => {
   const files = getFiles(state, formKey, fieldKey);
   return { ...state, [formKey]: { ...state[formKey], files: { [fieldKey]: files.filter((f, index) => index !== fileIndex) } } };
@@ -96,9 +100,6 @@ const form = (state = intialState, action) => {
     case actionTypes.INIT_FORM:
       const { name, ...form } = action.form;
       let currentForm = state[name] || {};
-      if (currentForm.files && currentForm.files.media && currentForm.files.media.length) {
-        currentForm.files = {};
-      }
       const mergedFields = mergeFields(currentForm.fields, action.form.fields);
       return { ...state, [name]: { ...currentForm, ...form, fields: mergedFields } };
     case actionTypes.RESET_FORM:
@@ -143,6 +144,8 @@ const form = (state = intialState, action) => {
       return fileUploadError(state, formKey, fieldKey, action.error, action.fileName);
     case actionTypes.FILE_REMOVE:
       return removeFile(state, formKey, fieldKey, action.fileIndex);
+    case actionTypes.RESET_FILES:
+      return resetFiles(state, formKey);
     // end of file reducers
     default:
       return state;

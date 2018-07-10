@@ -4,14 +4,18 @@ import { Details } from "modules/common";
 import { ComplaintTimeLine } from "modules/common";
 import { Comments } from "modules/common";
 import { Screen } from "modules/common";
+import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { getDateFromEpoch, mapCompIDToName, isImage, fetchImages, getPropertyFromObj } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 class ComplaintDetails extends Component {
   componentDidMount() {
-    let { fetchComplaints, match } = this.props;
+    let { fetchComplaints, match, resetFiles } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    if (this.props.form && this.props.form.complaint) {
+      resetFiles("complaint");
+    }
   }
 
   render() {
@@ -43,7 +47,7 @@ class ComplaintDetails extends Component {
 }
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
-  const { complaints, common } = state;
+  const { complaints, common, form } = state;
   const { employeeById, departmentById, designationsById } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
   if (selectedComplaint) {
@@ -81,15 +85,16 @@ const mapStateToProps = (state, ownProps) => {
       timeLine,
     };
 
-    return { transformedComplaint };
+    return { form, transformedComplaint };
   } else {
-    return { transformedComplaint: {} };
+    return { form, transformedComplaint: {} };
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    resetFiles: (formKey) => dispatch(resetFiles(formKey)),
   };
 };
 
