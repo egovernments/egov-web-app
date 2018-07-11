@@ -193,7 +193,7 @@ class ShowField extends Component {
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
-    let reportTitle = reportName && reportName.split(/(?=[A-Z])/).join(" ");
+    let reportTitle = this.getReportTitle();
 
     const buttons = [
       {
@@ -719,7 +719,23 @@ class ShowField extends Component {
 
     this.setState({ reportSubTitle: result });
   };
-
+  getReportTitle = () => {
+    let { reportName } = this.state;
+    let reportTitleArr = reportName && reportName.split(/(?=[A-Z])/);
+    let reportTitle = "";
+    if (reportTitleArr) {
+      reportTitle = reportTitleArr.map((char) => {
+        console.log(char);
+        if (char.length == 1) {
+          reportTitle = char + "";
+        } else {
+          reportTitle = " " + char;
+        }
+        return reportTitle;
+      });
+    }
+    return reportTitle;
+  };
   render() {
     let { drillDown, checkIfDate } = this;
     let { isTableShow, metaData, reportResult, tabLabel } = this.props;
@@ -742,6 +758,7 @@ class ShowField extends Component {
               fontWeight: "normal",
               padding: "0 !important",
               backgroundColor: "#ffffff",
+              overflowY: "auto",
             }}
             responsive
           >
@@ -867,7 +884,7 @@ class ShowField extends Component {
         {isTableShow &&
           !_.isEmpty(reportResult) &&
           reportResult.hasOwnProperty("reportData") &&
-          reportName && <div className="report-title">{reportName.split(/(?=[A-Z])/).join(" ")}</div>}
+          reportName && <div className="report-title">{this.getReportTitle()}</div>}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>

@@ -472,20 +472,18 @@ class ShowForm extends Component {
                   <div>
                     <Label label={"REPORTS_SEARCHFORM_MODIFY_DATE_HEADER"} />
 
-                    <Grid>
-                      <Row>
-                        {this.handleFormFields()}
-                        <div style={{ marginTop: "16px" }}>
-                          <RaisedButton
-                            style={{ height: "50px", lineHeight: "50px", width: "15%", background: "#fe7a51" }}
-                            type="submit"
-                            //disabled={!isFormValid}
-                            primary={true}
-                            label={buttonText}
-                          />
-                        </div>
-                      </Row>
-                    </Grid>
+                    <Row>
+                      {this.handleFormFields()}
+                      <div style={{ marginTop: "16px" }} className="col-xs-12 col-sm-4">
+                        <RaisedButton
+                          style={{ height: "50px", lineHeight: "50px", width: "80%", background: "#fe7a51" }}
+                          type="submit"
+                          //disabled={!isFormValid}
+                          primary={true}
+                          label={buttonText}
+                        />
+                      </div>
+                    </Row>
                   </div>
                 }
               />

@@ -211,7 +211,7 @@ const actionList = {
       serviceCode: "PT",
       code: "null",
       path: "PGR Reports.ULB Employees",
-      navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
+      navigationURL: "report/rainmaker-pgr/ULBEmployeeWiseReport",
       leftIcon: "action:assignment",
       rightIcon: "",
     },
@@ -229,7 +229,6 @@ const actionList = {
       leftIcon: "action:assignment",
       rightIcon: "",
     },
-
   ],
   CSR: [
     {
@@ -313,7 +312,7 @@ const actionList = {
       serviceCode: "PT",
       code: "null",
       path: "PGR Reports.ULB Employees",
-      navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
+      navigationURL: "report/rainmaker-pgr/ULBEmployeeWiseReport",
       leftIcon: "action:assignment",
       rightIcon: "",
     },
