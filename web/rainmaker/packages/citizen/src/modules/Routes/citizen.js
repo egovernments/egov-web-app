@@ -40,6 +40,7 @@ import { ReopenAcknowledgement } from "modules/common";
 // import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 // import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
 // import FormWizard from "modules/citizen/PropertyTax/FormWizard";
+// import PastPayment from "modules/citizen/PropertyTax/LinkPastPayments"
 
 const routes = [
   {
@@ -355,6 +356,11 @@ const routes = [
   //     hideBackButton: true,
   //   },
   // },
+  // {
+  //   path: "property-tax/past-payment",
+  //   component: PastPayment,
+  //   needsAuthentication: true,
+  // }
 ];
 
 export default routes;
