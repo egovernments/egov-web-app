@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var actionList = {
-  citizen: [{
+  CITIZEN: [{
     id: 1535,
     name: "Complaints",
     url: "url",
@@ -15,23 +15,10 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "my-complaints",
-    leftIcon: { action: "alert", name: "warning" },
-    rightIcon: ""
-  }, {
-    id: 1538,
-    name: "ConstructionSubType",
-    url: "url",
-    displayName: "Property Tax",
-    orderNumber: 4,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "Apply",
-    navigationURL: "property-tax",
-    leftIcon: { action: "custom", name: "property-tax" },
+    leftIcon: "alert:warning",
     rightIcon: ""
   }],
-  employee: [{
+  EMPLOYEE: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -42,7 +29,7 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "all-complaints",
-    leftIcon: { action: "custom", name: "open-complaints" },
+    leftIcon: "custom:open-complaints",
     rightIcon: ""
   }, {
     id: 1535,
@@ -55,74 +42,10 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "closed-complaints",
-    leftIcon: { action: "custom", name: "closed-complaints" },
-    rightIcon: ""
-  }, {
-    id: 1535,
-    name: "Departments",
-    url: "url",
-    displayName: "Departments",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "PGR Reports.Departments",
-    navigationURL: "report/rainmaker-pgr/DepartmentWiseReport",
-    leftIcon: { action: "action", name: "assignment" }
-  }, {
-    id: 1535,
-    name: "ComplaintType",
-    url: "url",
-    displayName: "Complaint Types",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "PGR Reports.Complaint Types",
-    navigationURL: "report/rainmaker-pgr/ComplaintTypeWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
-    rightIcon: ""
-  }, {
-    id: 1535,
-    name: "AssigningOfficers",
-    url: "url",
-    displayName: "Assigning Officers",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "PGR Reports.Assigning Officers",
-    navigationURL: "report/rainmaker-pgr/AOWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
-    rightIcon: ""
-  }, {
-    id: 1535,
-    name: "ULBEmployees",
-    url: "url",
-    displayName: "ULB Employees",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "PGR Reports.ULB Employees",
-    navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
-    rightIcon: ""
-  }, {
-    id: 1535,
-    name: "Source",
-    url: "url",
-    displayName: "Source",
-    orderNumber: 2,
-    enabled: true,
-    serviceCode: "PT",
-    code: "null",
-    path: "PGR Reports.Source",
-    navigationURL: "report/rainmaker-pgr/SourceWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
+    leftIcon: "custom:closed-complaints",
     rightIcon: ""
   }],
-  ao: [{
+  GRO: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -133,7 +56,7 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "all-complaints",
-    leftIcon: { action: "custom", name: "open-complaints" },
+    leftIcon: "custom:open-complaints",
     rightIcon: ""
   }, {
     id: 1535,
@@ -146,7 +69,7 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "closed-complaints",
-    leftIcon: { action: "custom", name: "closed-complaints" },
+    leftIcon: "custom:closed-complaints",
     rightIcon: ""
   }, {
     id: 1535,
@@ -159,7 +82,7 @@ var actionList = {
     code: "null",
     path: "PGR Reports.Departments",
     navigationURL: "report/rainmaker-pgr/DepartmentWiseReport",
-    leftIcon: { action: "action", name: "assignment" }
+    leftIcon: "action:assignment"
   }, {
     id: 1535,
     name: "ComplaintType",
@@ -171,7 +94,7 @@ var actionList = {
     code: "null",
     path: "PGR Reports.Complaint Types",
     navigationURL: "report/rainmaker-pgr/ComplaintTypeWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
+    leftIcon: "action:assignment",
     rightIcon: ""
   }, {
     id: 1535,
@@ -184,7 +107,7 @@ var actionList = {
     code: "null",
     path: "PGR Reports.Assigning Officers",
     navigationURL: "report/rainmaker-pgr/AOWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
+    leftIcon: "action:assignment",
     rightIcon: ""
   }, {
     id: 1535,
@@ -197,7 +120,7 @@ var actionList = {
     code: "null",
     path: "PGR Reports.ULB Employees",
     navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
+    leftIcon: "action:assignment",
     rightIcon: ""
   }, {
     id: 1535,
@@ -210,10 +133,10 @@ var actionList = {
     code: "null",
     path: "PGR Reports.Source",
     navigationURL: "report/rainmaker-pgr/SourceWiseReport",
-    leftIcon: { action: "action", name: "assignment" },
+    leftIcon: "action:assignment",
     rightIcon: ""
   }],
-  csr: [{
+  CSR: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -224,7 +147,7 @@ var actionList = {
     code: "null",
     path: "Home",
     navigationURL: "all-complaints",
-    leftIcon: { action: "custom", name: "open-complaints" },
+    leftIcon: "custom:open-complaints",
     rightIcon: ""
   }, {
     id: 1535,
@@ -237,7 +160,72 @@ var actionList = {
     code: "null",
     path: "create-complaint",
     navigationURL: "create-complaint",
-    leftIcon: { action: "content", name: "add" },
+    leftIcon: "content:add",
+    rightIcon: ""
+  }],
+  "PGR-ADMIN": [{
+    id: 1535,
+    name: "Departments",
+    url: "url",
+    displayName: "Departments",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "PGR Reports.Departments",
+    navigationURL: "report/rainmaker-pgr/DepartmentWiseReport",
+    leftIcon: "action:assignment"
+  }, {
+    id: 1535,
+    name: "ComplaintType",
+    url: "url",
+    displayName: "Complaint Types",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "PGR Reports.Complaint Types",
+    navigationURL: "report/rainmaker-pgr/ComplaintTypeWiseReport",
+    leftIcon: "action:assignment",
+    rightIcon: ""
+  }, {
+    id: 1535,
+    name: "AssigningOfficers",
+    url: "url",
+    displayName: "Assigning Officers",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "PGR Reports.Assigning Officers",
+    navigationURL: "report/rainmaker-pgr/AOWiseReport",
+    leftIcon: "action:assignment",
+    rightIcon: ""
+  }, {
+    id: 1535,
+    name: "ULBEmployees",
+    url: "url",
+    displayName: "ULB Employees",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "PGR Reports.ULB Employees",
+    navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
+    leftIcon: "action:assignment",
+    rightIcon: ""
+  }, {
+    id: 1535,
+    name: "Source",
+    url: "url",
+    displayName: "Source",
+    orderNumber: 2,
+    enabled: true,
+    serviceCode: "PT",
+    code: "null",
+    path: "PGR Reports.Source",
+    navigationURL: "report/rainmaker-pgr/SourceWiseReport",
+    leftIcon: "action:assignment",
     rightIcon: ""
   }]
 };

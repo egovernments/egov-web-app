@@ -68,10 +68,6 @@ var withAuthorization = function withAuthorization() {
           return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
         };
 
-        _this.getUserRole = function (userInfo) {
-          return userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase() || null;
-        };
-
         _this.renderCustomTitle = function (numberOfComplaints) {
           var titleAddon = numberOfComplaints ? "(" + numberOfComplaints + ")" : "";
           _this.setState({ titleAddon: titleAddon });
@@ -96,6 +92,8 @@ var withAuthorization = function withAuthorization() {
       }, {
         key: "render",
         value: function render() {
+          var _this2 = this;
+
           var hideHeader = options.hideHeader,
               hideFooter = options.hideFooter,
               customTitle = options.customTitle,
@@ -121,7 +119,11 @@ var withAuthorization = function withAuthorization() {
               this.props.logout();
             }
           }
+          var getUserRole = function getUserRole() {
+            var userInfo = _this2.props.userInfo;
 
+            return userInfo && userInfo.roles && userInfo.roles.length > 0 && userInfo.roles[0].code.toUpperCase() || null;
+          };
           return _react2.default.createElement(
             "div",
             { className: "rainmaker-header-cont", style: { position: "relative" } },
@@ -146,7 +148,7 @@ var withAuthorization = function withAuthorization() {
                   _react2.default.createElement(
                     "div",
                     { className: "rainmaker-action-menu" },
-                    _react2.default.createElement(_common.ActionMenu, { role: role })
+                    _react2.default.createElement(_common.ActionMenu, { role: getUserRole() })
                   )
                 ),
                 _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),
