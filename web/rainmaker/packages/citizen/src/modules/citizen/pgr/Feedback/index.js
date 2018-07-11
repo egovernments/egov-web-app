@@ -5,6 +5,8 @@ import { Screen } from "modules/common";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import FeedbackForm from "./components/FeedbackForm";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
+import get from "lodash/get";
 import "./index.css";
 
 const FeedbackFormHOC = formHoc({ formKey: "feedback" })(FeedbackForm);
@@ -30,24 +32,40 @@ class Feedback extends Component {
     this.props.handleFieldChange("feedback", "selectedSevice", valueArray.toString());
   };
 
+  onSubmit = (e) => {
+    console.log(this.props);
+    const { rating } = this.props;
+    if (!rating) {
+      e.preventDefault();
+      this.props.toggleSnackbarAndSetText(true, "Please provide ratings", true);
+    }
+  };
+
   render() {
     let { value } = this.state;
     return (
       <Screen className="background-white">
-        <FeedbackFormHOC onCheck={this.onCheck} checkBoxValue={value} />
+        <FeedbackFormHOC onSubmit={this.onSubmit} onCheck={this.onCheck} checkBoxValue={value} />
       </Screen>
     );
   }
 }
 
+const mapStateToProps = ({ form }) => {
+  let rating = get(form, "feedback.fields.rating.value");
+
+  return { rating };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Feedback);

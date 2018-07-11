@@ -4,7 +4,7 @@ import RatingsComponent from "../Ratings";
 import TextAreaComponent from "../TextArea";
 import CheckBoxGroup from "../CheckBoxGroup";
 
-const FeedbackForm = ({ form, handleFieldChange, onCheck, checkBoxValue }) => {
+const FeedbackForm = ({ form, handleFieldChange, onCheck, checkBoxValue, onSubmit }) => {
   const fields = form.fields || {};
   const submit = form.submit;
   return (
@@ -19,7 +19,7 @@ const FeedbackForm = ({ form, handleFieldChange, onCheck, checkBoxValue }) => {
         </div>
       }
       <div className="responsive-action-button-cont">
-        <Button className="responsive-action-button" {...submit} primary={true} fullWidth={true} />
+        <Button onClick={onSubmit} className="responsive-action-button" {...submit} primary={true} fullWidth={true} />
       </div>
     </div>
   );
