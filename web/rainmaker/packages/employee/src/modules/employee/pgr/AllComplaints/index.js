@@ -21,6 +21,11 @@ class AllComplaints extends Component {
     value: 0,
   };
   componentDidMount() {
+    let { userInfo } = this.props;
+    let role = userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
+    if (role === "PGR-ADMIN") {
+      this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
+    }
     let { fetchComplaints } = this.props;
     fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
   }

@@ -38,10 +38,6 @@ const withAuthorization = (options = {}) => (Component) => {
       return roleCodes && roleCodes.length && roleCodes.indexOf(role) > -1 ? true : false;
     };
 
-    getUserRole = (userInfo) => {
-      return (userInfo && userInfo.roles && userInfo.roles.length && userInfo.roles[0].code.toLowerCase()) || null;
-    };
-
     renderCustomTitle = (numberOfComplaints) => {
       const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "";
       this.setState({ titleAddon });
@@ -81,7 +77,10 @@ const withAuthorization = (options = {}) => (Component) => {
           this.props.logout();
         }
       }
-
+      const getUserRole = () => {
+        let { userInfo } = this.props;
+        return (userInfo && userInfo.roles && userInfo.roles.length > 0 && userInfo.roles[0].code.toUpperCase()) || null;
+      };
       return (
         <div className="rainmaker-header-cont" style={{ position: "relative" }}>
           {!hideHeader && authenticated ? (
@@ -100,7 +99,7 @@ const withAuthorization = (options = {}) => (Component) => {
               <div>
                 <div className="col-xs-2 action-menu-drawer show-action-menu">
                   <div className="rainmaker-action-menu">
-                    <ActionMenu role={role} />
+                    <ActionMenu role={getUserRole()} />
                   </div>
                 </div>
                 <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}

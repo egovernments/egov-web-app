@@ -258,7 +258,7 @@ class ShowField extends Component {
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
-      dom: '<".col-md-8 report-result-table-header"l><"col-md-4"B><"col-md-4"f>rtip',
+      dom: '<".col-sm-8 report-result-table-header"l><"col-sm-4"B><"col-sm-4"f>rtip',
       order: [],
       select: true,
       displayStart: displayStart,
@@ -331,7 +331,7 @@ class ShowField extends Component {
 
               // Update footer
               //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
-              typeof pageTotal !== "undefined" && pageTotal !== "NaN" && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
+              typeof pageTotal !== "undefined" && pageTotal != NaN && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
               //}
             }
             // }
