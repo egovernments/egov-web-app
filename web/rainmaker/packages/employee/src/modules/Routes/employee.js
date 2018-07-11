@@ -324,9 +324,8 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "CS_HEADER_COMPLAINT_SUBMITTED",
+      title: "PGR REPORTS",
       hideTitle: true,
-      hideBackButton: true,
     },
   },
 ];
