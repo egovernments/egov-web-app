@@ -10,7 +10,7 @@ const actionList = {
       serviceCode: "CS",
       code: "null",
       path: "Home",
-      navigationURL: "my-complaints",
+      navigationURL: "/",
       leftIcon: "alert:warning",
       rightIcon: "",
     },

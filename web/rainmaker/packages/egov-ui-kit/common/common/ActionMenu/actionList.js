@@ -14,7 +14,7 @@ var actionList = {
     serviceCode: "CS",
     code: "null",
     path: "Home",
-    navigationURL: "my-complaints",
+    navigationURL: "/",
     leftIcon: "alert:warning",
     rightIcon: ""
   }],
@@ -31,7 +31,6 @@ var actionList = {
     navigationURL: "all-complaints",
     leftIcon: "custom:open-complaints",
     rightIcon: ""
-
   }, {
     id: 1535,
     name: "PropertyType",
@@ -45,7 +44,6 @@ var actionList = {
     navigationURL: "closed-complaints",
     leftIcon: "custom:closed-complaints",
     rightIcon: ""
-
   }],
   GRO: [{
     id: 1535,
@@ -73,7 +71,6 @@ var actionList = {
     navigationURL: "closed-complaints",
     leftIcon: "custom:closed-complaints",
     rightIcon: ""
-
   }, {
     id: 1535,
     name: "Departments",
@@ -122,7 +119,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "PGR Reports.ULB Employees",
-    navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
+    navigationURL: "report/rainmaker-pgr/ULBEmployeeWiseReport",
     leftIcon: "action:assignment",
     rightIcon: ""
   }, {
@@ -138,7 +135,6 @@ var actionList = {
     navigationURL: "report/rainmaker-pgr/SourceWiseReport",
     leftIcon: "action:assignment",
     rightIcon: ""
-
   }],
   CSR: [{
     id: 1535,
@@ -215,7 +211,7 @@ var actionList = {
     serviceCode: "PT",
     code: "null",
     path: "PGR Reports.ULB Employees",
-    navigationURL: "report/rainmaker-pgr/FunctionaryWiseReport",
+    navigationURL: "report/rainmaker-pgr/ULBEmployeeWiseReport",
     leftIcon: "action:assignment",
     rightIcon: ""
   }, {
