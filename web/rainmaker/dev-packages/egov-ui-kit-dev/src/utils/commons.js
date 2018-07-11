@@ -384,7 +384,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       complaintDetail.actions &&
       complaintDetail.actions[complaintDetail.actions.length - 1].by &&
       complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] &&
-      complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
+      complaintDetail.actions[complaintDetail.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
     return {
       header: getPropertyFromObj(complaints.categoriesById, complaintDetail.serviceCode, "serviceCode", "NA"),
       date: complaintDetail.auditDetails.createdTime,
@@ -411,7 +411,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
       //     defaultMobileNumber
       //   ),
       latestActionTime: complaintDetail && complaintDetail.actions && getLatestAction(complaintDetail.actions),
-      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Customer Service Desk)` : filedUserName) : "NA",
+      submittedBy: filedUserName ? (isFiledByCSR ? `${filedUserName} (Citizen Service Desk)` : filedUserName) : "NA",
       citizenPhoneNumber: complaintDetail && complaintDetail.citizen && complaintDetail.citizen.mobileNumber,
       assignedTo: complaintDetail && getPropertyFromObj(employeeById, findLatestAssignee(complaintDetail.actions), "name", "NA"),
       employeePhoneNumber:

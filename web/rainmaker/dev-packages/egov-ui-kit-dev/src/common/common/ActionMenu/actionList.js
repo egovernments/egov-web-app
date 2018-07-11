@@ -44,6 +44,7 @@ const actionList = {
       leftIcon: "custom:open-complaints",
       rightIcon: "",
     },
+
     {
       id: 1535,
       name: "PropertyType",
@@ -125,6 +126,7 @@ const actionList = {
     //   path: "PGR Reports.Source",
     //   navigationURL: "report/rainmaker-pgr/SourceWiseReport",
     //   leftIcon: "action:assignment",
+
     //   rightIcon: "",
     // },
   ],
@@ -157,6 +159,7 @@ const actionList = {
       leftIcon: "custom:closed-complaints",
       rightIcon: "",
     },
+
     {
       id: 1535,
       name: "Departments",
@@ -226,6 +229,7 @@ const actionList = {
       leftIcon: "action:assignment",
       rightIcon: "",
     },
+
   ],
   CSR: [
     {

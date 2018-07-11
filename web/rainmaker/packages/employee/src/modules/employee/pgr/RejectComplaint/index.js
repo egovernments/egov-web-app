@@ -24,7 +24,7 @@ class RejectComplaint extends Component {
   options = [
     { value: "Not a valid complaint", label: <Label label="ES_REASSIGN_OPTION_ONE" /> },
     { value: "Out of operational scope", label: <Label label="ES_REJECT_OPTION_TWO" /> },
-    { value: "Operation already underway", label: <Label label="ES_REJECT_OPTION_THREE" /> },
+    // { value: "Operation already underway", label: <Label label="ES_REJECT_OPTION_THREE" /> },
     { value: "Other", label: <Label label="ES_REJECT_OPTION_FOUR" /> },
   ];
 

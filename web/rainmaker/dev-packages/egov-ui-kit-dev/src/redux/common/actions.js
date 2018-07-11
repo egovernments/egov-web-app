@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { EMPLOYEE, CITIZEN, MDMS } from "egov-ui-kit/utils/endPoints";
+import { EMPLOYEE, CITIZEN, MDMS, EMPLOYEE_ASSIGN } from "egov-ui-kit/utils/endPoints";
 
 export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
@@ -16,6 +16,20 @@ const employeeFetchSuccess = (payload) => {
 const employeeFetchError = (error) => {
   return {
     type: actionTypes.EMPLOYEE_FETCH_ERROR,
+    error,
+  };
+};
+
+const employeeToAssignFetchSuccess = (payload) => {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS,
+    payload,
+  };
+};
+
+const employeeToAssignFetchError = (error) => {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_ERROR,
     error,
   };
 };
@@ -77,6 +91,17 @@ export const fetchMDMSData = (requestBody) => {
       dispatch(MDMSFetchSuccess(payload));
     } catch (error) {
       dispatch(MDMSFetchError(error.message));
+    }
+  };
+};
+
+export const fetchEmployeeToAssign = (queryObj, requestBody) => {
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(EMPLOYEE_ASSIGN.GET.URL, EMPLOYEE_ASSIGN.GET.ACTION, queryObj, requestBody);
+      dispatch(employeeToAssignFetchSuccess(payload));
+    } catch (error) {
+      dispatch(employeeToAssignFetchError(error.message));
     }
   };
 };

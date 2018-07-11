@@ -21,12 +21,17 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .compalint-details-action-buttons {
+  .complaint-details-action-buttons {
     justify-content: flex-end;
     position: absolute;
   }
 
-  .compalint-details-action-buttons button {
+  .complaint-details-action-buttons button {
     width: 230px !important;
+  }
+
+  .action-button-one,
+  .action-button-two {
+    width: 230px;
   }
 }

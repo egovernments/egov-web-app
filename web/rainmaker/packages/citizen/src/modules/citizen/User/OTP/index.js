@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
-    submitForm: (formKey) => dispatch(submitForm(formKey)),
+    submitForm: (formKey,saveUrl) => dispatch(submitForm(formKey,saveUrl)),
     sendOTP: (otp) => dispatch(sendOTP(otp)),
   };
 };

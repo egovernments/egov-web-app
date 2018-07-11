@@ -1,6 +1,6 @@
 import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
-import LanguageSelection from "modules/employee/User/LanguageSelection";
+// import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
 import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
@@ -44,12 +44,12 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/all-complaints",
   },
-  {
-    path: "user/language-selection",
-    component: LanguageSelection,
-    needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
-  },
+  // {
+  //   path: "user/language-selection",
+  //   component: LanguageSelection,
+  //   needsAuthentication: false,
+  //   redirectionUrl: "/all-complaints",
+  // },
   {
     path: "user/forgot-password",
     component: ForgotPassword,

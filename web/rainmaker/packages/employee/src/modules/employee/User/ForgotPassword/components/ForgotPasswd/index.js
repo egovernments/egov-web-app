@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Card, TextField } from "components";
+import { Button, Card, TextField, Image } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import logo from "egov-ui-kit/assets/images/mseva-punjab.png";
 import "./index.css";
 
 const ForgotPasswd = ({ form, handleFieldChange }) => {
@@ -12,6 +13,9 @@ const ForgotPasswd = ({ form, handleFieldChange }) => {
       className="user-screens-card forgot-passwd-card col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4"
       textChildren={
         <div>
+          <div className="web-user-logo" style={{ marginBottom: "24px" }}>
+            <Image className="mseva-logo employee-login-logo" source={`${logo}`} />
+          </div>
           <Label
             style={{ marginBottom: "12px" }}
             className="text-center forgotpasswd"

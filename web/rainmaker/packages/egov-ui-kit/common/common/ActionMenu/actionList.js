@@ -31,6 +31,7 @@ var actionList = {
     navigationURL: "all-complaints",
     leftIcon: "custom:open-complaints",
     rightIcon: ""
+
   }, {
     id: 1535,
     name: "PropertyType",
@@ -44,6 +45,7 @@ var actionList = {
     navigationURL: "closed-complaints",
     leftIcon: "custom:closed-complaints",
     rightIcon: ""
+
   }],
   GRO: [{
     id: 1535,
@@ -71,6 +73,7 @@ var actionList = {
     navigationURL: "closed-complaints",
     leftIcon: "custom:closed-complaints",
     rightIcon: ""
+
   }, {
     id: 1535,
     name: "Departments",
@@ -135,6 +138,7 @@ var actionList = {
     navigationURL: "report/rainmaker-pgr/SourceWiseReport",
     leftIcon: "action:assignment",
     rightIcon: ""
+
   }],
   CSR: [{
     id: 1535,

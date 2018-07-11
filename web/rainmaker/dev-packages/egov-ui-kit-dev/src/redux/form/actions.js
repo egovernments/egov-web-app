@@ -107,6 +107,10 @@ export const removeFile = (formKey, fieldKey, fileIndex) => {
   return { type: actionTypes.FILE_REMOVE, fieldKey, formKey, fileIndex };
 };
 
+export const resetFiles = (formKey) => {
+  return { type: actionTypes.RESET_FILES, formKey };
+};
+
 // currently supports only single file upload at a time, although the API has support for multiple file upload
 // TODO : can the upload happen at a later point in time? Challenge is to intimate the user if in case of a failure
 export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {

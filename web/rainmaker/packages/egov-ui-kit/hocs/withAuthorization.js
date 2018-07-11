@@ -114,8 +114,11 @@ var withAuthorization = function withAuthorization() {
 
           var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : "";
 
+          //For restricting citizen to access employee url
+
           if (process.env.NODE_ENV === "production") {
-            if (window.basename.slice(1).toLowerCase() !== role.toLowerCase()) {
+            var _role = role === "citizen" ? "citizen" : "employee";
+            if (window.basename.slice(1).toLowerCase() !== _role) {
               this.props.logout();
             }
           }

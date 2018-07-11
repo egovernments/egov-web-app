@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import formHoc from "egov-ui-kit/hocs/form";
 import AssignComplaintForm from "./components/AssignComplaintForm";
-import { fetchEmployees } from "egov-ui-kit/redux/common/actions";
+import { fetchEmployeeToAssign } from "egov-ui-kit/redux/common/actions";
 import filter from "lodash/filter";
 
 const AssignComplaintFormHOC = formHoc({ formKey: "assignComplaint" })(AssignComplaintForm);
 
 class AssignComplaint extends Component {
   componentDidMount = () => {
-    let { fetchEmployees } = this.props;
-    fetchEmployees();
+    let { fetchEmployeeToAssign } = this.props;
+    const queryParams = [{ key: "roleCodes", value: "EMPLOYEE" }];
+    fetchEmployeeToAssign(queryParams);
   };
   render() {
     const { transformedComplaint, ...rest } = this.props;
@@ -25,7 +26,7 @@ class AssignComplaint extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchEmployees: () => dispatch(fetchEmployees()),
+    fetchEmployeeToAssign: (queryParams, requestBody) => dispatch(fetchEmployeeToAssign(queryParams, requestBody)),
   };
 };
 
@@ -33,11 +34,11 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints } = state;
   const { history } = ownProps;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
-  const { departmentById, designationsById, employeeById } = state.common;
+  const { departmentById, designationsById, employeeToAssignById } = state.common;
   const rawAPIData =
-    employeeById &&
-    Object.keys(employeeById).map((item, index) => {
-      return employeeById[item];
+    employeeToAssignById &&
+    Object.keys(employeeToAssignById).map((item, index) => {
+      return employeeToAssignById[item];
     });
   let selectedComplaint = complaints["byId"][decodeURIComponent(window.location.href.split("/").pop())];
   const complaintTenantId = selectedComplaint && selectedComplaint.tenantId;

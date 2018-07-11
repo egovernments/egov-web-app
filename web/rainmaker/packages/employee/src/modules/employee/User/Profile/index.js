@@ -6,6 +6,7 @@ import { UploadDrawer } from "modules/common";
 import ProfileForm from "./components/ProfileForm";
 import { Screen } from "modules/common";
 import img from "egov-ui-kit/assets/images/download.png";
+import { isImage } from "egov-ui-kit/utils/commons";
 import "./index.css";
 
 const formKey = "profileEmployee";
@@ -61,7 +62,7 @@ const mapStateToProps = (state) => {
 
   return {
     loading,
-    profilePic: (images.length && images[0].imageUri) || img,
+    profilePic: (images.length && images[0].imageUri && isImage(images[0].imageUri)) || img,
   };
 };
 

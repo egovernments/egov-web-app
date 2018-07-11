@@ -4,9 +4,17 @@ import { Icon, Button } from "components";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import { Screen } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
+import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
 class ComplaintSubmitted extends Component {
+  componentDidMount = () => {
+    const { resetFiles } = this.props;
+    if (this.props.form && this.props.form.complaint) {
+      resetFiles("complaint");
+    }
+  };
+
   continueComplaintSubmit = () => {
     this.props.history.push("/");
   };
@@ -65,7 +73,13 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    resetFiles: (formKey) => dispatch(resetFiles(formKey)),
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ComplaintSubmitted);

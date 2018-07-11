@@ -51,6 +51,10 @@
 @media only screen and (min-width: 768px) {
   .user-screens-wrapper {
     height: 100vh; }
+  .user-logo-wrapper {
+    display: none; }
+  .banner-logo-home .user-logo-wrapper {
+    display: block !important; }
   .banner-overlay {
     background: transparent; }
   .banner-image,
@@ -58,8 +62,6 @@
     background-image: url(../../../assets/images/Banner_image.jpg);
     position: absolute;
     height: 100%; }
-  .user-logo-wrapper {
-    display: none; }
   .logo-wrapper {
     position: absolute; }
   .user-screens-wrapper .user-screens-card {

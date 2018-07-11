@@ -18,10 +18,10 @@ class OTP extends Component {
   render() {
     const { phoneNumber, loading, toggleSnackbarAndSetText } = this.props;
     const { resendOTP } = this;
-
+    //className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8"
     return (
       <Screen loading={loading}>
-        <Banner className="col-lg-offset-2 col-md-offset-2 col-md-8 col-lg-8">
+        <Banner>
           <OTPFormHOC toggleSnackbarAndSetText={toggleSnackbarAndSetText} resendOTP={resendOTP} phoneNumber={phoneNumber} />
         </Banner>
       </Screen>

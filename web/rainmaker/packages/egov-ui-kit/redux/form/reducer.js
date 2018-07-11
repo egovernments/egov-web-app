@@ -12,9 +12,9 @@ var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _extends13 = require("babel-runtime/helpers/extends");
+var _extends14 = require("babel-runtime/helpers/extends");
 
-var _extends14 = _interopRequireDefault(_extends13);
+var _extends15 = _interopRequireDefault(_extends14);
 
 var _actionTypes = require("./actionTypes");
 
@@ -30,15 +30,15 @@ var intialState = {};
 
 var setFormProperty = function setFormProperty(state, formKey, propertyKey, propertyValue) {
   var form = state[formKey] || {};
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, form, (0, _defineProperty3.default)({}, propertyKey, propertyValue))));
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, form, (0, _defineProperty3.default)({}, propertyKey, propertyValue))));
 };
 
 var setFieldProperty = function setFieldProperty(state, formKey, fieldKey, propertyKey, propertyValue) {
   var form = state[formKey] || {};
   var fields = form.fields || {};
   var field = fields[fieldKey] || {};
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, form, {
-    fields: (0, _extends14.default)({}, fields, (0, _defineProperty3.default)({}, fieldKey, (0, _extends14.default)({}, field, (0, _defineProperty3.default)({}, propertyKey, propertyValue))))
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, form, {
+    fields: (0, _extends15.default)({}, fields, (0, _defineProperty3.default)({}, fieldKey, (0, _extends15.default)({}, field, (0, _defineProperty3.default)({}, propertyKey, propertyValue))))
   })));
 };
 
@@ -64,7 +64,7 @@ var mergeFields = function mergeFields() {
   var newFields = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   return Object.keys(newFields).reduce(function (mergedFields, fieldKey) {
-    mergedFields[fieldKey] = (0, _extends14.default)({}, oldFields[fieldKey], newFields[fieldKey]);
+    mergedFields[fieldKey] = (0, _extends15.default)({}, oldFields[fieldKey], newFields[fieldKey]);
     return mergedFields;
   }, {});
 };
@@ -74,9 +74,9 @@ var resetFields = function resetFields() {
 
   return Object.keys(fields).reduce(function (resetFields, fieldKey) {
     if (fields && fields[fieldKey] && !fields[fieldKey].dontReset) {
-      resetFields[fieldKey] = (0, _extends14.default)({}, fields[fieldKey], { value: "" });
+      resetFields[fieldKey] = (0, _extends15.default)({}, fields[fieldKey], { value: "" });
     } else {
-      resetFields[fieldKey] = (0, _extends14.default)({}, fields[fieldKey]);
+      resetFields[fieldKey] = (0, _extends15.default)({}, fields[fieldKey]);
     }
     return resetFields;
   }, {});
@@ -84,29 +84,33 @@ var resetFields = function resetFields() {
 
 var fileUploadStarted = function fileUploadStarted(state, formKey, fieldKey, fileObject) {
   var files = (0, _utils.getFiles)(state, formKey, fieldKey);
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, state[formKey], { files: (0, _defineProperty3.default)({}, fieldKey, files.concat((0, _extends14.default)({}, fileObject, { loading: true }))) })));
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, state[formKey], { files: (0, _defineProperty3.default)({}, fieldKey, files.concat((0, _extends15.default)({}, fileObject, { loading: true }))) })));
 };
 var fileUploadCompleted = function fileUploadCompleted(state, formKey, fieldKey, fileStoreId, fileName) {
   var files = (0, _utils.getFiles)(state, formKey, fieldKey);
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, state[formKey], {
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, state[formKey], {
     files: (0, _defineProperty3.default)({}, fieldKey, files.map(function (fileObject) {
-      return fileObject.file.name === fileName ? (0, _extends14.default)({}, fileObject, { fileStoreId: fileStoreId, loading: false }) : fileObject;
+      return fileObject.file.name === fileName ? (0, _extends15.default)({}, fileObject, { fileStoreId: fileStoreId, loading: false }) : fileObject;
     }))
   })));
 };
 // error message
 var fileUploadError = function fileUploadError(state, formKey, fieldKey, error, fileName) {
   var files = (0, _utils.getFiles)(state, formKey, fieldKey);
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, state[formKey], {
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, state[formKey], {
     files: (0, _defineProperty3.default)({}, fieldKey, files.filter(function (fileObject) {
       return fileObject.file.name !== fileName;
     }))
   })));
 };
 
+var resetFiles = function resetFiles(state, formKey) {
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, state[formKey], { files: {} })));
+};
+
 var removeFile = function removeFile(state, formKey, fieldKey, fileIndex) {
   var files = (0, _utils.getFiles)(state, formKey, fieldKey);
-  return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, state[formKey], { files: (0, _defineProperty3.default)({}, fieldKey, files.filter(function (f, index) {
+  return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, state[formKey], { files: (0, _defineProperty3.default)({}, fieldKey, files.filter(function (f, index) {
       return index !== fileIndex;
     })) })));
 };
@@ -126,16 +130,16 @@ var form = function form() {
 
       var currentForm = state[name] || {};
       var mergedFields = mergeFields(currentForm.fields, action.form.fields);
-      return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, name, (0, _extends14.default)({}, currentForm, _form, { fields: mergedFields })));
+      return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, name, (0, _extends15.default)({}, currentForm, _form, { fields: mergedFields })));
     case actionTypes.RESET_FORM:
       var oldForm = state[formKey] || {};
       var fieldsAfterReset = resetFields(oldForm.fields);
-      return (0, _extends14.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends14.default)({}, oldForm, { fields: fieldsAfterReset })));
+      return (0, _extends15.default)({}, state, (0, _defineProperty3.default)({}, formKey, (0, _extends15.default)({}, oldForm, { fields: fieldsAfterReset })));
     case actionTypes.REMOVE_FORM:
       var currForm = state[formKey] || {};
-      var newState = (0, _extends14.default)({}, state);
+      var newState = (0, _extends15.default)({}, state);
       delete newState[formKey];
-      return (0, _extends14.default)({}, newState);
+      return (0, _extends15.default)({}, newState);
     case actionTypes.FIELD_CHANGE:
       var value = action.value;
 
@@ -175,6 +179,8 @@ var form = function form() {
       return fileUploadError(state, formKey, fieldKey, action.error, action.fileName);
     case actionTypes.FILE_REMOVE:
       return removeFile(state, formKey, fieldKey, action.fileIndex);
+    case actionTypes.RESET_FILES:
+      return resetFiles(state, formKey);
     // end of file reducers
     default:
       return state;

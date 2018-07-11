@@ -51,6 +51,19 @@ var commonReducer = function commonReducer() {
         error: true,
         errorMessage: action.error
       });
+
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS:
+      var employeeToAssignById = (0, _commons.transformById)(action.payload.Employee, "id");
+      return (0, _extends4.default)({}, state, {
+        loading: false,
+        employeeToAssignById: (0, _extends4.default)({}, state.employeeToAssignById, employeeToAssignById)
+      });
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_ERROR:
+      return (0, _extends4.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     case commonTypes.CITIZEN_FETCH_SUCCESS:
       var citizenById = (0, _commons.transformById)(action.payload.user, "id");
       return (0, _extends4.default)({}, state, {

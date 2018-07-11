@@ -6,6 +6,7 @@ import { ActionButton } from "modules/common";
 import { Icon, MapLocation } from "components";
 import { Screen } from "modules/common";
 import pinIcon from "egov-ui-kit/assets/Location_pin.svg";
+import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import {
   getDateFromEpoch,
   mapCompIDToName,
@@ -25,8 +26,11 @@ class ComplaintDetails extends Component {
   };
 
   componentDidMount() {
-    let { fetchComplaints, match } = this.props;
+    let { fetchComplaints, match, resetFiles } = this.props;
     fetchComplaints([{ key: "serviceRequestId", value: match.params.serviceRequestId }]);
+    if (this.props.form && this.props.form.complaintResolved) {
+      resetFiles("complaintResolved");
+    }
     let { details } = this.state;
     if (this.props.location && this.props.location.search.split("=")[1] === "rejected") {
       this.setState({
@@ -284,7 +288,7 @@ const mapCitizenIdToMobileNumber = (citizenObjById, id) => {
 };
 let gro = "";
 const mapStateToProps = (state, ownProps) => {
-  const { complaints, common, auth } = state;
+  const { complaints, common, auth, form } = state;
   const { id } = auth.userInfo;
   const { citizenById } = common || {};
   const { employeeById, departmentById, designationsById } = common || {};
@@ -298,7 +302,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedComplaint.actions &&
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by &&
     selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] &&
-    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Customer Support Representative";
+    selectedComplaint.actions[selectedComplaint.actions.length - 1].by.split(":")[1] === "Citizen Service Representative";
   const role = roleFromUserInfo(userInfo.roles, "GRO") ? "ao" : roleFromUserInfo(userInfo.roles, "CSR") ? "csr" : "employee";
   let isAssignedToEmployee = true;
   if (selectedComplaint) {
@@ -355,15 +359,16 @@ const mapStateToProps = (state, ownProps) => {
       complaint: details,
       timeLine,
     };
-    return { transformedComplaint, role, serviceRequestId, isAssignedToEmployee };
+    return { form, transformedComplaint, role, serviceRequestId, isAssignedToEmployee };
   } else {
-    return { transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
+    return { form, transformedComplaint: {}, role, serviceRequestId, isAssignedToEmployee };
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+    resetFiles: (formKey) => dispatch(resetFiles(formKey)),
   };
 };
 
