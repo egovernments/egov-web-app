@@ -68,18 +68,21 @@
   }
 }
 
-body[class^="employee-complaint-details"] .map-container .searchBoxStyles,
-body[class^="employee-complaint-details"] .map-container .search-icon,
-body[class^="employee-complaint-details"] .map-container .myLoc {
-  display: none;
-}
-
-body[class^="employee-complaint-details"] .map-container {
+body[class^="complaint-details"] .map-container {
   z-index: 1101;
-}
-
-body[class^="employee-complaint-details"] .back-btn {
-  z-index: 1102;
+  height: calc(100vh - 64px);
+  .searchBoxStyles,
+  .search-icon,
+  .myLoc {
+    display: none;
+  }
+  .back-btn {
+    position: absolute !important;
+    top: 76px;
+    background: transparent;
+    margin-left: 15px;
+    z-index: 1102;
+  }
 }
 
 .employee-complaint-summary-mapBtn {

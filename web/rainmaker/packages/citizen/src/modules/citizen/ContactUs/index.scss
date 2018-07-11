@@ -20,22 +20,21 @@
   box-shadow: none;
 }
 
-.citizen-contact-us .searchBoxStyles,
-.citizen-contact-us .search-icon,
-.citizen-contact-us .myLoc {
-  display: none;
-}
-
-.citizen-contact-us .map-container {
+.contact-us .map-container {
   z-index: 1111;
-}
-
-.citizen-contact-us .back-btn {
-  position: absolute !important;
-  top: 76px;
-  background: transparent;
-  margin-left: 15px;
-  z-index: 1112;
+  height: calc(100vh - 64px);
+  .searchBoxStyles,
+  .search-icon,
+  .myLoc {
+    display: none;
+  }
+  .back-btn {
+    position: absolute !important;
+    top: 76px;
+    background: transparent;
+    margin-left: 15px;
+    z-index: 1112;
+  }
 }
 
 .phoneNumberStyle {
