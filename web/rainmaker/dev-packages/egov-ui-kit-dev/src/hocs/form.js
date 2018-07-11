@@ -3,15 +3,25 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = false }) => (Form) => {
+const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = false, ...rest }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
+      const { extraProps } = rest
       try {
         if (path && path !== "") {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
         } else {
           this.formConfig = require(`config/forms/specs/${formKey}`).default;
+        }
+        if (extraProps) {
+          this.formConfig = {
+            ...this.formConfig,
+            ["fields"]: {
+              ...this.formConfig.fields,
+              ...extraProps
+            }
+          }
         }
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
@@ -29,13 +39,18 @@ const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = 
     }
 
     createCopy = (formConf) => {
-      const { formKeys } = this.props;
+      let updatedFormConf = { ...formConf }
+      const { formKeys } = this.props
+      const { formatConfig } = updatedFormConf
       const existing_count = formKeys.filter(function(formKey) {
-        return formKey.includes(formConf.name);
+        return formKey.includes(updatedFormConf.name);
       }).length;
-      formConf.name = copyName ? copyName : formConf.name + `_${existing_count}`;
-      formKey = formConf.name;
-      return formConf;
+      updatedFormConf.name = copyName ? copyName : updatedFormConf.name + `_${existing_count}`;
+      formKey = updatedFormConf.name;
+      if (formatConfig) {
+        updatedFormConf = formatConfig({ ...this.props, config: updatedFormConf, currentCount: existing_count })
+      }
+      return updatedFormConf;
     };
 
     submitForm = () => {
