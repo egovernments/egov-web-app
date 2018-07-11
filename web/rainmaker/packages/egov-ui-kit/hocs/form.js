@@ -4,9 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require("babel-runtime/helpers/extends");
+var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
 
-var _extends3 = _interopRequireDefault(_extends2);
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends3 = require("babel-runtime/helpers/extends");
+
+var _extends4 = _interopRequireDefault(_extends3);
 
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
@@ -23,6 +27,10 @@ var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorRet
 var _inherits2 = require("babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
 var _react = require("react");
 
@@ -45,7 +53,8 @@ var form = function form(_ref) {
       copyName = _ref.copyName,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
-      edit = _ref$edit === undefined ? false : _ref$edit;
+      edit = _ref$edit === undefined ? false : _ref$edit,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "makeCopy", "copyName", "rowData", "edit"]);
   return function (Form) {
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
@@ -56,14 +65,20 @@ var form = function form(_ref) {
         var _this = (0, _possibleConstructorReturn3.default)(this, (FormWrapper.__proto__ || Object.getPrototypeOf(FormWrapper)).call(this, props));
 
         _this.createCopy = function (formConf) {
+          var updatedFormConf = (0, _extends4.default)({}, formConf);
           var formKeys = _this.props.formKeys;
+          var _updatedFormConf = updatedFormConf,
+              formatConfig = _updatedFormConf.formatConfig;
 
           var existing_count = formKeys.filter(function (formKey) {
-            return formKey.includes(formConf.name);
+            return formKey.includes(updatedFormConf.name);
           }).length;
-          formConf.name = copyName ? copyName : formConf.name + ("_" + existing_count);
-          formKey = formConf.name;
-          return formConf;
+          updatedFormConf.name = copyName ? copyName : updatedFormConf.name + ("_" + existing_count);
+          formKey = updatedFormConf.name;
+          if (formatConfig) {
+            updatedFormConf = formatConfig((0, _extends4.default)({}, _this.props, { config: updatedFormConf, currentCount: existing_count }));
+          }
+          return updatedFormConf;
         };
 
         _this.submitForm = function () {
@@ -77,11 +92,16 @@ var form = function form(_ref) {
           _this.props.handleFieldChange(formKey, fieldKey, value);
         };
 
+        var extraProps = rest.extraProps;
+
         try {
           if (path && path !== "") {
             _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
             _this.formConfig = require("config/forms/specs/" + formKey).default;
+          }
+          if (extraProps) {
+            _this.formConfig = (0, _extends4.default)({}, _this.formConfig, (0, _defineProperty3.default)({}, "fields", (0, _extends4.default)({}, _this.formConfig.fields, extraProps)));
           }
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
@@ -93,7 +113,7 @@ var form = function form(_ref) {
         key: "componentDidMount",
         value: function componentDidMount() {
           if (this.formConfig && makeCopy) {
-            var formConf = (0, _extends3.default)({}, this.formConfig);
+            var formConf = (0, _extends4.default)({}, this.formConfig);
             formConf = this.createCopy(formConf);
             this.props.initForm(formConf, rowData);
           } else {
@@ -118,7 +138,7 @@ var form = function form(_ref) {
                   submitForm();
                 }
               },
-              _react2.default.createElement(Form, (0, _extends3.default)({}, this.props, { formKey: formKey, submitForm: submitForm, handleFieldChange: handleFieldChange }))
+              _react2.default.createElement(Form, (0, _extends4.default)({}, this.props, { formKey: formKey, submitForm: submitForm, handleFieldChange: handleFieldChange }))
             ),
             loading && _react2.default.createElement(_components.LoadingIndicator, null)
           );
