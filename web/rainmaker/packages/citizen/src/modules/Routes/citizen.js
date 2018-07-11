@@ -22,25 +22,10 @@ import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
+import asyncComponent from "./asyncComponent";
+import ptRoutes from "./pt";
 
-//property tax
-// import PTHome from "modules/citizen/PropertyTax/PTHome";
-// import AssessPay from "modules/citizen/PropertyTax/AssessPay";
-// import SearchProperty from "modules/citizen/PropertyTax/SearchProperty";
-// import CompletedAssessments from "modules/citizen/PropertyTax/CompletedAssessments";
-// import IncompleteAssessments from "modules/citizen/PropertyTax/IncompleteAssessments";
-// import MyProperties from "modules/citizen/PropertyTax/MyProperties";
-// import Property from "modules/citizen/PropertyTax/Property";
-// import MyReceipts from "modules/citizen/PropertyTax/MyReceipts";
-// import PropertyTaxAssessmentFormWizard from "modules/citizen/PropertyTax/AssessmentFormWizard";
-// import PaymentSuccess from "modules/citizen/PropertyTax/PaymentSuccess";
-// import PaymentFailure from "modules/citizen/PropertyTax/PaymentFailure";
-// import Events from "modules/citizen/PropertyTax/Events";
-// import Payments from "modules/citizen/PropertyTax/Payments";
-// import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
-// import PropertyAddress from "modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress";
-// import FormWizard from "modules/citizen/PropertyTax/FormWizard";
-// import PastPayment from "modules/citizen/PropertyTax/LinkPastPayments"
+
 
 const routes = [
   {
@@ -219,148 +204,7 @@ const routes = [
       hideTitle: true,
     },
   },
-  //property tax routes
-  // {
-  //   path: "property-tax",
-  //   component: PTHome,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     // title: "PUNJAB MUNICIPAL CORPORATION",
-  //     hideBackButton: true,
-  //     isHomeScreen: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/assess-pay",
-  //   component: AssessPay,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "Assess & Pay : Select Property",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/incomplete-assessments",
-  //   component: IncompleteAssessments,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "Incomplete Assessments",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/completed-assessments",
-  //   component: CompletedAssessments,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "Completed Assessments",
-  //     hideBackButton: true,
-  //   },
-  // },
-
-  // {
-  //   path: "property-tax/my-properties",
-  //   component: MyProperties,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "My Properties",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/property",
-  //   component: Property,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/search-property",
-  //   component: SearchProperty,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "Search Property",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/my-receipts",
-  //   component: MyReceipts,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "My Receipts",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/payment-success",
-  //   component: PaymentSuccess,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/payment-failure",
-  //   component: PaymentFailure,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/property-address",
-  //   component: PropertyAddress,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //   },
-  // },
-  // {
-  //   path: "pt-payment-assessment-form-wizard",
-  //   component: PropertyTaxAssessmentFormWizard,
-  //   needsAuthentication: true,
-  //   options: {
-  //     title: "PT_PAYMENT_ASSESSMENT_FORM_WIZARD",
-  //     hideFooter: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/assessment-form",
-  //   component: FormWizard,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "PUNJAB MUNICIPAL CORPORATION",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "propert-tax/review-property",
-  //   component: ReviewForm,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "PUNJAB MUNICIPAL CORPORATION",
-  //     hideBackButton: true,
-  //   },
-  // },
-  // {
-  //   path: "property-tax/past-payment",
-  //   component: PastPayment,
-  //   needsAuthentication: true,
-  // }
+  ...ptRoutes
 ];
 
 export default routes;
