@@ -1,6 +1,7 @@
 import TextField from "egov-ui-kit/components/TextField";
 import TextFieldIcon from "egov-ui-kit/components/TextFieldIcon";
 import MobileNumberField from "egov-ui-kit/components/MobileNumberField";
+import BreadCrums from "egov-ui-kit/components/BreadCrums";
 import SelectField from "egov-ui-kit/components/DropDown";
 import Label from "egov-ui-kit/components/Label";
 import Receipt from "egov-ui-kit/components/Receipt";
@@ -78,4 +79,5 @@ export {
   ToolTipUi,
   TableUi,
   Receipt,
+  BreadCrums,
 };

@@ -53,16 +53,19 @@
   .complaint-detail-detail-section-expanded-status-negative-margin {
     padding-left: 131px !important; } }
 
-body[class^="employee-complaint-details"] .map-container .searchBoxStyles,
-body[class^="employee-complaint-details"] .map-container .search-icon,
-body[class^="employee-complaint-details"] .map-container .myLoc {
-  display: none; }
-
-body[class^="employee-complaint-details"] .map-container {
-  z-index: 1101; }
-
-body[class^="employee-complaint-details"] .back-btn {
-  z-index: 1102; }
+body[class^="complaint-details"] .map-container {
+  z-index: 1101;
+  height: calc(100vh - 64px); }
+  body[class^="complaint-details"] .map-container .searchBoxStyles,
+  body[class^="complaint-details"] .map-container .search-icon,
+  body[class^="complaint-details"] .map-container .myLoc {
+    display: none; }
+  body[class^="complaint-details"] .map-container .back-btn {
+    position: absolute !important;
+    top: 76px;
+    background: transparent;
+    margin-left: 15px;
+    z-index: 1102; }
 
 .employee-complaint-summary-mapBtn {
   margin-left: 22px;

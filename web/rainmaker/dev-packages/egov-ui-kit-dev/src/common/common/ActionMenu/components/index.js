@@ -235,7 +235,7 @@ class ActionMenuComp extends Component {
           } else {
             if (item.navigationURL) {
               return (
-                <Link key={index} to={`/${item.navigationURL}`}>
+                <Link key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
                   <MenuItem
                     innerDivStyle={styles.defaultMenuItemStyle}
                     style={{ whiteSpace: "initial" }}
@@ -279,7 +279,7 @@ class ActionMenuComp extends Component {
             if (item.path && item.url && item.displayName.toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
               if (item.navigationURL) {
                 return (
-                  <Link key={index} to={`/${item.navigationURL}`}>
+                  <Link key={index} to={item.navigationURL === "/" ? `${item.navigationURL}` : `/${item.navigationURL}`}>
                     <MenuItem
                       innerDivStyle={styles.defaultMenuItemStyle}
                       style={{ whiteSpace: "initial" }}
