@@ -119,6 +119,7 @@ class Header extends Component {
           fetchLocalizationLabel={fetchLocalizationLabel}
           role={role && role === "citizen" ? "citizen" : "employee"}
           isCSR={role === "csr" ? true : false}
+          isCSR={role === "pgr-admin" ? true : false}
           openSecondary={window.innerWidth >= 768 ? true : false}
           width={300}
           // containerStyle={{ top: "64px" }}

@@ -130,7 +130,7 @@ class ActionMenuComp extends Component {
         if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
           let splitArray = actionList[i].path.split(path + ".")[1].split(".");
           this.addMenuItems(path, splitArray, menuItems, i);
-        } else if (pathParam && pathParam.parentMenu) {
+        } else if (pathParam && pathParam.parentMenu && actionList[i].navigationURL) {
           let splitArray = actionList[i].path.split(".");
           this.addMenuItems(path, splitArray, menuItems, i);
         }

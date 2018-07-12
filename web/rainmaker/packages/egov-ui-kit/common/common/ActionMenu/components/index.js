@@ -157,7 +157,7 @@ var ActionMenuComp = function (_Component) {
           if (path && !path.parentMenu && actionList[i].path.startsWith(path + ".")) {
             var splitArray = actionList[i].path.split(path + ".")[1].split(".");
             _this.addMenuItems(path, splitArray, menuItems, i);
-          } else if (pathParam && pathParam.parentMenu) {
+          } else if (pathParam && pathParam.parentMenu && actionList[i].navigationURL) {
             var _splitArray = actionList[i].path.split(".");
             _this.addMenuItems(path, _splitArray, menuItems, i);
           }

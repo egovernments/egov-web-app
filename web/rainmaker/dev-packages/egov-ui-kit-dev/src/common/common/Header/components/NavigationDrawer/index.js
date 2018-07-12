@@ -28,6 +28,7 @@ const NavigationDrawer = ({
   fetchLocalizationLabel,
   containerStyle,
   isCSR,
+  isADMIN,
 }) => {
   return (
     <Drawer
@@ -44,7 +45,7 @@ const NavigationDrawer = ({
           onItemClick={handleItemClick}
           innerDivStyle={styles.listInnerDivStyle}
           className="drawer-list-style"
-          items={menuItems(role, "one", isCSR)}
+          items={menuItems(role, "one", isCSR, isADMIN)}
           listContainerStyle={{ background: "#ffffff" }}
           listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
         />
@@ -53,7 +54,7 @@ const NavigationDrawer = ({
           onItemClick={handleItemClick}
           innerDivStyle={styles.listInnerDivStyle}
           className="drawer-list-style"
-          items={menuItems(role, "two", isCSR)}
+          items={menuItems(role, "two", isCSR, isADMIN)}
           listContainerStyle={{ background: "#ffffff" }}
           listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
         />

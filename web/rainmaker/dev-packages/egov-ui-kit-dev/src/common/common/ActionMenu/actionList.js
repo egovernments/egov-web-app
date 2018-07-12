@@ -1,5 +1,5 @@
 const actionList = {
-  CITIZEN: [
+  citizen: [
     {
       id: 1535,
       name: "Complaints",
@@ -29,7 +29,7 @@ const actionList = {
     //   rightIcon: "",
     // },
   ],
-  EMPLOYEE: [
+  employee: [
     {
       id: 1535,
       name: "PropertyType",
@@ -130,7 +130,7 @@ const actionList = {
     //   rightIcon: "",
     // },
   ],
-  GRO: [
+  ao: [
     {
       id: 1535,
       name: "PropertyType",
@@ -230,7 +230,7 @@ const actionList = {
       rightIcon: "",
     },
   ],
-  CSR: [
+  csr: [
     {
       id: 1535,
       name: "PropertyType",
@@ -260,7 +260,7 @@ const actionList = {
       rightIcon: "",
     },
   ],
-  "PGR-ADMIN": [
+  "pgr-admin": [
     {
       id: 1535,
       name: "Departments",
