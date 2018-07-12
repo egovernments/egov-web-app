@@ -312,7 +312,7 @@ var ActionMenuComp = function (_Component) {
               if (item.navigationURL) {
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/" + item.navigationURL },
+                  { key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },
@@ -359,7 +359,7 @@ var ActionMenuComp = function (_Component) {
 
                 return _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { key: index, to: "/" + item.navigationURL },
+                  { key: index, to: item.navigationURL === "/" ? "" + item.navigationURL : "/" + item.navigationURL },
                   _react2.default.createElement(_MenuItem2.default, {
                     innerDivStyle: styles.defaultMenuItemStyle,
                     style: { whiteSpace: "initial" },

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Label, Icon, Card } from "components";
+import { connect } from "react-redux";
+import { Label, BreadCrums, Icon, Card } from "components";
 import PTList from "../common/PTList";
 import YearDialogue from "./components/YearDialogue";
 import { Screen } from "modules/common";
@@ -84,26 +85,36 @@ class AssessPay extends Component {
   render() {
     let { getListItems, items } = this;
     return (
-      <Screen className="pt-home-screen">
-        <Card
-          textChildren={
-            <div
-              onClick={() => {
-                this.setState({ dialogueOpen: true });
-              }}
-              className="rainmaker-displayInline"
-              style={{ paddingLeft: "14px", alignItems: "center", cursor: "pointer" }}
-            >
-              <Icon action="content" name="add" color="#767676" style={{ height: "30px", width: "30px" }} />
-              <Label label="Add New Property" containerStyle={{ marginLeft: "30px" }} labelStyle={{ fontWeight: 500 }} fontSize="16px" />
-            </div>
-          }
-        />
-        <PTList items={getListItems(items)} history={this.props.history} innerDivStyle={innerDivStyle} />;
-        <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
+      <Screen>
+        <div className="form-without-button-cont-generic">
+          <BreadCrums />
+          <Card
+            textChildren={
+              <div
+                onClick={() => {
+                  this.setState({ dialogueOpen: true });
+                }}
+                className="rainmaker-displayInline"
+                style={{ paddingLeft: "14px", alignItems: "center", cursor: "pointer" }}
+              >
+                <Icon action="content" name="add" color="#767676" style={{ height: "30px", width: "30px" }} />
+                <Label label="Add New Property" containerStyle={{ marginLeft: "30px" }} labelStyle={{ fontWeight: 500 }} fontSize="16px" />
+              </div>
+            }
+          />
+          <PTList items={getListItems(items)} history={this.props.history} innerDivStyle={innerDivStyle} />;
+          <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
+        </div>
       </Screen>
     );
   }
 }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchComplaints: (criteria) => dispatch(fetchComplaints(criteria)),
+//     resetFiles: (formKey) => dispatch(resetFiles(formKey)),
+//   };
+// };
 
 export default AssessPay;
