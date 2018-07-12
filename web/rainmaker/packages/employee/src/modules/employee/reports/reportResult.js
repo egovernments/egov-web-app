@@ -254,7 +254,6 @@ class ShowField extends Component {
       displayStart = rTable.page.info().start;
     }
     let showTabLabel = () => {
-      console.log($(".report-result-table-header"));
       $(".report-result-table-header").html(`${tabLabel}`);
     };
     rTable = $("#reportTable").DataTable({
@@ -328,10 +327,14 @@ class ShowField extends Component {
                     return intVal(a) + intVal(b);
                   }
                 }, 0);
+              let hideFooter = false;
+              if (isNaN(pageTotal) && typeof pageTotal === "number") {
+                hideFooter = true;
+              }
 
               // Update footer
               //$(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN") + " (" + total.toLocaleString("en-IN") + ")");
-              typeof pageTotal !== "undefined" && pageTotal != NaN && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
+              typeof pageTotal !== "undefined" && !hideFooter && $(api.column(index).footer()).html(pageTotal.toLocaleString("en-IN"));
               //}
             }
             // }
@@ -725,7 +728,6 @@ class ShowField extends Component {
     let reportTitle = "";
     if (reportTitleArr) {
       reportTitle = reportTitleArr.map((char) => {
-        console.log(char);
         if (char.length == 1) {
           reportTitle = char + "";
         } else {
