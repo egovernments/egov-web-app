@@ -33,7 +33,6 @@ class Feedback extends Component {
   };
 
   onSubmit = (e) => {
-    console.log(this.props);
     const { rating } = this.props;
     if (!rating) {
       e.preventDefault();

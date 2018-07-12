@@ -25,7 +25,7 @@ const getStyles = (iconPosition, textFieldProps) => {
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
-  inputStyle["width"] = iconPosition === "after" ? "90%" : "100%";
+  inputStyle["width"] = iconPosition === "after" ? "90%" : "90%";
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 24;
@@ -47,6 +47,7 @@ const TextFieldIcon = ({
   iconPosition = "after",
   autoFocus,
   className,
+  inputStyle,
   ...textFieldProps
 }) => {
   const style = getStyles(iconPosition, textFieldProps);
@@ -58,7 +59,7 @@ const TextFieldIcon = ({
         name="textfield-icon"
         className={className}
         style={{ ...style.textFieldStyle, ...textFieldStyle }}
-        inputStyle={{ ...style.inputStyle }}
+        inputStyle={{ ...style.inputStyle, ...inputStyle }}
         {...textFieldProps}
       />
     </div>

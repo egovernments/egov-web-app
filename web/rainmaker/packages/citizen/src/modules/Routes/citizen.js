@@ -25,8 +25,6 @@ import { ReopenAcknowledgement } from "modules/common";
 import asyncComponent from "./asyncComponent";
 import ptRoutes from "./pt";
 
-
-
 const routes = [
   {
     path: "user/register",
@@ -204,7 +202,7 @@ const routes = [
       hideTitle: true,
     },
   },
-  ...ptRoutes
+  ...ptRoutes,
 ];
 
 export default routes;

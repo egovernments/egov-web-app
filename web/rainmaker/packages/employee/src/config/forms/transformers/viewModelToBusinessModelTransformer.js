@@ -128,8 +128,12 @@ const transformer = (formKey, form = {}, state = {}) => {
     },
     complaint: async () => {
       const formData = prepareFormData(form);
+      const userInfo = localStorage.getItem("user-info");
+      let userRole = null;
       try {
         const { phone } = form.fields;
+        userRole = JSON.parse(userInfo).roles[0].code;
+        formData.services[0].source = userRole === "CSR" ? "csc" : "";
         formData.services[0].phone = phone.value;
       } catch (error) {}
 

@@ -50,7 +50,7 @@ var getStyles = function getStyles(iconPosition, textFieldProps) {
   };
   iconStyle[iconPosition === "before" ? "left" : "right"] = 0;
   textFieldStyle["textIndent"] = iconPosition === "before" ? 40 : 0;
-  inputStyle["width"] = iconPosition === "after" ? "90%" : "100%";
+  inputStyle["width"] = iconPosition === "after" ? "90%" : "90%";
 
   if (textFieldProps.floatingLabelText) {
     iconStyle.top = 24;
@@ -75,7 +75,8 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       iconPosition = _ref$iconPosition === undefined ? "after" : _ref$iconPosition,
       autoFocus = _ref.autoFocus,
       className = _ref.className,
-      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className"]);
+      inputStyle = _ref.inputStyle,
+      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className", "inputStyle"]);
 
   var style = getStyles(iconPosition, textFieldProps);
   return _react2.default.createElement(
@@ -87,7 +88,7 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       name: "textfield-icon",
       className: className,
       style: (0, _extends3.default)({}, style.textFieldStyle, textFieldStyle),
-      inputStyle: (0, _extends3.default)({}, style.inputStyle)
+      inputStyle: (0, _extends3.default)({}, style.inputStyle, inputStyle)
     }, textFieldProps))
   );
 };
