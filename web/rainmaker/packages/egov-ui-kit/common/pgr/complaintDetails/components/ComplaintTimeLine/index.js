@@ -494,7 +494,7 @@ var StatusContent = function StatusContent(_ref2) {
           " ",
           _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-rating", labelStyle: { color: "#22b25f" }, label: rating + "/5 " }),
           " ",
-          _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-feedback", label: " ( " + feedback + ")" })
+          _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-feedback", label: feedback && " (" + feedback + ")" })
         ),
         _react2.default.createElement(_translationNode2.default, { labelClassName: "rainmaker-small-font complaint-timeline-comments", label: comments ? "\" " + comments + " \"" : "" })
       );

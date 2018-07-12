@@ -85,8 +85,9 @@ var withAuthorization = function withAuthorization() {
           var authenticated = this.props.authenticated;
           var redirectionUrl = options.redirectionUrl;
 
+          console.log(options);
           if (!authenticated) {
-            this.props.history.replace(redirectionUrl || "/user/login");
+            this.props.history.replace(redirectionUrl || "/user/register");
           }
         }
       }, {

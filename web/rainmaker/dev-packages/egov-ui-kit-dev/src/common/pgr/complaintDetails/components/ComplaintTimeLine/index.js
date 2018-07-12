@@ -500,7 +500,7 @@ const StatusContent = ({ stepData, currentStatus, changeRoute, feedback, rating,
           <div style={{ display: "flex" }}>
             {" "}
             <Label labelClassName="rainmaker-small-font complaint-timeline-rating" labelStyle={{ color: "#22b25f" }} label={`${rating}/5 `} />{" "}
-            <Label labelClassName="rainmaker-small-font complaint-timeline-feedback" label={` ( ${feedback})`} />
+            <Label labelClassName="rainmaker-small-font complaint-timeline-feedback" label={feedback && ` (${feedback})`} />
           </div>
           <Label labelClassName="rainmaker-small-font complaint-timeline-comments" label={comments ? `" ${comments} "` : ""} />
         </div>
