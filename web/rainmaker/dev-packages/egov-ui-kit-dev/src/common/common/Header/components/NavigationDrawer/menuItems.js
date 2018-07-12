@@ -89,14 +89,16 @@ const items = {
               borderLeft: "3px solid #00bbd3",
             },
             id: "header-home",
-            renderForCSR: true,
+            renderforcsr: true,
+            renderforadmin: true,
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
             route: "/closed-complaints",
             leftIcon: <Icon action="custom" name="file-check" />,
             id: "header-closed-complaint",
-            renderForCSR: false,
+            renderforcsr: false,
+            renderforadmin: false,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
@@ -107,7 +109,8 @@ const items = {
               paddingTop: "2px",
             },
             id: "header-contact-us",
-            renderForCSR: true,
+            renderforcsr: true,
+            renderforadmin: true,
           },
 
           {
@@ -119,7 +122,8 @@ const items = {
               paddingTop: "3px",
             },
             id: "header-profile",
-            renderForCSR: true,
+            renderforcsr: true,
+            renderforadmin: true,
           },
           // {
           //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -129,7 +133,7 @@ const items = {
           //     borderBottom: "none",
           //   },
           //   id: "header-language",
-          //   renderForCSR: true,
+          //   renderforcsr: true,
           // },
         ],
       },
@@ -144,7 +148,8 @@ const items = {
               borderLeft: "red",
             },
             id: "header-logout",
-            renderForCSR: true,
+            renderforcsr: true,
+            renderforadmin: true,
           },
         ],
       },
@@ -154,13 +159,19 @@ const items = {
 
 const renderMenuForCSR = (role, section) => {
   const menuForCSR = items[role].sections[section].items.filter((item) => {
-    return item.renderForCSR === true;
+    return item.renderforcsr === true;
   });
   return menuForCSR;
 };
+const renderMenuForADMIN = (role, section) => {
+  const menuForADMIN = items[role].sections[section].items.filter((item) => {
+    return item.renderforadmin === true;
+  });
+  return menuForADMIN;
+};
 
-const menuItems = (role = "citizen", section = "one", isCSR) => {
-  return isCSR ? renderMenuForCSR(role, section) : items[role].sections[section].items;
+const menuItems = (role = "citizen", section = "one", isCSR, isADMIN) => {
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
 };
 
 export default menuItems;

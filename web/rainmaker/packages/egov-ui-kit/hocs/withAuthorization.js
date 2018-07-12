@@ -112,7 +112,7 @@ var withAuthorization = function withAuthorization() {
               complaints = _props.complaints;
           var titleAddon = this.state.titleAddon;
 
-          var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : "";
+          var role = this.roleFromUserInfo(userInfo, "CITIZEN") ? "citizen" : this.roleFromUserInfo(userInfo, "GRO") ? "ao" : this.roleFromUserInfo(userInfo, "CSR") ? "csr" : this.roleFromUserInfo(userInfo, "EMPLOYEE") ? "employee" : this.roleFromUserInfo(userInfo, "PGR-ADMIN") ? "pgr-admin" : "";
 
           //For restricting citizen to access employee url
 
@@ -151,7 +151,7 @@ var withAuthorization = function withAuthorization() {
                   _react2.default.createElement(
                     "div",
                     { className: "rainmaker-action-menu" },
-                    _react2.default.createElement(_common.ActionMenu, { role: getUserRole() })
+                    _react2.default.createElement(_common.ActionMenu, { role: role })
                   )
                 ),
                 _react2.default.createElement("div", { className: "col-xs-2  show-action-menu" }),

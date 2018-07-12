@@ -86,13 +86,15 @@ var items = {
             borderLeft: "3px solid #00bbd3"
           },
           id: "header-home",
-          renderForCSR: true
+          renderforcsr: true,
+          renderforadmin: true
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_CLOSED_COMPLAINTS_HEADER" }),
           route: "/closed-complaints",
           leftIcon: _react2.default.createElement(_components.Icon, { action: "custom", name: "file-check" }),
           id: "header-closed-complaint",
-          renderForCSR: false
+          renderforcsr: false,
+          renderforadmin: false
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "ES_EMPLOYEE_DIRECTORY_HEADER" }),
           route: "/employee-directory",
@@ -102,7 +104,8 @@ var items = {
             paddingTop: "2px"
           },
           id: "header-contact-us",
-          renderForCSR: true
+          renderforcsr: true,
+          renderforadmin: true
         }, {
           primaryText: _react2.default.createElement(_translationNode2.default, { label: "CS_HOME_HEADER_PROFILE" }),
           route: "/user/profile",
@@ -112,7 +115,8 @@ var items = {
             paddingTop: "3px"
           },
           id: "header-profile",
-          renderForCSR: true
+          renderforcsr: true,
+          renderforadmin: true
         }]
       },
       two: {
@@ -125,7 +129,8 @@ var items = {
             borderLeft: "red"
           },
           id: "header-logout",
-          renderForCSR: true
+          renderforcsr: true,
+          renderforadmin: true
         }]
       }
     }
@@ -134,17 +139,24 @@ var items = {
 
 var renderMenuForCSR = function renderMenuForCSR(role, section) {
   var menuForCSR = items[role].sections[section].items.filter(function (item) {
-    return item.renderForCSR === true;
+    return item.renderforcsr === true;
   });
   return menuForCSR;
+};
+var renderMenuForADMIN = function renderMenuForADMIN(role, section) {
+  var menuForADMIN = items[role].sections[section].items.filter(function (item) {
+    return item.renderforadmin === true;
+  });
+  return menuForADMIN;
 };
 
 var menuItems = function menuItems() {
   var role = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "citizen";
   var section = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "one";
   var isCSR = arguments[2];
+  var isADMIN = arguments[3];
 
-  return isCSR ? renderMenuForCSR(role, section) : items[role].sections[section].items;
+  return isCSR ? renderMenuForCSR(role, section) : isADMIN ? renderMenuForADMIN(role, section) : items[role].sections[section].items;
 };
 
 exports.default = menuItems;

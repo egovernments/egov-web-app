@@ -67,7 +67,9 @@ const withAuthorization = (options = {}) => (Component) => {
             ? "csr"
             : this.roleFromUserInfo(userInfo, "EMPLOYEE")
               ? "employee"
-              : "";
+              : this.roleFromUserInfo(userInfo, "PGR-ADMIN")
+                ? "pgr-admin"
+                : "";
 
       //For restricting citizen to access employee url
 
@@ -99,7 +101,7 @@ const withAuthorization = (options = {}) => (Component) => {
               <div>
                 <div className="col-xs-2 action-menu-drawer show-action-menu">
                   <div className="rainmaker-action-menu">
-                    <ActionMenu role={getUserRole()} />
+                    <ActionMenu role={role} />
                   </div>
                 </div>
                 <div className="col-xs-2  show-action-menu" /> {/*Dummy div for proper alignment - fixed positioning drawbacks*/}

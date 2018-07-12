@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var actionList = {
-  CITIZEN: [{
+  citizen: [{
     id: 1535,
     name: "Complaints",
     url: "url",
@@ -18,7 +18,7 @@ var actionList = {
     leftIcon: "alert:warning",
     rightIcon: ""
   }],
-  EMPLOYEE: [{
+  employee: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -45,7 +45,7 @@ var actionList = {
     leftIcon: "custom:closed-complaints",
     rightIcon: ""
   }],
-  GRO: [{
+  ao: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -136,7 +136,7 @@ var actionList = {
     leftIcon: "action:assignment",
     rightIcon: ""
   }],
-  CSR: [{
+  csr: [{
     id: 1535,
     name: "PropertyType",
     url: "url",
@@ -163,7 +163,7 @@ var actionList = {
     leftIcon: "content:add",
     rightIcon: ""
   }],
-  "PGR-ADMIN": [{
+  "pgr-admin": [{
     id: 1535,
     name: "Departments",
     url: "url",

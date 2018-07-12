@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -148,6 +152,8 @@ var Header = function (_Component) {
   (0, _createClass3.default)(Header, [{
     key: "render",
     value: function render() {
+      var _React$createElement;
+
       var _state = this.state,
           toggleMenu = _state.toggleMenu,
           logoutPopupOpen = _state.logoutPopupOpen;
@@ -181,7 +187,7 @@ var Header = function (_Component) {
           fetchLocalizationLabel: fetchLocalizationLabel,
           userInfo: userInfo
         })),
-        _react2.default.createElement(_NavigationDrawer2.default, {
+        _react2.default.createElement(_NavigationDrawer2.default, (_React$createElement = {
           handleItemClick: _handleItemClick,
           onUpdateMenuStatus: _onUpdateMenuStatus,
           toggleMenu: toggleMenu,
@@ -190,11 +196,8 @@ var Header = function (_Component) {
           userInfo: userInfo,
           fetchLocalizationLabel: fetchLocalizationLabel,
           role: role && role === "citizen" ? "citizen" : "employee",
-          isCSR: role === "csr" ? true : false,
-          openSecondary: window.innerWidth >= 768 ? true : false,
-          width: 300
-          // containerStyle={{ top: "64px" }}
-        }),
+          isCSR: role === "csr" ? true : false
+        }, (0, _defineProperty3.default)(_React$createElement, "isCSR", role === "pgr-admin" ? true : false), (0, _defineProperty3.default)(_React$createElement, "openSecondary", window.innerWidth >= 768 ? true : false), (0, _defineProperty3.default)(_React$createElement, "width", 300), _React$createElement)),
         _react2.default.createElement(_LogoutDialog2.default, { logoutPopupOpen: logoutPopupOpen, closeLogoutDialog: _closeLogoutDialog, logout: _logout })
       );
     }
