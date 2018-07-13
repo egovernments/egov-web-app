@@ -1,5 +1,5 @@
 const commonConfig = {
-  MAP_API_KEY: "AIzaSyBN01pR2wGavj2_q3v4-vFgQzmcx-gllk0",
+  MAP_API_KEY: "AIzaSyCH9PmCbk_mcpgijAAlTeltC4deOxC5wEM",
   tenantId: "pb",
   forgotPasswordTenant: "pb.amritsar",
 };

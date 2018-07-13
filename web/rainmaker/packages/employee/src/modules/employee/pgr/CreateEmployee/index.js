@@ -1215,7 +1215,7 @@ class Employee extends Component {
               </div>
               <div className="col-md-6 col-xs-12">
 
-                <AutoComplete className="create-employee-text-field-cont"s
+                <AutoComplete className="create-employee-text-field-cont"
                   errorText={self.state.errorText['assignments.position']}
                   fullWidth={true}
                   floatingLabelStyle={{

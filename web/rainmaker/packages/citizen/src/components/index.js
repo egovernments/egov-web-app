@@ -23,6 +23,7 @@ import Tabs from "egov-ui-kit/components/Tabs";
 import MapLocation from "egov-ui-kit/components/MapLocation";
 import List from "egov-ui-kit/components/List";
 import AutoSuggest from "egov-ui-kit/components/AutoSuggestCommon";
+import AutoSuggestDropdown from "egov-ui-kit/components/AutoSuggestDropdown";
 import ProfileSection from "egov-ui-kit/components/ProfileSection";
 import Ratings from "egov-ui-kit/components/Ratings";
 import ButtonGroup from "egov-ui-kit/components/ButtonGroup";
@@ -63,6 +64,7 @@ export {
   MapLocation,
   List,
   AutoSuggest,
+  AutoSuggestDropdown,
   ProfileSection,
   Ratings,
   ButtonGroup,

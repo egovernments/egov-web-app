@@ -2,6 +2,7 @@ import React from "react";
 import { Card, TextField, DropDown, Button } from "components";
 import AdditionalDetailsCard from "../AdditionalDetails";
 import ComplaintTypeCard from "../ComplaintType";
+import MohallaDropdown from "../MohallaDropdown";
 
 const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form, categories, history }) => {
   const fields = form.fields || {};
@@ -61,17 +62,12 @@ const AddComplaintForm = ({ formKey, localizationLabels, handleFieldChange, form
                 <DropDown
                   className="fix-for-layout-break"
                   fullWidth={true}
-                  {...city}
                   onChange={(e, value, selectedValue) => handleFieldChange("city", selectedValue)}
+                  {...city}
                 />
               </div>
               <div className="col-sm-6 col-xs-12">
-                <DropDown
-                  className="fix-for-layout-break"
-                  fullWidth={true}
-                  {...mohalla}
-                  onChange={(e, value, selectedValue) => handleFieldChange("mohalla", selectedValue)}
-                />
+                <MohallaDropdown handleFieldChange={handleFieldChange} mohalla={mohalla} />
               </div>
               <div className="col-sm-6 col-xs-12">
                 <TextField
