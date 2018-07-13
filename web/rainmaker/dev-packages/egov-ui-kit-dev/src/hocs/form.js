@@ -1,25 +1,25 @@
 import React from "react";
 import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
-import { handleFieldChange, initForm, submitForm } from "egov-ui-kit/redux/form/actions";
+import { handleFieldChange, initForm, submitForm, deleteForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = false, ...rest }) => (Form) => {
+const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      const { extraProps } = rest
+      const { extraFields } = rest
       try {
         if (path && path !== "") {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
         } else {
           this.formConfig = require(`config/forms/specs/${formKey}`).default;
         }
-        if (extraProps) {
+        if (extraFields) {
           this.formConfig = {
             ...this.formConfig,
             ["fields"]: {
               ...this.formConfig.fields,
-              ...extraProps
+              ...extraFields
             }
           }
         }
@@ -29,7 +29,7 @@ const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = 
     }
 
     componentDidMount() {
-      if (this.formConfig && makeCopy) {
+      if (this.formConfig && copyName) {
         let formConf = { ...this.formConfig };
         formConf = this.createCopy(formConf);
         this.props.initForm(formConf, rowData);
@@ -40,15 +40,11 @@ const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = 
 
     createCopy = (formConf) => {
       let updatedFormConf = { ...formConf }
-      const { formKeys } = this.props
       const { formatConfig } = updatedFormConf
-      const existing_count = formKeys.filter(function(formKey) {
-        return formKey.includes(updatedFormConf.name);
-      }).length;
-      updatedFormConf.name = copyName ? copyName : updatedFormConf.name + `_${existing_count}`;
+      updatedFormConf.name = copyName;
       formKey = updatedFormConf.name;
       if (formatConfig) {
-        updatedFormConf = formatConfig({ ...this.props, config: updatedFormConf, currentCount: existing_count })
+        updatedFormConf = formatConfig({ ...this.props, ...rest, config: updatedFormConf })
       }
       return updatedFormConf;
     };
@@ -94,6 +90,7 @@ const form = ({ formKey, path = "", makeCopy = false, copyName, rowData, edit = 
       handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
       submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
       initForm: (form) => dispatch(initForm(form)),
+      deleteForm: () => dispatch(deleteForm(formKey))
     };
   };
 

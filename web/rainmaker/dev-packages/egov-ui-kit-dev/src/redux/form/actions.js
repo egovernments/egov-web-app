@@ -130,3 +130,8 @@ export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
 export const setFieldProperty = (formKey, fieldKey, propertyName, propertyValue) => {
   return { type: actionTypes.SET_FIELD_PROPERTY, formKey, fieldKey, propertyName, propertyValue };
 };
+
+export const deleteForm = (formKey) => ({
+  type: actionTypes.DELETE_FORM,
+  formKey,
+})

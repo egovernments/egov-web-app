@@ -147,6 +147,10 @@ const form = (state = intialState, action) => {
     case actionTypes.RESET_FILES:
       return resetFiles(state, formKey);
     // end of file reducers
+    case actionTypes.DELETE_FORM:
+      const updatedState = { ...state }
+      delete updatedState[formKey]
+      return updatedState
     default:
       return state;
   }
