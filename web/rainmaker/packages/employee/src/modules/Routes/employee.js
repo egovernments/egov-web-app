@@ -8,6 +8,7 @@ import { TrackLocation } from "modules/common";
 import { ReOpenComplaint } from "modules/common";
 import { ReopenAcknowledgement } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
+import { PrivacyPolicy } from "modules/common";
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
@@ -55,6 +56,12 @@ const routes = [
     component: ForgotPassword,
     needsAuthentication: false,
     redirectionUrl: "/all-complaints",
+  },
+  {
+    path: "privacy-policy",
+    component: PrivacyPolicy,
+    needsAuthentication: false,
+    redirectionUrl: "/",
   },
   {
     path: "user/change-password",

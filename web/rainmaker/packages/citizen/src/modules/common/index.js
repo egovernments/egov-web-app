@@ -13,6 +13,7 @@ import VerticalCenterWrapper from "egov-ui-kit/common/common/VerticalCenterWrapp
 import Screen from "egov-ui-kit/common/common/Screen";
 import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
+import PrivacyPolicy from "egov-ui-kit/common/common/PrivacyPolicy";
 
 //pgr common components
 import ComplaintSubmited from "egov-ui-kit/common/pgr/ComplaintSubmited";
@@ -69,4 +70,5 @@ export {
   ReOpenComplaint,
   ReopenAcknowledgement,
   ComplaintSubmited,
+  PrivacyPolicy,
 };

@@ -24,6 +24,7 @@ import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
 import asyncComponent from "./asyncComponent";
 import ptRoutes from "./pt";
+import { PrivacyPolicy } from "modules/common";
 
 const routes = [
   {
@@ -44,6 +45,14 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/",
   },
+
+  {
+    path: "privacy-policy",
+    component: PrivacyPolicy,
+    needsAuthentication: false,
+    redirectionUrl: "/",
+  },
+
   // {
   //   path: "user/language-selection",
   //   component: LanguageSelection,

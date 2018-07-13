@@ -133,7 +133,7 @@ const transformer = (formKey, form = {}, state = {}) => {
       try {
         const { phone } = form.fields;
         userRole = JSON.parse(userInfo).roles[0].code;
-        formData.services[0].source = userRole === "CSR" ? "csc" : "";
+        formData.services[0].source = userRole === "CSR" ? "ivr" : "";
         formData.services[0].phone = phone.value;
       } catch (error) {}
 

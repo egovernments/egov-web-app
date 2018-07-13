@@ -62,7 +62,7 @@ const mapStateToProps = (state) => {
 
   return {
     loading,
-    profilePic: (images.length && images[0].imageUri && isImage(images[0].imageUri)) || img,
+    profilePic: (images.length && images[0].imageUri) || img,
   };
 };
 

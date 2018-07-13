@@ -34,18 +34,25 @@ var Banner = function Banner(_ref) {
       { className: className + " user-screens-wrapper" },
       _react2.default.createElement(
         "div",
-        { className: "row" },
-        _react2.default.createElement(_components.Icon, { onClick: function onClick() {
-            return history.goBack();
-          }, className: "banner-back-button", action: "navigation", name: "arrow-back" }),
-        _react2.default.createElement("div", { className: "banner-image" }),
+        { className: "banner-image" },
         _react2.default.createElement("div", { className: "banner-overlay" }),
         _react2.default.createElement(
           "div",
-          { className: "logo-wrapper user-logo-wrapper" },
-          _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _punjabLogo2.default })
-        ),
-        children
+          { className: "banner-main-content" },
+          _react2.default.createElement(_components.Icon, { onClick: function onClick() {
+              return history.goBack();
+            }, className: "banner-back-button", action: "navigation", name: "arrow-back" }),
+          _react2.default.createElement(
+            "div",
+            { className: "logo-wrapper user-logo-wrapper" },
+            _react2.default.createElement(_components.Image, { className: "mseva-logo", source: "" + _punjabLogo2.default })
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "banner-form-cont" },
+            children
+          )
+        )
       )
     )
   );
