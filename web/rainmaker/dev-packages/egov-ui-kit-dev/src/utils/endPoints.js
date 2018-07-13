@@ -105,3 +105,16 @@ export const CITY = {
     ACTION: "_search",
   },
 };
+
+export const FLOOR = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
+    ACTION: "_search",
+  },
+};
+export const ACTIONMENU = {
+  GET: {
+    URL: "/access/v1/actions/mdms/_get",
+    ACTION: "_get",
+  },
+};

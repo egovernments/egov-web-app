@@ -7,8 +7,8 @@ import { Icon } from "components";
 import { split, orderBy, some } from "lodash";
 import ActionMenuComp from "../ActionMenu/components";
 import "./index.css";
-//import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
-import actionList from "./actionList";
+import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
+//import actionList from "./actionList";
 
 const styles = {
   menuStyle: {
@@ -45,28 +45,59 @@ const styles = {
 // const
 
 class ActionMenu extends Component {
-  // componentDidMount = async () => {
-  //   let userInfo = localStorage.getItem("user-info");
-  //   let { fetchActionMenu, role } = this.props;
-  //   await fetchActionMenu(
-  //     {
-  //       roleCodes: [role],
-  //       tenantId: "pb",
-  //       actionMaster: "actions-test",
-  //       enabled: true,
-  //     },
-  //     {
-  //       ts: 1531206285401,
-  //     }
-  //   );
-  // };
+  componentDidMount = async () => {
+    //let userInfo = localStorage.getItem("user-info");
+    let { fetchActionMenu, role } = this.props;
+    let roleCode = this.getTransformedRole(role);
+    await fetchActionMenu(
+      {
+        roleCodes: [roleCode],
+        tenantId: "pb",
+        actionMaster: "actions-test",
+        enabled: true,
+      },
+      {
+        ts: new Date().getTime(),
+      }
+    );
+  };
+  getTransformedRole = (role) => {
+    switch (role) {
+      case "citizen":
+        return "CITIZEN";
+        break;
+      case "csr":
+        return "CSR";
+        break;
+      case "ao":
+        return "GRO";
+        break;
+      case "employee":
+        return "EMPLOYEE";
+        break;
+      case "pgr-admin":
+        return "PGR-ADMIN";
+        break;
+      default:
+        return "";
+    }
+  };
 
   render() {
-    // let { actionListArr, role } = this.props;
-    let { role } = this.props;
-    let actionListArr = actionList[role];
+    let { actionListArr, role } = this.props;
+    // let { role } = this.props;
+    //let actionListArr = actionList[role];
+    let transformedRole = this.getTransformedRole(role);
 
-    return actionListArr && actionListArr.length > 0 ? <ActionMenuComp role={role} actionListArr={actionListArr} /> : null;
+    if (actionListArr && actionListArr.length > 0) {
+      actionListArr.map((item) => {
+        if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
+          item.navigationURL = "";
+        }
+      });
+    }
+
+    return actionListArr && actionListArr.length > 0 ? <ActionMenuComp role={transformedRole} actionListArr={actionListArr} /> : null;
   }
 }
 
@@ -78,7 +109,7 @@ const mapStateToProps = ({ app }) => {
 const mapDispatchToProps = (dispatch) => ({
   handleToggle: (showMenu) => dispatch({ type: "MENU_TOGGLE", showMenu }),
   setRoute: (route) => dispatch({ type: "SET_ROUTE", route }),
-  // fetchActionMenu: (role, ts) => dispatch(fetchActionItems(role, ts)),
+  fetchActionMenu: (role, ts) => dispatch(fetchActionItems(role, ts)),
 });
 export default connect(
   mapStateToProps,

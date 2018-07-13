@@ -4,6 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _regenerator = require("babel-runtime/regenerator");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -46,11 +54,11 @@ var _components3 = _interopRequireDefault(_components2);
 
 require("./index.css");
 
-var _actionList = require("./actionList");
-
-var _actionList2 = _interopRequireDefault(_actionList);
+var _actions = require("egov-ui-kit/redux/app/actions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import actionList from "./actionList";
 
 var styles = {
   menuStyle: {
@@ -86,49 +94,97 @@ var styles = {
 
 // const
 
-//import { fetchActionItems } from "egov-ui-kit/redux/app/actions";
-
 var ActionMenu = function (_Component) {
   (0, _inherits3.default)(ActionMenu, _Component);
 
   function ActionMenu() {
+    var _ref,
+        _this2 = this;
+
+    var _temp, _this, _ret;
+
     (0, _classCallCheck3.default)(this, ActionMenu);
-    return (0, _possibleConstructorReturn3.default)(this, (ActionMenu.__proto__ || Object.getPrototypeOf(ActionMenu)).apply(this, arguments));
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ActionMenu.__proto__ || Object.getPrototypeOf(ActionMenu)).call.apply(_ref, [this].concat(args))), _this), _this.componentDidMount = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      var _this$props, fetchActionMenu, role, roleCode;
+
+      return _regenerator2.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              //let userInfo = localStorage.getItem("user-info");
+              _this$props = _this.props, fetchActionMenu = _this$props.fetchActionMenu, role = _this$props.role;
+              roleCode = _this.getTransformedRole(role);
+              _context.next = 4;
+              return fetchActionMenu({
+                roleCodes: [roleCode],
+                tenantId: "pb",
+                actionMaster: "actions-test",
+                enabled: true
+              }, {
+                ts: new Date().getTime()
+              });
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, _this2);
+    })), _this.getTransformedRole = function (role) {
+      switch (role) {
+        case "citizen":
+          return "CITIZEN";
+          break;
+        case "csr":
+          return "CSR";
+          break;
+        case "ao":
+          return "GRO";
+          break;
+        case "employee":
+          return "EMPLOYEE";
+          break;
+        case "pgr-admin":
+          return "PGR-ADMIN";
+          break;
+        default:
+          return "";
+      }
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(ActionMenu, [{
     key: "render",
-
-    // componentDidMount = async () => {
-    //   let userInfo = localStorage.getItem("user-info");
-    //   let { fetchActionMenu, role } = this.props;
-    //   await fetchActionMenu(
-    //     {
-    //       roleCodes: [role],
-    //       tenantId: "pb",
-    //       actionMaster: "actions-test",
-    //       enabled: true,
-    //     },
-    //     {
-    //       ts: 1531206285401,
-    //     }
-    //   );
-    // };
-
     value: function render() {
-      // let { actionListArr, role } = this.props;
-      var role = this.props.role;
+      var _props = this.props,
+          actionListArr = _props.actionListArr,
+          role = _props.role;
+      // let { role } = this.props;
+      //let actionListArr = actionList[role];
 
-      var actionListArr = _actionList2.default[role];
+      var transformedRole = this.getTransformedRole(role);
 
-      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components3.default, { role: role, actionListArr: actionListArr }) : null;
+      if (actionListArr && actionListArr.length > 0) {
+        actionListArr.map(function (item) {
+          if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
+            item.navigationURL = "";
+          }
+        });
+      }
+
+      return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components3.default, { role: transformedRole, actionListArr: actionListArr }) : null;
     }
   }]);
   return ActionMenu;
 }(_react.Component);
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var app = _ref.app;
+var mapStateToProps = function mapStateToProps(_ref3) {
+  var app = _ref3.app;
 
   var actionListArr = app.menu || [];
   return { actionListArr: actionListArr };
@@ -141,8 +197,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     setRoute: function setRoute(route) {
       return dispatch({ type: "SET_ROUTE", route: route });
+    },
+    fetchActionMenu: function fetchActionMenu(role, ts) {
+      return dispatch((0, _actions.fetchActionItems)(role, ts));
     }
-    // fetchActionMenu: (role, ts) => dispatch(fetchActionItems(role, ts)),
   };
 };
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ActionMenu);

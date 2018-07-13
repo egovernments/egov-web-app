@@ -722,8 +722,9 @@ class ShowField extends Component {
 
     this.setState({ reportSubTitle: result });
   };
-  getReportTitle = () => {
-    let { reportName } = this.state;
+  getReportTitle = (rptName) => {
+    // let { reportName } = this.state;
+    let reportName = rptName || this.state.reportName;
     let reportTitleArr = reportName && reportName.split(/(?=[A-Z])/);
     let reportTitle = "";
     if (reportTitleArr) {
@@ -886,7 +887,9 @@ class ShowField extends Component {
         {isTableShow &&
           !_.isEmpty(reportResult) &&
           reportResult.hasOwnProperty("reportData") &&
-          reportName && <div className="report-title">{this.getReportTitle()}</div>}
+          metaData &&
+          metaData.reportDetails &&
+          metaData.reportDetails.reportName && <div className="report-title">{this.getReportTitle(metaData.reportDetails.reportName)}</div>}
         <div className="report-result-table">
           {isTableShow && !_.isEmpty(reportResult) && reportResult.hasOwnProperty("reportData") && viewTabel()}
         </div>

@@ -13,6 +13,10 @@ var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _axios = require("axios");
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -36,7 +40,7 @@ var instance = _axios2.default.create({
   }
 });
 
-var wrapRequestBody = function wrapRequestBody(requestBody, action) {
+var wrapRequestBody = function wrapRequestBody(requestBody, action, customRequestInfo) {
   var authToken = (0, _commons.fetchFromLocalStorage)("token");
 
   var RequestInfo = {
@@ -50,7 +54,7 @@ var wrapRequestBody = function wrapRequestBody(requestBody, action) {
     requesterId: "",
     authToken: authToken
   };
-
+  RequestInfo = (0, _extends3.default)({}, RequestInfo, customRequestInfo);
   return Object.assign({}, {
     RequestInfo: RequestInfo
   }, requestBody);
@@ -61,6 +65,7 @@ var httpRequest = exports.httpRequest = function () {
     var queryObject = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
     var requestBody = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     var headers = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+    var customRequestInfo = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
     var tenantId, apiError, response, responseStatus, _error$response, data, status;
 
@@ -77,7 +82,7 @@ var httpRequest = exports.httpRequest = function () {
             });
 
             if (!(0, _some2.default)(queryObject, ["key", "tenantId"])) {
-              queryObject.push({
+              queryObject && queryObject.push({
                 key: "tenantId",
                 value: tenantId
               });
@@ -86,7 +91,7 @@ var httpRequest = exports.httpRequest = function () {
             endPoint = (0, _commons.addQueryArg)(endPoint, queryObject);
             _context.prev = 5;
             _context.next = 8;
-            return instance.post(endPoint, wrapRequestBody(requestBody, action));
+            return instance.post(endPoint, wrapRequestBody(requestBody, action, customRequestInfo));
 
           case 8:
             response = _context.sent;
@@ -189,7 +194,7 @@ var uploadFile = exports.uploadFile = function () {
     }, _callee2, undefined, [[4, 17]]);
   }));
 
-  return function uploadFile(_x6, _x7, _x8) {
+  return function uploadFile(_x7, _x8, _x9) {
     return _ref2.apply(this, arguments);
   };
 }();

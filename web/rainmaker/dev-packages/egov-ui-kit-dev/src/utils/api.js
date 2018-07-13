@@ -10,10 +10,10 @@ const instance = axios.create({
   },
 });
 
-const wrapRequestBody = (requestBody, action) => {
+const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   const authToken = fetchFromLocalStorage("token");
 
-  const RequestInfo = {
+  let RequestInfo = {
     apiId: "Rainmaker",
     ver: ".01",
     ts: "",
@@ -24,7 +24,7 @@ const wrapRequestBody = (requestBody, action) => {
     requesterId: "",
     authToken,
   };
-
+  RequestInfo = { ...RequestInfo, ...customRequestInfo };
   return Object.assign(
     {},
     {
@@ -34,7 +34,7 @@ const wrapRequestBody = (requestBody, action) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = []) => {
+export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {}) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 
@@ -44,15 +44,16 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
     });
 
   if (!some(queryObject, ["key", "tenantId"])) {
-    queryObject.push({
-      key: "tenantId",
-      value: tenantId,
-    });
+    queryObject &&
+      queryObject.push({
+        key: "tenantId",
+        value: tenantId,
+      });
   }
 
   endPoint = addQueryArg(endPoint, queryObject);
   try {
-    const response = await instance.post(endPoint, wrapRequestBody(requestBody, action));
+    const response = await instance.post(endPoint, wrapRequestBody(requestBody, action, customRequestInfo));
     const responseStatus = parseInt(response.status, 10);
     if (responseStatus === 200 || responseStatus === 201) {
       return response.data;

@@ -13,6 +13,7 @@ const initialState = {
   route: "",
   locale,
   urls: [],
+  menu: "",
   bottomNavigationIndex: 0,
   previousRoute: "",
   toast: {
@@ -49,8 +50,10 @@ const appReducer = (state = initialState, action) => {
       };
     case actionTypes.SET_USER_CURRENT_LOCATION:
       return { ...state, currentLocation: action.currentLocation };
+    case actionTypes.FETCH_ACTIONMENU:
+      return { ...state, menu: action.payload };
 
-    case actionTypes.ADD_BREADCRUM_ITEM:
+    case actionTypes.ADD_BREADCRUMB_ITEM:
       const url =
         window.location.pathname && window.location.pathname.split("/").pop() === "property-tax"
           ? []
@@ -60,7 +63,7 @@ const appReducer = (state = initialState, action) => {
 
       return { ...state, urls: url };
 
-    case actionTypes.REMOVE_BREADCRUM_ITEM:
+    case actionTypes.REMOVE_BREADCRUMB_ITEM:
       if (action.mode == "single") {
         let { urls } = state;
         return {

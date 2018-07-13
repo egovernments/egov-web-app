@@ -124,22 +124,22 @@ const routes = [
       hideBackButton: true,
     },
   },
-  {
-    path: "property-tax/property-address",
-    component: PropertyAddress,
-    needsAuthentication: true,
-    options: {
-      hideFooter: true,
-    },
-  },
-  {
-    path: "pt-payment-assessment-form-wizard",
-    component: PropertyTaxAssessmentFormWizard,
-    needsAuthentication: true,
-    options: {
-      hideFooter: true,
-    },
-  },
+  // {
+  //   path: "property-tax/property-address",
+  //   component: PropertyAddress,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //   },
+  // },
+  // {
+  //   path: "pt-payment-assessment-form-wizard",
+  //   component: PropertyTaxAssessmentFormWizard,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //   },
+  // },
   {
     path: "property-tax/assessment-form",
     component: FormWizard,
@@ -147,6 +147,7 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
+      title: "Assessment Form",
     },
   },
   {
