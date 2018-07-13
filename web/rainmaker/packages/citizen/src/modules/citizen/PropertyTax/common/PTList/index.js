@@ -7,9 +7,9 @@ const nestedListStyle = {
   marginLeft: 0,
 };
 
-const PTList = ({ items, history, label, onItemClick, innerDivStyle }) => {
+const PTList = ({ items, label, onItemClick, innerDivStyle }) => {
   return (
-    <div>
+    <div className="form-without-button-cont-generic">
       {label && (
         <Label
           label={label}

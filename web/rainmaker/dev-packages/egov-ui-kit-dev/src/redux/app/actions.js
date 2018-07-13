@@ -50,6 +50,14 @@ const setCurrentLocation = (currentLocation) => {
   };
 };
 
+export const addBreadCrumbs = (url) => {
+  return { type: actionTypes.ADD_BREADCRUM_ITEM, url };
+};
+
+export const removeBreadcrumbs = (url, mode = "single") => {
+  return { type: actionTypes.REMOVE_BREADCRUM_ITEM, mode, url };
+};
+
 export const fetchCurrentLocation = () => {
   return async (dispatch) => {
     const currAddress = await getCurrentAddress();

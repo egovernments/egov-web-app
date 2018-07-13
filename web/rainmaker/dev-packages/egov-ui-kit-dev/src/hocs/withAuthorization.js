@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import withData from "./withData";
 import { Header } from "modules/common";
-import { Footer } from "modules/common";
 import { ActionMenu } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import { logout } from "egov-ui-kit/redux/auth/actions";
@@ -134,7 +133,7 @@ const withAuthorization = (options = {}) => (Component) => {
                         )}
                       </div>
                     )}
-                  <Component {...this.props} renderCustomTitle={this.renderCustomTitle} />
+                  <Component {...this.props} title={title} renderCustomTitle={this.renderCustomTitle} />
                 </div>
               ) : null}
             </div>

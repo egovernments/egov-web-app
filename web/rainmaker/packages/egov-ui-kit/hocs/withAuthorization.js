@@ -183,7 +183,7 @@ var withAuthorization = function withAuthorization() {
                       fontSize: 20
                     })
                   ),
-                  _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, { renderCustomTitle: this.renderCustomTitle }))
+                  _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, { title: title, renderCustomTitle: this.renderCustomTitle }))
                 ) : null
               )
             )

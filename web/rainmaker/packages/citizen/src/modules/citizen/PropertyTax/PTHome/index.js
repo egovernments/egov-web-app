@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Label, List, Icon, Card } from "components";
 import { Link } from "react-router-dom";
 import { Screen } from "modules/common";
+import { connect } from "react-redux";
+import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
 const iconStyle = {
@@ -45,6 +47,12 @@ class PTHome extends Component {
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
   ];
+  componentDidMount = () => {
+    const { addBreadCrumTitle, title, location } = this.props;
+    const { pathname } = location;
+    let url = pathname && pathname.split("/").pop();
+    (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
+  };
 
   handleItemClick = (item, index) => {
     const { route } = item;
@@ -110,4 +118,13 @@ class PTHome extends Component {
   }
 }
 
-export default PTHome;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PTHome);

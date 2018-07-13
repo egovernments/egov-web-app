@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
-import { Icon } from "components";
+import { connect } from "react-redux";
+import { BreadCrumbs, Icon } from "components";
+import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 
 class CompletedAssessments extends Component {
   iconStyle = {
@@ -47,13 +49,34 @@ class CompletedAssessments extends Component {
       },
     ],
   };
+
+  componentDidMount = () => {
+    const { addBreadCrumTitle, title } = this.props;
+    title && addBreadCrumTitle(title);
+  };
+
   render() {
+    const { urls } = this.props;
     return (
-      <Screen className="pt-home-screen">
+      <Screen>
+        <BreadCrumbs url={urls} />
         <AssessmentList items={this.state.items} />
       </Screen>
     );
   }
 }
 
-export default CompletedAssessments;
+const mapStateToProps = ({ app }) => {
+  const { urls } = app;
+  return { urls };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CompletedAssessments);
