@@ -122,7 +122,11 @@ export const logout = () => {
   return async () => {
     try {
       const authToken = localStorage.getItem("token");
-      const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
+      if (authToken) {
+        const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
+      } else {
+          process.env.REACT_APP_NAME==="Citizen"?window.location.replace(`${window.basename}/user/register`):window.location.replace(`${window.basename}/user/login`);
+      }
     } catch (error) {
       console.log(error);
     }
