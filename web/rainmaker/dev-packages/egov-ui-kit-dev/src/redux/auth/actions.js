@@ -3,7 +3,7 @@ import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { httpRequest, loginRequest } from "egov-ui-kit/utils/api";
 import { AUTH, USER, OTP } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
-
+import get from "lodash/get";
 // temp fix
 const fixUserDob = (user = {}) => {
   const dob = user.dob;
@@ -118,19 +118,22 @@ export const sendOTP = (intent) => {
 };
 
 export const logout = () => {
-  return async (dispatch, getState) => {
+  return async () => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     // whatever happens the client should clear the user details
-    const state = getState();
-    const userRole = state.auth.userInfo.roles[0].code.toLowerCase();
     Object.keys(localStorage).forEach((key) => {
       if (!key.startsWith("localization")) {
         localStorage.removeItem(key);
       }
     });
-    window.location.replace(userRole === "citizen" ? `${window.basename}/user/login` : `${window.basename}/user/login`);
+    window.location.replace(window.basename);
+    // const state = getState();
+    // const userRole = get(state,"auth.userInfo.roles[0].code").toLowerCase();
+    // window.location.replace(userRole != "citizen" ? `${window.basename}/user/login` : `${window.basename}/user/login`);
   };
 };

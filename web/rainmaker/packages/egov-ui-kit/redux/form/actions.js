@@ -139,7 +139,7 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
               }
 
               _context.next = 22;
-              return (0, _api.loginRequest)(formData.employee.username, formData.employee.password, formData.employee.tenantId);
+              return (0, _api.loginRequest)(formData.employee.username, formData.employee.password, "", "password", formData.employee.tenantId);
 
             case 22:
               formResponse = _context.sent;

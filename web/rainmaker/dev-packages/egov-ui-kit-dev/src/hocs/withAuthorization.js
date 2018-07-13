@@ -22,7 +22,6 @@ const withAuthorization = (options = {}) => (Component) => {
     componentWillMount() {
       const { authenticated } = this.props;
       const { redirectionUrl } = options;
-      console.log(options);
       if (!authenticated) {
         this.props.history.replace(redirectionUrl || "/user/register");
       }

@@ -61,7 +61,7 @@ AutoSuggestDropdown.propTypes = {
   floatingLabelStyle: PropTypes.object,
   value: PropTypes.string,
   floatingLabelFixed: PropTypes.bool,
-  dataSource: PropTypes.Array,
+  dataSource: PropTypes.array,
   hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   required: PropTypes.bool,
   openOnFocus: PropTypes.bool,

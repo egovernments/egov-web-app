@@ -106,8 +106,8 @@ export const uploadFile = async (endPoint, module, file) => {
   }
 };
 
-export const loginRequest = async (username = null, password = null, tenantId = null, refreshToken, grantType = "password") => {
-  const _tenantId = tenantId ? tenantId : fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
+export const loginRequest = async (username = null, password = null, refreshToken = "", grantType = "password", tenantId = "") => {
+  tenantId = tenantId ? tenantId : commonConfig.tenantId;
   const loginInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
@@ -123,7 +123,7 @@ export const loginRequest = async (username = null, password = null, tenantId = 
   refreshToken && params.append("refresh_token", refreshToken);
   params.append("grant_type", grantType);
   params.append("scope", "read");
-  params.append("tenantId", _tenantId);
+  params.append("tenantId", tenantId);
 
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
