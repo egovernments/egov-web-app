@@ -182,6 +182,10 @@ var form = function form() {
     case actionTypes.RESET_FILES:
       return resetFiles(state, formKey);
     // end of file reducers
+    case actionTypes.DELETE_FORM:
+      var updatedState = (0, _extends15.default)({}, state);
+      delete updatedState[formKey];
+      return updatedState;
     default:
       return state;
   }

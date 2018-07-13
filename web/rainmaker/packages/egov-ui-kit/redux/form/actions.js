@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
+exports.deleteForm = exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -257,4 +257,11 @@ var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fil
 
 var setFieldProperty = exports.setFieldProperty = function setFieldProperty(formKey, fieldKey, propertyName, propertyValue) {
   return { type: actionTypes.SET_FIELD_PROPERTY, formKey: formKey, fieldKey: fieldKey, propertyName: propertyName, propertyValue: propertyValue };
+};
+
+var deleteForm = exports.deleteForm = function deleteForm(formKey) {
+  return {
+    type: actionTypes.DELETE_FORM,
+    formKey: formKey
+  };
 };
