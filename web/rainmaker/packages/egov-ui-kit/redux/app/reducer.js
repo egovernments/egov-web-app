@@ -35,6 +35,7 @@ var initialState = {
   route: "",
   locale: locale,
   urls: [],
+  menu: "",
   bottomNavigationIndex: 0,
   previousRoute: "",
   toast: {
@@ -71,13 +72,15 @@ var appReducer = function appReducer() {
       });
     case actionTypes.SET_USER_CURRENT_LOCATION:
       return (0, _extends3.default)({}, state, { currentLocation: action.currentLocation });
+    case actionTypes.FETCH_ACTIONMENU:
+      return (0, _extends3.default)({}, state, { menu: action.payload });
 
-    case actionTypes.ADD_BREADCRUM_ITEM:
+    case actionTypes.ADD_BREADCRUMB_ITEM:
       var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : state.urls && state.urls.indexOf(action.url) > -1 ? state.urls.splice(state.urls.indexOf(action.url), 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
 
       return (0, _extends3.default)({}, state, { urls: url });
 
-    case actionTypes.REMOVE_BREADCRUM_ITEM:
+    case actionTypes.REMOVE_BREADCRUMB_ITEM:
       if (action.mode == "single") {
         var urls = state.urls;
 

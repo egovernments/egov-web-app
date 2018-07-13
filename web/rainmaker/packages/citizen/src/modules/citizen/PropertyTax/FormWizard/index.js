@@ -47,7 +47,6 @@ class FormWizard extends Component {
     return configObject;
   };
 
-
   getSelectedCombination = (form, formKey, fieldKeys) => {
     return (
       form[formKey] &&
@@ -130,14 +129,14 @@ class FormWizard extends Component {
 
     return (
       <div className="wizard-form-main-cont">
-        <Label
+        {/* <Label
           label="Assessment Form"
           containerStyle={{ padding: "24px 0px 16px 0", marginLeft: "16px" }}
           dark={true}
           bold={true}
           labelStyle={{ letterSpacing: 0 }}
           fontSize={"20px"}
-        />
+        /> */}
         <WizardComponent
           content={renderStepperContent(selected)}
           onTabClick={this.onTabClick}

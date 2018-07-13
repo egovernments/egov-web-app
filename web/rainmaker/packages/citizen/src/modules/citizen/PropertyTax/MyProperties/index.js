@@ -31,6 +31,10 @@ class MyProperties extends Component {
     // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumTitle(title);
   };
+  onTitleClick = () => {
+    const { addBreadCrumTitle, title } = this.props;
+    title && addBreadCrumTitle(title);
+  };
 
   onListItemClick = (item, index) => {
     const { route } = item;
@@ -49,9 +53,10 @@ class MyProperties extends Component {
 
   render() {
     const { urls } = this.props;
+    const { onTitleClick } = this;
     return (
       <Screen>
-        <BreadCrumbs url={urls} />
+        <BreadCrumbs url={urls} onTitleClick={onTitleClick} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
       </Screen>
     );

@@ -110,3 +110,16 @@ var CITY = exports.CITY = {
     ACTION: "_search"
   }
 };
+
+var FLOOR = exports.FLOOR = {
+  GET: {
+    URL: "/egov-mdms-service/v1/_search",
+    ACTION: "_search"
+  }
+};
+var ACTIONMENU = exports.ACTIONMENU = {
+  GET: {
+    URL: "/access/v1/actions/mdms/_get",
+    ACTION: "_get"
+  }
+};

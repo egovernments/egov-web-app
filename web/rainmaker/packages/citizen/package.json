@@ -2,8 +2,8 @@
   "name": "rainmaker-citizen",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://egov-micro-qa.egovernments.org/citizen/",
-  "proxy": "https://egov-micro-qa.egovernments.org/",
+  "homepage": "https://egov-micro-dev.egovernments.org/citizen/",
+  "proxy": "https://egov-micro-dev.egovernments.org/",
   "dependencies": {
     "@material-ui/core": "^1.1.0",
     "@material-ui/icons": "^1.1.0",

@@ -56,6 +56,12 @@ class Property extends Component {
     url && addBreadCrumTitle(url);
   };
 
+  onTitleClick = () => {
+    const { location, addBreadCrumTitle } = this.props;
+    const { pathname } = location;
+    const url = pathname && pathname.split("/").pop();
+    url && addBreadCrumTitle(url);
+  };
   onListItemClick = (item, index) => {
     const { route } = item;
 
@@ -79,10 +85,11 @@ class Property extends Component {
 
   render() {
     const { urls } = this.props;
+    const { onTitleClick } = this;
 
     return (
       <Screen className="pt-home-screen">
-        <BreadCrumbs url={urls} />
+        <BreadCrumbs url={urls} onTitleClick={onTitleClick} />
         <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} innerDivStyle={innerDivStyle} history={this.props.history} />
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>

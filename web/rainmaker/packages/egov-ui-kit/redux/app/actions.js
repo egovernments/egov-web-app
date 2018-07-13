@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchCurrentLocation = exports.removeBreadcrumbs = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchActionItems = exports.fetchCurrentLocation = exports.removeBreadcrumbs = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -91,7 +91,12 @@ var fetchLocalizationLabel = exports.fetchLocalizationLabel = function fetchLoca
     };
   }();
 };
-
+var setActionItems = function setActionItems(payload) {
+  return {
+    type: actionTypes.FETCH_ACTIONMENU,
+    payload: payload
+  };
+};
 var setCurrentLocation = function setCurrentLocation(currentLocation) {
   return {
     type: actionTypes.SET_USER_CURRENT_LOCATION,
@@ -100,13 +105,13 @@ var setCurrentLocation = function setCurrentLocation(currentLocation) {
 };
 
 var addBreadCrumbs = exports.addBreadCrumbs = function addBreadCrumbs(url) {
-  return { type: actionTypes.ADD_BREADCRUM_ITEM, url: url };
+  return { type: actionTypes.ADD_BREADCRUMB_ITEM, url: url };
 };
 
 var removeBreadcrumbs = exports.removeBreadcrumbs = function removeBreadcrumbs(url) {
   var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "single";
 
-  return { type: actionTypes.REMOVE_BREADCRUM_ITEM, mode: mode, url: url };
+  return { type: actionTypes.REMOVE_BREADCRUMB_ITEM, mode: mode, url: url };
 };
 
 var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentLocation() {
@@ -135,6 +140,43 @@ var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentL
 
     return function (_x3) {
       return _ref2.apply(this, arguments);
+    };
+  }();
+};
+var fetchActionItems = exports.fetchActionItems = function fetchActionItems(role, ts) {
+  return function () {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch, getState) {
+      var payload;
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return (0, _api.httpRequest)(_endPoints.ACTIONMENU.GET.URL, _endPoints.ACTIONMENU.GET.ACTION, [], role, [], ts);
+
+            case 3:
+              payload = _context3.sent;
+
+
+              dispatch(setActionItems(payload.actions));
+              _context3.next = 9;
+              break;
+
+            case 7:
+              _context3.prev = 7;
+              _context3.t0 = _context3["catch"](0);
+
+            case 9:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined, [[0, 7]]);
+    }));
+
+    return function (_x4, _x5) {
+      return _ref3.apply(this, arguments);
     };
   }();
 };

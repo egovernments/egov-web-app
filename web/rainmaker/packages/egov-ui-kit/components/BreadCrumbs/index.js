@@ -17,7 +17,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var style = { marginLeft: 10, marginTop: 2 };
 
 var BreadCrumbs = function BreadCrumbs(_ref) {
-  var url = _ref.url;
+  var url = _ref.url,
+      onTitleClick = _ref.onTitleClick;
 
   return _react2.default.createElement(
     "div",
@@ -34,7 +35,7 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
         ),
         _react2.default.createElement(
           "div",
-          { style: style },
+          { onClick: onTitleClick, style: style },
           item
         )
       );
