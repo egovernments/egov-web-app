@@ -12,6 +12,7 @@ import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
+// import get from "lodash/get";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -33,7 +34,7 @@ class FormWizard extends Component {
       return !isEmpty(pathFormKeyObject) ? (
         <div>
           {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} />}
-          {pathFormKeyObject.hasFloor && <FloorsDetails path={pathFormKeyObject.path} component={pathFormKeyObject.floorForm} />}
+          {pathFormKeyObject.hasFloor && <FloorsDetails componentDetails={pathFormKeyObject.floorObject} />}
         </div>
       ) : null;
     } else {
@@ -41,24 +42,11 @@ class FormWizard extends Component {
     }
   };
 
-  // renderDynamicForms = (combination) => {
-  //   // const basePath = "config/forms/specs/PropertyTaxPay";
-  //
-  //   const moduleName = "PropertyTaxPay";
-  //   return combination ? (
-  //     <DependantFormHOC
-  //       formsToAdd={combinationToFormkeyMapping[combination]}
-  //       moduleName={moduleName}
-  //       combination={combination}
-  //       removeForm={(formKey) => this.props.removeForm(formKey)}
-  //     />
-  //   ) : null;
-  // };
-
   getConfigFromCombination = (combination, fetchConfigurationFn) => {
     let configObject = fetchConfigurationFn(combination);
     return configObject;
   };
+
 
   getSelectedCombination = (form, formKey, fieldKeys) => {
     return (

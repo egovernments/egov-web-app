@@ -23,6 +23,7 @@
     "react-google-maps": "^9.4.5",
     "react-id-swiper": "^1.6.3",
     "react-load-image": "^0.1.6",
+    "react-loadable": "^5.4.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
