@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Banner } from "modules/common";
+import { Screen } from "modules/common";
 import NewAndOldComplaints from "./components/NewAndOldComplaints";
 import Notifications from "./components/Notifications";
 import { fetchComplaints } from "egov-ui-kit/redux/complaints/actions";
 import { resetFiles } from "egov-ui-kit/redux/form/actions";
 import { mapCompIDToName } from "egov-ui-kit/utils/commons";
+import { Image } from "components";
+import logo from "egov-ui-kit/assets/images/punjab-logo.png";
 import orderby from "lodash/orderBy";
 import "./index.css";
 
@@ -21,14 +23,22 @@ class Home extends Component {
   render() {
     const { updates, history } = this.props;
     return (
-      <Banner className="homepage-banner banner-logo-home">
+      <Screen className="homepage-screen">
+        <div className="home-page-top-banner-cont">
+          <div className="banner-image">
+            <div className="banner-overlay" />
+            <div className="logo-wrapper user-logo-wrapper">
+              <Image className="mseva-logo" source={`${logo}`} />
+            </div>
+          </div>
+        </div>
         <div className="home-page-cont">
           <div>
             <NewAndOldComplaints history={history} />
             <Notifications updates={updates} history={history} />
           </div>
         </div>
-      </Banner>
+      </Screen>
     );
   }
 }
