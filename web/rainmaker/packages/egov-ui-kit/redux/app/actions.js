@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchCurrentLocation = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchCurrentLocation = exports.removeBreadcrumbs = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -99,6 +99,16 @@ var setCurrentLocation = function setCurrentLocation(currentLocation) {
   };
 };
 
+var addBreadCrumbs = exports.addBreadCrumbs = function addBreadCrumbs(url) {
+  return { type: actionTypes.ADD_BREADCRUM_ITEM, url: url };
+};
+
+var removeBreadcrumbs = exports.removeBreadcrumbs = function removeBreadcrumbs(url) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "single";
+
+  return { type: actionTypes.REMOVE_BREADCRUM_ITEM, mode: mode, url: url };
+};
+
 var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentLocation() {
   return function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
@@ -123,7 +133,7 @@ var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentL
       }, _callee2, undefined);
     }));
 
-    return function (_x2) {
+    return function (_x3) {
       return _ref2.apply(this, arguments);
     };
   }();
