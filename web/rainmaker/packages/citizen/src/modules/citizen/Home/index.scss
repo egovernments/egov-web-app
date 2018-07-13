@@ -1,6 +1,6 @@
 .home-page-cont {
   position: absolute !important;
-  top: 75%;
+  top: calc(30vh - 50px);
   left: 8px;
   right: 8px;
   margin-bottom: 70px;
@@ -24,4 +24,28 @@
   position: absolute;
   top: 30%;
   right: 0;
+}
+
+.home-page-top-banner-cont .banner-image {
+  height: 30vh;
+}
+
+.home-page-top-banner-cont .logo-wrapper {
+  position: absolute;
+  margin: 0;
+  top: 40px;
+}
+
+.homepage-screen {
+  padding: 0 !important;
+}
+
+.banner-image {
+  position: relative;
+}
+
+@media only screen and (min-width: 768px) {
+  .home-page-top-banner-cont .logo-wrapper {
+    display: block;
+  }
 }
