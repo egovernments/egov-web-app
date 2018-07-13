@@ -9,27 +9,41 @@ import get from "lodash/get";
 
 
 class FloorDetails extends React.Component {
+  // cacheFloors=JSON.parse(localStorage.getItem("floors"));
   state = {
-    floors: [],
+    floors:this.cacheFloors?this.cacheFloors:[],
   };
+
+  // updatedFloorsInCache=(floors)=>{
+  //   localStorage.setItem("floors",JSON.stringify(floors))
+  // }
+
+  componentDidMount() {
+    this.configureFloors(this.props)
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.noFloors !== this.props.noFloors) {
-      const { noFloors,componentDetails } = nextProps;
-      const { floors } = this.state;
-      let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
-        let units = [];
-        units.push(formHoc({ ...componentDetails ,copyName:`${componentDetails.copyName}_${key}_unit_0`})(GenericForm));
-        return {
-          floorId: key,
-          floorDropDown:formHoc({ formKey: "customSelect", makeCopy: true,copyName:"customSelect_"+key, path: "PropertyTaxPay" })(CustomSelectForm),
-          units,
-        };
-      });
-      this.setState({
-        floors:noFloors>0?[...floors,...updatedFloors]:[],
-      });
+      this.configureFloors(nextProps)
     }
+  }
+
+  configureFloors=(props)=>{
+    const { noFloors,componentDetails } = props;
+    const { floors } = this.state;
+    let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
+      let units = [];
+      units.push(formHoc({ ...componentDetails ,copyName:`${componentDetails.copyName}_${key}_unit_0`})(GenericForm));
+      return {
+        floorId: key,
+        floorDropDown:formHoc({ formKey: "customSelect", makeCopy: true,copyName:"customSelect_"+key, path: "PropertyTaxPay" })(CustomSelectForm),
+        units,
+      };
+    });
+    this.setState({
+      floors:noFloors>0?[...floors,...updatedFloors]:[],
+    });
+    // this.updatedFloorsInCache(floors)
   }
 
   renderFloors = (floors, noFloors) => {
@@ -50,25 +64,36 @@ class FloorDetails extends React.Component {
     });
   };
 
-  addUnit=(floorIndex)=>{
+  handleAddUnit=(floorIndex)=>{
     const { componentDetails } = this.props;
     let {floors}=this.state;
     floors[floorIndex].units.push(formHoc({ ...componentDetails ,copyName:`${componentDetails.copyName}_${floorIndex}_unit_${floors[floorIndex].units.length+1}`})(GenericForm));
     this.setState({
       floors
     })
+    // this.updatedFloorsInCache(floors)
+  }
+
+  handleRemoveUnit=(floorIndex,unitIndex)=>{
+    let {floors}=this.state;
+    floors[floorIndex].units=floors[floorIndex].units.splice(floors[floorIndex].units,unitIndex);
+    this.setState({
+      floors
+    })
+    // this.updatedFloorsInCache(floors)
   }
 
   renderUnits = (units,floorId) => {
+    const {handleAddUnit,handleRemoveUnit}=this;
       return (
         <div>
           {
             units.map((unit,key)=>{
               const Unit=unit;
-              return (<Unit key={key}/>)
+              return (<Unit key={key} handleRemoveItem={key!==0?()=>handleRemoveUnit(floorId,key):undefined}/>)
             })
           }
-          <div className="pt-add-owner-btn" onClick={()=>this.addUnit(floorId)} style={{ color: "#fe7a51", float: "right",cursor:"pointer" }}>
+          <div className="pt-add-owner-btn" onClick={()=>this.handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right",cursor:"pointer" }}>
             + ADD ONE MORE UNIT
           </div>
         </div>

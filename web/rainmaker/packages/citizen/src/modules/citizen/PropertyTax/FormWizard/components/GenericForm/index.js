@@ -1,13 +1,15 @@
 import React from "react";
-import { Card, ToolTipUi } from "components";
+import { Card, ToolTipUi, Icon } from "components";
 import Field from "egov-ui-kit/utils/field";
 
-const GenericForm = ({ form, handleFieldChange, formKey }) => {
+const GenericForm = ({ form, handleFieldChange, formKey,containerStyle ,handleRemoveItem}) => {
   const fields = form.fields || {};
   return (
     <Card
+      style={containerStyle}
       textChildren={
         <div className={`${formKey} col-xs-12`}>
+          {handleRemoveItem && <div className="text-right" style={{cursor:"pointer"}} onClick={handleRemoveItem}><Icon action="navigation" name="close"/></div>}
           {Object.keys(fields).map((fieldKey, index) => {
             return (
               <div
@@ -15,6 +17,7 @@ const GenericForm = ({ form, handleFieldChange, formKey }) => {
                 key={index}
                 className={fields[fieldKey].numcols ? `col-xs-${fields[fieldKey].numcols}` : `col-xs-6`}
               >
+
                 <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
                 {fields[fieldKey].toolTip && <ToolTipUi title={fields[fieldKey].toolTipMessage} />}
               </div>

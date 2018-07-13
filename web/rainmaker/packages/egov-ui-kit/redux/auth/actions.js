@@ -29,6 +29,10 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -266,12 +270,16 @@ var logout = exports.logout = function logout() {
 
           case 10:
             // whatever happens the client should clear the user details
+            // let userInfo=localStorage.getItem("user-info");
+            // let userRole=get(userInfo,"roles[0].code");
+
             Object.keys(localStorage).forEach(function (key) {
               if (!key.startsWith("localization")) {
                 localStorage.removeItem(key);
               }
             });
-            window.location.replace(window.basename);
+            // window.location.replace(`${window.basename}/user/login`)
+            window.location.replace(window.basename + "/user/login");
 
           case 12:
           case "end":

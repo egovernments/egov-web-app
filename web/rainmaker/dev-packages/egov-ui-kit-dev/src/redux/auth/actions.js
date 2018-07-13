@@ -3,6 +3,7 @@ import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import { httpRequest, loginRequest } from "egov-ui-kit/utils/api";
 import { AUTH, USER, OTP } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
 
 // temp fix
 const fixUserDob = (user = {}) => {
@@ -126,11 +127,15 @@ export const logout = () => {
       console.log(error);
     }
     // whatever happens the client should clear the user details
+    // let userInfo=localStorage.getItem("user-info");
+    // let userRole=get(userInfo,"roles[0].code");
+
     Object.keys(localStorage).forEach((key) => {
       if (!key.startsWith("localization")) {
         localStorage.removeItem(key);
       }
     });
-    window.location.replace(window.basename);
+    // window.location.replace(`${window.basename}/user/login`)
+    window.location.replace(`${window.basename}/user/login`);
   };
 };
