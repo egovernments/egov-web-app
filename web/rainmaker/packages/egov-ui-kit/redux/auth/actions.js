@@ -29,10 +29,6 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _commons = require("egov-ui-kit/utils/commons");
 
-var _get = require("lodash/get");
-
-var _get2 = _interopRequireDefault(_get);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -246,49 +242,42 @@ var sendOTP = exports.sendOTP = function sendOTP(intent) {
 };
 
 var logout = exports.logout = function logout() {
-  return function () {
-    var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch, getState) {
-      var authToken, response;
-      return _regenerator2.default.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.prev = 0;
-              authToken = localStorage.getItem("token");
-              _context4.next = 4;
-              return (0, _api.httpRequest)(_endPoints.AUTH.LOGOUT.URL, _endPoints.AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
+  return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
+    var authToken, response;
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            authToken = localStorage.getItem("token");
+            _context4.next = 4;
+            return (0, _api.httpRequest)(_endPoints.AUTH.LOGOUT.URL, _endPoints.AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
 
-            case 4:
-              response = _context4.sent;
-              _context4.next = 9;
-              break;
+          case 4:
+            response = _context4.sent;
+            _context4.next = 10;
+            break;
 
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
 
-            case 9:
-              // whatever happens the client should clear the user details
-              Object.keys(localStorage).forEach(function (key) {
-                if (!key.startsWith("localization")) {
-                  localStorage.removeItem(key);
-                }
-              });
-              window.location.replace(window.basename);
-              // const state = getState();
-              // const userRole = get(state,"auth.userInfo.roles[0].code").toLowerCase();
-              // window.location.replace(userRole != "citizen" ? `${window.basename}/user/login` : `${window.basename}/user/login`);
+            console.log(_context4.t0);
 
-            case 11:
-            case "end":
-              return _context4.stop();
-          }
+          case 10:
+            // whatever happens the client should clear the user details
+            Object.keys(localStorage).forEach(function (key) {
+              if (!key.startsWith("localization")) {
+                localStorage.removeItem(key);
+              }
+            });
+            window.location.replace(window.basename);
+
+          case 12:
+          case "end":
+            return _context4.stop();
         }
-      }, _callee4, undefined, [[0, 7]]);
-    }));
-
-    return function (_x10, _x11) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
+      }
+    }, _callee4, undefined, [[0, 7]]);
+  }));
 };
