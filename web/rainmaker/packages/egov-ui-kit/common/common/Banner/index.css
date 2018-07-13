@@ -1,23 +1,26 @@
 .user-screens-wrapper {
   width: 100%; }
 
-.banner-image,
-.banner-overlay {
-  position: fixed;
+.banner-image {
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh; }
 
 .banner-back-button {
-  position: fixed;
-  left: 20px;
-  top: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
   z-index: 1;
   color: #fff !important; }
 
 .banner-overlay {
-  background: rgba(61, 89, 107, 0.75); }
+  position: absolute;
+  background: rgba(61, 89, 107, 0.75);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 .banner-image {
   background-image: url(../../../assets/images/banner.png);
@@ -26,9 +29,8 @@
   background-position: center; }
 
 .logo-wrapper {
-  position: fixed;
   width: 100%;
-  top: 50px;
+  margin-top: 30px;
   padding: 10px; }
   .logo-wrapper .imageloader {
     text-align: center;
@@ -40,19 +42,29 @@
   margin: 0 auto; }
 
 .user-screens-wrapper .user-screens-card {
-  position: fixed;
-  bottom: 10px;
-  left: 8px;
-  right: 8px;
   padding: 24px 16px;
   overflow-y: scroll;
   overflow-x: hidden; }
+
+.banner-main-content {
+  position: relative;
+  min-height: 100vh; }
+
+.banner-form-cont {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  padding: 0 8px; }
 
 @media only screen and (min-width: 768px) {
   .user-screens-wrapper {
     height: 100vh; }
   .user-logo-wrapper {
     display: none; }
+  .banner-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px; }
   .banner-logo-home .user-logo-wrapper {
     display: block !important; }
   .banner-overlay {
@@ -62,9 +74,15 @@
     background-image: url(../../../assets/images/Banner_image.jpg);
     position: absolute;
     height: 100%; }
+  .banner-main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .banner-form-cont {
+    position: relative;
+    width: 100%;
+    padding: 0 8px; }
   .logo-wrapper {
     position: absolute; }
   .user-screens-wrapper .user-screens-card {
-    position: absolute;
-    bottom: 175px;
     overflow-y: unset; } }
