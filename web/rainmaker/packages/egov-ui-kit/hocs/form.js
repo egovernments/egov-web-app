@@ -48,13 +48,11 @@ var form = function form(_ref) {
   var formKey = _ref.formKey,
       _ref$path = _ref.path,
       path = _ref$path === undefined ? "" : _ref$path,
-      _ref$makeCopy = _ref.makeCopy,
-      makeCopy = _ref$makeCopy === undefined ? false : _ref$makeCopy,
       copyName = _ref.copyName,
       rowData = _ref.rowData,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "makeCopy", "copyName", "rowData", "edit"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "copyName", "rowData", "edit"]);
   return function (Form) {
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
@@ -66,17 +64,13 @@ var form = function form(_ref) {
 
         _this.createCopy = function (formConf) {
           var updatedFormConf = (0, _extends4.default)({}, formConf);
-          var formKeys = _this.props.formKeys;
           var _updatedFormConf = updatedFormConf,
               formatConfig = _updatedFormConf.formatConfig;
 
-          var existing_count = formKeys.filter(function (formKey) {
-            return formKey.includes(updatedFormConf.name);
-          }).length;
-          updatedFormConf.name = copyName ? copyName : updatedFormConf.name + ("_" + existing_count);
+          updatedFormConf.name = copyName;
           formKey = updatedFormConf.name;
           if (formatConfig) {
-            updatedFormConf = formatConfig((0, _extends4.default)({}, _this.props, { config: updatedFormConf, currentCount: existing_count }));
+            updatedFormConf = formatConfig((0, _extends4.default)({}, _this.props, rest, { config: updatedFormConf }));
           }
           return updatedFormConf;
         };
@@ -92,7 +86,7 @@ var form = function form(_ref) {
           _this.props.handleFieldChange(formKey, fieldKey, value);
         };
 
-        var extraProps = rest.extraProps;
+        var extraFields = rest.extraFields;
 
         try {
           if (path && path !== "") {
@@ -100,8 +94,8 @@ var form = function form(_ref) {
           } else {
             _this.formConfig = require("config/forms/specs/" + formKey).default;
           }
-          if (extraProps) {
-            _this.formConfig = (0, _extends4.default)({}, _this.formConfig, (0, _defineProperty3.default)({}, "fields", (0, _extends4.default)({}, _this.formConfig.fields, extraProps)));
+          if (extraFields) {
+            _this.formConfig = (0, _extends4.default)({}, _this.formConfig, (0, _defineProperty3.default)({}, "fields", (0, _extends4.default)({}, _this.formConfig.fields, extraFields)));
           }
         } catch (error) {
           // the error is assumed to have occured due to absence of config; so ignore it!
@@ -112,7 +106,7 @@ var form = function form(_ref) {
       (0, _createClass3.default)(FormWrapper, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-          if (this.formConfig && makeCopy) {
+          if (this.formConfig && copyName) {
             var formConf = (0, _extends4.default)({}, this.formConfig);
             formConf = this.createCopy(formConf);
             this.props.initForm(formConf, rowData);
@@ -167,6 +161,9 @@ var form = function form(_ref) {
         },
         initForm: function initForm(form) {
           return dispatch((0, _actions.initForm)(form));
+        },
+        deleteForm: function deleteForm() {
+          return dispatch((0, _actions.deleteForm)(formKey));
         }
       };
     };
