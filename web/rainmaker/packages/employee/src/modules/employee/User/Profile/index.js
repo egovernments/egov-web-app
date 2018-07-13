@@ -40,7 +40,7 @@ class Profile extends Component {
     const { setProfilePic, onClickAddPic, removeProfilePic } = this;
 
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="employee-profile-screen">
         <div className="profile-container">
           <ProfileFormHOC onClickAddPic={onClickAddPic} img={img} profilePic={profilePic} />
         </div>

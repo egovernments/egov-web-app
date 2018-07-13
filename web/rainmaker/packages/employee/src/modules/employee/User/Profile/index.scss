@@ -24,12 +24,9 @@
 .profileContainer {
   position: relative;
 }
-
-.profile-card-container {
-  position: absolute;
-  left: 0;
+.employee-profile-screen {
+  padding: 0px !important;
 }
-
 @media only screen and (max-width: 768px) {
   .profile-card-container {
     margin: 0px !important;
@@ -47,8 +44,8 @@
     z-index: 1 !important;
   }
   .profile-profilesection {
-    margin-top: 24px;
-    margin-bottom: 24px;
+    padding: 20px !important;
+    background-color: #ffffff;
   }
   .profile-profilesection .profileSection {
     height: 300px !important;
@@ -59,6 +56,6 @@
     margin-top: 30px !important;
   }
   .profileFormContainer {
-    padding: 6px 140px 24px 25px !important;
+    padding: 6px 140px 50px 25px !important;
   }
 }
