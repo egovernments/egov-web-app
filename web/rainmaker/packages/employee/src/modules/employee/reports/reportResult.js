@@ -42,8 +42,8 @@ class ShowField extends Component {
       rows: {},
       showPrintBtn: false,
       // logopath:""
-      logoBase64: "",
-      ulbname: "",
+      // logoBase64: "",
+      // ulbname: "",
     };
   }
 
@@ -71,27 +71,27 @@ class ShowField extends Component {
       moduleName: _this.props.match.params.moduleName,
     });
     _this.subHeader(_this.props.match.params.moduleName);
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
-    commonApiPost("/tenant/v1/tenant/_search?tenantId=" + "default" + "&code=" + "default" + "&pageSize=200").then(
-      function(response) {
-        let imgpath = response.tenant[0].logoId.substr(1);
-        if (response.tenant && response.tenant[0].logoId) {
-          _this.convertImgToBase64URL("https://raw.githubusercontent.com/egovernments/egov-web-app/master/web/ui-app/public/" + imgpath, (data) => {
-            _this.setState({
-              logoBase64: data,
-            });
-          });
+    // var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+    // commonApiPost("/tenant/v1/tenant/_search?tenantId=" + tenantId + "&code=" + tenantId + "&pageSize=200").then(
+    //   function(response) {
+    //     let imgpath = response.tenant[0].logoId.substr(1);
+    //     if (response.tenant && response.tenant[0].logoId) {
+    //       _this.convertImgToBase64URL("https://raw.githubusercontent.com/egovernments/egov-web-app/master/web/ui-app/public/" + imgpath, (data) => {
+    //         _this.setState({
+    //           logoBase64: data,
+    //         });
+    //       });
 
-          _this.setState({
-            ulbname: response.tenant[0].name,
-          });
-        }
-        // setForm();
-      },
-      function(err) {
-        alert("Try again later");
-      }
-    );
+    //       _this.setState({
+    //         ulbname: response.tenant[0].name,
+    //       });
+    //     }
+    //     // setForm();
+    //   },
+    //   function(err) {
+    //     alert("Try again later");
+    //   }
+    // );
   }
 
   componentWillReceiveProps(nextprops) {
@@ -104,58 +104,58 @@ class ShowField extends Component {
     // }
   }
 
-  PrintingCutomize(doc) {
-    let _this = this;
-    if (_this.state.moduleName == "lcms" && doc && doc.content) {
-      doc.content.map((item) => {
-        if (item.style == "title") {
-          return (doc.content[0].text = _this.state.ulbname);
-        }
-      });
-      doc.content.splice(1, 0, {
-        table: {
-          widths: ["auto", "*", "auto"],
-          body: [
-            [
-              {
-                image: _this.state.logoBase64,
-                height: 100,
-                width: 100,
-              },
-              {
-                alignment: "center",
-                stack: [
-                  {
-                    margin: [0, 10, 0, 0],
-                    fontSize: 16,
-                    bold: true,
-                    text: _this.state.reportSubTitle,
-                  },
-                ],
-              },
-              {
-                alignment: "right",
-                image: headerLogo,
-                height: 100,
-                width: 100,
-              },
-            ],
-          ],
-        },
-        layout: {
-          hLineWidth: function(line) {
-            return 0;
-          },
-          vLineWidth: function() {
-            return 0;
-          },
-          paddingBottom: function() {
-            return 5;
-          },
-        },
-      });
-    }
-  }
+  // PrintingCutomize(doc) {
+  //   let _this = this;
+  //   if (_this.state.moduleName == "lcms" && doc && doc.content) {
+  //     doc.content.map((item) => {
+  //       if (item.style == "title") {
+  //         return (doc.content[0].text = _this.state.ulbname);
+  //       }
+  //     });
+  //     doc.content.splice(1, 0, {
+  //       table: {
+  //         widths: ["auto", "*", "auto"],
+  //         body: [
+  //           [
+  //             {
+  //               image: _this.state.logoBase64,
+  //               height: 100,
+  //               width: 100,
+  //             },
+  //             {
+  //               alignment: "center",
+  //               stack: [
+  //                 {
+  //                   margin: [0, 10, 0, 0],
+  //                   fontSize: 16,
+  //                   bold: true,
+  //                   text: _this.state.reportSubTitle,
+  //                 },
+  //               ],
+  //             },
+  //             {
+  //               alignment: "right",
+  //               image: headerLogo,
+  //               height: 100,
+  //               width: 100,
+  //             },
+  //           ],
+  //         ],
+  //       },
+  //       layout: {
+  //         hLineWidth: function(line) {
+  //           return 0;
+  //         },
+  //         vLineWidth: function() {
+  //           return 0;
+  //         },
+  //         paddingBottom: function() {
+  //           return 5;
+  //         },
+  //       },
+  //     });
+  //   }
+  // }
 
   convertImgToBase64URL = (url, callback) => {
     var img = new Image();
@@ -189,7 +189,7 @@ class ShowField extends Component {
     }
 
     const { reportResult, searchForm, tabLabel } = _this.props;
-    const { reportName, logoBase64, ulbname } = _this.state;
+    const { reportName } = _this.state;
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
@@ -210,9 +210,9 @@ class ShowField extends Component {
         orientation: "portrait",
         pageSize: "A4",
         footer: true,
-        customize: function(doc) {
-          _this.PrintingCutomize(doc);
-        },
+        // customize: function(doc) {
+        //   _this.PrintingCutomize(doc);
+        // },
         className: "report-pdf-button",
       },
       {
