@@ -66,7 +66,7 @@ class ShowForm extends Component {
         handleChange(e, targetProperty, isMandatory ? true : false, "");
       }
     } catch (error) {
-      alert("Something went wrong while loading depedent");
+      //alert("Something went wrong while loading depedent");
     }
   };
 
