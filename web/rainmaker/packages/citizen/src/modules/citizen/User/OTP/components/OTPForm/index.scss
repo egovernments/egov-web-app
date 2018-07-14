@@ -22,6 +22,10 @@
   display: inline;
 }
 
+.force-padding-0 {
+  padding: 0 !important;
+}
+
 /* duplication */
 input#otp {
   height: 56px !important;

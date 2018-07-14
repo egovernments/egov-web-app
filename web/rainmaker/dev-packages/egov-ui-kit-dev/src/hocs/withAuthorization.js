@@ -38,7 +38,7 @@ const withAuthorization = (options = {}) => (Component) => {
     };
 
     renderCustomTitle = (numberOfComplaints) => {
-      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "";
+      const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "(0)";
       this.setState({ titleAddon });
     };
 
@@ -87,7 +87,7 @@ const withAuthorization = (options = {}) => (Component) => {
           {!hideHeader && authenticated ? (
             <Header
               title={title}
-              titleAddon={titleAddon && titleAddon}
+              titleAddon={role !== hideFor && titleAddon && titleAddon}
               userInfo={userInfo}
               role={role}
               options={options}

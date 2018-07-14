@@ -69,7 +69,7 @@ var withAuthorization = function withAuthorization() {
         };
 
         _this.renderCustomTitle = function (numberOfComplaints) {
-          var titleAddon = numberOfComplaints ? "(" + numberOfComplaints + ")" : "";
+          var titleAddon = numberOfComplaints ? "(" + numberOfComplaints + ")" : "(0)";
           _this.setState({ titleAddon: titleAddon });
         };
 
@@ -132,7 +132,7 @@ var withAuthorization = function withAuthorization() {
             { className: "rainmaker-header-cont", style: { position: "relative" } },
             !hideHeader && authenticated ? _react2.default.createElement(_common.Header, {
               title: title,
-              titleAddon: titleAddon && titleAddon,
+              titleAddon: role !== hideFor && titleAddon && titleAddon,
               userInfo: userInfo,
               role: role,
               options: options,

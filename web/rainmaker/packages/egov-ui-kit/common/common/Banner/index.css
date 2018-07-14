@@ -9,10 +9,11 @@
   height: 100vh; }
 
 .banner-back-button {
-  margin-left: 20px;
-  margin-top: 20px;
+  left: 20px;
+  top: 20px;
   z-index: 1;
-  color: #fff !important; }
+  color: #fff !important;
+  position: absolute; }
 
 .banner-overlay {
   position: absolute;
@@ -30,7 +31,6 @@
 
 .logo-wrapper {
   width: 100%;
-  margin-top: 30px;
   padding: 10px; }
   .logo-wrapper .imageloader {
     text-align: center;
@@ -48,7 +48,8 @@
 
 .banner-main-content {
   position: relative;
-  min-height: 100vh; }
+  min-height: 100vh;
+  padding-top: 50px; }
 
 .banner-form-cont {
   position: absolute;

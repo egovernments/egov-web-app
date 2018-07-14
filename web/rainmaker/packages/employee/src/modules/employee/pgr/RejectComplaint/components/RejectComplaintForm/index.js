@@ -9,7 +9,7 @@ const RejectComplaintForm = ({ form, options, onSubmit, ontextAreaChange, handle
   return (
     <div>
       <div className="custom-padding-for-screens">
-        <div className="reject-complaint-question">
+        <div className="reject-complaint-question request-reaasign-question">
           <Question options={options} label={"ES_REJECT_COMPLAINT_QUESTION"} handleChange={handleOptionChange} valueSelected={optionSelected} />
         </div>
         <div className="reject-complaint-textArea">

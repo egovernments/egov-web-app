@@ -8,7 +8,7 @@ const RegisterFormHOC = formHoc({ formKey: "register" })(RegisterForm);
 class Register extends Component {
   render() {
     return (
-      <Banner>
+      <Banner hideBackButton={true}>
         <RegisterFormHOC />
       </Banner>
     );
