@@ -21,20 +21,22 @@ class AllComplaints extends Component {
     value: 0,
   };
   componentDidMount() {
-    let { userInfo } = this.props;
-    let role = userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
-    if (role === "PGR-ADMIN") {
+    let { role, userInfo, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
+    let rawRole = userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
+    const numberOfComplaints = role === "employee" ? numEmpComplaint : role === "csr" ? numCSRComplaint : 0;
+    if (rawRole === "PGR-ADMIN") {
       this.props.history.push("/report/rainmaker-pgr/DepartmentWiseReport");
     } else {
       let { fetchComplaints } = this.props;
-      fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }]);
+      fetchComplaints([{ key: "status", value: "assigned,open,reassignrequested" }], true, true);
+      renderCustomTitle(numberOfComplaints);
     }
   }
 
   componentWillReceiveProps = (nextProps) => {
     const { role, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
     if (!isEqual(this.props.transformedComplaints, nextProps.transformedComplaints)) {
-      const numberOfComplaints = role === "employee" ? numEmpComplaint : role === "csr" ? numCSRComplaint : 0;
+      const numberOfComplaints = role === "employee" ? nextProps.numEmpComplaint : role === "csr" ? nextProps.numCSRComplaint : 0;
       renderCustomTitle(numberOfComplaints);
     }
   };
@@ -128,7 +130,7 @@ class AllComplaints extends Component {
                     complaints={unassignedComplaints}
                     complaintLocation={true}
                     role={role}
-                    heightOffset="112px"
+                    heightOffset="116px"
                   />
                 </div>
               </Screen>
@@ -161,6 +163,7 @@ class AllComplaints extends Component {
                     complaints={assignedComplaints}
                     complaintLocation={true}
                     role={role}
+                    heightOffset="116px"
                   />
                 </div>
               </Screen>
@@ -318,7 +321,6 @@ const mapStateToProps = (state) => {
   transformedComplaints = orderby(transformedComplaints, ["latestCreationTime"], ["desc"]);
   const numEmpComplaint = employeeComplaints.length;
   const numCSRComplaint = transformedComplaints.length;
-
   return { assignedComplaints, unassignedComplaints, numEmpComplaint, numCSRComplaint, employeeComplaints, role, loading, transformedComplaints };
 };
 

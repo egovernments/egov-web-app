@@ -204,7 +204,7 @@ body.employee-user-profile {
 
 .custom-padding-for-screens {
   position: relative;
-  padding: 10px 16px 0 16px; }
+  padding: 0; }
 
 @media only screen and (max-width: 768px) {
   .show-action-menu {
@@ -227,6 +227,8 @@ body.employee-user-profile {
     justify-content: flex-end;
     padding: 6px 8px;
     left: 0; }
+  .custom-padding-for-screens {
+    padding: 10px 16px 0 16px; }
   .responsive-action-button {
     width: 230px !important;
     min-width: inherit !important; }

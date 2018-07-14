@@ -47,7 +47,7 @@ class OTP extends Component {
     const { resendOTP } = this;
 
     return (
-      <Screen loading={loading}>
+      <Screen loading={loading} className="force-padding-0">
         <Banner>
           <OTPFormHOC resendOTP={resendOTP} phoneNumber={phoneNumber} />
         </Banner>

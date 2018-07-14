@@ -22,6 +22,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Banner = function Banner(_ref) {
   var children = _ref.children,
+      hideBackButton = _ref.hideBackButton,
       history = _ref.history,
       _ref$className = _ref.className,
       className = _ref$className === undefined ? "" : _ref$className;
@@ -39,7 +40,7 @@ var Banner = function Banner(_ref) {
         _react2.default.createElement(
           "div",
           { className: "banner-main-content" },
-          _react2.default.createElement(_components.Icon, { onClick: function onClick() {
+          !hideBackButton && _react2.default.createElement(_components.Icon, { onClick: function onClick() {
               return history.goBack();
             }, className: "banner-back-button", action: "navigation", name: "arrow-back" }),
           _react2.default.createElement(
