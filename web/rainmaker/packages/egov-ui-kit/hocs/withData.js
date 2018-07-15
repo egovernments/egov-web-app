@@ -50,10 +50,13 @@ var withData = function withData(Component) {
       value: function componentDidMount() {
         var _props = this.props,
             searchUser = _props.searchUser,
-            fetchComplaintCategories = _props.fetchComplaintCategories;
+            fetchComplaintCategories = _props.fetchComplaintCategories,
+            authenticated = _props.authenticated;
 
         fetchComplaintCategories();
-        searchUser();
+        if (authenticated) {
+          searchUser();
+        }
       }
     }, {
       key: "render",
@@ -69,6 +72,13 @@ var withData = function withData(Component) {
     }]);
     return Wrapper;
   }(_react2.default.Component);
+
+  var mapStateToProps = function mapStateToProps(_ref) {
+    var auth = _ref.auth;
+    var authenticated = auth.authenticated;
+
+    return { authenticated: authenticated };
+  };
 
   var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
