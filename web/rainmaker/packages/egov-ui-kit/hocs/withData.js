@@ -54,9 +54,7 @@ var withData = function withData(Component) {
             authenticated = _props.authenticated;
 
         fetchComplaintCategories();
-        if (authenticated) {
-          searchUser();
-        }
+        searchUser();
       }
     }, {
       key: "render",

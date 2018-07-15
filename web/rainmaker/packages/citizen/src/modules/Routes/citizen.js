@@ -69,7 +69,7 @@ const routes = [
     path: "/",
     component: Home,
     needsAuthentication: true,
-    options: { isHomeScreen: true, title: "Home", hideTitle: true },
+    options: { isHomeScreen: true, title: "Home", hideTitle: true,redirectionUrl: "/user/register" },
   },
 
   {

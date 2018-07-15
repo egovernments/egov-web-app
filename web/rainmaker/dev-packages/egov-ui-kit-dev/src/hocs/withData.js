@@ -8,9 +8,7 @@ const withData = (Component) => {
     componentDidMount() {
       const { searchUser, fetchComplaintCategories,authenticated } = this.props;
       fetchComplaintCategories();
-      if (authenticated) {
-          searchUser();
-      }
+      searchUser();
     }
 
     render() {

@@ -86,7 +86,8 @@ var withAuthorization = function withAuthorization() {
           var redirectionUrl = options.redirectionUrl;
 
           if (!authenticated) {
-            this.props.history.replace(redirectionUrl || "/user/register");
+            var baseUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
+            this.props.history.replace(redirectionUrl || baseUrl);
           }
         }
       }, {
