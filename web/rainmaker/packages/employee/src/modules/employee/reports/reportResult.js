@@ -26,6 +26,7 @@ import "datatables.net-buttons/js/buttons.flash.js"; // Flash file export
 import headerLogo from "egov-ui-kit/assets/images/punjab-logo.png";
 import { getResultUrl } from "./commons/url";
 import Label from "egov-ui-kit/utils/translationNode";
+import commonConfig from "config/common.js";
 import "./index.css";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -385,7 +386,7 @@ class ShowField extends Component {
         searchParams.push({ name: key, input: value });
       }
 
-      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
 
       let response = commonApiPost(
         // "/report/" + match.params.moduleName + "/_get",
@@ -565,7 +566,7 @@ class ShowField extends Component {
       searchParams.push({ name: key, input: values });
       let resulturl = getResultUrl(match.params.moduleName);
 
-      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+      var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
       let response =
         resulturl &&
         commonApiPost(

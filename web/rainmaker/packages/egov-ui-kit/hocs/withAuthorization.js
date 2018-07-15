@@ -142,7 +142,7 @@ var withAuthorization = function withAuthorization() {
             _react2.default.createElement(
               "div",
               { className: " col-xs-12", style: { padding: 0 } },
-              !hideActionMenu && _react2.default.createElement(
+              !hideActionMenu && authenticated && _react2.default.createElement(
                 "div",
                 null,
                 _react2.default.createElement(
