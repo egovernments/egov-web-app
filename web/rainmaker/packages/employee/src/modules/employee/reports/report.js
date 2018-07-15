@@ -4,6 +4,7 @@ import { commonApiPost } from "egov-ui-kit/utils/api";
 import SearchForm from "./searchForm";
 import ReportResult from "./reportResult";
 import { getMetaDataUrl, getReportName, options } from "./commons/url";
+import commonConfig from "config/common.js";
 
 class Report extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class Report extends Component {
     var _this = this;
     let { setMetaData, setFlag, showTable, setForm, setReportResult } = this.props;
 
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
 
     // setFlag(1);
     // showTable(false);

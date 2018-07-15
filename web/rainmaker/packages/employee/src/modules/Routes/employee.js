@@ -329,10 +329,12 @@ const routes = [
     path: "report/:moduleName/:reportName",
     component: Report,
     needsAuthentication: true,
+
     options: {
       hideFooter: true,
       title: "PGR REPORTS",
       hideTitle: true,
+      redirectionUrl,
     },
   },
 ];

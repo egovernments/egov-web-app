@@ -13,6 +13,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import jp from "jsonpath";
 import _ from "lodash";
 import { getResultUrl } from "./commons/url";
+import commonConfig from "config/common.js";
 class ShowForm extends Component {
   state = {
     searchBtnText: "APPLY",
@@ -271,7 +272,7 @@ class ShowForm extends Component {
     let tabLabel = `Showing data upto : ${date}`;
     this.props.updateTabLabel(tabLabel);
 
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
     let self = this;
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
@@ -318,7 +319,7 @@ class ShowForm extends Component {
       decreaseReportIndex,
     } = this.props;
     let searchParams = [];
-    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : "";
+    var tenantId = localStorage.getItem("tenant-id") ? localStorage.getItem("tenant-id") : commonConfig.tenantId;
     let self = this;
     if (!isDrilldown) {
       const displayOnlyFields = this.getDisplayOnlyFields(metaData);
