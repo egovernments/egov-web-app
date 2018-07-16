@@ -6,9 +6,11 @@ import { fetchComplaintCategories } from "egov-ui-kit/redux/complaints/actions";
 const withData = (Component) => {
   class Wrapper extends React.Component {
     componentDidMount() {
-      const { searchUser, fetchComplaintCategories,authenticated } = this.props;
-      fetchComplaintCategories();
-      searchUser();
+      const { searchUser, fetchComplaintCategories, authenticated } = this.props;
+      if (localStorage.getItem("token")) {
+        fetchComplaintCategories();
+        searchUser();
+      }
     }
 
     render() {
@@ -17,7 +19,7 @@ const withData = (Component) => {
     }
   }
 
-  const mapStateToProps = ({auth}) => {
+  const mapStateToProps = ({ auth }) => {
     const { authenticated } = auth;
     return { authenticated };
   };

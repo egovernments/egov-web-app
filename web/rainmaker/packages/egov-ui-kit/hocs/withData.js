@@ -53,8 +53,10 @@ var withData = function withData(Component) {
             fetchComplaintCategories = _props.fetchComplaintCategories,
             authenticated = _props.authenticated;
 
-        fetchComplaintCategories();
-        searchUser();
+        if (localStorage.getItem("token")) {
+          fetchComplaintCategories();
+          searchUser();
+        }
       }
     }, {
       key: "render",
