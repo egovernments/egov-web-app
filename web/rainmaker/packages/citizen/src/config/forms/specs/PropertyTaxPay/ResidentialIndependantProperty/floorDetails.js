@@ -70,6 +70,7 @@ const formConfig = {
       required: true,
     },
   },
+  isFormValid: false,
 };
 
 export default formConfig;

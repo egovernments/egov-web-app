@@ -1,4 +1,5 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
+const cityCode = "";
 // const formConfig = {
 //   name: "propertyAddress",
 //   fields: {
@@ -78,7 +79,7 @@ const formConfig = {
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -141,6 +142,7 @@ const formConfig = {
       hintText: "Select locality",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
+      dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
     },
     pincode: {
       id: "pincode",
@@ -165,6 +167,7 @@ const formConfig = {
   action: "",
   redirectionRoute: "",
   saveUrl: "",
+  isFormValid: false,
 };
 
 export default formConfig;

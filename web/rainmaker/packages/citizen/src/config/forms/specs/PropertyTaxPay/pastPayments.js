@@ -34,14 +34,17 @@ const formConfig = {
     id: "payment-submit-action",
     type: "submit",
   },
-  extraDetails: [{
-    name: "year",
-    jsonPath: "res.",
-    opitions: "abc[1].xyzz",
-  }],
+  extraDetails: [
+    {
+      name: "year",
+      jsonPath: "res.",
+      opitions: "abc[1].xyzz",
+    },
+  ],
   action: "_send",
   saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/citizen/user/otp",
+  isFormValid: false,
   formatConfig: ({ config, currentCount }) => {
     const updatedConfig = {
       ...config,
@@ -49,12 +52,12 @@ const formConfig = {
         ...config.fields,
         year: {
           ...config.fields.year,
-          jsonPath: `abc[${currentCount}].xyzz`
-        }
-      }
-    }
-    return updatedConfig
-  }
-}
+          jsonPath: `abc[${currentCount}].xyzz`,
+        },
+      },
+    };
+    return updatedConfig;
+  },
+};
 
 export default formConfig;

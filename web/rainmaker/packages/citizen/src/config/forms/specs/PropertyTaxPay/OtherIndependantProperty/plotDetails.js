@@ -30,6 +30,7 @@ const formConfig = {
       hintText: "Select",
     },
   },
+  isFormValid: false,
 };
 
 export default formConfig;

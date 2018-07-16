@@ -103,6 +103,7 @@ const formConfig = {
       numcols: 4,
     },
   },
+  isFormValid: false,
 };
 
 export default formConfig;
