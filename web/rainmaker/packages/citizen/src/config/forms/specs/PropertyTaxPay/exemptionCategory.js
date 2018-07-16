@@ -30,5 +30,6 @@ const formConfig = {
       numcols: 6,
     },
   },
+  isFormValid: false,
 };
 export default formConfig;

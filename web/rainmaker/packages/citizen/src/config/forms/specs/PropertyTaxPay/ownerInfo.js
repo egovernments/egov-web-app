@@ -47,6 +47,7 @@ const formConfig = {
   action: "",
   redirectionRoute: "",
   saveUrl: "",
+  isFormValid: false,
 };
 
 export default formConfig;
