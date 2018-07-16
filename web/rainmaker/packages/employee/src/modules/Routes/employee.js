@@ -26,7 +26,7 @@ import ReassignSuccess from "modules/employee/pgr/ReassignSuccess";
 import CreateComplaint from "modules/employee/pgr/CreateComplaint";
 import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
-//import Home from "modules/employee/Home";
+import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
 
 //Redirection Url
@@ -253,17 +253,17 @@ const routes = [
       redirectionUrl,
     },
   },
-  // {
-  //   path: "",
-  //   component: Home,
-  //   needsAuthentication: true,
-  //   options: {
-  //     title: "HOME",
-  //     hideFooter: false,
-  //     redirectionUrl,
-  //     //isHomeScreen: true,
-  //   },
-  // },
+  {
+    path: "",
+    component: Home,
+    needsAuthentication: true,
+    options: {
+      title: "HOME",
+      hideFooter: false,
+      redirectionUrl,
+      //isHomeScreen: true,
+    },
+  },
   {
     path: "create-complaint",
     component: CreateComplaint,
