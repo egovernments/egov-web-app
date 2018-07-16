@@ -13,11 +13,13 @@ import "./index.css";
 
 class MyComplaints extends Component {
   componentDidMount = () => {
-    let { fetchComplaints, resetFiles } = this.props;
+    let { fetchComplaints, resetFiles, transformedComplaints, renderCustomTitle } = this.props;
+    const numberOfComplaints = transformedComplaints && transformedComplaints.length;
     fetchComplaints([]);
     if (this.props.form && this.props.form.complaint) {
       resetFiles("complaint");
     }
+    renderCustomTitle(numberOfComplaints);
   };
 
   onComplaintClick = (complaintNo) => {
@@ -27,7 +29,7 @@ class MyComplaints extends Component {
   componentWillReceiveProps = (nextProps) => {
     const { role, transformedComplaints, renderCustomTitle } = this.props;
     if (!isEqual(transformedComplaints, nextProps.transformedComplaints)) {
-      const numberOfComplaints = transformedComplaints && transformedComplaints.length;
+      const numberOfComplaints = nextProps.transformedComplaints && nextProps.transformedComplaints.length;
       renderCustomTitle(numberOfComplaints);
     }
   };
