@@ -9,7 +9,7 @@ import formtemp from "../formtemp/reducer";
 import mdms from "../mdms/reducer";
 import report from "../reports/report";
 
-const rootReducer = combineReducers({
+const rootReducer = {
   app,
   auth,
   form,
@@ -18,6 +18,6 @@ const rootReducer = combineReducers({
   mdms,
   formtemp,
   report,
-});
+};
 
 export default rootReducer;
