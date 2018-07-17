@@ -39,7 +39,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
       },
     },
     occupancy: {

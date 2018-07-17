@@ -39,7 +39,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor"],
       },
     },
     subUsageType: {

@@ -32,7 +32,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OwnerShipCategory",
+        dataPath: ["MdmsRes.PropertyTax.OwnerShipCategory"],
       },
       numcols: 6,
     },
