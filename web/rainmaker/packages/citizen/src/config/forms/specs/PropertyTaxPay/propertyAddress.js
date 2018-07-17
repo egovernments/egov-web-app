@@ -95,7 +95,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.tenant.tenants",
+        dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [
           {
             fieldKey: "mohalla",
