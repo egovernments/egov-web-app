@@ -99,7 +99,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.PropertyType",
+        dataPath: ["MdmsRes.PropertyTax.PropertyType"],
       },
     },
   },

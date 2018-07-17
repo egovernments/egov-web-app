@@ -32,7 +32,7 @@ const formConfig = {
             fieldKey: "subUsageType",
           },
         ],
-        dataPath: "MdmsRes.PropertyTax.UsageCategoryMinor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMinor"],
       },
       required: true,
       disabled: true,

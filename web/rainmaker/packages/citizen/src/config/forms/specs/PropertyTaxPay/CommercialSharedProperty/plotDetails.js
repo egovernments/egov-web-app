@@ -36,7 +36,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
       },
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
