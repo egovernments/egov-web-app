@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -14,11 +18,13 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var style = { marginLeft: 10, marginTop: 2 };
+var style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
+var selStyle = { color: "#fe7a51" };
 
 var BreadCrumbs = function BreadCrumbs(_ref) {
   var url = _ref.url,
-      onTitleClick = _ref.onTitleClick;
+      selected = _ref.selected,
+      onClick = _ref.onClick;
 
   return _react2.default.createElement(
     "div",
@@ -35,8 +41,13 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
         ),
         _react2.default.createElement(
           "div",
-          { onClick: onTitleClick, style: style },
-          item
+          {
+            // onClick={() => {
+            //   onClick(index, item.path);
+            // }}
+            style: url.length - 1 === index ? style : (0, _extends3.default)({}, selStyle, style)
+          },
+          item.title
         )
       );
     })

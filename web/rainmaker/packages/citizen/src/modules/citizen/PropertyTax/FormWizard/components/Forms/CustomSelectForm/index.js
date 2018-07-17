@@ -10,11 +10,11 @@ const getDropDownData = (noFloors) => {
 const CustomSelectForm = ({ handleFieldChange, form, noFloors }) => {
   let fields = form.fields || {};
   let floorName = fields.floorName;
-  if (floorName) {
-    floorName.value = "Base";
-    floorName.dropDownData = [{ label: "Basement", value: "Base" }, { label: "Ground Floor", value: "GF" }];
-    floorName.dropDownData = [...floorName.dropDownData, ...getDropDownData(noFloors - 1)];
-  }
+  // if (floorName) {
+  //   floorName.value = "Base";
+  //   floorName.dropDownData = [{ label: "Basement", value: "Base" }, { label: "Ground Floor", value: "GF" }];
+  //   floorName.dropDownData = [...floorName.dropDownData, ...getDropDownData(noFloors - 1)];
+  // }
 
   return (
     <div style={{ marginLeft: "30px" }}>

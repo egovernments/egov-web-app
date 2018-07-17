@@ -34,8 +34,8 @@ class IncompleteAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumTitle, title } = this.props;
-    title && addBreadCrumTitle(title);
+    const { addBreadCrumbs, title } = this.props;
+    title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
   render() {
@@ -55,7 +55,7 @@ const mapStateToProps = ({ app }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
   };
 };
 

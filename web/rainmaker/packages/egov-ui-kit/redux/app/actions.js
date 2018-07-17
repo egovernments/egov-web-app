@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchActionItems = exports.fetchCurrentLocation = exports.removeBreadcrumbs = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
+exports.fetchActionItems = exports.fetchCurrentLocation = exports.addBreadCrumbs = exports.fetchLocalizationLabel = exports.toggleSnackbarAndSetText = exports.setBottomNavigationIndex = exports.setRoute = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -108,12 +108,6 @@ var addBreadCrumbs = exports.addBreadCrumbs = function addBreadCrumbs(url) {
   return { type: actionTypes.ADD_BREADCRUMB_ITEM, url: url };
 };
 
-var removeBreadcrumbs = exports.removeBreadcrumbs = function removeBreadcrumbs(url) {
-  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "single";
-
-  return { type: actionTypes.REMOVE_BREADCRUMB_ITEM, mode: mode, url: url };
-};
-
 var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentLocation() {
   return function () {
     var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
@@ -138,7 +132,7 @@ var fetchCurrentLocation = exports.fetchCurrentLocation = function fetchCurrentL
       }, _callee2, undefined);
     }));
 
-    return function (_x3) {
+    return function (_x2) {
       return _ref2.apply(this, arguments);
     };
   }();
@@ -175,7 +169,7 @@ var fetchActionItems = exports.fetchActionItems = function fetchActionItems(role
       }, _callee3, undefined, [[0, 7]]);
     }));
 
-    return function (_x4, _x5) {
+    return function (_x3, _x4) {
       return _ref3.apply(this, arguments);
     };
   }();

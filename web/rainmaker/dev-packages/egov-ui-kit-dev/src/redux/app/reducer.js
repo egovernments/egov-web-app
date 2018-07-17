@@ -54,29 +54,32 @@ const appReducer = (state = initialState, action) => {
       return { ...state, menu: action.payload };
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
+      const index = state.urls.findIndex((url) => {
+        return url.title === action.url.title;
+      });
       const url =
         window.location.pathname && window.location.pathname.split("/").pop() === "property-tax"
           ? []
-          : state.urls && state.urls.indexOf(action.url) > -1
-            ? state.urls.splice(state.urls.indexOf(action.url), 1)
+          : index > -1
+            ? state.urls.splice(index, 1)
             : [...state.urls, action.url];
 
       return { ...state, urls: url };
 
-    case actionTypes.REMOVE_BREADCRUMB_ITEM:
-      if (action.mode == "single") {
-        let { urls } = state;
-        return {
-          ...state,
-          urls: urls.filter((item) => item !== action.url),
-        };
-      } else {
-        let urls = [];
-        return {
-          ...state,
-          urls,
-        };
-      }
+    // case actionTypes.REMOVE_BREADCRUMB_ITEM:
+    //   if (action.mode == "single") {
+    //     let { urls } = state;
+    //     return {
+    //       ...state,
+    //       urls: urls.filter((item) => item !== action.url),
+    //     };
+    //   } else {
+    //     let urls = [];
+    //     return {
+    //       ...state,
+    //       urls,
+    //     };
+    //   }
 
     default:
       return state;

@@ -46,7 +46,7 @@ const ReceiptItems = () => {
             minWidth: "inherit",
           }}
           labelStyle={{
-            padding: "0 12px 0 0 ",
+            padding: "0 12px 0 12px ",
             letterSpacing: "0.6px",
             display: "inline-block",
             height: "22px",
