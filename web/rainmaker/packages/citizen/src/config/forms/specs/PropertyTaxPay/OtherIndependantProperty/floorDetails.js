@@ -17,6 +17,27 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Sub Usage Type",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+      },
       hintText: "Select",
       required: true,
       numcols: 4,
@@ -33,7 +54,7 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
