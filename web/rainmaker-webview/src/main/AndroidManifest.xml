@@ -2,7 +2,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.egovernment.mseva.punjab.employee"
+    package="org.egovernment.mseva"
     android:installLocation="auto">
 
     <supports-screens
@@ -36,7 +36,7 @@
         android:theme="@style/SplashTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name="org.egovernment.mseva.punjab.employee.SplashScreen"
+            android:name="org.egovernment.mseva.SplashScreen"
             android:launchMode="singleTop"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -47,7 +47,7 @@
         </activity>
         <activity
 			android:launchMode="singleTask"
-            android:name="org.egovernment.mseva.punjab.employee.MainActivity"
+            android:name="org.egovernment.mseva.MainActivity"
             android:screenOrientation="portrait" > <!-- remove or alter as your apps requirement -->
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />

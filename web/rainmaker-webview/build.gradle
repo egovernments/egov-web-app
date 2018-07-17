@@ -24,7 +24,7 @@ android {
 	compileSdkVersion 26
 	buildToolsVersion '27.0.3'
 	defaultConfig {
-		applicationId 'org.egovernment.rainmaker.employee'
+		applicationId 'org.egovernment.mseva.employee'
 		minSdkVersion 19
 		targetSdkVersion 26
 		versionCode 2
@@ -42,29 +42,35 @@ android {
 	productFlavors {
 		Citizen {
 			minSdkVersion 19
-			applicationId 'org.egovernment.rainmaker.citizen'
+			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 2
-			versionName '2.0'
+			versionCode 1
+			versionName '1.1'
 			resValue "string", "app_name", "mSeva-Punjab"
 			// QA
-			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/citizen/user/register"'
+//			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/citizen/user/register"'
 			// DEV
 //			buildConfigField 'String', 'url', '"https://egov-micro-dev.egovernments.org/citizen/user/register"'
+			//UAT
+			//buildConfigField 'String', 'url', '"https://mseva-uat.lgpunjab.gov.in/citizen/user/register"'
+			buildConfigField 'String', 'url', '"https://mseva.lgpunjab.gov.in/citizen/user/register"'
 		}
 		Employee {
 			minSdkVersion 19
-			applicationId 'org.egovernment.rainmaker.employee'
+			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 2
-			versionName '2.0'
+			versionCode 1
+			versionName '1.1'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
 			//QA
-			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/employee/user/login"'
+//			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/employee/user/login"'
 			//DEV
 			//buildConfigField 'String', 'url', '"https://egov-micro-dev.egovernments.org/employee/user/login"'
+			//UAT
+			//buildConfigField 'String', 'url', '"https://mseva-uat.lgpunjab.gov.in/employee/user/login"'
+			buildConfigField 'String', 'url', '"https://mseva.lgpunjab.gov.in/employee/user/login"'
 		}
 	}
 }
