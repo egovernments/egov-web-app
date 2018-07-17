@@ -4,12 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _redux = require("redux");
-
 var _reducer = require("./reducer");
 
 var _reducer2 = _interopRequireDefault(_reducer);
@@ -46,6 +40,4 @@ if (process.env.NODE_ENV === "development") {
   middlewares = middlewares.concat(logger);
 }
 
-var store = (0, _redux.createStore)(_reducer2.default, _redux.applyMiddleware.apply(undefined, (0, _toConsumableArray3.default)(middlewares)));
-
-exports.default = store;
+exports.default = { rootReducer: _reducer2.default, middlewares: middlewares };

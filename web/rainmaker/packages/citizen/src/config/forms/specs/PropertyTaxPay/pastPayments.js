@@ -45,14 +45,14 @@ const formConfig = {
   saveUrl: "/user-otp/v1/_send",
   redirectionRoute: "/citizen/user/otp",
   isFormValid: false,
-  formatConfig: ({ config, currentCount }) => {
+  formatConfig: ({ config, index }) => {
     const updatedConfig = {
       ...config,
       fields: {
         ...config.fields,
         year: {
           ...config.fields.year,
-          jsonPath: `abc[${currentCount}].xyzz`,
+          jsonPath: `abc[${index}].xyzz`
         },
       },
     };

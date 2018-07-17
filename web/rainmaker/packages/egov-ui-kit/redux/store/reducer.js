@@ -40,7 +40,7 @@ var _report2 = _interopRequireDefault(_report);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rootReducer = (0, _redux.combineReducers)({
+var rootReducer = {
   app: _reducer2.default,
   auth: _reducer4.default,
   form: _reducer6.default,
@@ -49,6 +49,6 @@ var rootReducer = (0, _redux.combineReducers)({
   mdms: _reducer14.default,
   formtemp: _reducer12.default,
   report: _report2.default
-});
+};
 
 exports.default = rootReducer;

@@ -7,6 +7,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Name",
       hintText: "Enter Owner's Name",
+      required: true,
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -14,6 +15,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Mobile No.",
       hintText: "Enter Mobile No.",
+      required: true,
     },
     ownerGuardian: {
       id: "ownerGuardian",
@@ -21,6 +23,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Father's/Husband's Name",
       hintText: "Enter father's/husband's name",
+      required: true,
     },
     ownerAadhar: {
       id: "ownerAadhar",
@@ -43,6 +46,38 @@ const formConfig = {
       floatingLabelText: "Correspondence Address",
       hintText: "Enter correspondence address",
     },
+    ownerRelationship: {
+      id: "ownerRelationship",
+      jsonPath: "",
+      type: "singleValueList",
+      floatingLabelText: "Relationship",
+      hintText: "",
+      dropDownData: [
+        { label: "Father", value: "father" },
+        { label: "Husband", value: "husband" },
+      ],
+      value: "father",
+    },
+    ownerCategory: {
+      id: "ownerCategory",
+      required: true,
+      jsonPath: "",
+      type: "singleValueList",
+      floatingLabelText: "Owner Category",
+      hintText: "Select",
+      dropDownData: [
+        { label: "xyzz", value: "abcd"},
+        { label: "2xyzz", value: "2abcd"},
+      ],
+    },
+    ownerCategoryId: {
+      id: "ownerCategoryId",
+      jsonPath: "",
+      required: true,
+      type: "textfield",
+      floatingLabelText: "Owner Category Id number",
+      hintText: "Enter identification number",
+    }
   },
   action: "",
   redirectionRoute: "",
