@@ -12,9 +12,35 @@ const formConfig = {
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
-      type: "textfield",
+      type: "singleValueList",
       floatingLabelText: "Usage Type",
-      value: "Residential",
+      value: "RESIDENTIAL",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dependants: [
+          {
+            fieldKey: "subUsageType",
+          },
+        ],
+        dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
+      },
       required: true,
       numcols: 4,
       disabled: true,
@@ -23,6 +49,28 @@ const formConfig = {
       id: "assessment-subUsageType",
       jsonPath: "",
       type: "singleValueList",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        //isDependent: true,
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+      },
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
       numcols: 4,
@@ -40,7 +88,7 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
