@@ -13,28 +13,23 @@ const formConfig = {
       dataFetchConfig: {
         url: FLOOR.GET.URL,
         action: FLOOR.GET.ACTION,
-        queryParams: [],
+        queryParams: [{ key: "tenantId", value: "pb" }],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
             moduleDetails: [
               {
-                moduleName: "tenant",
+                moduleName: "PropertyTax",
                 masterDetails: [
                   {
-                    name: "tenants",
+                    name: "Floor",
                   },
                 ],
               },
             ],
           },
         },
-        dataPath: "MdmsRes.tenant.tenants",
-        dependants: [
-          {
-            fieldKey: "mohalla",
-          },
-        ],
+        dataPath: "MdmsRes.PropertyTax.Floor",
       },
       // dropDownData: [],
       // dataFetchConfig: {

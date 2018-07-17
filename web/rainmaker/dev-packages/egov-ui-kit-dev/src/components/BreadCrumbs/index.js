@@ -1,9 +1,10 @@
 import React from "react";
 import Icon from "../Icon";
 
-const style = { marginLeft: 10, marginTop: 2 };
+const style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
+const selStyle = { color: "#fe7a51" };
 
-const BreadCrumbs = ({ url, onTitleClick }) => {
+const BreadCrumbs = ({ url }) => {
   return (
     <div className="rainmaker-displayInline" style={{ paddingLeft: 15 }}>
       <Icon action="action" name="home" color="#fe7a51" />
@@ -12,8 +13,13 @@ const BreadCrumbs = ({ url, onTitleClick }) => {
           return (
             <div className="rainmaker-displayInline">
               <div style={style}>❯</div>
-              <div onClick={onTitleClick} style={style}>
-                {item}
+              <div
+                // onClick={() => {
+                //   onClick(index, item.path);
+                // }}
+                style={url.length - 1 === index ? style : { ...selStyle, ...style }}
+              >
+                {item.title}
               </div>
             </div>
           );

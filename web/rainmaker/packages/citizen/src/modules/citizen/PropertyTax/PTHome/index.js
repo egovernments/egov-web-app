@@ -104,8 +104,8 @@ class PTHome extends Component {
             <List
               innerDivStyle={innerDivStyle}
               onItemClick={handleItemClick}
-              listContainerStyle={{ marginTop: "16px" }}
-              listItemStyle={{ borderBottom: "1px solid #e0e0e0" }}
+              // listContainerStyle={{ marginTop: "16px" }}
+              listItemStyle={{ paddingLeft: "10px", borderBottom: "1px solid #e0e0e0" }}
               nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
               autoGenerateNestedIndicator={false}
               primaryTogglesNestedList={true}

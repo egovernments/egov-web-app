@@ -76,25 +76,27 @@ var appReducer = function appReducer() {
       return (0, _extends3.default)({}, state, { menu: action.payload });
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
-      var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : state.urls && state.urls.indexOf(action.url) > -1 ? state.urls.splice(state.urls.indexOf(action.url), 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
+      var index = state.urls.findIndex(function (url) {
+        return url.title === action.url.title;
+      });
+      var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : index > -1 ? state.urls.splice(index, 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
 
       return (0, _extends3.default)({}, state, { urls: url });
 
-    case actionTypes.REMOVE_BREADCRUMB_ITEM:
-      if (action.mode == "single") {
-        var urls = state.urls;
-
-        return (0, _extends3.default)({}, state, {
-          urls: urls.filter(function (item) {
-            return item !== action.url;
-          })
-        });
-      } else {
-        var _urls = [];
-        return (0, _extends3.default)({}, state, {
-          urls: _urls
-        });
-      }
+    // case actionTypes.REMOVE_BREADCRUMB_ITEM:
+    //   if (action.mode == "single") {
+    //     let { urls } = state;
+    //     return {
+    //       ...state,
+    //       urls: urls.filter((item) => item !== action.url),
+    //     };
+    //   } else {
+    //     let urls = [];
+    //     return {
+    //       ...state,
+    //       urls,
+    //     };
+    //   }
 
     default:
       return state;

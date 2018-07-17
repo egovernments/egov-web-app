@@ -17,6 +17,7 @@ class Property extends Component {
     super(props);
 
     this.state = {
+      // selected: null,
       dialogueOpen: false,
       items: [
         {
@@ -50,18 +51,12 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumTitle } = this.props;
+    const { location, addBreadCrumbs } = this.props;
     const { pathname } = location;
     const url = pathname && pathname.split("/").pop();
-    url && addBreadCrumTitle(url);
+    url && addBreadCrumbs({ title: url, path: window.location.pathname });
   };
 
-  onTitleClick = () => {
-    const { location, addBreadCrumTitle } = this.props;
-    const { pathname } = location;
-    const url = pathname && pathname.split("/").pop();
-    url && addBreadCrumTitle(url);
-  };
   onListItemClick = (item, index) => {
     const { route } = item;
 
@@ -79,17 +74,25 @@ class Property extends Component {
     }
   };
 
+  // onBreadcrumbsClick = (index, path) => {
+  //   const { history } = this.props;
+  //   this.setState({
+  //     selected: index,
+  //   });
+  //   history.push(path);
+  // };
+
   closeReceiptDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
 
   render() {
     const { urls } = this.props;
-    const { onTitleClick } = this;
+    const { selected } = this.state;
 
     return (
       <Screen className="pt-home-screen">
-        <BreadCrumbs url={urls} onTitleClick={onTitleClick} />
+        <BreadCrumbs url={urls} onClick={this.onBreadcrumbsClick} />
         <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} innerDivStyle={innerDivStyle} history={this.props.history} />
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>
@@ -104,7 +107,7 @@ const mapStateToProps = ({ app }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
   };
 };
 

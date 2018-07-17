@@ -10,30 +10,31 @@ const innerDivStyle = {
 };
 
 class MyProperties extends Component {
-  state = {
-    items: [
-      {
-        primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
-        route: "/my-properties/property",
-        secondaryText: "Property ID: PQL-98-876",
-      },
-      {
-        primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
-        route: "/my-properties/property",
-        secondaryText: "Property ID: JML-34-756",
-      },
-    ],
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      //selected: null,
+      items: [
+        {
+          primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
+          route: "/my-properties/property",
+          secondaryText: "Property ID: PQL-98-876",
+        },
+        {
+          primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
+          route: "/my-properties/property",
+          secondaryText: "Property ID: JML-34-756",
+        },
+      ],
+    };
+  }
 
   componentDidMount = () => {
-    const { addBreadCrumTitle, title } = this.props;
+    const { addBreadCrumbs, title } = this.props;
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
-    title && addBreadCrumTitle(title);
-  };
-  onTitleClick = () => {
-    const { addBreadCrumTitle, title } = this.props;
-    title && addBreadCrumTitle(title);
+    title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
   onListItemClick = (item, index) => {
@@ -45,18 +46,25 @@ class MyProperties extends Component {
       case "receipt-dialogue":
         break;
       default:
-        console.log(path);
         this.props.history.push(path);
         break;
     }
   };
 
+  // onBreadcrumbsClick = (index, path) => {
+  //   const { history } = this.props;
+  //   this.setState({
+  //     selected: index,
+  //   });
+  //   history.push(path);
+  // };
+
   render() {
     const { urls } = this.props;
-    const { onTitleClick } = this;
+    const { selected } = this.state;
     return (
       <Screen>
-        <BreadCrumbs url={urls} onTitleClick={onTitleClick} />
+        <BreadCrumbs url={urls} onClick={this.onBreadcrumbsClick} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
       </Screen>
     );
@@ -69,7 +77,7 @@ const mapStateToProps = ({ app }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
   };
 };
 
