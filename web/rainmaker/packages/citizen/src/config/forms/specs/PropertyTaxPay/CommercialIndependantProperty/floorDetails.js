@@ -64,7 +64,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
       },
       required: true,
       numcols: 4,
@@ -96,7 +96,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
     },
     builtArea: {

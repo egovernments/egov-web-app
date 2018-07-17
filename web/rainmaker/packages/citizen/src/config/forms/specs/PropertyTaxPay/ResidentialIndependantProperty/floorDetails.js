@@ -104,7 +104,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
     },
     builtArea: {

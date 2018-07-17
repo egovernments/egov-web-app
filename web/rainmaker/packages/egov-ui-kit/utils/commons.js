@@ -562,7 +562,10 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
 
           case 4:
             payloadSpec = _context3.sent;
-            dropdownData = boundary ? _jsonpath2.default.query(payloadSpec, dataFetchConfig.dataPath) : (0, _get2.default)(payloadSpec, dataFetchConfig.dataPath);
+            dropdownData = boundary ? _jsonpath2.default.query(payloadSpec, dataFetchConfig.dataPath) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
+              dropdownData = [].concat((0, _toConsumableArray3.default)(dropdownData), (0, _toConsumableArray3.default)((0, _get2.default)(payloadSpec, path)));
+              return dropdownData;
+            }, []);
             ddData = dropdownData && dropdownData.reduce(function (ddData, item) {
               ddData.push({ label: item.name, value: item.code });
               return ddData;
