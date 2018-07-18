@@ -6,10 +6,11 @@ const formConfig = {
       id: "floorName",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "",
+      floatingLabelText: "Select Floor",
       hintText: "Select locality",
       numcols: 12,
       errorMessage: "",
+      required:true,
       dataFetchConfig: {
         url: FLOOR.GET.URL,
         action: FLOOR.GET.ACTION,
