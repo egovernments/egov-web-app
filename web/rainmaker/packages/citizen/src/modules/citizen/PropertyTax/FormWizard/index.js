@@ -211,7 +211,60 @@ class FormWizard extends Component {
         }
         break;
       case 2:
-        this.setState({ selected: index });
+        const {ownershipType}=form;
+        if (ownershipType) {
+          const isOwnershipTypeFormValid=validateForm(ownershipType);
+          if (isOwnershipTypeFormValid) {
+            const ownershipTypeSelected=get(ownershipType,"fields.typeOfOwnership.value")
+            if (ownershipTypeSelected==="IND") {
+              const {ownerInfo} =form;
+              const isOwnerInfoFormValid=validateForm(ownerInfo);
+              if (isOwnerInfoFormValid) {
+                this.setState({ selected: index });
+              }
+              else {
+                displayFormErrorsAction("ownerInfo");
+              }
+            }
+            else if(ownershipTypeSelected==="MUL")
+            {
+              let ownerValidation=true;
+              for (const variable in form) {
+                if (variable.search("ownerInfo_")!==-1) {
+                  const isDynamicFormValid=validateForm(form[variable]);
+                  if (!isDynamicFormValid) {
+                    displayFormErrorsAction(variable);
+                    ownerValidation=false;
+                  }
+                }
+              }
+              if (ownerValidation) {
+                this.setState({ selected: index });
+              }
+            }
+            else if (ownershipTypeSelected==="Institution") {
+              const {institutionDetails,institutionAuthority}=form;
+              const isInstitutionDetailsFormValid=validateForm(institutionDetails);
+              let institutionFormValid=true;
+              if (!isInstitutionDetailsFormValid) {
+                displayFormErrorsAction("institutionDetails");
+                institutionFormValid=false
+              }
+              const isInstitutionAuthorityFormValid=validateForm(institutionAuthority);
+              if (!isInstitutionAuthorityFormValid) {
+                displayFormErrorsAction("institutionAuthority");
+                institutionFormValid=false
+              }
+              if (institutionFormValid) {
+                this.setState({ selected: index });
+              }
+            }
+          }
+          else {
+            displayFormErrorsAction("ownershipType");
+          }
+        }
+
         break;
       default:
         setRoute("/property-tax/payment-success");
