@@ -2,6 +2,7 @@ import React from "react";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "../PTList";
+import BlankAssessment from "../BlankAssessment";
 import "./index.css";
 
 const getItemStatus = (item) => {
@@ -45,10 +46,38 @@ const getItemStatus = (item) => {
         </div>
       );
       break;
-
+    case "ACCESS & PAY":
+      return (
+        <div className="assessment-displayInline">
+          <Button
+            label="Access & Pay"
+            primary={true}
+            style={{
+              height: 25,
+              lineHeight: "auto",
+              minWidth: "inherit",
+            }}
+          />
+        </div>
+      );
     default:
       return "";
   }
+};
+
+const getRightIconItems = (item) => {
+  return item.date || item.status || item.receipt || item.action ? (
+    <div style={{ width: "auto" }}>
+      {item.date && <Label label={item.date} labelStyle={{ textAlign: "right" }} />}
+      {getItemStatus(item)}
+      <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+        <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} />
+        <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+      </div>
+    </div>
+  ) : (
+    item.rightIcon
+  );
 };
 
 const getListItems = (items) => {
@@ -57,28 +86,16 @@ const getListItems = (items) => {
     items.map((item, index) => {
       return {
         primaryText: <Label label={item.primaryText} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-
         secondaryText:
-          typeof item.secondaryText === "object" ? (
+          item.secondaryText &&
+          (typeof item.secondaryText === "object" ? (
             item.secondaryText
           ) : (
             <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
-          ),
+          )),
         route: item.route,
         leftIcon: item.leftIcon,
-        rightIcon:
-          item.date || item.status || item.receipt ? (
-            <div style={{ width: "auto" }}>
-              <Label label={item.date} labelStyle={{ textAlign: "right" }} />
-              {getItemStatus(item)}
-              <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-                <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} />
-                <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-              </div>
-            </div>
-          ) : (
-            item.rightIcon
-          ),
+        rightIcon: getRightIconItems(item),
         nestedItems:
           item &&
           item.nestedItems &&
@@ -90,10 +107,11 @@ const getListItems = (items) => {
                   <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
                 </div>
               ) : (
-                <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" />
+                <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
               ),
               secondaryText: nestedItem.secondaryText,
               route: nestedItem.route,
+              rightIcon: getRightIconItems(nestedItem),
             };
           }),
       };
@@ -101,32 +119,25 @@ const getListItems = (items) => {
   );
 };
 
-const AssessmentList = ({ items, history, onItemClick, innerDivStyle, noAssessmentMessage }) => {
+const AssessmentList = ({
+  items,
+  history,
+  onItemClick,
+  button,
+  innerDivStyle,
+  noAssessmentMessage,
+  yearDialogue,
+  closeDialogue,
+  onNewPropertyButtonClick,
+}) => {
   return items.length == 0 ? (
-    <div className="no-assessment-message-cont">
-      <Label label={noAssessmentMessage} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
-      <Button
-        className="assessment-button"
-        primary={true}
-        label="New Property Assessment"
-        style={{
-          height: 36,
-          lineHeight: "auto",
-          minWidth: "inherit",
-        }}
-        labelStyle={{
-          padding: "0 12px 0 12px ",
-          letterSpacing: "0.6px",
-          display: "inline-block",
-          height: "22px",
-          lineHeight: "22px",
-          fontSize: "14px",
-        }}
-        onClick={(e) => {
-          // this.props.redirectToMap(true);
-        }}
-      />
-    </div>
+    <BlankAssessment
+      noAssessmentMessage={noAssessmentMessage}
+      button={button}
+      dialogueOpen={yearDialogue}
+      closeDialogue={closeDialogue}
+      onButtonClick={onNewPropertyButtonClick}
+    />
   ) : (
     <PTList items={getListItems(items)} history={history} onItemClick={onItemClick} innerDivStyle={innerDivStyle} />
   );
