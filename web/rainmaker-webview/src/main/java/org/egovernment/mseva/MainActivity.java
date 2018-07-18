@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     if (null == asw_file_path) {
                         return;
                     }
-                    if (intent == null) {
+                    if (intent == null || intent.getFlags() == 0) {
                         if (asw_cam_message != null) {
                             results = new Uri[]{Uri.parse(asw_cam_message)};
                         }
