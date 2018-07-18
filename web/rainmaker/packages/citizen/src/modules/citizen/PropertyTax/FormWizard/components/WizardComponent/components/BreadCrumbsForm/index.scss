@@ -1,4 +1,4 @@
-.breadcrumb {
+.breadcrumb-form {
   /*centering*/
   display: inline-block;
   overflow: hidden;
@@ -7,7 +7,7 @@
   border-radius: 2px;
 }
 
-.breadcrumb a {
+.breadcrumb-form a {
   text-decoration: none;
   outline: none;
   display: block;
@@ -19,28 +19,28 @@
   width: 25%;
 }
 
-.breadcrumb a:hover {
+.breadcrumb-form a:hover {
   text-decoration: none;
   color: #fff;
 }
 /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
-.breadcrumb a:first-child {
+.breadcrumb-form a:first-child {
   border-radius: 2px 0 0 2px; /*to match with the parent's radius*/
 }
-.breadcrumb a:first-child:before {
+.breadcrumb-form a:first-child:before {
   left: 14px;
 }
-.breadcrumb a:last-child {
+.breadcrumb-form a:last-child {
   border-radius: 0 2px 2px 0; /*this was to prevent glitches on hover*/
 }
 
-/*adding the arrows for the breadcrumbs using rotated pseudo elements*/
-.breadcrumb a:after {
+/*adding the arrows for the breadcrumb-forms using rotated pseudo elements*/
+.breadcrumb-form a:after {
   content: "";
   position: absolute;
   top: 0;
   right: -18px; /*half of square's length*/
-  /*same dimension as the line-height of .breadcrumb a */
+  /*same dimension as the line-height of .breadcrumb-form a */
   width: 48px;
   height: 48px;
   /*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's: 
@@ -60,7 +60,7 @@
   border-radius: 0 5px 0 50px;
 }
 /*we dont need an arrow after the last link*/
-.breadcrumb a:last-child:after {
+.breadcrumb-form a:last-child:after {
   content: none;
 }
 
@@ -71,4 +71,19 @@
 }
 .flat a:before {
   background: white;
+}
+
+.tab-icon {
+  border-radius: 100%;
+  background: #fff;
+  margin-right: 10px;
+  display: flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-tab-index {
+  font-size: 12px;
 }
