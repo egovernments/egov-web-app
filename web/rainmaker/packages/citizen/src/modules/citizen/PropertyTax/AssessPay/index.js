@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BreadCrumbs, Icon } from "components";
 import AssessmentList from "../common/AssessmentList";
-import YearDialogue from "./components/YearDialogue";
+import YearDialogue from "../common/YearDialogue";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
@@ -52,27 +52,6 @@ class AssessPay extends Component {
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
-  getYearList = () => {
-    let today = new Date();
-    let month = today.getMonth() + 1;
-    let yearRange = [];
-    var counter = 0;
-    if (month <= 3) {
-      return this.getLastFourYear(yearRange, today.getFullYear() - 1, counter);
-    } else {
-      return this.getLastFourYear(yearRange, today.getFullYear(), counter);
-    }
-  };
-
-  getLastFourYear(yearRange, currentYear, counter) {
-    if (counter < 4) {
-      counter++;
-      yearRange.push(`${currentYear}-${currentYear + 1}`);
-      this.getLastFourYear(yearRange, currentYear - 1, counter);
-    }
-    return yearRange;
-  }
-
   closeYearRangeDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
@@ -94,23 +73,6 @@ class AssessPay extends Component {
     }
   };
 
-  // getListItems = (items) => {
-  //   return items.map((item, index) => {
-  //     return {
-  //       primaryText: <Label label={item.primaryText} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-  //       leftIcon: item.leftIcon,
-  //       route: item.route,
-  //       nestedItems:
-  //         item.nestedItems &&
-  //         item.nestedItems.map((nestedItem) => {
-  //           return {
-  //             primaryText: <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" />,
-  //           };
-  //         }),
-  //     };
-  //   });
-  // };
-
   render() {
     const { urls, history } = this.props;
 
@@ -131,9 +93,9 @@ class AssessPay extends Component {
               </div>
             }
           /> */}
-        {/* <PTList items={getListItems(items)} history={this.props.history} innerDivStyle={innerDivStyle} /> */}
+
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
-        <YearDialogue open={this.state.dialogueOpen} yearList={this.getYearList()} closeDialogue={this.closeYearRangeDialogue} />
+        <YearDialogue open={this.state.dialogueOpen} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
     );
   }

@@ -74,8 +74,10 @@ const formConfig = {
       value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      fullWidth: true,
       hintText: "",
-      numcols: 12,
+      numcols: 6,
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
@@ -103,6 +105,10 @@ const formConfig = {
         ],
       },
     },
+    dummy: {
+      numcols: 6,
+      type: "dummy",
+    },
     houseNumber: {
       id: "house-number",
       jsonPath: "",
@@ -112,6 +118,7 @@ const formConfig = {
       hintText: "PT_PROPERTY_DETAILS_DOOR_NUMBER_PLACEHOLDER",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     colony: {
       id: "property-colony",
@@ -122,6 +129,7 @@ const formConfig = {
       hintText: "PT_PROPERTY_DETAILS_COLONY_NAME_PLACEHOLDER",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     street: {
       id: "property-street",
@@ -131,6 +139,7 @@ const formConfig = {
       hintText: "PT_PROPERTY_DETAILS_STREET_PLACEHOLDER",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     mohalla: {
       id: "mohalla",
@@ -143,15 +152,27 @@ const formConfig = {
       toolTipMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     pincode: {
       id: "pincode",
       type: "textfield",
       jsonPath: "",
-      floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
+       floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    },
+    oldPID: {
+      id: "oldpid",
+      type: "textfield",
+      jsonPath: "",
+      floatingLabelText: "Old Property ID (If applicable)",
+      hintText: "Enter old propert ID",
+      numcols: 6,
+      errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
   },
 

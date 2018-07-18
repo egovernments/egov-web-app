@@ -14,7 +14,7 @@ class MyProperties extends Component {
     super(props);
 
     this.state = {
-      //selected: null,
+      dialogueOpen: false,
       items: [
         {
           primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
@@ -30,11 +30,21 @@ class MyProperties extends Component {
     };
   }
 
+  closeYearRangeDialogue = () => {
+    this.setState({ dialogueOpen: false });
+  };
+
   componentDidMount = () => {
     const { addBreadCrumbs, title } = this.props;
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
+  };
+
+  onNewPropertyButtonClick = () => {
+    this.setState({
+      dialogueOpen: true,
+    });
   };
 
   onListItemClick = (item, index) => {
@@ -65,7 +75,17 @@ class MyProperties extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
+        <AssessmentList
+          onItemClick={this.onListItemClick}
+          innerDivStyle={innerDivStyle}
+          items={this.state.items}
+          history={this.props.history}
+          noAssessmentMessage="You have yet to assess for a property. Start Now:"
+          button={true}
+          yearDialogue={this.state.dialogueOpen}
+          closeDialogue={this.closeYearRangeDialogue}
+          onNewPropertyButtonClick={this.onNewPropertyButtonClick}
+        />
       </Screen>
     );
   }
