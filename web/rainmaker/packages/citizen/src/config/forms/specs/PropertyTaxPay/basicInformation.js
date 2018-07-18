@@ -44,30 +44,30 @@ const formConfig = {
         { label: "Mixed", value: "MIXED" },
       ],
       required: true,
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "UsageCategoryMajor",
-      //             },
-      //             {
-      //               name: "UsageCategoryMinor",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
-      // },
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor", "MdmsRes.PropertyTax.UsageCategoryMinor"],
+      },
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
@@ -81,7 +81,7 @@ const formConfig = {
       //   { label: "Flat/Part of Building", value: "SharedProperty" },
       //   { label: "Vacant Land", value: "VACANT" },
       // ],
-      dropDownData: [],
+      //dropDownData: [],
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,

@@ -10,6 +10,7 @@ import {
   InstitutionHOC,
   OwnerInformation,
   InstitutionAuthorityHOC,
+  OldPIDHOC,
 } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
@@ -128,7 +129,12 @@ class FormWizard extends Component {
     const { renderPlotAndFloorDetails, getOwnerDetails } = this;
     switch (selected) {
       case 0:
-        return <PropertyAddressHOC />;
+        return (
+          <div>
+            <PropertyAddressHOC />
+            <OldPIDHOC />
+          </div>
+        );
       case 1:
         return (
           <div>
