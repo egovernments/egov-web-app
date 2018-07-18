@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Label } from "components";
-import { removeForm } from "egov-ui-kit/redux/form/actions";
-import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC } from "./components/Forms";
+import { deleteForm } from "egov-ui-kit/redux/form/actions";
+import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC, InstitutionHOC, OwnerInformation, InstitutionAuthorityHOC } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
@@ -12,6 +12,7 @@ import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
+import formHoc from "egov-ui-kit/hocs/form";
 // import get from "lodash/get";
 import "./index.css";
 
@@ -21,6 +22,29 @@ class FormWizard extends Component {
     ownerInfoArr: [],
     showOwners: false,
   };
+
+  addOwner = () => {
+    const { ownerInfoArr } = this.state
+    const index = ownerInfoArr.length
+    const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${index}`, path: "PropertyTaxPay" })(OwnerInformation)
+    this.setState({
+      ownerInfoArr: [ ...this.state.ownerInfoArr, { index, Component: OwnerInfoHOC } ],
+    })
+  }
+
+  componentDidMount() {
+    this.addOwner()
+  }
+
+  deleteData = (index, formKey) => {
+    const { ownerInfoArr } = this.state
+    const updatedOwnerArr = [...ownerInfoArr]
+    updatedOwnerArr.splice(ownerInfoArr.findIndex(ownerData => ownerData.index === index), 1)
+    this.setState({
+      ownerInfoArr: updatedOwnerArr,
+    })
+    this.props.deleteForm(formKey)
+  }
 
   renderPlotAndFloorDetails = () => {
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
@@ -62,8 +86,35 @@ class FormWizard extends Component {
     );
   };
 
+  getOwnerDetails = (ownerType) => {
+    const { selected } = this.state
+    const { addOwner, deleteData, deleteForm } = this.props
+    switch(ownerType) {
+      case "IND":
+        return <OwnerInfoHOC />
+      case "MUL":
+        return (
+          <MultipleOwnerInfoHOC
+            addOwner={this.addOwner}
+            deleteData={this.deleteData}
+            ownerDetails={this.state.ownerInfoArr}
+            disabled={selected === 3}
+          />
+        )
+      case "Institution":
+        return (
+          <div>
+            <InstitutionHOC />
+            <InstitutionAuthorityHOC cardTitle={<div>Details of authorised person</div>} />
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
   renderStepperContent = (selected) => {
-    const { renderPlotAndFloorDetails } = this;
+    const { renderPlotAndFloorDetails, getOwnerDetails } = this;
     switch (selected) {
       case 0:
         return <PropertyAddressHOC />;
@@ -75,25 +126,15 @@ class FormWizard extends Component {
           </div>
         );
       case 2:
-        const selection = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
+        const ownerType = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
         const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
         const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
             <OwnershipTypeHOC />
-            {selection === "MUL" ? (
-              <MultipleOwnerInfoHOC removeForm={this.props.removeForm} />
-            ) : selection === "Institution" ? (
-              <div>
-                <Institution />
-                <OwnerInfoHOC cardTitle={<div>Details of authorised person</div>} />
-              </div>
-            ) : (
-              <OwnerInfoHOC />
-            )}
+            {getOwnerDetails(ownerType)}
           </div>
-        );
-
+        )
       case 3:
         return (
           <div>
@@ -125,7 +166,7 @@ class FormWizard extends Component {
 
   render() {
     const { renderStepperContent } = this;
-    const { selected } = this.state;
+    const { selected, ownerInfoArr } = this.state;
 
     return (
       <div className="wizard-form-main-cont">
@@ -144,6 +185,7 @@ class FormWizard extends Component {
           updateIndex={this.updateIndex}
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}
+          ownerInfoArr={ownerInfoArr}
         />
       </div>
     );
@@ -157,7 +199,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeForm: (formKey) => dispatch(removeForm(formKey)),
+    deleteForm: (formKey) => dispatch(deleteForm(formKey)),
     setRoute: (route) => dispatch(setRoute(route)),
   };
 };

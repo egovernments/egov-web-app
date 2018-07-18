@@ -10,10 +10,11 @@ const getListItems = (items) => items.map((item, index) => ({
   nestedItems: [{
     secondaryText:
       <PastPaymentDetailsForm
-        makeCopy
-        formKey="pastPayments"
+        formKey={`pastPayments`}
         path="PropertyTaxPay"
-        extraProps={{"year": {"value": item.primaryText}}}
+        extraFields={{"year": {"value": item.primaryText}}}
+        index={index}
+        copyName={`pastPayments_${index}`}
       />,
     disabled: true,
     listContainerStyle: { padding: 0 }

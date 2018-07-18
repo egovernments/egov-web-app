@@ -3,7 +3,8 @@ import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label } from "c
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const { type, tooltip, label, ...fieldProps } = field;
+    const { type, tooltip, label, hideField, ...fieldProps } = field;
+    if (hideField) return null
     switch (type) {
       case "textfield":
       case "textarea":

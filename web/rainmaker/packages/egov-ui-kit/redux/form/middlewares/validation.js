@@ -29,12 +29,16 @@ var formValidation = function formValidation(store) {
         var form = state.form[formKey] || {};
         var field = (0, _utils.getFormField)(form, fieldKey);
         var required = field.required,
-            pattern = field.pattern;
+            pattern = field.pattern,
+            updateDependentFields = field.updateDependentFields;
 
         if (pattern || required) {
           var validationObject = (0, _utils.validateField)(field);
           var errorText = validationObject.errorText;
 
+          if (updateDependentFields) {
+            updateDependentFields(formKey, field, dispatch);
+          }
           dispatch((0, _actions.setFieldValidation)(formKey, fieldKey, errorText));
         }
       } else {

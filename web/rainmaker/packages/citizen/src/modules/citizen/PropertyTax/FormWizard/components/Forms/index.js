@@ -4,6 +4,7 @@ import GenericForm from "../GenericForm";
 import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import get from "lodash/get"
 
 const options = [
   { value: "Male", label: <Label label="Male" /> },
@@ -40,69 +41,85 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn, deleteOwner, handleChange, handleGuardianChange }) => {
+const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn,handleChange, handleGuardianChange, deleteData, formId, disabled}) => {
   const fields = form.fields || {};
+  const genderSelected = get(fields, "ownerGender.value", "")
   return (
     <Card
       textChildren={
-        <div className="col-xs-12 pt-owner-info">
+        <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
             {deleteBtn && (
               <div
                 className="pt-ownerinfo-deletebtn"
-                onClick={() => {
-                  deleteOwner(formKey, form);
-                }}
+                onClick={() => { deleteData(formId, formKey) }}
               >
                 <Icon action="content" name="clear" />
               </div>
             )}
           </div>
-          <div className="col-xs-6">
-            <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} />
-          </div>
-          <div className="col-xs-6" style={{ height: 72 }}>
-            <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
-            <RadioButton
-              id="gender-selection"
-              name="gender-selection"
-              options={options}
-              handleChange={handleChange}
-              radioButtonItemStyle={styles.radioButtonItemStyle}
-              labelStyle={styles.radioButtonLabelStyle}
-              selectedLabelStyle={styles.selectedLabelStyle}
-              className={"owner-gender-selection"}
-              iconStyle={styles.iconStyle}
-            />
-          </div>
-          <div className="col-xs-6">
-            <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} />
-          </div>
-          <div className="col-xs-6" style={{ display: "flex", alignItems: "center" }}>
-            <div className="col-xs-8" style={{ padding: 0 }}>
-              <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} />
+          <div className="owner-details-form">
+            <div className="name-address">
+              <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerCategory" field={fields["ownerCategory"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div className="col-xs-4" style={{ padding: 0 }}>
+            <div>
+              <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
               <RadioButton
-                id="guardian-selection"
-                name="guardian-selection"
-                options={guardianOptions}
-                handleChange={handleGuardianChange}
-                className={"owner-guardian-selection"}
-                iconStyle={styles.iconStyle}
+                id="gender-selection"
+                name="gender-selection"
+                options={options}
+                handleChange={(e) => {
+                  handleFieldChange("ownerGender", e.target.value)
+                }}
+                radioButtonItemStyle={styles.radioButtonItemStyle}
                 labelStyle={styles.radioButtonLabelStyle}
+                selectedLabelStyle={styles.selectedLabelStyle}
+                className={"owner-gender-selection"}
+                iconStyle={styles.iconStyle}
+                valueSelected={genderSelected}
               />
+              <div className="relationship-details">
+                <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+                <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              </div>
+              <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
           </div>
-          <div className="col-xs-6">
-            <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} />
+        </div>
+      }
+    />
+  );
+};
+
+const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, deleteData, formId, disabled}) => {
+  const fields = form.fields || {};
+  return (
+    <Card
+      textChildren={
+        <div className="pt-institute-authority-info">
+          <div className="pt-authority-title">
+            <span>
+              <Icon action="social" name="person" />
+            </span>
+            <span>{cardTitle}</span>
           </div>
-          <div className="col-xs-6">
-            <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} />
-          </div>
-          <div className="col-xs-6">
-            <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} />
+          <div className="authority-details-form">
+            <div className="name-address">
+              <Field fieldKey="name" field={fields["name"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="mobile" field={fields["mobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="email" field={fields["email"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div className="address">
+              <Field fieldKey="designation" field={fields["designation"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="telephone" field={fields["telephone"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="address" field={fields["address"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
           </div>
         </div>
       }
@@ -116,9 +133,11 @@ const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "Property
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
 const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
 const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm)
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
+const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(InstitutionAuthority)
 
 export {
   UsageInformationHOC,
@@ -129,4 +148,6 @@ export {
   ExemptionCategoryHOC,
   DynamicFormHoc,
   OwnerInformation,
+  InstitutionHOC,
+  InstitutionAuthorityHOC,
 };

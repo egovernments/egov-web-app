@@ -8,51 +8,32 @@ const titleStyle = {
   display: "flex",
   alignItems: "center",
 };
-class MultipleOwnerInfoHOC extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMultiple: false,
-      owners: [],
-    };
-  }
 
-  addOwner = () => {
-    const { owners } = this.state;
-    const index = owners.length + 1;
-    const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", makeCopy: true, path: "PropertyTaxPay" })(OwnerInformation);
-    let Component = <OwnerInfoHOC key={index} cardTitle={this.getTitle(index + 1)} deleteBtn={true} deleteOwner={this.deleteOwner} />;
-    ownerArr.push(Component);
-    this.setState({
-      owners: ownerArr,
-      showMultiple: true,
-    });
-  };
+const getTitle = length => (
+  <div className="pt-ownerinfo-title" style={titleStyle}>
+    <span>
+      <Icon action="social" name="person" />
+    </span>
+    <span style={{ marginLeft: 4 }}>Owner-{length}</span>
+  </div>
+)
 
-  deleteOwner = () => {};
-
-  getTitle = (length) => {
-    return (
-      <div className="pt-ownerinfo-title" style={titleStyle}>
-        <span>
-          <Icon action="social" name="person" />
-        </span>
-        <span style={{ marginLeft: 4 }}>Owner-{length}</span>
+const MultipleOwnerInfoHOC = ({ deleteData, addOwner, ownerDetails, disabled }) => (
+    <div>
+      {ownerDetails.map((Data, index) => (
+        <Data.Component
+          key={index}
+          cardTitle={this.getTitle(index + 1)}
+          deleteBtn={ownerDetails.length > 1}
+          deleteData={(formId, formKey) => { deleteData(formId, formKey) }}
+          formId={index}
+          disabled={disabled}
+        />
+      ))}
+      <div className="pt-add-owner-btn" onClick={addOwner}>
+        + Add Owner
       </div>
-    );
-  };
-
-  render() {
-    return (
-      <div>
-        <OwnerInfoHOC cardTitle={this.getTitle(1)} />
-        {this.state.showMultiple && [...this.state.owners]}
-        <div className="pt-add-owner-btn" onClick={this.addOwner} style={{ color: "#fe7a51", float: "right" }}>
-          + Add Owner
-        </div>
-      </div>
-    );
-  }
-}
+    </div>
+  )
 
 export default MultipleOwnerInfoHOC;
