@@ -10,9 +10,8 @@ import {
   InstitutionHOC,
   OwnerInformation,
   InstitutionAuthorityHOC,
+  OldPIDHOC,
 } from "./components/Forms";
-import { removeForm } from "egov-ui-kit/redux/form/actions";
-import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC, OldPIDHOC } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
@@ -23,8 +22,6 @@ import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
-import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
