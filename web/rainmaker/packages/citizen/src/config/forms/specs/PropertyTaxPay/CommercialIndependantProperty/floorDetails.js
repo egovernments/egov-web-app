@@ -5,9 +5,35 @@ const formConfig = {
     usageType: {
       id: "assessment-usageType",
       jsonPath: "",
-      type: "textfield",
+      type: "singleValueList",
       floatingLabelText: "Usage Type",
-      value: "Commercial",
+      value: "COMMERCIAL",
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dependants: [
+          {
+            fieldKey: "subUsageType",
+          },
+        ],
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMinor"],
+      },
       required: true,
       disabled: true,
       numcols: 4,
@@ -21,7 +47,8 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
+        // isDependent: true,
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -37,7 +64,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.UsageCategorySubMinor",
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
       },
       required: true,
       numcols: 4,
@@ -53,7 +80,7 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -69,7 +96,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
     },
     builtArea: {

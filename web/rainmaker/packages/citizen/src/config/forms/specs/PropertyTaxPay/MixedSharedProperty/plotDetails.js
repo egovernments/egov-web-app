@@ -10,37 +10,37 @@ const formConfig = {
       value: "Residential",
       required: true,
       numcols: 4,
-      dropDownData: [
-        { label: "Residential", value: "RESIDENTIAL" },
-        { label: "Commercial", value: "COMMERCIAL" },
-        { label: "Institutional", value: "INSTITUTIONAL" },
-        { label: "Industrial", value: "INDUSTRIAL" },
-        { label: "Public Space", value: "PUBLICSPACE" },
-        { label: "Religious", value: "RELIGIOUS" },
-        { label: "Other", value: "OTHER" },
-        { label: "Mixed", value: "MIXED" },
-      ],
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: {},
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "UsageCategoryMajor",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
-      // },
+      // dropDownData: [
+      //   { label: "Residential", value: "RESIDENTIAL" },
+      //   { label: "Commercial", value: "COMMERCIAL" },
+      //   { label: "Institutional", value: "INSTITUTIONAL" },
+      //   { label: "Industrial", value: "INDUSTRIAL" },
+      //   { label: "Public Space", value: "PUBLICSPACE" },
+      //   { label: "Religious", value: "RELIGIOUS" },
+      //   { label: "Other", value: "OTHER" },
+      //   { label: "Mixed", value: "MIXED" },
+      // ],
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor"],
+      },
     },
     subUsageType: {
       id: "assessment-subUsageType",
@@ -63,7 +63,7 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -79,7 +79,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
     },
     superArea: {

@@ -20,6 +20,27 @@ const formConfig = {
       hintText: "Select",
       required: true,
       numcols: 4,
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
+      },
     },
     occupancy: {
       id: "assessment-occupancy",
@@ -33,7 +54,7 @@ const formConfig = {
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -49,7 +70,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.OccupancyType",
+        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
     },
     superArea: {

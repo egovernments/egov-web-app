@@ -17,7 +17,7 @@ const formConfig = {
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
-        queryParams: {},
+        queryParams: [],
         requestBody: {
           MdmsCriteria: {
             tenantId: "pb",
@@ -33,7 +33,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.tenant.tenants",
+        dataPath: ["MdmsRes.tenant.tenants"],
       },
     },
     name: {

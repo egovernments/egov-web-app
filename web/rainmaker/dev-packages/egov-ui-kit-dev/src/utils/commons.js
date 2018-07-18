@@ -468,7 +468,12 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
   const { url, action, requestBody, queryParams } = dataFetchConfig;
   try {
     const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
-    const dropdownData = boundary ? jp.query(payloadSpec, dataFetchConfig.dataPath) : get(payloadSpec, dataFetchConfig.dataPath);
+    const dropdownData = boundary
+      ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+      : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
+          dropdownData = [...dropdownData, ...get(payloadSpec, path)];
+          return dropdownData;
+        }, []);
     const ddData =
       dropdownData &&
       dropdownData.reduce((ddData, item) => {

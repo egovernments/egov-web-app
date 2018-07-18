@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DownArrow from "material-ui/svg-icons/navigation/arrow-drop-down";
 import "./index.css";
 
-const ComplaintTypeField = ({ categories, localizationLabels, complaintType = {} }) => {
+const ComplaintTypeField = ({ categories, localizationLabels, complaintType = {}, ...rest }) => {
   const complainTypeMessage =
     (complaintType && complaintType.value && (localizationLabels["SERVICEDEFS." + (complaintType.value || "").toUpperCase()] || {}).message) || "";
 
@@ -21,8 +21,8 @@ const ComplaintTypeField = ({ categories, localizationLabels, complaintType = {}
               Icon={DownArrow}
               iconStyle={{ marginTop: "9px" }}
               name="complaint-type"
-              isRequired={true}
               disabled={false}
+              {...rest}
             />
           </Link>
         }

@@ -38,6 +38,7 @@ const TextAreaUi = ({
   underlineStyle,
   underlineFocusStyle,
   floatingLabelStyle = {},
+  jsonPath,
   id,
   ...rest
 }) => {

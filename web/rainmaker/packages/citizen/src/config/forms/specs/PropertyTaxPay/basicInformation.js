@@ -1,3 +1,4 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 // const formConfig = {
 //   name: "basicInformation",
 //   fields: {
@@ -45,7 +46,7 @@ const formConfig = {
       // dataFetchConfig: {
       //   url: MDMS.GET.URL,
       //   action: MDMS.GET.ACTION,
-      //   queryParams: {},
+      //   queryParams: [],
       //   requestBody: {
       //     MdmsCriteria: {
       //       tenantId: "pb",
@@ -55,6 +56,9 @@ const formConfig = {
       //           masterDetails: [
       //             {
       //               name: "UsageCategoryMajor",
+      //             },
+      //             {
+      //               name: "UsageCategoryMinor",
       //             },
       //           ],
       //         },
@@ -70,32 +74,33 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
-      dropDownData: [
-        { label: "Independent Building", value: "IndependentProperty" },
-        { label: "Flat/Part of Building", value: "SharedProperty" },
-        { label: "Vacant Land", value: "VACANT" },
-      ],
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: {},
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "PropertyType",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: "MdmsRes.PropertyTax.PropertyType",
-      // },
+      // dropDownData: [
+      //   { label: "Independent Building", value: "IndependentProperty" },
+      //   { label: "Flat/Part of Building", value: "SharedProperty" },
+      //   { label: "Vacant Land", value: "VACANT" },
+      // ],
+      dropDownData: [],
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "PropertyType",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.PropertyType"],
+      },
     },
   },
   action: "",

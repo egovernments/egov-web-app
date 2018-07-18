@@ -29,7 +29,7 @@ const formConfig = {
             ],
           },
         },
-        dataPath: "MdmsRes.PropertyTax.Floor",
+        dataPath: ["MdmsRes.PropertyTax.Floor"],
       },
       // dropDownData: [],
       // dataFetchConfig: {
