@@ -92,7 +92,9 @@ var TextField = function TextField(_ref) {
       autoFocus = _ref.autoFocus,
       maxLength = _ref.maxLength,
       multiLine = _ref.multiLine,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine"]);
+      errorMessage = _ref.errorMessage,
+      jsonPath = _ref.jsonPath,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine", "errorMessage", "jsonPath"]);
 
   return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
     errorText: errorText,

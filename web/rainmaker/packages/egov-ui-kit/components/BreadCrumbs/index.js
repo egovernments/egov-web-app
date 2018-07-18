@@ -22,9 +22,7 @@ var style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
 var selStyle = { color: "#fe7a51" };
 
 var BreadCrumbs = function BreadCrumbs(_ref) {
-  var url = _ref.url,
-      selected = _ref.selected,
-      onClick = _ref.onClick;
+  var url = _ref.url;
 
   return _react2.default.createElement(
     "div",

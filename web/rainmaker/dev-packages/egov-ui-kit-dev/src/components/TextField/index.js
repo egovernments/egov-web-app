@@ -59,6 +59,8 @@ const TextField = ({
   autoFocus,
   maxLength,
   multiLine,
+  errorMessage,
+  jsonPath,
   ...rest
 }) => {
   return (

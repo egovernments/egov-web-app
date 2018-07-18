@@ -89,16 +89,16 @@ const items = {
               borderLeft: "3px solid #00bbd3",
             },
             id: "header-home",
-            renderforcsr: true,
-            renderforadmin: true,
+            renderforcsr: 1,
+            renderforadmin: 1,
           },
           {
             primaryText: <Label label="ES_CLOSED_COMPLAINTS_HEADER" />,
             route: "/closed-complaints",
             leftIcon: <Icon action="custom" name="file-check" />,
             id: "header-closed-complaint",
-            renderforcsr: false,
-            renderforadmin: false,
+            renderforcsr: 0,
+            renderforadmin: 0,
           },
           {
             primaryText: <Label label="ES_EMPLOYEE_DIRECTORY_HEADER" />,
@@ -109,8 +109,8 @@ const items = {
               paddingTop: "2px",
             },
             id: "header-contact-us",
-            renderforcsr: true,
-            renderforadmin: true,
+            renderforcsr: 1,
+            renderforadmin: 1,
           },
 
           {
@@ -122,8 +122,8 @@ const items = {
               paddingTop: "3px",
             },
             id: "header-profile",
-            renderforcsr: true,
-            renderforadmin: true,
+            renderforcsr: 1,
+            renderforadmin: 1,
           },
           // {
           //   primaryText: <Label label="CS_HOME_HEADER_LANGUAGE" />,
@@ -148,8 +148,8 @@ const items = {
               borderLeft: "red",
             },
             id: "header-logout",
-            renderforcsr: true,
-            renderforadmin: true,
+            renderforcsr: 1,
+            renderforadmin: 1,
           },
         ],
       },
@@ -159,13 +159,13 @@ const items = {
 
 const renderMenuForCSR = (role, section) => {
   const menuForCSR = items[role].sections[section].items.filter((item) => {
-    return item.renderforcsr === true;
+    return item.renderforcsr === 1;
   });
   return menuForCSR;
 };
 const renderMenuForADMIN = (role, section) => {
   const menuForADMIN = items[role].sections[section].items.filter((item) => {
-    return item.renderforadmin === true;
+    return item.renderforadmin === 1;
   });
   return menuForADMIN;
 };

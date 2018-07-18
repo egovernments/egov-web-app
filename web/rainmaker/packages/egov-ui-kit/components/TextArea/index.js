@@ -64,8 +64,9 @@ var TextAreaUi = function TextAreaUi(_ref) {
       underlineFocusStyle = _ref.underlineFocusStyle,
       _ref$floatingLabelSty = _ref.floatingLabelStyle,
       floatingLabelStyle = _ref$floatingLabelSty === undefined ? {} : _ref$floatingLabelSty,
+      jsonPath = _ref.jsonPath,
       id = _ref.id,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "style", "underlineShow", "inputStyle", "onChange", "errorMessage", "value", "disabled", "isRequired", "hide", "rows", "hintText", "hintStyle", "textareaStyle", "rowsMax", "underlineStyle", "underlineFocusStyle", "floatingLabelStyle", "id"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "style", "underlineShow", "inputStyle", "onChange", "errorMessage", "value", "disabled", "isRequired", "hide", "rows", "hintText", "hintStyle", "textareaStyle", "rowsMax", "underlineStyle", "underlineFocusStyle", "floatingLabelStyle", "jsonPath", "id"]);
 
   return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
     className: className,
