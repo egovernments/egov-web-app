@@ -31,8 +31,10 @@ var Field = function Field(_ref) {
     var type = field.type,
         tooltip = field.tooltip,
         label = field.label,
-        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label"]);
+        hideField = field.hideField,
+        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField"]);
 
+    if (hideField) return null;
     switch (type) {
       case "textfield":
       case "textarea":

@@ -25,7 +25,6 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
   var url = _ref.url,
       history = _ref.history;
 
-
   return _react2.default.createElement(
     "div",
     { className: "rainmaker-displayInline", style: { paddingLeft: 15 } },
