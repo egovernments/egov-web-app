@@ -23,7 +23,7 @@ const MultipleOwnerInfoHOC = ({ deleteData, addOwner, ownerDetails, disabled }) 
       {ownerDetails.map((Data, index) => (
         <Data.Component
           key={index}
-          cardTitle={this.getTitle(index + 1)}
+          cardTitle={getTitle(index + 1)}
           deleteBtn={ownerDetails.length > 1}
           deleteData={(formId, formKey) => { deleteData(formId, formKey) }}
           formId={index}
