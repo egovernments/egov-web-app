@@ -39,10 +39,10 @@ class IncompleteAssessments extends Component {
   };
 
   render() {
-    const { urls } = this.props;
+    const { urls, history } = this.props;
     return (
       <Screen>
-        <BreadCrumbs url={urls} />
+        <BreadCrumbs url={urls} history={history} />
         <AssessmentList items={this.state.items} />
       </Screen>
     );

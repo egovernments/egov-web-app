@@ -22,7 +22,9 @@ var style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
 var selStyle = { color: "#fe7a51" };
 
 var BreadCrumbs = function BreadCrumbs(_ref) {
-  var url = _ref.url;
+  var url = _ref.url,
+      history = _ref.history;
+
 
   return _react2.default.createElement(
     "div",
@@ -40,9 +42,9 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
         _react2.default.createElement(
           "div",
           {
-            // onClick={() => {
-            //   onClick(index, item.path);
-            // }}
+            onClick: function onClick() {
+              url.length > 1 && index != url.length - 1 && history.push(item.path);
+            },
             style: url.length - 1 === index ? style : (0, _extends3.default)({}, selStyle, style)
           },
           item.title

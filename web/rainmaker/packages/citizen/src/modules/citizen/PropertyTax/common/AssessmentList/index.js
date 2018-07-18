@@ -46,7 +46,12 @@ const getListItems = (items) => {
     items &&
     items.map((item, index) => {
       return {
-        primaryText: <Label label={item.primaryText} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText:
+          typeof item.secondaryText === "object" ? (
+            item.primaryText
+          ) : (
+            <Label label={item.primaryText} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
+          ),
         secondaryText:
           typeof item.secondaryText === "object" ? (
             item.secondaryText

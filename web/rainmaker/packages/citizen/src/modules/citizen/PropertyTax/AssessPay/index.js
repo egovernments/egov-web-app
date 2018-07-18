@@ -40,7 +40,7 @@ class AssessPay extends Component {
         },
         {
           primaryText: "Search Property",
-          route: "search-property",
+          route: "/search-property",
           leftIcon: <Icon action="action" name="search" color="#484848" style={{ marginLeft: 0, marginTop: 3 }} />,
         },
       ],
@@ -112,11 +112,11 @@ class AssessPay extends Component {
   // };
 
   render() {
-    const { urls } = this.props;
+    const { urls, history } = this.props;
 
     return (
       <Screen>
-        <BreadCrumbs url={urls} />;
+        <BreadCrumbs url={urls} history={history} />
         {/* <Card
             textChildren={
               <div

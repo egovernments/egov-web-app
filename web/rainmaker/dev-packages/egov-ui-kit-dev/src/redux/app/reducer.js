@@ -54,6 +54,7 @@ const appReducer = (state = initialState, action) => {
       return { ...state, menu: action.payload };
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
+      localStorage.setItem("path", action.url.path);
       const index = state.urls.findIndex((url) => {
         return url.title === action.url.title;
       });
@@ -63,7 +64,8 @@ const appReducer = (state = initialState, action) => {
           : index > -1
             ? state.urls.splice(index, 1)
             : [...state.urls, action.url];
-
+      console.log(url);
+      localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return { ...state, urls: url };
 
     // case actionTypes.REMOVE_BREADCRUMB_ITEM:

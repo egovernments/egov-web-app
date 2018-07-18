@@ -76,11 +76,13 @@ var appReducer = function appReducer() {
       return (0, _extends3.default)({}, state, { menu: action.payload });
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
+      localStorage.setItem("path", action.url.path);
       var index = state.urls.findIndex(function (url) {
         return url.title === action.url.title;
       });
       var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : index > -1 ? state.urls.splice(index, 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
-
+      console.log(url);
+      localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return (0, _extends3.default)({}, state, { urls: url });
 
     // case actionTypes.REMOVE_BREADCRUMB_ITEM:

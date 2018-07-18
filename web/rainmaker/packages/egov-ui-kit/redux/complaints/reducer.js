@@ -19,7 +19,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mergeServiceWithActions = function mergeServiceWithActions(payload) {
-  return payload.actionHistory.map(function (item, index) {
+  return payload && payload.actionHistory && payload.actionHistory.map(function (item, index) {
     return (0, _extends3.default)({}, payload.services[index], {
       actions: payload.actionHistory[index].actions
     });

@@ -60,11 +60,11 @@ class MyProperties extends Component {
   // };
 
   render() {
-    const { urls } = this.props;
-    const { selected } = this.state;
+    const { urls, location, history } = this.props;
+    const { pathname } = location;
     return (
       <Screen>
-        <BreadCrumbs url={urls} onClick={this.onBreadcrumbsClick} />
+        <BreadCrumbs url={urls} history={history} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
       </Screen>
     );
