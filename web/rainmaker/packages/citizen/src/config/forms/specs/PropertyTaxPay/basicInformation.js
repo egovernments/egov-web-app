@@ -43,6 +43,7 @@ const formConfig = {
         { label: "Other", value: "OTHER" },
         { label: "Mixed", value: "MIXED" },
       ],
+      required: true,
       // dataFetchConfig: {
       //   url: MDMS.GET.URL,
       //   action: MDMS.GET.ACTION,
@@ -74,6 +75,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
+      required: true,
       // dropDownData: [
       //   { label: "Independent Building", value: "IndependentProperty" },
       //   { label: "Flat/Part of Building", value: "SharedProperty" },

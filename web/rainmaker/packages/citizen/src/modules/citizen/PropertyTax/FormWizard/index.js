@@ -13,7 +13,9 @@ import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
-// import get from "lodash/get";
+import {validateForm} from "egov-ui-kit/redux/form/utils";
+import {displayFormErrors} from "egov-ui-kit/redux/form/actions";
+import get from "lodash/get";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -153,12 +155,67 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { setRoute } = this.props;
-    if (index <= 3) {
-      this.setState({ selected: index });
-    } else if (index === 4) {
-      setRoute("/property-tax/payment-success");
+    const {selected} = this.state;
+    const { setRoute,displayFormErrorsAction,form } = this.props;
+    switch (selected) {
+      //validating property address is validated
+      case 0:
+        const isProperyAddressFormValid=validateForm(form.propertyAddress);
+        if (isProperyAddressFormValid) {
+          this.setState({ selected: index });
+        } else {
+          displayFormErrorsAction("propertyAddress");
+        }
+        break;
+      //validating basic information,plotdetails and if plot details having floors
+      case 1:
+        const {basicInformation,plotDetails} = form;
+        if (basicInformation) {
+          const isBasicInformationFormValid=validateForm(basicInformation);
+          if (isBasicInformationFormValid) {
+            if (plotDetails) {
+              const isPlotDetailsFormValid=validateForm(plotDetails);
+              if (isPlotDetailsFormValid) {
+                  if (get(plotDetails,'fields.floorCount')) {
+                      let floorValidation=true;
+                      for (const variable in form) {
+                        if (variable.search("customSelect")!==-1 || variable.search("floorDetails")!==-1) {
+                          const isDynamicFormValid=validateForm(form[variable]);
+                          if (!isDynamicFormValid) {
+                            displayFormErrorsAction(variable);
+                            floorValidation=false;
+                          }
+                        }
+                      }
+                      if (floorValidation) {
+                        this.setState({ selected: index });
+                      }
+                  }
+                  else {
+                    this.setState({ selected: index });
+                  }
+              } else {
+                  displayFormErrorsAction("plotDetails");
+              }
+            }
+          }
+          else {
+            displayFormErrorsAction("basicInformation");
+          }
+        }
+        break;
+      case 2:
+        this.setState({ selected: index });
+        break;
+      default:
+        setRoute("/property-tax/payment-success");
+
     }
+    // if (index <= 3) {
+    //   this.setState({ selected: index });
+    // } else if (index === 4) {
+    //   // setRoute("/property-tax/payment-success");
+    // }
   };
 
   onTabClick = (index) => {
@@ -171,14 +228,6 @@ class FormWizard extends Component {
     const { selected, ownerInfoArr, formValidIndex } = this.state;
     return (
       <div className="wizard-form-main-cont">
-        {/* <Label
-          label="Assessment Form"
-          containerStyle={{ padding: "24px 0px 16px 0", marginLeft: "16px" }}
-          dark={true}
-          bold={true}
-          labelStyle={{ letterSpacing: 0 }}
-          fontSize={"20px"}
-        /> */}
         <WizardComponent
           content={renderStepperContent(selected)}
           onTabClick={this.onTabClick}
@@ -203,6 +252,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteForm: (formKey) => dispatch(deleteForm(formKey)),
     setRoute: (route) => dispatch(setRoute(route)),
+    displayFormErrorsAction:(formKey) => dispatch(displayFormErrors(formKey))
   };
 };
 
