@@ -18,14 +18,14 @@ const getTitle = length => (
   </div>
 )
 
-const MultipleOwnerInfoHOC = ({ deleteData, addOwner, ownerDetails, disabled }) => (
+const MultipleOwnerInfoHOC = ({ handleRemoveOwner, addOwner, ownerDetails, disabled }) => (
     <div>
       {ownerDetails.map((Data, index) => (
         <Data.Component
           key={index}
           cardTitle={getTitle(index + 1)}
           deleteBtn={ownerDetails.length > 1}
-          deleteData={(formId, formKey) => { deleteData(formId, formKey) }}
+          handleRemoveOwner={(formId, formKey) => { handleRemoveOwner(formId, formKey) }}
           formId={index}
           disabled={disabled}
         />

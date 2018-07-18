@@ -39,7 +39,7 @@ class FormWizard extends Component {
     this.addOwner()
   }
 
-  deleteData = (index, formKey) => {
+  handleRemoveOwner = (index, formKey) => {
     const { ownerInfoArr } = this.state
     const updatedOwnerArr = [...ownerInfoArr]
     updatedOwnerArr.splice(ownerInfoArr.findIndex(ownerData => ownerData.index === index), 1)
@@ -91,7 +91,7 @@ class FormWizard extends Component {
 
   getOwnerDetails = (ownerType) => {
     const { selected } = this.state
-    const { addOwner, deleteData, deleteForm } = this.props
+    const { addOwner, handleRemoveOwner, deleteForm } = this.props
     switch(ownerType) {
       case "IND":
         return <OwnerInfoHOC />
@@ -99,7 +99,7 @@ class FormWizard extends Component {
         return (
           <MultipleOwnerInfoHOC
             addOwner={this.addOwner}
-            deleteData={this.deleteData}
+            handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
             disabled={selected === 3}
           />
