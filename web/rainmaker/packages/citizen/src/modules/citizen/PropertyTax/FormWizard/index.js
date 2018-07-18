@@ -21,6 +21,7 @@ class FormWizard extends Component {
     selected: 0,
     ownerInfoArr: [],
     showOwners: false,
+    formValidIndex: 0,
   };
 
   addOwner = () => {
@@ -161,13 +162,13 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
+    // form validation checks needs to be written here
     this.setState({ selected: index });
   };
 
   render() {
     const { renderStepperContent } = this;
-    const { selected, ownerInfoArr } = this.state;
-
+    const { selected, ownerInfoArr, formValidIndex } = this.state;
     return (
       <div className="wizard-form-main-cont">
         {/* <Label
@@ -182,6 +183,7 @@ class FormWizard extends Component {
           content={renderStepperContent(selected)}
           onTabClick={this.onTabClick}
           selected={selected}
+          formValidIndex={formValidIndex}
           updateIndex={this.updateIndex}
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}

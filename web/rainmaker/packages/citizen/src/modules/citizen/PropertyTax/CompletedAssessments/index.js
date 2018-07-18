@@ -6,81 +6,91 @@ import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 
+const secondaryTextContainer = {
+  marginTop: 3,
+};
+
 class CompletedAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
     height: "20px",
   };
   state = {
-    items: [
+    items: [],
+    items1: [
       {
         primaryText: "INR 1300.00",
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" />
-            <Label label="Assessment No.: ZRN-453-98" />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
           </div>
         ),
         date: "12-06-2018",
         status: "Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
       },
       {
         primaryText: "INR 1300.00",
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" />
-            <Label label="Assessment No.: ZRN-453-98" />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
           </div>
         ),
         date: "12-06-2018",
-        status: "Paid",
+        status: "Partially Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
       },
       {
         primaryText: "INR 1300.00",
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" />
-            <Label label="Assessment No.: ZRN-453-98" />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
           </div>
         ),
         date: "12-06-2018",
         status: "Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
       },
       {
         primaryText: "INR 1300.00",
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" />
-            <Label label="Assessment No.: ZRN-453-98" />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
           </div>
         ),
         date: "12-06-2018",
         status: "Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
       },
       {
         primaryText: "INR 1300.00",
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={{ marginTop: 3 }} fontSize="14px" fontWeight="500" />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" fontSize="14px" containerStyle={{ marginTop: 3 }} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={{ marginTop: 3 }} fontSize="14px" />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
           </div>
         ),
         date: "12-06-2018",
         status: "Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
       },
     ],
   };
@@ -95,7 +105,7 @@ class CompletedAssessments extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList items={this.state.items} />
+        <AssessmentList items={this.state.items} noAssessmentMessage="You have no complete assessments." />
       </Screen>
     );
   }
