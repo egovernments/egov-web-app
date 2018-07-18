@@ -26,7 +26,7 @@ const floatingLabelStyle = {
   left: -35,
 };
 
-const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", prefixStyle = {}, ...textFieldProps }) => {
+const MobileNumberField = ({ className, textFieldStyle = {}, prefix = "+91", prefixStyle = {}, jsonPath, errorMessage, ...textFieldProps }) => {
   return (
     <div style={containerStyle}>
       <div style={{ ...prefixBaseStyle, ...prefixStyle }}>{prefix}</div>

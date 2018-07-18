@@ -58,7 +58,9 @@ var MobileNumberField = function MobileNumberField(_ref) {
       prefix = _ref$prefix === undefined ? "+91" : _ref$prefix,
       _ref$prefixStyle = _ref.prefixStyle,
       prefixStyle = _ref$prefixStyle === undefined ? {} : _ref$prefixStyle,
-      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["className", "textFieldStyle", "prefix", "prefixStyle"]);
+      jsonPath = _ref.jsonPath,
+      errorMessage = _ref.errorMessage,
+      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["className", "textFieldStyle", "prefix", "prefixStyle", "jsonPath", "errorMessage"]);
 
   return _react2.default.createElement(
     "div",

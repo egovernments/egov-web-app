@@ -19,7 +19,7 @@ var validateField = exports.validateField = function validateField(field) {
 
   if (required && !value) {
     isFieldValid = false;
-    errorText = field.requiredMessage;
+    errorText = field.requiredmessage;
   }
 
   if (value) {
