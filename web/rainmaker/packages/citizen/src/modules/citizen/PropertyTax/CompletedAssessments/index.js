@@ -16,8 +16,8 @@ class CompletedAssessments extends Component {
     height: "20px",
   };
   state = {
-    items: [],
-    items1: [
+    dialogueOpen: false,
+    items: [
       {
         primaryText: "INR 1300.00",
         secondaryText: (
@@ -100,12 +100,29 @@ class CompletedAssessments extends Component {
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
+  closeYearRangeDialogue = () => {
+    this.setState({ dialogueOpen: false });
+  };
+
+  onNewPropertyButtonClick = () => {
+    this.setState({
+      dialogueOpen: true,
+    });
+  };
+
   render() {
     const { urls, history } = this.props;
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList items={this.state.items} noAssessmentMessage="You have no complete assessments." />
+        <AssessmentList
+          items={this.state.items}
+          noAssessmentMessage="You have no complete assessments."
+          button={true}
+          yearDialogue={this.state.dialogueOpen}
+          closeDialogue={this.closeYearRangeDialogue}
+          onNewPropertyButtonClick={this.onNewPropertyButtonClick}
+        />
       </Screen>
     );
   }

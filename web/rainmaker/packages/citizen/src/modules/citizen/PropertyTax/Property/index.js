@@ -9,7 +9,10 @@ import ReceiptDialog from "./components/ReceiptDialog";
 
 const innerDivStyle = {
   paddingLeft: 50,
-  paddingTop: 27,
+};
+
+const IconStyle = {
+  margin: "12px 0px 0px 0px",
 };
 
 class Property extends Component {
@@ -22,7 +25,7 @@ class Property extends Component {
       items: [
         {
           primaryText: "Property Information",
-          leftIcon: <Icon action="action" name="info" color="#484848" style={{ marginLeft: 0 }} />,
+          leftIcon: <Icon action="action" name="info" color="#484848" style={IconStyle} />,
           nestedItems: [
             {
               secondaryText: <PropertyInformation />,
@@ -30,19 +33,29 @@ class Property extends Component {
           ],
         },
         {
-          primaryText: "Payment Record",
-          leftIcon: <Icon action="action" name="receipt" color="#484848" style={{ marginLeft: 0 }} />,
+          primaryText: "Assessment History",
+          leftIcon: <Icon action="action" name="receipt" color="#484848" style={IconStyle} />,
           nestedItems: [
             {
               primaryText: "2018 - 2019",
-              route: "/receipt-dialogue",
+              status: "Paid",
+              // route: "/receipt-dialogue",
             },
             {
               primaryText: "2017 - 2018",
-              route: "/receipt-dialogue",
+              status: "ACCESS & PAY",
             },
             {
-              primaryText: "Link Past Payments",
+              primaryText: "2016 - 2017",
+              status: "Paid",
+            },
+            {
+              primaryText: "2015 - 2016",
+              status: "ACCESS & PAY",
+            },
+            {
+              primaryText: "2014 - 2015",
+              status: "ACCESS & PAY",
             },
           ],
         },

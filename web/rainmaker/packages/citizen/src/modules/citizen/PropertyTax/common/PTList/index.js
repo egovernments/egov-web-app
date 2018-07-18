@@ -2,11 +2,6 @@ import React from "react";
 import { List, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const nestedListStyle = {
-  paddingLeft: 0,
-  marginLeft: 0,
-};
-
 const PTList = ({ items, label, onItemClick, innerDivStyle }) => {
   return (
     <div className="form-without-button-cont-generic">

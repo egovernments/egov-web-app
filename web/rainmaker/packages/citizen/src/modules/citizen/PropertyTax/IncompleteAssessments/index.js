@@ -43,7 +43,7 @@ class IncompleteAssessments extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList items={this.state.items} />
+        <AssessmentList items={this.state.items} noAssessmentMessage="You have no incomplete assessments!" button={false} />
       </Screen>
     );
   }
