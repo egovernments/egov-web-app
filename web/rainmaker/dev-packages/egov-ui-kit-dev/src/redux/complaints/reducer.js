@@ -2,12 +2,16 @@ import * as actionTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
 
 const mergeServiceWithActions = (payload) => {
-  return payload.actionHistory.map((item, index) => {
-    return {
-      ...payload.services[index],
-      actions: payload.actionHistory[index].actions,
-    };
-  });
+  return (
+    payload &&
+    payload.actionHistory &&
+    payload.actionHistory.map((item, index) => {
+      return {
+        ...payload.services[index],
+        actions: payload.actionHistory[index].actions,
+      };
+    })
+  );
 };
 
 const intialState = {

@@ -39,12 +39,15 @@ export const displayLocalizedStatusMessage = (status) => {
   return status ? statusToLocalisationKeyMapping[status.toLowerCase()] : "";
 };
 export const transformById = (payload, id) => {
-  return payload.reduce((result, item) => {
-    result[item[id]] = {
-      ...item,
-    };
-    return result;
-  }, {});
+  return (
+    payload &&
+    payload.reduce((result, item) => {
+      result[item[id]] = {
+        ...item,
+      };
+      return result;
+    }, {})
+  );
 };
 
 export const hyphenSeperatedDateTime = (d) => {

@@ -17,7 +17,7 @@ class Property extends Component {
     super(props);
 
     this.state = {
-      // selected: null,
+      pathName: null,
       dialogueOpen: false,
       items: [
         {
@@ -53,8 +53,10 @@ class Property extends Component {
   componentDidMount = () => {
     const { location, addBreadCrumbs } = this.props;
     const { pathname } = location;
-    const url = pathname && pathname.split("/").pop();
-    url && addBreadCrumbs({ title: url, path: window.location.pathname });
+    if (!(localStorage.getItem("path") === pathname)) {
+      const url = pathname && pathname.split("/").pop();
+      url && addBreadCrumbs({ title: url, path: window.location.pathname });
+    }
   };
 
   onListItemClick = (item, index) => {
@@ -87,12 +89,16 @@ class Property extends Component {
   };
 
   render() {
-    const { urls } = this.props;
-    const { selected } = this.state;
+    const { urls, location, history } = this.props;
+    let urlArray = [];
+    const { pathname } = location;
+    if (urls.length == 0 && localStorage.getItem("path") === pathname) {
+      urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
+    }
 
     return (
       <Screen className="pt-home-screen">
-        <BreadCrumbs url={urls} onClick={this.onBreadcrumbsClick} />
+        <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} innerDivStyle={innerDivStyle} history={this.props.history} />
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>
