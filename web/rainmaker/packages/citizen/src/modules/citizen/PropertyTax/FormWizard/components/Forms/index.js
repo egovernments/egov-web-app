@@ -2,9 +2,11 @@ import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "../GenericForm";
 import Field from "egov-ui-kit/utils/field";
-import { RadioButton, Card, Icon } from "components";
+import { RadioButton, Card, Icon, TextFieldIcon, ToolTipUi } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import get from "lodash/get"
+import get from "lodash/get";
+import SearchIcon from "material-ui/svg-icons/action/search";
+//import { TextFieldIcon } from "../../../../../../../node_modules/egov-ui-kit/components";
 
 const options = [
   { value: "Male", label: <Label label="Male" /> },
@@ -41,9 +43,20 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn,handleChange, handleGuardianChange, handleRemoveOwner, formId, disabled}) => {
+const OwnerInformation = ({
+  form,
+  formKey,
+  handleFieldChange,
+  cardTitle,
+  deleteBtn,
+  handleChange,
+  handleGuardianChange,
+  handleRemoveOwner,
+  formId,
+  disabled,
+}) => {
   const fields = form.fields || {};
-  const genderSelected = get(fields, "ownerGender.value", "")
+  const genderSelected = get(fields, "ownerGender.value", "");
   return (
     <Card
       textChildren={
@@ -53,7 +66,9 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
             {deleteBtn && (
               <div
                 className="pt-ownerinfo-deletebtn"
-                onClick={() => { handleRemoveOwner(formId, formKey) }}
+                onClick={() => {
+                  handleRemoveOwner(formId, formKey);
+                }}
               >
                 <Icon action="content" name="clear" />
               </div>
@@ -74,7 +89,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 name="gender-selection"
                 options={options}
                 handleChange={(e) => {
-                  handleFieldChange("ownerGender", e.target.value)
+                  handleFieldChange("ownerGender", e.target.value);
                 }}
                 radioButtonItemStyle={styles.radioButtonItemStyle}
                 labelStyle={styles.radioButtonLabelStyle}
@@ -97,7 +112,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
   );
 };
 
-const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, formId, disabled}) => {
+const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, formId, disabled }) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -127,17 +142,38 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
   );
 };
 
+const OldPID = ({ form, formKey }) => {
+  console.log(form);
+  let textFieldProps = form && form.fields && form.fields.oldPID;
+  console.log(textFieldProps);
+  return (
+    <Card
+      textChildren={
+        <div className={`${formKey} col-xs-6`}>
+          <TextFieldIcon iconPosition="right" Icon={SearchIcon} {...textFieldProps} />
+          <span style={{ position: "absolute", right: "-50px", top: "12px" }}>
+            {textFieldProps && textFieldProps.toolTip && <ToolTipUi title={textFieldProps.toolTipMessage} />}
+          </span>
+        </div>
+      }
+    />
+  );
+};
+
 const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" })(GenericForm);
 const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay" })(GenericForm);
+const OldPIDHOC = formHoc({ formKey: "oldPID", path: "PropertyTaxPay" })(OldPID);
 const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
 const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
 const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
-const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm)
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm);
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
-const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(InstitutionAuthority)
+const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(
+  InstitutionAuthority
+);
 
 export {
   UsageInformationHOC,
@@ -150,4 +186,6 @@ export {
   OwnerInformation,
   InstitutionHOC,
   InstitutionAuthorityHOC,
+  OldPIDHOC,
+  OldPID,
 };
