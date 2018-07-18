@@ -54,7 +54,7 @@ const formValidStyle = {
   background: "#3d4951",
 };
 
-const BreadCrumbsForm = ({ onTabClick, selected, formValidIndex }) => {
+const BreadCrumbsForm = ({ onTabClick, selected, formValidIndexArray }) => {
   return (
     <div className="breadcrumb-form flat">
       {tabs.map((tab, index) => {
@@ -62,13 +62,13 @@ const BreadCrumbsForm = ({ onTabClick, selected, formValidIndex }) => {
           <a
             onClick={() => onTabClick(index)}
             key={index}
-            style={formValidIndex === index ? formValidStyle : selected === index ? selectedTabStyle : defaultTabStyle}
+            style={formValidIndexArray.indexOf(index) > -1 ? formValidStyle : selected === index ? selectedTabStyle : defaultTabStyle}
             href={`#${index}`}
           >
             <div className="breadcrumb-tab">
               {/* <Icon action={tab.icon.action} name={tab.icon.name} color={"#fff"} style={{ marginRight: 10 }} /> */}
               <div className="tab-icon">
-                {formValidIndex === index ? (
+                {formValidIndexArray.indexOf(index) > -1 ? (
                   <Icon style={checkIconStyle} action="navigation" name="check" color="#22b25f" />
                 ) : (
                   <span className="form-tab-index" style={selected === index ? { color: "#fe7a51" } : { color: "#b3b3b3" }}>

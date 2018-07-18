@@ -74,8 +74,10 @@ const formConfig = {
       value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "City",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      fullWidth: true,
       hintText: "",
-      numcols: 12,
+      numcols: 6,
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,
@@ -103,6 +105,10 @@ const formConfig = {
         ],
       },
     },
+    dummy: {
+      numcols: 6,
+      type: "dummy",
+    },
     houseNumber: {
       id: "house-number",
       jsonPath: "",
@@ -112,6 +118,7 @@ const formConfig = {
       hintText: "Enter Enter No.",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     colony: {
       id: "property-colony",
@@ -124,6 +131,7 @@ const formConfig = {
       hintText: "Enter buiding/colony name",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     street: {
       id: "property-street",
@@ -133,6 +141,7 @@ const formConfig = {
       hintText: "Enter street name",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     mohalla: {
       id: "mohalla",
@@ -143,6 +152,7 @@ const formConfig = {
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     pincode: {
       id: "pincode",
@@ -152,6 +162,7 @@ const formConfig = {
       hintText: "Enter area pincode",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     oldPID: {
       id: "oldpid",
@@ -161,6 +172,7 @@ const formConfig = {
       hintText: "Enter old propert ID",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
   },
 
