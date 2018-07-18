@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Label } from "components";
 import { deleteForm } from "egov-ui-kit/redux/form/actions";
-import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC, InstitutionHOC, OwnerInformation, InstitutionAuthorityHOC } from "./components/Forms";
+import {
+  UsageInformationHOC,
+  PropertyAddressHOC,
+  OwnershipTypeHOC,
+  OwnerInfoHOC,
+  InstitutionHOC,
+  OwnerInformation,
+  InstitutionAuthorityHOC,
+} from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
@@ -13,8 +21,8 @@ import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
 import { setRoute } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
-import {validateForm} from "egov-ui-kit/redux/form/utils";
-import {displayFormErrors} from "egov-ui-kit/redux/form/actions";
+import { validateForm } from "egov-ui-kit/redux/form/utils";
+import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import "./index.css";
 
@@ -23,31 +31,31 @@ class FormWizard extends Component {
     selected: 0,
     ownerInfoArr: [],
     showOwners: false,
-    formValidIndex: 0,
+    formValidIndexArray: [],
   };
 
   addOwner = () => {
-    const { ownerInfoArr } = this.state
-    const index = ownerInfoArr.length
-    const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${index}`, path: "PropertyTaxPay" })(OwnerInformation)
+    const { ownerInfoArr } = this.state;
+    const index = ownerInfoArr.length;
+    const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${index}`, path: "PropertyTaxPay" })(OwnerInformation);
     this.setState({
-      ownerInfoArr: [ ...this.state.ownerInfoArr, { index, Component: OwnerInfoHOC } ],
-    })
-  }
+      ownerInfoArr: [...this.state.ownerInfoArr, { index, Component: OwnerInfoHOC }],
+    });
+  };
 
   componentDidMount() {
-    this.addOwner()
+    this.addOwner();
   }
 
   handleRemoveOwner = (index, formKey) => {
-    const { ownerInfoArr } = this.state
-    const updatedOwnerArr = [...ownerInfoArr]
-    updatedOwnerArr.splice(ownerInfoArr.findIndex(ownerData => ownerData.index === index), 1)
+    const { ownerInfoArr } = this.state;
+    const updatedOwnerArr = [...ownerInfoArr];
+    updatedOwnerArr.splice(ownerInfoArr.findIndex((ownerData) => ownerData.index === index), 1);
     this.setState({
       ownerInfoArr: updatedOwnerArr,
-    })
-    this.props.deleteForm(formKey)
-  }
+    });
+    this.props.deleteForm(formKey);
+  };
 
   renderPlotAndFloorDetails = () => {
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
@@ -90,11 +98,11 @@ class FormWizard extends Component {
   };
 
   getOwnerDetails = (ownerType) => {
-    const { selected } = this.state
-    const { addOwner, handleRemoveOwner, deleteForm } = this.props
-    switch(ownerType) {
+    const { selected } = this.state;
+    const { addOwner, handleRemoveOwner, deleteForm } = this.props;
+    switch (ownerType) {
       case "IND":
-        return <OwnerInfoHOC />
+        return <OwnerInfoHOC />;
       case "MUL":
         return (
           <MultipleOwnerInfoHOC
@@ -103,18 +111,18 @@ class FormWizard extends Component {
             ownerDetails={this.state.ownerInfoArr}
             disabled={selected === 3}
           />
-        )
+        );
       case "Institution":
         return (
           <div>
             <InstitutionHOC />
             <InstitutionAuthorityHOC cardTitle={<div>Details of authorised person</div>} />
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   renderStepperContent = (selected) => {
     const { renderPlotAndFloorDetails, getOwnerDetails } = this;
@@ -137,7 +145,7 @@ class FormWizard extends Component {
             <OwnershipTypeHOC />
             {getOwnerDetails(ownerType)}
           </div>
-        )
+        );
       case 3:
         return (
           <div>
@@ -155,12 +163,12 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const {selected} = this.state;
-    const { setRoute,displayFormErrorsAction,form } = this.props;
+    const { selected } = this.state;
+    const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
       case 0:
-        const isProperyAddressFormValid=validateForm(form.propertyAddress);
+        const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
           this.setState({ selected: index });
         } else {
@@ -169,37 +177,35 @@ class FormWizard extends Component {
         break;
       //validating basic information,plotdetails and if plot details having floors
       case 1:
-        const {basicInformation,plotDetails} = form;
+        const { basicInformation, plotDetails } = form;
         if (basicInformation) {
-          const isBasicInformationFormValid=validateForm(basicInformation);
+          const isBasicInformationFormValid = validateForm(basicInformation);
           if (isBasicInformationFormValid) {
             if (plotDetails) {
-              const isPlotDetailsFormValid=validateForm(plotDetails);
+              const isPlotDetailsFormValid = validateForm(plotDetails);
               if (isPlotDetailsFormValid) {
-                  if (get(plotDetails,'fields.floorCount')) {
-                      let floorValidation=true;
-                      for (const variable in form) {
-                        if (variable.search("customSelect")!==-1 || variable.search("floorDetails")!==-1) {
-                          const isDynamicFormValid=validateForm(form[variable]);
-                          if (!isDynamicFormValid) {
-                            displayFormErrorsAction(variable);
-                            floorValidation=false;
-                          }
-                        }
+                if (get(plotDetails, "fields.floorCount")) {
+                  let floorValidation = true;
+                  for (const variable in form) {
+                    if (variable.search("customSelect") !== -1 || variable.search("floorDetails") !== -1) {
+                      const isDynamicFormValid = validateForm(form[variable]);
+                      if (!isDynamicFormValid) {
+                        displayFormErrorsAction(variable);
+                        floorValidation = false;
                       }
-                      if (floorValidation) {
-                        this.setState({ selected: index });
-                      }
+                    }
                   }
-                  else {
+                  if (floorValidation) {
                     this.setState({ selected: index });
                   }
+                } else {
+                  this.setState({ selected: index });
+                }
               } else {
-                  displayFormErrorsAction("plotDetails");
+                displayFormErrorsAction("plotDetails");
               }
             }
-          }
-          else {
+          } else {
             displayFormErrorsAction("basicInformation");
           }
         }
@@ -209,7 +215,6 @@ class FormWizard extends Component {
         break;
       default:
         setRoute("/property-tax/payment-success");
-
     }
     // if (index <= 3) {
     //   this.setState({ selected: index });
@@ -225,14 +230,15 @@ class FormWizard extends Component {
 
   render() {
     const { renderStepperContent } = this;
-    const { selected, ownerInfoArr, formValidIndex } = this.state;
+    const { selected, ownerInfoArr, formValidIndexArray } = this.state;
+
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
           content={renderStepperContent(selected)}
           onTabClick={this.onTabClick}
           selected={selected}
-          formValidIndex={formValidIndex}
+          formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}
@@ -252,7 +258,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteForm: (formKey) => dispatch(deleteForm(formKey)),
     setRoute: (route) => dispatch(setRoute(route)),
-    displayFormErrorsAction:(formKey) => dispatch(displayFormErrors(formKey))
+    displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
   };
 };
 
