@@ -41,7 +41,7 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn,handleChange, handleGuardianChange, deleteData, formId, disabled}) => {
+const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn,handleChange, handleGuardianChange, handleRemoveOwner, formId, disabled}) => {
   const fields = form.fields || {};
   const genderSelected = get(fields, "ownerGender.value", "")
   return (
@@ -53,7 +53,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
             {deleteBtn && (
               <div
                 className="pt-ownerinfo-deletebtn"
-                onClick={() => { deleteData(formId, formKey) }}
+                onClick={() => { handleRemoveOwner(formId, formKey) }}
               >
                 <Icon action="content" name="clear" />
               </div>
@@ -97,7 +97,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
   );
 };
 
-const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, deleteData, formId, disabled}) => {
+const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, formId, disabled}) => {
   const fields = form.fields || {};
   return (
     <Card
