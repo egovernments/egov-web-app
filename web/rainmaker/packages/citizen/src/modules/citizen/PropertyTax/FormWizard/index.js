@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Label } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { UsageInformationHOC, PropertyAddressHOC, OwnershipTypeHOC, OwnerInfoHOC } from "./components/Forms";
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
@@ -20,6 +19,7 @@ class FormWizard extends Component {
     selected: 0,
     ownerInfoArr: [],
     showOwners: false,
+    formValidIndex: 0,
   };
 
   renderPlotAndFloorDetails = () => {
@@ -120,12 +120,13 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
+    // form validation checks needs to be written here
     this.setState({ selected: index });
   };
 
   render() {
     const { renderStepperContent } = this;
-    const { selected } = this.state;
+    const { selected, formValidIndex } = this.state;
 
     return (
       <div className="wizard-form-main-cont">
@@ -141,6 +142,7 @@ class FormWizard extends Component {
           content={renderStepperContent(selected)}
           onTabClick={this.onTabClick}
           selected={selected}
+          formValidIndex={formValidIndex}
           updateIndex={this.updateIndex}
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}

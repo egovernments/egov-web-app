@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "components";
-import BreadCrumbs from "./components/BreadCrumbs";
+import BreadCrumbsForm from "./components/BreadCrumbsForm";
 import "./index.css";
 
-const WizardComponent = ({ content, onTabClick, selected, updateIndex, backLabel, nextLabel }) => {
+const WizardComponent = ({ content, onTabClick, selected, formValidIndex, updateIndex, backLabel, nextLabel }) => {
   return (
     <div className="wizard-cont">
-      <BreadCrumbs onTabClick={onTabClick} selected={selected} />
+      <BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndex={formValidIndex} />
       <div className="wizard-content clearfix">{content}</div>
       <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right" }}>
