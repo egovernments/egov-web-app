@@ -4,7 +4,7 @@ const formConfig = {
   fields: {
     usageType: {
       id: "assessment-usageType",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "singleValueList",
       floatingLabelText: "Usage Type",
       value: "Residential",
@@ -44,7 +44,7 @@ const formConfig = {
     },
     subUsageType: {
       id: "assessment-subUsageType",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategorySubMinor",
       type: "singleValueList",
       floatingLabelText: "Sub Usage Type",
       hintText: "Select",
@@ -53,7 +53,7 @@ const formConfig = {
     },
     occupancy: {
       id: "assessment-occupancy",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
       hintText: "Select",
@@ -84,7 +84,7 @@ const formConfig = {
     },
     superArea: {
       id: "assessment-super-area",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
       type: "textfield",
       floatingLabelText: "Total Super area",
       hintText: "Enter total super area",
@@ -104,7 +104,7 @@ const formConfig = {
     },
     annualRent: {
       id: "assessment-annual-rent",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].arv",
       type: "textfield",
       floatingLabelText: "Total Annual Rent",
       hintText: "Enter annual rent",
