@@ -30,7 +30,7 @@ class Property extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: <Label label="Propert Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           leftIcon: <Icon action="action" name="info" color="#484848" style={IconStyle} />,
           nestedItems: [
             {

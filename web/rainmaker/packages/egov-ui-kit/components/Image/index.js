@@ -54,7 +54,7 @@ var getImageSource = function getImageSource(imageSource, size) {
 };
 
 var isImageSourceUrl = function isImageSourceUrl(imageSource) {
-  return (/https?/.test(imageSource)
+  return (/https?/.test(imageSource.split(",")[0])
   );
 };
 
@@ -75,6 +75,7 @@ var Image = function Image(_ref) {
 
   var classNames = circular ? "img-responsive img-circle" : "img-responsive";
   var imageSource = isImageSourceUrl(source) && getImageSource(source, size) || source;
+  // const imageSource = source;
   classNames = className ? classNames + " " + className : classNames;
   return isLazyLoading ? _react2.default.createElement(
     _reactLoadImage2.default,

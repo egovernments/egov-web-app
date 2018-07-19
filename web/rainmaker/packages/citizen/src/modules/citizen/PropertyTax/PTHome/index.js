@@ -3,6 +3,7 @@ import { Label, List, Icon, Card } from "components";
 import { Link } from "react-router-dom";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
+import { fetchProperties } from "egov-ui-kit/redux/properties/action";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import "./index.css";
 
@@ -48,10 +49,11 @@ class PTHome extends Component {
     },
   ];
   componentDidMount = () => {
-    const { addBreadCrumTitle, title, location } = this.props;
+    const { addBreadCrumTitle, title, location, fetchProperties } = this.props;
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
     (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
+    fetchProperties([]);
   };
 
   handleItemClick = (item, index) => {
@@ -61,6 +63,7 @@ class PTHome extends Component {
 
   render() {
     let { listItems, handleItemClick } = this;
+    const { numProperties } = this.props;
     return (
       <Screen className="pt-home-screen">
         <Card
@@ -86,7 +89,7 @@ class PTHome extends Component {
                 <Link to="/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <Label label="My Properties (2)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
+                    <Label label={`My Properties (${numProperties})`} fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
                   </div>
                 </Link>
               </div>
@@ -113,13 +116,21 @@ class PTHome extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { properties } = state;
+  const { propertiesById } = properties || {};
+  const numProperties = propertiesById && Object.keys(propertiesById).length;
+  return { numProperties };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PTHome);

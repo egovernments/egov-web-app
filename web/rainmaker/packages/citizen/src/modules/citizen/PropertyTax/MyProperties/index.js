@@ -41,7 +41,7 @@ class MyProperties extends Component {
 
   componentDidMount = () => {
     const { addBreadCrumbs, title, fetchProperties } = this.props;
-    fetchProperties();
+    fetchProperties([]); //Unnecessary API call to prevent page break on reload
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
@@ -53,18 +53,17 @@ class MyProperties extends Component {
     });
   };
 
-  onListItemClick = (item, index) => {
-    const { route } = item;
+  onListItemClick = (item) => {
+    const { route: propertyId } = item;
 
-    let path = route && route.slice(1);
-
-    switch (path) {
-      case "receipt-dialogue":
-        break;
-      default:
-        this.props.history.push(path);
-        break;
-    }
+    // switch (path) {
+    //   case "receipt-dialogue":
+    //     break;
+    //   default:
+    //     this.props.history.push(path);
+    //     break;
+    // }
+    this.props.history.push(`/property-tax/my-properties/property/${propertyId}`);
   };
 
   // onBreadcrumbsClick = (index, path) => {
@@ -102,13 +101,27 @@ const getCommaSeperatedAddress = (buildingName, street) => {
 };
 
 const mapStateToProps = (state) => {
+  const { properties } = state;
   const { urls } = state.app;
-  const { loading } = state.properties;
-  const { propertiesById } = state.properties || {};
+  const { loading, propertiesById } = properties || {};
   const transformedProperties = Object.values(propertiesById).map((property, index) => {
     return {
-      primaryText: getCommaSeperatedAddress(property.address.buildingName, property.address.street),
-      secondaryText: property.propertyId,
+      primaryText: (
+        <Label
+          label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
+          fontSize="16px"
+          color="#484848"
+          bold={true}
+          labelStyle={{ letterSpacing: 0.6, marginBottom: 15 }}
+        />
+      ),
+      secondaryText: (
+        <div className="rainmaker-displayInline">
+          <Label label="Property Tax Assessment ID: " dark={true} labelStyle={{ letterSpacing: 0.6 }} />
+          <Label label={property.propertyId} dark={true} labelStyle={{ letterSpacing: 0.6, marginLeft: 5 }} />
+        </div>
+      ),
+      route: property.propertyId,
     };
   });
   return { urls, transformedProperties, loading };
