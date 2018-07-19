@@ -4,18 +4,17 @@ const formConfig = {
   fields: {
     usageType: {
       id: "assessment-usageType",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
       floatingLabelText: "Usage Type",
       value: "COMMERCIAL",
       required: true,
       disabled: true,
       numcols: 4,
-      numcols: 4,
     },
     subUsageType: {
       id: "assessment-subUsageType",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategorySubMinor",
       type: "singleValueList",
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -45,7 +44,7 @@ const formConfig = {
     },
     occupancy: {
       id: "assessment-occupancy",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
       type: "singleValueList",
       floatingLabelText: "Occupancy",
       hintText: "Select",
@@ -76,7 +75,7 @@ const formConfig = {
     },
     superArea: {
       id: "assessment-super-area",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
       type: "textfield",
       floatingLabelText: "Total Super area",
       hintText: "Enter total super area",
@@ -98,13 +97,11 @@ const formConfig = {
     },
     annualRent: {
       id: "assessment-annual-rent",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].arv",
       type: "textfield",
       floatingLabelText: "Total Annual Rent",
       hintText: "Enter annual rent",
       ErrorText: "Enter a valid amount",
-      toolTip: true,
-      toolTipMessage: "",
       required: true,
       numcols: 4,
     },

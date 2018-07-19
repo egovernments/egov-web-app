@@ -3,7 +3,7 @@ const formConfig = {
   fields: {
     plotSize: {
       id: "assessment-plot-size",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].landArea",
       type: "textfield",
       floatingLabelText: "Plot Size",
       hintText: "Enter plot size",

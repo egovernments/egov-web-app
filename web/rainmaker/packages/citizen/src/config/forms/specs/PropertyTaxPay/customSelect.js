@@ -4,13 +4,13 @@ const formConfig = {
   fields: {
     floorName: {
       id: "floorName",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
       type: "singleValueList",
       floatingLabelText: "Select Floor",
       hintText: "Select locality",
       numcols: 12,
       errorMessage: "",
-      required:true,
+      required: true,
       dataFetchConfig: {
         url: FLOOR.GET.URL,
         action: FLOOR.GET.ACTION,
