@@ -16,7 +16,7 @@ const getItemStatus = (item) => {
   switch (status) {
     case "Paid":
       return (
-        <div className="assessment-displayInline" style={{ marginTop: "10px", marginLeft: "50px" }}>
+        <div className="assessment-displayInline" style={item.date ? { marginTop: "10px" } : { marginTop: "0px" }}>
           <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
           <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
         </div>
@@ -50,10 +50,10 @@ const getItemStatus = (item) => {
       return (
         <div className="assessment-displayInline">
           <Button
-            label="Access & Pay"
+            label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
             primary={true}
             style={{
-              height: 25,
+              height: 20,
               lineHeight: "auto",
               minWidth: "inherit",
             }}
@@ -72,7 +72,7 @@ const getRightIconItems = (item) => {
       {getItemStatus(item)}
       {item.receipt && (
         <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-          <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} />
+          <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
           <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
         </div>
       )}
@@ -87,7 +87,7 @@ const getListItems = (items) => {
     items &&
     items.map((item, index) => {
       return {
-        primaryText: <Label label={item.primaryText} fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
         secondaryText:
           item.secondaryText &&
           (typeof item.secondaryText === "object" ? (
@@ -109,7 +109,8 @@ const getListItems = (items) => {
                   <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
                 </div>
               ) : (
-                <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
+                nestedItem.primaryText
+                // <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
               ),
               secondaryText: nestedItem.secondaryText,
               route: nestedItem.route,

@@ -31,18 +31,18 @@ class PTHome extends Component {
 
   listItems = [
     {
-      primaryText: <Label label="Completed Assessments" />,
+      primaryText: <Label label="Completed Assessments" color="#484848" />,
       route: "/property-tax/completed-assessments",
       leftIcon: <Icon action="action" name="done" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
     {
-      primaryText: <Label label="PT_HOW_IT_WORKS" />,
+      primaryText: <Label label="PT_HOW_IT_WORKS" color="#484848" />,
       leftIcon: <Icon action="action" name="help" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
     {
-      primaryText: <Label label="PT_EXAMPLES" />,
+      primaryText: <Label label="PT_EXAMPLES" color="#484848" />,
       leftIcon: <Icon action="custom" name="pt-example" style={{ marginLeft: 0 }} />,
       rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
     },
@@ -68,30 +68,25 @@ class PTHome extends Component {
             <div>
               <div className="rainmaker-displayInline">
                 <Icon style={{ marginLeft: "8px" }} action="action" name="credit-card" color="#767676" />
-                <Label label="PT_HOME_PAY" containerStyle={{ marginLeft: "33px" }} />
+                <Label label="PT_HOME_PAY" containerStyle={{ marginLeft: "25px" }} color="#484848" />
               </div>
               <div className="col-xs-12 row pt-service-list">
                 <Link to="/property-tax/assess-pay">
-                  <div
-                    // onClick={() => {
-                    //   this.setState({ dialogueOpen: true });
-                    // }}
-                    className="col-xs-4 text-center pt-new-property"
-                  >
+                  <div className="col-xs-4 text-center pt-new-property">
                     <Icon style={iconStyle} action="communication" name="business" />
-                    <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} />
+                    <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
                   </div>
                 </Link>
                 <Link to="/property-tax/incomplete-assessments">
                   <div className="col-xs-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
-                    <Label label="Incomplete Assessments" fontSize="20px" containerStyle={labelContainerStyle} />
+                    <Label label="Incomplete Assessments" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
                   </div>
                 </Link>
                 <Link to="/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <Label label="My Properties (2)" fontSize="20px" containerStyle={labelContainerStyle} />
+                    <Label label="My Properties (2)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
                   </div>
                 </Link>
               </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AssessmentList from "../common/AssessmentList";
+import Label from "egov-ui-kit/utils/translationNode";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
@@ -17,12 +18,15 @@ class MyProperties extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
+          primaryText: <Label label="EB-154, Maya Enclave, Jail Road, Harinagar" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/my-properties/property",
           secondaryText: "Property ID: PQL-98-876",
         },
         {
-          primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
+          primaryText: (
+            <Label label="P-9/2, Balwinder Colony, Palwal Road, Indirapuram" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
+          ),
+
           route: "/my-properties/property",
           secondaryText: "Property ID: JML-34-756",
         },

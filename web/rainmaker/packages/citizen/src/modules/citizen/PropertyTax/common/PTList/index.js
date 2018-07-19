@@ -1,6 +1,7 @@
 import React from "react";
 import { List, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
+import "./index.css";
 
 const PTList = ({ items, label, onItemClick, innerDivStyle, listItemStyle }) => {
   return (
