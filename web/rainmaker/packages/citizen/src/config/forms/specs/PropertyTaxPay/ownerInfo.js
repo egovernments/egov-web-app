@@ -1,5 +1,5 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions"
-
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "ownerInfo",
   fields: {
@@ -60,10 +60,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Relationship",
       hintText: "",
-      dropDownData: [
-        { label: "Father", value: "father" },
-        { label: "Husband", value: "husband" },
-      ],
+      dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
       value: "father",
     },
     ownerCategory: {
@@ -73,19 +70,38 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Owner Category",
       hintText: "Select",
-      dropDownData: [
-        { label: "xyzz", value: "abcd"},
-        { label: "2xyzz", value: "2abcd"},
-      ],
+      dropDownData: [],
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OwnerType",
+                    filter: "[?(@.fromFY=='2018-19')]", //year value for this filter should be dynamic.
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.OwnerType"],
+      },
       updateDependentFields: (formKey, sourceField, dispatch) => {
-        const { value } = sourceField
+        const { value } = sourceField;
         switch (value) {
           case "abcd":
-            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true))
-            break
+            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true));
+            break;
           default:
-            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false))
-            break
+            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false));
+            break;
         }
       },
     },
@@ -101,7 +117,7 @@ const formConfig = {
     ownerGender: {
       id: "ownerGender",
       jsonPath: "",
-    }
+    },
   },
   action: "",
   redirectionRoute: "",

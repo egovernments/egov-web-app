@@ -1,10 +1,10 @@
 import React from "react";
-import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label } from "components";
+import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label, TextFieldIcon } from "components";
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
-    const { type, tooltip, label, hideField, ...fieldProps } = field;
-    if (hideField) return null
+    const { type, tooltip, label, hideField, Icon, onIconClick, iconRedirectionURL, ...fieldProps } = field;
+    if (hideField) return null;
     switch (type) {
       case "textfield":
       case "textarea":
@@ -29,6 +29,23 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
             onChange={(e, value, selectedValue) => handleFieldChange(fieldKey, selectedValue)}
           />
         );
+      case "textFieldIcon":
+        return (
+          <TextFieldIcon
+            iconPosition="right"
+            Icon={Icon}
+            {...fieldProps}
+            onIconClick={
+              iconRedirectionURL
+                ? () => {
+                    window.open(iconRedirectionURL);
+                  }
+                : onIconClick
+            }
+            onChange={(e, value) => handleFieldChange(fieldKey, value)}
+          />
+        );
+
       default:
         return null;
     }
