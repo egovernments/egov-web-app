@@ -81,24 +81,8 @@ var appReducer = function appReducer() {
         return url.title === action.url.title;
       });
       var url = window.location.pathname && window.location.pathname.split("/").pop() === "property-tax" ? [] : index > -1 ? state.urls.splice(index, 1) : [].concat((0, _toConsumableArray3.default)(state.urls), [action.url]);
-      console.log(url);
       localStorage.setItem("breadCrumbObject", JSON.stringify(url));
       return (0, _extends3.default)({}, state, { urls: url });
-
-    // case actionTypes.REMOVE_BREADCRUMB_ITEM:
-    //   if (action.mode == "single") {
-    //     let { urls } = state;
-    //     return {
-    //       ...state,
-    //       urls: urls.filter((item) => item !== action.url),
-    //     };
-    //   } else {
-    //     let urls = [];
-    //     return {
-    //       ...state,
-    //       urls,
-    //     };
-    //   }
 
     default:
       return state;

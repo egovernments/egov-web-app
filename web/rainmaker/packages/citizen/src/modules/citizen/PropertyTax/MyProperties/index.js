@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import { fetchProperties } from "egov-ui-kit/redux/properties/action";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -39,7 +40,8 @@ class MyProperties extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title } = this.props;
+    const { addBreadCrumbs, title, fetchProperties } = this.props;
+    fetchProperties();
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
@@ -74,15 +76,15 @@ class MyProperties extends Component {
   // };
 
   render() {
-    const { urls, location, history } = this.props;
+    const { urls, location, history, transformedProperties, loading } = this.props;
     const { pathname } = location;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
           onItemClick={this.onListItemClick}
           innerDivStyle={innerDivStyle}
-          items={this.state.items}
+          items={transformedProperties}
           history={this.props.history}
           noAssessmentMessage="You have yet to assess for a property. Start Now:"
           button={true}
@@ -95,13 +97,26 @@ class MyProperties extends Component {
   }
 }
 
-const mapStateToProps = ({ app }) => {
-  const { urls } = app;
-  return { urls };
+const getCommaSeperatedAddress = (buildingName, street) => {
+  return `${buildingName}, ${street}`;
+};
+
+const mapStateToProps = (state) => {
+  const { urls } = state.app;
+  const { loading } = state.properties;
+  const { propertiesById } = state.properties || {};
+  const transformedProperties = Object.values(propertiesById).map((property, index) => {
+    return {
+      primaryText: getCommaSeperatedAddress(property.address.buildingName, property.address.street),
+      secondaryText: property.propertyId,
+    };
+  });
+  return { urls, transformedProperties, loading };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
   };
 };
 
