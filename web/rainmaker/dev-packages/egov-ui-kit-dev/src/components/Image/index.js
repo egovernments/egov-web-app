@@ -28,12 +28,13 @@ const getImageSource = (imageSource, size) => {
 };
 
 const isImageSourceUrl = (imageSource) => {
-  return /https?/.test(imageSource);
+  return /https?/.test(imageSource.split(",")[0]);
 };
 
 const Image = ({ circular = false, size = "large", className = "", style, source, height, width, onClick, isLazyLoading = true }) => {
   let classNames = circular ? `img-responsive img-circle` : `img-responsive`;
   const imageSource = (isImageSourceUrl(source) && getImageSource(source, size)) || source;
+  // const imageSource = source;
   classNames = className ? `${classNames} ${className}` : classNames;
   return isLazyLoading ? (
     <ImageLoader src={imageSource}>

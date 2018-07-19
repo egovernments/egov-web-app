@@ -24,7 +24,7 @@ const PropertyAddress = asyncComponent(() =>
 
 const FormWizard = asyncComponent(() => import("modules/citizen/PropertyTax/FormWizard").then((module) => module.default));
 
-const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/LinkPastPayments").then((module) => module.default))
+const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/LinkPastPayments").then((module) => module.default));
 
 const routes = [
   // property tax routes
@@ -80,7 +80,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/my-properties/property",
+    path: "property-tax/my-properties/property/:propertyId",
     component: Property,
     needsAuthentication: true,
     options: {
