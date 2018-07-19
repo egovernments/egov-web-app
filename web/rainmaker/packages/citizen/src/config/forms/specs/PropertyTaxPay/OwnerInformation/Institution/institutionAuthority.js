@@ -1,11 +1,11 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions"
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 
 const formConfig = {
   name: "institutionAuthority",
   fields: {
     name: {
       id: "authority-name",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].name",
       type: "textfield",
       floatingLabelText: "Name",
       hintText: "Enter Owner's Name",
@@ -13,7 +13,7 @@ const formConfig = {
     },
     mobile: {
       id: "authority-mobile",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
       type: "textfield",
       floatingLabelText: "Mobile No.",
       hintText: "Enter Mobile No.",
@@ -23,7 +23,7 @@ const formConfig = {
     },
     ownerGuardian: {
       id: "ownerGuardian",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
       type: "textfield",
       floatingLabelText: "Father's/Husband's Name",
       hintText: "Enter father's/husband's name",
@@ -31,7 +31,7 @@ const formConfig = {
     },
     designation: {
       id: "authority-designation",
-      jsonPath: "",
+      jsonPath: "propertyDetails[0].institution.designation",
       type: "textfield",
       floatingLabelText: "Designation",
       hintText: "Enter designation",
@@ -39,7 +39,7 @@ const formConfig = {
     },
     telephone: {
       id: "authority-telephone",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
       type: "textfield",
       floatingLabelText: "Telephone No.",
       hintText: "Enter Telephone No.",
@@ -49,7 +49,7 @@ const formConfig = {
     },
     email: {
       id: "authority-email",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].emailId",
       type: "textfield",
       floatingLabelText: "Email ID",
       hintText: "Enter email ID",
@@ -58,7 +58,7 @@ const formConfig = {
     },
     address: {
       id: "authority-address",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].correspondenceAddress",
       type: "textfield",
       floatingLabelText: "Official Correspondence Address",
       hintText: "Enter official correspondence address",

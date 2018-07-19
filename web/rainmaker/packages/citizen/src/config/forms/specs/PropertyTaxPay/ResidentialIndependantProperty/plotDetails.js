@@ -5,6 +5,7 @@ const formConfig = {
       id: "assessment-plot-size",
       jsonPath: "",
       type: "textfield",
+      required: true,
       floatingLabelText: "Plot Size",
       hintText: "Enter plot size",
       errorMessage: "Enter a valid plot size",

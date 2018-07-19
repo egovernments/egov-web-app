@@ -29,9 +29,9 @@ const formConfig = {
   fields: {
     typeOfUsage: {
       id: "typeOfUsage",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].usageCategoryMajor",
       type: "singleValueList",
-      floatingLabelText: "Type of usage",
+      floatingLabelText: "Usage Type",
       hintText: "Select",
       dropDownData: [
         { label: "Residential", value: "RESIDENTIAL" },
@@ -71,7 +71,7 @@ const formConfig = {
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].propertyType",
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
