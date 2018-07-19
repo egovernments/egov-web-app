@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Dialog, Button } from "components";
 import PropertyInformation from "../PropertyInformation";
-import AssessmentList from "../../../common/AssessmentList";
 
 const innerDivStyle = {
   paddingLeft: 60,

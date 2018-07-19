@@ -15,6 +15,11 @@ const IconStyle = {
   margin: "12px 0px 0px 0px",
 };
 
+const listItemStyle = {
+  paddingLeft: "10px",
+  borderBottom: "1px solid #e0e0e0",
+};
+
 class Property extends Component {
   constructor(props) {
     super(props);
@@ -112,7 +117,13 @@ class Property extends Component {
     return (
       <Screen className="pt-home-screen">
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
-        <AssessmentList onItemClick={this.onListItemClick} items={this.state.items} innerDivStyle={innerDivStyle} history={this.props.history} />
+        <AssessmentList
+          onItemClick={this.onListItemClick}
+          items={this.state.items}
+          innerDivStyle={innerDivStyle}
+          listItemStyle={listItemStyle}
+          history={this.props.history}
+        />
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>
     );

@@ -6,7 +6,7 @@ import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 
 const innerDivStyle = {
-  paddingLeft: 0,
+  paddingTop: "16px",
 };
 
 class MyProperties extends Component {
