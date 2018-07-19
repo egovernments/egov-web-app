@@ -32,7 +32,10 @@ var Field = function Field(_ref) {
         tooltip = field.tooltip,
         label = field.label,
         hideField = field.hideField,
-        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField"]);
+        Icon = field.Icon,
+        onIconClick = field.onIconClick,
+        iconRedirectionURL = field.iconRedirectionURL,
+        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField", "Icon", "onIconClick", "iconRedirectionURL"]);
 
     if (hideField) return null;
     switch (type) {
@@ -63,6 +66,19 @@ var Field = function Field(_ref) {
             return handleFieldChange(fieldKey, selectedValue);
           }
         }));
+      case "textFieldIcon":
+        return _react2.default.createElement(_components.TextFieldIcon, (0, _extends3.default)({
+          iconPosition: "right",
+          Icon: Icon
+        }, fieldProps, {
+          onIconClick: iconRedirectionURL ? function () {
+            window.open(iconRedirectionURL);
+          } : onIconClick,
+          onChange: function onChange(e, value) {
+            return handleFieldChange(fieldKey, value);
+          }
+        }));
+
       default:
         return null;
     }
