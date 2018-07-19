@@ -87,6 +87,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
                 <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               </div>
+              <Field fieldKey="ownerCategoryIdType" field={fields["ownerCategoryIdType"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>

@@ -1,5 +1,6 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields"
+
 const formConfig = {
   name: "ownerInfo",
   fields: {
@@ -94,14 +95,15 @@ const formConfig = {
         dataPath: ["MdmsRes.PropertyTax.OwnerType"],
       },
       updateDependentFields: (formKey, sourceField, dispatch) => {
-        const { value } = sourceField;
+        const { value } = sourceField
+        const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"]
         switch (value) {
           case "abcd":
-            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", true));
-            break;
+            setDependentFields(dependentFields, dispatch, formKey, true)
+            break
           default:
-            dispatch(setFieldProperty(formKey, "ownerCategoryId", "hideField", false));
-            break;
+            setDependentFields(dependentFields, dispatch, formKey, false)
+            break
         }
       },
     },
@@ -113,6 +115,19 @@ const formConfig = {
       floatingLabelText: "Owner Category Id number",
       hintText: "Enter identification number",
       hideField: true,
+    },
+    ownerCategoryIdType: {
+      id: "ownerCategoryIdType",
+      jsonPath: "",
+      required: true,
+      type: "singleValueList",
+      floatingLabelText: "Owner Category Id Type",
+      hideField: true,
+      hintText: "Select",
+      dropDownData: [
+        { label: "test", value: "test"},
+        { label: "test2", value: "test2"},
+      ],
     },
     ownerGender: {
       id: "ownerGender",
