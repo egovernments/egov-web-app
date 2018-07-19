@@ -3,7 +3,7 @@ const formConfig = {
   fields: {
     name: {
       id: "institution-name",
-      jsonPath: "",
+      jsonPath: "propertyDetails[0].institution.name",
       type: "textfield",
       floatingLabelText: "Name of Institution",
       hintText: "Enter Institute's name",
@@ -12,7 +12,7 @@ const formConfig = {
     },
     type: {
       id: "institution-type",
-      jsonPath: "",
+      jsonPath: "propertyDetails[0].institution.type",
       type: "singleValueList",
       floatingLabelText: "Type of Institution",
       required: true,

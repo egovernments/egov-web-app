@@ -4,7 +4,7 @@ const formConfig = {
   fields: {
     typeOfOwnership: {
       id: "typeOfOwnership",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].ownershipCategory",
       type: "singleValueList",
       floatingLabelText: "Type of Ownership",
       hintText: "Select Ownership Type",
@@ -35,7 +35,7 @@ const formConfig = {
       //   dataPath: ["MdmsRes.PropertyTax.OwnerShipCategory"],
       // },
       numcols: 6,
-      required:true
+      required: true,
     },
   },
   action: "",

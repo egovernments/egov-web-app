@@ -5,7 +5,7 @@ const formConfig = {
   fields: {
     ownerName: {
       id: "ownerName",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].name",
       type: "textfield",
       floatingLabelText: "Name",
       hintText: "Enter Owner's Name",
@@ -13,7 +13,7 @@ const formConfig = {
     },
     ownerMobile: {
       id: "ownerMobile",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
       type: "textfield",
       floatingLabelText: "Mobile No.",
       hintText: "Enter Mobile No.",
@@ -23,7 +23,7 @@ const formConfig = {
     },
     ownerGuardian: {
       id: "ownerGuardian",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
       type: "textfield",
       floatingLabelText: "Father's/Husband's Name",
       hintText: "Enter details",
@@ -31,7 +31,7 @@ const formConfig = {
     },
     ownerAadhar: {
       id: "ownerAadhar",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].aadhaarNumber",
       type: "textfield",
       floatingLabelText: "Aadhar ID",
       hintText: "Enter aadhar card no.",
@@ -40,7 +40,7 @@ const formConfig = {
     },
     ownerEmail: {
       id: "ownerEmail",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].emailId",
       type: "textfield",
       floatingLabelText: "Email ID",
       hintText: "Enter email ID",
@@ -49,14 +49,14 @@ const formConfig = {
     },
     ownerAddress: {
       id: "ownerAddress",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].correspondenceAddress",
       type: "textfield",
       floatingLabelText: "Correspondence Address",
       hintText: "Enter correspondence address",
     },
     ownerRelationship: {
       id: "ownerRelationship",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].relationship",
       type: "singleValueList",
       floatingLabelText: "Relationship",
       hintText: "",
@@ -66,7 +66,7 @@ const formConfig = {
     ownerCategory: {
       id: "ownerCategory",
       required: true,
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].ownerType",
       type: "singleValueList",
       floatingLabelText: "Owner Category",
       hintText: "Select",
@@ -107,7 +107,7 @@ const formConfig = {
     },
     ownerCategoryId: {
       id: "ownerCategoryId",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].document.documentUid",
       required: true,
       type: "textfield",
       floatingLabelText: "Owner Category Id number",
@@ -116,7 +116,7 @@ const formConfig = {
     },
     ownerGender: {
       id: "ownerGender",
-      jsonPath: "",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].gender",
     },
   },
   action: "",

@@ -69,7 +69,7 @@ const formConfig = {
   fields: {
     city: {
       id: "city",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.city",
       required: true,
       toolTip: true,
       toolTipMessage: "",
@@ -113,7 +113,7 @@ const formConfig = {
     },
     houseNumber: {
       id: "house-number",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.doorNo",
       type: "textfield",
       floatingLabelText: "PT_PROPERTY_DETAILS_DOOR_NUMBER",
       hintText: "PT_PROPERTY_DETAILS_DOOR_NUMBER_PLACEHOLDER",
@@ -123,7 +123,7 @@ const formConfig = {
     },
     colony: {
       id: "property-colony",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.buildingName",
       type: "textfield",
       floatingLabelText: "PT_PROPERTY_DETAILS_COLONY_NAME",
       hintText: "PT_PROPERTY_DETAILS_COLONY_NAME_PLACEHOLDER",
@@ -134,7 +134,7 @@ const formConfig = {
     },
     street: {
       id: "property-street",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.street",
       type: "textfield",
       floatingLabelText: "PT_PROPERTY_DETAILS_STREET",
       hintText: "PT_PROPERTY_DETAILS_STREET_PLACEHOLDER",
@@ -144,10 +144,10 @@ const formConfig = {
     },
     mohalla: {
       id: "mohalla",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.locality.code",
       type: "singleValueList",
       floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
-      hintText: "PT_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER",
+      hintText: "PT_COMMON_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "mohalla",
       numcols: 6,
@@ -159,7 +159,7 @@ const formConfig = {
     pincode: {
       id: "pincode",
       type: "textfield",
-      jsonPath: "",
+      jsonPath: "Properties[0].address.pincode",
       floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
       numcols: 6,
@@ -171,7 +171,7 @@ const formConfig = {
       type: "textFieldIcon",
       Icon: SearchIcon,
       iconRedirectionURL: "https://www.google.co.in/",
-      jsonPath: "",
+      jsonPath: "Properties[0].oldPropertyId",
       floatingLabelText: "PT_PROPERTY_ADDRESS_OLDPID",
       hintText: "PT_PROPERTY_ADDRESS_OLDPID_PLACEHOLDER",
       numcols: 6,
