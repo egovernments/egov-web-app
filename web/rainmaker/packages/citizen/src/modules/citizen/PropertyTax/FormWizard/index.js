@@ -32,6 +32,15 @@ class FormWizard extends Component {
     ownerInfoArr: [],
     showOwners: false,
     formValidIndexArray: [],
+    draftRequest:{
+      "draft":{
+        "tenantId":get,
+        "userId":"vishal",
+        "draftRecord":{
+          
+        }
+     }
+   }
   };
 
   addOwner = () => {
@@ -163,14 +172,14 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { selected } = this.state;
+    const { selected,formValidIndexArray } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
       case 0:
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
-          this.setState({ selected: index });
+          this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
         } else {
           displayFormErrorsAction("propertyAddress");
         }
@@ -196,10 +205,10 @@ class FormWizard extends Component {
                     }
                   }
                   if (floorValidation) {
-                    this.setState({ selected: index });
+                    this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
                   }
                 } else {
-                  this.setState({ selected: index });
+                  this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
                 }
               } else {
                 displayFormErrorsAction("plotDetails");
@@ -220,7 +229,7 @@ class FormWizard extends Component {
               const {ownerInfo} =form;
               const isOwnerInfoFormValid=validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
-                this.setState({ selected: index });
+                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
               else {
                 displayFormErrorsAction("ownerInfo");
@@ -239,7 +248,7 @@ class FormWizard extends Component {
                 }
               }
               if (ownerValidation) {
-                this.setState({ selected: index });
+                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
             }
             else if (ownershipTypeSelected==="Institution") {
@@ -256,7 +265,7 @@ class FormWizard extends Component {
                 institutionFormValid=false
               }
               if (institutionFormValid) {
-                this.setState({ selected: index });
+                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
             }
           }
@@ -277,8 +286,15 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
+    const {formValidIndexArray} =this.state;
     // form validation checks needs to be written here
-    this.setState({ selected: index });
+    if (formValidIndexArray.indexOf(index)) {
+      this.setState({ selected: index });
+    }
+    else {
+      alert("Please fill required tabs")
+    }
+
   };
 
   render() {

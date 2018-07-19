@@ -26,7 +26,7 @@ const formConfig = {
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Father's/Husband's Name",
-      hintText: "Enter father's/husband's name",
+      hintText: "Enter details",
       required: true,
     },
     ownerAadhar: {
@@ -112,7 +112,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Owner Category Id number",
       hintText: "Enter identification number",
-      hideField: false,
+      hideField: true,
     },
     ownerGender: {
       id: "ownerGender",

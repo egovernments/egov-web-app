@@ -9,8 +9,13 @@ var validateField = exports.validateField = function validateField(field) {
       minLength = field.minLength,
       maxLength = field.maxLength,
       minValue = field.minValue,
-      maxValue = field.maxValue;
+      maxValue = field.maxValue,
+      hideField = field.hideField;
 
+
+  if (hideField) {
+    return { isFieldValid: true, errorText: "" };
+  }
 
   var value = field.value ? typeof field.value === "string" ? field.value.trim() : field.value : null;
   var errorText = "",
