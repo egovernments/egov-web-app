@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Label from "egov-ui-kit/utils/translationNode";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 import { Icon, BreadCrumbs } from "components";
@@ -29,7 +30,7 @@ class Property extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: "Property Information",
+          primaryText: <Label label="Propert Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           leftIcon: <Icon action="action" name="info" color="#484848" style={IconStyle} />,
           nestedItems: [
             {
@@ -38,29 +39,36 @@ class Property extends Component {
           ],
         },
         {
-          primaryText: "Assessment History",
+          primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           leftIcon: <Icon action="action" name="receipt" color="#484848" style={IconStyle} />,
           nestedItems: [
             {
-              primaryText: "2018 - 2019",
+              primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
               status: "Paid",
-              // route: "/receipt-dialogue",
+              receipt: true,
             },
             {
-              primaryText: "2017 - 2018",
+              primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
               status: "ACCESS & PAY",
+              receipt: true,
             },
             {
-              primaryText: "2016 - 2017",
+              primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
               status: "Paid",
+              receipt: true,
             },
             {
-              primaryText: "2015 - 2016",
+              primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
               status: "ACCESS & PAY",
+              receipt: true,
             },
             {
-              primaryText: "2014 - 2015",
+              primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
               status: "ACCESS & PAY",
+              receipt: true,
+            },
+            {
+              primaryText: <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" labelStyle={{ fontWeight: 500 }} />,
             },
           ],
         },
@@ -93,14 +101,6 @@ class Property extends Component {
         break;
     }
   };
-
-  // onBreadcrumbsClick = (index, path) => {
-  //   const { history } = this.props;
-  //   this.setState({
-  //     selected: index,
-  //   });
-  //   history.push(path);
-  // };
 
   closeReceiptDialogue = () => {
     this.setState({ dialogueOpen: false });

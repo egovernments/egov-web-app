@@ -4,6 +4,7 @@ import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -16,19 +17,19 @@ class IncompleteAssessments extends Component {
   state = {
     items: [
       {
-        primaryText: "2016 - 2017",
+        primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         secondaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
         date: "12-06-2018",
         status: "Payment failed",
       },
       {
-        primaryText: "2017 - 2018",
+        primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         secondaryText: "P-9/2, Banwinder Colony, alwal Road, Indirapuram",
         date: "12-06-2018",
         status: "Saved Draft",
       },
       {
-        primaryText: "2015 - 2016",
+        primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         secondaryText: "EB-154, Maya Enclave, Jail Road, Harinagar",
         date: "12-06-2018",
         status: "Payment failed",

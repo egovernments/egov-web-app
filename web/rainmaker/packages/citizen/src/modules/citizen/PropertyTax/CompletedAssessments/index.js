@@ -23,7 +23,7 @@ class CompletedAssessments extends Component {
     dialogueOpen: false,
     items: [
       {
-        primaryText: "INR 1300.00",
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label label="2016-2017" containerStyle={secondaryTextContainer} />
@@ -37,7 +37,7 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: "INR 1300.00",
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>
@@ -52,7 +52,21 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: "INR 1300.00",
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        secondaryText: (
+          <div style={{ height: "auto" }}>
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
+            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+          </div>
+        ),
+        date: "12-06-2018",
+        status: "Paid",
+        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+        receipt: true,
+      },
+      {
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>
@@ -67,22 +81,7 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: "INR 1300.00",
-
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-      {
-        primaryText: "INR 1300.00",
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>

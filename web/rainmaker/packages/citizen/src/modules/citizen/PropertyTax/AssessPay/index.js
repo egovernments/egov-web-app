@@ -5,6 +5,7 @@ import YearDialogue from "../common/YearDialogue";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const innerDivStyle = {
   paddingLeft: 50,
@@ -21,27 +22,13 @@ class AssessPay extends Component {
     this.state = {
       dialogueOpen: false,
       items: [
-        // {
-        //   primaryText: "My Properties",
-        //   status: "Payment Pending",
-        //   leftIcon: <Icon action="action" name="home" style={{ marginLeft: 0 }} />,
-
-        //   nestedItems: [
-        //     {
-        //       primaryText: "EB-154, Maya Enclave, Harinagar",
-        //     },
-        //     {
-        //       primaryText: "P-9/2, Balwinder Colony, Palwal Road, Indirapuram",
-        //     },
-        //   ],
-        // },
         {
-          primaryText: "Add New Property",
+          primaryText: <Label label="Add New Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/date-dialogue",
           leftIcon: <Icon action="content" name="add" color="#484848" style={IconStyle} />,
         },
         {
-          primaryText: "Search Property",
+          primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/search-property",
           leftIcon: <Icon action="action" name="search" color="#484848" style={IconStyle} />,
         },
