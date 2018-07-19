@@ -118,3 +118,10 @@ export const ACTIONMENU = {
     ACTION: "_get",
   },
 };
+
+export const PROPERTY = {
+  GET: {
+    URL: "/pt-services-v2/property/_search",
+    ACTION: "_get",
+  },
+};

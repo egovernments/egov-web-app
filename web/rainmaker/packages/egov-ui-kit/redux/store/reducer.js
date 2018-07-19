@@ -38,6 +38,10 @@ var _report = require("../reports/report");
 
 var _report2 = _interopRequireDefault(_report);
 
+var _reducer15 = require("../properties/reducer");
+
+var _reducer16 = _interopRequireDefault(_reducer15);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = {
@@ -48,7 +52,8 @@ var rootReducer = {
   common: _reducer10.default,
   mdms: _reducer14.default,
   formtemp: _reducer12.default,
-  report: _report2.default
+  report: _report2.default,
+  properties: _reducer16.default
 };
 
 exports.default = rootReducer;

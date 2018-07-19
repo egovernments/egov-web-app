@@ -123,3 +123,10 @@ var ACTIONMENU = exports.ACTIONMENU = {
     ACTION: "_get"
   }
 };
+
+var PROPERTY = exports.PROPERTY = {
+  GET: {
+    URL: "/pt-services-v2/property/_search",
+    ACTION: "_get"
+  }
+};

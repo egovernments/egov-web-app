@@ -8,6 +8,7 @@ import common from "../common/reducer";
 import formtemp from "../formtemp/reducer";
 import mdms from "../mdms/reducer";
 import report from "../reports/report";
+import properties from "../properties/reducer";
 
 const rootReducer = {
   app,
@@ -18,6 +19,7 @@ const rootReducer = {
   mdms,
   formtemp,
   report,
+  properties,
 };
 
 export default rootReducer;
