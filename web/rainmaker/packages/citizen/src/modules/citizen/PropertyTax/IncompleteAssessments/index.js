@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 
+const innerDivStyle = {
+  paddingTop: "16px",
+};
 class IncompleteAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
@@ -43,7 +46,12 @@ class IncompleteAssessments extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList items={this.state.items} noAssessmentMessage="You have no incomplete assessments!" button={false} />
+        <AssessmentList
+          items={this.state.items}
+          innerDivStyle={innerDivStyle}
+          noAssessmentMessage="You have no incomplete assessments!"
+          button={false}
+        />
       </Screen>
     );
   }

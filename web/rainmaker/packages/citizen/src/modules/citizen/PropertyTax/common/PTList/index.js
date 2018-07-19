@@ -2,7 +2,7 @@ import React from "react";
 import { List, Card } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const PTList = ({ items, label, onItemClick, innerDivStyle }) => {
+const PTList = ({ items, label, onItemClick, innerDivStyle, listItemStyle }) => {
   return (
     <div className="form-without-button-cont-generic">
       {label && (
@@ -21,7 +21,7 @@ const PTList = ({ items, label, onItemClick, innerDivStyle }) => {
           <List
             innerDivStyle={innerDivStyle}
             items={items}
-            listItemStyle={{ paddingLeft: "10px", borderBottom: "1px solid #e0e0e0" }}
+            listItemStyle={listItemStyle ? listItemStyle : { borderBottom: "1px solid #e0e0e0" }}
             nestedListStyle={{ padding: "0px" }}
             primaryTogglesNestedList={true}
             onItemClick={onItemClick}

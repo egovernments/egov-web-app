@@ -70,10 +70,12 @@ const getRightIconItems = (item) => {
     <div style={{ width: "auto" }}>
       {item.date && <Label label={item.date} labelStyle={{ textAlign: "right" }} />}
       {getItemStatus(item)}
-      <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-        <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} />
-        <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-      </div>
+      {item.receipt && (
+        <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+          <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} />
+          <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+        </div>
+      )}
     </div>
   ) : (
     item.rightIcon
@@ -125,6 +127,7 @@ const AssessmentList = ({
   onItemClick,
   button,
   innerDivStyle,
+  listItemStyle,
   noAssessmentMessage,
   yearDialogue,
   closeDialogue,
@@ -139,7 +142,7 @@ const AssessmentList = ({
       onButtonClick={onNewPropertyButtonClick}
     />
   ) : (
-    <PTList items={getListItems(items)} history={history} onItemClick={onItemClick} innerDivStyle={innerDivStyle} />
+    <PTList items={getListItems(items)} history={history} onItemClick={onItemClick} innerDivStyle={innerDivStyle} listItemStyle={listItemStyle} />
   );
 };
 

@@ -8,8 +8,10 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 
 const innerDivStyle = {
   paddingLeft: 50,
-  paddingTop: 18,
-  paddingBottom: 0,
+};
+
+const IconStyle = {
+  margin: "12px 0px 0px 0px",
 };
 
 class AssessPay extends Component {
@@ -36,12 +38,12 @@ class AssessPay extends Component {
         {
           primaryText: "Add New Property",
           route: "/date-dialogue",
-          leftIcon: <Icon action="content" name="add" color="#484848" style={{ marginLeft: 0, marginTop: 3 }} />,
+          leftIcon: <Icon action="content" name="add" color="#484848" style={IconStyle} />,
         },
         {
           primaryText: "Search Property",
           route: "/search-property",
-          leftIcon: <Icon action="action" name="search" color="#484848" style={{ marginLeft: 0, marginTop: 3 }} />,
+          leftIcon: <Icon action="action" name="search" color="#484848" style={IconStyle} />,
         },
       ],
     };

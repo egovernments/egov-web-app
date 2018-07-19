@@ -10,6 +10,10 @@ const secondaryTextContainer = {
   marginTop: 3,
 };
 
+const innerDivStyle = {
+  paddingTop: "16px",
+};
+
 class CompletedAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
@@ -116,6 +120,7 @@ class CompletedAssessments extends Component {
       <Screen>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
+          innerDivStyle={innerDivStyle}
           items={this.state.items}
           noAssessmentMessage="You have no complete assessments."
           button={true}
