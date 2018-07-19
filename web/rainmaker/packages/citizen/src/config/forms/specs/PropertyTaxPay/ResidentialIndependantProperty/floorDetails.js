@@ -116,7 +116,7 @@ const formConfig = {
       ErrorText: "Enter a valid built area size",
       numcols: 4,
       toolTip: true,
-      toolTipMessage: "",
+      toolTipMessage: "Carpet Area + balcony area + thickness of outer walls",
       required: true,
     },
   },

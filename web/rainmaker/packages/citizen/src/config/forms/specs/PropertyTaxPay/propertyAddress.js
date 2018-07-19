@@ -153,7 +153,7 @@ const formConfig = {
       //hintText: "PT_COMMON_SELECT_PLACEHOLDER",
       hintText: "Select",
       toolTip: true,
-      toolTipMessage: "mohalla",
+      toolTipMessage: "Name of the area in which your property is located",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
       dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
@@ -182,7 +182,7 @@ const formConfig = {
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       toolTip: true,
-      toolTipMessage: "",
+      toolTipMessage: "ID assigned to your property by your Municipality ",
     },
   },
 

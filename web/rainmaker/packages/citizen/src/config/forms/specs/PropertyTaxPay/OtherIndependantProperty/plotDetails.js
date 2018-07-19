@@ -25,6 +25,8 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].noOfFloors",
       type: "textfield",
       floatingLabelText: "No. of Floors",
+      toolTip: true,
+      toolTipMessage: "Total number of built floors in owned property",
       required: true,
       numcols: 4,
       hintText: "Select",
