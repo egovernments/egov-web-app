@@ -24,7 +24,7 @@
         width: 145% !important;
       }
       .dropdown {
-        display: block !important;
+        display: flow-root !important;
       }
     }
     .relationship-details {
@@ -32,6 +32,9 @@
       div:nth-of-type(1) {
         margin-right: 35px;
       }
+    }
+    .dropdown {
+      display: flow-root !important;
     }
   }
 }
@@ -48,8 +51,9 @@
   .authority-details-form {
     display: flex;
     .name-address {
+      width: 50%;
       .textfield  {
-        width: 117% !important;
+        width: 77% !important;
       }
     }
     .address {
