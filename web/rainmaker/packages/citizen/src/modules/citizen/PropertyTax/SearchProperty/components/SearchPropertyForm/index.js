@@ -1,10 +1,10 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
 import { Button, Card } from "components";
+import "./index.css";
 
-const SearchPropertyForm = ({ handleFieldChange, form, formKey }) => {
+const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick }) => {
   const fields = form.fields || {};
-  const submit = form.submit;
 
   return (
     <div className="form-without-button-cont-generic">
@@ -22,20 +22,12 @@ const SearchPropertyForm = ({ handleFieldChange, form, formKey }) => {
                 </div>
               );
             })}
+            <div className="search-property-btn col-xs-12">
+              <Button label={"SEARCH"} className="" onClick={() => onSearchClick(form, formKey)} primary={true} fullWidth={true} />
+            </div>
           </div>
         }
       />
-      <div className="responsive-action-button-cont">
-        <Button
-          {...submit}
-          className="responsive-action-button"
-          //   onClick={() => history.push("/citizen")}
-          label="SEARCH"
-          primary={true}
-          fullWidth={true}
-          className="responsive-action-button"
-        />
-      </div>
     </div>
   );
 };
