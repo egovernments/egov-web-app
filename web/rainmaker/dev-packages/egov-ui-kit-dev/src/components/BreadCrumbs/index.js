@@ -1,5 +1,6 @@
 import React from "react";
 import Icon from "../Icon";
+import { Link } from "react-router-dom";
 
 const style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
 const selStyle = { color: "#fe7a51" };
@@ -7,7 +8,9 @@ const selStyle = { color: "#fe7a51" };
 const BreadCrumbs = ({ url, history }) => {
   return (
     <div className="rainmaker-displayInline" style={{ paddingLeft: 15 }}>
-      <Icon action="action" name="home" color="#fe7a51" />
+      <Link to="/property-tax">
+        <Icon action="action" name="home" color="#fe7a51" />
+      </Link>
       {url &&
         url.map((item, index) => {
           return (
