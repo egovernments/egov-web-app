@@ -1,0 +1,25 @@
+.pt-service-list {
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.pt-new-property,
+.pt-search-property,
+.pt-my-properties {
+  cursor: pointer;
+}
+
+.pt-new-property,
+.pt-search-property {
+  border-right: 2px solid #e5e7e9;
+}
+
+.property-tax-card {
+  padding: 0 !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .pt-home-screen {
+    padding: 0px 8px 60px 8px !important;
+  }
+}

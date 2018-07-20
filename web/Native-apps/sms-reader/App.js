@@ -325,25 +325,60 @@ import {
 //   }
 
 
-import SmsListener from 'react-native-android-sms-listener'
+// import SmsListener from 'react-native-android-sms-listener'
 
+import SmsAndroid  from 'react-native-get-sms-android';
 
+/* List SMS messages matching the filter */
+// var filter = {
+//     box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+//     // the next 4 filters should NOT be used together, they are OR-ed so pick one
+//     read: 0, // 0 for unread SMS, 1 for SMS already read
+//     _id: 1234, // specify the msg id
+//     address: '+917795929033', // sender's phone number
+//     body: 'Hi', // content to match
+//     // the next 2 filters can be used for pagination
+//     indexFrom: 0, // start from index 0
+//     maxCount: 10, // count of SMS to return each time
+// };
+
+// var filter = {
+//     box: 'inbox',
+//     read: 0,
+//     body: 'otp',
+//     indexFrom: 0,
+//     maxCount: 10
+// };
+
+var filter = {
+      box: 'inbox',
+      maxCount: 10,
+};
 
 export default class App extends React.Component {
   state={
     message:""
   }
+
   componentDidMount()
   {
-    let self=this;
-    console.log("hai");
-    SmsListener.addListener(message => {
-      console.info(message)
-      self.setState({
-        message
-      })
-    })
+    SmsAndroid.list(JSON.stringify(filter), (fail) => {
+        console.log("Failed with this error: " + fail)
+    },
+    (count, smsList) => {
+        console.log("Hai");
+        console.log('Count: ', count);
+        console.log('List: ', smsList);
+        var arr = JSON.parse(smsList);
+
+        arr.forEach(function(object){
+            console.log("Object: " + object);
+            console.log("-->" + object.date);
+            console.log("-->" + object.body);
+        })
+    });
   }
+
   render() {
     let {message}=this.state;
     return (
@@ -353,6 +388,7 @@ export default class App extends React.Component {
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

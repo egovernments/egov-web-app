@@ -2,45 +2,48 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextField from "material-ui/TextField";
 
+const defaultStyle = {
+  backgroundColor: "transparent",
+};
 const TextAreaUi = ({
   className,
+  style,
+  underlineShow,
+  inputStyle,
   onChange,
   errorMessage,
-  value,
+  value = "",
   disabled,
   isRequired,
   hide,
-  label
+  rows,
+  hintText,
+  hintStyle,
+  textareaStyle,
+  rowsMax,
+  underlineStyle,
+  underlineFocusStyle,
+  id,
 }) => {
-  const labelProperty = {
-    className: className ? className : "",
-    floatingLabelFixed: true,
-    floatingLabelStyle: {
-      fontSize: "20px",
-      whiteSpace: "nowrap"
-    },
-    floatingLabelText: (
-      <span>
-        {label}
-        <span style={{ color: "#FF0000" }}>{isRequired ? " *" : ""}</span>
-      </span>
-    )
-  };
-
-  const style = { display: hide ? "none" : "block" };
-
   return (
     <TextField
-      inputStyle={{ color: "#5F5C57" }}
+      className={className}
+      id={id}
       fullWidth={true}
       multiLine={true}
-      errorText={errorMessage}
-      rows={2}
-      {...labelProperty}
-      value={value}
+      rows={rows}
+      rowsMax={rowsMax}
       disabled={disabled}
       onChange={onChange}
-      style={style}
+      style={{ ...defaultStyle, ...style }}
+      hintText={hintText}
+      inputStyle={inputStyle}
+      hintStyle={hintStyle}
+      textareaStyle={textareaStyle}
+      underlineShow={underlineShow}
+      underlineStyle={underlineStyle}
+      underlineFocusStyle={underlineFocusStyle}
+      value={value}
     />
   );
 };
@@ -54,7 +57,7 @@ TextAreaUi.propTypes = {
   label: PropTypes.string,
   isRequired: PropTypes.bool,
   hide: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default TextAreaUi;

@@ -1,0 +1,4 @@
+174 error execute Error occured with 'rainmaker-employee' while running 'npm run postinstall'
+175 error npm run postinstall [rainmaker-employee] Output from stdout:
+176 error npm run postinstall [rainmaker-employee] Output from stderr:
+177 error execute Error occured with 'rainmaker-employee' while running 'npm run postinstall'
