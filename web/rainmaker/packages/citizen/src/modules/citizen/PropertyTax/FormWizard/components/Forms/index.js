@@ -63,7 +63,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
             <div className="name-address">
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerCategory" field={fields["ownerCategory"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerCategory" field={fields["ownerCategory"]} handleFieldChange={handleFieldChange} disabled={disabled} className="ownerCategory"/>
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
@@ -87,7 +87,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
                 <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               </div>
-              <Field fieldKey="ownerCategoryIdType" field={fields["ownerCategoryIdType"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="ownerCategoryIdType" field={fields["ownerCategoryIdType"]} handleFieldChange={handleFieldChange} disabled={disabled} className="ownerCategoryIdType"/>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
