@@ -28,9 +28,9 @@ class AssessPay extends Component {
           leftIcon: <Icon action="content" name="add" color="#484848" style={IconStyle} />,
         },
         {
-          primaryText: "Search Property",
+          primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/search-property",
-          leftIcon: <Icon action="action" name="search" color="#484848" style={{ marginLeft: 0, marginTop: 3 }} />,
+          leftIcon: <Icon action="action" name="search" color="#484848" style={IconStyle} />,
         },
       ],
     };
