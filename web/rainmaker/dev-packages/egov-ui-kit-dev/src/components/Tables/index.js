@@ -18,10 +18,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
-import Label from "../Label";
 import "./index.css";
 
-let counter = 0;
+// let counter = 0;
 // function createData(name, calories, fat, carbs, protein) {
 //   counter += 1;
 //   return { id: counter, name, calories, fat, carbs, protein };
@@ -176,14 +175,8 @@ class TableUi extends React.Component {
   constructor(props) {
     super(props);
     const { actionOnRow } = this.props;
-    // const data = rowData.reduce((data, item, index) => {
-    //   data.push(createData(index, ...item));
-    //   return data;
-    // }, []);
     this.state = {
       order: "asc",
-      // orderBy: orderBy,
-      // data: data,
       Action: actionOnRow,
       selected: [],
       page: 0,
@@ -239,13 +232,10 @@ class TableUi extends React.Component {
 
   render() {
     const { classes, rowCheckBox, rowData, columnData, orderBy, tableHeading } = this.props;
-    const { order, selected, rowsPerPage, page, Action } = this.state;
+    const { order, selected, rowsPerPage, page } = this.state;
     const data = [...rowData];
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    console.log(data);
-    console.log(columnData, orderBy);
-    console.log(classes);
     return (
       <Paper className={classes.root}>
         {rowCheckBox && <EnhancedTableToolbar numSelected={selected.length} />}
@@ -285,7 +275,6 @@ class TableUi extends React.Component {
                           <Checkbox checked={isSelected} />
                         </TableCell>
                       )}
-                      <TableCell numeric>{index}</TableCell>
                       {Object.values(n).map((i, ind) => {
                         return (
                           <TableCell key={ind} numeric>
@@ -293,10 +282,6 @@ class TableUi extends React.Component {
                           </TableCell>
                         );
                       })}
-                      {/* <TableCell>
-                        <Action />
-                      </TableCell> */}
-                      {/* <TableCell>{ActionOnRow && <ActionOnRow />}</TableCell> */}
                     </TableRow>
                   );
                 })}

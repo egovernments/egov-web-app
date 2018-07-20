@@ -108,15 +108,11 @@ var _FilterList2 = _interopRequireDefault(_FilterList);
 
 var _colorManipulator = require("@material-ui/core/styles/colorManipulator");
 
-var _Label = require("../Label");
-
-var _Label2 = _interopRequireDefault(_Label);
-
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var counter = 0;
+// let counter = 0;
 // function createData(name, calories, fat, carbs, protein) {
 //   counter += 1;
 //   return { id: counter, name, calories, fat, carbs, protein };
@@ -379,15 +375,9 @@ var TableUi = function (_React$Component2) {
     };
 
     var actionOnRow = _this3.props.actionOnRow;
-    // const data = rowData.reduce((data, item, index) => {
-    //   data.push(createData(index, ...item));
-    //   return data;
-    // }, []);
 
     _this3.state = {
       order: "asc",
-      // orderBy: orderBy,
-      // data: data,
       Action: actionOnRow,
       selected: [],
       page: 0,
@@ -412,15 +402,11 @@ var TableUi = function (_React$Component2) {
           order = _state.order,
           selected = _state.selected,
           rowsPerPage = _state.rowsPerPage,
-          page = _state.page,
-          Action = _state.Action;
+          page = _state.page;
 
       var data = [].concat((0, _toConsumableArray3.default)(rowData));
 
       var emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-      console.log(data);
-      console.log(columnData, orderBy);
-      console.log(classes);
       return _react2.default.createElement(
         _Paper2.default,
         { className: classes.root },
@@ -463,11 +449,6 @@ var TableUi = function (_React$Component2) {
                     _TableCell2.default,
                     { padding: "checkbox" },
                     _react2.default.createElement(_Checkbox2.default, { checked: isSelected })
-                  ),
-                  _react2.default.createElement(
-                    _TableCell2.default,
-                    { numeric: true },
-                    index
                   ),
                   Object.values(n).map(function (i, ind) {
                     return _react2.default.createElement(
