@@ -21,6 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var initialState = {
   loading: false,
   propertiesById: {},
+  draftsById: {},
   error: false,
   errorMessage: ""
 };
@@ -44,6 +45,18 @@ var propertyReducer = function propertyReducer() {
         error: true,
         errorMessage: action.error
       });
+    case actionTypes.DRAFT_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.DRAFT_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     case actionTypes.PROPERTY_FETCH_COMPLETE:
       var propertiesById = (0, _commons.transformById)(action.payload["Properties"], "propertyId");
       return (0, _extends3.default)({}, state, {
@@ -51,6 +64,14 @@ var propertyReducer = function propertyReducer() {
         error: false,
         errorMessage: "",
         propertiesById: propertiesById
+      });
+    case actionTypes.DRAFT_FETCH_COMPLETE:
+      var draftsById = (0, _commons.transformById)(action.payload["drafts"], "id");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        draftsById: draftsById
       });
     default:
       return state;

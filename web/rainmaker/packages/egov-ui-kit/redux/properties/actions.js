@@ -31,9 +31,22 @@ var propertyFetchPending = function propertyFetchPending() {
   };
 };
 
+var draftFetchPending = function draftFetchPending() {
+  return {
+    type: actionTypes.DRAFT_FETCH_PENDING
+  };
+};
+
 var propertyFetchComplete = function propertyFetchComplete(payload, overWrite) {
   return {
     type: actionTypes.PROPERTY_FETCH_COMPLETE,
+    payload: payload
+  };
+};
+
+var draftFetchComplete = function draftFetchComplete(payload) {
+  return {
+    type: actionTypes.DRAFT_FETCH_COMPLETE,
     payload: payload
   };
 };
@@ -44,39 +57,64 @@ var propertyFetchError = function propertyFetchError(error) {
     error: error
   };
 };
+var draftFetchError = function draftFetchError(error) {
+  return {
+    type: actionTypes.DRAFT_FETCH_ERROR,
+    error: error
+  };
+};
 
 var fetchProperties = exports.fetchProperties = function fetchProperties(queryObject) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-      var payload;
+      var payload, draftpayload;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               dispatch(propertyFetchPending());
-              _context.prev = 1;
-              _context.next = 4;
+              dispatch(draftFetchPending());
+              _context.prev = 2;
+              _context.next = 5;
               return (0, _api.httpRequest)(_endPoints.PROPERTY.GET.URL, _endPoints.PROPERTY.GET.ACTION, queryObject);
 
-            case 4:
+            case 5:
               payload = _context.sent;
 
               dispatch(propertyFetchComplete(payload));
-              _context.next = 11;
+              _context.prev = 7;
+              _context.next = 10;
+              return (0, _api.httpRequest)(_endPoints.DRAFT.GET.URL, _endPoints.DRAFT.GET.ACTION, queryObject);
+
+            case 10:
+              draftpayload = _context.sent;
+
+              dispatch(draftFetchComplete(draftpayload));
+              _context.next = 17;
               break;
 
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context["catch"](1);
+            case 14:
+              _context.prev = 14;
+              _context.t0 = _context["catch"](7);
 
-              dispatch(propertyFetchError(_context.t0.message));
+              dispatch(draftFetchError(_context.t0.message));
 
-            case 11:
+            case 17:
+              _context.next = 22;
+              break;
+
+            case 19:
+              _context.prev = 19;
+              _context.t1 = _context["catch"](2);
+
+              dispatch(propertyFetchError(_context.t1.message));
+
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[1, 8]]);
+      }, _callee, undefined, [[2, 19], [7, 14]]);
     }));
 
     return function (_x) {

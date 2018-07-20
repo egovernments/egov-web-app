@@ -130,3 +130,10 @@ var PROPERTY = exports.PROPERTY = {
     ACTION: "_get"
   }
 };
+
+var DRAFT = exports.DRAFT = {
+  GET: {
+    URL: "/pt-services-v2/drafts/_search",
+    ACTION: "_get"
+  }
+};
