@@ -19,15 +19,12 @@ class MyProperties extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: <Label label="EB-154, Maya Enclave, Jail Road, Harinagar" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="EB-154, Maya Enclave, Jail Road, Harinagar" fontSize="16px" color="#484848" bold={true} />,
           route: "/my-properties/property",
           secondaryText: "Property ID: PQL-98-876",
         },
         {
-          primaryText: (
-            <Label label="P-9/2, Balwinder Colony, Palwal Road, Indirapuram" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
-          ),
-
+          primaryText: <Label label="P-9/2, Balwinder Colony, Palwal Road, Indirapuram" fontSize="16px" color="#484848" bold={true} />,
           route: "/my-properties/property",
           secondaryText: "Property ID: JML-34-756",
         },
@@ -40,11 +37,11 @@ class MyProperties extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, fetchProperties } = this.props;
+    const { addBreadCrumbs, title, fetchProperties, numProperties } = this.props;
     fetchProperties([]); //Unnecessary API call to prevent page break on reload
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
-    title && addBreadCrumbs({ title: title, path: window.location.pathname });
+    title && addBreadCrumbs({ title: `${title}(${numProperties})`, path: window.location.pathname });
   };
 
   onNewPropertyButtonClick = () => {
@@ -76,11 +73,11 @@ class MyProperties extends Component {
 
   render() {
     const { urls, location, history, transformedProperties, loading } = this.props;
-    const { pathname } = location;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
+          // pageTitle={`My Properties (${numProperties})`}
           onItemClick={this.onListItemClick}
           innerDivStyle={innerDivStyle}
           items={transformedProperties}
@@ -104,6 +101,7 @@ const mapStateToProps = (state) => {
   const { properties } = state;
   const { urls } = state.app;
   const { loading, propertiesById } = properties || {};
+  const numProperties = propertiesById && Object.keys(propertiesById).length;
   const transformedProperties = Object.values(propertiesById).map((property, index) => {
     return {
       primaryText: (
@@ -124,7 +122,7 @@ const mapStateToProps = (state) => {
       route: property.propertyId,
     };
   });
-  return { urls, transformedProperties, loading };
+  return { urls, transformedProperties, loading, numProperties };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

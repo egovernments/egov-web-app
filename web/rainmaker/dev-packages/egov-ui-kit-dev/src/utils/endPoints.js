@@ -125,3 +125,10 @@ export const PROPERTY = {
     ACTION: "_get",
   },
 };
+
+export const DRAFT = {
+  GET: {
+    URL: "/pt-services-v2/drafts/_search",
+    ACTION: "_get",
+  },
+};

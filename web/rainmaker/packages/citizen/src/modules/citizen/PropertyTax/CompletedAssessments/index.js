@@ -6,6 +6,14 @@ import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 
+const secondaryTextLabelStyle = {
+  letterSpacing: 0.5,
+};
+
+const primaryTextLabelStyle = {
+  letterSpacing: 0.6,
+};
+
 const secondaryTextContainer = {
   marginTop: 3,
 };
@@ -23,12 +31,16 @@ class CompletedAssessments extends Component {
     dialogueOpen: false,
     items: [
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
           </div>
         ),
         date: "12-06-2018",
@@ -37,13 +49,17 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
           </div>
         ),
         date: "12-06-2018",
@@ -52,12 +68,16 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
           </div>
         ),
         date: "12-06-2018",
@@ -66,13 +86,17 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
           </div>
         ),
         date: "12-06-2018",
@@ -81,13 +105,17 @@ class CompletedAssessments extends Component {
         receipt: true,
       },
       {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
 
         secondaryText: (
           <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} />
-            <Label label="P-9/2, Banwinder Colony, alwal Road, Indirapuram" containerStyle={secondaryTextContainer} />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} />
+            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+            <Label
+              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+              containerStyle={secondaryTextContainer}
+              labelStyle={secondaryTextLabelStyle}
+            />
+            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
           </div>
         ),
         date: "12-06-2018",

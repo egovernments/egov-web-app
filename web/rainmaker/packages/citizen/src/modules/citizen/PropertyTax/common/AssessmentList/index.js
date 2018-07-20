@@ -133,6 +133,7 @@ const AssessmentList = ({
   yearDialogue,
   closeDialogue,
   onNewPropertyButtonClick,
+  pageTitle,
 }) => {
   return items.length == 0 ? (
     <BlankAssessment
@@ -143,7 +144,14 @@ const AssessmentList = ({
       onButtonClick={onNewPropertyButtonClick}
     />
   ) : (
-    <PTList items={getListItems(items)} history={history} onItemClick={onItemClick} innerDivStyle={innerDivStyle} listItemStyle={listItemStyle} />
+    <PTList
+      items={getListItems(items)}
+      history={history}
+      // label={pageTitle}
+      onItemClick={onItemClick}
+      innerDivStyle={innerDivStyle}
+      listItemStyle={listItemStyle}
+    />
   );
 };
 
