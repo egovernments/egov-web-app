@@ -57,7 +57,7 @@ class PTHome extends Component {
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
     (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
-    fetchProperties([{ key: "uuid", value: userInfo.uuid }]);
+    fetchProperties([{ key: "uuid", value: userInfo.uuid }], [{ key: "userId", value: userInfo.uuid }]);
   };
 
   handleItemClick = (item, index) => {
@@ -144,7 +144,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectProperty, queryObjectDraft)),
   };
 };
 

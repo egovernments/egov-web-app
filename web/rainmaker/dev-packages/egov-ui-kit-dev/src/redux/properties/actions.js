@@ -41,21 +41,26 @@ const draftFetchError = (error) => {
   };
 };
 
-export const fetchProperties = (queryObject) => {
+export const fetchProperties = (queryObjectproperty, queryObjectDraft) => {
   return async (dispatch) => {
-    dispatch(propertyFetchPending());
-    dispatch(draftFetchPending());
-    try {
-      const payload = await httpRequest(PROPERTY.GET.URL, PROPERTY.GET.ACTION, queryObject);
-      dispatch(propertyFetchComplete(payload));
+    if (queryObjectDraft) {
+      dispatch(draftFetchPending());
       try {
-        const draftpayload = await httpRequest(DRAFT.GET.URL, DRAFT.GET.ACTION, queryObject);
+        const draftpayload = await httpRequest(DRAFT.GET.URL, DRAFT.GET.ACTION, queryObjectDraft);
         dispatch(draftFetchComplete(draftpayload));
       } catch (error) {
         dispatch(draftFetchError(error.message));
       }
-    } catch (error) {
-      dispatch(propertyFetchError(error.message));
+    }
+
+    if (queryObjectproperty) {
+      dispatch(propertyFetchPending());
+      try {
+        const payloadProperty = await httpRequest(PROPERTY.GET.URL, PROPERTY.GET.ACTION, queryObjectproperty);
+        dispatch(propertyFetchComplete(payloadProperty));
+      } catch (error) {
+        dispatch(propertyFetchError(error.message));
+      }
     }
   };
 };
