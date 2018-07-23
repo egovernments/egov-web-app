@@ -6,6 +6,7 @@ import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -92,10 +93,6 @@ class MyProperties extends Component {
     );
   }
 }
-
-const getCommaSeperatedAddress = (buildingName, street) => {
-  return `${buildingName}, ${street}`;
-};
 
 const mapStateToProps = (state) => {
   const { properties } = state;

@@ -3,6 +3,7 @@ import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "../PTList";
 import BlankAssessment from "../BlankAssessment";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 const getItemStatus = (item) => {
@@ -16,9 +17,15 @@ const getItemStatus = (item) => {
   switch (status) {
     case "Paid":
       return (
-        <div className="assessment-displayInline" style={item.date ? { marginTop: "10px" } : { marginTop: "0px" }}>
-          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
-          <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
+        <div>
+          <div className="assessment-displayInline" style={item.date ? { marginTop: "10px" } : { marginTop: "0px" }}>
+            <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
+          </div>
+          <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
+            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+          </div>
         </div>
       );
       break;
@@ -48,16 +55,27 @@ const getItemStatus = (item) => {
       break;
     case "ACCESS & PAY":
       return (
-        <div className="assessment-displayInline">
-          <Button
-            label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
-            primary={true}
-            style={{
-              height: 20,
-              lineHeight: "auto",
-              minWidth: "inherit",
-            }}
-          />
+        <div>
+          <div className="assessment-displayInline">
+            <Button
+              label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
+              primary={true}
+              style={{
+                height: 20,
+                lineHeight: "auto",
+                minWidth: "inherit",
+              }}
+            />
+          </div>
+          <Link to="/property-tax/past-payment">
+            <Label
+              containerStyle={{ marginTop: 10 }}
+              label="LINK LAST PAYMENTS"
+              labelStyle={{ marginLeft: "8px" }}
+              color={"#fe7a51"}
+              fontSize="12px"
+            />
+          </Link>
         </div>
       );
     default:
@@ -70,12 +88,12 @@ const getRightIconItems = (item) => {
     <div style={{ width: "auto" }}>
       {item.date && <Label label={item.date} labelStyle={{ textAlign: "right" }} color="#484848" />}
       {getItemStatus(item)}
-      {item.receipt && (
+      {/* {item.receipt && (
         <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
           <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
           <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
         </div>
-      )}
+      )} */}
     </div>
   ) : (
     item.rightIcon
