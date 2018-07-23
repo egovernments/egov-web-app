@@ -7,7 +7,7 @@ import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { Button } from "components";
-import { fetchProperties } from "egov-ui-kit/redux/properties/action";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 import "./index.css";
 

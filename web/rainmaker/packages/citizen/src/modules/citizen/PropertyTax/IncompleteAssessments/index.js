@@ -60,7 +60,7 @@ class IncompleteAssessments extends Component {
         status: "Saved Draft",
       },
       {
-        primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" bold={true} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label
@@ -84,12 +84,12 @@ class IncompleteAssessments extends Component {
   };
 
   render() {
-    const { urls, history } = this.props;
+    const { urls, history, transformedDrafts, loading } = this.props;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
-          items={this.state.items}
+          items={transformedDrafts}
           innerDivStyle={innerDivStyle}
           noAssessmentMessage="You have no incomplete assessments!"
           button={false}
@@ -99,9 +99,43 @@ class IncompleteAssessments extends Component {
   }
 }
 
-const mapStateToProps = ({ app }) => {
-  const { urls } = app;
-  return { urls };
+const getCommaSeperatedAddress = (buildingName, street) => {
+  return `${buildingName}, ${street}`;
+};
+
+const mapStateToProps = (state) => {
+  const { properties } = state;
+  const { urls } = state.app;
+  const { loading, draftsById } = properties || {};
+  const numDrafts = draftsById && Object.keys(draftsById).length;
+  const transformedDrafts = Object.values(draftsById).map((draft, index) => {
+    return {
+      primaryText: (
+        <Label
+          label={draft.draftRecord.propertyDetails[0] && draft.draftRecord.propertyDetails[0].financialYear}
+          fontSize="16px"
+          color="#484848"
+          labelStyle={primaryTextLabelStyle}
+          bold={true}
+        />
+      ),
+      secondaryText: (
+        <div style={{ height: "auto" }}>
+          <Label
+            label={getCommaSeperatedAddress(draft.draftRecord.address.buildingName, draft.draftRecord.address.street)}
+            labelStyle={secondaryTextLabelStyle}
+            fontSize="14px"
+            containerStyle={secondaryTextContainer}
+            color="#484848"
+          />
+          {/* <Label label="Assessment No.: ZRN-453-98" fontSize="13px" labelStyle={secondaryTextLabelStyle} containerStyle={secondaryTextContainer} /> */}
+        </div>
+      ),
+      date: draft.draftRecord.propertyDetails[0] && draft.draftRecord.propertyDetails[0].assessmentDate,
+      status: "Saved Draft",
+    };
+  });
+  return { urls, loading, numDrafts, transformedDrafts };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
