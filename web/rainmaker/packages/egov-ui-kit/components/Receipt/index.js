@@ -30,14 +30,14 @@ var Receipt = function Receipt(_ref) {
         "div",
         { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
         items && items.map(function (item, index) {
-          return _react2.default.createElement(_translationNode2.default, { containerStyle: { marginTop: 10 }, label: item.key });
+          return _react2.default.createElement(_translationNode2.default, { key: index, containerStyle: { marginTop: 10 }, label: item.key });
         })
       ),
       _react2.default.createElement(
         "div",
         { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
         items && items.map(function (item, index) {
-          return _react2.default.createElement(_translationNode2.default, { containerStyle: { marginTop: 10 }, label: item.value });
+          return _react2.default.createElement(_translationNode2.default, { key: index, containerStyle: { marginTop: 10 }, label: item.value });
         })
       )
     );

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import { fetchProperties } from "egov-ui-kit/redux/properties/action";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 const innerDivStyle = {
   paddingTop: "16px",
