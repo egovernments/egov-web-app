@@ -24,10 +24,11 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
                   <div
                     style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
                     key={index}
-                    className={fields[fieldKey].numcols ? `col-xs-${fields[fieldKey].numcols}` : `col-xs-6`}
+                    className={fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`}
                   >
                     <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
-                    {fields[fieldKey].toolTip && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
+                    {fields[fieldKey].toolTip &&
+                      !fields[fieldKey].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
                   </div>
                 )}
               </div>
