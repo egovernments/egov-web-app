@@ -16,6 +16,8 @@ var _Icon = require("../Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var style = { marginLeft: 10, marginTop: 2, cursor: "pointer" };
@@ -28,7 +30,11 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
   return _react2.default.createElement(
     "div",
     { className: "rainmaker-displayInline", style: { paddingLeft: 15 } },
-    _react2.default.createElement(_Icon2.default, { action: "action", name: "home", color: "#fe7a51" }),
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: "/property-tax" },
+      _react2.default.createElement(_Icon2.default, { action: "action", name: "home", color: "#fe7a51" })
+    ),
     url && url.map(function (item, index) {
       return _react2.default.createElement(
         "div",
