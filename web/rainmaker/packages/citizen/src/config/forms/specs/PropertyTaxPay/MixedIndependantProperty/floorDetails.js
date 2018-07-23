@@ -1,4 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 const formConfig = {
   name: "floorDetails",
   fields: {
@@ -102,6 +103,23 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
       },
+      updateDependentFields: (formKey, sourceField, dispatch) => {
+        const { value } = sourceField;
+        const dependentFields1 = ["builtArea"];
+        const dependentFields2 = ["annualRent"];
+        switch (value) {
+          case "SELFOCCUPIED":
+            setDependentFields(dependentFields2, dispatch, formKey, true);
+            setDependentFields(dependentFields1, dispatch, formKey, false);
+            break;
+          case "RENTED":
+            setDependentFields(dependentFields1, dispatch, formKey, true);
+            setDependentFields(dependentFields2, dispatch, formKey, false);
+            break;
+          default:
+          // setDependentFields(dependentFields, dispatch, formKey, false);
+        }
+      },
     },
     builtArea: {
       id: "assessment-built-area",
@@ -114,6 +132,7 @@ const formConfig = {
       toolTipMessage: "Carpet Area + balcony area + thickness of outer walls",
       required: true,
       numcols: 4,
+      hideField: true,
     },
     annualRent: {
       id: "assessment-annual-rent",
@@ -126,6 +145,7 @@ const formConfig = {
       toolTipMessage: "Total Rent collected on your property over a year",
       required: true,
       numcols: 4,
+      hideField: true,
     },
   },
   isFormValid: false,
