@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -98,10 +99,6 @@ class IncompleteAssessments extends Component {
     );
   }
 }
-
-const getCommaSeperatedAddress = (buildingName, street) => {
-  return `${buildingName}, ${street}`;
-};
 
 const mapStateToProps = (state) => {
   const { properties } = state;

@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -127,8 +129,9 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
+    fetchProperties([{ key: "uuid", value: userInfo.uuid }]);
   };
 
   closeYearRangeDialogue = () => {
@@ -142,13 +145,13 @@ class CompletedAssessments extends Component {
   };
 
   render() {
-    const { urls, history } = this.props;
+    const { urls, history, transformedProperties, loading } = this.props;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
           innerDivStyle={innerDivStyle}
-          items={this.state.items}
+          items={transformedProperties}
           noAssessmentMessage="You have no complete assessments."
           button={true}
           yearDialogue={this.state.dialogueOpen}
@@ -160,13 +163,51 @@ class CompletedAssessments extends Component {
   }
 }
 
-const mapStateToProps = ({ app }) => {
-  const { urls } = app;
-  return { urls };
+const mapStateToProps = (state) => {
+  const { properties } = state;
+  const { urls } = state.app;
+  const { loading, propertiesById } = properties || {};
+  const numProperties = propertiesById && Object.keys(propertiesById).length;
+  const transformedProperties = Object.values(propertiesById).map((property, index) => {
+    return {
+      primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+
+      secondaryText: (
+        <div style={{ height: "auto" }}>
+          <Label
+            label={property.propertyDetails[0] && property.propertyDetails[0].financialYear}
+            containerStyle={secondaryTextContainer}
+            labelStyle={secondaryTextLabelStyle}
+            color="#484848"
+          />
+          <Label
+            label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
+            containerStyle={secondaryTextContainer}
+            labelStyle={secondaryTextLabelStyle}
+            color="#484848"
+          />
+          <Label
+            label={`Assessment No.: (${property.propertyDetails[0].assessmentNumber})`}
+            containerStyle={secondaryTextContainer}
+            labelStyle={secondaryTextLabelStyle}
+            color="#484848"
+          />
+        </div>
+      ),
+      date: "12-06-2018",
+      status: "Paid",
+
+      receipt: true,
+    };
+  });
+
+  return { urls, transformedProperties, loading, numProperties };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
   };
 };
 

@@ -278,6 +278,10 @@ const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
+export const getCommaSeperatedAddress = (buildingName, street) => {
+  return `${buildingName}, ${street}`;
+};
+
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
   switch (status.toLowerCase()) {
