@@ -29,14 +29,14 @@ class FloorDetails extends React.Component {
   }
 
   configureFloors=(props)=>{
-    const { noFloors,componentDetails } = props;
+    const { noFloors,componentDetails, disabled } = props;
     const { floors } = this.state;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
-      units.push(formHoc({ ...componentDetails ,copyName:`${componentDetails.copyName}_${key}_unit_0`})(GenericForm));
+      units.push(formHoc({ ...componentDetails ,copyName:`${componentDetails.copyName}_${key}_unit_0`, disabled })(GenericForm));
       return {
         floorId: key,
-        floorDropDown:formHoc({ formKey: "customSelect", makeCopy: true,copyName:"customSelect_"+key, path: "PropertyTaxPay" })(CustomSelectForm),
+        floorDropDown:formHoc({ formKey: "customSelect", makeCopy: true,copyName:"customSelect_"+key, path: "PropertyTaxPay", disabled })(CustomSelectForm),
         units,
       };
     });
@@ -48,6 +48,7 @@ class FloorDetails extends React.Component {
 
   renderFloors = (floors, noFloors) => {
     const {renderUnits}=this;
+    const { disabled } = this.props
     return floors.map((floor, key) => {
       const { floorId, floorDropDown: FloorDropDown,units } = floor;
       return (
@@ -55,7 +56,7 @@ class FloorDetails extends React.Component {
           key={key}
           textChildren={
             <div>
-              <FloorDropDown noFloors={noFloors}/>
+              <FloorDropDown noFloors={noFloors} />
               <div className={`col-xs-12`}>{renderUnits(units,floorId)}</div>
             </div>
           }
@@ -84,13 +85,14 @@ class FloorDetails extends React.Component {
   }
 
   renderUnits = (units,floorId) => {
+    const { disabled } = this.props
     const {handleAddUnit,handleRemoveUnit}=this;
       return (
         <div>
           {
             units.map((unit,key)=>{
               const Unit=unit;
-              return (<Unit key={key} handleRemoveItem={key!==0?()=>handleRemoveUnit(floorId,key):undefined}/>)
+              return (<Unit key={key} className={disabled ? "grayout" : ""} handleRemoveItem={key!==0?()=>handleRemoveUnit(floorId,key):undefined} disabled={disabled} />)
             })
           }
           <div className="pt-add-owner-btn" onClick={()=>this.handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right",cursor:"pointer" }}>

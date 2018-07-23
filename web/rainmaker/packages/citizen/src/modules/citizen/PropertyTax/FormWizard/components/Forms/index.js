@@ -82,6 +82,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 className={"owner-gender-selection"}
                 iconStyle={styles.iconStyle}
                 valueSelected={genderSelected}
+                disabled={disabled}
               />
               <div className="relationship-details">
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />

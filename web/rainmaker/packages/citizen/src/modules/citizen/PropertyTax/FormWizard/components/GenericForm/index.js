@@ -3,7 +3,7 @@ import { Card, ToolTipUi, Icon } from "components";
 import Field from "egov-ui-kit/utils/field";
 import "./index.css";
 
-const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleRemoveItem }) => {
+const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleRemoveItem, disabled, className }) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -26,7 +26,7 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
                     key={index}
                     className={fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`}
                   >
-                    <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} />
+                    <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} disabled={disabled} className={className} />
                     {fields[fieldKey].toolTip &&
                       !fields[fieldKey].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
                   </div>
@@ -36,6 +36,7 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
           })}
         </div>
       }
+      className={className}
     />
   );
 };

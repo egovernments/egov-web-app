@@ -5,7 +5,7 @@ class PlotDetails extends React.Component {
     let { component: Component } = this.props;
     return (
       <div>
-        <Component />
+        <Component {...this.props} />
       </div>
     );
   }

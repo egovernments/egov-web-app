@@ -37,7 +37,7 @@ class FormWizard extends Component {
         "tenantId":get,
         "userId":"vishal",
         "draftRecord":{
-          
+
         }
      }
    }
@@ -66,7 +66,7 @@ class FormWizard extends Component {
     this.props.deleteForm(formKey);
   };
 
-  renderPlotAndFloorDetails = () => {
+  renderPlotAndFloorDetails = (fromReviewPage) => {
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
     if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
       let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;
@@ -77,8 +77,8 @@ class FormWizard extends Component {
       let pathFormKeyObject = getPlotAndFloorFormConfigPath(basicInformation.fields.typeOfUsage.value, basicInformation.fields.typeOfBuilding.value);
       return !isEmpty(pathFormKeyObject) ? (
         <div>
-          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} />}
-          {pathFormKeyObject.hasFloor && <FloorsDetails componentDetails={pathFormKeyObject.floorObject} />}
+          {pathFormKeyObject.hasPlot && <PlotDetails component={pathFormKeyObject.plotForm} disabled={fromReviewPage} />}
+          {pathFormKeyObject.hasFloor && <FloorsDetails componentDetails={pathFormKeyObject.floorObject} disabled={fromReviewPage} />}
         </div>
       ) : null;
     } else {
@@ -109,23 +109,28 @@ class FormWizard extends Component {
   getOwnerDetails = (ownerType) => {
     const { selected } = this.state;
     const { addOwner, handleRemoveOwner, deleteForm } = this.props;
+    const isReviewPage = selected === 3
     switch (ownerType) {
       case "IND":
-        return <OwnerInfoHOC />;
+        return (
+          <OwnerInfoHOC
+            disabled={isReviewPage}
+          />
+        );
       case "MUL":
         return (
           <MultipleOwnerInfoHOC
             addOwner={this.addOwner}
             handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
-            disabled={selected === 3}
+            disabled={isReviewPage}
           />
         );
       case "Institution":
         return (
           <div>
-            <InstitutionHOC />
-            <InstitutionAuthorityHOC cardTitle={<div>Details of authorised person</div>} />
+            <InstitutionHOC disabled={isReviewPage} />
+            <InstitutionAuthorityHOC cardTitle={<div>Details of authorised person</div>} disabled={isReviewPage} />
           </div>
         );
       default:
@@ -133,16 +138,16 @@ class FormWizard extends Component {
     }
   };
 
-  renderStepperContent = (selected) => {
+  renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails } = this;
     switch (selected) {
       case 0:
-        return <PropertyAddressHOC />;
+        return <PropertyAddressHOC disabled={fromReviewPage} />;
       case 1:
         return (
           <div>
-            <UsageInformationHOC />
-            {renderPlotAndFloorDetails()}
+            <UsageInformationHOC disabled={fromReviewPage} />
+            {renderPlotAndFloorDetails(fromReviewPage)}
           </div>
         );
       case 2:
@@ -151,7 +156,9 @@ class FormWizard extends Component {
         const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
-            <OwnershipTypeHOC />
+            <OwnershipTypeHOC
+              disabled={fromReviewPage}
+            />
             {getOwnerDetails(ownerType)}
           </div>
         );
@@ -160,9 +167,9 @@ class FormWizard extends Component {
           <div>
             <ReviewForm
               updateIndex={this.updateIndex}
-              stepZero={this.renderStepperContent(0)}
-              stepOne={this.renderStepperContent(1)}
-              stepTwo={this.renderStepperContent(2)}
+              stepZero={this.renderStepperContent(0, fromReviewPage)}
+              stepOne={this.renderStepperContent(1, fromReviewPage)}
+              stepTwo={this.renderStepperContent(2, fromReviewPage)}
             />
           </div>
         );
@@ -300,11 +307,11 @@ class FormWizard extends Component {
   render() {
     const { renderStepperContent } = this;
     const { selected, ownerInfoArr, formValidIndexArray } = this.state;
-
+    const fromReviewPage = selected === 3
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
-          content={renderStepperContent(selected)}
+          content={renderStepperContent(selected, fromReviewPage)}
           onTabClick={this.onTabClick}
           selected={selected}
           formValidIndexArray={formValidIndexArray}
