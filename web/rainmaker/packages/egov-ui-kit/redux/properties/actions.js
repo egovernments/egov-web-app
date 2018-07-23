@@ -64,57 +64,67 @@ var draftFetchError = function draftFetchError(error) {
   };
 };
 
-var fetchProperties = exports.fetchProperties = function fetchProperties(queryObject) {
+var fetchProperties = exports.fetchProperties = function fetchProperties(queryObjectproperty, queryObjectDraft) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-      var payload, draftpayload;
+      var draftpayload, payloadProperty;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              dispatch(propertyFetchPending());
+              if (!queryObjectDraft) {
+                _context.next = 12;
+                break;
+              }
+
               dispatch(draftFetchPending());
               _context.prev = 2;
               _context.next = 5;
-              return (0, _api.httpRequest)(_endPoints.PROPERTY.GET.URL, _endPoints.PROPERTY.GET.ACTION, queryObject);
+              return (0, _api.httpRequest)(_endPoints.DRAFT.GET.URL, _endPoints.DRAFT.GET.ACTION, queryObjectDraft);
 
             case 5:
-              payload = _context.sent;
-
-              dispatch(propertyFetchComplete(payload));
-              _context.prev = 7;
-              _context.next = 10;
-              return (0, _api.httpRequest)(_endPoints.DRAFT.GET.URL, _endPoints.DRAFT.GET.ACTION, queryObject);
-
-            case 10:
               draftpayload = _context.sent;
 
               dispatch(draftFetchComplete(draftpayload));
-              _context.next = 17;
+              _context.next = 12;
               break;
 
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](7);
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](2);
 
               dispatch(draftFetchError(_context.t0.message));
 
+            case 12:
+              if (!queryObjectproperty) {
+                _context.next = 24;
+                break;
+              }
+
+              dispatch(propertyFetchPending());
+              _context.prev = 14;
+              _context.next = 17;
+              return (0, _api.httpRequest)(_endPoints.PROPERTY.GET.URL, _endPoints.PROPERTY.GET.ACTION, queryObjectproperty);
+
             case 17:
-              _context.next = 22;
+              payloadProperty = _context.sent;
+
+              dispatch(propertyFetchComplete(payloadProperty));
+              _context.next = 24;
               break;
 
-            case 19:
-              _context.prev = 19;
-              _context.t1 = _context["catch"](2);
+            case 21:
+              _context.prev = 21;
+              _context.t1 = _context["catch"](14);
 
               dispatch(propertyFetchError(_context.t1.message));
 
-            case 22:
+            case 24:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[2, 19], [7, 14]]);
+      }, _callee, undefined, [[2, 9], [14, 21]]);
     }));
 
     return function (_x) {
