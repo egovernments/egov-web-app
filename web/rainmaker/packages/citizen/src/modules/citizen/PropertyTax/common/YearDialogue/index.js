@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dialog } from "components";
-import SingleButton from "./components/SingleButton";
+import SingleButtonForm from "./components/SingleButtonForm";
+import formHoc from "egov-ui-kit/hocs/form";
 import "./index.css";
 
 const getYearList = () => {
@@ -24,18 +25,18 @@ const getLastFourYear = (yearRange, currentYear, counter) => {
   return yearRange;
 };
 
+const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPay" })(SingleButtonForm);
+
 class YearDialog extends Component {
   render() {
-    let { open, closeDialogue } = this.props;
+    let { open, closeDialogue, handleFieldChange } = this.props;
     return (
       <Dialog
         open={open}
         children={[
           <div key={1}>
             <div className="dialogue-question">Which year’s taxes would you like to pay? </div>
-            <div className="year-range-botton-cont">
-              {getYearList().map((item, index) => <SingleButton key={index} label={item} handleClose={closeDialogue} />)}
-            </div>
+            <div className="year-range-botton-cont">{getYearList().map((item, index) => <YearDialogueHOC key={index} label={item} />)}</div>
           </div>,
         ]}
         bodyStyle={{ backgroundColor: "#ffffff" }}

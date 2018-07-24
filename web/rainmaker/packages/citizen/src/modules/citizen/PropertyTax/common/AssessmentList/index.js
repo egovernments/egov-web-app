@@ -18,11 +18,11 @@ const getItemStatus = (item) => {
     case "Paid":
       return (
         <div>
-          <div className="assessment-displayInline" style={item.date ? { marginTop: "10px" } : { marginTop: "0px" }}>
+          <div className="assessment-displayInline" style={item.date ? { marginTop: "8px" } : { marginTop: "0px" }}>
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
             <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
             <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
           </div>
@@ -31,9 +31,19 @@ const getItemStatus = (item) => {
       break;
     case "Partially Paid":
       return (
-        <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
-          <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
+        <div>
+          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
+            <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+            <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
+          </div>
+          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
+            <Label label="COMPLETE PAYMENT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
+            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+          </div>
+          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
+            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
+            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+          </div>
         </div>
       );
       break;
@@ -55,27 +65,16 @@ const getItemStatus = (item) => {
       break;
     case "ACCESS & PAY":
       return (
-        <div>
-          <div className="assessment-displayInline">
-            <Button
-              label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
-              primary={true}
-              style={{
-                height: 20,
-                lineHeight: "auto",
-                minWidth: "inherit",
-              }}
-            />
-          </div>
-          <Link to="/property-tax/past-payment">
-            <Label
-              containerStyle={{ marginTop: 10 }}
-              label="LINK LAST PAYMENTS"
-              labelStyle={{ marginLeft: "8px" }}
-              color={"#fe7a51"}
-              fontSize="12px"
-            />
-          </Link>
+        <div className="assessment-displayInline">
+          <Button
+            label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
+            primary={true}
+            style={{
+              height: 20,
+              lineHeight: "auto",
+              minWidth: "inherit",
+            }}
+          />
         </div>
       );
     default:
@@ -85,15 +84,14 @@ const getItemStatus = (item) => {
 
 const getRightIconItems = (item) => {
   return item.date || item.status || item.receipt || item.action ? (
-    <div style={{ width: "auto", top: "4px" }}>
-      {item.date && <Label label={item.date} labelStyle={{ textAlign: "right" }} color="#484848" />}
-      {getItemStatus(item)}
-      {/* {item.receipt && (
-        <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-          <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-          <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-        </div>
-      )} */}
+    <div
+      className="assessment-right-icon"
+      style={{ width: "auto", top: "0px", bottom: "0px", height: "inherit", margin: "auto", alignItems: "center", display: "flex", marginRight: 8 }}
+    >
+      <div>
+        {item.date && <Label label={item.date} containerStyle={{ marginRight: 5 }} labelStyle={{ textAlign: "right" }} color="#484848" />}
+        {getItemStatus(item)}
+      </div>
     </div>
   ) : (
     item.rightIcon

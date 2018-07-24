@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 const secondaryTextLabelStyle = {
@@ -17,7 +17,7 @@ const primaryTextLabelStyle = {
 };
 
 const secondaryTextContainer = {
-  marginTop: 3,
+  marginTop: 5,
 };
 
 const innerDivStyle = {
@@ -46,7 +46,7 @@ class CompletedAssessments extends Component {
           </div>
         ),
         date: "12-06-2018",
-        status: "Paid",
+        status: "Partially Paid",
         statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
         receipt: true,
       },
@@ -171,10 +171,10 @@ const getTransformedItems = (propertiesById) => {
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
           return {
-            primaryText: <Label label={curr.propertyId} fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+            primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
 
             secondaryText: (
-              <div style={{ height: "auto" }}>
+              <div style={{ height: "auto", marginTop: 0 }}>
                 <Label
                   label={item && item.financialYear}
                   containerStyle={secondaryTextContainer}
@@ -188,14 +188,14 @@ const getTransformedItems = (propertiesById) => {
                   color="#484848"
                 />
                 <Label
-                  label={`Assessment No.: (${item.assessmentNumber})`}
+                  label={`Assessment No.: ${item.assessmentNumber}`}
                   containerStyle={secondaryTextContainer}
                   labelStyle={secondaryTextLabelStyle}
                   color="#484848"
                 />
               </div>
             ),
-            date: "12-06-2018",
+            date: getDateFromEpoch(item.assessmentDate),
             status: "Paid",
 
             receipt: true,
@@ -214,40 +214,6 @@ const mapStateToProps = (state) => {
   const numProperties = propertiesById && Object.keys(propertiesById).length;
 
   const transformedProperties = getTransformedItems(propertiesById);
-
-  // const transformedProperties = Object.values(propertiesById).map((property, index) => {
-  //   return {
-  //     primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-
-  //     secondaryText: (
-  //       <div style={{ height: "auto" }}>
-  //         <Label
-  //           label={property.propertyDetails[0] && property.propertyDetails[0].financialYear}
-  //           containerStyle={secondaryTextContainer}
-  //           labelStyle={secondaryTextLabelStyle}
-  //           color="#484848"
-  //         />
-  //         <Label
-  //           label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
-  //           containerStyle={secondaryTextContainer}
-  //           labelStyle={secondaryTextLabelStyle}
-  //           color="#484848"
-  //         />
-  //         <Label
-  //           label={`Assessment No.: (${property.propertyDetails[0].assessmentNumber})`}
-  //           containerStyle={secondaryTextContainer}
-  //           labelStyle={secondaryTextLabelStyle}
-  //           color="#484848"
-  //         />
-  //       </div>
-  //     ),
-  //     date: "12-06-2018",
-  //     status: "Paid",
-
-  //     receipt: true,
-  //   };
-  // });
-
   return { urls, transformedProperties, loading, numProperties };
 };
 

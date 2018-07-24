@@ -29,7 +29,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Button = function Button(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === undefined ? "Continue" : _ref$label,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["label"]);
+      jsonPath = _ref.jsonPath,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["label", "jsonPath"]);
 
   return _react2.default.createElement(_RaisedButton2.default, (0, _extends3.default)({ label: label }, rest));
 };

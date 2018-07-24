@@ -94,10 +94,6 @@ var _IconButton = require("@material-ui/core/IconButton");
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _Tooltip = require("@material-ui/core/Tooltip");
-
-var _Tooltip2 = _interopRequireDefault(_Tooltip);
-
 var _Delete = require("@material-ui/icons/Delete");
 
 var _Delete2 = _interopRequireDefault(_Delete);
@@ -264,7 +260,7 @@ var EnhancedTableToolbar = function EnhancedTableToolbar(props) {
       "div",
       { className: classes.actions },
       numSelected > 0 ? _react2.default.createElement(
-        _Tooltip2.default,
+        Tooltip,
         { title: "Delete" },
         _react2.default.createElement(
           _IconButton2.default,
@@ -272,7 +268,7 @@ var EnhancedTableToolbar = function EnhancedTableToolbar(props) {
           _react2.default.createElement(_Delete2.default, null)
         )
       ) : _react2.default.createElement(
-        _Tooltip2.default,
+        Tooltip,
         { title: "Filter list" },
         _react2.default.createElement(
           _IconButton2.default,
