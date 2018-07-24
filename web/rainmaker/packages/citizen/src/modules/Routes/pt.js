@@ -89,7 +89,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/search-property",
+    path: "property-tax/assess-pay/search-property",
     component: SearchProperty,
     needsAuthentication: true,
     options: {

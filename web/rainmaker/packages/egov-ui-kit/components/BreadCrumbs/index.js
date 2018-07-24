@@ -38,7 +38,7 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
     url && url.map(function (item, index) {
       return _react2.default.createElement(
         "div",
-        { className: "rainmaker-displayInline" },
+        { key: index, className: "rainmaker-displayInline" },
         _react2.default.createElement(
           "div",
           { style: style },
