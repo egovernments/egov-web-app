@@ -58,13 +58,17 @@ class SearchProperty extends Component {
     return tableData;
   };
 
+  onActionClick = (e) => {
+    console.log(e);
+  };
+
   render() {
     const { propertiesFound } = this.props;
     const tableData = this.extractTableData(propertiesFound);
     return (
       <Screen>
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
-        <PropertyTable tableData={tableData} />
+        <PropertyTable tableData={tableData} onActionClick={this.onActionClick} />
       </Screen>
     );
   }

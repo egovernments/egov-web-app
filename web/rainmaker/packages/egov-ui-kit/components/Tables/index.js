@@ -184,18 +184,14 @@ var TableHeader = function (_React$Component) {
                 className: "tableHeadStyle"
               },
               _react2.default.createElement(
-                _Tooltip2.default,
-                { title: "Sort", placement: column.numeric ? "bottom-end" : "bottom-start", enterDelay: 300 },
-                _react2.default.createElement(
-                  _TableSortLabel2.default,
-                  {
-                    active: orderBy === column.id,
-                    direction: order,
-                    onClick: _this2.createSortHandler(column.id),
-                    className: "table-tooltip-styles"
-                  },
-                  column.label
-                )
+                _TableSortLabel2.default,
+                {
+                  active: orderBy === column.id,
+                  direction: order,
+                  onClick: _this2.createSortHandler(column.id),
+                  className: "table-tooltip-styles"
+                },
+                column.label
               )
             );
           }, this)
@@ -374,10 +370,13 @@ var TableUi = function (_React$Component2) {
       return _this3.state.selected.indexOf(id) !== -1;
     };
 
-    var actionOnRow = _this3.props.actionOnRow;
+    var _this3$props = _this3.props,
+        actionOnRow = _this3$props.actionOnRow,
+        orderby = _this3$props.orderby;
 
     _this3.state = {
       order: "asc",
+      orderBy: orderby,
       Action: actionOnRow,
       selected: [],
       page: 0,
@@ -396,13 +395,14 @@ var TableUi = function (_React$Component2) {
           rowCheckBox = _props2.rowCheckBox,
           rowData = _props2.rowData,
           columnData = _props2.columnData,
-          orderBy = _props2.orderBy,
+          orderby = _props2.orderby,
           tableHeading = _props2.tableHeading;
       var _state = this.state,
           order = _state.order,
           selected = _state.selected,
           rowsPerPage = _state.rowsPerPage,
-          page = _state.page;
+          page = _state.page,
+          orderBy = _state.orderBy;
 
       var data = [].concat((0, _toConsumableArray3.default)(rowData));
 

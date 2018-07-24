@@ -11,7 +11,7 @@ const columnData = [
   { id: "action", numeric: false, disablePadding: false, label: "Action" },
 ];
 
-const PropertyTable = ({ tableData }) => {
+const PropertyTable = ({ tableData, onActionClick }) => {
   return (
     <div className="form-without-button-cont-generic">
       <Card
@@ -31,10 +31,10 @@ const PropertyTable = ({ tableData }) => {
             />
             <TableUi
               rowCheckBox={false}
-              orderBy={"index"}
+              orderby={"index"}
               columnData={columnData}
               rowData={tableData}
-              ActionOnRow={<Button className={"search-table-assess-pay-btn"} label={"Assess & Pay"} />}
+              ActionOnRow={<Button className={"search-table-assess-pay-btn"} label={"Assess & Pay"} onClick={onActionClick} />}
             />
           </div>
         }
