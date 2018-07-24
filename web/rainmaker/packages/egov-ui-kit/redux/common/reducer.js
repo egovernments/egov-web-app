@@ -22,12 +22,17 @@ var commonTypes = _interopRequireWildcard(_actionTypes);
 
 var _commons = require("egov-ui-kit/utils/commons");
 
+var _set = require("lodash/set");
+
+var _set2 = _interopRequireDefault(_set);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var intialState = {
-  dropDownData: {}
+  dropDownData: {},
+  prepareFormData: {}
 };
 
 var commonReducer = function commonReducer() {
@@ -96,6 +101,10 @@ var commonReducer = function commonReducer() {
         loading: false,
         error: true,
         errorMessage: action.error
+      });
+    case commonTypes.PREPARE_FORM_DATA:
+      return (0, _extends4.default)({}, state, {
+        prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value)
       });
     default:
       return state;

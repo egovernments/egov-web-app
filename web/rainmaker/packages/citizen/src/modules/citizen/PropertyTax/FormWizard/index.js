@@ -55,6 +55,7 @@ class FormWizard extends Component {
       }
       try {
         let draftResponse=await httpRequest("pt-services-v2/drafts/_create","_cretae",[],draftRequest)
+
         this.setState({
           draftRequest:{draft:draftResponse.drafts[0]}
         })

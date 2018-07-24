@@ -1,4 +1,5 @@
 import * as actionTypes from "../actionTypes";
+import {prepareFormData} from "../../common/actions";
 import { setFieldValidation } from "../actions";
 import { validateField, getFormField } from "../utils";
 
@@ -20,6 +21,7 @@ const formValidation = (store) => (next) => (action) => {
       }
       dispatch(setFieldValidation(formKey, fieldKey, errorText));
     }
+    dispatch(prepareFormData(field.jsonPath,field.value))
   } else {
     next(action);
   }

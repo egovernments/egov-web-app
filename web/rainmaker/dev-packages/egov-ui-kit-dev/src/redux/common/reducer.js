@@ -1,8 +1,11 @@
 import * as commonTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
+import set from "lodash/set";
+
 
 const intialState = {
   dropDownData: {},
+  prepareFormData:{}
 };
 
 const commonReducer = (state = intialState, action) => {
@@ -97,6 +100,11 @@ const commonReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case commonTypes.PREPARE_FORM_DATA:
+      return {
+        ...state,
+        prepareFormData:set(state.prepareFormData,action.jsonPath,action.value)
+      }
     default:
       return state;
   }

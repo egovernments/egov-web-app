@@ -8,7 +8,9 @@ var _actionTypes = require("../actionTypes");
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _actions = require("../actions");
+var _actions = require("../../common/actions");
+
+var _actions2 = require("../actions");
 
 var _utils = require("../utils");
 
@@ -39,8 +41,9 @@ var formValidation = function formValidation(store) {
           if (updateDependentFields) {
             updateDependentFields(formKey, field, dispatch);
           }
-          dispatch((0, _actions.setFieldValidation)(formKey, fieldKey, errorText));
+          dispatch((0, _actions2.setFieldValidation)(formKey, fieldKey, errorText));
         }
+        dispatch((0, _actions.prepareFormData)(field.jsonPath, field.value));
       } else {
         next(action);
       }

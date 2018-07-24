@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.setDropDownData = undefined;
+exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -82,6 +82,14 @@ var MDMSFetchError = function MDMSFetchError(error) {
   return {
     type: actionTypes.MDMS_FETCH_ERROR,
     error: error
+  };
+};
+
+var prepareFormData = exports.prepareFormData = function prepareFormData(jsonPath, value) {
+  return {
+    type: actionTypes.PREPARE_FORM_DATA,
+    jsonPath: jsonPath,
+    value: value
   };
 };
 

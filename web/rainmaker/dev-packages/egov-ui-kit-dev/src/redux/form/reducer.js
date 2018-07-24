@@ -1,7 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import { validateField, getFormFields, getFiles } from "./utils";
 
-const intialState = {};
+const intialState = {
+};
 
 const setFormProperty = (state, formKey, propertyKey, propertyValue) => {
   const form = state[formKey] || {};

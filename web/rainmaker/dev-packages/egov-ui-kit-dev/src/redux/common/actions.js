@@ -62,6 +62,14 @@ const MDMSFetchError = (error) => {
   };
 };
 
+export const prepareFormData = (jsonPath,value) => {
+  return {
+    type:actionTypes.PREPARE_FORM_DATA,
+    jsonPath,
+    value
+  }
+}
+
 export const fetchEmployees = (requestBody) => {
   return async (dispatch) => {
     try {
