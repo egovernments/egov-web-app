@@ -45,11 +45,12 @@ class FormWizard extends Component {
   };
 
   callDraft=async (formArray=[])=>{
-    let {draftRequest} =this.state;
+    let {draftRequest,selected} =this.state;
     // if (formArray) {
     const {form}= this.props;
     if (!draftRequest.draft.id) {
       draftRequest.draft.draftRecord={
+        selectedTabIndex:selected+1,
         ...form
       }
       try {
@@ -63,6 +64,7 @@ class FormWizard extends Component {
 
     } else {
       draftRequest.draft.draftRecord={
+        selectedTabIndex:selected+1,
         ...form
       }
       try {
