@@ -142,7 +142,8 @@ var uploadFile = exports.uploadFile = function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id");
+            // Bad idea to fetch from local storage, change as feasible
+            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") ? (0, _commons.fetchFromLocalStorage)("tenant-id").split(".")[0] : "";
             uploadInstance = _axios2.default.create({
               baseURL: window.location.origin,
               headers: {
