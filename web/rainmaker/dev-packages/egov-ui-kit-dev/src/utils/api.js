@@ -75,7 +75,8 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
 };
 
 export const uploadFile = async (endPoint, module, file) => {
-  const tenantId = fetchFromLocalStorage("tenant-id");
+  // Bad idea to fetch from local storage, change as feasible
+  const tenantId = fetchFromLocalStorage("tenant-id") ? fetchFromLocalStorage("tenant-id").split(".")[0] : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
