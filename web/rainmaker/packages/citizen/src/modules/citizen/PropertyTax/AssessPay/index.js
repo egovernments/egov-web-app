@@ -68,21 +68,6 @@ class AssessPay extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
-        {/* <Card
-            textChildren={
-              <div
-                onClick={() => {
-                  this.setState({ dialogueOpen: true });
-                }}
-                className="rainmaker-displayInline"
-                style={{ paddingLeft: "14px", alignItems: "center", cursor: "pointer" }}
-              >
-                <Icon action="content" name="add" color="#767676" style={{ height: "30px", width: "30px" }} />
-                <Label label="Add New Property" containerStyle={{ marginLeft: "30px" }} labelStyle={{ fontWeight: 500 }} fontSize="16px" />
-              </div>
-            }
-          /> */}
-
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
         <YearDialogue open={this.state.dialogueOpen} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
