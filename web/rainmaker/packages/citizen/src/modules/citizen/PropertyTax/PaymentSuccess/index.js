@@ -14,6 +14,78 @@ const receiptDetails = {
   AmountPaid: "1432.47",
   button1: "Link previous payments",
   button2: "Finish",
+  oldPropertyId: "oldPropertyId",
+  propertyId: "PB-PT-2018_07_19-000016",
+  tax: {
+    AmountPaid: "100",
+    fireCess: "10",
+    rebate: "10",
+    total: "100",
+  },
+  receipts: {
+    AmountPaid: "60",
+    transactionId: "TR123",
+    bankName: "ICICI",
+    payMode: "Net Banking",
+    pendingAmt: "40",
+    paymentDate: "24/07/2018",
+  },
+  propertyDetails: [
+    {
+      noOfFloors: 2,
+      landArea: 10,
+      propertySubType: "INDEPENDENTBUILDING",
+      financialYear: "2017-18",
+      assessmentDate: 1531987969654,
+      assessmentNumber: "PB-PT-2018_07_19-000019",
+      documents: [
+        {
+          name: "aadhar",
+          id: "12345",
+        },
+      ],
+      units: [
+        {
+          floorNo: "1",
+          occupancyType: "RENTED",
+          usageCategoryDetail: "GROCERYSTORE",
+          usageCategoryMajor: "NONRESIDENTIAL",
+          usageCategoryMinor: "COMMERCIAL",
+          usageCategorySubMinor: "RETAIL",
+          unitArea: 10,
+          arv: 100.1,
+        },
+        {
+          floorNo: "2",
+          occupancyType: "SELFOCCUPIED",
+          usageCategoryDetail: "GROCERYSTORE",
+          usageCategoryMajor: "NONRESIDENTIAL",
+          usageCategoryMinor: "COMMERCIAL",
+          usageCategorySubMinor: "RETAIL",
+          unitArea: 90,
+          arv: 200,
+        },
+      ],
+    },
+  ],
+  address: {
+    buildingName: "Springfield",
+    city: "amritsar",
+    locality: {
+      code: "abc",
+    },
+
+    street: "Sarjapur Road",
+    doorNo: "1/11",
+  },
+  owners: {
+    mobileNumber: "9000000007",
+    OwnershipType: "Individual",
+    name: "testseven",
+    ownerType: "WIDOW",
+
+    correspondenceAddress: "bangalore",
+  },
 };
 
 const buttons = {

@@ -3,6 +3,7 @@ import { Card, Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { ActionFooter } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
+import generateReceipt from "./Components/receiptsPDF";
 import "./index.css";
 
 const labelStyle = {
@@ -88,7 +89,21 @@ const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages, bu
             </div>
           }
         />
+        {receiptDetails.ReceiptNo && (
+          <div
+            onClick={() => {
+              generateReceipt("pt-reciept-citizen", receiptDetails);
+            }}
+          >
+            <Label
+              label="DOWNLOAD RECEIPT"
+              color="#fe7a51"
+              labelStyle={{ textAlign: "center", fontWeight: 500, fontSize: "16px", cursor: "pointer" }}
+            />
+          </div>
+        )}
       </div>
+
       {/* {receiptDetails.printIcon &&
         receiptDetails.downloadIcon && (
           <div className="pt-success-receipt" style={{ alignItems: "center", paddingLeft: "8%", paddingRight: "8%", display: "flex" }}>
