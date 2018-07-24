@@ -23,6 +23,8 @@ import { setRoute } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { httpRequest} from "egov-ui-kit/utils/api";
+import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import "./index.css";
 
@@ -34,14 +36,47 @@ class FormWizard extends Component {
     formValidIndexArray: [],
     draftRequest:{
       "draft":{
-        "tenantId":get,
-        "userId":"vishal",
+        "tenantId":localStorage.getItem("tenant-id"),
+        "userId":get(JSON.parse(localStorage.getItem("user-info")),"id"),
         "draftRecord":{
-
         }
      }
    }
   };
+
+  callDraft=async (formArray=[])=>{
+    let {draftRequest} =this.state;
+    // if (formArray) {
+    const {form}= this.props;
+    if (!draftRequest.draft.id) {
+      draftRequest.draft.draftRecord={
+        ...form
+      }
+      try {
+        let draftResponse=await httpRequest("pt-services-v2/drafts/_create","_cretae",[],draftRequest)
+        this.setState({
+          draftRequest:{draft:draftResponse.drafts[0]}
+        })
+      } catch (e) {
+        alert(e);
+      }
+
+    } else {
+      draftRequest.draft.draftRecord={
+        ...form
+      }
+      try {
+        let draftResponse=await httpRequest("pt-services-v2/drafts/_update","_update",[],draftRequest)
+        this.setState({
+          draftRequest:{draft:draftResponse.drafts[0]}
+        })
+      } catch (e) {
+        alert(e)
+      }
+
+    }
+    // }
+  }
 
   addOwner = () => {
     const { ownerInfoArr } = this.state;
@@ -179,6 +214,7 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
+    const {callDraft,pay} =this;
     const { selected,formValidIndexArray } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
@@ -186,6 +222,7 @@ class FormWizard extends Component {
       case 0:
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
+          callDraft();
           this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
         } else {
           displayFormErrorsAction("propertyAddress");
@@ -212,9 +249,11 @@ class FormWizard extends Component {
                     }
                   }
                   if (floorValidation) {
+                    callDraft();
                     this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
                   }
                 } else {
+                  callDraft();
                   this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
                 }
               } else {
@@ -236,6 +275,7 @@ class FormWizard extends Component {
               const {ownerInfo} =form;
               const isOwnerInfoFormValid=validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
+                callDraft();
                 this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
               else {
@@ -255,6 +295,7 @@ class FormWizard extends Component {
                 }
               }
               if (ownerValidation) {
+                callDraft();
                 this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
             }
@@ -272,6 +313,7 @@ class FormWizard extends Component {
                 institutionFormValid=false
               }
               if (institutionFormValid) {
+                callDraft();
                 this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
               }
             }
@@ -282,8 +324,10 @@ class FormWizard extends Component {
         }
 
         break;
-      default:
-        setRoute("/property-tax/payment-success");
+      case 3:
+        pay();
+        // setRoute("/property-tax/payment-success");
+      break
     }
     // if (index <= 3) {
     //   this.setState({ selected: index });
@@ -291,6 +335,27 @@ class FormWizard extends Component {
     //   // setRoute("/property-tax/payment-success");
     // }
   };
+
+  formPropertyTaxPayObject=()=>{
+    const {form} =this.props;
+    let Properties=[];
+    Properties[0]={}
+    for (var variable in form) {
+      if (form.hasOwnProperty(variable)) {
+        const partialPropertyTaxPayObject =prepareFormData(form[variable]);
+        Properties[0]={
+          ...Properties[0],
+          ...partialPropertyTaxPayObject.Properties[0]
+        }
+      }
+    }
+    return Properties;
+  }
+
+  pay=()=>{
+    const PropertyTaxObject=this.formPropertyTaxPayObject();
+    console.log(PropertyTaxObject);
+  }
 
   onTabClick = (index) => {
     const {formValidIndexArray} =this.state;
