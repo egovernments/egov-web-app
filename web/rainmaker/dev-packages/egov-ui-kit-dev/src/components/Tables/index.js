@@ -14,7 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
@@ -55,16 +54,14 @@ class TableHeader extends React.Component {
                 sortDirection={orderBy === column.id ? order : false}
                 className="tableHeadStyle"
               >
-                <Tooltip title="Sort" placement={column.numeric ? "bottom-end" : "bottom-start"} enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === column.id}
-                    direction={order}
-                    onClick={this.createSortHandler(column.id)}
-                    className="table-tooltip-styles"
-                  >
-                    {column.label}
-                  </TableSortLabel>
-                </Tooltip>
+                <TableSortLabel
+                  active={orderBy === column.id}
+                  direction={order}
+                  onClick={this.createSortHandler(column.id)}
+                  className="table-tooltip-styles"
+                >
+                  {column.label}
+                </TableSortLabel>
               </TableCell>
             );
           }, this)}
@@ -174,9 +171,10 @@ const styles = (theme) => ({
 class TableUi extends React.Component {
   constructor(props) {
     super(props);
-    const { actionOnRow } = this.props;
+    const { actionOnRow, orderby } = this.props;
     this.state = {
       order: "asc",
+      orderBy: orderby,
       Action: actionOnRow,
       selected: [],
       page: 0,
@@ -231,8 +229,8 @@ class TableUi extends React.Component {
   isSelected = (id) => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, rowCheckBox, rowData, columnData, orderBy, tableHeading } = this.props;
-    const { order, selected, rowsPerPage, page } = this.state;
+    const { classes, rowCheckBox, rowData, columnData, orderby, tableHeading } = this.props;
+    const { order, selected, rowsPerPage, page, orderBy } = this.state;
     const data = [...rowData];
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
