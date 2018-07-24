@@ -85,7 +85,7 @@ const getItemStatus = (item) => {
 
 const getRightIconItems = (item) => {
   return item.date || item.status || item.receipt || item.action ? (
-    <div style={{ width: "auto" }}>
+    <div style={{ width: "auto", top: "4px" }}>
       {item.date && <Label label={item.date} labelStyle={{ textAlign: "right" }} color="#484848" />}
       {getItemStatus(item)}
       {/* {item.receipt && (

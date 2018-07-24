@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import { Screen } from "modules/common";
+import { BreadCrumbs } from "components";
+import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
@@ -20,6 +22,17 @@ class SearchProperty extends Component {
       searchResult: [],
     };
   }
+
+  componentDidMount = () => {
+    const { location, addBreadCrumbs, title } = this.props;
+    const { pathname } = location;
+    if (!(localStorage.getItem("path") === pathname)) {
+      title && addBreadCrumbs({ title: title, path: window.location.pathname });
+    }
+    // const { addBreadCrumbs, title } = this.props;
+    // title && addBreadCrumbs({ title: title, path: window.location.pathname });
+  };
+
   onSearchClick = (form, formKey) => {
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
@@ -63,10 +76,16 @@ class SearchProperty extends Component {
   };
 
   render() {
-    const { propertiesFound } = this.props;
+    const { urls, location, history, propertiesFound } = this.props;
+    let urlArray = [];
+    const { pathname } = location;
     const tableData = this.extractTableData(propertiesFound);
+    if (urls.length == 0 && localStorage.getItem("path") === pathname) {
+      urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
+    }
     return (
       <Screen>
+        <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         <PropertyTable tableData={tableData} onActionClick={this.onActionClick} />
       </Screen>
@@ -76,13 +95,15 @@ class SearchProperty extends Component {
 
 const mapStateToProps = (state) => {
   const { properties } = state;
+  const { urls } = state.app;
   const { propertiesById } = properties && properties;
   const propertiesFound = Object.values(propertiesById);
-  return { propertiesFound };
+  return { propertiesFound, urls };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
   };

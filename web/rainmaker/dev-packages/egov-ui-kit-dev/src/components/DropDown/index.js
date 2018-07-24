@@ -51,6 +51,9 @@ const DropDownUi = ({
   underlineStyle,
   hintText,
   hintStyle,
+  jsonPath,
+  dataFetchConfig,
+  errorMessage,
   ...rest
 }) => {
   const renderSelectMenuItems = () => {

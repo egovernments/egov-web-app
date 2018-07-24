@@ -14,7 +14,7 @@ const BreadCrumbs = ({ url, history }) => {
       {url &&
         url.map((item, index) => {
           return (
-            <div className="rainmaker-displayInline">
+            <div key={index} className="rainmaker-displayInline">
               <div style={style}>❯</div>
               <div
                 onClick={() => {

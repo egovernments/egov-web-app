@@ -53,14 +53,6 @@ class MyProperties extends Component {
 
   onListItemClick = (item) => {
     const { route: propertyId } = item;
-
-    // switch (path) {
-    //   case "receipt-dialogue":
-    //     break;
-    //   default:
-    //     this.props.history.push(path);
-    //     break;
-    // }
     this.props.history.push(`/property-tax/my-properties/property/${propertyId}`);
   };
 

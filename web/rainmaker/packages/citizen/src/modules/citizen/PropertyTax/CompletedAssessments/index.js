@@ -163,43 +163,90 @@ class CompletedAssessments extends Component {
   }
 }
 
+const getTransformedItems = (propertiesById) => {
+  return (
+    propertiesById &&
+    Object.values(propertiesById).reduce((acc, curr) => {
+      const propertyDetail =
+        curr.propertyDetails &&
+        curr.propertyDetails.map((item) => {
+          return {
+            primaryText: <Label label={curr.propertyId} fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+
+            secondaryText: (
+              <div style={{ height: "auto" }}>
+                <Label
+                  label={item && item.financialYear}
+                  containerStyle={secondaryTextContainer}
+                  labelStyle={secondaryTextLabelStyle}
+                  color="#484848"
+                />
+                <Label
+                  label={getCommaSeperatedAddress(curr.address.buildingName, curr.address.street)}
+                  containerStyle={secondaryTextContainer}
+                  labelStyle={secondaryTextLabelStyle}
+                  color="#484848"
+                />
+                <Label
+                  label={`Assessment No.: (${item.assessmentNumber})`}
+                  containerStyle={secondaryTextContainer}
+                  labelStyle={secondaryTextLabelStyle}
+                  color="#484848"
+                />
+              </div>
+            ),
+            date: "12-06-2018",
+            status: "Paid",
+
+            receipt: true,
+          };
+        });
+      acc = [...acc, ...propertyDetail];
+      return acc;
+    }, [])
+  );
+};
+
 const mapStateToProps = (state) => {
   const { properties } = state;
   const { urls } = state.app;
   const { loading, propertiesById } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
-  const transformedProperties = Object.values(propertiesById).map((property, index) => {
-    return {
-      primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
 
-      secondaryText: (
-        <div style={{ height: "auto" }}>
-          <Label
-            label={property.propertyDetails[0] && property.propertyDetails[0].financialYear}
-            containerStyle={secondaryTextContainer}
-            labelStyle={secondaryTextLabelStyle}
-            color="#484848"
-          />
-          <Label
-            label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
-            containerStyle={secondaryTextContainer}
-            labelStyle={secondaryTextLabelStyle}
-            color="#484848"
-          />
-          <Label
-            label={`Assessment No.: (${property.propertyDetails[0].assessmentNumber})`}
-            containerStyle={secondaryTextContainer}
-            labelStyle={secondaryTextLabelStyle}
-            color="#484848"
-          />
-        </div>
-      ),
-      date: "12-06-2018",
-      status: "Paid",
+  const transformedProperties = getTransformedItems(propertiesById);
 
-      receipt: true,
-    };
-  });
+  // const transformedProperties = Object.values(propertiesById).map((property, index) => {
+  //   return {
+  //     primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+
+  //     secondaryText: (
+  //       <div style={{ height: "auto" }}>
+  //         <Label
+  //           label={property.propertyDetails[0] && property.propertyDetails[0].financialYear}
+  //           containerStyle={secondaryTextContainer}
+  //           labelStyle={secondaryTextLabelStyle}
+  //           color="#484848"
+  //         />
+  //         <Label
+  //           label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
+  //           containerStyle={secondaryTextContainer}
+  //           labelStyle={secondaryTextLabelStyle}
+  //           color="#484848"
+  //         />
+  //         <Label
+  //           label={`Assessment No.: (${property.propertyDetails[0].assessmentNumber})`}
+  //           containerStyle={secondaryTextContainer}
+  //           labelStyle={secondaryTextLabelStyle}
+  //           color="#484848"
+  //         />
+  //       </div>
+  //     ),
+  //     date: "12-06-2018",
+  //     status: "Paid",
+
+  //     receipt: true,
+  //   };
+  // });
 
   return { urls, transformedProperties, loading, numProperties };
 };

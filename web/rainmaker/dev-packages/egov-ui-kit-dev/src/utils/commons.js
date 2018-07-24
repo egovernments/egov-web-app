@@ -348,6 +348,12 @@ export const transformLocalizationLabels = (localizationLabels) => {
   return labelsById;
 };
 
+export const flatten = (arr) => {
+  return arr.reduce((flat, toFlatten) => {
+    return flat.concat(Array.isArray(toFlatten) ? this.flatten(toFlatten) : toFlatten);
+  }, []);
+};
+
 export const getTenantForLatLng = async (lat, lng) => {
   let queryObjList = [{ key: "lat", value: lat }, { key: "lng", value: lng }, { key: "tenantId", value: commonConfig.tenantId }];
   let response;
