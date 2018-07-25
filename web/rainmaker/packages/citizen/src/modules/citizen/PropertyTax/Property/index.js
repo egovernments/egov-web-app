@@ -82,10 +82,10 @@ class Property extends Component {
       "OccupancyType",
       "PropertyType",
     ]);
+    console.log(this.props);
     const { pathname } = location;
     if (!(localStorage.getItem("path") === pathname)) {
-      const url = pathname && pathname.split("/").pop();
-      url && addBreadCrumbs({ title: url, path: window.location.pathname });
+      customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
     renderCustomTitleForPt(customTitle);
   };

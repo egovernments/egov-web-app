@@ -44,7 +44,7 @@ class MyProperties extends Component {
     fetchProperties([{ key: "uuid", value: userInfo.uuid }]); //Unnecessary API call to prevent page break on reload
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
-    title && addBreadCrumbs({ title: `${title}(${numProperties})`, path: window.location.pathname });
+    title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
   onNewPropertyButtonClick = () => {
