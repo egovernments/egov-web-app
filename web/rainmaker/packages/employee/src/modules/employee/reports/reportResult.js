@@ -194,7 +194,7 @@ class ShowField extends Component {
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
-    let reportTitle = this.getReportTitle();
+    let reportTitle =  this.getReportTitle();
 
     const buttons = [
       {
@@ -205,15 +205,19 @@ class ShowField extends Component {
         extend: "pdf",
         exportOptions,
         filename: _this.state.reportName,
-        title: reportTitle,
+        //title: reportTitle,
         messageTop: tabLabel,
         text: "PDF",
         orientation: "portrait",
         pageSize: "A4",
         footer: true,
-        // customize: function(doc) {
-        //   _this.PrintingCutomize(doc);
-        // },
+        customize: function(doc) {
+         // _this.PrintingCutomize(doc);
+         console.log(doc.content)
+         doc.content[0].text = [];
+         doc.content[0].text.push({text:"mSeva System Reports\n\n",bold:true,fontSize:20});
+         doc.content[0].text.push({text:reportTitle,fontSize:18})
+        },
         className: "report-pdf-button",
       },
       {
