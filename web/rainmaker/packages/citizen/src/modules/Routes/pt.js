@@ -32,6 +32,7 @@ const routes = [
       hideFooter: true,
       hideBackButton: true,
       isHomeScreen: true,
+      hideTitle: true,
     },
   },
   {

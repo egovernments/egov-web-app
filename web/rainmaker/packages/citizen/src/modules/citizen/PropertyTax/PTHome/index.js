@@ -19,6 +19,7 @@ const labelContainerStyle = {
 
 const innerDivStyle = {
   paddingLeft: 50,
+  borderBottom: "1px solid #e0e0e0",
 };
 
 const labelStyle = {
@@ -74,10 +75,10 @@ class PTHome extends Component {
           textChildren={
             <div>
               <div className="rainmaker-displayInline">
-                <Icon style={{ marginLeft: "8px" }} action="action" name="credit-card" color="#767676" />
+                <Icon style={{ marginLeft: "18px" }} action="action" name="credit-card" color="#767676" />
                 <Label
                   label="Pay Property Tax"
-                  containerStyle={{ marginLeft: "25px" }}
+                  containerStyle={{ marginLeft: 25, marginTop: 3 }}
                   labelStyle={labelStyle}
                   color="#484848"
                   fontSize="16px"
@@ -119,8 +120,7 @@ class PTHome extends Component {
             <List
               innerDivStyle={innerDivStyle}
               onItemClick={handleItemClick}
-              // listContainerStyle={{ marginTop: "16px" }}
-              listItemStyle={{ paddingLeft: "10px", borderBottom: "1px solid #e0e0e0" }}
+              listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px" }}
               nestedListStyle={{ padding: "0px", background: "#f2f2f2" }}
               autoGenerateNestedIndicator={false}
               primaryTogglesNestedList={true}

@@ -22,6 +22,7 @@ const secondaryTextContainer = {
 
 const innerDivStyle = {
   paddingTop: "16px",
+  borderBottom: "1px solid #e0e0e0",
 };
 
 class CompletedAssessments extends Component {

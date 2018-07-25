@@ -6,7 +6,7 @@ import YearDialogue from "../YearDialogue";
 const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialogue, onButtonClick }) => {
   return (
     <div className="no-assessment-message-cont">
-      <Label label={noAssessmentMessage} dark={true} fontSize={"16px"} labelStyle={{ letterSpacing: "0.7px" }} />
+      <Label label={noAssessmentMessage} dark={true} fontSize={"16px"} />
 
       {button && (
         <Button
