@@ -2,6 +2,7 @@ import React from "react";
 import { Screen } from "modules/common";
 import { Icon } from "components";
 import PaymentStatus from "../common/PaymentStatus";
+import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 
 const receiptDetails = {
   ReceiptNo: "PT03-067-03-117",
@@ -16,6 +17,11 @@ const receiptDetails = {
   button2: "Finish",
   oldPropertyId: "oldPropertyId",
   propertyId: "PB-PT-2018_07_19-000016",
+  header: {
+    header: "AMRITSAR MUNICIPAL CORPORATION",
+    subheader: "Property Tax Payment Receipt (Citizen Copy)",
+    logo: msevaLogo,
+  },
   tax: {
     AmountPaid: "100",
     fireCess: "10",
