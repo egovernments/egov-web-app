@@ -206,9 +206,9 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { callDraft, pay } = this;
-    const { selected, formValidIndexArray } = this.state;
-    const { displayFormErrorsAction, form } = this.props;
+    const {callDraft,pay,estimate} =this;
+    const { selected,formValidIndexArray } = this.state;
+    const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
       case 0:
@@ -310,6 +310,8 @@ class FormWizard extends Component {
           }
         }
 
+        estimate();
+
         break;
       case 3:
         pay();
@@ -323,27 +325,25 @@ class FormWizard extends Component {
     // }
   };
 
-  formPropertyTaxPayObject = () => {
-    const { form } = this.props;
-    let Properties = [];
-    Properties[0] = {};
-    for (var variable in form) {
-      if (form.hasOwnProperty(variable)) {
-        const partialPropertyTaxPayObject = prepareFormData(form[variable]);
-        Properties[0] = {
-          ...Properties[0],
-          ...partialPropertyTaxPayObject.Properties[0],
-        };
-      }
+  estimate=async ()=>{
+    let {prepareFormData}=this.props;
+    try {
+      let estimateResponse=await httpRequest("pt-calculator-v2/propertytax/_estimate","_estimate",[],{CalculationCriteria:[{assessmentYear:"2018-2-19",tenantId:localStorage.getItem("tenant-id"),property:prepareFormData.Properties[0]}]});
+      console.log(estimateResponse);
+    } catch (e) {
+      alert(e);
     }
-    return Properties;
-  };
+  }
 
-  pay = () => {
-    const PropertyTaxObject = this.formPropertyTaxPayObject();
-    console.log(PropertyTaxObject);
-  };
-
+  pay=async ()=>{
+    let {prepareFormData}=this.props;
+    try {
+      let createPropertyResponse=await httpRequest("pt-services-v2/property/_create","_create",[],{Properties:prepareFormData.Properties});
+      console.log(createPropertyResponse);
+    } catch (e) {
+      alert(e);
+    }
+  }
   onTabClick = (index) => {
     const { formValidIndexArray } = this.state;
     // form validation checks needs to be written here
@@ -376,8 +376,8 @@ class FormWizard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { form } = state || {};
-  return { form };
+  const { form,common } = state || {};
+  return { form ,prepareFormData:common.prepareFormData};
 };
 
 const mapDispatchToProps = (dispatch) => {
