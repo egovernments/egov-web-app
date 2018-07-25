@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-
+import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const generateReceipt = (role, details) => {
@@ -22,6 +22,9 @@ const generateReceipt = (role, details) => {
   };
   switch (role) {
     case "pt-reciept-citizen":
+
+      // let floorData = propertyDetails[0].noOfFloors || 1;
+
       // data for floor details
       let getFloorDetails = () => {
         let bodyData = [];

@@ -22,7 +22,6 @@ import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
-import asyncComponent from "./asyncComponent";
 import ptRoutes from "./pt";
 import { PrivacyPolicy } from "modules/common";
 
@@ -69,7 +68,7 @@ const routes = [
     path: "/",
     component: Home,
     needsAuthentication: true,
-    options: { isHomeScreen: true, title: "Home", hideTitle: true,redirectionUrl: "/user/register" },
+    options: { isHomeScreen: true, title: "Home", hideTitle: true, redirectionUrl: "/user/register" },
   },
 
   {

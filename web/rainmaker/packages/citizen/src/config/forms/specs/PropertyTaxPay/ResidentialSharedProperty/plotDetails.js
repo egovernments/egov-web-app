@@ -82,8 +82,6 @@ const formConfig = {
       ErrorText: "Enter a valid super area size",
       toolTip: true,
       toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
-      toolTip: true,
-      toolTipMessage: "",
       required: true,
       numcols: 4,
     },

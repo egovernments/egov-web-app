@@ -1,6 +1,5 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
-const cityCode = "";
 
 // const formConfig = {
 //   name: "propertyAddress",
@@ -127,7 +126,7 @@ const formConfig = {
       type: "textfield",
       // floatingLabelText: "PT_PROPERTY_DETAILS_COLONY_NAME",
       floatingLabelText: "Building/Colony Name",
-      hintText: "PT_PROPERTY_DETAILS_COLONY_NAME_PLACEHOLDER",
+      // hintText: "PT_PROPERTY_DETAILS_COLONY_NAME_PLACEHOLDER",
       hintText: "Enter buiding/colony name",
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",

@@ -3,7 +3,6 @@ import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "../PTList";
 import BlankAssessment from "../BlankAssessment";
-import { Link } from "react-router-dom";
 import "./index.css";
 
 const getItemStatus = (item) => {

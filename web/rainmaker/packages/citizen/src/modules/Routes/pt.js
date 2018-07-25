@@ -1,8 +1,6 @@
 // property tax
 import asyncComponent from "./asyncComponent";
-// import PTHome from "modules/citizen/PropertyTax/PTHome";
 const PTHome = asyncComponent(() => import("modules/citizen/PropertyTax/PTHome").then((module) => module.default));
-// import AssessPay from "modules/citizen/PropertyTax/AssessPay";
 const AssessPay = asyncComponent(() => import("modules/citizen/PropertyTax/AssessPay").then((module) => module.default));
 const SearchProperty = asyncComponent(() => import("modules/citizen/PropertyTax/SearchProperty").then((module) => module.default));
 const CompletedAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/CompletedAssessments").then((module) => module.default));
@@ -10,17 +8,15 @@ const IncompleteAssessments = asyncComponent(() => import("modules/citizen/Prope
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
 const Property = asyncComponent(() => import("modules/citizen/PropertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
-const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
-  import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
-);
+// const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
+//   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
+// );
 const PaymentSuccess = asyncComponent(() => import("modules/citizen/PropertyTax/PaymentSuccess").then((module) => module.default));
 const PaymentFailure = asyncComponent(() => import("modules/citizen/PropertyTax/PaymentFailure").then((module) => module.default));
-const Events = asyncComponent(() => import("modules/citizen/PropertyTax/Events").then((module) => module.default));
-const Payments = asyncComponent(() => import("modules/citizen/PropertyTax/Payments").then((module) => module.default));
 const ReviewForm = asyncComponent(() => import("modules/citizen/PropertyTax/ReviewForm").then((module) => module.default));
-const PropertyAddress = asyncComponent(() =>
-  import("modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress").then((module) => module.default)
-);
+// const PropertyAddress = asyncComponent(() =>
+//   import("modules/citizen/PropertyTax/AssessmentFormWizard/components/PropertyAddress").then((module) => module.default)
+// );
 
 const FormWizard = asyncComponent(() => import("modules/citizen/PropertyTax/FormWizard").then((module) => module.default));
 

@@ -54,6 +54,8 @@ const DropDownUi = ({
   jsonPath,
   dataFetchConfig,
   errorMessage,
+  toolTip,
+  toolTipMessage,
   ...rest
 }) => {
   const renderSelectMenuItems = () => {

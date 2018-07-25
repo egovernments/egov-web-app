@@ -1,8 +1,7 @@
-import React, { Component } from "react"
-import AssessmentList from "../common/AssessmentList"
-import { Screen } from "modules/common"
-import PastPaymentList from "./PastPaymentList"
-import "./index.css"
+import React, { Component } from "react";
+import { Screen } from "modules/common";
+import PastPaymentList from "./PastPaymentList";
+import "./index.css";
 
 class LinkLastPayments extends Component {
   state = {
@@ -23,7 +22,7 @@ class LinkLastPayments extends Component {
         primaryText: "2018 - 2019",
       },
     ],
-  }
+  };
   render() {
     return (
       <Screen className="pt-home-screen">
@@ -33,7 +32,7 @@ class LinkLastPayments extends Component {
           subHeader="If yes, please indicate below to link your payments"
         />
       </Screen>
-    )
+    );
   }
 }
 

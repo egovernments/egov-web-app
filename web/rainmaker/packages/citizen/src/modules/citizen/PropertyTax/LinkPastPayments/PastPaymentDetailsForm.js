@@ -4,7 +4,6 @@ import formHoc from "egov-ui-kit/hocs/form";
 
 const PastPaymentDetailsForm = ({ handleFieldChange, form }) => {
   const fields = form.fields || {};
-  const submit = form.submit;
   return (
     <div className="past-payment-form">
       <Field fieldKey="receipt" field={fields.receipt} handleFieldChange={handleFieldChange} className="receipt" />
@@ -15,20 +14,13 @@ const PastPaymentDetailsForm = ({ handleFieldChange, form }) => {
 };
 
 const PastPaymentDetailsFormHoc = (props) => {
-  const DetailsForm = formHoc({...props})(PastPaymentDetailsForm);
-  return (
-    <DetailsForm />
-  )
-}
+  const DetailsForm = formHoc({ ...props })(PastPaymentDetailsForm);
+  return <DetailsForm />;
+};
 
 class PastPaymentDetails extends React.Component {
   render() {
-    return (
-        <PastPaymentDetailsFormHoc
-          path="PropertyTaxPay"
-          {...this.props}
-        />
-    );
+    return <PastPaymentDetailsFormHoc path="PropertyTaxPay" {...this.props} />;
   }
 }
 

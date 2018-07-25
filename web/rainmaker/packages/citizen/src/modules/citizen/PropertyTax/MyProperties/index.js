@@ -65,7 +65,7 @@ class MyProperties extends Component {
   // };
 
   render() {
-    const { urls, location, history, transformedProperties, loading } = this.props;
+    const { urls, history, transformedProperties, loading } = this.props;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />

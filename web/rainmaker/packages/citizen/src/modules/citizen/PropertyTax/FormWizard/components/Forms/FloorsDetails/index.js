@@ -135,6 +135,7 @@ const mapStateToProps = ({ form }) => {
   return { noFloors };
 };
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
     removeForm: (formKey) => dispatch(removeForm(formKey)),
@@ -143,5 +144,4 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(FloorDetails);
+  mapDispatchToProps)(FloorDetails);
