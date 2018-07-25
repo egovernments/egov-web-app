@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 import { Icon, BreadCrumbs } from "components";
@@ -8,16 +9,22 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
-import PropertyItems from "./components/PropertyInformation/propertyitems";
+import isEqual from "lodash/isEqual";
+// import PropertyItems from "./components/PropertyInformation/propertyitems";
 
 const innerDivStyle = {
-  paddingLeft: 50,
+  padding: "20px 56px 20px 50px",
   borderBottom: "1px solid #e0e0e0",
   marginLeft: 0,
 };
 
 const IconStyle = {
-  margin: "12px 0px 0px 0px",
+  margin: 0,
+  top: 0,
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  height: "inherit",
 };
 
 const listItemStyle = {
@@ -36,7 +43,7 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, fetchGeneralMDMSData } = this.props;
+    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -79,6 +86,14 @@ class Property extends Component {
     if (!(localStorage.getItem("path") === pathname)) {
       const url = pathname && pathname.split("/").pop();
       url && addBreadCrumbs({ title: url, path: window.location.pathname });
+    }
+    renderCustomTitleForPt(customTitle);
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    const { customTitle, renderCustomTitleForPt } = this.props;
+    if (!isEqual(customTitle, nextProps.customTitle)) {
+      renderCustomTitleForPt(nextProps.customTitle);
     }
   };
 
@@ -257,19 +272,33 @@ const mapStateToProps = (state, ownProps) => {
   const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
   const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
+  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
   const assessmentListItems = [
     {
       primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-      leftIcon: <Icon action="action" name="info" color="#484848" style={IconStyle} />,
+      leftIcon: (
+        <div style={IconStyle}>
+          <Icon action="action" name="info" color="#484848" />
+        </div>
+      ),
       nestedItems: [
         {
-          secondaryText: <PropertyInformation items={propertyItems} />,
+          secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} />,
         },
       ],
+      rightIcon: (
+        <div style={IconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+        </div>
+      ),
     },
     {
       primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-      leftIcon: <Icon action="action" name="receipt" color="#484848" style={IconStyle} />,
+      leftIcon: (
+        <div style={IconStyle}>
+          <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
+        </div>
+      ),
       nestedItems: [
         {
           primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
@@ -300,10 +329,15 @@ const mapStateToProps = (state, ownProps) => {
           primaryText: <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" labelStyle={{ fontWeight: 500 }} />,
         },
       ],
+      rightIcon: (
+        <div style={IconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+        </div>
+      ),
     },
   ];
 
-  return { urls, assessmentListItems };
+  return { urls, assessmentListItems, customTitle };
 };
 
 const mapDispatchToProps = (dispatch) => {

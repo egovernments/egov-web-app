@@ -73,6 +73,11 @@ var withAuthorization = function withAuthorization() {
           _this.setState({ titleAddon: titleAddon });
         };
 
+        _this.renderCustomTitleForPt = function (title) {
+          var titleAddon = title ? title : "";
+          _this.setState({ titleAddon: titleAddon });
+        };
+
         if (typeof androidAppProxy !== "undefined" && window.androidAppProxy.smsReceiverRunning()) {
           window.androidAppProxy.stopSMSReceiver();
         }
@@ -90,6 +95,9 @@ var withAuthorization = function withAuthorization() {
             this.props.history.replace(redirectionUrl || baseUrl);
           }
         }
+
+        //Duplication due to lack of time for proper testing in PGR
+
       }, {
         key: "render",
         value: function render() {
@@ -183,7 +191,11 @@ var withAuthorization = function withAuthorization() {
                       fontSize: 20
                     })
                   ),
-                  _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, { title: title, renderCustomTitle: this.renderCustomTitle }))
+                  _react2.default.createElement(Component, (0, _extends3.default)({}, this.props, {
+                    title: title,
+                    renderCustomTitleForPt: this.renderCustomTitleForPt,
+                    renderCustomTitle: this.renderCustomTitle
+                  }))
                 ) : null
               )
             )

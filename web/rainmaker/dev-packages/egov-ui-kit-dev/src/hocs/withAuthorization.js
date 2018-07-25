@@ -23,7 +23,7 @@ const withAuthorization = (options = {}) => (Component) => {
       const { authenticated } = this.props;
       const { redirectionUrl } = options;
       if (!authenticated) {
-        const baseUrl=process.env.REACT_APP_NAME==="Citizen"?"/user/register":"/user/login";
+        const baseUrl = process.env.REACT_APP_NAME === "Citizen" ? "/user/register" : "/user/login";
         this.props.history.replace(redirectionUrl || baseUrl);
       }
     }
@@ -40,6 +40,13 @@ const withAuthorization = (options = {}) => (Component) => {
 
     renderCustomTitle = (numberOfComplaints) => {
       const titleAddon = numberOfComplaints ? `(${numberOfComplaints})` : "(0)";
+      this.setState({ titleAddon });
+    };
+
+    //Duplication due to lack of time for proper testing in PGR
+
+    renderCustomTitleForPt = (title) => {
+      const titleAddon = title ? title : "";
       this.setState({ titleAddon });
     };
 
@@ -134,7 +141,12 @@ const withAuthorization = (options = {}) => (Component) => {
                         )}
                       </div>
                     )}
-                  <Component {...this.props} title={title} renderCustomTitle={this.renderCustomTitle} />
+                  <Component
+                    {...this.props}
+                    title={title}
+                    renderCustomTitleForPt={this.renderCustomTitleForPt}
+                    renderCustomTitle={this.renderCustomTitle}
+                  />
                 </div>
               ) : null}
             </div>
