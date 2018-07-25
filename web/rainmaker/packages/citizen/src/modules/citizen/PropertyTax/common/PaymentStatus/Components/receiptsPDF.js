@@ -50,6 +50,9 @@ const generateReceipt = (role, details) => {
           });
         return bodyData;
       };
+      let borderKey = [true, true, false, true];
+      let borderValue = [false, true, true, true];
+      let receiptTableWidth = ["*", "*", "*", "*"];
 
       data = {
         content: [
@@ -145,12 +148,12 @@ const generateReceipt = (role, details) => {
             table: {
               body: [
                 [
-                  { text: "Receipt No:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: details.ReceiptNo || "", border: [false, true, true, true] },
-                  { text: "Property System ID:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: details.propertyId || "", border: [false, true, true, true] }, //need to confirm this data
-                  { text: "Assessment ID:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: propertyDetails[0].assessmentNumber || "", border: [false, true, true, true] },
+                  { text: "Receipt No:", border: borderKey, style: "receipt-table-key" },
+                  { text: details.ReceiptNo || "", border: borderValue },
+                  { text: "Property System ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: details.propertyId || "", border: borderValue }, //need to confirm this data
+                  { text: "Assessment ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: propertyDetails[0].assessmentNumber || "", border: borderValue },
                 ],
               ],
             },
@@ -160,19 +163,19 @@ const generateReceipt = (role, details) => {
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: ["*", "*", "*", "*"],
+              widths: receiptTableWidth,
               body: [
                 [
-                  { text: "House/Door No.:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: address.doorNo || "", border: [false, true, true, true] },
-                  { text: "Building/Colony Name.:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: address.buildingName || "", border: [false, true, true, true] },
+                  { text: "House/Door No.:", border: borderKey, style: "receipt-table-key" },
+                  { text: address.doorNo || "", border: borderValue },
+                  { text: "Building/Colony Name.:", border: borderKey, style: "receipt-table-key" },
+                  { text: address.buildingName || "", border: borderValue },
                 ],
                 [
-                  { text: "Street Name:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: address.street || "", border: [false, true, true, true] },
-                  { text: "Locality/Mohalla:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: address.locality.code || "", border: [false, true, true, true] },
+                  { text: "Street Name:", border: borderKey, style: "receipt-table-key" },
+                  { text: address.street || "", border: borderValue },
+                  { text: "Locality/Mohalla:", border: borderKey, style: "receipt-table-key" },
+                  { text: address.locality.code || "", border: borderValue },
                 ],
               ],
             },
@@ -182,13 +185,13 @@ const generateReceipt = (role, details) => {
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: ["*", "*", "*", "*"],
+              widths: receiptTableWidth,
               body: [
                 [
-                  { text: "Plot Size:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: propertyDetails[0].landArea || "", border: [false, true, true, true] },
-                  { text: "Type of Building:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: propertyDetails[0].propertySubType || "", border: [false, true, true, true] },
+                  { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
+                  { text: propertyDetails[0].landArea || "", border: borderValue },
+                  { text: "Type of Building:", border: borderKey, style: "receipt-table-key" },
+                  { text: propertyDetails[0].propertySubType || "", border: borderValue },
                 ],
               ],
             },
@@ -206,25 +209,25 @@ const generateReceipt = (role, details) => {
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: ["*", "*", "*", "*"],
+              widths: receiptTableWidth,
               body: [
                 [
-                  { text: "Owner/Company Name:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: owners.name || "", border: [false, true, true, true] },
-                  { text: "Type of Ownership:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: owners.OwnershipType || "", border: [false, true, true, true] },
+                  { text: "Owner/Company Name:", border: borderKey, style: "receipt-table-key" },
+                  { text: owners.name || "", border: borderValue },
+                  { text: "Type of Ownership:", border: borderKey, style: "receipt-table-key" },
+                  { text: owners.OwnershipType || "", border: borderValue },
                 ],
                 [
-                  { text: "Mobile No.:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: owners.mobileNumber || "", border: [false, true, true, true] },
-                  { text: "Owner Category:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: owners.ownerType || "", border: [false, true, true, true] },
+                  { text: "Mobile No.:", border: borderKey, style: "receipt-table-key" },
+                  { text: owners.mobileNumber || "", border: borderValue },
+                  { text: "Owner Category:", border: borderKey, style: "receipt-table-key" },
+                  { text: owners.ownerType || "", border: borderValue },
                 ],
                 [
-                  { text: "Correspondence Address:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: owners.correspondenceAddress || "", border: [false, true, true, true] },
-                  { text: "Owner Category ID No.:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: propertyDetails[0].documents[0].id || "", border: [false, true, true, true] },
+                  { text: "Correspondence Address:", border: borderKey, style: "receipt-table-key" },
+                  { text: owners.correspondenceAddress || "", border: borderValue },
+                  { text: "Owner Category ID No.:", border: borderKey, style: "receipt-table-key" },
+                  { text: propertyDetails[0].documents[0].id || "", border: borderValue },
                 ],
               ],
             },
@@ -234,19 +237,19 @@ const generateReceipt = (role, details) => {
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: ["*", "*", "*", "*"],
+              widths: receiptTableWidth,
               body: [
                 [
-                  { text: "Property Tax:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: tax.AmountPaid || "", border: [false, true, true, true] },
-                  { text: "Fire Cess (10%):", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: tax.fireCess || "", border: [false, true, true, true] },
+                  { text: "Property Tax:", border: borderKey, style: "receipt-table-key" },
+                  { text: tax.AmountPaid || "", border: borderValue },
+                  { text: "Fire Cess (10%):", border: borderKey, style: "receipt-table-key" },
+                  { text: tax.fireCess || "", border: borderValue },
                 ],
                 [
-                  { text: "Rebate :", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: tax.rebate || "", border: [false, true, true, true] },
-                  { text: "TOTAL:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: tax.total || "", border: [false, true, true, true] },
+                  { text: "Rebate :", border: borderKey, style: "receipt-table-key" },
+                  { text: tax.rebate || "", border: borderValue },
+                  { text: "TOTAL:", border: borderKey, style: "receipt-table-key" },
+                  { text: tax.total || "", border: borderValue },
                 ],
               ],
             },
@@ -256,25 +259,25 @@ const generateReceipt = (role, details) => {
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: ["*", "*", "*", "*"],
+              widths: receiptTableWidth,
               body: [
                 [
-                  { text: "Total Amount Paid:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: receipts.AmountPaid || "", border: [false, true, true, true], style: "receipt-table-value" },
-                  { text: "Payment Mode:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: receipts.payMode || "", border: [false, true, true, true] },
+                  { text: "Total Amount Paid:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.AmountPaid || "", border: borderValue, style: "receipt-table-value" },
+                  { text: "Payment Mode:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.payMode || "", border: borderValue },
                 ],
                 [
-                  { text: "Transaction ID:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: receipts.transactionId || "", border: [false, true, true, true] },
-                  { text: "Bank Name:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: receipts.bankName || "", border: [false, true, true, true] },
+                  { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.transactionId || "", border: borderValue },
+                  { text: "Bank Name:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.bankName || "", border: borderValue },
                 ],
                 [
-                  { text: "Pending Amount:", border: [true, true, false, true], style: "receipt-table-key" },
-                  { text: receipts.pendingAmt || "", border: [false, true, true, true] },
-                  { text: "", border: [true, true, false, true] },
-                  { text: "", border: [false, true, true, true] },
+                  { text: "Pending Amount:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.pendingAmt || "", border: borderValue },
+                  { text: "", border: borderKey },
+                  { text: "", border: borderValue },
                 ],
               ],
             },
