@@ -268,7 +268,7 @@ var deleteForm = exports.deleteForm = function deleteForm(formKey) {
 
 var updatePTForms = exports.updatePTForms = function updatePTForms(forms) {
   return {
-    type: actionTypes.UPDATE_PT_FORM,
+    type: actionTypes.UPDATE_FORM,
     forms: forms
   };
 };
