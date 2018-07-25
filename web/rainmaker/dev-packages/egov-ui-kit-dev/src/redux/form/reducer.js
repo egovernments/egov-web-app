@@ -153,8 +153,11 @@ const form = (state = intialState, action) => {
       const updatedState = { ...state }
       delete updatedState[formKey]
       return updatedState
-    case actionTypes.UPDATE_PT_FORM:
-      return action.forms
+    case actionTypes.UPDATE_FORM:
+      return {
+        ...state,
+        ...action.forms,
+      }
     default:
       return state;
   }

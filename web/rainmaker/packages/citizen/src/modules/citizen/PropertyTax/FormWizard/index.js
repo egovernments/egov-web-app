@@ -135,7 +135,8 @@ class FormWizard extends Component {
   }
 
   getAssessmentId = (queryString) => {
-    const assessmentString = queryString.split("?")[1].split("&").find(params => params.split("=")[0] === "assessmentId")
+    console.log("queryString", queryString)
+    const assessmentString = queryString.indexOf("?") !== -1 && queryString.split("?")[1].split("&").find(params => params.split("=")[0] === "assessmentId")
     return assessmentString && assessmentString.split("=")[1]
   }
 

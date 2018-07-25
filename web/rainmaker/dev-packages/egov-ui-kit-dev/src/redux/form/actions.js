@@ -137,6 +137,6 @@ export const deleteForm = (formKey) => ({
 });
 
 export const updatePTForms = (forms) => ({
-  type: actionTypes.UPDATE_PT_FORM,
+  type: actionTypes.UPDATE_FORM,
   forms,
 })

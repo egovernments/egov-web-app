@@ -17,4 +17,4 @@ export const FILE_REMOVE = "FILE_REMOVE";
 export const SET_FIELD_PROPERTY = "SET_FIELD_PROPERTY";
 export const RESET_FILES = "RESET_FILES";
 export const DELETE_FORM = "DELETE_FORM"
-export const UPDATE_PT_FORM = "UPDATE_PT_FORM"
+export const UPDATE_FORM = "UPDATE_FORM"
