@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { deleteForm } from "egov-ui-kit/redux/form/actions";
+import { Label } from "components";
+import { deleteForm, updatePTForms } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -25,6 +26,8 @@ import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
+import range from "lodash/range"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -33,17 +36,26 @@ class FormWizard extends Component {
     ownerInfoArr: [],
     showOwners: false,
     formValidIndexArray: [],
-    draftRequest: {
-      draft: {
-        tenantId: localStorage.getItem("tenant-id"),
-        userId: get(JSON.parse(localStorage.getItem("user-info")), "id"),
-        draftRecord: {},
-      },
-    },
+    ownersCount: 0,
+    draftRequest:{
+      "draft":{
+        "tenantId":localStorage.getItem("tenant-id"),
+        "userId":get(JSON.parse(localStorage.getItem("user-info")),"id"),
+        "draftRecord":{
+        }
+     }
+   }
   };
 
-  callDraft = async () => {
-    let { draftRequest, selected } = this.state;
+  updateDraftinLocalStorage = (draftInfo) => {
+    localStorage.setItem("draftId", draftInfo.id)
+    this.setState({
+      draftRequest:{draft:draftInfo}
+    })
+  }
+
+  callDraft=async (formArray=[])=>{
+    let {draftRequest,selected} =this.state;
     // if (formArray) {
     const { form } = this.props;
     if (!draftRequest.draft.id) {
@@ -52,11 +64,9 @@ class FormWizard extends Component {
         ...form,
       };
       try {
-        let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
-
-        this.setState({
-          draftRequest: { draft: draftResponse.drafts[0] },
-        });
+        let draftResponse=await httpRequest("pt-services-v2/drafts/_create","_cretae",[],draftRequest)
+        const draftInfo = draftResponse.drafts[0]
+        this.updateDraftinLocalStorage(draftInfo)
       } catch (e) {
         alert(e);
       }
@@ -66,10 +76,9 @@ class FormWizard extends Component {
         ...form,
       };
       try {
-        let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
-        this.setState({
-          draftRequest: { draft: draftResponse.drafts[0] },
-        });
+        let draftResponse=await httpRequest("pt-services-v2/drafts/_update","_update",[],draftRequest)
+        const draftInfo = draftResponse.drafts[0]
+        this.updateDraftinLocalStorage(draftInfo)
       } catch (e) {
         alert(e);
       }
@@ -77,16 +86,64 @@ class FormWizard extends Component {
     // }
   };
 
+  configOwner = ownersCount => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
+
   addOwner = () => {
-    const { ownerInfoArr } = this.state;
-    const index = ownerInfoArr.length;
-    const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${index}`, path: "PropertyTaxPay" })(OwnerInformation);
+    const { ownerInfoArr, ownersCount } = this.state;
+    const OwnerInfoHOC = this.configOwner(ownersCount)
     this.setState({
-      ownerInfoArr: [...this.state.ownerInfoArr, { index, Component: OwnerInfoHOC }],
+      ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
+      ownersCount: ownersCount + 1,
     });
   };
 
+  configOwnersDetailsFromDraft = ownerFormKeys => {
+    const ownerDetails = []
+    let ownersCount = -1
+    ownerFormKeys.forEach((key) => {
+      const currentOwnerIndex = key.split("_")[1]
+      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex
+      const ownerInfo = this.configOwner(currentOwnerIndex)
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
+    })
+    return {
+      ownerDetails,
+      totalowners: ownersCount,
+    }
+  }
+
+  fetchDraftDetails = async (draftId) => {
+    const { draftRequest, ownerInfoArr } =this.state;
+    try {
+      let draftsResponse=await httpRequest("pt-services-v2/drafts/_search","_search",[{key: "userId", value: 23278}],draftRequest)
+      const currentDraft = draftsResponse.drafts.find(res => res.id === draftId)
+      const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("ownerInfo") !== -1)
+      const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys)
+      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0)
+      this.setState({
+        ownerInfoArr: ownerDetails,
+        ownersCount: totalowners,
+        formValidIndexArray: range(0, activeTab),
+        selected: activeTab,
+      }, () => {
+        this.props.updatePTForms(currentDraft.draftRecord)
+        this.onTabClick(activeTab)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  getAssessmentId = (queryString) => {
+    const assessmentString = queryString.split("?")[1].split("&").find(params => params.split("=")[0] === "assessmentId")
+    return assessmentString && assessmentString.split("=")[1]
+  }
+
   componentDidMount() {
+    let { hash } = this.props.location
+    const assessmentId = this.getAssessmentId(hash)
+    const draftId =  assessmentId || fetchFromLocalStorage("draftId");
+    if (draftId) this.fetchDraftDetails(draftId)
     this.addOwner();
   }
 
@@ -385,6 +442,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteForm: (formKey) => dispatch(deleteForm(formKey)),
     setRoute: (route) => dispatch(setRoute(route)),
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
+    updatePTForms: (forms) => dispatch(updatePTForms(forms)),
   };
 };
 
