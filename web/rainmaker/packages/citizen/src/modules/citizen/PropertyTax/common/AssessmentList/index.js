@@ -5,7 +5,7 @@ import PTList from "../PTList";
 import BlankAssessment from "../BlankAssessment";
 import "./index.css";
 
-const getItemStatus = (item) => {
+const getItemStatus = (item, history) => {
   let status = item.status;
   let styles = {
     paidIconStyle: {
@@ -56,7 +56,13 @@ const getItemStatus = (item) => {
       break;
     case "Saved Draft":
       return (
-        <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
+        <div
+          onClick={() => {
+            history && history.push(`/property-tax/assessment-form?draftId=${item.assessmentNo}`);
+          }}
+          className="assessment-displayInline"
+          style={{ marginTop: "10px" }}
+        >
           <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#00bbd3"} />
           <Icon action="image" name="edit" style={styles.paidIconStyle} color={"#00bbd3"} />
         </div>
@@ -81,15 +87,15 @@ const getItemStatus = (item) => {
   }
 };
 
-const getRightIconItems = (item) => {
+const getRightIconItems = (item, history) => {
   return item.date || item.status || item.receipt || item.action ? (
     <div
       className="assessment-right-icon"
-      style={{ width: "auto", top: "0px", bottom: "0px", height: "inherit", margin: "auto", alignItems: "center", display: "flex", marginRight: 8 }}
+      style={{ width: "auto", top: "0px", bottom: "0px", height: "inherit", margin: "auto", alignItems: "center", display: "flex", right: 0 }}
     >
       <div>
         {item.date && <Label label={item.date} containerStyle={{ marginRight: 5 }} labelStyle={{ textAlign: "right" }} color="#484848" />}
-        {getItemStatus(item)}
+        {getItemStatus(item, history)}
       </div>
     </div>
   ) : (
@@ -97,7 +103,7 @@ const getRightIconItems = (item) => {
   );
 };
 
-const getListItems = (items) => {
+const getListItems = (items, history) => {
   return (
     items &&
     items.map((item, index) => {
@@ -112,7 +118,7 @@ const getListItems = (items) => {
           )),
         route: item.route,
         leftIcon: item.leftIcon,
-        rightIcon: getRightIconItems(item),
+        rightIcon: getRightIconItems(item, history),
         nestedItems:
           item &&
           item.nestedItems &&
@@ -160,7 +166,7 @@ const AssessmentList = ({
     />
   ) : (
     <PTList
-      items={getListItems(items)}
+      items={getListItems(items, history)}
       history={history}
       // label={pageTitle}
       onItemClick={onItemClick}

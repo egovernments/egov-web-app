@@ -52,13 +52,6 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/",
   },
-
-  // {
-  //   path: "user/language-selection",
-  //   component: LanguageSelection,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/",
-  // },
   {
     path: "user/profile",
     component: Profile,
@@ -82,32 +75,6 @@ const routes = [
       hideHeader: true,
     },
   },
-
-  // {
-  //   path: "events",
-  //   component: Events,
-  //   needsAuthentication: true,
-  //   options: { hideFooter: true, title: "Events" },
-  // },
-
-  // {
-  //   path: "notifications",
-  //   component: Notifications,
-  //   needsAuthentication: true,
-  //   options: { hideFooter: true, title: "Notifications" },
-  // },
-  // {
-  //   path: "police-stations",
-  //   component: PoliceStations,
-  //   needsAuthentication: true,
-  //   options: { hideFooter: true, title: "Police Stations" },
-  // },
-  // {
-  //   path: "payments",
-  //   component: Payments,
-  //   needsAuthentication: true,
-  //   options: { hideFooter: true, title: "Payments" },
-  // },
   {
     path: "my-complaints",
     component: MyComplaints,
@@ -132,17 +99,7 @@ const routes = [
     needsAuthentication: true,
     options: { hideHeader: true, hideFooter: true, title: "CS_HEADER_TRACK_LOCATION", hideTitle: true, hideActionMenu: true },
   },
-  // {
-  //   path: "complaint-submitted",
-  //   component: ComplaintSubmited,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "CS_HEADER_COMPLAINT_SUBMITTED",
-  //     hideTitle: true,
-  //     hideBackButton: true,
-  //   },
-  // },
+
   {
     path: "complaint-submitted",
     component: ComplaintCreated,

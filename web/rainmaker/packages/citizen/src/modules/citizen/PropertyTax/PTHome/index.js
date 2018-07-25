@@ -68,9 +68,9 @@ class PTHome extends Component {
 
   render() {
     let { listItems, handleItemClick } = this;
-    const { numProperties, numDrafts } = this.props;
+    const { numProperties, numDrafts, loading } = this.props;
     return (
-      <Screen className="pt-home-screen">
+      <Screen loading={loading} className="pt-home-screen">
         <Card
           textChildren={
             <div>
@@ -135,10 +135,10 @@ class PTHome extends Component {
 
 const mapStateToProps = (state) => {
   const { properties } = state;
-  const { propertiesById, draftsById } = properties || {};
+  const { propertiesById, draftsById, loading } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const numDrafts = draftsById && Object.keys(draftsById).length;
-  return { numProperties, numDrafts };
+  return { numProperties, numDrafts, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
