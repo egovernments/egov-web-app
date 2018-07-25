@@ -7,13 +7,22 @@ import { connect } from "react-redux";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const innerDivStyle = {
-  paddingLeft: 50,
-  borderBottom: "1px solid #e0e0e0",
+const IconStyle = {
+  margin: "0px",
 };
 
-const IconStyle = {
-  margin: "12px 0px 0px 0px",
+const listIconStyle = {
+  margin: 0,
+  top: 0,
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  height: "inherit",
+};
+
+const innerDivStyle = {
+  padding: "20px 56px 20px 50px",
+  borderBottom: "1px solid #e0e0e0",
 };
 
 class AssessPay extends Component {
@@ -26,12 +35,20 @@ class AssessPay extends Component {
         {
           primaryText: <Label label="Add New Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/date-dialogue",
-          leftIcon: <Icon action="content" name="add" color="#484848" style={IconStyle} />,
+          leftIcon: (
+            <div style={listIconStyle}>
+              <Icon action="content" name="add" color="#484848" style={IconStyle} />
+            </div>
+          ),
         },
         {
           primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/assess-pay/search-property",
-          leftIcon: <Icon action="action" name="search" color="#484848" style={IconStyle} />,
+          leftIcon: (
+            <div style={listIconStyle}>
+              <Icon action="action" name="search" color="#484848" style={IconStyle} />
+            </div>
+          ),
         },
       ],
     };
