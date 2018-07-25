@@ -9,6 +9,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 
 const innerDivStyle = {
   paddingLeft: 50,
+  borderBottom: "1px solid #e0e0e0",
 };
 
 const IconStyle = {

@@ -21,6 +21,7 @@ const secondaryTextContainer = {
 
 const innerDivStyle = {
   paddingTop: "16px",
+  paddingLeft: 0,
   borderBottom: "1px solid #e0e0e0",
 };
 class IncompleteAssessments extends Component {
@@ -46,37 +47,6 @@ class IncompleteAssessments extends Component {
         date: "12-06-2018",
         status: "Payment failed",
       },
-      {
-        primaryText: <Label label="2017 - 2018" fontSize="16px" labelStyle={primaryTextLabelStyle} color="#484848" bold={true} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              labelStyle={secondaryTextLabelStyle}
-              fontSize="14px"
-              containerStyle={secondaryTextContainer}
-            />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Saved Draft",
-      },
-      {
-        primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" bold={true} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label
-              label="EB-154, Maya Enclave, Jail Road, Harinagar"
-              labelStyle={secondaryTextLabelStyle}
-              fontSize="14px"
-              containerStyle={secondaryTextContainer}
-            />
-            <Label label="Assessment No.: ZRN-453-98" fontSize="13px" labelStyle={secondaryTextLabelStyle} containerStyle={secondaryTextContainer} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Payment failed",
-      },
     ],
   };
 
@@ -87,10 +57,12 @@ class IncompleteAssessments extends Component {
 
   render() {
     const { urls, history, transformedDrafts, loading } = this.props;
+    console.log(history);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
+          history={history}
           items={transformedDrafts}
           innerDivStyle={innerDivStyle}
           noAssessmentMessage="You have no incomplete assessments!"
@@ -129,6 +101,7 @@ const mapStateToProps = (state) => {
           {/* <Label label="Assessment No.: ZRN-453-98" fontSize="13px" labelStyle={secondaryTextLabelStyle} containerStyle={secondaryTextContainer} /> */}
         </div>
       ),
+      assessmentNo: draft.id,
       date: draft.draftRecord.propertyDetails[0] && draft.draftRecord.propertyDetails[0].assessmentDate,
       status: "Saved Draft",
     };

@@ -278,7 +278,7 @@ const mapStateToProps = (state, ownProps) => {
         },
         {
           primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ACCESS & PAY",
+          status: "ASSESS & PAY",
           receipt: true,
         },
         {
@@ -288,12 +288,12 @@ const mapStateToProps = (state, ownProps) => {
         },
         {
           primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ACCESS & PAY",
+          status: "ASSESS & PAY",
           receipt: true,
         },
         {
           primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ACCESS & PAY",
+          status: "ASSESS & PAY",
           receipt: true,
         },
         {

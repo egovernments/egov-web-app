@@ -10,6 +10,7 @@ import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const innerDivStyle = {
   paddingTop: "16px",
+  paddingLeft: 0,
   borderBottom: "1px solid #e0e0e0",
 };
 
