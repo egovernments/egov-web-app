@@ -141,8 +141,8 @@ class FormWizard extends Component {
   }
 
   componentDidMount() {
-    let { hash } = this.props.location
-    const assessmentId = this.getAssessmentId(hash)
+    let { search } = this.props.location
+    const assessmentId = this.getAssessmentId(search)
     const draftId =  assessmentId || fetchFromLocalStorage("draftId");
     if (draftId) this.fetchDraftDetails(draftId)
     this.addOwner();
