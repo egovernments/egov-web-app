@@ -4,12 +4,18 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 
-const ReceiptItems = ({ items }) => {
+const ReceiptItems = ({ items, propertyTaxAssessmentId }) => {
   return (
     <div>
       <div className="receipt-displayInline">
         <Icon action="action" name="assignment" color="#767676" />
-        <Label label="Property Tax Assessment ID.: ZRN-647-98-756" containerStyle={{ marginLeft: "13px" }} labelStyle={{ letterSpacing: 0 }} />
+        <Label
+          bold={true}
+          label={`Property Tax Assessment ID.: ${propertyTaxAssessmentId}`}
+          containerStyle={{ marginLeft: "13px" }}
+          labelStyle={{ letterSpacing: 0 }}
+          color="#767676"
+        />
       </div>
       <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
       <div>

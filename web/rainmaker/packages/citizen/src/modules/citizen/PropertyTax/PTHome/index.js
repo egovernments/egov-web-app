@@ -13,12 +13,21 @@ const iconStyle = {
   color: "#fe7a51",
 };
 
+const listIconStyle = {
+  margin: 0,
+  top: 0,
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  height: "inherit",
+};
+
 const labelContainerStyle = {
   marginTop: "25px",
 };
 
 const innerDivStyle = {
-  paddingLeft: 50,
+  padding: "20px 56px 20px 50px",
   borderBottom: "1px solid #e0e0e0",
 };
 
@@ -39,18 +48,42 @@ class PTHome extends Component {
     {
       primaryText: <Label label="Completed Assessments" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
       route: "/property-tax/completed-assessments",
-      leftIcon: <Icon action="action" name="done" style={{ marginLeft: 0 }} />,
-      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+      leftIcon: (
+        <div style={listIconStyle}>
+          <Icon action="action" name="done" />
+        </div>
+      ),
+      rightIcon: (
+        <div style={listIconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" />
+        </div>
+      ),
     },
     {
       primaryText: <Label label="How it works" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
-      leftIcon: <Icon action="action" name="help" style={{ marginLeft: 0 }} />,
-      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+      leftIcon: (
+        <div style={listIconStyle}>
+          <Icon action="action" name="help" />
+        </div>
+      ),
+      rightIcon: (
+        <div style={listIconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" />
+        </div>
+      ),
     },
     {
       primaryText: <Label label="Examples" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
-      leftIcon: <Icon action="custom" name="pt-example" style={{ marginLeft: 0 }} />,
-      rightIcon: <Icon action="hardware" name="keyboard-arrow-right" />,
+      leftIcon: (
+        <div style={listIconStyle}>
+          <Icon action="custom" name="pt-example" />
+        </div>
+      ),
+      rightIcon: (
+        <div style={listIconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" />
+        </div>
+      ),
     },
   ];
   componentDidMount = () => {
