@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import CustomSelectForm from "../CustomSelectForm";
 import GenericForm from "../../GenericForm";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
+// import DynamicForm from "../../DynamicForm";
 import get from "lodash/get";
 
 class FloorDetails extends React.Component {
@@ -31,7 +33,12 @@ class FloorDetails extends React.Component {
     const { floors } = this.state;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
-      units.push(formHoc({ ...componentDetails, copyName: `${componentDetails.copyName}_${key}_unit_0`, disabled })(GenericForm));
+      const date = new Date();
+      const formKey = `${componentDetails.copyName}_${key}_unit_${date.getTime()}`;
+      units.push({
+        component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
+        formKey: formKey,
+      });
       return {
         floorId: key,
         floorDropDown: formHoc({ formKey: "customSelect", makeCopy: true, copyName: "customSelect_" + key, path: "PropertyTaxPay", disabled })(
@@ -48,6 +55,7 @@ class FloorDetails extends React.Component {
 
   renderFloors = (floors, noFloors) => {
     const { renderUnits } = this;
+    const { disabled } = this.props;
     return floors.map((floor, key) => {
       const { floorId, floorDropDown: FloorDropDown, units } = floor;
       return (
@@ -67,20 +75,23 @@ class FloorDetails extends React.Component {
   handleAddUnit = (floorIndex) => {
     const { componentDetails } = this.props;
     let { floors } = this.state;
-    floors[floorIndex].units.push(
-      formHoc({ ...componentDetails, copyName: `${componentDetails.copyName}_${floorIndex}_unit_${floors[floorIndex].units.length + 1}` })(
-        GenericForm
-      )
-    );
+    //Naming Units with timestamp to maintain uniqueness, untill any other alternative way is found.
+    const date = new Date();
+    const formKey = `${componentDetails.copyName}_${floorIndex}_unit_${date.getTime()}`;
+    floors[floorIndex].units.push({
+      component: formHoc({ ...componentDetails, copyName: formKey })(GenericForm),
+      formKey: formKey,
+    });
     this.setState({
       floors,
     });
     // this.updatedFloorsInCache(floors)
   };
 
-  handleRemoveUnit = (floorIndex, unitIndex) => {
+  handleRemoveUnit = (floorIndex, unitIndex, formKey) => {
     let { floors } = this.state;
-    floors[floorIndex].units = floors[floorIndex].units.splice(floors[floorIndex].units, unitIndex);
+    floors[floorIndex].units.splice(unitIndex, 1);
+    this.props.removeForm(formKey);
     this.setState({
       floors,
     });
@@ -89,16 +100,16 @@ class FloorDetails extends React.Component {
 
   renderUnits = (units, floorId) => {
     const { disabled } = this.props;
-    const { handleRemoveUnit } = this;
+    const { handleAddUnit, handleRemoveUnit } = this;
     return (
       <div>
         {units.map((unit, key) => {
-          const Unit = unit;
+          const Unit = unit.component;
           return (
             <Unit
               key={key}
               className={disabled ? "grayout" : ""}
-              handleRemoveItem={key !== 0 ? () => handleRemoveUnit(floorId, key) : undefined}
+              handleRemoveItem={key !== 0 ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined}
               disabled={disabled}
             />
           );
@@ -124,7 +135,13 @@ const mapStateToProps = ({ form }) => {
   return { noFloors };
 };
 
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeForm: (formKey) => dispatch(removeForm(formKey)),
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
-)(FloorDetails);
+  mapDispatchToProps)(FloorDetails);
