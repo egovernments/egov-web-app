@@ -186,6 +186,8 @@ var form = function form() {
       var updatedState = (0, _extends15.default)({}, state);
       delete updatedState[formKey];
       return updatedState;
+    case actionTypes.UPDATE_PT_FORM:
+      return action.forms;
     default:
       return state;
   }

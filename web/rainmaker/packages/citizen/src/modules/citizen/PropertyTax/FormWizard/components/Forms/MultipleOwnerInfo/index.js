@@ -16,23 +16,21 @@ const getTitle = (length) => (
 );
 
 const MultipleOwnerInfoHOC = ({ handleRemoveOwner, addOwner, ownerDetails, disabled }) => (
-  <div>
-    {ownerDetails.map((Data, index) => (
-      <Data.Component
-        key={index}
-        cardTitle={getTitle(index + 1)}
-        deleteBtn={ownerDetails.length > 1}
-        handleRemoveOwner={(formId, formKey) => {
-          handleRemoveOwner(formId, formKey);
-        }}
-        formId={index}
-        disabled={disabled}
-      />
-    ))}
-    <div className="pt-add-owner-btn" onClick={addOwner}>
-      + Add Owner
+    <div>
+      {ownerDetails.map((Data, index) => (
+        <Data.Component
+          key={index}
+          cardTitle={getTitle(index + 1)}
+          deleteBtn={ownerDetails.length > 1}
+          handleRemoveOwner={(formId, formKey) => { handleRemoveOwner(formId, formKey) }}
+          formId={Data.index}
+          disabled={disabled}
+        />
+      ))}
+      <div className="pt-add-owner-btn" onClick={addOwner}>
+        + Add Owner
+      </div>
     </div>
-  </div>
 );
 
 export default MultipleOwnerInfoHOC;
