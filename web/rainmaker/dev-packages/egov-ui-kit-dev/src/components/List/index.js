@@ -27,7 +27,6 @@ const List = ({ listItemContainer, onItemClick, listItemStyle = {}, innerDivStyl
         <ListItem
           onClick={() => onItemClick && onItemClick(item, index)}
           innerDivStyle={innerDivStyle}
-          // innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
           containerElement={listItemContainer}
           key={index}
           {...rest}

@@ -10,6 +10,7 @@ import ReceiptDialog from "./components/ReceiptDialog";
 
 const innerDivStyle = {
   paddingLeft: 50,
+  borderBottom: "1px solid #e0e0e0",
 };
 
 const IconStyle = {
@@ -17,8 +18,8 @@ const IconStyle = {
 };
 
 const listItemStyle = {
-  paddingLeft: "10px",
-  borderBottom: "1px solid #e0e0e0",
+  padding: "0px 20px",
+  borderWidth: "10px 10px 0px",
 };
 
 class Property extends Component {
@@ -112,7 +113,7 @@ class Property extends Component {
     }
 
     return (
-      <Screen className="pt-home-screen">
+      <Screen>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         <AssessmentList
           onItemClick={this.onListItemClick}
