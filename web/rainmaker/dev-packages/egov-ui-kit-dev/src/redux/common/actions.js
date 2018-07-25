@@ -62,13 +62,28 @@ const MDMSFetchError = (error) => {
   };
 };
 
-export const prepareFormData = (jsonPath,value) => {
+export const prepareFormData = (jsonPath, value) => {
   return {
-    type:actionTypes.PREPARE_FORM_DATA,
+    type: actionTypes.PREPARE_FORM_DATA,
     jsonPath,
-    value
-  }
-}
+    value,
+  };
+};
+const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
+  return {
+    type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
+    payload,
+    moduleName,
+    masterArray,
+  };
+};
+
+const generalMDMSFetchError = (error) => {
+  return {
+    type: actionTypes.GENERAL_MDMS_FETCH_ERROR,
+    error,
+  };
+};
 
 export const fetchEmployees = (requestBody) => {
   return async (dispatch) => {
@@ -110,6 +125,17 @@ export const fetchEmployeeToAssign = (queryObj, requestBody) => {
       dispatch(employeeToAssignFetchSuccess(payload));
     } catch (error) {
       dispatch(employeeToAssignFetchError(error.message));
+    }
+  };
+};
+
+export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
+  return async (dispatch) => {
+    try {
+      const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+      dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
+    } catch (error) {
+      dispatch(generalMDMSFetchError(error.message));
     }
   };
 };
