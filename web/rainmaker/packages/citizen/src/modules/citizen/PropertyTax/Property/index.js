@@ -107,7 +107,7 @@ class Property extends Component {
     const { urls, location, history } = this.props;
     let urlArray = [];
     const { pathname } = location;
-    if (urls.length == 0 && localStorage.getItem("path") === pathname) {
+    if (urls.length === 0 && localStorage.getItem("path") === pathname) {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
 

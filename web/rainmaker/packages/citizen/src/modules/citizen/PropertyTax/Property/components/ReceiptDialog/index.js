@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { Dialog, Button } from "components";
+import { Dialog } from "components";
 import PropertyInformation from "../PropertyInformation";
-
-const innerDivStyle = {
-  paddingLeft: 60,
-};
 
 class ReceiptDialog extends Component {
   render() {
@@ -20,7 +16,7 @@ class ReceiptDialog extends Component {
         handleClose={closeDialogue}
         open={open}
         children={[<PropertyInformation />]}
-        bodyStyle={{ backgroundColor: "#ffffff" }}
+        // bodyStyle={{ backgroundColor: "#ffffff" }}
         isClose={true}
         contentStyle={{ width: "80%" }}
       />

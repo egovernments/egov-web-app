@@ -61,6 +61,8 @@ const TextField = ({
   multiLine,
   errorMessage,
   jsonPath,
+  toolTip,
+  toolTipMessage,
   ...rest
 }) => {
   return (

@@ -17,16 +17,21 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
           )}
           {Object.keys(fields).map((fieldKey, index) => {
             return (
-              <div>
+              <div key={index}>
                 {fieldKey === "dummy" ? (
                   <div className="col-xs-6" style={{ height: 72 }} />
                 ) : (
                   <div
                     style={fields[fieldKey].toolTip ? { display: "flex", alignItems: "center" } : {}}
-                    key={index}
                     className={fields[fieldKey].numcols ? (fields[fieldKey].hideField ? "" : `col-xs-${fields[fieldKey].numcols}`) : `col-xs-6`}
                   >
-                    <Field fieldKey={fieldKey} field={fields[fieldKey]} handleFieldChange={handleFieldChange} disabled={disabled} className={className} />
+                    <Field
+                      fieldKey={fieldKey}
+                      field={fields[fieldKey]}
+                      handleFieldChange={handleFieldChange}
+                      disabled={disabled}
+                      className={className}
+                    />
                     {fields[fieldKey].toolTip &&
                       !fields[fieldKey].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
                   </div>

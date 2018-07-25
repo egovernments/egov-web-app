@@ -1,5 +1,3 @@
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
-
 const formConfig = {
   name: "institutionAuthority",
   fields: {

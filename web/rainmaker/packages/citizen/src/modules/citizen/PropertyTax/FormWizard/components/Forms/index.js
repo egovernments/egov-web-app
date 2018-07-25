@@ -4,7 +4,7 @@ import GenericForm from "../GenericForm";
 import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import get from "lodash/get"
+import get from "lodash/get";
 
 const options = [
   { value: "Male", label: <Label label="Male" /> },
@@ -12,7 +12,7 @@ const options = [
   { value: "Transgender", label: <Label label="Transgender" /> },
 ];
 
-const guardianOptions = [{ value: "Husband", label: <Label label="Husband" /> }, { value: "Father ", label: <Label label="Father" /> }];
+// const guardianOptions = [{ value: "Husband", label: <Label label="Husband" /> }, { value: "Father ", label: <Label label="Father" /> }];
 
 const styles = {
   labelStyle: {
@@ -41,9 +41,20 @@ const styles = {
   },
 };
 
-const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteBtn,handleChange, handleGuardianChange, handleRemoveOwner, formId, disabled}) => {
+const OwnerInformation = ({
+  form,
+  formKey,
+  handleFieldChange,
+  cardTitle,
+  deleteBtn,
+  handleChange,
+  handleGuardianChange,
+  handleRemoveOwner,
+  formId,
+  disabled,
+}) => {
   const fields = form.fields || {};
-  const genderSelected = get(fields, "ownerGender.value", "")
+  const genderSelected = get(fields, "ownerGender.value", "");
   return (
     <Card
       textChildren={
@@ -53,7 +64,9 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
             {deleteBtn && (
               <div
                 className="pt-ownerinfo-deletebtn"
-                onClick={() => { handleRemoveOwner(formId, formKey) }}
+                onClick={() => {
+                  handleRemoveOwner(formId, formKey);
+                }}
               >
                 <Icon action="content" name="clear" />
               </div>
@@ -63,7 +76,13 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
             <div className="name-address">
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerCategory" field={fields["ownerCategory"]} handleFieldChange={handleFieldChange} disabled={disabled} className="ownerCategory"/>
+              <Field
+                fieldKey="ownerCategory"
+                field={fields["ownerCategory"]}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                className="ownerCategory"
+              />
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
@@ -74,7 +93,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 name="gender-selection"
                 options={options}
                 handleChange={(e) => {
-                  handleFieldChange("ownerGender", e.target.value)
+                  handleFieldChange("ownerGender", e.target.value);
                 }}
                 radioButtonItemStyle={styles.radioButtonItemStyle}
                 labelStyle={styles.radioButtonLabelStyle}
@@ -88,7 +107,13 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
                 <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               </div>
-              <Field fieldKey="ownerCategoryIdType" field={fields["ownerCategoryIdType"]} handleFieldChange={handleFieldChange} disabled={disabled} className="ownerCategoryIdType"/>
+              <Field
+                fieldKey="ownerCategoryIdType"
+                field={fields["ownerCategoryIdType"]}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                className="ownerCategoryIdType"
+              />
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
@@ -99,7 +124,7 @@ const OwnerInformation = ({ form, formKey, handleFieldChange, cardTitle, deleteB
   );
 };
 
-const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, formId, disabled}) => {
+const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, formId, disabled }) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -135,11 +160,13 @@ const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "Property
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
 const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
 const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
-const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm)
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm);
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
-const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(InstitutionAuthority)
+const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(
+  InstitutionAuthority
+);
 
 export {
   UsageInformationHOC,

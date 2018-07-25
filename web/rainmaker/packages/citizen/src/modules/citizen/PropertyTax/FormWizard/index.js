@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Label } from "components";
 import { deleteForm } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
@@ -15,7 +14,7 @@ import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
-import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
+// import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
@@ -23,7 +22,7 @@ import { setRoute } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
-import { httpRequest} from "egov-ui-kit/utils/api";
+import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import "./index.css";
@@ -34,52 +33,49 @@ class FormWizard extends Component {
     ownerInfoArr: [],
     showOwners: false,
     formValidIndexArray: [],
-    draftRequest:{
-      "draft":{
-        "tenantId":localStorage.getItem("tenant-id"),
-        "userId":get(JSON.parse(localStorage.getItem("user-info")),"id"),
-        "draftRecord":{
-        }
-     }
-   }
+    draftRequest: {
+      draft: {
+        tenantId: localStorage.getItem("tenant-id"),
+        userId: get(JSON.parse(localStorage.getItem("user-info")), "id"),
+        draftRecord: {},
+      },
+    },
   };
 
-  callDraft=async (formArray=[])=>{
-    let {draftRequest,selected} =this.state;
+  callDraft = async () => {
+    let { draftRequest, selected } = this.state;
     // if (formArray) {
-    const {form}= this.props;
+    const { form } = this.props;
     if (!draftRequest.draft.id) {
-      draftRequest.draft.draftRecord={
-        selectedTabIndex:selected+1,
-        ...form
-      }
+      draftRequest.draft.draftRecord = {
+        selectedTabIndex: selected + 1,
+        ...form,
+      };
       try {
-        let draftResponse=await httpRequest("pt-services-v2/drafts/_create","_cretae",[],draftRequest)
+        let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
 
         this.setState({
-          draftRequest:{draft:draftResponse.drafts[0]}
-        })
+          draftRequest: { draft: draftResponse.drafts[0] },
+        });
       } catch (e) {
         alert(e);
       }
-
     } else {
-      draftRequest.draft.draftRecord={
-        selectedTabIndex:selected+1,
-        ...form
-      }
+      draftRequest.draft.draftRecord = {
+        selectedTabIndex: selected + 1,
+        ...form,
+      };
       try {
-        let draftResponse=await httpRequest("pt-services-v2/drafts/_update","_update",[],draftRequest)
+        let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
         this.setState({
-          draftRequest:{draft:draftResponse.drafts[0]}
-        })
+          draftRequest: { draft: draftResponse.drafts[0] },
+        });
       } catch (e) {
-        alert(e)
+        alert(e);
       }
-
     }
     // }
-  }
+  };
 
   addOwner = () => {
     const { ownerInfoArr } = this.state;
@@ -146,15 +142,10 @@ class FormWizard extends Component {
 
   getOwnerDetails = (ownerType) => {
     const { selected } = this.state;
-    const { addOwner, handleRemoveOwner, deleteForm } = this.props;
-    const isReviewPage = selected === 3
+    const isReviewPage = selected === 3;
     switch (ownerType) {
       case "IND":
-        return (
-          <OwnerInfoHOC
-            disabled={isReviewPage}
-          />
-        );
+        return <OwnerInfoHOC disabled={isReviewPage} />;
       case "MUL":
         return (
           <MultipleOwnerInfoHOC
@@ -190,13 +181,11 @@ class FormWizard extends Component {
         );
       case 2:
         const ownerType = this.getSelectedCombination(this.props.form, "ownershipType", ["typeOfOwnership"]);
-        const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
-        const { ownerForm: Institution } = OwnerConfig;
+        //const OwnerConfig = this.getConfigFromCombination("Institution", getOwnerInfoFormConfigPath);
+        // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
-            <OwnershipTypeHOC
-              disabled={fromReviewPage}
-            />
+            <OwnershipTypeHOC disabled={fromReviewPage} />
             {getOwnerDetails(ownerType)}
           </div>
         );
@@ -217,16 +206,16 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const {callDraft,pay} =this;
-    const { selected,formValidIndexArray } = this.state;
-    const { setRoute, displayFormErrorsAction, form } = this.props;
+    const { callDraft, pay } = this;
+    const { selected, formValidIndexArray } = this.state;
+    const { displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
       case 0:
         const isProperyAddressFormValid = validateForm(form.propertyAddress);
         if (isProperyAddressFormValid) {
           callDraft();
-          this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
+          this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
         } else {
           displayFormErrorsAction("propertyAddress");
         }
@@ -253,11 +242,11 @@ class FormWizard extends Component {
                   }
                   if (floorValidation) {
                     callDraft();
-                    this.setState({ selected: index,formValidIndexArray:[...formValidIndexArray,selected] });
+                    this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                   }
                 } else {
                   callDraft();
-                  this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
+                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                 }
               } else {
                 displayFormErrorsAction("plotDetails");
@@ -269,59 +258,54 @@ class FormWizard extends Component {
         }
         break;
       case 2:
-        const {ownershipType}=form;
+        const { ownershipType } = form;
         if (ownershipType) {
-          const isOwnershipTypeFormValid=validateForm(ownershipType);
+          const isOwnershipTypeFormValid = validateForm(ownershipType);
           if (isOwnershipTypeFormValid) {
-            const ownershipTypeSelected=get(ownershipType,"fields.typeOfOwnership.value")
-            if (ownershipTypeSelected==="IND") {
-              const {ownerInfo} =form;
-              const isOwnerInfoFormValid=validateForm(ownerInfo);
+            const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
+            if (ownershipTypeSelected === "IND") {
+              const { ownerInfo } = form;
+              const isOwnerInfoFormValid = validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
                 callDraft();
-                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
-              }
-              else {
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+              } else {
                 displayFormErrorsAction("ownerInfo");
               }
-            }
-            else if(ownershipTypeSelected==="MUL")
-            {
-              let ownerValidation=true;
+            } else if (ownershipTypeSelected === "MUL") {
+              let ownerValidation = true;
               for (const variable in form) {
-                if (variable.search("ownerInfo_")!==-1) {
-                  const isDynamicFormValid=validateForm(form[variable]);
+                if (variable.search("ownerInfo_") !== -1) {
+                  const isDynamicFormValid = validateForm(form[variable]);
                   if (!isDynamicFormValid) {
                     displayFormErrorsAction(variable);
-                    ownerValidation=false;
+                    ownerValidation = false;
                   }
                 }
               }
               if (ownerValidation) {
                 callDraft();
-                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
               }
-            }
-            else if (ownershipTypeSelected==="Institution") {
-              const {institutionDetails,institutionAuthority}=form;
-              const isInstitutionDetailsFormValid=validateForm(institutionDetails);
-              let institutionFormValid=true;
+            } else if (ownershipTypeSelected === "Institution") {
+              const { institutionDetails, institutionAuthority } = form;
+              const isInstitutionDetailsFormValid = validateForm(institutionDetails);
+              let institutionFormValid = true;
               if (!isInstitutionDetailsFormValid) {
                 displayFormErrorsAction("institutionDetails");
-                institutionFormValid=false
+                institutionFormValid = false;
               }
-              const isInstitutionAuthorityFormValid=validateForm(institutionAuthority);
+              const isInstitutionAuthorityFormValid = validateForm(institutionAuthority);
               if (!isInstitutionAuthorityFormValid) {
                 displayFormErrorsAction("institutionAuthority");
-                institutionFormValid=false
+                institutionFormValid = false;
               }
               if (institutionFormValid) {
                 callDraft();
-                this.setState({ selected: index ,formValidIndexArray:[...formValidIndexArray,selected]});
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
               }
             }
-          }
-          else {
+          } else {
             displayFormErrorsAction("ownershipType");
           }
         }
@@ -330,7 +314,7 @@ class FormWizard extends Component {
       case 3:
         pay();
         // setRoute("/property-tax/payment-success");
-      break
+        break;
     }
     // if (index <= 3) {
     //   this.setState({ selected: index });
@@ -339,43 +323,41 @@ class FormWizard extends Component {
     // }
   };
 
-  formPropertyTaxPayObject=()=>{
-    const {form} =this.props;
-    let Properties=[];
-    Properties[0]={}
+  formPropertyTaxPayObject = () => {
+    const { form } = this.props;
+    let Properties = [];
+    Properties[0] = {};
     for (var variable in form) {
       if (form.hasOwnProperty(variable)) {
-        const partialPropertyTaxPayObject =prepareFormData(form[variable]);
-        Properties[0]={
+        const partialPropertyTaxPayObject = prepareFormData(form[variable]);
+        Properties[0] = {
           ...Properties[0],
-          ...partialPropertyTaxPayObject.Properties[0]
-        }
+          ...partialPropertyTaxPayObject.Properties[0],
+        };
       }
     }
     return Properties;
-  }
+  };
 
-  pay=()=>{
-    const PropertyTaxObject=this.formPropertyTaxPayObject();
+  pay = () => {
+    const PropertyTaxObject = this.formPropertyTaxPayObject();
     console.log(PropertyTaxObject);
-  }
+  };
 
   onTabClick = (index) => {
-    const {formValidIndexArray} =this.state;
+    const { formValidIndexArray } = this.state;
     // form validation checks needs to be written here
     if (formValidIndexArray.indexOf(index)) {
       this.setState({ selected: index });
+    } else {
+      alert("Please fill required tabs");
     }
-    else {
-      alert("Please fill required tabs")
-    }
-
   };
 
   render() {
     const { renderStepperContent } = this;
     const { selected, ownerInfoArr, formValidIndexArray } = this.state;
-    const fromReviewPage = selected === 3
+    const fromReviewPage = selected === 3;
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent

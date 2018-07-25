@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = require("redux");
-
 var _reducer = require("../app/reducer");
 
 var _reducer2 = _interopRequireDefault(_reducer);

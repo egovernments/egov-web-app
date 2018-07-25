@@ -29,7 +29,7 @@ const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPa
 
 class YearDialog extends Component {
   render() {
-    let { open, closeDialogue, handleFieldChange } = this.props;
+    let { open, closeDialogue } = this.props;
     return (
       <Dialog
         open={open}
