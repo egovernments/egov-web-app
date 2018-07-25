@@ -62,11 +62,11 @@ const getItemStatus = (item) => {
         </div>
       );
       break;
-    case "ACCESS & PAY":
+    case "ASSESS & PAY":
       return (
         <div className="assessment-displayInline">
           <Button
-            label={<Label buttonLabel={true} label="Access & Pay" fontSize="12px" />}
+            label={<Label buttonLabel={true} label="ASSESS & PAY" fontSize="12px" />}
             primary={true}
             style={{
               height: 20,

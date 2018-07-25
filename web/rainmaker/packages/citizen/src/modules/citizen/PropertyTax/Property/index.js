@@ -50,7 +50,7 @@ class Property extends Component {
             },
             {
               primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-              status: "ACCESS & PAY",
+              status: "ASSESS & PAY",
             },
             {
               primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
@@ -59,11 +59,11 @@ class Property extends Component {
             },
             {
               primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-              status: "ACCESS & PAY",
+              status: "ASSESS & PAY",
             },
             {
               primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-              status: "ACCESS & PAY",
+              status: "ASSESS & PAY",
             },
             {
               primaryText: <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" labelStyle={{ fontWeight: 500 }} />,

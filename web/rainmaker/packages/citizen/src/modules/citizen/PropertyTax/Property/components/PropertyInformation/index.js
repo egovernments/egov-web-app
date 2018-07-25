@@ -39,7 +39,7 @@ const ReceiptItems = () => {
         <Button
           className="receipt-button"
           primary={true}
-          label={<Label buttonLabel={true} label="ACCESS & PAY" />}
+          label={<Label buttonLabel={true} label="ASSESS & PAY" />}
           style={{
             height: 36,
             lineHeight: "auto",
