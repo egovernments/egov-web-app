@@ -16,45 +16,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Receipt = function Receipt(_ref) {
   var receiptItems = _ref.receiptItems,
-      innerDivClass = _ref.innerDivClass;
-
-  var _ref2 = receiptItems && receiptItems[0],
-      leftItems = _ref2.leftItems,
-      rightItems = _ref2.rightItems;
-
-  var getItems = function getItems(items) {
-    return _react2.default.createElement(
-      "div",
-      null,
-      _react2.default.createElement(
-        "div",
-        { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
-        items && items.map(function (item, index) {
-          return _react2.default.createElement(_translationNode2.default, { key: index, containerStyle: { marginTop: 10 }, label: item.key });
-        })
-      ),
-      _react2.default.createElement(
-        "div",
-        { className: innerDivClass ? innerDivClass : "col-xs-12 col-sm-4" },
-        items && items.map(function (item, index) {
-          return _react2.default.createElement(_translationNode2.default, { key: index, containerStyle: { marginTop: 10 }, label: item.value });
-        })
-      )
-    );
-  };
+      header = _ref.header;
 
   return receiptItems && _react2.default.createElement(
     "div",
     { className: "clearfix", style: { height: "inherit", marginTop: "10px", marginBottom: "15px" } },
+    header && _react2.default.createElement(_translationNode2.default, { label: header, dark: true, bold: true, containerStyle: { margin: "5px 0 10px 0" } }),
     _react2.default.createElement(
       "div",
-      { className: "col-xs-12 col-sm-5", style: { padding: "0px" } },
-      getItems(leftItems)
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "col-xs-12 col-sm-5", style: { padding: "0px" } },
-      getItems(rightItems)
+      { className: "col-xs-12 col-sm-12", style: { padding: "0px" } },
+      receiptItems.map(function (item, index) {
+        return _react2.default.createElement(
+          "div",
+          { key: index, className: "col-sm-6 col-xs-12", style: { marginBottom: 10 } },
+          _react2.default.createElement(
+            "div",
+            { className: "col-sm-6 col-xs-6", style: { padding: 0 } },
+            _react2.default.createElement(_translationNode2.default, { dark: true, labelStyle: { letterSpacing: 0 }, label: item.key })
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "col-sm-6 col-xs-6", style: { padding: 0 } },
+            _react2.default.createElement(_translationNode2.default, { dark: true, labelStyle: { letterSpacing: 0 }, label: item.value })
+          )
+        );
+      })
     )
   );
 };

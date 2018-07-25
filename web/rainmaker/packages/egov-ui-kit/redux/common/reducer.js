@@ -106,6 +106,27 @@ var commonReducer = function commonReducer() {
       return (0, _extends4.default)({}, state, {
         prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value)
       });
+
+    case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
+      var masterArray = action.masterArray;
+
+      var generalMDMSDataById = masterArray.reduce(function (result, masterName) {
+        result[masterName] = (0, _commons.transformById)(action.payload.MdmsRes[action.moduleName][masterName], "code");
+        return result;
+      }, {});
+
+      // const generalMDMSDataById = transformById(action.payload.MdmsRes[action.moduleName][action.masterName], "code");
+      return (0, _extends4.default)({}, state, {
+        loading: false,
+        generalMDMSDataById: generalMDMSDataById
+      });
+
+    case commonTypes.GENERAL_MDMS_FETCH_ERROR:
+      return (0, _extends4.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     default:
       return state;
   }

@@ -2,38 +2,39 @@ import React from "react";
 import { Receipt, Icon, Divider, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
-import PropertyItems from "./propertyitems";
+import AssessmentInfoTable from "../AssessmentInfoTable";
 
-let { propertyAddressItems, assessmentItems, ownershipItems } = PropertyItems;
-
-const className = "col-xs-12 col-xs-6";
-
-const ReceiptItems = () => {
+const ReceiptItems = ({ items }) => {
   return (
-    <div style={{ marginLeft: 20 }}>
-      {/* <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} /> */}
-      <div>
-        <div className="receipt-displayInline">
-          <Icon action="action" name="home" color="#767676" />
-          <Label label="Property Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
-        </div>
-        <Receipt receiptItems={propertyAddressItems} innerDivClass={className} />
+    <div>
+      <div className="receipt-displayInline">
+        <Icon action="action" name="assignment" color="#767676" />
+        <Label label="Property Tax Assessment ID.: ZRN-647-98-756" containerStyle={{ marginLeft: "13px" }} labelStyle={{ letterSpacing: 0 }} />
       </div>
-      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 10, marginRight: 0 }} />
+      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
       <div>
-        <div className="receipt-displayInline">
-          <Icon action="action" name="assignment" color="#767676" />
-          <Label label="Assessment Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
-        </div>
-        <Receipt receiptItems={assessmentItems} innerDivClass={className} />
-      </div>
-      <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 10, marginRight: 0 }} />
-      <div>
-        <div className="receipt-displayInline">
-          <Icon action="social" name="person" color="#767676" />
-          <Label label="Ownership Information" containerStyle={{ marginLeft: "13px" }} labelClassName="dark-heading" />
-        </div>
-        <Receipt receiptItems={ownershipItems} innerDivClass={className} />
+        {items.map((item, index) => {
+          return (
+            <div key={index}>
+              <div>
+                <div className="receipt-displayInline">
+                  <Icon action={item.iconAction} name={item.iconName} color="#767676" />
+                  <Label label={item.heading} containerStyle={{ marginLeft: "13px" }} bold={true} dark={true} labelStyle={{ letterSpacing: 0.6 }} />
+                </div>
+                {item.showTable ? (
+                  <AssessmentInfoTable items={item.items} tableHeaderItems={item.tableHeaderItems} />
+                ) : item.nestedItems ? (
+                  item.items.map((nestedItem, nestedIndex) => {
+                    return <Receipt receiptItems={nestedItem.items} header={item.items.length > 1 && `Owner ${nestedIndex + 1}`} />;
+                  })
+                ) : (
+                  <Receipt receiptItems={item.items} />
+                )}
+              </div>
+              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+            </div>
+          );
+        })}
       </div>
       <div className="text-center">
         <Button
@@ -46,7 +47,7 @@ const ReceiptItems = () => {
             minWidth: "inherit",
           }}
           labelStyle={{
-            padding: "0 12px 0 12px ",
+            padding: "0 31px",
             letterSpacing: "0.6px",
             display: "inline-block",
             height: "22px",

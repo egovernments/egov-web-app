@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -90,6 +90,21 @@ var prepareFormData = exports.prepareFormData = function prepareFormData(jsonPat
     type: actionTypes.PREPARE_FORM_DATA,
     jsonPath: jsonPath,
     value: value
+  };
+};
+var generalMDMSFetchSuccess = function generalMDMSFetchSuccess(payload, moduleName, masterArray) {
+  return {
+    type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
+    payload: payload,
+    moduleName: moduleName,
+    masterArray: masterArray
+  };
+};
+
+var generalMDMSFetchError = function generalMDMSFetchError(error) {
+  return {
+    type: actionTypes.GENERAL_MDMS_FETCH_ERROR,
+    error: error
   };
 };
 
@@ -248,6 +263,45 @@ var fetchEmployeeToAssign = exports.fetchEmployeeToAssign = function fetchEmploy
 
     return function (_x6) {
       return _ref4.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralMDMSData(requestBody, moduleName, masterArray) {
+  return function () {
+    var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(dispatch) {
+      var payload;
+      return _regenerator2.default.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return (0, _api.httpRequest)(_endPoints.MDMS.GET.URL, _endPoints.MDMS.GET.ACTION, [], requestBody);
+
+            case 3:
+              payload = _context5.sent;
+
+              dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
+              _context5.next = 10;
+              break;
+
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5["catch"](0);
+
+              dispatch(generalMDMSFetchError(_context5.t0.message));
+
+            case 10:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, undefined, [[0, 7]]);
+    }));
+
+    return function (_x7) {
+      return _ref5.apply(this, arguments);
     };
   }();
 };
