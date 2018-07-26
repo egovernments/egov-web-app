@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label, TextFieldIcon } from "components";
+import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label, TextFieldIcon, AutoSuggestDropdown } from "components";
 
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
@@ -43,6 +43,17 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
                 : onIconClick
             }
             onChange={(e, value) => handleFieldChange(fieldKey, value)}
+          />
+        );
+      case "autoSuggestDropdown":
+        return (
+          <AutoSuggestDropdown
+            {...rest}
+            {...fieldProps}
+            dataSource={fieldProps && fieldProps.dropDownData}
+            onChange={(chosenRequest, index) => {
+              handleFieldChange(fieldKey, chosenRequest.value);
+            }}
           />
         );
 
