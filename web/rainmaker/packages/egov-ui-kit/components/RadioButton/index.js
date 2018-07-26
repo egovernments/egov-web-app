@@ -39,7 +39,8 @@ var RadioButtonUi = function RadioButtonUi(_ref) {
       checkedIcon = _ref.checkedIcon,
       iconStyle = _ref.iconStyle,
       selectedLabelStyle = _ref.selectedLabelStyle,
-      id = _ref.id;
+      id = _ref.id,
+      disabled = _ref.disabled;
 
   var renderRadioButtons = function renderRadioButtons() {
     return options.map(function (option, index) {
@@ -54,7 +55,8 @@ var RadioButtonUi = function RadioButtonUi(_ref) {
         label: label,
         labelStyle: value === valueSelected ? (0, _extends3.default)({}, labelStyle, selectedLabelStyle) : labelStyle,
         iconStyle: value === valueSelected ? (0, _extends3.default)({}, iconStyle, selectedIconStyle) : iconStyle,
-        checkedIcon: checkedIcon
+        checkedIcon: checkedIcon,
+        disabled: disabled
       });
     });
   };

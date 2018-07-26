@@ -20,6 +20,7 @@ const RadioButtonUi = ({
   iconStyle,
   selectedLabelStyle,
   id,
+  disabled,
 }) => {
   const renderRadioButtons = () => {
     return options.map((option, index) => {
@@ -34,6 +35,7 @@ const RadioButtonUi = ({
           labelStyle={value === valueSelected ? { ...labelStyle, ...selectedLabelStyle } : labelStyle}
           iconStyle={value === valueSelected ? { ...iconStyle, ...selectedIconStyle } : iconStyle}
           checkedIcon={checkedIcon}
+          disabled={disabled}
         />
       );
     });

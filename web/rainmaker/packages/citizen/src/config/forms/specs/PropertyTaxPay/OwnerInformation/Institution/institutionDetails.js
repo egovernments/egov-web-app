@@ -1,3 +1,5 @@
+import { MDMS } from "egov-ui-kit/utils/endPoints";
+
 const formConfig = {
   name: "institutionDetails",
   fields: {
@@ -15,7 +17,29 @@ const formConfig = {
       jsonPath: "propertyDetails[0].institution.type",
       type: "singleValueList",
       floatingLabelText: "Type of Institution",
-      required: true,
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                    filter: "[?(@.usageCategoryMinor=='INSTITUTIONAL')]", //year value for this filter should be dynamic.
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
+      },
+      dropDownData:[],
       numcols: 6,
       hintText: "Select",
     },

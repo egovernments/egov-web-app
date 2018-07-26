@@ -24,8 +24,13 @@ var _TextField = require("../TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
 
+var _search = require("material-ui/svg-icons/action/search");
+
+var _search2 = _interopRequireDefault(_search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// can we pull the existing textfield
 var containerStyle = {
   position: "relative",
   display: "inline-block",
@@ -33,8 +38,6 @@ var containerStyle = {
   boxSizing: "border-box",
   fontSize: 0
 };
-// can we pull the existing textfield
-
 
 var getStyles = function getStyles(iconPosition, textFieldProps) {
   var textFieldStyle = {},
@@ -78,11 +81,12 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       inputStyle = _ref.inputStyle,
       textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className", "inputStyle"]);
 
+  var TargetIcon = Icon || _search2.default;
   var style = getStyles(iconPosition, textFieldProps);
   return _react2.default.createElement(
     "div",
     { onClick: onClick, style: containerStyle },
-    _react2.default.createElement(Icon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
+    _react2.default.createElement(TargetIcon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
     _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
       autoFocus: autoFocus,
       name: "textfield-icon",

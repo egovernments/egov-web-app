@@ -6,7 +6,7 @@ import "./index.css";
 const SingleButtonForm = ({ label, form, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <Link to="/property-tax/assessment-form#0">
+    <Link to="/property-tax/assessment-form?type=new">
       <Button
         {...fields.button}
         onClick={() => {
