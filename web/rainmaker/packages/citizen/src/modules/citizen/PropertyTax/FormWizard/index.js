@@ -40,7 +40,7 @@ class FormWizard extends Component {
     draftRequest:{
       "draft":{
         "tenantId":localStorage.getItem("tenant-id"),
-        "userId":get(JSON.parse(localStorage.getItem("user-info")),"id"),
+        "userId":get(JSON.parse(localStorage.getItem("user-info")),"uuid"),
         "draftRecord":{
         }
      }
