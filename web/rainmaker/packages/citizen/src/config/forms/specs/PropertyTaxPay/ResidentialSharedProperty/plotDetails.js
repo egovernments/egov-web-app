@@ -1,4 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import {measuringUnit,occupancy,subUsageType} from "../utils/reusableFields";
 const formConfig = {
   name: "plotDetails",
   fields: {
@@ -12,67 +13,8 @@ const formConfig = {
       disabled: true,
       numcols: 4,
     },
-    subUsageType: {
-      id: "assessment-subUsageType",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategorySubMinor",
-      type: "singleValueList",
-      floatingLabelText: "Sub Usage Type",
-      hintText: "Select",
-      required: true,
-      numcols: 4,
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategorySubMinor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
-      },
-    },
-    occupancy: {
-      id: "assessment-occupancy",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
-      type: "singleValueList",
-      floatingLabelText: "Occupancy",
-      value: "SELFOCCUPIED",
-      required: true,
-      numcols: 4,
-
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "OccupancyType",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
-      },
-    },
+    ...subUsageType,
+    ...occupancy,
     superArea: {
       id: "assessment-super-area",
       jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
@@ -85,16 +27,7 @@ const formConfig = {
       required: true,
       numcols: 4,
     },
-    superAreaUnit: {
-      id: "assessment-super-area-unit",
-      jsonPath: "",
-      type: "singleValueList",
-      floatingLabelText: "Measuring unit",
-      value: "sq yards",
-      dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
-      required: true,
-      numcols: 4,
-    },
+    ...measuringUnit,
   },
   isFormValid: false,
 };

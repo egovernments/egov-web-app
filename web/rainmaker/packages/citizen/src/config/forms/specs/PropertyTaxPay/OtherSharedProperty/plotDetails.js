@@ -1,4 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import {measuringUnit,annualRent,occupancy,subUsageType} from "../utils/reusableFields";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 const formConfig = {
   name: "plotDetails",
@@ -13,84 +14,8 @@ const formConfig = {
       disabled: true,
       numcols: 4,
     },
-    subUsageType: {
-      id: "assessment-subUsageType",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategorySubMinor",
-      type: "singleValueList",
-      floatingLabelText: "Sub Usage Type",
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategorySubMinor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
-      },
-      hintText: "Select",
-      required: true,
-      numcols: 4,
-    },
-    occupancy: {
-      id: "assessment-occupancy",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
-      type: "singleValueList",
-      floatingLabelText: "Occupancy",
-      hintText: "Select",
-      required: true,
-      numcols: 4,
-
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "OccupancyType",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
-      },
-      updateDependentFields: (formKey, sourceField, dispatch) => {
-        const { value } = sourceField;
-        const dependentFields1 = ["superArea", "superAreaUnit"];
-        const dependentFields2 = ["annualRent"];
-        switch (value) {
-          case "SELFOCCUPIED":
-            setDependentFields(dependentFields2, dispatch, formKey, true);
-            setDependentFields(dependentFields1, dispatch, formKey, false);
-            break;
-          case "RENTED":
-            setDependentFields(dependentFields1, dispatch, formKey, true);
-            setDependentFields(dependentFields2, dispatch, formKey, false);
-            break;
-          default:
-          // setDependentFields(dependentFields, dispatch, formKey, false);
-        }
-      },
-    },
+    ...subUsageType,
+    ...occupancy,
     superArea: {
       id: "assessment-super-area",
       jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
@@ -104,30 +29,8 @@ const formConfig = {
       numcols: 4,
       hideField: true,
     },
-    superAreaUnit: {
-      id: "assessment-super-area-unit",
-      jsonPath: "",
-      type: "singleValueList",
-      floatingLabelText: "Built area unit",
-      dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
-      required: true,
-      numcols: 4,
-      value: "sq yards",
-      hideField: true,
-    },
-    annualRent: {
-      id: "assessment-annual-rent",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].arv",
-      type: "textfield",
-      floatingLabelText: "Total Annual Rent",
-      hintText: "Enter annual rent",
-      ErrorText: "Enter a valid amount",
-      toolTip: true,
-      toolTipMessage: "Total Rent collected on your property over a year",
-      required: true,
-      numcols: 4,
-      hideField: true,
-    },
+    ...measuringUnit,
+    ...annualRent
   },
   isFormValid: false,
 };
