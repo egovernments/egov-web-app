@@ -71,29 +71,28 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Owner Category",
       hintText: "Select",
-      dropDownData: [{ label: "test", value: "test" }, { label: "test2", value: "test2" }],
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "OwnerType",
-      //               filter: "[?(@.fromFY=='2018-19')]", //year value for this filter should be dynamic.
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.PropertyTax.OwnerType"],
-      // },
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "OwnerType",
+                    filter: "[?(@.fromFY=='2018-19')]", //year value for this filter should be dynamic.
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.OwnerType"],
+      },
       updateDependentFields: (formKey, sourceField, dispatch) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
