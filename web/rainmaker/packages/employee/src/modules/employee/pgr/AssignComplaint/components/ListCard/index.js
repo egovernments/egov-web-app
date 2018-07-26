@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Icon, List, Image, AutoSuggest, Button } from "components";
-import faceOne from "egov-ui-kit/assets/images/faceOne.jpg";
+// import faceOne from "egov-ui-kit/assets/images/faceOne.jpg";
+import faceOne from "egov-ui-kit/assets/images/download.png";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getNameFromId } from "egov-ui-kit/utils/commons";
 import "./index.css";
@@ -31,7 +32,6 @@ export default class ListCard extends Component {
     top: 0,
     right: 30,
     margin: "0px",
-    position: "absolute",
   };
 
   prepareRawDataToFormat = (rawData) => {
@@ -75,7 +75,17 @@ export default class ListCard extends Component {
                   <a
                     className="pgr-call-icon emp-directory-call-icon-link"
                     href={`tel:+91${depItem.mobileNumber}`}
-                    style={{ textDecoration: "none" }}
+                    style={{
+                      textDecoration: "none",
+                      height: "inherit",
+                      width: "inherit",
+                      top: 0,
+                      margin: 0,
+                      right: 16,
+                      bottom: 0,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
                   >
                     <Icon className="emp-directory-call-icon" action="communication" name="call" style={this.callIconStyle} color="#22b25f" />
                     <span style={{ color: "#484848" }}>{`+91${depItem.mobileNumber}`}</span>

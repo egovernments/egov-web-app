@@ -17,11 +17,20 @@ const commonReducer = (state = intialState, action) => {
           [action.key]: action.payload,
         },
       };
+    case commonTypes.EMPLOYEE_FETCH_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        employeeFetchSuccess: false,
+        errorMessage: "",
+      };
     case commonTypes.EMPLOYEE_FETCH_SUCCESS:
       let employeeById = transformById(action.payload.Employee, "id");
       return {
         ...state,
         loading: false,
+        employeeFetchSuccess: true,
         employeeById: {
           ...state.employeeById,
           ...employeeById,
@@ -31,8 +40,18 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
+        employeeFetchSuccess: true,
         error: true,
         errorMessage: action.error,
+      };
+
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        fetchEmployeeToAssignSuccess: false,
+        errorMessage: "",
       };
 
     case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS:
@@ -40,6 +59,7 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
+        fetchEmployeeToAssignSuccess: true,
         employeeToAssignById: {
           ...state.employeeToAssignById,
           ...employeeToAssignById,
@@ -49,6 +69,7 @@ const commonReducer = (state = intialState, action) => {
       return {
         ...state,
         loading: false,
+        fetchEmployeeToAssignSuccess: true,
         error: true,
         errorMessage: action.error,
       };

@@ -6,6 +6,12 @@ export const setDropDownData = (key, payload) => {
   return { type: actionTypes.SET_DROPDOWN_DATA, key, payload };
 };
 
+const employeeFetchPending = () => {
+  return {
+    type: actionTypes.EMPLOYEE_FETCH_PENDING,
+  };
+};
+
 const employeeFetchSuccess = (payload) => {
   return {
     type: actionTypes.EMPLOYEE_FETCH_SUCCESS,
@@ -24,6 +30,12 @@ const employeeToAssignFetchSuccess = (payload) => {
   return {
     type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS,
     payload,
+  };
+};
+
+const employeeToAssignFetchPending = () => {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_PENDING,
   };
 };
 
@@ -87,6 +99,7 @@ const generalMDMSFetchError = (error) => {
 
 export const fetchEmployees = (requestBody) => {
   return async (dispatch) => {
+    dispatch(employeeFetchPending());
     try {
       const payload = await httpRequest(EMPLOYEE.GET.URL, EMPLOYEE.GET.ACTION, requestBody);
       dispatch(employeeFetchSuccess(payload));
@@ -120,6 +133,7 @@ export const fetchMDMSData = (requestBody) => {
 
 export const fetchEmployeeToAssign = (queryObj, requestBody) => {
   return async (dispatch) => {
+    dispatch(employeeToAssignFetchPending());
     try {
       const payload = await httpRequest(EMPLOYEE_ASSIGN.GET.URL, EMPLOYEE_ASSIGN.GET.ACTION, queryObj, requestBody);
       dispatch(employeeToAssignFetchSuccess(payload));

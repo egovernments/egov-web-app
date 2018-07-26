@@ -2,7 +2,7 @@ import Login from "modules/employee/User/Login";
 import OTP from "modules/employee/User/OTP";
 // import LanguageSelection from "modules/employee/User/LanguageSelection";
 import ChangePassword from "modules/employee/User/ChangePassword";
-import ForgotPassword from "modules/employee/User/ForgotPassword";
+// import ForgotPassword from "modules/employee/User/ForgotPassword";
 import Profile from "modules/employee/User/Profile";
 import { TrackLocation } from "modules/common";
 import { ReOpenComplaint } from "modules/common";
@@ -51,12 +51,12 @@ const routes = [
   //   needsAuthentication: false,
   //   redirectionUrl: "/all-complaints",
   // },
-  {
-    path: "user/forgot-password",
-    component: ForgotPassword,
-    needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
-  },
+  // {
+  //   path: "user/forgot-password",
+  //   component: ForgotPassword,
+  //   needsAuthentication: false,
+  //   redirectionUrl: "/all-complaints",
+  // },
   {
     path: "privacy-policy",
     component: PrivacyPolicy,

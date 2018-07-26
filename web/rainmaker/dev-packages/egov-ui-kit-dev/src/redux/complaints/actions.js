@@ -25,13 +25,17 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
         }
       });
     });
-    let { common } = state;
+    let { common, auth } = state;
     if (employeeIds.length > 0) {
       let cachedEmployeeIds = [];
       if (common && common.employeeById) {
         cachedEmployeeIds = Object.keys(common.employeeById);
       }
-      let value = uniq(difference(employeeIds, cachedEmployeeIds)).join(",");
+      let value =
+        uniq(difference(employeeIds, cachedEmployeeIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type !== "CITIZEN"
+          ? [...uniq(difference(employeeIds, cachedEmployeeIds)), auth.userInfo.id].join(",")
+          : [...uniq(difference(employeeIds, cachedEmployeeIds))].join(",");
+
       if (value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value }]));
     }
     if (userIds.length > 0) {
@@ -39,7 +43,10 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
       if (common && common.citizenById) {
         cachedUserIds = Object.keys(common.citizenById);
       }
-      let id = uniq(difference(userIds, cachedUserIds));
+      let id =
+        uniq(difference(userIds, cachedUserIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type === "CITIZEN"
+          ? [...uniq(difference(userIds, cachedUserIds)), auth.userInfo.id]
+          : [...uniq(difference(userIds, cachedUserIds))];
       if (id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id }));
     }
   }
