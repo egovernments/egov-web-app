@@ -136,14 +136,14 @@ var httpRequest = exports.httpRequest = function () {
 }();
 
 var uploadFile = exports.uploadFile = function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(endPoint, module, file) {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(endPoint, module, file, ulbLevel) {
     var tenantId, uploadInstance, requestParams, requestBody, response, responseStatus, fileStoreIds, responseData, files;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             // Bad idea to fetch from local storage, change as feasible
-            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") ? (0, _commons.fetchFromLocalStorage)("tenant-id").split(".")[0] : "";
+            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") ? ulbLevel ? (0, _commons.fetchFromLocalStorage)("tenant-id") : (0, _commons.fetchFromLocalStorage)("tenant-id").split(".")[0] : "";
             uploadInstance = _axios2.default.create({
               baseURL: window.location.origin,
               headers: {
@@ -195,7 +195,7 @@ var uploadFile = exports.uploadFile = function () {
     }, _callee2, undefined, [[4, 17]]);
   }));
 
-  return function uploadFile(_x7, _x8, _x9) {
+  return function uploadFile(_x7, _x8, _x9, _x10) {
     return _ref2.apply(this, arguments);
   };
 }();

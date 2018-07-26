@@ -212,7 +212,7 @@ var resetFiles = exports.resetFiles = function resetFiles(formKey) {
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload
 // TODO : can the upload happen at a later point in time? Challenge is to intimate the user if in case of a failure
-var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fileObject, fileIndex) {
+var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fileObject, ulbLevel) {
   var fileName = fileObject.file.name;
 
   return function () {
@@ -225,7 +225,7 @@ var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fil
               dispatch(fileUploadPending(formKey, fieldKey, fileObject));
               _context2.prev = 1;
               _context2.next = 4;
-              return (0, _api.uploadFile)(_endPoints.FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
+              return (0, _api.uploadFile)(_endPoints.FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file, ulbLevel);
 
             case 4:
               fileStoreId = _context2.sent;

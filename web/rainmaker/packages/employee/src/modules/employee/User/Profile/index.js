@@ -20,7 +20,7 @@ class Profile extends Component {
   setProfilePic = (file = null, imageUri = "") => {
     const { fileUpload } = this.props;
     this.removeProfilePic();
-    fileUpload("profileEmployee", "photo", { module: "rainmaker-pgr", file, imageUri });
+    fileUpload("profileEmployee", "photo", { module: "rainmaker-pgr", file, imageUri }, true);
   };
 
   removeProfilePic = () => {
