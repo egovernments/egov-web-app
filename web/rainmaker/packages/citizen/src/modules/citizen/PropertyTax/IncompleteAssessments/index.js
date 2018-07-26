@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { getDateFromEpoch, getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -29,30 +31,11 @@ class IncompleteAssessments extends Component {
     marginLeft: "10px",
     height: "20px",
   };
-  state = {
-    items: [
-      {
-        primaryText: <Label label="2016 - 2017" fontSize="16px" labelStyle={primaryTextLabelStyle} color="#484848" bold={true} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label
-              label="EB-154, Maya Enclave, Jail Road"
-              fontSize="14px"
-              labelStyle={secondaryTextLabelStyle}
-              containerStyle={secondaryTextContainer}
-            />
-            <Label label="Assessment No.: ZRN-453-98" fontSize="13px" labelStyle={secondaryTextLabelStyle} containerStyle={secondaryTextContainer} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Payment failed",
-      },
-    ],
-  };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
+    fetchProperties(null, [{ key: "userId", value: userInfo.uuid }]);
   };
 
   render() {
@@ -77,11 +60,12 @@ const mapStateToProps = (state) => {
   const { urls } = state.app;
   const { loading, draftsById } = properties || {};
   const numDrafts = draftsById && Object.keys(draftsById).length;
+  get(JSON.parse(localStorage.getItem("user-info")), "uuid");
   const transformedDrafts = Object.values(draftsById).map((draft, index) => {
     return {
       primaryText: (
         <Label
-          label={draft.draftRecord.propertyDetails[0] && draft.draftRecord.propertyDetails[0].financialYear}
+          label={get(draft, "draftRecord.financialYear.fields.button.value")}
           fontSize="16px"
           color="#484848"
           labelStyle={primaryTextLabelStyle}
@@ -91,17 +75,17 @@ const mapStateToProps = (state) => {
       secondaryText: (
         <div style={{ height: "auto" }}>
           <Label
-            label={getCommaSeperatedAddress(draft.draftRecord.address.buildingName, draft.draftRecord.address.street)}
+            // label={getCommaSeperatedAddress(get(draft, "draftRecord.financialYear.fields.button.value"))}
+            label="Gold Plaza, Bellandur"
             labelStyle={secondaryTextLabelStyle}
             fontSize="14px"
             containerStyle={secondaryTextContainer}
             color="#484848"
           />
-          {/* <Label label="Assessment No.: ZRN-453-98" fontSize="13px" labelStyle={secondaryTextLabelStyle} containerStyle={secondaryTextContainer} /> */}
         </div>
       ),
       assessmentNo: draft.id,
-      date: draft.draftRecord.propertyDetails[0] && draft.draftRecord.propertyDetails[0].assessmentDate,
+      date: getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")),
       status: "Saved Draft",
     };
   });
@@ -110,6 +94,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    fetchProperties: (queryObjectproperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectproperty, queryObjectDraft)),
   };
 };
 

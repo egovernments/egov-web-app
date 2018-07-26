@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
+import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
@@ -61,7 +62,14 @@ class SearchProperty extends Component {
       let { propertyId, oldPropertyId, address, propertyDetails } = property;
       let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
       let name = propertyDetails[0].owners[0].name;
-      let button = <Button className={"search-table-assess-pay-btn"} label={"Assess & Pay"} value={propertyId} />;
+      let button = (
+        <Button
+          label={<Label buttonLabel={true} label={"Assess & Pay"} fontSize="12px" />}
+          value={propertyId}
+          primary={true}
+          style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
+        />
+      );
       let item = { index: index + 1, name: name, propertyId: propertyId, oldPropertyId: oldPropertyId, address: displayAddress, action: button };
       tableData.push(item);
       return tableData;

@@ -92,10 +92,21 @@ class AssessPay extends Component {
     );
   }
 }
-const mapStateToProps = ({ app }) => {
+const mapStateToProps = (state) => {
+  const { common, app } = state;
   const { urls } = app;
+  // const { generalMDMSDataById } = common;
+  // console.log(generalMDMSDataById);
+  // const FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
+  // const getYearList =
+  //   FinancialYear &&
+  //   Object.keys(FinancialYear).map((year, index) => {
+  //     console.log(year);
+  //   });
+
   return { urls };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
