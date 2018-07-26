@@ -8,6 +8,7 @@ const IncompleteAssessments = asyncComponent(() => import("modules/citizen/Prope
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
 const Property = asyncComponent(() => import("modules/citizen/PropertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
+const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
 // const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
 //   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
 // );
@@ -86,6 +87,15 @@ const routes = [
     },
   },
   {
+    path: "property-tax/my-properties/property/view-assessments/:propertyId",
+    component: ViewAllAssessments,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+    },
+  },
+  {
     path: "property-tax/assess-pay/search-property",
     component: SearchProperty,
     needsAuthentication: true,
@@ -123,22 +133,6 @@ const routes = [
       hideBackButton: true,
     },
   },
-  // {
-  //   path: "property-tax/property-address",
-  //   component: PropertyAddress,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //   },
-  // },
-  // {
-  //   path: "pt-payment-assessment-form-wizard",
-  //   component: PropertyTaxAssessmentFormWizard,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //   },
-  // },
   {
     path: "property-tax/assessment-form",
     component: FormWizard,

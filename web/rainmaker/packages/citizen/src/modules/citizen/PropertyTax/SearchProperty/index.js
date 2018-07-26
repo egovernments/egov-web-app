@@ -29,8 +29,6 @@ class SearchProperty extends Component {
     if (!(localStorage.getItem("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
-    // const { addBreadCrumbs, title } = this.props;
-    // title && addBreadCrumbs({ title: title, path: window.location.pathname });
   };
 
   onSearchClick = (form, formKey) => {

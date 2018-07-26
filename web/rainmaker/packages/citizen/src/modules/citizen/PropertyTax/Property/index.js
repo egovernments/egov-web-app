@@ -10,7 +10,6 @@ import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
 import isEqual from "lodash/isEqual";
-// import PropertyItems from "./components/PropertyInformation/propertyitems";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -82,12 +81,86 @@ class Property extends Component {
       "OccupancyType",
       "PropertyType",
     ]);
-    console.log(this.props);
     const { pathname } = location;
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
     renderCustomTitleForPt(customTitle);
+  };
+
+  getAssessmentListItems = (props) => {
+    const { propertyItems, propertyId, history } = props;
+    return [
+      {
+        primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        leftIcon: (
+          <div style={IconStyle}>
+            <Icon action="action" name="info" color="#484848" />
+          </div>
+        ),
+        nestedItems: [
+          {
+            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} />,
+          },
+        ],
+        rightIcon: (
+          <div style={IconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+          </div>
+        ),
+      },
+      {
+        primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        leftIcon: (
+          <div style={IconStyle}>
+            <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
+          </div>
+        ),
+        nestedItems: [
+          {
+            primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+            status: "Paid",
+            receipt: true,
+          },
+          {
+            primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+            status: "ASSESS & PAY",
+            receipt: true,
+          },
+          {
+            primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+            status: "Paid",
+            receipt: true,
+          },
+          {
+            primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+            status: "ASSESS & PAY",
+            receipt: true,
+          },
+          {
+            primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+            status: "ASSESS & PAY",
+            receipt: true,
+          },
+          {
+            primaryText: (
+              <div
+                onClick={() => {
+                  history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
+                }}
+              >
+                <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
+              </div>
+            ),
+          },
+        ],
+        rightIcon: (
+          <div style={IconStyle}>
+            <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
+          </div>
+        ),
+      },
+    ];
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -102,7 +175,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history, assessmentListItems } = this.props;
+    const { urls, location, history } = this.props;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
@@ -112,9 +185,14 @@ class Property extends Component {
     return (
       <Screen>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
-        {assessmentListItems && (
-          <AssessmentList items={assessmentListItems} innerDivStyle={innerDivStyle} listItemStyle={listItemStyle} history={this.props.history} />
-        )}
+        {
+          <AssessmentList
+            items={this.getAssessmentListItems(this.props)}
+            innerDivStyle={innerDivStyle}
+            listItemStyle={listItemStyle}
+            history={this.props.history}
+          />
+        }
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
       </Screen>
     );
@@ -273,71 +351,8 @@ const mapStateToProps = (state, ownProps) => {
   const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-  const assessmentListItems = [
-    {
-      primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-      leftIcon: (
-        <div style={IconStyle}>
-          <Icon action="action" name="info" color="#484848" />
-        </div>
-      ),
-      nestedItems: [
-        {
-          secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} />,
-        },
-      ],
-      rightIcon: (
-        <div style={IconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
-        </div>
-      ),
-    },
-    {
-      primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
-      leftIcon: (
-        <div style={IconStyle}>
-          <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
-        </div>
-      ),
-      nestedItems: [
-        {
-          primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "Paid",
-          receipt: true,
-        },
-        {
-          primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ASSESS & PAY",
-          receipt: true,
-        },
-        {
-          primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "Paid",
-          receipt: true,
-        },
-        {
-          primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ASSESS & PAY",
-          receipt: true,
-        },
-        {
-          primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-          status: "ASSESS & PAY",
-          receipt: true,
-        },
-        {
-          primaryText: <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" labelStyle={{ fontWeight: 500 }} />,
-        },
-      ],
-      rightIcon: (
-        <div style={IconStyle}>
-          <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
-        </div>
-      ),
-    },
-  ];
 
-  return { urls, assessmentListItems, customTitle };
+  return { urls, propertyItems, propertyId, customTitle };
 };
 
 const mapDispatchToProps = (dispatch) => {
