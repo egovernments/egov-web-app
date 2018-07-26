@@ -22,9 +22,9 @@ import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
-import ptRoutes from "./pt";
+// import ptRoutes from "./pt";
 import { PrivacyPolicy } from "modules/common";
-// const ptRoutes = [];
+const ptRoutes = [];
 
 const routes = [
   {

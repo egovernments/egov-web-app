@@ -6,13 +6,16 @@ import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 
 const receiptDetails = {
   ReceiptNo: "PT03-067-03-117",
-  TransactionID: "AB-879-67",
+  TransactionID: "ZRN-647-98-756",
+  AssessmentNo: "ZRN-453-98",
   payedDate: "24.04.18",
   OwnerName: "Harishikesh Anand",
-  PropertyID: "PID-78-567",
-  Property: "EB-154, Maya Enclave Harinagar, KT Marg Amritsar - 53",
+  OldPropertyID: "PID-78-567",
+  PropertyAddress: "EB-154, Maya Enclave Harinagar, KT Marg Amritsar - 53",
   PaymentTerm: "2017-18",
+  PayableAmount: "1432.47",
   AmountPaid: "1432.47",
+  AmountDue: "0.00",
   button1: "Link previous payments",
   button2: "Finish",
   oldPropertyId: "oldPropertyId",
@@ -101,7 +104,7 @@ const buttons = {
 
 const successMessages = {
   Message1: "Thank you !",
-  Message2: "PT_RECEIPT_SUCCESS_MESSAGE",
+  Message2: "Payment has been made successfully!",
 };
 
 const icon = <Icon action="navigation" name="check" />;

@@ -78,6 +78,15 @@ var Field = function Field(_ref) {
             return handleFieldChange(fieldKey, value);
           }
         }));
+      case "autoSuggestDropdown":
+        return _react2.default.createElement(_components.AutoSuggestDropdown, (0, _extends3.default)({}, rest, fieldProps, {
+          dataSource: fieldProps && fieldProps.dropDownData
+          // dropDownData={fieldProps.dropDownData || []}
+          , fullWidth: true,
+          onChange: function onChange(chosenRequest, index) {
+            handleFieldChange(fieldKey, chosenRequest.value);
+          }
+        }));
 
       default:
         return null;

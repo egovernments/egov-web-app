@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updatePTForms = exports.deleteForm = exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
+exports.updateForms = exports.deleteForm = exports.setFieldProperty = exports.fileUpload = exports.resetFiles = exports.removeFile = exports.submitForm = exports.submitFormError = exports.submitFormComplete = exports.submitFormPending = exports.setFieldValidation = exports.setFormValidation = exports.displayFormErrors = exports.handleFieldChange = exports.removeForm = exports.resetForm = exports.initForm = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -212,7 +212,7 @@ var resetFiles = exports.resetFiles = function resetFiles(formKey) {
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload
 // TODO : can the upload happen at a later point in time? Challenge is to intimate the user if in case of a failure
-var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fileObject, fileIndex) {
+var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fileObject, ulbLevel) {
   var fileName = fileObject.file.name;
 
   return function () {
@@ -225,7 +225,7 @@ var fileUpload = exports.fileUpload = function fileUpload(formKey, fieldKey, fil
               dispatch(fileUploadPending(formKey, fieldKey, fileObject));
               _context2.prev = 1;
               _context2.next = 4;
-              return (0, _api.uploadFile)(_endPoints.FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
+              return (0, _api.uploadFile)(_endPoints.FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file, ulbLevel);
 
             case 4:
               fileStoreId = _context2.sent;
@@ -266,7 +266,7 @@ var deleteForm = exports.deleteForm = function deleteForm(formKey) {
   };
 };
 
-var updatePTForms = exports.updatePTForms = function updatePTForms(forms) {
+var updateForms = exports.updateForms = function updateForms(forms) {
   return {
     type: actionTypes.UPDATE_FORM,
     forms: forms

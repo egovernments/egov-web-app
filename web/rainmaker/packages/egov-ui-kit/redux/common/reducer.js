@@ -44,28 +44,47 @@ var commonReducer = function commonReducer() {
       return (0, _extends4.default)({}, state, {
         dropDownData: (0, _extends4.default)({}, state.dropDownData, (0, _defineProperty3.default)({}, action.key, action.payload))
       });
+    case commonTypes.EMPLOYEE_FETCH_PENDING:
+      return (0, _extends4.default)({}, state, {
+        loading: true,
+        error: false,
+        employeeFetchSuccess: false,
+        errorMessage: ""
+      });
     case commonTypes.EMPLOYEE_FETCH_SUCCESS:
       var employeeById = (0, _commons.transformById)(action.payload.Employee, "id");
       return (0, _extends4.default)({}, state, {
         loading: false,
+        employeeFetchSuccess: true,
         employeeById: (0, _extends4.default)({}, state.employeeById, employeeById)
       });
     case commonTypes.EMPLOYEE_FETCH_ERROR:
       return (0, _extends4.default)({}, state, {
         loading: false,
+        employeeFetchSuccess: true,
         error: true,
         errorMessage: action.error
+      });
+
+    case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_PENDING:
+      return (0, _extends4.default)({}, state, {
+        loading: true,
+        error: false,
+        fetchEmployeeToAssignSuccess: false,
+        errorMessage: ""
       });
 
     case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS:
       var employeeToAssignById = (0, _commons.transformById)(action.payload.Employee, "id");
       return (0, _extends4.default)({}, state, {
         loading: false,
+        fetchEmployeeToAssignSuccess: true,
         employeeToAssignById: (0, _extends4.default)({}, state.employeeToAssignById, employeeToAssignById)
       });
     case commonTypes.EMPLOYEE_TO_ASSIGN_FETCH_ERROR:
       return (0, _extends4.default)({}, state, {
         loading: false,
+        fetchEmployeeToAssignSuccess: true,
         error: true,
         errorMessage: action.error
       });

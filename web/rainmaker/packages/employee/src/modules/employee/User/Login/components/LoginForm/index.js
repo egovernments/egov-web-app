@@ -21,7 +21,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
           <TextField onChange={(e, value) => handleFieldChange("username", value)} {...fields.username} />
           <TextField onChange={(e, value) => handleFieldChange("password", value)} {...fields.password} />
           <CityPicker onChange={handleFieldChange} fieldKey="city" field={fields.city} />
-          <Link to="/user/forgot-password">
+          {/* <Link to="/user/forgot-password">
             <div style={{ float: "right" }}>
               <Label
                 containerStyle={{ cursor: "pointer", position: "relative", zIndex: 10 }}
@@ -31,7 +31,7 @@ const LoginForm = ({ handleFieldChange, form, onForgotPasswdCLick }) => {
                 label="FORGOT PASSWORD?"
               />
             </div>
-          </Link>
+          </Link> */}
           <Button {...submit} fullWidth={true} primary={true} />
         </div>
       }

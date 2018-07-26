@@ -63,30 +63,26 @@ var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
       required = _ref.required,
       restProps = (0, _objectWithoutProperties3.default)(_ref, ["onChange", "dataSource", "floatingLabelText", "className", "required"]);
 
-  return _react2.default.createElement(
-    "div",
-    null,
-    _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
-      className: "autosuggest " + className,
-      floatingLabelFixed: true,
-      floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
-      hintStyle: (0, _extends3.default)({}, hintBaseStyle),
-      underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
-      filter: _AutoComplete2.default.caseInsensitiveFilter,
-      openOnFocus: false,
-      fullWidth: true,
-      dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
-      menuStyle: { maxHeight: "150px", overflowY: "auto" },
-      dataSourceConfig: { text: "label", value: "value" },
-      onNewRequest: onChange,
-      floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
-        "span",
-        { key: "error-" + className, style: requiredStyle },
-        " ",
-        "*"
-      ) : null]
-    }, restProps))
-  );
+  return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
+    className: "autosuggest " + className,
+    floatingLabelFixed: true,
+    floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
+    hintStyle: (0, _extends3.default)({}, hintBaseStyle),
+    underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
+    filter: _AutoComplete2.default.caseInsensitiveFilter,
+    openOnFocus: false,
+    fullWidth: true,
+    dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
+    menuStyle: { maxHeight: "150px", overflowY: "auto" },
+    dataSourceConfig: { text: "label", value: "value" },
+    onNewRequest: onChange,
+    floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
+      "span",
+      { key: "error-" + className, style: requiredStyle },
+      " ",
+      "*"
+    ) : null]
+  }, restProps));
 };
 
 AutoSuggestDropdown.propTypes = (_AutoSuggestDropdown$ = {

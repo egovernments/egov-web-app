@@ -71,7 +71,6 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Owner Category",
       hintText: "Select",
-      dropDownData: [],
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
@@ -124,7 +123,7 @@ const formConfig = {
       floatingLabelText: "Owner Category Id Type",
       hideField: true,
       hintText: "Select",
-      dropDownData: [{ label: "test", value: "test" }, { label: "test2", value: "test2" }],
+      dropDownData: [{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
     },
     ownerGender: {
       id: "ownerGender",

@@ -29,6 +29,12 @@ var setDropDownData = exports.setDropDownData = function setDropDownData(key, pa
   return { type: actionTypes.SET_DROPDOWN_DATA, key: key, payload: payload };
 };
 
+var employeeFetchPending = function employeeFetchPending() {
+  return {
+    type: actionTypes.EMPLOYEE_FETCH_PENDING
+  };
+};
+
 var employeeFetchSuccess = function employeeFetchSuccess(payload) {
   return {
     type: actionTypes.EMPLOYEE_FETCH_SUCCESS,
@@ -47,6 +53,12 @@ var employeeToAssignFetchSuccess = function employeeToAssignFetchSuccess(payload
   return {
     type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_SUCCESS,
     payload: payload
+  };
+};
+
+var employeeToAssignFetchPending = function employeeToAssignFetchPending() {
+  return {
+    type: actionTypes.EMPLOYEE_TO_ASSIGN_FETCH_PENDING
   };
 };
 
@@ -116,29 +128,30 @@ var fetchEmployees = exports.fetchEmployees = function fetchEmployees(requestBod
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
+              dispatch(employeeFetchPending());
+              _context.prev = 1;
+              _context.next = 4;
               return (0, _api.httpRequest)(_endPoints.EMPLOYEE.GET.URL, _endPoints.EMPLOYEE.GET.ACTION, requestBody);
 
-            case 3:
+            case 4:
               payload = _context.sent;
 
               dispatch(employeeFetchSuccess(payload));
-              _context.next = 10;
+              _context.next = 11;
               break;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](0);
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](1);
 
               dispatch(employeeFetchError(_context.t0.message));
 
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[0, 7]]);
+      }, _callee, undefined, [[1, 8]]);
     }));
 
     return function (_x) {
@@ -236,29 +249,30 @@ var fetchEmployeeToAssign = exports.fetchEmployeeToAssign = function fetchEmploy
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
+              dispatch(employeeToAssignFetchPending());
+              _context4.prev = 1;
+              _context4.next = 4;
               return (0, _api.httpRequest)(_endPoints.EMPLOYEE_ASSIGN.GET.URL, _endPoints.EMPLOYEE_ASSIGN.GET.ACTION, queryObj, requestBody);
 
-            case 3:
+            case 4:
               payload = _context4.sent;
 
               dispatch(employeeToAssignFetchSuccess(payload));
-              _context4.next = 10;
+              _context4.next = 11;
               break;
 
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](1);
 
               dispatch(employeeToAssignFetchError(_context4.t0.message));
 
-            case 10:
+            case 11:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[0, 7]]);
+      }, _callee4, undefined, [[1, 8]]);
     }));
 
     return function (_x6) {

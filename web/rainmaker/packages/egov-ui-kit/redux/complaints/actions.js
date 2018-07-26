@@ -13,6 +13,10 @@ var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _actionTypes = require("./actionTypes");
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
@@ -66,14 +70,16 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
         }
       });
     });
-    var common = state.common;
+    var common = state.common,
+        auth = state.auth;
 
     if (employeeIds.length > 0) {
       var cachedEmployeeIds = [];
       if (common && common.employeeById) {
         cachedEmployeeIds = Object.keys(common.employeeById);
       }
-      var value = (0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)).join(",");
+      var value = (0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type !== "CITIZEN" ? [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds))), [auth.userInfo.id]).join(",") : [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)))).join(",");
+
       if (value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value: value }]));
     }
     if (userIds.length > 0) {
@@ -81,7 +87,7 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
       if (common && common.citizenById) {
         cachedUserIds = Object.keys(common.citizenById);
       }
-      var id = (0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds));
+      var id = (0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type === "CITIZEN" ? [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds))), [auth.userInfo.id]) : [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds))));
       if (id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: id }));
     }
   }

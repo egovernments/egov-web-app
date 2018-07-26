@@ -10,8 +10,10 @@ import "./index.css";
 
 class ClosedComplaints extends Component {
   componentDidMount() {
-    let { fetchComplaints } = this.props;
+    let { fetchComplaints, numClosedComplaints, renderCustomTitle } = this.props;
     fetchComplaints([{ key: "status", value: "rejected,resolved,closed" }]);
+    const numberOfComplaints = numClosedComplaints ? numClosedComplaints : 0;
+    renderCustomTitle(numberOfComplaints);
   }
 
   onComplaintClick = (complaintNo) => {
@@ -21,7 +23,7 @@ class ClosedComplaints extends Component {
   componentWillReceiveProps = (nextProps) => {
     const { numClosedComplaints, closedComplaints, renderCustomTitle } = this.props;
     if (!isEqual(closedComplaints, nextProps.closedComplaints)) {
-      const numberOfComplaints = numClosedComplaints ? numClosedComplaints : 0;
+      const numberOfComplaints = nextProps.numClosedComplaints ? nextProps.numClosedComplaints : 0;
       renderCustomTitle(numberOfComplaints);
     }
   };
@@ -80,6 +82,7 @@ const mapStateToProps = (state) => {
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
   const numClosedComplaints = closedComplaints.length;
+  console.log(numClosedComplaints);
   return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
 

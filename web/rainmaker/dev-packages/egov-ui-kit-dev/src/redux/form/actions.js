@@ -113,12 +113,12 @@ export const resetFiles = (formKey) => {
 
 // currently supports only single file upload at a time, although the API has support for multiple file upload
 // TODO : can the upload happen at a later point in time? Challenge is to intimate the user if in case of a failure
-export const fileUpload = (formKey, fieldKey, fileObject, fileIndex) => {
+export const fileUpload = (formKey, fieldKey, fileObject, ulbLevel) => {
   const { name: fileName } = fileObject.file;
   return async (dispatch, getState) => {
     dispatch(fileUploadPending(formKey, fieldKey, fileObject));
     try {
-      const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file);
+      const fileStoreId = await uploadFile(FILE_UPLOAD.POST.URL, fileObject.module, fileObject.file, ulbLevel);
       dispatch(fileUploadCompleted(formKey, fieldKey, fileStoreId, fileName));
     } catch (error) {
       dispatch(fileUploadError(formKey, fieldKey, error.message, fileName));
@@ -136,7 +136,7 @@ export const deleteForm = (formKey) => ({
   formKey,
 });
 
-export const updatePTForms = (forms) => ({
+export const updateForms = (forms) => ({
   type: actionTypes.UPDATE_FORM,
   forms,
-})
+});

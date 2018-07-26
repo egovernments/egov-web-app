@@ -15,9 +15,9 @@ class AssignComplaint extends Component {
     fetchEmployeeToAssign(queryParams);
   };
   render() {
-    const { transformedComplaint, ...rest } = this.props;
+    const { transformedComplaint, loading, ...rest } = this.props;
     return (
-      <Screen>
+      <Screen loading={loading}>
         <AssignComplaintFormHOC complaint={transformedComplaint} {...rest} />
       </Screen>
     );
@@ -31,7 +31,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { complaints } = state;
+  const { complaints, common } = state;
+  const { fetchEmployeeToAssignSuccess } = common;
+  const loading = !fetchEmployeeToAssignSuccess;
   const { history } = ownProps;
   const serviceRequestId = ownProps.match.params.serviceRequestId;
   const { departmentById, designationsById, employeeToAssignById } = state.common;
@@ -49,7 +51,7 @@ const mapStateToProps = (state, ownProps) => {
     header: selectedComplaint && selectedComplaint.serviceCode,
     address: selectedComplaint && selectedComplaint.address,
   };
-  return { designationsById, departmentById, APIData, transformedComplaint, history, serviceRequestId };
+  return { designationsById, departmentById, APIData, transformedComplaint, history, serviceRequestId, loading };
 };
 
 export default connect(

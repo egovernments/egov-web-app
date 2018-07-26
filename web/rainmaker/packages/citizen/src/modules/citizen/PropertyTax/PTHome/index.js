@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Label, List, Icon, Card } from "components";
+import { List, Icon, Card } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import { Link } from "react-router-dom";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
