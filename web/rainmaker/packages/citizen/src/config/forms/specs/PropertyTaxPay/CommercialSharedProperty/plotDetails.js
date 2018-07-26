@@ -1,4 +1,4 @@
-import {annualRent,subUsageType,annualRent,measuringUnit} from "../utils/reusableFields";
+import { annualRent, subUsageType, measuringUnit } from "../utils/reusableFields";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 const formConfig = {
@@ -12,7 +12,7 @@ const formConfig = {
       value: "COMMERCIAL",
       required: true,
       disabled: true,
-      numcols: 4
+      numcols: 4,
     },
     ...subUsageType,
     ...occupancy,
@@ -30,7 +30,7 @@ const formConfig = {
       hideField: true,
     },
     ...measuringUnit,
-    ...annualRent
+    ...annualRent,
   },
   isFormValid: false,
 };
