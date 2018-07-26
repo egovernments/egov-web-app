@@ -23,32 +23,30 @@ const requiredStyle = {
 
 const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, className, required, ...restProps }) => {
   return (
-    <div>
-      <AutoComplete
-        className={`autosuggest ${className}`}
-        floatingLabelFixed={true}
-        floatingLabelStyle={{ ...floatingLabelStyle }}
-        hintStyle={{ ...hintBaseStyle }}
-        underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-        filter={AutoComplete.caseInsensitiveFilter}
-        openOnFocus={false}
-        fullWidth={true}
-        dataSource={(dataSource && [...dataSource]) || []}
-        menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
-        dataSourceConfig={{ text: "label", value: "value" }}
-        onNewRequest={onChange}
-        floatingLabelText={[
-          floatingLabelText,
-          required ? (
-            <span key={`error-${className}`} style={requiredStyle}>
-              {" "}
-              *
-            </span>
-          ) : null,
-        ]}
-        {...restProps}
-      />
-    </div>
+    <AutoComplete
+      className={`autosuggest ${className}`}
+      floatingLabelFixed={true}
+      floatingLabelStyle={{ ...floatingLabelStyle }}
+      hintStyle={{ ...hintBaseStyle }}
+      underlineFocusStyle={{ ...underlineFocusBaseStyle }}
+      filter={AutoComplete.caseInsensitiveFilter}
+      openOnFocus={false}
+      fullWidth={true}
+      dataSource={(dataSource && [...dataSource]) || []}
+      menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
+      dataSourceConfig={{ text: "label", value: "value" }}
+      onNewRequest={onChange}
+      floatingLabelText={[
+        floatingLabelText,
+        required ? (
+          <span key={`error-${className}`} style={requiredStyle}>
+            {" "}
+            *
+          </span>
+        ) : null,
+      ]}
+      {...restProps}
+    />
   );
 };
 

@@ -1,67 +1,6 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
-
-// const formConfig = {
-//   name: "propertyAddress",
-//   fields: {
-//     doorNumber: {
-//       id: "door-number",
-//       jsonPath: "",
-//       required: true,
-//       type: "textfield",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_DOOR_NUMBER",
-//       hintText: "PT_PROPERTY_DETAILS_DOOR_NUMBER_PLACEHOLDER",
-//       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
-//     },
-//     colony: {
-//       id: "property-colony",
-//       jsonPath: "",
-//       required: true,
-//       type: "textfield",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_COLONY_NAME",
-//       hintText: "PT_PROPERTY_DETAILS_COLONY_NAME_PLACEHOLDER",
-//       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
-//     },
-//     street: {
-//       id: "property-street",
-//       jsonPath: "",
-//       type: "textfield",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_STREET",
-//       hintText: "PT_PROPERTY_DETAILS_STREET_PLACEHOLDER",
-//       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
-//     },
-//     mohalla: {
-//       id: "mohalla",
-//       jsonPath: "",
-//       type: "singleValueList",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
-//       hintText: "PT_PROPERTY_DETAILS_MOHALLA_PLACEHOLDER",
-//       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-//     },
-//     city: {
-//       id: "city",
-//       jsonPath: "",
-//       required: true,
-//       type: "singleValueList",
-//       floatingLabelText: "CS_ADDCOMPLAINT_CITY",
-//       hintText: "PT_PROPERTY_DETAILS_CITY_PLACEHOLDER",
-//     },
-//     pincode: {
-//       id: "pincode",
-//       type: "textfield",
-//       jsonPath: "",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
-//       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
-//       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
-//     },
-//   },
-
-//   action: "",
-//   redirectionRoute: "",
-//   saveUrl: "",
-// };
-
-// export default formConfig;
+const cityCode = "";
 
 const formConfig = {
   name: "propertyAddress",
@@ -77,7 +16,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       fullWidth: true,
-      hintText: "",
+      hintText: "Select",
       numcols: 6,
       dataFetchConfig: {
         url: CITY.GET.URL,
@@ -147,15 +86,25 @@ const formConfig = {
     mohalla: {
       id: "mohalla",
       jsonPath: "Properties[0].address.locality.code",
-      type: "singleValueList",
+      type: "autoSuggestDropdown",
       floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
       //hintText: "PT_COMMON_SELECT_PLACEHOLDER",
       hintText: "Select",
+      fullWidth: true,
       toolTip: true,
       toolTipMessage: "Name of the area in which your property is located",
+      boundary: true,
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
+      dataFetchConfig: {
+        url: "egov-location/location/v11/boundarys/_search",
+        action: "",
+        queryParams: [],
+        requestBody: {},
+        isDependent: true,
+        dataPath: `$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==${cityCode})]..children[?(@.label=='Locality')]`,
+      },
+      dropDownData: [],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
     },
