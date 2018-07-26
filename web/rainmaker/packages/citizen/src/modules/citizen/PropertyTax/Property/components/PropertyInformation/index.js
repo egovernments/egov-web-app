@@ -4,7 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 
-const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
+const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
   return (
     <div>
       <div className="receipt-displayInline">
@@ -61,7 +61,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
             fontSize: "14px",
           }}
           onClick={(e) => {
-            // this.props.redirectToMap(true);
+            history && history.push(`/property-tax/assessment-form?propertyId=${propertyTaxAssessmentID}`);
           }}
         />
       </div>
