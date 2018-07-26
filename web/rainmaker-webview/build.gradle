@@ -23,14 +23,6 @@ allprojects {
 android {
 	compileSdkVersion 26
 	buildToolsVersion '27.0.3'
-	defaultConfig {
-		applicationId 'org.egovernment.mseva.employee'
-		minSdkVersion 19
-		targetSdkVersion 26
-		versionCode 2
-		versionName '2.0'
-		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-	}
 	buildTypes {
 		release {
 			minifyEnabled false
@@ -45,8 +37,8 @@ android {
 			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 1
-			versionName '1.1'
+			versionCode 5
+			versionName '1.0.5'
 			resValue "string", "app_name", "mSeva-Punjab"
 			// QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/citizen/user/register"'
@@ -61,8 +53,8 @@ android {
 			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 1
-			versionName '1.1'
+			versionCode 5
+			versionName '1.0.5'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
 			//QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/employee/user/login"'
