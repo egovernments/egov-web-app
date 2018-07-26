@@ -1,0 +1,6 @@
+.custom-form-control-for-datepicker hr {
+  display: none; }
+
+.custom-form-control-for-datepicker label {
+  top: 15px !important;
+  color: #5f5c62 !important; }

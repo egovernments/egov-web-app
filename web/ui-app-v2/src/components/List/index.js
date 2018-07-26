@@ -1,81 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { List as MaterialUiList, ListItem } from "material-ui/List";
-import Avatar from "material-ui/Avatar";
-import SvgIcon from "material-ui/SvgIcon";
 
-const List = ({
-  listItemContainer,
-  listItemStyle = {},
-  listContainerStyle,
-  items = []
-}) => {
-  const renderListItems = items => {
+const baseListContainerStyle = { background: "#fff", padding: "0px" };
+const baseListItemStyle = { color: "#484848", fontWeight: 500 };
+
+const List = ({ listItemContainer, onItemClick, listItemStyle = {}, listContainerStyle = {}, items = [], ...rest }) => {
+  const renderListItems = (items) => {
     return items.map((item, index) => {
-      const listItemProps = {};
-
-      const {
-        primaryText,
-        nestedItems,
-        secondaryText,
-        leftIcon,
-        rightIcon,
-        leftAvatar,
-        rightAvatar,
-        initiallyOpen,
-        primaryTogglesNestedList,
-        style
-      } = item;
+      const { nestedItems } = item;
 
       if (listItemStyle && Object.keys(listItemStyle).length) {
-        listItemProps.style = listItemStyle;
-      }
-      if (primaryText) {
-        listItemProps.primaryText = primaryText;
-      }
-      if (secondaryText) {
-        listItemProps.secondaryText = secondaryText;
-      }
-      if (leftIcon) {
-        listItemProps.leftIcon = leftIcon;
-      }
-      if (rightIcon) {
-        listItemProps.rightIcon = rightIcon;
-      }
-      if (leftAvatar) {
-        listItemProps.leftAvatar = leftAvatar;
-      }
-      if (rightAvatar) {
-        listItemProps.rightAvatar = rightAvatar;
+        item.style = { ...baseListItemStyle, ...listItemStyle, ...item.style };
       }
       if (nestedItems) {
-        listItemProps.nestedItems = renderListItems(nestedItems);
-      }
-      if (initiallyOpen) {
-        listItemProps.initiallyOpen = true;
-      }
-      if (primaryTogglesNestedList) {
-        listItemProps.primaryTogglesNestedList = primaryTogglesNestedList;
-      }
-      if (style && Object.keys(style).length) {
-        listItemProps.style = style;
+        // recurse over the nested items
+        item.nestedItems = renderListItems(nestedItems);
       }
 
       return (
-        <ListItem
-          containerElement={listItemContainer}
-          key={index}
-          {...listItemProps}
-        />
+        <ListItem onClick={() => onItemClick && onItemClick(item, index)} containerElement={listItemContainer} key={index} {...rest} {...item} />
       );
     });
   };
 
   return (
-    <div>
-      <MaterialUiList style={listContainerStyle}>
-        {renderListItems(items)}
-      </MaterialUiList>
+    <div className="list-main-card">
+      <MaterialUiList style={{ ...baseListContainerStyle, ...listContainerStyle }}>{renderListItems(items)}</MaterialUiList>
     </div>
   );
 };
@@ -83,21 +34,22 @@ const List = ({
 List.propTypes = {
   listItemContainer: PropTypes.string,
   listItemStyle: PropTypes.object,
+  onItemClick: PropTypes.func,
   listContainerStyle: PropTypes.object,
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      primaryText: PropTypes.string,
+      primaryText: PropTypes.node,
       nestedItems: PropTypes.array,
-      secondaryText: PropTypes.string,
-      leftIcon: PropTypes.instanceOf(SvgIcon),
-      rightIcon: PropTypes.instanceOf(SvgIcon),
-      leftAvatar: PropTypes.instanceOf(Avatar),
-      rightAvatar: PropTypes.instanceOf(Avatar),
+      secondaryText: PropTypes.node,
+      leftIcon: PropTypes.element,
+      rightIcon: PropTypes.element,
+      leftAvatar: PropTypes.element,
+      rightAvatar: PropTypes.element,
       initiallyOpen: PropTypes.bool,
       primaryTogglesNestedList: PropTypes.bool,
-      style: PropTypes.object
+      style: PropTypes.object,
     })
-  )
+  ),
 };
 
 export default List;

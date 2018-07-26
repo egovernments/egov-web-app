@@ -1,0 +1,29 @@
+.tableStyle thead tr {
+  background-color: "#d3d3d399"; }
+
+.tableHeadStyle,
+.material-table-row {
+  font-family: Roboto;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+  text-align: center !important;
+  color: #767676 !important; }
+
+.material-table-row th,
+.material-table-row td {
+  font-size: 13px;
+  color: #484848;
+  font-weight: normal; }
+
+.material-table-pagination span {
+  font-size: 14px; }
+
+.MuiTableCell-numeric-42 {
+  text-align: center !important; }
+
+.MuiTableCell-root-38 {
+  padding: 4px 8px 4px 8px !important; }
+
+.TableUi-tableWrapper-3 {
+  overflow: hidden !important; }

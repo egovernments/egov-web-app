@@ -315,7 +315,7 @@ const menuConvention = {
   'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails Search': '/search/swm/paymentvendor/view',
   'Solid Waste Management.SWM Transactions.Payment Details.PaymentDetails  Update': '/search/swm/paymentvendor/update',
 
- 
+
 
 
   //SWM Reports

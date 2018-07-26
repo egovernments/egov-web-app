@@ -1,31 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import RaisedButton from "material-ui/RaisedButton";
 
-const ButtonUi = ({
-  label,
-  icon = {},
-  onClick,
-  disabled,
-  hide,
-  primary = false,
-  style = {}
-}) => {
-  return (
-    <RaisedButton
-      style={style}
-      hide={hide}
-      disabled={disabled}
-      primary={primary}
-      type="button"
-      label={label}
-      onClick={onClick}
-      icon={
-        <i style={icon.style} className="material-icons">
-          {icon.name}
-        </i>
-      }
-    />
-  );
+const Button = ({ label = "Continue", ...rest }) => {
+  return <RaisedButton label={label} {...rest} />;
 };
 
-export default ButtonUi;
+Button.propTypes = {
+  onClick: PropTypes.func,
+  primary: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+  disabled: PropTypes.bool,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  style: PropTypes.object,
+};
+
+export default Button;
