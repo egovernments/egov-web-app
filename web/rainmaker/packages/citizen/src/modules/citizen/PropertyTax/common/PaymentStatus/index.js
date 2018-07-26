@@ -32,58 +32,70 @@ const PaymentStatus = ({ receiptDetails, floatingButtonColor, icon, messages, bu
             <div>
               {receiptDetails.ReceiptNo && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_RECEIPT_NO" />
+                  <Label className="col-xs-6" label="Receipt No:" />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.ReceiptNo} />
                 </div>
               )}
               {receiptDetails.TransactionID && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_DATE" />
+                  <Label className="col-xs-6" label="Property Tax Assessment ID: " />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.TransactionID} />
+                </div>
+              )}
+              {receiptDetails.AssessmentNo && (
+                <div className="row pt-reciept-label">
+                  <Label className="col-xs-6" label="Assessment No.:" />
+                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.AssessmentNo} />
                 </div>
               )}
               {receiptDetails.payedDate && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_DATE" />
+                  <Label className="col-xs-6" label="Date:" />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.payedDate} />
                 </div>
               )}
               <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
               {receiptDetails.OwnerName && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_OWNER_NAME" />
+                  <Label className="col-xs-6" label="Owner Name:" />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.OwnerName} />
                 </div>
               )}
-              {receiptDetails.OwnerName && (
+              {receiptDetails.OldPropertyID && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_PROPERTY" />
-                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.PropertyID} />
+                  <Label className="col-xs-6" label="Old Property ID:" />
+                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.OldPropertyID} />
                 </div>
               )}
-              {receiptDetails.Property && (
+              {receiptDetails.PropertyAddress && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_PROPERTY" />
-                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.Property} />
+                  <Label className="col-xs-6" label="Property Address:" />
+                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.PropertyAddress} />
                 </div>
               )}
               <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
               {receiptDetails.PaymentTerm && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_PAYMENT_TERM" />
+                  <Label className="col-xs-6" label="Payment Term:" />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.PaymentTerm} />
+                </div>
+              )}
+              {receiptDetails.PayableAmount && (
+                <div className="row pt-reciept-label">
+                  <Label className="col-xs-6" label="Payable Amount:" />
+                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.PayableAmount} />
                 </div>
               )}
               {receiptDetails.AmountPaid && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_AMOUNT_PAID" />
+                  <Label className="col-xs-6" label="Amount Paid:" />
                   <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.AmountPaid} />
                 </div>
               )}
-              {receiptDetails.PropertyTaxDue && (
+              {receiptDetails.AmountDue && (
                 <div className="row pt-reciept-label">
-                  <Label className="col-xs-6" label="PT_RECEIPT_PROPERTY_TAX_DUE" />
-                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.PropertyTaxDue} />
+                  <Label className="col-xs-6" label="Amount Due:" />
+                  <Label className="col-xs-6" labelStyle={labelStyle} label={receiptDetails.AmountDue} />
                 </div>
               )}
             </div>
