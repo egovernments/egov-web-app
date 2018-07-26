@@ -40,12 +40,17 @@ android {
 			versionCode 5
 			versionName '1.0.5'
 			resValue "string", "app_name", "mSeva-Punjab"
+
 			// QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/citizen/user/register"'
+
 			// DEV
 //			buildConfigField 'String', 'url', '"https://egov-micro-dev.egovernments.org/citizen/user/register"'
+
 			//UAT
 			//buildConfigField 'String', 'url', '"https://mseva-uat.lgpunjab.gov.in/citizen/user/register"'
+
+			// Production
 			buildConfigField 'String', 'url', '"https://mseva.lgpunjab.gov.in/citizen/user/register"'
 		}
 		Employee {
@@ -56,12 +61,17 @@ android {
 			versionCode 5
 			versionName '1.0.5'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
+
 			//QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/employee/user/login"'
+
 			//DEV
 			//buildConfigField 'String', 'url', '"https://egov-micro-dev.egovernments.org/employee/user/login"'
+
 			//UAT
 			//buildConfigField 'String', 'url', '"https://mseva-uat.lgpunjab.gov.in/employee/user/login"'
+
+			// Production
 			buildConfigField 'String', 'url', '"https://mseva.lgpunjab.gov.in/employee/user/login"'
 		}
 	}
