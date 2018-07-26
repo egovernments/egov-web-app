@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getTransformedItems = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -24,6 +24,10 @@ var _typeof3 = _interopRequireDefault(_typeof2);
 var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
 
 var _set = require("lodash/set");
 
@@ -255,6 +259,45 @@ var getCurrentAddress = exports.getCurrentAddress = function () {
   };
 }();
 
+var getTransformedItems = exports.getTransformedItems = function getTransformedItems(propertiesById) {
+  return propertiesById && Object.values(propertiesById).reduce(function (acc, curr) {
+    var propertyDetail = curr.propertyDetails && curr.propertyDetails.map(function (item) {
+      return {
+        primaryText: _react2.default.createElement(Label, { label: "INR 1300.00", fontSize: "16px", color: "#484848", bold: true, labelStyle: primaryTextLabelStyle }),
+
+        secondaryText: _react2.default.createElement(
+          "div",
+          { style: { height: "auto", marginTop: 0 } },
+          _react2.default.createElement(Label, {
+            label: item && item.financialYear,
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          }),
+          _react2.default.createElement(Label, {
+            label: getCommaSeperatedAddress(curr.address.buildingName, curr.address.street),
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          }),
+          _react2.default.createElement(Label, {
+            label: "Assessment No.: " + item.assessmentNumber,
+            containerStyle: secondaryTextContainer,
+            labelStyle: secondaryTextLabelStyle,
+            color: "#484848"
+          })
+        ),
+        date: getDateFromEpoch(item.assessmentDate),
+        status: "Paid",
+
+        receipt: true
+      };
+    });
+    acc = [].concat((0, _toConsumableArray3.default)(acc), (0, _toConsumableArray3.default)(propertyDetail));
+    return acc;
+  }, []);
+};
+
 var mapCompIDToName = exports.mapCompIDToName = function mapCompIDToName(IDObj, compID) {
   return IDObj[compID] ? IDObj[compID].serviceCode : "Default";
 };
@@ -422,6 +465,12 @@ var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCr
 var transformLocalizationLabels = exports.transformLocalizationLabels = function transformLocalizationLabels(localizationLabels) {
   var labelsById = transformById(localizationLabels, "code");
   return labelsById;
+};
+
+var flatten = exports.flatten = function flatten(arr) {
+  return arr.reduce(function (flat, toFlatten) {
+    return flat.concat(Array.isArray(toFlatten) ? undefined.flatten(toFlatten) : toFlatten);
+  }, []);
 };
 
 var getTenantForLatLng = exports.getTenantForLatLng = function () {

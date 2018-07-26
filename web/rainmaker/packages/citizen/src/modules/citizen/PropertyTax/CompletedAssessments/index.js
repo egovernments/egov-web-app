@@ -2,23 +2,10 @@ import React, { Component } from "react";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
-import { BreadCrumbs, Icon } from "components";
+import { BreadCrumbs } from "components";
+import { getTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import Label from "egov-ui-kit/utils/translationNode";
-import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-
-const secondaryTextLabelStyle = {
-  letterSpacing: 0.5,
-};
-
-const primaryTextLabelStyle = {
-  letterSpacing: 0.6,
-};
-
-const secondaryTextContainer = {
-  marginTop: 5,
-};
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -33,101 +20,26 @@ class CompletedAssessments extends Component {
   };
   state = {
     dialogueOpen: false,
-    items: [
-      {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-            />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Partially Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-      {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-            />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Partially Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-      {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-            />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-      {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-            />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-      {
-        primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-
-        secondaryText: (
-          <div style={{ height: "auto" }}>
-            <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-            <Label
-              label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
-              containerStyle={secondaryTextContainer}
-              labelStyle={secondaryTextLabelStyle}
-            />
-            <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
-          </div>
-        ),
-        date: "12-06-2018",
-        status: "Paid",
-        statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
-        receipt: true,
-      },
-    ],
+    // items: [
+    //   {
+    //     primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+    //     secondaryText: (
+    //       <div style={{ height: "auto" }}>
+    //         <Label label="2016-2017" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+    //         <Label
+    //           label="P-9/2, Banwinder Colony, alwal Road, Indirapuram"
+    //           containerStyle={secondaryTextContainer}
+    //           labelStyle={secondaryTextLabelStyle}
+    //         />
+    //         <Label label="Assessment No.: ZRN-453-98" containerStyle={secondaryTextContainer} labelStyle={secondaryTextLabelStyle} />
+    //       </div>
+    //     ),
+    //     date: "12-06-2018",
+    //     status: "Partially Paid",
+    //     statusIcon: <Icon action="navigation" name="check" style={this.iconStyle} color={"#22b25f"} />,
+    //     receipt: true,
+    //   },
+    // ],
   };
 
   componentDidMount = () => {
@@ -164,50 +76,6 @@ class CompletedAssessments extends Component {
     );
   }
 }
-
-const getTransformedItems = (propertiesById) => {
-  return (
-    propertiesById &&
-    Object.values(propertiesById).reduce((acc, curr) => {
-      const propertyDetail =
-        curr.propertyDetails &&
-        curr.propertyDetails.map((item) => {
-          return {
-            primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
-
-            secondaryText: (
-              <div style={{ height: "auto", marginTop: 0 }}>
-                <Label
-                  label={item && item.financialYear}
-                  containerStyle={secondaryTextContainer}
-                  labelStyle={secondaryTextLabelStyle}
-                  color="#484848"
-                />
-                <Label
-                  label={getCommaSeperatedAddress(curr.address.buildingName, curr.address.street)}
-                  containerStyle={secondaryTextContainer}
-                  labelStyle={secondaryTextLabelStyle}
-                  color="#484848"
-                />
-                <Label
-                  label={`Assessment No.: ${item.assessmentNumber}`}
-                  containerStyle={secondaryTextContainer}
-                  labelStyle={secondaryTextLabelStyle}
-                  color="#484848"
-                />
-              </div>
-            ),
-            date: getDateFromEpoch(item.assessmentDate),
-            status: "Paid",
-
-            receipt: true,
-          };
-        });
-      acc = [...acc, ...propertyDetail];
-      return acc;
-    }, [])
-  );
-};
 
 const mapStateToProps = (state) => {
   const { properties } = state;

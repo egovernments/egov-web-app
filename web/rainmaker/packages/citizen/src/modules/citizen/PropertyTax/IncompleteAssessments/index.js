@@ -57,7 +57,6 @@ class IncompleteAssessments extends Component {
 
   render() {
     const { urls, history, transformedDrafts, loading } = this.props;
-    console.log(history);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
