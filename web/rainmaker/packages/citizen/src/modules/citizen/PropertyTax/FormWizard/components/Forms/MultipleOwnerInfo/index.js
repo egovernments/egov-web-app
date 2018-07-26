@@ -27,9 +27,9 @@ const MultipleOwnerInfoHOC = ({ handleRemoveOwner, addOwner, ownerDetails, disab
           disabled={disabled}
         />
       ))}
-      <div className="pt-add-owner-btn" onClick={addOwner}>
+      {!disabled && <div className="pt-add-owner-btn" onClick={addOwner}>
         + Add Owner
-      </div>
+      </div>}
     </div>
 );
 

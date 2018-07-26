@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Label } from "components";
-import { deleteForm, updatePTForms } from "egov-ui-kit/redux/form/actions";
+import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -27,7 +27,8 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
-import range from "lodash/range";
+import range from "lodash/range"
+import queryString from "query-string"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -100,11 +101,17 @@ class FormWizard extends Component {
     const ownerDetails = [];
     let ownersCount = -1;
     ownerFormKeys.forEach((key) => {
-      const currentOwnerIndex = key.split("_")[1];
-      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex;
-      const ownerInfo = this.configOwner(currentOwnerIndex);
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
-    });
+      const currentOwnerIndex = key.split("_")[1]
+      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex
+      const ownerInfo = this.configOwner(currentOwnerIndex)
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
+    })
+    if (!ownerDetails.length) {
+      ownersCount = 0
+      const ownerInfo = this.configOwner(ownersCount)
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
+      ownersCount += 1
+    }
     return {
       ownerDetails,
       totalowners: ownersCount,
@@ -114,50 +121,34 @@ class FormWizard extends Component {
   fetchDraftDetails = async (draftId) => {
     const { draftRequest } = this.state;
     try {
-      let draftsResponse = await httpRequest(
-        "pt-services-v2/drafts/_search",
-        "_search",
-        [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
-        draftRequest
-      );
-      const currentDraft = draftsResponse.drafts.find((res) => res.id === draftId);
-      const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo") !== -1);
-      const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
-      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
-      this.setState(
-        {
-          ownerInfoArr: ownerDetails,
-          ownersCount: totalowners,
-          formValidIndexArray: range(0, activeTab),
-          selected: activeTab,
-        },
-        () => {
-          this.props.updatePTForms(currentDraft.draftRecord);
-          this.onTabClick(activeTab);
-        }
-      );
+
+      let draftsResponse = await httpRequest("pt-services-v2/drafts/_search","_search",[{key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid")}], draftRequest)
+      const currentDraft = draftsResponse.drafts.find(res => res.id === draftId)
+      const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("ownerInfo_") !== -1)
+      const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys)
+      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0)
+      this.setState({
+        ownerInfoArr: ownerDetails,
+        ownersCount: totalowners,
+        formValidIndexArray: range(0, activeTab),
+        selected: activeTab,
+      }, () => {
+        this.props.updatePTForms(currentDraft.draftRecord)
+        this.onTabClick(activeTab)
+      })
     } catch (e) {
       console.log(e);
     }
   };
 
-  getAssessmentId = (queryString) => {
-    console.log("queryString", queryString);
-    const assessmentString =
-      queryString.indexOf("?") !== -1 &&
-      queryString
-        .split("?")[1]
-        .split("&")
-        .find((params) => params.split("=")[0] === "assessmentId");
-    return assessmentString && assessmentString.split("=")[1];
-  };
+  getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined)
 
   componentDidMount() {
-    let { search } = this.props.location;
-    const assessmentId = this.getAssessmentId(search);
-    const draftId = assessmentId || fetchFromLocalStorage("draftId");
-    if (draftId) this.fetchDraftDetails(draftId);
-    this.addOwner();
+    let { search } = this.props.location
+    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId")
+    const isFreshAssesment = this.getAssessmentId(search, "type")
+    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId)
+    this.addOwner()
   }
 
   handleRemoveOwner = (index, formKey) => {
@@ -417,10 +408,13 @@ class FormWizard extends Component {
     }
   };
   onTabClick = (index) => {
-    const { formValidIndexArray } = this.state;
+    const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (formValidIndexArray.indexOf(index)) {
-      this.setState({ selected: index });
+    if (formValidIndexArray.indexOf(index) !== -1 && selected > index) {
+      this.setState({
+        selected: index,
+        formValidIndexArray: range(0, index),
+      });
     } else {
       alert("Please fill required tabs");
     }
@@ -457,7 +451,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteForm: (formKey) => dispatch(deleteForm(formKey)),
     setRoute: (route) => dispatch(setRoute(route)),
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
-    updatePTForms: (forms) => dispatch(updatePTForms(forms)),
+    updatePTForms: (forms) => dispatch(updateForms(forms)),
   };
 };
 
