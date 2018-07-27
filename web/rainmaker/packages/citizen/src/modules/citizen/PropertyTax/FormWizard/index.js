@@ -132,6 +132,10 @@ class FormWizard extends Component {
         ownersCount: totalowners,
         formValidIndexArray: range(0, activeTab),
         selected: activeTab,
+        draftRequest: { draft : {
+          ...draftRequest.draft,
+          id: draftId,
+        }}
       }, () => {
         this.props.updatePTForms(currentDraft.draftRecord)
         this.onTabClick(activeTab)
