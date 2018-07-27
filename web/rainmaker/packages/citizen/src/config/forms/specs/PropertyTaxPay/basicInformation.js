@@ -27,47 +27,67 @@ import { MDMS } from "egov-ui-kit/utils/endPoints";
 const formConfig = {
   name: "basicInformation",
   fields: {
+    // typeOfUsageTemp: {
+    //   id: "typeOfUsageTemp",
+    //   jsonPath: "",
+    //   type:"singleValueList",
+    //   dataFetchConfig: {
+    //     url: MDMS.GET.URL,
+    //     action: MDMS.GET.ACTION,
+    //     queryParams: [],
+    //     requestBody: {
+    //       MdmsCriteria: {
+    //         tenantId: "pb",
+    //         moduleDetails: [
+    //           {
+    //             moduleName: "PropertyTax",
+    //             masterDetails: [
+    //               {
+    //                 name: "UsageCategorySubMinor",
+    //               },
+    //               {
+    //                 name: "UsageCategoryDetail",
+    //               }
+    //             ],
+    //           },
+    //         ],
+    //       },
+    //     },
+    //     dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor","MdmsRes.PropertyTax.UsageCategoryDetail"],
+    //   },
+    //   hideField:true
+    // },
     typeOfUsage: {
       id: "typeOfUsage",
       jsonPath: "Properties[0].propertyDetails[0].usageCategoryMajor",
       type: "singleValueList",
       floatingLabelText: "Usage Type",
       hintText: "Select",
-      dropDownData: [
-        { label: "Residential", value: "RESIDENTIAL" },
-        { label: "Commercial", value: "COMMERCIAL" },
-        { label: "Institutional", value: "INSTITUTIONAL" },
-        { label: "Industrial", value: "INDUSTRIAL" },
-        { label: "Public Space", value: "PUBLICSPACE" },
-        { label: "Religious", value: "RELIGIOUS" },
-        { label: "Other", value: "OTHER" },
-        { label: "Mixed", value: "MIXED" },
-      ],
       required: true,
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "UsageCategoryMajor",
-      //             },
-      //             {
-      //               name: "UsageCategoryMinor",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
-      // },
+      dataFetchConfig: {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  }
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor","MdmsRes.PropertyTax.UsageCategoryMinor"],
+      }
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
@@ -81,7 +101,7 @@ const formConfig = {
       //   { label: "Flat/Part of Building", value: "SharedProperty" },
       //   { label: "Vacant Land", value: "VACANT" },
       // ],
-      dropDownData: [],
+      // dropDownData: [],
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
@@ -96,12 +116,15 @@ const formConfig = {
                   {
                     name: "PropertyType",
                   },
+                  {
+                    name: "PropertySubType",
+                  }
                 ],
               },
             ],
           },
         },
-        dataPath: ["MdmsRes.PropertyTax.PropertyType"],
+        dataPath: ["MdmsRes.PropertyTax.PropertyType","MdmsRes.PropertyTax.PropertySubType"],
       },
     },
   },
@@ -112,3 +135,14 @@ const formConfig = {
 };
 
 export default formConfig;
+
+
+// {
+//   name: "UsageCategorySubMinor",
+// },
+// {
+//   name: "UsageCategoryDetail",
+// },
+
+
+// ,"UsageCategorySubMinor","UsageCategoryDetail"

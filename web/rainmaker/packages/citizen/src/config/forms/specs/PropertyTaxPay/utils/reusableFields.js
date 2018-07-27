@@ -27,33 +27,11 @@ export const floorCount={
 export const subUsageType={
   subUsageType: {
     id: "assessment-subUsageType",
-    jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategorySubMinor",
+    jsonPath: "Properties[0].propertyDetails[0].units[0].propertySubType",
     type: "singleValueList",
     floatingLabelText: "Sub Usage Type",
     hintText: "Select",
     dropDownData:[],
-    // dataFetchConfig: {
-    //   url: MDMS.GET.URL,
-    //   action: MDMS.GET.ACTION,
-    //   queryParams: [],
-    //   // isDependent: true,
-    //   requestBody: {
-    //     MdmsCriteria: {
-    //       tenantId: "pb",
-    //       moduleDetails: [
-    //         {
-    //           moduleName: "PropertyTax",
-    //           masterDetails: [
-    //             {
-    //               name: "UsageCategorySubMinor",
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //   },
-    //   dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor"],
-    // },
     required: true,
     numcols: 4
   },
@@ -163,4 +141,39 @@ export const measuringUnit={
     required: true,
     value: "sq yards",
   },
+}
+
+
+export const beforeInitForm={
+  beforeInitForm:(action,store)=>{
+    let state=store.getState();
+    action.form.fields.subUsageType.dataFetchConfig=
+    {
+        url: MDMS.GET.URL,
+        action: MDMS.GET.ACTION,
+        queryParams: [],
+        requestBody: {
+          MdmsCriteria: {
+            tenantId: "pb",
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "UsageCategorySubMinor",
+                    filter: `[?(@.usageCategoryMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`
+                  },
+                  {
+                    name: "UsageCategoryDetail",
+                    filter: `[?(@.usageCategorySubMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`
+                  }
+                ],
+              },
+            ],
+          },
+        },
+        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor","MdmsRes.PropertyTax.UsageCategoryDetail"],
+    }
+    return action;
+  }
 }

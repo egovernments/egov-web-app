@@ -1,6 +1,6 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
-import {subUsageType,occupancy,builtArea,annualRent} from "../utils/reusableFields";
+import {subUsageType,occupancy,builtArea,annualRent,beforeInitForm} from "../utils/reusableFields";
 
 const formConfig = {
   name: "floorDetails",
@@ -51,6 +51,7 @@ const formConfig = {
     ...annualRent
   },
   isFormValid: false,
+  ...beforeInitForm
 };
 
 export default formConfig;
