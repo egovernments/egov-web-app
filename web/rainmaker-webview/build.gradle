@@ -59,8 +59,8 @@ android {
 			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 5
-			versionName '1.0.5'
+			versionCode 6
+			versionName '1.0.6'
 			resValue "string", "app_name", "mSeva-Punjab"
 			signingConfig signingConfigs.Citizen
 
@@ -72,8 +72,8 @@ android {
 			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 5
-			versionName '1.0.5'
+			versionCode 6
+			versionName '1.0.6'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
 			signingConfig signingConfigs.Employee
 
@@ -85,8 +85,8 @@ android {
 			applicationId 'org.egovernment.mseva.citizen'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 5
-			versionName '1.0.5'
+			versionCode 6
+			versionName '1.0.6'
 			resValue "string", "app_name", "UAT mSeva-Punjab"
 
 			// QA
@@ -103,8 +103,8 @@ android {
 			applicationId 'org.egovernment.mseva.employee'
 			targetSdkVersion 26
 			testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-			versionCode 5
-			versionName '1.0.5'
+			versionCode 6
+			versionName '1.0.6'
 			resValue "string", "app_name", "UAT mSeva-Punjab Employee"
 
 			//QA
