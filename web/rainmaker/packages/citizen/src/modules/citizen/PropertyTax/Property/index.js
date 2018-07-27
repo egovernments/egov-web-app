@@ -100,7 +100,7 @@ class Property extends Component {
         ),
         nestedItems: [
           {
-            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} />,
+            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} />,
           },
         ],
         rightIcon: (

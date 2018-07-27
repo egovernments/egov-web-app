@@ -58,12 +58,17 @@ class SearchProperty extends Component {
   };
 
   extractTableData = (properties) => {
+    const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
       let { propertyId, oldPropertyId, address, propertyDetails } = property;
       let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button
+          onClick={(e) => {
+            console.log(e);
+            history.push(`/property-tax/assessment-form?propertyId=${propertyId}`);
+          }}
           label={<Label buttonLabel={true} label={"Assess & Pay"} fontSize="12px" />}
           value={propertyId}
           primary={true}
