@@ -15,9 +15,15 @@
         android:layout_centerHorizontal="true" />
 
 	<TextView
-		android:layout_width="15dp"
-		android:layout_height="15dp"
-		android:onClick="onClick" />
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:onClick="onClickLeftBox" />
+
+	<TextView
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:layout_alignParentEnd="true"
+		android:onClick="onClickRightBox" />
 
 	<TextView
 		android:id="@+id/url_text"

@@ -11,14 +11,12 @@ import org.egovernment.mseva.R;
 
 public class SplashScreen extends Activity {
 
-	private int count;
+	private boolean rightBoxClick, leftBoxClick;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        count = 0;
 
 		int SPLASH_TIME_OUT = 5000;
 		new Handler().postDelayed(new Runnable() {
@@ -41,10 +39,18 @@ public class SplashScreen extends Activity {
         }, SPLASH_TIME_OUT);
     }
 
-	public void onClick(View view) {
-		if (++count == 3) {
-			TextView tv_url = findViewById(R.id.url_text);
-			tv_url.setText(BuildConfig.url);
+	public void onClickLeftBox(View view) {
+		leftBoxClick = !leftBoxClick;
+	}
+
+	public void onClickRightBox(View view) {
+		rightBoxClick = !rightBoxClick;
+		TextView tv_url = findViewById(R.id.url_text);
+		tv_url.setText(BuildConfig.url);
+		if (leftBoxClick && rightBoxClick) {
+			tv_url.setVisibility(View.VISIBLE);
+		} else {
+			tv_url.setVisibility(View.INVISIBLE);
 		}
 	}
 }
