@@ -40,6 +40,8 @@ const twitterStyle = {
   background: "#55acee",
 };
 
+const defaultLoader = "Loading ..."
+
 // const location = { lat: 12.9199988, lng: 77.67078 };
 
 class ContactUs extends Component {
@@ -73,7 +75,7 @@ class ContactUs extends Component {
     return [
       {
         leftIcon: <Icon style={iconStyle} action="maps" name="place" />,
-        primaryText: <Label label={address ? address : "NA"} />,
+        primaryText: <Label label={address ? address : defaultLoader} />,
         secondaryText: address && (
           <div onClick={() => this.openMapHandler(true)}>
             <Label id="contactus-open-map" label="CS_CONTACTUS_OPEN_MAP" className="openMap" labelStyle={{ color: "#00bbd3" }} />
@@ -89,7 +91,7 @@ class ContactUs extends Component {
         leftIcon: <Icon style={iconStyle} action="communication" name="call" />,
         primaryText: (
           <a className="pgr-call-icon phoneNumberStyle" href={`tel:+91${contactNumber}`} style={{ textDecoration: "none" }}>
-            {contactNumber ? contactNumber : "NA"}
+            {contactNumber ? contactNumber : defaultLoader}
           </a>
         ),
         style: {
@@ -100,7 +102,7 @@ class ContactUs extends Component {
       {
         leftIcon: <Icon style={iconStyle} action="device" name="access-time" />,
         primaryText: OfficeTimings && Object.keys(OfficeTimings)[0],
-        secondaryText: OfficeTimings && OfficeTimings[Object.keys(OfficeTimings)[0]],
+        secondaryText: (OfficeTimings && OfficeTimings[Object.keys(OfficeTimings)[0]]) || defaultLoader,
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -118,7 +120,7 @@ class ContactUs extends Component {
 
       {
         leftIcon: <Icon style={iconStyle} action="communication" name="email" />,
-        primaryText: emailId ? emailId : "NA",
+        primaryText: emailId ? emailId : defaultLoader,
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
@@ -126,16 +128,15 @@ class ContactUs extends Component {
       },
       {
         leftIcon: <Icon style={iconStyle} action="action" name="language" />,
-        primaryText: domainUrl && (
-          <a
+        primaryText: <a
             className="phoneNumberStyle"
             target="_blank"
-            href={domainUrl.includes("http") ? domainUrl : `http://${domainUrl}`}
+            href={domainUrl && domainUrl.includes("http") ? domainUrl : `http://${domainUrl}`}
             style={{ textDecoration: "none" }}
           >
-            {domainUrl}
+            {domainUrl || defaultLoader}
           </a>
-        ),
+        ,
         style: {
           paddingBottom: "8px",
           paddingTop: "8px",
