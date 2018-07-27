@@ -163,10 +163,11 @@ class ContactUs extends Component {
                   <List onItemClick={this.onItemClick} innerDivStyle={listInnerDivStyle} items={this.returnListItems()} />
                 </div>
                 <div style={{ textAlign: "center", paddingBottom: "8px" }}>
-                  <a href={twitterUrl} target="_blank">
+                  {twitterUrl &&
+                    <a href={twitterUrl} target="_blank">
                     {<Icon id="contactus-twitter" className="contactus-twitter" style={twitterStyle} action="custom" name="twitter" color="ffffff" />}
-                  </a>
-                  <a href={facebookUrl} target="_blank">
+                  </a>}
+                  {facebookUrl && <a href={facebookUrl} target="_blank">
                     {
                       <Icon
                         id="contactus-facebook"
@@ -177,7 +178,7 @@ class ContactUs extends Component {
                         color="ffffff"
                       />
                     }
-                  </a>
+                  </a>}
                 </div>
               </div>
             }
