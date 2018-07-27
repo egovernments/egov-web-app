@@ -27,6 +27,13 @@ android {
 		release {
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			applicationVariants.all { variant ->
+				variant.outputs.all {
+					def date = new Date()
+					def formattedDate = date.format('ddMMMyyyy_HH:mm:ss')
+					outputFileName = "${variant.name}_${variant.versionName}_${formattedDate}.apk"
+				}
+			}
 		}
 	}
 
