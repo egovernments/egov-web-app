@@ -37,6 +37,11 @@ android {
 		}
 	}
 
+	lintOptions {
+		checkReleaseBuilds true
+		abortOnError false
+	}
+
 	signingConfigs {
 		Citizen {
 			keyAlias 'mseva.punjab.citizen'
@@ -62,6 +67,7 @@ android {
 			versionCode 6
 			versionName '1.0.6'
 			resValue "string", "app_name", "mSeva-Punjab"
+			resValue "string", "launcher_icon", "@mipmap/ic_launcher_citizen"
 			signingConfig signingConfigs.Citizen
 
 			// Production
@@ -75,6 +81,7 @@ android {
 			versionCode 6
 			versionName '1.0.6'
 			resValue "string", "app_name", "mSeva-Punjab Employee"
+			resValue "string", "launcher_icon", "@mipmap/ic_launcher_employee"
 			signingConfig signingConfigs.Employee
 
 			// Production
@@ -88,6 +95,8 @@ android {
 			versionCode 6
 			versionName '1.0.6'
 			resValue "string", "app_name", "UAT mSeva-Punjab"
+			resValue "string", "launcher_icon", "@mipmap/ic_launcher_citizen"
+			signingConfig signingConfigs.Citizen
 
 			// QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/citizen/user/register"'
@@ -106,6 +115,8 @@ android {
 			versionCode 6
 			versionName '1.0.6'
 			resValue "string", "app_name", "UAT mSeva-Punjab Employee"
+			resValue "string", "launcher_icon", "@mipmap/ic_launcher_employee"
+			signingConfig signingConfigs.Employee
 
 			//QA
 //			buildConfigField 'String', 'url', '"https://egov-micro-qa.egovernments.org/employee/user/login"'
