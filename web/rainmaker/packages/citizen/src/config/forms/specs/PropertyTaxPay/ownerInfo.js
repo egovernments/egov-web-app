@@ -71,6 +71,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Owner Category",
       hintText: "Select",
+      dropDownData: [],
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
@@ -84,7 +85,7 @@ const formConfig = {
                 masterDetails: [
                   {
                     name: "OwnerType",
-                    filter: "[?(@.fromFY=='2018-19')]", //year value for this filter should be dynamic.
+                    filter: "[?(@.fromFY=='2013-14')]", //year value for this filter should be dynamic.
                   },
                 ],
               },
@@ -97,11 +98,11 @@ const formConfig = {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         switch (value) {
-          case "abcd":
-            setDependentFields(dependentFields, dispatch, formKey, true);
+          case "FREEDOMFIGHTER":
+            setDependentFields(dependentFields, dispatch, formKey, false);
             break;
           default:
-            setDependentFields(dependentFields, dispatch, formKey, false);
+            setDependentFields(dependentFields, dispatch, formKey, true);
             break;
         }
       },
