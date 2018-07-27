@@ -4,15 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.TextView;
 
 import org.egovernment.mseva.R;
 
 public class SplashScreen extends Activity {
 
+	private int count;
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        count = 0;
 
 		int SPLASH_TIME_OUT = 5000;
 		new Handler().postDelayed(new Runnable() {
@@ -35,4 +41,10 @@ public class SplashScreen extends Activity {
         }, SPLASH_TIME_OUT);
     }
 
+	public void onClick(View view) {
+		if (++count == 3) {
+			TextView tv_url = findViewById(R.id.url_text);
+			tv_url.setText(BuildConfig.url);
+		}
+	}
 }
