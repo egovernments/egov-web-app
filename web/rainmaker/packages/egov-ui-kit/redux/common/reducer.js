@@ -32,7 +32,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var intialState = {
   dropDownData: {},
-  prepareFormData: {}
+  prepareFormData: {},
+  spinner: false
 };
 
 var commonReducer = function commonReducer() {
@@ -145,6 +146,11 @@ var commonReducer = function commonReducer() {
         loading: false,
         error: true,
         errorMessage: action.error
+      });
+
+    case commonTypes.TOGGLE_SPINNER:
+      return (0, _extends4.default)({}, state, {
+        spinner: !state.spinner
       });
     default:
       return state;

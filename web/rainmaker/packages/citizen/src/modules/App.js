@@ -8,6 +8,7 @@ import { fetchMDMSData } from "egov-ui-kit/redux/common/actions";
 import Router from "./Router";
 import commonConfig from "config/common";
 import routes from "./Routes";
+import { LoadingIndicator } from "components"
 
 class App extends Component {
   constructor(props) {
@@ -68,26 +69,33 @@ class App extends Component {
   }
 
   render() {
-    const { toast } = this.props;
+    const { toast, loading } = this.props;
     return (
       <div>
         <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
+        {loading && <LoadingIndicator />}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const { route, toast } = state.app;
+const mapStateToProps = (state, ownProps) => {
+  const { app, common } = state
+  const { route, toast } = app
+  const { spinner } = common
   const props = {};
+  const loading = ownProps.loading || spinner
   if (route && route.length) {
     props.route = route;
   }
   if (toast && toast.open && toast.message && toast.message.length) {
     props.toast = toast;
   }
-  return props;
+  return {
+    ...props,
+    loading,
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {

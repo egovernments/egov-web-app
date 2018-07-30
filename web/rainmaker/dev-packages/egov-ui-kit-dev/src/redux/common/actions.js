@@ -153,3 +153,7 @@ export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
     }
   };
 };
+
+export const toggleSpinner = () => ({
+  type: actionTypes.TOGGLE_SPINNER
+})
