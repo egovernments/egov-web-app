@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
+import { Icon } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
@@ -309,10 +311,33 @@ class FormWizard extends Component {
     const { renderPlotAndFloorDetails, getOwnerDetails } = this;
     switch (selected) {
       case 0:
-        return <PropertyAddressHOC disabled={fromReviewPage} />;
+        return (
+          <div>
+            <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="Please provide information to identify the property." />
+            <PropertyAddressHOC disabled={fromReviewPage} />
+            <div
+              className="rainmaker-displayInline"
+              style={{ padding: "12px 0px 12px 16px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
+            >
+              <Icon action="action" name="info" color="#30588c" />
+              <Label
+                containerStyle={{ marginLeft: 16 }}
+                fontSize="14px"
+                color="#484848"
+                label="If you do not have an existing Property ID, please visit your Municipal office with your Payment Receipt and you will be provided one."
+              />
+            </div>
+          </div>
+        );
       case 1:
         return (
           <div>
+            <Label
+              containerStyle={{ marginTop: 12 }}
+              fontSize="16px"
+              color="#484848"
+              label="Please provide information to define the property. The Property Tax will be calculated based on this."
+            />
             <UsageInformationHOC disabled={fromReviewPage} />
             {renderPlotAndFloorDetails(fromReviewPage)}
           </div>
@@ -323,6 +348,12 @@ class FormWizard extends Component {
         // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
+            <Label
+              containerStyle={{ marginTop: 12 }}
+              fontSize="16px"
+              color="#484848"
+              label="Please provide information regarding the owner(s) of the property."
+            />
             <OwnershipTypeHOC disabled={fromReviewPage} />
             {getOwnerDetails(ownerType)}
           </div>
@@ -332,6 +363,13 @@ class FormWizard extends Component {
         const { financialYear } = draft.draftRecord;
         return (
           <div>
+            <Label
+              containerStyle={{ marginTop: 12 }}
+              fontSize="16px"
+              color="#484848"
+              label="Verify the information you have provided and let us know how much you would like to pay against your bill."
+            />
+
             <ReviewForm
               updateIndex={this.updateIndex}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
