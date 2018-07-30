@@ -1,10 +1,12 @@
 import * as commonTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
+import { commonActions } from "egov-ui-kit/utils/commons"
 
 const intialState = {
   dropDownData: {},
   prepareFormData: {},
+  spinner: false,
 };
 
 const commonReducer = (state = intialState, action) => {
@@ -147,6 +149,12 @@ const commonReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+
+    case commonTypes.TOGGLE_SPINNER:
+      return {
+        ...state,
+        spinner: !state.spinner,
+      }
     default:
       return state;
   }

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -318,4 +318,10 @@ var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralM
       return _ref5.apply(this, arguments);
     };
   }();
+};
+
+var toggleSpinner = exports.toggleSpinner = function toggleSpinner() {
+  return {
+    type: actionTypes.TOGGLE_SPINNER
+  };
 };

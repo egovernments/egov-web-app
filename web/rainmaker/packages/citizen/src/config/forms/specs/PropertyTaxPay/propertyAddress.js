@@ -11,7 +11,6 @@ const formConfig = {
       required: true,
       toolTip: true,
       toolTipMessage: "",
-      value: localStorage.getItem("tenant-id"),
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },

@@ -29,6 +29,7 @@ import get from "lodash/get";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import range from "lodash/range"
 import queryString from "query-string"
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -119,9 +120,10 @@ class FormWizard extends Component {
   };
 
   fetchDraftDetails = async (draftId) => {
-    const { draftRequest } = this.state;
+    const { draftRequest } = this.state
+    const { toggleSpinner } = this.props
     try {
-
+      toggleSpinner()
       let draftsResponse = await httpRequest("pt-services-v2/drafts/_search","_search",[{key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid")}], draftRequest)
       const currentDraft = draftsResponse.drafts.find(res => res.id === draftId)
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("ownerInfo_") !== -1)
@@ -138,7 +140,8 @@ class FormWizard extends Component {
         }}
       }, () => {
         this.props.updatePTForms(currentDraft.draftRecord)
-        this.onTabClick(activeTab)
+        //this.onTabClick(activeTab)
+        toggleSpinner()
       })
     } catch (e) {
       console.log(e);
@@ -414,7 +417,7 @@ class FormWizard extends Component {
   onTabClick = (index) => {
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (formValidIndexArray.indexOf(index) !== -1 && selected > index) {
+    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       this.setState({
         selected: index,
         formValidIndexArray: range(0, index),
@@ -456,6 +459,7 @@ const mapDispatchToProps = (dispatch) => {
     setRoute: (route) => dispatch(setRoute(route)),
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
     updatePTForms: (forms) => dispatch(updateForms(forms)),
+    toggleSpinner: () => dispatch(toggleSpinner())
   };
 };
 
