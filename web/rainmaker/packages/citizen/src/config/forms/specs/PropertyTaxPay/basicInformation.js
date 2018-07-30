@@ -1,5 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
+import set from "lodash/set";
+import get from "lodash/get";
 
 const formConfig = {
   name: "basicInformation",
@@ -14,30 +16,7 @@ const formConfig = {
       updateDependentFields: (formKey, field, dispatch, state) => {
         removeFormKey(formKey, field, dispatch, state);
       },
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategoryMajor",
-                  },
-                  {
-                    name: "UsageCategoryMinor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor", "MdmsRes.PropertyTax.UsageCategoryMinor"],
-      },
+      dropDownData: [],
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
@@ -49,61 +28,31 @@ const formConfig = {
       updateDependentFields: (formKey, field, dispatch, state) => {
         removeFormKey(formKey, field, dispatch, state);
       },
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "PropertyType",
-                  },
-                  {
-                    name: "PropertySubType",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.PropertyType", "MdmsRes.PropertyTax.PropertySubType"],
-      },
+      dropDownData: [],
     },
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
   isFormValid: false,
+  beforeInitForm: (action, store) => {
+    let state = store.getState();
+    console.log(state);
+    // action.form.fields.typeOfUsage.dropDownData
+    // action=set(action,"form.fields.typeOfUsage.dropDownData",mergeMaster(get(state,"state.common.generalMDMSDataById.UsageCategoryMajor"),get(state,"state.common.generalMDMSDataById.UsageCategoryMinor")))
+    return action;
+  },
 };
 
 export default formConfig;
 
-// const formConfig = {
-//   name: "basicInformation",
-//   fields: {
-//     typeOfUsage: {
-//       id: "typeOfUsage",
-//       jsonPath: "",
-//       type: "singleValueList",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_TYPE_OF_USAGE",
-//       hintText: "PT_PROPERTY_DETAILS_CITY_PLACEHOLDER",
-//     },
-//     typeOfBuilding: {
-//       id: "typeOfBuilding",
-//       jsonPath: "",
-//       type: "singleValueList",
-//       floatingLabelText: "PT_PROPERTY_DETAILS_TYPE_OF_BUILDING",
-//       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
-//     },
-//   },
-//   action: "",
-//   redirectionRoute: "",
-//   saveUrl: "",
+// mergeMaster = (masterOne, masterTwo, parentName = "") => {
+//   let dropDownData = [];
+//   let parentList = [];
+//   for (var variable in masterTwo) {
+//     if (object.hasOwnProperty(variable)) {
+//       dropDownData.push({ label: masterTwo[variable].code, value: masterTwo[variable].name });
+//     }
+//   }
+//   return dropDownData;
 // };
-
-// export default formConfig;

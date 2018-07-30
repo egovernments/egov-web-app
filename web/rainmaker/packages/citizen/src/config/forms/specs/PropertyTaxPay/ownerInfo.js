@@ -50,7 +50,7 @@ const formConfig = {
     },
     ownerAddress: {
       id: "ownerAddress",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].correspondenceAddress",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].permanentAddress",
       type: "textfield",
       floatingLabelText: "Correspondence Address",
       hintText: "Enter correspondence address",

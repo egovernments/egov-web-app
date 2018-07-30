@@ -29,7 +29,8 @@ import get from "lodash/get";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import range from "lodash/range"
 import queryString from "query-string"
-import { toggleSpinner } from "egov-ui-kit/redux/common/actions"
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
+import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -151,10 +152,70 @@ class FormWizard extends Component {
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined)
 
   componentDidMount() {
-    let { search } = this.props.location
-    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId")
+    let { search } = this.props.location;
+    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type")
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId)
+    const { fetchGeneralMDMSData } = this.props;
+    let requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "PropertyTax",
+            masterDetails: [
+              {
+                name: "Floor",
+              },
+              {
+                name: "OccupancyType",
+              },
+              {
+                name: "OwnerShipCategory",
+              },
+              {
+                name: "OwnerType",
+              },
+              {
+                name:"PropertySubType"
+              },
+              {
+                name:"PropertyType"
+              },
+              {
+                name:"SubOwnerShipCategory"
+              },
+              {
+                name:"UsageCategoryDetail"
+              },
+              {
+                name:"UsageCategoryMajor"
+              },
+              {
+                name:"UsageCategoryMinor"
+              },
+              {
+                name:"UsageCategorySubMinor"
+              }
+            ],
+          }
+        ],
+      },
+    };
+
+    fetchGeneralMDMSData(requestBody, "PropertyTax", [
+      "Floor",
+      "OccupancyType",
+      "OwnerShipCategory",
+      "OwnerType",
+      "PropertySubType",
+      "PropertyType",
+      "SubOwnerShipCategory",
+      "UsageCategoryDetail",
+      "UsageCategoryMajor",
+      "UsageCategoryMinor",
+      "UsageCategorySubMinor"
+    ]);
     this.addOwner()
   }
 
@@ -459,7 +520,8 @@ const mapDispatchToProps = (dispatch) => {
     setRoute: (route) => dispatch(setRoute(route)),
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
     updatePTForms: (forms) => dispatch(updateForms(forms)),
-    toggleSpinner: () => dispatch(toggleSpinner())
+    toggleSpinner: () => dispatch(toggleSpinner()),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName))
   };
 };
 
