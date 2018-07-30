@@ -10,7 +10,7 @@ const formConfig = {
       id: "typeOfUsage",
       jsonPath: "Properties[0].propertyDetails[0].usageCategoryMajor",
       type: "singleValueList",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "Property Usage Type",
       hintText: "Select",
       required: true,
       updateDependentFields: (formKey, field, dispatch, state) => {
@@ -22,7 +22,7 @@ const formConfig = {
       id: "typeOfBuilding",
       jsonPath: "Properties[0].propertyDetails[0].propertyType",
       type: "singleValueList",
-      floatingLabelText: "Type of Buiding",
+      floatingLabelText: "Property Type",
       hintText: "Select",
       required: true,
       updateDependentFields: (formKey, field, dispatch, state) => {
