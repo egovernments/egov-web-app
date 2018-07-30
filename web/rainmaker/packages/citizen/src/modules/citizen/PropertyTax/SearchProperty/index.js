@@ -3,7 +3,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
-import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
@@ -33,19 +33,18 @@ class SearchProperty extends Component {
   };
 
   onSearchClick = (form, formKey) => {
+    const { city, ids, oldAssessmentNumber, mobileNumber } = form.fields || {};
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
+    } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {
+      this.props.toggleSnackbarAndSetText(true, "Please fill atleast one field along with city", true);
     } else {
-      const { city, ids, name, oldAssessmentNumber, mobileNumber } = form.fields || {};
       const queryParams = [];
       if (city.value) {
         queryParams.push({ key: "tenantId", value: city.value });
       }
       if (ids.value) {
         queryParams.push({ key: "ids", value: ids.value });
-      }
-      if (name.value) {
-        queryParams.push({ key: "name", value: name.value });
       }
       if (oldAssessmentNumber.value) {
         queryParams.push({ key: "oldAssessmentNumber", value: oldAssessmentNumber.value });
@@ -87,7 +86,7 @@ class SearchProperty extends Component {
   };
 
   render() {
-    const { urls, location, history, propertiesFound } = this.props;
+    const { urls, location, history, propertiesFound, loading } = this.props;
     let urlArray = [];
     const { pathname } = location;
     const tableData = this.extractTableData(propertiesFound);
@@ -95,10 +94,10 @@ class SearchProperty extends Component {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
     return (
-      <Screen>
+      <Screen loading={loading}>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
-        <PropertyTable tableData={tableData} onActionClick={this.onActionClick} />
+        {tableData.length > 0 ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
       </Screen>
     );
   }
@@ -107,9 +106,9 @@ class SearchProperty extends Component {
 const mapStateToProps = (state) => {
   const { properties } = state;
   const { urls } = state.app;
-  const { propertiesById } = properties && properties;
+  const { propertiesById, loading } = properties && properties;
   const propertiesFound = Object.values(propertiesById);
-  return { propertiesFound, urls };
+  return { propertiesFound, urls, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -117,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
