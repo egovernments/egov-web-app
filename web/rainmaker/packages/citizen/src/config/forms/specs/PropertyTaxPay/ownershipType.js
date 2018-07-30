@@ -1,3 +1,6 @@
+import { getOwnerDetails } from "modules/citizen/PropertyTax/FormWizard/utils/formConfigModifier"
+import set from "lodash/set"
+
 const formConfig = {
   name: "ownershipType",
   fields: {
@@ -36,6 +39,13 @@ const formConfig = {
       numcols: 6,
       required: true,
     },
+  },
+  beforeInitForm: (action, store) => {
+    let state = store.getState();
+    const ownerDetails = getOwnerDetails(state)
+    set(action, "form.fields.typeOfOwnership.dropDownData", ownerDetails)
+    set(action, "form.fields.typeOfOwnership.value", ownerDetails[0].value)
+    return action;
   },
   action: "",
   redirectionRoute: "",

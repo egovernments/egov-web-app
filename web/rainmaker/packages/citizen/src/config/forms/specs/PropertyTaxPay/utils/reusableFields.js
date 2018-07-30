@@ -20,7 +20,7 @@ export const floorCount = {
     hintText: "Select",
     numcols: 4,
     dropDownData: floorDropDownData,
-    updateDependentFields: (formKey, field, dispatch, state) => {
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
       removeFormKey(formKey, field, dispatch, state);
     },
   },
@@ -69,7 +69,7 @@ export const occupancy = {
       },
       dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
     },
-    updateDependentFields: (formKey, sourceField, dispatch) => {
+    updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
       const { value } = sourceField;
       const dependentFields1 = ["builtArea"];
       const dependentFields2 = ["annualRent"];

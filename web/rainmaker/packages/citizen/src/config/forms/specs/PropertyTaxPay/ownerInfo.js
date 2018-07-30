@@ -94,7 +94,7 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.OwnerType"],
       },
-      updateDependentFields: (formKey, sourceField, dispatch) => {
+      updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         switch (value) {

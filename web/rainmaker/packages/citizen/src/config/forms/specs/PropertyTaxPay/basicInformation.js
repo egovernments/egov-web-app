@@ -13,7 +13,7 @@ const formConfig = {
       floatingLabelText: "Usage Type",
       hintText: "Select",
       required: true,
-      updateDependentFields: (formKey, field, dispatch, state) => {
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
       },
       dropDownData: [],
@@ -25,7 +25,7 @@ const formConfig = {
       floatingLabelText: "Type of Buiding",
       hintText: "Select",
       required: true,
-      updateDependentFields: (formKey, field, dispatch, state) => {
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
       },
       dropDownData: [],

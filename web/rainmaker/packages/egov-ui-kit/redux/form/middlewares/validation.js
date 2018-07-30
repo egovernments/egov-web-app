@@ -39,7 +39,7 @@ var formValidation = function formValidation(store) {
           var errorText = validationObject.errorText;
 
           if (updateDependentFields) {
-            updateDependentFields(formKey, field, dispatch, state);
+            updateDependentFields({ formKey: formKey, field: field, dispatch: dispatch, state: state });
           }
           dispatch((0, _actions2.setFieldValidation)(formKey, fieldKey, errorText));
         }
