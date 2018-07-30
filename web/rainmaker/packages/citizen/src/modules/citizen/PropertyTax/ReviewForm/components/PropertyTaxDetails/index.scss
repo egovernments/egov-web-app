@@ -30,6 +30,13 @@
     width: 454px;
     background-color: #f2f2f2;
     margin-right: 23%;
+    .pt-rf-detailed-bill-text {
+      padding: 16px !important;
+      font-family: "Roboto";
+      font-size: 20px;
+      font-weight: 500;
+      color: #484848;
+    }
     .pt-rf-detailed-bill-table {
       border-bottom: solid 1px #b3b3b3;
       margin-left: 16px;
@@ -49,9 +56,7 @@
         color: #fe7a51;
       }
     }
-    .pt-rf-detailed-bill-text {
-      padding: 16px !important;
-    }
+
     .pt-rf-price {
       float: right;
     }
