@@ -35,6 +35,7 @@ const underlineFocusBaseStyle = {
 
 const DropDownUi = ({
   className,
+  menuInnerDivStyle,
   errorText,
   errorStyle = {},
   value,
@@ -45,6 +46,7 @@ const DropDownUi = ({
   children,
   selected,
   onChange,
+  menuStyle,
   id,
   style = {},
   floatingLabelText,
@@ -55,13 +57,14 @@ const DropDownUi = ({
   dataFetchConfig,
   errorMessage,
   toolTip,
+  autoWidth,
   toolTipMessage,
   updateDependentFields,
   ...rest
 }) => {
   const renderSelectMenuItems = () => {
     return dropDownData.map((option, index) => {
-      return <MenuItem key={index} value={option.value} primaryText={option.label} />;
+      return <MenuItem className="menu-class" key={index} value={option.value} primaryText={option.label} />;
     });
   };
 
@@ -72,6 +75,8 @@ const DropDownUi = ({
       className={`dropdown ${className}`}
       id={id}
       style={style}
+      autoWidth={autoWidth}
+      menuStyle={menuStyle}
       fullWidth={fullWidth}
       dropDownMenuProps={{
         targetOrigin: { horizontal: "left", vertical: "top" },

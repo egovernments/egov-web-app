@@ -63,6 +63,7 @@ var underlineFocusBaseStyle = {
 
 var DropDownUi = function DropDownUi(_ref) {
   var className = _ref.className,
+      menuInnerDivStyle = _ref.menuInnerDivStyle,
       errorText = _ref.errorText,
       _ref$errorStyle = _ref.errorStyle,
       errorStyle = _ref$errorStyle === undefined ? {} : _ref$errorStyle,
@@ -75,6 +76,7 @@ var DropDownUi = function DropDownUi(_ref) {
       children = _ref.children,
       selected = _ref.selected,
       onChange = _ref.onChange,
+      menuStyle = _ref.menuStyle,
       id = _ref.id,
       _ref$style = _ref.style,
       style = _ref$style === undefined ? {} : _ref$style,
@@ -86,13 +88,14 @@ var DropDownUi = function DropDownUi(_ref) {
       dataFetchConfig = _ref.dataFetchConfig,
       errorMessage = _ref.errorMessage,
       toolTip = _ref.toolTip,
+      autoWidth = _ref.autoWidth,
       toolTipMessage = _ref.toolTipMessage,
       updateDependentFields = _ref.updateDependentFields,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "toolTipMessage", "updateDependentFields"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "menuInnerDivStyle", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "menuStyle", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "autoWidth", "toolTipMessage", "updateDependentFields"]);
 
   var renderSelectMenuItems = function renderSelectMenuItems() {
     return dropDownData.map(function (option, index) {
-      return _react2.default.createElement(_MenuItem2.default, { key: index, value: option.value, primaryText: option.label });
+      return _react2.default.createElement(_MenuItem2.default, { className: "menu-class", key: index, value: option.value, primaryText: option.label });
     });
   };
 
@@ -104,6 +107,8 @@ var DropDownUi = function DropDownUi(_ref) {
       className: "dropdown " + className,
       id: id,
       style: style,
+      autoWidth: autoWidth,
+      menuStyle: menuStyle,
       fullWidth: fullWidth,
       dropDownMenuProps: {
         targetOrigin: { horizontal: "left", vertical: "top" }
