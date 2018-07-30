@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Label } from "components";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
   UsageInformationHOC,
@@ -27,8 +26,8 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
-import range from "lodash/range"
-import queryString from "query-string"
+import range from "lodash/range";
+import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
@@ -103,16 +102,16 @@ class FormWizard extends Component {
     const ownerDetails = [];
     let ownersCount = -1;
     ownerFormKeys.forEach((key) => {
-      const currentOwnerIndex = key.split("_")[1]
-      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex
-      const ownerInfo = this.configOwner(currentOwnerIndex)
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
-    })
+      const currentOwnerIndex = key.split("_")[1];
+      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex;
+      const ownerInfo = this.configOwner(currentOwnerIndex);
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
+    });
     if (!ownerDetails.length) {
-      ownersCount = 0
-      const ownerInfo = this.configOwner(ownersCount)
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
-      ownersCount += 1
+      ownersCount = 0;
+      const ownerInfo = this.configOwner(ownersCount);
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
+      ownersCount += 1;
     }
     return {
       ownerDetails,
@@ -121,41 +120,51 @@ class FormWizard extends Component {
   };
 
   fetchDraftDetails = async (draftId) => {
-    const { draftRequest } = this.state
-    const { toggleSpinner } = this.props
+    const { draftRequest } = this.state;
+    const { toggleSpinner } = this.props;
     try {
-      toggleSpinner()
-      let draftsResponse = await httpRequest("pt-services-v2/drafts/_search","_search",[{key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid")}], draftRequest)
-      const currentDraft = draftsResponse.drafts.find(res => res.id === draftId)
-      const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("ownerInfo_") !== -1)
-      const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys)
-      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0)
-      this.setState({
-        ownerInfoArr: ownerDetails,
-        ownersCount: totalowners,
-        formValidIndexArray: range(0, activeTab),
-        selected: activeTab,
-        draftRequest: { draft : {
-          ...draftRequest.draft,
-          id: draftId,
-        }}
-      }, () => {
-        this.props.updatePTForms(currentDraft.draftRecord)
-        //this.onTabClick(activeTab)
-        toggleSpinner()
-      })
+      toggleSpinner();
+      let draftsResponse = await httpRequest(
+        "pt-services-v2/drafts/_search",
+        "_search",
+        [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
+        draftRequest
+      );
+      const currentDraft = draftsResponse.drafts.find((res) => res.id === draftId);
+      const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
+      const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
+      const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      this.setState(
+        {
+          ownerInfoArr: ownerDetails,
+          ownersCount: totalowners,
+          formValidIndexArray: range(0, activeTab),
+          selected: activeTab,
+          draftRequest: {
+            draft: {
+              ...draftRequest.draft,
+              id: draftId,
+            },
+          },
+        },
+        () => {
+          this.props.updatePTForms(currentDraft.draftRecord);
+          //this.onTabClick(activeTab)
+          toggleSpinner();
+        }
+      );
     } catch (e) {
       console.log(e);
     }
   };
 
-  getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined)
+  getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount() {
     let { search } = this.props.location;
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isFreshAssesment = this.getAssessmentId(search, "type")
-    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId)
+    const isFreshAssesment = this.getAssessmentId(search, "type");
+    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
     const { fetchGeneralMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
@@ -177,28 +186,28 @@ class FormWizard extends Component {
                 name: "OwnerType",
               },
               {
-                name:"PropertySubType"
+                name: "PropertySubType",
               },
               {
-                name:"PropertyType"
+                name: "PropertyType",
               },
               {
-                name:"SubOwnerShipCategory"
+                name: "SubOwnerShipCategory",
               },
               {
-                name:"UsageCategoryDetail"
+                name: "UsageCategoryDetail",
               },
               {
-                name:"UsageCategoryMajor"
+                name: "UsageCategoryMajor",
               },
               {
-                name:"UsageCategoryMinor"
+                name: "UsageCategoryMinor",
               },
               {
-                name:"UsageCategorySubMinor"
-              }
+                name: "UsageCategorySubMinor",
+              },
             ],
-          }
+          },
         ],
       },
     };
@@ -214,9 +223,9 @@ class FormWizard extends Component {
       "UsageCategoryDetail",
       "UsageCategoryMajor",
       "UsageCategoryMinor",
-      "UsageCategorySubMinor"
+      "UsageCategorySubMinor",
     ]);
-    this.addOwner()
+    this.addOwner();
   }
 
   handleRemoveOwner = (index, formKey) => {
@@ -319,6 +328,8 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
+        const { draft } = this.state.draftRequest;
+        const { financialYear } = draft.draftRecord;
         return (
           <div>
             <ReviewForm
@@ -326,6 +337,8 @@ class FormWizard extends Component {
               stepZero={this.renderStepperContent(0, fromReviewPage)}
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
+              estimationDetails={{}}
+              financialYr={financialYear ? financialYear.fields.button : {}}
             />
           </div>
         );
@@ -521,7 +534,7 @@ const mapDispatchToProps = (dispatch) => {
     displayFormErrorsAction: (formKey) => dispatch(displayFormErrors(formKey)),
     updatePTForms: (forms) => dispatch(updateForms(forms)),
     toggleSpinner: () => dispatch(toggleSpinner()),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName))
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
   };
 };
 
