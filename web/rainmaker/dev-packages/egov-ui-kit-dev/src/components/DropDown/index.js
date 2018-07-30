@@ -56,6 +56,7 @@ const DropDownUi = ({
   errorMessage,
   toolTip,
   toolTipMessage,
+  updateDependentFields,
   ...rest
 }) => {
   const renderSelectMenuItems = () => {

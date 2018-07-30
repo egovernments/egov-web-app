@@ -30,7 +30,6 @@ class FloorDetails extends React.Component {
 
   configureFloors = (props) => {
     const { noFloors, componentDetails, disabled } = props;
-    const { floors } = this.state;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
       const date = new Date();
@@ -48,14 +47,14 @@ class FloorDetails extends React.Component {
       };
     });
     this.setState({
-      floors: noFloors > 0 ? [...floors, ...updatedFloors] : [],
+      floors: noFloors > 0 ? [...updatedFloors] : [],
     });
     // this.updatedFloorsInCache(floors)
   };
 
   renderFloors = (floors, noFloors) => {
     const { renderUnits } = this;
-    const { disabled } = this.props;
+
     return floors.map((floor, key) => {
       const { floorId, floorDropDown: FloorDropDown, units } = floor;
       return (
@@ -131,10 +130,10 @@ class FloorDetails extends React.Component {
 
 const mapStateToProps = ({ form }) => {
   let { plotDetails } = form;
+
   let noFloors = parseInt(get(plotDetails, "fields.floorCount.value")) || 0;
   return { noFloors };
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -144,4 +143,5 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)(FloorDetails);
+  mapDispatchToProps
+)(FloorDetails);

@@ -47,7 +47,7 @@ const formConfig = {
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Built Area",
-      hintText: "Enter built area size",
+      hintText: "Enter built-up area",
       numcols: 4,
     },
   },

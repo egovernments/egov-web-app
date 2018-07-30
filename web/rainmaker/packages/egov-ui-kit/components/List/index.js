@@ -61,9 +61,8 @@ var List = function List(_ref) {
         onClick: function onClick() {
           return onItemClick && onItemClick(item, index);
         },
-        innerDivStyle: innerDivStyle
-        // innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
-        , containerElement: listItemContainer,
+        innerDivStyle: innerDivStyle,
+        containerElement: listItemContainer,
         key: index
       }, rest, item));
     });

@@ -87,7 +87,8 @@ var DropDownUi = function DropDownUi(_ref) {
       errorMessage = _ref.errorMessage,
       toolTip = _ref.toolTip,
       toolTipMessage = _ref.toolTipMessage,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "toolTipMessage"]);
+      updateDependentFields = _ref.updateDependentFields,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["className", "errorText", "errorStyle", "value", "fullWidth", "labelStyle", "required", "dropDownData", "children", "selected", "onChange", "id", "style", "floatingLabelText", "underlineStyle", "hintText", "hintStyle", "jsonPath", "dataFetchConfig", "errorMessage", "toolTip", "toolTipMessage", "updateDependentFields"]);
 
   var renderSelectMenuItems = function renderSelectMenuItems() {
     return dropDownData.map(function (option, index) {
