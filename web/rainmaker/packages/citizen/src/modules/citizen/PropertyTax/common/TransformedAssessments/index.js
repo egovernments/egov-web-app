@@ -15,7 +15,6 @@ const secondaryTextContainer = {
 };
 
 export const getTransformedItems = (propertiesById) => {
-  console.log(propertiesById);
   return (
     propertiesById &&
     Object.values(propertiesById).reduce((acc, curr) => {

@@ -1,13 +1,14 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
+import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
 
-let floorDropDownData=[];
+let floorDropDownData = [];
 
 for (var i = 1; i <= 25; i++) {
-  floorDropDownData.push({ label: i, value: i })
+  floorDropDownData.push({ label: i, value: i });
 }
 
-export const floorCount={
+export const floorCount = {
   floorCount: {
     id: "assessment-number-of-floors",
     jsonPath: "Properties[0].propertyDetails[0].noOfFloors",
@@ -18,26 +19,27 @@ export const floorCount={
     required: true,
     hintText: "Select",
     numcols: 4,
-    dropDownData:floorDropDownData
-    // errorMessage: "Enter floor number between 1 to 25",
-    // pattern: /^[1-25]$/
+    dropDownData: floorDropDownData,
+    updateDependentFields: (formKey, field, dispatch, state) => {
+      removeFormKey(formKey, field, dispatch, state);
+    },
   },
 };
 
-export const subUsageType={
+export const subUsageType = {
   subUsageType: {
     id: "assessment-subUsageType",
     jsonPath: "Properties[0].propertyDetails[0].units[0].propertySubType",
     type: "singleValueList",
     floatingLabelText: "Sub Usage Type",
     hintText: "Select",
-    dropDownData:[],
+    dropDownData: [],
     required: true,
-    numcols: 4
+    numcols: 4,
   },
 };
 
-export const occupancy={
+export const occupancy = {
   occupancy: {
     id: "assessment-occupancy",
     jsonPath: "Properties[0].propertyDetails[0].units[0].occupancyType",
@@ -84,26 +86,26 @@ export const occupancy={
         // setDependentFields(dependentFields, dispatch, formKey, false);
       }
     },
-  }
+  },
 };
 
-export const builtArea={
+export const builtArea = {
   builtArea: {
     id: "assessment-built-area",
     jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
     type: "textfield",
     floatingLabelText: "Built Area(sq yards)",
-    hintText: "Enter built area size",
+    hintText: "Enter built-up area",
     ErrorText: "Enter a valid built area size",
     toolTip: true,
     toolTipMessage: "Carpet Area + balcony area + thickness of outer walls",
     required: true,
     hideField: true,
-    numcols: 4
-  }
-}
+    numcols: 4,
+  },
+};
 
-export const annualRent={
+export const annualRent = {
   annualRent: {
     id: "assessment-annual-rent",
     jsonPath: "Properties[0].propertyDetails[0].units[0].arv",
@@ -115,11 +117,11 @@ export const annualRent={
     toolTipMessage: "Total Rent collected on your property over a year",
     required: true,
     hideField: true,
-    numcols: 4
-  }
-}
+    numcols: 4,
+  },
+};
 
-export const plotSize={
+export const plotSize = {
   plotSize: {
     id: "assessment-plot-size",
     jsonPath: "Properties[0].propertyDetails[0].landArea",
@@ -128,10 +130,11 @@ export const plotSize={
     hintText: "Enter plot size",
     errorMessage: "Enter a valid plot size",
     required: true,
-  }
-}
+    numcols: 4,
+  },
+};
 
-export const measuringUnit={
+export const measuringUnit = {
   measuringUnit: {
     id: "assessment-plot-unit",
     jsonPath: "",
@@ -139,41 +142,40 @@ export const measuringUnit={
     floatingLabelText: "Measuring unit",
     dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
     required: true,
+    numcols: 4,
     value: "sq yards",
   },
-}
+};
 
-
-export const beforeInitForm={
-  beforeInitForm:(action,store)=>{
-    let state=store.getState();
-    action.form.fields.subUsageType.dataFetchConfig=
-    {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategorySubMinor",
-                    filter: `[?(@.usageCategoryMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`
-                  },
-                  {
-                    name: "UsageCategoryDetail",
-                    filter: `[?(@.usageCategorySubMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`
-                  }
-                ],
-              },
-            ],
-          },
+export const beforeInitForm = {
+  beforeInitForm: (action, store) => {
+    let state = store.getState();
+    action.form.fields.subUsageType.dataFetchConfig = {
+      url: MDMS.GET.URL,
+      action: MDMS.GET.ACTION,
+      queryParams: [],
+      requestBody: {
+        MdmsCriteria: {
+          tenantId: "pb",
+          moduleDetails: [
+            {
+              moduleName: "PropertyTax",
+              masterDetails: [
+                {
+                  name: "UsageCategorySubMinor",
+                  filter: `[?(@.usageCategoryMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`,
+                },
+                {
+                  name: "UsageCategoryDetail",
+                  filter: `[?(@.usageCategorySubMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`,
+                },
+              ],
+            },
+          ],
         },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor","MdmsRes.PropertyTax.UsageCategoryDetail"],
-    }
+      },
+      dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor", "MdmsRes.PropertyTax.UsageCategoryDetail"],
+    };
     return action;
-  }
-}
+  },
+};

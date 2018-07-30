@@ -62,6 +62,7 @@ const TextField = ({
   errorMessage,
   jsonPath,
   toolTip,
+  updateDependentFields,
   toolTipMessage,
   ...rest
 }) => {
