@@ -116,12 +116,13 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-success",
+    path: "property-tax/payment-success/:propertyId",
     component: PaymentSuccess,
     needsAuthentication: true,
     options: {
       hideFooter: true,
       hideBackButton: true,
+      hideTitle: true,
     },
   },
   {
@@ -131,6 +132,7 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
+      hideTitle: true,
     },
   },
   {
