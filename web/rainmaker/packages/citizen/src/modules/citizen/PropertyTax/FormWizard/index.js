@@ -322,31 +322,12 @@ class FormWizard extends Component {
       case 0:
         return (
           <div>
-            <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="Please provide information to identify the property." />
             <PropertyAddressHOC disabled={fromReviewPage} />
-            <div
-              className="rainmaker-displayInline"
-              style={{ padding: "12px 0px 12px 16px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
-            >
-              <Icon action="action" name="info" color="#30588c" />
-              <Label
-                containerStyle={{ marginLeft: 16 }}
-                fontSize="14px"
-                color="#484848"
-                label="If you do not have an existing Property ID, please visit your Municipal office with your Payment Receipt and you will be provided one."
-              />
-            </div>
           </div>
         );
       case 1:
         return (
           <div>
-            <Label
-              containerStyle={{ marginTop: 12 }}
-              fontSize="16px"
-              color="#484848"
-              label="Please provide information to define the property. The Property Tax will be calculated based on this."
-            />
             <UsageInformationHOC disabled={fromReviewPage} />
             {renderPlotAndFloorDetails(fromReviewPage)}
           </div>
@@ -357,12 +338,6 @@ class FormWizard extends Component {
         // const { ownerForm: Institution } = OwnerConfig;
         return (
           <div>
-            <Label
-              containerStyle={{ marginTop: 12 }}
-              fontSize="16px"
-              color="#484848"
-              label="Please provide information regarding the owner(s) of the property."
-            />
             <OwnershipTypeHOC disabled={fromReviewPage} />
             {getOwnerDetails(ownerType)}
           </div>
@@ -592,8 +567,54 @@ class FormWizard extends Component {
     }
   };
 
+  getHeaderLabel = (selected) => {
+    switch (selected) {
+      case 0:
+        return (
+          <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="Please provide information to identify the property." />
+        );
+      case 1:
+        return (
+          <Label
+            containerStyle={{ marginTop: 12 }}
+            fontSize="16px"
+            color="#484848"
+            label="Please provide information to define the property. The Property Tax will be calculated based on this."
+          />
+        );
+      case 2:
+        return (
+          <Label
+            containerStyle={{ marginTop: 12 }}
+            fontSize="16px"
+            color="#484848"
+            label="Verify the information you have provided and let us know how much you would like to pay against your bill."
+          />
+        );
+    }
+  };
+
+  getFooterLabel = (selected) => {
+    if (selected === 0) {
+      return (
+        <div
+          className="rainmaker-displayInline"
+          style={{ padding: "12px 0px 12px 16px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
+        >
+          <Icon action="action" name="info" color="#30588c" />
+          <Label
+            containerStyle={{ marginLeft: 16 }}
+            fontSize="14px"
+            color="#484848"
+            label="If you do not have an existing Property ID, please visit your Municipal office with your Payment Receipt and you will be provided one."
+          />
+        </div>
+      );
+    }
+  };
+
   render() {
-    const { renderStepperContent } = this;
+    const { renderStepperContent, getHeaderLabel, getFooterLabel } = this;
     const { selected, ownerInfoArr, formValidIndexArray } = this.state;
     const fromReviewPage = selected === 3;
     return (
@@ -602,6 +623,8 @@ class FormWizard extends Component {
           content={renderStepperContent(selected, fromReviewPage)}
           onTabClick={this.onTabClick}
           selected={selected}
+          header={getHeaderLabel(selected)}
+          footer={getFooterLabel(selected)}
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="GO BACK"

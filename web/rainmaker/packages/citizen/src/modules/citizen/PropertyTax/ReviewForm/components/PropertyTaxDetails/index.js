@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "components";
+import { Label, Divider } from "components";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import "./index.css";
 
@@ -7,7 +7,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
   const { taxHeadEstimates, totalAmount } = estimationDetails[0];
   const { fireCess, intrest, penalty, rebate } = importantDates;
   return (
-    <Card style={{ marginBottom: 200, "background-color": "white" }}>
+    <Card style={{ marginBottom: 20, "background-color": "white" }}>
       <CardHeader
         className="tax-calculation-card-header"
         actAsExpander={true}
@@ -19,63 +19,75 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
         }
         iconStyle={{}}
         title={
-          <div className="tax-header-price">
-            <span>Property Tax Dues</span>
-            <span className="pt-total">{totalAmount}</span>
+          <div className="tax-header-price rainmaker-displayInline">
+            <Label label="Property Tax Dues" fontSize="16px" color="#484848" />
+            <Label label={totalAmount} fontSize="16px" color="#484848" />
           </div>
         }
       />
       <CardText expandable={true}>
-        <div className="fare-section">
-          <div className="pt-rf-detailed-bill">
-            <div className="pt-rf-detailed-bill-text col-md-6 col-lg-6">Detailed Bill</div>
-            <div className="pt-rf-detailed-bill-table">
-              {taxHeadEstimates &&
-                taxHeadEstimates.map((item, index) => {
-                  return (
-                    item.estimateAmount > 0 && (
-                      <div className="pt-rf-detailed-bill-points">
+        <div className="clearfix fare-section">
+          <div className="col-sm-6" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+            <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="Detailed Bill" bold={true} />
+            {taxHeadEstimates &&
+              taxHeadEstimates.map((item, index) => {
+                return (
+                  item.estimateAmount > 0 && (
+                    <div className="clearfix" style={{ marginBottom: 8 }}>
+                      <div className="col-sm-9" style={{ padding: 0 }}>
                         <Label label={item.taxHeadCode} />
-                        <Label className="pt-rf-price" label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`} />
                       </div>
-                    )
-                  );
-                })}
-            </div>
-
-            <div className="pt-rf-detailed-bill-total">
-              <span className="">Total</span>
-              <span className="pt-rf-price">{totalAmount}</span>
+                      <div className="col-sm-3">
+                        <Label
+                          containerStyle={{ textAlign: "right" }}
+                          className="pt-rf-price"
+                          label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`}
+                        />
+                      </div>
+                    </div>
+                  )
+                );
+              })}
+            <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, height: 2 }} />
+            <div className="clearfix" style={{ marginTop: 8 }}>
+              <div className="col-sm-9" style={{ padding: 0 }}>
+                <Label label="Total" />
+              </div>
+              <div className="col-sm-3">
+                <Label containerStyle={{ textAlign: "right" }} label={totalAmount} />
+              </div>
             </div>
           </div>
-          <div className="date-details">
-            <span className="header">Important Dates</span>
-            <ul>
-              {rebate && (
-                <li>
-                  <span>
-                    <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
-                  </span>
-                  <span>{`${rebate.endingDay}/${rebate.fromFY.slice(0, 4)}`}</span>
-                </li>
-              )}
-              {penalty && (
-                <li>
-                  <span>
-                    <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
-                  </span>
-                  <span>{`${penalty.startingDay}/${penalty.fromFY.slice(0, 4)}`}</span>
-                </li>
-              )}
-              {intrest && (
-                <li>
-                  <span>
-                    <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
-                  </span>
-                  <span>{`${intrest.startingDay}/${intrest.fromFY.slice(0, 4)}`}</span>
-                </li>
-              )}
-            </ul>
+          <div className="col-sm-6">
+            <div className="date-details">
+              <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="Important Dates" bold={true} />
+              <ul>
+                {rebate && (
+                  <li>
+                    <span>
+                      <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
+                    </span>
+                    <span>{`${rebate.endingDay}/${rebate.fromFY && rebate.fromFY.slice(0, 4)}`}</span>
+                  </li>
+                )}
+                {penalty && (
+                  <li>
+                    <span>
+                      <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
+                    </span>
+                    <span>{`${penalty.startingDay}/${penalty.fromFY && penalty.fromFY.slice(0, 4)}`}</span>
+                  </li>
+                )}
+                {intrest && (
+                  <li>
+                    <span>
+                      <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
+                    </span>
+                    <span>{`${intrest.startingDay}/${intrest.fromFY && intrest.fromFY.slice(0, 4)}`}</span>
+                  </li>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </CardText>
