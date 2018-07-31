@@ -45,7 +45,7 @@ const formConfig = {
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const  institutedropDown = updateInstituteType(state, value)
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].ownershipCategory",get(state,`common.generalMDMSDataById.SubOwnerShipCategory[${sourceField.value}]`).ownerShipCategory));
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].ownershipCategory",get(state,`common.generalMDMSDataById.SubOwnerShipCategory[${sourceField.value}].ownerShipCategory`, value)));
         dispatch(setFieldProperty("institutionDetails", "type", "dropDownData", institutedropDown))
       },
     },
