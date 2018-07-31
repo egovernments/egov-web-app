@@ -130,16 +130,16 @@ const formConfig = {
       id: "ownerGender",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].gender",
     },
-    roles:{
-      id:"roles",
-      jsonPath:"Properties[0].propertyDetails[0].owners[0].roles[0].code",
-      value:"CITIZEN",
+    roles: {
+      id: "roles",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].roles[0].code",
+      value: "CITIZEN",
     },
-    tenantId:{
-      id:"tenantId",
-      jsonPath:"Properties[0].propertyDetails[0].owners[0].tenantId",
-      value:localStorage.getItem("tenantId");
-    }
+    tenantId: {
+      id: "tenantId",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].tenantId",
+      value: localStorage.getItem("tenantId"),
+    },
   },
   action: "",
   redirectionRoute: "",
