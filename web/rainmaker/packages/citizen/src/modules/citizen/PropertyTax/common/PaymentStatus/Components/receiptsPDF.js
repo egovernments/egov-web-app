@@ -22,7 +22,6 @@ const generateReceipt = (role, details) => {
   };
   switch (role) {
     case "pt-reciept-citizen":
-
       // let floorData = propertyDetails[0].noOfFloors || 1;
 
       // data for floor details
@@ -53,9 +52,31 @@ const generateReceipt = (role, details) => {
           });
         return bodyData;
       };
+
       let borderKey = [true, true, false, true];
       let borderValue = [false, true, true, true];
       let receiptTableWidth = ["*", "*", "*", "*"];
+
+      let getOwnerDetails = (ownerArray, noOfColumns) => {
+        const transformedArray = ownerArray.map((item, index) => {
+          return [
+            {
+              text: `Owner ${index + 1} Name`,
+              border: borderKey,
+              style: "receipt-table-key",
+            },
+            {
+              text: item.name || "",
+              border: borderValue,
+            },
+          ];
+        });
+        const flatArray = transformedArray.reduce((acc, val) => acc.concat(val), []);
+
+        let newArray = [];
+        while (flatArray.length > 0) newArray.push(flatArray.splice(0, noOfColumns));
+        return newArray;
+      };
 
       data = {
         content: [
@@ -213,26 +234,7 @@ const generateReceipt = (role, details) => {
             style: "pt-reciept-citizen-table",
             table: {
               widths: receiptTableWidth,
-              body: [
-                [
-                  { text: "Owner/Company Name:", border: borderKey, style: "receipt-table-key" },
-                  { text: owners.name || "", border: borderValue },
-                  { text: "Type of Ownership:", border: borderKey, style: "receipt-table-key" },
-                  { text: owners.OwnershipType || "", border: borderValue },
-                ],
-                [
-                  { text: "Mobile No.:", border: borderKey, style: "receipt-table-key" },
-                  { text: owners.mobileNumber || "", border: borderValue },
-                  { text: "Owner Category:", border: borderKey, style: "receipt-table-key" },
-                  { text: owners.ownerType || "", border: borderValue },
-                ],
-                [
-                  { text: "Correspondence Address:", border: borderKey, style: "receipt-table-key" },
-                  { text: owners.correspondenceAddress || "", border: borderValue },
-                  { text: "Owner Category ID No.:", border: borderKey, style: "receipt-table-key" },
-                  { text: propertyDetails[0].documents[0].id || "", border: borderValue },
-                ],
-              ],
+              body: getOwnerDetails(owners, 4),
             },
             layout: tableborder,
           },

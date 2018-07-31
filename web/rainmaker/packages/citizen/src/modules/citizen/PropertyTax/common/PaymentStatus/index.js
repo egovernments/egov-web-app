@@ -40,39 +40,44 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
           className="pt-success-receipt"
           textChildren={
             <div>
-              {receiptUIDetails.propertyInfo.map((item) => {
-                return (
-                  <div className="row pt-reciept-label">
-                    <Label className="col-xs-6" label={item.key} />
-                    <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
-                  </div>
-                );
-              })}
+              {receiptUIDetails &&
+                receiptUIDetails.propertyInfo &&
+                receiptUIDetails.propertyInfo.map((item) => {
+                  return (
+                    <div className="row pt-reciept-label">
+                      <Label className="col-xs-6" label={item.key} />
+                      <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
+                    </div>
+                  );
+                })}
               <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
-              {receiptUIDetails.receiptInfo.map((item) => {
-                return (
-                  <div className="row pt-reciept-label">
-                    <Label className="col-xs-6" label={item.key} />
-                    <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
-                  </div>
-                );
-              })}
+              {receiptUIDetails &&
+                receiptUIDetails.receiptInfo &&
+                receiptUIDetails.receiptInfo.map((item) => {
+                  return (
+                    <div className="row pt-reciept-label">
+                      <Label className="col-xs-6" label={item.key} />
+                      <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
+                    </div>
+                  );
+                })}
             </div>
           }
         />
-        {receiptDetails.ReceiptNo && (
-          <div
-            onClick={() => {
-              generateReceipt("pt-reciept-citizen", receiptDetails);
-            }}
-          >
-            <Label
-              label="DOWNLOAD RECEIPT"
-              color="#fe7a51"
-              labelStyle={{ textAlign: "center", fontWeight: 500, fontSize: "16px", cursor: "pointer" }}
-            />
-          </div>
-        )}
+        {receiptDetails &&
+          receiptDetails.ReceiptNo && (
+            <div
+              onClick={() => {
+                generateReceipt("pt-reciept-citizen", receiptDetails);
+              }}
+            >
+              <Label
+                label="DOWNLOAD RECEIPT"
+                color="#fe7a51"
+                labelStyle={{ textAlign: "center", fontWeight: 500, fontSize: "16px", cursor: "pointer" }}
+              />
+            </div>
+          )}
       </div>
 
       {/* {receiptDetails.printIcon &&
