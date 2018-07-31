@@ -1,6 +1,9 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
+import set from "lodash/set";
+import get from "lodash/get";
+import filter from "lodash/filter";
 
 let floorDropDownData = [];
 
@@ -74,16 +77,14 @@ export const occupancy = {
       const dependentFields1 = ["builtArea"];
       const dependentFields2 = ["annualRent"];
       switch (value) {
-        case "SELFOCCUPIED":
-          setDependentFields(dependentFields2, dispatch, formKey, true);
-          setDependentFields(dependentFields1, dispatch, formKey, false);
-          break;
         case "RENTED":
-          setDependentFields(dependentFields1, dispatch, formKey, true);
+          // setDependentFields(dependentFields1, dispatch, formKey, true);
           setDependentFields(dependentFields2, dispatch, formKey, false);
           break;
         default:
-        // setDependentFields(dependentFields, dispatch, formKey, false);
+          setDependentFields(dependentFields2, dispatch, formKey, true);
+          setDependentFields(dependentFields1, dispatch, formKey, false);
+          break;
       }
     },
   },
@@ -100,7 +101,7 @@ export const builtArea = {
     toolTip: true,
     toolTipMessage: "Carpet Area + balcony area + thickness of outer walls",
     required: true,
-    hideField: true,
+    hideField: false,
     numcols: 4,
   },
 };
@@ -124,7 +125,7 @@ export const annualRent = {
 export const plotSize = {
   plotSize: {
     id: "assessment-plot-size",
-    jsonPath: "Properties[0].propertyDetails[0].landArea",
+    jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
     type: "textfield",
     floatingLabelText: "Plot Size",
     hintText: "Enter plot size",
@@ -133,6 +134,7 @@ export const plotSize = {
     numcols: 4,
   },
 };
+
 
 export const measuringUnit = {
   measuringUnit: {
@@ -150,32 +152,40 @@ export const measuringUnit = {
 export const beforeInitForm = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
-    action.form.fields.subUsageType.dataFetchConfig = {
-      url: MDMS.GET.URL,
-      action: MDMS.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "UsageCategorySubMinor",
-                  filter: `[?(@.usageCategoryMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`,
-                },
-                {
-                  name: "UsageCategoryDetail",
-                  filter: `[?(@.usageCategorySubMinor=='${state.form.basicInformation.fields.typeOfUsage.value}')]`,
-                },
-              ],
-            },
-          ],
-        },
-      },
-      dataPath: ["MdmsRes.PropertyTax.UsageCategorySubMinor", "MdmsRes.PropertyTax.UsageCategoryDetail"],
-    };
+    var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
+    console.log(get(state,"form.basicInformation.fields.typeOfUsage.value"));
+    var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryMinor"),true),(subUsageMinor)=>{
+      return subUsageMinor.usageCategoryMajor===get(state,"form.basicInformation.fields.typeOfUsage.value");
+    });
+    var filteredUsageCategoryDetails=getPresentMasterObj(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),filteredSubUsageMinor,"code");
+    set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
+    set(action,"form.fields.subUsageType.dropDownData",prepareDropDownData(filteredUsageCategoryDetails));
     return action;
   },
+};
+
+
+export const prepareDropDownData = (master,withOriginal=false) => {
+  let dropDownData = [];
+  for (var variable in master) {
+    if (master.hasOwnProperty(variable)) {
+      if (withOriginal) {
+        dropDownData.push(master[variable]);
+      } else {
+        dropDownData.push({ label: master[variable].name, value: master[variable].code });
+      }
+    }
+  }
+  return dropDownData;
+};
+
+
+const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+  const propArray = master2Arr.reduce((result, item) => {
+    if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
+      result.push(item[propToCompare]);
+    }
+    return result;
+  }, []);
+  return master1Arr.filter((item) => propArray.indexOf(item.code) !== -1);
 };

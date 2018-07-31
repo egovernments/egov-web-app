@@ -42,7 +42,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
           );
         })}
       </div>
-      <div className="text-center">
+      {/* <div className="text-center">
         <Button
           className="receipt-button"
           primary={true}
@@ -64,7 +64,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
             history && history.push(`/property-tax/assessment-form?propertyId=${propertyTaxAssessmentID}`);
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

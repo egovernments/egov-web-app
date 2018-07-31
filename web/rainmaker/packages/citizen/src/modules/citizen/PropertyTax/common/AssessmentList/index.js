@@ -1,9 +1,35 @@
 import React from "react";
-import { Icon, Button } from "components";
+import { Icon, Button, DropDown } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "../PTList";
 import BlankAssessment from "../BlankAssessment";
 import "./index.css";
+
+const PAIDdropDownData = [
+  {
+    label: "Download Statement",
+    value: "Download Statement",
+  },
+  {
+    label: "Re-Assess",
+    value: "Re-Assess",
+  },
+];
+
+const PartiallyPaiddropDownData = [
+  {
+    label: "Download Statement",
+    value: "Download Statement",
+  },
+  {
+    label: "Re-Assess",
+    value: "Re-Assess",
+  },
+  {
+    label: "Complete Payment",
+    value: "Complete Payment",
+  },
+];
 
 const getItemStatus = (item, history) => {
   let status = item.status;
@@ -21,9 +47,20 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
+          {/* <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
             <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
             <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
+          </div> */}
+          <div>
+            <DropDown
+              autoWidth={true}
+              menuInnerDivStyle={{ padding: "0px 6px" }}
+              menuStyle={{ marginTop: 0 }}
+              iconStyle={{ top: "-3px", fill: "#484848", width: "35px" }}
+              style={{ backgroundColor: "transperent", height: "45px", width: "150px" }}
+              dropDownData={PAIDdropDownData}
+              hintText="Select action"
+            />
           </div>
         </div>
       );

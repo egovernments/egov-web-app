@@ -51,7 +51,7 @@ var wrapRequestBody = function wrapRequestBody(requestBody, action, customReques
     did: "1",
     key: "",
     msgId: "20170310130900|en_IN",
-    requesterId: "",
+    // requesterId: "",
     authToken: authToken
   };
   RequestInfo = (0, _extends3.default)({}, RequestInfo, customRequestInfo);
