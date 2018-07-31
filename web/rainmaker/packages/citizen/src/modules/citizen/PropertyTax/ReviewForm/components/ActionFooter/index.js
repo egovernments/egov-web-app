@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Card, Button } from "components";
+import React from "react";
+import { Button } from "components";
 
 const ActionFooter = () => {
   return (
@@ -12,7 +12,7 @@ const ActionFooter = () => {
           style={{ marginRight: 45, width: "36%" }}
         />
         <Button
-          label="PAY"
+          label="PAY ONE"
           style={{ width: "36%" }}
           backgroundColor="#fe7a51"
           labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}

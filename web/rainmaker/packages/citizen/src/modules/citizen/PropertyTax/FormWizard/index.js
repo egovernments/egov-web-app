@@ -37,6 +37,7 @@ import "./index.css";
 
 class FormWizard extends Component {
   state = {
+    dialogueOpen: false,
     selected: 0,
     ownerInfoArr: [],
     showOwners: false,
@@ -640,9 +641,17 @@ class FormWizard extends Component {
     }
   };
 
+  closeDeclarationDialogue = () => {
+    this.setState({ dialogueOpen: false });
+  };
+
+  onPayButtonClick = () => {
+    this.setState({ dialogueOpen: true });
+  };
+
   render() {
-    const { renderStepperContent, getHeaderLabel, getFooterLabel } = this;
-    const { selected, ownerInfoArr, formValidIndexArray } = this.state;
+    const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
+    const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
     return (
       <div className="wizard-form-main-cont">
@@ -657,6 +666,18 @@ class FormWizard extends Component {
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}
           ownerInfoArr={ownerInfoArr}
+          closeDialogue={closeDeclarationDialogue}
+          dialogueOpen={dialogueOpen}
+          onPayButtonClick={onPayButtonClick}
+        />
+        <Button
+          label={"Call Pg"}
+          onClick={() => {
+            this.callPGService();
+          }}
+          labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+          buttonStyle={{ border: "1px solid #fe7a51" }}
+          style={{ marginRight: 45, width: "36%" }}
         />
       </div>
     );

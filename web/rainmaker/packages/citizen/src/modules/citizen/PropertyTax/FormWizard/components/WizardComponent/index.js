@@ -1,9 +1,23 @@
 import React from "react";
 import { Button } from "components";
 import BreadCrumbsForm from "./components/BreadCrumbsForm";
+import Declaration from "./components/Declaration";
 import "./index.css";
 
-const WizardComponent = ({ content, header, footer, onTabClick, selected, formValidIndexArray, updateIndex, backLabel, nextLabel }) => {
+const WizardComponent = ({
+  content,
+  header,
+  footer,
+  onTabClick,
+  selected,
+  closeDialogue,
+  dialogueOpen,
+  onPayButtonClick,
+  formValidIndexArray,
+  updateIndex,
+  backLabel,
+  nextLabel,
+}) => {
   return (
     <div className="wizard-cont">
       <BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />
@@ -27,12 +41,17 @@ const WizardComponent = ({ content, header, footer, onTabClick, selected, formVa
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
             buttonStyle={{ border: 0 }}
-            onClick={() => {
-              updateIndex(selected + 1);
-            }}
+            onClick={
+              selected === 3
+                ? onPayButtonClick
+                : () => {
+                    updateIndex(selected + 1);
+                  }
+            }
           />
         </div>
       </div>
+      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} />
     </div>
   );
 };
