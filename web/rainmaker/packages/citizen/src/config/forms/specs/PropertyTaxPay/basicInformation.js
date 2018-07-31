@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import { prepareFormData } from "egov-ui-kit/redux/form/actions";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
 import {prepareDropDownData} from "./utils/reusableFields";
 import set from "lodash/set";
@@ -18,7 +18,7 @@ const formConfig = {
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
         // get(state,`state.generalMDMSDataById.UsageCategoryMinor[${field.value}]`)
-        console.log(get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`).usageCategoryMajor);
+        // console.log(get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`).usageCategoryMajor);
         dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`).usageCategoryMajor));
       },
       dropDownData: [],
@@ -32,7 +32,7 @@ const formConfig = {
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
-        console.log(state);
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",get(state,`common.generalMDMSDataById.PropertySubType[${field.value}]`).propertyType));
       },
       dropDownData: [],
     },

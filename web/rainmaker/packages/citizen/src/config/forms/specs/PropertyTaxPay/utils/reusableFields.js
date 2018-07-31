@@ -1,6 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 import filter from "lodash/filter";
@@ -32,13 +33,16 @@ export const floorCount = {
 export const subUsageType = {
   subUsageType: {
     id: "assessment-subUsageType",
-    jsonPath: "Properties[0].propertyDetails[0].units[0].propertySubType",
+    jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryDetail",
     type: "singleValueList",
     floatingLabelText: "Sub Usage Type",
     hintText: "Select",
     dropDownData: [],
     required: true,
     numcols: 4,
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,get(state,`common.generalMDMSDataById.UsageCategoryDetail[${field.value}]`).usageCategorySubMinor));
+    },
   },
 };
 
@@ -51,27 +55,7 @@ export const occupancy = {
     hintText: "Select",
     required: true,
     numcols: 4,
-    dataFetchConfig: {
-      url: MDMS.GET.URL,
-      action: MDMS.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "OccupancyType",
-                },
-              ],
-            },
-          ],
-        },
-      },
-      dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
-    },
+    dropDownData:[],
     updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
       const { value } = sourceField;
       const dependentFields1 = ["builtArea"];
@@ -152,6 +136,7 @@ export const measuringUnit = {
 export const beforeInitForm = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
+    let {dispatch}=store;
     var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
     console.log(get(state,"form.basicInformation.fields.typeOfUsage.value"));
     var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryMinor"),true),(subUsageMinor)=>{
@@ -160,6 +145,8 @@ export const beforeInitForm = {
     var filteredUsageCategoryDetails=getPresentMasterObj(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),filteredSubUsageMinor,"code");
     set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
     set(action,"form.fields.subUsageType.dropDownData",prepareDropDownData(filteredUsageCategoryDetails));
+    dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+    dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
     return action;
   },
 };

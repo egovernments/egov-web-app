@@ -5,7 +5,7 @@ const formConfig = {
   fields: {
     usageType: {
       id: "assessment-usageType",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMajor",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
       floatingLabelText: "Usage Type",
       value: "RESIDENTIAL",
