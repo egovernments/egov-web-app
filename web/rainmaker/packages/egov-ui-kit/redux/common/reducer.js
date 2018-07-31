@@ -124,7 +124,7 @@ var commonReducer = function commonReducer() {
       });
     case commonTypes.PREPARE_FORM_DATA:
       return (0, _extends4.default)({}, state, {
-        prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value)
+        prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value ? action.value : null)
       });
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:

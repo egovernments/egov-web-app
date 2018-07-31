@@ -125,7 +125,7 @@ const commonReducer = (state = intialState, action) => {
     case commonTypes.PREPARE_FORM_DATA:
       return {
         ...state,
-        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value),
+        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value?action.value:null),
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:

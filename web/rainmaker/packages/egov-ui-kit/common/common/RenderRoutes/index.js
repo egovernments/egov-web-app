@@ -27,7 +27,7 @@ var RenderRoutes = function RenderRoutes(_ref) {
       return _react2.default.createElement(_reactRouterDom.Route, {
         key: index,
         exact: true,
-        path: match.url === "/" ? "/" + path : match.url + "/" + path,
+        path: match.path === "/" ? path === "/" ? "/" : "/" + path : baseUrl + "/" + path,
         render: function render(props) {
           return _react2.default.createElement(Component, props);
         }
