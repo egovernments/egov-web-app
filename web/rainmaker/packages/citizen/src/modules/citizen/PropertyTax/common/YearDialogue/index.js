@@ -37,7 +37,7 @@ class YearDialog extends Component {
         tenantId: "pb",
         moduleDetails: [
           {
-            moduleName: "PropertyTax",
+            moduleName: "egf-master",
             masterDetails: [
               {
                 name: "FinancialYear",
@@ -47,7 +47,7 @@ class YearDialog extends Component {
         ],
       },
     };
-    fetchGeneralMDMSData(requestBody, "PropertyTax", ["FinancialYear"]);
+    fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
   };
 
   render() {
