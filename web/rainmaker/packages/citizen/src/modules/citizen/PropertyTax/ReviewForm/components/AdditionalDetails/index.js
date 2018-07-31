@@ -27,8 +27,7 @@ const styles = {
   },
 };
 
-const AdditionalDetails = ({ optionSelected, handleOptionChange }) => {
-  console.log(optionSelected);
+const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonChange, value }) => {
   return (
     <Card
       className="tax-calculation-card-header"
@@ -53,7 +52,14 @@ const AdditionalDetails = ({ optionSelected, handleOptionChange }) => {
               />
             </div>
             <div className="col-sm-6">
-              <TextField id="amount-to-be-paid" fullWidth={true} hintText="Enter amount" floatingLabelText="Amount to pay (INR)" />
+              <TextField
+                id="amount-to-be-paid"
+                onChange={(e, value) => onRadioButtonChange(e)}
+                value={value}
+                fullWidth={true}
+                hintText="Enter amount"
+                floatingLabelText="Amount to pay (INR)"
+              />
             </div>
           </div>
           {optionSelected &&

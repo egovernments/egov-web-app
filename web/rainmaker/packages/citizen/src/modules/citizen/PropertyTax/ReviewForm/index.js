@@ -17,6 +17,7 @@ const defaultIconStyle = {
   height: 20,
   marginLeft: 26,
   marginRight: 10,
+  totalAmountTobePaid: "",
 };
 
 const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
@@ -106,10 +107,15 @@ class ReviewForm extends Component {
     this.setState({ valueSelected: value });
   };
 
+  onRadioButtonChange = (e) => {
+    const inputValue = e.target.value;
+    this.setState({ totalAmountTobePaid: inputValue });
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
-    let { handleOptionsChange } = this;
-    let { valueSelected, importantDates } = this.state;
+    let { handleOptionsChange, onRadioButtonChange } = this;
+    let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
     console.log(estimationDetails);
     return (
@@ -161,8 +167,13 @@ class ReviewForm extends Component {
           // form={propertyAddressConfig}
           component={stepTwo}
         />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        <AdditionalDetails handleOptionChange={handleOptionsChange} optionSelected={valueSelected} />
+        <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={importantDates} />
+        <AdditionalDetails
+          value={totalAmountTobePaid}
+          onRadioButtonChange={onRadioButtonChange}
+          handleOptionChange={handleOptionsChange}
+          optionSelected={valueSelected}
+        />
       </div>
     );
   }
