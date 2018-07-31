@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Icon } from "components";
+import { Icon,Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
@@ -162,8 +162,16 @@ class FormWizard extends Component {
 
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
-  componentDidMount() {
+  componentDidMount=async()=> {
     let { search } = this.props.location;
+    if (this.props.location.search.split("&").length>3) {
+      try {
+        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update"+search, "_update", [], {});
+        console.log(pgUpdateResponse);
+      } catch (e) {
+        alert(e);
+      }
+    }
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
@@ -295,8 +303,8 @@ class FormWizard extends Component {
             disabled={isReviewPage}
           />
         );
-      case "INSTITUTIONALPRIVATE":
-      case "INSTITUTIONALGOVERNMENT":
+      case "INSTITUITIONALPRIVATE":
+      case "INSTITUITIONALGOVERNMENT":
         return (
           <div>
             <InstitutionHOC disabled={isReviewPage} />
@@ -530,6 +538,8 @@ class FormWizard extends Component {
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
         console.log(goToPaymentGateway);
+        const redirectionUrl=get(goToPaymentGateway,"Transaction.redirectUrl");
+        window.location=redirectionUrl;
       } catch (e) {
         console.log(e);
       }
@@ -597,6 +607,13 @@ class FormWizard extends Component {
           backLabel="GO BACK"
           nextLabel={selected === 3 ? "PAY" : "NEXT"}
           ownerInfoArr={ownerInfoArr}
+        />
+        <Button
+          label={"Call Pg"}
+          onClick={()=>{this.callPGService()}}
+          labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
+          buttonStyle={{ border: "1px solid #fe7a51" }}
+          style={{ marginRight: 45, width: "36%" }}
         />
       </div>
     );

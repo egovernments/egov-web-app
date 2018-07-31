@@ -33,6 +33,16 @@ var _common2 = _interopRequireDefault(_common);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_axios2.default.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (error.response && error.response.data && error.response.data.location) {
+    window.location = error.response.data.location;
+  } else {
+    return Promise.reject(error);
+  }
+});
+
 var instance = _axios2.default.create({
   baseURL: window.location.origin,
   headers: {
