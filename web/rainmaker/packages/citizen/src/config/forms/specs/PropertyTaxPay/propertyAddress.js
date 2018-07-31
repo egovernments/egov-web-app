@@ -1,5 +1,6 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 const cityCode = "";
 
 const formConfig = {
@@ -43,6 +44,9 @@ const formConfig = {
           },
         ],
       },
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        dispatch(prepareFormData("Properties[0].tenantId",field.value));
+      }
     },
     dummy: {
       numcols: 6,
