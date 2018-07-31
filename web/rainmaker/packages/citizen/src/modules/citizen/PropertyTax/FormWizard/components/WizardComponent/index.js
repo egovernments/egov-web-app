@@ -3,11 +3,13 @@ import { Button } from "components";
 import BreadCrumbsForm from "./components/BreadCrumbsForm";
 import "./index.css";
 
-const WizardComponent = ({ content, onTabClick, selected, formValidIndexArray, updateIndex, backLabel, nextLabel }) => {
+const WizardComponent = ({ content, header, footer, onTabClick, selected, formValidIndexArray, updateIndex, backLabel, nextLabel }) => {
   return (
     <div className="wizard-cont">
       <BreadCrumbsForm onTabClick={onTabClick} selected={selected} formValidIndexArray={formValidIndexArray} />
+      {header}
       <div className="wizard-content clearfix">{content}</div>
+      {footer}
       <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right" }}>
           <Button

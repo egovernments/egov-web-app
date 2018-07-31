@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
+import AdditionalDetails from "./components/AdditionalDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
@@ -24,6 +25,7 @@ const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="soc
 
 class ReviewForm extends Component {
   state = {
+    valueSelected: "",
     importantDates: {},
   };
   componentDidMount() {
@@ -79,11 +81,11 @@ class ReviewForm extends Component {
 
   findCorrectDateObj = (financialYear, category) => {
     const categoryYear = category.reduce((categoryYear, item) => {
-      const year = item.fromFY.slice(0, 4);
+      const year = item.fromFY && item.fromFY.slice(0, 4);
       categoryYear.push(year);
       return categoryYear;
     }, []);
-    const assessYear = financialYear.slice(0, 4);
+    const assessYear = financialYear && financialYear.slice(0, 4);
     let chosenDateObj = {};
     const index = categoryYear.indexOf(assessYear);
     if (index > -1) {
@@ -100,8 +102,14 @@ class ReviewForm extends Component {
     return chosenDateObj;
   };
 
+  handleOptionsChange = (event, value) => {
+    this.setState({ valueSelected: value });
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
+    let { handleOptionsChange } = this;
+    let { valueSelected } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
     return (
       <div>
@@ -153,6 +161,7 @@ class ReviewForm extends Component {
           component={stepTwo}
         />
         <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={this.state.importantDates} />
+        <AdditionalDetails handleOptionChange={handleOptionsChange} optionSelected={valueSelected} />
       </div>
     );
   }
@@ -179,28 +188,23 @@ const CalculationCriteria = [
     tenantId: "pb.patiala",
     taxHeadEstimates: [
       {
-        taxHeadCode: "PT_TAX",
+        taxHeadCode: "Property Tax (PT)",
         estimateAmount: 850,
         category: "TAX",
       },
       {
-        taxHeadCode: "PT_UNIT_USAGE_EXEMPTION",
-        estimateAmount: 0,
+        taxHeadCode: "Fire Cess (5% of PT)",
+        estimateAmount: 1,
         category: "EXEMPTION",
       },
       {
-        taxHeadCode: "PT_OWNER_EXEMPTION",
-        estimateAmount: 850,
+        taxHeadCode: "Penalty (20% of PT)",
+        estimateAmount: 1,
         category: "EXEMPTION",
       },
       {
-        taxHeadCode: "PT_TIME_REBATE",
-        estimateAmount: 0,
-        category: "EXEMPTION",
-      },
-      {
-        taxHeadCode: "PT_TIME_PENALTY",
-        estimateAmount: 0,
+        taxHeadCode: "Interest (18% p.a. daily)",
+        estimateAmount: 1,
         category: "EXEMPTION",
       },
     ],
