@@ -85,6 +85,7 @@ const OwnerInformation = ({
               />
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field fieldKey="isSameAsPropertyAddress" field={fields.isSameAsPropertyAddress} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div>
               <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />

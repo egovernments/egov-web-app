@@ -34,13 +34,13 @@ var formValidation = function formValidation(store) {
             pattern = field.pattern,
             updateDependentFields = field.updateDependentFields;
 
+        if (updateDependentFields) {
+          updateDependentFields({ formKey: formKey, field: field, dispatch: dispatch, state: state });
+        }
         if (pattern || required) {
           var validationObject = (0, _utils.validateField)(field);
           var errorText = validationObject.errorText;
 
-          if (updateDependentFields) {
-            updateDependentFields({ formKey: formKey, field: field, dispatch: dispatch, state: state });
-          }
           dispatch((0, _actions2.setFieldValidation)(formKey, fieldKey, errorText));
         }
         dispatch((0, _actions.prepareFormData)(field.jsonPath, field.value));

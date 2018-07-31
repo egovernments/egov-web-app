@@ -295,8 +295,8 @@ class FormWizard extends Component {
             disabled={isReviewPage}
           />
         );
-      case "INSTITUITIONALPRIVATE":
-      case "INSTITUITIONALGOVERNMENT":
+      case "INSTITUTIONALPRIVATE":
+      case "INSTITUTIONALGOVERNMENT":
         return (
           <div>
             <InstitutionHOC disabled={isReviewPage} />

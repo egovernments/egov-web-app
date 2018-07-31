@@ -1,5 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
+import get from "lodash/get"
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions"
 
 const formConfig = {
   name: "ownerInfo",
@@ -130,15 +132,23 @@ const formConfig = {
       id: "ownerGender",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].gender",
     },
-    roles: {
-      id: "roles",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].roles[0].code",
-      value: "CITIZEN",
-    },
-    tenantId: {
-      id: "tenantId",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].tenantId",
-      value: localStorage.getItem("tenantId"),
+    isSameAsPropertyAddress: {
+      id: "rcpt",
+      type: "checkbox",
+      jsonPath: "",
+      errorMessage: "",
+      floatingLabelText: "Same as property address",
+      value: "",
+      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+        const { value: iscorrAddrSameProp } = sourceField;
+        const { city="", colony="", houseNumber="", mohalla="", pincode="", street="" } = get(state, "form.propertyAddress.fields", {})
+        if (iscorrAddrSameProp) {
+          const correspondingAddress = `${get(houseNumber, "value", "")} ${get(colony, "value", "")} ${get(street, "value", "")} ${get(city, "value", "").split(".").pop()} ${get(pincode, "value", "")}`
+          dispatch(setFieldProperty(formKey, "ownerAddress", "value", correspondingAddress))
+        } else {
+          dispatch(setFieldProperty(formKey, "ownerAddress", "value", ""))
+        }
+      },
     },
   },
   action: "",

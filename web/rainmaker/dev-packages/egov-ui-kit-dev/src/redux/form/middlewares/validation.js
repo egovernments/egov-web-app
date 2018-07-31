@@ -13,12 +13,12 @@ const formValidation = (store) => (next) => (action) => {
     const form = state.form[formKey] || {};
     const field = getFormField(form, fieldKey);
     const { required, pattern, updateDependentFields } = field;
+    if (updateDependentFields) {
+      updateDependentFields({ formKey, field, dispatch, state })
+    }
     if (pattern || required) {
       const validationObject = validateField(field);
       const { errorText } = validationObject;
-      if (updateDependentFields) {
-        updateDependentFields({ formKey, field, dispatch, state })
-      }
       dispatch(setFieldValidation(formKey, fieldKey, errorText));
     }
     dispatch(prepareFormData(field.jsonPath, field.value));
