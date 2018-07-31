@@ -117,7 +117,6 @@ class ReviewForm extends Component {
     let { handleOptionsChange, onRadioButtonChange } = this;
     let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
-    console.log(estimationDetails);
     return (
       <div>
         <PropertyAddress
@@ -167,7 +166,7 @@ class ReviewForm extends Component {
           // form={propertyAddressConfig}
           component={stepTwo}
         />
-        <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={importantDates} />
+        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
         <AdditionalDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
