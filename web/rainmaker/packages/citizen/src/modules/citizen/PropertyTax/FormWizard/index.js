@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
-import { Icon,Button } from "components";
+import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
@@ -42,6 +42,7 @@ class FormWizard extends Component {
     showOwners: false,
     formValidIndexArray: [],
     ownersCount: 0,
+    estimation: [],
     draftRequest: {
       draft: {
         tenantId: localStorage.getItem("tenant-id"),
@@ -162,11 +163,11 @@ class FormWizard extends Component {
 
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
-  componentDidMount=async()=> {
+  componentDidMount = async () => {
     let { search } = this.props.location;
-    if (this.props.location.search.split("&").length>3) {
+    if (this.props.location.search.split("&").length > 3) {
       try {
-        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update"+search, "_update", [], {});
+        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
         console.log(pgUpdateResponse);
       } catch (e) {
         alert(e);
@@ -236,7 +237,7 @@ class FormWizard extends Component {
       "UsageCategorySubMinor",
     ]);
     this.addOwner();
-  }
+  };
 
   handleRemoveOwner = (index, formKey) => {
     const { ownerInfoArr } = this.state;
@@ -343,7 +344,8 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
-        const { draft } = this.state.draftRequest;
+        const { draftRequest, estimation } = this.state;
+        const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
         return (
           <div>
@@ -359,7 +361,7 @@ class FormWizard extends Component {
               stepZero={this.renderStepperContent(0, fromReviewPage)}
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
-              estimationDetails={{}}
+              estimationDetails={estimation}
               financialYr={financialYear ? financialYear.fields.button : {}}
             />
           </div>
@@ -513,8 +515,8 @@ class FormWizard extends Component {
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
         console.log(goToPaymentGateway);
-        const redirectionUrl=get(goToPaymentGateway,"Transaction.redirectUrl");
-        window.location=redirectionUrl;
+        const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+        window.location = redirectionUrl;
       } catch (e) {
         console.log(e);
       }
@@ -533,12 +535,15 @@ class FormWizard extends Component {
         CalculationCriteria: [
           {
             assessmentYear: financialYear && financialYear.fields.button.value,
-            tenantId: localStorage.getItem("tenant-id"),
+            tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
             property: prepareFormData.Properties[0],
           },
         ],
       });
-      console.log(estimateResponse);
+      console.log(estimateResponse.Calculation);
+      this.setState({
+        estimation: estimateResponse.Calculation,
+      });
     } catch (e) {
       alert(e);
     }
@@ -633,7 +638,9 @@ class FormWizard extends Component {
         />
         <Button
           label={"Call Pg"}
-          onClick={()=>{this.callPGService()}}
+          onClick={() => {
+            this.callPGService();
+          }}
           labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
           buttonStyle={{ border: "1px solid #fe7a51" }}
           style={{ marginRight: 45, width: "36%" }}

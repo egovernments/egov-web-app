@@ -109,12 +109,13 @@ class ReviewForm extends Component {
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleOptionsChange } = this;
-    let { valueSelected } = this.state;
+    let { valueSelected, importantDates } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
+    console.log(estimationDetails);
     return (
       <div>
         <PropertyAddress
-          form={propertyAddressConfig}
+          // form={propertyAddressConfig}
           icon={PropAddressIcon}
           editIcon={
             <Icon
@@ -157,10 +158,10 @@ class ReviewForm extends Component {
               name="edit"
             />
           }
-          form={propertyAddressConfig}
+          // form={propertyAddressConfig}
           component={stepTwo}
         />
-        <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={this.state.importantDates} />
+        <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={importantDates} />
         <AdditionalDetails handleOptionChange={handleOptionsChange} optionSelected={valueSelected} />
       </div>
     );
