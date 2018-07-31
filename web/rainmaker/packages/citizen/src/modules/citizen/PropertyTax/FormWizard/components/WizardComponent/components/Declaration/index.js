@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 
-const Declaration = ({ open, closeDialogue }) => {
+const Declaration = ({ open, closeDialogue,selected,updateIndex }) => {
   return (
     <Dialog
       open={open}
@@ -23,6 +23,9 @@ const Declaration = ({ open, closeDialogue }) => {
                 height: 40,
                 lineHeight: "auto",
                 minWidth: "inherit",
+              }}
+              onClick={(e)=>{
+                updateIndex(selected+1)
               }}
             />
           </div>

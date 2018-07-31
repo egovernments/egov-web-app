@@ -169,21 +169,6 @@ class FormWizard extends Component {
   componentDidMount = async () => {
     let { history } = this.props;
     let { search } = this.props.location;
-    if (this.props.location.search.split("&").length > 3) {
-      try {
-        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-        console.log(pgUpdateResponse);
-        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-          history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
-        } else {
-          history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
-        }
-      } catch (e) {
-        alert(e);
-        // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
-      }
-    }
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
@@ -248,6 +233,21 @@ class FormWizard extends Component {
       "UsageCategorySubMinor",
     ]);
     this.addOwner();
+    if (this.props.location.search.split("&").length > 3) {
+      try {
+        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
+        console.log(pgUpdateResponse);
+        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
+        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
+          history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
+        } else {
+          history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
+        }
+      } catch (e) {
+        alert(e);
+        // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
+      }
+    }
   };
 
   handleRemoveOwner = (index, formKey) => {
@@ -498,14 +498,9 @@ class FormWizard extends Component {
         break;
       case 3:
         pay();
-        // setRoute("/property-tax/payment-success");
         break;
     }
-    // if (index <= 3) {
-    //   this.setState({ selected: index });
-    // } else if (index === 4) {
-    //   // setRoute("/property-tax/payment-success");
-    // }
+
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
@@ -669,15 +664,6 @@ class FormWizard extends Component {
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
           onPayButtonClick={onPayButtonClick}
-        />
-        <Button
-          label={"Call Pg"}
-          onClick={() => {
-            this.callPGService();
-          }}
-          labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
-          buttonStyle={{ border: "1px solid #fe7a51" }}
-          style={{ marginRight: 45, width: "36%" }}
         />
       </div>
     );

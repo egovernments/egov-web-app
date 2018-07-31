@@ -51,7 +51,7 @@ const WizardComponent = ({
           />
         </div>
       </div>
-      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} />
+      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex}/>
     </div>
   );
 };
