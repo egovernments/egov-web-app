@@ -260,7 +260,9 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         },
         {
           key: "Type of Building:",
-          value: generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name,
+          value: generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
+            ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+            : "NA",
         },
       ],
       items: {
