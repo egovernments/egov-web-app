@@ -27,6 +27,7 @@ const formConfig = {
     const ownerDetails = getOwnerDetails(state)
     set(action, "form.fields.typeOfOwnership.dropDownData", ownerDetails)
     set(action, "form.fields.typeOfOwnership.value", ownerDetails[0].value)
+    dispatch(prepareFormData("Properties[0].propertyDetails[0].subOwnershipCategory",ownerDetails[0].value));
     dispatch(prepareFormData("Properties[0].propertyDetails[0].ownershipCategory",get(state,`common.generalMDMSDataById.SubOwnerShipCategory[${ownerDetails[0].value}]`).ownerShipCategory));
     return action;
   },
