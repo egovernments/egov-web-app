@@ -103,22 +103,21 @@ class FormWizard extends Component {
 
   configOwnersDetailsFromDraft = (ownerFormKeys) => {
     const ownerDetails = [];
-    let ownersCount = -1;
+    let ownersCount = 0;
     ownerFormKeys.forEach((key) => {
-      const currentOwnerIndex = key.split("_")[1];
-      if (parseInt(currentOwnerIndex) > ownersCount) ownersCount = currentOwnerIndex;
-      const ownerInfo = this.configOwner(currentOwnerIndex);
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
-    });
+      const currentOwnerIndex = parseInt(key.split("_")[1])
+      if (currentOwnerIndex >= ownersCount) ownersCount = currentOwnerIndex
+      const ownerInfo = this.configOwner(currentOwnerIndex)
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
+    })
     if (!ownerDetails.length) {
-      ownersCount = 0;
-      const ownerInfo = this.configOwner(ownersCount);
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
-      ownersCount += 1;
+      ownersCount = 0
+      const ownerInfo = this.configOwner(ownersCount)
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
     }
     return {
       ownerDetails,
-      totalowners: ownersCount,
+      totalowners: ownersCount + 1,
     };
   };
 
@@ -285,9 +284,9 @@ class FormWizard extends Component {
     const { selected } = this.state;
     const isReviewPage = selected === 3;
     switch (ownerType) {
-      case "IND":
+      case "SINGLEOWNER":
         return <OwnerInfoHOC disabled={isReviewPage} />;
-      case "MUL":
+      case "MULTIPLEOWNERS":
         return (
           <MultipleOwnerInfoHOC
             addOwner={this.addOwner}
@@ -296,7 +295,8 @@ class FormWizard extends Component {
             disabled={isReviewPage}
           />
         );
-      case "Institution":
+      case "INSTITUITIONALPRIVATE":
+      case "INSTITUITIONALGOVERNMENT":
         return (
           <div>
             <InstitutionHOC disabled={isReviewPage} />
@@ -444,7 +444,7 @@ class FormWizard extends Component {
           const isOwnershipTypeFormValid = validateForm(ownershipType);
           if (isOwnershipTypeFormValid) {
             const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
-            if (ownershipTypeSelected === "IND") {
+            if (ownershipTypeSelected === "SINGLEOWNER") {
               const { ownerInfo } = form;
               const isOwnerInfoFormValid = validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
@@ -453,7 +453,7 @@ class FormWizard extends Component {
               } else {
                 displayFormErrorsAction("ownerInfo");
               }
-            } else if (ownershipTypeSelected === "MUL") {
+            } else if (ownershipTypeSelected === "MULTIPLEOWNERS") {
               let ownerValidation = true;
               for (const variable in form) {
                 if (variable.search("ownerInfo_") !== -1) {
@@ -468,7 +468,7 @@ class FormWizard extends Component {
                 callDraft();
                 this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
               }
-            } else if (ownershipTypeSelected === "Institution") {
+            } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUITION") !== -1) {
               const { institutionDetails, institutionAuthority } = form;
               const isInstitutionDetailsFormValid = validateForm(institutionDetails);
               let institutionFormValid = true;

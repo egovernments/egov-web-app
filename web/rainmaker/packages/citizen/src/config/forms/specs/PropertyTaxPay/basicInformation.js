@@ -14,7 +14,7 @@ const formConfig = {
       floatingLabelText: "Property Usage Type",
       hintText: "Select",
       required: true,
-      updateDependentFields: (formKey, field, dispatch, state) => {
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
       },
       dropDownData: [],
@@ -26,7 +26,7 @@ const formConfig = {
       floatingLabelText: "Property Type",
       hintText: "Select",
       required: true,
-      updateDependentFields: (formKey, field, dispatch, state) => {
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
       },
       dropDownData: [],

@@ -23,7 +23,7 @@ export const floorCount = {
     hintText: "Select",
     numcols: 4,
     dropDownData: floorDropDownData,
-    updateDependentFields: (formKey, field, dispatch, state) => {
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
       removeFormKey(formKey, field, dispatch, state);
     },
   },
@@ -51,8 +51,28 @@ export const occupancy = {
     hintText: "Select",
     required: true,
     numcols: 4,
-    dropDownData:[],
-    updateDependentFields: (formKey, sourceField, dispatch) => {
+    dataFetchConfig: {
+      url: MDMS.GET.URL,
+      action: MDMS.GET.ACTION,
+      queryParams: [],
+      requestBody: {
+        MdmsCriteria: {
+          tenantId: "pb",
+          moduleDetails: [
+            {
+              moduleName: "PropertyTax",
+              masterDetails: [
+                {
+                  name: "OccupancyType",
+                },
+              ],
+            },
+          ],
+        },
+      },
+      dataPath: ["MdmsRes.PropertyTax.OccupancyType"],
+    },
+    updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
       const { value } = sourceField;
       const dependentFields1 = ["builtArea"];
       const dependentFields2 = ["annualRent"];

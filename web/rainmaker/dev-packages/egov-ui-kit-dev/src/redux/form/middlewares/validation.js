@@ -17,7 +17,7 @@ const formValidation = (store) => (next) => (action) => {
       const validationObject = validateField(field);
       const { errorText } = validationObject;
       if (updateDependentFields) {
-        updateDependentFields(formKey, field, dispatch, state);
+        updateDependentFields({ formKey, field, dispatch, state })
       }
       dispatch(setFieldValidation(formKey, fieldKey, errorText));
     }
