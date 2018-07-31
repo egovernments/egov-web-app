@@ -21,7 +21,7 @@ const requiredStyle = {
   color: "red",
 };
 
-const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, className, required, ...restProps }) => {
+const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, className, required, value, ...restProps }) => {
   return (
     <AutoComplete
       className={`autosuggest ${className}`}
@@ -32,6 +32,7 @@ const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, classNam
       filter={AutoComplete.caseInsensitiveFilter}
       openOnFocus={false}
       fullWidth={true}
+      value={value}
       dataSource={(dataSource && [...dataSource]) || []}
       menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
       dataSourceConfig={{ text: "label", value: "value" }}

@@ -61,7 +61,8 @@ var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
       floatingLabelText = _ref.floatingLabelText,
       className = _ref.className,
       required = _ref.required,
-      restProps = (0, _objectWithoutProperties3.default)(_ref, ["onChange", "dataSource", "floatingLabelText", "className", "required"]);
+      value = _ref.value,
+      restProps = (0, _objectWithoutProperties3.default)(_ref, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value"]);
 
   return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
     className: "autosuggest " + className,
@@ -72,6 +73,7 @@ var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
     filter: _AutoComplete2.default.caseInsensitiveFilter,
     openOnFocus: false,
     fullWidth: true,
+    value: value,
     dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
     menuStyle: { maxHeight: "150px", overflowY: "auto" },
     dataSourceConfig: { text: "label", value: "value" },
