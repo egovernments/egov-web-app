@@ -51,9 +51,8 @@ const formConfig = {
     },
   },
   beforeInitForm: (action, store) => {
-    debugger
     let state = store.getState();
-    let {dispatch} =store;
+    const {dispatch} = store;
     const ownerDetails = getOwnerDetails(state)
     set(action, "form.fields.typeOfOwnership.dropDownData", ownerDetails)
     set(action, "form.fields.typeOfOwnership.value", ownerDetails[0].value)
