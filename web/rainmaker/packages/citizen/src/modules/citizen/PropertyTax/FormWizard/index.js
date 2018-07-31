@@ -105,15 +105,15 @@ class FormWizard extends Component {
     const ownerDetails = [];
     let ownersCount = 0;
     ownerFormKeys.forEach((key) => {
-      const currentOwnerIndex = parseInt(key.split("_")[1])
-      if (currentOwnerIndex >= ownersCount) ownersCount = currentOwnerIndex
-      const ownerInfo = this.configOwner(currentOwnerIndex)
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
-    })
+      const currentOwnerIndex = parseInt(key.split("_")[1]);
+      if (currentOwnerIndex >= ownersCount) ownersCount = currentOwnerIndex;
+      const ownerInfo = this.configOwner(currentOwnerIndex);
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
+    });
     if (!ownerDetails.length) {
-      ownersCount = 0
-      const ownerInfo = this.configOwner(ownersCount)
-      ownerDetails.push({ index: ownersCount, Component: ownerInfo })
+      ownersCount = 0;
+      const ownerInfo = this.configOwner(ownersCount);
+      ownerDetails.push({ index: ownersCount, Component: ownerInfo });
     }
     return {
       ownerDetails,
@@ -540,10 +540,18 @@ class FormWizard extends Component {
 
   estimate = async () => {
     let { prepareFormData } = this.props;
+    const { draft } = this.state.draftRequest;
+    const { financialYear } = draft.draftRecord;
     try {
-      set(prepareFormData,"Properties[0].address.locality.area","Area1")
+      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
-        CalculationCriteria: [{ assessmentYear: "2018-2-19", tenantId: localStorage.getItem("tenant-id"), property: prepareFormData.Properties[0] }],
+        CalculationCriteria: [
+          {
+            assessmentYear: financialYear && financialYear.fields.button.value,
+            tenantId: localStorage.getItem("tenant-id"),
+            property: prepareFormData.Properties[0],
+          },
+        ],
       });
       console.log(estimateResponse);
     } catch (e) {
@@ -554,7 +562,7 @@ class FormWizard extends Component {
   pay = async () => {
     let { prepareFormData } = this.props;
     try {
-      set(prepareFormData,"Properties[0].address.locality.area","Area1");
+      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       console.log(createPropertyResponse);
     } catch (e) {
