@@ -4,7 +4,7 @@ import { Card, CardHeader, CardText } from "material-ui/Card";
 import "./index.css";
 
 const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
-  const { taxHeadEstimates, totalAmount } = estimationDetails[0];
+  const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
   const { fireCess, intrest, penalty, rebate } = importantDates;
   return (
     <Card style={{ marginBottom: 20, "background-color": "white" }}>
@@ -20,8 +20,8 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
         iconStyle={{}}
         title={
           <div className="tax-header-price rainmaker-displayInline">
-            <Label label="Property Tax Dues" fontSize="16px" color="#484848" />
-            <Label label={totalAmount} fontSize="16px" color="#484848" />
+            <Label label="Property Tax Dues:" fontSize="16px" color="#484848" />
+            <Label className="property-dues-total-amount" label={`INR ${totalAmount}`} fontSize="16px" color="#484848" />
           </div>
         }
       />
@@ -54,7 +54,11 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
                 <Label label="Total" />
               </div>
               <div className="col-sm-3">
-                <Label containerStyle={{ textAlign: "right" }} label={totalAmount} />
+                <Label
+                  containerStyle={{ textAlign: "right" }}
+                  labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
+                  label={`${totalAmount}`}
+                />
               </div>
             </div>
           </div>

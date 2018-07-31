@@ -161,7 +161,7 @@ class ReviewForm extends Component {
           // form={propertyAddressConfig}
           component={stepTwo}
         />
-        <PropertyTaxDetailsCard estimationDetails={CalculationCriteria} importantDates={importantDates} />
+        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
         <AdditionalDetails handleOptionChange={handleOptionsChange} optionSelected={valueSelected} />
       </div>
     );
@@ -175,39 +175,3 @@ export default connect(
   null,
   mapDispatchToProps
 )(ReviewForm);
-
-const CalculationCriteria = [
-  {
-    serviceNumber: null,
-    totalAmount: 0,
-    taxAmount: 850,
-    penalty: 0,
-    exemption: 850,
-    rebate: 0,
-    fromDate: 1522540800000,
-    toDate: 1554076799000,
-    tenantId: "pb.patiala",
-    taxHeadEstimates: [
-      {
-        taxHeadCode: "Property Tax (PT)",
-        estimateAmount: 850,
-        category: "TAX",
-      },
-      {
-        taxHeadCode: "Fire Cess (5% of PT)",
-        estimateAmount: 1,
-        category: "EXEMPTION",
-      },
-      {
-        taxHeadCode: "Penalty (20% of PT)",
-        estimateAmount: 1,
-        category: "EXEMPTION",
-      },
-      {
-        taxHeadCode: "Interest (18% p.a. daily)",
-        estimateAmount: 1,
-        category: "EXEMPTION",
-      },
-    ],
-  },
-];

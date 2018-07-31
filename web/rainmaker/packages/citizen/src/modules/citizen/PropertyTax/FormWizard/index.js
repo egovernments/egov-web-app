@@ -59,7 +59,7 @@ class FormWizard extends Component {
     });
   };
 
-  callDraft = async (formArray = [],assessmentNumber="") => {
+  callDraft = async (formArray = [], assessmentNumber = "") => {
     let { draftRequest, selected } = this.state;
     // if (formArray) {
     const { form } = this.props;
@@ -80,7 +80,7 @@ class FormWizard extends Component {
       draftRequest.draft.draftRecord = {
         selectedTabIndex: selected + 1,
         ...form,
-        assessmentNumber
+        assessmentNumber,
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
@@ -165,23 +165,22 @@ class FormWizard extends Component {
 
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
-  componentDidMount=async()=> {
-    let {history} =this.props;
+  componentDidMount = async () => {
+    let { history } = this.props;
     let { search } = this.props.location;
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
         console.log(pgUpdateResponse);
-        let moduleId=get(pgUpdateResponse,"Transaction[0].moduleId");
-        if (get(pgUpdateResponse,"Transaction[0].txnStatus")==="FAILURE") {
-          history.push("/property-tax/payment-failure/"+moduleId.split("-",3).join("-"))
+        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
+        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
+          history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
         } else {
-          history.push("/property-tax/payment-success/"+moduleId.split("-",3).join("-"))
+          history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
         }
       } catch (e) {
         alert(e);
         // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
-
       }
     }
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
@@ -487,7 +486,13 @@ class FormWizard extends Component {
           }
         }
 
-        estimate();
+        estimate().then((estimateResponse) => {
+          if (estimateResponse) {
+            this.setState({
+              estimation: estimateResponse && estimateResponse.Calculation,
+            });
+          }
+        });
 
         break;
       case 3:
@@ -510,7 +515,6 @@ class FormWizard extends Component {
     ];
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
-      console.log(getBill);
       try {
         const requestBody = {
           Transaction: {
@@ -525,7 +529,6 @@ class FormWizard extends Component {
           },
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
-        console.log(goToPaymentGateway);
         const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
         window.location = redirectionUrl;
       } catch (e) {
@@ -551,24 +554,28 @@ class FormWizard extends Component {
           },
         ],
       });
-      console.log(estimateResponse.Calculation);
-      this.setState({
-        estimation: estimateResponse.Calculation,
-      });
+      // console.log(estimateResponse.Calculation);
+      // this.setState({
+      //   estimation: estimateResponse && estimateResponse.Calculation,
+      // });
+      return estimateResponse;
     } catch (e) {
       alert(e);
     }
   };
 
   pay = async () => {
-    const {callPGService,callDraft} =this;
+    const { callPGService, callDraft } = this;
     let { prepareFormData } = this.props;
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
-      console.log(createPropertyResponse);
-      callDraft([],get(createPropertyResponse,"Properties[0].propertyDetails[0].assessmentNumber"));
-      callPGService(get(createPropertyResponse,"Properties[0].propertyId"),get(createPropertyResponse,"Properties[0].propertyDetails[0].assessmentNumber"),get(createPropertyResponse,"Properties[0].propertyDetails[0].financialYear"));
+      callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
+      callPGService(
+        get(createPropertyResponse, "Properties[0].propertyId"),
+        get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
+        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear")
+      );
     } catch (e) {
       alert(e);
     }
@@ -651,7 +658,6 @@ class FormWizard extends Component {
           nextLabel={selected === 3 ? "PAY" : "NEXT"}
           ownerInfoArr={ownerInfoArr}
         />
-
       </div>
     );
   }
