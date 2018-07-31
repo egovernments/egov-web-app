@@ -27,6 +27,7 @@ import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import set from "lodash/set";
 import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
@@ -505,9 +506,42 @@ class FormWizard extends Component {
     // }
   };
 
+  callPGService = async (propertyId = "prop12", assessmentNumber = "assess2", assessmentYear = "2018-19") => {
+    const queryObj = [
+      { key: "propertyId", value: propertyId },
+      { key: "assessmentNumber", value: assessmentNumber },
+      { key: "assessmentYear", value: assessmentYear },
+    ];
+    try {
+      const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
+      console.log(getBill);
+      try {
+        const requestBody = {
+          Transaction: {
+            tenantId: localStorage.getItem("tenant-id"),
+            txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
+            module: "PT",
+            billId: get(getBill, "Bill[0].id"),
+            moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
+            productInfo: "Property Tax Payment",
+            gateway: "AXIS",
+            callbackUrl: window.location.href,
+          },
+        };
+        const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
+        console.log(goToPaymentGateway);
+      } catch (e) {
+        console.log(e);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   estimate = async () => {
     let { prepareFormData } = this.props;
     try {
+      set(prepareFormData,"Properties[0].address.locality.area","Area1")
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [{ assessmentYear: "2018-2-19", tenantId: localStorage.getItem("tenant-id"), property: prepareFormData.Properties[0] }],
       });
@@ -520,6 +554,7 @@ class FormWizard extends Component {
   pay = async () => {
     let { prepareFormData } = this.props;
     try {
+      set(prepareFormData,"Properties[0].address.locality.area","Area1");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       console.log(createPropertyResponse);
     } catch (e) {

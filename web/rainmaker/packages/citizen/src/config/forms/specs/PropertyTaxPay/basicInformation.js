@@ -1,5 +1,6 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
+import {prepareDropDownData} from "./utils/reusableFields";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -8,7 +9,7 @@ const formConfig = {
   fields: {
     typeOfUsage: {
       id: "typeOfUsage",
-      jsonPath: "Properties[0].propertyDetails[0].usageCategoryMajor",
+      jsonPath: "Properties[0].propertyDetails[0].usageCategoryMinor",
       type: "singleValueList",
       floatingLabelText: "Property Usage Type",
       hintText: "Select",
@@ -20,7 +21,7 @@ const formConfig = {
     },
     typeOfBuilding: {
       id: "typeOfBuilding",
-      jsonPath: "Properties[0].propertyDetails[0].propertyType",
+      jsonPath: "Properties[0].propertyDetails[0].propertySubType",
       type: "singleValueList",
       floatingLabelText: "Property Type",
       hintText: "Select",
@@ -36,23 +37,46 @@ const formConfig = {
   saveUrl: "",
   isFormValid: false,
   beforeInitForm: (action, store) => {
-    let state = store.getState();
-    console.log(state);
-    // action.form.fields.typeOfUsage.dropDownData
-    // action=set(action,"form.fields.typeOfUsage.dropDownData",mergeMaster(get(state,"state.common.generalMDMSDataById.UsageCategoryMajor"),get(state,"state.common.generalMDMSDataById.UsageCategoryMinor")))
-    return action;
+    try {
+      let state = store.getState();
+      var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+      var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+      set(action, "form.fields.typeOfUsage.dropDownData", mergeMaster(masterOne, masterTwo,"usageCategoryMajor"));
+      masterOne = get(state, "common.generalMDMSDataById.PropertyType");
+      masterTwo = get(state, "common.generalMDMSDataById.PropertySubType");
+      set(action, "form.fields.typeOfBuilding.dropDownData", mergeMaster(masterOne, masterTwo,"propertyType"));
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 
 export default formConfig;
 
-// mergeMaster = (masterOne, masterTwo, parentName = "") => {
-//   let dropDownData = [];
-//   let parentList = [];
-//   for (var variable in masterTwo) {
-//     if (object.hasOwnProperty(variable)) {
-//       dropDownData.push({ label: masterTwo[variable].code, value: masterTwo[variable].name });
-//     }
-//   }
-//   return dropDownData;
-// };
+const mergeMaster = (masterOne, masterTwo, parentName = "") => {
+  let dropDownData = [];
+  let parentList = [];
+  for (var variable in masterTwo) {
+    if (masterTwo.hasOwnProperty(variable)) {
+      dropDownData.push({ label: masterTwo[variable].name, value: masterTwo[variable].code });
+    }
+  }
+  let masterOneData=getAbsentMasterObj(prepareDropDownData(masterOne,true),prepareDropDownData(masterTwo,true),parentName);
+  // console.log(masterOneData);
+  for (var i = 0; i < masterOneData.length; i++) {
+    // masterOneData[i][parentName]=masterOneData[i].code;
+    dropDownData.push({ label:masterOneData[i].name,value: masterOneData[i].code});
+  }
+  return dropDownData;
+};
+
+const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+  const propArray = master2Arr.reduce((result, item) => {
+    if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
+      result.push(item[propToCompare]);
+    }
+    return result;
+  }, []);
+  return master1Arr.filter((item) => propArray.indexOf(item.code) === -1);
+};

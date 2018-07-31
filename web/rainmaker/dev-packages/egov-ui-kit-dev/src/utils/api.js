@@ -21,7 +21,7 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
     did: "1",
     key: "",
     msgId: "20170310130900|en_IN",
-    requesterId: "",
+    // requesterId: "",
     authToken,
   };
   RequestInfo = { ...RequestInfo, ...customRequestInfo };
