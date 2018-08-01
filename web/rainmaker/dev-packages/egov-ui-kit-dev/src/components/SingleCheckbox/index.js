@@ -25,6 +25,7 @@ const SingleCheckboxUi = ({
   iconStyle,
   containerClassName,
   id,
+  disabled,
 }) => {
   const renderCheckbox = () => {
     return (
@@ -38,6 +39,7 @@ const SingleCheckboxUi = ({
         checked={typeof value === "boolean" ? value : value === "true" ? true : false}
         checkedIcon={checkedIcon}
         labelStyle={{ ...defaultLabelStyle, ...labelStyle, ...selectedLabelStyle }}
+        disabled={disabled}
       />
     );
   };
