@@ -95,6 +95,7 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
+            console.log(item);
             history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}`);
           }}
           className="assessment-displayInline"
@@ -111,6 +112,10 @@ const getItemStatus = (item, history) => {
           <Button
             label={<Label buttonLabel={true} label="ASSESS & PAY" fontSize="12px" />}
             primary={true}
+            onClick={(e) => {
+              console.log();
+              //history && history.push(`/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}`);
+            }}
             style={{
               height: 20,
               lineHeight: "auto",
