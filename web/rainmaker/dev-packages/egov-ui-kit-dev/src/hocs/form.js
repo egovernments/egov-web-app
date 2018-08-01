@@ -7,7 +7,7 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      const { extraFields } = rest
+      const { extraFields } = rest;
       try {
         if (path && path !== "") {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
@@ -19,9 +19,9 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
             ...this.formConfig,
             ["fields"]: {
               ...this.formConfig.fields,
-              ...extraFields
-            }
-          }
+              ...extraFields,
+            },
+          };
         }
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
@@ -39,12 +39,12 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
     }
 
     createCopy = (formConf) => {
-      let updatedFormConf = { ...formConf }
-      const { formatConfig } = updatedFormConf
+      let updatedFormConf = { ...formConf };
+      const { formatConfig } = updatedFormConf;
       updatedFormConf.name = copyName;
       formKey = updatedFormConf.name;
       if (formatConfig) {
-        updatedFormConf = formatConfig({ ...this.props, ...rest, config: updatedFormConf })
+        updatedFormConf = formatConfig({ ...this.props, ...rest, config: updatedFormConf });
       }
       return updatedFormConf;
     };
@@ -90,7 +90,7 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
       handleFieldChange: (formKey, fieldKey, value) => dispatch(handleFieldChange(formKey, fieldKey, value)),
       submitForm: (formKey, saveUrl) => dispatch(submitForm(formKey, saveUrl)),
       initForm: (form) => dispatch(initForm(form)),
-      deleteForm: () => dispatch(deleteForm(formKey))
+      deleteForm: () => dispatch(deleteForm(formKey)),
     };
   };
 

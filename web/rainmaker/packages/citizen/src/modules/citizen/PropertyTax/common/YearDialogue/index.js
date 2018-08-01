@@ -51,7 +51,7 @@ class YearDialog extends Component {
   };
 
   render() {
-    let { open, closeDialogue, getYearList } = this.props;
+    let { open, closeDialogue, getYearList, history } = this.props;
     return (
       <Dialog
         open={open}
@@ -59,7 +59,7 @@ class YearDialog extends Component {
           <div key={1}>
             <div className="dialogue-question">Which year’s taxes would you like to pay? </div>
             <div className="year-range-botton-cont">
-              {getYearList && Object.values(getYearList).map((item, index) => <YearDialogueHOC key={index} label={item} />)}
+              {getYearList && Object.values(getYearList).map((item, index) => <YearDialogueHOC key={index} label={item} history={history} />)}
             </div>
           </div>,
         ]}
@@ -77,7 +77,6 @@ const mapStateToProps = (state) => {
   const { generalMDMSDataById } = common;
   const FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
   const getYearList = FinancialYear && Object.keys(FinancialYear);
-  console.log(getYearList);
   return { getYearList };
 };
 

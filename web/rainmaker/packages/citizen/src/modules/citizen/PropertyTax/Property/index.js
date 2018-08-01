@@ -9,6 +9,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
+import { getTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 
 const innerDivStyle = {
@@ -89,7 +90,18 @@ class Property extends Component {
   };
 
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, history } = props;
+    const { propertyItems, propertyId, history, transformedAssessments } = props;
+    const viewAllAssessmentItem = {
+      primaryText: (
+        <div
+          onClick={() => {
+            history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
+          }}
+        >
+          <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
+        </div>
+      ),
+    };
     return [
       {
         primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -140,18 +152,8 @@ class Property extends Component {
           {
             primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
             status: "ASSESS & PAY",
+
             receipt: true,
-          },
-          {
-            primaryText: (
-              <div
-                onClick={() => {
-                  history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
-                }}
-              >
-                <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
-              </div>
-            ),
           },
         ],
         rightIcon: (
@@ -354,7 +356,17 @@ const mapStateToProps = (state, ownProps) => {
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
 
-  return { urls, propertyItems, propertyId, customTitle };
+  const { propertyDetails } = selPropertyDetails;
+  const transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
+    [
+      {
+        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+        status: "ASSESS & PAY",
+        receipt: true,
+      },
+    ];
+  });
+  return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {

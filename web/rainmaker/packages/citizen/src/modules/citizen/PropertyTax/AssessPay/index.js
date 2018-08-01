@@ -87,7 +87,7 @@ class AssessPay extends Component {
       <Screen>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
-        <YearDialogue open={this.state.dialogueOpen} closeDialogue={this.closeYearRangeDialogue} />
+        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
     );
   }
