@@ -1,4 +1,4 @@
-import {plotSize,measuringUnit} from "../utils/reusableFields";
+import {plotSize,measuringUnit,beforeInitFormForPlot} from "../utils/reusableFields";
 const formConfig = {
   name: "plotDetails",
   fields: {

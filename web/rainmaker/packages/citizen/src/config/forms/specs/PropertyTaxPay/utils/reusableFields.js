@@ -138,7 +138,6 @@ export const beforeInitForm = {
     let state = store.getState();
     let {dispatch}=store;
     var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
-    console.log(get(state,"form.basicInformation.fields.typeOfUsage.value"));
     var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryMinor"),true),(subUsageMinor)=>{
       return subUsageMinor.usageCategoryMajor===get(state,"form.basicInformation.fields.typeOfUsage.value");
     });
@@ -147,6 +146,25 @@ export const beforeInitForm = {
     set(action,"form.fields.subUsageType.dropDownData",prepareDropDownData(filteredUsageCategoryDetails));
     dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
     dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
+    return action;
+  },
+};
+
+export const beforeInitFormForPlot = {
+  beforeInitForm: (action, store) => {
+    let state = store.getState();
+    if (get(state,"form.basicInformation.fields.propertySubType.value")!="VACANT") {
+      let {dispatch}=store;
+      var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
+      var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryMinor"),true),(subUsageMinor)=>{
+        return subUsageMinor.usageCategoryMajor===get(state,"form.basicInformation.fields.typeOfUsage.value");
+      });
+      var filteredUsageCategoryDetails=getPresentMasterObj(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),filteredSubUsageMinor,"code");
+      set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
+      set(action,"form.fields.subUsageType.dropDownData",prepareDropDownData(filteredUsageCategoryDetails));
+      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
+    }
     return action;
   },
 };

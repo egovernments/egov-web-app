@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {plotSize,measuringUnit,subUsageType,occupancy,annualRent} from "../utils/reusableFields";
+import {plotSize,measuringUnit,subUsageType,occupancy,annualRent,beforeInitFormForPlot} from "../utils/reusableFields";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 const formConfig = {
   name: "plotDetails",
@@ -12,37 +12,7 @@ const formConfig = {
       value: "Residential",
       required: true,
       numcols: 4,
-      // dropDownData: [
-      //   { label: "Residential", value: "RESIDENTIAL" },
-      //   { label: "Commercial", value: "COMMERCIAL" },
-      //   { label: "Institutional", value: "INSTITUTIONAL" },
-      //   { label: "Industrial", value: "INDUSTRIAL" },
-      //   { label: "Public Space", value: "PUBLICSPACE" },
-      //   { label: "Religious", value: "RELIGIOUS" },
-      //   { label: "Other", value: "OTHER" },
-      //   { label: "Mixed", value: "MIXED" },
-      // ],
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategoryMajor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor"],
-      },
+      dropDownData: []
     },
     ...subUsageType,
     ...occupancy,
@@ -63,6 +33,7 @@ const formConfig = {
     ...annualRent
   },
   isFormValid: false,
+  ...beforeInitFormForPlot
 };
 
 export default formConfig;

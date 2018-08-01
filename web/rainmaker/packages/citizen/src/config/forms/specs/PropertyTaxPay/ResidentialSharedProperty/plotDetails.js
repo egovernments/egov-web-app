@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {measuringUnit,occupancy,subUsageType} from "../utils/reusableFields";
+import {measuringUnit,occupancy,subUsageType,beforeInitFormForPlot} from "../utils/reusableFields";
 const formConfig = {
   name: "plotDetails",
   fields: {
@@ -30,6 +30,7 @@ const formConfig = {
     ...measuringUnit,
   },
   isFormValid: false,
+  ...beforeInitFormForPlot
 };
 
 export default formConfig;

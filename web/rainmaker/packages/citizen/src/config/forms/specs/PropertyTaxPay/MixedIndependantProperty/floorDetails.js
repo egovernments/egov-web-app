@@ -13,30 +13,7 @@ const formConfig = {
       value: "MIXED",
       required: true,
       numcols: 4,
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "UsageCategoryMajor",
-                  },
-                  {
-                    name: "UsageCategoryMinor",
-                  }
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.UsageCategoryMajor","MdmsRes.PropertyTax.UsageCategoryMinor"],
-      }
+      dropDownData:[]
     },
     ...subUsageType,
     ...occupancy,

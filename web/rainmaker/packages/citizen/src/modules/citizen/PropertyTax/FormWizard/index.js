@@ -525,7 +525,7 @@ class FormWizard extends Component {
             moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
             productInfo: "Property Tax Payment",
             gateway: "AXIS",
-            callbackUrl: window.location.href,
+            callbackUrl: `${window.origin}/property-tax/payment-redirect-page`,
           },
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);

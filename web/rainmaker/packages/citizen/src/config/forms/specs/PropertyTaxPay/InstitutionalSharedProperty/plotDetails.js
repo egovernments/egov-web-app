@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {measuringUnit,annualRent,occupancy,subUsageType} from "../utils/reusableFields";
+import {measuringUnit,annualRent,occupancy,subUsageType,beforeInitFormForPlot} from "../utils/reusableFields";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 const formConfig = {
   name: "plotDetails",
@@ -33,6 +33,7 @@ const formConfig = {
     ...annualRent
   },
   isFormValid: false,
+  ...beforeInitFormForPlot
 };
 
 export default formConfig;
