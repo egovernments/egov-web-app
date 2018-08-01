@@ -111,7 +111,7 @@ export const plotSize = {
     id: "assessment-plot-size",
     jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
     type: "textfield",
-    floatingLabelText: "Plot Size",
+    floatingLabelText: "Plot Size(sq yards)",
     hintText: "Enter plot size",
     errorMessage: "Enter a valid plot size",
     required: true,
@@ -121,16 +121,16 @@ export const plotSize = {
 
 
 export const measuringUnit = {
-  measuringUnit: {
-    id: "assessment-plot-unit",
-    jsonPath: "",
-    type: "singleValueList",
-    floatingLabelText: "Measuring unit",
-    dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
-    required: true,
-    numcols: 4,
-    value: "sq yards",
-  },
+  // measuringUnit: {
+  //   id: "assessment-plot-unit",
+  //   jsonPath: "",
+  //   type: "singleValueList",
+  //   floatingLabelText: "Measuring unit",
+  //   dropDownData: [{ label: "sq ft", value: "sq ft" }, { label: "sq yards", value: "sq yards" }],
+  //   required: true,
+  //   numcols: 4,
+  //   value: "sq yards",
+  // },
 };
 
 export const beforeInitForm = {

@@ -503,19 +503,20 @@ class FormWizard extends Component {
 
   };
 
-  callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
+  callPGService = async (propertyId, assessmentNumber, assessmentYear,tenantId) => {
     let { history } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
+      {key:"tenantId",value:tenantId}
     ];
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
       try {
         const requestBody = {
           Transaction: {
-            tenantId: localStorage.getItem("tenant-id"),
+            tenantId,
             txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
             module: "PT",
             billId: get(getBill, "Bill[0].id"),
@@ -576,7 +577,8 @@ class FormWizard extends Component {
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
         get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear")
+        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
+        get(createPropertyResponse, "Properties[0].tenantId")
       );
     } catch (e) {
       alert(e);

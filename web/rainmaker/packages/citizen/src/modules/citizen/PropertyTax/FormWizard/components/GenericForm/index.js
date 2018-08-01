@@ -3,7 +3,7 @@ import { Card, ToolTipUi, Icon } from "components";
 import Field from "egov-ui-kit/utils/field";
 import "./index.css";
 
-const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleRemoveItem, disabled, className }) => {
+const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleRemoveItem, disabled, className ,formName}) => {
   const fields = form.fields || {};
   return (
     <Card
@@ -15,6 +15,10 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
               <Icon action="navigation" name="close" />
             </div>
           )}
+          {formName &&
+            <div className="text-left">
+              {formName}
+            </div> }
           {Object.keys(fields).map((fieldKey, index) => {
             return (
               <div key={index}>
