@@ -239,7 +239,6 @@ class FormWizard extends Component {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
         console.log(pgUpdateResponse);
         let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-        debugger
         if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
           history.push("/property-tax/payment-failure/" + moduleId.split("-", 4).join("-"));
         } else {
