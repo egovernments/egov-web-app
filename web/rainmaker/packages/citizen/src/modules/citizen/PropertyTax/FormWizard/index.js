@@ -79,7 +79,7 @@ class FormWizard extends Component {
       }
     } else {
       draftRequest.draft.draftRecord = {
-        selectedTabIndex: selected + 1,
+        selectedTabIndex: assessmentNumber ? selected : selected + 1,
         ...form,
         assessmentNumber,
       };
@@ -136,7 +136,8 @@ class FormWizard extends Component {
         [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
         draftRequest
       );
-      const currentDraft = draftsResponse.drafts.find((res) => res.id === draftId);
+
+      const currentDraft = draftsResponse.drafts.find((res) => get(res, "draftRecord.assessmentNumber", "") === draftId);
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
