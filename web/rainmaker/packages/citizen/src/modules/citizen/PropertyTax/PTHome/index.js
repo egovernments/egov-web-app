@@ -92,7 +92,7 @@ class PTHome extends Component {
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
     (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
-    fetchProperties([{ key: "uuid", value: userInfo.uuid }], [{ key: "userId", value: userInfo.uuid }]);
+    fetchProperties([{ key: "accountId", value: userInfo.uuid }], [{ key: "userId", value: userInfo.uuid }]);
   };
 
   handleItemClick = (item, index) => {
