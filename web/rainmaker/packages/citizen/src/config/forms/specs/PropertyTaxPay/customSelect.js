@@ -7,7 +7,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
       type: "singleValueList",
       floatingLabelText: "Select Floor",
-      hintText: "Select locality",
+      hintText: "Select floor",
       numcols: 12,
       errorMessage: "",
       required: true,
