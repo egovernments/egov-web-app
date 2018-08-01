@@ -217,6 +217,7 @@ var loginRequest = exports.loginRequest = function () {
     var refreshToken = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
     var grantType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "password";
     var tenantId = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "";
+    var userType = arguments[5];
 
     var loginInstance, apiError, params, response, responseStatus, _error$response2, data, status;
 
@@ -241,44 +242,45 @@ var loginRequest = exports.loginRequest = function () {
             params.append("grant_type", grantType);
             params.append("scope", "read");
             params.append("tenantId", tenantId);
+            userType && params.append("userType", userType);
 
-            _context3.prev = 10;
-            _context3.next = 13;
+            _context3.prev = 11;
+            _context3.next = 14;
             return loginInstance.post("/user/oauth/token", params);
 
-          case 13:
+          case 14:
             response = _context3.sent;
             responseStatus = parseInt(response.status, 10);
 
             if (!(responseStatus === 200 || responseStatus === 201)) {
-              _context3.next = 17;
+              _context3.next = 18;
               break;
             }
 
             return _context3.abrupt("return", response.data);
 
-          case 17:
-            _context3.next = 23;
+          case 18:
+            _context3.next = 24;
             break;
 
-          case 19:
-            _context3.prev = 19;
-            _context3.t0 = _context3["catch"](10);
+          case 20:
+            _context3.prev = 20;
+            _context3.t0 = _context3["catch"](11);
             _error$response2 = _context3.t0.response, data = _error$response2.data, status = _error$response2.status;
 
             if (status === 400) {
               apiError = data.hasOwnProperty("error_description") && data.error_description || apiError;
             }
 
-          case 23:
+          case 24:
             throw new Error(apiError);
 
-          case 24:
+          case 25:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[10, 19]]);
+    }, _callee3, undefined, [[11, 20]]);
   }));
 
   return function loginRequest() {
