@@ -116,7 +116,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-success/:propertyId",
+    path: "property-tax/payment-success/:propertyId/:tenantId",
     component: PaymentSuccess,
     needsAuthentication: true,
     options: {
@@ -126,7 +126,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-failure",
+    path: "property-tax/payment-failure/:propertyId/:tenantId",
     component: PaymentFailure,
     needsAuthentication: true,
     options: {
