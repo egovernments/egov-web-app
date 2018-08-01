@@ -504,6 +504,7 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
+    let { history } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
@@ -525,8 +526,13 @@ class FormWizard extends Component {
           },
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
-        const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-        window.location = redirectionUrl;
+        if (get(getBill, "Bill[0].billDetails[0].totalAmount")) {
+          const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+          window.location = redirectionUrl;
+        } else {
+          history.push("/property-tax/payment-success/" + propertyId);
+        }
+
       } catch (e) {
         console.log(e);
       }

@@ -4,6 +4,7 @@ import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/remo
 import {prepareDropDownData} from "./utils/reusableFields";
 import set from "lodash/set";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 
 const formConfig = {
   name: "basicInformation",
@@ -17,9 +18,14 @@ const formConfig = {
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
-        // get(state,`state.generalMDMSDataById.UsageCategoryMinor[${field.value}]`)
-        // console.log(get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`).usageCategoryMajor);
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`).usageCategoryMajor));
+        let minorObject=get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`)
+        if (!isEmpty(minorObject)) {
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",minorObject.usageCategoryMajor));
+
+        } else {
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",field.value));
+
+        }
       },
       dropDownData: [],
     },
@@ -32,7 +38,12 @@ const formConfig = {
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",get(state,`common.generalMDMSDataById.PropertySubType[${field.value}]`).propertyType));
+        let subTypeObject=get(state,`common.generalMDMSDataById.PropertySubType[${field.value}]`);
+        if (!isEmpty(subTypeObject)) {
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",subTypeObject.propertyType));
+        } else {
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",field.value));
+        }
       },
       dropDownData: [],
     },
