@@ -1,0 +1,36 @@
+import React from "react"
+import Field from "egov-ui-kit/utils/field"
+
+const CashInformation = ({ form, formKey, handleFieldChange }) => {
+  const fields = form.fields || {};
+  return (
+    <div className="cash-info">
+      <div className="name-paidby">
+        <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
+        <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
+      </div>
+      <div className="mobile-number">
+        <div className="empty"></div>
+        <Field fieldKey="payerMobile" field={fields.payerMobile} handleFieldChange={handleFieldChange} />
+      </div>
+    </div>
+  );
+};
+
+const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
+  const fields = form.fields || {};
+  return (
+    <div className="cheque-info">
+      <div className="no-name">
+        <Field fieldKey="chequeNo" field={fields.chequeNo} handleFieldChange={handleFieldChange} />
+        <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
+      </div>
+      <div className="date-branchr">
+      <Field fieldKey="chequeDate" field={fields.chequeDate} handleFieldChange={handleFieldChange} />
+        <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
+      </div>
+    </div>
+  );
+};
+
+export { CashInformation, ChequeInformation }
