@@ -41,6 +41,14 @@
       display: flow-root !important;
     }
   }
+  .property-corr {
+    margin-top: -29px;
+    margin-left: -4px;
+    label {
+      color: rgb(72, 72, 72) !important;
+      font-weight: 500;
+    }
+  }
 }
 
 .pt-institute-authority-info {
@@ -55,7 +63,7 @@
   .authority-details-form {
     display: flex;
     .name-address {
-      .textfield  {
+      .textfield {
         width: 117% !important;
       }
     }
@@ -77,10 +85,12 @@
 }
 
 .grayout {
+  box-shadow: none;
   background-color: #f6f6f6 !important;
 }
 
 .payment-details {
+  margin-top: 20px;
   .tax-header {
     display: flex;
     .label-text  {
@@ -176,6 +186,15 @@
     }
   }
   .addl-details {
+    button {
+      position: initial !important;
+      height: initial !important;
+      padding: 0 !important;
+      margin-left: 53% !important;
+      svg {
+        margin-left: 80%;
+      }
+    }
     .view-details {
       width: 99px;
       height: 16px;
@@ -184,6 +203,66 @@
       line-height: normal;
       letter-spacing: 0.6px;
       color: #fe7a51;
+    }
+  }
+  .payment-modes {
+    margin-top: 26px;
+    margin-bottom: 20px;
+    background-color: white;
+    .payment-modes-header {
+      height: 19px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.7px;
+      color: #484848;
+      padding-top: 20px;
+      padding-bottom: 28px;
+      padding-left: 16px;
+    }
+    .payer-details {
+      .cash-info {
+        display: flex;
+        .mobile-number {
+          margin-left: 28%;
+          width: 457px;
+          .empty {
+            height: 72px;
+          }
+        }
+        .textfield {
+          width:100% !important;
+        }
+      }
+    }
+    .cheque-details {
+      margin-top: 40px;
+      .cheque-info {
+        display: flex;
+        .date-branchr {
+          margin-left: 28%;
+        }
+      }
+    }
+    .mode-title {
+      font-size: 16px;
+      font-weight: 500;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: 0.6px;
+      color: #484848;
+    }
+    .list-header {
+      .label-text {
+        font-size: 16px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.6px;
+        color: #484848;
+      }
     }
   }
 }

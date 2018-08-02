@@ -105,13 +105,13 @@ class FloorDetails extends React.Component {
         {units.map((unit, key) => {
           const Unit = unit.component;
           return (
-              <Unit
-                key={key}
-                className={disabled ? "grayout" : ""}
-                handleRemoveItem={key !== 0 ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined}
-                disabled={disabled}
-                formName={`Unit-${key+1}`}
-              />
+            <Unit
+              key={key}
+              className={"grayout"}
+              handleRemoveItem={key !== 0 ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined}
+              disabled={disabled}
+              formName={`Unit-${key + 1}`}
+            />
           );
         })}
         <div className="pt-add-owner-btn" onClick={() => this.handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>

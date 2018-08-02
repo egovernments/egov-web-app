@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, ToolTipUi, Icon } from "components";
+import { Card , Icon } from "components";
+import Tooltip from "egov-ui-kit/components/Tooltip"
 import Field from "egov-ui-kit/utils/field";
 import "./index.css";
 
@@ -37,7 +38,7 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
                       className={className}
                     />
                     {fields[fieldKey].toolTip &&
-                      !fields[fieldKey].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
+                      !fields[fieldKey].hideField && <Tooltip id={"form-wizard-tooltip"} title={fields[fieldKey].toolTipMessage} />}
                   </div>
                 )}
               </div>

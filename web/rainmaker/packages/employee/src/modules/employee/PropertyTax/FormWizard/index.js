@@ -12,7 +12,7 @@ import {
   OwnerInformation,
   InstitutionAuthorityHOC,
 } from "./components/Forms";
-import ReviewForm from ".components/ReviewForm";
+import ReviewForm from "./components/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
 import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
@@ -33,7 +33,7 @@ import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import PaymentDetails from "modules/citizen/PropertyTax/FormWizard/components/PaymentDetails"
+import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -588,7 +588,7 @@ class FormWizard extends Component {
   onTabClick = (index) => {
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (/*formValidIndexArray.indexOf(index) !== -1 && selected >= index*/true) {
+    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       this.setState({
         selected: index,
         formValidIndexArray: range(0, index),

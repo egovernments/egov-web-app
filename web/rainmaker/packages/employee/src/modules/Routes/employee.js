@@ -28,6 +28,7 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
+import FormWizard from "modules/employee/PropertyTax/FormWizard"
 
 //Redirection Url
 const redirectionUrl = "/user/login";
@@ -335,6 +336,16 @@ const routes = [
       title: "PGR REPORTS",
       hideTitle: true,
       redirectionUrl,
+    },
+  },
+  {
+    path: "property-tax/assessment-form",
+    component: FormWizard,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "Assessment Form",
     },
   },
 ];
