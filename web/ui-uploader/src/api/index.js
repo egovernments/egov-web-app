@@ -100,11 +100,11 @@ export const Api = () => {
     }
   };
 
-  const loginUser = async (username, password) => {
+  const loginUser = async (username, password, userType) => {
     const grant_type = "password";
     const scope = "read";
-    const tenantId = "default";
-    const requestParams = { tenantId, username, password, scope, grant_type };
+    const tenantId = "pb.amritsar";
+    const requestParams = { tenantId, username, password, scope, grant_type, userType };
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0"

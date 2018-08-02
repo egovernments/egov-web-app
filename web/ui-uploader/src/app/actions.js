@@ -28,13 +28,14 @@ export const userLoginFailure = error => {
   return { type: actionTypes.USER_LOGIN_FAILURE, error };
 };
 
-export const loginUser = (username, password) => {
+export const loginUser = (username, password, usertype,history) => {
   return async dispatch => {
     dispatch(initiateUserLogin());
     try {
-      const response = await Api().loginUser(username, password);
+      const response = await Api().loginUser(username, password, usertype);
       // dispatch the action
       dispatch(userLoginSuccess(response));
+      // history.push("/");
     } catch (error) {
       dispatch(userLoginFailure(error));
     }
