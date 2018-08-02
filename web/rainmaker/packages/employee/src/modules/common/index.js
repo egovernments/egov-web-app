@@ -36,6 +36,12 @@ import ProfileForm from "egov-ui-kit/common/User/components/ProfileForm";
 import ProfileSection from "egov-ui-kit/common/User/components/ProfileSection";
 import UploadDrawer from "egov-ui-kit/common/User/components/UploadDrawer";
 
+//Pt common components
+import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
+import SearchProperty from "egov-ui-kit/common/propertyTax/SearchProperty";
+import PropertyInformation from "egov-ui-kit/common/propertyTax/PropertyInformation";
+import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
+
 export {
   Banner,
   CityPicker,
@@ -69,4 +75,8 @@ export {
   ReOpenComplaint,
   ReopenAcknowledgement,
   PrivacyPolicy,
+  AssessPay,
+  SearchProperty,
+  PropertyInformation,
+  AssessmentList,
 };

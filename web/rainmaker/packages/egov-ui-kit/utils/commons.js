@@ -355,7 +355,7 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
 };
 
 var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(buildingName, street) {
-  return buildingName + ", " + street;
+  return buildingName && street ? buildingName + ", " + street : "SpringField, Sarjapur";
 };
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
