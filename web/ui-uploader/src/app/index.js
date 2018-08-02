@@ -17,11 +17,12 @@ class AppContainer extends Component {
     // this listener is setup when the parent application sends a message via postMessage API
     window.addEventListener("message", this.handleFrameTasks);
 
-    if (process.env.NODE_ENV === "development") {
-      const username = process.env.REACT_APP_USERNAME;
-      const password = process.env.REACT_APP_PASSWORD;
-      this.props.loginUser(username, password);
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const username = process.env.REACT_APP_USERNAME;
+    //   const password = process.env.REACT_APP_PASSWORD;
+    //   const usertype = process.env.REACT_APP_USERTYPE;
+    //   this.props.loginUser(username, password, usertype);
+    // }
   }
 
   handleFrameTasks = e => {
@@ -45,7 +46,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (username, password) => dispatch(loginUser(username, password)),
+  loginUser: (username, password, usertype) => dispatch(loginUser(username, password, usertype)),
   userLoginSuccess: () => dispatch(userLoginSuccess())
 });
 
