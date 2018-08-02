@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
-import AdditionalDetails from "./components/AdditionalDetails";
+import PaymentAmountDetails from "./components/PaymentAmountDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
-import propertyAddressConfig from "./formConfigs/propertyAddress";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
@@ -17,7 +16,6 @@ const defaultIconStyle = {
   height: 20,
   marginLeft: 26,
   marginRight: 10,
-  totalAmountTobePaid: "",
 };
 
 const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
@@ -28,9 +26,16 @@ class ReviewForm extends Component {
   state = {
     valueSelected: "",
     importantDates: {},
+    totalAmountTobePaid: 0,
   };
   componentDidMount() {
     this.getImportantDates();
+    let { estimationDetails } = this.props;
+    let { totalAmount } = estimationDetails[0] || 0;
+    console.log(totalAmount);
+    this.setState({
+      totalAmountTobePaid: totalAmount,
+    });
   }
 
   getImportantDates = async () => {
@@ -103,24 +108,32 @@ class ReviewForm extends Component {
     return chosenDateObj;
   };
 
-  handleOptionsChange = (event, value) => {
-    this.setState({ valueSelected: value });
+  handleFieldChange = (event, value) => {
+    console.log(value);
+    this.setState({ totalAmountTobePaid: value });
   };
 
   onRadioButtonChange = (e) => {
-    const inputValue = e.target.value;
-    this.setState({ totalAmountTobePaid: inputValue });
+    let { estimationDetails } = this.props;
+    let { totalAmount } = estimationDetails[0] || {};
+    if (e.target.value === "Full_Amount") {
+      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+    } else {
+      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
+    }
   };
 
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
-    let { handleOptionsChange, onRadioButtonChange } = this;
+    let { handleFieldChange, onRadioButtonChange } = this;
     let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
+    let { totalAmount } = estimationDetails[0] || {};
+
+    console.log(this.state.totalAmountTobePaid, totalAmount);
     return (
       <div>
         <PropertyAddress
-          // form={propertyAddressConfig}
           icon={PropAddressIcon}
           editIcon={
             <Icon
@@ -163,15 +176,15 @@ class ReviewForm extends Component {
               name="edit"
             />
           }
-          // form={propertyAddressConfig}
           component={stepTwo}
         />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        <AdditionalDetails
+        <PaymentAmountDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
-          handleOptionChange={handleOptionsChange}
+          handleFieldChange={handleFieldChange}
           optionSelected={valueSelected}
+          totalAmount={totalAmount && totalAmount}
         />
       </div>
     );
