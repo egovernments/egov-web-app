@@ -29,15 +29,28 @@ class FloorDetails extends React.Component {
   }
 
   configureFloors = (props) => {
-    const { noFloors, componentDetails, disabled } = props;
+    const { noFloors, componentDetails, disabled, form } = props;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
-      const date = new Date();
-      const formKey = `${componentDetails.copyName}_${key}_unit_${date.getTime()}`;
-      units.push({
-        component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
-        formKey: formKey,
+
+      const unitKeys = Object.keys(form).filter((item) => {
+        return item.startsWith(`${componentDetails.copyName}_${key}_unit_`);
       });
+
+      if (unitKeys.length === 0) {
+        const formKey = `${componentDetails.copyName}_${key}_unit_0`;
+        units.push({
+          component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
+          formKey: formKey,
+        });
+      } else {
+        unitKeys.forEach((formKey, ind) => {
+          units.push({
+            component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
+            formKey: formKey,
+          });
+        });
+      }
       return {
         floorId: key,
         floorDropDown: formHoc({ formKey: "customSelect", makeCopy: true, copyName: "customSelect_" + key, path: "PropertyTaxPay", disabled })(
@@ -49,7 +62,6 @@ class FloorDetails extends React.Component {
     this.setState({
       floors: noFloors > 0 ? [...updatedFloors] : [],
     });
-    // this.updatedFloorsInCache(floors)
   };
 
   renderFloors = (floors, noFloors) => {
@@ -72,11 +84,13 @@ class FloorDetails extends React.Component {
   };
 
   handleAddUnit = (floorIndex) => {
-    const { componentDetails } = this.props;
+    const { componentDetails, form } = this.props;
     let { floors } = this.state;
-    //Naming Units with timestamp to maintain uniqueness, untill any other alternative way is found.
-    const date = new Date();
-    const formKey = `${componentDetails.copyName}_${floorIndex}_unit_${date.getTime()}`;
+    const unitKeys = Object.keys(form).filter((key) => {
+      return key.startsWith(`floorDetails_${floorIndex}_unit_`);
+    });
+    const index = parseInt(unitKeys[unitKeys.length - 1].split("unit_")[1]);
+    const formKey = `${componentDetails.copyName}_${floorIndex}_unit_${index + 1}`;
     floors[floorIndex].units.push({
       component: formHoc({ ...componentDetails, copyName: formKey })(GenericForm),
       formKey: formKey,
@@ -84,7 +98,6 @@ class FloorDetails extends React.Component {
     this.setState({
       floors,
     });
-    // this.updatedFloorsInCache(floors)
   };
 
   handleRemoveUnit = (floorIndex, unitIndex, formKey) => {
@@ -94,7 +107,6 @@ class FloorDetails extends React.Component {
     this.setState({
       floors,
     });
-    // this.updatedFloorsInCache(floors)
   };
 
   renderUnits = (units, floorId) => {
@@ -114,7 +126,7 @@ class FloorDetails extends React.Component {
             />
           );
         })}
-        <div className="pt-add-owner-btn" onClick={() => this.handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
+        <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
           + ADD ONE MORE UNIT
         </div>
       </div>
@@ -131,9 +143,8 @@ class FloorDetails extends React.Component {
 
 const mapStateToProps = ({ form }) => {
   let { plotDetails } = form;
-
   let noFloors = parseInt(get(plotDetails, "fields.floorCount.value")) || 0;
-  return { noFloors };
+  return { noFloors, form };
 };
 
 const mapDispatchToProps = (dispatch) => {

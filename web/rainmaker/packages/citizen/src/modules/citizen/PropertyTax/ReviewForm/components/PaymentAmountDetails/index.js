@@ -1,11 +1,9 @@
 import React from "react";
-import { RadioButton, Card, Icon, TextField } from "components";
+import { RadioButton, Card, Icon } from "components";
+import TextField from "material-ui/TextField";
 import Label from "egov-ui-kit/utils/translationNode";
+import "./index.css";
 
-const options = [
-  { value: "Full Amount", label: <Label label="Full Amount" color="#4848484" /> },
-  { value: "Partial Amount", label: <Label label="Partial Amount" color="#4848484" /> },
-];
 const styles = {
   labelStyle: {
     color: "#484848",
@@ -23,11 +21,21 @@ const styles = {
   },
   radioButtonLabelStyle: {
     lineHeight: 1,
-    marginBottom: 8,
   },
 };
+const inputBaseStyle = {
+  paddingBottom: 10,
+  fontSize: "16px",
+  color: "#484848",
+  letterSpacing: "0.7px",
+};
+const floatingLabelBaseStyle = {
+  top: 30,
+  fontSize: "14px",
+  letterSpacing: "0.6px",
+};
 
-const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonChange, value }) => {
+const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButtonChange, totalAmount, value }) => {
   return (
     <Card
       className="tax-calculation-card-header"
@@ -39,7 +47,7 @@ const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonCh
           </div>
           <div className="clearfix">
             <div className="col-sm-6" style={{ paddingTop: 30 }}>
-              <RadioButton
+              {/* <RadioButton
                 id="gender-selection"
                 name="gender-selection"
                 options={options}
@@ -49,21 +57,43 @@ const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonCh
                 radioButtonItemStyle={styles.radioButtonItemStyle}
                 labelStyle={styles.radioButtonLabelStyle}
                 selectedLabelStyle={styles.selectedLabelStyle}
+                defaultValue={"Full_Amount"}
               />
+            </div> */}
+              <div className="property-amount-radio">
+                <div className="amt-radio">
+                  <input type="radio" checked="checked" onClick={onRadioButtonChange} value="Full_Amount" name="radio" />
+                  <Label label="Full Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                </div>
+                <div className="amt-radio">
+                  <input type="radio" onClick={onRadioButtonChange} value="Partial_Amount" name="radio" />
+                  <Label label="Partial Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
+                </div>
+              </div>
             </div>
             <div className="col-sm-6">
               <TextField
                 id="amount-to-be-paid"
-                onChange={(e, value) => onRadioButtonChange(e)}
+                onChange={(e, value) => handleFieldChange(e)}
                 value={value}
-                fullWidth={true}
-                hintText="Enter amount"
+                defaultValue={`${totalAmount}`}
                 floatingLabelText="Amount to pay (INR)"
+                floatingLabelShrinkStyle={{
+                  fontSize: "12px",
+                  color: "#00bcd1",
+                  transform: "scale(1) translate(0px, -16px)",
+                  fontWeight: 500,
+                  zIndex: 0,
+                }}
+                floatingLabelFixed={true}
+                inputStyle={inputBaseStyle}
+                floatingLabelStyle={floatingLabelBaseStyle}
+                underlineFocusStyle={{ borderColor: "#e0e0e0" }}
               />
             </div>
           </div>
           {optionSelected &&
-            optionSelected === "Partial Amount" && (
+            optionSelected === "Partial_Amount" && (
               <div className="rainmaker-displayInline" style={{ padding: "12px 0px 12px 12px", backgroundColor: "#f2f2f2", marginTop: 10 }}>
                 <Icon action="action" name="info" />
                 <Label
@@ -80,4 +110,4 @@ const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonCh
   );
 };
 
-export default AdditionalDetails;
+export default PaymentAmountDetails;
