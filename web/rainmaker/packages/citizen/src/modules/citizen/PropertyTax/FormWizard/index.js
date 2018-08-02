@@ -544,7 +544,7 @@ class FormWizard extends Component {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
           window.location = redirectionUrl;
         } else {
-          history.push("/property-tax/payment-success/" + propertyId);
+          history.push("/property-tax/payment-success/" + propertyId +"/" + tenantId);
         }
 
       } catch (e) {
@@ -561,6 +561,9 @@ class FormWizard extends Component {
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
     try {
+      if (financialYearFromQuery) {
+        set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
@@ -586,7 +589,7 @@ class FormWizard extends Component {
     const {financialYearFromQuery} =this.state;
     let { prepareFormData } = this.props;
     if (financialYearFromQuery) {
-      set(prepareFormData, "Properties[0].propertyDetails.financialYear", financialYearFromQuery);
+      set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");

@@ -1,6 +1,8 @@
 import { annualRent, subUsageType, measuringUnit,occupancy,beforeInitFormForPlot } from "../utils/reusableFields";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+
 const formConfig = {
   name: "plotDetails",
   fields: {
@@ -18,7 +20,7 @@ const formConfig = {
     ...occupancy,
     superArea: {
       id: "assessment-super-area",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
+      jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
       type: "textfield",
       floatingLabelText: "Total Super area",
       hintText: "Enter total super area",
@@ -28,6 +30,9 @@ const formConfig = {
       required: true,
       numcols: 4,
       hideField: true,
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea",field.value))
+      }
     },
     ...measuringUnit,
     ...annualRent,

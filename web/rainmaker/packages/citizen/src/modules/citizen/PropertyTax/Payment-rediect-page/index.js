@@ -20,10 +20,10 @@ class PaymentRedirect extends React.Component {
       let tenantId=get(pgUpdateResponse, "Transaction[0].tenantId");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
         this.props.toggleSpinner();
-        history.push("/property-tax/payment-failure/" + moduleId.split("-", 4).join("-")+"/"+tenantId);
+        history.push("/property-tax/payment-failure/" + moduleId.split(":")[0]+"/"+tenantId);
       } else {
         this.props.toggleSpinner();
-        history.push("/property-tax/payment-success/" + moduleId.split("-", 4).join("-")+"/"+tenantId);
+        history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId);
       }
     } catch (e) {
       this.props.toggleSpinner();

@@ -21,10 +21,9 @@ const formConfig = {
         let minorObject=get(state,`common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`)
         if (!isEmpty(minorObject)) {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",minorObject.usageCategoryMajor));
-
         } else {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMajor",field.value));
-
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryMinor",null));
         }
       },
       dropDownData: [],
@@ -43,6 +42,7 @@ const formConfig = {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",subTypeObject.propertyType));
         } else {
           dispatch(prepareFormData("Properties[0].propertyDetails[0].propertyType",field.value));
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].propertySubType",null));
         }
       },
       dropDownData: [],

@@ -1,5 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { measuringUnit, occupancy, subUsageType, beforeInitFormForPlot } from "../utils/reusableFields";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+
 const formConfig = {
   name: "plotDetails",
   fields: {
@@ -17,7 +19,7 @@ const formConfig = {
     ...occupancy,
     superArea: {
       id: "assessment-super-area",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
+      jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
       type: "number",
       floatingLabelText: "Total Super Built-up Area",
       hintText: "Enter Super Built-up Area",
@@ -27,6 +29,9 @@ const formConfig = {
       required: true,
       pattern: "^([0-9]){0,8}$",
       numcols: 4,
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea",field.value))
+      }
     },
     ...measuringUnit,
   },

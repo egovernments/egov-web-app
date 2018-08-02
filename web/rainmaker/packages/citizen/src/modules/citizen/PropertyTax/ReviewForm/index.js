@@ -179,13 +179,13 @@ class ReviewForm extends Component {
           component={stepTwo}
         />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        <PaymentAmountDetails
+        {/*<PaymentAmountDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
           handleFieldChange={handleFieldChange}
           optionSelected={valueSelected}
           totalAmount={totalAmount && totalAmount}
-        />
+        />*/}
       </div>
     );
   }

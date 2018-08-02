@@ -4,6 +4,7 @@ import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/remo
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
 
 let floorDropDownData = [];
@@ -41,13 +42,24 @@ export const subUsageType = {
     required: true,
     numcols: 4,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      dispatch(
-        prepareFormData(
-          `${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,
-          get(state, `common.generalMDMSDataById.UsageCategoryDetail[${field.value}]`).usageCategorySubMinor
-        )
-      );
-    },
+      let subUsageMinor=get(state,`common.generalMDMSDataById.UsageCategoryDetail[${field.value}]`);
+      if (!isEmpty(subUsageMinor)) {
+        dispatch(
+          prepareFormData(
+            `${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,
+            subUsageMinor.usageCategorySubMinor
+          )
+        );
+      } else {
+        dispatch(
+          prepareFormData(
+            `${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,
+            field.value
+          )
+        );
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryDetail",null));
+      }
+    }
   },
 };
 
@@ -123,6 +135,12 @@ export const plotSize = {
     required: true,
     pattern: "^([0-9]){0,8}$",
     numcols: 4,
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      let propertyType=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].propertyType")
+      if (propertyType=="VACANT") {
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].landArea",field.value));
+      }
+    },
   },
 };
 
@@ -144,13 +162,18 @@ export const beforeInitForm = {
     let state = store.getState();
     let {dispatch}=store;
     var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
-    var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
-      return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-    });
-    var filteredUsageCategoryDetails=getPresentMasterObj(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),filteredSubUsageMinor,"code");
+    var usageCategoryMinor=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+    if (usageCategoryMinor) {
+      var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
+        return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+      });
+      var filteredUsageCategoryDetails=getPresentMasterObj(filteredSubUsageMinor,prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),"usageCategorySubMinor");
+      set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
+      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+    } else {
+      set(action,"form.fields.subUsageType.hideField",true);
+    }
     set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
-    set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
-    dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
     dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
     return action;
   }
@@ -163,20 +186,26 @@ export const beforeInitFormForPlot = {
     const propertyType=get(state,"form.basicInformation.fields.typeOfBuilding.value");
     if (propertyType!="VACANT") {
       var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
-      var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
-        return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-      });
-      var filteredUsageCategoryDetails=getPresentMasterObj(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),filteredSubUsageMinor,"code");
+      var usageCategoryMinor=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+      if (usageCategoryMinor) {
+        var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
+          return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+        });
+        var filteredUsageCategoryDetails=getPresentMasterObj(filteredSubUsageMinor,prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),"usageCategorySubMinor");
+        set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
+        dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+      } else {
+        set(action,"form.fields.subUsageType.hideField",true);
+      }
       set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
-      set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
-      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
       dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
     }
-    if (propertyType=="VACANT" || propertyType=="SHAREDPROPERTY") {
+    if (propertyType=="VACANT") {
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`,1));
+    }
+    if (propertyType=="SHAREDPROPERTY") {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`,2));
-      if (propertyType=="SHAREDPROPERTY") {
-        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`,-1));
-      }
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`,-1));
     }
     return action;
   },
