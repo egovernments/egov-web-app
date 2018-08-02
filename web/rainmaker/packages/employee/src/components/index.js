@@ -36,6 +36,8 @@ import Carousel from "egov-ui-kit/components/Carousel";
 import Divider from "egov-ui-kit/components/Divider";
 import SingleCheckbox from "egov-ui-kit/components/SingleCheckbox";
 import TableUi from "egov-ui-kit/components/Tables";
+import ToolTipUi from "egov-ui-kit/components/Tooltip";
+import Receipt from "egov-ui-kit/components/Receipt";
 
 export {
   Label,
@@ -76,4 +78,6 @@ export {
   Divider,
   SingleCheckbox,
   TableUi,
+  ToolTipUi,
+  Receipt,
 };

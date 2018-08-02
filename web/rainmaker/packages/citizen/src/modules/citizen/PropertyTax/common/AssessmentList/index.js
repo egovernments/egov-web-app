@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Button, DropDown } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import PTList from "../PTList";
+import PTList from "./components/PTList";
 import BlankAssessment from "../BlankAssessment";
 import "./index.css";
 

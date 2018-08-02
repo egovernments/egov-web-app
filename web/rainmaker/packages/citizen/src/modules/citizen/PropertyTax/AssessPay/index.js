@@ -117,3 +117,38 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AssessPay);
+
+// import React, { Component } from "react";
+// import { Icon, BreadCrumbs } from "components";
+// import { AssessPay } from "modules/common";
+// import { connect } from "react-redux";
+// import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+
+// const list1items = {
+//   icon: <Icon action="content" name="add" />,
+//   label: "Add New Property",
+// };
+
+// class AssessandPay extends Component {
+//   render() {
+//     const { urls, history } = this.props;
+//     return <AssessPay list1items={list1items} hasbreadCrumbs={true} history={history} urls={urls} />;
+//   }
+// }
+
+// const mapStateToProps = (state) => {
+//   const { app } = state;
+//   const { urls } = app;
+//   return { urls };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+//   };
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(AssessandPay);

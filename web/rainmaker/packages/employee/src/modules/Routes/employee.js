@@ -28,7 +28,11 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
-import FormWizard from "modules/employee/PropertyTax/FormWizard"
+import FormWizard from "modules/employee/PropertyTax/FormWizard";
+
+//pt
+import ptRoutes from "./pt";
+// import PTHome from "modules/employee/PropertyTax/PTHome";
 
 //Redirection Url
 const redirectionUrl = "/user/login";
@@ -46,18 +50,6 @@ const routes = [
     needsAuthentication: false,
     redirectionUrl: "/all-complaints",
   },
-  // {
-  //   path: "user/language-selection",
-  //   component: LanguageSelection,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/all-complaints",
-  // },
-  // {
-  //   path: "user/forgot-password",
-  //   component: ForgotPassword,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/all-complaints",
-  // },
   {
     path: "privacy-policy",
     component: PrivacyPolicy,
@@ -313,19 +305,6 @@ const routes = [
       hideBackButton: true,
     },
   },
-
-  //create employee
-  // {
-  //   path: "create",
-  //   component: CreateEmployee,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "CS_HEADER_COMPLAINT_SUBMITTED",
-  //     hideTitle: true,
-  //     hideBackButton: true,
-  //   },
-  // },
   {
     path: "report/:moduleName/:reportName",
     component: Report,
@@ -338,16 +317,7 @@ const routes = [
       redirectionUrl,
     },
   },
-  {
-    path: "property-tax/assessment-form",
-    component: FormWizard,
-    needsAuthentication: true,
-    options: {
-      hideFooter: true,
-      hideBackButton: true,
-      title: "Assessment Form",
-    },
-  },
+  ...ptRoutes,
 ];
 
 export default routes;

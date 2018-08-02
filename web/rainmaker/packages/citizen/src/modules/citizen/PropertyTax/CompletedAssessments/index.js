@@ -58,7 +58,7 @@ class CompletedAssessments extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    fetchProperties([{ key: "uuid", value: userInfo.uuid }]);
+    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null);
   };
 
   closeYearRangeDialogue = () => {
@@ -78,7 +78,7 @@ class CompletedAssessments extends Component {
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList
           innerDivStyle={innerDivStyle}
-          items={this.state.items}
+          items={transformedProperties}
           noAssessmentMessage="You have no complete assessments."
           button={true}
           yearDialogue={this.state.dialogueOpen}
@@ -103,7 +103,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    fetchProperties: (queryObjectproperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectproperty, queryObjectDraft)),
   };
 };
 
