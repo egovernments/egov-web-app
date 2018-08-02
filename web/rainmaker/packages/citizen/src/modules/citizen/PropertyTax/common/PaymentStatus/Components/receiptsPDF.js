@@ -5,7 +5,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const generateReceipt = (role, details) => {
   let data;
-  let { owners, address, propertyDetails, tax, receipts, header } = details;
+  let { owners, address, propertyDetails, tax, taxNew, receipts, header } = details;
   let tableborder = {
     hLineColor: function(i, node) {
       return "#979797";
@@ -240,23 +240,11 @@ const generateReceipt = (role, details) => {
           },
           { text: "TAX CALCULATION", style: "pt-reciept-citizen-subheader" },
           {
-            style: "pt-reciept-citizen-table",
+            style: "receipt-assess-table",
             table: {
-              widths: receiptTableWidth,
-              body: [
-                [
-                  { text: "Property Tax:", border: borderKey, style: "receipt-table-key" },
-                  { text: tax.AmountPaid || "", border: borderValue },
-                  { text: "Fire Cess (10%):", border: borderKey, style: "receipt-table-key" },
-                  { text: tax.fireCess || "", border: borderValue },
-                ],
-                [
-                  { text: "Rebate :", border: borderKey, style: "receipt-table-key" },
-                  { text: tax.rebate || "", border: borderValue },
-                  { text: "TOTAL:", border: borderKey, style: "receipt-table-key" },
-                  { text: tax.total || "", border: borderValue },
-                ],
-              ],
+              widths: [60, 60, 60, 60, 60, 60, 60],
+
+              body: taxNew,
             },
             layout: tableborder,
           },
@@ -269,20 +257,22 @@ const generateReceipt = (role, details) => {
                 [
                   { text: "Total Amount Paid:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.AmountPaid || "", border: borderValue, style: "receipt-table-value" },
-                  { text: "Payment Mode:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.payMode || "", border: borderValue },
+                  { text: "Pending Amount:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.pendingAmt || "", border: borderValue },
                 ],
                 [
-                  { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.transactionId || "", border: borderValue },
+                  { text: "Payment Mode:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.payMode || "", border: borderValue },
+                  // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
+                  // { text: receipts.transactionId || "", border: borderValue },
                   { text: "Bank Name:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.bankName || "", border: borderValue },
                 ],
                 [
-                  { text: "Pending Amount:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.pendingAmt || "", border: borderValue },
-                  { text: "", border: borderKey },
-                  { text: "", border: borderValue },
+                  { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.receiptNo || "", border: borderValue },
+                  { text: "G8 Receipt Issue Date", border: borderKey },
+                  { text: receipts.paymentDate, border: borderValue },
                 ],
               ],
             },

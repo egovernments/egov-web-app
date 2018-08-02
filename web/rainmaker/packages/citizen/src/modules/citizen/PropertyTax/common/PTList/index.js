@@ -4,6 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const PTList = ({ items, label, onItemClick, innerDivStyle, listItemStyle }) => {
+  console.log(items);
   return (
     <div className="form-without-button-cont-generic">
       {label && (

@@ -33,7 +33,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
               taxHeadEstimates.map((item, index) => {
                 return (
                   item.estimateAmount > 0 && (
-                    <div className="clearfix" style={{ marginBottom: 8 }}>
+                    <div key={index} className="clearfix" style={{ marginBottom: 8 }}>
                       <div className="col-sm-9" style={{ padding: 0 }}>
                         <Label label={item.taxHeadCode} />
                       </div>

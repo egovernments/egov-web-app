@@ -95,7 +95,6 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
-            console.log(item);
             history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}`);
           }}
           className="assessment-displayInline"
@@ -113,8 +112,7 @@ const getItemStatus = (item, history) => {
             label={<Label buttonLabel={true} label="ASSESS & PAY" fontSize="12px" />}
             primary={true}
             onClick={(e) => {
-              console.log();
-              //history && history.push(`/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}`);
+              history && history.push(`/property-tax/assessment-form?assessmentNo=${item.assessmentNo}`);
             }}
             style={{
               height: 20,
@@ -149,38 +147,40 @@ const getListItems = (items, history) => {
   return (
     items &&
     items.map((item, index) => {
-      return {
-        primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
-        secondaryText:
-          item.secondaryText &&
-          (typeof item.secondaryText === "object" ? (
-            item.secondaryText
-          ) : (
-            <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
-          )),
-        route: item.route,
-        leftIcon: item.leftIcon,
-        rightIcon: getRightIconItems(item, history),
-        nestedItems:
-          item &&
-          item.nestedItems &&
-          item.nestedItems.map((nestedItem) => {
-            return {
-              primaryText: nestedItem.leftIcon ? (
-                <div style={{ alignItems: "center", display: "flex" }}>
-                  {nestedItem.leftIcon}
-                  <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
-                </div>
-              ) : (
-                nestedItem.primaryText
-                // <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
-              ),
-              secondaryText: nestedItem.secondaryText,
-              route: nestedItem.route,
-              rightIcon: getRightIconItems(nestedItem),
-            };
-          }),
-      };
+      return (
+        item && {
+          primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
+          secondaryText:
+            item.secondaryText &&
+            (typeof item.secondaryText === "object" ? (
+              item.secondaryText
+            ) : (
+              <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
+            )),
+          route: item.route,
+          leftIcon: item.leftIcon,
+          rightIcon: getRightIconItems(item, history),
+          nestedItems:
+            item &&
+            item.nestedItems &&
+            item.nestedItems.map((nestedItem) => {
+              return {
+                primaryText: nestedItem.leftIcon ? (
+                  <div style={{ alignItems: "center", display: "flex" }}>
+                    {nestedItem.leftIcon}
+                    <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
+                  </div>
+                ) : (
+                  nestedItem.primaryText
+                  // <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
+                ),
+                secondaryText: nestedItem.secondaryText,
+                route: nestedItem.route,
+                rightIcon: getRightIconItems(nestedItem, history),
+              };
+            }),
+        }
+      );
     })
   );
 };

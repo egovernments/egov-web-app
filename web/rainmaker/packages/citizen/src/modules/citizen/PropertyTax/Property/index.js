@@ -102,6 +102,7 @@ class Property extends Component {
         </div>
       ),
     };
+    transformedAssessments.push(viewAllAssessmentItem);
     return [
       {
         primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -128,34 +129,7 @@ class Property extends Component {
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
           </div>
         ),
-        nestedItems: [
-          {
-            primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "Paid",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "Paid",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-
-            receipt: true,
-          },
-        ],
+        nestedItems: transformedAssessments,
         rightIcon: (
           <div style={IconStyle}>
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
@@ -192,7 +166,7 @@ class Property extends Component {
             items={this.getAssessmentListItems(this.props)}
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
-            history={this.props.history}
+            history={history}
           />
         }
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
@@ -262,9 +236,10 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         },
         {
           key: "Type of Building:",
-          value: generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
-            ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
-            : "NA",
+          value:
+            generalMDMSDataById && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
+              ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+              : "NA",
         },
       ],
       items: {
@@ -357,14 +332,13 @@ const mapStateToProps = (state, ownProps) => {
   const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
 
   const { propertyDetails } = selPropertyDetails;
-  const transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
-    [
-      {
-        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-        status: "ASSESS & PAY",
-        receipt: true,
-      },
-    ];
+  let transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
+    return {
+      primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+      status: "ASSESS & PAY",
+      receipt: true,
+      assessmentNo: assessment.assessmentNumber,
+    };
   });
   return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
 };
