@@ -213,10 +213,16 @@ const transform = (floor, key, generalMDMSDataById) => {
   if (!masterName) {
     return floor[dataKey];
   } else {
-    if (floor[dataKey] === "NONRESIDENTIAL") {
-      return generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name;
+    if (floor[dataKey]) {
+      if (floor[dataKey] === "NONRESIDENTIAL") {
+        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
+      } else if (floor[dataKey] === "RESIDENTIAL") {
+        return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
+      } else {
+        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
+      }
     } else {
-      return generalMDMSDataById[masterName][floor[dataKey]].name;
+      return "-";
     }
   }
 };
@@ -237,7 +243,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         {
           key: "Type of Building:",
           value:
-            generalMDMSDataById && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
+            generalMDMSDataById && generalMDMSDataById["PropertyType"] && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
               ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
               : "NA",
         },
