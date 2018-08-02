@@ -171,7 +171,15 @@ const mapStateToProps = (state) => {
   const { properties } = state;
   const { propertiesById, draftsById, loading } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
-  const numDrafts = draftsById && Object.keys(draftsById).length;
+  // const numDrafts = draftsById && Object.keys(draftsById).length;
+  const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
+    if (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") {
+      result.push(draft);
+    }
+    return result;
+  }, []);
+
+  const numDrafts = transformedDrafts.length;
   return { numProperties, numDrafts, loading };
 };
 

@@ -6,8 +6,9 @@ import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-import { getDateFromEpoch, getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import { isFunction } from "util";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -61,34 +62,37 @@ const mapStateToProps = (state) => {
   const { loading, draftsById } = properties || {};
   const numDrafts = draftsById && Object.keys(draftsById).length;
   get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-  const transformedDrafts = Object.values(draftsById).map((draft, index) => {
-    return {
-      primaryText: (
-        <Label
-          label={get(draft, "draftRecord.financialYear.fields.button.value")}
-          fontSize="16px"
-          color="#484848"
-          labelStyle={primaryTextLabelStyle}
-          bold={true}
-        />
-      ),
-      secondaryText: (
-        <div style={{ height: "auto" }}>
+  const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
+    if (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") {
+      result.push({
+        primaryText: (
           <Label
-            // label={getCommaSeperatedAddress(get(draft, "draftRecord.financialYear.fields.button.value"))}
-            label="Gold Plaza, Bellandur"
-            labelStyle={secondaryTextLabelStyle}
-            fontSize="14px"
-            containerStyle={secondaryTextContainer}
+            label={get(draft, "draftRecord.financialYear.fields.button.value")}
+            fontSize="16px"
             color="#484848"
+            labelStyle={primaryTextLabelStyle}
+            bold={true}
           />
-        </div>
-      ),
-      assessmentNo: draft.id,
-      date: getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")),
-      status: "Saved Draft",
-    };
-  });
+        ),
+        secondaryText: (
+          <div style={{ height: "auto" }}>
+            <Label
+              // label={getCommaSeperatedAddress(get(draft, "draftRecord.financialYear.fields.button.value"))}
+              label="Gold Plaza, Bellandur"
+              labelStyle={secondaryTextLabelStyle}
+              fontSize="14px"
+              containerStyle={secondaryTextContainer}
+              color="#484848"
+            />
+          </div>
+        ),
+        assessmentNo: draft.id,
+        date: getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")),
+        status: "Saved Draft",
+      });
+    }
+    return result;
+  }, []);
   return { urls, loading, numDrafts, transformedDrafts };
 };
 const mapDispatchToProps = (dispatch) => {

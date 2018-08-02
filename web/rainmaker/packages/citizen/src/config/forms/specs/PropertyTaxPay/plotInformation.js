@@ -4,9 +4,10 @@ const formConfig = {
     plotSize: {
       id: "plotSize",
       jsonPath: "",
-      type: "textfield",
+      type: "number",
       floatingLabelText: "Plot Size",
       hintText: "Enter Plot Size",
+      pattern: "^([0-9]){8}$",
       numcols: 4,
     },
     measuringUnit: {

@@ -10,8 +10,8 @@ const formConfig = {
       id: "city",
       jsonPath: "Properties[0].address.city",
       required: true,
-      toolTip: true,
-      toolTipMessage: "",
+      // toolTip: true,
+      // toolTipMessage: "",
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
@@ -45,8 +45,8 @@ const formConfig = {
         ],
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        dispatch(prepareFormData("Properties[0].tenantId",field.value));
-      }
+        dispatch(prepareFormData("Properties[0].tenantId", field.value));
+      },
     },
     dummy: {
       numcols: 6,
@@ -61,6 +61,7 @@ const formConfig = {
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      maxLength: 64,
     },
     colony: {
       id: "property-colony",
@@ -73,6 +74,7 @@ const formConfig = {
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      maxLength: 64,
     },
     street: {
       id: "property-street",
@@ -85,6 +87,7 @@ const formConfig = {
       numcols: 6,
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      maxLength: 64,
     },
     mohalla: {
       id: "mohalla",
@@ -112,13 +115,15 @@ const formConfig = {
     },
     pincode: {
       id: "pincode",
-      type: "textfield",
+      type: "number",
       jsonPath: "Properties[0].address.pincode",
       floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
       numcols: 6,
-      errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+      errorMessage: "Pincode should be 8 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      pattern: "^([0-9]){8}$",
     },
     oldPID: {
       id: "oldpid",
@@ -133,6 +138,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       toolTip: true,
       toolTipMessage: "ID assigned to your property by your Municipality ",
+      maxLength: 64,
     },
   },
 

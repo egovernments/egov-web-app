@@ -57,6 +57,7 @@ const formConfig = {
       hintText: "Enter old property ID",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      maxLength: 64,
     },
     ids: {
       id: "property-tax-assessment-id",
@@ -67,6 +68,7 @@ const formConfig = {
       hintText: "Enter property tax assesssment ID",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      maxLength: 64,
     },
 
     // houseNo: {
