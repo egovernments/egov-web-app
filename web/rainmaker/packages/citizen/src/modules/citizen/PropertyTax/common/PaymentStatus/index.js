@@ -4,6 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { ActionFooter } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import generateReceipt from "./Components/receiptsPDF";
+import "../../FormWizard/components/WizardComponent/index.css";
 import "./index.css";
 
 const labelStyle = {
@@ -36,7 +37,7 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
             </div>
           }
         />
-        {receiptUIDetails && (
+        {receiptUIDetails && receiptUIDetails.propertyInfo.length && receiptUIDetails.receiptInfo.length ? (
           <Card
             className="pt-success-receipt"
             textChildren={
@@ -47,7 +48,7 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
                     return (
                       <div className="row pt-reciept-label">
                         <Label className="col-xs-6" label={item.key} />
-                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
+                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value || "NA"} />
                       </div>
                     );
                   })}
@@ -58,14 +59,14 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
                     return (
                       <div className="row pt-reciept-label">
                         <Label className="col-xs-6" label={item.key} />
-                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
+                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value || item.value === "0" ? item.value : "NA"} />
                       </div>
                     );
                   })}
               </div>
             }
           />
-        )}
+        ) : null}
         {receiptDetails &&
           receiptDetails.ReceiptNo && (
             <div

@@ -25,7 +25,6 @@ const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/Lin
 
 const PaymentRedirectPage = asyncComponent(() => import("modules/citizen/PropertyTax/Payment-rediect-page").then((module) => module.default));
 
-
 const routes = [
   // property tax routes
   {
@@ -129,7 +128,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-failure/:propertyId/:tenantId",
+    path: "property-tax/payment-failure/:propertyId/:tenantId/:assessmentNumber/:assessmentYear",
     component: PaymentFailure,
     needsAuthentication: true,
     options: {

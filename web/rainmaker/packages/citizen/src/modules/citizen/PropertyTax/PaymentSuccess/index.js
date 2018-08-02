@@ -7,7 +7,6 @@ import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
-import "../FormWizard/components/WizardComponent/index.css";
 import get from "lodash/get";
 
 class PaymentSuccess extends Component {
