@@ -58,7 +58,7 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
                     return (
                       <div className="row pt-reciept-label">
                         <Label className="col-xs-6" label={item.key} />
-                        <Label className="col-xs-6" labelStyle={labelStyle} label={34} />
+                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
                       </div>
                     );
                   })}

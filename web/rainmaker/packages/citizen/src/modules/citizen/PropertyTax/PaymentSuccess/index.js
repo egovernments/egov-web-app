@@ -96,15 +96,15 @@ const createReceiptUIInfo = (property, receiptDetails) => {
       },
       {
         key: "Payable Amount:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].totalAmount"),
+        value: get(receiptDetails, "Bill[0].billDetails[0].totalAmount").toString(),
       },
       {
         key: "Amount Paid:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+        value: get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       },
       {
         key: "Amount Due:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+        value: (get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
       },
     ],
   };
