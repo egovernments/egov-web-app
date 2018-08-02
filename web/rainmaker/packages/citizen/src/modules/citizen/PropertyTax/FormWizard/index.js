@@ -37,6 +37,7 @@ import "./index.css";
 
 class FormWizard extends Component {
   state = {
+    financialYearFromQuery:"",
     dialogueOpen: false,
     selected: 0,
     ownerInfoArr: [],
@@ -136,10 +137,10 @@ class FormWizard extends Component {
         [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
         draftRequest
       );
-
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "draftRecord.assessmentNumber", "") === draftId);
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
+      // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
       this.setState(
         {
@@ -153,6 +154,7 @@ class FormWizard extends Component {
               id: draftId,
             },
           },
+          // floorDetails,
         },
         () => {
           this.props.updatePTForms(currentDraft.draftRecord);
@@ -250,6 +252,14 @@ class FormWizard extends Component {
         // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
       }
     }
+
+    let financialYearFromQuery=window.location.search.split("financialYear=")[1];
+    if (financialYearFromQuery) {
+      financialYearFromQuery=financialYearFromQuery.split("&")[0];
+      this.setState({
+        financialYearFromQuery
+      })
+    }
   };
 
   handleRemoveOwner = (index, formKey) => {
@@ -263,6 +273,7 @@ class FormWizard extends Component {
   };
 
   renderPlotAndFloorDetails = (fromReviewPage) => {
+    // let {floorDetails} =this.state;
     let { basicInformation, plotDetails, floorDetails_0 } = this.props.form;
     if (plotDetails && floorDetails_0 && floorDetails_0.fields.builtArea) {
       let uom = plotDetails.fields && plotDetails.fields.measuringUnit && plotDetails.fields.measuringUnit.value;
@@ -545,7 +556,8 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { prepareFormData } = this.props;
+    let { prepareFormData,location } = this.props;
+    const {financialYearFromQuery} =this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
     try {
@@ -553,7 +565,7 @@ class FormWizard extends Component {
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
-            assessmentYear: financialYear && financialYear.fields.button.value,
+            assessmentYear: ((financialYear && financialYear.fields.button.value) || financialYearFromQuery),
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
             property: prepareFormData.Properties[0],
           },
@@ -571,7 +583,11 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
+    const {financialYearFromQuery} =this.state;
     let { prepareFormData } = this.props;
+    if (financialYearFromQuery) {
+      set(prepareFormData, "Properties[0].propertyDetails.financialYear", financialYearFromQuery);
+    }
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
@@ -588,8 +604,10 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
+    const {fetchDraftDetails} =this;
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
+    // fetchDraftDetails();
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       this.setState({
         selected: index,
