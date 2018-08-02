@@ -106,7 +106,7 @@ export const annualRent = {
     toolTip: true,
     toolTipMessage: "Total Rent collected on your property over a year",
     required: true,
-    pattern: "^([0-9]){8}$",
+    pattern: "^([0-9]){0,8}$",
     hideField: true,
     numcols: 4,
   },
@@ -121,7 +121,7 @@ export const plotSize = {
     hintText: "Enter plot size",
     errorMessage: "Plot Size can be maximum 8 digits",
     required: true,
-    pattern: "^([0-9]){8}$",
+    pattern: "^([0-9]){0,8}$",
     numcols: 4,
   },
 };

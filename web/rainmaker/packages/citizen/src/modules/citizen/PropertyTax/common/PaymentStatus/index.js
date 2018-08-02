@@ -10,7 +10,7 @@ const labelStyle = {
   fontWeight: 500,
 };
 
-const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons }) => {
+const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
   return (
     <div>
       <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
@@ -36,34 +36,36 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
             </div>
           }
         />
-        <Card
-          className="pt-success-receipt"
-          textChildren={
-            <div>
-              {receiptUIDetails &&
-                receiptUIDetails.propertyInfo &&
-                receiptUIDetails.propertyInfo.map((item) => {
-                  return (
-                    <div className="row pt-reciept-label">
-                      <Label className="col-xs-6" label={item.key} />
-                      <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
-                    </div>
-                  );
-                })}
-              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
-              {receiptUIDetails &&
-                receiptUIDetails.receiptInfo &&
-                receiptUIDetails.receiptInfo.map((item) => {
-                  return (
-                    <div className="row pt-reciept-label">
-                      <Label className="col-xs-6" label={item.key} />
-                      <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
-                    </div>
-                  );
-                })}
-            </div>
-          }
-        />
+        {receiptUIDetails && (
+          <Card
+            className="pt-success-receipt"
+            textChildren={
+              <div>
+                {receiptUIDetails &&
+                  receiptUIDetails.propertyInfo &&
+                  receiptUIDetails.propertyInfo.map((item) => {
+                    return (
+                      <div className="row pt-reciept-label">
+                        <Label className="col-xs-6" label={item.key} />
+                        <Label className="col-xs-6" labelStyle={labelStyle} label={item.value} />
+                      </div>
+                    );
+                  })}
+                <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+                {receiptUIDetails &&
+                  receiptUIDetails.receiptInfo &&
+                  receiptUIDetails.receiptInfo.map((item) => {
+                    return (
+                      <div className="row pt-reciept-label">
+                        <Label className="col-xs-6" label={item.key} />
+                        <Label className="col-xs-6" labelStyle={labelStyle} label={34} />
+                      </div>
+                    );
+                  })}
+              </div>
+            }
+          />
+        )}
         {receiptDetails &&
           receiptDetails.ReceiptNo && (
             <div
@@ -93,7 +95,7 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
             </div>
           </div>
         )} */}
-      <ActionFooter label2={buttons.button2} />
+      <ActionFooter label2={buttons.button2} primaryAction={primaryAction} />
     </div>
   );
 };

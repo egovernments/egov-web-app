@@ -123,7 +123,7 @@ const formConfig = {
       //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
       errorMessage: "Pincode should be 8 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: "^([0-9]){8}$",
+      pattern: "^([0-9]){0,8}$",
     },
     oldPID: {
       id: "oldpid",

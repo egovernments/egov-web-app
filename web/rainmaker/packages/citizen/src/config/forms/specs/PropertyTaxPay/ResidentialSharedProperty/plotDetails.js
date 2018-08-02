@@ -25,7 +25,7 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
       required: true,
-      pattern: "^([0-9]){8}$",
+      pattern: "^([0-9]){0,8}$",
       numcols: 4,
     },
     ...measuringUnit,

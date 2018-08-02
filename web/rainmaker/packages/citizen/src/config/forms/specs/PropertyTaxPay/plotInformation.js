@@ -7,7 +7,7 @@ const formConfig = {
       type: "number",
       floatingLabelText: "Plot Size",
       hintText: "Enter Plot Size",
-      pattern: "^([0-9]){8}$",
+      pattern: "^([0-9]){0,8}$",
       numcols: 4,
     },
     measuringUnit: {
