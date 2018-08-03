@@ -75,16 +75,13 @@ export const occupancy = {
     dropDownData: [],
     updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
       const { value } = sourceField;
-      const dependentFields1 = ["builtArea"];
-      const dependentFields2 = ["annualRent"];
+      const dependentFields1 = ["annualRent"];
       switch (value) {
         case "RENTED":
-          // setDependentFields(dependentFields1, dispatch, formKey, true);
-          setDependentFields(dependentFields2, dispatch, formKey, false);
+          setDependentFields(dependentFields1, dispatch, formKey, false);
           break;
         default:
-          setDependentFields(dependentFields2, dispatch, formKey, true);
-          setDependentFields(dependentFields1, dispatch, formKey, false);
+          setDependentFields(dependentFields1, dispatch, formKey, true);
           break;
       }
     },
