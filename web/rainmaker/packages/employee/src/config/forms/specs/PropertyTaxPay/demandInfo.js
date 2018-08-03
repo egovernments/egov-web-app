@@ -1,17 +1,17 @@
 const formConfig = {
-  name: "chequeInfo ",
+  name: "demandInfo ",
   fields: {
-    chequeNo: {
-      id: "chequeNo",
+    demandNo: {
+      id: "demandNo",
       type: "textfield",
-      floatingLabelText: "Cheque No",
+      floatingLabelText: "Demand draft No",
       hintText: "Enter cheque no.",
       required: true
     },
-    chequeDate: {
-      id: "chequeDate",
+    demandDate: {
+      id: "demandDate",
       type: "textfield",
-      floatingLabelText: "Cheque Date",
+      floatingLabelText: "Issue Date",
       hintText: "dd/mm/yy",
       required: true,
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
@@ -23,7 +23,8 @@ const formConfig = {
       value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Name",
-      dropDownData: [{ label: "SBI", value: "SBI" }, { label: "Other", value: "Other" }]
+      dropDownData: [{ label: "SBI", value: "SBI" }, { label: "Other", value: "Other" }],
+      hintText: "Select",
     },
     BankBranch: {
       id: "BankBranch",
@@ -31,7 +32,8 @@ const formConfig = {
       value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Branch",
-      dropDownData: [{ label: "Bengaluru", value: "Bengaluru" }, { label: "Other", value: "Other" }]
+      dropDownData: [{ label: "Bengaluru", value: "Bengaluru" }, { label: "Other", value: "Other" }],
+      hintText: "Select",
     }
   },
   action: "",

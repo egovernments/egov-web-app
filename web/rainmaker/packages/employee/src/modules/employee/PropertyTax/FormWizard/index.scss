@@ -103,6 +103,37 @@
       color: #484848;
     }
   }
+  .receipt-details {
+    background-color: white;
+    margin-bottom: 18px;
+    .receipt-header {
+      .label-text {
+        height: 19px;
+        font-size: 16px;
+        font-weight: 700;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.7px;
+        color: #484848;
+        padding-left: 11px;
+        font-size: 14px;
+        padding-top: 10px;
+      }
+    }
+    .receipt-info {
+      margin-top: 7px;
+      display: flex;
+      .textfield:nth-of-type(1) {
+        width: 35% !important;
+        margin-left: 15px;
+      }
+      .textfield:nth-of-type(2) {
+        width: 35% !important;
+        margin-left: 237px;
+      }
+    }
+  }
   .bill-dates-payment {
     display: flex;
     .detaild-bill {
@@ -212,7 +243,7 @@
     .payment-modes-header {
       height: 19px;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 700;
       line-height: normal;
       letter-spacing: 0.7px;
       color: #484848;
@@ -244,6 +275,15 @@
         }
       }
     }
+    .demand-details {
+      margin-top: 40px;
+      .demand-info {
+        display: flex;
+        .date-branchr {
+          margin-left: 28%;
+        }
+      }
+    }
     .mode-title {
       font-size: 16px;
       font-weight: 500;
@@ -256,7 +296,7 @@
     .list-header {
       .label-text {
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 700;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;

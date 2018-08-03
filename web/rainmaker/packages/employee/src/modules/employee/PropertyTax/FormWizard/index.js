@@ -505,7 +505,12 @@ class FormWizard extends Component {
 
         break;
       case 3:
-        pay();
+        //pay();
+        //this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+        this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+        break;
+      case 4:
+        this.setState({ selected: selected === 4 ? index - 1 : index, formValidIndexArray: selected === 4 ? [0,1,2,3] : [...formValidIndexArray, selected] });
         break;
     }
 
@@ -588,7 +593,7 @@ class FormWizard extends Component {
   onTabClick = (index) => {
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
+    if (/*formValidIndexArray.indexOf(index) !== -1 && selected >= index*/true) {
       this.setState({
         selected: index,
         formValidIndexArray: range(0, index),
@@ -667,7 +672,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="GO BACK"
-          nextLabel={selected === 3 ? "PAY" : "NEXT"}
+          nextLabel={selected === 4 ? "PAY" : "NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
