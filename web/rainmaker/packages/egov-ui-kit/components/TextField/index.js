@@ -146,7 +146,7 @@ TextField.propTypes = {
   hintText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   required: _propTypes2.default.bool,
   hide: _propTypes2.default.bool,
-  floatingLabelText: _propTypes2.default.string,
+  floatingLabelText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   className: _propTypes2.default.string
 };
 

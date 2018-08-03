@@ -119,7 +119,7 @@ TextField.propTypes = {
   hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   required: PropTypes.bool,
   hide: PropTypes.bool,
-  floatingLabelText: PropTypes.string,
+  floatingLabelText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   className: PropTypes.string,
 };
 

@@ -65,7 +65,12 @@ var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
       className = _ref.className,
       required = _ref.required,
       value = _ref.value,
-      restProps = (0, _objectWithoutProperties3.default)(_ref, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value"]);
+      jsonPath = _ref.jsonPath,
+      errorMessage = _ref.errorMessage,
+      boundary = _ref.boundary,
+      dropDownData = _ref.dropDownData,
+      dataFetchConfig = _ref.dataFetchConfig,
+      restProps = (0, _objectWithoutProperties3.default)(_ref, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData", "dataFetchConfig"]);
 
   return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
     className: "autosuggest " + className,

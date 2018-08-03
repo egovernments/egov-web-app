@@ -8,12 +8,16 @@ const formConfig = {
       errorMessage: "CORE_COMMON_NAME_VALIDMSG",
       hintText: "CORE_COMMON_NAME_PLACEHOLDER",
       pattern: "^[A-z]+(\\s?[A-z])*$",
+      errorText: "",
+      value: "",
     },
     phonenumber: {
       id: "profile-form-phonenumber",
       floatingLabelText: "CORE_COMMON_PHONE_NUMBER",
       errorMessage: "CORE_COMMON_PHONENO_INVALIDMSG",
       hintText: "CORE_COMMON_PHONE_NUMBER_PLACEHOLDER",
+      errorText: "",
+      value: "",
     },
     email: {
       id: "profile-form-email",
@@ -21,6 +25,8 @@ const formConfig = {
       hintText: "CS_PROFILE_EMAIL_PLACEHOLDER",
       errorMessage: "CS_PROFILE_EMAIL_ERRORMSG",
       pattern: "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+      errorText: "",
+      value: "",
     },
   },
   submit: {

@@ -44,7 +44,6 @@ const tabs = [
     heading: "Payment Details",
     formValid: false,
   },
-
 ];
 
 const selectedTabStyle = {
@@ -71,17 +70,21 @@ const BreadCrumbsForm = ({ onTabClick, selected, formValidIndexArray }) => {
             href={`#${index}`}
           >
             <div className="breadcrumb-tab">
-              {/* <Icon action={tab.icon.action} name={tab.icon.name} color={"#fff"} style={{ marginRight: 10 }} /> */}
-              <div className="tab-icon">
-                {formValidIndexArray.indexOf(index) > -1 ? (
-                  <Icon style={checkIconStyle} action="navigation" name="check" color="#22b25f" />
-                ) : (
-                  <span className="form-tab-index" style={selected === index ? { color: "#fe7a51" } : { color: "#b3b3b3" }}>
-                    {index + 1}
-                  </span>
-                )}
+              <div className="breadcrumb-content breadcrumb-tab">
+                {/* <Icon action={tab.icon.action} name={tab.icon.name} color={"#fff"} style={{ marginRight: 10 }} /> */}
+                <div>
+                  <div className="tab-icon">
+                    {formValidIndexArray.indexOf(index) > -1 ? (
+                      <Icon style={checkIconStyle} action="navigation" name="check" color="#22b25f" />
+                    ) : (
+                      <span className="form-tab-index" style={selected === index ? { color: "#fe7a51" } : { color: "#b3b3b3" }}>
+                        {index + 1}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <Label label={tab.heading} labelStyle={{ letterSpacing: 0.6 }} color={"#fff"} bold={true} />
               </div>
-              <Label label={tab.heading} labelStyle={{ letterSpacing: 0.6 }} color={"#fff"} bold={true} />
             </div>
           </a>
         );

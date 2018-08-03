@@ -20,6 +20,7 @@ class AllComplaints extends Component {
     search: false,
     value: 0,
   };
+
   componentDidMount() {
     let { role, userInfo, numCSRComplaint, numEmpComplaint, renderCustomTitle } = this.props;
     let rawRole = userInfo && userInfo.roles && userInfo.roles[0].code.toUpperCase();
@@ -189,7 +190,7 @@ class AllComplaints extends Component {
                     type="number"
                     value={mobileNo}
                     hintText={<Label label="CORE_COMMON_MOBILE_NUMBER_PLACEHOLDER" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                    floatingLabelText={<Label label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={0} label="ES_CREATECOMPLAINT_MOBILE_NUMBER" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onMobileChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}
@@ -202,7 +203,7 @@ class AllComplaints extends Component {
                     name="complaint-no"
                     value={complaintNo}
                     hintText={<Label label="ES_MYCOMPLAINTS_COMPLAINT_NO" color="#b3b3b3" fontSize={16} labelStyle={hintTextStyle} />}
-                    floatingLabelText={<Label label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
+                    floatingLabelText={<Label key={1} label="CS_COMPLAINT_SUBMITTED_COMPLAINT_NO" color="#03b0c6" fontSize="12px" />}
                     onChange={(e, value) => this.onComplaintChange(e)}
                     underlineStyle={{ bottom: 7 }}
                     underlineFocusStyle={{ bottom: 7 }}

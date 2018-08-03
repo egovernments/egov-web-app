@@ -24,7 +24,20 @@ const underlineDisabledStyle = {
   borderBottom: "1px solid #e0e0e0",
 };
 
-const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, className, required, value, ...restProps }) => {
+const AutoSuggestDropdown = ({
+  onChange,
+  dataSource,
+  floatingLabelText,
+  className,
+  required,
+  value,
+  jsonPath,
+  errorMessage,
+  boundary,
+  dropDownData,
+  dataFetchConfig,
+  ...restProps
+}) => {
   return (
     <AutoComplete
       className={`autosuggest ${className}`}

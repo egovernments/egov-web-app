@@ -37,6 +37,7 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorMessage: "Landmark should be less than 100 characters",
+      value: "",
     },
     additionalDetails: {
       id: "additional details",
@@ -44,6 +45,7 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorMessage: "Landmark should be less than 300 characters",
+      value: "",
     },
     tenantId: {
       id: "add-complaint-tenantid",

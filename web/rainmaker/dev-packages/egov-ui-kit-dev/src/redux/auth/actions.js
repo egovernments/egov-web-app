@@ -91,8 +91,9 @@ export const refreshTokenRequest = () => {
   return async (dispatch) => {
     const refreshToken = window.localStorage.getItem("refresh-token");
     const grantType = "refresh_token";
+    const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
     try {
-      const response = await loginRequest(null, null, refreshToken, grantType);
+      const response = await loginRequest(null, null, refreshToken, grantType, "", userType);
       delete response.ResponseInfo;
       dispatch(authenticated(response));
       // only option for the time being!
@@ -125,8 +126,10 @@ export const logout = () => {
       if (authToken) {
         const response = await httpRequest(AUTH.LOGOUT.URL, AUTH.LOGOUT.ACTION, [{ key: "access_token", value: authToken }]);
       } else {
-          process.env.REACT_APP_NAME==="Citizen"?window.location.replace(`${window.basename}/user/register`):window.location.replace(`${window.basename}/user/login`);
-          return;
+        process.env.REACT_APP_NAME === "Citizen"
+          ? window.location.replace(`${window.basename}/user/register`)
+          : window.location.replace(`${window.basename}/user/login`);
+        return;
       }
     } catch (error) {
       console.log(error);

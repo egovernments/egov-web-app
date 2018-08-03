@@ -12,6 +12,8 @@ const formConfig = {
       hintText: "ES_CREATECOMPLAINT_COMPLAINT_NAME_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     phone: {
       id: "complainant-mobile-no",
@@ -24,6 +26,8 @@ const formConfig = {
       hintText: "ES_CREATECOMPLAINT_MOBILE_NUMBER_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     complaintType: {
       id: "complaint-type",
@@ -34,6 +38,8 @@ const formConfig = {
       hintText: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       numcols: 2,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     latitude: {
       id: "latitude",
@@ -50,6 +56,8 @@ const formConfig = {
       floatingLabelText: "ES_CREATECOMPLAINT_ADDRESS",
       hintText: "ES_CREATECOMPLAINT_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     city: {
       id: "city",
@@ -59,6 +67,8 @@ const formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
       type: "singleValueList",
       dataFetchConfig: {
         url: CITY.GET.URL,
@@ -107,6 +117,8 @@ const formConfig = {
       },
 
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     landmark: {
       id: "landmark",
@@ -114,6 +126,8 @@ const formConfig = {
       floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
       hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     additionalDetails: {
       id: "additional details",
@@ -121,6 +135,8 @@ const formConfig = {
       floatingLabelText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS",
       hintText: "ES_CREATECOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      value: "",
+      errorText: "",
     },
     tenantId: {
       id: "add-complaint-tenantid",
