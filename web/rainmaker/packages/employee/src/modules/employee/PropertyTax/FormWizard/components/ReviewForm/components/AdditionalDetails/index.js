@@ -70,7 +70,7 @@ const AdditionalDetails = ({ optionSelected, handleOptionChange, onRadioButtonCh
                   containerStyle={{ marginLeft: 16 }}
                   fontSize="14px"
                   color="#484848"
-                  label="Payment of a partial amount does not qualify you for a rebate. Please pay the pending amount by 31.12.17 to avail a rebate of INR 108 on your Property Tax."
+                  label="Please inform the citizen that they will not be eligible for a rebate if a partial amount is being paid. The rebate will be applied if the pending amount is paid before 31.12.17"
                 />
               </div>
             )}

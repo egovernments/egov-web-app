@@ -251,18 +251,27 @@
       padding-bottom: 28px;
       padding-left: 16px;
     }
+    .textfield {
+      display: flow-root !important;
+    }
+    .dropdown {
+      display: flow-root !important;
+      width: 100% !important;
+    }
     .payer-details {
+      margin-top: 25px;
+      margin-bottom: 7px;
       .cash-info {
+        justify-content: space-between;
         display: flex;
+        .name-paidby {
+          width: 40%;
+        }
         .mobile-number {
-          margin-left: 28%;
-          width: 457px;
+          width: 40%;
           .empty {
             height: 72px;
           }
-        }
-        .textfield {
-          width:100% !important;
         }
       }
     }
@@ -270,17 +279,25 @@
       margin-top: 40px;
       .cheque-info {
         display: flex;
+        justify-content: space-between;
+        .no-name {
+          width: 40%;
+        }
         .date-branchr {
-          margin-left: 28%;
+          width: 40%;
         }
       }
     }
     .demand-details {
-      margin-top: 40px;
+      margin: 40px 0 11px 0;
       .demand-info {
         display: flex;
+        justify-content: space-between;
+        .no-name {
+          width: 40%;
+        }
         .date-branchr {
-          margin-left: 28%;
+          width: 40%;
         }
       }
     }
@@ -294,15 +311,18 @@
       color: #484848;
     }
     .card-details {
-      margin-top: 40px;
+      padding: 18px 0;
       .card-info {
         display: flex;
+        justify-content: space-between;
+        .card-no {
+          width: 40%;
+        }
         .receipt {
-          width: 32%;
+          width: 40%;
           .empty {
             height: 72px;
           }
-          margin-left: 32%;
         }
       }
     }

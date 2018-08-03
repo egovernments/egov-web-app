@@ -56,7 +56,9 @@ class PaymentModes extends Component {
         <List
           items={getListItems(this.props.paymentModeDetails)}
           primaryTogglesNestedList={true}
-          //innerDivStyle={{"border-bottom":"blue solid 1px"}}
+          listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px" }}
+          nestedListStyle={{ padding: "0px" }}
+          innerDivStyle={{"border-bottom":"#e0e0e0 solid 1px"}}
           onItemClick={(item, index) => {
             //  history && history.push(item.route);
           }}
