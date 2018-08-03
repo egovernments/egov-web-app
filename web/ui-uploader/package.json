@@ -10,6 +10,10 @@
     "/data-uploader/*": {
       "target": "http://localhost:8082/",
       "changeOrigin": true
+    },
+    "/filestore/*": {
+      "target": "https://egov-micro-dev.egovernments.org/",
+      "changeOrigin": true
     }
   },
   "dependencies": {

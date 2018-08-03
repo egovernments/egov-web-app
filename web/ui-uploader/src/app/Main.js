@@ -12,7 +12,7 @@ const Main = () => {
     <main>
       <Switch>
         <Route exact path={`${base}/`} component={LoginUser} />
-        <Route exact path={`${base}/user-jobs`} component={UserJobs} />
+        <Route exact path={`${base}/view-jobs`} component={UserJobs} />
         <Route exact path={`${base}/file-uploader`} component={FileUploader} />
       </Switch>
     </main>
