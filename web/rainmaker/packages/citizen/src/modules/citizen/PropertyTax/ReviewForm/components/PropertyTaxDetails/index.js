@@ -21,7 +21,12 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
         title={
           <div className="tax-header-price rainmaker-displayInline">
             <Label label="Property Tax Dues:" fontSize="16px" color="#484848" />
-            <Label className="property-dues-total-amount" label={`INR ${totalAmount}`} fontSize="16px" color="#484848" />
+            <Label
+              className="property-dues-total-amount"
+              label={`INR ${totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}`}
+              fontSize="16px"
+              color="#484848"
+            />
           </div>
         }
       />
@@ -57,7 +62,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
                 <Label
                   containerStyle={{ textAlign: "right" }}
                   labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
-                  label={`${totalAmount}`}
+                  label={totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}
                 />
               </div>
             </div>
@@ -66,30 +71,33 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
             <div className="date-details">
               <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="Important Dates" bold={true} />
               <ul>
-                {rebate && (
-                  <li>
-                    <span>
-                      <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
-                    </span>
-                    <span>{`${rebate.endingDay}/${rebate.fromFY && rebate.fromFY.slice(0, 4)}`}</span>
-                  </li>
-                )}
-                {penalty && (
-                  <li>
-                    <span>
-                      <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
-                    </span>
-                    <span>{`${penalty.startingDay}/${penalty.fromFY && penalty.fromFY.slice(0, 4)}`}</span>
-                  </li>
-                )}
-                {intrest && (
-                  <li>
-                    <span>
-                      <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
-                    </span>
-                    <span>{`${intrest.startingDay}/${intrest.fromFY && intrest.fromFY.slice(0, 4)}`}</span>
-                  </li>
-                )}
+                {rebate &&
+                  rebate.endingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
+                      </span>
+                      <span>{`${rebate.endingDay}/${rebate.fromFY && rebate.fromFY.slice(0, 4)}`}</span>
+                    </li>
+                  )}
+                {penalty &&
+                  penalty.startingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
+                      </span>
+                      <span>{`${penalty.startingDay}/${penalty.fromFY && penalty.fromFY.slice(0, 4)}`}</span>
+                    </li>
+                  )}
+                {intrest &&
+                  intrest.startingDay && (
+                    <li>
+                      <span>
+                        <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
+                      </span>
+                      <span>{`${intrest.startingDay}/${intrest.fromFY && intrest.fromFY.slice(0, 4)}`}</span>
+                    </li>
+                  )}
               </ul>
             </div>
           </div>

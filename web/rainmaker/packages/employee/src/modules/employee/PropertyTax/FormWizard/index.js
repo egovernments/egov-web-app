@@ -33,7 +33,7 @@ import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails"
+import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -380,11 +380,7 @@ class FormWizard extends Component {
           </div>
         );
       case 4:
-        return (
-          <PaymentDetails
-            financialYr={financialYear ? financialYear.fields.button : {}}
-          />
-        )
+        return <PaymentDetails financialYr={financialYear ? financialYear.fields.button : {}} />;
       default:
         return null;
     }
@@ -513,7 +509,6 @@ class FormWizard extends Component {
         this.setState({ selected: index, formValidIndexArray: range(0, index) });
         break;
     }
-
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear) => {

@@ -5,8 +5,8 @@ const formConfig = {
       id: "payerName",
       type: "textfield",
       floatingLabelText: "Payer Name",
-      hintText: "Enterpayer Name",
-      required: true
+      hintText: "Enter payer Name",
+      required: true,
     },
     payerMobile: {
       id: "ownerMobile",
@@ -15,7 +15,7 @@ const formConfig = {
       hintText: "Enter Mobile No.",
       required: true,
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number"
+      errorMessage: "Enter valid mobile number",
     },
     paidBy: {
       id: "paidBy",
@@ -23,13 +23,13 @@ const formConfig = {
       value: "Select",
       type: "singleValueList",
       floatingLabelText: "Paid By",
-      dropDownData: [{ label: "Owner", value: "Owner" }, { label: "Other", value: "Other" }]
-    }
+      dropDownData: [{ label: "Owner", value: "Owner" }, { label: "Other", value: "Other" }],
+    },
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false
+  isFormValid: false,
 };
 
 export default formConfig;

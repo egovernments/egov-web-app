@@ -3,6 +3,7 @@ import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
+
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -20,7 +21,7 @@ import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
 import { connect } from "react-redux";
-import { setRoute } from "egov-ui-kit/redux/app/actions";
+import { setRoute, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
@@ -37,7 +38,7 @@ import "./index.css";
 
 class FormWizard extends Component {
   state = {
-    financialYearFromQuery:"",
+    financialYearFromQuery: "",
     dialogueOpen: false,
     selected: 0,
     ownerInfoArr: [],
@@ -241,11 +242,11 @@ class FormWizard extends Component {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
         console.log(pgUpdateResponse);
         let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-        let tenantId=get(pgUpdateResponse, "Transaction[0].tenantId");
+        let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
         if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-          history.push("/property-tax/payment-failure/" + moduleId.split("-", 4).join("-")+"/"+tenantId);
+          history.push("/property-tax/payment-failure/" + moduleId.split("-", 4).join("-") + "/" + tenantId);
         } else {
-          history.push("/property-tax/payment-success/" + moduleId.split("-", 4).join("-")+"/"+tenantId);
+          history.push("/property-tax/payment-success/" + moduleId.split("-", 4).join("-") + "/" + tenantId);
         }
       } catch (e) {
         alert(e);
@@ -253,12 +254,12 @@ class FormWizard extends Component {
       }
     }
 
-    let financialYearFromQuery=window.location.search.split("financialYear=")[1];
+    let financialYearFromQuery = window.location.search.split("financialYear=")[1];
     if (financialYearFromQuery) {
-      financialYearFromQuery=financialYearFromQuery.split("&")[0];
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
       this.setState({
-        financialYearFromQuery
-      })
+        financialYearFromQuery,
+      });
     }
   };
 
@@ -513,16 +514,15 @@ class FormWizard extends Component {
         pay();
         break;
     }
-
   };
 
-  callPGService = async (propertyId, assessmentNumber, assessmentYear,tenantId) => {
+  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     let { history } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
-      {key:"tenantId",value:tenantId}
+      { key: "tenantId", value: tenantId },
     ];
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
@@ -544,9 +544,8 @@ class FormWizard extends Component {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
           window.location = redirectionUrl;
         } else {
-          history.push("/property-tax/payment-success/" + propertyId +"/" + tenantId);
+          history.push("/property-tax/payment-success/" + propertyId + "/" + tenantId);
         }
-
       } catch (e) {
         console.log(e);
       }
@@ -556,8 +555,8 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { prepareFormData,location } = this.props;
-    const {financialYearFromQuery} =this.state;
+    let { prepareFormData, location } = this.props;
+    const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
     try {
@@ -568,7 +567,7 @@ class FormWizard extends Component {
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
-            assessmentYear: ((financialYear && financialYear.fields.button.value) || financialYearFromQuery),
+            assessmentYear: (financialYear && financialYear.fields.button.value) || financialYearFromQuery,
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
             property: prepareFormData.Properties[0],
           },
@@ -580,13 +579,14 @@ class FormWizard extends Component {
       // });
       return estimateResponse;
     } catch (e) {
-      alert(e);
+      // alert(e);
+      this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     }
   };
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    const {financialYearFromQuery} =this.state;
+    const { financialYearFromQuery } = this.state;
     let { prepareFormData } = this.props;
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
@@ -607,7 +607,7 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    const {fetchDraftDetails} =this;
+    const { fetchDraftDetails } = this;
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
     // fetchDraftDetails();
@@ -714,6 +714,7 @@ const mapDispatchToProps = (dispatch) => {
     updatePTForms: (forms) => dispatch(updateForms(forms)),
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
