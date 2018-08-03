@@ -293,6 +293,19 @@
       letter-spacing: 0.6px;
       color: #484848;
     }
+    .card-details {
+      margin-top: 40px;
+      .card-info {
+        display: flex;
+        .receipt {
+          width: 32%;
+          .empty {
+            height: 72px;
+          }
+          margin-left: 32%;
+        }
+      }
+    }
     .list-header {
       .label-text {
         font-size: 16px;

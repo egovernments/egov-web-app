@@ -59,4 +59,20 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
   );
 };
 
-export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation }
+const CardInformation = ({ form, formKey, handleFieldChange }) => {
+  const fields = form.fields || {};
+  return (
+    <div className="card-info">
+      <div className="card-no">
+        <Field fieldKey="cardDigits" field={fields.cardDigits} handleFieldChange={handleFieldChange} />
+        <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
+      </div>
+      <div className="receipt">
+      <div className="empty"></div>
+      <Field fieldKey="confirmReceiptNo" field={fields.confirmReceiptNo} handleFieldChange={handleFieldChange} />
+      </div>
+    </div>
+  );
+}
+
+export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation, CardInformation }

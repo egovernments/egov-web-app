@@ -510,7 +510,7 @@ class FormWizard extends Component {
         this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
         break;
       case 4:
-        this.setState({ selected: selected === 4 ? index - 1 : index, formValidIndexArray: selected === 4 ? [0,1,2,3] : [...formValidIndexArray, selected] });
+        this.setState({ selected: index, formValidIndexArray: range(0, index) });
         break;
     }
 
