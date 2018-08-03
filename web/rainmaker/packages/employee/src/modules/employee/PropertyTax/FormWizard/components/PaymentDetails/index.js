@@ -16,36 +16,12 @@ import Field from "egov-ui-kit/utils/field"
 //   OwnerInformation,
 //   InstitutionAuthorityHOC,
 // } from "modules/citizen/PropertyTax/FormWizard/components/Forms";
-import { CashInformation, ChequeInformation } from "./forms"
+import { CashInformation, ChequeInformation, DemandDraftInformation } from "./forms"
+import AdditionalDetails from "modules/employee/PropertyTax/FormWizard/components/ReviewForm/components/AdditionalDetails"
 
 const paymentModeDetails =  [
   {
     primaryText: "Cash",
-    forms: [
-      {
-        title: "Payer Details",
-        className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
-      },
-    ],
-  },
-  {
-    primaryText: "Card",
-    forms: [
-      {
-        title: "Payer Details",
-        className: "payer-details",
-        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
-      },
-      {
-        title: "Cheque Details",
-        className: "cheque-details",
-        comp: formHoc({ formKey: "chequeInfo", copyName: "chequeInfo", path: "PropertyTaxPay" })(ChequeInformation)
-      }
-    ],
-  },
-  {
-    primaryText: "NetBanking",
     forms: [
       {
         title: "Payer Details",
@@ -62,6 +38,36 @@ const paymentModeDetails =  [
         className: "payer-details",
         comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
       },
+      {
+        title: "Cheque Details",
+        className: "cheque-details",
+        comp: formHoc({ formKey: "chequeInfo", copyName: "chequeInfo", path: "PropertyTaxPay" })(ChequeInformation)
+      }
+    ],
+  },
+  {
+    primaryText: "DD",
+    forms: [
+      {
+        title: "Payer Details",
+        className: "payer-details",
+        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
+      },
+      {
+        title: "Demand Draft Details",
+        className: "demand-details",
+        comp: formHoc({ formKey: "demandInfo", copyName: "demandInfo", path: "PropertyTaxPay" })(DemandDraftInformation)
+      }
+    ],
+  },
+  {
+    primaryText: "Credit/Debit",
+    forms: [
+      {
+        title: "Payer Details",
+        className: "payer-details",
+        comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
+      },
     ],
   },
 ]
@@ -71,11 +77,21 @@ class PaymentDetails extends Component {
   state = {
     importantDates: {},
     paymentModeDetails,
+    valueSelected: "",
   };
 
   componentDidMount() {
     this.getImportantDates();
   }
+
+  handleOptionsChange = (event, value) => {
+    this.setState({ valueSelected: value });
+  };
+
+  onRadioButtonChange = (e) => {
+    const inputValue = e.target.value;
+    this.setState({ totalAmountTobePaid: inputValue });
+  };
 
   getImportantDates = async () => {
     try {
@@ -148,13 +164,19 @@ class PaymentDetails extends Component {
   };
 
   render() {
-    const { importantDates, paymentModeDetails } = this.state
+    const { importantDates, paymentModeDetails, valueSelected } = this.state
     return (
       <div className="payment-details">
         <TaxBreakUp importantDates={importantDates} />
+        <AdditionalDetails
+          value={10000}
+          onRadioButtonChange={this.onRadioButtonChange}
+          handleOptionChange={this.handleOptionsChange}
+          optionSelected={valueSelected}
+        />
         <AmountDetails />
-        <ReceiptDetails />
         <PaymentModes paymentModeDetails={paymentModeDetails} />
+        <ReceiptDetails />
       </div>
     )
   }

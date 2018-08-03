@@ -41,17 +41,11 @@ const WizardComponent = ({
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
             buttonStyle={{ border: 0 }}
-            onClick={
-              selected === 3
-                ? onPayButtonClick
-                : () => {
-                    updateIndex(selected + 1);
-                  }
-            }
+            onClick={() => {updateIndex(selected + 1)}}
           />
         </div>
       </div>
-      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex}/>
+      {/*<Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex}/>*/}
     </div>
   );
 };
