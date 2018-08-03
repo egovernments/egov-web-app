@@ -33,6 +33,10 @@ const underlineFocusBaseStyle = {
   borderColor: "#e0e0e0",
 };
 
+const underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0",
+};
+
 const DropDownUi = ({
   className,
   menuInnerDivStyle,
@@ -76,6 +80,7 @@ const DropDownUi = ({
       id={id}
       style={style}
       autoWidth={autoWidth}
+      underlineDisabledStyle={underlineDisabledStyle}
       menuStyle={menuStyle}
       fullWidth={fullWidth}
       dropDownMenuProps={{

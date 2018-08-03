@@ -7,7 +7,7 @@ import Field from "egov-ui-kit/utils/field";
 //   });
 // };
 
-const CustomSelectForm = ({ handleFieldChange, form, noFloors }) => {
+const CustomSelectForm = ({ handleFieldChange, form }) => {
   let fields = form.fields || {};
 
   return (

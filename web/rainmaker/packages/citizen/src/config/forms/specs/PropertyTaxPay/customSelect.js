@@ -1,4 +1,6 @@
 import { FLOOR } from "egov-ui-kit/utils/endPoints";
+import { updateFloorDropdown } from "modules/citizen/PropertyTax/FormWizard/utils/updateFloorDropdown";
+
 const formConfig = {
   name: "customSelect",
   fields: {
@@ -32,14 +34,8 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.Floor"],
       },
-      // dropDownData: [],
-      // dataFetchConfig: {
-      //   url: "egov-location/location/v11/boundarys/_search",
-      //   action: "",
-      //   queryParams: [],
-      //   requestBody: {},
-      //   isDependent: true,
-      //   dataPath: `$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==${cityCode})]..children[?(@.label=='Locality')]`,
+      // updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      //   updateFloorDropdown(formKey, field, dispatch, state);
       // },
     },
   },

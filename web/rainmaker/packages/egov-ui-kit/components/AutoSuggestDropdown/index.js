@@ -54,6 +54,9 @@ var underlineFocusBaseStyle = {
 var requiredStyle = {
   color: "red"
 };
+var underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0"
+};
 
 var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
   var onChange = _ref.onChange,
@@ -78,6 +81,7 @@ var AutoSuggestDropdown = function AutoSuggestDropdown(_ref) {
     menuStyle: { maxHeight: "150px", overflowY: "auto" },
     dataSourceConfig: { text: "label", value: "value" },
     onNewRequest: onChange,
+    underlineDisabledStyle: underlineDisabledStyle,
     floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
       "span",
       { key: "error-" + className, style: requiredStyle },

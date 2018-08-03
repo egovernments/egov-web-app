@@ -42,6 +42,9 @@ var floatingLabelBaseShrinkStyle = {
   transform: "scale(1) translate(0px, -16px)",
   fontWeight: 500
 };
+var underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0"
+};
 
 var TextAreaUi = function TextAreaUi(_ref) {
   var className = _ref.className,
@@ -86,7 +89,8 @@ var TextAreaUi = function TextAreaUi(_ref) {
     underlineStyle: underlineStyle,
     underlineFocusStyle: underlineFocusStyle,
     floatingLabelStyle: (0, _extends3.default)({}, floatingLabelBaseStyle, floatingLabelStyle),
-    value: value
+    value: value,
+    underlineDisabledStyle: underlineDisabledStyle
   }, rest));
 };
 

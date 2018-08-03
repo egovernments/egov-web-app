@@ -61,6 +61,10 @@ var underlineFocusBaseStyle = {
   borderColor: "#e0e0e0"
 };
 
+var underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0"
+};
+
 var DropDownUi = function DropDownUi(_ref) {
   var className = _ref.className,
       menuInnerDivStyle = _ref.menuInnerDivStyle,
@@ -108,6 +112,7 @@ var DropDownUi = function DropDownUi(_ref) {
       id: id,
       style: style,
       autoWidth: autoWidth,
+      underlineDisabledStyle: underlineDisabledStyle,
       menuStyle: menuStyle,
       fullWidth: fullWidth,
       dropDownMenuProps: {

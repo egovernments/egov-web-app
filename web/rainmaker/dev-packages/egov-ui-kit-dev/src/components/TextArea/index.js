@@ -18,6 +18,9 @@ const floatingLabelBaseShrinkStyle = {
   transform: "scale(1) translate(0px, -16px)",
   fontWeight: 500,
 };
+const underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0",
+};
 
 const TextAreaUi = ({
   className,
@@ -62,6 +65,7 @@ const TextAreaUi = ({
       underlineFocusStyle={underlineFocusStyle}
       floatingLabelStyle={{ ...floatingLabelBaseStyle, ...floatingLabelStyle }}
       value={value}
+      underlineDisabledStyle={underlineDisabledStyle}
       {...rest}
     />
   );

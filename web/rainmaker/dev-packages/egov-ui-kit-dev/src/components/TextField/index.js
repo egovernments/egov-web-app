@@ -33,6 +33,10 @@ const requiredStyle = {
   color: "red",
 };
 
+const underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0",
+};
+
 const underlineFocusBaseStyle = {
   borderColor: "#e0e0e0",
 };
@@ -99,6 +103,7 @@ const TextField = ({
       maxLength={maxLength}
       autoComplete={type === "password" ? "new-password" : "off"}
       multiLine={multiLine}
+      underlineDisabledStyle={underlineDisabledStyle}
       {...rest}
     />
   );

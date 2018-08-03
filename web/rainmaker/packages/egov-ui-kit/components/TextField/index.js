@@ -57,6 +57,10 @@ var requiredStyle = {
   color: "red"
 };
 
+var underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0"
+};
+
 var underlineFocusBaseStyle = {
   borderColor: "#e0e0e0"
 };
@@ -127,7 +131,8 @@ var TextField = function TextField(_ref) {
     autoFocus: autoFocus,
     maxLength: maxLength,
     autoComplete: type === "password" ? "new-password" : "off",
-    multiLine: multiLine
+    multiLine: multiLine,
+    underlineDisabledStyle: underlineDisabledStyle
   }, rest));
 };
 
