@@ -60,7 +60,8 @@ class SearchProperty extends Component {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
       let { propertyId, oldPropertyId, address, propertyDetails } = property;
-      let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
+      let displayAddress = "StringFiled, Sarjapur Road";
+      //let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button

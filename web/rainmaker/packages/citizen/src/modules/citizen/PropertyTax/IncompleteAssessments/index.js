@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
           </div>
         ),
         assessmentNo: draft.id,
-        date: getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")),
+        date: draft.auditDetails ? getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")) : "",
         status: "Saved Draft",
       });
     }
