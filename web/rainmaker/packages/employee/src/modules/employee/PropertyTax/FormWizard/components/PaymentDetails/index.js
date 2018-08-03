@@ -16,7 +16,7 @@ import Field from "egov-ui-kit/utils/field"
 //   OwnerInformation,
 //   InstitutionAuthorityHOC,
 // } from "modules/citizen/PropertyTax/FormWizard/components/Forms";
-import { CashInformation, ChequeInformation, DemandDraftInformation } from "./forms"
+import { CashInformation, ChequeInformation, DemandDraftInformation, CardInformation } from "./forms"
 import AdditionalDetails from "modules/employee/PropertyTax/FormWizard/components/ReviewForm/components/AdditionalDetails"
 
 const paymentModeDetails =  [
@@ -67,6 +67,11 @@ const paymentModeDetails =  [
         title: "Payer Details",
         className: "payer-details",
         comp: formHoc({ formKey: "cashInfo", copyName: "cashInfo", path: "PropertyTaxPay" })(CashInformation)
+      },
+      {
+        title: "Card Details",
+        className: "card-details",
+        comp: formHoc({ formKey: "cardInfo", copyName: "cardInfo", path: "PropertyTaxPay" })(CardInformation)
       },
     ],
   },
