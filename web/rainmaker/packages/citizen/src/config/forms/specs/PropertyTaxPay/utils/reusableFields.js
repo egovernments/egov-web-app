@@ -42,24 +42,14 @@ export const subUsageType = {
     required: true,
     numcols: 4,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      let subUsageMinor=get(state,`common.generalMDMSDataById.UsageCategoryDetail[${field.value}]`);
+      let subUsageMinor = get(state, `common.generalMDMSDataById.UsageCategoryDetail[${field.value}]`);
       if (!isEmpty(subUsageMinor)) {
-        dispatch(
-          prepareFormData(
-            `${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,
-            subUsageMinor.usageCategorySubMinor
-          )
-        );
+        dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`, subUsageMinor.usageCategorySubMinor));
       } else {
-        dispatch(
-          prepareFormData(
-            `${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`,
-            field.value
-          )
-        );
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryDetail",null));
+        dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`, field.value));
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryDetail", null));
       }
-    }
+    },
   },
 };
 
@@ -133,9 +123,9 @@ export const plotSize = {
     pattern: "^([0-9]){0,8}$",
     numcols: 4,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      let propertyType=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].propertyType")
-      if (propertyType=="VACANT") {
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].landArea",field.value));
+      let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
+      if (propertyType == "VACANT") {
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].landArea", field.value));
       }
     },
   },
@@ -157,58 +147,127 @@ export const measuringUnit = {
 export const beforeInitForm = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
-    let {dispatch}=store;
-    var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
-    var usageCategoryMinor=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+    let { dispatch } = store;
+    const { form } = action;
+    const { name: formKey, fields } = form;
+
+    var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
+    var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+
     if (usageCategoryMinor) {
-      var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
-        return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-      });
-      var filteredUsageCategoryDetails=getPresentMasterObj(filteredSubUsageMinor,prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),"usageCategorySubMinor");
-      set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
-      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+      var filteredSubUsageMinor = filter(
+        prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
+        (subUsageMinor) => {
+          return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+        }
+      );
+      var filteredUsageCategoryDetails = getPresentMasterObj(
+        filteredSubUsageMinor,
+        prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+        "usageCategorySubMinor"
+      );
+      set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
+      dispatch(
+        prepareFormData(
+          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+        )
+      );
     } else {
-      set(action,"form.fields.subUsageType.hideField",true);
+      set(action, "form.fields.subUsageType.hideField", true);
     }
-    set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
-    dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
+    set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
+    dispatch(
+      prepareFormData(
+        `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
+        get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
+      )
+    );
+
+    //For adding multiple units to prepareFormData
+    if (formKey.startsWith(`floorDetails_`)) {
+      const arr = formKey.split("_");
+      const floorIndex = parseInt(arr[1]);
+      const unitIndex = parseInt(arr[3]);
+      let unitsCount = null;
+      if (state.form[formKey]) {
+        unitsCount = state.form[formKey].unitsIndex;
+      } else {
+        unitsCount = get(state, `common.prepareFormData.Properties[0].propertyDetails[0].units`).length;
+        form.unitsIndex = unitsCount;
+      }
+      if (floorIndex === 0 && unitIndex === 0) {
+        form.unitsIndex = 0;
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, "0"));
+      } else {
+        const updatedFields = Object.keys(fields).reduce((updatedFields, fieldKey) => {
+          const jsonPath = fields[fieldKey].jsonPath;
+          updatedFields[fieldKey] = { ...fields[fieldKey], unitsIndex: unitsCount };
+          if (jsonPath.indexOf("units[") > -1) {
+            const first = jsonPath.split("units[")[0];
+            const last = jsonPath.split("units[")[1].split("]")[1];
+            updatedFields[fieldKey].jsonPath = `${first}units[${unitsCount}]${last}`;
+          }
+          return updatedFields;
+        }, {});
+        set(action, "form.fields", { ...updatedFields });
+
+        !state.form[formKey] && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorIndex}`));
+      }
+    }
+
     return action;
-  }
+  },
 };
 
 export const beforeInitFormForPlot = {
   beforeInitForm: (action, store) => {
     let state = store.getState();
-    let {dispatch}=store;
-    const propertyType=get(state,"form.basicInformation.fields.typeOfBuilding.value");
-    if (propertyType!="VACANT") {
-      var occupancy=get(state,"common.generalMDMSDataById.OccupancyType");
-      var usageCategoryMinor=get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+    let { dispatch } = store;
+    const propertyType = get(state, "form.basicInformation.fields.typeOfBuilding.value");
+    if (propertyType != "VACANT") {
+      var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
+      var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
       if (usageCategoryMinor) {
-        var filteredSubUsageMinor=filter(prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategorySubMinor"),true),(subUsageMinor)=>{
-          return subUsageMinor.usageCategoryMinor===get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-        });
-        var filteredUsageCategoryDetails=getPresentMasterObj(filteredSubUsageMinor,prepareDropDownData(get(state,"common.generalMDMSDataById.UsageCategoryDetail"),true),"usageCategorySubMinor");
-        set(action,"form.fields.subUsageType.dropDownData",mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails,"usageCategoryDetail"));
-        dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)));
+        var filteredSubUsageMinor = filter(
+          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
+          (subUsageMinor) => {
+            return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+          }
+        );
+        var filteredUsageCategoryDetails = getPresentMasterObj(
+          filteredSubUsageMinor,
+          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+          "usageCategorySubMinor"
+        );
+        set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
+        dispatch(
+          prepareFormData(
+            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+          )
+        );
       } else {
-        set(action,"form.fields.subUsageType.hideField",true);
+        set(action, "form.fields.subUsageType.hideField", true);
       }
-      set(action,"form.fields.occupancy.dropDownData",prepareDropDownData(occupancy));
-      dispatch(prepareFormData(`${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,get(state,`common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)));
+      set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
+      dispatch(
+        prepareFormData(
+          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
+          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
+        )
+      );
     }
-    if (propertyType=="VACANT") {
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`,1));
+    if (propertyType == "VACANT") {
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 1));
     }
-    if (propertyType=="SHAREDPROPERTY") {
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`,2));
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`,-1));
+    if (propertyType == "SHAREDPROPERTY") {
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
     }
     return action;
   },
 };
-
-
 
 export const prepareDropDownData = (master, withOriginal = false) => {
   let dropDownData = [];
@@ -252,11 +311,11 @@ const mergeMaster = (masterOne, masterTwo, parentName = "") => {
       dropDownData.push({ label: masterTwo[variable].name, value: masterTwo[variable].code });
     }
   }
-  let masterOneData=getAbsentMasterObj(prepareDropDownData(masterOne,true),prepareDropDownData(masterTwo,true),parentName);
+  let masterOneData = getAbsentMasterObj(prepareDropDownData(masterOne, true), prepareDropDownData(masterTwo, true), parentName);
   // console.log(masterOneData);
   for (var i = 0; i < masterOneData.length; i++) {
     // masterOneData[i][parentName]=masterOneData[i].code;
-    dropDownData.push({ label:masterOneData[i].name,value: masterOneData[i].code});
+    dropDownData.push({ label: masterOneData[i].name, value: masterOneData[i].code });
   }
   return dropDownData;
 };

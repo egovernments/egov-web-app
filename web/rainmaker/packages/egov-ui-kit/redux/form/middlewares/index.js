@@ -28,7 +28,11 @@ var _initForm = require("./initForm");
 
 var _initForm2 = _interopRequireDefault(_initForm);
 
+var _removeForm = require("./removeForm");
+
+var _removeForm2 = _interopRequireDefault(_removeForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var composedMiddleware = [_initForm2.default, _formHooks2.default, _initField2.default, _formSubmit2.default, _translateFieldText2.default, _validation2.default];
+var composedMiddleware = [_initForm2.default, _formHooks2.default, _initField2.default, _formSubmit2.default, _translateFieldText2.default, _validation2.default, _removeForm2.default];
 exports.default = composedMiddleware;
