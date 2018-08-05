@@ -10,7 +10,7 @@ const SingleButtonForm = ({ label, form, handleFieldChange, history }) => {
       {...fields.button}
       onClick={() => {
         handleFieldChange("button", label);
-        history && history.push(`/property-tax/assessment-form?financialYear=${label}&type=new`);
+        history && history.push(`/property-tax/assessment-form?FY=${label}&type=new`);
       }}
       className="year-range-button"
       label={label}

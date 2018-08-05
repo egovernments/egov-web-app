@@ -138,7 +138,9 @@ class FormWizard extends Component {
         [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
         draftRequest
       );
-      const currentDraft = draftsResponse.drafts.find((res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      const currentDraft = draftsResponse.drafts.find(
+        (res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId
+      );
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
@@ -565,22 +567,19 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
             assessmentYear: (financialYear && financialYear.fields.button.value) || financialYearFromQuery,
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
-            property: prepareFormData.Properties[0],
+            property: propertyDetails[0],
           },
         ],
       });
-      // console.log(estimateResponse.Calculation);
-      // this.setState({
-      //   estimation: estimateResponse && estimateResponse.Calculation,
-      // });
       return estimateResponse;
     } catch (e) {
-      // alert(e);
+      console.log(e);
       this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     }
   };
@@ -595,7 +594,8 @@ class FormWizard extends Component {
     }
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
+      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
@@ -667,6 +667,17 @@ class FormWizard extends Component {
         </div>
       );
     }
+  };
+
+  normalizePropertyDetails = (properties) => {
+    const propertyInfo = JSON.parse(JSON.stringify(properties));
+    const property = propertyInfo[0] || {};
+    const { propertyDetails } = property;
+    const units = propertyDetails[0].units.filter((item, ind) => {
+      return item !== null;
+    });
+    propertyDetails[0].units = units;
+    return propertyInfo;
   };
 
   closeDeclarationDialogue = () => {
