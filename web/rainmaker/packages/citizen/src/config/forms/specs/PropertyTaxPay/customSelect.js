@@ -1,5 +1,4 @@
 import { FLOOR } from "egov-ui-kit/utils/endPoints";
-import { updateFloorDropdown } from "modules/citizen/PropertyTax/FormWizard/utils/updateFloorDropdown";
 
 const formConfig = {
   name: "customSelect",
@@ -34,9 +33,6 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.Floor"],
       },
-      // updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      //   updateFloorDropdown(formKey, field, dispatch, state);
-      // },
     },
   },
   action: "",

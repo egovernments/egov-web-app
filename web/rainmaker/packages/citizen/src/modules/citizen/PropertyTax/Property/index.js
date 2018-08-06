@@ -121,6 +121,7 @@ class Property extends Component {
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
           </div>
         ),
+        initiallyOpen: true,
       },
       {
         primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,

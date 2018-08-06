@@ -279,7 +279,7 @@ const dateDiffInDays = (a, b) => {
 };
 
 export const getCommaSeperatedAddress = (buildingName, street) => {
-  return buildingName && street ? `${buildingName}, ${street}` : "SpringField, Sarjapur";
+  return buildingName && street ? `${buildingName}, ${street}` : "NA";
 };
 
 export const getTransformedStatus = (status) => {
