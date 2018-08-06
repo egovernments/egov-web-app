@@ -6,6 +6,7 @@ import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import get from "lodash/get";
 import "./index.css";
 
 const iconStyle = {
@@ -173,7 +174,10 @@ const mapStateToProps = (state) => {
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   // const numDrafts = draftsById && Object.keys(draftsById).length;
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
-    if (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") {
+    if (
+      (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
+      get(draft, "draftRecord.financialYear.fields.button.value")
+    ) {
       result.push(draft);
     }
     return result;
