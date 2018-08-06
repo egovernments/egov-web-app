@@ -151,6 +151,38 @@ export const beforeInitForm = {
     const { form } = action;
     const { name: formKey, fields } = form;
 
+    if (formKey.startsWith(`floorDetails_`)) {
+      const arr = formKey.split("_");
+      const floorIndex = parseInt(arr[1]);
+      const unitIndex = parseInt(arr[3]);
+      const property = get(state, `common.prepareFormData.Properties[0].propertyDetails[0]`);
+      let unitsCount = null;
+      if (state.form[formKey]) {
+        unitsCount = state.form[formKey].unitsIndex;
+      } else {
+        unitsCount = property && property.units && property.units.length;
+        form.unitsIndex = unitsCount;
+      }
+      if (floorIndex === 0 && unitIndex === 0) {
+        form.unitsIndex = 0;
+        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, "0"));
+      } else {
+        const updatedFields = Object.keys(fields).reduce((updatedFields, fieldKey) => {
+          const jsonPath = fields[fieldKey].jsonPath;
+          updatedFields[fieldKey] = { ...fields[fieldKey], unitsIndex: unitsCount };
+          if (jsonPath.indexOf("units[") > -1) {
+            const first = jsonPath.split("units[")[0];
+            const last = jsonPath.split("units[")[1].split("]")[1];
+            updatedFields[fieldKey].jsonPath = `${first}units[${unitsCount}]${last}`;
+          }
+          return updatedFields;
+        }, {});
+        set(action, "form.fields", { ...updatedFields });
+
+        !state.form[formKey] && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorIndex}`));
+      }
+    }
+
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
 
@@ -185,36 +217,6 @@ export const beforeInitForm = {
     );
 
     //For adding multiple units to prepareFormData
-    if (formKey.startsWith(`floorDetails_`)) {
-      const arr = formKey.split("_");
-      const floorIndex = parseInt(arr[1]);
-      const unitIndex = parseInt(arr[3]);
-      let unitsCount = null;
-      if (state.form[formKey]) {
-        unitsCount = state.form[formKey].unitsIndex;
-      } else {
-        unitsCount = get(state, `common.prepareFormData.Properties[0].propertyDetails[0].units`).length;
-        form.unitsIndex = unitsCount;
-      }
-      if (floorIndex === 0 && unitIndex === 0) {
-        form.unitsIndex = 0;
-        dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, "0"));
-      } else {
-        const updatedFields = Object.keys(fields).reduce((updatedFields, fieldKey) => {
-          const jsonPath = fields[fieldKey].jsonPath;
-          updatedFields[fieldKey] = { ...fields[fieldKey], unitsIndex: unitsCount };
-          if (jsonPath.indexOf("units[") > -1) {
-            const first = jsonPath.split("units[")[0];
-            const last = jsonPath.split("units[")[1].split("]")[1];
-            updatedFields[fieldKey].jsonPath = `${first}units[${unitsCount}]${last}`;
-          }
-          return updatedFields;
-        }, {});
-        set(action, "form.fields", { ...updatedFields });
-
-        !state.form[formKey] && dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[${unitsCount}].floorNo`, `${floorIndex}`));
-      }
-    }
 
     return action;
   },
