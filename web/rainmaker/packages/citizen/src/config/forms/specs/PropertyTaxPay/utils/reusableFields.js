@@ -186,6 +186,8 @@ export const beforeInitForm = {
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
 
+    //For adding multiple units to prepareFormData
+
     if (usageCategoryMinor) {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
@@ -215,8 +217,6 @@ export const beforeInitForm = {
         get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
       )
     );
-
-    //For adding multiple units to prepareFormData
 
     return action;
   },

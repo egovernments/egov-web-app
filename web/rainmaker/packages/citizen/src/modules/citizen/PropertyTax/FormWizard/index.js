@@ -604,6 +604,7 @@ class FormWizard extends Component {
         get(createPropertyResponse, "Properties[0].tenantId")
       );
     } catch (e) {
+      toggleSpinner();
       alert(e);
     }
   };

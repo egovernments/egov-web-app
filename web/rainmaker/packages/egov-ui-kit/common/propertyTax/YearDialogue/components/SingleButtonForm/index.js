@@ -30,7 +30,7 @@ var SingleButtonForm = function SingleButtonForm(_ref) {
   return _react2.default.createElement(_components.Button, (0, _extends3.default)({}, fields.button, {
     onClick: function onClick() {
       handleFieldChange("button", label);
-      history && history.push("/property-tax/assessment-form?financialYear=" + label + "&type=new");
+      history && history.push("/property-tax/assessment-form?FY=" + label + "&type=new");
     },
     className: "year-range-button",
     label: label,

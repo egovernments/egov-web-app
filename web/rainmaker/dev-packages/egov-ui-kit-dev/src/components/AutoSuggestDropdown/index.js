@@ -1,6 +1,7 @@
 import React from "react";
 import AutoComplete from "material-ui/AutoComplete";
 import PropTypes from "prop-types";
+import filter from "lodash/filter";
 
 const hintBaseStyle = {
   fontSize: "16px",
@@ -24,20 +25,34 @@ const underlineDisabledStyle = {
   borderBottom: "1px solid #e0e0e0",
 };
 
-const AutoSuggestDropdown = ({
-  onChange,
-  dataSource,
-  floatingLabelText,
-  className,
-  required,
-  value,
-  jsonPath,
-  errorMessage,
-  boundary,
-  dropDownData,
-  dataFetchConfig,
-  ...restProps
-}) => {
+class AutoSuggestDropdown extends React.Component {
+   //  state = {
+   //   searchText: '',
+   // };
+   //
+   // handleUpdateInput = (searchText) => {
+   //   this.setState({
+   //     searchText: searchText,
+   //   });
+   // };
+
+  render()
+  {
+    let {
+      onChange,
+      dataSource,
+      floatingLabelText,
+      className,
+      required,
+      value,
+      jsonPath,
+      errorMessage,
+      boundary,
+      dropDownData,
+      dataFetchConfig,
+      ...restProps
+    }=this.props;
+
   return (
     <AutoComplete
       className={`autosuggest ${className}`}
@@ -53,7 +68,6 @@ const AutoSuggestDropdown = ({
       menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
       dataSourceConfig={{ text: "label", value: "value" }}
       onNewRequest={onChange}
-      underlineDisabledStyle={underlineDisabledStyle}
       floatingLabelText={[
         floatingLabelText,
         required ? (
@@ -66,6 +80,7 @@ const AutoSuggestDropdown = ({
       {...restProps}
     />
   );
+}
 };
 
 AutoSuggestDropdown.propTypes = {
@@ -86,3 +101,6 @@ AutoSuggestDropdown.propTypes = {
 };
 
 export default AutoSuggestDropdown;
+
+// value={value}
+// searchKey={value}

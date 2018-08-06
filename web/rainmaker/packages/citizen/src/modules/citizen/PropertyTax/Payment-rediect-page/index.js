@@ -15,7 +15,6 @@ class PaymentRedirect extends React.Component {
     let { search } = this.props.location;
     try {
       let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-      console.log(pgUpdateResponse);
       let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
       let tenantId=get(pgUpdateResponse, "Transaction[0].tenantId");
       if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
@@ -23,7 +22,7 @@ class PaymentRedirect extends React.Component {
         history.push("/property-tax/payment-failure/" + moduleId.split(":")[0]+"/"+tenantId);
       } else {
         this.props.toggleSpinner();
-        history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId);
+        history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId+"/"+moduleId.split(":")[1]+"/"+"2019-18");
       }
     } catch (e) {
       this.props.toggleSpinner();
