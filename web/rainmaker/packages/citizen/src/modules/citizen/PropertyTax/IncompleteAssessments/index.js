@@ -61,8 +61,6 @@ class IncompleteAssessments extends Component {
 }
 
 const getfailedPropertiesById = (propertiesById, failedTransactions) => {
-  console.log(failedTransactions);
-  console.log(propertiesById);
   return (
     failedTransactions &&
     failedTransactions.reduce((result, moduleId) => {
@@ -172,7 +170,6 @@ const mapStateToProps = (state) => {
     }
     return result;
   }, []);
-  console.log(getfailedPropertiesById(propertiesById, failedTransactionsConsumercode));
 
   return { urls, loading, transformedDrafts };
 };
