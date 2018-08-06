@@ -1,6 +1,6 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import get from "lodash/get"
-import { updateInstituteType } from "modules/employee/PropertyTax/FormWizard/utils/formConfigModifier"
+import { updateInstituteType } from "modules/citizen/PropertyTax/FormWizard/utils/formConfigModifier"
 import set from "lodash/set"
 
 const formConfig = {
@@ -14,6 +14,7 @@ const formConfig = {
       hintText: "Enter Institute's name",
       errorMessage: "Enter a valid name",
       numcols: 6,
+      required: true,
     },
     type: {
       id: "institution-type",
@@ -45,6 +46,7 @@ const formConfig = {
       // dropDownData:[],
       numcols: 6,
       hintText: "Select",
+      required: true,
     },
   },
   beforeInitForm: (action, store) => {

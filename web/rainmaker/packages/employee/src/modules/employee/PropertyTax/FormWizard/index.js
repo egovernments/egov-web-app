@@ -317,8 +317,8 @@ class FormWizard extends Component {
             disabled={isReviewPage}
           />
         );
-      case "INSTITUITIONALPRIVATE":
-      case "INSTITUITIONALGOVERNMENT":
+      case "INSTITUTIONALPRIVATE":
+      case "INSTITUTIONALGOVERNMENT":
         return (
           <div>
             <InstitutionHOC disabled={isReviewPage} />
@@ -468,7 +468,7 @@ class FormWizard extends Component {
                 callDraft();
                 this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
               }
-            } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUITION") !== -1) {
+            } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
               const { institutionDetails, institutionAuthority } = form;
               const isInstitutionDetailsFormValid = validateForm(institutionDetails);
               let institutionFormValid = true;
