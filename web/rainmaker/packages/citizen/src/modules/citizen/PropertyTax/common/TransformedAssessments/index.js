@@ -48,7 +48,7 @@ export const getTransformedItems = (propertiesById) => {
             ),
             date: getDateFromEpoch(item.assessmentDate),
             status: "Paid",
-
+            consumerCode: `${curr.propertyId}:${item.assessmentNumber}`,
             receipt: true,
           };
         });

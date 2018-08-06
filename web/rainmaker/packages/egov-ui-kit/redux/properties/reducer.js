@@ -57,6 +57,18 @@ var propertyReducer = function propertyReducer() {
         error: true,
         errorMessage: action.error
       });
+    case actionTypes.PG_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.PG_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     case actionTypes.PROPERTY_FETCH_COMPLETE:
       var propertiesById = (0, _commons.transformById)(action.payload["Properties"], "propertyId");
       return (0, _extends3.default)({}, state, {
@@ -72,6 +84,14 @@ var propertyReducer = function propertyReducer() {
         error: false,
         errorMessage: "",
         draftsById: draftsById
+      });
+    case actionTypes.PG_FETCH_COMPLETE:
+      var failedPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        failedPayments: failedPayments
       });
     default:
       return state;

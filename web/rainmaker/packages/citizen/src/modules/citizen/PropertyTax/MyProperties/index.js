@@ -41,7 +41,7 @@ class MyProperties extends Component {
 
   componentDidMount = () => {
     const { addBreadCrumbs, title, fetchProperties, userInfo } = this.props;
-    fetchProperties([{ key: "accountId", value: userInfo.uuid }]); //Unnecessary API call to prevent page break on reload
+    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null); //Unnecessary API call to prevent page break on reload
     // const { pathname } = location;
     // let url = pathname && pathname.split("/").pop();
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
@@ -118,7 +118,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
+      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
   };
 };
 

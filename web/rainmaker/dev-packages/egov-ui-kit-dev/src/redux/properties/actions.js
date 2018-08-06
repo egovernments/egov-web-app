@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { PROPERTY, DRAFT } from "egov-ui-kit/utils/endPoints";
+import { PROPERTY, DRAFT, PGService } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
 
 const propertyFetchPending = () => {
@@ -41,7 +41,25 @@ const draftFetchError = (error) => {
   };
 };
 
-export const fetchProperties = (queryObjectproperty, queryObjectDraft) => {
+const PGFetchError = (error) => {
+  return {
+    type: actionTypes.PG_FETCH_ERROR,
+    error,
+  };
+};
+const PGFetchComplete = (payload) => {
+  return {
+    type: actionTypes.PG_FETCH_COMPLETE,
+    payload,
+  };
+};
+const PGFetchPending = () => {
+  return {
+    type: actionTypes.PG_FETCH_PENDING,
+  };
+};
+
+export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments) => {
   return async (dispatch) => {
     if (queryObjectDraft) {
       dispatch(draftFetchPending());
@@ -60,6 +78,16 @@ export const fetchProperties = (queryObjectproperty, queryObjectDraft) => {
         dispatch(propertyFetchComplete(payloadProperty));
       } catch (error) {
         dispatch(propertyFetchError(error.message));
+      }
+    }
+
+    if (queryObjectFailedPayments) {
+      dispatch(PGFetchPending());
+      try {
+        const payloadFailedPayments = await httpRequest(PGService.GET.URL, PGService.GET.ACTION, queryObjectFailedPayments, {}, [], {}, true);
+        dispatch(PGFetchComplete(payloadFailedPayments));
+      } catch (error) {
+        dispatch(PGFetchError(error.message));
       }
     }
   };

@@ -58,7 +58,7 @@ class CompletedAssessments extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null);
+    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null);
   };
 
   closeYearRangeDialogue = () => {
@@ -103,7 +103,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObjectproperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectproperty, queryObjectDraft)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
+      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
   };
 };
 

@@ -132,3 +132,10 @@ export const DRAFT = {
     ACTION: "_get",
   },
 };
+
+export const PGService = {
+  GET: {
+    URL: "/pg-service/transaction/v1/_search",
+    ACTION: "_get",
+  },
+};

@@ -64,10 +64,28 @@ var draftFetchError = function draftFetchError(error) {
   };
 };
 
-var fetchProperties = exports.fetchProperties = function fetchProperties(queryObjectproperty, queryObjectDraft) {
+var PGFetchError = function PGFetchError(error) {
+  return {
+    type: actionTypes.PG_FETCH_ERROR,
+    error: error
+  };
+};
+var PGFetchComplete = function PGFetchComplete(payload) {
+  return {
+    type: actionTypes.PG_FETCH_COMPLETE,
+    payload: payload
+  };
+};
+var PGFetchPending = function PGFetchPending() {
+  return {
+    type: actionTypes.PG_FETCH_PENDING
+  };
+};
+
+var fetchProperties = exports.fetchProperties = function fetchProperties(queryObjectproperty, queryObjectDraft, queryObjectFailedPayments) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-      var draftpayload, payloadProperty;
+      var draftpayload, payloadProperty, payloadFailedPayments;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -120,11 +138,35 @@ var fetchProperties = exports.fetchProperties = function fetchProperties(queryOb
               dispatch(propertyFetchError(_context.t1.message));
 
             case 24:
+              if (!queryObjectFailedPayments) {
+                _context.next = 36;
+                break;
+              }
+
+              dispatch(PGFetchPending());
+              _context.prev = 26;
+              _context.next = 29;
+              return (0, _api.httpRequest)(_endPoints.PGService.GET.URL, _endPoints.PGService.GET.ACTION, queryObjectFailedPayments, {}, [], {}, true);
+
+            case 29:
+              payloadFailedPayments = _context.sent;
+
+              dispatch(PGFetchComplete(payloadFailedPayments));
+              _context.next = 36;
+              break;
+
+            case 33:
+              _context.prev = 33;
+              _context.t2 = _context["catch"](26);
+
+              dispatch(PGFetchError(_context.t2.message));
+
+            case 36:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[2, 9], [14, 21]]);
+      }, _callee, undefined, [[2, 9], [14, 21], [26, 33]]);
     }));
 
     return function (_x) {
