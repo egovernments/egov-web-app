@@ -120,7 +120,7 @@ var generalMDMSFetchError = function generalMDMSFetchError(error) {
   };
 };
 
-var fetchEmployees = exports.fetchEmployees = function fetchEmployees(queryObj, tenantId) {
+var fetchEmployees = exports.fetchEmployees = function fetchEmployees(queryObj) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
       var payload;

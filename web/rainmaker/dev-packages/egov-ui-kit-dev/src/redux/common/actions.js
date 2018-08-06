@@ -97,7 +97,7 @@ const generalMDMSFetchError = (error) => {
   };
 };
 
-export const fetchEmployees = (queryObj, tenantId) => {
+export const fetchEmployees = (queryObj) => {
   return async (dispatch) => {
     dispatch(employeeFetchPending());
     try {

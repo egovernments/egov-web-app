@@ -51,7 +51,7 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers, t
     var employeeIds = [],
         userIds = [];
     actionHistory.forEach(function (actions) {
-      actions.actions.forEach(function (action) {
+      actions.actions && actions.actions.forEach(function (action) {
         if (action.by) {
           var _getUserEmployeeId = getUserEmployeeId(action.by),
               userId = _getUserEmployeeId.userId,

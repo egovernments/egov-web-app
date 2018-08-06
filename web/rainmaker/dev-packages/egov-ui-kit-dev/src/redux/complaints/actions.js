@@ -12,18 +12,19 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers, tenantId) => {
     let employeeIds = [],
       userIds = [];
     actionHistory.forEach((actions) => {
-      actions.actions.forEach((action) => {
-        if (action.by) {
-          let { userId, employeeId } = getUserEmployeeId(action.by);
-          if (userId) userIds.push(userId);
-          if (employeeId) employeeIds.push(employeeId);
-        }
-        if (action.assignee) {
-          let { userId, employeeId } = getUserEmployeeId(action.assignee);
-          if (userId) userIds.push(userId);
-          if (employeeId) employeeIds.push(employeeId);
-        }
-      });
+      actions.actions &&
+        actions.actions.forEach((action) => {
+          if (action.by) {
+            let { userId, employeeId } = getUserEmployeeId(action.by);
+            if (userId) userIds.push(userId);
+            if (employeeId) employeeIds.push(employeeId);
+          }
+          if (action.assignee) {
+            let { userId, employeeId } = getUserEmployeeId(action.assignee);
+            if (userId) userIds.push(userId);
+            if (employeeId) employeeIds.push(employeeId);
+          }
+        });
     });
     let { common, auth } = state;
     if (employeeIds.length > 0) {
