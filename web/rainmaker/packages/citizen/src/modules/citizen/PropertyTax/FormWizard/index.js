@@ -80,10 +80,15 @@ class FormWizard extends Component {
         alert(e);
       }
     } else {
-      draftRequest.draft.draftRecord = {
-        selectedTabIndex: assessmentNumber ? selected : selected + 1,
-        ...form,
+      draftRequest.draft = {
+        ...draftRequest.draft,
         assessmentNumber,
+        draftRecord: {
+          ...draftRequest.draft.draftRecord,
+          selectedTabIndex: assessmentNumber ? selected : selected + 1,
+          ...form,
+          assessmentNumber,
+        }
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
@@ -127,7 +132,7 @@ class FormWizard extends Component {
     };
   };
 
-  fetchDraftDetails = async (draftId) => {
+  fetchDraftDetails = async (draftId, isReassesment) => {
     const { draftRequest } = this.state;
     const { toggleSpinner } = this.props;
     try {
@@ -135,12 +140,13 @@ class FormWizard extends Component {
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
-        [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") }],
+        [{
+          key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+          key: isReassesment ? "assessmentNumber" : "id", value: draftId,
+        }],
         draftRequest
       );
-      const currentDraft = draftsResponse.drafts.find(
-        (res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId
-      );
+      const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
@@ -166,7 +172,7 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      console.log(e);
+      toggleSpinner()
     }
   };
 
@@ -176,8 +182,9 @@ class FormWizard extends Component {
     let { history } = this.props;
     let { search } = this.props.location;
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment")
     const isFreshAssesment = this.getAssessmentId(search, "type");
-    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
+    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     const { fetchGeneralMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {

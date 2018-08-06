@@ -137,7 +137,7 @@ var getItemStatus = function getItemStatus(item, history) {
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: "ASSESS & PAY", fontSize: "12px" }),
           primary: true,
           onClick: function onClick(e) {
-            history && history.push("/property-tax/assessment-form?assessmentNo=" + item.assessmentNo);
+            history && history.push("/property-tax/assessment-form?assessmentId=" + item.assessmentNo + "&isReassesment=true");
           },
           style: {
             height: 20,
