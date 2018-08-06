@@ -47,7 +47,7 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {}) => {
+export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {},ignoreTenantId=false) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 
@@ -56,7 +56,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
       headers,
     });
 
-  if (!some(queryObject, ["key", "tenantId"])) {
+  if (!some(queryObject, ["key", "tenantId"]) && !ignoreTenantId) {
     queryObject &&
       queryObject.push({
         key: "tenantId",

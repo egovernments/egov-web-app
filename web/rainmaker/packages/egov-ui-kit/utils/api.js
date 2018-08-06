@@ -76,6 +76,7 @@ var httpRequest = exports.httpRequest = function () {
     var requestBody = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     var headers = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
     var customRequestInfo = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
+    var ignoreTenantId = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
 
     var tenantId, apiError, response, responseStatus, _error$response, data, status;
 
@@ -91,7 +92,7 @@ var httpRequest = exports.httpRequest = function () {
               headers: headers
             });
 
-            if (!(0, _some2.default)(queryObject, ["key", "tenantId"])) {
+            if (!(0, _some2.default)(queryObject, ["key", "tenantId"]) && !ignoreTenantId) {
               queryObject && queryObject.push({
                 key: "tenantId",
                 value: tenantId
@@ -205,7 +206,7 @@ var uploadFile = exports.uploadFile = function () {
     }, _callee2, undefined, [[4, 17]]);
   }));
 
-  return function uploadFile(_x7, _x8, _x9, _x10) {
+  return function uploadFile(_x8, _x9, _x10, _x11) {
     return _ref2.apply(this, arguments);
   };
 }();
