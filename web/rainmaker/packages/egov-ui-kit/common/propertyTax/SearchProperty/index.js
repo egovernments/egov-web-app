@@ -137,7 +137,7 @@ var SearchProperty = function (_Component) {
         var name = propertyDetails[0].owners[0].name;
         var button = _react2.default.createElement(_Button2.default, {
           onClick: userType === "CITIZEN" ? function (e) {
-            history.push("/property-tax/assessment-form?assessmentNo=" + (propertyDetails[0] && propertyDetails[0].assessmentNumber));
+            history.push("/property-tax/assessment-form?assessmentId=" + (propertyDetails[0] && propertyDetails[0].assessmentNumber) + "&isReassesment=true");
           } : function (e) {
             history.push("/property-tax/property/" + propertyId);
           },

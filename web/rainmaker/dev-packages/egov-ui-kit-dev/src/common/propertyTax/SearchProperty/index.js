@@ -72,7 +72,7 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? (e) => {
-                  history.push(`/property-tax/assessment-form?assessmentNo=${propertyDetails[0] && propertyDetails[0].assessmentNumber}`);
+                  history.push(`/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}&isReassesment=true`);
                 }
               : (e) => {
                   history.push(`/property-tax/property/${propertyId}`);

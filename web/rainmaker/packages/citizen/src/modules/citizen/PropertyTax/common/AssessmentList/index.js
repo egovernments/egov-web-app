@@ -112,7 +112,7 @@ const getItemStatus = (item, history) => {
             label={<Label buttonLabel={true} label="ASSESS & PAY" fontSize="12px" />}
             primary={true}
             onClick={(e) => {
-              history && history.push(`/property-tax/assessment-form?assessmentNo=${item.assessmentNo}`);
+              history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}&isReassesment=true`);
             }}
             style={{
               height: 20,
