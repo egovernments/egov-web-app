@@ -7,7 +7,6 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Name",
       hintText: "Enter Owner's Name",
-      required: true,
     },
     mobile: {
       id: "authority-mobile",
@@ -15,7 +14,6 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Mobile No.",
       hintText: "Enter Mobile No.",
-      required: true,
       pattern: /^(\+\d{1,2}[\s-]{0,1})?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
     },
@@ -34,6 +32,7 @@ const formConfig = {
       floatingLabelText: "Designation",
       hintText: "Enter designation",
       errorMessage: "",
+      required: true,
     },
     telephone: {
       id: "authority-telephone",
@@ -44,6 +43,7 @@ const formConfig = {
       required: true,
       pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
+      required: true,
     },
     email: {
       id: "authority-email",

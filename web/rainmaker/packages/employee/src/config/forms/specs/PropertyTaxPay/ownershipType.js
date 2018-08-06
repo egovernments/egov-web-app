@@ -46,6 +46,9 @@ const formConfig = {
         const { value } = sourceField;
         const  institutedropDown = updateInstituteType(state, value)
         dispatch(prepareFormData("Properties[0].propertyDetails[0].ownershipCategory",get(state,`common.generalMDMSDataById.SubOwnerShipCategory[${sourceField.value}].ownerShipCategory`, value)));
+        if (value.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
+          dispatch(prepareFormData("Properties[0].propertyDetails[0].subOwnershipCategory", null));
+        }
         dispatch(setFieldProperty("institutionDetails", "type", "dropDownData", institutedropDown))
       },
     },

@@ -14,6 +14,7 @@ const formConfig = {
       hintText: "Enter Institute's name",
       errorMessage: "Enter a valid name",
       numcols: 6,
+      required: true,
     },
     type: {
       id: "institution-type",
@@ -45,6 +46,7 @@ const formConfig = {
       // dropDownData:[],
       numcols: 6,
       hintText: "Select",
+      required: true,
     },
   },
   beforeInitForm: (action, store) => {
