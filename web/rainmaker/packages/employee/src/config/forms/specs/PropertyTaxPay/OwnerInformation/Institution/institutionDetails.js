@@ -1,6 +1,6 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import get from "lodash/get"
-import { updateInstituteType } from "modules/citizen/PropertyTax/FormWizard/utils/formConfigModifier"
+import { updateInstituteType } from "modules/employee/PropertyTax/FormWizard/utils/formConfigModifier"
 import set from "lodash/set"
 
 const formConfig = {
