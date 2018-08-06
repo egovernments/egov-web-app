@@ -8,7 +8,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
-import { isFunction } from "util";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -57,13 +57,26 @@ class IncompleteAssessments extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { properties } = state;
+  const { properties, common } = state;
   const { urls } = state.app;
+  const { cities } = common;
   const { loading, draftsById } = properties || {};
   const numDrafts = draftsById && Object.keys(draftsById).length;
   get(JSON.parse(localStorage.getItem("user-info")), "uuid");
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
-    if (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") {
+    if (
+      (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
+      get(draft, "draftRecord.financialYear.fields.button.value")
+    ) {
+      const cityValue = get(draft, "draftRecord.propertyAddress.fields.city.value");
+      let cityName = "";
+      cities &&
+        cities.forEach((city) => {
+          if (city.code === cityValue) {
+            cityName = city.name;
+          }
+        });
+      const mohalla = get(draft, "draftRecord.propertyAddress.fields.mohalla.value");
       result.push({
         primaryText: (
           <Label
@@ -77,8 +90,7 @@ const mapStateToProps = (state) => {
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label
-              // label={getCommaSeperatedAddress(get(draft, "draftRecord.financialYear.fields.button.value"))}
-              label="Gold Plaza, Bellandur"
+              label={getCommaSeperatedAddress(cityName, mohalla)}
               labelStyle={secondaryTextLabelStyle}
               fontSize="14px"
               containerStyle={secondaryTextContainer}
