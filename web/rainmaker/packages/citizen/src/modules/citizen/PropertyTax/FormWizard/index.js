@@ -526,13 +526,22 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
-    let { history } = this.props;
+    let { history,toggleSpinner } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
     ];
+    let callbackUrl=`${window.origin}/property-tax/payment-redirect-page`;
+    if (process.env.NODE_ENV !== "development") {
+      const userType=process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
+      if (userType==="CITIZEN") {
+        callbackUrl=`${window.origin}/citizen/property-tax/payment-redirect-page`;
+      } else {
+        callbackUrl=`${window.origin}/employee/property-tax/payment-redirect-page`;
+      }
+    }
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
       try {
@@ -545,7 +554,7 @@ class FormWizard extends Component {
             moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
             productInfo: "Property Tax Payment",
             gateway: "AXIS",
-            callbackUrl: `${window.origin}/property-tax/payment-redirect-page`,
+            callbackUrl,
           },
         };
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
@@ -559,6 +568,7 @@ class FormWizard extends Component {
         console.log(e);
       }
     } catch (e) {
+      toggleSpinner()
       console.log(e);
     }
   };
@@ -595,8 +605,9 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    const { financialYearFromQuery } = this.state;
-    let { prepareFormData } = this.props;
+    const { financialYearFromQuery } = this.state;  
+    let { prepareFormData,toggleSpinner } = this.props;
+    toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
