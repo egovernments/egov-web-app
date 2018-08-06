@@ -3,15 +3,18 @@ import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
 import commonConfig from "config/common.js";
 
-axios.interceptors.response.use((response) => {
-  return response
-}, (error) => {
-  if (error.response && error.response.data && error.response.data.location) {
-    window.location = error.response.data.location
-  } else {
-    return Promise.reject(error)
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.data && error.response.data.location) {
+      window.location = error.response.data.location;
+    } else {
+      return Promise.reject(error);
+    }
   }
-})
+);
 
 const instance = axios.create({
   baseURL: window.location.origin,
@@ -19,8 +22,6 @@ const instance = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-
 
 const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   const authToken = fetchFromLocalStorage("token");
@@ -123,7 +124,7 @@ export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   }
 };
 
-export const loginRequest = async (username = null, password = null, refreshToken = "", grantType = "password", tenantId = "",userType) => {
+export const loginRequest = async (username = null, password = null, refreshToken = "", grantType = "password", tenantId = "", userType) => {
   tenantId = tenantId ? tenantId : commonConfig.tenantId;
   const loginInstance = axios.create({
     baseURL: window.location.origin,
@@ -141,7 +142,7 @@ export const loginRequest = async (username = null, password = null, refreshToke
   params.append("grant_type", grantType);
   params.append("scope", "read");
   params.append("tenantId", tenantId);
-  userType && params.append("userType",userType);
+  userType && params.append("userType", userType);
 
   try {
     const response = await loginInstance.post("/user/oauth/token", params);

@@ -120,7 +120,7 @@ var generalMDMSFetchError = function generalMDMSFetchError(error) {
   };
 };
 
-var fetchEmployees = exports.fetchEmployees = function fetchEmployees(requestBody) {
+var fetchEmployees = exports.fetchEmployees = function fetchEmployees(queryObj, tenantId) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
       var payload;
@@ -131,7 +131,7 @@ var fetchEmployees = exports.fetchEmployees = function fetchEmployees(requestBod
               dispatch(employeeFetchPending());
               _context.prev = 1;
               _context.next = 4;
-              return (0, _api.httpRequest)(_endPoints.EMPLOYEE.GET.URL, _endPoints.EMPLOYEE.GET.ACTION, requestBody);
+              return (0, _api.httpRequest)(_endPoints.EMPLOYEE.GET.URL, _endPoints.EMPLOYEE.GET.ACTION, queryObj);
 
             case 4:
               payload = _context.sent;
