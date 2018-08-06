@@ -27,6 +27,7 @@ export const floorCount = {
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       removeFormKey(formKey, field, dispatch, state);
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
     },
   },
 };
@@ -151,6 +152,7 @@ export const beforeInitForm = {
     const { form } = action;
     const { name: formKey, fields } = form;
 
+    //For adding multiple units to prepareFormData
     if (formKey.startsWith(`floorDetails_`)) {
       const arr = formKey.split("_");
       const floorIndex = parseInt(arr[1]);
