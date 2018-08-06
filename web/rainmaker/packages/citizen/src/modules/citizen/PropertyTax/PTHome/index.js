@@ -190,7 +190,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObjectProperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectProperty, queryObjectDraft)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
+      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
   };
 };
 

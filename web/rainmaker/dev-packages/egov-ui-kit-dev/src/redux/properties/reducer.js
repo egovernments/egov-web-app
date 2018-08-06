@@ -41,6 +41,20 @@ const propertyReducer = (state = initialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case actionTypes.PG_FETCH_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
+    case actionTypes.PG_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
     case actionTypes.PROPERTY_FETCH_COMPLETE:
       const propertiesById = transformById(action.payload["Properties"], "propertyId");
       return {
@@ -58,6 +72,15 @@ const propertyReducer = (state = initialState, action) => {
         error: false,
         errorMessage: "",
         draftsById,
+      };
+    case actionTypes.PG_FETCH_COMPLETE:
+      const failedPayments = transformById(action.payload["Transaction"], "txnId");
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        failedPayments,
       };
     default:
       return state;

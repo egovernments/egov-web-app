@@ -36,7 +36,11 @@ class IncompleteAssessments extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    fetchProperties(null, [{ key: "userId", value: userInfo.uuid }]);
+    fetchProperties(
+      [{ key: "accountId", value: userInfo.uuid }],
+      [{ key: "userId", value: userInfo.uuid }],
+      [{ key: "userUuid", value: userInfo.uuid }, { key: "txnStatus", value: "FAILURE" }]
+    );
   };
 
   render() {
@@ -56,26 +60,89 @@ class IncompleteAssessments extends Component {
   }
 }
 
+const getfailedPropertiesById = (propertiesById, failedTransactions) => {
+  console.log(failedTransactions);
+  console.log(propertiesById);
+  return (
+    failedTransactions &&
+    failedTransactions.reduce((result, moduleId) => {
+      const propertyId = moduleId.split(":")[0];
+      const failedProperties =
+        propertiesById &&
+        Object.keys(propertiesById).filter((key) => {
+          return propertyId === key;
+        });
+      result = [...result, ...failedProperties];
+      return result;
+    }, [])
+  );
+};
+
+// const getFailedTransactionProperties = (propertiesById, failedTransactions, cities) => {
+//   failedTransactions &&
+//     failedTransactions.forEach((moduleId) => {
+//       return (
+//         propertiesById &&
+//         Object.values(propertiesById).reduce((acc, curr) => {
+//           const propertyDetail =
+//             curr.propertyDetails &&
+//             curr.propertyDetails.map((item) => {
+//               const consumerCode = `${curr.propertyId}:${item.assessmentNumber}`;
+//               if (moduleId === consumerCode) {
+//                 return {
+//                   primaryText: <Label label={item.financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
+//                   secondaryText: (
+//                     <div style={{ height: "auto" }}>
+//                       <Label
+//                         label={getAddress(cities, curr.address.city, curr.address.locality.code)}
+//                         labelStyle={secondaryTextLabelStyle}
+//                         fontSize="14px"
+//                         containerStyle={secondaryTextContainer}
+//                         color="#484848"
+//                       />
+//                     </div>
+//                   ),
+//                   assessmentNo: item.assessmentNumber,
+//                   date: curr.auditDetails ? getDateFromEpoch(get(curr, "auditDetails.lastModifiedTime")) : "",
+//                   status: "Payment failed",
+//                 };
+//               }
+//             });
+//           acc = [...acc, ...propertyDetail];
+//           return acc;
+//         }, [])
+//       );
+//     });
+// };
+
+const getAddress = (cities, cityValue, mohalla) => {
+  let cityName = "";
+  cities &&
+    cities.forEach((city) => {
+      if (city.code === cityValue) {
+        cityName = city.name;
+      }
+    });
+  return getCommaSeperatedAddress(cityName, mohalla);
+};
+
 const mapStateToProps = (state) => {
   const { properties, common } = state;
   const { urls } = state.app;
   const { cities } = common;
-  const { loading, draftsById } = properties || {};
-  const numDrafts = draftsById && Object.keys(draftsById).length;
-  get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+  const { loading, draftsById, propertiesById, failedPayments } = properties || {};
+  const failedTransactionsConsumercode =
+    failedPayments &&
+    Object.values(failedPayments).map((transaction) => {
+      return transaction.moduleId;
+    });
+
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
       get(draft, "draftRecord.financialYear.fields.button.value")
     ) {
       const cityValue = get(draft, "draftRecord.propertyAddress.fields.city.value");
-      let cityName = "";
-      cities &&
-        cities.forEach((city) => {
-          if (city.code === cityValue) {
-            cityName = city.name;
-          }
-        });
       const mohalla = get(draft, "draftRecord.propertyAddress.fields.mohalla.value");
       result.push({
         primaryText: (
@@ -90,7 +157,7 @@ const mapStateToProps = (state) => {
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label
-              label={getCommaSeperatedAddress(cityName, mohalla)}
+              label={getAddress(cities, cityValue, mohalla)}
               labelStyle={secondaryTextLabelStyle}
               fontSize="14px"
               containerStyle={secondaryTextContainer}
@@ -105,12 +172,15 @@ const mapStateToProps = (state) => {
     }
     return result;
   }, []);
-  return { urls, loading, numDrafts, transformedDrafts };
+  console.log(getfailedPropertiesById(propertiesById, failedTransactionsConsumercode));
+
+  return { urls, loading, transformedDrafts };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObjectproperty, queryObjectDraft) => dispatch(fetchProperties(queryObjectproperty, queryObjectDraft)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
+      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
   };
 };
 
