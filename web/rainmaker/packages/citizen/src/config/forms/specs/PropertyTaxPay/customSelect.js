@@ -1,37 +1,38 @@
-import { FLOOR } from "egov-ui-kit/utils/endPoints";
+import { prepareDropDownData } from "./utils/reusableFields";
+import set from "lodash/set";
 
 const formConfig = {
   name: "customSelect",
   fields: {
     floorName: {
       id: "floorName",
-      // jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
       type: "singleValueList",
       floatingLabelText: "Select Floor",
       hintText: "Select floor",
       numcols: 12,
       errorMessage: "",
       required: true,
-      dataFetchConfig: {
-        url: FLOOR.GET.URL,
-        action: FLOOR.GET.ACTION,
-        queryParams: [{ key: "tenantId", value: "pb" }],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "Floor",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.Floor"],
+      beforeFieldChange: ({ action, dispatch, state }) => {
+        const { value } = action;
+        console.log(value);
+        // const formKeys = Object.keys(state.form);
+        const floorValues = Object.keys(state.form).map((key) => {
+          if (key.startsWith("customSelect_")) {
+            const form = state.form[key];
+            if (form && form.fields.floorName.value) {
+              return form.fields.floorName.value;
+            }
+          }
+        });
+        console.log(floorValues);
+        const valueExists = floorValues.find((floorvalue) => {
+          return floorvalue === value;
+        });
+        if (valueExists) {
+          alert("This floor is already selected, please select another floor");
+          action.value = "";
+        }
+        return action;
       },
     },
   },
@@ -39,6 +40,16 @@ const formConfig = {
   redirectionRoute: "",
   saveUrl: "",
   isFormValid: false,
+  beforeInitForm: (action, store) => {
+    try {
+      let state = store.getState();
+      const { Floor } = state.common && state.common.generalMDMSDataById;
+      set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
 
 export default formConfig;
