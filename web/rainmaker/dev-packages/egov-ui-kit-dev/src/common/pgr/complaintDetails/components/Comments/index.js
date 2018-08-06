@@ -49,7 +49,7 @@ class Comments extends Component {
                     comment.role === "Citizen Service Representative"
                       ? `${complainant} (From citizen service desk)`
                       : comment.name
-                        ? `${comment.name} (${comment.designation})`
+                        ? `${comment.name} ${comment.designation && `(${comment.designation})`}`
                         : ""
                   }
                 />
@@ -89,6 +89,7 @@ class Comments extends Component {
                   listContainerStyle={{ marginTop: "24px", background: "transparent" }}
                   listItemStyle={{ marginBottom: "-8.5px" }}
                   items={items}
+                  disabled={true}
                 />
 
                 {(isAssignedToEmployee && role === "employee") || role === "citizen" || role === "ao" || role === "csr"
