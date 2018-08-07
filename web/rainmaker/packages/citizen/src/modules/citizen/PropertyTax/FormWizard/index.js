@@ -605,14 +605,14 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    const { financialYearFromQuery } = this.state;  
+    const { financialYearFromQuery } = this.state;
     let { prepareFormData,toggleSpinner } = this.props;
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
     try {
-      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      set(prepareFormData,"Properties[0].address.locality.area", "Area3")
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
@@ -700,6 +700,7 @@ class FormWizard extends Component {
     const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
     const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
+    const {history} =this.props;
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -715,6 +716,7 @@ class FormWizard extends Component {
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
+          history={history}
           onPayButtonClick={onPayButtonClick}
         />
       </div>

@@ -17,6 +17,7 @@ const WizardComponent = ({
   updateIndex,
   backLabel,
   nextLabel,
+  history
 }) => {
   return (
     <div className="wizard-cont">
@@ -29,7 +30,8 @@ const WizardComponent = ({
           <Button
             label={backLabel}
             onClick={() => {
-              updateIndex(selected - 1);
+              (selected-1)===-1?history.push("/property-tax"):
+              onTabClick(selected - 1)
             }}
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
             buttonStyle={{ border: "1px solid #fe7a51" }}
