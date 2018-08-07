@@ -127,7 +127,7 @@ class ReviewForm extends Component {
   render() {
     let { handleFieldChange, onRadioButtonChange } = this;
     let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
-    let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
+    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
 
     console.log(this.state.totalAmountTobePaid, totalAmount);
@@ -138,7 +138,7 @@ class ReviewForm extends Component {
           editIcon={
             <Icon
               onClick={() => {
-                updateIndex(0);
+                onTabClick(0);
               }}
               style={defaultIconStyle}
               color="#ffffff"
@@ -153,7 +153,7 @@ class ReviewForm extends Component {
           editIcon={
             <Icon
               onClick={() => {
-                updateIndex(1);
+                onTabClick(1);
               }}
               style={defaultIconStyle}
               color="#ffffff"
@@ -168,7 +168,7 @@ class ReviewForm extends Component {
           editIcon={
             <Icon
               onClick={() => {
-                updateIndex(2);
+                onTabClick(2);
               }}
               style={defaultIconStyle}
               color="#ffffff"

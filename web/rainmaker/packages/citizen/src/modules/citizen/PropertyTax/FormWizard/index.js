@@ -169,6 +169,13 @@ class FormWizard extends Component {
           this.props.updatePTForms(currentDraft.draftRecord);
           //this.onTabClick(activeTab)
           toggleSpinner();
+          this.estimate().then((estimateResponse) => {
+            if (estimateResponse) {
+              this.setState({
+                estimation: estimateResponse && estimateResponse.Calculation,
+              });
+            }
+          });
         }
       );
     } catch (e) {
@@ -179,13 +186,8 @@ class FormWizard extends Component {
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
-    let { history } = this.props;
+    let { history, fetchGeneralMDMSData } = this.props;
     let { search } = this.props.location;
-    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!this.getAssessmentId(search, "isReassesment")
-    const isFreshAssesment = this.getAssessmentId(search, "type");
-    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
-    const { fetchGeneralMDMSData } = this.props;
     let requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -232,7 +234,7 @@ class FormWizard extends Component {
       },
     };
 
-    fetchGeneralMDMSData(requestBody, "PropertyTax", [
+    await fetchGeneralMDMSData(requestBody, "PropertyTax", [
       "Floor",
       "OccupancyType",
       "OwnerShipCategory",
@@ -245,6 +247,10 @@ class FormWizard extends Component {
       "UsageCategoryMinor",
       "UsageCategorySubMinor",
     ]);
+    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment")
+    const isFreshAssesment = this.getAssessmentId(search, "type");
+    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     this.addOwner();
     if (this.props.location.search.split("&").length > 3) {
       try {
@@ -382,7 +388,7 @@ class FormWizard extends Component {
         const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
         return (
-          <div>
+          <div className="review-pay-tab">
             <Label
               containerStyle={{ marginTop: 12 }}
               fontSize="16px"
@@ -391,7 +397,7 @@ class FormWizard extends Component {
             />
 
             <ReviewForm
-              updateIndex={this.updateIndex}
+              onTabClick={this.onTabClick}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}

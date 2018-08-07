@@ -86,6 +86,12 @@ class PaymentFailure extends Component {
     );
   };
 
+  redirectToReview = () => {
+    const { match, history } = this.props
+    const { assessmentNumber, assessmentYear } = match.params
+    history.push(`/property-tax/assessment-form?financialYear=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true`);
+  };
+
   render() {
     const { bill } = this.state;
     const receiptUIInfo = bill && bill.length && this.createReceiptUIInfo(this.state.bill);
@@ -95,7 +101,7 @@ class PaymentFailure extends Component {
     };
     return (
       <Screen>
-        <PaymentStatus receiptUIDetails={receiptUIDetails} floatingButtonColor="#e74c3c" icon={icon} messages={failureMessages} buttons={buttons} />
+        <PaymentStatus receiptUIDetails={receiptUIDetails} floatingButtonColor="#e74c3c" icon={icon} messages={failureMessages} buttons={buttons} primaryAction={this.redirectToReview} />
       </Screen>
     );
   }
