@@ -33,7 +33,7 @@ import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -65,7 +65,7 @@ class FormWizard extends Component {
   callDraft = async (formArray = [], assessmentNumber = "") => {
     let { draftRequest, selected } = this.state;
     // if (formArray) {
-    const { form } = this.props;
+    const { form, prepareFormData } = this.props;
     if (!draftRequest.draft.id) {
       draftRequest.draft.draftRecord = {
         selectedTabIndex: selected + 1,
@@ -88,7 +88,8 @@ class FormWizard extends Component {
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
           ...form,
           assessmentNumber,
-        }
+        },
+        prepareFormData,
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
@@ -134,7 +135,7 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner } = this.props;
+    const { toggleSpinner, updatePrepareFormDataFromDraft } = this.props;
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -151,6 +152,7 @@ class FormWizard extends Component {
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      updatePrepareFormDataFromDraft(get(currentDraft, "prepareFormData", {}))
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -744,6 +746,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData))
   };
 };
 
