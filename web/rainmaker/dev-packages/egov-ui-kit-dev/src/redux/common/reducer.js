@@ -155,6 +155,11 @@ const commonReducer = (state = intialState, action) => {
         ...state,
         spinner: !state.spinner,
       }
+    case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
+      return {
+        ...state,
+        prepareFormData: action.prepareFormData,
+      }
     default:
       return state;
   }

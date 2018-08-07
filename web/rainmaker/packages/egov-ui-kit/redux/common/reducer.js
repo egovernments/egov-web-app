@@ -152,6 +152,10 @@ var commonReducer = function commonReducer() {
       return (0, _extends4.default)({}, state, {
         spinner: !state.spinner
       });
+    case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
+      return (0, _extends4.default)({}, state, {
+        prepareFormData: action.prepareFormData
+      });
     default:
       return state;
   }

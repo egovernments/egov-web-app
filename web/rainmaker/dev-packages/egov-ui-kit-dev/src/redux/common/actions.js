@@ -157,3 +157,8 @@ export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
 export const toggleSpinner = () => ({
   type: actionTypes.TOGGLE_SPINNER,
 });
+
+export const updatePrepareFormDataFromDraft = prepareFormData => ({
+  type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
+  prepareFormData,
+})
