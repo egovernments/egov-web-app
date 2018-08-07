@@ -88,3 +88,11 @@
   box-shadow: none;
   background-color: #f6f6f6 !important;
 }
+
+.review-pay-tab {
+  .dropdown > div > div  {
+    div:nth-of-type(2) {
+      color: rgb(72, 72, 72) !important;
+    }
+  }
+}
