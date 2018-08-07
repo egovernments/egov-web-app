@@ -6,6 +6,7 @@ const formConfig = {
     ...measuringUnit
   },
   isFormValid: false,
+  ...beforeInitFormForPlot
 };
 
 export default formConfig;

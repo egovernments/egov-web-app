@@ -501,8 +501,7 @@ class FormWizard extends Component {
 
         break;
       case 3:
-        //pay();
-        //this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+        pay();
         this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
         break;
       case 4:
@@ -512,6 +511,7 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
+    const {updateIndex} =this;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
@@ -519,25 +519,26 @@ class FormWizard extends Component {
     ];
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
-      try {
-        const requestBody = {
-          Transaction: {
-            tenantId: localStorage.getItem("tenant-id"),
-            txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
-            module: "PT",
-            billId: get(getBill, "Bill[0].id"),
-            moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
-            productInfo: "Property Tax Payment",
-            gateway: "AXIS",
-            callbackUrl: window.location.href,
-          },
-        };
-        const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
-        const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-        window.location = redirectionUrl;
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   const requestBody = {
+      //     Transaction: {
+      //       tenantId: localStorage.getItem("tenant-id"),
+      //       txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
+      //       module: "PT",
+      //       billId: get(getBill, "Bill[0].id"),
+      //       moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
+      //       productInfo: "Property Tax Payment",
+      //       gateway: "AXIS",
+      //       callbackUrl: window.location.href,
+      //     },
+      //   };
+      //   const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
+      //   const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+      //   window.location = redirectionUrl;
+      // } catch (e) {
+      //   console.log(e);
+      // }
+      updateIndex(4);
     } catch (e) {
       console.log(e);
     }
@@ -572,6 +573,8 @@ class FormWizard extends Component {
     const { callPGService, callDraft } = this;
     let { prepareFormData } = this.props;
     try {
+      set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",get(prepareFormData,"Properties[0].propertyDetails[0].owners[0].mobileNumber"));
+      set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.name",get(prepareFormData,"Properties[0].propertyDetails[0].owners[0].name"));
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
