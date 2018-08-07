@@ -7,8 +7,8 @@ const formConfig = {
     floorName: {
       id: "floorName",
       type: "singleValueList",
-      floatingLabelText: "Select Floor",
-      hintText: "Select floor",
+      floatingLabelText: "PT_FORM2_SELECT_FLOOR",
+      hintText: "PT_FORM2_SELECT_FLOOR",
       numcols: 12,
       errorMessage: "",
       required: true,

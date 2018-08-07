@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dialog } from "components";
 import SingleButtonForm from "./components/SingleButtonForm";
+import Label from "egov-ui-kit/utils/translationNode";
 import formHoc from "egov-ui-kit/hocs/form";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
@@ -57,7 +58,9 @@ class YearDialog extends Component {
         open={open}
         children={[
           <div key={1}>
-            <div className="dialogue-question">Which year’s taxes would you like to pay? </div>
+            <div className="dialogue-question">
+              <Label label="PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS" fontSize="16px" color="#484848" />
+            </div>
             <div className="year-range-botton-cont">
               {getYearList && Object.values(getYearList).map((item, index) => <YearDialogueHOC key={index} label={item} history={history} />)}
             </div>

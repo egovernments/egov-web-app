@@ -16,7 +16,8 @@ const formConfig = {
       id: "assessment-occupancy",
       jsonPath: "",
       type: "singleValueList",
-      floatingLabelText: "Occupancy",
+      floatingLabelText: "PT_FORM2_OCCUPANCY",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       value: "Self-Occupied",
       required: true,
 
@@ -47,7 +48,7 @@ const formConfig = {
       jsonPath: "",
       type: "textfield",
       floatingLabelText: "Built Area",
-      hintText: "Enter built-up area",
+      hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
       numcols: 4,
     },
   },

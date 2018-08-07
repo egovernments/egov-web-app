@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "components";
 import BreadCrumbsForm from "./components/BreadCrumbsForm";
 import Declaration from "./components/Declaration";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const WizardComponent = ({
@@ -28,7 +29,7 @@ const WizardComponent = ({
       <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right" }}>
           <Button
-            label={backLabel}
+            label={<Label buttonLabel={true} label={backLabel} color="#fe7a51" />}
             onClick={() => {
               (selected-1)===-1?history.push("/property-tax"):
               onTabClick(selected - 1)
@@ -38,7 +39,7 @@ const WizardComponent = ({
             style={{ marginRight: 45, width: "36%" }}
           />
           <Button
-            label={nextLabel}
+            label={<Label buttonLabel={true} label={nextLabel} color="#fff" />}
             style={{ width: "36%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
@@ -53,7 +54,7 @@ const WizardComponent = ({
           />
         </div>
       </div>
-      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex}/>
+      <Declaration open={dialogueOpen} closeDialogue={closeDialogue} selected={selected} updateIndex={updateIndex} />
     </div>
   );
 };

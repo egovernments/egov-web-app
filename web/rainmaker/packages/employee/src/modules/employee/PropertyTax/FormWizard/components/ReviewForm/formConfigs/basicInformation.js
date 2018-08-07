@@ -31,7 +31,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Type of usage",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       value: "",
     },
     typeOfBuilding: {
@@ -39,7 +39,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Type of Buiding",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       value: "",
     },
   },

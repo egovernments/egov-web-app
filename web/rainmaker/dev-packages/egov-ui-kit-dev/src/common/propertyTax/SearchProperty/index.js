@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
-import Screen from "egov-ui-kit/common/common/Screen";
-import Button from "egov-ui-kit/components/Button";
-import BreadCrumbs from "egov-ui-kit/components/BreadCrumbs";
+import Screen from "modules/common";
+import Button from "components";
+import BreadCrumbs from "components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
@@ -72,13 +72,15 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? (e) => {
-                  history.push(`/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}&isReassesment=true`);
+                  history.push(
+                    `/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}&isReassesment=true`
+                  );
                 }
               : (e) => {
                   history.push(`/property-tax/property/${propertyId}`);
                 }
           }
-          label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "ASSESS & PAY" : "View"} fontSize="12px" />}
+          label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
           value={propertyId}
           primary={true}
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}

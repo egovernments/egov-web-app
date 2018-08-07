@@ -13,8 +13,8 @@ const formConfig = {
       id: "typeOfUsage",
       jsonPath: "Properties[0].propertyDetails[0].usageCategoryMinor",
       type: "singleValueList",
-      floatingLabelText: "Property Usage Type",
-      hintText: "Select",
+      floatingLabelText: "PT_COMMONS_PROPERTY_USAGE_TYPE",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
@@ -33,8 +33,8 @@ const formConfig = {
       id: "typeOfBuilding",
       jsonPath: "Properties[0].propertyDetails[0].propertySubType",
       type: "singleValueList",
-      floatingLabelText: "Property Type",
-      hintText: "Select",
+      floatingLabelText: "PT_COMMONS_PROPERTY_TYPE",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);

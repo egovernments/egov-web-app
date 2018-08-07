@@ -591,7 +591,7 @@ class FormWizard extends Component {
   onTabClick = (index) => {
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (/*formValidIndexArray.indexOf(index) !== -1 && selected >= index*/true) {
+    if (/*formValidIndexArray.indexOf(index) !== -1 && selected >= index*/ true) {
       this.setState({
         selected: index,
         formValidIndexArray: range(0, index),
@@ -604,27 +604,11 @@ class FormWizard extends Component {
   getHeaderLabel = (selected) => {
     switch (selected) {
       case 0:
-        return (
-          <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="Please provide information to identify the property." />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM1_HEADER_MESSAGE" />;
       case 1:
-        return (
-          <Label
-            containerStyle={{ marginTop: 12 }}
-            fontSize="16px"
-            color="#484848"
-            label="Please provide information to define the property. The Property Tax will be calculated based on this."
-          />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM2_HEADER_MESSAGE" />;
       case 2:
-        return (
-          <Label
-            containerStyle={{ marginTop: 12 }}
-            fontSize="16px"
-            color="#484848"
-            label="Verify the information you have provided and let us know how much you would like to pay against your bill."
-          />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM3_HEADER_MESSAGE" />;
     }
   };
 
@@ -636,12 +620,7 @@ class FormWizard extends Component {
           style={{ padding: "12px 0px 12px 16px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
         >
           <Icon action="action" name="info" color="#30588c" />
-          <Label
-            containerStyle={{ marginLeft: 16 }}
-            fontSize="14px"
-            color="#484848"
-            label="If you do not have an existing Property ID, please visit your Municipal office with your Payment Receipt and you will be provided one."
-          />
+          <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE" />
         </div>
       );
     }
@@ -669,8 +648,8 @@ class FormWizard extends Component {
           footer={getFooterLabel(selected)}
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
-          backLabel="GO BACK"
-          nextLabel={selected === 4 ? "PAY" : "NEXT"}
+          backLabel="PT_COMMONS_GO_BACK"
+          nextLabel={selected === 4 ? "PT_HOME_PAY" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}

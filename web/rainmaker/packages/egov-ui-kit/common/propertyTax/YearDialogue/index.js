@@ -30,6 +30,10 @@ var _SingleButtonForm = require("./components/SingleButtonForm");
 
 var _SingleButtonForm2 = _interopRequireDefault(_SingleButtonForm);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 var _form = require("egov-ui-kit/hocs/form");
 
 var _form2 = _interopRequireDefault(_form);
@@ -114,7 +118,7 @@ var YearDialog = function (_Component) {
           _react2.default.createElement(
             "div",
             { className: "dialogue-question" },
-            "Which year\u2019s taxes would you like to pay? "
+            _react2.default.createElement(_translationNode2.default, { label: "PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS", fontSize: "16px", color: "#484848" })
           ),
           _react2.default.createElement(
             "div",

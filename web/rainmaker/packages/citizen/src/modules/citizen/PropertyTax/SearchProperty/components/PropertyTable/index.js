@@ -18,7 +18,7 @@ const PropertyTable = ({ tableData, onActionClick }) => {
         textChildren={
           <div>
             <Label
-              label={"Property Search Result"}
+              label="PT_SEARCH_PROPERTY_TABLE_HEADERS"
               className="property-search-table-heading"
               labelStyle={{
                 fontFamily: "Roboto",
@@ -34,7 +34,7 @@ const PropertyTable = ({ tableData, onActionClick }) => {
               orderby={"index"}
               columnData={columnData}
               rowData={tableData}
-              ActionOnRow={<Button className={"search-table-assess-pay-btn"} label={"Assess & Pay"} onClick={onActionClick} />}
+              ActionOnRow={<Button className={"search-table-assess-pay-btn"} label="PT_PAYMENT_ASSESS_AND_PAY" onClick={onActionClick} />}
             />
           </div>
         }

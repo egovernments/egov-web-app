@@ -40,7 +40,7 @@ var PropertyTable = function PropertyTable(_ref) {
         "div",
         null,
         _react2.default.createElement(_translationNode2.default, {
-          label: "Property Search Result",
+          label: "PT_SEARCH_PROPERTY_TABLE_HEADERS",
           className: "property-search-table-heading",
           labelStyle: {
             fontFamily: "Roboto",
@@ -56,7 +56,7 @@ var PropertyTable = function PropertyTable(_ref) {
           orderby: "index",
           columnData: columnData,
           rowData: tableData,
-          ActionOnRow: _react2.default.createElement(_Button2.default, { className: "search-table-assess-pay-btn", label: "Assess & Pay", onClick: onActionClick })
+          ActionOnRow: _react2.default.createElement(_Button2.default, { className: "search-table-assess-pay-btn", label: "PT_PAYMENT_ASSESS_AND_PAY", onClick: onActionClick })
         })
       )
     })

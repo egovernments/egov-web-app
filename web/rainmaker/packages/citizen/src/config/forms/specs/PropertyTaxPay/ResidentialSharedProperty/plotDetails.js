@@ -9,7 +9,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMajor",
       type: "textfield",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       value: "Residential",
       required: true,
       disabled: true,
@@ -21,17 +21,18 @@ const formConfig = {
       id: "assessment-super-area",
       jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
       type: "number",
-      floatingLabelText: "Total Super Built-up Area",
-      hintText: "Enter Super Built-up Area",
+      floatingLabelText: "PT_FORM2_TOTAL_BUILT_AREA",
+      hintText: "PT_FORM2_TOTAL_BUILT_AREA_PLACEHOLDER",
       ErrorText: "Can be maximimum 8 digits",
       toolTip: true,
-      toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
+      toolTipMessage: "PT_TOTAL_AREA_TOOLTIP_MESSAGE",
+      //toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
       required: true,
       pattern: "^([0-9]){0,8}$",
       numcols: 4,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea",field.value))
-      }
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
+      },
     },
     ...measuringUnit,
   },

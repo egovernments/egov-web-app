@@ -14,7 +14,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].usageCategoryMinor",
       type: "singleValueList",
       floatingLabelText: "Property Usage Type",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
@@ -34,7 +34,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].propertySubType",
       type: "singleValueList",
       floatingLabelText: "Property Type",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);

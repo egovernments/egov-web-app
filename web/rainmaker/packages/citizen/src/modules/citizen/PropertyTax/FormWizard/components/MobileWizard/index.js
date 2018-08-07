@@ -79,10 +79,15 @@ const MobileWizard = ({ handleNext, handlePrev, iconAction, header, iconName, tr
         />
         <div className="flexbox-container">
           <div className="flex-item">
-            <Button onClick={handlePrev} fullWidth={true} primary={true} label="GO BACK" />
+            <Button
+              onClick={handlePrev}
+              fullWidth={true}
+              primary={true}
+              label={<Label buttonLabel={true} label="PT_COMMONS_GO_BACK" color="#fe7a51" />}
+            />
           </div>
           <div className="flex-item">
-            <Button onClick={handleNext} fullWidth={true} label="NEXT" />
+            <Button onClick={handleNext} fullWidth={true} label={<Label buttonLabel={true} label="PT_COMMONS_NEXT" color="#ffffff" />} />
           </div>
         </div>
       </div>
