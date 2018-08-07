@@ -66,6 +66,7 @@ class FloorDetails extends React.Component {
 
   renderFloors = (floors, noFloors) => {
     const { renderUnits } = this;
+    const {disabled}=this.props;
 
     return floors.map((floor, key) => {
       const { floorId, floorDropDown: FloorDropDown, units } = floor;
@@ -74,7 +75,7 @@ class FloorDetails extends React.Component {
           key={key}
           textChildren={
             <div>
-              <FloorDropDown noFloors={noFloors} />
+              <FloorDropDown noFloors={noFloors} disabled={disabled}/>
               <div className={`col-xs-12`}>{renderUnits(units, floorId)}</div>
             </div>
           }
@@ -120,15 +121,15 @@ class FloorDetails extends React.Component {
             <Unit
               key={key}
               className={"grayout"}
-              handleRemoveItem={key !== 0 ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined}
+              handleRemoveItem={key !== 0 ?(!disabled?() => handleRemoveUnit(floorId, key, unit.formKey):undefined) : undefined}
               disabled={disabled}
               formName={`Unit-${key + 1}`}
             />
           );
         })}
-        <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
+        {!disabled  && <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
           + ADD ONE MORE UNIT
-        </div>
+        </div>}
       </div>
     );
   };

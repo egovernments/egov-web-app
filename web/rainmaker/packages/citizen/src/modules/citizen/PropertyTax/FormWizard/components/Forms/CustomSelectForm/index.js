@@ -7,12 +7,12 @@ import Field from "egov-ui-kit/utils/field";
 //   });
 // };
 
-const CustomSelectForm = ({ handleFieldChange, form }) => {
+const CustomSelectForm = ({ handleFieldChange, form,disabled }) => {
   let fields = form.fields || {};
 
   return (
     <div style={{ marginLeft: "30px" }}>
-      <Field fieldKey="floorName" field={fields.floorName} handleFieldChange={handleFieldChange} />
+      <Field fieldKey="floorName" field={fields.floorName} handleFieldChange={handleFieldChange} disabled={disabled}/>
     </div>
   );
 };
