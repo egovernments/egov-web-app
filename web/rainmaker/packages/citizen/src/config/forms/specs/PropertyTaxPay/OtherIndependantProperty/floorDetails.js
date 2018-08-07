@@ -9,7 +9,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       value: "Other",
       required: true,
       disabled: true,

@@ -6,7 +6,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Individiual Exemption Category (if applicable)",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [
         { label: "Individual Owner", value: "IND" },
         { label: "Multiple Owners", value: "MUL" },
@@ -20,7 +20,7 @@ const formConfig = {
       jsonPath: "",
       type: "singleValueList",
       floatingLabelText: "Usage Exemption Category (if applicable)",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [
         { label: "Individual Owner", value: "IND" },
         { label: "Multiple Owners", value: "MUL" },

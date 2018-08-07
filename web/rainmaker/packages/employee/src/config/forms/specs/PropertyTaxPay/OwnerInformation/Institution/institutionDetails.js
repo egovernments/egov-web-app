@@ -45,7 +45,7 @@ const formConfig = {
       // },
       // dropDownData:[],
       numcols: 6,
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
     },
   },

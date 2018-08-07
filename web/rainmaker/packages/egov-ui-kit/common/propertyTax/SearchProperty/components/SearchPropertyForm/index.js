@@ -12,13 +12,9 @@ var _field = require("egov-ui-kit/utils/field");
 
 var _field2 = _interopRequireDefault(_field);
 
-var _Button = require("egov-ui-kit/components/Button");
+var _components = require("components");
 
-var _Button2 = _interopRequireDefault(_Button);
-
-var _Card = require("egov-ui-kit/components/Card");
-
-var _Card2 = _interopRequireDefault(_Card);
+var _components2 = _interopRequireDefault(_components);
 
 require("./index.css");
 
@@ -35,7 +31,7 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
   return _react2.default.createElement(
     "div",
     { className: "form-without-button-cont-generic" },
-    _react2.default.createElement(_Card2.default, {
+    _react2.default.createElement(_components2.default, {
       textChildren: _react2.default.createElement(
         "div",
         { className: formKey + " col-xs-12" },
@@ -53,9 +49,15 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
         _react2.default.createElement(
           "div",
           { className: "text-center" },
-          _react2.default.createElement(_Button2.default, { label: "SEARCH", className: "search-property-btn", onClick: function onClick() {
+          _react2.default.createElement(_components2.default, {
+            label: "PT_SEARCH_BUTTON",
+            className: "search-property-btn",
+            onClick: function onClick() {
               return onSearchClick(form, formKey);
-            }, primary: true, fullWidth: true })
+            },
+            primary: true,
+            fullWidth: true
+          })
         )
       )
     })

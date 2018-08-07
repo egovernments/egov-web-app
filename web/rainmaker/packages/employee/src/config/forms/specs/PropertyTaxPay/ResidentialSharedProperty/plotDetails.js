@@ -9,7 +9,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMajor",
       type: "textfield",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       value: "Residential",
       required: true,
       disabled: true,
@@ -30,8 +30,8 @@ const formConfig = {
       pattern: "^([0-9]){0,8}$",
       numcols: 4,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea",field.value))
-      }
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
+      },
     },
     ...measuringUnit,
   },

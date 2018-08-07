@@ -42,29 +42,6 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
           );
         })}
       </div>
-      {/* <div className="text-center">
-        <Button
-          className="receipt-button"
-          primary={true}
-          label={<Label buttonLabel={true} label="ASSESS & PAY" />}
-          style={{
-            height: 36,
-            lineHeight: "auto",
-            minWidth: "inherit",
-          }}
-          labelStyle={{
-            padding: "0 31px",
-            letterSpacing: "0.6px",
-            display: "inline-block",
-            height: "22px",
-            lineHeight: "22px",
-            fontSize: "14px",
-          }}
-          onClick={(e) => {
-            history && history.push(`/property-tax/assessment-form?propertyId=${propertyTaxAssessmentID}`);
-          }}
-        />
-      </div> */}
     </div>
   );
 };

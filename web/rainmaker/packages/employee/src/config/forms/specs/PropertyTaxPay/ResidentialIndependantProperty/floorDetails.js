@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {subUsageType,occupancy,builtArea,beforeInitForm,annualRent} from "../utils/reusableFields";
+import { subUsageType, occupancy, builtArea, beforeInitForm, annualRent } from "../utils/reusableFields";
 const formConfig = {
   name: "floorDetails",
   fields: {
@@ -7,7 +7,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       value: "RESIDENTIAL",
       required: true,
       numcols: 4,
@@ -16,10 +16,10 @@ const formConfig = {
     ...subUsageType,
     ...occupancy,
     ...builtArea,
-    ...annualRent
+    ...annualRent,
   },
   isFormValid: false,
-  ...beforeInitForm
+  ...beforeInitForm,
 };
 
 export default formConfig;

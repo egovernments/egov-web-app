@@ -32,17 +32,13 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
-var _Screen = require("egov-ui-kit/common/common/Screen");
+var _common = require("modules/common");
 
-var _Screen2 = _interopRequireDefault(_Screen);
+var _common2 = _interopRequireDefault(_common);
 
-var _Button = require("egov-ui-kit/components/Button");
+var _components = require("components");
 
-var _Button2 = _interopRequireDefault(_Button);
-
-var _BreadCrumbs = require("egov-ui-kit/components/BreadCrumbs");
-
-var _BreadCrumbs2 = _interopRequireDefault(_BreadCrumbs);
+var _components2 = _interopRequireDefault(_components);
 
 var _actions = require("egov-ui-kit/redux/app/actions");
 
@@ -135,13 +131,13 @@ var SearchProperty = function (_Component) {
 
         var displayAddress = "StringFiled, Sarjapur Road";
         var name = propertyDetails[0].owners[0].name;
-        var button = _react2.default.createElement(_Button2.default, {
+        var button = _react2.default.createElement(_components2.default, {
           onClick: userType === "CITIZEN" ? function (e) {
             history.push("/property-tax/assessment-form?assessmentId=" + (propertyDetails[0] && propertyDetails[0].assessmentNumber) + "&isReassesment=true");
           } : function (e) {
             history.push("/property-tax/property/" + propertyId);
           },
-          label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "CITIZEN" ? "ASSESS & PAY" : "View", fontSize: "12px" }),
+          label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View", fontSize: "12px" }),
           value: propertyId,
           primary: true,
           style: { height: 20, lineHeight: "auto", minWidth: "inherit" }
@@ -194,9 +190,9 @@ var SearchProperty = function (_Component) {
         urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
       }
       return _react2.default.createElement(
-        _Screen2.default,
+        _common2.default,
         { loading: loading },
-        userType === "CITIZEN" ? _react2.default.createElement(_BreadCrumbs2.default, { url: urls.length > 0 ? urls : urlArray, history: history }) : [],
+        userType === "CITIZEN" ? _react2.default.createElement(_components2.default, { url: urls.length > 0 ? urls : urlArray, history: history }) : [],
         _react2.default.createElement(PropertySearchFormHOC, { history: this.props.history, onSearchClick: this.onSearchClick }),
         tableData.length > 0 ? _react2.default.createElement(_PropertyTable2.default, { tableData: tableData, onActionClick: this.onActionClick }) : null
       );

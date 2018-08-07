@@ -85,7 +85,13 @@ const OwnerInformation = ({
               />
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="isSameAsPropertyAddress" field={fields.isSameAsPropertyAddress} handleFieldChange={handleFieldChange} disabled={disabled} containerClassName="property-corr"/>
+              <Field
+                fieldKey="isSameAsPropertyAddress"
+                field={fields.isSameAsPropertyAddress}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                containerClassName="property-corr"
+              />
             </div>
             <div>
               <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
@@ -157,7 +163,7 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
 
 const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" })(GenericForm);
 const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay" })(GenericForm);
-const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
+//const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
 const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
 const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
 const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
@@ -172,7 +178,6 @@ const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path:
 export {
   UsageInformationHOC,
   PropertyAddressHOC,
-  PlotInformationHOC,
   OwnershipTypeHOC,
   OwnerInfoHOC,
   ExemptionCategoryHOC,

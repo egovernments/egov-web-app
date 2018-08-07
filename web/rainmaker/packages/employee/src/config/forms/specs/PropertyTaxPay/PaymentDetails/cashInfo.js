@@ -5,7 +5,7 @@ const formConfig = {
       id: "payerName",
       type: "textfield",
       floatingLabelText: "Payer Name",
-      hintText: "Enterpayer Name",
+      hintText: "Enter payer Name",
       required: true,
     },
     payerMobile: {

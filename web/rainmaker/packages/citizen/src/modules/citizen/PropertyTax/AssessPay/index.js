@@ -33,7 +33,7 @@ class AssessPay extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: <Label label="Add New Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="PT_ADD_NEW_PROPERTY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/date-dialogue",
           leftIcon: (
             <div style={listIconStyle}>
@@ -42,7 +42,7 @@ class AssessPay extends Component {
           ),
         },
         {
-          primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="PT_SEARCH_PROPERTY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/assess-pay/search-property",
           leftIcon: (
             <div style={listIconStyle}>

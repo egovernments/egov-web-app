@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import {measuringUnit,annualRent,occupancy,subUsageType,beforeInitFormForPlot} from "../utils/reusableFields";
+import { measuringUnit, annualRent, occupancy, subUsageType, beforeInitFormForPlot } from "../utils/reusableFields";
 import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
@@ -10,7 +10,7 @@ const formConfig = {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
-      floatingLabelText: "Usage Type",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       value: "Other",
       required: true,
       disabled: true,
@@ -35,10 +35,10 @@ const formConfig = {
       }
     },
     ...measuringUnit,
-    ...annualRent
+    ...annualRent,
   },
   isFormValid: false,
-  ...beforeInitFormForPlot
+  ...beforeInitFormForPlot,
 };
 
 export default formConfig;

@@ -44,7 +44,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Assess & Pay : Select Property",
+      title: "PT_ASSESPAY_SELECTPROPERTY",
       hideBackButton: true,
     },
   },
@@ -54,7 +54,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Incomplete Assessments",
+      title: "PT_INCOMPLETE_ASSESSMENT",
       hideBackButton: true,
     },
   },
@@ -64,7 +64,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Completed Assessments",
+      title: "PT_COMPLETED_ASSESSMENTS",
       hideBackButton: true,
     },
   },
@@ -75,7 +75,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "My Properties",
+      title: "PT_MY_PROPERTY",
       hideBackButton: true,
     },
   },
@@ -103,7 +103,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Search Property",
+      title: "PT_SEARCH_PROPERTY",
       hideBackButton: true,
     },
   },
@@ -144,7 +144,7 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "Assessment Form",
+      title: "PT_COMMON_ASSESSMENT_FORM_HEADERS",
     },
   },
   {

@@ -48,7 +48,7 @@ class PTHome extends Component {
 
   listItems = [
     {
-      primaryText: <Label label="Completed Assessments" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
+      primaryText: <Label label="PT_COMPLETED_ASSESSMENTS" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
       route: "/property-tax/completed-assessments",
       leftIcon: (
         <div style={listIconStyle}>
@@ -62,7 +62,7 @@ class PTHome extends Component {
       ),
     },
     {
-      primaryText: <Label label="How it works" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
+      primaryText: <Label label="PT_HOW_IT_WORK" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
       leftIcon: (
         <div style={listIconStyle}>
           <Icon action="action" name="help" />
@@ -75,7 +75,7 @@ class PTHome extends Component {
       ),
     },
     {
-      primaryText: <Label label="Examples" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
+      primaryText: <Label label="PT_EXAMPLE" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
       leftIcon: (
         <div style={listIconStyle}>
           <Icon action="custom" name="pt-example" />
@@ -112,7 +112,7 @@ class PTHome extends Component {
               <div className="rainmaker-displayInline">
                 <Icon style={{ marginLeft: "18px" }} action="action" name="credit-card" color="#767676" />
                 <Label
-                  label="Pay Property Tax"
+                  label="PT_PAY_PROPERTY_TAX"
                   containerStyle={{ marginLeft: 25, marginTop: 3 }}
                   labelStyle={labelStyle}
                   color="#484848"
@@ -124,25 +124,25 @@ class PTHome extends Component {
                 <Link to="/property-tax/assess-pay">
                   <div className="col-xs-4 text-center pt-new-property">
                     <Icon style={iconStyle} action="communication" name="business" />
-                    <Label label="Assess & Pay" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
+                    <Label label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
                   </div>
                 </Link>
                 <Link to="/property-tax/incomplete-assessments">
                   <div className="col-xs-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
-                    <Label
-                      label={`Incomplete Assessments (${numDrafts})`}
-                      fontSize="20px"
-                      containerStyle={labelContainerStyle}
-                      color="#484848"
-                      bold={true}
-                    />
+                    <div className="rainmaker-displayInline">
+                      <Label label="PT_INCOMPLETE_ASSESSMENT" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
+                      <Label label="(10)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
+                    </div>
                   </div>
                 </Link>
                 <Link to="/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <Label label={`My Properties (${numProperties})`} fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
+                    <div className="rainmaker-displayInline">
+                      <Label label="PT_MY_PROPERTY" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
+                      <Label label="(10)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
+                    </div>
                   </div>
                 </Link>
               </div>

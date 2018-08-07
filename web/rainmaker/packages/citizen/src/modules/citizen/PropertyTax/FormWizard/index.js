@@ -88,7 +88,7 @@ class FormWizard extends Component {
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
           ...form,
           assessmentNumber,
-        }
+        },
       };
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
@@ -140,10 +140,14 @@ class FormWizard extends Component {
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
-        [{
-          key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
-          key: isReassesment ? "assessmentNumber" : "id", value: draftId,
-        }],
+        [
+          {
+            key: "userId",
+            value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+            key: isReassesment ? "assessmentNumber" : "id",
+            value: draftId,
+          },
+        ],
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
@@ -172,7 +176,7 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      toggleSpinner()
+      toggleSpinner();
     }
   };
 
@@ -182,7 +186,7 @@ class FormWizard extends Component {
     let { history } = this.props;
     let { search } = this.props.location;
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!this.getAssessmentId(search, "isReassesment")
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     const { fetchGeneralMDMSData } = this.props;
@@ -526,20 +530,20 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
-    let { history,toggleSpinner } = this.props;
+    let { history, toggleSpinner } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
     ];
-    let callbackUrl=`${window.origin}/property-tax/payment-redirect-page`;
+    let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
-      const userType=process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
-      if (userType==="CITIZEN") {
-        callbackUrl=`${window.origin}/citizen/property-tax/payment-redirect-page`;
+      const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
+      if (userType === "CITIZEN") {
+        callbackUrl = `${window.origin}/citizen/property-tax/payment-redirect-page`;
       } else {
-        callbackUrl=`${window.origin}/employee/property-tax/payment-redirect-page`;
+        callbackUrl = `${window.origin}/employee/property-tax/payment-redirect-page`;
       }
     }
     try {
@@ -568,7 +572,7 @@ class FormWizard extends Component {
         console.log(e);
       }
     } catch (e) {
-      toggleSpinner()
+      toggleSpinner();
       console.log(e);
     }
   };
@@ -606,13 +610,13 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { prepareFormData,toggleSpinner } = this.props;
+    let { prepareFormData, toggleSpinner } = this.props;
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
     try {
-      set(prepareFormData,"Properties[0].address.locality.area", "Area3")
+      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
@@ -645,27 +649,11 @@ class FormWizard extends Component {
   getHeaderLabel = (selected) => {
     switch (selected) {
       case 0:
-        return (
-          <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="Please provide information to identify the property." />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM1_HEADER_MESSAGE" />;
       case 1:
-        return (
-          <Label
-            containerStyle={{ marginTop: 12 }}
-            fontSize="16px"
-            color="#484848"
-            label="Please provide information to define the property. The Property Tax will be calculated based on this."
-          />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM2_HEADER_MESSAGE" />;
       case 2:
-        return (
-          <Label
-            containerStyle={{ marginTop: 12 }}
-            fontSize="16px"
-            color="#484848"
-            label="Verify the information you have provided and let us know how much you would like to pay against your bill."
-          />
-        );
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM3_HEADER_MESSAGE" />;
     }
   };
 
@@ -677,12 +665,7 @@ class FormWizard extends Component {
           style={{ padding: "12px 0px 12px 16px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
         >
           <Icon action="action" name="info" color="#30588c" />
-          <Label
-            containerStyle={{ marginLeft: 16 }}
-            fontSize="14px"
-            color="#484848"
-            label="If you do not have an existing Property ID, please visit your Municipal office with your Payment Receipt and you will be provided one."
-          />
+          <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE" />
         </div>
       );
     }
@@ -700,7 +683,7 @@ class FormWizard extends Component {
     const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
     const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
-    const {history} =this.props;
+    const { history } = this.props;
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -711,8 +694,8 @@ class FormWizard extends Component {
           footer={getFooterLabel(selected)}
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
-          backLabel="GO BACK"
-          nextLabel={selected === 3 ? "PAY" : "NEXT"}
+          backLabel="PT_COMMONS_GO_BACK"
+          nextLabel={selected === 3 ? "PT_HOME_PAY" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}

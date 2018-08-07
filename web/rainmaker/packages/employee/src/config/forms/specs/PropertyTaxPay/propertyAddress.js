@@ -16,7 +16,7 @@ const formConfig = {
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       fullWidth: true,
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       numcols: 6,
       dataFetchConfig: {
         url: CITY.GET.URL,
@@ -95,7 +95,7 @@ const formConfig = {
       type: "autoSuggestDropdown",
       floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
       //hintText: "PT_COMMON_SELECT_PLACEHOLDER",
-      hintText: "Select",
+      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       fullWidth: true,
       toolTip: true,
       toolTipMessage: "Name of the area in which your property is located",
