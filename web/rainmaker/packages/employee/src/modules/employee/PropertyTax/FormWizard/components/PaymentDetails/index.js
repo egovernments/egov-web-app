@@ -189,8 +189,4 @@ class PaymentDetails extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-
-}
-
 export default PaymentDetails
