@@ -51,6 +51,7 @@ const TextFieldIcon = ({
   autoFocus,
   className,
   inputStyle,
+  disabled,
   ...textFieldProps
 }) => {
   const TargetIcon = Icon || SearchIcon;
@@ -70,6 +71,7 @@ const TextFieldIcon = ({
         className={className}
         style={{ ...style.textFieldStyle, ...textFieldStyle }}
         inputStyle={{ ...style.inputStyle, ...inputStyle }}
+        disabled={disabled}
         {...textFieldProps}
       />
     </div>

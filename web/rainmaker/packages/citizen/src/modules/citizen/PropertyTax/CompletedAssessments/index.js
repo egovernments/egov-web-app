@@ -79,7 +79,7 @@ class CompletedAssessments extends Component {
         <AssessmentList
           innerDivStyle={innerDivStyle}
           items={transformedProperties}
-          noAssessmentMessage="You have no complete assessments."
+          noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE1"
           button={true}
           yearDialogue={this.state.dialogueOpen}
           closeDialogue={this.closeYearRangeDialogue}

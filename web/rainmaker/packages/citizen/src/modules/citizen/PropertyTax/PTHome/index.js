@@ -93,7 +93,10 @@ class PTHome extends Component {
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
     (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
-    fetchProperties([{ key: "accountId", value: userInfo.uuid }], [{ key: "userId", value: userInfo.uuid }]);
+    fetchProperties(
+      [{ key: "accountId", value: userInfo.uuid }],
+      [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }]
+    );
   };
 
   handleItemClick = (item, index) => {
@@ -104,6 +107,7 @@ class PTHome extends Component {
   render() {
     let { listItems, handleItemClick } = this;
     const { numProperties, numDrafts, loading } = this.props;
+    console.log(numDrafts, numProperties);
     return (
       <Screen loading={loading} className="pt-home-screen">
         <Card
@@ -130,18 +134,18 @@ class PTHome extends Component {
                 <Link to="/property-tax/incomplete-assessments">
                   <div className="col-xs-4 text-center pt-search-property">
                     <Icon style={iconStyle} action="image" name="edit" />
-                    <div className="rainmaker-displayInline">
-                      <Label label="PT_INCOMPLETE_ASSESSMENT" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
-                      <Label label="(10)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" bold={true} />
+                    <div className="pt-home-rainmaker-displayInline">
+                      <Label label="PT_INCOMPLETE_ASSESSMENT" fontSize="20px" color="#484848" bold={true} />
+                      <Label label={`(${numDrafts})`} fontSize="20px" color="#484848" bold={true} />
                     </div>
                   </div>
                 </Link>
                 <Link to="/property-tax/my-properties">
                   <div className="col-xs-4 text-center pt-my-properties">
                     <Icon style={iconStyle} action="custom" name="property-tax" />
-                    <div className="rainmaker-displayInline">
-                      <Label label="PT_MY_PROPERTY" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
-                      <Label label="(10)" fontSize="20px" containerStyle={labelContainerStyle} color="#484848" />
+                    <div className="pt-home-rainmaker-displayInline">
+                      <Label label="PT_MY_PROPERTY" fontSize="20px" color="#484848" />
+                      <Label label={`(${numProperties})`} fontSize="20px" color="#484848" />
                     </div>
                   </div>
                 </Link>

@@ -20,7 +20,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
         iconStyle={{}}
         title={
           <div className="tax-header-price rainmaker-displayInline">
-            <Label label="Property Tax Dues:" fontSize="16px" color="#484848" />
+            <Label label="PT_MAKE_PAYMENT_PT_DUE" fontSize="16px" color="#484848" />
             <Label className="property-dues-total-amount" label={`INR ${totalAmount}`} fontSize="16px" color="#484848" />
           </div>
         }
@@ -28,7 +28,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
       <CardText expandable={true}>
         <div className="clearfix fare-section">
           <div className="col-sm-6" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
-            <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="Detailed Bill" bold={true} />
+            <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_MAKE_PAYMENT_DETAILED_BILL" bold={true} />
             {taxHeadEstimates &&
               taxHeadEstimates.map((item, index) => {
                 return (
@@ -51,7 +51,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
             <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, height: 2 }} />
             <div className="clearfix" style={{ marginTop: 8 }}>
               <div className="col-sm-9" style={{ padding: 0 }}>
-                <Label label="Total" />
+                <Label label="PT_MAKE_PAYMENT_TOTAL" />
               </div>
               <div className="col-sm-3">
                 <Label
@@ -64,7 +64,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
           </div>
           <div className="col-sm-6">
             <div className="date-details">
-              <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="Important Dates" bold={true} />
+              <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_MAKE_PAYMENT_IMPORTANT_DATES" bold={true} />
               <ul>
                 {rebate && (
                   <li>

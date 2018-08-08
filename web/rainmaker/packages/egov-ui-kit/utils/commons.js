@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -408,6 +408,16 @@ var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHour
   } else {
     return Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
   }
+};
+
+var getAddress = exports.getAddress = function getAddress(cities, cityValue, mohalla) {
+  var cityName = "";
+  cities && cities.forEach(function (city) {
+    if (city.code === cityValue) {
+      cityName = city.name;
+    }
+  });
+  return getCommaSeperatedAddress(cityName, mohalla);
 };
 
 var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCreationTime(complaint) {

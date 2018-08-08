@@ -129,6 +129,7 @@ var AutoSuggestDropdown = function (_React$Component) {
         menuStyle: { maxHeight: "150px", overflowY: "auto" },
         dataSourceConfig: { text: "label", value: "value" },
         onNewRequest: onChange,
+        underlineDisabledStyle: underlineDisabledStyle,
         floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
           "span",
           { key: "error-" + className, style: requiredStyle },
@@ -140,8 +141,6 @@ var AutoSuggestDropdown = function (_React$Component) {
   }]);
   return AutoSuggestDropdown;
 }(_react2.default.Component);
-
-;
 
 AutoSuggestDropdown.propTypes = (_AutoSuggestDropdown$ = {
   onNewRequest: _propTypes2.default.func,
