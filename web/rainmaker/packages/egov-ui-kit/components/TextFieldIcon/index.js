@@ -20,6 +20,10 @@ var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _translationNode = require("../../utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 var _TextField = require("../TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -30,7 +34,6 @@ var _search2 = _interopRequireDefault(_search);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// can we pull the existing textfield
 var containerStyle = {
   position: "relative",
   display: "inline-block",
@@ -38,6 +41,8 @@ var containerStyle = {
   boxSizing: "border-box",
   fontSize: 0
 };
+// can we pull the existing textfield
+
 
 var getStyles = function getStyles(iconPosition, textFieldProps) {
   var textFieldStyle = {},
@@ -70,6 +75,7 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
   var Icon = _ref.Icon,
       _ref$iconStyle = _ref.iconStyle,
       iconStyle = _ref$iconStyle === undefined ? {} : _ref$iconStyle,
+      text = _ref.text,
       onClick = _ref.onClick,
       onIconClick = _ref.onIconClick,
       _ref$textFieldStyle = _ref.textFieldStyle,
@@ -79,14 +85,18 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
       autoFocus = _ref.autoFocus,
       className = _ref.className,
       inputStyle = _ref.inputStyle,
-      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className", "inputStyle"]);
+      textFieldProps = (0, _objectWithoutProperties3.default)(_ref, ["Icon", "iconStyle", "text", "onClick", "onIconClick", "textFieldStyle", "iconPosition", "autoFocus", "className", "inputStyle"]);
 
   var TargetIcon = Icon || _search2.default;
   var style = getStyles(iconPosition, textFieldProps);
   return _react2.default.createElement(
     "div",
     { onClick: onClick, style: containerStyle },
-    _react2.default.createElement(TargetIcon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
+    text ? _react2.default.createElement(
+      "div",
+      { onClick: onIconClick },
+      _react2.default.createElement(_translationNode2.default, { className: "textfield-text", label: text, labelStyle: (0, _extends3.default)({}, style.iconStyle, iconStyle, { top: 36 }) })
+    ) : _react2.default.createElement(TargetIcon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
     _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
       autoFocus: autoFocus,
       name: "textfield-icon",

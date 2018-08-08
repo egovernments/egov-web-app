@@ -1,7 +1,9 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import Icon from "egov-ui-kit/components/Icon";
 const cityCode = "";
+// const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
   name: "propertyAddress",
@@ -122,7 +124,8 @@ const formConfig = {
     oldPID: {
       id: "oldpid",
       type: "textFieldIcon",
-      Icon: SearchIcon,
+      className: "pt-old-pid-text-field",
+      text: "SEARCH",
       iconRedirectionURL: "https://www.google.co.in/",
       jsonPath: "Properties[0].oldPropertyId",
       floatingLabelText: "PT_PROPERTY_ADDRESS_OLDPID",

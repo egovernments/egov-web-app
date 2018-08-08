@@ -3,7 +3,6 @@ import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
-
 import {
   UsageInformationHOC,
   PropertyAddressHOC,
@@ -141,10 +140,14 @@ class FormWizard extends Component {
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
-        [{
-          key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
-          key: isReassesment ? "assessmentNumber" : "id", value: draftId,
-        }],
+        [
+          {
+            key: "userId",
+            value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+            key: isReassesment ? "assessmentNumber" : "id",
+            value: draftId,
+          },
+        ],
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
@@ -152,7 +155,7 @@ class FormWizard extends Component {
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
-      updatePrepareFormDataFromDraft(get(currentDraft, "prepareFormData", {}))
+      updatePrepareFormDataFromDraft(get(currentDraft, "prepareFormData", {}));
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -181,7 +184,7 @@ class FormWizard extends Component {
         }
       );
     } catch (e) {
-      toggleSpinner()
+      toggleSpinner();
     }
   };
 
@@ -250,7 +253,7 @@ class FormWizard extends Component {
       "UsageCategorySubMinor",
     ]);
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!this.getAssessmentId(search, "isReassesment")
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     this.addOwner();
@@ -361,6 +364,7 @@ class FormWizard extends Component {
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails } = this;
+
     switch (selected) {
       case 0:
         return (
@@ -414,7 +418,7 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { callDraft, pay, estimate } = this;
+    const { callDraft, pay, estimate, validateUnitandPlotSize } = this;
     const { selected, formValidIndexArray } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
@@ -437,24 +441,29 @@ class FormWizard extends Component {
             if (plotDetails) {
               const isPlotDetailsFormValid = validateForm(plotDetails);
               if (isPlotDetailsFormValid) {
-                if (get(plotDetails, "fields.floorCount")) {
-                  let floorValidation = true;
-                  for (const variable in form) {
-                    if (variable.search("customSelect") !== -1 || variable.search("floorDetails") !== -1) {
-                      const isDynamicFormValid = validateForm(form[variable]);
-                      if (!isDynamicFormValid) {
-                        displayFormErrorsAction(variable);
-                        floorValidation = false;
+                const isTotalUnitSizeValid = validateUnitandPlotSize(plotDetails, form);
+                if (isTotalUnitSizeValid) {
+                  if (get(plotDetails, "fields.floorCount")) {
+                    let floorValidation = true;
+                    for (const variable in form) {
+                      if (variable.search("customSelect") !== -1 || variable.search("floorDetails") !== -1) {
+                        const isDynamicFormValid = validateForm(form[variable]);
+                        if (!isDynamicFormValid) {
+                          displayFormErrorsAction(variable);
+                          floorValidation = false;
+                        }
                       }
                     }
-                  }
-                  if (floorValidation) {
+                    if (floorValidation) {
+                      callDraft();
+                      this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                    }
+                  } else {
                     callDraft();
                     this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                   }
                 } else {
-                  callDraft();
-                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                  alert("Plot size can't be less than total ground floor units area");
                 }
               } else {
                 displayFormErrorsAction("plotDetails");
@@ -534,20 +543,20 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
-    let { history,toggleSpinner } = this.props;
+    let { history, toggleSpinner } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
     ];
-    let callbackUrl=`${window.origin}/property-tax/payment-redirect-page`;
+    let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
-      const userType=process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
-      if (userType==="CITIZEN") {
-        callbackUrl=`${window.origin}/citizen/property-tax/payment-redirect-page`;
+      const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
+      if (userType === "CITIZEN") {
+        callbackUrl = `${window.origin}/citizen/property-tax/payment-redirect-page`;
       } else {
-        callbackUrl=`${window.origin}/employee/property-tax/payment-redirect-page`;
+        callbackUrl = `${window.origin}/employee/property-tax/payment-redirect-page`;
       }
     }
     try {
@@ -576,7 +585,7 @@ class FormWizard extends Component {
         console.log(e);
       }
     } catch (e) {
-      toggleSpinner()
+      toggleSpinner();
       console.log(e);
     }
   };
@@ -600,10 +609,6 @@ class FormWizard extends Component {
           },
         ],
       });
-      // console.log(estimateResponse.Calculation);
-      // this.setState({
-      //   estimation: estimateResponse && estimateResponse.Calculation,
-      // });
       return estimateResponse;
     } catch (e) {
       // alert(e);
@@ -614,13 +619,13 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { prepareFormData,toggleSpinner } = this.props;
+    let { prepareFormData, toggleSpinner } = this.props;
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
     try {
-      set(prepareFormData,"Properties[0].address.locality.area", "Area3")
+      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
@@ -648,6 +653,21 @@ class FormWizard extends Component {
     } else {
       alert("Please fill required tabs");
     }
+  };
+
+  validateUnitandPlotSize = (plotDetails, form) => {
+    const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
+      if (key.startsWith("floorDetails_0_")) {
+        const form1 = form[key];
+        if (form1 && form1.fields.builtArea.value) {
+          unitTotal += parseFloat(form1.fields.builtArea.value);
+        }
+      }
+      return unitTotal;
+    }, 0);
+    if (unitTotal > parseFloat(plotDetails.fields.plotSize.value)) {
+      return false;
+    } else return true;
   };
 
   getHeaderLabel = (selected) => {
@@ -708,7 +728,7 @@ class FormWizard extends Component {
     const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
     const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
-    const {history} =this.props;
+    const { history } = this.props;
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -746,7 +766,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData))
+    updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
   };
 };
 
