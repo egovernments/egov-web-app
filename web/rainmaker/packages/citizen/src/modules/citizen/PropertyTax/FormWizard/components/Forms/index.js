@@ -93,23 +93,25 @@ const OwnerInformation = ({
                 containerClassName="property-corr"
               />
             </div>
-            <div>
-              <Label label="PT_FORM3_GENDER" fontSize={12} labelStyle={styles.labelStyle} bold={true} />
-              <RadioButton
-                id="gender-selection"
-                name="gender-selection"
-                options={options}
-                handleChange={(e) => {
-                  handleFieldChange("ownerGender", e.target.value);
-                }}
-                radioButtonItemStyle={styles.radioButtonItemStyle}
-                labelStyle={styles.radioButtonLabelStyle}
-                selectedLabelStyle={styles.selectedLabelStyle}
-                className={"owner-gender-selection"}
-                iconStyle={styles.iconStyle}
-                valueSelected={genderSelected}
-                disabled={disabled}
-              />
+            <div className="other-details">
+              <div>
+                <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+                <RadioButton
+                  id="gender-selection"
+                  name="gender-selection"
+                  options={options}
+                  handleChange={(e) => {
+                    handleFieldChange("ownerGender", e.target.value);
+                  }}
+                  radioButtonItemStyle={styles.radioButtonItemStyle}
+                  labelStyle={styles.radioButtonLabelStyle}
+                  selectedLabelStyle={styles.selectedLabelStyle}
+                  className={"owner-gender-selection"}
+                  iconStyle={styles.iconStyle}
+                  valueSelected={genderSelected}
+                  disabled={disabled}
+                />
+              </div>
               <div className="relationship-details">
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
                 <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
