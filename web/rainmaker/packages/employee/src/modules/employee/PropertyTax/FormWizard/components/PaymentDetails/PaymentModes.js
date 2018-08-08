@@ -5,6 +5,9 @@ import Label from "egov-ui-kit/utils/translationNode";
 //import XYZ from "modules/citizen/PropertyTax/LinkPastPayments/index"
 import formHoc from "egov-ui-kit/hocs/form";
 import Field from "egov-ui-kit/utils/field";
+import get from "lodash/get";
+import { connect } from "react-redux";
+import { Card } from "components";
 // import {
 //   UsageInformationHOC,
 //   PropertyAddressHOC,
@@ -17,7 +20,7 @@ import Field from "egov-ui-kit/utils/field";
 
 const FormDetails = ({ item }) => {
   return (
-    <div>
+    <div className="payment-filled-details">
       {item.forms.map((form) => {
         const { title, comp: TransactionForm, className } = form;
         return (
@@ -49,23 +52,40 @@ const getListItems = (items) =>
   });
 
 class PaymentModes extends Component {
+  getPaymentDetails = () => {
+    const { currentPaymentMode, paymentModeDetails } = this.props
+    const paymentData = paymentModeDetails.find(paymentMode => paymentMode.primaryText.toLowerCase() === currentPaymentMode.toLowerCase())
+    return FormDetails({ item: paymentData })
+  }
   render() {
+    const { PaymentModeSelector } = this.props
     return (
-      <div className="payment-modes">
-        <div className="payment-modes-header">Choose mode of Payment</div>
-        <List
-          items={getListItems(this.props.paymentModeDetails)}
-          primaryTogglesNestedList={true}
-          listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px" }}
-          nestedListStyle={{ padding: "0px" }}
-          innerDivStyle={{"border-bottom":"#e0e0e0 solid 1px"}}
-          onItemClick={(item, index) => {
-            //  history && history.push(item.route);
-          }}
-        />
-      </div>
+      <Card
+        textChildren={
+          <div className="payment-modes">
+            <div className="payment-modes-header">Choose mode of Payment</div>
+            <PaymentModeSelector />
+            {/*<List
+              items={getListItems(this.props.paymentModeDetails)}
+              primaryTogglesNestedList={true}
+              listItemStyle={{ padding: "0px 20px", borderWidth: "10px 10px 0px" }}
+              nestedListStyle={{ padding: "0px" }}
+              innerDivStyle={{"border-bottom":"#e0e0e0 solid 1px"}}
+              onItemClick={(item, index) => {
+                //  history && history.push(item.route);
+              }}
+            />*/}
+            {this.getPaymentDetails()}
+          </div>
+        }
+      />
     );
   }
 }
 
-export default PaymentModes;
+const mapStateToProps = (state) => {
+  const currentPaymentMode = get(state, "form.paymentModes.fields.mode.value", "cash")
+  return { currentPaymentMode }
+}
+
+export default connect(mapStateToProps, null)(PaymentModes);

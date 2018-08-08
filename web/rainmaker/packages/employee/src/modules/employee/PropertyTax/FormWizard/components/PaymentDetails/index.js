@@ -16,8 +16,10 @@ import Field from "egov-ui-kit/utils/field"
 //   OwnerInformation,
 //   InstitutionAuthorityHOC,
 // } from "modules/citizen/PropertyTax/FormWizard/components/Forms";
-import { CashInformation, ChequeInformation, DemandDraftInformation, CardInformation } from "./forms"
+import { CashInformation, ChequeInformation, DemandDraftInformation, CardInformation, PaymentModeInformation } from "./forms"
 import AdditionalDetails from "modules/employee/PropertyTax/FormWizard/components/ReviewForm/components/AdditionalDetails"
+
+const PaymentModeSelector = formHoc({ formKey: "paymentModes" })(PaymentModeInformation)
 
 const paymentModeDetails =  [
   {
@@ -180,11 +182,15 @@ class PaymentDetails extends Component {
           optionSelected={valueSelected}
         />
         <AmountDetails />
-        <PaymentModes paymentModeDetails={paymentModeDetails} />
+        <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />
         <ReceiptDetails />
       </div>
     )
   }
+}
+
+const mapStateToProps = (state) => {
+
 }
 
 export default PaymentDetails
