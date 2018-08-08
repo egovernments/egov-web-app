@@ -55,7 +55,8 @@ class CreateJob extends Component {
 
   showJobs = e => {
     console.log("AAsssssssssA");
-    // let { history } = this.props;
+    let { history } = this.props;
+    // history.push("/view-jobs");
     window.location.href = window.location.origin + "/view-jobs";
   };
 
