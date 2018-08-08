@@ -86,8 +86,8 @@ const getItemStatus = (item, history) => {
     case "Payment failed":
       return (
         <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#e74c3c"} />
           <Icon action="alert" name="warning" style={styles.paidIconStyle} color={"#e74c3c"} />
+          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#e74c3c"} />
         </div>
       );
       break;
@@ -149,7 +149,7 @@ const getListItems = (items, history) => {
     items.map((item, index) => {
       return (
         item && {
-          primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
+          primaryText: item.primaryText,
           secondaryText:
             item.secondaryText &&
             (typeof item.secondaryText === "object" ? (
@@ -173,7 +173,6 @@ const getListItems = (items, history) => {
                   </div>
                 ) : (
                   nestedItem.primaryText
-                  // <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
                 ),
                 secondaryText: nestedItem.secondaryText,
                 route: nestedItem.route,

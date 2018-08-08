@@ -70,7 +70,7 @@ var Field = function Field(_ref) {
         return _react2.default.createElement(_components.TextFieldIcon, (0, _extends3.default)({
           iconPosition: "right",
           Icon: Icon
-        }, fieldProps, {
+        }, fieldProps, rest, {
           onIconClick: iconRedirectionURL ? function () {
             window.open(iconRedirectionURL);
           } : onIconClick,

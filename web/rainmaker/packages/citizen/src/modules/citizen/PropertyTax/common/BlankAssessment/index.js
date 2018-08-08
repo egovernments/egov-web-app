@@ -12,7 +12,7 @@ const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialo
         <Button
           className="assessment-button"
           primary={true}
-          label="New Property Assessment"
+          label={<Label label="PT_NO_ASSESSMENT_BUTTON" buttonLabel={true} dark={true} fontSize={"16px"} />}
           style={{
             height: 36,
             lineHeight: "auto",

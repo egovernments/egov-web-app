@@ -6,7 +6,8 @@ import { Screen } from "modules/common";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getAddress } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -77,7 +78,7 @@ class MyProperties extends Component {
           innerDivStyle={innerDivStyle}
           items={transformedProperties}
           history={this.props.history}
-          noAssessmentMessage="You have yet to assess for a property. Start Now:"
+          noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE3"
           button={true}
           yearDialogue={this.state.dialogueOpen}
           closeDialogue={this.closeYearRangeDialogue}
@@ -89,15 +90,18 @@ class MyProperties extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { properties } = state;
+  const { properties, common } = state;
   const { urls } = state.app;
+  const { cities } = common;
   const { loading, propertiesById } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const transformedProperties = Object.values(propertiesById).map((property, index) => {
+    const cityValue = get(property, "address.city");
+    const mohalla = get(property, "address.locality.code");
     return {
       primaryText: (
         <Label
-          label={getCommaSeperatedAddress(property.address.buildingName, property.address.street)}
+          label={getAddress(cities, cityValue, mohalla)}
           fontSize="16px"
           color="#484848"
           bold={true}
@@ -106,7 +110,7 @@ const mapStateToProps = (state) => {
       ),
       secondaryText: (
         <div className="rainmaker-displayInline">
-          <Label label="Property Tax Assessment ID: " dark={true} labelStyle={{ letterSpacing: 0.6 }} />
+          <Label label="PT_PROPERTY_ASSESSMENT_ID" dark={true} labelStyle={{ letterSpacing: 0.6 }} />
           <Label label={property.propertyId} dark={true} labelStyle={{ letterSpacing: 0.6, marginLeft: 5 }} />
         </div>
       ),

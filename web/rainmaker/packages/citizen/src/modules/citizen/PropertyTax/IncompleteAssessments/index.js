@@ -8,7 +8,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getAddress } from "egov-ui-kit/utils/commons";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -38,23 +38,26 @@ class IncompleteAssessments extends Component {
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
     fetchProperties(
       [{ key: "accountId", value: userInfo.uuid }],
-      [{ key: "userId", value: userInfo.uuid }],
+      [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }],
       [{ key: "userUuid", value: userInfo.uuid }, { key: "txnStatus", value: "FAILURE" }]
     );
   };
 
   render() {
-    const { urls, history, transformedDrafts, loading } = this.props;
+    const { urls, history, loading, incompleteAssessments } = this.props;
+    console.log(incompleteAssessments);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList
-          history={history}
-          items={transformedDrafts}
-          innerDivStyle={innerDivStyle}
-          noAssessmentMessage="You have no incomplete assessments!"
-          button={false}
-        />
+        {incompleteAssessments && (
+          <AssessmentList
+            history={history}
+            items={incompleteAssessments}
+            innerDivStyle={innerDivStyle}
+            noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE2"
+            button={false}
+          />
+        )}
       </Screen>
     );
   }
@@ -63,65 +66,72 @@ class IncompleteAssessments extends Component {
 const getfailedPropertiesById = (propertiesById, failedTransactions) => {
   return (
     failedTransactions &&
-    failedTransactions.reduce((result, moduleId) => {
-      const propertyId = moduleId.split(":")[0];
-      const failedProperties =
-        propertiesById &&
-        Object.keys(propertiesById).filter((key) => {
-          return propertyId === key;
-        });
-      result = [...result, ...failedProperties];
+    Object.keys(failedTransactions).reduce((result, moduleId) => {
+      if (propertiesById[moduleId] && !result[moduleId]) result[moduleId] = [];
+      result[moduleId] = propertiesById[moduleId];
       return result;
-    }, [])
+    }, {})
   );
 };
 
-// const getFailedTransactionProperties = (propertiesById, failedTransactions, cities) => {
-//   failedTransactions &&
-//     failedTransactions.forEach((moduleId) => {
-//       return (
-//         propertiesById &&
-//         Object.values(propertiesById).reduce((acc, curr) => {
-//           const propertyDetail =
-//             curr.propertyDetails &&
-//             curr.propertyDetails.map((item) => {
-//               const consumerCode = `${curr.propertyId}:${item.assessmentNumber}`;
-//               if (moduleId === consumerCode) {
-//                 return {
-//                   primaryText: <Label label={item.financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
-//                   secondaryText: (
-//                     <div style={{ height: "auto" }}>
-//                       <Label
-//                         label={getAddress(cities, curr.address.city, curr.address.locality.code)}
-//                         labelStyle={secondaryTextLabelStyle}
-//                         fontSize="14px"
-//                         containerStyle={secondaryTextContainer}
-//                         color="#484848"
-//                       />
-//                     </div>
-//                   ),
-//                   assessmentNo: item.assessmentNumber,
-//                   date: curr.auditDetails ? getDateFromEpoch(get(curr, "auditDetails.lastModifiedTime")) : "",
-//                   status: "Payment failed",
-//                 };
-//               }
-//             });
-//           acc = [...acc, ...propertyDetail];
-//           return acc;
-//         }, [])
-//       );
-//     });
-// };
+/* console.log(failedTransObj); */
 
-const getAddress = (cities, cityValue, mohalla) => {
-  let cityName = "";
-  cities &&
-    cities.forEach((city) => {
-      if (city.code === cityValue) {
-        cityName = city.name;
-      }
-    });
-  return getCommaSeperatedAddress(cityName, mohalla);
+const filterData = (propertiesById, propertyName, ids) => {
+  return {
+    [propertyName]: {
+      ...propertiesById[propertyName],
+      propertyDetails: propertiesById && propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
+    },
+  };
+};
+
+const mergeFinalData = (propertiesById, failedTransObj) => {
+  return (
+    propertiesById &&
+    Object.keys(propertiesById).reduce((result, current) => {
+      result[current] = filterData(propertiesById, current, failedTransObj[current])[current];
+      return result;
+    }, {})
+  );
+};
+
+const getTransformedItems = (propertiesById, cities) => {
+  return (
+    propertiesById &&
+    Object.values(propertiesById).reduce((acc, curr) => {
+      const cityValue = get(curr, "address.city");
+      const mohalla = get(curr, "address.locality.code");
+      const propertyDetail =
+        curr.propertyDetails &&
+        curr.propertyDetails.map((item) => {
+          return {
+            primaryText: <Label label={get(item, "financialYear")} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
+            secondaryText: (
+              <div style={{ height: "auto" }}>
+                <Label
+                  label={getAddress(cities, cityValue, mohalla)}
+                  labelStyle={secondaryTextLabelStyle}
+                  fontSize="14px"
+                  containerStyle={secondaryTextContainer}
+                  color="#484848"
+                />
+                <Label
+                  label={`Assessment No.: ${get(item, "assessmentNumber")}`}
+                  labelStyle={secondaryTextLabelStyle}
+                  fontSize="13px"
+                  containerStyle={secondaryTextContainer}
+                  color="#767676"
+                />
+              </div>
+            ),
+            date: item.auditDetails ? getDateFromEpoch(get(item, "auditDetails.lastModifiedTime")) : "",
+            status: "Payment failed",
+          };
+        });
+      acc = [...acc, ...propertyDetail];
+      return acc;
+    }, [])
+  );
 };
 
 const mapStateToProps = (state) => {
@@ -135,7 +145,14 @@ const mapStateToProps = (state) => {
       return transaction.moduleId;
     });
 
-  const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
+  const failedTransObj =
+    failedTransactionsConsumercode &&
+    failedTransactionsConsumercode.reduce((result, current) => {
+      if (!result[current.split(":")[0]]) result[current.split(":")[0]] = [];
+      result[current.split(":")[0]].push(current.split(":")[1]);
+      return result;
+    }, {});
+  let transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
       get(draft, "draftRecord.financialYear.fields.button.value")
@@ -171,7 +188,12 @@ const mapStateToProps = (state) => {
     return result;
   }, []);
 
-  return { urls, loading, transformedDrafts };
+  const failedProperties = getfailedPropertiesById(propertiesById, failedTransObj);
+  const mergedData = failedProperties && mergeFinalData(failedProperties, failedTransObj);
+  let finalFailedTransactions = mergedData && getTransformedItems(mergeFinalData(failedProperties, failedTransObj), cities);
+  const incompleteAssessments = transformedDrafts && finalFailedTransactions && [...transformedDrafts, ...finalFailedTransactions];
+
+  return { urls, loading, incompleteAssessments };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

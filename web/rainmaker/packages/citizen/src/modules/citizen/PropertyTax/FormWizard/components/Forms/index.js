@@ -7,9 +7,9 @@ import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
 const options = [
-  { value: "Male", label: <Label label="Male" /> },
-  { value: "Female", label: <Label label="Female" /> },
-  { value: "Transgender", label: <Label label="Transgender" /> },
+  { value: "Male", label: <Label label="PT_FORM3_MALE" /> },
+  { value: "Female", label: <Label label="PT_FORM3_FEMALE" /> },
+  { value: "Transgender", label: <Label label="PT_FORM3_TRANSGENDER" /> },
 ];
 
 // const guardianOptions = [{ value: "Husband", label: <Label label="Husband" /> }, { value: "Father ", label: <Label label="Father" /> }];
@@ -94,7 +94,7 @@ const OwnerInformation = ({
               />
             </div>
             <div>
-              <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+              <Label label="PT_FORM3_GENDER" fontSize={12} labelStyle={styles.labelStyle} bold={true} />
               <RadioButton
                 id="gender-selection"
                 name="gender-selection"

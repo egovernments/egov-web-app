@@ -334,6 +334,17 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
   }
 };
 
+export const getAddress = (cities, cityValue, mohalla) => {
+  let cityName = "";
+  cities &&
+    cities.forEach((city) => {
+      if (city.code === cityValue) {
+        cityName = city.name;
+      }
+    });
+  return getCommaSeperatedAddress(cityName, mohalla);
+};
+
 export const getLatestCreationTime = (complaint) => {
   for (let i = 0; i < complaint.actions.length; i++) {
     if (complaint.actions[i].action === "reopen") {

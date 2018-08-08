@@ -26,18 +26,17 @@ const underlineDisabledStyle = {
 };
 
 class AutoSuggestDropdown extends React.Component {
-   //  state = {
-   //   searchText: '',
-   // };
-   //
-   // handleUpdateInput = (searchText) => {
-   //   this.setState({
-   //     searchText: searchText,
-   //   });
-   // };
+  //  state = {
+  //   searchText: '',
+  // };
+  //
+  // handleUpdateInput = (searchText) => {
+  //   this.setState({
+  //     searchText: searchText,
+  //   });
+  // };
 
-  render()
-  {
+  render() {
     let {
       onChange,
       dataSource,
@@ -51,37 +50,38 @@ class AutoSuggestDropdown extends React.Component {
       dropDownData,
       dataFetchConfig,
       ...restProps
-    }=this.props;
+    } = this.props;
 
-  return (
-    <AutoComplete
-      className={`autosuggest ${className}`}
-      floatingLabelFixed={true}
-      floatingLabelStyle={{ ...floatingLabelStyle }}
-      hintStyle={{ ...hintBaseStyle }}
-      underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-      filter={AutoComplete.caseInsensitiveFilter}
-      openOnFocus={false}
-      fullWidth={true}
-      value={value}
-      dataSource={(dataSource && [...dataSource]) || []}
-      menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
-      dataSourceConfig={{ text: "label", value: "value" }}
-      onNewRequest={onChange}
-      floatingLabelText={[
-        floatingLabelText,
-        required ? (
-          <span key={`error-${className}`} style={requiredStyle}>
-            {" "}
-            *
-          </span>
-        ) : null,
-      ]}
-      {...restProps}
-    />
-  );
+    return (
+      <AutoComplete
+        className={`autosuggest ${className}`}
+        floatingLabelFixed={true}
+        floatingLabelStyle={{ ...floatingLabelStyle }}
+        hintStyle={{ ...hintBaseStyle }}
+        underlineFocusStyle={{ ...underlineFocusBaseStyle }}
+        filter={AutoComplete.caseInsensitiveFilter}
+        openOnFocus={false}
+        fullWidth={true}
+        value={value}
+        dataSource={(dataSource && [...dataSource]) || []}
+        menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
+        dataSourceConfig={{ text: "label", value: "value" }}
+        onNewRequest={onChange}
+        underlineDisabledStyle={underlineDisabledStyle}
+        floatingLabelText={[
+          floatingLabelText,
+          required ? (
+            <span key={`error-${className}`} style={requiredStyle}>
+              {" "}
+              *
+            </span>
+          ) : null,
+        ]}
+        {...restProps}
+      />
+    );
+  }
 }
-};
 
 AutoSuggestDropdown.propTypes = {
   onNewRequest: PropTypes.func,

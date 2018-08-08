@@ -55,7 +55,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].owners[0].permanentAddress",
       type: "textfield",
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
-      floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
+      hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
     },
     ownerRelationship: {
       id: "ownerRelationship",
