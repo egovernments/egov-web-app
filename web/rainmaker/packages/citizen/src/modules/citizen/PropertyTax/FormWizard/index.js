@@ -656,8 +656,17 @@ class FormWizard extends Component {
   };
 
   validateUnitandPlotSize = (plotDetails, form) => {
+    let groundFloorIndex = 0;
+    Object.keys(form).forEach((formKey, ind) => {
+      if (formKey.startsWith("customSelect_")) {
+        const { fields } = form[formKey];
+        if (fields.floorName.value === "0") {
+          groundFloorIndex = formKey.split("_")[1];
+        }
+      }
+    });
     const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
-      if (key.startsWith("floorDetails_0_")) {
+      if (key.startsWith(`floorDetails_${groundFloorIndex}_`)) {
         const form1 = form[key];
         if (form1 && form1.fields.builtArea.value) {
           unitTotal += parseFloat(form1.fields.builtArea.value);
