@@ -95,7 +95,7 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
-            history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}`);
+            history && history.push(`/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}`);
           }}
           className="assessment-displayInline"
           style={{ marginTop: "10px" }}

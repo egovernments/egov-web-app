@@ -73,7 +73,8 @@ class SearchProperty extends Component {
             userType === "CITIZEN"
               ? (e) => {
                   history.push(
-                    `/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}&isReassesment=true`
+                    `/property-tax/assessment-form?FY=${propertyDetails[0].financialYear}&assessmentId=${propertyDetails[0] &&
+                      propertyDetails[0].assessmentNumber}&isReassesment=true&propertyId=${propertyId}`
                   );
                 }
               : (e) => {

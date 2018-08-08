@@ -66,9 +66,12 @@ class SearchProperty extends Component {
       let button = (
         <Button
           onClick={(e) => {
-            history.push(
-              `/property-tax/assessment-form?assessmentId=${propertyDetails[0] && propertyDetails[0].assessmentNumber}&isReassesment=true`
-            );
+            propertyDetails[0] &&
+              history.push(
+                `/property-tax/assessment-form?FY=${propertyDetails[0].financialYear}&assessmentId=${
+                  propertyDetails[0].assessmentNumber
+                }&isReassesment=true&propertyId=${propertyId}`
+              );
           }}
           label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
           value={propertyId}
