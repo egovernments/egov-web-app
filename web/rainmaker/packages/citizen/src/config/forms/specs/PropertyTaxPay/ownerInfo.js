@@ -100,11 +100,11 @@ const formConfig = {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         switch (value) {
-          case "FREEDOMFIGHTER":
-            setDependentFields(dependentFields, dispatch, formKey, false);
+          case "NONE":
+            setDependentFields(dependentFields, dispatch, formKey, true);
             break;
           default:
-            setDependentFields(dependentFields, dispatch, formKey, true);
+            setDependentFields(dependentFields, dispatch, formKey, false);
             break;
         }
       },
@@ -117,6 +117,8 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_NO",
       hintText: "PT_FORM3_DOCUMENT_ID_NO_PLACEHOLDER",
       hideField: true,
+      toolTip: true,
+      toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
@@ -126,6 +128,8 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
       hideField: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
+      toolTip: true,
+      toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       dropDownData: [{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
     },
     ownerGender: {
