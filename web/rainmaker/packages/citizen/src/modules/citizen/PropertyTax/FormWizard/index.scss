@@ -90,9 +90,16 @@
 }
 
 .review-pay-tab {
-  .dropdown > div > div  {
+  .dropdown > div > div {
     div:nth-of-type(2) {
       color: rgb(72, 72, 72) !important;
     }
+  }
+}
+
+.propertyAddress {
+  .textfield-text div {
+    width: 56px;
+    color: #fe7a51 !important;
   }
 }

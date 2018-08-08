@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 // can we pull the existing textfield
+import Label from "../../utils/translationNode";
 import TextField from "../TextField";
 import SearchIcon from "material-ui/svg-icons/action/search";
 
@@ -42,6 +43,7 @@ const getStyles = (iconPosition, textFieldProps) => {
 const TextFieldIcon = ({
   Icon,
   iconStyle = {},
+  text,
   onClick,
   onIconClick,
   textFieldStyle = {},
@@ -51,11 +53,17 @@ const TextFieldIcon = ({
   inputStyle,
   ...textFieldProps
 }) => {
-  const TargetIcon = Icon || SearchIcon
+  const TargetIcon = Icon || SearchIcon;
   const style = getStyles(iconPosition, textFieldProps);
   return (
     <div onClick={onClick} style={containerStyle}>
-      <TargetIcon onClick={onIconClick} style={{ ...style.iconStyle, ...iconStyle }} />
+      {text ? (
+        <div onClick={onIconClick}>
+          <Label className="textfield-text" label={text} labelStyle={{ ...style.iconStyle, ...iconStyle, top: 36 }} />
+        </div>
+      ) : (
+        <TargetIcon onClick={onIconClick} style={{ ...style.iconStyle, ...iconStyle }} />
+      )}
       <TextField
         autoFocus={autoFocus}
         name="textfield-icon"

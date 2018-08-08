@@ -14,17 +14,16 @@ const formConfig = {
       required: true,
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
-        console.log(value);
         // const formKeys = Object.keys(state.form);
-        const floorValues = Object.keys(state.form).map((key) => {
+        const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
           if (key.startsWith("customSelect_")) {
             const form = state.form[key];
             if (form && form.fields.floorName.value) {
-              return form.fields.floorName.value;
+              floorValues.push(form.fields.floorName.value);
             }
           }
-        });
-        console.log(floorValues);
+          return floorValues;
+        }, []);
         const valueExists = floorValues.find((floorvalue) => {
           return floorvalue === value;
         });
