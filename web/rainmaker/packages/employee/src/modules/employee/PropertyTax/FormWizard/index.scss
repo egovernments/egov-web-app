@@ -1,5 +1,5 @@
 .wizard-form-main-cont {
-  padding: 0;
+  padding: 12px 0px 0px 0px;
   position: relative;
 }
 
@@ -63,7 +63,7 @@
   .authority-details-form {
     display: flex;
     .name-address {
-      .textfield  {
+      .textfield {
         width: 117% !important;
       }
     }
@@ -93,7 +93,7 @@
   margin-top: 20px;
   .tax-header {
     display: flex;
-    .label-text  {
+    .label-text {
       width: 245px;
       height: 19px;
       font-size: 16px;
@@ -140,7 +140,7 @@
       width: 442px;
       height: 274px;
       background-color: #f2f2f2;
-      .tax-breakup{
+      .tax-breakup {
         .header {
           font-size: 14px;
           font-weight: 900;

@@ -87,9 +87,9 @@ class PaymentFailure extends Component {
   };
 
   redirectToReview = () => {
-    const { match, history } = this.props
-    const { assessmentNumber, assessmentYear } = match.params
-    history.push(`/property-tax/assessment-form?financialYear=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true`);
+    const { match, history } = this.props;
+    const { assessmentNumber, assessmentYear } = match.params;
+    history.push(`/property-tax/assessment-form?FY=${assessmentYear}&assessmentId=${assessmentNumber}&isReassesment=true`);
   };
 
   render() {
@@ -101,7 +101,14 @@ class PaymentFailure extends Component {
     };
     return (
       <Screen>
-        <PaymentStatus receiptUIDetails={receiptUIDetails} floatingButtonColor="#e74c3c" icon={icon} messages={failureMessages} buttons={buttons} primaryAction={this.redirectToReview} />
+        <PaymentStatus
+          receiptUIDetails={receiptUIDetails}
+          floatingButtonColor="#e74c3c"
+          icon={icon}
+          messages={failureMessages}
+          buttons={buttons}
+          primaryAction={this.redirectToReview}
+        />
       </Screen>
     );
   }

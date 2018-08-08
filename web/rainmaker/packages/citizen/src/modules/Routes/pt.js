@@ -144,7 +144,6 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "PT_COMMON_ASSESSMENT_FORM_HEADERS",
     },
   },
   {
