@@ -16,29 +16,26 @@
   .pt-ownerinfo-title {
     margin-left: 23px;
   }
+  .dropdown {
+    width: 100% !important;
+  }
   .owner-details-form {
     display: flex;
+    justify-content: space-between;
+    padding: 2px 30px 1px 31px;
     .name-address {
-      padding: 5px 352px 0 30px;
-      .textfield {
-        width: 145% !important;
-      }
-      .ownerCategory {
-        width: 145% !important;
-        display: flow-root !important;
-      }
+      width:40%;
     }
-    .relationship-details {
-      display: flex;
-      div:nth-of-type(1) {
-        margin-right: 35px;
+    .other-details {
+      width: 40%;
+      .relationship-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        .dropdown {
+          margin-left: 11%;
+        }
       }
-    }
-    .ownerCategoryIdType {
-      width: 100% !important;
-    }
-    .dropdown {
-      display: flow-root !important;
     }
   }
   .property-corr {
