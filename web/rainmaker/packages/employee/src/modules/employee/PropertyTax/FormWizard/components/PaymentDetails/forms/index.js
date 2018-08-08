@@ -75,4 +75,13 @@ const CardInformation = ({ form, formKey, handleFieldChange }) => {
   );
 }
 
-export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation, CardInformation }
+const PaymentModeInformation = ({ form, formKey, handleFieldChange }) => {
+  const fields = form.fields || {};
+  return (
+    <div className="payment-mode-info">
+      <Field fieldKey="mode" field={fields.mode} handleFieldChange={handleFieldChange} />
+    </div>
+  );
+}
+
+export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation, CardInformation, PaymentModeInformation }
