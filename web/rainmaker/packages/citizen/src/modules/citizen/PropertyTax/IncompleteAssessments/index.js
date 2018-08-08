@@ -180,6 +180,7 @@ const mapStateToProps = (state) => {
             />
           </div>
         ),
+        financialYear: get(draft, "draftRecord.financialYear.fields.button.value"),
         assessmentNo: draft.id,
         date: draft.auditDetails ? getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")) : "",
         status: "Saved Draft",
