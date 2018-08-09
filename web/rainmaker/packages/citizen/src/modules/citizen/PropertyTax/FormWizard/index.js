@@ -581,7 +581,9 @@ class FormWizard extends Component {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
           window.location = redirectionUrl;
         } else {
-          history.push("/property-tax/payment-success/" + propertyId + "/" + tenantId);
+          let moduleId = get(goToPaymentGateway, "Transaction.moduleId");
+          let tenantId=get(goToPaymentGateway, "Transaction.tenantId");
+          history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId+"/"+moduleId.split(":")[1]+"/"+"2018-19");
         }
       } catch (e) {
         console.log(e);

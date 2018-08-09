@@ -15,7 +15,6 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "singleValueList",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
-      value: "",
       required: true,
       numcols: 4,
       dropDownData: [],
@@ -39,6 +38,7 @@ const formConfig = {
             setDependentFields(["subUsageType"], dispatch, formKey, mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"),"dropDownData");
           }
         } else {
+          setDependentFields(["subUsageType"], dispatch, formKey, true);
           dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`, field.value));
           dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMinor`, null));
         }

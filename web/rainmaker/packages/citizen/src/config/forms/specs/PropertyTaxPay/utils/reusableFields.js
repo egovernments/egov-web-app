@@ -190,7 +190,7 @@ export const beforeInitForm = {
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
-
+    set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
     if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
@@ -228,6 +228,7 @@ export const beforeInitForm = {
           var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
           var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
           var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+          set(action, "form.fields.usageType.disabled",false);
           set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
       }
       set(action, "form.fields.subUsageType.hideField", true);
@@ -255,6 +256,7 @@ export const beforeInitFormForPlot = {
       var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
       var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
       var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
+      set(action, "form.fields.subUsageType.hideField", false);
 
 
       if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
@@ -292,6 +294,7 @@ export const beforeInitFormForPlot = {
             var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
             var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
             var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+            set(action, "form.fields.usageType.disabled",false);
             set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
         }
         set(action, "form.fields.subUsageType.hideField", true);
