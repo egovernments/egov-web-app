@@ -345,6 +345,8 @@ const mapStateToProps = (state, ownProps) => {
       status: "ASSESS & PAY",
       receipt: true,
       assessmentNo: assessment.assessmentNumber,
+      financialYear: assessment.financialYear,
+      propertyId: propertyId,
     };
   });
   return { urls, propertyItems, propertyId, customTitle, transformedAssessments };

@@ -72,7 +72,69 @@ const OwnerInformation = ({
               </div>
             )}
           </div>
-          <div className="owner-details-form">
+          <div className={`${formKey} col-sm-12`}>
+            <div className="col-sm-6">
+              <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div className="col-sm-6" style={{ paddingTop: "10px", paddingBottom: "5px" }}>
+              <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+              <RadioButton
+                id="gender-selection"
+                name="gender-selection"
+                options={options}
+                handleChange={(e) => {
+                  handleFieldChange("ownerGender", e.target.value);
+                }}
+                radioButtonItemStyle={styles.radioButtonItemStyle}
+                labelStyle={styles.radioButtonLabelStyle}
+                selectedLabelStyle={styles.selectedLabelStyle}
+                className="owner-gender-selection"
+                iconStyle={styles.iconStyle}
+                valueSelected={genderSelected}
+                disabled={disabled}
+                radioButtonItemStyle={styles.childrenStyle}
+              />
+            </div>
+            <div className="col-sm-6">
+              <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div style={{ padding: 0 }} className="col-sm-6">
+              <div className="col-sm-6">
+                <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              </div>
+              <div className="col-sm-6">
+                <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              </div>
+            </div>
+            <div className="col-sm-6">
+              <Field
+                fieldKey="ownerCategory"
+                field={fields["ownerCategory"]}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                className="ownerCategory"
+              />
+            </div>
+            <div className="col-sm-6" style={{ paddingBottom: "4px" }}>
+              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div className="col-sm-6">
+              <Field
+                fieldKey="ownerCategoryIdType"
+                field={fields["ownerCategoryIdType"]}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                className="ownerCategoryIdType"
+              />
+            </div>
+            <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
+              <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div className="col-sm-6">
+              <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+          </div>
+          {/* <div className="owner-details-form">
             <div className="name-address">
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
@@ -126,7 +188,7 @@ const OwnerInformation = ({
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-          </div>
+          </div> */}
         </div>
       }
     />
