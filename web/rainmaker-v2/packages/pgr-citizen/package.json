@@ -2,6 +2,8 @@
   "name": "pgr-citizen",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://egov-micro-dev.egovernments.org/citizen/",
+  "proxy": "https://egov-micro-dev.egovernments.org/",
   "main": "lib/",
   "dependencies": {
     "@material-ui/core": "^1.4.1",

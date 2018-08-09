@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { Icon } from "components";
+import { Icon, Card, Dialog } from "components";
 import PropertyAddress from "./components/PropertyAddress";
 import AdditionalDetails from "./components/AdditionalDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
+import AddRebateExemption from "./components/addRebateBox";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
 import propertyAddressConfig from "./formConfigs/propertyAddress";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import formHoc from "egov-ui-kit/hocs/form";
 
 import "./index.css";
 const defaultIconStyle = {
@@ -24,10 +26,13 @@ const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="a
 const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
 const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
 
+const AddRebatePopUp = formHoc({ formKey: "additionalRebate", path: "PropertyTaxPay" })(AddRebateExemption);
+
 class ReviewForm extends Component {
   state = {
     valueSelected: "",
     importantDates: {},
+    showRebateBox: false,
   };
   componentDidMount() {
     this.getImportantDates();
@@ -112,10 +117,22 @@ class ReviewForm extends Component {
     this.setState({ totalAmountTobePaid: inputValue });
   };
 
+  addRebateBox = (show) => {
+    this.setState({
+      showRebateBox: show,
+    });
+  };
+
+  updateCalculation = () => {
+    this.addRebateBox(false);
+    const { updateEstimate } = this.props;
+    updateEstimate();
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
-    let { handleOptionsChange, onRadioButtonChange } = this;
-    let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
+    let { handleOptionsChange, onRadioButtonChange, addRebateBox, updateCalculation } = this;
+    let { valueSelected, totalAmountTobePaid, importantDates, showRebateBox } = this.state;
     let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
     return (
       <div>
@@ -166,13 +183,27 @@ class ReviewForm extends Component {
           // form={propertyAddressConfig}
           component={stepTwo}
         />
-        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
+        <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} addRebateBox={addRebateBox} />
         <AdditionalDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
           handleOptionChange={handleOptionsChange}
           optionSelected={valueSelected}
         />
+        <div className="pt-rebate-exemption-box">
+          <Dialog
+            open={showRebateBox}
+            children={[
+              <div className="pt-rebate-box">
+                <AddRebatePopUp updateEstimate={updateCalculation} />
+              </div>,
+            ]}
+            bodyStyle={{ backgroundColor: "#ffffff" }}
+            isClose={false}
+            onRequestClose={() => addRebateBox(false)}
+            contentStyle={{ width: "56%" }}
+          />
+        </div>
       </div>
     );
   }

@@ -4,7 +4,7 @@ const formConfig = {
   fields: {
     floorName: {
       id: "floorName",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
+      // jsonPath: "Properties[0].propertyDetails[0].units[0].floorNo",
       type: "singleValueList",
       floatingLabelText: "PT_FORM2_SELECT_FLOOR",
       hintText: "PT_FORM2_SELECT_FLOOR",

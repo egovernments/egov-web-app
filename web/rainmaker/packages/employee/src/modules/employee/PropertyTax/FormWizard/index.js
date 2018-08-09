@@ -330,8 +330,18 @@ class FormWizard extends Component {
     }
   };
 
+  updateEstimate = () => {
+    this.estimate().then((estimateResponse) => {
+      if (estimateResponse) {
+        this.setState({
+          estimation: estimateResponse && estimateResponse.Calculation,
+        });
+      }
+    });
+  };
+
   renderStepperContent = (selected, fromReviewPage) => {
-    const { renderPlotAndFloorDetails, getOwnerDetails } = this;
+    const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
     switch (selected) {
       case 0:
         return (
@@ -375,6 +385,7 @@ class FormWizard extends Component {
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
               estimationDetails={estimation}
+              updateEstimate={updateEstimate}
               financialYr={financialYear ? financialYear.fields.button : {}}
             />
           </div>
@@ -511,7 +522,7 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
-    const {updateIndex} =this;
+    const { updateIndex } = this;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
@@ -573,8 +584,16 @@ class FormWizard extends Component {
     const { callPGService, callDraft } = this;
     let { prepareFormData } = this.props;
     try {
-      set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",get(prepareFormData,"Properties[0].propertyDetails[0].owners[0].mobileNumber"));
-      set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.name",get(prepareFormData,"Properties[0].propertyDetails[0].owners[0].name"));
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
+        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
+      );
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].citizenInfo.name",
+        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
+      );
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
