@@ -260,23 +260,6 @@ class FormWizard extends Component {
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     this.addOwner();
-    if (this.props.location.search.split("&").length > 3) {
-      try {
-        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-        console.log(pgUpdateResponse);
-        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-        let tenantId = get(pgUpdateResponse, "Transaction[0].tenantId");
-        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-          history.push("/property-tax/payment-failure/" + moduleId.split("-", 4).join("-") + "/" + tenantId);
-        } else {
-          history.push("/property-tax/payment-success/" + moduleId.split("-", 4).join("-") + "/" + tenantId);
-        }
-      } catch (e) {
-        alert(e);
-        // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
-      }
-    }
-
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
@@ -607,7 +590,7 @@ class FormWizard extends Component {
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
-            assessmentYear: (financialYear && financialYear.fields.button.value) || financialYearFromQuery,
+            assessmentYear: financialYearFromQuery,
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
             property: prepareFormData.Properties[0],
           },
