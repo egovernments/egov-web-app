@@ -551,6 +551,7 @@ class FormWizard extends Component {
       { key: "tenantId", value: tenantId },
       { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid }
     ];
+
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
       const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
