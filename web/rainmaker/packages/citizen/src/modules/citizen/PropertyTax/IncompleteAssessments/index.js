@@ -74,8 +74,6 @@ const getfailedPropertiesById = (propertiesById, failedTransactions) => {
   );
 };
 
-/* console.log(failedTransObj); */
-
 const filterData = (propertiesById, propertyName, ids) => {
   return {
     [propertyName]: {
