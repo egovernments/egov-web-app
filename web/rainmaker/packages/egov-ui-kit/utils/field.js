@@ -37,7 +37,6 @@ var Field = function Field(_ref) {
         iconRedirectionURL = field.iconRedirectionURL,
         fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField", "Icon", "onIconClick", "iconRedirectionURL"]);
 
-    console.log(tooltip, fieldKey);
     if (hideField) return null;
     switch (type) {
       case "textfield":

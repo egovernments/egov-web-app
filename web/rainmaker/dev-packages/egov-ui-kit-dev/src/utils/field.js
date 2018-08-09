@@ -4,7 +4,6 @@ import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label, TextFiel
 const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
   const renderField = () => {
     const { type, tooltip, label, hideField, Icon, onIconClick, iconRedirectionURL, ...fieldProps } = field;
-    console.log(tooltip, fieldKey);
     if (hideField) return null;
     switch (type) {
       case "textfield":
