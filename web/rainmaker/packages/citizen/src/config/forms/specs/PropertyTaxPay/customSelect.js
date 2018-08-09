@@ -44,6 +44,10 @@ const formConfig = {
       let state = store.getState();
       const { Floor } = state.common && state.common.generalMDMSDataById;
       set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      set(action, "form.fields.floorName.value", "");
+      if (action.form.name === "customSelect_0") {
+        set(action, "form.fields.floorName.value", "0");
+      }
       return action;
     } catch (e) {
       console.log(e);
