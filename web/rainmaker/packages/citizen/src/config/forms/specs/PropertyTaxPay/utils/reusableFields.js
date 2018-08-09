@@ -197,18 +197,26 @@ export const beforeInitForm = {
           return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
         }
       );
-      var filteredUsageCategoryDetails = getPresentMasterObj(
-        filteredSubUsageMinor,
-        prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
-        "usageCategorySubMinor"
-      );
-      set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
-      dispatch(
-        prepareFormData(
-          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
-          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
-        )
-      );
+      if (filteredSubUsageMinor.length > 0) {
+        var filteredUsageCategoryDetails = getPresentMasterObj(
+          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+          filteredSubUsageMinor,
+          "usageCategorySubMinor"
+        );
+        set(
+          action,
+          "form.fields.subUsageType.dropDownData",
+          mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
+        );
+        dispatch(
+          prepareFormData(
+            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+          )
+        );
+      } else {
+        set(action, "form.fields.subUsageType.hideField", true);
+      }
     } else {
       set(action, "form.fields.subUsageType.hideField", true);
     }
@@ -239,18 +247,26 @@ export const beforeInitFormForPlot = {
             return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
           }
         );
-        var filteredUsageCategoryDetails = getPresentMasterObj(
-          filteredSubUsageMinor,
-          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
-          "usageCategorySubMinor"
-        );
-        set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
-        dispatch(
-          prepareFormData(
-            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
-            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
-          )
-        );
+        if (filteredSubUsageMinor.length > 0) {
+          var filteredUsageCategoryDetails = getPresentMasterObj(
+            prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+            filteredSubUsageMinor,
+            "usageCategorySubMinor"
+          );
+          set(
+            action,
+            "form.fields.subUsageType.dropDownData",
+            mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
+          );
+          dispatch(
+            prepareFormData(
+              `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+              get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+            )
+          );
+        } else {
+          set(action, "form.fields.subUsageType.hideField", true);
+        }
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
@@ -289,12 +305,12 @@ export const prepareDropDownData = (master, withOriginal = false) => {
 
 const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   const propArray = master2Arr.reduce((result, item) => {
-    if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
-      result.push(item[propToCompare]);
+    if (item["code"] && result.indexOf(item["code"]) === -1) {
+      result.push(item["code"]);
     }
     return result;
   }, []);
-  return master1Arr.filter((item) => propArray.indexOf(item.code) !== -1);
+  return master1Arr.filter((item) => propArray.indexOf(item[propToCompare]) !== -1);
 };
 
 const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {

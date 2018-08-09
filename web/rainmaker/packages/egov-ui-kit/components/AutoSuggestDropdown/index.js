@@ -82,22 +82,35 @@ var AutoSuggestDropdown = function (_React$Component) {
   (0, _inherits3.default)(AutoSuggestDropdown, _React$Component);
 
   function AutoSuggestDropdown() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     (0, _classCallCheck3.default)(this, AutoSuggestDropdown);
-    return (0, _possibleConstructorReturn3.default)(this, (AutoSuggestDropdown.__proto__ || Object.getPrototypeOf(AutoSuggestDropdown)).apply(this, arguments));
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = AutoSuggestDropdown.__proto__ || Object.getPrototypeOf(AutoSuggestDropdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      searchText: ""
+    }, _this.getNameById = function (id) {
+      var dropDownData = _this.props.dropDownData;
+
+      var filteredArray = (0, _filter2.default)(dropDownData, { value: id });
+      return filteredArray.length > 0 ? filteredArray[0].value : id;
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(AutoSuggestDropdown, [{
     key: "render",
 
-    //  state = {
-    //   searchText: '',
-    // };
-    //
-    // handleUpdateInput = (searchText) => {
-    //   this.setState({
-    //     searchText: searchText,
-    //   });
-    // };
+
+    // filter={(searchText, key) => {
+    //   return key.toLowerCase().includes(getNameById(value) && getNameById(value.toLowerCase()));
+    // }}
+
+    // searchText={getNameById(value)}
 
     value: function render() {
       var _props = this.props,
@@ -111,8 +124,9 @@ var AutoSuggestDropdown = function (_React$Component) {
           errorMessage = _props.errorMessage,
           boundary = _props.boundary,
           dropDownData = _props.dropDownData,
-          dataFetchConfig = _props.dataFetchConfig,
-          restProps = (0, _objectWithoutProperties3.default)(_props, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData", "dataFetchConfig"]);
+          restProps = (0, _objectWithoutProperties3.default)(_props, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData"]);
+      var filterAutoComplete = this.filterAutoComplete,
+          getNameById = this.getNameById;
 
 
       return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
@@ -121,7 +135,6 @@ var AutoSuggestDropdown = function (_React$Component) {
         floatingLabelStyle: (0, _extends3.default)({}, floatingLabelStyle),
         hintStyle: (0, _extends3.default)({}, hintBaseStyle),
         underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
-        filter: _AutoComplete2.default.caseInsensitiveFilter,
         openOnFocus: false,
         fullWidth: true,
         value: value,

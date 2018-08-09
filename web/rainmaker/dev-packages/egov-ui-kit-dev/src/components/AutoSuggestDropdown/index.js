@@ -26,15 +26,21 @@ const underlineDisabledStyle = {
 };
 
 class AutoSuggestDropdown extends React.Component {
-  //  state = {
-  //   searchText: '',
-  // };
-  //
-  // handleUpdateInput = (searchText) => {
-  //   this.setState({
-  //     searchText: searchText,
-  //   });
-  // };
+  state = {
+    searchText: "",
+  };
+
+  getNameById = (id) => {
+    const { dropDownData } = this.props;
+    const filteredArray = filter(dropDownData, { value: id });
+    return filteredArray.length > 0 ? filteredArray[0].value : id;
+  };
+
+  // filter={(searchText, key) => {
+  //   return key.toLowerCase().includes(getNameById(value) && getNameById(value.toLowerCase()));
+  // }}
+
+  // searchText={getNameById(value)}
 
   render() {
     let {
@@ -48,9 +54,10 @@ class AutoSuggestDropdown extends React.Component {
       errorMessage,
       boundary,
       dropDownData,
-      dataFetchConfig,
       ...restProps
     } = this.props;
+
+    const { filterAutoComplete,getNameById } = this;
 
     return (
       <AutoComplete
@@ -59,7 +66,6 @@ class AutoSuggestDropdown extends React.Component {
         floatingLabelStyle={{ ...floatingLabelStyle }}
         hintStyle={{ ...hintBaseStyle }}
         underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-        filter={AutoComplete.caseInsensitiveFilter}
         openOnFocus={false}
         fullWidth={true}
         value={value}
@@ -67,7 +73,6 @@ class AutoSuggestDropdown extends React.Component {
         menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
         dataSourceConfig={{ text: "label", value: "value" }}
         onNewRequest={onChange}
-        underlineDisabledStyle={underlineDisabledStyle}
         floatingLabelText={[
           floatingLabelText,
           required ? (
