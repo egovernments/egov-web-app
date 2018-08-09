@@ -30,11 +30,12 @@ let themeObject = {
 };
 
 const muiTheme = getMuiTheme(themeObject);
+window.basename = process.env.NODE_ENV === "production" ? "/app/v2/uploader/" : "";
 
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Router>
+    <Router basename={window.basename}>
         <App />
       </Router>
     </MuiThemeProvider>
