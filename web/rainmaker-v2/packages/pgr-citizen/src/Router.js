@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Citizen from "modules/citizen";
+import PGR from "./Screens/index";
 
 const Main = ({ routes }) => {
   return (
@@ -8,8 +8,8 @@ const Main = ({ routes }) => {
       <Switch>
         <Route
           path={`/`}
-          render={(props) => {
-            return <Citizen match={props.match} routes={routes.citizen} />;
+          render={props => {
+            return <PGR match={props.match} routes={routes.pgr} />;
           }}
         />
         {/* <Route exact path={`/image`} component={ImageModalDisplay} /> */}

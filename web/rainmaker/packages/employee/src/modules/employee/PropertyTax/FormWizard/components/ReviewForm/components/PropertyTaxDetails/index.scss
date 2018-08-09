@@ -29,6 +29,8 @@
 
 .fare-section {
   display: flex;
+  .bill-details {
+  }
   .pt-rf-detailed-bill {
     width: 454px;
     background-color: #f2f2f2;
@@ -98,6 +100,20 @@
         span:nth-of-type(2) {
           color: black;
         }
+      }
+    }
+  }
+}
+
+.additional-rebate-charges {
+  margin: 10px 0px 0px 320px;
+  button {
+    background-color: #fe7a51 !important;
+    span {
+      padding-left: 9px !important;
+      .label-text {
+        font-size: 12px !important;
+        font-weight: 500;
       }
     }
   }

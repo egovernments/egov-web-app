@@ -1,9 +1,10 @@
 import React from "react";
-import { Label, Divider } from "components";
+import { Divider, Button } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import "./index.css";
 
-const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
+const PropertyTaxDetails = ({ estimationDetails, importantDates, addRebateBox }) => {
   const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
   const { fireCess, intrest, penalty, rebate } = importantDates;
   return (
@@ -27,39 +28,53 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
       />
       <CardText expandable={true}>
         <div className="clearfix fare-section">
-          <div className="col-sm-6" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
-            <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_MAKE_PAYMENT_DETAILED_BILL" bold={true} />
-            {taxHeadEstimates &&
-              taxHeadEstimates.map((item, index) => {
-                return (
-                  item.estimateAmount > 0 && (
-                    <div className="clearfix" style={{ marginBottom: 8 }}>
-                      <div className="col-sm-9" style={{ padding: 0 }}>
-                        <Label label={item.taxHeadCode} />
+          <div className="bill-details col-sm-6">
+            <div className="" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+              <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_MAKE_PAYMENT_DETAILED_BILL" bold={true} />
+              {taxHeadEstimates &&
+                taxHeadEstimates.map((item, index) => {
+                  return (
+                    item.estimateAmount > 0 && (
+                      <div className="clearfix" style={{ marginBottom: 8 }}>
+                        <div className="col-sm-9" style={{ padding: 0 }}>
+                          <Label label={item.taxHeadCode} />
+                        </div>
+                        <div className="col-sm-3">
+                          <Label
+                            containerStyle={{ textAlign: "right" }}
+                            className="pt-rf-price"
+                            label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`}
+                          />
+                        </div>
                       </div>
-                      <div className="col-sm-3">
-                        <Label
-                          containerStyle={{ textAlign: "right" }}
-                          className="pt-rf-price"
-                          label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`}
-                        />
-                      </div>
-                    </div>
-                  )
-                );
-              })}
-            <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, height: 2 }} />
-            <div className="clearfix" style={{ marginTop: 8 }}>
-              <div className="col-sm-9" style={{ padding: 0 }}>
-                <Label label="PT_MAKE_PAYMENT_TOTAL" />
+                    )
+                  );
+                })}
+              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, height: 2 }} />
+              <div className="clearfix" style={{ marginTop: 8 }}>
+                <div className="col-sm-9" style={{ padding: 0 }}>
+                  <Label label="PT_MAKE_PAYMENT_TOTAL" />
+                </div>
+                <div className="col-sm-3">
+                  <Label
+                    containerStyle={{ textAlign: "right" }}
+                    labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
+                    label={`${totalAmount}`}
+                  />
+                </div>
               </div>
-              <div className="col-sm-3">
-                <Label
-                  containerStyle={{ textAlign: "right" }}
-                  labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
-                  label={`${totalAmount}`}
-                />
-              </div>
+            </div>
+            <div className="additional-rebate-charges">
+              <Button
+                label={<Label label={"ADD REBATE/CHARGES"} buttonLabel={true} />}
+                style={{
+                  width: 152,
+                  height: 22,
+                  borderRadius: 2,
+                  color: "#fe7a51",
+                }}
+                onClick={() => addRebateBox(true)}
+              />
             </div>
           </div>
           <div className="col-sm-6">
