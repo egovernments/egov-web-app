@@ -2,7 +2,7 @@ import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import GenericForm from "../GenericForm";
 import Field from "egov-ui-kit/utils/field";
-import { RadioButton, Card, Icon } from "components";
+import { RadioButton, Card, Icon, ToolTipUi } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
@@ -115,10 +115,12 @@ const OwnerInformation = ({
                 className="ownerCategory"
               />
             </div>
-            <div className="col-sm-6" style={{ paddingBottom: "4px" }}>
+            <div className="col-sm-6" style={{ paddingBottom: "4px", display: "flex", alignItems: "center" }}>
               <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              {fields["ownerCategoryId"].toolTip &&
+                !fields["ownerCategoryId"].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />}
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6" style={{ display: "flex", alignItems: "center" }}>
               <Field
                 fieldKey="ownerCategoryIdType"
                 field={fields["ownerCategoryIdType"]}
@@ -126,12 +128,25 @@ const OwnerInformation = ({
                 disabled={disabled}
                 className="ownerCategoryIdType"
               />
+              {fields["ownerCategoryIdType"].toolTip &&
+                !fields["ownerCategoryIdType"].hideField && (
+                  <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryIdType"].toolTipMessage} />
+                )}
             </div>
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div className="col-sm-6">
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div>
+              <Field
+                fieldKey="isSameAsPropertyAddress"
+                field={fields.isSameAsPropertyAddress}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                containerClassName="property-corr"
+              />
             </div>
           </div>
           {/* <div className="owner-details-form">

@@ -13,6 +13,7 @@ const formConfig = {
       floatingLabelText: "PT_OWNER_NAME",
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -23,6 +24,7 @@ const formConfig = {
       required: true,
       pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerGuardian: {
       id: "ownerGuardian",
@@ -31,6 +33,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_GUARDIAN",
       hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
       required: true,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     // ownerAadhar: {
     //   id: "ownerAadhar",
@@ -48,6 +51,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_EMAIL_ID",
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
       errorMessage: "Enter valid email id",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^(([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     ownerAddress: {
@@ -56,6 +60,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerRelationship: {
       id: "ownerRelationship",
@@ -65,6 +70,7 @@ const formConfig = {
       hintText: "",
       dropDownData: [{ label: "Father", value: "father" }, { label: "Husband", value: "husband" }],
       value: "father",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerCategory: {
       id: "ownerCategory",
@@ -74,6 +80,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_SPECIAL_CATEGORY",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [],
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dataFetchConfig: {
         url: MDMS.GET.URL,
         action: MDMS.GET.ACTION,
@@ -119,6 +126,7 @@ const formConfig = {
       hideField: true,
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TOOLTIP_MESSAGE",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     ownerCategoryIdType: {
       id: "ownerCategoryIdType",
@@ -130,6 +138,7 @@ const formConfig = {
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dropDownData: [{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
     },
     ownerGender: {
