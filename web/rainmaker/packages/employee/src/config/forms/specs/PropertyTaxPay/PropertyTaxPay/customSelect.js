@@ -1,4 +1,4 @@
-import { prepareDropDownData } from "./utils/reusableFields";
+import { prepareDropDownData } from "../utils/reusableFields";
 import set from "lodash/set";
 
 const formConfig = {
