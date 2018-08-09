@@ -35,7 +35,9 @@ const floatingLabelBaseStyle = {
   letterSpacing: "0.6px",
 };
 
-const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButtonChange, totalAmount, value }) => {
+const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButtonChange, value, estimationDetails, errorText, pattern }) => {
+  // const { totalAmount } = estimationDetails[0] || {};
+  // const AmountToBePaid = optionSelected === "Partial_Amount" ? 0 : totalAmount
   return (
     <Card
       className="tax-calculation-card-header"
@@ -62,11 +64,11 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
             </div> */}
               <div className="property-amount-radio">
                 <div className="amt-radio">
-                  <input type="radio" checked="checked" onClick={onRadioButtonChange} value="Full_Amount" name="radio" />
+                  <input type="radio" checked={optionSelected === "Full_Amount"} onClick={onRadioButtonChange} value="Full_Amount" name="radio" />
                   <Label label="Full Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
                 <div className="amt-radio">
-                  <input type="radio" onClick={onRadioButtonChange} value="Partial_Amount" name="radio" />
+                  <input type="radio" checked={optionSelected === "Partial_Amount"} onClick={onRadioButtonChange} value="Partial_Amount" name="radio" />
                   <Label label="Partial Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
               </div>
@@ -74,9 +76,8 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
             <div className="col-sm-6">
               <TextField
                 id="amount-to-be-paid"
-                onChange={(e, value) => handleFieldChange(e)}
+                onChange={(e, value) => handleFieldChange(e, value)}
                 value={value}
-                defaultValue={`${totalAmount}`}
                 floatingLabelText="Amount to pay (INR)"
                 floatingLabelShrinkStyle={{
                   fontSize: "12px",
@@ -89,6 +90,8 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
                 inputStyle={inputBaseStyle}
                 floatingLabelStyle={floatingLabelBaseStyle}
                 underlineFocusStyle={{ borderColor: "#e0e0e0" }}
+                disabled={optionSelected === "Full_Amount"}
+                errorText={errorText}
               />
             </div>
           </div>

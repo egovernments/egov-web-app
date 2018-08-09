@@ -54,6 +54,8 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
+    totalAmountToBePaid: 0,
+    isFullPayment: true,
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -181,6 +183,7 @@ class FormWizard extends Component {
             if (estimateResponse) {
               this.setState({
                 estimation: estimateResponse && estimateResponse.Calculation,
+                totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0)
               });
             }
           });
@@ -349,8 +352,15 @@ class FormWizard extends Component {
     }
   };
 
+  updateTotalAmount = (value, isFullPayment) => {
+    this.setState({
+      totalAmountToBePaid: value,
+      isFullPayment,
+    })
+  }
+
   renderStepperContent = (selected, fromReviewPage) => {
-    const { renderPlotAndFloorDetails, getOwnerDetails } = this;
+    const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
 
     switch (selected) {
       case 0:
@@ -377,7 +387,7 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
-        const { draftRequest, estimation } = this.state;
+        const { draftRequest, estimation, totalAmountToBePaid } = this.state;
         const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
         return (
@@ -396,6 +406,8 @@ class FormWizard extends Component {
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
               estimationDetails={estimation}
               financialYr={financialYear ? financialYear.fields.button : {}}
+              totalAmountToBePaid={totalAmountToBePaid}
+              updateTotalAmount={updateTotalAmount}
             />
           </div>
         );
@@ -530,12 +542,14 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
+    const { isFullPayment, totalAmountToBePaid, estimation } = this.state
     let { history, toggleSpinner } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
+      { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid }
     ];
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {

@@ -25,19 +25,35 @@ const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="soc
 
 class ReviewForm extends Component {
   state = {
-    valueSelected: "",
+    valueSelected: "Full_Amount",
     importantDates: {},
     totalAmountTobePaid: 0,
+    errorText: "",
+    pattern: false,
+    minLength: 1,
+    maxLength: 11,
   };
-  componentDidMount() {
-    this.getImportantDates();
-    let { estimationDetails } = this.props;
-    let { totalAmount } = estimationDetails[0] || 0;
-    console.log(totalAmount);
-    this.setState({
-      totalAmountTobePaid: totalAmount,
-    });
-  }
+
+  // componentWillReceiveProps(nextProps) {
+  //   let { estimationDetails: nextEstimationDetails } = nextProps;
+  //   const { totalAmountToBePaid } = this.state
+  //   const { totalAmount: nextTotalAmount } = this.props.estimationDetails[0] || 0
+  //   if (totalAmountToBePaid !== nextTotalAmount && !isNaN(parseFloat(nextTotalAmount)) && isFinite(nextTotalAmount)) {
+  //     this.setState({
+  //       totalAmountTobePaid: nextTotalAmount,
+  //     })
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   this.getImportantDates();
+  //   let { estimationDetails } = this.props;
+  //   let { totalAmount } = estimationDetails[0] || 0;
+  //   console.log(totalAmount);
+  //   this.setState({
+  //     totalAmountTobePaid: totalAmount,
+  //   });
+  // }
 
   getImportantDates = async () => {
     try {
@@ -110,8 +126,17 @@ class ReviewForm extends Component {
   };
 
   handleFieldChange = (event, value) => {
-    console.log(value);
-    this.setState({ totalAmountTobePaid: value });
+    let { totalAmount } = this.props.estimationDetails[0] || {};
+    if ((!isNaN(parseFloat(value)) && isFinite(value) && value > totalAmount)) {
+      this.setState({
+        errorText: `amount should be numeric and can't be greater than ${totalAmount}`,
+      })
+    } else {
+      this.setState({
+        errorText: "",
+      })
+      this.props.updateTotalAmount(value, this.props.valueSelected === "Full_Amount")
+    }
   };
 
   onRadioButtonChange = (e) => {
@@ -132,8 +157,8 @@ class ReviewForm extends Component {
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
-    let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
-    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
+    let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
+    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountTobePaid } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
 
     console.log(this.state.totalAmountTobePaid, totalAmount);
@@ -143,13 +168,15 @@ class ReviewForm extends Component {
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        {/*<PaymentAmountDetails
-          value={totalAmountTobePaid}
+        <PaymentAmountDetails
+          value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
           onRadioButtonChange={onRadioButtonChange}
           handleFieldChange={handleFieldChange}
           optionSelected={valueSelected}
           totalAmount={totalAmount && totalAmount}
-        />*/}
+          estimationDetails={estimationDetails}
+          errorText={errorText}
+        />
       </div>
     );
   }
