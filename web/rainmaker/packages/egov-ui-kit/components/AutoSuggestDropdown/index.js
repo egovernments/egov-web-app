@@ -98,20 +98,23 @@ var AutoSuggestDropdown = function (_React$Component) {
       var dropDownData = _this.props.dropDownData;
 
       var filteredArray = (0, _filter2.default)(dropDownData, { value: id });
-      return filteredArray.length > 0 ? filteredArray[0].value : id;
+      return filteredArray.length > 0 ? filteredArray[0].label : id;
+    }, _this.onChangeText = function (searchText, dataSource, params) {
+      _this.setState({ searchText: searchText });
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(AutoSuggestDropdown, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      var getNameById = this.getNameById;
+
+      if (nextProps.value) {
+        this.setState({ searchText: getNameById(nextProps.value) });
+      }
+    }
+  }, {
     key: "render",
-
-
-    // filter={(searchText, key) => {
-    //   return key.toLowerCase().includes(getNameById(value) && getNameById(value.toLowerCase()));
-    // }}
-
-    // searchText={getNameById(value)}
-
     value: function render() {
       var _props = this.props,
           onChange = _props.onChange,
@@ -126,7 +129,9 @@ var AutoSuggestDropdown = function (_React$Component) {
           dropDownData = _props.dropDownData,
           restProps = (0, _objectWithoutProperties3.default)(_props, ["onChange", "dataSource", "floatingLabelText", "className", "required", "value", "jsonPath", "errorMessage", "boundary", "dropDownData"]);
       var filterAutoComplete = this.filterAutoComplete,
-          getNameById = this.getNameById;
+          getNameById = this.getNameById,
+          onChangeText = this.onChangeText;
+      var searchText = this.state.searchText;
 
 
       return _react2.default.createElement(_AutoComplete2.default, (0, _extends3.default)({
@@ -137,12 +142,15 @@ var AutoSuggestDropdown = function (_React$Component) {
         underlineFocusStyle: (0, _extends3.default)({}, underlineFocusBaseStyle),
         openOnFocus: false,
         fullWidth: true,
-        value: value,
+        searchText: searchText,
         dataSource: dataSource && [].concat((0, _toConsumableArray3.default)(dataSource)) || [],
         menuStyle: { maxHeight: "150px", overflowY: "auto" },
         dataSourceConfig: { text: "label", value: "value" },
         onNewRequest: onChange,
-        underlineDisabledStyle: underlineDisabledStyle,
+        onUpdateInput: onChangeText,
+        filter: function filter(searchText, key) {
+          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+        },
         floatingLabelText: [floatingLabelText, required ? _react2.default.createElement(
           "span",
           { key: "error-" + className, style: requiredStyle },

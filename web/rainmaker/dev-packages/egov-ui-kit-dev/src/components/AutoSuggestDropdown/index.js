@@ -33,14 +33,21 @@ class AutoSuggestDropdown extends React.Component {
   getNameById = (id) => {
     const { dropDownData } = this.props;
     const filteredArray = filter(dropDownData, { value: id });
-    return filteredArray.length > 0 ? filteredArray[0].value : id;
+    return filteredArray.length > 0 ? filteredArray[0].label : id;
   };
 
-  // filter={(searchText, key) => {
-  //   return key.toLowerCase().includes(getNameById(value) && getNameById(value.toLowerCase()));
-  // }}
+  componentWillReceiveProps(nextProps)
+  {
+    let {getNameById}=this;
+    if (nextProps.value) {
+      this.setState({searchText:getNameById(nextProps.value)});
+    }
+  }
 
-  // searchText={getNameById(value)}
+  onChangeText =(searchText,dataSource,params)=>{
+    this.setState({searchText});
+  }
+
 
   render() {
     let {
@@ -57,7 +64,8 @@ class AutoSuggestDropdown extends React.Component {
       ...restProps
     } = this.props;
 
-    const { filterAutoComplete,getNameById } = this;
+    const { filterAutoComplete,getNameById,onChangeText } = this;
+    const {searchText}=this.state;
 
     return (
       <AutoComplete
@@ -68,11 +76,15 @@ class AutoSuggestDropdown extends React.Component {
         underlineFocusStyle={{ ...underlineFocusBaseStyle }}
         openOnFocus={false}
         fullWidth={true}
-        value={value}
+        searchText={searchText}
         dataSource={(dataSource && [...dataSource]) || []}
         menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
         dataSourceConfig={{ text: "label", value: "value" }}
         onNewRequest={onChange}
+        onUpdateInput={onChangeText}
+        filter={(searchText, key) => {
+          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+        }}
         floatingLabelText={[
           floatingLabelText,
           required ? (
