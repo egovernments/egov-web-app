@@ -535,8 +535,9 @@ class FormWizard extends Component {
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
-      { key: "tenantId", value: tenantId },
+      { key: "tenantId", value: tenantId }
     ];
+
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
     if (process.env.NODE_ENV !== "development") {
       const userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";

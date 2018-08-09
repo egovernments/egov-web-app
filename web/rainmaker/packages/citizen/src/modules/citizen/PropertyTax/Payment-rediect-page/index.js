@@ -21,8 +21,9 @@ class PaymentRedirect extends React.Component {
         this.props.toggleSpinner();
         history.push("/property-tax/payment-failure/" + moduleId.split(":")[0]+"/"+tenantId+"/"+moduleId.split(":")[1]+"/"+"2019-18");
       } else {
+        let transactionId=get(pgUpdateResponse, "Transaction[0].receipt[0].transactionId");
         this.props.toggleSpinner();
-        history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId);
+        history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId+"/"+transactionId);
       }
     } catch (e) {
       this.props.toggleSpinner();

@@ -87,7 +87,7 @@ const combinationToFormkeyMapping = {
     hasPlot: true,
     hasFloor: false,
   },
-  "OTHER-INDEPENDENTPROPERTY": {
+  "OTHERS-INDEPENDENTPROPERTY": {
     path: "PropertyTaxPay/OtherIndependantProperty",
     plotForm: formHoc({ formKey: "plotDetails", path: "PropertyTaxPay/OtherIndependantProperty" })(GenericForm),
     floorForm: formHoc({ formKey: "floorDetails", makeCopy: true, path: "PropertyTaxPay/OtherIndependantProperty" })(GenericForm),
@@ -95,7 +95,7 @@ const combinationToFormkeyMapping = {
     hasPlot: true,
     hasFloor: true,
   },
-  "OTHER-SHAREDPROPERTY": {
+  "OTHERS-SHAREDPROPERTY": {
     path: "PropertyTaxPay/OtherSharedProperty",
     plotForm: formHoc({ formKey: "plotDetails", path: "PropertyTaxPay/OtherSharedProperty" })(GenericForm),
     hasPlot: true,
@@ -108,6 +108,12 @@ const combinationToFormkeyMapping = {
     floorObject: { formKey: "floorDetails", makeCopy: true, copyName: "floorDetails", path: "PropertyTaxPay/PublicSpaceIndependantProperty" },
     hasPlot: true,
     hasFloor: true,
+  },
+  "PUBLICSPACES-SHAREDPROPERTY": {
+    path: "PropertyTaxPay/PublicSpaceSharedProperty",
+    plotForm: formHoc({ formKey: "plotDetails", path: "PropertyTaxPay/PublicSpaceSharedProperty" })(GenericForm),
+    hasPlot: true,
+    hasFloor: false,
   },
   "COMMON-VACANT": {
     path: "PropertyTaxPay/CommonVacantLandProperty",

@@ -143,13 +143,13 @@ class ReviewForm extends Component {
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        {/*<PaymentAmountDetails
+        <PaymentAmountDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
           handleFieldChange={handleFieldChange}
           optionSelected={valueSelected}
           totalAmount={totalAmount && totalAmount}
-        />*/}
+        />
       </div>
     );
   }

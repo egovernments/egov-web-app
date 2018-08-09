@@ -189,10 +189,11 @@ export const beforeInitForm = {
 
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+    var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
 
     //For adding multiple units to prepareFormData
 
-    if (usageCategoryMinor) {
+    if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
@@ -222,6 +223,13 @@ export const beforeInitForm = {
         set(action, "form.fields.subUsageType.hideField", true);
       }
     } else {
+      if (usageCategoryMajor==="MIXED") {
+          var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+          var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+          var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+          var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+          set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+      }
       set(action, "form.fields.subUsageType.hideField", true);
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
@@ -246,7 +254,10 @@ export const beforeInitFormForPlot = {
     if (propertyType != "VACANT") {
       var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
       var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-      if (usageCategoryMinor) {
+      var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
+
+
+      if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
         var filteredSubUsageMinor = filter(
           prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
           (subUsageMinor) => {
@@ -276,6 +287,13 @@ export const beforeInitFormForPlot = {
           set(action, "form.fields.subUsageType.hideField", true);
         }
       } else {
+        if (usageCategoryMajor==="MIXED") {
+            var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+            var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+            var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+            var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+            set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+        }
         set(action, "form.fields.subUsageType.hideField", true);
       }
       set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
@@ -313,7 +331,7 @@ export const prepareDropDownData = (master, withOriginal = false) => {
   return dropDownData;
 };
 
-const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+export const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   const propArray = master2Arr.reduce((result, item) => {
     if (item["code"] && result.indexOf(item["code"]) === -1) {
       result.push(item["code"]);
@@ -323,7 +341,7 @@ const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   return master1Arr.filter((item) => propArray.indexOf(item[propToCompare]) !== -1);
 };
 
-const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+export const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   const propArray = master2Arr.reduce((result, item) => {
     if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
       result.push(item[propToCompare]);
@@ -333,7 +351,7 @@ const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   return master1Arr.filter((item) => propArray.indexOf(item.code) === -1);
 };
 
-const mergeMaster = (masterOne, masterTwo, parentName = "") => {
+export const mergeMaster = (masterOne, masterTwo, parentName = "") => {
   let dropDownData = [];
   let parentList = [];
   for (var variable in masterTwo) {
