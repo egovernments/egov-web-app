@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://egov-micro-dev.egovernments.org/",
-  "home": "https://egov-micro-dev.egovernments.org/app/v2/uploader",
+  "homepage": "https://egov-micro-dev.egovernments.org/app/v2/uploader",
   "dependencies": {
     "axios": "^0.17.1",
     "material-ui": "^0.20.0",
