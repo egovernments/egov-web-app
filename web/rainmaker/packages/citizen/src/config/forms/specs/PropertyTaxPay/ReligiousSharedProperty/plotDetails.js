@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import { plotSize, measuringUnit, subUsageType, occupancy, annualRent, beforeInitFormForPlot } from "../utils/reusableFields";
+import { subUsageType, occupancy, measuringUnit, annualRent, beforeInitFormForPlot } from "../utils/reusableFields";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
@@ -9,11 +9,12 @@ const formConfig = {
     usageType: {
       id: "assessment-usageType",
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
-      type: "singleValueList",
+      type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
-      value: "",
+      value: "Religious",
       required: true,
-      numcols: 4
+      disabled: true,
+      numcols: 4,
     },
     ...subUsageType,
     ...occupancy,
@@ -27,8 +28,8 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
       required: true,
-      numcols: 4,
       hideField: false,
+      numcols: 4,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
       },

@@ -208,12 +208,15 @@ export const beforeInitForm = {
           "form.fields.subUsageType.dropDownData",
           mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
         );
-        dispatch(
-          prepareFormData(
-            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
-            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
-          )
-        );
+        if (get(action,"form.fields.subUsageType.jsonPath")) {
+          dispatch(
+            prepareFormData(
+              `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+              get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+            )
+          );
+        }
+
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
@@ -221,12 +224,14 @@ export const beforeInitForm = {
       set(action, "form.fields.subUsageType.hideField", true);
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    dispatch(
-      prepareFormData(
-        `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
-        get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
-      )
-    );
+    if (get(action,"form.fields.subUsageType.jsonPath")) {
+        dispatch(
+          prepareFormData(
+            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
+            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
+          )
+        );
+    }
 
     return action;
   },
@@ -258,12 +263,14 @@ export const beforeInitFormForPlot = {
             "form.fields.subUsageType.dropDownData",
             mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
           );
+          if (get(action,"form.fields.subUsageType.jsonPath")) {
           dispatch(
             prepareFormData(
               `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
               get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
             )
           );
+        }
         } else {
           set(action, "form.fields.subUsageType.hideField", true);
         }
@@ -271,12 +278,14 @@ export const beforeInitFormForPlot = {
         set(action, "form.fields.subUsageType.hideField", true);
       }
       set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
+      if (get(action,"form.fields.subUsageType.jsonPath")) {
       dispatch(
         prepareFormData(
           `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
           get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
         )
       );
+    }
     }
     if (propertyType == "VACANT") {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 1));
