@@ -24,7 +24,7 @@
     justify-content: space-between;
     padding: 2px 30px 1px 31px;
     .name-address {
-      width:40%;
+      width: 40%;
     }
     .other-details {
       width: 40%;
@@ -39,8 +39,9 @@
     }
   }
   .property-corr {
-    margin-top: -29px;
-    margin-left: -4px;
+    // margin-top: -29px;
+    // margin-left: -4px;
+    margin-left: 12px;
     label {
       color: rgb(72, 72, 72) !important;
       font-weight: 500;
