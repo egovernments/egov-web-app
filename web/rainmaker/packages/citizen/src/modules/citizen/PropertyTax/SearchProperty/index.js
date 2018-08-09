@@ -21,6 +21,7 @@ class SearchProperty extends Component {
     super(props);
     this.state = {
       searchResult: [],
+      showTable:false
     };
   }
 
@@ -53,7 +54,9 @@ class SearchProperty extends Component {
         queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
       }
       this.props.fetchProperties(queryParams);
+      this.setState({showTable:true})
     }
+
   };
 
   extractTableData = (properties) => {
@@ -92,6 +95,7 @@ class SearchProperty extends Component {
 
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
+    const {showTable}=this.state;
     let urlArray = [];
     const { pathname } = location;
     const tableData = this.extractTableData(propertiesFound);
@@ -102,7 +106,7 @@ class SearchProperty extends Component {
       <Screen loading={loading}>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
-        {tableData.length > 0 ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
+        {(tableData.length > 0 && showTable) ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
       </Screen>
     );
   }

@@ -47,6 +47,8 @@ const formConfig = {
       inputStyle: { width: "calc(100% - 35px)" },
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      value:""
     },
     oldAssessmentNumber: {
       id: "old-property-id",
@@ -58,6 +60,7 @@ const formConfig = {
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64,
+      value:""
     },
     ids: {
       id: "property-tax-assessment-id",
@@ -68,7 +71,7 @@ const formConfig = {
       hintText: "PT_ASSESSMENT_ID_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      maxLength: 64,
+      maxLength: 64
     },
 
     // houseNo: {
