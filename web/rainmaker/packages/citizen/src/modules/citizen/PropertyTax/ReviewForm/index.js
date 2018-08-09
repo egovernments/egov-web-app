@@ -8,18 +8,19 @@ import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import EditIcon from "./components/EditIcon";
 
 import "./index.css";
 const defaultIconStyle = {
   fill: "#767676",
-  width: 18,
-  height: 20,
-  marginLeft: 26,
+  width: 22,
+  height: 22,
+  marginLeft: 15,
   marginRight: 10,
 };
 
 const PropAddressIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="home" />;
-const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assessment" />;
+const AssessmentInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="action" name="assignment" />;
 const OwnerInfoIcon = <Icon style={defaultIconStyle} color="#ffffff" action="social" name="person" />;
 
 class ReviewForm extends Component {
@@ -123,9 +124,14 @@ class ReviewForm extends Component {
     }
   };
 
+  onEditButtonClick = (index) => {
+    let { onTabClick } = this.props;
+    onTabClick(index);
+  };
+
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
-    let { handleFieldChange, onRadioButtonChange } = this;
+    let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
     let { valueSelected, totalAmountTobePaid, importantDates } = this.state;
     let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
@@ -133,51 +139,9 @@ class ReviewForm extends Component {
     console.log(this.state.totalAmountTobePaid, totalAmount);
     return (
       <div>
-        <PropertyAddress
-          icon={PropAddressIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                onTabClick(0);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          component={stepZero}
-        />
-        <AssessmentInfo
-          icon={AssessmentInfoIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                onTabClick(1);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          component={stepOne}
-        />
-        <OwnerInfo
-          icon={OwnerInfoIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                onTabClick(2);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          component={stepTwo}
-        />
+        <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
+        <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
+        <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
         {/*<PaymentAmountDetails
           value={totalAmountTobePaid}

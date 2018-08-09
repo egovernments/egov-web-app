@@ -16,6 +16,7 @@ const formConfig = {
       floatingLabelText: "PT_COMMONS_PROPERTY_USAGE_TYPE",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
+      fullWidth: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
         dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
@@ -36,6 +37,7 @@ const formConfig = {
       floatingLabelText: "PT_COMMONS_PROPERTY_TYPE",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       required: true,
+      fullWidth: true,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         removeFormKey(formKey, field, dispatch, state);
         dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));

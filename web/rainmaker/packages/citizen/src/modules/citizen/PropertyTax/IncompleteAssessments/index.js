@@ -80,7 +80,10 @@ const filterData = (propertiesById, propertyName, ids) => {
   return {
     [propertyName]: {
       ...propertiesById[propertyName],
-      propertyDetails: propertiesById && propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
+      propertyDetails:
+        propertiesById &&
+        propertiesById[propertyName]["propertyDetails"] &&
+        propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
     },
   };
 };

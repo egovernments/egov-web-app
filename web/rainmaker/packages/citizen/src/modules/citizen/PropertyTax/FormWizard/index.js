@@ -89,6 +89,7 @@ class FormWizard extends Component {
           selectedTabIndex: assessmentNumber ? selected : selected + 1,
           ...form,
           assessmentNumber,
+          prepareFormData,
         },
         prepareFormData,
       };
@@ -157,7 +158,7 @@ class FormWizard extends Component {
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
-      updatePrepareFormDataFromDraft(get(currentDraft, "prepareFormData", {}));
+      updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.setState(
         {
           ownerInfoArr: ownerDetails,
