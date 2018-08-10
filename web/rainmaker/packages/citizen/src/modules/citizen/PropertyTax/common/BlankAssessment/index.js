@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import YearDialogue from "../YearDialogue";
+import "./index.css";
 
 const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialogue, onButtonClick }) => {
   return (
@@ -12,19 +13,13 @@ const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialo
         <Button
           className="assessment-button"
           primary={true}
-          label={<Label label="PT_NO_ASSESSMENT_BUTTON" buttonLabel={true} dark={true} fontSize={"16px"} />}
+          label={
+            <Label label="PT_NO_ASSESSMENT_BUTTON" labelClassName="no-assessment-button-label-style" color="#ffffff" buttonLabel={true} dark={true} />
+          }
           style={{
             height: 36,
             lineHeight: "auto",
             minWidth: "inherit",
-          }}
-          labelStyle={{
-            padding: "0 12px 0 12px ",
-            letterSpacing: "0.6px",
-            display: "inline-block",
-            height: "22px",
-            lineHeight: "22px",
-            fontSize: "14px",
           }}
           onClick={onButtonClick}
         />

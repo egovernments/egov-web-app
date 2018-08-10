@@ -5,7 +5,12 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
-import { getTransformedItems } from "../common/TransformedAssessments";
+import {
+  getTransactionsforCompletedAssessments,
+  getPropertiesByIdTransactions,
+  mergeFinalData,
+  getTransformedItems,
+} from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
@@ -58,7 +63,10 @@ class CompletedAssessments extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null);
+    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
+      { key: "userUuid", value: userInfo.uuid },
+      { key: "txnStatus", value: "SUCCESS" },
+    ]);
   };
 
   closeYearRangeDialogue = () => {
@@ -72,39 +80,48 @@ class CompletedAssessments extends Component {
   };
 
   render() {
-    const { urls, history, transformedProperties, loading } = this.props;
+    const { urls, history, loading, completedAssessments } = this.props;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
-        <AssessmentList
-          innerDivStyle={innerDivStyle}
-          items={transformedProperties}
-          noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE1"
-          button={true}
-          yearDialogue={this.state.dialogueOpen}
-          closeDialogue={this.closeYearRangeDialogue}
-          onNewPropertyButtonClick={this.onNewPropertyButtonClick}
-        />
+        {completedAssessments && (
+          <AssessmentList
+            innerDivStyle={innerDivStyle}
+            items={completedAssessments}
+            noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE1"
+            button={true}
+            yearDialogue={this.state.dialogueOpen}
+            closeDialogue={this.closeYearRangeDialogue}
+            onNewPropertyButtonClick={this.onNewPropertyButtonClick}
+          />
+        )}
       </Screen>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { properties } = state;
+  const { properties, common } = state;
+  const { cities } = common;
   const { urls } = state.app;
-  const { loading, propertiesById } = properties || {};
+  const { loading, propertiesById, successPayments } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
 
-  const transformedProperties = getTransformedItems(propertiesById);
-  return { urls, transformedProperties, loading, numProperties };
+  const successTransObj = getTransactionsforCompletedAssessments(successPayments);
+  const successProperties = successTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, successTransObj);
+
+  const mergedData = successProperties && mergeFinalData(successProperties, successTransObj);
+  let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
+
+  //const transformedProperties = getTransformedItems(propertiesById, cities);
+  return { urls, completedAssessments, loading, numProperties };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
-      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
+    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
+      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
   };
 };
 

@@ -22,8 +22,9 @@ export const plotSize = {
     hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
     errorMessage: "Plot Size can be maximum 8 digits",
     required: true,
+    fullWidth: true,
     pattern: "^([0-9]){0,8}$",
-    numcols: 4,
+    numcols: 6,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
       let propertySubType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType");
@@ -43,9 +44,10 @@ export const floorCount = {
     floatingLabelText: "PT_FORM2_NUMBER_OF_FLOORS",
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     toolTip: true,
+    fullWidth: true,
     toolTipMessage: "PT_NUMBER_OF_FLOORS_TOOLTIP_MESSAGE",
     required: true,
-    numcols: 4,
+    numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       // removeFormKey(formKey, field, dispatch, state);

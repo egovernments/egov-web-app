@@ -46,6 +46,7 @@ const formConfig = {
       hintText: "ES_CREATECOMPLAINT_MOBILE_NUMBER_PLACEHOLDER",
       inputStyle: { width: "calc(100% - 35px)" },
       numcols: 6,
+      pattern: "^([0-9]){10}$",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
     oldAssessmentNumber: {

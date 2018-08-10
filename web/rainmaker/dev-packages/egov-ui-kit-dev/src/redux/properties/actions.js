@@ -41,21 +41,38 @@ const draftFetchError = (error) => {
   };
 };
 
-const PGFetchError = (error) => {
+const failedTransactionFetchError = (error) => {
   return {
-    type: actionTypes.PG_FETCH_ERROR,
+    type: actionTypes.FAILED_TRANSACTION_FETCH_ERROR,
     error,
   };
 };
-const PGFetchComplete = (payload) => {
+const failedTransactionFetchComplete = (payload) => {
   return {
-    type: actionTypes.PG_FETCH_COMPLETE,
+    type: actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE,
     payload,
   };
 };
-const PGFetchPending = () => {
+const failedTransactionFetchPending = () => {
   return {
-    type: actionTypes.PG_FETCH_PENDING,
+    type: actionTypes.FAILED_TRANSACTION_FETCH_PENDING,
+  };
+};
+const successTransactionFetchError = (error) => {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_ERROR,
+    error,
+  };
+};
+const successTransactionFetchComplete = (payload) => {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_COMPLETE,
+    payload,
+  };
+};
+const successTransactionFetchPending = () => {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_PENDING,
   };
 };
 
@@ -77,7 +94,7 @@ const ReceiptFetchPending = () => {
   };
 };
 
-export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments) => {
+export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) => {
   return async (dispatch) => {
     if (queryObjectDraft) {
       dispatch(draftFetchPending());
@@ -100,12 +117,22 @@ export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObje
     }
 
     if (queryObjectFailedPayments) {
-      dispatch(PGFetchPending());
+      dispatch(failedTransactionFetchPending());
       try {
         const payloadFailedPayments = await httpRequest(PGService.GET.URL, PGService.GET.ACTION, queryObjectFailedPayments, {}, [], {}, true);
-        dispatch(PGFetchComplete(payloadFailedPayments));
+        dispatch(failedTransactionFetchComplete(payloadFailedPayments));
       } catch (error) {
-        dispatch(PGFetchError(error.message));
+        dispatch(failedTransactionFetchError(error.message));
+      }
+    }
+
+    if (queryObjectSuccessPayments) {
+      dispatch(successTransactionFetchPending());
+      try {
+        const payloadSuccessPayments = await httpRequest(PGService.GET.URL, PGService.GET.ACTION, queryObjectSuccessPayments, {}, [], {}, true);
+        dispatch(successTransactionFetchComplete(payloadSuccessPayments));
+      } catch (error) {
+        dispatch(successTransactionFetchError(error.message));
       }
     }
   };

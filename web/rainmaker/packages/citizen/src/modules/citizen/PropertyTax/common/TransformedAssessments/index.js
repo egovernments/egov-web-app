@@ -1,6 +1,9 @@
 import React from "react";
-import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import Label from "egov-ui-kit/utils/translationNode";
+import get from "lodash/get";
+import { getAddress } from "egov-ui-kit/utils/commons";
+import { fail } from "assert";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -14,10 +17,12 @@ const secondaryTextContainer = {
   marginTop: 5,
 };
 
-export const getTransformedItems = (propertiesById) => {
+export const getTransformedItems = (propertiesById, cities) => {
   return (
     propertiesById &&
     Object.values(propertiesById).reduce((acc, curr) => {
+      const cityValue = get(curr, "address.city");
+      const mohalla = get(curr, "address.locality.code");
       const propertyDetail =
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
@@ -33,7 +38,7 @@ export const getTransformedItems = (propertiesById) => {
                   color="#484848"
                 />
                 <Label
-                  label={getCommaSeperatedAddress(curr.address.buildingName, curr.address.street)}
+                  label={getAddress(cities, cityValue, mohalla)}
                   containerStyle={secondaryTextContainer}
                   labelStyle={secondaryTextLabelStyle}
                   color="#484848"
@@ -55,5 +60,80 @@ export const getTransformedItems = (propertiesById) => {
       acc = [...acc, ...propertyDetail];
       return acc;
     }, [])
+  );
+};
+
+export const getTransactionsforIncompleteAssessments = (payments) => {
+  const failedTransactionsConsumercode =
+    payments &&
+    Object.values(payments).map((transaction) => {
+      return transaction.moduleId;
+    });
+  return (
+    failedTransactionsConsumercode &&
+    failedTransactionsConsumercode.reduce((result, current) => {
+      if (!result[current.split(":")[0]]) result[current.split(":")[0]] = [];
+      result[current.split(":")[0]].push(current.split(":")[1]);
+      return result;
+    }, {})
+  );
+};
+
+export const getTransactionsforCompletedAssessments = (payments) => {
+  const failedTransactionsConsumercode =
+    payments &&
+    Object.values(payments).map((transaction) => {
+      return {
+        consumerCode: transaction.moduleId,
+        amountPaid: transaction.txnAmount,
+      };
+    });
+  return (
+    failedTransactionsConsumercode &&
+    failedTransactionsConsumercode.reduce((result, current) => {
+      if (!result[current.consumerCode.split(":")[0]]) result[current.consumerCode.split(":")[0]] = [];
+      const resultValue = {
+        assessmentNo: current.consumerCode.split(":")[1],
+        amountPaid: current.amountPaid,
+      };
+      result[current.consumerCode.split(":")[0]].push(resultValue);
+      return result;
+    }, {})
+  );
+};
+
+export const getPropertiesByIdTransactions = (propertiesById, transactions) => {
+  return (
+    transactions &&
+    Object.keys(transactions).reduce((result, moduleId) => {
+      if (propertiesById[moduleId] && !result[moduleId]) result[moduleId] = [];
+      if (propertiesById[moduleId]) {
+        result[moduleId] = propertiesById[moduleId];
+      }
+      return result;
+    }, {})
+  );
+};
+
+const filterData = (propertiesById, propertyName, ids) => {
+  return {
+    [propertyName]: {
+      ...propertiesById[propertyName],
+      propertyDetails:
+        propertiesById &&
+        propertiesById[propertyName]["propertyDetails"] &&
+        propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
+    },
+  };
+};
+
+export const mergeFinalData = (propertiesById, failedTransObj) => {
+  console.log(failedTransObj);
+  return (
+    propertiesById &&
+    Object.keys(propertiesById).reduce((result, current) => {
+      result[current] = filterData(propertiesById, current, failedTransObj[current])[current];
+      return result;
+    }, {})
   );
 };

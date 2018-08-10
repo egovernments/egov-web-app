@@ -392,13 +392,6 @@ class FormWizard extends Component {
         const { financialYear } = draft.draftRecord;
         return (
           <div className="review-pay-tab">
-            <Label
-              containerStyle={{ marginTop: 12 }}
-              fontSize="16px"
-              color="#484848"
-              label="Verify the information you have provided and let us know how much you would like to pay against your bill."
-            />
-
             <ReviewForm
               onTabClick={this.onTabClick}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
@@ -704,6 +697,8 @@ class FormWizard extends Component {
         return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM2_HEADER_MESSAGE" />;
       case 2:
         return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM3_HEADER_MESSAGE" />;
+      case 3:
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM4_HEADER_MESSAGE" />;
     }
   };
 

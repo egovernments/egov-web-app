@@ -80,6 +80,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_SPECIAL_CATEGORY",
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       dropDownData: [],
+      fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dataFetchConfig: {
         url: MDMS.GET.URL,
@@ -135,6 +136,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "PT_FORM3_DOCUMENT_ID_TYPE",
       hideField: true,
+      fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
