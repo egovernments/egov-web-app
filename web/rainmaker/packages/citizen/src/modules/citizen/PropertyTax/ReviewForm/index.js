@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon } from "components";
 import PropertyAddress from "./components/PropertyAddress";
-import PaymentAmountDetails from "./components/PaymentAmountDetails";
+//import PaymentAmountDetails from "./components/PaymentAmountDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
@@ -154,15 +154,13 @@ class ReviewForm extends Component {
     let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
     let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountTobePaid } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
-
-    console.log(this.state.totalAmountTobePaid, totalAmount);
     return (
       <div>
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        <PaymentAmountDetails
+        {/* <PaymentAmountDetails
           value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
           onRadioButtonChange={onRadioButtonChange}
           handleFieldChange={handleFieldChange}
@@ -170,7 +168,7 @@ class ReviewForm extends Component {
           totalAmount={totalAmount && totalAmount}
           estimationDetails={estimationDetails}
           errorText={errorText}
-        />
+        /> */}
       </div>
     );
   }

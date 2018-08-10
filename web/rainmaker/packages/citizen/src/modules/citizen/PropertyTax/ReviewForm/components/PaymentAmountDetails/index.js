@@ -68,7 +68,13 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
                   <Label label="Full Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
                 <div className="amt-radio">
-                  <input type="radio" checked={optionSelected === "Partial_Amount"} onClick={onRadioButtonChange} value="Partial_Amount" name="radio" />
+                  <input
+                    type="radio"
+                    checked={optionSelected === "Partial_Amount"}
+                    onClick={onRadioButtonChange}
+                    value="Partial_Amount"
+                    name="radio"
+                  />
                   <Label label="Partial Amount" color="#4848484" labelStyle={styles.radioButtonLabelStyle} />
                 </div>
               </div>

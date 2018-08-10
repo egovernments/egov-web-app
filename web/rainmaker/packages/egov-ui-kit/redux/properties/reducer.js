@@ -69,13 +69,25 @@ var propertyReducer = function propertyReducer() {
         error: true,
         errorMessage: action.error
       });
-    case actionTypes.PG_FETCH_PENDING:
+    case actionTypes.FAILED_TRANSACTION_FETCH_PENDING:
       return (0, _extends3.default)({}, state, {
         loading: true,
         error: false,
         errorMessage: ""
       });
-    case actionTypes.PG_FETCH_ERROR:
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.FAILED_TRANSACTION_FETCH_ERROR:
       return (0, _extends3.default)({}, state, {
         loading: false,
         error: true,
@@ -97,13 +109,21 @@ var propertyReducer = function propertyReducer() {
         errorMessage: "",
         draftsById: draftsById
       });
-    case actionTypes.PG_FETCH_COMPLETE:
+    case actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE:
       var failedPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
       return (0, _extends3.default)({}, state, {
         loading: false,
         error: false,
         errorMessage: "",
         failedPayments: failedPayments
+      });
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_COMPLETE:
+      var successPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        successPayments: successPayments
       });
     case actionTypes.RECEIPT_FETCH_COMPLETE:
       var receipts = action.payload["Receipt"];

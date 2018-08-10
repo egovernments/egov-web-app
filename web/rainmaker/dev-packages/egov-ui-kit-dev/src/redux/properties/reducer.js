@@ -55,14 +55,28 @@ const propertyReducer = (state = initialState, action) => {
         error: true,
         errorMessage: action.error,
       };
-    case actionTypes.PG_FETCH_PENDING:
+    case actionTypes.FAILED_TRANSACTION_FETCH_PENDING:
       return {
         ...state,
         loading: true,
         error: false,
         errorMessage: "",
       };
-    case actionTypes.PG_FETCH_ERROR:
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
+    case actionTypes.FAILED_TRANSACTION_FETCH_ERROR:
       return {
         ...state,
         loading: false,
@@ -87,7 +101,7 @@ const propertyReducer = (state = initialState, action) => {
         errorMessage: "",
         draftsById,
       };
-    case actionTypes.PG_FETCH_COMPLETE:
+    case actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE:
       const failedPayments = transformById(action.payload["Transaction"], "txnId");
       return {
         ...state,
@@ -95,6 +109,15 @@ const propertyReducer = (state = initialState, action) => {
         error: false,
         errorMessage: "",
         failedPayments,
+      };
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_COMPLETE:
+      const successPayments = transformById(action.payload["Transaction"], "txnId");
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        successPayments,
       };
     case actionTypes.RECEIPT_FETCH_COMPLETE:
       const receipts = action.payload["Receipt"];

@@ -46,6 +46,7 @@ const formConfig = {
       hintText: "PT_OWNER_MOBILE_NUMBER_PLACEHOLDER",
       inputStyle: { width: "calc(100% - 35px)" },
       numcols: 6,
+      pattern: "^([0-9]){10}$",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       value:""

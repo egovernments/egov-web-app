@@ -64,21 +64,38 @@ var draftFetchError = function draftFetchError(error) {
   };
 };
 
-var PGFetchError = function PGFetchError(error) {
+var failedTransactionFetchError = function failedTransactionFetchError(error) {
   return {
-    type: actionTypes.PG_FETCH_ERROR,
+    type: actionTypes.FAILED_TRANSACTION_FETCH_ERROR,
     error: error
   };
 };
-var PGFetchComplete = function PGFetchComplete(payload) {
+var failedTransactionFetchComplete = function failedTransactionFetchComplete(payload) {
   return {
-    type: actionTypes.PG_FETCH_COMPLETE,
+    type: actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE,
     payload: payload
   };
 };
-var PGFetchPending = function PGFetchPending() {
+var failedTransactionFetchPending = function failedTransactionFetchPending() {
   return {
-    type: actionTypes.PG_FETCH_PENDING
+    type: actionTypes.FAILED_TRANSACTION_FETCH_PENDING
+  };
+};
+var successTransactionFetchError = function successTransactionFetchError(error) {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_ERROR,
+    error: error
+  };
+};
+var successTransactionFetchComplete = function successTransactionFetchComplete(payload) {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_COMPLETE,
+    payload: payload
+  };
+};
+var successTransactionFetchPending = function successTransactionFetchPending() {
+  return {
+    type: actionTypes.SUCCESS_TRANSACTION_FETCH_PENDING
   };
 };
 
@@ -100,10 +117,10 @@ var ReceiptFetchPending = function ReceiptFetchPending() {
   };
 };
 
-var fetchProperties = exports.fetchProperties = function fetchProperties(queryObjectproperty, queryObjectDraft, queryObjectFailedPayments) {
+var fetchProperties = exports.fetchProperties = function fetchProperties(queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-      var draftpayload, payloadProperty, payloadFailedPayments;
+      var draftpayload, payloadProperty, payloadFailedPayments, payloadSuccessPayments;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -161,7 +178,7 @@ var fetchProperties = exports.fetchProperties = function fetchProperties(queryOb
                 break;
               }
 
-              dispatch(PGFetchPending());
+              dispatch(failedTransactionFetchPending());
               _context.prev = 26;
               _context.next = 29;
               return (0, _api.httpRequest)(_endPoints.PGService.GET.URL, _endPoints.PGService.GET.ACTION, queryObjectFailedPayments, {}, [], {}, true);
@@ -169,7 +186,7 @@ var fetchProperties = exports.fetchProperties = function fetchProperties(queryOb
             case 29:
               payloadFailedPayments = _context.sent;
 
-              dispatch(PGFetchComplete(payloadFailedPayments));
+              dispatch(failedTransactionFetchComplete(payloadFailedPayments));
               _context.next = 36;
               break;
 
@@ -177,14 +194,38 @@ var fetchProperties = exports.fetchProperties = function fetchProperties(queryOb
               _context.prev = 33;
               _context.t2 = _context["catch"](26);
 
-              dispatch(PGFetchError(_context.t2.message));
+              dispatch(failedTransactionFetchError(_context.t2.message));
 
             case 36:
+              if (!queryObjectSuccessPayments) {
+                _context.next = 48;
+                break;
+              }
+
+              dispatch(successTransactionFetchPending());
+              _context.prev = 38;
+              _context.next = 41;
+              return (0, _api.httpRequest)(_endPoints.PGService.GET.URL, _endPoints.PGService.GET.ACTION, queryObjectSuccessPayments, {}, [], {}, true);
+
+            case 41:
+              payloadSuccessPayments = _context.sent;
+
+              dispatch(successTransactionFetchComplete(payloadSuccessPayments));
+              _context.next = 48;
+              break;
+
+            case 45:
+              _context.prev = 45;
+              _context.t3 = _context["catch"](38);
+
+              dispatch(successTransactionFetchError(_context.t3.message));
+
+            case 48:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[2, 9], [14, 21], [26, 33]]);
+      }, _callee, undefined, [[2, 9], [14, 21], [26, 33], [38, 45]]);
     }));
 
     return function (_x) {

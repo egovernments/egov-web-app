@@ -7,6 +7,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import { getTransactionsforIncompleteAssessments, getPropertiesByIdTransactions, mergeFinalData } from "../common/TransformedAssessments";
 import get from "lodash/get";
 import { getAddress } from "egov-ui-kit/utils/commons";
 
@@ -45,7 +46,6 @@ class IncompleteAssessments extends Component {
 
   render() {
     const { urls, history, loading, incompleteAssessments } = this.props;
-    console.log(incompleteAssessments);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
@@ -63,38 +63,38 @@ class IncompleteAssessments extends Component {
   }
 }
 
-const getfailedPropertiesById = (propertiesById, failedTransactions) => {
-  return (
-    failedTransactions &&
-    Object.keys(failedTransactions).reduce((result, moduleId) => {
-      if (propertiesById[moduleId] && !result[moduleId]) result[moduleId] = [];
-      result[moduleId] = propertiesById[moduleId];
-      return result;
-    }, {})
-  );
-};
+// const getfailedPropertiesById = (propertiesById, failedTransactions) => {
+//   return (
+//     failedTransactions &&
+//     Object.keys(failedTransactions).reduce((result, moduleId) => {
+//       if (propertiesById[moduleId] && !result[moduleId]) result[moduleId] = [];
+//       result[moduleId] = propertiesById[moduleId];
+//       return result;
+//     }, {})
+//   );
+// };
 
-const filterData = (propertiesById, propertyName, ids) => {
-  return {
-    [propertyName]: {
-      ...propertiesById[propertyName],
-      propertyDetails:
-        propertiesById &&
-        propertiesById[propertyName]["propertyDetails"] &&
-        propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
-    },
-  };
-};
+// const filterData = (propertiesById, propertyName, ids) => {
+//   return {
+//     [propertyName]: {
+//       ...propertiesById[propertyName],
+//       propertyDetails:
+//         propertiesById &&
+//         propertiesById[propertyName]["propertyDetails"] &&
+//         propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
+//     },
+//   };
+// };
 
-const mergeFinalData = (propertiesById, failedTransObj) => {
-  return (
-    propertiesById &&
-    Object.keys(propertiesById).reduce((result, current) => {
-      result[current] = filterData(propertiesById, current, failedTransObj[current])[current];
-      return result;
-    }, {})
-  );
-};
+// const mergeFinalData = (propertiesById, failedTransObj) => {
+//   return (
+//     propertiesById &&
+//     Object.keys(propertiesById).reduce((result, current) => {
+//       result[current] = filterData(propertiesById, current, failedTransObj[current])[current];
+//       return result;
+//     }, {})
+//   );
+// };
 
 const getTransformedItems = (propertiesById, cities) => {
   return (
@@ -140,19 +140,20 @@ const mapStateToProps = (state) => {
   const { urls } = state.app;
   const { cities } = common;
   const { loading, draftsById, propertiesById, failedPayments } = properties || {};
-  const failedTransactionsConsumercode =
-    failedPayments &&
-    Object.values(failedPayments).map((transaction) => {
-      return transaction.moduleId;
-    });
+  // const failedTransactionsConsumercode =
+  //   failedPayments &&
+  //   Object.values(failedPayments).map((transaction) => {
+  //     return transaction.moduleId;
+  //   });
 
-  const failedTransObj =
-    failedTransactionsConsumercode &&
-    failedTransactionsConsumercode.reduce((result, current) => {
-      if (!result[current.split(":")[0]]) result[current.split(":")[0]] = [];
-      result[current.split(":")[0]].push(current.split(":")[1]);
-      return result;
-    }, {});
+  // const failedTransObj =
+  //   failedTransactionsConsumercode &&
+  //   failedTransactionsConsumercode.reduce((result, current) => {
+  //     if (!result[current.split(":")[0]]) result[current.split(":")[0]] = [];
+  //     result[current.split(":")[0]].push(current.split(":")[1]);
+  //     return result;
+  //   }, {});
+  const failedTransObj = getTransactionsforIncompleteAssessments(failedPayments);
   let transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
@@ -190,9 +191,12 @@ const mapStateToProps = (state) => {
     return result;
   }, []);
 
-  const failedProperties = getfailedPropertiesById(propertiesById, failedTransObj);
+  console.log(propertiesById);
+  const failedProperties = failedTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, failedTransObj);
+  console.log(failedProperties);
   const mergedData = failedProperties && mergeFinalData(failedProperties, failedTransObj);
-  let finalFailedTransactions = mergedData && getTransformedItems(mergeFinalData(failedProperties, failedTransObj), cities);
+
+  let finalFailedTransactions = mergedData && getTransformedItems(mergedData, cities);
   const incompleteAssessments = transformedDrafts && finalFailedTransactions && [...transformedDrafts, ...finalFailedTransactions];
 
   return { urls, loading, incompleteAssessments };

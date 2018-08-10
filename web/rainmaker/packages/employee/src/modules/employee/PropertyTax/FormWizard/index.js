@@ -53,6 +53,8 @@ class FormWizard extends Component {
       },
     },
     bill: [],
+    totalAmountToBePaid: 0,
+    isFullPayment: true,
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -94,6 +96,13 @@ class FormWizard extends Component {
       }
     }
     // }
+  };
+
+  updateTotalAmount = (value, isFullPayment) => {
+    this.setState({
+      totalAmountToBePaid: value,
+      isFullPayment,
+    });
   };
 
   configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
@@ -160,6 +169,14 @@ class FormWizard extends Component {
           this.props.updatePTForms(currentDraft.draftRecord);
           //this.onTabClick(activeTab)
           toggleSpinner();
+          this.estimate().then((estimateResponse) => {
+            if (estimateResponse) {
+              this.setState({
+                estimation: estimateResponse && estimateResponse.Calculation,
+                totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
+              });
+            }
+          });
         }
       );
     } catch (e) {
@@ -335,10 +352,20 @@ class FormWizard extends Component {
     this.estimate().then((estimateResponse) => {
       if (estimateResponse) {
         this.setState({
-          estimation: estimateResponse && estimateResponse.Calculation,
+          estimation: estimateResponse ? estimateResponse.Calculation : [],
         });
       }
     });
+  };
+
+  onRadioButtonChange = (e) => {
+    let { estimationDetails } = this.props;
+    let { totalAmount } = estimationDetails[0] || {};
+    if (e.target.value === "Full_Amount") {
+      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+    } else {
+      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
+    }
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
@@ -368,18 +395,12 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
-        const { draftRequest, estimation } = this.state;
+        const { draftRequest, estimation, totalAmountToBePaid } = this.state;
+        const { onRadioButtonChange, updateTotalAmount } = this;
         const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
         return (
           <div>
-            <Label
-              containerStyle={{ marginTop: 12 }}
-              fontSize="16px"
-              color="#484848"
-              label="Verify the information you have provided and let us know how much you would like to pay against your bill."
-            />
-
             <ReviewForm
               updateIndex={this.updateIndex}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
@@ -392,7 +413,15 @@ class FormWizard extends Component {
           </div>
         );
       case 4:
-        return <PaymentDetails financialYr={financialYear ? financialYear.fields.button : {}} />;
+        return (
+          <PaymentDetails
+            onRadioButtonChange={onRadioButtonChange}
+            updateTotalAmount={updateTotalAmount}
+            estimationDetails={estimation}
+            financialYr={financialYear ? financialYear.fields.button : {}}
+            totalAmountToBePaid={totalAmountToBePaid}
+          />
+        );
       default:
         return null;
     }
@@ -702,6 +731,10 @@ class FormWizard extends Component {
         return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM2_HEADER_MESSAGE" />;
       case 2:
         return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM3_HEADER_MESSAGE" />;
+      case 3:
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM4_HEADER_MESSAGE" />;
+      case 4:
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM5_HEADER_MESSAGE" />;
     }
   };
 
