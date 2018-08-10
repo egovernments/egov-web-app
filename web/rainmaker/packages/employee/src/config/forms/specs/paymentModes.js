@@ -3,7 +3,7 @@ const formConfig = {
   fields: {
     mode: {
       id: "mode",
-      jsonPath: "",
+      jsonPath: "Receipt[0].instrument.instrumentType.name",
       required: true,
       type: "singleValueList",
       floatingLabelText: "Mode of payment",

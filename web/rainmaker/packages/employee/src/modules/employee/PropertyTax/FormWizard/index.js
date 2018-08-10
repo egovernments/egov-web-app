@@ -52,6 +52,7 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
+    bill: [],
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -398,7 +399,7 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { callDraft, pay, estimate } = this;
+    const { callDraft, pay, estimate, createReceipt } = this;
     const { selected, formValidIndexArray } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
@@ -530,6 +531,9 @@ class FormWizard extends Component {
     ];
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
+      const { Bill } = getBill;
+      console.log(Bill);
+      this.setState({ Bill });
       // try {
       //   const requestBody = {
       //     Transaction: {
@@ -550,6 +554,24 @@ class FormWizard extends Component {
       //   console.log(e);
       // }
       updateIndex(4);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  createReceipt = async () => {
+    const { prepareFormData } = this.props;
+    const { Bill } = this.state;
+    prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", "100"); //hardcoded -- needs to change
+
+    const formData = {
+      Receipt: prepareFormData["Receipt"],
+    };
+    console.log(formData);
+    try {
+      const getBill = await httpRequest("collection-services/receipts/_create", "_create", [], formData);
+      console.log(getBill);
     } catch (e) {
       console.log(e);
     }
@@ -651,6 +673,7 @@ class FormWizard extends Component {
 
   onPayButtonClick = () => {
     this.setState({ dialogueOpen: true });
+    this.createReceipt();
   };
 
   render() {

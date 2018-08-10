@@ -37,14 +37,18 @@ const WizardComponent = ({
             style={{ marginRight: 45, width: "36%" }}
           />
           <Button
-            label={<Label buttonLabel={true} label={backLabel} color="#fff" />}
+            label={<Label buttonLabel={true} label={nextLabel} color="#fff" />}
             style={{ width: "36%" }}
             backgroundColor="#fe7a51"
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
             buttonStyle={{ border: 0 }}
-            onClick={() => {
-              updateIndex(selected + 1);
-            }}
+            onClick={
+              selected === 4
+                ? onPayButtonClick
+                : () => {
+                    updateIndex(selected + 1);
+                  }
+            }
           />
         </div>
       </div>

@@ -144,3 +144,10 @@ var PGService = exports.PGService = {
     ACTION: "_get"
   }
 };
+
+var RECEIPT = exports.RECEIPT = {
+  GET: {
+    URL: "/collection-services/receipts/_search",
+    ACTION: "_get"
+  }
+};

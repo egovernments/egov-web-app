@@ -1,5 +1,17 @@
-import React from "react"
-import Field from "egov-ui-kit/utils/field"
+import React from "react";
+import Field from "egov-ui-kit/utils/field";
+import { DatePicker } from "components";
+
+const changeDateToFormat = (date) => {
+  console.log(date);
+  const dateObj = new Date(date);
+  let year = dateObj.getFullYear();
+  let month = dateObj.getMonth() + 1;
+  let dt = dateObj.getDate();
+  dt = dt < 10 ? "0" + dt : dt;
+  month = month < 10 ? "0" + month : month;
+  return dt + "/" + month + "/" + year;
+};
 
 const CashInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
@@ -10,7 +22,7 @@ const CashInformation = ({ form, formKey, handleFieldChange }) => {
         <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
       </div>
       <div className="mobile-number">
-        <div className="empty"></div>
+        <div className="empty" />
         <Field fieldKey="payerMobile" field={fields.payerMobile} handleFieldChange={handleFieldChange} />
       </div>
     </div>
@@ -26,7 +38,14 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
         <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
       </div>
       <div className="date-branchr">
-      <Field fieldKey="chequeDate" field={fields.chequeDate} handleFieldChange={handleFieldChange} />
+        <DatePicker
+          onChange={(first, object) => {
+            let e = { target: { value: object } };
+            handleFieldChange("chequeDate", changeDateToFormat(e.target.value));
+          }}
+          formatDate={(date) => changeDateToFormat(date)}
+          {...fields.chequeDate}
+        />
         <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
       </div>
     </div>
@@ -52,7 +71,14 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
         <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
       </div>
       <div className="date-branchr">
-      <Field fieldKey="demandDate" field={fields.demandDate} handleFieldChange={handleFieldChange} />
+        <DatePicker
+          onChange={(first, object) => {
+            let e = { target: { value: object } };
+            handleFieldChange("chequeDate", changeDateToFormat(e.target.value));
+          }}
+          formatDate={(date) => changeDateToFormat(date)}
+          {...fields.chequeDate}
+        />
         <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
       </div>
     </div>
@@ -68,12 +94,12 @@ const CardInformation = ({ form, formKey, handleFieldChange }) => {
         <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
       </div>
       <div className="receipt">
-      <div className="empty"></div>
-      <Field fieldKey="confirmReceiptNo" field={fields.confirmReceiptNo} handleFieldChange={handleFieldChange} />
+        <div className="empty" />
+        <Field fieldKey="confirmReceiptNo" field={fields.confirmReceiptNo} handleFieldChange={handleFieldChange} />
       </div>
     </div>
   );
-}
+};
 
 const PaymentModeInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
@@ -82,6 +108,6 @@ const PaymentModeInformation = ({ form, formKey, handleFieldChange }) => {
       <Field fieldKey="mode" field={fields.mode} handleFieldChange={handleFieldChange} />
     </div>
   );
-}
+};
 
-export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation, CardInformation, PaymentModeInformation }
+export { CashInformation, ChequeInformation, DemandDraftInformation, ReceiptInformation, CardInformation, PaymentModeInformation };

@@ -27,6 +27,20 @@ const propertyReducer = (state = initialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+    case actionTypes.RECEIPT_FETCH_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
+    case actionTypes.RECEIPT_FETCH_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
     case actionTypes.DRAFT_FETCH_PENDING:
       return {
         ...state,
@@ -81,6 +95,15 @@ const propertyReducer = (state = initialState, action) => {
         error: false,
         errorMessage: "",
         failedPayments,
+      };
+    case actionTypes.RECEIPT_FETCH_COMPLETE:
+      const receipts = action.payload["Receipt"];
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        receipts,
       };
     default:
       return state;

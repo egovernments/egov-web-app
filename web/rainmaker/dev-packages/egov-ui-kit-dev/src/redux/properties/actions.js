@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { PROPERTY, DRAFT, PGService } from "egov-ui-kit/utils/endPoints";
+import { PROPERTY, DRAFT, PGService, RECEIPT } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
 
 const propertyFetchPending = () => {
@@ -59,6 +59,24 @@ const PGFetchPending = () => {
   };
 };
 
+const ReceiptFetchError = (error) => {
+  return {
+    type: actionTypes.RECEIPT_FETCH_ERROR,
+    error,
+  };
+};
+const ReceiptFetchComplete = (payload) => {
+  return {
+    type: actionTypes.RECEIPT_FETCH_COMPLETE,
+    payload,
+  };
+};
+const ReceiptFetchPending = () => {
+  return {
+    type: actionTypes.RECEIPT_FETCH_PENDING,
+  };
+};
+
 export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments) => {
   return async (dispatch) => {
     if (queryObjectDraft) {
@@ -89,6 +107,18 @@ export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObje
       } catch (error) {
         dispatch(PGFetchError(error.message));
       }
+    }
+  };
+};
+
+export const fetchReceipts = (queryObj) => {
+  return async (dispatch) => {
+    dispatch(ReceiptFetchPending());
+    try {
+      const payloadReceipts = await httpRequest(RECEIPT.GET.URL, RECEIPT.GET.ACTION, queryObj, {}, [], { ts: "10-03-2017 00:00:00" });
+      dispatch(ReceiptFetchComplete(payloadReceipts));
+    } catch (error) {
+      dispatch(ReceiptFetchError(error.message));
     }
   };
 };

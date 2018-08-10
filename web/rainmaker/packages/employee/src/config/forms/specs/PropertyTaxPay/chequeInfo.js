@@ -6,7 +6,8 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "Cheque No",
       hintText: "Enter cheque no.",
-      required: true
+      jsonPath: "Receipt[0].instrument.transactionNumber",
+      required: true,
     },
     chequeDate: {
       id: "chequeDate",
@@ -14,8 +15,9 @@ const formConfig = {
       floatingLabelText: "Cheque Date",
       hintText: "dd/mm/yy",
       required: true,
+      jsonPath: "Receipt[0].instrument.transactionDateInput",
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: ""
+      errorMessage: "",
     },
     BankName: {
       id: "BankName",
@@ -23,7 +25,8 @@ const formConfig = {
       value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Name",
-      dropDownData: [{ label: "SBI", value: "SBI" }, { label: "Other", value: "Other" }]
+      dropDownData: [{ label: "RBI", value: "10101" }],
+      jsonPath: "Receipt[0].bank.id",
     },
     BankBranch: {
       id: "BankBranch",
@@ -31,13 +34,14 @@ const formConfig = {
       value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Branch",
-      dropDownData: [{ label: "Bengaluru", value: "Bengaluru" }, { label: "Other", value: "Other" }]
-    }
+      dropDownData: [{ label: "RBIPunjab", value: "RBIPN" }],
+      jsonPath: "Receipt[0].branchName",
+    },
   },
   action: "",
   redirectionRoute: "",
   saveUrl: "",
-  isFormValid: false
+  isFormValid: false,
 };
 
 export default formConfig;

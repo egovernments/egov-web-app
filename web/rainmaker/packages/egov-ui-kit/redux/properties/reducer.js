@@ -45,6 +45,18 @@ var propertyReducer = function propertyReducer() {
         error: true,
         errorMessage: action.error
       });
+    case actionTypes.RECEIPT_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.RECEIPT_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     case actionTypes.DRAFT_FETCH_PENDING:
       return (0, _extends3.default)({}, state, {
         loading: true,
@@ -92,6 +104,14 @@ var propertyReducer = function propertyReducer() {
         error: false,
         errorMessage: "",
         failedPayments: failedPayments
+      });
+    case actionTypes.RECEIPT_FETCH_COMPLETE:
+      var receipts = action.payload["Receipt"];
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        receipts: receipts
       });
     default:
       return state;

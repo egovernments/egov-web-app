@@ -118,7 +118,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-success/:propertyId/:tenantId/:assessmentNumber/:assessmentYear",
+    path: "property-tax/payment-success/:propertyId/:tenantId/:assessmentId",
     component: PaymentSuccess,
     needsAuthentication: true,
     options: {

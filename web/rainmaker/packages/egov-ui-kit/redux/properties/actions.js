@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchProperties = undefined;
+exports.fetchReceipts = exports.fetchProperties = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -79,6 +79,24 @@ var PGFetchComplete = function PGFetchComplete(payload) {
 var PGFetchPending = function PGFetchPending() {
   return {
     type: actionTypes.PG_FETCH_PENDING
+  };
+};
+
+var ReceiptFetchError = function ReceiptFetchError(error) {
+  return {
+    type: actionTypes.RECEIPT_FETCH_ERROR,
+    error: error
+  };
+};
+var ReceiptFetchComplete = function ReceiptFetchComplete(payload) {
+  return {
+    type: actionTypes.RECEIPT_FETCH_COMPLETE,
+    payload: payload
+  };
+};
+var ReceiptFetchPending = function ReceiptFetchPending() {
+  return {
+    type: actionTypes.RECEIPT_FETCH_PENDING
   };
 };
 
@@ -171,6 +189,46 @@ var fetchProperties = exports.fetchProperties = function fetchProperties(queryOb
 
     return function (_x) {
       return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchReceipts = exports.fetchReceipts = function fetchReceipts(queryObj) {
+  return function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
+      var payloadReceipts;
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              dispatch(ReceiptFetchPending());
+              _context2.prev = 1;
+              _context2.next = 4;
+              return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, queryObj, {}, [], { ts: "10-03-2017 00:00:00" });
+
+            case 4:
+              payloadReceipts = _context2.sent;
+
+              dispatch(ReceiptFetchComplete(payloadReceipts));
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](1);
+
+              dispatch(ReceiptFetchError(_context2.t0.message));
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined, [[1, 8]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }();
 };

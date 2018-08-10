@@ -8,6 +8,7 @@ import Field from "egov-ui-kit/utils/field";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { Card } from "components";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 // import {
 //   UsageInformationHOC,
 //   PropertyAddressHOC,
@@ -52,13 +53,18 @@ const getListItems = (items) =>
   });
 
 class PaymentModes extends Component {
+  allFormkeys = ["demandInfo", "chequeInfo", "cardInfo", "cashInfo"];
+
   getPaymentDetails = () => {
-    const { currentPaymentMode, paymentModeDetails } = this.props
-    const paymentData = paymentModeDetails.find(paymentMode => paymentMode.primaryText.toLowerCase() === currentPaymentMode.toLowerCase())
-    return FormDetails({ item: paymentData })
-  }
+    const { currentPaymentMode, paymentModeDetails, removeForm } = this.props;
+    this.allFormkeys.forEach((item) => {
+      removeForm(item);
+    });
+    const paymentData = paymentModeDetails.find((paymentMode) => paymentMode.primaryText.toLowerCase() === currentPaymentMode.toLowerCase());
+    return FormDetails({ item: paymentData });
+  };
   render() {
-    const { PaymentModeSelector } = this.props
+    const { PaymentModeSelector } = this.props;
     return (
       <Card
         textChildren={
@@ -84,8 +90,16 @@ class PaymentModes extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const currentPaymentMode = get(state, "form.paymentModes.fields.mode.value", "cash")
-  return { currentPaymentMode }
-}
+  const currentPaymentMode = get(state, "form.paymentModes.fields.mode.value", "cash");
+  return { currentPaymentMode };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeForm: (formKey) => dispatch(removeForm(formKey)),
+  };
+};
 
-export default connect(mapStateToProps, null)(PaymentModes);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentModes);

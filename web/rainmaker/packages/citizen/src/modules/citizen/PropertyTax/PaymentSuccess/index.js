@@ -4,7 +4,7 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import PaymentStatus from "../common/PaymentStatus";
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
-import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/actions";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
@@ -27,8 +27,12 @@ class PaymentSuccess extends Component {
   };
 
   componentDidMount = () => {
-    const { fetchProperties, match } = this.props;
+    const { fetchProperties, fetchReceipts, match } = this.props;
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
+    fetchReceipts([
+      { key: "tenantId", value: match.params.tenantId },
+      { key: "consumerNo", value: `${match.params.propertyId}:${match.params.assessmentId}` },
+    ]);
   };
 
   goToHome = () => {
@@ -79,11 +83,11 @@ const createReceiptUIInfo = (property, receiptDetails) => {
     receiptInfo: [
       {
         key: "Assessment No.: ",
-        value: get(receiptDetails, "Bill[0].billDetails[0].consumerCode").split(":")[1],
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].consumerCode").split(":")[1],
       },
       {
         key: "Receipt No:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       },
       {
         key: "Payment Term:",
@@ -91,19 +95,21 @@ const createReceiptUIInfo = (property, receiptDetails) => {
       },
       {
         key: "Date:",
-        value: getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
+        value: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       },
       {
         key: "Payable Amount:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].totalAmount").toString(),
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount").toString(),
       },
       {
         key: "Amount Paid:",
-        value: get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       },
       {
         key: "Amount Due:",
-        value: (get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+        value:
+          receiptDetails &&
+          (get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
       },
     ],
   };
@@ -131,7 +137,7 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails) => {
       subheader: "Property Tax Payment Receipt (Citizen Copy)",
       logo: msevaLogo,
     },
-    taxNew: getTaxInfo(receiptDetails.Bill[0].billDetails[0].billAccountDetails, receiptDetails.Bill[0].billDetails[0].totalAmount),
+    taxNew: receiptDetails && getTaxInfo(receiptDetails.Bill[0].billDetails[0].billAccountDetails, receiptDetails.Bill[0].billDetails[0].totalAmount),
     tax: {
       AmountPaid: "100",
       fireCess: "10",
@@ -139,13 +145,14 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails) => {
       total: "100",
     },
     receipts: {
-      AmountPaid: get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
-      transactionId: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+      AmountPaid: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+      transactionId: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       bankName: "AXIS",
       payMode: "Net Banking",
-      pendingAmt: get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
-      paymentDate: getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
-      receiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+      pendingAmt:
+        receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+      paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
+      receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,
@@ -367,12 +374,12 @@ const ReceiptFromAPI = {
 
 const mapStateToProps = (state, ownProps) => {
   const { properties } = state || {};
-  const { propertiesById } = properties;
+  const { propertiesById, receipts } = properties;
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
 
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
-  const rawReceiptDetails = ReceiptFromAPI.Receipt[0];
-
+  const rawReceiptDetails = receipts && receipts[0];
+  console.log(rawReceiptDetails);
   const receiptUIDetails = selProperty && createReceiptUIInfo(selProperty, rawReceiptDetails);
   const receiptDetails = selProperty && createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails);
   console.log(receiptUIDetails);
@@ -382,6 +389,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
   };
 };
 export default connect(
