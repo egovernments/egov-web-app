@@ -21,7 +21,7 @@ const formConfig = {
     superArea: {
       id: "assessment-super-area",
       jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
-      type: "textfield",
+      type: "number",
       floatingLabelText: "Total Super area",
       hintText: "Enter total super area",
       ErrorText: "Enter a valid super area size",

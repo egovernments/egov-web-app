@@ -107,7 +107,7 @@ export const builtArea = {
   builtArea: {
     id: "assessment-built-area",
     jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
-    type: "textfield",
+    type: "number",
     floatingLabelText: "PT_FORM2_BUILT_AREA",
     hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
     errorMessage: "Enter a valid built area size",
