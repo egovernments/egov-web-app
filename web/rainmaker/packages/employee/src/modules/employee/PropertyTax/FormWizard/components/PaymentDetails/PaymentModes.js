@@ -7,7 +7,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import Field from "egov-ui-kit/utils/field";
 import get from "lodash/get";
 import { connect } from "react-redux";
-import { Card } from "components";
+import { Card, Icon } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 // import {
 //   UsageInformationHOC,
@@ -69,7 +69,10 @@ class PaymentModes extends Component {
       <Card
         textChildren={
           <div className="payment-modes">
-            <div className="payment-modes-header">Choose mode of Payment</div>
+            <div className="payment-mode-header-cont rainmaker-displayInline" style={{ padding: "0 0 0 16px" }}>
+              <Icon name="credit-card" action="action" />
+              <Label label="Choose mode of Payment" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 5 }} />
+            </div>
             <PaymentModeSelector />
             {/*<List
               items={getListItems(this.props.paymentModeDetails)}

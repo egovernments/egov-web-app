@@ -559,19 +559,53 @@ class FormWizard extends Component {
     }
   };
 
+  changeDateToFormat = (date) => {
+    console.log(date);
+    const dateObj = new Date(date);
+    let year = dateObj.getFullYear();
+    let month = dateObj.getMonth() + 1;
+    let dt = dateObj.getDate();
+    dt = dt < 10 ? "0" + dt : dt;
+    month = month < 10 ? "0" + month : month;
+    return dt + "-" + month + "-" + year;
+  };
+
   createReceipt = async () => {
     const { prepareFormData } = this.props;
     const { Bill } = this.state;
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", "100"); //hardcoded -- needs to change
-
+    set(
+      prepareFormData,
+      "Receipt[0].instrument.transactionDate",
+      this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDate"))
+    );
+    set(prepareFormData, "Receipt[0].instrument.amount", "100");
+    set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     const formData = {
       Receipt: prepareFormData["Receipt"],
     };
     console.log(formData);
     try {
-      const getBill = await httpRequest("collection-services/receipts/_create", "_create", [], formData);
-      console.log(getBill);
+      const userInfo = {
+        id: 23432,
+        userName: "8050579149",
+        name: "Gyan",
+        type: "CITIZEN",
+        mobileNumber: "8050579149",
+        emailId: null,
+        roles: [
+          {
+            id: 281,
+            name: "Citizen",
+            code: "CITIZEN",
+          },
+        ],
+        tenantId: "pb",
+        uuid: "7737b382-1bc5-4e84-a57b-b9a9a9ceef46",
+      };
+      const getReceipt = await httpRequest("collection-services/receipts/_create", "_create", [], formData, [], userInfo);
+      console.log(getReceipt);
     } catch (e) {
       console.log(e);
     }

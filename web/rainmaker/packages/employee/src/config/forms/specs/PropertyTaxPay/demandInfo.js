@@ -17,7 +17,7 @@ const formConfig = {
       required: true,
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "",
-      jsonPath: "Receipt[0].instrument.transactionDateInput",
+      jsonPath: "Receipt[0].instrument.transactionDate",
     },
     BankName: {
       id: "BankName",
@@ -27,7 +27,7 @@ const formConfig = {
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
-      jsonPath: "Receipt[0].bank.id",
+      jsonPath: "Receipt[0].instrument.bank.id",
     },
     BankBranch: {
       id: "BankBranch",
@@ -37,7 +37,7 @@ const formConfig = {
       floatingLabelText: "Bank Branch",
       dropDownData: [{ label: "RBIPunjab", value: "RBIPN" }],
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
-      jsonPath: "Receipt[0].branchName",
+      jsonPath: "Receipt[0].instrument.branchName",
     },
   },
   action: "",

@@ -1,6 +1,7 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
 import { DatePicker } from "components";
+import "./index.css";
 
 const changeDateToFormat = (date) => {
   console.log(date);
@@ -10,20 +11,26 @@ const changeDateToFormat = (date) => {
   let dt = dateObj.getDate();
   dt = dt < 10 ? "0" + dt : dt;
   month = month < 10 ? "0" + month : month;
-  return dt + "/" + month + "/" + year;
+  return dt + "-" + month + "-" + year;
 };
 
 const CashInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="cash-info">
-      <div className="name-paidby">
-        <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
-        <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
-      </div>
-      <div className="mobile-number">
-        <div className="empty" />
-        <Field fieldKey="payerMobile" field={fields.payerMobile} handleFieldChange={handleFieldChange} />
+    <div className="clearfix">
+      <div className="col-sm-12 general-form-cont-padding">
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <div style={{ height: 72, marginBottom: 14 }} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="payerMobile" field={fields.payerMobile} handleFieldChange={handleFieldChange} />
+        </div>
       </div>
     </div>
   );
@@ -32,21 +39,27 @@ const CashInformation = ({ form, formKey, handleFieldChange }) => {
 const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="cheque-info">
-      <div className="no-name">
-        <Field fieldKey="chequeNo" field={fields.chequeNo} handleFieldChange={handleFieldChange} />
-        <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
-      </div>
-      <div className="date-branchr">
-        <DatePicker
-          onChange={(first, object) => {
-            let e = { target: { value: object } };
-            handleFieldChange("chequeDate", changeDateToFormat(e.target.value));
-          }}
-          formatDate={(date) => changeDateToFormat(date)}
-          {...fields.chequeDate}
-        />
-        <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
+    <div className="clearfix">
+      <div className="col-sm-12 general-form-cont-padding">
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="chequeNo" field={fields.chequeNo} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <DatePicker
+            onChange={(first, object) => {
+              let e = { target: { value: object } };
+              handleFieldChange("chequeDate", e.target.value);
+            }}
+            formatDate={(date) => changeDateToFormat(date)}
+            {...fields.chequeDate}
+          />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
+        </div>
       </div>
     </div>
   );
@@ -55,9 +68,15 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
 const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="receipt-info">
-      <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
-      <Field fieldKey="receiptDate" field={fields.receiptDate} handleFieldChange={handleFieldChange} />
+    <div className="clearfix">
+      <div className="col-sm-12 general-form-cont-padding">
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="receiptDate" field={fields.receiptDate} handleFieldChange={handleFieldChange} />
+        </div>
+      </div>
     </div>
   );
 };
@@ -65,21 +84,27 @@ const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
 const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="demand-info">
-      <div className="no-name">
-        <Field fieldKey="demandNo" field={fields.demandNo} handleFieldChange={handleFieldChange} />
-        <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
-      </div>
-      <div className="date-branchr">
-        <DatePicker
-          onChange={(first, object) => {
-            let e = { target: { value: object } };
-            handleFieldChange("chequeDate", changeDateToFormat(e.target.value));
-          }}
-          formatDate={(date) => changeDateToFormat(date)}
-          {...fields.chequeDate}
-        />
-        <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
+    <div className="clearfix">
+      <div className="col-sm-12 general-form-cont-padding">
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="demandNo" field={fields.demandNo} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <DatePicker
+            onChange={(first, object) => {
+              let e = { target: { value: object } };
+              handleFieldChange("chequeDate", e.target.value);
+            }}
+            formatDate={(date) => changeDateToFormat(date)}
+            {...fields.chequeDate}
+          />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
+        </div>
       </div>
     </div>
   );
@@ -88,14 +113,20 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
 const CardInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="card-info">
-      <div className="card-no">
-        <Field fieldKey="cardDigits" field={fields.cardDigits} handleFieldChange={handleFieldChange} />
-        <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
-      </div>
-      <div className="receipt">
-        <div className="empty" />
-        <Field fieldKey="confirmReceiptNo" field={fields.confirmReceiptNo} handleFieldChange={handleFieldChange} />
+    <div className="clearfix">
+      <div className="col-sm-12 general-form-cont-padding">
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="cardDigits" field={fields.cardDigits} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <div style={{ height: 72, marginBottom: 14 }} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="confirmReceiptNo" field={fields.confirmReceiptNo} handleFieldChange={handleFieldChange} />
+        </div>
       </div>
     </div>
   );
