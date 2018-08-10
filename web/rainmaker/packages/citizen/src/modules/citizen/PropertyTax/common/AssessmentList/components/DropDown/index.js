@@ -14,17 +14,6 @@ const styles = {
   hintStyle: { color: "#484848", top: 0 },
 };
 
-const PAIDdropDownData = [
-  {
-    label: "Download Statement",
-    value: "Download Statement",
-  },
-  {
-    label: "Re-Assess",
-    value: "Re-Assess",
-  },
-];
-
 const PartiallyPaiddropDownData = [
   {
     label: "Download Statement",
@@ -40,9 +29,20 @@ const PartiallyPaiddropDownData = [
   },
 ];
 
-//value={this.state.value} onChange={this.handleChange}
+const onSelectFieldChange = (event, key, payload, history, item) => {
+  console.log(history, item);
+  switch (payload) {
+    case "Re-Assess":
+      history &&
+        history.push(
+          `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${item.propertyId}`
+        );
+    case "Download Statement":
+      console.log(item);
+  }
+};
 
-const DropDown = ({ value, handleChange }) => {
+const DropDown = ({ history, item }) => {
   return (
     <SelectField
       autoWidth={true}
@@ -52,6 +52,7 @@ const DropDown = ({ value, handleChange }) => {
       iconStyle={styles.iconStyle}
       style={styles.customWidth}
       hintStyle={styles.hintStyle}
+      onChange={(event, key, payload) => onSelectFieldChange(event, key, payload, history, item)}
     >
       <MenuItem value="Download Statement" primaryText="Download Statement" />
       <MenuItem value="Re-Assess" primaryText="Re-Assess" />

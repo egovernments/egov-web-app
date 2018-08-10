@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
-import Screen from "modules/common";
-import Button from "components";
-import BreadCrumbs from "components";
+import Screen from "egov-ui-kit/common/common/Screen";
+import { Button } from "egov-ui-kit/components";
+import { BreadCrumbs } from "egov-ui-kit/components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";

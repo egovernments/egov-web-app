@@ -53,6 +53,9 @@ export const getTransformedItems = (propertiesById, cities) => {
                 />
               </div>
             ),
+            financialYear: item.financialYear,
+            assessmentNo: item.assessmentNumber,
+            propertyId: curr.propertyId,
             date: getDateFromEpoch(item.assessmentDate),
             status: "Paid",
             consumerCode: `${curr.propertyId}:${item.assessmentNumber}`,
