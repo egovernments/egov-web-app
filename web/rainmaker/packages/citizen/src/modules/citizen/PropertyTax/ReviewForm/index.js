@@ -45,15 +45,9 @@ class ReviewForm extends Component {
   //   }
   // }
 
-  // componentDidMount() {
-  //   this.getImportantDates();
-  //   let { estimationDetails } = this.props;
-  //   let { totalAmount } = estimationDetails[0] || 0;
-  //   console.log(totalAmount);
-  //   this.setState({
-  //     totalAmountTobePaid: totalAmount,
-  //   });
-  // }
+  componentDidMount() {
+    this.getImportantDates();
+  }
 
   getImportantDates = async () => {
     try {
@@ -127,15 +121,15 @@ class ReviewForm extends Component {
 
   handleFieldChange = (event, value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    if ((!isNaN(parseFloat(value)) && isFinite(value) && value > totalAmount)) {
+    if (!isNaN(parseFloat(value)) && isFinite(value) && value > totalAmount) {
       this.setState({
         errorText: `amount should be numeric and can't be greater than ${totalAmount}`,
-      })
+      });
     } else {
       this.setState({
         errorText: "",
-      })
-      this.props.updateTotalAmount(value, this.props.valueSelected === "Full_Amount")
+      });
+      this.props.updateTotalAmount(value, this.props.valueSelected === "Full_Amount");
     }
   };
 
