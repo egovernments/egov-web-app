@@ -33,7 +33,7 @@ const formValidation = (store) => (next) => (action) => {
             if (fields[item.fieldKey].boundary) {
               fields[
                 item.fieldKey
-              ].dataFetchConfig.dataPath = `$.TenantBoundary.*.boundary[?(@.label=="City"&&@.code=="${value}")]..children[?(@.label=="Locality")]`;
+              ].dataFetchConfig.dataPath = `$.TenantBoundary.*.boundary[?(@.label=="City"&&@.code=="${value}")]..children[?(@.label=="Locality"&&@.area=="Area3")]`;
               fields[item.fieldKey].dataFetchConfig.queryParams = [{ key: "tenantId", value: value }];
               fetchDropdownData(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey, true);
             } else {
