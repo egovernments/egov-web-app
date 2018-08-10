@@ -245,7 +245,7 @@ var fetchReceipts = exports.fetchReceipts = function fetchReceipts(queryObj) {
               dispatch(ReceiptFetchPending());
               _context2.prev = 1;
               _context2.next = 4;
-              return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, queryObj, {}, [], { ts: "10-03-2017 00:00:00" });
+              return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, queryObj, {}, [], { ts: 0 });
 
             case 4:
               payloadReceipts = _context2.sent;

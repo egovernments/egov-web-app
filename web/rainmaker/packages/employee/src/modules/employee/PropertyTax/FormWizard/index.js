@@ -52,6 +52,7 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
+    propertyDetails: {},
     bill: [],
     totalAmountToBePaid: 0,
     isFullPayment: true,
@@ -551,13 +552,14 @@ class FormWizard extends Component {
     }
   };
 
-  callPGService = async (propertyId, assessmentNumber, assessmentYear) => {
+  callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     const { updateIndex } = this;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
     ];
+    this.setState({ propertyDetails: { propertyId, assessmentNumber, assessmentYear, tenantId } });
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
       const { Bill } = getBill;
@@ -601,7 +603,8 @@ class FormWizard extends Component {
 
   createReceipt = async () => {
     const { prepareFormData } = this.props;
-    const { Bill } = this.state;
+    const { Bill, propertyDetails } = this.state;
+    const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", "100"); //hardcoded -- needs to change
     set(
@@ -615,6 +618,7 @@ class FormWizard extends Component {
       Receipt: prepareFormData["Receipt"],
     };
     console.log(formData);
+    console.log(this.state.propertyDetails);
     try {
       const userInfo = {
         id: 23432,
@@ -633,8 +637,16 @@ class FormWizard extends Component {
         tenantId: "pb",
         uuid: "7737b382-1bc5-4e84-a57b-b9a9a9ceef46",
       };
-      const getReceipt = await httpRequest("collection-services/receipts/_create", "_create", [], formData, [], userInfo);
+      const getReceipt = await httpRequest("collection-services/receipts/_create", "_create", [], formData, [], {
+        userInfo,
+        ts: 0,
+      });
       console.log(getReceipt);
+      if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
+        this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}`);
+      } else {
+        this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -692,7 +704,8 @@ class FormWizard extends Component {
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
         get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"),
-        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear")
+        get(createPropertyResponse, "Properties[0].propertyDetails[0].financialYear"),
+        get(createPropertyResponse, "Properties[0].tenantId")
       );
     } catch (e) {
       alert(e);

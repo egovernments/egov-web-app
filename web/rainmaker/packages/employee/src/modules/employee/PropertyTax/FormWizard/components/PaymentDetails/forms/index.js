@@ -45,9 +45,6 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
           <Field fieldKey="chequeNo" field={fields.chequeNo} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
-        </div>
-        <div className="col-sm-6 general-field-padding">
           <DatePicker
             onChange={(first, object) => {
               let e = { target: { value: object } };
@@ -57,6 +54,10 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
             {...fields.chequeDate}
           />
         </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
+        </div>
+
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
         </div>
@@ -90,9 +91,6 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
           <Field fieldKey="demandNo" field={fields.demandNo} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
-        </div>
-        <div className="col-sm-6 general-field-padding">
           <DatePicker
             onChange={(first, object) => {
               let e = { target: { value: object } };
@@ -102,6 +100,10 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
             {...fields.chequeDate}
           />
         </div>
+        <div className="col-sm-6 general-field-padding">
+          <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
+        </div>
+
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
         </div>

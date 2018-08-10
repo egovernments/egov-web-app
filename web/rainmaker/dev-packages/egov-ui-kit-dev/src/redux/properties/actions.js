@@ -142,7 +142,7 @@ export const fetchReceipts = (queryObj) => {
   return async (dispatch) => {
     dispatch(ReceiptFetchPending());
     try {
-      const payloadReceipts = await httpRequest(RECEIPT.GET.URL, RECEIPT.GET.ACTION, queryObj, {}, [], { ts: "10-03-2017 00:00:00" });
+      const payloadReceipts = await httpRequest(RECEIPT.GET.URL, RECEIPT.GET.ACTION, queryObj, {}, [], { ts: 0 });
       dispatch(ReceiptFetchComplete(payloadReceipts));
     } catch (error) {
       dispatch(ReceiptFetchError(error.message));
