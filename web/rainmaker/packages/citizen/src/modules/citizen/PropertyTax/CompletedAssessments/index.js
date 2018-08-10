@@ -109,8 +109,8 @@ const mapStateToProps = (state) => {
 
   const successTransObj = getTransactionsforCompletedAssessments(successPayments);
   const successProperties = successTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, successTransObj);
-
   const mergedData = successProperties && mergeFinalData(successProperties, successTransObj);
+  console.log(mergedData);
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
 
   //const transformedProperties = getTransformedItems(propertiesById, cities);

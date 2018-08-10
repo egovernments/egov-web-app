@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Card, Dialog } from "components";
 import PropertyAddress from "./components/PropertyAddress";
-import AdditionalDetails from "./components/AdditionalDetails";
+//import AdditionalDetails from "./components/AdditionalDetails";
 import AssessmentInfo from "./components/AssessmentInfo";
 import OwnerInfo from "./components/OwnerInfo";
 import AddRebateExemption from "./components/addRebateBox";
@@ -184,12 +184,12 @@ class ReviewForm extends Component {
           component={stepTwo}
         />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} addRebateBox={addRebateBox} />
-        <AdditionalDetails
+        {/* <AdditionalDetails
           value={totalAmountTobePaid}
           onRadioButtonChange={onRadioButtonChange}
           handleOptionChange={handleOptionsChange}
           optionSelected={valueSelected}
-        />
+        /> */}
         <div className="pt-rebate-exemption-box">
           <Dialog
             open={showRebateBox}

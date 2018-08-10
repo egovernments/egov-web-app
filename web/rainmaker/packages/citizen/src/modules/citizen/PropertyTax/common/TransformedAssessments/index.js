@@ -27,7 +27,9 @@ export const getTransformedItems = (propertiesById, cities) => {
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
           return {
-            primaryText: <Label label="INR 1300.00" fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />,
+            primaryText: (
+              <Label label={`INR ${get(curr, "amountPaid")}`} fontSize="16px" color="#484848" bold={true} labelStyle={primaryTextLabelStyle} />
+            ),
 
             secondaryText: (
               <div style={{ height: "auto", marginTop: 0 }}>
@@ -119,16 +121,16 @@ const filterData = (propertiesById, propertyName, ids) => {
   return {
     [propertyName]: {
       ...propertiesById[propertyName],
+      amountPaid: ids[0].amountPaid && ids[0].amountPaid,
       propertyDetails:
         propertiesById &&
         propertiesById[propertyName]["propertyDetails"] &&
-        propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1),
+        propertiesById[propertyName]["propertyDetails"].filter((item) => ids.indexOf(item.assessmentNumber) !== -1 || ids[0].assessmentNo),
     },
   };
 };
 
 export const mergeFinalData = (propertiesById, failedTransObj) => {
-  console.log(failedTransObj);
   return (
     propertiesById &&
     Object.keys(propertiesById).reduce((result, current) => {
