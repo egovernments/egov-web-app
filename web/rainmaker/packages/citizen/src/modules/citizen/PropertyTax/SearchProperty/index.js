@@ -7,7 +7,7 @@ import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { Button } from "components";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
@@ -26,8 +26,9 @@ class SearchProperty extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, title } = this.props;
+    const { location, addBreadCrumbs, title, resetForm } = this.props;
     const { pathname } = location;
+    resetForm("searchProperty")
     if (!(localStorage.getItem("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
@@ -126,6 +127,7 @@ const mapDispatchToProps = (dispatch) => {
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    resetForm: (formKey) => dispatch(resetForm(formKey)),
   };
 };
 
