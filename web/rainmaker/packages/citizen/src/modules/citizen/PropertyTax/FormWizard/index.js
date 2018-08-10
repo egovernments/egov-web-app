@@ -183,7 +183,7 @@ class FormWizard extends Component {
             if (estimateResponse) {
               this.setState({
                 estimation: estimateResponse && estimateResponse.Calculation,
-                totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0)
+                totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
               });
             }
           });
@@ -356,8 +356,8 @@ class FormWizard extends Component {
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
-    })
-  }
+    });
+  };
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
@@ -542,14 +542,14 @@ class FormWizard extends Component {
   };
 
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
-    const { isFullPayment, totalAmountToBePaid, estimation } = this.state
+    const { isFullPayment, totalAmountToBePaid, estimation } = this.state;
     let { history, toggleSpinner } = this.props;
     const queryObj = [
       { key: "propertyId", value: propertyId },
       { key: "assessmentNumber", value: assessmentNumber },
       { key: "assessmentYear", value: assessmentYear },
       { key: "tenantId", value: tenantId },
-      { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid }
+      { key: "amountToBePaid", value: isFullPayment ? estimation[0].totalAmount : totalAmountToBePaid },
     ];
 
     let callbackUrl = `${window.origin}/property-tax/payment-redirect-page`;
@@ -582,8 +582,8 @@ class FormWizard extends Component {
           window.location = redirectionUrl;
         } else {
           let moduleId = get(goToPaymentGateway, "Transaction.moduleId");
-          let tenantId=get(goToPaymentGateway, "Transaction.tenantId");
-          history.push("/property-tax/payment-success/" + moduleId.split(":")[0]+"/"+tenantId+"/"+moduleId.split(":")[1]+"/"+"2018-19");
+          let tenantId = get(goToPaymentGateway, "Transaction.tenantId");
+          history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1] + "/" + "2018-19");
         }
       } catch (e) {
         console.log(e);
@@ -604,12 +604,13 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
             assessmentYear: financialYearFromQuery,
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
-            property: prepareFormData.Properties[0],
+            property: propertyDetails[0],
           },
         ],
       });
@@ -630,7 +631,8 @@ class FormWizard extends Component {
     }
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
+      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
@@ -708,6 +710,17 @@ class FormWizard extends Component {
         </div>
       );
     }
+  };
+
+  normalizePropertyDetails = (properties) => {
+    const propertyInfo = JSON.parse(JSON.stringify(properties));
+    const property = propertyInfo[0] || {};
+    const { propertyDetails } = property;
+    const units = propertyDetails[0].units.filter((item, ind) => {
+      return item !== null;
+    });
+    propertyDetails[0].units = units;
+    return propertyInfo;
   };
 
   closeDeclarationDialogue = () => {

@@ -580,15 +580,21 @@ class FormWizard extends Component {
   estimate = async () => {
     let { prepareFormData } = this.props;
     const { draft } = this.state.draftRequest;
+    const { financialYearFromQuery } = this.state;
     const { financialYear } = draft.draftRecord;
     try {
+      if (financialYearFromQuery) {
+        set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
+
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
-            assessmentYear: financialYear && financialYear.fields.button.value,
+            assessmentYear: financialYearFromQuery,
             tenantId: prepareFormData.Properties[0] && prepareFormData.Properties[0].tenantId,
-            property: prepareFormData.Properties[0],
+            property: propertyDetails[0],
           },
         ],
       });
@@ -617,7 +623,8 @@ class FormWizard extends Component {
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
       );
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: prepareFormData.Properties });
+      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
@@ -627,6 +634,17 @@ class FormWizard extends Component {
     } catch (e) {
       alert(e);
     }
+  };
+
+  normalizePropertyDetails = (properties) => {
+    const propertyInfo = JSON.parse(JSON.stringify(properties));
+    const property = propertyInfo[0] || {};
+    const { propertyDetails } = property;
+    const units = propertyDetails[0].units.filter((item, ind) => {
+      return item !== null;
+    });
+    propertyDetails[0].units = units;
+    return propertyInfo;
   };
 
   onTabClick = (index) => {
