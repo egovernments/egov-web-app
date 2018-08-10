@@ -12,9 +12,7 @@ var _field = require("egov-ui-kit/utils/field");
 
 var _field2 = _interopRequireDefault(_field);
 
-var _components = require("components");
-
-var _components2 = _interopRequireDefault(_components);
+var _components = require("egov-ui-kit/components");
 
 require("./index.css");
 
@@ -31,7 +29,7 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
   return _react2.default.createElement(
     "div",
     { className: "form-without-button-cont-generic" },
-    _react2.default.createElement(_components2.default, {
+    _react2.default.createElement(_components.Card, {
       textChildren: _react2.default.createElement(
         "div",
         { className: formKey + " col-xs-12" },
@@ -49,7 +47,7 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
         _react2.default.createElement(
           "div",
           { className: "text-center" },
-          _react2.default.createElement(_components2.default, {
+          _react2.default.createElement(_components.Button, {
             label: "PT_SEARCH_BUTTON",
             className: "search-property-btn",
             onClick: function onClick() {

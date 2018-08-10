@@ -1,7 +1,7 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
-import Button from "components";
-import Card from "components";
+import { Button } from "egov-ui-kit/components";
+import { Card } from "egov-ui-kit/components";
 import "./index.css";
 
 const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick }) => {

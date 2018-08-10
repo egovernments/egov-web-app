@@ -26,17 +26,7 @@ const getItemStatus = (item, history) => {
             <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
             <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
           </div> */}
-          <div style={{ height: "30px", marginTop: "8px" }}>
-            <DropDown
-            // autoWidth={true}
-            // menuInnerDivStyle={{ padding: "0px 6px" }}
-            // menuStyle={{ marginTop: 0 }}
-            // iconStyle={{ top: "-3px", fill: "#484848", width: "35px" }}
-            // style={{ backgroundColor: "transperent", height: "45px", width: "150px" }}
-            // dropDownData={PAIDdropDownData}
-            // hintText="Select action"
-            />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;

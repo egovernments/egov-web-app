@@ -90,6 +90,7 @@ class CompletedAssessments extends Component {
             items={completedAssessments}
             noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE1"
             button={true}
+            history={history}
             yearDialogue={this.state.dialogueOpen}
             closeDialogue={this.closeYearRangeDialogue}
             onNewPropertyButtonClick={this.onNewPropertyButtonClick}
@@ -110,7 +111,7 @@ const mapStateToProps = (state) => {
   const successTransObj = getTransactionsforCompletedAssessments(successPayments);
   const successProperties = successTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, successTransObj);
   const mergedData = successProperties && mergeFinalData(successProperties, successTransObj);
-  console.log(mergedData);
+
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
 
   //const transformedProperties = getTransformedItems(propertiesById, cities);
