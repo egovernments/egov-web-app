@@ -37,7 +37,7 @@ export const jobCreateRequest = (
       status: "new"
     }
   ];
-
+  
   return { UploadJobs, RequestInfo };
 };
 

@@ -65,6 +65,7 @@ export const Api = () => {
       startDate,
       endDate
     );
+    requestBody.RequestInfo.authToken = fetchFromLocalStorage("token");
 
     const endPoint = apiEndpoints.SEARCH_USER_JOBS_ENDPOINT;
     try {
@@ -81,13 +82,19 @@ export const Api = () => {
     requestFileName,
     moduleName,
     defName
-  ) => {
+  ) => {  
     const requestBody = prepareRequestBody.jobCreateRequest(
       requestFilePath,
       requestFileName,
       moduleName,
       defName
     );
+    requestBody.RequestInfo.authToken = fetchFromLocalStorage("token");
+    for (var i=0;i<requestBody.UploadJobs.length;i++){
+      requestBody.UploadJobs[i].tenantId = tenantId;
+    }
+    console.log(JSON.parse(fetchFromLocalStorage("userRequest")));
+    requestBody.RequestInfo.userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
     const endPoint = apiEndpoints.CREATE_JOB_ENDPOINT;
 
     try {

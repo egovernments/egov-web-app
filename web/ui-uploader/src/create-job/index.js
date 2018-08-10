@@ -54,10 +54,11 @@ class CreateJob extends Component {
   };
 
   showJobs = e => {
-    console.log("AAsssssssssA");
+    // console.log("AAsssssssssA");
     let { history } = this.props;
     // history.push("/view-jobs");
-    window.location.href = window.location.origin + "/view-jobs";
+    window.basename = process.env.NODE_ENV === "production" ? "/app/v2/uploader" : "";
+    window.location.href = window.location.origin +window.basename+ "/view-jobs";
   };
 
   render() {
