@@ -194,7 +194,7 @@ class FormWizard extends Component {
     }
   };
 
-  getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
+  getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
     let { history, fetchGeneralMDMSData, renderCustomTitleForPt } = this.props;
@@ -258,9 +258,9 @@ class FormWizard extends Component {
       "UsageCategoryMinor",
       "UsageCategorySubMinor",
     ]);
-    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
-    const isFreshAssesment = this.getAssessmentId(search, "type");
+    const assessmentId = this.getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isReassesment = !!this.getQueryValue(search, "isReassesment");
+    const isFreshAssesment = this.getQueryValue(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
     this.addOwner();
     let financialYearFromQuery = window.location.search.split("FY=")[1];
@@ -624,15 +624,24 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { prepareFormData, toggleSpinner } = this.props;
+    let { prepareFormData, toggleSpinner, location } = this.props;
+    let { search } = location;
+    const propertyId = this.getQueryValue(search, "propertyId");
+    const assessmentId = this.getQueryValue(search, "assessmentId");
+    const propertyMethodAction = !!propertyId ? "_update" : "_create"
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
+
+    if (!!propertyId) {
+     set(prepareFormData, "Properties[0].propertId", propertyId)
+     set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId)
+    }
+
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
-      let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
+      let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], { Properties: prepareFormData.Properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),

@@ -108,12 +108,13 @@ export const builtArea = {
     type: "textfield",
     floatingLabelText: "PT_FORM2_BUILT_AREA",
     hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
-    ErrorText: "Enter a valid built area size",
+    errorMessage: "Enter a valid built area size",
     toolTip: true,
     toolTipMessage: "PT_BUILT_UP_AREA_TOOLTIP_MESSAGE",
     required: true,
     hideField: false,
     numcols: 4,
+    pattern: /^(\d+\.?\d*|\.\d+)$/,
   },
 };
 
