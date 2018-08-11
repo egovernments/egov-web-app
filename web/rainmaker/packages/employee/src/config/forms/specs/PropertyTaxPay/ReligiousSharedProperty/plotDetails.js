@@ -18,22 +18,7 @@ const formConfig = {
     },
     ...subUsageType,
     ...occupancy,
-    superArea: {
-      id: "assessment-super-area",
-      jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
-      type: "textfield",
-      floatingLabelText: "Total Super area",
-      hintText: "Enter total super area",
-      ErrorText: "Enter a valid super area size",
-      toolTip: true,
-      toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
-      required: true,
-      hideField: false,
-      numcols: 4,
-      updateDependentFields: ({ formKey, field, dispatch, state }) => {
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
-      },
-    },
+    ...superArea,
     ...measuringUnit,
     ...annualRent,
   },
