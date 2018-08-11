@@ -1,5 +1,5 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import { subUsageType, occupancy, measuringUnit, annualRent, beforeInitFormForPlot } from "../utils/reusableFields";
+import { subUsageType, occupancy, measuringUnit, annualRent, beforeInitFormForPlot, superArea } from "../utils/reusableFields";
 import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
