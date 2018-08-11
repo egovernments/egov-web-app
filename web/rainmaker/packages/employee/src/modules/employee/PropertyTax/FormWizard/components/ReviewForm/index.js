@@ -7,9 +7,7 @@ import OwnerInfo from "./components/OwnerInfo";
 import AddRebateExemption from "./components/addRebateBox";
 import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
 import propertyAddressConfig from "./formConfigs/propertyAddress";
-import { httpRequest } from "egov-ui-kit/utils/api";
 import { connect } from "react-redux";
-import { MDMS } from "egov-ui-kit/utils/endPoints";
 import formHoc from "egov-ui-kit/hocs/form";
 
 import "./index.css";
@@ -31,81 +29,7 @@ const AddRebatePopUp = formHoc({ formKey: "additionalRebate", path: "PropertyTax
 class ReviewForm extends Component {
   state = {
     valueSelected: "",
-    importantDates: {},
     showRebateBox: false,
-  };
-  componentDidMount() {
-    this.getImportantDates();
-  }
-
-  getImportantDates = async () => {
-    try {
-      let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [
-            {
-              moduleName: "PropertyTax",
-              masterDetails: [
-                {
-                  name: "Rebate",
-                },
-                {
-                  name: "Penalty",
-                },
-                {
-                  name: "Interest",
-                },
-                {
-                  name: "FireCess",
-                },
-              ],
-            },
-          ],
-        },
-      });
-      if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
-        const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
-        const { value } = this.props.financialYr;
-        const intrest = this.findCorrectDateObj(value, Interest);
-        const fireCess = this.findCorrectDateObj(value, FireCess);
-        const rebate = this.findCorrectDateObj(value, Rebate);
-        const penalty = this.findCorrectDateObj(value, Penalty);
-        this.setState({
-          importantDates: {
-            intrest,
-            fireCess,
-            rebate,
-            penalty,
-          },
-        });
-      }
-    } catch (e) {
-      alert(e);
-    }
-  };
-
-  findCorrectDateObj = (financialYear, category) => {
-    const categoryYear = category.reduce((categoryYear, item) => {
-      const year = item.fromFY && item.fromFY.slice(0, 4);
-      categoryYear.push(year);
-      return categoryYear;
-    }, []);
-    const assessYear = financialYear && financialYear.slice(0, 4);
-    let chosenDateObj = {};
-    const index = categoryYear.indexOf(assessYear);
-    if (index > -1) {
-      chosenDateObj = category[index];
-    } else {
-      categoryYear.sort((a, b) => a > b);
-      for (let i = 0; i < categoryYear.length; i++) {
-        if (assessYear > categoryYear[i]) {
-          chosenDateObj = category[i - 1];
-          break;
-        }
-      }
-    }
-    return chosenDateObj;
   };
 
   handleOptionsChange = (event, value) => {
@@ -132,8 +56,8 @@ class ReviewForm extends Component {
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
   render() {
     let { handleOptionsChange, onRadioButtonChange, addRebateBox, updateCalculation } = this;
-    let { valueSelected, totalAmountTobePaid, importantDates, showRebateBox } = this.state;
-    let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails } = this.props;
+    let { valueSelected, totalAmountTobePaid, showRebateBox } = this.state;
+    let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails, importantDates } = this.props;
     return (
       <div>
         <PropertyAddress

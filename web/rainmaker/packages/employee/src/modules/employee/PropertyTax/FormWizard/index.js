@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
+import { MDMS } from "egov-ui-kit/utils/endPoints";
+
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
@@ -39,12 +41,14 @@ import "./index.css";
 class FormWizard extends Component {
   state = {
     dialogueOpen: false,
+    financialYearFromQuery: "",
     selected: 0,
     ownerInfoArr: [],
     showOwners: false,
     formValidIndexArray: [],
     ownersCount: 0,
     estimation: [],
+    importantDates: {},
     draftRequest: {
       draft: {
         tenantId: localStorage.getItem("tenant-id"),
@@ -187,9 +191,18 @@ class FormWizard extends Component {
 
   getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
+  componentWillMount = () => {};
+
   componentDidMount = async () => {
     let { history } = this.props;
     let { search } = this.props.location;
+    let financialYearFromQuery = window.location.search.split("FY=")[1];
+    if (financialYearFromQuery) {
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      this.setState({
+        financialYearFromQuery,
+      });
+    }
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
@@ -254,6 +267,7 @@ class FormWizard extends Component {
       "UsageCategorySubMinor",
     ]);
     this.addOwner();
+    this.getImportantDates(financialYearFromQuery);
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
@@ -269,6 +283,76 @@ class FormWizard extends Component {
         // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
       }
     }
+  };
+
+  getImportantDates = async (financialYearFromQuery) => {
+    console.log("hit", financialYearFromQuery);
+    try {
+      let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
+        MdmsCriteria: {
+          tenantId: "pb",
+          moduleDetails: [
+            {
+              moduleName: "PropertyTax",
+              masterDetails: [
+                {
+                  name: "Rebate",
+                },
+                {
+                  name: "Penalty",
+                },
+                {
+                  name: "Interest",
+                },
+                {
+                  name: "FireCess",
+                },
+              ],
+            },
+          ],
+        },
+      });
+      if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
+        const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
+        const intrest = this.findCorrectDateObj(financialYearFromQuery, Interest);
+        const fireCess = this.findCorrectDateObj(financialYearFromQuery, FireCess);
+        const rebate = this.findCorrectDateObj(financialYearFromQuery, Rebate);
+        const penalty = this.findCorrectDateObj(financialYearFromQuery, Penalty);
+        this.setState({
+          importantDates: {
+            intrest,
+            fireCess,
+            rebate,
+            penalty,
+          },
+        });
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  findCorrectDateObj = (financialYear, category) => {
+    const categoryYear = category.reduce((categoryYear, item) => {
+      const year = item.fromFY && item.fromFY.slice(0, 4);
+      categoryYear.push(year);
+      return categoryYear;
+    }, []);
+    const assessYear = financialYear && financialYear.slice(0, 4);
+    let chosenDateObj = {};
+    const index = categoryYear.indexOf(assessYear);
+    if (index > -1) {
+      chosenDateObj = category[index];
+    } else {
+      categoryYear.sort((a, b) => a > b);
+      for (let i = 0; i < categoryYear.length; i++) {
+        if (assessYear > categoryYear[i]) {
+          chosenDateObj = category[i - 1];
+          break;
+        }
+      }
+    }
+    return chosenDateObj;
   };
 
   handleRemoveOwner = (index, formKey) => {
@@ -371,6 +455,8 @@ class FormWizard extends Component {
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
+    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates } = this.state;
+    const { onRadioButtonChange, updateTotalAmount } = this;
     switch (selected) {
       case 0:
         return (
@@ -396,10 +482,6 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
-        const { draftRequest, estimation, totalAmountToBePaid } = this.state;
-        const { onRadioButtonChange, updateTotalAmount } = this;
-        const { draft } = draftRequest;
-        const { financialYear } = draft.draftRecord;
         return (
           <div>
             <ReviewForm
@@ -409,7 +491,8 @@ class FormWizard extends Component {
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
               estimationDetails={estimation}
               updateEstimate={updateEstimate}
-              financialYr={financialYear ? financialYear.fields.button : {}}
+              importantDates={importantDates}
+              // financialYr={financialYear ? financialYear.fields.button : {}}
             />
           </div>
         );
@@ -419,8 +502,9 @@ class FormWizard extends Component {
             onRadioButtonChange={onRadioButtonChange}
             updateTotalAmount={updateTotalAmount}
             estimationDetails={estimation}
-            financialYr={financialYear ? financialYear.fields.button : {}}
+            financialYr={financialYearFromQuery}
             totalAmountToBePaid={totalAmountToBePaid}
+            importantDates={importantDates}
           />
         );
       default:

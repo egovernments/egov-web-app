@@ -4,14 +4,9 @@ import { Card, CardHeader, CardText } from "material-ui/Card";
 import Label from "egov-ui-kit/utils/translationNode";
 
 const AdditionalDetails = ({ estimationDetails, importantDates }) => {
-  // const taxHeadEstimates = JSON.parse(
-  //   '[{"taxHeadCode":"PT_TAX","estimateAmount":2222,"category":"TAX"},{"taxHeadCode":"PT_UNIT_USAGE_EXEMPTION","estimateAmount":0,"category":"EXEMPTION"},{"taxHeadCode":"PT_FIRE_CESS","estimateAmount":600,"category":"TAX"},{"taxHeadCode":"PT_OWNER_EXEMPTION","estimateAmount":0,"category":"EXEMPTION"},{"taxHeadCode":"PT_TIME_REBATE","estimateAmount":366.86,"category":"EXEMPTION"},{"taxHeadCode":"PT_TIME_PENALTY","estimateAmount":0,"category":"EXEMPTION"},{"taxHeadCode":"PT_TIME_INTEREST","estimateAmount":0,"category":"PENALTY"}]'
-  // );
-
-  console.log(estimationDetails);
   const { taxHeadEstimates, totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-  // const totalAmount = 1000;
   const { fireCess, intrest, penalty, rebate } = importantDates;
+
   return (
     <Card style={{ marginBottom: 20, "background-color": "white" }}>
       <CardHeader

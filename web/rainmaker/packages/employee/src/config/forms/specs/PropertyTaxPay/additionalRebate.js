@@ -1,6 +1,5 @@
 const formConfig = {
   name: "additionalRebate",
-  idJsonPath: "services[0].serviceRequestId",
   fields: {
     adhocPenalty: {
       id: "adhocPenalty",
@@ -18,7 +17,7 @@ const formConfig = {
         { label: "Pending dues from earlier", value: "Pending dues from earlier" },
         { label: "Miscalculation of earlier assessment", value: "Miscalculation of earlier assessment" },
         { label: "One time Penalty", value: "One time Penalty" },
-        { label: "Other", value: "Other" },
+        { label: "Others", value: "Others" },
       ],
       floatingLabelText: "Reason for Charges",
       hintText: "Select",
@@ -42,17 +41,36 @@ const formConfig = {
       hintText: "Select",
       dropDownData: [
         { label: "Advanced paid by citizen earlier", value: "Advanced paid by citizen earlier" },
-        { label: "Rebate provided by commisioner", value: "Rebate provided by commisioner" },
-        { label: "Other", value: "Other" },
+        { label: "Rebate provided by commissioner/EO", value: "Rebate provided by commissioner/EO" },
+        { label: "Additional amount charged from the citizen", value: "Additional amount charged from the citizen" },
+        { label: "Others", value: "Others" },
       ],
       required: false,
       fullWidth: true,
       jsonPath: "Properties[0].propertyDetails[0].adhocExemptionReason",
     },
+    otherExemptionReason: {
+      id: "adhocExemption",
+      type: "textField",
+      floatingLabelText: "Description",
+      hintText: "Enter a description of the reason",
+      required: false,
+      fullWidth: true,
+      jsonPath: "Properties[0].propertyDetails[0].adhocExemptionReason",
+    },
+    otherPenaltyReason: {
+      id: "adhocExemption",
+      type: "textField",
+      floatingLabelText: "Description",
+      hintText: "Enter a description of the reason",
+      required: false,
+      fullWidth: true,
+      jsonPath: "Properties[0].propertyDetails[0].adhocPenaltyReason",
+    },
   },
-  action: "_create",
-  saveUrl: "/rainmaker-pgr/v1/requests/_create",
-  redirectionRoute: "/complaint-submitted",
+  action: "",
+  saveUrl: "",
+  redirectionRoute: "",
 };
 
 export default formConfig;
