@@ -810,7 +810,7 @@ class FormWizard extends Component {
   onTabClick = (index) => {
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    if (/*formValidIndexArray.indexOf(index) !== -1 && selected >= index*/ true) {
+    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       this.setState({
         selected: index,
         formValidIndexArray: range(0, index),

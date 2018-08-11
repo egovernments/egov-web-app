@@ -1,5 +1,5 @@
-import { annualRent, subUsageType, measuringUnit, occupancy, beforeInitFormForPlot } from "../utils/reusableFields";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { subUsageType, occupancy, measuringUnit, annualRent, beforeInitFormForPlot } from "../utils/reusableFields";
 import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
@@ -11,7 +11,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
-      value: "COMMERCIAL",
+      value: "Religious",
       required: true,
       disabled: true,
       numcols: 4,
@@ -28,13 +28,11 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
       required: true,
-      numcols: 4,
       hideField: false,
+      numcols: 4,
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
       },
-      pattern: /^(\d+\.?\d*|\.\d+)$/,
-      errorMessage: "Enter a valid super area size",
     },
     ...measuringUnit,
     ...annualRent,

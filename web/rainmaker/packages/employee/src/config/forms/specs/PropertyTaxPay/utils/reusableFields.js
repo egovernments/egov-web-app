@@ -13,6 +13,28 @@ for (var i = 1; i <= 25; i++) {
   floorDropDownData.push({ label: i, value: i });
 }
 
+export const plotSize = {
+  plotSize: {
+    id: "assessment-plot-size",
+    jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
+    type: "number",
+    floatingLabelText: "PT_FORM2_PLOT_SIZE",
+    hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
+    errorMessage: "Plot Size can be maximum 8 digits",
+    required: true,
+    pattern: "^([0-9]){0,8}$",
+    numcols: 4,
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
+      let propertySubType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType");
+      if (propertyType === "VACANT" || propertySubType === "INDEPENDENTPROPERTY") {
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].landArea", field.value));
+        dispatch(prepareFormData("Properties[0].propertyDetails[0].buildUpArea", null));
+      }
+    },
+  },
+};
+
 export const floorCount = {
   floorCount: {
     id: "assessment-number-of-floors",
@@ -26,8 +48,8 @@ export const floorCount = {
     numcols: 4,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      removeFormKey(formKey, field, dispatch, state);
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+      // removeFormKey(formKey, field, dispatch, state);
+      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
     },
   },
 };
@@ -86,12 +108,13 @@ export const builtArea = {
     type: "textfield",
     floatingLabelText: "PT_FORM2_BUILT_AREA",
     hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
-    ErrorText: "Enter a valid built area size",
+    errorMessage: "Enter a valid built area size",
     toolTip: true,
     toolTipMessage: "PT_BUILT_UP_AREA_TOOLTIP_MESSAGE",
     required: true,
     hideField: false,
     numcols: 4,
+    pattern: /^(\d+\.?\d*|\.\d+)$/,
   },
 };
 
@@ -109,26 +132,6 @@ export const annualRent = {
     pattern: "^([0-9]){0,8}$",
     hideField: true,
     numcols: 4,
-  },
-};
-
-export const plotSize = {
-  plotSize: {
-    id: "assessment-plot-size",
-    jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
-    type: "number",
-    floatingLabelText: "PT_FORM2_PLOT_SIZE",
-    hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
-    errorMessage: "Plot Size can be maximum 8 digits",
-    required: true,
-    pattern: "^([0-9]){0,8}$",
-    numcols: 4,
-    updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
-      if (propertyType == "VACANT") {
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].landArea", field.value));
-      }
-    },
   },
 };
 
@@ -187,38 +190,60 @@ export const beforeInitForm = {
 
     var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-
+    var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
+    set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    if (usageCategoryMinor) {
+    if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
           return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
         }
       );
-      var filteredUsageCategoryDetails = getPresentMasterObj(
-        filteredSubUsageMinor,
-        prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
-        "usageCategorySubMinor"
-      );
-      set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
-      dispatch(
-        prepareFormData(
-          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
-          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
-        )
-      );
+      if (filteredSubUsageMinor.length > 0) {
+        var filteredUsageCategoryDetails = getPresentMasterObj(
+          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+          filteredSubUsageMinor,
+          "usageCategorySubMinor"
+        );
+        set(
+          action,
+          "form.fields.subUsageType.dropDownData",
+          mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
+        );
+        if (get(action, "form.fields.subUsageType.jsonPath")) {
+          dispatch(
+            prepareFormData(
+              `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+              get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+            )
+          );
+        }
+      } else {
+        set(action, "form.fields.subUsageType.hideField", true);
+      }
     } else {
+      if (usageCategoryMajor==="MIXED") {
+          var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+          var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+          var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+          var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+          set(action, "form.fields.usageType.disabled",false);
+          set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+      }
       set(action, "form.fields.subUsageType.hideField", true);
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-    dispatch(
-      prepareFormData(
-        `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
-        get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
-      )
-    );
+    if (get(action, "form.fields.subUsageType.jsonPath")) {
+      dispatch(
+        prepareFormData(
+          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
+          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
+        )
+      );
+    }
+
     return action;
   },
 };
@@ -231,35 +256,59 @@ export const beforeInitFormForPlot = {
     if (propertyType != "VACANT") {
       var occupancy = get(state, "common.generalMDMSDataById.OccupancyType");
       var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
-      if (usageCategoryMinor) {
+      var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
+      set(action, "form.fields.subUsageType.hideField", false);
+
+
+      if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
         var filteredSubUsageMinor = filter(
           prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
           (subUsageMinor) => {
             return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
           }
         );
-        var filteredUsageCategoryDetails = getPresentMasterObj(
-          filteredSubUsageMinor,
-          prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
-          "usageCategorySubMinor"
-        );
-        set(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategoryDetail"));
-        dispatch(
-          prepareFormData(
-            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
-            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
-          )
-        );
+        if (filteredSubUsageMinor.length > 0) {
+          var filteredUsageCategoryDetails = getPresentMasterObj(
+            prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+            filteredSubUsageMinor,
+            "usageCategorySubMinor"
+          );
+          set(
+            action,
+            "form.fields.subUsageType.dropDownData",
+            mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
+          );
+          if (get(action, "form.fields.subUsageType.jsonPath")) {
+            dispatch(
+              prepareFormData(
+                `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
+                get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor`)
+              )
+            );
+          }
+        } else {
+          set(action, "form.fields.subUsageType.hideField", true);
+        }
       } else {
+        if (usageCategoryMajor==="MIXED") {
+            var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+            var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+            var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+            var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
+            set(action, "form.fields.usageType.disabled",false);
+            set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+        }
         set(action, "form.fields.subUsageType.hideField", true);
       }
       set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
-      dispatch(
-        prepareFormData(
-          `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
-          get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
-        )
-      );
+      if (get(action, "form.fields.subUsageType.jsonPath")) {
+        dispatch(
+          prepareFormData(
+            `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMajor`,
+            get(state, `common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor`)
+          )
+        );
+      }
     }
     if (propertyType == "VACANT") {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 1));
@@ -286,17 +335,17 @@ export const prepareDropDownData = (master, withOriginal = false) => {
   return dropDownData;
 };
 
-const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+export const getPresentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   const propArray = master2Arr.reduce((result, item) => {
-    if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
-      result.push(item[propToCompare]);
+    if (item["code"] && result.indexOf(item["code"]) === -1) {
+      result.push(item["code"]);
     }
     return result;
   }, []);
-  return master1Arr.filter((item) => propArray.indexOf(item.code) !== -1);
+  return master1Arr.filter((item) => propArray.indexOf(item[propToCompare]) !== -1);
 };
 
-const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
+export const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   const propArray = master2Arr.reduce((result, item) => {
     if (item[propToCompare] && result.indexOf(item[propToCompare]) === -1) {
       result.push(item[propToCompare]);
@@ -306,7 +355,7 @@ const getAbsentMasterObj = (master1Arr, master2Arr, propToCompare) => {
   return master1Arr.filter((item) => propArray.indexOf(item.code) === -1);
 };
 
-const mergeMaster = (masterOne, masterTwo, parentName = "") => {
+export const mergeMaster = (masterOne, masterTwo, parentName = "") => {
   let dropDownData = [];
   let parentList = [];
   for (var variable in masterTwo) {
