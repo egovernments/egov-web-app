@@ -342,3 +342,18 @@
     }
   }
 }
+.review-pay-tab {
+  .dropdown > div > div {
+    div:nth-of-type(2) {
+      color: rgb(72, 72, 72) !important;
+    }
+  }
+}
+
+.propertyAddress {
+  .textfield-text div {
+    width: 55px;
+    color: #fe7a51 !important;
+    margin-right: 12px !important;
+  }
+}

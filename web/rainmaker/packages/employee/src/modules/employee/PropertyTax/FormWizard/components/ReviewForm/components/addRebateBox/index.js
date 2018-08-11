@@ -75,6 +75,7 @@ class AddRebateExemption extends React.Component {
             style={{ boxShadow: "0 2px 5px 0 rgba(100, 100, 100, 0.5), 0 2px 10px 0 rgba(167, 167, 167, 0.5)" }}
             className="add-rebate-action-button"
             onClick={updateEstimate}
+            label={"SUBMIT"}
           />
         </div>
       </div>
