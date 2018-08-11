@@ -142,6 +142,16 @@ const formConfig = {
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       dropDownData: [{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+        const { value } = sourceField;
+        if (value === "Aadhar") {
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", /^[0-9]{12}$/i));
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", "Enter valid 12 digits aadhar no"))
+        } else {
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", ""))
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", ""))
+        }
+      }
     },
     ownerGender: {
       id: "ownerGender",
