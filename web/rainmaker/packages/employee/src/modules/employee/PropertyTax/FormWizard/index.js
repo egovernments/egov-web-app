@@ -862,6 +862,7 @@ class FormWizard extends Component {
     const { renderStepperContent, getHeaderLabel, getFooterLabel, onPayButtonClick, closeDeclarationDialogue } = this;
     const { selected, ownerInfoArr, formValidIndexArray, dialogueOpen } = this.state;
     const fromReviewPage = selected === 3;
+    const { history } = this.props;
     return (
       <div className="wizard-form-main-cont">
         <WizardComponent
@@ -877,6 +878,7 @@ class FormWizard extends Component {
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
+          history={history}
           onPayButtonClick={onPayButtonClick}
         />
       </div>
