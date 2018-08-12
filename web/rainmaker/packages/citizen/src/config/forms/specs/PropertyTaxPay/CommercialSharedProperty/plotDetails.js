@@ -1,4 +1,4 @@
-import { annualRent, subUsageType, measuringUnit, occupancy, beforeInitFormForPlot } from "../utils/reusableFields";
+import { annualRent, subUsageType, measuringUnit, occupancy, beforeInitFormForPlot,superArea } from "../utils/reusableFields";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
