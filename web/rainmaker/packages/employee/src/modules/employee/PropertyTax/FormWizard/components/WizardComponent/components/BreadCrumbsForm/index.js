@@ -67,7 +67,6 @@ const BreadCrumbsForm = ({ onTabClick, selected, formValidIndexArray }) => {
             onClick={() => onTabClick(index)}
             key={index}
             style={formValidIndexArray.indexOf(index) > -1 ? formValidStyle : selected === index ? selectedTabStyle : defaultTabStyle}
-            href={`#${index}`}
           >
             <div className="breadcrumb-tab">
               <div className="breadcrumb-content breadcrumb-tab">

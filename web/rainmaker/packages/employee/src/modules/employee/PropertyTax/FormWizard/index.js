@@ -60,6 +60,7 @@ class FormWizard extends Component {
     bill: [],
     totalAmountToBePaid: 0,
     isFullPayment: true,
+    valueSelected: "Full_Amount",
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -104,6 +105,7 @@ class FormWizard extends Component {
   };
 
   updateTotalAmount = (value, isFullPayment) => {
+    console.log(value);
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
@@ -438,24 +440,27 @@ class FormWizard extends Component {
       if (estimateResponse) {
         this.setState({
           estimation: estimateResponse ? estimateResponse.Calculation : [],
+          totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
+          valueSelected: "Full_Amount",
         });
       }
     });
   };
 
   onRadioButtonChange = (e) => {
-    let { estimationDetails } = this.props;
-    let { totalAmount } = estimationDetails[0] || {};
+    let { estimation } = this.state;
+    console.log(estimation);
+    let { totalAmount } = estimation[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+      this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount" });
     } else {
-      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
+      this.setState({ totalAmountToBePaid: 0, valueSelected: "Partial_Amount" });
     }
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
-    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates } = this.state;
+    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected } = this.state;
     const { onRadioButtonChange, updateTotalAmount } = this;
     switch (selected) {
       case 0:
@@ -504,6 +509,7 @@ class FormWizard extends Component {
             estimationDetails={estimation}
             financialYr={financialYearFromQuery}
             totalAmountToBePaid={totalAmountToBePaid}
+            optionSelected={valueSelected}
             importantDates={importantDates}
           />
         );
@@ -621,6 +627,8 @@ class FormWizard extends Component {
           if (estimateResponse) {
             this.setState({
               estimation: estimateResponse && estimateResponse.Calculation,
+              totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
+              valueSelected: "Full_Amount",
             });
           }
         });
@@ -690,19 +698,22 @@ class FormWizard extends Component {
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
-    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", "100"); //hardcoded -- needs to change
-    set(
-      prepareFormData,
-      "Receipt[0].instrument.transactionDate",
-      this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDate"))
-    );
-    set(prepareFormData, "Receipt[0].instrument.amount", "100");
+    if (!get(prepareFormData, "Receipt[0].instrument.instrumentType.name")) {
+      set(prepareFormData, "Receipt[0].instrument.instrumentType.name", "Cash");
+    }
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid); //hardcoded -- needs to change
+    get(prepareFormData, "Receipt[0].instrument.transactionDate") &&
+      set(
+        prepareFormData,
+        "Receipt[0].instrument.transactionDate",
+        this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDate"))
+      );
+    set(prepareFormData, "Receipt[0].instrument.amount", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     const formData = {
       Receipt: prepareFormData["Receipt"],
     };
-    console.log(formData);
-    console.log(this.state.propertyDetails);
+
     try {
       const userInfo = {
         id: 23432,
@@ -725,14 +736,14 @@ class FormWizard extends Component {
         userInfo,
         ts: 0,
       });
-      console.log(getReceipt);
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
         this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}`);
       } else {
-        this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
+        console.log(getReceipt);
       }
     } catch (e) {
       console.log(e);
+      this.props.history.push(`payment-failure/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
     }
   };
 
@@ -855,7 +866,33 @@ class FormWizard extends Component {
 
   onPayButtonClick = () => {
     this.setState({ dialogueOpen: true });
-    this.createReceipt();
+    const { form } = this.props;
+    const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
+    const validateArray = Object.keys(form).reduce((result, item) => {
+      if (formKeysToValidate.indexOf(item) > -1) {
+        result.push({ formKey: item, formValid: validateForm(form[item]) });
+      }
+      return result;
+    }, []);
+
+    const areFormsValid = validateArray.reduce((result, current) => {
+      if (!current.formValid) {
+        result = false;
+      } else {
+        result = true;
+      }
+      return result;
+    }, false);
+
+    if (areFormsValid) {
+      this.createReceipt();
+    } else {
+      validateArray.forEach((item) => {
+        if (!item.formValid) {
+          this.props.displayFormErrorsAction(item.formKey);
+        }
+      });
+    }
   };
 
   render() {

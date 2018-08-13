@@ -90,27 +90,29 @@ class PaymentDetails extends Component {
     }
   };
 
-  onRadioButtonChange = (e) => {
-    const inputValue = e.target.value;
-    this.setState({ totalAmountTobePaid: inputValue });
-  };
-
   // onRadioButtonChange = (e) => {
-  //   let { estimationDetails } = this.props;
-  //   let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-  //   if (e.target.value === "Full_Amount") {
-  //     this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
-  //   } else {
-  //     this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
-  //   }
+  //   const inputValue = e.target.value;
+  //   this.setState({ totalAmountTobePaid: inputValue });
   // };
 
-  updateTotalAmount = (value, isFullPayment) => {
-    this.setState({
-      totalAmountToBePaid: value,
-      isFullPayment,
-    });
+  onRadioButtonChange = (e) => {
+    let { estimationDetails, updateTotalAmount } = this.props;
+    let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
+    if (e.target.value === "Full_Amount") {
+      updateTotalAmount && updateTotalAmount(totalAmount, this.state.valueSelected === "Full_Amount");
+      // this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+    } else {
+      updateTotalAmount && updateTotalAmount(0, this.state.valueSelected === "Partial_Amount");
+      // this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
+    }
   };
+
+  // updateTotalAmount = (value, isFullPayment) => {
+  //   this.setState({
+  //     totalAmountToBePaid: value,
+  //     isFullPayment,
+  //   });
+  // };
 
   render() {
     const { paymentModeDetails, valueSelected, totalAmountTobePaid, errorText } = this.state;
@@ -121,10 +123,10 @@ class PaymentDetails extends Component {
       <div className="payment-details">
         <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
         <AdditionalDetails
-          value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
-          onRadioButtonChange={this.onRadioButtonChange}
-          handleFieldChange={this.handleOptionsChange}
-          optionSelected={valueSelected}
+          value={this.props.totalAmountToBePaid}
+          onRadioButtonChange={this.props.onRadioButtonChange}
+          handleFieldChange={this.handleFieldChange}
+          optionSelected={this.props.optionSelected}
           errorText={errorText}
           totalAmount={totalAmount && totalAmount}
           estimationDetails={estimationDetails}

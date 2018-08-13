@@ -22,7 +22,6 @@ const formConfig = {
     BankName: {
       id: "BankName",
       required: true,
-      value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
@@ -32,7 +31,6 @@ const formConfig = {
     BankBranch: {
       id: "BankBranch",
       required: true,
-      value: "Select",
       type: "singleValueList",
       floatingLabelText: "Bank Branch",
       dropDownData: [{ label: "RBIPunjab", value: "RBIPN" }],
