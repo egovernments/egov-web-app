@@ -5,6 +5,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import CustomSelectForm from "../CustomSelectForm";
 import GenericForm from "../../GenericForm";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 // import DynamicForm from "../../DynamicForm";
 import get from "lodash/get";
 
@@ -29,7 +30,7 @@ class FloorDetails extends React.Component {
   }
 
   configureFloors = (props) => {
-    const { noFloors, componentDetails, disabled, form } = props;
+    const { noFloors, componentDetails, disabled, form,toggleSpinner } = props;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
 
@@ -62,6 +63,8 @@ class FloorDetails extends React.Component {
     this.setState({
       floors: noFloors > 0 ? [...updatedFloors] : [],
     });
+
+
   };
 
   renderFloors = (floors, noFloors) => {
@@ -151,6 +154,7 @@ const mapStateToProps = ({ form }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeForm: (formKey) => dispatch(removeForm(formKey)),
+    toggleSpinner: () => dispatch(toggleSpinner())
   };
 };
 
