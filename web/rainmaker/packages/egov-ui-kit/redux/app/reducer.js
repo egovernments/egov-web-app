@@ -77,7 +77,7 @@ var appReducer = function appReducer() {
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
       if (process.env.NODE_ENV !== "development") {
-        action.url.path = action.url.path && action.url.path.split("/citizen").pop;
+        action.url.path = action.url.path && action.url.path.split("/citizen").pop();
       }
 
       localStorage.setItem("path", action.url.path);
