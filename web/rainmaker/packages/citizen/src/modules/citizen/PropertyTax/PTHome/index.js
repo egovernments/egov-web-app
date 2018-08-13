@@ -107,7 +107,6 @@ class PTHome extends Component {
   render() {
     let { listItems, handleItemClick } = this;
     const { numProperties, numDrafts, loading } = this.props;
-    console.log(numDrafts, numProperties);
     return (
       <Screen loading={loading} className="pt-home-screen">
         <Card

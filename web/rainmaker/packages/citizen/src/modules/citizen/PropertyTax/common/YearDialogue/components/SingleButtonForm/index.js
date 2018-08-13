@@ -11,7 +11,6 @@ const SingleButtonForm = ({ label, form, handleFieldChange, history }) => {
       onClick={() => {
         handleFieldChange("button", label);
         history && history.push(`/property-tax/assessment-form?FY=${label}&type=new`);
-        console.log(label);
       }}
       className="year-range-button"
       label={label}

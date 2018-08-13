@@ -7,6 +7,7 @@ import Profile from "modules/citizen/User/Profile";
 
 // common screens
 import Home from "modules/citizen/Home";
+import Dashboard from "modules/citizen/Dashboard";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import { ImageModalDisplay } from "modules/common";
@@ -64,7 +65,11 @@ const routes = [
     needsAuthentication: true,
     options: { isHomeScreen: true, title: "Home", hideTitle: true, redirectionUrl: "/user/register" },
   },
-
+  {
+    path: "landing-page",
+    component: Dashboard,
+    needsAuthentication: true,
+  },
   {
     path: "image",
     component: ImageModalDisplay,

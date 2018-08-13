@@ -140,8 +140,8 @@ export const superArea = {
     id: "assessment-super-area",
     jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
     type: "textfield",
-    floatingLabelText: "Total Super area",
-    hintText: "Enter total super area",
+    floatingLabelText: "PT_FORM2_TOTAL_BUILT_AREA",
+    hintText: "PT_FORM2_TOTAL_BUILT_AREA_PLACEHOLDER",
     ErrorText: "Enter a valid super area size",
     toolTip: true,
     toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
@@ -153,8 +153,8 @@ export const superArea = {
     },
     pattern: /^(\d+\.?\d*|\.\d+)$/,
     errorMessage: "Enter a valid super area size",
-  }
-}
+  },
+};
 
 export const measuringUnit = {
   // measuringUnit: {
@@ -215,7 +215,7 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
+    if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
@@ -245,13 +245,13 @@ export const beforeInitForm = {
         set(action, "form.fields.subUsageType.hideField", true);
       }
     } else {
-      if (usageCategoryMajor==="MIXED") {
-          var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
-          var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
-          var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
-          var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
-          set(action, "form.fields.usageType.disabled",false);
-          set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+      if (usageCategoryMajor === "MIXED") {
+        var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+        var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+        var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+        var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
+        set(action, "form.fields.usageType.disabled", false);
+        set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
       }
       set(action, "form.fields.subUsageType.hideField", true);
     }
@@ -280,8 +280,7 @@ export const beforeInitFormForPlot = {
       var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
       set(action, "form.fields.subUsageType.hideField", false);
 
-
-      if (usageCategoryMinor && usageCategoryMajor!=="MIXED") {
+      if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
         var filteredSubUsageMinor = filter(
           prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
           (subUsageMinor) => {
@@ -311,13 +310,13 @@ export const beforeInitFormForPlot = {
           set(action, "form.fields.subUsageType.hideField", true);
         }
       } else {
-        if (usageCategoryMajor==="MIXED") {
-            var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
-            var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
-            var usageTypes=mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
-            var filterArrayWithoutMixed=filter(usageTypes,(item)=>item.value!=="MIXED");
-            set(action, "form.fields.usageType.disabled",false);
-            set(action, "form.fields.usageType.dropDownData",filterArrayWithoutMixed);
+        if (usageCategoryMajor === "MIXED") {
+          var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
+          var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
+          var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+          var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
+          set(action, "form.fields.usageType.disabled", false);
+          set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
         }
         set(action, "form.fields.subUsageType.hideField", true);
       }
