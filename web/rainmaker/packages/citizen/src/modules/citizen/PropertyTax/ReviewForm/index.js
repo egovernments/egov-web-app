@@ -77,11 +77,11 @@ class ReviewForm extends Component {
       });
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
         const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
-        const { value } = this.props.financialYr;
-        const intrest = this.findCorrectDateObj(value, Interest);
-        const fireCess = this.findCorrectDateObj(value, FireCess);
-        const rebate = this.findCorrectDateObj(value, Rebate);
-        const penalty = this.findCorrectDateObj(value, Penalty);
+        const { financialYr } = this.props;
+        const intrest = this.findCorrectDateObj(financialYr, Interest);
+        const fireCess = this.findCorrectDateObj(financialYr, FireCess);
+        const rebate = this.findCorrectDateObj(financialYr, Rebate);
+        const penalty = this.findCorrectDateObj(financialYr, Penalty);
         this.setState({
           importantDates: {
             intrest,
@@ -160,15 +160,17 @@ class ReviewForm extends Component {
         <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
         <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
-        {!isPartialPaymentInValid && <PaymentAmountDetails
-          value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
-          onRadioButtonChange={onRadioButtonChange}
-          handleFieldChange={handleFieldChange}
-          optionSelected={valueSelected}
-          totalAmount={totalAmount && totalAmount}
-          estimationDetails={estimationDetails}
-          errorText={errorText}
-        />}
+        {!isPartialPaymentInValid && (
+          <PaymentAmountDetails
+            value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
+            onRadioButtonChange={onRadioButtonChange}
+            handleFieldChange={handleFieldChange}
+            optionSelected={valueSelected}
+            totalAmount={totalAmount && totalAmount}
+            estimationDetails={estimationDetails}
+            errorText={errorText}
+          />
+        )}
       </div>
     );
   }

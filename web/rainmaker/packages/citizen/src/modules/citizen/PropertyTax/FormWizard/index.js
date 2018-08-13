@@ -361,7 +361,8 @@ class FormWizard extends Component {
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
-    const { estimation } = this.state;
+    const { estimation, totalAmountToBePaid, financialYearFromQuery } = this.state;
+    const { form } = this.props;
 
     switch (selected) {
       case 0:
@@ -388,10 +389,6 @@ class FormWizard extends Component {
           </div>
         );
       case 3:
-        const { draftRequest, estimation, totalAmountToBePaid } = this.state;
-        const { draft } = draftRequest;
-        const { financialYear } = draft.draftRecord;
-        const { form } = this.props;
         return (
           <div className="review-pay-tab">
             <ReviewForm
@@ -400,7 +397,7 @@ class FormWizard extends Component {
               stepOne={this.renderStepperContent(1, fromReviewPage)}
               stepTwo={this.renderStepperContent(2, fromReviewPage)}
               estimationDetails={estimation}
-              financialYr={financialYear ? financialYear.fields.button : {}}
+              financialYr={financialYearFromQuery}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
               isPartialPaymentInValid={
