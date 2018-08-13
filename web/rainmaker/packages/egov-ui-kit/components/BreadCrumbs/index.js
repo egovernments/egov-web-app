@@ -40,6 +40,7 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
       _react2.default.createElement(_Icon2.default, { action: "action", name: "home", color: "#fe7a51" })
     ),
     url && url.map(function (item, index) {
+      console.log(item);
       return _react2.default.createElement(
         "div",
         { key: index, className: "rainmaker-displayInline" },
