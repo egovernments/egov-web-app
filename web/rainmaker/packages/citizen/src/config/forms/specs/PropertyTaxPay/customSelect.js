@@ -1,5 +1,6 @@
 import { prepareDropDownData } from "./utils/reusableFields";
 import set from "lodash/set";
+import get from "lodash/get";
 
 const formConfig = {
   name: "customSelect",
@@ -27,7 +28,7 @@ const formConfig = {
         const valueExists = floorValues.find((floorvalue) => {
           return floorvalue === value;
         });
-        if (valueExists) {
+        if (valueExists && get(state,`form[${action.formKey}].fields[${action.fieldKey}].value`)!==action.value) {
           alert("This floor is already selected, please select another floor");
           action.value = "";
         }
