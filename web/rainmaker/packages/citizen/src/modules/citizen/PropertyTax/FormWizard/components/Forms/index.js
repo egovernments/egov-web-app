@@ -61,7 +61,7 @@ const OwnerInformation = ({
         <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
-            {deleteBtn && (
+            {!disabled && deleteBtn && (
               <div
                 className="pt-ownerinfo-deletebtn"
                 onClick={() => {
