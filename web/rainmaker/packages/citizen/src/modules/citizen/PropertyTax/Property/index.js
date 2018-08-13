@@ -251,13 +251,17 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
       ],
       items: {
         header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
-        values: units.map((floor) => {
-          return {
-            value: keys.map((key) => {
-              return transform(floor, key, generalMDMSDataById);
-            }),
-          };
-        }),
+        values:
+          units &&
+          units.map((floor) => {
+            return {
+              value:
+                keys &&
+                keys.map((key) => {
+                  return transform(floor, key, generalMDMSDataById);
+                }),
+            };
+          }),
       },
     },
   ];
@@ -270,40 +274,42 @@ const getOwnerInfo = (ownerDetails) => {
       iconAction: "social",
       iconName: "person",
       nestedItems: true,
-      items: ownerDetails.map((owner) => {
-        return {
-          items: [
-            {
-              key: "Name",
-              value: owner.name || "NA",
-            },
-            {
-              key: "Gender:",
-              value: owner.gender || "NA",
-            },
-            {
-              key: "Mobile No:",
-              value: owner.mobileNumber || "NA",
-            },
-            {
-              key: "Father's Name:",
-              value: owner.fatherOrHusbandName || "NA",
-            },
-            {
-              key: "User Category:",
-              value: owner.ownerType || "NA",
-            },
-            {
-              key: "Email ID:",
-              value: owner.emailId || "NA",
-            },
-            {
-              key: "Correspondence Address:",
-              value: owner.correspondenceAddress || "NA",
-            },
-          ],
-        };
-      }),
+      items:
+        ownerDetails &&
+        ownerDetails.map((owner) => {
+          return {
+            items: [
+              {
+                key: "Name",
+                value: owner.name || "NA",
+              },
+              {
+                key: "Gender:",
+                value: owner.gender || "NA",
+              },
+              {
+                key: "Mobile No:",
+                value: owner.mobileNumber || "NA",
+              },
+              {
+                key: "Father's Name:",
+                value: owner.fatherOrHusbandName || "NA",
+              },
+              {
+                key: "User Category:",
+                value: owner.ownerType || "NA",
+              },
+              {
+                key: "Email ID:",
+                value: owner.emailId || "NA",
+              },
+              {
+                key: "Correspondence Address:",
+                value: owner.correspondenceAddress || "NA",
+              },
+            ],
+          };
+        }),
     },
   ];
 };
@@ -339,16 +345,18 @@ const mapStateToProps = (state, ownProps) => {
   const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
 
   const { propertyDetails } = selPropertyDetails;
-  let transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
-    return {
-      primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-      status: "ASSESS & PAY",
-      receipt: true,
-      assessmentNo: assessment.assessmentNumber,
-      financialYear: assessment.financialYear,
-      propertyId: propertyId,
-    };
-  });
+  let transformedAssessments =
+    propertyDetails &&
+    Object.values(propertyDetails).map((assessment, index) => {
+      return {
+        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+        status: "ASSESS & PAY",
+        receipt: true,
+        assessmentNo: assessment.assessmentNumber,
+        financialYear: assessment.financialYear,
+        propertyId: propertyId,
+      };
+    });
   return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
 };
 

@@ -191,9 +191,7 @@ const mapStateToProps = (state) => {
     return result;
   }, []);
 
-  console.log(propertiesById);
   const failedProperties = failedTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, failedTransObj);
-  console.log(failedProperties);
   const mergedData = failedProperties && mergeFinalData(failedProperties, failedTransObj);
 
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData, cities);

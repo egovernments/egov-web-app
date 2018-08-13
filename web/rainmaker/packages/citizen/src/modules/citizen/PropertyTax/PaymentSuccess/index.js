@@ -379,10 +379,8 @@ const mapStateToProps = (state, ownProps) => {
 
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const rawReceiptDetails = receipts && receipts[0];
-  console.log(rawReceiptDetails);
   const receiptUIDetails = selProperty && createReceiptUIInfo(selProperty, rawReceiptDetails);
   const receiptDetails = selProperty && createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails);
-  console.log(receiptUIDetails);
   return { receiptUIDetails, receiptDetails };
 };
 
