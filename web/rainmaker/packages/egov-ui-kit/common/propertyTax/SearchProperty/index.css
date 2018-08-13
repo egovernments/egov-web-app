@@ -12,3 +12,12 @@
       text-align: center;
       color: #ffffff !important;
       padding: 0 !important; }
+
+.search-no-property-found {
+  text-align: center; }
+  .search-no-property-found .new-assess-btn {
+    width: 214px;
+    margin: 0px auto; }
+  .search-no-property-found .no-search-text {
+    margin-bottom: 17px;
+    margin-top: 36px; }

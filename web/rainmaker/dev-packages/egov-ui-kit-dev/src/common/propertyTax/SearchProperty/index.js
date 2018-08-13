@@ -25,6 +25,7 @@ class SearchProperty extends Component {
     this.state = {
       dialogueOpen: false,
       searchResult: [],
+      showTable: false,
     };
   }
 
@@ -57,6 +58,7 @@ class SearchProperty extends Component {
         queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
       }
       this.props.fetchProperties(queryParams);
+      this.setState({ showTable: true });
     }
   };
 
@@ -64,8 +66,10 @@ class SearchProperty extends Component {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
       let { propertyId, oldPropertyId, address, propertyDetails } = property;
-      //let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
-      let displayAddress = "StringFiled, Sarjapur Road";
+      const { doorNo, buildingName, street, locality } = address;
+      let displayAddress = doorNo
+        ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
+        : `${locality.name ? locality.name : ""}`;
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button
@@ -110,11 +114,10 @@ class SearchProperty extends Component {
 
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
-    const { closeYearRangeDialogue, onNewPropertyButtonClick } = this;
+    const { showTable } = this.state;
     let urlArray = [];
     const pathname = location && location.pathname;
     const tableData = this.extractTableData(propertiesFound);
-    console.log(tableData);
     if (userType === "CITIZEN" && urls.length == 0 && localStorage.getItem("path") === pathname) {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
@@ -123,20 +126,26 @@ class SearchProperty extends Component {
         {userType === "CITIZEN" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
         {/* <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> */}
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
-        {tableData.length > 0 ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
+        {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
+        {showTable &&
+          tableData.length === 0 && (
+            <div className="search-no-property-found">
+              <div className="no-search-text">No property records found</div>
+              <div className="new-assess-btn">
+                <Button
+                  label={"New Property Assessment"}
+                  labelStyle={{ fontSize: 12 }}
+                  className="new-property-assessment"
+                  onClick={() => history.push("/property-tax")}
+                  primary={true}
+                  fullWidth={true}
+                />
+              </div>
+            </div>
+          )}
       </Screen>
     );
   }
-}
-
-{
-  /* <BlankAssessment
-            noAssessmentMessage={"No property records found"}
-            button={true}
-            dialogueOpen={this.state.dialogueOpen}
-            closeDialogue={closeYearRangeDialogue}
-            onButtonClick={onNewPropertyButtonClick}
-          /> */
 }
 
 const mapStateToProps = (state) => {

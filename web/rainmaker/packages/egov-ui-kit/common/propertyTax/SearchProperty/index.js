@@ -114,6 +114,7 @@ var SearchProperty = function (_Component) {
           queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
         }
         _this.props.fetchProperties(queryParams);
+        _this.setState({ showTable: true });
       }
     };
 
@@ -125,9 +126,12 @@ var SearchProperty = function (_Component) {
             oldPropertyId = property.oldPropertyId,
             address = property.address,
             propertyDetails = property.propertyDetails;
-        //let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
+        var doorNo = address.doorNo,
+            buildingName = address.buildingName,
+            street = address.street,
+            locality = address.locality;
 
-        var displayAddress = "StringFiled, Sarjapur Road";
+        var displayAddress = doorNo ? "" + (doorNo ? doorNo + "," : "") + ("" + (buildingName ? buildingName + "," : "")) + ("" + (street ? street + "," : "")) : "" + (locality.name ? locality.name : "");
         var name = propertyDetails[0].owners[0].name;
         var button = _react2.default.createElement(_components.Button, {
           onClick: userType === "CITIZEN" ? function (e) {
@@ -163,7 +167,8 @@ var SearchProperty = function (_Component) {
 
     _this.state = {
       dialogueOpen: false,
-      searchResult: []
+      searchResult: [],
+      showTable: false
     };
     return _this;
   }
@@ -177,13 +182,11 @@ var SearchProperty = function (_Component) {
           history = _props.history,
           propertiesFound = _props.propertiesFound,
           loading = _props.loading;
-      var closeYearRangeDialogue = this.closeYearRangeDialogue,
-          onNewPropertyButtonClick = this.onNewPropertyButtonClick;
+      var showTable = this.state.showTable;
 
       var urlArray = [];
       var pathname = location && location.pathname;
       var tableData = this.extractTableData(propertiesFound);
-      console.log(tableData);
       if (userType === "CITIZEN" && urls.length == 0 && localStorage.getItem("path") === pathname) {
         urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
       }
@@ -192,22 +195,35 @@ var SearchProperty = function (_Component) {
         { loading: loading },
         userType === "CITIZEN" ? _react2.default.createElement(_components.BreadCrumbs, { url: urls.length > 0 ? urls : urlArray, history: history }) : [],
         _react2.default.createElement(PropertySearchFormHOC, { history: this.props.history, onSearchClick: this.onSearchClick }),
-        tableData.length > 0 ? _react2.default.createElement(_PropertyTable2.default, { tableData: tableData, onActionClick: this.onActionClick }) : null
+        tableData.length > 0 && showTable ? _react2.default.createElement(_PropertyTable2.default, { tableData: tableData, onActionClick: this.onActionClick }) : null,
+        showTable && tableData.length === 0 && _react2.default.createElement(
+          "div",
+          { className: "search-no-property-found" },
+          _react2.default.createElement(
+            "div",
+            { className: "no-search-text" },
+            "No property records found"
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "new-assess-btn" },
+            _react2.default.createElement(_components.Button, {
+              label: "New Property Assessment",
+              labelStyle: { fontSize: 12 },
+              className: "new-property-assessment",
+              onClick: function onClick() {
+                return history.push("/property-tax");
+              },
+              primary: true,
+              fullWidth: true
+            })
+          )
+        )
       );
     }
   }]);
   return SearchProperty;
 }(_react.Component);
-
-{
-  /* <BlankAssessment
-            noAssessmentMessage={"No property records found"}
-            button={true}
-            dialogueOpen={this.state.dialogueOpen}
-            closeDialogue={closeYearRangeDialogue}
-            onButtonClick={onNewPropertyButtonClick}
-          /> */
-}
 
 var mapStateToProps = function mapStateToProps(state) {
   var properties = state.properties;
