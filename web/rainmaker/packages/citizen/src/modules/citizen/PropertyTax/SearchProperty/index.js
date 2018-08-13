@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
-import { BreadCrumbs } from "components";
+import { BreadCrumbs, Button } from "components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
-import { Button } from "components";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 import "./index.css";
@@ -63,8 +62,10 @@ class SearchProperty extends Component {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
       let { propertyId, oldPropertyId, address, propertyDetails } = property;
-      let displayAddress = "StringFiled, Sarjapur Road";
-      //let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
+      const { doorNo, buildingName, street, locality } = address;
+      let displayAddress = doorNo
+        ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
+        : `${locality.name ? locality.name : ""}`;
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button
@@ -107,6 +108,22 @@ class SearchProperty extends Component {
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
+        {showTable &&
+          tableData.length === 0 && (
+            <div className="search-no-property-found">
+              <div className="no-search-text">No property records found</div>
+              <div className="new-assess-btn">
+                <Button
+                  label={"New Property Assessment"}
+                  labelStyle={{ fontSize: 12 }}
+                  className="new-property-assessment"
+                  onClick={() => history.push("/property-tax/assess-pay")}
+                  primary={true}
+                  fullWidth={true}
+                />
+              </div>
+            </div>
+          )}
       </Screen>
     );
   }
