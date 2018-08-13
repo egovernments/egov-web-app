@@ -403,7 +403,7 @@ class FormWizard extends Component {
               financialYr={financialYear ? financialYear.fields.button : {}}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
-              isPartialPaymentInValid={get(this.state, "estimation[0].totalAmount", 1) !== 0 || get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"}
+              isPartialPaymentInValid={get(this.state, "estimation[0].totalAmount", 1) === 0 || get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"}
             />
           </div>
         );
