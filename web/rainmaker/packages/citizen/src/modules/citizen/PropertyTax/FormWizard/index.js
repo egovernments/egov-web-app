@@ -361,6 +361,7 @@ class FormWizard extends Component {
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
+    const { estimation } = this.state;
 
     switch (selected) {
       case 0:
@@ -390,6 +391,7 @@ class FormWizard extends Component {
         const { draftRequest, estimation, totalAmountToBePaid } = this.state;
         const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
+        const { form } = this.props
         return (
           <div className="review-pay-tab">
             <ReviewForm
@@ -401,6 +403,7 @@ class FormWizard extends Component {
               financialYr={financialYear ? financialYear.fields.button : {}}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
+              isPartialPaymentInValid={get(this.state, "estimation[0].totalAmount", 1) !== 0 || get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"}
             />
           </div>
         );
@@ -560,7 +563,7 @@ class FormWizard extends Component {
         const requestBody = {
           Transaction: {
             tenantId,
-            txnAmount: get(getBill, "Bill[0].billDetails[0].totalAmount"),
+            txnAmount: isFullPayment ? get(getBill, "Bill[0].billDetails[0].totalAmount") : totalAmountToBePaid,
             module: "PT",
             billId: get(getBill, "Bill[0].id"),
             moduleId: get(getBill, "Bill[0].billDetails[0].consumerCode"),
