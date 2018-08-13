@@ -14,7 +14,6 @@ const BreadCrumbs = ({ url, history }) => {
       </Link>
       {url &&
         url.map((item, index) => {
-          console.log(item);
           return (
             <div key={index} className="rainmaker-displayInline">
               <div style={style}>❯</div>
