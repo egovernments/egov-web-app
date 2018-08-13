@@ -55,8 +55,8 @@ class MyProperties extends Component {
   };
 
   onListItemClick = (item) => {
-    const { route: propertyId } = item;
-    this.props.history.push(`/property-tax/my-properties/property/${propertyId}`);
+    const { route: propertyId, tenantId } = item;
+    this.props.history.push(`/property-tax/my-properties/property/${propertyId}/${tenantId}`);
   };
 
   // onBreadcrumbsClick = (index, path) => {
@@ -115,6 +115,7 @@ const mapStateToProps = (state) => {
         </div>
       ),
       route: property.propertyId,
+      tenantId: property.tenantId,
     };
   });
   return { urls, transformedProperties, loading, numProperties };

@@ -211,7 +211,8 @@ var AssessmentList = function AssessmentList(_ref) {
     button: button,
     dialogueOpen: yearDialogue,
     closeDialogue: closeDialogue,
-    onButtonClick: onNewPropertyButtonClick
+    onButtonClick: onNewPropertyButtonClick,
+    history: history
   }) : _react2.default.createElement(_PTList2.default, {
     items: getListItems(items, history),
     history: history,

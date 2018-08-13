@@ -14,6 +14,10 @@ var _field2 = _interopRequireDefault(_field);
 
 var _components = require("egov-ui-kit/components");
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -48,7 +52,7 @@ var SearchPropertyForm = function SearchPropertyForm(_ref) {
           "div",
           { className: "text-center" },
           _react2.default.createElement(_components.Button, {
-            label: "PT_SEARCH_BUTTON",
+            label: _react2.default.createElement(_translationNode2.default, { label: "PT_SEARCH_BUTTON", buttonLabel: true, fontSize: "16px" }),
             className: "search-property-btn",
             onClick: function onClick() {
               return onSearchClick(form, formKey);

@@ -14,7 +14,7 @@ const innerDivStyle = {
   borderBottom: "1px solid #e0e0e0",
 };
 
-class CompletedAssessments extends Component {
+class ViewAllAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
     height: "20px",
@@ -78,7 +78,7 @@ const mapStateToProps = (state, ownProps) => {
   const propertyId = ownProps.match.params.propertyId;
   const selPropertyDetails = propertiesById[propertyId];
   const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-  const transformedItems = getTransformedItems([selPropertyDetails]);
+  const transformedItems = getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
 
   return { urls, loading, transformedItems, urls, customTitle };
 };
@@ -92,4 +92,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CompletedAssessments);
+)(ViewAllAssessments);

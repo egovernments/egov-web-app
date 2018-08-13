@@ -25,7 +25,8 @@ var BlankAssessment = function BlankAssessment(_ref) {
       button = _ref.button,
       dialogueOpen = _ref.dialogueOpen,
       closeDialogue = _ref.closeDialogue,
-      onButtonClick = _ref.onButtonClick;
+      onButtonClick = _ref.onButtonClick,
+      history = _ref.history;
 
   return _react2.default.createElement(
     "div",
@@ -50,7 +51,7 @@ var BlankAssessment = function BlankAssessment(_ref) {
       },
       onClick: onButtonClick
     }),
-    _react2.default.createElement(_YearDialogue2.default, { open: dialogueOpen, closeDialogue: closeDialogue })
+    _react2.default.createElement(_YearDialogue2.default, { open: dialogueOpen, history: history, closeDialogue: closeDialogue })
   );
 };
 

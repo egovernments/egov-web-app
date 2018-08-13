@@ -129,6 +129,7 @@ const getListItems = (items, history) => {
           route: item.route,
           leftIcon: item.leftIcon,
           rightIcon: getRightIconItems(item, history),
+          tenantId: item.tenantId,
           initiallyOpen: item.initiallyOpen,
           nestedItems:
             item &&
@@ -166,7 +167,7 @@ const AssessmentList = ({
   closeDialogue,
   onNewPropertyButtonClick,
 }) => {
-  return items.length == 0 ? (
+  return items && items.length == 0 ? (
     <BlankAssessment
       noAssessmentMessage={noAssessmentMessage}
       button={button}
