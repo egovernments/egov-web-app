@@ -577,9 +577,10 @@ class FormWizard extends Component {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
           window.location = redirectionUrl;
         } else {
+          toggleSpinner();
           let moduleId = get(goToPaymentGateway, "Transaction.moduleId");
           let tenantId = get(goToPaymentGateway, "Transaction.tenantId");
-          history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1] + "/" + "2018-19");
+          history.push("/property-tax/payment-success/" + moduleId.split(":")[0] + "/" + tenantId + "/" + moduleId.split(":")[1]);
         }
       } catch (e) {
         console.log(e);
