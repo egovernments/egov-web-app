@@ -117,9 +117,9 @@ const formConfig = {
       hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
       numcols: 6,
       //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
-      errorMessage: "Pincode should be 8 digits",
+      errorMessage: "Pincode should be 6 digits",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: "^([0-9]){8}$",
+      pattern: "^([0-9]){6}$",
     },
     oldPID: {
       id: "oldpid",
