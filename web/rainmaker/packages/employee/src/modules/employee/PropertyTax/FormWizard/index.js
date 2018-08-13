@@ -840,14 +840,14 @@ class FormWizard extends Component {
     const propertyInfo = JSON.parse(JSON.stringify(properties));
     const property = propertyInfo[0] || {};
     const { propertyDetails } = property;
-    const buildUpAreaInFt = propertyDetails[0].buildUpArea && parseFloat(propertyDetails[0].buildUpArea) * 9;
-    const landAreaInFt = propertyDetails[0].landArea && parseFloat(propertyDetails[0].landArea) * 9;
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
+    units.forEach((unit) => {
+      let unitAreaInSqYd = parseFloat(unit.unitArea) * 0.11111;
+      unit.unitArea = unitAreaInSqYd;
+    });
     propertyDetails[0].units = units;
-    propertyDetails[0].buildUpArea = buildUpAreaInFt;
-    propertyDetails[0].landArea = landAreaInFt;
     return propertyInfo;
   };
 

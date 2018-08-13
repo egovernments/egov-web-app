@@ -391,7 +391,7 @@ class FormWizard extends Component {
         const { draftRequest, estimation, totalAmountToBePaid } = this.state;
         const { draft } = draftRequest;
         const { financialYear } = draft.draftRecord;
-        const { form } = this.props
+        const { form } = this.props;
         return (
           <div className="review-pay-tab">
             <ReviewForm
@@ -403,7 +403,10 @@ class FormWizard extends Component {
               financialYr={financialYear ? financialYear.fields.button : {}}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
-              isPartialPaymentInValid={get(this.state, "estimation[0].totalAmount", 1) === 0 || get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"}
+              isPartialPaymentInValid={
+                get(this.state, "estimation[0].totalAmount", 1) === 0 ||
+                get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
+              }
             />
           </div>
         );
@@ -592,33 +595,33 @@ class FormWizard extends Component {
   };
 
   getMultipleOwnerInfo = () => {
-    const { form } = this.props
+    const { form } = this.props;
     return Object.keys(form)
-      .filter(formkey => formkey.indexOf("ownerInfo_") !== -1)
+      .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
-        const ownerData = [...acc]
-        const currForm = form[curr]
-        const ownerObj = {}
+        const ownerData = [...acc];
+        const currForm = form[curr];
+        const ownerObj = {};
         Object.keys(currForm.fields).map((field) => {
-          const jsonPath = currForm.fields[field].jsonPath
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined)
-        })
-        ownerData.push(ownerObj)
-        return ownerData
-      }, [])
-  }
+          const jsonPath = currForm.fields[field].jsonPath;
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined);
+        });
+        ownerData.push(ownerObj);
+        return ownerData;
+      }, []);
+  };
 
   estimate = async () => {
     let { prepareFormData, location, form } = this.props;
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
-    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "")
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
-      if(selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+      if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
@@ -751,14 +754,14 @@ class FormWizard extends Component {
     const propertyInfo = JSON.parse(JSON.stringify(properties));
     const property = propertyInfo[0] || {};
     const { propertyDetails } = property;
-    const buildUpAreaInFt = propertyDetails[0].buildUpArea && parseFloat(propertyDetails[0].buildUpArea) * 9;
-    const landAreaInFt = propertyDetails[0].landArea && parseFloat(propertyDetails[0].landArea) * 9;
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
+    units.forEach((unit) => {
+      let unitAreaInSqYd = parseFloat(unit.unitArea) * 0.11111;
+      unit.unitArea = unitAreaInSqYd;
+    });
     propertyDetails[0].units = units;
-    propertyDetails[0].buildUpArea = buildUpAreaInFt;
-    propertyDetails[0].landArea = landAreaInFt;
     return propertyInfo;
   };
 
