@@ -173,6 +173,7 @@ const AssessmentList = ({
       dialogueOpen={yearDialogue}
       closeDialogue={closeDialogue}
       onButtonClick={onNewPropertyButtonClick}
+      history={history}
     />
   ) : (
     <PTList

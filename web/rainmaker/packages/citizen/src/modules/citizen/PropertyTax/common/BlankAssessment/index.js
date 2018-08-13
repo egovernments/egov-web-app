@@ -4,7 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import YearDialogue from "../YearDialogue";
 import "./index.css";
 
-const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialogue, onButtonClick }) => {
+const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialogue, onButtonClick, history }) => {
   return (
     <div className="no-assessment-message-cont">
       <Label label={noAssessmentMessage} dark={true} fontSize={"16px"} />
@@ -24,7 +24,7 @@ const BlankAssessment = ({ noAssessmentMessage, button, dialogueOpen, closeDialo
           onClick={onButtonClick}
         />
       )}
-      <YearDialogue open={dialogueOpen} closeDialogue={closeDialogue} />
+      <YearDialogue open={dialogueOpen} history={history} closeDialogue={closeDialogue} />
     </div>
   );
 };

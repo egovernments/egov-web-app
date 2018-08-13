@@ -89,10 +89,10 @@ class PTHome extends Component {
     },
   ];
   componentDidMount = () => {
-    const { addBreadCrumTitle, title, location, fetchProperties, userInfo } = this.props;
+    const { addBreadCrumbs, title, location, fetchProperties, userInfo } = this.props;
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
-    (title || url) && addBreadCrumTitle(url && url === "property-tax" ? "" : title);
+    (title || url) && addBreadCrumbs(url && url === "property-tax" ? "" : title);
     fetchProperties(
       [{ key: "accountId", value: userInfo.uuid }],
       [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }]
@@ -192,7 +192,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBreadCrumTitle: (url) => dispatch(addBreadCrumbs(url)),
+    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments) =>
       dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments)),
   };
