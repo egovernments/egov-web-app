@@ -93,7 +93,7 @@ class PTHome extends Component {
     const { addBreadCrumbs, title, location, fetchProperties, userInfo } = this.props;
     const { pathname } = location;
     let url = pathname && pathname.split("/").pop();
-    (title || url) && addBreadCrumbs(url && url === "property-tax" ? "" : title);
+    (title || url) && url === "property-tax" && addBreadCrumbs({ title: "", path: "" });
     fetchProperties(
       [{ key: "accountId", value: userInfo.uuid }],
       [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }]

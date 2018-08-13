@@ -54,7 +54,7 @@ const appReducer = (state = initialState, action) => {
       return { ...state, menu: action.payload };
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
-      if (process.env.NODE_ENV !== "development") {
+      if (process.env.NODE_ENV !== "development" && action.url && action.url.title !== "" && action.url.path !== "") {
         action.url.path = action.url.path && action.url.path.split("/citizen").pop();
       }
 

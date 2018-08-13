@@ -76,7 +76,7 @@ var appReducer = function appReducer() {
       return (0, _extends3.default)({}, state, { menu: action.payload });
 
     case actionTypes.ADD_BREADCRUMB_ITEM:
-      if (process.env.NODE_ENV !== "development") {
+      if (process.env.NODE_ENV !== "development" && action.url && action.url.title !== "" && action.url.path !== "") {
         action.url.path = action.url.path && action.url.path.split("/citizen").pop();
       }
 
