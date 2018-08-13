@@ -8,6 +8,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getAddress } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -116,10 +117,15 @@ const mapStateToProps = (state) => {
       ),
       route: property.propertyId,
       tenantId: property.tenantId,
+      createdTime: property.auditDetails.createdTime,
     };
   });
-  return { urls, transformedProperties, loading, numProperties };
+
+  const sortedProperties = orderby(transformedProperties, ["createdTime"], ["asc"]);
+
+  return { urls, transformedProperties: sortedProperties, loading, numProperties };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
