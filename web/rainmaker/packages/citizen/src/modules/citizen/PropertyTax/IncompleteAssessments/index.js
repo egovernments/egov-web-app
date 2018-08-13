@@ -44,6 +44,11 @@ class IncompleteAssessments extends Component {
     );
   };
 
+  onListItemClick = (item) => {
+    const { route } = item;
+    this.props.history.push(route);
+  };
+
   render() {
     const { urls, history, loading, incompleteAssessments } = this.props;
     return (
@@ -51,6 +56,7 @@ class IncompleteAssessments extends Component {
         <BreadCrumbs url={urls} history={history} />
         {incompleteAssessments && (
           <AssessmentList
+            onItemClick={this.onListItemClick}
             history={history}
             items={incompleteAssessments}
             innerDivStyle={innerDivStyle}
@@ -106,7 +112,7 @@ const getTransformedItems = (propertiesById, cities) => {
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
           return {
-            primaryText: <Label label={get(item, "financialYear")} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
+            primaryText: <Label label={item.financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
             secondaryText: (
               <div style={{ height: "auto" }}>
                 <Label
@@ -125,6 +131,9 @@ const getTransformedItems = (propertiesById, cities) => {
                 />
               </div>
             ),
+            route: `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNumber}&isReassesment=true&propertyId=${
+              curr.propertyId
+            }`,
             date: item.auditDetails ? getDateFromEpoch(get(item, "auditDetails.lastModifiedTime")) : "",
             status: "Payment failed",
           };
@@ -161,16 +170,9 @@ const mapStateToProps = (state) => {
     ) {
       const cityValue = get(draft, "draftRecord.propertyAddress.fields.city.value");
       const mohalla = get(draft, "draftRecord.propertyAddress.fields.mohalla.value");
+      const financialYear = get(draft, "draftRecord.financialYear.fields.button.value");
       result.push({
-        primaryText: (
-          <Label
-            label={get(draft, "draftRecord.financialYear.fields.button.value")}
-            fontSize="16px"
-            color="#484848"
-            labelStyle={primaryTextLabelStyle}
-            bold={true}
-          />
-        ),
+        primaryText: <Label label={financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label
@@ -182,7 +184,8 @@ const mapStateToProps = (state) => {
             />
           </div>
         ),
-        financialYear: get(draft, "draftRecord.financialYear.fields.button.value"),
+        route: `/property-tax/assessment-form?FY=${financialYear}&assessmentId=${draft.id}`,
+        financialYear: financialYear,
         assessmentNo: draft.id,
         date: draft.auditDetails ? getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")) : "",
         status: "Saved Draft",
