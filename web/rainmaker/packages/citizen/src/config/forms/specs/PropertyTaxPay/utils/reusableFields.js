@@ -23,7 +23,7 @@ export const plotSize = {
     errorMessage: "Plot Size can be maximum 8 digits",
     required: true,
     fullWidth: true,
-    pattern: "^([0-9]){0,8}$",
+    pattern: "^[1-9][0-9]{0,7}$",
     numcols: 6,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
@@ -116,7 +116,7 @@ export const builtArea = {
     required: true,
     hideField: false,
     numcols: 4,
-    pattern: /^(\d+\.?\d*|\.\d+)$/
+    pattern: "^[1-9][0-9]{0,7}$",
   },
 };
 
@@ -136,7 +136,7 @@ export const superArea = {
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
     },
-    pattern: /^(\d+\.?\d*|\.\d+)$/,
+    pattern: "^[1-9][0-9]{0,7}$",
     errorMessage: "Enter a valid super area size",
   },
 };
@@ -152,7 +152,7 @@ export const annualRent = {
     toolTip: true,
     toolTipMessage: "PT_TOTAL_ANNUAL_RENT_TOOLTIP_MESSAGE",
     required: true,
-    pattern: "^([0-9]){0,8}$",
+    pattern: "^[1-9][0-9]{0,7}$",
     hideField: true,
     numcols: 4,
   },
