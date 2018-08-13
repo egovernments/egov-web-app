@@ -519,7 +519,7 @@ class FormWizard extends Component {
   };
 
   updateIndex = (index) => {
-    const { callDraft, pay, estimate, createReceipt } = this;
+    const { callDraft, pay, estimate, createReceipt, validateUnitandPlotSize } = this;
     const { selected, formValidIndexArray } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
@@ -542,24 +542,29 @@ class FormWizard extends Component {
             if (plotDetails) {
               const isPlotDetailsFormValid = validateForm(plotDetails);
               if (isPlotDetailsFormValid) {
-                if (get(plotDetails, "fields.floorCount")) {
-                  let floorValidation = true;
-                  for (const variable in form) {
-                    if (variable.search("customSelect") !== -1 || variable.search("floorDetails") !== -1) {
-                      const isDynamicFormValid = validateForm(form[variable]);
-                      if (!isDynamicFormValid) {
-                        displayFormErrorsAction(variable);
-                        floorValidation = false;
+                const isTotalUnitSizeValid = validateUnitandPlotSize(plotDetails, form);
+                if (isTotalUnitSizeValid) {
+                  if (get(plotDetails, "fields.floorCount")) {
+                    let floorValidation = true;
+                    for (const variable in form) {
+                      if (variable.search("customSelect") !== -1 || variable.search("floorDetails") !== -1) {
+                        const isDynamicFormValid = validateForm(form[variable]);
+                        if (!isDynamicFormValid) {
+                          displayFormErrorsAction(variable);
+                          floorValidation = false;
+                        }
                       }
                     }
-                  }
-                  if (floorValidation) {
+                    if (floorValidation) {
+                      callDraft();
+                      this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                    }
+                  } else {
                     callDraft();
                     this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                   }
                 } else {
-                  callDraft();
-                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                  alert("Plot size can't be less than total ground floor units area");
                 }
               } else {
                 displayFormErrorsAction("plotDetails");
@@ -644,6 +649,33 @@ class FormWizard extends Component {
     }
   };
 
+  validateUnitandPlotSize = (plotDetails, form) => {
+    let groundFloorIndex = null;
+    Object.keys(form).forEach((formKey, ind) => {
+      if (formKey.startsWith("customSelect_")) {
+        const { fields } = form[formKey];
+        if (fields.floorName.value === "0") {
+          groundFloorIndex = formKey.split("_")[1];
+        }
+      }
+    });
+    if (groundFloorIndex !== null) {
+      const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
+        if (key.startsWith(`floorDetails_${groundFloorIndex}_`)) {
+          const form1 = form[key];
+          if (form1 && form1.fields.builtArea.value) {
+            unitTotal += parseFloat(form1.fields.builtArea.value);
+          }
+        }
+        return unitTotal;
+      }, 0);
+      const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
+      if (unitTotal > plotSizeInFt) {
+        return false;
+      } else return true;
+    } else return true;
+  };
+
   callPGService = async (propertyId, assessmentNumber, assessmentYear, tenantId) => {
     const { updateIndex } = this;
     const queryObj = [
@@ -655,7 +687,6 @@ class FormWizard extends Component {
     try {
       const getBill = await httpRequest("pt-calculator-v2/propertytax/_getbill", "_create", queryObj, {});
       const { Bill } = getBill;
-      console.log(Bill);
       this.setState({ Bill });
       // try {
       //   const requestBody = {
@@ -683,7 +714,6 @@ class FormWizard extends Component {
   };
 
   changeDateToFormat = (date) => {
-    console.log(date);
     const dateObj = new Date(date);
     let year = dateObj.getFullYear();
     let month = dateObj.getMonth() + 1;
@@ -713,7 +743,6 @@ class FormWizard extends Component {
     const formData = {
       Receipt: prepareFormData["Receipt"],
     };
-
     try {
       const userInfo = {
         id: 23432,
@@ -811,10 +840,14 @@ class FormWizard extends Component {
     const propertyInfo = JSON.parse(JSON.stringify(properties));
     const property = propertyInfo[0] || {};
     const { propertyDetails } = property;
+    const buildUpAreaInFt = propertyDetails[0].buildUpArea && parseFloat(propertyDetails[0].buildUpArea) * 9;
+    const landAreaInFt = propertyDetails[0].landArea && parseFloat(propertyDetails[0].landArea) * 9;
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
     propertyDetails[0].units = units;
+    propertyDetails[0].buildUpArea = buildUpAreaInFt;
+    propertyDetails[0].landArea = landAreaInFt;
     return propertyInfo;
   };
 

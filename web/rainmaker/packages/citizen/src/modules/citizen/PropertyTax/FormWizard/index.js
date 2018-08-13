@@ -601,6 +601,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      //Remove null units and do sqyd to sqft conversion.
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
@@ -625,20 +626,24 @@ class FormWizard extends Component {
     let { search } = location;
     const propertyId = this.getQueryValue(search, "propertyId");
     const assessmentId = this.getQueryValue(search, "assessmentId");
-    const propertyMethodAction = !!propertyId ? "_update" : "_create"
+    const propertyMethodAction = !!propertyId ? "_update" : "_create";
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
     }
 
     if (!!propertyId) {
-     set(prepareFormData, "Properties[0].propertId", propertyId)
-     set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId)
+      set(prepareFormData, "Properties[0].propertId", propertyId);
+      set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
     }
 
     try {
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], { Properties: prepareFormData.Properties });
+      //Remove null units and do sqyd to sqft conversion.
+      const properties = this.normalizePropertyDetails(prepareFormData.Properties);
+      let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {
+        Properties: properties,
+      });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
       callPGService(
         get(createPropertyResponse, "Properties[0].propertyId"),
@@ -687,7 +692,8 @@ class FormWizard extends Component {
         }
         return unitTotal;
       }, 0);
-      if (unitTotal > parseFloat(plotDetails.fields.plotSize.value)) {
+      const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
+      if (unitTotal > plotSizeInFt) {
         return false;
       } else return true;
     } else return true;
@@ -724,10 +730,14 @@ class FormWizard extends Component {
     const propertyInfo = JSON.parse(JSON.stringify(properties));
     const property = propertyInfo[0] || {};
     const { propertyDetails } = property;
+    const buildUpAreaInFt = propertyDetails[0].buildUpArea && parseFloat(propertyDetails[0].buildUpArea) * 9;
+    const landAreaInFt = propertyDetails[0].landArea && parseFloat(propertyDetails[0].landArea) * 9;
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
     propertyDetails[0].units = units;
+    propertyDetails[0].buildUpArea = buildUpAreaInFt;
+    propertyDetails[0].landArea = landAreaInFt;
     return propertyInfo;
   };
 
