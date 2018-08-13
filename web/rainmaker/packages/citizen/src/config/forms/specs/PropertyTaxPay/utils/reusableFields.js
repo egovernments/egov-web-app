@@ -116,7 +116,7 @@ export const builtArea = {
     required: true,
     hideField: false,
     numcols: 4,
-    pattern: /^(\d+\.?\d*|\.\d+)$/,
+    pattern: /^(\d+\.?\d*|\.\d+)$/
   },
 };
 

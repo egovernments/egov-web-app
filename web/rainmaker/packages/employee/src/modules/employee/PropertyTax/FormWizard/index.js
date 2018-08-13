@@ -577,6 +577,17 @@ class FormWizard extends Component {
         break;
       case 2:
         const { ownershipType } = form;
+        const estimateCall=()=>{
+          estimate().then((estimateResponse) => {
+            if (estimateResponse) {
+              this.setState({
+                estimation: estimateResponse && estimateResponse.Calculation,
+                totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
+                valueSelected: "Full_Amount",
+              });
+            }
+          });
+        }
         if (ownershipType) {
           const isOwnershipTypeFormValid = validateForm(ownershipType);
           if (isOwnershipTypeFormValid) {
@@ -586,7 +597,7 @@ class FormWizard extends Component {
               const isOwnerInfoFormValid = validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
               } else {
                 displayFormErrorsAction("ownerInfo");
               }
@@ -603,7 +614,7 @@ class FormWizard extends Component {
               }
               if (ownerValidation) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
               }
             } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
               const { institutionDetails, institutionAuthority } = form;
@@ -620,7 +631,7 @@ class FormWizard extends Component {
               }
               if (institutionFormValid) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
               }
             }
           } else {
@@ -628,15 +639,6 @@ class FormWizard extends Component {
           }
         }
 
-        estimate().then((estimateResponse) => {
-          if (estimateResponse) {
-            this.setState({
-              estimation: estimateResponse && estimateResponse.Calculation,
-              totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
-              valueSelected: "Full_Amount",
-            });
-          }
-        });
 
         break;
       case 3:

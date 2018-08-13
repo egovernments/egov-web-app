@@ -469,68 +469,72 @@ class FormWizard extends Component {
           }
         }
         break;
-      case 2:
-        const { ownershipType } = form;
-        if (ownershipType) {
-          const isOwnershipTypeFormValid = validateForm(ownershipType);
-          if (isOwnershipTypeFormValid) {
-            const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
-            if (ownershipTypeSelected === "SINGLEOWNER") {
-              const { ownerInfo } = form;
-              const isOwnerInfoFormValid = validateForm(ownerInfo);
-              if (isOwnerInfoFormValid) {
-                callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
-              } else {
-                displayFormErrorsAction("ownerInfo");
+        case 2:
+          const { ownershipType } = form;
+          const estimateCall=()=>{
+            estimate().then((estimateResponse) => {
+              if (estimateResponse) {
+                this.setState({
+                  estimation: estimateResponse && estimateResponse.Calculation,
+                  totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
+                  valueSelected: "Full_Amount",
+                });
               }
-            } else if (ownershipTypeSelected === "MULTIPLEOWNERS") {
-              let ownerValidation = true;
-              for (const variable in form) {
-                if (variable.search("ownerInfo_") !== -1) {
-                  const isDynamicFormValid = validateForm(form[variable]);
-                  if (!isDynamicFormValid) {
-                    displayFormErrorsAction(variable);
-                    ownerValidation = false;
-                  }
-                }
-              }
-              if (ownerValidation) {
-                callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
-              }
-            } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
-              const { institutionDetails, institutionAuthority } = form;
-              const isInstitutionDetailsFormValid = validateForm(institutionDetails);
-              let institutionFormValid = true;
-              if (!isInstitutionDetailsFormValid) {
-                displayFormErrorsAction("institutionDetails");
-                institutionFormValid = false;
-              }
-              const isInstitutionAuthorityFormValid = validateForm(institutionAuthority);
-              if (!isInstitutionAuthorityFormValid) {
-                displayFormErrorsAction("institutionAuthority");
-                institutionFormValid = false;
-              }
-              if (institutionFormValid) {
-                callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
-              }
-            }
-          } else {
-            displayFormErrorsAction("ownershipType");
-          }
-        }
-
-        estimate().then((estimateResponse) => {
-          if (estimateResponse) {
-            this.setState({
-              estimation: estimateResponse && estimateResponse.Calculation,
             });
           }
-        });
+          if (ownershipType) {
+            const isOwnershipTypeFormValid = validateForm(ownershipType);
+            if (isOwnershipTypeFormValid) {
+              const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
+              if (ownershipTypeSelected === "SINGLEOWNER") {
+                const { ownerInfo } = form;
+                const isOwnerInfoFormValid = validateForm(ownerInfo);
+                if (isOwnerInfoFormValid) {
+                  callDraft();
+                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                } else {
+                  displayFormErrorsAction("ownerInfo");
+                }
+              } else if (ownershipTypeSelected === "MULTIPLEOWNERS") {
+                let ownerValidation = true;
+                for (const variable in form) {
+                  if (variable.search("ownerInfo_") !== -1) {
+                    const isDynamicFormValid = validateForm(form[variable]);
+                    if (!isDynamicFormValid) {
+                      displayFormErrorsAction(variable);
+                      ownerValidation = false;
+                    }
+                  }
+                }
+                if (ownerValidation) {
+                  callDraft();
+                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                }
+              } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
+                const { institutionDetails, institutionAuthority } = form;
+                const isInstitutionDetailsFormValid = validateForm(institutionDetails);
+                let institutionFormValid = true;
+                if (!isInstitutionDetailsFormValid) {
+                  displayFormErrorsAction("institutionDetails");
+                  institutionFormValid = false;
+                }
+                const isInstitutionAuthorityFormValid = validateForm(institutionAuthority);
+                if (!isInstitutionAuthorityFormValid) {
+                  displayFormErrorsAction("institutionAuthority");
+                  institutionFormValid = false;
+                }
+                if (institutionFormValid) {
+                  callDraft();
+                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                }
+              }
+            } else {
+              displayFormErrorsAction("ownershipType");
+            }
+          }
 
-        break;
+
+          break;
       case 3:
         pay();
         break;
