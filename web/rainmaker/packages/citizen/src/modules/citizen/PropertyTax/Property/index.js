@@ -255,14 +255,16 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
           },
         ],
         items: {
-          header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
-          values: units.map((floor) => {
-            return {
-              value: keys.map((key) => {
-                return transform(floor, key, generalMDMSDataById);
-              }),
-            };
-          }),
+          header: units ? ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"] : [],
+          values: units
+            ? units.map((floor) => {
+                return {
+                  value: keys.map((key) => {
+                    return transform(floor, key, generalMDMSDataById);
+                  }),
+                };
+              })
+            : [],
         },
       },
     ]

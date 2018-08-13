@@ -25,6 +25,7 @@ const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/Lin
 const PaymentRedirectPage = asyncComponent(() => import("modules/citizen/PropertyTax/Payment-rediect-page").then((module) => module.default));
 const HowItWorks = asyncComponent(() => import("modules/citizen/PropertyTax/HowItWorks").then((module) => module.default));
 const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
+const PTExamples = asyncComponent(() => import("modules/citizen/PropertyTax/PTExample").then((module) => module.default));
 
 const routes = [
   // property tax routes
@@ -180,6 +181,16 @@ const routes = [
       hideFooter: true,
       hideBackButton: true,
       title: "FAQs",
+    },
+  },
+  {
+    path: "property-tax/pt-examples",
+    component: PTExamples,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "Examples",
     },
   },
 ];

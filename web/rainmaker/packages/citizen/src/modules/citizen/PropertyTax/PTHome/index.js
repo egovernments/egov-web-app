@@ -77,6 +77,7 @@ class PTHome extends Component {
     },
     {
       primaryText: <Label label="PT_EXAMPLE" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
+      route: "/property-tax/pt-examples",
       leftIcon: (
         <div style={listIconStyle}>
           <Icon action="custom" name="pt-example" />
