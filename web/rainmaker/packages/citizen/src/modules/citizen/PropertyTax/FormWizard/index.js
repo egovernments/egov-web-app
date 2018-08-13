@@ -658,7 +658,7 @@ class FormWizard extends Component {
     }
 
     if (!!propertyId) {
-      set(prepareFormData, "Properties[0].propertId", propertyId);
+      set(prepareFormData, "Properties[0].propertyId", propertyId);
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
     }
 

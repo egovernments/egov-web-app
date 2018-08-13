@@ -116,12 +116,6 @@ const OwnerInformation = ({
               />
             </div>
             <div className="col-sm-6" style={{ paddingBottom: "4px", display: "flex", alignItems: "center" }}>
-              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              {fields["ownerCategoryId"] &&
-                fields["ownerCategoryId"].toolTip &&
-                !fields["ownerCategoryId"].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />}
-            </div>
-            <div className="col-sm-6" style={{ display: "flex", alignItems: "center" }}>
               <Field
                 fieldKey="ownerCategoryIdType"
                 field={fields["ownerCategoryIdType"]}
@@ -134,6 +128,12 @@ const OwnerInformation = ({
                 !fields["ownerCategoryIdType"].hideField && (
                   <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryIdType"].toolTipMessage} />
                 )}
+            </div>
+            <div className="col-sm-6" style={{ display: "flex", alignItems: "center" }}>
+              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              {fields["ownerCategoryId"] &&
+                fields["ownerCategoryId"].toolTip &&
+                !fields["ownerCategoryId"].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />}
             </div>
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
