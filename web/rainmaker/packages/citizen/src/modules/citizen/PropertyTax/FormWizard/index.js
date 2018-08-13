@@ -591,14 +591,35 @@ class FormWizard extends Component {
     }
   };
 
+  getMultipleOwnerInfo = () => {
+    const { form } = this.props
+    return Object.keys(form)
+      .filter(formkey => formkey.indexOf("ownerInfo_") !== -1)
+      .reduce((acc, curr, currIndex, arr) => {
+        const ownerData = [...acc]
+        const currForm = form[curr]
+        const ownerObj = {}
+        Object.keys(currForm.fields).map((field) => {
+          const jsonPath = currForm.fields[field].jsonPath
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined)
+        })
+        ownerData.push(ownerObj)
+        return ownerData
+      }, [])
+  }
+
   estimate = async () => {
-    let { prepareFormData, location } = this.props;
+    let { prepareFormData, location, form } = this.props;
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "")
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if(selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
       set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       //Remove null units and do sqyd to sqft conversion.
