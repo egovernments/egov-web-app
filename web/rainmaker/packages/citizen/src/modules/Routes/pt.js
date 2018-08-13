@@ -8,7 +8,6 @@ const IncompleteAssessments = asyncComponent(() => import("modules/citizen/Prope
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
 const Property = asyncComponent(() => import("modules/citizen/PropertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
-const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
 // const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
 //   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
 // );
@@ -24,6 +23,8 @@ const FormWizard = asyncComponent(() => import("modules/citizen/PropertyTax/Form
 const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/LinkPastPayments").then((module) => module.default));
 
 const PaymentRedirectPage = asyncComponent(() => import("modules/citizen/PropertyTax/Payment-rediect-page").then((module) => module.default));
+const HowItWorks = asyncComponent(() => import("modules/citizen/PropertyTax/HowItWorks").then((module) => module.default));
+const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
 
 const routes = [
   // property tax routes
@@ -80,7 +81,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/my-properties/property/:propertyId",
+    path: "property-tax/my-properties/property/:propertyId/:tenantId",
     component: Property,
     needsAuthentication: true,
     options: {
@@ -89,10 +90,11 @@ const routes = [
     },
   },
   {
-    path: "property-tax/my-properties/property/view-assessments/:propertyId",
+    path: "property-tax/my-properties/view-assessments/:propertyId",
     component: ViewAllAssessments,
     needsAuthentication: true,
     options: {
+      title: "View All Assessments",
       hideFooter: true,
       hideBackButton: true,
     },
@@ -168,6 +170,16 @@ const routes = [
       hideFooter: true,
       hideBackButton: true,
       hideTitle: true,
+    },
+  },
+  {
+    path: "property-tax/how-it-works",
+    component: HowItWorks,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "FAQs",
     },
   },
 ];

@@ -9,6 +9,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 
@@ -43,7 +44,7 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
+    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle, fetchProperties } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -82,6 +83,7 @@ class Property extends Component {
       "OccupancyType",
       "PropertyType",
     ]);
+    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     const { pathname } = location;
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
@@ -95,7 +97,7 @@ class Property extends Component {
       primaryText: (
         <div
           onClick={() => {
-            history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
+            history.push(`/property-tax/my-properties/view-assessments/${propertyId}`);
           }}
         >
           <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
@@ -152,7 +154,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history } = this.props;
+    const { urls, location, history, transformedAssessments } = this.props;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
@@ -164,7 +166,7 @@ class Property extends Component {
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         {
           <AssessmentList
-            items={this.getAssessmentListItems(this.props)}
+            items={transformedAssessments && this.getAssessmentListItems(this.props)}
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
             history={history}
@@ -177,36 +179,38 @@ class Property extends Component {
 }
 
 const getAddressInfo = (addressObj, extraItems) => {
-  return [
-    {
-      heading: "Property Address",
-      iconAction: "action",
-      iconName: "home",
-      items: [
-        {
-          key: " House No:",
-          value: addressObj.houseNo || "NA",
-        },
-        {
-          key: "Street Name:",
-          value: addressObj.street || "NA",
-        },
-        {
-          key: "Pincode:",
-          value: addressObj.pincode || "NA",
-        },
-        {
-          key: "Colony Name:",
-          value: addressObj.colonyName || "NA",
-        },
-        {
-          key: "Mohalla:",
-          value: addressObj.mohalla || "NA",
-        },
-        ...extraItems,
-      ],
-    },
-  ];
+  return (
+    addressObj && [
+      {
+        heading: "Property Address",
+        iconAction: "action",
+        iconName: "home",
+        items: [
+          {
+            key: " House No:",
+            value: addressObj.houseNo || "NA",
+          },
+          {
+            key: "Street Name:",
+            value: addressObj.street || "NA",
+          },
+          {
+            key: "Pincode:",
+            value: addressObj.pincode || "NA",
+          },
+          {
+            key: "Colony Name:",
+            value: addressObj.colonyName || "NA",
+          },
+          {
+            key: "Mohalla:",
+            value: addressObj.mohalla || "NA",
+          },
+          ...extraItems,
+        ],
+      },
+    ]
+  );
 };
 
 const transform = (floor, key, generalMDMSDataById) => {
@@ -229,54 +233,51 @@ const transform = (floor, key, generalMDMSDataById) => {
 };
 
 const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
-  const { units } = propertyDetails;
-  return [
-    {
-      heading: "Assessment Information",
-      iconAction: "action",
-      iconName: "assignment",
-      showTable: true,
-      tableHeaderItems: [
-        {
-          key: "Plot Size:",
-          value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
-        },
-        {
-          key: "Type of Building:",
-          value:
-            generalMDMSDataById && generalMDMSDataById["PropertyType"] && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
-              ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
-              : "NA",
-        },
-      ],
-      items: {
-        header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
-        values:
-          units &&
-          units.map((floor) => {
+  const { units } = propertyDetails || {};
+  return (
+    propertyDetails && [
+      {
+        heading: "Assessment Information",
+        iconAction: "action",
+        iconName: "assignment",
+        showTable: true,
+        tableHeaderItems: [
+          {
+            key: "Plot Size:",
+            value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
+          },
+          {
+            key: "Type of Building:",
+            value:
+              generalMDMSDataById && generalMDMSDataById["PropertyType"] && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
+                ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+                : "NA",
+          },
+        ],
+        items: {
+          header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
+          values: units.map((floor) => {
             return {
-              value:
-                keys &&
-                keys.map((key) => {
-                  return transform(floor, key, generalMDMSDataById);
-                }),
+              value: keys.map((key) => {
+                return transform(floor, key, generalMDMSDataById);
+              }),
             };
           }),
+        },
       },
-    },
-  ];
+    ]
+  );
 };
 
 const getOwnerInfo = (ownerDetails) => {
-  return [
-    {
-      heading: "Ownership Information",
-      iconAction: "social",
-      iconName: "person",
-      nestedItems: true,
-      items:
-        ownerDetails &&
-        ownerDetails.map((owner) => {
+  return (
+    ownerDetails && [
+      {
+        heading: "Ownership Information",
+        iconAction: "social",
+        iconName: "person",
+        nestedItems: true,
+        items: ownerDetails.map((owner) => {
           return {
             items: [
               {
@@ -310,17 +311,22 @@ const getOwnerInfo = (ownerDetails) => {
             ],
           };
         }),
-    },
-  ];
+      },
+    ]
+  );
 };
 
 const getLatestPropertyDetails = (propertyDetailsArray) => {
-  if (propertyDetailsArray.length > 1) {
-    return propertyDetailsArray.reduce((acc, curr) => {
-      return acc.assessmentDate > curr.assessmentDate ? acc : curr;
-    });
+  if (propertyDetailsArray) {
+    if (propertyDetailsArray.length > 1) {
+      return propertyDetailsArray.reduce((acc, curr) => {
+        return acc.assessmentDate > curr.assessmentDate ? acc : curr;
+      });
+    } else {
+      return propertyDetailsArray[0];
+    }
   } else {
-    return propertyDetailsArray[0];
+    return;
   }
 };
 
@@ -329,9 +335,9 @@ const mapStateToProps = (state, ownProps) => {
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
-  const selPropertyDetails = propertiesById[propertyId];
+  const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]);
+  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
@@ -339,10 +345,17 @@ const mapStateToProps = (state, ownProps) => {
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];
-  const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
-  const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
+  const assessmentInfo = generalMDMSDataById
+    ? latestPropertyDetails
+      ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
+      : []
+    : [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
+  const customTitle =
+    selPropertyDetails &&
+    selPropertyDetails.address &&
+    getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
 
   const { propertyDetails } = selPropertyDetails;
   let transformedAssessments =
@@ -364,6 +377,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
   };
 };
 
