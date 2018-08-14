@@ -67,7 +67,7 @@ export const getTransformedItems = (propertiesById, cities) => {
   );
 };
 
-export const getTransactionsforIncompleteAssessments = (payments) => {
+const getTransactionsforIncompleteAssessments = (payments) => {
   const failedTransactionsConsumercode =
     payments &&
     Object.values(payments).map((transaction) => {
@@ -106,7 +106,7 @@ export const getTransactionsforCompletedAssessments = (payments) => {
   );
 };
 
-export const getPropertiesByIdTransactions = (propertiesById, transactions) => {
+const getPropertiesByIdTransactions = (propertiesById, transactions) => {
   return (
     transactions &&
     Object.keys(transactions).reduce((result, moduleId) => {
@@ -132,7 +132,7 @@ const filterData = (propertiesById, propertyName, ids) => {
   };
 };
 
-export const mergeFinalData = (propertiesById, failedTransObj) => {
+const mergeFinalData = (propertiesById, failedTransObj) => {
   return (
     propertiesById &&
     Object.keys(propertiesById).reduce((result, current) => {
@@ -140,4 +140,10 @@ export const mergeFinalData = (propertiesById, failedTransObj) => {
       return result;
     }, {})
   );
+};
+
+export const getFinalAssessments = (failedPayments, propertiesById) => {
+  let failedTransObj = failedPayments && getTransactionsforIncompleteAssessments(failedPayments);
+  let failedProperties = failedTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, failedTransObj);
+  return failedProperties && mergeFinalData(failedProperties, failedTransObj);
 };

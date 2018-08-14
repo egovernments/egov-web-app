@@ -6,6 +6,7 @@ import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import { getFinalAssessments } from "../common/TransformedAssessments";
 import get from "lodash/get";
 import "./index.css";
 
@@ -97,7 +98,8 @@ class PTHome extends Component {
     (title || url) && url === "property-tax" && addBreadCrumbs({ title: "", path: "" });
     fetchProperties(
       [{ key: "accountId", value: userInfo.uuid }],
-      [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }]
+      [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }],
+      [{ key: "userUuid", value: userInfo.uuid }, { key: "txnStatus", value: "FAILURE" }]
     );
   };
 
@@ -175,9 +177,10 @@ class PTHome extends Component {
 
 const mapStateToProps = (state) => {
   const { properties } = state;
-  const { propertiesById, draftsById, loading } = properties || {};
+  const { propertiesById, draftsById, loading, failedPayments } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
-  // const numDrafts = draftsById && Object.keys(draftsById).length;
+  const mergedData = failedPayments && propertiesById && getFinalAssessments(failedPayments, propertiesById);
+  const numFailedPayments = mergedData && Object.keys(mergedData).length;
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
@@ -188,7 +191,7 @@ const mapStateToProps = (state) => {
     return result;
   }, []);
 
-  const numDrafts = transformedDrafts.length;
+  const numDrafts = transformedDrafts.length + numFailedPayments;
   return { numProperties, numDrafts, loading };
 };
 

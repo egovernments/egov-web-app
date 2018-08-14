@@ -31,7 +31,7 @@ class Dashboard extends Component {
       moduleSecondaryCaption: "How do i do?",
       borderLeftColor: { borderLeft: "4px solid #ffcc80" },
       iconAction: "custom",
-      iconName: "file-send",
+      iconName: "water-tap",
     },
   ];
   render() {

@@ -5,12 +5,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
-import {
-  getTransactionsforCompletedAssessments,
-  getPropertiesByIdTransactions,
-  mergeFinalData,
-  getTransformedItems,
-} from "../common/TransformedAssessments";
+import { getTransformedItems, getFinalAssessments } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
@@ -107,14 +102,8 @@ const mapStateToProps = (state) => {
   const { urls } = state.app;
   const { loading, propertiesById, successPayments } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
-
-  const successTransObj = getTransactionsforCompletedAssessments(successPayments);
-  const successProperties = successTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, successTransObj);
-  const mergedData = successProperties && mergeFinalData(successProperties, successTransObj);
-
+  const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
-
-  //const transformedProperties = getTransformedItems(propertiesById, cities);
   return { urls, completedAssessments, loading, numProperties };
 };
 

@@ -7,9 +7,11 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
-import { getTransactionsforIncompleteAssessments, getPropertiesByIdTransactions, mergeFinalData } from "../common/TransformedAssessments";
+
 import get from "lodash/get";
+import { getFinalAssessments } from "../common/TransformedAssessments";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+getFinalAssessments;
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -147,20 +149,7 @@ const mapStateToProps = (state) => {
   const { urls } = state.app;
   const { cities } = common;
   const { loading, draftsById, propertiesById, failedPayments } = properties || {};
-  // const failedTransactionsConsumercode =
-  //   failedPayments &&
-  //   Object.values(failedPayments).map((transaction) => {
-  //     return transaction.moduleId;
-  //   });
 
-  // const failedTransObj =
-  //   failedTransactionsConsumercode &&
-  //   failedTransactionsConsumercode.reduce((result, current) => {
-  //     if (!result[current.split(":")[0]]) result[current.split(":")[0]] = [];
-  //     result[current.split(":")[0]].push(current.split(":")[1]);
-  //     return result;
-  //   }, {});
-  const failedTransObj = getTransactionsforIncompleteAssessments(failedPayments);
   let transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
@@ -200,9 +189,7 @@ const mapStateToProps = (state) => {
     return result;
   }, []);
 
-  const failedProperties = failedTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, failedTransObj);
-  const mergedData = failedProperties && mergeFinalData(failedProperties, failedTransObj);
-
+  const mergedData = failedPayments && propertiesById && getFinalAssessments(failedPayments, propertiesById);
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData, cities);
   const incompleteAssessments = transformedDrafts && finalFailedTransactions && [...transformedDrafts, ...finalFailedTransactions];
 
