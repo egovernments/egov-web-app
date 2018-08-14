@@ -5,6 +5,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import formHoc from "egov-ui-kit/hocs/form";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import "./index.css";
 
 // const getYearList = () => {
@@ -51,6 +52,31 @@ class YearDialog extends Component {
     fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
   };
 
+  resetFormWizard = () => {
+    const { formKeys, removeForm } = this.props;
+    const formToReset = [
+      "basicInformation",
+      "propertyAddress",
+      "plotDetails",
+      "ownershipType",
+      "institutionAuthority",
+      "institutionDetails",
+      "cashInfo",
+      "paymentModes",
+      "receiptInfo",
+    ];
+    formKeys.forEach((formKey) => {
+      if (
+        formToReset.includes(formKey) ||
+        formKey.startsWith("ownerInfo") ||
+        formKey.startsWith("customSelect_") ||
+        formKey.startsWith("floorDetails_")
+      ) {
+        removeForm(formKey);
+      }
+    });
+  };
+
   render() {
     let { open, closeDialogue, getYearList, history } = this.props;
     return (
@@ -62,7 +88,10 @@ class YearDialog extends Component {
               <Label label="PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS" fontSize="16px" color="#484848" />
             </div>
             <div className="year-range-botton-cont">
-              {getYearList && Object.values(getYearList).map((item, index) => <YearDialogueHOC key={index} label={item} history={history} />)}
+              {getYearList &&
+                Object.values(getYearList).map((item, index) => (
+                  <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetFormWizard} />
+                ))}
             </div>
           </div>,
         ]}
@@ -76,16 +105,18 @@ class YearDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { common } = state;
+  const { common, form } = state;
   const { generalMDMSDataById } = common;
   const FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
   const getYearList = FinancialYear && Object.keys(FinancialYear);
-  return { getYearList };
+  const formKeys = Object.keys(form);
+  return { getYearList, formKeys };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    removeForm: (formkey) => dispatch(removeForm(formkey)),
   };
 };
 

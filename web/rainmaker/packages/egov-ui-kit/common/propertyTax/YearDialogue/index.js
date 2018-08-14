@@ -42,6 +42,8 @@ var _reactRedux = require("react-redux");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
+var _actions2 = require("egov-ui-kit/redux/form/actions");
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -98,12 +100,25 @@ var YearDialog = function (_Component) {
         }
       };
       fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
+    }, _this.resetFormWizard = function () {
+      var _this$props = _this.props,
+          formKeys = _this$props.formKeys,
+          removeForm = _this$props.removeForm;
+
+      var formToReset = ["basicInformation", "propertyAddress", "plotDetails", "ownershipType", "institutionAuthority", "institutionDetails", "cashInfo", "paymentModes", "receiptInfo"];
+      formKeys.forEach(function (formKey) {
+        if (formToReset.includes(formKey) || formKey.startsWith("ownerInfo") || formKey.startsWith("customSelect_") || formKey.startsWith("floorDetails_")) {
+          removeForm(formKey);
+        }
+      });
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(YearDialog, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           open = _props.open,
           closeDialogue = _props.closeDialogue,
@@ -124,7 +139,7 @@ var YearDialog = function (_Component) {
             "div",
             { className: "year-range-botton-cont" },
             getYearList && Object.values(getYearList).map(function (item, index) {
-              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history });
+              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history, resetFormWizard: _this2.resetFormWizard });
             })
           )
         )],
@@ -139,18 +154,23 @@ var YearDialog = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-  var common = state.common;
+  var common = state.common,
+      form = state.form;
   var generalMDMSDataById = common.generalMDMSDataById;
 
   var FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
   var getYearList = FinancialYear && Object.keys(FinancialYear);
-  return { getYearList: getYearList };
+  var formKeys = Object.keys(form);
+  return { getYearList: getYearList, formKeys: formKeys };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchGeneralMDMSData: function fetchGeneralMDMSData(requestBody, moduleName, masterName) {
       return dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, moduleName, masterName));
+    },
+    removeForm: function removeForm(formkey) {
+      return dispatch((0, _actions2.removeForm)(formkey));
     }
   };
 };
