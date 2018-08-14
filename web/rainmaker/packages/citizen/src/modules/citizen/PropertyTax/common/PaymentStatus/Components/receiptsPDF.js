@@ -242,7 +242,12 @@ const generateReceipt = (role, details) => {
           {
             style: "receipt-assess-table",
             table: {
-              widths: [60, 60, 60, 60, 60, 60, 60],
+              widths:
+                taxNew &&
+                taxNew[0] &&
+                taxNew[0].map((item) => {
+                  return "auto";
+                }),
 
               body: taxNew,
             },
@@ -350,7 +355,7 @@ const generateReceipt = (role, details) => {
       break;
     default:
   }
-  pdfMake.createPdf(data).download("citizenreceipt.pdf");
+  data && pdfMake.createPdf(data).download("citizenreceipt.pdf");
 };
 
 export default generateReceipt;

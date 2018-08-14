@@ -98,13 +98,14 @@ class CompletedAssessments extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { properties, common } = state;
+  const { properties, common, app } = state;
+  const { localizationLabels } = app;
   const { cities } = common;
   const { urls } = state.app;
   const { loading, propertiesById, successPayments } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
-  let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
+  let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);
   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
   return { urls, sortedProperties, loading, numProperties };
 };

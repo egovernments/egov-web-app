@@ -114,7 +114,7 @@ class PaymentFailure extends Component {
   }
 }
 
-const createPropertyUIInfo = (property) => {
+const createPropertyUIInfo = (property, cities) => {
   const { owners: ownerDetails } = property.propertyDetails[0];
   return {
     propertyInfo: property && [
@@ -135,17 +135,18 @@ const createPropertyUIInfo = (property) => {
       },
       {
         key: "Property Address:",
-        value: getCommaSeperatedAddress(property.address.buildingName, property.address.street),
+        value: getCommaSeperatedAddress(property.address, cities),
       },
     ],
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { properties } = state || {};
+  const { properties, common } = state || {};
+  const { cities } = common;
   const { propertiesById } = properties;
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
-  const { propertyInfo } = (selProperty && createPropertyUIInfo(selProperty)) || {};
+  const { propertyInfo } = (selProperty && selProperty && createPropertyUIInfo(selProperty, cities)) || {};
   return { propertyInfo };
 };
 

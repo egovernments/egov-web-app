@@ -17,7 +17,7 @@ const secondaryTextContainer = {
   marginTop: 5,
 };
 
-export const getTransformedItems = (propertiesById, cities) => {
+export const getTransformedItems = (propertiesById, cities, localizationLabels) => {
   return (
     propertiesById &&
     Object.values(propertiesById).reduce((acc, curr) => {
@@ -56,10 +56,14 @@ export const getTransformedItems = (propertiesById, cities) => {
             financialYear: item.financialYear,
             assessmentNo: item.assessmentNumber,
             propertyId: curr.propertyId,
+            propertyDetails: item,
+            property: curr,
+            tenantId: curr.tenantId,
             date: getDateFromEpoch(item.assessmentDate),
             status: "Paid",
             consumerCode: `${curr.propertyId}:${item.assessmentNumber}`,
             receipt: true,
+            localizationLabels: localizationLabels,
           };
         });
       acc = [...acc, ...propertyDetail];

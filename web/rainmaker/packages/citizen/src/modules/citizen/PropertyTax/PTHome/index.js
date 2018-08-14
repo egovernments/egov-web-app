@@ -63,7 +63,7 @@ class PTHome extends Component {
       ),
     },
     {
-      primaryText: <Label label="PT_HOW_IT_WORK" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
+      primaryText: <Label label="PT_FAQs" color="#484848" fontSize="16px" bold={true} labelStyle={labelStyle} />,
       route: "/property-tax/how-it-works",
       leftIcon: (
         <div style={listIconStyle}>
