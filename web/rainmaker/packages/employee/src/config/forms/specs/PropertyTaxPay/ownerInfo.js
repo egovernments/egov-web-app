@@ -14,7 +14,8 @@ const formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: "",
+      pattern: /^[a-zA-Z\s]{1,64}$/i,
+      errorMessage: "Enter valid name (max length 64)",
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -53,7 +54,7 @@ const formConfig = {
       hintText: "PT_FORM3_EMAIL_ID_PLACEHOLDER",
       errorMessage: "Enter valid email id",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^(([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      pattern: /^(?=^.{1,64}$)((([^<>()\[\]\\.,;:\s$*@'"]+(\.[^<>()\[\]\\.,;:\s@'"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))$/,
     },
     ownerAddress: {
       id: "ownerAddress",
@@ -62,6 +63,8 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 1-9A-Za-z]{1,128}$/,
+      errorMessage: "Enter valid address (max length 128)"
     },
     ownerRelationship: {
       id: "ownerRelationship",
