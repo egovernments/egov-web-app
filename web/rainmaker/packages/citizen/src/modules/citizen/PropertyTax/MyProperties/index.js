@@ -117,11 +117,11 @@ const mapStateToProps = (state) => {
       ),
       route: property.propertyId,
       tenantId: property.tenantId,
-      createdTime: property.auditDetails.createdTime,
+      modifiedTime: property.auditDetails.lastModifiedTime,
     };
   });
 
-  const sortedProperties = orderby(transformedProperties, ["createdTime"], ["asc"]);
+  const sortedProperties = orderby(transformedProperties, ["modifiedTime"], ["desc"]);
 
   return { urls, transformedProperties: sortedProperties, loading, numProperties };
 };

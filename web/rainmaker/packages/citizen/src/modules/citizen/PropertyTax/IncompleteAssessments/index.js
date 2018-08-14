@@ -7,7 +7,7 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
-
+import orderby from "lodash/orderBy";
 import get from "lodash/get";
 import { getFinalAssessments } from "../common/TransformedAssessments";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
@@ -52,15 +52,15 @@ class IncompleteAssessments extends Component {
   };
 
   render() {
-    const { urls, history, loading, incompleteAssessments } = this.props;
+    const { urls, history, loading, sortedProperties } = this.props;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
-        {incompleteAssessments && (
+        {sortedProperties && (
           <AssessmentList
             onItemClick={this.onListItemClick}
             history={history}
-            items={incompleteAssessments}
+            items={sortedProperties}
             innerDivStyle={innerDivStyle}
             noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE2"
             button={false}
@@ -131,6 +131,7 @@ const getTransformedItems = (propertiesById, cities) => {
                 />
               </div>
             ),
+            epocDate: get(item, "auditDetails.lastModifiedTime"),
             route: `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNumber}&isReassesment=true&propertyId=${
               curr.propertyId
             }`,
@@ -179,6 +180,7 @@ const mapStateToProps = (state) => {
             />
           </div>
         ),
+        epocDate: get(draft, "auditDetails.lastModifiedTime"),
         route: `/property-tax/assessment-form?FY=${financialYear}&assessmentId=${draft.id}`,
         financialYear: financialYear,
         assessmentNo: draft.id,
@@ -193,7 +195,9 @@ const mapStateToProps = (state) => {
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData, cities);
   const incompleteAssessments = transformedDrafts && finalFailedTransactions && [...transformedDrafts, ...finalFailedTransactions];
 
-  return { urls, loading, incompleteAssessments };
+  const sortedProperties = incompleteAssessments && orderby(incompleteAssessments, ["epocDate"], ["desc"]);
+
+  return { urls, loading, sortedProperties };
 };
 const mapDispatchToProps = (dispatch) => {
   return {

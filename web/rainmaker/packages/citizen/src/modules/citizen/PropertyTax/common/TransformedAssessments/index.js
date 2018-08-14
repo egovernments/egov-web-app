@@ -52,6 +52,7 @@ export const getTransformedItems = (propertiesById, cities) => {
                 />
               </div>
             ),
+            epocDate: item.assessmentDate,
             financialYear: item.financialYear,
             assessmentNo: item.assessmentNumber,
             propertyId: curr.propertyId,
@@ -142,8 +143,11 @@ const mergeFinalData = (propertiesById, failedTransObj) => {
   );
 };
 
-export const getFinalAssessments = (failedPayments, propertiesById) => {
-  let failedTransObj = failedPayments && getTransactionsforIncompleteAssessments(failedPayments);
+export const getFinalAssessments = (payments, propertiesById) => {
+  let url = window.location.pathname.includes("completed-assessments");
+  let failedTransObj = url
+    ? payments && getTransactionsforCompletedAssessments(payments)
+    : payments && getTransactionsforIncompleteAssessments(payments);
   let failedProperties = failedTransObj && propertiesById && getPropertiesByIdTransactions(propertiesById, failedTransObj);
   return failedProperties && mergeFinalData(failedProperties, failedTransObj);
 };

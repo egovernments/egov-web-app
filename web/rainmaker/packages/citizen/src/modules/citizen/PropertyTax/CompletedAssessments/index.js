@@ -8,6 +8,7 @@ import { BreadCrumbs } from "components";
 import { getTransformedItems, getFinalAssessments } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -75,14 +76,14 @@ class CompletedAssessments extends Component {
   };
 
   render() {
-    const { urls, history, loading, completedAssessments } = this.props;
+    const { urls, history, loading, sortedProperties } = this.props;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
-        {completedAssessments && (
+        {sortedProperties && (
           <AssessmentList
             innerDivStyle={innerDivStyle}
-            items={completedAssessments}
+            items={sortedProperties}
             noAssessmentMessage="PT_NO_ASSESSMENT_MESSAGE1"
             button={true}
             history={history}
@@ -104,7 +105,8 @@ const mapStateToProps = (state) => {
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities);
-  return { urls, completedAssessments, loading, numProperties };
+  const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  return { urls, sortedProperties, loading, numProperties };
 };
 
 const mapDispatchToProps = (dispatch) => {
