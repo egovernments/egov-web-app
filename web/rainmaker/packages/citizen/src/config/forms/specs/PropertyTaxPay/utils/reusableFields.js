@@ -125,7 +125,7 @@ export const superArea = {
   superArea: {
     id: "assessment-super-area",
     jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
-    type: "textfield",
+    type: "number",
     floatingLabelText: "PT_FORM2_TOTAL_BUILT_AREA",
     hintText: "PT_FORM2_TOTAL_BUILT_AREA_PLACEHOLDER",
     ErrorText: "Enter a valid super area size",
@@ -138,7 +138,7 @@ export const superArea = {
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
     },
-    pattern: "^[1-9][0-9]{0,7}$",
+    pattern: /^\d{0,8}(\.\d{1,2})?$/,
     errorMessage: "Enter a valid super area size",
   },
 };
