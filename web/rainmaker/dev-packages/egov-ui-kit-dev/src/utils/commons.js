@@ -347,7 +347,7 @@ export const getCommaSeperatedAddress = (address, cities) => {
     });
   const addressKeys = ["doorNo", "buildingName", "street"];
   let addressArray = addressKeys.reduce((result, curr) => {
-    if (address[curr]) {
+    if (address && address[curr]) {
       result.push(address[curr]);
     }
     return [...result];

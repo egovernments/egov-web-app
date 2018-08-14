@@ -715,13 +715,7 @@ class FormWizard extends Component {
   };
 
   changeDateToFormat = (date) => {
-    const dateObj = new Date(date);
-    let year = dateObj.getFullYear();
-    let month = dateObj.getMonth() + 1;
-    let dt = dateObj.getDate();
-    dt = dt < 10 ? "0" + dt : dt;
-    month = month < 10 ? "0" + month : month;
-    return dt + "-" + month + "-" + year;
+    return new Date(date).getTime();
   };
 
   createReceipt = async () => {
@@ -732,13 +726,10 @@ class FormWizard extends Component {
     if (!get(prepareFormData, "Receipt[0].instrument.instrumentType.name")) {
       set(prepareFormData, "Receipt[0].instrument.instrumentType.name", "Cash");
     }
-    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid); //hardcoded -- needs to change
-    get(prepareFormData, "Receipt[0].instrument.transactionDate") &&
-      set(
-        prepareFormData,
-        "Receipt[0].instrument.transactionDate",
-        this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDate"))
-      );
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
+    set(prepareFormData, "Receipt[0].instrument.tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
+    get(prepareFormData, "Receipt[0].instrument.transactionDateInput") &&
+      set(prepareFormData, "Receipt[0].instrument.transactionDateInput", this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput")));
     set(prepareFormData, "Receipt[0].instrument.amount", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     const formData = {

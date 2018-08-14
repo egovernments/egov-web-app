@@ -422,7 +422,7 @@ var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCo
   });
   var addressKeys = ["doorNo", "buildingName", "street"];
   var addressArray = addressKeys.reduce(function (result, curr) {
-    if (address[curr]) {
+    if (address && address[curr]) {
       result.push(address[curr]);
     }
     return [].concat((0, _toConsumableArray3.default)(result));

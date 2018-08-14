@@ -4,6 +4,7 @@ import { DatePicker } from "components";
 import "./index.css";
 
 const changeDateToFormat = (date) => {
+  console.log(date);
   const dateObj = new Date(date);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
@@ -93,10 +94,10 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
           <DatePicker
             onChange={(first, object) => {
               let e = { target: { value: object } };
-              handleFieldChange("chequeDate", e.target.value);
+              handleFieldChange("demandDate", e.target.value);
             }}
             formatDate={(date) => changeDateToFormat(date)}
-            {...fields.chequeDate}
+            {...fields.demandDate}
           />
         </div>
         <div className="col-sm-6 general-field-padding">
