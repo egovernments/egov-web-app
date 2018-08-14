@@ -14,6 +14,7 @@ const formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+      pattern: "^[a-zA-Z]{1,64}$",
     },
     ownerMobile: {
       id: "ownerMobile",
@@ -95,7 +96,7 @@ const formConfig = {
                 masterDetails: [
                   {
                     name: "OwnerType",
-                    filter: "[?(@.fromFY=='2013-14')]", //year value for this filter should be dynamic.
+                    filter: "[?(@.fromFY=='2015-16')]", //year value for this filter should be dynamic.
                   },
                 ],
               },
@@ -146,12 +147,12 @@ const formConfig = {
         const { value } = sourceField;
         if (value === "Aadhar") {
           dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", /^[0-9]{12}$/i));
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", "Enter valid 12 digits aadhar no"))
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", "Enter valid 12 digits aadhar no"));
         } else {
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", ""))
-          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", ""))
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "pattern", ""));
+          dispatch(setFieldProperty(formKey, "ownerCategoryId", "errorMessage", ""));
         }
-      }
+      },
     },
     ownerGender: {
       id: "ownerGender",
