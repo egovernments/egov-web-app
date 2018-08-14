@@ -24,12 +24,14 @@ var SingleButtonForm = function SingleButtonForm(_ref) {
   var label = _ref.label,
       form = _ref.form,
       handleFieldChange = _ref.handleFieldChange,
-      history = _ref.history;
+      history = _ref.history,
+      resetFormWizard = _ref.resetFormWizard;
 
   var fields = form.fields || {};
   return _react2.default.createElement(_components.Button, (0, _extends3.default)({}, fields.button, {
     onClick: function onClick() {
       handleFieldChange("button", label);
+      resetFormWizard();
       history && history.push("/property-tax/assessment-form?FY=" + label + "&type=new");
     },
     className: "year-range-button",
