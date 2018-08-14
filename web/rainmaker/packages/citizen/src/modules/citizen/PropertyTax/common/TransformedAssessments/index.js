@@ -2,7 +2,7 @@ import React from "react";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
-import { getAddress } from "egov-ui-kit/utils/commons";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { fail } from "assert";
 
 const secondaryTextLabelStyle = {
@@ -21,9 +21,8 @@ export const getTransformedItems = (propertiesById, cities) => {
   return (
     propertiesById &&
     Object.values(propertiesById).reduce((acc, curr) => {
-      const cityValue = get(curr, "address.city");
-      const mohalla = get(curr, "address.locality.code");
       const propertyDetail =
+        curr &&
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
           return {
@@ -40,7 +39,7 @@ export const getTransformedItems = (propertiesById, cities) => {
                   color="#484848"
                 />
                 <Label
-                  label={getAddress(cities, cityValue, mohalla)}
+                  label={getCommaSeperatedAddress(curr.address, cities)}
                   containerStyle={secondaryTextContainer}
                   labelStyle={secondaryTextLabelStyle}
                   color="#484848"
