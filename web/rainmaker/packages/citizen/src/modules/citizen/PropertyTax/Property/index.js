@@ -334,6 +334,8 @@ const getLatestPropertyDetails = (propertyDetailsArray) => {
 
 const mapStateToProps = (state, ownProps) => {
   const { urls } = state.app;
+  const { common } = state;
+  const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
@@ -354,11 +356,8 @@ const mapStateToProps = (state, ownProps) => {
     : [];
   const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  const customTitle =
-    selPropertyDetails &&
-    selPropertyDetails.address &&
-    getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-
+  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  console.log(customTitle);
   const { propertyDetails } = selPropertyDetails;
   let transformedAssessments =
     propertyDetails &&

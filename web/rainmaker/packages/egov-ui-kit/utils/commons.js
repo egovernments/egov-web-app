@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -354,9 +354,9 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
-var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(buildingName, street) {
-  return buildingName && street ? buildingName + ", " + street : "NA";
-};
+// export const getCommaSeperatedAddress = (buildingName, street) => {
+//   return buildingName && street ? `${buildingName}, ${street}` : "NA";
+// };
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
   var transformedStatus = "";
@@ -410,14 +410,25 @@ var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHour
   }
 };
 
-var getAddress = exports.getAddress = function getAddress(cities, cityValue, mohalla) {
+var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
+  var name = address ? address.locality.name : "";
+  var cityValue = address ? address.city : "";
+  var pincode = address ? address.pincode : "";
   var cityName = "";
   cities && cities.forEach(function (city) {
     if (city.code === cityValue) {
       cityName = city.name;
     }
   });
-  return getCommaSeperatedAddress(cityName, mohalla);
+  var addressKeys = ["doorNo", "buildingName", "street"];
+  var addressArray = addressKeys.reduce(function (result, curr) {
+    if (address[curr]) {
+      result.push(address[curr]);
+    }
+    return [].concat((0, _toConsumableArray3.default)(result));
+  }, []);
+  addressArray = pincode ? [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName, pincode]) : [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName]);
+  return addressArray.join(" , ");
 };
 
 var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCreationTime(complaint) {

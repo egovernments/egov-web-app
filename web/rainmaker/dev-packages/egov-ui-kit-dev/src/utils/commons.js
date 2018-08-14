@@ -278,9 +278,9 @@ const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
-export const getCommaSeperatedAddress = (buildingName, street) => {
-  return buildingName && street ? `${buildingName}, ${street}` : "NA";
-};
+// export const getCommaSeperatedAddress = (buildingName, street) => {
+//   return buildingName && street ? `${buildingName}, ${street}` : "NA";
+// };
 
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
@@ -334,7 +334,10 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
   }
 };
 
-export const getAddress = (cities, cityValue, mohalla) => {
+export const getCommaSeperatedAddress = (address, cities) => {
+  let name = address ? address.locality.name : "";
+  let cityValue = address ? address.city : "";
+  let pincode = address ? address.pincode : "";
   let cityName = "";
   cities &&
     cities.forEach((city) => {
@@ -342,7 +345,15 @@ export const getAddress = (cities, cityValue, mohalla) => {
         cityName = city.name;
       }
     });
-  return getCommaSeperatedAddress(cityName, mohalla);
+  const addressKeys = ["doorNo", "buildingName", "street"];
+  let addressArray = addressKeys.reduce((result, curr) => {
+    if (address[curr]) {
+      result.push(address[curr]);
+    }
+    return [...result];
+  }, []);
+  addressArray = pincode ? [...addressArray, name, cityName, pincode] : [...addressArray, name, cityName];
+  return addressArray.join(" , ");
 };
 
 export const getLatestCreationTime = (complaint) => {

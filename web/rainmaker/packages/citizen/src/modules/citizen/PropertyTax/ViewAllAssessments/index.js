@@ -59,8 +59,9 @@ class ViewAllAssessments extends Component {
           <AssessmentList
             innerDivStyle={innerDivStyle}
             items={transformedItems}
-            noAssessmentMessage="You have no complete assessments."
+            noAssessmentMessage="You have no past assessments."
             button={true}
+            history={history}
             yearDialogue={this.state.dialogueOpen}
             closeDialogue={this.closeYearRangeDialogue}
             onNewPropertyButtonClick={this.onNewPropertyButtonClick}
@@ -72,13 +73,14 @@ class ViewAllAssessments extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { properties } = state;
+  const { properties, common } = state;
+  const { cities } = common;
   const { urls } = state.app;
   const { loading, propertiesById } = properties || {};
   const propertyId = ownProps.match.params.propertyId;
   const selPropertyDetails = propertiesById[propertyId];
-  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-  const transformedItems = getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
+  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  const transformedItems = selPropertyDetails && getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
 
   return { urls, loading, transformedItems, urls, customTitle };
 };

@@ -9,7 +9,7 @@ import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import { getTransactionsforIncompleteAssessments, getPropertiesByIdTransactions, mergeFinalData } from "../common/TransformedAssessments";
 import get from "lodash/get";
-import { getAddress } from "egov-ui-kit/utils/commons";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const secondaryTextLabelStyle = {
   letterSpacing: 0.5,
@@ -106,8 +106,6 @@ const getTransformedItems = (propertiesById, cities) => {
   return (
     propertiesById &&
     Object.values(propertiesById).reduce((acc, curr) => {
-      const cityValue = get(curr, "address.city");
-      const mohalla = get(curr, "address.locality.code");
       const propertyDetail =
         curr.propertyDetails &&
         curr.propertyDetails.map((item) => {
@@ -116,7 +114,7 @@ const getTransformedItems = (propertiesById, cities) => {
             secondaryText: (
               <div style={{ height: "auto" }}>
                 <Label
-                  label={getAddress(cities, cityValue, mohalla)}
+                  label={getCommaSeperatedAddress(curr.address, cities)}
                   labelStyle={secondaryTextLabelStyle}
                   fontSize="14px"
                   containerStyle={secondaryTextContainer}
@@ -168,15 +166,23 @@ const mapStateToProps = (state) => {
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
       get(draft, "draftRecord.financialYear.fields.button.value")
     ) {
-      const cityValue = get(draft, "draftRecord.propertyAddress.fields.city.value");
-      const mohalla = get(draft, "draftRecord.propertyAddress.fields.mohalla.value");
+      const address = {
+        doorNo: get(draft, "draftRecord.propertyAddress.fields.houseNumber.value"),
+        buildingName: get(draft, "draftRecord.propertyAddress.fields.colony.value"),
+        street: get(draft, "draftRecord.propertyAddress.fields.street.value"),
+        pincode: get(draft, "draftRecord.propertyAddress.fields.pincode.value"),
+        locality: {
+          name: get(draft, "draftRecord.propertyAddress.fields.mohalla.value"),
+        },
+        city: get(draft, "draftRecord.propertyAddress.fields.city.value"),
+      };
       const financialYear = get(draft, "draftRecord.financialYear.fields.button.value");
       result.push({
         primaryText: <Label label={financialYear} fontSize="16px" color="#484848" labelStyle={primaryTextLabelStyle} bold={true} />,
         secondaryText: (
           <div style={{ height: "auto" }}>
             <Label
-              label={getAddress(cities, cityValue, mohalla)}
+              label={getCommaSeperatedAddress(address, cities)}
               labelStyle={secondaryTextLabelStyle}
               fontSize="14px"
               containerStyle={secondaryTextContainer}
