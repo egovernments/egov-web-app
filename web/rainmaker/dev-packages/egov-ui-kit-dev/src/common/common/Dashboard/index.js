@@ -8,32 +8,24 @@ class Dashboard extends Component {
   moduleData = [
     {
       moduleTitle: "Complaints",
-      moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-      modulePrimaryCaption: "COMPLAINTS HOME",
-      moduleSecondaryCaption: "How do i do?",
+      moduleDescription:
+        "mSeva Complaints offers an easy to use interface which enables you to lodge civic works related complaints. It also lets you track the status of your complaint and facilitates direct interaction with your municipality till its resolution.",
+      button1: "COMPLAINTS HOME",
+      button2: "How do i do?",
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
       iconName: "file-send",
     },
     {
       moduleTitle: "Property Tax",
-      moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-      modulePrimaryCaption: "PT HOME",
-      moduleSecondaryCaption: "How do i do?",
+      moduleDescription: "Assess, pay and track your Property Taxes online with mSeva Property Tax.",
+      button1: "PT HOME",
+      button2: "How do i do?",
       borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       iconName: "file-send",
       route: "property-tax",
     },
-    // {
-    //   moduleTitle: "Water & Sewerage",
-    //   moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-    //   modulePrimaryCaption: "Pay",
-    //   moduleSecondaryCaption: "How do i do?",
-    //   borderLeftColor: { borderLeft: "4px solid #ffcc80" },
-    //   iconAction: "custom",
-    //   iconName: "water-tap",
-    // },
   ];
 
   onButton1Click = (item) => {
@@ -45,10 +37,12 @@ class Dashboard extends Component {
   };
   onButton2Click = (item) => {
     const { history } = this.props;
-    if (item.moduleTitle === "Property Tax") {
-      history && history.push("property-tax/how-it-works");
-    } else if (item.moduleTitle === "Complaints") {
-      history && history.push("how-it-works");
+    let userType = JSON.parse(localStorage.getItem("user-info")).type;
+
+    if (userType === "CITIZEN") {
+      if (item.moduleTitle === "Property Tax") {
+        history && history.push("property-tax/how-it-works");
+      }
     }
   };
 

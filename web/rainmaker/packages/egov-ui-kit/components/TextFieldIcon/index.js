@@ -95,7 +95,7 @@ var TextFieldIcon = function TextFieldIcon(_ref) {
     { onClick: onClick, style: containerStyle },
     text ? _react2.default.createElement(
       "div",
-      { onClick: onIconClick },
+      { onClick: onIconClick, style: { cursor: "pointer" } },
       _react2.default.createElement(_translationNode2.default, { className: "textfield-text", label: text, labelStyle: (0, _extends3.default)({}, style.iconStyle, iconStyle, { top: 36 }) })
     ) : _react2.default.createElement(TargetIcon, { onClick: onIconClick, style: (0, _extends3.default)({}, style.iconStyle, iconStyle) }),
     _react2.default.createElement(_TextField2.default, (0, _extends3.default)({

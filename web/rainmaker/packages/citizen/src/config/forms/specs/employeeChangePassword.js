@@ -41,7 +41,7 @@ const formConfig = {
     id: "employee-change-password-submit-action",
   },
   saveUrl: "/user/password/_update",
-  redirectionRoute: "/all-complaints",
+  redirectionRoute: "/landing-page",
   action: "_update",
 };
 

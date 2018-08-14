@@ -61,16 +61,17 @@ const OwnerInformation = ({
         <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
-            {!disabled && deleteBtn && (
-              <div
-                className="pt-ownerinfo-deletebtn"
-                onClick={() => {
-                  handleRemoveOwner(formId, formKey);
-                }}
-              >
-                <Icon action="content" name="clear" />
-              </div>
-            )}
+            {!disabled &&
+              deleteBtn && (
+                <div
+                  className="pt-ownerinfo-deletebtn"
+                  onClick={() => {
+                    handleRemoveOwner(formId, formKey);
+                  }}
+                >
+                  <Icon action="content" name="clear" />
+                </div>
+              )}
           </div>
           <div className={`${formKey} col-sm-12`}>
             <div className="col-sm-6">
@@ -151,61 +152,6 @@ const OwnerInformation = ({
               />
             </div>
           </div>
-          {/* <div className="owner-details-form">
-            <div className="name-address">
-              <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field
-                fieldKey="ownerCategory"
-                field={fields["ownerCategory"]}
-                handleFieldChange={handleFieldChange}
-                disabled={disabled}
-                className="ownerCategory"
-              />
-              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field
-                fieldKey="isSameAsPropertyAddress"
-                field={fields.isSameAsPropertyAddress}
-                handleFieldChange={handleFieldChange}
-                disabled={disabled}
-                containerClassName="property-corr"
-              />
-            </div>
-            <div className="other-details">
-              <div>
-                <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
-                <RadioButton
-                  id="gender-selection"
-                  name="gender-selection"
-                  options={options}
-                  handleChange={(e) => {
-                    handleFieldChange("ownerGender", e.target.value);
-                  }}
-                  radioButtonItemStyle={styles.radioButtonItemStyle}
-                  labelStyle={styles.radioButtonLabelStyle}
-                  selectedLabelStyle={styles.selectedLabelStyle}
-                  className={"owner-gender-selection"}
-                  iconStyle={styles.iconStyle}
-                  valueSelected={genderSelected}
-                  disabled={disabled}
-                />
-              </div>
-              <div className="relationship-details">
-                <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-                <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              </div>
-              <Field
-                fieldKey="ownerCategoryIdType"
-                field={fields["ownerCategoryIdType"]}
-                handleFieldChange={handleFieldChange}
-                disabled={disabled}
-                className="ownerCategoryIdType"
-              />
-              <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-            </div>
-          </div> */}
         </div>
       }
     />
