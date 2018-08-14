@@ -7,7 +7,9 @@ const formConfig = {
       floatingLabelText: "Last 4 digits",
       hintText: "Enter last 4 digits of the card",
       required: true,
+      pattern: "^([0-9]){4}$",
       jsonPath: "Receipt[0].instrument.instrumentNumber",
+      errorMessage: "Enter 4 digits",
     },
     receiptNo: {
       id: "receiptNo",

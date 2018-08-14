@@ -7,6 +7,8 @@ const formConfig = {
       floatingLabelText: "Demand draft No",
       hintText: "Enter cheque no.",
       jsonPath: "Receipt[0].instrument.transactionNumber",
+      pattern: /^([1-9]\d{6,15})(\.\d+)?$/,
+      errorMessage: "DD should be minimum 6 digits",
       required: true,
     },
     demandDate: {
