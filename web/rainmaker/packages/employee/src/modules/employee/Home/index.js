@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.history.push("/all-complaints");
+    this.props.history.push("/landing-page");
   }
   render() {
     return (

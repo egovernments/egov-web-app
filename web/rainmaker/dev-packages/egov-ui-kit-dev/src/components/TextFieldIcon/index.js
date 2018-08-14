@@ -59,7 +59,7 @@ const TextFieldIcon = ({
   return (
     <div onClick={onClick} style={containerStyle}>
       {text ? (
-        <div onClick={onIconClick}>
+        <div onClick={onIconClick} style={{ cursor: "pointer" }}>
           <Label className="textfield-text" label={text} labelStyle={{ ...style.iconStyle, ...iconStyle, top: 36 }} />
         </div>
       ) : (

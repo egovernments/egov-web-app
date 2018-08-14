@@ -9,6 +9,7 @@ import { ReOpenComplaint } from "modules/common";
 import { ReopenAcknowledgement } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
+import { Dashboard } from "modules/common";
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
@@ -28,7 +29,6 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
-import FormWizard from "modules/employee/PropertyTax/FormWizard";
 
 //pt
 import ptRoutes from "./pt";
@@ -42,13 +42,13 @@ const routes = [
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
+    redirectionUrl: "/landing-page",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
+    redirectionUrl: "/landing-page",
   },
   {
     path: "privacy-policy",
@@ -81,6 +81,16 @@ const routes = [
       hideFor: "ao",
       customFor: "csr",
       customTitle: "ES_ALL_COMPLAINTS_HEADER",
+    },
+  },
+  {
+    path: "landing-page",
+    component: Dashboard,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      redirectionUrl,
+      isHomeScreen: true,
     },
   },
   {

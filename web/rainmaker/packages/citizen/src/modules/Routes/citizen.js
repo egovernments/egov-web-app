@@ -7,7 +7,7 @@ import Profile from "modules/citizen/User/Profile";
 
 // common screens
 import PGRHome from "modules/citizen/Home";
-import Dashboard from "modules/citizen/Dashboard";
+import { Dashboard } from "modules/common";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import { ImageModalDisplay } from "modules/common";
