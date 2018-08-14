@@ -20,7 +20,7 @@ export const plotSize = {
     type: "number",
     floatingLabelText: "PT_FORM2_PLOT_SIZE",
     hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
-    errorMessage: "Plot Size can be maximum 8 digits",
+    errorMessage: "Enter a valid Plot Size",
     required: true,
     fullWidth: true,
     pattern: "^[1-9][0-9]{0,7}$",
