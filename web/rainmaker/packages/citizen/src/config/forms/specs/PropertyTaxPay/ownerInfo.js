@@ -14,7 +14,7 @@ const formConfig = {
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: "^[a-zA-Z]{1,64}$",
+      pattern: "",
     },
     ownerMobile: {
       id: "ownerMobile",
