@@ -46,8 +46,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (username, password, usertype) => dispatch(loginUser(username, password, usertype)),
+  loginUser: (username, password, usertype) =>
+    dispatch(loginUser(username, password, usertype)),
   userLoginSuccess: () => dispatch(userLoginSuccess())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppContainer);

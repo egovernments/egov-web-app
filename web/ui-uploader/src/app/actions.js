@@ -28,7 +28,7 @@ export const userLoginFailure = error => {
   return { type: actionTypes.USER_LOGIN_FAILURE, error };
 };
 
-export const loginUser = (username, password, usertype,history) => {
+export const loginUser = (username, password, usertype, history) => {
   return async dispatch => {
     dispatch(initiateUserLogin());
     try {

@@ -82,7 +82,7 @@ export const Api = () => {
     requestFileName,
     moduleName,
     defName
-  ) => {  
+  ) => {
     const requestBody = prepareRequestBody.jobCreateRequest(
       requestFilePath,
       requestFileName,
@@ -90,11 +90,13 @@ export const Api = () => {
       defName
     );
     requestBody.RequestInfo.authToken = fetchFromLocalStorage("token");
-    for (var i=0;i<requestBody.UploadJobs.length;i++){
+    for (var i = 0; i < requestBody.UploadJobs.length; i++) {
       requestBody.UploadJobs[i].tenantId = tenantId;
     }
     console.log(JSON.parse(fetchFromLocalStorage("userRequest")));
-    requestBody.RequestInfo.userInfo = JSON.parse(fetchFromLocalStorage("userRequest"));
+    requestBody.RequestInfo.userInfo = JSON.parse(
+      fetchFromLocalStorage("userRequest")
+    );
     const endPoint = apiEndpoints.CREATE_JOB_ENDPOINT;
 
     try {
@@ -110,8 +112,15 @@ export const Api = () => {
   const loginUser = async (username, password, userType) => {
     const grant_type = "password";
     const scope = "read";
-    const tenantId = "pb.amritsar";
-    const requestParams = { tenantId, username, password, scope, grant_type, userType };
+    // const tenantId = "pb.amritsar";
+    const requestParams = {
+      tenantId,
+      username,
+      password,
+      scope,
+      grant_type,
+      userType
+    };
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0"
