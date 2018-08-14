@@ -175,12 +175,30 @@ class PTHome extends Component {
   }
 }
 
+const getTransformedItems = (propertiesById) => {
+  return (
+    propertiesById &&
+    Object.values(propertiesById).reduce((acc, curr) => {
+      const propertyDetail =
+        curr.propertyDetails &&
+        curr.propertyDetails.map((item) => {
+          return {
+            consumerCode: `${curr.propertyId}:${item.assessmentNumber}`,
+          };
+        });
+      acc = [...acc, ...propertyDetail];
+      return acc;
+    }, [])
+  );
+};
+
 const mapStateToProps = (state) => {
   const { properties } = state;
   const { propertiesById, draftsById, loading, failedPayments } = properties || {};
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = failedPayments && propertiesById && getFinalAssessments(failedPayments, propertiesById);
-  const numFailedPayments = mergedData && Object.keys(mergedData).length;
+  let finalFailedTransactions = mergedData && getTransformedItems(mergedData);
+  const numFailedPayments = finalFailedTransactions && Object.keys(finalFailedTransactions).length;
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&
