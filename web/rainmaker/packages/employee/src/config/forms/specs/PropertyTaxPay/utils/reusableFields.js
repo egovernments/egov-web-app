@@ -22,7 +22,7 @@ export const plotSize = {
     hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
     errorMessage: "Enter a valid Plot Size",
     required: true,
-    pattern: "^[1-9][0-9]{0,7}$",
+    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     numcols: 4,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
@@ -115,7 +115,7 @@ export const builtArea = {
     required: true,
     hideField: false,
     numcols: 4,
-    pattern: "^[1-9][0-9]{0,7}$",
+    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
   },
 };
 
@@ -131,7 +131,7 @@ export const annualRent = {
     toolTip: true,
     toolTipMessage: "PT_TOTAL_ANNUAL_RENT_TOOLTIP_MESSAGE",
     required: true,
-    pattern: "^[1-9][0-9]{0,7}$",
+    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     hideField: true,
     numcols: 4,
   },
@@ -154,7 +154,7 @@ export const superArea = {
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
     },
-    pattern: "^[1-9][0-9]{0,7}$",
+    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     errorMessage: "Enter a valid super area size",
   },
 };

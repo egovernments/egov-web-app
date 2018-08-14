@@ -469,72 +469,71 @@ class FormWizard extends Component {
           }
         }
         break;
-        case 2:
-          const { ownershipType } = form;
-          const estimateCall=()=>{
-            estimate().then((estimateResponse) => {
-              if (estimateResponse) {
-                this.setState({
-                  estimation: estimateResponse && estimateResponse.Calculation,
-                  totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
-                  valueSelected: "Full_Amount",
-                });
+      case 2:
+        const { ownershipType } = form;
+        const estimateCall = () => {
+          estimate().then((estimateResponse) => {
+            if (estimateResponse) {
+              this.setState({
+                estimation: estimateResponse && estimateResponse.Calculation,
+                totalAmountToBePaid: estimateResponse && estimateResponse.Calculation && estimateResponse.Calculation[0].totalAmount,
+                valueSelected: "Full_Amount",
+              });
+            }
+          });
+        };
+        if (ownershipType) {
+          const isOwnershipTypeFormValid = validateForm(ownershipType);
+          if (isOwnershipTypeFormValid) {
+            const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
+            if (ownershipTypeSelected === "SINGLEOWNER") {
+              const { ownerInfo } = form;
+              const isOwnerInfoFormValid = validateForm(ownerInfo);
+              if (isOwnerInfoFormValid) {
+                callDraft();
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
+              } else {
+                displayFormErrorsAction("ownerInfo");
               }
-            });
-          }
-          if (ownershipType) {
-            const isOwnershipTypeFormValid = validateForm(ownershipType);
-            if (isOwnershipTypeFormValid) {
-              const ownershipTypeSelected = get(ownershipType, "fields.typeOfOwnership.value");
-              if (ownershipTypeSelected === "SINGLEOWNER") {
-                const { ownerInfo } = form;
-                const isOwnerInfoFormValid = validateForm(ownerInfo);
-                if (isOwnerInfoFormValid) {
-                  callDraft();
-                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
-                } else {
-                  displayFormErrorsAction("ownerInfo");
-                }
-              } else if (ownershipTypeSelected === "MULTIPLEOWNERS") {
-                let ownerValidation = true;
-                for (const variable in form) {
-                  if (variable.search("ownerInfo_") !== -1) {
-                    const isDynamicFormValid = validateForm(form[variable]);
-                    if (!isDynamicFormValid) {
-                      displayFormErrorsAction(variable);
-                      ownerValidation = false;
-                    }
+            } else if (ownershipTypeSelected === "MULTIPLEOWNERS") {
+              let ownerValidation = true;
+              for (const variable in form) {
+                if (variable.search("ownerInfo_") !== -1) {
+                  const isDynamicFormValid = validateForm(form[variable]);
+                  if (!isDynamicFormValid) {
+                    displayFormErrorsAction(variable);
+                    ownerValidation = false;
                   }
                 }
-                if (ownerValidation) {
-                  callDraft();
-                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
-                }
-              } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
-                const { institutionDetails, institutionAuthority } = form;
-                const isInstitutionDetailsFormValid = validateForm(institutionDetails);
-                let institutionFormValid = true;
-                if (!isInstitutionDetailsFormValid) {
-                  displayFormErrorsAction("institutionDetails");
-                  institutionFormValid = false;
-                }
-                const isInstitutionAuthorityFormValid = validateForm(institutionAuthority);
-                if (!isInstitutionAuthorityFormValid) {
-                  displayFormErrorsAction("institutionAuthority");
-                  institutionFormValid = false;
-                }
-                if (institutionFormValid) {
-                  callDraft();
-                  this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
-                }
               }
-            } else {
-              displayFormErrorsAction("ownershipType");
+              if (ownerValidation) {
+                callDraft();
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
+              }
+            } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
+              const { institutionDetails, institutionAuthority } = form;
+              const isInstitutionDetailsFormValid = validateForm(institutionDetails);
+              let institutionFormValid = true;
+              if (!isInstitutionDetailsFormValid) {
+                displayFormErrorsAction("institutionDetails");
+                institutionFormValid = false;
+              }
+              const isInstitutionAuthorityFormValid = validateForm(institutionAuthority);
+              if (!isInstitutionAuthorityFormValid) {
+                displayFormErrorsAction("institutionAuthority");
+                institutionFormValid = false;
+              }
+              if (institutionFormValid) {
+                callDraft();
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
+              }
             }
+          } else {
+            displayFormErrorsAction("ownershipType");
           }
+        }
 
-
-          break;
+        break;
       case 3:
         pay();
         break;
@@ -759,8 +758,8 @@ class FormWizard extends Component {
       return item !== null;
     });
     units.forEach((unit) => {
-      let unitAreaInSqYd = parseFloat(unit.unitArea) * 0.11111;
-      unit.unitArea = unitAreaInSqYd;
+      let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
+      unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
     });
     propertyDetails[0].units = units;
     return propertyInfo;

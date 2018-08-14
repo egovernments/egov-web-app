@@ -577,7 +577,7 @@ class FormWizard extends Component {
         break;
       case 2:
         const { ownershipType } = form;
-        const estimateCall=()=>{
+        const estimateCall = () => {
           estimate().then((estimateResponse) => {
             if (estimateResponse) {
               this.setState({
@@ -587,7 +587,7 @@ class FormWizard extends Component {
               });
             }
           });
-        }
+        };
         if (ownershipType) {
           const isOwnershipTypeFormValid = validateForm(ownershipType);
           if (isOwnershipTypeFormValid) {
@@ -597,7 +597,7 @@ class FormWizard extends Component {
               const isOwnerInfoFormValid = validateForm(ownerInfo);
               if (isOwnerInfoFormValid) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               } else {
                 displayFormErrorsAction("ownerInfo");
               }
@@ -614,7 +614,7 @@ class FormWizard extends Component {
               }
               if (ownerValidation) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               }
             } else if (ownershipTypeSelected.toUpperCase().indexOf("INSTITUTIONAL") !== -1) {
               const { institutionDetails, institutionAuthority } = form;
@@ -631,14 +631,13 @@ class FormWizard extends Component {
               }
               if (institutionFormValid) {
                 callDraft();
-                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] },estimateCall());
+                this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] }, estimateCall());
               }
             }
           } else {
             displayFormErrorsAction("ownershipType");
           }
         }
-
 
         break;
       case 3:
@@ -846,8 +845,8 @@ class FormWizard extends Component {
       return item !== null;
     });
     units.forEach((unit) => {
-      let unitAreaInSqYd = parseFloat(unit.unitArea) * 0.11111;
-      unit.unitArea = unitAreaInSqYd;
+      let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
+      unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
     });
     propertyDetails[0].units = units;
     return propertyInfo;
