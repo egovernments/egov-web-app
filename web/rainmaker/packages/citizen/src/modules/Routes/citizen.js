@@ -6,7 +6,7 @@ import OTP from "modules/citizen/User/OTP";
 import Profile from "modules/citizen/User/Profile";
 
 // common screens
-import Home from "modules/citizen/Home";
+import PGRHome from "modules/citizen/Home";
 import Dashboard from "modules/citizen/Dashboard";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
@@ -60,10 +60,16 @@ const routes = [
     options: { hideFooter: true, title: "Edit Profile" },
   },
   {
-    path: "/",
-    component: Home,
+    path: "pgr-home",
+    component: PGRHome,
     needsAuthentication: true,
     options: { isHomeScreen: true, title: "Home", hideTitle: true, redirectionUrl: "/user/register" },
+  },
+  {
+    path: "/",
+    component: Dashboard,
+    needsAuthentication: true,
+    options: { isHomeScreen: true, hideTitle: true, redirectionUrl: "/user/register" },
   },
   {
     path: "landing-page",

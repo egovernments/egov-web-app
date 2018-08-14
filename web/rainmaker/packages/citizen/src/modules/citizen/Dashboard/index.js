@@ -9,7 +9,7 @@ class Dashboard extends Component {
     {
       moduleTitle: "Complaints",
       moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-      modulePrimaryCaption: "File Complaint",
+      modulePrimaryCaption: "COMPLAINTS HOME",
       moduleSecondaryCaption: "How do i do?",
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
@@ -18,43 +18,47 @@ class Dashboard extends Component {
     {
       moduleTitle: "Property Tax",
       moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-      modulePrimaryCaption: "Assess & Pay",
+      modulePrimaryCaption: "PT HOME",
       moduleSecondaryCaption: "How do i do?",
       borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       iconName: "file-send",
+      route: "property-tax",
     },
-    {
-      moduleTitle: "Water & Sewerage",
-      moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
-      modulePrimaryCaption: "Pay",
-      moduleSecondaryCaption: "How do i do?",
-      borderLeftColor: { borderLeft: "4px solid #ffcc80" },
-      iconAction: "custom",
-      iconName: "water-tap",
-    },
+    // {
+    //   moduleTitle: "Water & Sewerage",
+    //   moduleDescription: "Lorem ipsum dolor sit amet, consectetur adipis cing elit. Donec rutrum felis eu sem egestas",
+    //   modulePrimaryCaption: "Pay",
+    //   moduleSecondaryCaption: "How do i do?",
+    //   borderLeftColor: { borderLeft: "4px solid #ffcc80" },
+    //   iconAction: "custom",
+    //   iconName: "water-tap",
+    // },
   ];
-  render() {
-    const { name } = this.props;
 
+  onButton1Click = (item) => {
+    const { history } = this.props;
+    const { route } = item;
+    if (item.moduleTitle === "Property Tax") {
+      history && history.push(route);
+    }
+  };
+  onButton2Click = (item) => {
+    const { history } = this.props;
+    if (item.moduleTitle === "Property Tax") {
+      history && history.push("property-tax/how-it-works");
+    } else if (item.moduleTitle === "Complaints") {
+      history && history.push("how-it-works");
+    }
+  };
+
+  render() {
+    const { name, history } = this.props;
+    const { onButton1Click, onButton2Click } = this;
     return (
       <div class="col-sm-12">
-        <div class="col-sm-12">
-          <Label className="landingPageUser" label={` Welcome ${name}, `} />
-        </div>
-        {this.moduleData.map((moduleNewData) => {
-          return (
-            <ModuleCard
-              moduleCardTitle={moduleNewData.moduleTitle}
-              moduleCardDescription={moduleNewData.moduleDescription}
-              modulePrimaryCaption={moduleNewData.modulePrimaryCaption}
-              moduleSecondaryCaption={moduleNewData.moduleSecondaryCaption}
-              borderLeftColor={moduleNewData.borderLeftColor}
-              iconAction={moduleNewData.iconAction}
-              iconName={moduleNewData.iconName}
-            />
-          );
-        })}
+        <Label className="landingPageUser" label={` Welcome ${name}, `} />
+        <ModuleCard items={this.moduleData} onButton1Click={onButton1Click} onButton2Click={onButton2Click} />
       </div>
     );
   }
