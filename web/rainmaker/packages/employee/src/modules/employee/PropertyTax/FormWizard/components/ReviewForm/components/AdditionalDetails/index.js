@@ -84,8 +84,9 @@
 
 import React from "react";
 import { Card, Icon } from "components";
-import TextField from "material-ui/TextField";
+// import TextField from "material-ui/TextField";
 import Label from "egov-ui-kit/utils/translationNode";
+import { TextField } from "components";
 import "./index.css";
 
 const styles = {
@@ -175,6 +176,7 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                 floatingLabelStyle={floatingLabelBaseStyle}
                 underlineFocusStyle={{ borderColor: "#e0e0e0" }}
                 disabled={optionSelected === "Full_Amount"}
+                required={true}
                 errorText={errorText}
               />
             </div>

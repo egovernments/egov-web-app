@@ -75,7 +75,14 @@ const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
           <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <Field fieldKey="receiptDate" field={fields.receiptDate} handleFieldChange={handleFieldChange} />
+          <DatePicker
+            onChange={(first, object) => {
+              let e = { target: { value: object } };
+              handleFieldChange("receiptDate", e.target.value);
+            }}
+            formatDate={(date) => changeDateToFormat(date)}
+            {...fields.receiptDate}
+          />
         </div>
       </div>
     </div>

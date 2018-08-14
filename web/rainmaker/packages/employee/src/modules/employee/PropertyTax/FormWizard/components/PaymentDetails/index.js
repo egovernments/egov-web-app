@@ -51,7 +51,7 @@ const paymentModeDetails = [
     ],
   },
   {
-    primaryText: "Credit/Debit",
+    primaryText: "Card",
     forms: [
       {
         title: "Payer Details",

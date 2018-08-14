@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import WizardComponent from "./components/WizardComponent";
 import { Icon, Button } from "components";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import Label from "egov-ui-kit/utils/translationNode";
 import { deleteForm, updateForms } from "egov-ui-kit/redux/form/actions";
 import {
@@ -729,12 +729,31 @@ class FormWizard extends Component {
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].instrument.tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     get(prepareFormData, "Receipt[0].instrument.transactionDateInput") &&
-      set(prepareFormData, "Receipt[0].instrument.transactionDateInput", this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput")));
+      set(
+        prepareFormData,
+        "Receipt[0].instrument.transactionDateInput",
+        this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput"))
+      );
     set(prepareFormData, "Receipt[0].instrument.amount", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     const formData = {
       Receipt: prepareFormData["Receipt"],
     };
+
+    if (
+      get(prepareFormData, "Receipt[0].instrument.transactionNumber") &&
+      get(prepareFormData, "Receipt[0].instrument.transactionNumberConfirm") &&
+      get(prepareFormData, "Receipt[0].instrument.transactionNumber") !== get(prepareFormData, "Receipt[0].instrument.transactionNumberConfirm")
+    ) {
+      this.props.toggleSnackbarAndSetText(true, "Transaction Numbers don't match", true);
+      return;
+    }
+
+    if (!this.state.totalAmountToBePaid) {
+      this.props.toggleSnackbarAndSetText(true, "Amount to pay can't be empty", true);
+      return;
+    }
+
     try {
       const userInfo = {
         id: 23432,
@@ -777,7 +796,7 @@ class FormWizard extends Component {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
-      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      set(prepareFormData, "Properties[0].address.locality.area", "Area1");
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
 
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
@@ -813,7 +832,7 @@ class FormWizard extends Component {
         "Properties[0].propertyDetails[0].citizenInfo.name",
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
       );
-      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
+      set(prepareFormData, "Properties[0].address.locality.area", "Area1");
       const properties = this.normalizePropertyDetails(prepareFormData.Properties);
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));
@@ -961,6 +980,7 @@ const mapDispatchToProps = (dispatch) => {
     updatePTForms: (forms) => dispatch(updateForms(forms)),
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
   };
 };
 
