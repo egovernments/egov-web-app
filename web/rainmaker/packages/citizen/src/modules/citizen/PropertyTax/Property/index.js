@@ -357,7 +357,6 @@ const mapStateToProps = (state, ownProps) => {
   const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
-  console.log(customTitle);
   const { propertyDetails } = selPropertyDetails;
   let transformedAssessments =
     propertyDetails &&

@@ -4,7 +4,6 @@ import { DatePicker } from "components";
 import "./index.css";
 
 const changeDateToFormat = (date) => {
-  console.log(date);
   const dateObj = new Date(date);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;

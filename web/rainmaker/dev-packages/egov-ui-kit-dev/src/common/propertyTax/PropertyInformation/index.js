@@ -324,8 +324,6 @@ const mapStateToProps = (state, ownProps) => {
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];
-  console.log(latestPropertyDetails);
-  console.log(generalMDMSDataById);
   const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
   const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];

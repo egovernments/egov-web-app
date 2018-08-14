@@ -14,7 +14,6 @@ const formConfig = {
       required: true,
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
-        console.log(value);
         // const formKeys = Object.keys(state.form);
         const floorValues = Object.keys(state.form).map((key) => {
           if (key.startsWith("customSelect_")) {
@@ -24,7 +23,6 @@ const formConfig = {
             }
           }
         });
-        console.log(floorValues);
         const valueExists = floorValues.find((floorvalue) => {
           return floorvalue === value;
         });

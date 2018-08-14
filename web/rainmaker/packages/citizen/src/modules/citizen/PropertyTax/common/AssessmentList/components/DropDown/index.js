@@ -30,7 +30,6 @@ const PartiallyPaiddropDownData = [
 ];
 
 const onSelectFieldChange = (event, key, payload, history, item) => {
-  console.log(history, item);
   switch (payload) {
     case "Re-Assess":
       history &&
