@@ -7,18 +7,60 @@ import { AppBar } from "material-ui";
 import { connect } from "react-redux";
 import { loginUser, userLoginSuccess } from "./actions";
 import { Redirect } from "react-router-dom";
+import { persistInLocalStorage } from "../utils";
 
 class UserLogin extends Component {
+  constructor() {
+    super();
+    this.state = {
+      cities: []
+    };
+  }
   handleClick() {
     let { history } = this.props;
     if (this.state) {
       const username = this.state.username;
       const password = this.state.password;
+      const tenantId = this.state.tenantId;
       const usertype = "EMPLOYEE";
+      const tenantSel = {};
+      tenantSel["tenantId"] = this.state.tenantId;
+      persistInLocalStorage(tenantSel);
       this.props.loginUser(username, password, usertype, history);
 
       history.push("/file-uploader");
     }
+  }
+
+  componentDidMount() {
+    this.fetchoption();
+  }
+
+  fetchoption() {
+    fetch(
+      window.location.origin +
+        "/egov-mdms-service/v1/_get?moduleName=tenant&masterName=tenants&tenantId=pb",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({})
+      }
+    )
+      .then(response => response.json())
+      .then(response => {
+        let optionItems = response.MdmsRes.tenant.tenants.map(element => {
+          return { code: element.code, name: element.city.name };
+        });
+        this.setState({
+          cities: optionItems,
+          tenantId: optionItems[0].code
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -46,6 +88,25 @@ class UserLogin extends Component {
               this.setState({ password: newValue })
             }
           />
+          <br />
+          <br />
+          <label>
+            Please Select City:
+            <select
+              onChange={event =>
+                this.setState({ tenantId: event.target.value })
+              }
+            >
+              {this.state.cities.map(item => {
+                return (
+                  <option key={item.code} value={item.code}>
+                    {item.name}{" "}
+                  </option>
+                );
+              })}
+            </select>
+          </label>
+          <br />
           <br />
           <RaisedButton
             label="Submit"
