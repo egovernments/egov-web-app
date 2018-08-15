@@ -791,14 +791,11 @@ class FormWizard extends Component {
     let { prepareFormData } = this.props;
     const { draft } = this.state.draftRequest;
     const { financialYearFromQuery } = this.state;
-    const { financialYear } = draft.draftRecord;
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
       }
-      set(prepareFormData, "Properties[0].address.locality.area", "Area1");
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
-
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
           {
@@ -808,10 +805,6 @@ class FormWizard extends Component {
           },
         ],
       });
-      // console.log(estimateResponse.Calculation);
-      // this.setState({
-      //   estimation: estimateResponse && estimateResponse.Calculation,
-      // });
       return estimateResponse;
     } catch (e) {
       alert(e);
@@ -832,7 +825,6 @@ class FormWizard extends Component {
         "Properties[0].propertyDetails[0].citizenInfo.name",
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
       );
-      set(prepareFormData, "Properties[0].address.locality.area", "Area1");
       const properties = this.normalizePropertyDetails(prepareFormData.Properties);
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));

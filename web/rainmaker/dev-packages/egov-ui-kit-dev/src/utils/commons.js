@@ -7,7 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import jp from "jsonpath";
+import JSONPath from "JSONPath";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -501,7 +501,7 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
   try {
     const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
     const dropdownData = boundary
-      ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+      ? JSONPath({ json: payloadSpec, path: dataFetchConfig.dataPath })
       : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
           dropdownData = [...dropdownData, ...get(payloadSpec, path)];
           return dropdownData;
@@ -509,7 +509,10 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     const ddData =
       dropdownData &&
       dropdownData.reduce((ddData, item) => {
-        ddData.push({ label: item.name, value: item.code });
+        let option = { label: item.name, value: item.code };
+        //Only for boundary
+        item.area && (option.area = item.area);
+        ddData.push(option);
         return ddData;
       }, []);
     dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));

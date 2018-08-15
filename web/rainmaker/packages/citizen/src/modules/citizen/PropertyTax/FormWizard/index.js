@@ -624,8 +624,6 @@ class FormWizard extends Component {
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
-      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
-      //Remove null units and do sqyd to sqft conversion.
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
         CalculationCriteria: [
@@ -662,7 +660,6 @@ class FormWizard extends Component {
     }
 
     try {
-      set(prepareFormData, "Properties[0].address.locality.area", "Area3");
       //Remove null units and do sqyd to sqft conversion.
       const properties = this.normalizePropertyDetails(prepareFormData.Properties);
       let createPropertyResponse = await httpRequest(`pt-services-v2/property/${propertyMethodAction}`, `${propertyMethodAction}`, [], {

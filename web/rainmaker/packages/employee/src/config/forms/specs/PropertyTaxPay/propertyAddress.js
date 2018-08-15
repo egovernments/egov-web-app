@@ -104,7 +104,12 @@ const formConfig = {
         queryParams: [],
         requestBody: {},
         isDependent: true,
-        dataPath: `$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==${cityCode})]..children[?(@.label=='Locality')]`,
+      },
+      updateDependentFields: ({ formKey, field, dispatch }) => {
+        const mohalla = field.dropDownData.find((option) => {
+          return option.value === field.value;
+        });
+        dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
       },
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,

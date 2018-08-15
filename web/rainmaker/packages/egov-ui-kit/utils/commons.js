@@ -53,9 +53,9 @@ var _get2 = _interopRequireDefault(_get);
 
 var _actions2 = require("egov-ui-kit/redux/app/actions");
 
-var _jsonpath = require("jsonpath");
+var _JSONPath = require("JSONPath");
 
-var _jsonpath2 = _interopRequireDefault(_jsonpath);
+var _JSONPath2 = _interopRequireDefault(_JSONPath);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -593,12 +593,15 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
 
           case 4:
             payloadSpec = _context3.sent;
-            dropdownData = boundary ? _jsonpath2.default.query(payloadSpec, dataFetchConfig.dataPath) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
+            dropdownData = boundary ? (0, _JSONPath2.default)({ json: payloadSpec, path: dataFetchConfig.dataPath }) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
               dropdownData = [].concat((0, _toConsumableArray3.default)(dropdownData), (0, _toConsumableArray3.default)((0, _get2.default)(payloadSpec, path)));
               return dropdownData;
             }, []);
             ddData = dropdownData && dropdownData.reduce(function (ddData, item) {
-              ddData.push({ label: item.name, value: item.code });
+              var option = { label: item.name, value: item.code };
+              //Only for boundary
+              item.area && (option.area = item.area);
+              ddData.push(option);
               return ddData;
             }, []);
 

@@ -52,7 +52,7 @@ var formValidation = function formValidation(store) {
             dependants.forEach(function (item) {
               if (fields[item.fieldKey].dataFetchConfig) {
                 if (fields[item.fieldKey].boundary) {
-                  fields[item.fieldKey].dataFetchConfig.dataPath = "$.TenantBoundary.*.boundary[?(@.label==\"City\"&&@.code==\"" + value + "\")]..children[?(@.label==\"Locality\"&&@.area==\"Area1\")]";
+                  fields[item.fieldKey].dataFetchConfig.dataPath = "$.TenantBoundary.*.boundary[?(@parent.hierarchyType.code===\"REVENUE\"&&@.label==\"City\"&&@.code==\"" + value + "\")]..children[?(@.label==\"Locality\")]";
                   fields[item.fieldKey].dataFetchConfig.queryParams = [{ key: "tenantId", value: value }];
                   (0, _commons.fetchDropdownData)(dispatch, fields[item.fieldKey].dataFetchConfig, formKey, item.fieldKey, true);
                 } else {
