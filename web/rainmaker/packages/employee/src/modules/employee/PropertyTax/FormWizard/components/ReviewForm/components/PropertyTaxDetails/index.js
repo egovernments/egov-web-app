@@ -8,7 +8,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates, addRebateBox })
   const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
   const { fireCess, intrest, penalty, rebate } = importantDates;
   return (
-    <Card style={{ marginBottom: 20, "background-color": "white" }}>
+    <Card style={{ marginBottom: 20, "background-color": "white" }} initiallyExpanded={true}>
       <CardHeader
         className="tax-calculation-card-header"
         actAsExpander={true}
@@ -29,7 +29,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates, addRebateBox })
       <CardText expandable={true}>
         <div className="clearfix fare-section">
           <div className="bill-details col-sm-6">
-            <div className="" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+            <div className="col-sm-10" style={{ backgroundColor: "#f2f2f2", padding: 16 }}>
               <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_DETAILED_BILL" bold={true} />
               {taxHeadEstimates &&
                 taxHeadEstimates.map((item, index) => {
@@ -64,7 +64,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates, addRebateBox })
                 </div>
               </div>
             </div>
-            <div className="additional-rebate-charges">
+            <div className="additional-rebate-charges col-sm-10">
               <Button
                 label={<Label label={"ADD REBATE/CHARGES"} buttonLabel={true} />}
                 style={{
