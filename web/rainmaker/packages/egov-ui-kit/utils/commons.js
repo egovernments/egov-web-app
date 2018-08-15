@@ -53,9 +53,9 @@ var _get2 = _interopRequireDefault(_get);
 
 var _actions2 = require("egov-ui-kit/redux/app/actions");
 
-var _JSONPath = require("JSONPath");
+var _jsonpathPlus = require("jsonpath-plus");
 
-var _JSONPath2 = _interopRequireDefault(_JSONPath);
+var _jsonpathPlus2 = _interopRequireDefault(_jsonpathPlus);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -593,7 +593,7 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
 
           case 4:
             payloadSpec = _context3.sent;
-            dropdownData = boundary ? (0, _JSONPath2.default)({ json: payloadSpec, path: dataFetchConfig.dataPath }) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
+            dropdownData = boundary ? (0, _jsonpathPlus2.default)({ json: payloadSpec, path: dataFetchConfig.dataPath }) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
               dropdownData = [].concat((0, _toConsumableArray3.default)(dropdownData), (0, _toConsumableArray3.default)((0, _get2.default)(payloadSpec, path)));
               return dropdownData;
             }, []);

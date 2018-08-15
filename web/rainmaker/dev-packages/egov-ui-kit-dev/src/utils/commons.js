@@ -7,7 +7,7 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import JSONPath from "JSONPath";
+import JSONPath from "jsonpath-plus";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
