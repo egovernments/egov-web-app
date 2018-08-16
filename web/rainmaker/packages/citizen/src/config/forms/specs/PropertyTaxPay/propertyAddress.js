@@ -1,6 +1,6 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
-import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import Icon from "egov-ui-kit/components/Icon";
 const cityCode = "";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
@@ -46,6 +46,71 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: field.value,
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "Floor",
+                  },
+                  {
+                    name: "OccupancyType",
+                  },
+                  {
+                    name: "OwnerShipCategory",
+                  },
+                  {
+                    name: "OwnerType",
+                  },
+                  {
+                    name: "PropertySubType",
+                  },
+                  {
+                    name: "PropertyType",
+                  },
+                  {
+                    name: "SubOwnerShipCategory",
+                  },
+                  {
+                    name: "UsageCategoryDetail",
+                  },
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        };
+
+        dispatch(
+          fetchGeneralMDMSData(requestBody, "PropertyTax", [
+            "Floor",
+            "OccupancyType",
+            "OwnerShipCategory",
+            "OwnerType",
+            "PropertySubType",
+            "PropertyType",
+            "SubOwnerShipCategory",
+            "UsageCategoryDetail",
+            "UsageCategoryMajor",
+            "UsageCategoryMinor",
+            "UsageCategorySubMinor",
+            "Rebate",
+            "Penalty",
+            "Interest",
+            "FireCess",
+          ])
+        );
       },
     },
     dummy: {

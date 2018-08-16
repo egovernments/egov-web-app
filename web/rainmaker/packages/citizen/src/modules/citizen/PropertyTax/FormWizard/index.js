@@ -197,67 +197,8 @@ class FormWizard extends Component {
   getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
-    let { history, fetchGeneralMDMSData, renderCustomTitleForPt } = this.props;
+    let { renderCustomTitleForPt } = this.props;
     let { search } = this.props.location;
-    let requestBody = {
-      MdmsCriteria: {
-        tenantId: "pb",
-        moduleDetails: [
-          {
-            moduleName: "PropertyTax",
-            masterDetails: [
-              {
-                name: "Floor",
-              },
-              {
-                name: "OccupancyType",
-              },
-              {
-                name: "OwnerShipCategory",
-              },
-              {
-                name: "OwnerType",
-              },
-              {
-                name: "PropertySubType",
-              },
-              {
-                name: "PropertyType",
-              },
-              {
-                name: "SubOwnerShipCategory",
-              },
-              {
-                name: "UsageCategoryDetail",
-              },
-              {
-                name: "UsageCategoryMajor",
-              },
-              {
-                name: "UsageCategoryMinor",
-              },
-              {
-                name: "UsageCategorySubMinor",
-              },
-            ],
-          },
-        ],
-      },
-    };
-
-    await fetchGeneralMDMSData(requestBody, "PropertyTax", [
-      "Floor",
-      "OccupancyType",
-      "OwnerShipCategory",
-      "OwnerType",
-      "PropertySubType",
-      "PropertyType",
-      "SubOwnerShipCategory",
-      "UsageCategoryDetail",
-      "UsageCategoryMajor",
-      "UsageCategoryMinor",
-      "UsageCategorySubMinor",
-    ]);
     const assessmentId = this.getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isReassesment = !!this.getQueryValue(search, "isReassesment");
     const isFreshAssesment = this.getQueryValue(search, "type");
@@ -362,7 +303,7 @@ class FormWizard extends Component {
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateTotalAmount } = this;
     const { estimation, totalAmountToBePaid, financialYearFromQuery } = this.state;
-    const { form } = this.props;
+    const { form, currentTenantId } = this.props;
 
     switch (selected) {
       case 0:
@@ -400,6 +341,7 @@ class FormWizard extends Component {
               financialYr={financialYearFromQuery}
               totalAmountToBePaid={totalAmountToBePaid}
               updateTotalAmount={updateTotalAmount}
+              currentTenantId={currentTenantId}
               isPartialPaymentInValid={
                 get(this.state, "estimation[0].totalAmount", 1) === 0 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
@@ -800,7 +742,10 @@ class FormWizard extends Component {
 
 const mapStateToProps = (state) => {
   const { form, common } = state || {};
-  return { form, prepareFormData: common.prepareFormData };
+  const { propertyAddress } = form;
+  const { city } = (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
+  const currentTenantId = (city && city.value) || "pb";
+  return { form, prepareFormData: common.prepareFormData, currentTenantId };
 };
 
 const mapDispatchToProps = (dispatch) => {

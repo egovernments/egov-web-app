@@ -50,10 +50,11 @@ class ReviewForm extends Component {
   }
 
   getImportantDates = async () => {
+    const { currentTenantId } = this.props;
     try {
       let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
         MdmsCriteria: {
-          tenantId: "pb",
+          tenantId: currentTenantId,
           moduleDetails: [
             {
               moduleName: "PropertyTax",
@@ -97,21 +98,27 @@ class ReviewForm extends Component {
   };
 
   findCorrectDateObj = (financialYear, category) => {
-    const categoryYear = category.reduce((categoryYear, item) => {
+    category.sort((a, b) => {
+      let yearOne = a.fromFY && a.fromFY.slice(0, 4);
+      let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+      if (yearOne < yearTwo) {
+        return 1;
+      } else return -1;
+    });
+    const assessYear = financialYear && financialYear.slice(0, 4);
+    let chosenDateObj = {};
+    let categoryYear = category.reduce((categoryYear, item) => {
       const year = item.fromFY && item.fromFY.slice(0, 4);
       categoryYear.push(year);
       return categoryYear;
     }, []);
-    const assessYear = financialYear && financialYear.slice(0, 4);
-    let chosenDateObj = {};
     const index = categoryYear.indexOf(assessYear);
     if (index > -1) {
       chosenDateObj = category[index];
     } else {
-      categoryYear.sort((a, b) => a > b);
       for (let i = 0; i < categoryYear.length; i++) {
         if (assessYear > categoryYear[i]) {
-          chosenDateObj = category[i - 1];
+          chosenDateObj = category[i];
           break;
         }
       }

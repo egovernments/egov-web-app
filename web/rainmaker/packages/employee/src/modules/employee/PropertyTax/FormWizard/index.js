@@ -105,7 +105,6 @@ class FormWizard extends Component {
   };
 
   updateTotalAmount = (value, isFullPayment) => {
-    console.log(value);
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
@@ -196,8 +195,8 @@ class FormWizard extends Component {
   componentWillMount = () => {};
 
   componentDidMount = async () => {
-    let { history } = this.props;
-    let { search } = this.props.location;
+    let { history, location } = this.props;
+    let { search } = location;
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
@@ -208,72 +207,10 @@ class FormWizard extends Component {
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
-    const { fetchGeneralMDMSData } = this.props;
-    let requestBody = {
-      MdmsCriteria: {
-        tenantId: "pb",
-        moduleDetails: [
-          {
-            moduleName: "PropertyTax",
-            masterDetails: [
-              {
-                name: "Floor",
-              },
-              {
-                name: "OccupancyType",
-              },
-              {
-                name: "OwnerShipCategory",
-              },
-              {
-                name: "OwnerType",
-              },
-              {
-                name: "PropertySubType",
-              },
-              {
-                name: "PropertyType",
-              },
-              {
-                name: "SubOwnerShipCategory",
-              },
-              {
-                name: "UsageCategoryDetail",
-              },
-              {
-                name: "UsageCategoryMajor",
-              },
-              {
-                name: "UsageCategoryMinor",
-              },
-              {
-                name: "UsageCategorySubMinor",
-              },
-            ],
-          },
-        ],
-      },
-    };
-
-    fetchGeneralMDMSData(requestBody, "PropertyTax", [
-      "Floor",
-      "OccupancyType",
-      "OwnerShipCategory",
-      "OwnerType",
-      "PropertySubType",
-      "PropertyType",
-      "SubOwnerShipCategory",
-      "UsageCategoryDetail",
-      "UsageCategoryMajor",
-      "UsageCategoryMinor",
-      "UsageCategorySubMinor",
-    ]);
     this.addOwner();
-    this.getImportantDates(financialYearFromQuery);
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-        console.log(pgUpdateResponse);
         let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
         if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
           history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
@@ -288,11 +225,11 @@ class FormWizard extends Component {
   };
 
   getImportantDates = async (financialYearFromQuery) => {
-    console.log("hit", financialYearFromQuery);
+    const { currentTenantId } = this.props;
     try {
       let ImpDatesResponse = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], {
         MdmsCriteria: {
-          tenantId: "pb",
+          tenantId: currentTenantId,
           moduleDetails: [
             {
               moduleName: "PropertyTax",
@@ -335,21 +272,27 @@ class FormWizard extends Component {
   };
 
   findCorrectDateObj = (financialYear, category) => {
-    const categoryYear = category.reduce((categoryYear, item) => {
+    category.sort((a, b) => {
+      let yearOne = a.fromFY && a.fromFY.slice(0, 4);
+      let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+      if (yearOne < yearTwo) {
+        return 1;
+      } else return -1;
+    });
+    const assessYear = financialYear && financialYear.slice(0, 4);
+    let chosenDateObj = {};
+    let categoryYear = category.reduce((categoryYear, item) => {
       const year = item.fromFY && item.fromFY.slice(0, 4);
       categoryYear.push(year);
       return categoryYear;
     }, []);
-    const assessYear = financialYear && financialYear.slice(0, 4);
-    let chosenDateObj = {};
     const index = categoryYear.indexOf(assessYear);
     if (index > -1) {
       chosenDateObj = category[index];
     } else {
-      categoryYear.sort((a, b) => a > b);
       for (let i = 0; i < categoryYear.length; i++) {
         if (assessYear > categoryYear[i]) {
-          chosenDateObj = category[i - 1];
+          chosenDateObj = category[i];
           break;
         }
       }
@@ -497,7 +440,6 @@ class FormWizard extends Component {
               estimationDetails={estimation}
               updateEstimate={updateEstimate}
               importantDates={importantDates}
-              // financialYr={financialYear ? financialYear.fields.button : {}}
             />
           </div>
         );
@@ -520,7 +462,7 @@ class FormWizard extends Component {
 
   updateIndex = (index) => {
     const { callDraft, pay, estimate, createReceipt, validateUnitandPlotSize } = this;
-    const { selected, formValidIndexArray } = this.state;
+    const { selected, formValidIndexArray, financialYearFromQuery } = this.state;
     const { setRoute, displayFormErrorsAction, form } = this.props;
     switch (selected) {
       //validating property address is validated
@@ -574,6 +516,7 @@ class FormWizard extends Component {
             displayFormErrorsAction("basicInformation");
           }
         }
+        this.getImportantDates(financialYearFromQuery);
         break;
       case 2:
         const { ownershipType } = form;
@@ -961,7 +904,10 @@ class FormWizard extends Component {
 
 const mapStateToProps = (state) => {
   const { form, common } = state || {};
-  return { form, prepareFormData: common.prepareFormData };
+  const { propertyAddress } = form;
+  const { city } = (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
+  const currentTenantId = (city && city.value) || "pb";
+  return { form, currentTenantId, prepareFormData: common.prepareFormData };
 };
 
 const mapDispatchToProps = (dispatch) => {
