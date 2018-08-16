@@ -113,12 +113,16 @@ class FormWizard extends Component {
 
   configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
 
-  addOwner = () => {
+  addOwner = (isMultiple = false) => {
     const { ownerInfoArr, ownersCount } = this.state;
     const OwnerInfoHOC = this.configOwner(ownersCount);
     this.setState({
       ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
       ownersCount: ownersCount + 1,
+    }, () => {
+      if (isMultiple) {
+        this.addOwner()
+      }
     });
   };
 
@@ -359,7 +363,7 @@ class FormWizard extends Component {
       case "MULTIPLEOWNERS":
         return (
           <MultipleOwnerInfoHOC
-            addOwner={this.addOwner}
+            addOwner={() => {this.addOwner(false)}}
             handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
             disabled={isReviewPage}
@@ -431,7 +435,7 @@ class FormWizard extends Component {
         );
       case 3:
         return (
-          <div>
+          <div className="review-pay-tab">
             <ReviewForm
               updateIndex={this.updateIndex}
               stepZero={this.renderStepperContent(0, fromReviewPage)}

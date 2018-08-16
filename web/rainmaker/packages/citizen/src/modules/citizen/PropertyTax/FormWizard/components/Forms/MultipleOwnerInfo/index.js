@@ -21,14 +21,14 @@ const MultipleOwnerInfoHOC = ({ handleRemoveOwner, addOwner, ownerDetails, disab
         <Data.Component
           key={index}
           cardTitle={getTitle(index + 1)}
-          deleteBtn={ownerDetails.length > 1}
+          deleteBtn={ownerDetails.length > 2}
           handleRemoveOwner={(formId, formKey) => { handleRemoveOwner(formId, formKey) }}
           formId={Data.index}
           disabled={disabled}
         />
       ))}
       {!disabled && <div className="pt-add-owner-btn" onClick={addOwner}>
-        + Add Owner
+        + ADD OWNER
       </div>}
     </div>
 );

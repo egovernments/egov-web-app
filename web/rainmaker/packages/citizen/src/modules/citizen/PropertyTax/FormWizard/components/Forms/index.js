@@ -54,7 +54,7 @@ const OwnerInformation = ({
   disabled,
 }) => {
   const fields = form.fields || {};
-  const genderSelected = get(fields, "ownerGender.value", "");
+  const genderSelected = get(fields, "ownerGender.value", "Male");
   return (
     <Card
       textChildren={
@@ -78,7 +78,7 @@ const OwnerInformation = ({
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div className="col-sm-6" style={{ paddingTop: "10px", paddingBottom: "5px" }}>
-              <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+              <Label label={"Gender"} required fontSize={12} labelStyle={styles.labelStyle} bold={true} />
               <RadioButton
                 id="gender-selection"
                 name="gender-selection"
@@ -139,7 +139,7 @@ const OwnerInformation = ({
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6" style={{ paddingBottom: "8px"}}>
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div>
@@ -180,6 +180,13 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
               <Field fieldKey="designation" field={fields["designation"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="telephone" field={fields["telephone"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="address" field={fields["address"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field
+                fieldKey="isSameAsPropertyAddress"
+                field={fields.isSameAsPropertyAddress}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                containerClassName="property-corr"
+              />
             </div>
           </div>
         </div>
