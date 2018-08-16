@@ -48,6 +48,7 @@ class IncompleteAssessments extends Component {
 
   onListItemClick = (item) => {
     const { route } = item;
+    localStorage.setItem("draftId","");
     this.props.history.push(route);
   };
 
@@ -134,7 +135,7 @@ const getTransformedItems = (propertiesById, cities) => {
             epocDate: get(item, "auditDetails.lastModifiedTime"),
             route: `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNumber}&isReassesment=true&propertyId=${
               curr.propertyId
-            }`,
+            }&tenantId=${item.tenantId}`,
             date: item.auditDetails ? getDateFromEpoch(get(item, "auditDetails.lastModifiedTime")) : "",
             status: "Payment failed",
           };
@@ -181,7 +182,7 @@ const mapStateToProps = (state) => {
           </div>
         ),
         epocDate: get(draft, "auditDetails.lastModifiedTime"),
-        route: `/property-tax/assessment-form?FY=${financialYear}&assessmentId=${draft.id}`,
+        route: `/property-tax/assessment-form?FY=${financialYear}&assessmentId=${draft.id}&tenantId=${draft.tenantId}`,
         financialYear: financialYear,
         assessmentNo: draft.id,
         date: draft.auditDetails ? getDateFromEpoch(get(draft, "auditDetails.lastModifiedTime")) : "",

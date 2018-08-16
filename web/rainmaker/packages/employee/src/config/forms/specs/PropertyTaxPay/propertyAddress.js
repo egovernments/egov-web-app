@@ -18,6 +18,7 @@ const formConfig = {
       fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       numcols: 6,
+      value:localStorage.getItem("tenantId"),
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,

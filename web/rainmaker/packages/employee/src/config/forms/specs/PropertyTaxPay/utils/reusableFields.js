@@ -6,6 +6,7 @@ import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 
 let floorDropDownData = [];
 
@@ -22,8 +23,9 @@ export const plotSize = {
     hintText: "PT_FORM2_PLOT_SIZE_PLACEHOLDER",
     errorMessage: "Enter a valid Plot Size",
     required: true,
+    fullWidth: true,
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
-    numcols: 4,
+    numcols: 6,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
       let propertyType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertyType");
       let propertySubType = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType");
@@ -43,13 +45,14 @@ export const floorCount = {
     floatingLabelText: "PT_FORM2_NUMBER_OF_FLOORS",
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     toolTip: true,
+    fullWidth: true,
     toolTipMessage: "PT_NUMBER_OF_FLOORS_TOOLTIP_MESSAGE",
     required: true,
-    numcols: 4,
+    numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      // removeFormKey(formKey, field, dispatch, state);
-      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+      removeFormKey(formKey, field, dispatch, state);
+      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
     },
   },
 };
@@ -106,7 +109,7 @@ export const builtArea = {
   builtArea: {
     id: "assessment-built-area",
     jsonPath: "Properties[0].propertyDetails[0].units[0].unitArea",
-    type: "textfield",
+    type: "number",
     floatingLabelText: "PT_FORM2_BUILT_AREA",
     hintText: "PT_FORM2_BUILT_UP_AREA_PLACEHOLDER",
     errorMessage: "Enter a valid built area size",
@@ -116,6 +119,28 @@ export const builtArea = {
     hideField: false,
     numcols: 4,
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
+  },
+};
+
+export const superArea = {
+  superArea: {
+    id: "assessment-super-area",
+    jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
+    type: "number",
+    floatingLabelText: "PT_FORM2_TOTAL_BUILT_AREA",
+    hintText: "PT_FORM2_TOTAL_BUILT_AREA_PLACEHOLDER",
+    ErrorText: "Enter a valid super area size",
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    toolTip: true,
+    toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
+    required: true,
+    numcols: 4,
+    hideField: false,
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
+    },
+    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
+    errorMessage: "Enter a valid super area size",
   },
 };
 
@@ -134,28 +159,6 @@ export const annualRent = {
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     hideField: true,
     numcols: 4,
-  },
-};
-
-export const superArea = {
-  superArea: {
-    id: "assessment-super-area",
-    jsonPath: "Properties[0].propertyDetails[0].buildUpArea",
-    type: "textfield",
-    floatingLabelText: "PT_FORM2_TOTAL_BUILT_AREA",
-    hintText: "PT_FORM2_TOTAL_BUILT_AREA_PLACEHOLDER",
-    ErrorText: "Enter a valid super area size",
-    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-    toolTip: true,
-    toolTipMessage: "Total Carpet Area + Total balcony area + Total thickness of outer walls + Total common area (lift, stairs, lobby etc.)",
-    required: true,
-    numcols: 4,
-    hideField: false,
-    updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      dispatch(prepareFormData("Properties[0].propertyDetails[0].units[0].unitArea", field.value));
-    },
-    pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
-    errorMessage: "Enter a valid super area size",
   },
 };
 
@@ -267,9 +270,11 @@ export const beforeInitForm = {
         )
       );
     }
-
-    if (get(state, `common.prepareFormData.${action.form.fields.occupancy.jsonPath}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
       set(action, "form.fields.annualRent.hideField", false);
+    }
+    else {
+      set(action, "form.fields.annualRent.hideField", true);
     }
     return action;
   },
@@ -304,6 +309,11 @@ export const beforeInitFormForPlot = {
             "form.fields.subUsageType.dropDownData",
             mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
           );
+          // set(
+          //   action,
+          //   "form.fields.subUsageType.value",
+          //   null)
+          // );
           if (get(action, "form.fields.subUsageType.jsonPath")) {
             dispatch(
               prepareFormData(
@@ -343,8 +353,11 @@ export const beforeInitFormForPlot = {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
     }
-    if (get(state, `common.prepareFormData.${action.form.fields.occupancy.jsonPath}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
       set(action, "form.fields.annualRent.hideField", false);
+    }
+    else {
+      set(action, "form.fields.annualRent.hideField", true);
     }
     return action;
   },

@@ -55,7 +55,7 @@ class FormWizard extends Component {
       },
     },
     totalAmountToBePaid: 0,
-    isFullPayment: true,
+    isFullPayment: true
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -146,7 +146,7 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId, isReassesment) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner, updatePrepareFormDataFromDraft } = this.props;
+    const { toggleSpinner, updatePrepareFormDataFromDraft} = this.props;
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -163,6 +163,8 @@ class FormWizard extends Component {
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      // const city=get(currentDraft, "draftRecord.propertyAddress.fields.city.value");
+
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
@@ -204,12 +206,80 @@ class FormWizard extends Component {
   getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
-    let { renderCustomTitleForPt } = this.props;
+    let { renderCustomTitleForPt,fetchGeneralMDMSData } = this.props;
     let { search } = this.props.location;
     const assessmentId = this.getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isReassesment = !!this.getQueryValue(search, "isReassesment");
     const isFreshAssesment = this.getQueryValue(search, "type");
-    if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
+    const tenantId=this.getQueryValue(search,"tenantId");
+    if (assessmentId){
+      let requestBody = {
+        MdmsCriteria: {
+          tenantId: tenantId,
+          moduleDetails: [
+            {
+              moduleName: "PropertyTax",
+              masterDetails: [
+                {
+                  name: "Floor",
+                },
+                {
+                  name: "OccupancyType",
+                },
+                {
+                  name: "OwnerShipCategory",
+                },
+                {
+                  name: "OwnerType",
+                },
+                {
+                  name: "PropertySubType",
+                },
+                {
+                  name: "PropertyType",
+                },
+                {
+                  name: "SubOwnerShipCategory",
+                },
+                {
+                  name: "UsageCategoryDetail",
+                },
+                {
+                  name: "UsageCategoryMajor",
+                },
+                {
+                  name: "UsageCategoryMinor",
+                },
+                {
+                  name: "UsageCategorySubMinor",
+                },
+              ],
+            },
+          ],
+        },
+      };
+
+
+      fetchGeneralMDMSData(requestBody, "PropertyTax", [
+          "Floor",
+          "OccupancyType",
+          "OwnerShipCategory",
+          "OwnerType",
+          "PropertySubType",
+          "PropertyType",
+          "SubOwnerShipCategory",
+          "UsageCategoryDetail",
+          "UsageCategoryMajor",
+          "UsageCategoryMinor",
+          "UsageCategorySubMinor",
+          "Rebate",
+          "Penalty",
+          "Interest",
+          "FireCess",
+        ])
+
+      await this.fetchDraftDetails(assessmentId, isReassesment);
+    }
     this.addOwner(true);
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
@@ -640,7 +710,7 @@ class FormWizard extends Component {
         formValidIndexArray: range(0, index),
       });
     } else {
-      alert("Please fill required tabs");
+      // alert("Please fill required tabs");
     }
   };
 

@@ -35,10 +35,12 @@ const PartiallyPaiddropDownData = [
 const onSelectFieldChange = (event, key, payload, history, item) => {
   switch (payload) {
     case "Re-Assess":
+      localStorage.setItem("draftId","");
       history &&
         history.push(
-          `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${item.propertyId}`
+          `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${item.propertyId}&tenantId=${item.tenantId}`
         );
+        break;
     case "Download Statement":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func

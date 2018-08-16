@@ -44,12 +44,18 @@ const formConfig = {
   beforeInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
-      const { Floor } = state.common && state.common.generalMDMSDataById;
-      set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
-      set(action, "form.fields.floorName.value", "");
-      if (action.form.name === "customSelect_0") {
-        set(action, "form.fields.floorName.value", "0");
-        dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+      if (get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")!=="RESIDENTIAL" && get(state,"common.prepareFormData.Properties[0].propertyDetails[0].propertySubType")==="SHAREDPROPERTY") {
+        dispatch(setFieldProperty(action.form.name, "floorName", "hideField", true));
+      }
+      else {
+        dispatch(setFieldProperty(action.form.name, "floorName", "hideField", false));
+        const { Floor } = state.common && state.common.generalMDMSDataById;
+        set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+        set(action, "form.fields.floorName.value", "");
+        if (action.form.name === "customSelect_0") {
+          set(action, "form.fields.floorName.value", "0");
+          dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
+        }
       }
       return action;
     } catch (e) {

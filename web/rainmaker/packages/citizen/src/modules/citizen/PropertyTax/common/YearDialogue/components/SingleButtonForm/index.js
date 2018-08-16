@@ -11,6 +11,7 @@ const SingleButtonForm = ({ label, form, handleFieldChange, history, resetFormWi
       onClick={() => {
         handleFieldChange("button", label);
         resetFormWizard();
+        localStorage.setItem("draftId","");
         history && history.push(`/property-tax/assessment-form?FY=${label}&type=new`);
       }}
       className="year-range-button"

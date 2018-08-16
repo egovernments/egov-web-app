@@ -61,7 +61,7 @@ class SearchProperty extends Component {
   extractTableData = (properties) => {
     const { history } = this.props;
     const tableData = properties.reduce((tableData, property, index) => {
-      let { propertyId, oldPropertyId, address, propertyDetails } = property;
+      let { propertyId, oldPropertyId, address, propertyDetails,tenantId } = property;
       const { doorNo, buildingName, street, locality } = address;
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
@@ -70,11 +70,12 @@ class SearchProperty extends Component {
       let button = (
         <Button
           onClick={(e) => {
+            localStorage.setItem("draftId","");
             propertyDetails[0] &&
               history.push(
                 `/property-tax/assessment-form?FY=${propertyDetails[0].financialYear}&assessmentId=${
                   propertyDetails[0].assessmentNumber
-                }&isReassesment=true&propertyId=${propertyId}`
+                }&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
               );
           }}
           label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
