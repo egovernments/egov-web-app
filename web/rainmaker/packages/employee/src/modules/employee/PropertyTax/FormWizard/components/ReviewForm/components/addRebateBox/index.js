@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { TextField, Button, DropDown } from "components";
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 
 const labelStyle = {
@@ -24,6 +24,7 @@ class AddRebateExemption extends React.Component {
 
   onChangePenaltyField = (value) => {
     let show = false;
+    const { setFieldProperty } = this.props;
     if (value === "Others") {
       show = true;
       setFieldProperty("additionalRebate", "otherPenaltyReason", "required", true);
@@ -52,20 +53,36 @@ class AddRebateExemption extends React.Component {
     this.props.handleFieldChange("adhocExemptionReason", value);
   };
   onSubmit = () => {
-    const { updateEstimate, totalAmount } = this.props;
-    const { exemptValue } = this.state;
-    if (exemptValue < totalAmount && validateForm("additionalRebate")) {
-      updateEstimate();
-    } else {
-      alert("Adhoc Exemption cannot be greater than the estimated tax for the given property");
+    const { updateEstimate, totalAmount, displayFormErrors, adhocExemption, adhocPenalty, additionalRebate } = this.props;
+    if (adhocExemption.value > 0) {
+      if (adhocExemption.value > totalAmount) {
+        if (validateForm(additionalRebate)) {
+          alert("Adhoc Exemption cannot be greater than the estimated tax for the given property");
+        } else {
+          displayFormErrors("additionalRebate");
+        }
+      } else {
+        if (validateForm(additionalRebate)) {
+          updateEstimate();
+        } else {
+          displayFormErrors("additionalRebate");
+        }
+      }
+    }
+    if (adhocPenalty.value > 0) {
+      if (!validateForm(additionalRebate)) {
+        displayFormErrors("additionalRebate");
+      } else {
+        updateEstimate();
+      }
     }
   };
 
   render() {
-    const { form, handleFieldChange } = this.props;
+    const { handleFieldChange, fields } = this.props;
     const { showExtraExemptField, showExtraPenaltyField } = this.state;
-    const fields = form.fields || {};
-    const { adhocPenalty, adhocPenaltyReason, adhocExemption, adhocExemptionReason, otherExemptionReason, otherPenaltyReason } = fields;
+    const { adhocPenalty, adhocPenaltyReason, adhocExemption, adhocExemptionReason, otherExemptionReason, otherPenaltyReason } = fields || {};
+    console.log(adhocPenalty, adhocPenaltyReason, adhocExemption, adhocExemptionReason, otherExemptionReason, otherPenaltyReason, fields);
     return (
       <div className="add-rebate-box">
         <div className="pt-emp-penalty-charges col-xs-12">
@@ -116,13 +133,22 @@ class AddRebateExemption extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { form } = state;
+  const { additionalRebate } = form;
+  const { fields } = additionalRebate || {};
+  const { adhocExemption, adhocPenalty } = (additionalRebate && additionalRebate.fields) || {};
+  return { additionalRebate, fields, adhocExemption, adhocPenalty };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setFieldProperty: (formKey, fieldKey, propertyName, propertyValue) => dispatch(setFieldProperty(formKey, fieldKey, propertyName, propertyValue)),
+    displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AddRebateExemption);
