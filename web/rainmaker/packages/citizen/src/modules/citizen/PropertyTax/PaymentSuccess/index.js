@@ -61,7 +61,7 @@ class PaymentSuccess extends Component {
           messages={this.successMessages}
           buttons={this.buttons}
           primaryAction={this.goToHome}
-          existingPropertyId={this.props.existingPropertyId}
+          noExistingPropertyId={!this.props.existingPropertyId}
         />
       </Screen>
     );

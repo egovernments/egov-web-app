@@ -73,6 +73,7 @@ const DatePickerUi = ({
   toolTip,
   updateDependentFields,
   toolTipMessage,
+  textFieldStyle,
   ...rest
 }) => {
   return (
@@ -107,6 +108,7 @@ const DatePickerUi = ({
       type={type}
       autoFocus={autoFocus}
       maxLength={maxLength}
+      textFieldStyle={textFieldStyle}
       autoComplete={type === "password" ? "new-password" : "off"}
       multiLine={multiLine}
       underlineDisabledStyle={underlineDisabledStyle}

@@ -62,7 +62,7 @@ const routes = [
   //   },
   // },
   {
-    path: "property-tax/payment-success/:propertyId/:tenantId/:assessmentId",
+    path: "property-tax/payment-success/:propertyId/:tenantId/:assessmentId/:assessmentYear",
     component: PaymentSuccess,
     needsAuthentication: true,
     options: {

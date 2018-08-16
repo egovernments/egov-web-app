@@ -724,7 +724,7 @@ class FormWizard extends Component {
         ts: 0,
       });
       if (getReceipt && getReceipt.Receipt && getReceipt.Receipt.length) {
-        this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}`);
+        this.props.history.push(`payment-success/${propertyId}/${tenantId}/${assessmentNumber}/${assessmentYear}`);
       } else {
         console.log(getReceipt);
       }

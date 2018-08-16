@@ -1,10 +1,9 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
-import { DatePicker } from "components";
+import { DatePicker, Icon } from "components";
 import "./index.css";
 
 const changeDateToFormat = (date) => {
-  console.log(date);
   const dateObj = new Date(date);
   let year = dateObj.getFullYear();
   let month = dateObj.getMonth() + 1;
@@ -51,8 +50,12 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
               handleFieldChange("chequeDate", e.target.value);
             }}
             formatDate={(date) => changeDateToFormat(date)}
+            textFieldStyle={{ cursor: "pointer" }}
             {...fields.chequeDate}
           />
+          <div className="datepicker-icon" onClick={(e) => e.preventDefault}>
+            <Icon action="action" name="date-range" />
+          </div>
         </div>
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
@@ -81,8 +84,12 @@ const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
               handleFieldChange("receiptDate", e.target.value);
             }}
             formatDate={(date) => changeDateToFormat(date)}
+            textFieldStyle={{ cursor: "pointer" }}
             {...fields.receiptDate}
           />
+          <div className="datepicker-icon" onClick={(e) => e.preventDefault}>
+            <Icon action="action" name="date-range" />
+          </div>
         </div>
       </div>
     </div>
@@ -104,8 +111,12 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
               handleFieldChange("demandDate", e.target.value);
             }}
             formatDate={(date) => changeDateToFormat(date)}
+            textFieldStyle={{ cursor: "pointer" }}
             {...fields.demandDate}
           />
+          <div className="datepicker-icon" onClick={(e) => e.preventDefault}>
+            <Icon action="action" name="date-range" />
+          </div>
         </div>
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />

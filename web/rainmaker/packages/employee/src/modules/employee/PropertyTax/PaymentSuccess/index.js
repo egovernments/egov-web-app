@@ -9,6 +9,7 @@ import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import createReceiptDetails from "../common/PaymentStatus/Components/createReceipt";
 import get from "lodash/get";
+import Label from "egov-ui-kit/utils/translationNode";
 
 class PaymentSuccess extends Component {
   constructor(props) {
@@ -22,9 +23,30 @@ class PaymentSuccess extends Component {
     button2: "Finish",
   };
 
-  successMessages = {
-    Message1: "Thank you !",
-    Message2: "Payment has been made successfully!",
+  successMessages = (financialYear) => {
+    return {
+      Message1: (
+        <div className="rainmaker-displayInline" style={{ justifyContent: "center" }}>
+          <Label containerStyle={{ paddingTop: "10px" }} fontSize={16} label={"PT_TAX"} labelStyle={{ color: "#484848", fontWeight: 500 }} />
+          {financialYear && (
+            <Label
+              containerStyle={{ margin: "0 3px", paddingTop: "10px" }}
+              fontSize={16}
+              label={`(${financialYear})`}
+              labelStyle={{ color: "#484848", fontWeight: 500 }}
+            />
+          )}
+        </div>
+      ),
+      Message2: (
+        <Label
+          containerStyle={{ paddingTop: "10px" }}
+          fontSize={16}
+          label={"PT_RECEIPTS_SUCCESS_MESSAGE4"}
+          labelStyle={{ color: "#484848", fontWeight: 500 }}
+        />
+      ),
+    };
   };
 
   componentDidMount = () => {
@@ -41,6 +63,8 @@ class PaymentSuccess extends Component {
   };
 
   render() {
+    const { match } = this.props;
+    const messages = match.params.assessmentYear && this.successMessages(match.params.assessmentYear);
     return (
       <Screen>
         <PaymentStatus
@@ -48,7 +72,7 @@ class PaymentSuccess extends Component {
           receiptDetails={this.props.receiptDetails}
           floatingButtonColor="#22b25f"
           icon={this.icon}
-          messages={this.successMessages}
+          messages={messages}
           buttons={this.buttons}
           primaryAction={this.goToHome}
         />
@@ -132,7 +156,7 @@ const mapStateToProps = (state, ownProps) => {
   const { cities } = common;
   const { propertiesById, receipts } = properties;
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
-
+  const financialYear = selProperty && selProperty;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const rawReceiptDetails = receipts && receipts[0];
   const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities);

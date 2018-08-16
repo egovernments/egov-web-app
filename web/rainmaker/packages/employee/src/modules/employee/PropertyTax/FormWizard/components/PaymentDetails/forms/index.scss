@@ -5,3 +5,11 @@
 .general-field-padding {
   padding: 0 60px 0 0 !important;
 }
+
+.datepicker-icon {
+  position: absolute;
+  right: 80px;
+  top: 30px;
+  pointer-events: none;
+  cursor: pointer;
+}

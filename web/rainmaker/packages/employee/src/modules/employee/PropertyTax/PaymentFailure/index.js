@@ -7,6 +7,7 @@ import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
 const buttons = {
@@ -14,8 +15,15 @@ const buttons = {
 };
 
 const failureMessages = {
-  Message1: "OOPS !",
-  Message2: "PT_RECEIPT_FAILURE_MESSAGE",
+  Message1: <Label containerStyle={{ paddingTop: "10px" }} fontSize={16} label={"PT_OOPS"} labelStyle={{ color: "#484848", fontWeight: 500 }} />,
+  Message2: (
+    <Label
+      containerStyle={{ paddingTop: "10px" }}
+      fontSize={16}
+      label={"PT_RECEIPT_FAILURE_MESSAGE"}
+      labelStyle={{ color: "#484848", fontWeight: 500 }}
+    />
+  ),
 };
 
 const icon = <Icon action="navigation" name="close" />;

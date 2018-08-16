@@ -11,7 +11,7 @@ const labelStyle = {
   fontWeight: 500,
 };
 
-const PaymentStatus = ({ existingPropertyId, receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
+const PaymentStatus = ({ noExistingPropertyId, receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
   return (
     <div>
       <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
@@ -27,7 +27,7 @@ const PaymentStatus = ({ existingPropertyId, receiptUIDetails, receiptDetails, f
             </div>
           }
         />
-        {!existingPropertyId && (
+        {noExistingPropertyId && (
           <div
             className="rainmaker-displayInline"
             style={{ padding: "12px 12px 12px 12px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
