@@ -47,7 +47,7 @@ const PropertyTaxDetails = ({ estimationDetails, importantDates }) => {
                         <Label
                           containerStyle={{ textAlign: "right" }}
                           className="pt-rf-price"
-                          label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`}
+                          label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
                         />
                       </div>
                     </div>

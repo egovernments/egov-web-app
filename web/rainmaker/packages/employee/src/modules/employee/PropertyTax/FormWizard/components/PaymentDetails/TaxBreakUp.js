@@ -8,7 +8,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
   const { fireCess, intrest, penalty, rebate } = importantDates;
 
   return (
-    <Card style={{ marginBottom: 20, "background-color": "white" }}>
+    <Card style={{ marginBottom: 20, "background-color": "white" }} initiallyExpanded={true}>
       <CardHeader
         className="tax-calculation-card-header"
         actAsExpander={true}
@@ -48,7 +48,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                         <Label
                           containerStyle={{ textAlign: "right" }}
                           className="pt-rf-price"
-                          label={(item.category === "EXEMPTION" ? "- " : "") + `${item.estimateAmount}`}
+                          label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
                         />
                       </div>
                     </div>
