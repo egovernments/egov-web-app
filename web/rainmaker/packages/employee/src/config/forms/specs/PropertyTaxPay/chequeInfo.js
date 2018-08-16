@@ -9,6 +9,7 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.transactionNumber",
       pattern: /^([1-9]\d{6,15})(\.\d+)?$/,
       errorMessage: "Check no. should be minimum 6 digits",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
     },
     chequeDate: {
@@ -18,6 +19,7 @@ const formConfig = {
       hintText: "dd/mm/yy",
       required: true,
       jsonPath: "Receipt[0].instrument.transactionDateInput",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "",
     },
@@ -28,6 +30,7 @@ const formConfig = {
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
       jsonPath: "Receipt[0].instrument.bank.id",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     },
     BankBranch: {
@@ -37,6 +40,7 @@ const formConfig = {
       floatingLabelText: "Bank Branch",
       dropDownData: [{ label: "RBIPunjab", value: "RBIPN" }],
       jsonPath: "Receipt[0].instrument.branchName",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     },
   },

@@ -198,7 +198,7 @@ const mapStateToProps = (state) => {
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = failedPayments && propertiesById && getFinalAssessments(failedPayments, propertiesById);
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData);
-  const numFailedPayments = finalFailedTransactions && Object.keys(finalFailedTransactions).length;
+  const numFailedPayments = finalFailedTransactions ? Object.keys(finalFailedTransactions).length : 0;
   const transformedDrafts = Object.values(draftsById).reduce((result, draft) => {
     if (
       (!draft.draftRecord.assessmentNumber || draft.draftRecord.assessmentNumber === "") &&

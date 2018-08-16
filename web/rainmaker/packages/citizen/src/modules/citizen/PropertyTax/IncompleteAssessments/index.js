@@ -193,7 +193,11 @@ const mapStateToProps = (state) => {
 
   const mergedData = failedPayments && propertiesById && getFinalAssessments(failedPayments, propertiesById);
   let finalFailedTransactions = mergedData && getTransformedItems(mergedData, cities);
-  const incompleteAssessments = transformedDrafts && finalFailedTransactions && [...transformedDrafts, ...finalFailedTransactions];
+  const incompleteAssessments = transformedDrafts
+    ? finalFailedTransactions
+      ? [...transformedDrafts, ...finalFailedTransactions]
+      : [...transformedDrafts]
+    : [];
 
   const sortedProperties = incompleteAssessments && orderby(incompleteAssessments, ["epocDate"], ["desc"]);
 
