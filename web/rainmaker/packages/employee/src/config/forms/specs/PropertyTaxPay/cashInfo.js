@@ -4,7 +4,6 @@ const formConfig = {
     paidBy: {
       id: "paidBy",
       required: true,
-      value: "Select",
       hintText: "Please Select",
       type: "singleValueList",
       floatingLabelText: "Paid By",
