@@ -107,7 +107,7 @@
   .receipt-details {
     background-color: white;
     margin-bottom: 18px;
-    padding: 16px;
+    padding: 10px;
     .receipt-header {
       .label-text {
         height: 19px;
@@ -239,11 +239,11 @@
     }
   }
   .payment-modes {
-    margin-top: 26px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     background-color: white;
     .payment-mode-info {
-      padding: 2px 30px;
+      padding: 2px 18px;
       width: 42.5%;
     }
     .payment-modes-header {
@@ -263,7 +263,7 @@
       width: 100% !important;
     }
     .payer-details {
-      margin: 25px 30px 7px 30px;
+      margin: 16px 30px 7px 18px;
       .cash-info {
         justify-content: space-between;
         display: flex;

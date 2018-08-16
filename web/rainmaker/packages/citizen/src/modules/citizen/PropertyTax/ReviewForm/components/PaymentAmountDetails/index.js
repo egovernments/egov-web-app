@@ -48,20 +48,7 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
             <Label label="Amount to be Paid" fontSize={16} bold={true} labelStyle={styles.labelStyle} />
           </div>
           <div className="clearfix">
-            <div className="col-sm-6" style={{ paddingTop: 30 }}>
-              {/* <RadioButton
-                id="gender-selection"
-                name="gender-selection"
-                options={options}
-                className={"owner-gender-selection"}
-                valueSelected={optionSelected}
-                handleChange={handleOptionChange}
-                radioButtonItemStyle={styles.radioButtonItemStyle}
-                labelStyle={styles.radioButtonLabelStyle}
-                selectedLabelStyle={styles.selectedLabelStyle}
-                defaultValue={"Full_Amount"}
-              />
-            </div> */}
+            <div className="col-sm-6" style={{ paddingTop: 25, paddingLeft: 8 }}>
               <div className="property-amount-radio">
                 <div className="amt-radio">
                   <input type="radio" checked={optionSelected === "Full_Amount"} onClick={onRadioButtonChange} value="Full_Amount" name="radio" />

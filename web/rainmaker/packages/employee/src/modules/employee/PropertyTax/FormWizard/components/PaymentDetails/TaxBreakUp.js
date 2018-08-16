@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider } from "components";
+import { Divider, Icon } from "components";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import Label from "egov-ui-kit/utils/translationNode";
 
@@ -20,8 +20,9 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
         }
         iconStyle={{}}
         title={
-          <div className="tax-header-price rainmaker-displayInline">
-            <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" />
+          <div className="tax-header-price rainmaker-displayInline" style={{ marginLeft: 5 }}>
+            <Icon action="custom" name="property-tax" />
+            <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" containerStyle={{ marginLeft: 5 }} />
             <Label
               className="property-dues-total-amount"
               label={`INR ${totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}`}

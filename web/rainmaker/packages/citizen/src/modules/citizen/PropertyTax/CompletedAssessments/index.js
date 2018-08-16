@@ -103,6 +103,7 @@ const mapStateToProps = (state) => {
   const { cities } = common;
   const { urls } = state.app;
   const { loading, propertiesById, successPayments } = properties || {};
+  console.log(successPayments);
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);
