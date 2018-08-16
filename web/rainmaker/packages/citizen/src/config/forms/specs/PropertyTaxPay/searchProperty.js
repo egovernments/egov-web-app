@@ -49,19 +49,19 @@ const formConfig = {
       pattern: "^([0-9]){10}$",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      value:""
+      value: "",
     },
     oldAssessmentNumber: {
       id: "old-property-id",
       jsonPath: "",
       type: "textfield",
-      floatingLabelText: "PT_PROPERTY_ADDRESS_OLDPID",
+      floatingLabelText: "PT_PROPERTY_ADDRESS_EXISTING_PID",
       errorMessage: "",
-      hintText: "PT_PROPERTY_ADDRESS_OLDPID_PLACEHOLDER",
+      hintText: "PT_PROPERTY_ADDRESS_EXISTING_PID_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64,
-      value:""
+      value: "",
     },
     ids: {
       id: "property-tax-assessment-id",
@@ -72,7 +72,7 @@ const formConfig = {
       hintText: "PT_ASSESSMENT_ID_PLACEHOLDER",
       numcols: 6,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      maxLength: 64
+      maxLength: 64,
     },
 
     // houseNo: {
