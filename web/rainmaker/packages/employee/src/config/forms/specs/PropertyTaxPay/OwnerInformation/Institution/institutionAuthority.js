@@ -1,3 +1,5 @@
+import get from "lodash/get";
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 const formConfig = {
   name: "institutionAuthority",
   fields: {
@@ -7,6 +9,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_OWNER_NAME",
       hintText: "PT_FORM3_OWNER_NAME_PLACEHOLDER",
+      required: true,
     },
     mobile: {
       id: "authority-mobile",
@@ -16,14 +19,6 @@ const formConfig = {
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       pattern: /^(\+\d{1,2}[\s-]{0,1})?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
-    },
-    ownerGuardian: {
-      id: "ownerGuardian",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].fatherOrHusbandName",
-      type: "textfield",
-      floatingLabelText: "PT_FORM3_GUARDIAN",
-      hintText: "PT_FORM3_GUARDIAN_PLACEHOLDER",
-      required: true,
     },
     designation: {
       id: "authority-designation",
@@ -38,11 +33,11 @@ const formConfig = {
       id: "authority-telephone",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
       type: "textfield",
-      floatingLabelText: "Telephone No.",
-      hintText: "Enter Telephone No.",
+      floatingLabelText: "Landline No.(with STD code)",
+      hintText: "Enter Landline No.",
       required: true,
-      pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
-      errorMessage: "Enter valid mobile number",
+      pattern: /^[0-9]{11}$/i,
+      errorMessage: "Enter valid landline number",
       required: true,
     },
     email: {
@@ -61,6 +56,25 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       required: true,
+    },
+    isSameAsPropertyAddress: {
+      id: "rcpt",
+      type: "checkbox",
+      jsonPath: "",
+      errorMessage: "",
+      floatingLabelText: "PT_FORM3_ADDRESS_CHECKBOX",
+      value: "",
+      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
+        const { value: iscorrAddrSameProp } = sourceField;
+        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = "" } = get(state, "form.propertyAddress.fields", {});
+        if (iscorrAddrSameProp) {
+          const correspondingAddress = `${get(houseNumber, "value", "")} ${get(colony, "value", "")} ${get(street, "value", "")} ${get(city,"value","").split(".").pop()}
+          ${get(pincode, "value", "")}`;
+          dispatch(setFieldProperty(formKey, "address", "value", correspondingAddress));
+        } else {
+          dispatch(setFieldProperty(formKey, "address", "value", ""));
+        }
+      },
     },
   },
   action: "",

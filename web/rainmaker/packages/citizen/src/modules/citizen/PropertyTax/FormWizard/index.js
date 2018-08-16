@@ -108,12 +108,16 @@ class FormWizard extends Component {
 
   configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
 
-  addOwner = () => {
+  addOwner = (isMultiple) => {
     const { ownerInfoArr, ownersCount } = this.state;
     const OwnerInfoHOC = this.configOwner(ownersCount);
     this.setState({
       ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
       ownersCount: ownersCount + 1,
+    }, () => {
+      if (isMultiple) {
+        this.addOwner()
+      }
     });
   };
 
@@ -203,7 +207,7 @@ class FormWizard extends Component {
     const isReassesment = !!this.getQueryValue(search, "isReassesment");
     const isFreshAssesment = this.getQueryValue(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId, isReassesment);
-    this.addOwner();
+    this.addOwner(true);
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
@@ -274,7 +278,7 @@ class FormWizard extends Component {
       case "MULTIPLEOWNERS":
         return (
           <MultipleOwnerInfoHOC
-            addOwner={this.addOwner}
+            addOwner={() => {this.addOwner(false)}}
             handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
             disabled={isReviewPage}

@@ -24,7 +24,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
-      pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^([0]|((\+\d{1,2}[\s-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
@@ -63,8 +63,8 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 1-9A-Za-z]{1,128}$/,
-      errorMessage: "Enter valid address (max length 128)"
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 1-9A-Za-z]{1,500}$/,
+      errorMessage: "Enter valid address"
     },
     ownerRelationship: {
       id: "ownerRelationship",
@@ -170,15 +170,11 @@ const formConfig = {
       value: "",
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value: iscorrAddrSameProp } = sourceField;
-        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = "" } = get(state, "form.propertyAddress.fields", {});
+        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = ""} = get(state, "form.propertyAddress.fields", {});
+        const mohallaDetails = mohalla && mohalla.dropDownData.find(mohallaData => mohallaData.value === get(mohalla, "value", ""))
         if (iscorrAddrSameProp) {
-          const correspondingAddress = `${get(houseNumber, "value", "")} ${get(colony, "value", "")} ${get(street, "value", "")} ${get(
-            city,
-            "value",
-            ""
-          )
-            .split(".")
-            .pop()} ${get(pincode, "value", "")}`;
+          const correspondingAddress = `${get(houseNumber, "value", "")} ${get(colony, "value", "")} ${get(street, "value", "")} ${get(city,"value","").split(".").pop()}
+          ${get(mohallaDetails, "label", "")} ${get(pincode, "value", "")}`;
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", correspondingAddress));
         } else {
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", ""));
