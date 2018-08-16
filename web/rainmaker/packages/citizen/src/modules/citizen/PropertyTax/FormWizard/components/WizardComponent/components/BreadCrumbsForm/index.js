@@ -66,7 +66,7 @@ const BreadCrumbsForm = ({ onTabClick, selected, formValidIndexArray }) => {
             style={formValidIndexArray.indexOf(index) > -1 ? formValidStyle : selected === index ? selectedTabStyle : defaultTabStyle}
             href={`#${index}`}
           >
-            <div className="breadcrumb-tab">
+            <div className="breadcrumb-tab" style={{ cursor: "pointer" }}>
               {/* <Icon action={tab.icon.action} name={tab.icon.name} color={"#fff"} style={{ marginRight: 10 }} /> */}
               <div className="tab-icon">
                 {formValidIndexArray.indexOf(index) > -1 ? (
