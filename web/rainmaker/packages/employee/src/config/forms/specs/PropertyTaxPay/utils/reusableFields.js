@@ -268,6 +268,9 @@ export const beforeInitForm = {
       );
     }
 
+    if (get(state, `common.prepareFormData.${action.form.fields.occupancy.jsonPath}`)==='RENTED') {
+      set(action, "form.fields.annualRent.hideField", false);
+    }
     return action;
   },
 };
@@ -339,6 +342,9 @@ export const beforeInitFormForPlot = {
     if (propertyType == "SHAREDPROPERTY") {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
+    }
+    if (get(state, `common.prepareFormData.${action.form.fields.occupancy.jsonPath}`)==='RENTED') {
+      set(action, "form.fields.annualRent.hideField", false);
     }
     return action;
   },

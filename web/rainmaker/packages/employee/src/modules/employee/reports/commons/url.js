@@ -6,7 +6,7 @@ export const options = {
       customReportName: "SourceWiseReport",
       needDefaultSearch: true,
     },
-  ],
+  ]
 };
 
 export const getResultUrl = (moduleName) => {
