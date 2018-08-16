@@ -303,6 +303,11 @@ export const beforeInitFormForPlot = {
             "form.fields.subUsageType.dropDownData",
             mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
           );
+          // set(
+          //   action,
+          //   "form.fields.subUsageType.value",
+          //   null)
+          // );
           if (get(action, "form.fields.subUsageType.jsonPath")) {
             dispatch(
               prepareFormData(
