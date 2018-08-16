@@ -12,9 +12,9 @@ class ReceiptDetails extends Component {
       <Card
         textChildren={
           <div className="receipt-details">
-            <div className="rainmaker-displayInline" style={{ paddingLeft: 4 }}>
+            <div className="rainmaker-displayInline" style={{ paddingLeft: 4, alignItems: "center" }}>
               <Icon name="receipt" action="action" />
-              <Label label="G8 Receipt Details" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 8, marginTop: 3 }} />
+              <Label label="G8 Receipt Details (Optional)" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 8 }} />
             </div>
             <ReceiptInformationHoc />
           </div>

@@ -12,7 +12,7 @@ const formConfig = {
         { label: "Cash", value: "Cash" },
         { label: "DD", value: "DD" },
         { label: "Cheque", value: "Cheque" },
-        { label: "Credit/Debit", value: "Card" },
+        { label: "Credit/Debit Card", value: "Card" },
       ],
       value: "Cash",
     },

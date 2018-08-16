@@ -18,7 +18,7 @@ const WizardComponent = ({
   updateIndex,
   backLabel,
   nextLabel,
-  history
+  history,
 }) => {
   return (
     <div className="wizard-cont">
@@ -26,13 +26,12 @@ const WizardComponent = ({
       {header}
       <div className="wizard-content clearfix">{content}</div>
       {footer}
-      <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
+      <div className="wizard-footer col-sm-10" style={{ textAlign: "right" }}>
         <div className="col-xs-6" style={{ float: "right" }}>
           <Button
             label={<Label buttonLabel={true} label={backLabel} color="#fe7a51" />}
             onClick={() => {
-              (selected-1)===-1?history.push("/property-tax"):
-              onTabClick(selected - 1)
+              selected - 1 === -1 ? history.push("/property-tax") : onTabClick(selected - 1);
             }}
             labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fe7a51" }}
             buttonStyle={{ border: "1px solid #fe7a51" }}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Divider } from "components";
+import { Card, Divider, Icon } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { ActionFooter } from "modules/common";
 import FloatingActionButton from "material-ui/FloatingActionButton";
@@ -11,7 +11,7 @@ const labelStyle = {
   fontWeight: 500,
 };
 
-const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
+const PaymentStatus = ({ existingPropertyId, receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
   return (
     <div>
       <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
@@ -22,21 +22,24 @@ const PaymentStatus = ({ receiptUIDetails, receiptDetails, floatingButtonColor, 
               <FloatingActionButton className="floating-button" style={{ boxShadow: 0 }} backgroundColor={floatingButtonColor}>
                 {icon}
               </FloatingActionButton>
-              <Label
-                containerStyle={{ paddingTop: "30px" }}
-                fontSize={16}
-                label={messages.Message1}
-                labelStyle={{ color: "#484848", fontWeight: 500 }}
-              />
-              <Label
-                containerStyle={{ paddingTop: "10px" }}
-                fontSize={16}
-                label={messages.Message2}
-                labelStyle={{ color: "#484848", fontWeight: 500 }}
-              />
+              <div>{messages.Message1}</div>
+              <div>{messages.Message2}</div>
             </div>
           }
         />
+        {!existingPropertyId && (
+          <div
+            className="rainmaker-displayInline"
+            style={{ padding: "12px 12px 12px 12px", border: "1px solid #5aaafa", borderLeft: "5px solid #5aaafa" }}
+          >
+            <div>
+              <Icon action="action" name="info" color="#30588c" />
+            </div>
+            <div style={{ marginLeft: 16 }}>
+              <Label fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE" />
+            </div>
+          </div>
+        )}
         {receiptUIDetails && receiptUIDetails.propertyInfo.length && receiptUIDetails.receiptInfo.length ? (
           <Card
             className="pt-success-receipt"

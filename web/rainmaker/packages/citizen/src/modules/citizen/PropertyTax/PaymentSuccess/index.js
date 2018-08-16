@@ -8,6 +8,7 @@ import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/act
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import createReceiptDetails from "../common/PaymentStatus/Components/createReceipt";
+import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
 class PaymentSuccess extends Component {
@@ -23,8 +24,17 @@ class PaymentSuccess extends Component {
   };
 
   successMessages = {
-    Message1: "Thank you !",
-    Message2: "Payment has been made successfully!",
+    Message1: (
+      <Label containerStyle={{ paddingTop: "10px" }} fontSize={16} label={"PT_RECEIPT_THANKYOU"} labelStyle={{ color: "#484848", fontWeight: 500 }} />
+    ),
+    Message2: (
+      <Label
+        containerStyle={{ paddingTop: "10px" }}
+        fontSize={16}
+        label={"PT_RECEIPTS_SUCCESS_MESSAGE"}
+        labelStyle={{ color: "#484848", fontWeight: 500 }}
+      />
+    ),
   };
 
   componentDidMount = () => {
@@ -51,6 +61,7 @@ class PaymentSuccess extends Component {
           messages={this.successMessages}
           buttons={this.buttons}
           primaryAction={this.goToHome}
+          existingPropertyId={this.props.existingPropertyId}
         />
       </Screen>
     );
@@ -61,7 +72,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
   const { owners: ownerDetails } = property.propertyDetails[0];
   return {
     propertyInfo: property && [
-      ownerDetails.length > 0
+      ownerDetails.length > 1
         ? ownerDetails.reduce((result, current, index) => {
             result["key"] = `Owner${index + 1} name:`;
             result["value"] = current.name;
@@ -132,14 +143,13 @@ const mapStateToProps = (state, ownProps) => {
   const { cities } = common;
   const { propertiesById, receipts } = properties;
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
-
+  const existingPropertyId = selProperty && selProperty.oldPropertyId;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const rawReceiptDetails = receipts && receipts[0];
   const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities);
   const receiptDetails =
     selProperty && rawReceiptDetails && createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels);
-
-  return { receiptUIDetails, receiptDetails, cities };
+  return { receiptUIDetails, receiptDetails, cities, existingPropertyId };
 };
 
 const mapDispatchToProps = (dispatch) => {

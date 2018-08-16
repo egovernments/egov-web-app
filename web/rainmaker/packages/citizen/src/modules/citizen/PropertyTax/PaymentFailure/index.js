@@ -8,14 +8,63 @@ import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import Label from "egov-ui-kit/utils/translationNode";
 
 const buttons = {
   button2: "Retry",
 };
 
-const failureMessages = {
-  Message1: "OOPS !",
-  Message2: "PT_RECEIPT_FAILURE_MESSAGE",
+const failureMessages = (billAmount) => {
+  return {
+    Message1: <Label containerStyle={{ paddingTop: "30px" }} fontSize={16} label={"PT_OOPS"} labelStyle={{ color: "#484848", fontWeight: 500 }} />,
+    Message2: (
+      <div>
+        <div>
+          {billAmount ? (
+            <div class="rainmaker-displayInline" style={{ justifyContent: "center" }}>
+              <Label
+                containerStyle={{ paddingTop: "10px" }}
+                fontSize={16}
+                label={"PT_RECEIPT_FAILURE_MESSAGE1"}
+                labelStyle={{ color: "#484848", fontWeight: 500 }}
+              />
+              <Label
+                containerStyle={{ paddingTop: "10px", margin: "0 3px" }}
+                fontSize={16}
+                label={billAmount}
+                labelStyle={{ color: "#484848", fontWeight: 500 }}
+              />
+              <Label
+                containerStyle={{ paddingTop: "10px" }}
+                fontSize={16}
+                label={"PT_RECEIPT_FAILURE_MESSAGE2"}
+                labelStyle={{ color: "#484848", fontWeight: 500 }}
+              />
+            </div>
+          ) : (
+            <div>
+              <Label
+                containerStyle={{ paddingTop: "10px" }}
+                fontSize={16}
+                label={"PT_RECEIPT_FAILURE_MESSAGE"}
+                labelStyle={{ color: "#484848", fontWeight: 500 }}
+              />
+            </div>
+          )}
+        </div>
+        <Label
+          containerStyle={{ paddingTop: "10px" }}
+          fontSize={16}
+          label={"PT_RECEIPT_FAILURE_MESSAGE3"}
+          labelStyle={{ color: "#484848", fontWeight: 500 }}
+        />
+      </div>
+    ),
+  };
+};
+
+const getMessage2 = () => {
+  return;
 };
 
 const icon = <Icon action="navigation" name="close" />;
@@ -94,18 +143,20 @@ class PaymentFailure extends Component {
 
   render() {
     const { bill } = this.state;
+    const billAmount = get(bill[0], "billDetails[0].billAmount");
     const receiptUIInfo = bill && bill.length && this.createReceiptUIInfo(this.state.bill);
     const receiptUIDetails = {
       propertyInfo: this.props.propertyInfo ? this.props.propertyInfo : [],
       receiptInfo: receiptUIInfo.receiptInfo ? receiptUIInfo.receiptInfo : [],
     };
+    const messages = failureMessages(billAmount);
     return (
       <Screen>
         <PaymentStatus
           receiptUIDetails={receiptUIDetails}
           floatingButtonColor="#e74c3c"
           icon={icon}
-          messages={failureMessages}
+          messages={messages}
           buttons={buttons}
           primaryAction={this.redirectToReview}
         />
@@ -118,7 +169,7 @@ const createPropertyUIInfo = (property, cities) => {
   const { owners: ownerDetails } = property.propertyDetails[0];
   return {
     propertyInfo: property && [
-      ownerDetails.length > 0
+      ownerDetails.length > 1
         ? ownerDetails.reduce((result, current, index) => {
             result["key"] = `Owner${index + 1} name:`;
             result["value"] = current.name;

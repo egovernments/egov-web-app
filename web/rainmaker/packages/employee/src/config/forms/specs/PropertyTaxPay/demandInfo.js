@@ -4,8 +4,8 @@ const formConfig = {
     demandNo: {
       id: "demandNo",
       type: "textfield",
-      floatingLabelText: "Demand draft No",
-      hintText: "Enter cheque no.",
+      floatingLabelText: "DD No.",
+      hintText: "Enter dd no.",
       jsonPath: "Receipt[0].instrument.transactionNumber",
       pattern: /^([1-9]\d{6,15})(\.\d+)?$/,
       errorMessage: "DD should be minimum 6 digits",
@@ -14,7 +14,7 @@ const formConfig = {
     demandDate: {
       id: "demandDate",
       type: "textfield",
-      floatingLabelText: "Issue Date",
+      floatingLabelText: "DD Date",
       hintText: "dd/mm/yy",
       required: true,
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
