@@ -401,7 +401,6 @@ class FormWizard extends Component {
 
   onRadioButtonChange = (e) => {
     let { estimation } = this.state;
-    console.log(estimation);
     let { totalAmount } = estimation[0] || {};
     if (e.target.value === "Full_Amount") {
       this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount" });
@@ -450,6 +449,7 @@ class FormWizard extends Component {
               estimationDetails={estimation}
               updateEstimate={updateEstimate}
               importantDates={importantDates}
+              totalAmount={totalAmountToBePaid}
             />
           </div>
         );

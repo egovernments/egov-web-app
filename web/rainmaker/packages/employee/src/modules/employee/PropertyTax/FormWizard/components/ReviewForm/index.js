@@ -64,7 +64,7 @@ class ReviewForm extends Component {
   render() {
     let { addRebateBox, updateCalculation, onEditButtonClick } = this;
     let { showRebateBox } = this.state;
-    let { stepZero, stepTwo, stepOne, estimationDetails, importantDates } = this.props;
+    let { stepZero, stepTwo, stepOne, estimationDetails, importantDates, totalAmount } = this.props;
     return (
       <div>
         <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
@@ -76,7 +76,7 @@ class ReviewForm extends Component {
             open={showRebateBox}
             children={[
               <div className="pt-rebate-box">
-                <AddRebatePopUp updateEstimate={updateCalculation} />
+                <AddRebatePopUp updateEstimate={updateCalculation} totalAmount={totalAmount} />
               </div>,
             ]}
             bodyStyle={{ backgroundColor: "#ffffff" }}

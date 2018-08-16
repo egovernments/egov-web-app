@@ -7,30 +7,33 @@ import "./index.css";
 class PropertyTaxDetails extends React.Component {
   state = {
     isExpanded: true,
-  }
+  };
 
-  toggleExpander = () => this.setState({
-    isExpanded: !this.state.isExpanded,
-  })
+  toggleExpander = () =>
+    this.setState({
+      isExpanded: !this.state.isExpanded,
+    });
 
   componentDidMount = () => {
     document.getElementsByClassName("tax-calculation-card-header")[0].addEventListener("click", this.toggleExpander);
-  }
+  };
 
   render() {
-    const { estimationDetails, importantDates, addRebateBox } = this.props
+    const { estimationDetails, importantDates, addRebateBox } = this.props;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
     const { fireCess, intrest, penalty, rebate } = importantDates;
-    const { isExpanded } = this.state
+    const { isExpanded } = this.state;
     return (
-      <Card style={{ marginBottom: 20, "background-color": "white" }} expanded={isExpanded} >
+      <Card style={{ marginBottom: 20, "background-color": "white" }} expanded={isExpanded}>
         <CardHeader
           className="tax-calculation-card-header"
           actAsExpander={true}
           showExpandableButton={true}
           closeIcon={
             <div>
-              <div className="pt-tax-calc-details-btn" onClick={this.toggleExpander}>View Details</div>
+              <div className="pt-tax-calc-details-btn" onClick={this.toggleExpander}>
+                View Details
+              </div>
             </div>
           }
           iconStyle={{}}
@@ -44,7 +47,7 @@ class PropertyTaxDetails extends React.Component {
         <CardText expandable={true}>
           <div className="clearfix fare-section">
             <div className="bill-details col-sm-6">
-              <div className="" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+              <div className="col-sm-10" style={{ backgroundColor: "#f2f2f2", padding: 16 }}>
                 <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_DETAILED_BILL" bold={true} />
                 {taxHeadEstimates &&
                   taxHeadEstimates.map((item, index) => {
@@ -79,7 +82,7 @@ class PropertyTaxDetails extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="additional-rebate-charges">
+              <div className="additional-rebate-charges col-sm-10">
                 <Button
                   label={<Label label={"ADD REBATE/CHARGES"} buttonLabel={true} />}
                   style={{
@@ -126,8 +129,8 @@ class PropertyTaxDetails extends React.Component {
           </div>
         </CardText>
       </Card>
-    )
+    );
   }
-};
+}
 
 export default PropertyTaxDetails;
