@@ -898,7 +898,7 @@ class FormWizard extends Component {
           onTabClick={this.onTabClick}
           selected={selected}
           header={getHeaderLabel(selected)}
-          footer={getFooterLabel(selected)}
+          footer={null}
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"

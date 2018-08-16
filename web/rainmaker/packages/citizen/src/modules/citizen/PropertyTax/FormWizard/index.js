@@ -111,14 +111,17 @@ class FormWizard extends Component {
   addOwner = (isMultiple) => {
     const { ownerInfoArr, ownersCount } = this.state;
     const OwnerInfoHOC = this.configOwner(ownersCount);
-    this.setState({
-      ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
-      ownersCount: ownersCount + 1,
-    }, () => {
-      if (isMultiple) {
-        this.addOwner()
+    this.setState(
+      {
+        ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
+        ownersCount: ownersCount + 1,
+      },
+      () => {
+        if (isMultiple) {
+          this.addOwner();
+        }
       }
-    });
+    );
   };
 
   configOwnersDetailsFromDraft = (ownerFormKeys) => {
@@ -278,7 +281,9 @@ class FormWizard extends Component {
       case "MULTIPLEOWNERS":
         return (
           <MultipleOwnerInfoHOC
-            addOwner={() => {this.addOwner(false)}}
+            addOwner={() => {
+              this.addOwner(false);
+            }}
             handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
             disabled={isReviewPage}
@@ -728,7 +733,7 @@ class FormWizard extends Component {
           onTabClick={this.onTabClick}
           selected={selected}
           header={getHeaderLabel(selected)}
-          footer={getFooterLabel(selected)}
+          footer={null}
           fontSize
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
