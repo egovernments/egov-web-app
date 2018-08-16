@@ -55,7 +55,7 @@ var ToolTipUi = function ToolTipUi(_ref) {
     { id: id, title: _react2.default.createElement(_translationNode2.default, { label: title, color: "#fff", fontSize: "12px" }), placement: placement || "right", PopperProps: PopperProps },
     _react2.default.createElement(
       _Icon2.default,
-      { color: "disabled", style: { fontSize: 50 } },
+      { color: "disabled", style: { fontSize: 24 } },
       _react2.default.createElement(_Info2.default, null)
     )
   );

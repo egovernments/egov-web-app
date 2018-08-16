@@ -21,7 +21,7 @@ const PopperProps = {
 const ToolTipUi = ({ placement, show, title, id }) => {
   return (
     <Tooltip id={id} title={<Label label={title} color="#fff" fontSize="12px" />} placement={placement || "right"} PopperProps={PopperProps}>
-      <Icon color="disabled" style={{ fontSize: 50 }}>
+      <Icon color="disabled" style={{ fontSize: 24 }}>
         <InfoIcon />
       </Icon>
     </Tooltip>

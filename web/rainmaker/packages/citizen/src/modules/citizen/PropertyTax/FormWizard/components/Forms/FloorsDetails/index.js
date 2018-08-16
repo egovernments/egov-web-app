@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "components";
+import { Card, ToolTipUi } from "components";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import CustomSelectForm from "../CustomSelectForm";
@@ -30,7 +30,7 @@ class FloorDetails extends React.Component {
   }
 
   configureFloors = (props) => {
-    const { noFloors, componentDetails, disabled, form,toggleSpinner } = props;
+    const { noFloors, componentDetails, disabled, form, toggleSpinner } = props;
     let updatedFloors = [...Array(parseInt(noFloors))].map((item, key) => {
       let units = [];
 
@@ -63,13 +63,11 @@ class FloorDetails extends React.Component {
     this.setState({
       floors: noFloors > 0 ? [...updatedFloors] : [],
     });
-
-
   };
 
   renderFloors = (floors, noFloors) => {
     const { renderUnits } = this;
-    const {disabled}=this.props;
+    const { disabled } = this.props;
 
     return floors.map((floor, key) => {
       const { floorId, floorDropDown: FloorDropDown, units } = floor;
@@ -78,7 +76,7 @@ class FloorDetails extends React.Component {
           key={key}
           textChildren={
             <div>
-              <FloorDropDown noFloors={noFloors} disabled={disabled}/>
+              <FloorDropDown noFloors={noFloors} disabled={disabled} />
               <div className={`col-xs-12`}>{renderUnits(units, floorId)}</div>
             </div>
           }
@@ -124,15 +122,18 @@ class FloorDetails extends React.Component {
             <Unit
               key={key}
               className={"grayout"}
-              handleRemoveItem={key !== 0 ?(!disabled?() => handleRemoveUnit(floorId, key, unit.formKey):undefined) : undefined}
+              handleRemoveItem={key !== 0 ? (!disabled ? () => handleRemoveUnit(floorId, key, unit.formKey) : undefined) : undefined}
               disabled={disabled}
               formName={`Unit-${key + 1}`}
             />
           );
         })}
-        {!disabled  && <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
-          + ADD ONE MORE UNIT
-        </div>}
+        {!disabled && (
+          <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
+            <span style={{ marginRight: 6 }}>+ ADD ONE MORE UNIT</span>
+            <ToolTipUi id={"form-wizard-tooltip"} title={"PT_FLOOR_DETAILS_ADD_ONE_MORE_UNIT_INFO"} style={{ fontSize: 24 }} />
+          </div>
+        )}
       </div>
     );
   };
@@ -154,7 +155,7 @@ const mapStateToProps = ({ form }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeForm: (formKey) => dispatch(removeForm(formKey)),
-    toggleSpinner: () => dispatch(toggleSpinner())
+    toggleSpinner: () => dispatch(toggleSpinner()),
   };
 };
 

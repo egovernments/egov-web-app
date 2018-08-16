@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "components";
+import { Card, ToolTipUi } from "components";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import CustomSelectForm from "../CustomSelectForm";
@@ -129,7 +129,8 @@ class FloorDetails extends React.Component {
         })}
         {!disabled && (
           <div className="pt-add-owner-btn" onClick={() => handleAddUnit(floorId)} style={{ color: "#fe7a51", float: "right", cursor: "pointer" }}>
-            + ADD ONE MORE UNIT
+            <span style={{ marginRight: 6 }}>+ ADD ONE MORE UNIT</span>
+            <ToolTipUi id={"form-wizard-tooltip"} title={"PT_FLOOR_DETAILS_ADD_ONE_MORE_UNIT_INFO"} style={{ fontSize: 24 }} />
           </div>
         )}
       </div>
