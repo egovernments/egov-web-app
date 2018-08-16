@@ -63,7 +63,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\{\}\!\`#%\^\& 1-9A-Za-z]{1, 500}$/,
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 1-9A-Za-z]{1,500}$/,
       errorMessage: "Enter valid address"
     },
     ownerRelationship: {
