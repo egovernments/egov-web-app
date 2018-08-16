@@ -204,6 +204,7 @@ const formConfig = {
       errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       toolTip: true,
+      pattern: /^[a-zA-Z1-9\\\/\-_\s]{1,64}$/i,
       toolTipMessage: "PT_OLDPID_TOOLTIP_MESSAGE",
       maxLength: 64,
     },

@@ -9,6 +9,7 @@ const formConfig = {
       jsonPath: "Receipt[0].instrument.transactionNumber",
       pattern: /^([1-9]\d{6,15})(\.\d+)?$/,
       errorMessage: "DD should be minimum 6 digits",
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       required: true,
     },
     demandDate: {
@@ -17,6 +18,7 @@ const formConfig = {
       floatingLabelText: "DD Date",
       hintText: "dd/mm/yy",
       required: true,
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       // pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "",
       jsonPath: "Receipt[0].instrument.transactionDateInput",
@@ -27,6 +29,7 @@ const formConfig = {
       type: "singleValueList",
       floatingLabelText: "Bank Name",
       dropDownData: [{ label: "RBI", value: "10101" }],
+      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       jsonPath: "Receipt[0].instrument.bank.id",
     },

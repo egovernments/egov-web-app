@@ -77,6 +77,7 @@ class CompletedAssessments extends Component {
 
   render() {
     const { urls, history, loading, sortedProperties } = this.props;
+    console.log(sortedProperties);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
@@ -103,7 +104,6 @@ const mapStateToProps = (state) => {
   const { cities } = common;
   const { urls } = state.app;
   const { loading, propertiesById, successPayments } = properties || {};
-  console.log(successPayments);
   const numProperties = propertiesById && Object.keys(propertiesById).length;
   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
   let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);

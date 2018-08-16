@@ -729,10 +729,11 @@ class FormWizard extends Component {
           selected={selected}
           header={getHeaderLabel(selected)}
           footer={getFooterLabel(selected)}
+          fontSize
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
-          backLabel="GO BACK"
-          nextLabel={selected === 3 ? "PAY" : "NEXT"}
+          backLabel="PT_COMMONS_GO_BACK"
+          nextLabel={selected === 3 ? "PT_HOME_PAY" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
