@@ -71,7 +71,7 @@ class PaymentModes extends Component {
           <div className="payment-modes">
             <div className="payment-mode-header-cont rainmaker-displayInline" style={{ padding: "0 0 0 16px" }}>
               <Icon name="credit-card" action="action" />
-              <Label label="Choose mode of Payment" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 5 }} />
+              <Label label="Choose mode of Payment" fontSize={16} bold={true} dark={true} containerStyle={{ marginLeft: 8, marginTop: 3 }} />
             </div>
             <PaymentModeSelector />
             {/*<List

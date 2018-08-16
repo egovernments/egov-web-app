@@ -23,7 +23,7 @@ const CashInformation = ({ form, formKey, handleFieldChange }) => {
           <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <div style={{ height: 72, marginBottom: 14 }} />
+          <div style={{ height: 64, marginBottom: 14 }} />
         </div>
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
@@ -69,7 +69,7 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
 const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
   const fields = form.fields || {};
   return (
-    <div className="clearfix">
+    <div className="clearfix" style={{ paddingLeft: 10 }}>
       <div className="col-sm-12 general-form-cont-padding">
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />
@@ -128,7 +128,7 @@ const CardInformation = ({ form, formKey, handleFieldChange }) => {
           <Field fieldKey="cardDigits" field={fields.cardDigits} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <div style={{ height: 72, marginBottom: 14 }} />
+          <div style={{ height: 64, marginBottom: 14 }} />
         </div>
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="receiptNo" field={fields.receiptNo} handleFieldChange={handleFieldChange} />

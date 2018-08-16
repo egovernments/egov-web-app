@@ -3,7 +3,7 @@ import AssessmentList from "../common/AssessmentList";
 import Label from "egov-ui-kit/utils/translationNode";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
-import { BreadCrumbs } from "components";
+import { BreadCrumbs, Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
@@ -14,6 +14,15 @@ const innerDivStyle = {
   paddingTop: "16px",
   paddingLeft: 0,
   borderBottom: "1px solid #e0e0e0",
+};
+
+const IconStyle = {
+  margin: 0,
+  top: 0,
+  bottom: 0,
+  display: "flex",
+  alignItems: "center",
+  height: "inherit",
 };
 
 class MyProperties extends Component {
@@ -106,13 +115,18 @@ const mapStateToProps = (state) => {
           fontSize="16px"
           color="#484848"
           bold={true}
-          labelStyle={{ letterSpacing: 0.6, marginBottom: 15 }}
+          labelStyle={{ letterSpacing: 0.6, marginBottom: 10 }}
         />
       ),
       secondaryText: (
         <div className="rainmaker-displayInline">
-          <Label label="PT_PROPERTY_ASSESSMENT_ID" dark={true} labelStyle={{ letterSpacing: 0.6 }} />
-          <Label label={property.propertyId} dark={true} labelStyle={{ letterSpacing: 0.6, marginLeft: 5 }} />
+          <Label label="PT_PROPERTY_ASSESSMENT_ID" color="#484848" dark={true} labelStyle={{ letterSpacing: 0.5 }} />
+          <Label label={property.propertyId} dark={true} color="#484848" labelStyle={{ letterSpacing: 0.5, marginLeft: 5 }} />
+        </div>
+      ),
+      rightIcon: (
+        <div style={IconStyle}>
+          <Icon action="hardware" name="keyboard-arrow-right" color="#767676" />
         </div>
       ),
       route: property.propertyId,

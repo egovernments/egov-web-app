@@ -20,9 +20,6 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
       <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
       <div>
         {items.map((item, index) => {
-          console.log("Index is...");
-          console.log(index);
-          console.log(items.length);
           return (
             <div key={index}>
               <div>

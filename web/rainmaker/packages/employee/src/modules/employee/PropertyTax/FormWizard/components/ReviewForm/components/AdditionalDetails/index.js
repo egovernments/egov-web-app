@@ -132,7 +132,7 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
             <Label label="Amount to be Paid" fontSize={16} bold={true} labelStyle={styles.labelStyle} />
           </div>
           <div className="clearfix">
-            <div className="col-sm-6" style={{ paddingTop: 30 }}>
+            <div className="col-sm-6" style={{ paddingTop: 25, paddingLeft: 8 }}>
               <div className="property-amount-radio">
                 <div className="amt-radio">
                   <input

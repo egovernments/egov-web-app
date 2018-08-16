@@ -42,7 +42,7 @@ class IncompleteAssessments extends Component {
     fetchProperties(
       [{ key: "accountId", value: userInfo.uuid }],
       [{ key: "userId", value: userInfo.uuid }, { key: "isActive", value: true }, { key: "limit", value: 100 }],
-      [{ key: "userUuid", value: userInfo.uuid }, { key: "txnStatus", value: "FAILURE" }]
+      [{ key: "userUuid", value: userInfo.uuid }, { key: "txnStatus", value: "FAILURE" }, { key: "limit", value: 100 }]
     );
   };
 
