@@ -120,6 +120,21 @@ const formConfig = {
             break;
         }
       },
+      updateOnSetField: (store, action) => {
+        const dispatch = store.dispatch;
+        const state = store.getState()
+        const { fieldKey, formKey, propertyValue } = action;
+        const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
+        const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE")
+        if (propertyValue.length > 0) {
+          if (currentCategory === "NONE") {
+            setDependentFields(dependentFields, dispatch, formKey, true);
+          } else {
+            setDependentFields(dependentFields, dispatch, formKey, false);
+          }
+        }
+        return action;
+      }
     },
     ownerCategoryId: {
       id: "ownerCategoryId",

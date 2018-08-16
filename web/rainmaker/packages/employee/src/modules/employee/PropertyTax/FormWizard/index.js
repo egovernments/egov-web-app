@@ -686,6 +686,23 @@ class FormWizard extends Component {
     return new Date(date).getTime();
   };
 
+  getMultipleOwnerInfo = () => {
+    const { form } = this.props;
+    return Object.keys(form)
+      .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
+      .reduce((acc, curr, currIndex, arr) => {
+        const ownerData = [...acc];
+        const currForm = form[curr];
+        const ownerObj = {};
+        Object.keys(currForm.fields).map((field) => {
+          const jsonPath = currForm.fields[field].jsonPath;
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined);
+        });
+        ownerData.push(ownerObj);
+        return ownerData;
+      }, []);
+  };
+
   createReceipt = async () => {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
@@ -756,12 +773,16 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { prepareFormData } = this.props;
+    let { prepareFormData, form } = this.props;
     const { draft } = this.state.draftRequest;
     const { financialYearFromQuery } = this.state;
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {

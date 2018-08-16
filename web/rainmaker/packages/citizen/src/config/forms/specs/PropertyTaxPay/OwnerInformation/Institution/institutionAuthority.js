@@ -31,7 +31,7 @@ const formConfig = {
     },
     telephone: {
       id: "authority-telephone",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].altContactNumber",
       type: "textfield",
       floatingLabelText: "Landline No.(with STD code)",
       hintText: "Enter Landline No.",
