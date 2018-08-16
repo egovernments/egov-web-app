@@ -19,13 +19,13 @@ const CashInformation = ({ form, formKey, handleFieldChange }) => {
     <div className="clearfix">
       <div className="col-sm-12 general-form-cont-padding">
         <div className="col-sm-6 general-field-padding">
-          <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
+          <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
           <div style={{ height: 64, marginBottom: 14 }} />
         </div>
         <div className="col-sm-6 general-field-padding">
-          <Field fieldKey="paidBy" field={fields.paidBy} handleFieldChange={handleFieldChange} />
+          <Field fieldKey="payerName" field={fields.payerName} handleFieldChange={handleFieldChange} />
         </div>
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="payerMobile" field={fields.payerMobile} handleFieldChange={handleFieldChange} />

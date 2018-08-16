@@ -9,6 +9,7 @@ import PropertyTaxDetailsCard from "./components/PropertyTaxDetails";
 import propertyAddressConfig from "./formConfigs/propertyAddress";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
+import EditIcon from "./components/EditIcon";
 
 import "./index.css";
 const defaultIconStyle = {
@@ -54,66 +55,22 @@ class ReviewForm extends Component {
   };
 
   editIcon = <Icon onClick={this.handleEdit} style={defaultIconStyle} color="#ffffff" action="image" name="edit" />;
+
+  onEditButtonClick = (index) => {
+    let { onTabClick } = this.props;
+    onTabClick(index);
+  };
+
   render() {
-    let { handleOptionsChange, onRadioButtonChange, addRebateBox, updateCalculation } = this;
-    let { valueSelected, totalAmountTobePaid, showRebateBox } = this.state;
-    let { updateIndex, stepZero, stepTwo, stepOne, estimationDetails, importantDates } = this.props;
+    let { addRebateBox, updateCalculation, onEditButtonClick } = this;
+    let { showRebateBox } = this.state;
+    let { stepZero, stepTwo, stepOne, estimationDetails, importantDates } = this.props;
     return (
       <div>
-        <PropertyAddress
-          // form={propertyAddressConfig}
-          icon={PropAddressIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                updateIndex(0);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          component={stepZero}
-        />
-        <AssessmentInfo
-          icon={AssessmentInfoIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                updateIndex(1);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          component={stepOne}
-        />
-        <OwnerInfo
-          icon={OwnerInfoIcon}
-          editIcon={
-            <Icon
-              onClick={() => {
-                updateIndex(2);
-              }}
-              style={defaultIconStyle}
-              color="#ffffff"
-              action="image"
-              name="edit"
-            />
-          }
-          // form={propertyAddressConfig}
-          component={stepTwo}
-        />
+        <PropertyAddress icon={PropAddressIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(0)} />} component={stepZero} />
+        <AssessmentInfo icon={AssessmentInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(1)} />} component={stepOne} />
+        <OwnerInfo icon={OwnerInfoIcon} editIcon={<EditIcon onIconClick={() => onEditButtonClick(2)} />} component={stepTwo} />
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} addRebateBox={addRebateBox} />
-        {/* <AdditionalDetails
-          value={totalAmountTobePaid}
-          onRadioButtonChange={onRadioButtonChange}
-          handleOptionChange={handleOptionsChange}
-          optionSelected={valueSelected}
-        /> */}
         <div className="pt-rebate-exemption-box">
           <Dialog
             open={showRebateBox}

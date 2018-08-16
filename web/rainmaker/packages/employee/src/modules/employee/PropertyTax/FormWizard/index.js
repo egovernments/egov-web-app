@@ -116,14 +116,17 @@ class FormWizard extends Component {
   addOwner = (isMultiple = false) => {
     const { ownerInfoArr, ownersCount } = this.state;
     const OwnerInfoHOC = this.configOwner(ownersCount);
-    this.setState({
-      ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
-      ownersCount: ownersCount + 1,
-    }, () => {
-      if (isMultiple) {
-        this.addOwner()
+    this.setState(
+      {
+        ownerInfoArr: [...ownerInfoArr, { index: ownersCount, Component: OwnerInfoHOC }],
+        ownersCount: ownersCount + 1,
+      },
+      () => {
+        if (isMultiple) {
+          this.addOwner();
+        }
       }
-    });
+    );
   };
 
   configOwnersDetailsFromDraft = (ownerFormKeys) => {
@@ -363,7 +366,9 @@ class FormWizard extends Component {
       case "MULTIPLEOWNERS":
         return (
           <MultipleOwnerInfoHOC
-            addOwner={() => {this.addOwner(false)}}
+            addOwner={() => {
+              this.addOwner(false);
+            }}
             handleRemoveOwner={this.handleRemoveOwner}
             ownerDetails={this.state.ownerInfoArr}
             disabled={isReviewPage}
@@ -437,6 +442,7 @@ class FormWizard extends Component {
         return (
           <div className="review-pay-tab">
             <ReviewForm
+              onTabClick={this.onTabClick}
               updateIndex={this.updateIndex}
               stepZero={this.renderStepperContent(0, fromReviewPage)}
               stepOne={this.renderStepperContent(1, fromReviewPage)}
@@ -461,6 +467,21 @@ class FormWizard extends Component {
         );
       default:
         return null;
+    }
+  };
+
+  onTabClick = (index) => {
+    const { fetchDraftDetails } = this;
+    const { formValidIndexArray, selected } = this.state;
+    // form validation checks needs to be written here
+    // fetchDraftDetails();
+    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
+      this.setState({
+        selected: index,
+        formValidIndexArray: range(0, index),
+      });
+    } else {
+      alert("Please fill required tabs");
     }
   };
 
@@ -799,19 +820,6 @@ class FormWizard extends Component {
     });
     propertyDetails[0].units = units;
     return propertyInfo;
-  };
-
-  onTabClick = (index) => {
-    const { formValidIndexArray, selected } = this.state;
-    // form validation checks needs to be written here
-    if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      this.setState({
-        selected: index,
-        formValidIndexArray: range(0, index),
-      });
-    } else {
-      alert("Please fill required tabs");
-    }
   };
 
   getHeaderLabel = (selected) => {
