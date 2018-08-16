@@ -9,7 +9,7 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
   // const state = store.getState();
   if (type === INIT_FORM) {
     if (typeof get(action, "form.beforeInitForm") === "function") {
-      action = action.form.beforeInitForm(action, store);
+      action = action.form.beforeInitForm(action, store, dispatch);
     }
     const { form } = action;
     const { name: formKey, fields } = form;

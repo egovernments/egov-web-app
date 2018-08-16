@@ -1,4 +1,5 @@
 import { prepareDropDownData } from "./utils/reusableFields";
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -28,7 +29,7 @@ const formConfig = {
         const valueExists = floorValues.find((floorvalue) => {
           return floorvalue === value;
         });
-        if (valueExists && get(state,`form[${action.formKey}].fields[${action.fieldKey}].value`)!==action.value) {
+        if (valueExists && get(state, `form[${action.formKey}].fields[${action.fieldKey}].value`) !== action.value) {
           alert("This floor is already selected, please select another floor");
           action.value = "";
         }
@@ -40,7 +41,7 @@ const formConfig = {
   redirectionRoute: "",
   saveUrl: "",
   isFormValid: false,
-  beforeInitForm: (action, store) => {
+  beforeInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
       const { Floor } = state.common && state.common.generalMDMSDataById;
@@ -48,6 +49,7 @@ const formConfig = {
       set(action, "form.fields.floorName.value", "");
       if (action.form.name === "customSelect_0") {
         set(action, "form.fields.floorName.value", "0");
+        dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
       }
       return action;
     } catch (e) {

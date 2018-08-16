@@ -44,7 +44,7 @@ var fieldInitFormMiddleware = function fieldInitFormMiddleware(store) {
                 }
 
                 if (typeof (0, _get2.default)(action, "form.beforeInitForm") === "function") {
-                  action = action.form.beforeInitForm(action, store);
+                  action = action.form.beforeInitForm(action, store, dispatch);
                 }
                 _action2 = action, form = _action2.form;
                 formKey = form.name, fields = form.fields;
