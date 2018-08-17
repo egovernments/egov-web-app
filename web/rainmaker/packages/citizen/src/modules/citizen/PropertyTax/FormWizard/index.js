@@ -693,11 +693,7 @@ class FormWizard extends Component {
   };
 
   getMultipleOwnerInfo = () => {
-    const { draft } = this.state.draftRequest;
     let { form } = this.props;
-    if (Object.keys(form).filter((formkey) => formkey.indexOf("ownerInfo_") !== -1).length === 0) {
-      form = get(draft, "draftRecord", {})
-    }
     return Object.keys(form)
       .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
@@ -732,7 +728,7 @@ class FormWizard extends Component {
 
   getSingleOwnerInfo = () => {
     const { draft } = this.state.draftRequest;
-    const ownerInfo = this.props.form.ownerInfo || get(draft, "draftRecord.ownerInfo", {})
+    const ownerInfo = this.props.form.ownerInfo
     const ownerObj = {};
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
@@ -751,9 +747,6 @@ class FormWizard extends Component {
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
-      }
-      if (selectedownerShipCategoryType === "SINGLEOWNER") {
-        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
