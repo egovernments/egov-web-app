@@ -693,7 +693,6 @@ class FormWizard extends Component {
   };
 
   getMultipleOwnerInfo = () => {
-    let { form } = this.props;
     return Object.keys(form)
       .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
@@ -726,24 +725,12 @@ class FormWizard extends Component {
     return { instiObj, ownerArray };
   };
 
-  getSingleOwnerInfo = () => {
-    const { draft } = this.state.draftRequest;
-    const ownerInfo = this.props.form.ownerInfo
-    const ownerObj = {};
-    Object.keys(ownerInfo.fields).map((field) => {
-      const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined);
-    });
-    const ownerArray = [ownerObj];
-    return ownerArray;
-  }
-
   estimate = async () => {
     let { prepareFormData, location, form } = this.props;
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
-    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "") || get(draft, "draftRecord.ownershipType.fields.typeOfOwnership.value", "")
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "")
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
