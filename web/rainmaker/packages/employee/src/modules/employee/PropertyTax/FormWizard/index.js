@@ -784,12 +784,12 @@ class FormWizard extends Component {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
-    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     if (!get(prepareFormData, "Receipt[0].instrument.instrumentType.name")) {
       set(prepareFormData, "Receipt[0].instrument.instrumentType.name", "Cash");
     }
-
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].instrument.tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     get(prepareFormData, "Receipt[0].instrument.transactionDateInput") &&
       set(
