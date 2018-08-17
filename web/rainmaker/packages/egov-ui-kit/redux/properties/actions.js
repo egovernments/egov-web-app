@@ -336,18 +336,18 @@ var getAssesmentsandStatus = exports.getAssesmentsandStatus = function getAssesm
               _context3.next = 13;
               return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, [{ key: "consumerCode", value: commaSeperatedCC }], {}, [], {
                 ts: 0
-              });
+              }, true);
 
             case 13:
               payloadReceipts = _context3.sent;
               receiptbyId = (0, _commons.transformById)(payloadReceipts["Receipt"], "transactionId");
               receiptDetails = receiptbyId && Object.values(receiptbyId).reduce(function (acc, curr) {
                 if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
-                acc[curr.Bill[0].billDetails[0].consumerCode] = {
+                acc[curr.Bill[0].billDetails[0].consumerCode].push({
                   amountPaid: curr.Bill[0].billDetails[0].amountPaid,
                   consumerCode: curr.Bill[0].billDetails[0].consumerCode,
                   totalAmount: curr.Bill[0].billDetails[0].totalAmount
-                };
+                });
                 return acc;
               }, {});
 

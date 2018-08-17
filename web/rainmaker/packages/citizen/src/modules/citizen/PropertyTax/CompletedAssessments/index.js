@@ -57,7 +57,7 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, userInfo, fetchProperties } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchProperties, getAssesmentsandStatus } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
     fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
       { key: "userUuid", value: userInfo.uuid },
@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
       dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
-    // getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
+    //getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
   };
 };
 

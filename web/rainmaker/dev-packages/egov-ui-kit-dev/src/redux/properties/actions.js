@@ -201,19 +201,27 @@ export const getAssesmentsandStatus = (queryObjectproperty) => {
       console.log(finalcc);
       const commaSeperatedCC = Object.keys(finalcc).join(",");
 
-      const payloadReceipts = await httpRequest(RECEIPT.GET.URL, RECEIPT.GET.ACTION, [{ key: "consumerCode", value: commaSeperatedCC }], {}, [], {
-        ts: 0,
-      });
+      const payloadReceipts = await httpRequest(
+        RECEIPT.GET.URL,
+        RECEIPT.GET.ACTION,
+        [{ key: "consumerCode", value: commaSeperatedCC }],
+        {},
+        [],
+        {
+          ts: 0,
+        },
+        true
+      );
       const receiptbyId = transformById(payloadReceipts["Receipt"], "transactionId");
       const receiptDetails =
         receiptbyId &&
         Object.values(receiptbyId).reduce((acc, curr) => {
           if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
-          acc[curr.Bill[0].billDetails[0].consumerCode] = {
+          acc[curr.Bill[0].billDetails[0].consumerCode].push({
             amountPaid: curr.Bill[0].billDetails[0].amountPaid,
             consumerCode: curr.Bill[0].billDetails[0].consumerCode,
             totalAmount: curr.Bill[0].billDetails[0].totalAmount,
-          };
+          });
           return acc;
         }, {});
       console.log(receiptDetails);
