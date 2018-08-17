@@ -109,9 +109,24 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.OwnerType"],
       },
-      updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
+      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
+        let documentTypes = get(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+          .filter((docu) => {
+            return docu.ownerTypeCode === value
+          })
+          .reduce((acc, curr) => {
+            let currAcc = [...acc]
+            let dropDownData = {
+              label: curr.name,
+              value: curr.code,
+            }
+            currAcc.push(dropDownData)
+            return currAcc
+          }, [])
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         switch (value) {
           case "NONE":
             setDependentFields(dependentFields, dispatch, formKey, true);
@@ -127,6 +142,21 @@ const formConfig = {
         const { fieldKey, formKey, propertyValue } = action;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE")
+        let documentTypes = get(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+          .filter((docu) => {
+            return docu.ownerTypeCode === currentCategory
+          })
+          .reduce((acc, curr) => {
+            let currAcc = [...acc]
+            let dropDownData = {
+              label: curr.name,
+              value: curr.code,
+            }
+            currAcc.push(dropDownData)
+            return currAcc
+          }, [])
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         if (propertyValue.length > 0) {
           if (currentCategory === "NONE") {
             setDependentFields(dependentFields, dispatch, formKey, true);
@@ -161,7 +191,7 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dropDownData: [{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      dropDownData: [],//[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         if (value === "Aadhar") {

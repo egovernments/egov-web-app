@@ -36,6 +36,8 @@ import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
+import { getDocumentTypes } from "modules/employee/PropertyTax/FormWizard/utils/mdmsCalls";
+import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -226,6 +228,8 @@ class FormWizard extends Component {
           "UsageCategoryMinor",
           "UsageCategorySubMinor",
         ]);
+        const documentTypeMdms = await getDocumentTypes()
+        if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
       }
       this.setState(
         {
@@ -237,6 +241,7 @@ class FormWizard extends Component {
             draft: {
               ...draftRequest.draft,
               id: draftId,
+              assessmentNumber: currentDraft.assessmentNumber,
             },
           },
         },
@@ -264,7 +269,7 @@ class FormWizard extends Component {
   componentWillMount = () => {};
 
   componentDidMount = async () => {
-    let { history, location } = this.props;
+    let { history, location, fetchMDMDDocumentTypeSuccess } = this.props;
     let { search } = location;
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
@@ -277,6 +282,8 @@ class FormWizard extends Component {
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
     this.addOwner(true);
+    const documentTypeMdms = await getDocumentTypes()
+    if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
@@ -1051,6 +1058,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
+    fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data))
   };
 };
 
