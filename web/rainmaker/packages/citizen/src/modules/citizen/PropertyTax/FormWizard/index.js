@@ -524,7 +524,7 @@ class FormWizard extends Component {
             if (plotDetails) {
               const isPlotDetailsFormValid = validateForm(plotDetails);
               if (isPlotDetailsFormValid) {
-                const isTotalUnitSizeValid = validateUnitandPlotSize(plotDetails, form);
+                const isTotalUnitSizeValid = plotDetails.fields.plotSize ? validateUnitandPlotSize(plotDetails, form) : true;
                 if (isTotalUnitSizeValid) {
                   if (get(plotDetails, "fields.floorCount")) {
                     let floorValidation = true;
