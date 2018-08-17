@@ -39,7 +39,7 @@ var fieldInitFormMiddleware = function fieldInitFormMiddleware(store) {
                 // const state = store.getState();
 
                 if (!(type === _actionTypes.INIT_FORM)) {
-                  _context.next = 16;
+                  _context.next = 20;
                   break;
                 }
 
@@ -73,8 +73,16 @@ var fieldInitFormMiddleware = function fieldInitFormMiddleware(store) {
 
               case 16:
                 next(action);
+                if (typeof (0, _get2.default)(action, "form.afterInitForm") === "function") {
+                  action = action.form.afterInitForm(action, store, dispatch);
+                }
+                _context.next = 21;
+                break;
 
-              case 17:
+              case 20:
+                next(action);
+
+              case 21:
               case "end":
                 return _context.stop();
             }

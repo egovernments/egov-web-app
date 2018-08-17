@@ -1,7 +1,8 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import Icon from "egov-ui-kit/components/Icon";
+import set from "lodash/set";
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 const cityCode = "";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
@@ -11,8 +12,9 @@ const formConfig = {
     city: {
       id: "city",
       jsonPath: "Properties[0].address.city",
-      required: true,
+      required: false,
       type: "singleValueList",
+      disabled: true,
       floatingLabelText: "CORE_COMMON_CITY",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       fullWidth: true,
@@ -210,7 +212,12 @@ const formConfig = {
       maxLength: 64,
     },
   },
-
+  afterInitForm: (action, store, dispatch) => {
+    const state = store.getState();
+    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    dispatch(handleFieldChange("propertyAddress", "city", tenantId));
+    return action;
+  },
   action: "",
   redirectionRoute: "",
   saveUrl: "",

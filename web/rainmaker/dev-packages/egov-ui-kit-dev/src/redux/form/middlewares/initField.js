@@ -29,8 +29,13 @@ const fieldInitFormMiddleware = (store) => (next) => async (action) => {
       dispatch(toggleSnackbarAndSetText(true, message, true));
       return;
     }
+    next(action);
+    if (typeof get(action, "form.afterInitForm") === "function") {
+      action = action.form.afterInitForm(action, store, dispatch);
+    }
+  } else {
+    next(action);
   }
-  next(action);
 };
 
 export default fieldInitFormMiddleware;
