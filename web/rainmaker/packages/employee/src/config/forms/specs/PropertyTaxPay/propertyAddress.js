@@ -11,6 +11,7 @@ const formConfig = {
   fields: {
     city: {
       id: "city",
+      className: "pt-emp-property-address-city",
       jsonPath: "Properties[0].address.city",
       required: false,
       type: "singleValueList",
@@ -20,7 +21,6 @@ const formConfig = {
       fullWidth: true,
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       numcols: 6,
-      value:localStorage.getItem("tenantId"),
       dataFetchConfig: {
         url: CITY.GET.URL,
         action: CITY.GET.ACTION,

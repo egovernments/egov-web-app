@@ -14,6 +14,7 @@ const formConfig = {
       numcols: 12,
       errorMessage: "",
       required: true,
+      className: "pt-floor-name",
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
         // const formKeys = Object.keys(state.form);
@@ -44,10 +45,12 @@ const formConfig = {
   beforeInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
-      if (get(state,"common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor")!=="RESIDENTIAL" && get(state,"common.prepareFormData.Properties[0].propertyDetails[0].propertySubType")==="SHAREDPROPERTY") {
+      if (
+        get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" &&
+        get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY"
+      ) {
         dispatch(setFieldProperty(action.form.name, "floorName", "hideField", true));
-      }
-      else {
+      } else {
         dispatch(setFieldProperty(action.form.name, "floorName", "hideField", false));
         const { Floor } = state.common && state.common.generalMDMSDataById;
         set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));

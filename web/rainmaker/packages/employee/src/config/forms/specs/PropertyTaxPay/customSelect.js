@@ -14,6 +14,7 @@ const formConfig = {
       numcols: 12,
       errorMessage: "",
       required: true,
+      className: "pt-floor-name",
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
         // const formKeys = Object.keys(state.form);
