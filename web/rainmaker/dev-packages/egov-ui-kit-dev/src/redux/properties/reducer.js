@@ -144,13 +144,36 @@ const propertyReducer = (state = initialState, action) => {
         errorMessage: action.error,
       };
     case actionTypes.ASSESSMENT_STATUS_COMPLETE:
-      const assessmentsByStatus = {};
+      const assessmentsByStatus = action.payload;
       return {
         ...state,
         loading: false,
         error: false,
         errorMessage: "",
         assessmentsByStatus,
+      };
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_COMPLETE:
+      const singleAssessmentByStatus = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        singleAssessmentByStatus,
       };
     default:
       return state;

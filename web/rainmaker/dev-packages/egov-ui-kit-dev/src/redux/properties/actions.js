@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import { PROPERTY, DRAFT, PGService, RECEIPT } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
 import { transformById } from "egov-ui-kit/utils/commons";
+import orderby from "lodash/orderBy";
 
 const propertyFetchPending = () => {
   return {
@@ -113,6 +114,24 @@ const AssessmentStatusFetchPending = () => {
   };
 };
 
+const SingleAssessmentStatusFetchPending = () => {
+  return {
+    type: actionTypes.SINGLE_ASSESSMENT_STATUS_PENDING,
+  };
+};
+const SingleAssessmentStatusFetchError = (error) => {
+  return {
+    type: actionTypes.SINGLE_ASSESSMENT_STATUS_ERROR,
+    error,
+  };
+};
+const SingleAssessmentStatusFetchComplete = (payload) => {
+  return {
+    type: actionTypes.SINGLE_ASSESSMENT_STATUS_COMPLETE,
+    payload,
+  };
+};
+
 export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) => {
   return async (dispatch) => {
     if (queryObjectDraft) {
@@ -169,9 +188,36 @@ export const fetchReceipts = (queryObj) => {
   };
 };
 
+const getStatusAndAmount = (receiptArrayItem) => {
+  const receiptTransformed = receiptArrayItem.reduce((result, current) => {
+    if (!result.totalAmount) result.totalAmount = 0;
+    result.totalAmount += current.amountPaid;
+    result.totalAmountToPay = receiptArrayItem[receiptArrayItem.length - 1].totalAmount;
+    return result;
+  }, {});
+  if (receiptTransformed.totalAmount === receiptTransformed.totalAmountToPay) {
+    receiptTransformed["status"] = "Paid";
+  } else {
+    receiptTransformed["status"] = "Partially Paid";
+  }
+  return receiptTransformed;
+};
+
+const mergeReceiptsInProperty = (receiptsArray, propertyObj) => {
+  const transformedPropertyObj = { ...propertyObj };
+  Object.keys(receiptsArray).forEach((item) => {
+    if (transformedPropertyObj.hasOwnProperty(item)) {
+      transformedPropertyObj[item].receiptInfo = getStatusAndAmount(orderby(receiptsArray[item], "totalAmount", "asc"));
+    }
+  });
+  const mergedReceiptsProperties = Object.values(transformedPropertyObj).filter((property) => {
+    return property.receiptInfo;
+  });
+  return mergedReceiptsProperties;
+};
+
 export const getAssesmentsandStatus = (queryObjectproperty) => {
   return async (dispatch) => {
-    console.log("inside status.....");
     dispatch(AssessmentStatusFetchPending());
     try {
       const payloadProperty = await httpRequest(PROPERTY.GET.URL, PROPERTY.GET.ACTION, queryObjectproperty);
@@ -183,7 +229,13 @@ export const getAssesmentsandStatus = (queryObjectproperty) => {
             curr &&
             curr.propertyDetails &&
             curr.propertyDetails.reduce((consumerCodes, item) => {
-              consumerCodes[`${curr.propertyId}:${item.assessmentNumber}`] = { ...item, propertyId: curr.propertyId, address: curr.address };
+              consumerCodes[`${curr.propertyId}:${item.assessmentNumber}`] = {
+                ...item,
+                propertyId: curr.propertyId,
+                address: curr.address,
+                tenantId: curr.tenantId,
+                property: curr,
+              };
               return consumerCodes;
             }, []);
 
@@ -198,7 +250,6 @@ export const getAssesmentsandStatus = (queryObjectproperty) => {
           });
           return acc;
         }, {});
-      console.log(finalcc);
       const commaSeperatedCC = Object.keys(finalcc).join(",");
 
       const payloadReceipts = await httpRequest(
@@ -225,9 +276,62 @@ export const getAssesmentsandStatus = (queryObjectproperty) => {
           return acc;
         }, {});
       console.log(receiptDetails);
-      // dispatch(AssessmentStatusFetchComplete(result));
+      console.log(mergeReceiptsInProperty(receiptDetails, finalcc));
+      dispatch(AssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, finalcc)));
     } catch (error) {
       dispatch(AssessmentStatusFetchError(error.message));
+    }
+  };
+};
+
+export const getSingleAssesmentandStatus = (queryObjectproperty) => {
+  return async (dispatch) => {
+    dispatch(SingleAssessmentStatusFetchPending());
+    try {
+      const consumerCodes =
+        queryObjectproperty &&
+        queryObjectproperty.propertyDetails &&
+        queryObjectproperty.propertyDetails.reduce((acc, item) => {
+          acc[`${queryObjectproperty.propertyId}:${item.assessmentNumber}`] = {
+            ...item,
+            propertyId: queryObjectproperty.propertyId,
+            address: queryObjectproperty.address,
+            tenantId: queryObjectproperty.tenantId,
+            property: queryObjectproperty,
+          };
+          return acc;
+        }, {});
+
+      const finalcc = Object.keys(consumerCodes).join(",");
+      const payloadReceipts = await httpRequest(
+        RECEIPT.GET.URL,
+        RECEIPT.GET.ACTION,
+        [{ key: "consumerCode", value: finalcc }],
+        {},
+        [],
+        {
+          ts: 0,
+        },
+        true
+      );
+      const receiptbyId = transformById(payloadReceipts["Receipt"], "transactionId");
+      const receiptDetails =
+        receiptbyId &&
+        Object.values(receiptbyId).reduce((acc, curr) => {
+          if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
+          acc[curr.Bill[0].billDetails[0].consumerCode].push({
+            amountPaid: curr.Bill[0].billDetails[0].amountPaid,
+            consumerCode: curr.Bill[0].billDetails[0].consumerCode,
+            totalAmount: curr.Bill[0].billDetails[0].totalAmount,
+          });
+          return acc;
+        }, {});
+
+      console.log(receiptDetails);
+      console.log(mergeReceiptsInProperty(receiptDetails, consumerCodes));
+      dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
+    } catch (error) {
+      dispatch(SingleAssessmentStatusFetchError(error.message));
     }
   };
 };
