@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import AmountDetails from "./AmountDetails";
 import ReceiptDetails from "./ReceiptDetails";
 import TaxBreakUp from "./TaxBreakUp";
 import PaymentModes from "./PaymentModes";
@@ -118,21 +117,21 @@ class PaymentDetails extends Component {
     const { paymentModeDetails, valueSelected, totalAmountTobePaid, errorText } = this.state;
     const { estimationDetails, importantDates } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-
     return (
       <div className="payment-details">
         <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
-        <AdditionalDetails
-          value={this.props.totalAmountToBePaid}
-          onRadioButtonChange={this.props.onRadioButtonChange}
-          handleFieldChange={this.handleFieldChange}
-          optionSelected={this.props.optionSelected}
-          errorText={errorText}
-          totalAmount={totalAmount && totalAmount}
-          estimationDetails={estimationDetails}
-        />
-        <AmountDetails />
-        <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />
+        {totalAmount > 0 && (
+          <AdditionalDetails
+            value={this.props.totalAmountToBePaid}
+            onRadioButtonChange={this.props.onRadioButtonChange}
+            handleFieldChange={this.handleFieldChange}
+            optionSelected={this.props.optionSelected}
+            errorText={errorText}
+            totalAmount={totalAmount && totalAmount}
+            estimationDetails={estimationDetails}
+          />
+        )}
+        {totalAmount > 0 && <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />}
         <ReceiptDetails />
       </div>
     );

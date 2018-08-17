@@ -82,7 +82,6 @@ class AddRebateExemption extends React.Component {
     const { handleFieldChange, fields } = this.props;
     const { showExtraExemptField, showExtraPenaltyField } = this.state;
     const { adhocPenalty, adhocPenaltyReason, adhocExemption, adhocExemptionReason, otherExemptionReason, otherPenaltyReason } = fields || {};
-    console.log(adhocPenalty, adhocPenaltyReason, adhocExemption, adhocExemptionReason, otherExemptionReason, otherPenaltyReason, fields);
     return (
       <div className="add-rebate-box">
         <div className="pt-emp-penalty-charges col-xs-12">
