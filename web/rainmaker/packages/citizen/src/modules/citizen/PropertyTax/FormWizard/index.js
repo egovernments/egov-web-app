@@ -34,8 +34,8 @@ import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
-import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls"
-import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions"
+import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
+import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
 
 const customTitle = window.location.search && `Property Assessment (${window.location.search.split("FY=")[1].split("&")[0]}) : New Property`;
@@ -86,7 +86,7 @@ class FormWizard extends Component {
         alert(e);
       }
     } else {
-      const assessmentNo = draftRequest.draft.assessmentNumber || assessmentNumber
+      const assessmentNo = draftRequest.draft.assessmentNumber || assessmentNumber;
       draftRequest.draft = {
         ...draftRequest.draft,
         assessmentNumber: assessmentNo,
@@ -235,8 +235,8 @@ class FormWizard extends Component {
           "UsageCategoryMinor",
           "UsageCategorySubMinor",
         ]);
-        const documentTypeMdms = await getDocumentTypes()
-        if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
+        const documentTypeMdms = await getDocumentTypes();
+        if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
       this.setState(
@@ -357,8 +357,8 @@ class FormWizard extends Component {
 
       await this.fetchDraftDetails(assessmentId, isReassesment);
     }
-    const documentTypeMdms = await getDocumentTypes()
-    if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
+    const documentTypeMdms = await getDocumentTypes();
+    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
     this.addOwner(true);
     let financialYearFromQuery = window.location.search.split("FY=")[1];
     if (financialYearFromQuery) {
@@ -693,6 +693,7 @@ class FormWizard extends Component {
   };
 
   getMultipleOwnerInfo = () => {
+    let { form } = this.props;
     return Object.keys(form)
       .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
@@ -730,7 +731,7 @@ class FormWizard extends Component {
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
-    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "")
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
@@ -936,7 +937,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     updatePrepareFormDataFromDraft: (prepareFormData) => dispatch(updatePrepareFormDataFromDraft(prepareFormData)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
-    fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data))
+    fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data)),
   };
 };
 
