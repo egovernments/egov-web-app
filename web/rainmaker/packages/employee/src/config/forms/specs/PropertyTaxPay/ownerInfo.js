@@ -63,7 +63,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_CORRESPONDENCE_ADDRESS",
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 1-9A-Za-z]{1,500}$/,
+      pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/\{\}\!\`#%\^\& 0-9A-Za-z]{1,500}$/,
       errorMessage: "Enter valid address"
     },
     ownerRelationship: {
@@ -188,8 +188,7 @@ const formConfig = {
         const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = ""} = get(state, "form.propertyAddress.fields", {});
         const mohallaDetails = mohalla && mohalla.dropDownData.find(mohallaData => mohallaData.value === get(mohalla, "value", ""))
         if (iscorrAddrSameProp) {
-          const correspondingAddress = `${get(houseNumber, "value", "")} ${get(colony, "value", "")} ${get(street, "value", "")} ${get(city,"value","").split(".").pop()}
-          ${get(mohallaDetails, "label", "")} ${get(pincode, "value", "")}`;
+        const correspondingAddress = [`${get(houseNumber, "value", "")}`,`${get(colony, "value", "")}`,`${get(street, "value", "")}`, `${get(mohallaDetails, "label", "")}`,`${get(city,"value","").split(".").pop()}`, `${get(pincode, "value", "")}`].join(",").replace(/,,/g,",")
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", correspondingAddress));
         } else {
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", ""));

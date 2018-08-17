@@ -126,27 +126,46 @@ class ReviewForm extends Component {
     return chosenDateObj;
   };
 
+  getErrorMessage = (value) => {
+    let { totalAmount } = this.props.estimationDetails[0] || {};
+    let errorText = `amount should be numeric`
+    if (isFinite(value) && value >= totalAmount) {
+      errorText = `can't be greater than ${parseInt(totalAmount)-1}`
+    } else if (isFinite(value) && value == 0) {
+      errorText = "can't be zero"
+    } else if (isFinite(value) && value <= 0) {
+      errorText = "can't be negative"
+    }
+    return errorText
+  }
+
   handleFieldChange = (event, value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    if (!isNaN(parseFloat(value)) && isFinite(value) && value >= totalAmount) {
+    if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value <= 0) {
       this.setState({
-        errorText: `amount should be numeric and can't be greater than ${parseInt(totalAmount) - 1}`,
+        errorText: this.getErrorMessage(value),
       });
     } else {
       this.setState({
         errorText: "",
       });
-      this.props.updateTotalAmount(value, this.props.valueSelected === "Full_Amount");
     }
+    this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount");
   };
+
+  updateTotalAmount = (value) => this.props.updateTotalAmount(value, this.state.valueSelected === "Full_Amount");
 
   onRadioButtonChange = (e) => {
     let { estimationDetails } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
+      this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount", errorText: "" }, () => {
+        this.updateTotalAmount(this.props.totalAmountToBePaid)
+      });
     } else {
-      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
+      this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" }, () => {
+        this.updateTotalAmount(this.props.totalAmountToBePaid)
+      });
     }
   };
 
@@ -159,7 +178,7 @@ class ReviewForm extends Component {
   render() {
     let { handleFieldChange, onRadioButtonChange, onEditButtonClick } = this;
     let { valueSelected, importantDates, pattern, errorText, minLength, maxLength } = this.state;
-    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountTobePaid, isPartialPaymentInValid } = this.props;
+    let { onTabClick, stepZero, stepTwo, stepOne, estimationDetails, totalAmountToBePaid, isPartialPaymentInValid } = this.props;
     let { totalAmount } = estimationDetails[0] || {};
     return (
       <div>
@@ -169,7 +188,7 @@ class ReviewForm extends Component {
         <PropertyTaxDetailsCard estimationDetails={estimationDetails} importantDates={importantDates} />
         {!isPartialPaymentInValid && (
           <PaymentAmountDetails
-            value={valueSelected === "Partial_Amount" ? totalAmountTobePaid : totalAmount}
+            value={valueSelected === "Partial_Amount" ? totalAmountToBePaid : totalAmount}
             onRadioButtonChange={onRadioButtonChange}
             handleFieldChange={handleFieldChange}
             optionSelected={valueSelected}
