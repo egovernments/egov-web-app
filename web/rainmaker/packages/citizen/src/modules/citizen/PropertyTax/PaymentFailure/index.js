@@ -143,13 +143,13 @@ class PaymentFailure extends Component {
 
   render() {
     const { bill } = this.state;
-    const billAmount = get(bill[0], "billDetails[0].billAmount");
+    const { txnAmount } = this.props.match.params;
     const receiptUIInfo = bill && bill.length && this.createReceiptUIInfo(this.state.bill);
     const receiptUIDetails = {
       propertyInfo: this.props.propertyInfo ? this.props.propertyInfo : [],
       receiptInfo: receiptUIInfo.receiptInfo ? receiptUIInfo.receiptInfo : [],
     };
-    const messages = failureMessages(billAmount);
+    const messages = failureMessages(txnAmount);
     return (
       <Screen>
         <PaymentStatus

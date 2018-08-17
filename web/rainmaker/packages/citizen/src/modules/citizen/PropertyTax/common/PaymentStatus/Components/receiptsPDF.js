@@ -29,28 +29,32 @@ const generateReceipt = (role, details) => {
         let bodyData = [];
         let { units } = propertyDetails[0];
         let dataRow = [];
-        dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
-        bodyData.push(dataRow);
-        units &&
-          units.map((unit) => {
-            dataRow = [];
-            dataRow.push(unit.floorNo || "-");
-            dataRow.push(unit.usageCategoryMinor || unit.usageCategoryMajor || "");
-            dataRow.push(unit.usageCategorySubMinor || "");
-            dataRow.push(unit.occupancyType || "");
-            if (unit.occupancyType === "RENTED") {
-              dataRow.push(unit.arv || "");
-            } else {
-              dataRow.push(unit.unitArea || "");
-            }
+        if (units && units.length) {
+          dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
+          bodyData.push(dataRow);
+          units &&
+            units.map((unit) => {
+              dataRow = [];
+              dataRow.push(unit.floorNo ? (unit.floorNo == 0 ? "Ground Floor" : unit.floorNo) : "-");
+              dataRow.push(unit.usageCategoryMinor || unit.usageCategoryMajor || "");
+              dataRow.push(unit.usageCategorySubMinor || "");
+              dataRow.push(unit.occupancyType || "");
+              if (unit.occupancyType === "RENTED") {
+                dataRow.push(unit.arv || "");
+              } else {
+                dataRow.push(unit.unitArea || "");
+              }
 
-            bodyData.push(dataRow);
-          });
-        return bodyData;
+              bodyData.push(dataRow);
+            });
+          return bodyData;
+        } else {
+          return null;
+        }
       };
 
       let borderKey = [true, true, false, true];
@@ -61,7 +65,7 @@ const generateReceipt = (role, details) => {
         const transformedArray = ownerArray.map((item, index) => {
           return [
             {
-              text: `Owner ${index + 1} Name`,
+              text: `Owner ${ownerArray.length > 1 ? "" : index + 1} Name`,
               border: borderKey,
               style: "receipt-table-key",
             },
@@ -136,7 +140,7 @@ const generateReceipt = (role, details) => {
                     text: "Contact Us: ",
                     bold: true,
                   },
-                  "080 - 09567743",
+                  header.contact,
                 ],
                 alignment: "right",
               },
@@ -158,10 +162,10 @@ const generateReceipt = (role, details) => {
               {
                 text: [
                   {
-                    text: "Visit Us: ",
+                    text: "Website: ",
                     bold: true,
                   },
-                  "www.pmidc.com",
+                  header.website,
                 ],
                 alignment: "right",
               },
@@ -172,11 +176,11 @@ const generateReceipt = (role, details) => {
             table: {
               body: [
                 [
-                  { text: "Receipt No:", border: borderKey, style: "receipt-table-key" },
-                  { text: details.ReceiptNo || "", border: borderValue },
-                  { text: "Property System ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: details.existingPropertyId || "NA", border: borderValue },
+                  { text: "Property Tax Assessment ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.propertyId || "", border: borderValue }, //need to confirm this data
-                  { text: "Assessment ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Assessment No:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].assessmentNumber || "", border: borderValue },
                 ],
               ],
@@ -199,7 +203,7 @@ const generateReceipt = (role, details) => {
                   { text: "Street Name:", border: borderKey, style: "receipt-table-key" },
                   { text: address.street || "", border: borderValue },
                   { text: "Locality/Mohalla:", border: borderKey, style: "receipt-table-key" },
-                  { text: address.locality.code || "", border: borderValue },
+                  { text: address.locality.name || "", border: borderValue },
                 ],
               ],
             },
@@ -214,18 +218,19 @@ const generateReceipt = (role, details) => {
                 [
                   { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].landArea || "", border: borderValue },
-                  { text: "Type of Building:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Property Type:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].propertySubType || "", border: borderValue },
                 ],
               ],
             },
             layout: tableborder,
           },
+          { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" },
           {
             style: "receipt-assess-table",
             table: {
               widths: ["*", "*", "*", "*", "*"],
-              body: getFloorDetails(),
+              body: getFloorDetails() || [],
             },
             layout: tableborder,
           },
@@ -238,7 +243,7 @@ const generateReceipt = (role, details) => {
             },
             layout: tableborder,
           },
-          { text: "TAX CALCULATION", style: "pt-reciept-citizen-subheader" },
+          { text: "PAYABLE AMOUNT", style: "pt-reciept-citizen-subheader" },
           {
             style: "receipt-assess-table",
             table: {
@@ -253,7 +258,7 @@ const generateReceipt = (role, details) => {
             },
             layout: tableborder,
           },
-          { text: "PAYMENT RECEIPT", style: "pt-reciept-citizen-subheader" },
+          { text: "PAYMENT INFORMATION", style: "pt-reciept-citizen-subheader" },
           {
             style: "pt-reciept-citizen-table",
             table: {
@@ -275,9 +280,9 @@ const generateReceipt = (role, details) => {
                 ],
                 [
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.receiptNo || "", border: borderValue },
-                  { text: "G8 Receipt Issue Date", border: borderKey },
-                  { text: receipts.paymentDate, border: borderValue },
+                  { text: receipts.G8receiptNo || "", border: borderValue },
+                  { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.G8paymentDate || "", border: borderValue },
                 ],
               ],
             },
@@ -355,7 +360,7 @@ const generateReceipt = (role, details) => {
       break;
     default:
   }
-  data && pdfMake.createPdf(data).download("citizenreceipt.pdf");
+  data && pdfMake.createPdf(data).download(`${details.ReceiptNo}.pdf`);
 };
 
 export default generateReceipt;

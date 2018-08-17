@@ -6,10 +6,8 @@ import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const taxArray = billAccountDetails.reduce(
     (result, current) => {
-      current.accountDescription &&
-        current.crAmountToBePaid != 0 &&
-        result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
-      current.accountDescription && current.crAmountToBePaid != 0 && result[1].push({ text: current.crAmountToBePaid });
+      current.accountDescription && result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
+      current.accountDescription && result[1].push({ text: current.crAmountToBePaid });
       return result;
     },
     [[], []]
@@ -19,14 +17,44 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   return taxArray;
 };
 
-const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels) => {
+const getBase64FromImageUrl = async (url) => {
+  var img = new Image();
+  var dataURL;
+  img.setAttribute("crossOrigin", "anonymous");
+
+  img.onload = await function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = this.width;
+    canvas.height = this.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(this, 0, 0);
+
+    dataURL = canvas.toDataURL("image/png");
+
+    dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  };
+  console.log(dataURL);
+
+  return dataURL;
+};
+const url = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${property.tenantId}/logo.png`;
+const getHeaderDetails = (property, cities) => {
+  const propertyTenant = cities.filter((item) => item.code === property.tenantId);
+  console.log(propertyTenant);
+  return {
+    header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
+    subheader: "Property Tax Payment Receipt (Citizen Copy)",
+    logo: propertyTenant[0].imageId || msevaLogo,
+    contact: propertyTenant[0].contactNumber,
+    website: propertyTenant[0].domainUrl,
+  };
+};
+
+const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities) => {
   return {
     ReceiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-    header: {
-      header: "AMRITSAR MUNICIPAL CORPORATION",
-      subheader: "Property Tax Payment Receipt (Citizen Copy)",
-      logo: msevaLogo,
-    },
+    header: getHeaderDetails(property, cities),
     taxNew:
       receiptDetails &&
       getTaxInfo(receiptDetails.Bill[0].billDetails[0].billAccountDetails, receiptDetails.Bill[0].billDetails[0].totalAmount, localizationLabels),
@@ -49,6 +77,8 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,
     owners: propertyDetails.owners,
+    existingPropertyId: property.oldPropertyId,
+    propertyId: property.propertyId,
   };
 };
 

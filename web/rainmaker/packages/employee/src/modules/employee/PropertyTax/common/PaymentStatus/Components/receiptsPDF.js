@@ -275,9 +275,9 @@ const generateReceipt = (role, details) => {
                 ],
                 [
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.receiptNo || "", border: borderValue },
+                  { text: receipts.G8receiptNo || "", border: borderValue },
                   { text: "G8 Receipt Issue Date", border: borderKey },
-                  { text: receipts.paymentDate, border: borderValue },
+                  { text: receipts.G8receiptDate || "", border: borderValue },
                 ],
               ],
             },

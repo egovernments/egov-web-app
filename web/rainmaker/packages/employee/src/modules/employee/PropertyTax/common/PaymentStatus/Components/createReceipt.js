@@ -45,6 +45,8 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
         receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+      G8receiptNo: receiptDetails && get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate")),
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,

@@ -81,8 +81,8 @@ class PaymentSuccess extends Component {
   }
 }
 
-const createReceiptUIInfo = (property, receiptDetails, cities) => {
-  const { owners: ownerDetails } = property.propertyDetails[0];
+const createReceiptUIInfo = (property, receiptDetails, cities, totalReceipts) => {
+  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
   return {
     propertyInfo: property && [
       ownerDetails.length > 0
@@ -124,7 +124,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
       },
       {
         key: "Payable Amount:",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount").toString(),
+        value: receiptDetails && totalReceipts && get(receiptDetails, `Bill[${totalReceipts - 1}].billDetails[0].totalAmount`).toString(),
       },
       {
         key: "Amount Paid:",
@@ -134,7 +134,10 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
         key: "Amount Due:",
         value:
           receiptDetails &&
-          (get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+          totalReceipts &&
+          (
+            get(receiptDetails, `Bill[${totalReceipts - 1}].billDetails[0].totalAmount`) - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")
+          ).toString(),
       },
     ],
   };
@@ -156,10 +159,10 @@ const mapStateToProps = (state, ownProps) => {
   const { cities } = common;
   const { propertiesById, receipts } = properties;
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
-  const financialYear = selProperty && selProperty;
+  const totalReceipts = receipts && receipts.length;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const rawReceiptDetails = receipts && receipts[0];
-  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities);
+  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalReceipts);
   const receiptDetails =
     selProperty && rawReceiptDetails && createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels);
 

@@ -36,7 +36,7 @@ const PaymentStatus = ({ noExistingPropertyId, receiptUIDetails, receiptDetails,
               <Icon action="action" name="info" color="#30588c" />
             </div>
             <div style={{ marginLeft: 16 }}>
-              <Label fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE" />
+              <Label fontSize="14px" color="#484848" label="PT_FORM1_INFORMATION_MESSAGE2" />
             </div>
           </div>
         )}

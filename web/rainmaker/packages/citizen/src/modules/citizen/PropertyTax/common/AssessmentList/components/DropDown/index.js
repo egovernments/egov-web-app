@@ -49,7 +49,7 @@ const onSelectFieldChange = (event, key, payload, history, item) => {
 };
 
 const downloadReceipt = async (item) => {
-  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerNo", value: item.consumerCode }];
+  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerCode", value: item.consumerCode }];
   try {
     const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
     const receiptDetails =

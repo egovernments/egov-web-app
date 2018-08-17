@@ -42,7 +42,7 @@ class PaymentSuccess extends Component {
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
     fetchReceipts([
       { key: "tenantId", value: match.params.tenantId },
-      { key: "consumerNo", value: `${match.params.propertyId}:${match.params.assessmentId}` },
+      { key: "consumerCode", value: `${match.params.propertyId}:${match.params.assessmentId}` },
     ]);
   };
 
@@ -68,8 +68,8 @@ class PaymentSuccess extends Component {
   }
 }
 
-const createReceiptUIInfo = (property, receiptDetails, cities) => {
-  const { owners: ownerDetails } = property.propertyDetails[0];
+const createReceiptUIInfo = (property, receiptDetails, cities, totalReceipts) => {
+  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
   return {
     propertyInfo: property && [
       ownerDetails.length > 1
@@ -103,7 +103,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
       },
       {
         key: "Payment Term:",
-        value: "2018-19", // To be API integrated
+        value: financialYear,
       },
       {
         key: "Date:",
@@ -111,7 +111,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
       },
       {
         key: "Payable Amount:",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount").toString(),
+        value: receiptDetails && get(receiptDetails, `Bill[${totalReceipts - 1}].billDetails[0].totalAmount`).toString(),
       },
       {
         key: "Amount Paid:",
@@ -121,7 +121,10 @@ const createReceiptUIInfo = (property, receiptDetails, cities) => {
         key: "Amount Due:",
         value:
           receiptDetails &&
-          (get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+          totalReceipts &&
+          (
+            get(receiptDetails, `Bill[${totalReceipts - 1}].billDetails[0].totalAmount`) - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")
+          ).toString(),
       },
     ],
   };
@@ -145,10 +148,14 @@ const mapStateToProps = (state, ownProps) => {
   const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
   const existingPropertyId = selProperty && selProperty.oldPropertyId;
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
+  const totalReceipts = receipts && receipts.length;
   const rawReceiptDetails = receipts && receipts[0];
-  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities);
+  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalReceipts);
   const receiptDetails =
-    selProperty && rawReceiptDetails && createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels);
+    selProperty &&
+    rawReceiptDetails &&
+    cities &&
+    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities);
   return { receiptUIDetails, receiptDetails, cities, existingPropertyId };
 };
 
