@@ -730,7 +730,7 @@ class FormWizard extends Component {
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
-        set(prepareFormData, "Properties[0].propertyDetails[0].institute", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
       }
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {

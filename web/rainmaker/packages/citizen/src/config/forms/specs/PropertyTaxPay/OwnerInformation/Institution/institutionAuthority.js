@@ -69,7 +69,7 @@ const formConfig = {
         const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = ""} = get(state, "form.propertyAddress.fields", {});
         const mohallaDetails = mohalla && mohalla.dropDownData.find(mohallaData => mohallaData.value === get(mohalla, "value", ""))
         if (iscorrAddrSameProp) {
-        const correspondingAddress = [`${get(houseNumber, "value", "")}`,`${get(colony, "value", "")}`,`${get(street, "value", "")}`, `${get(mohallaDetails, "label", "")}`,`${get(city,"value","").split(".").pop()}`, `${get(pincode, "value", "")}`].join(",").replace(/,,/g,",")
+        const correspondingAddress = [`${get(houseNumber, "value", "")}`,`${get(colony, "value", "")}`,`${get(street, "value", "")}`, `${get(mohallaDetails, "label", "")}`,`${get(city,"value","").split(".").pop()}`, `${get(pincode, "value", "")}`].join(", ").replace(/^(,\s)+|(,\s)+$/g, '').replace(/(,\s){2,}/g, ", ")
           dispatch(setFieldProperty(formKey, "address", "value", correspondingAddress));
         } else {
           dispatch(setFieldProperty(formKey, "address", "value", ""));
