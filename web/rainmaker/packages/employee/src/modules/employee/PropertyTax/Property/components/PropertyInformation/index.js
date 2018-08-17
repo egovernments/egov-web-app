@@ -37,7 +37,9 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
                   <Receipt receiptItems={item.items} />
                 )}
               </div>
-              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+              {index < items.length - 1 && (
+                <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }} />
+              )}
             </div>
           );
         })}

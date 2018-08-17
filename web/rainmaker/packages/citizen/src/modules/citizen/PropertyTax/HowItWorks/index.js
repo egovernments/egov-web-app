@@ -118,8 +118,10 @@ class HowItWorks extends Component {
               nestedListStyle={{ padding: "0 0 16px 0" }}
               primaryText={<Label dark={true} label={item.question} fontSize={16} />}
               nestedItems={item.answer.map((nestedItem) => {
-                return <ListItem primaryText={<Label fontSize={16} label={nestedItem.text} />} innerDivStyle={{ padding: 0 }} />;
+                return <ListItem hoverColor="#fff" primaryText={<Label fontSize={16} label={nestedItem.text} />} innerDivStyle={{ padding: 0 }} />;
               })}
+              primaryTogglesNestedList={true}
+              hoverColor="#fff"
             />
           );
         })}

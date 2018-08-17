@@ -160,6 +160,7 @@ const getListItems = (items, history) => {
           route: item.route,
           leftIcon: item.leftIcon,
           rightIcon: getRightIconItems(item, history),
+          initiallyOpen: item.initiallyOpen,
           nestedItems:
             item &&
             item.nestedItems &&

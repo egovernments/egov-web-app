@@ -7,8 +7,8 @@ import { Screen } from "modules/common";
 import { Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import PropertyInformation from "./components/PropertyInformation";
-import ReceiptDialog from "./components/ReceiptDialog";
 import isEqual from "lodash/isEqual";
 
 const innerDivStyle = {
@@ -42,7 +42,7 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
+    const { fetchProperties, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -81,15 +81,13 @@ class Property extends Component {
       "OccupancyType",
       "PropertyType",
     ]);
-    // const { pathname } = location;
-    // if (!(localStorage.getItem("path") === pathname)) {
-    //   customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
-    // }
+    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     renderCustomTitleForPt(customTitle);
   };
 
   getAssessmentListItems = (props) => {
     const { propertyItems, propertyId, history, transformedAssessments } = props;
+    console.log(transformedAssessments);
     const viewAllAssessmentItem = {
       primaryText: (
         <div
@@ -101,7 +99,7 @@ class Property extends Component {
         </div>
       ),
     };
-    transformedAssessments.push(viewAllAssessmentItem);
+    transformedAssessments && transformedAssessments.push(viewAllAssessmentItem);
     return [
       {
         primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -120,6 +118,7 @@ class Property extends Component {
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
           </div>
         ),
+        initiallyOpen: true,
       },
       {
         primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -150,55 +149,56 @@ class Property extends Component {
   };
 
   render() {
-    const { history } = this.props;
+    const { history, transformedAssessments } = this.props;
 
     return (
       <Screen>
-        {
+        {transformedAssessments && (
           <AssessmentList
             items={this.getAssessmentListItems(this.props)}
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
             history={history}
           />
-        }
-        <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
+        )}
       </Screen>
     );
   }
 }
 
 const getAddressInfo = (addressObj, extraItems) => {
-  return [
-    {
-      heading: "Property Address",
-      iconAction: "action",
-      iconName: "home",
-      items: [
-        {
-          key: " House No:",
-          value: addressObj.houseNo || "NA",
-        },
-        {
-          key: "Street Name:",
-          value: addressObj.street || "NA",
-        },
-        {
-          key: "Pincode:",
-          value: addressObj.pincode || "NA",
-        },
-        {
-          key: "Colony Name:",
-          value: addressObj.colonyName || "NA",
-        },
-        {
-          key: "Mohalla:",
-          value: addressObj.mohalla || "NA",
-        },
-        ...extraItems,
-      ],
-    },
-  ];
+  return (
+    addressObj && [
+      {
+        heading: "Property Address",
+        iconAction: "action",
+        iconName: "home",
+        items: [
+          {
+            key: " House No:",
+            value: addressObj.houseNo || "NA",
+          },
+          {
+            key: "Street Name:",
+            value: addressObj.street || "NA",
+          },
+          {
+            key: "Pincode:",
+            value: addressObj.pincode || "NA",
+          },
+          {
+            key: "Colony Name:",
+            value: addressObj.colonyName || "NA",
+          },
+          {
+            key: "Mohalla:",
+            value: addressObj.mohalla || "NA",
+          },
+          ...extraItems,
+        ],
+      },
+    ]
+  );
 };
 
 const transform = (floor, key, generalMDMSDataById) => {
@@ -301,23 +301,58 @@ const getOwnerInfo = (ownerDetails) => {
 };
 
 const getLatestPropertyDetails = (propertyDetailsArray) => {
-  if (propertyDetailsArray.length > 1) {
-    return propertyDetailsArray.reduce((acc, curr) => {
-      return acc.assessmentDate > curr.assessmentDate ? acc : curr;
-    });
+  if (propertyDetailsArray) {
+    if (propertyDetailsArray.length > 1) {
+      return propertyDetailsArray.reduce((acc, curr) => {
+        return acc.assessmentDate > curr.assessmentDate ? acc : curr;
+      });
+    } else {
+      return propertyDetailsArray[0];
+    }
   } else {
-    return propertyDetailsArray[0];
+    return;
   }
 };
 
 const mapStateToProps = (state, ownProps) => {
+  // const { urls } = state.app;
+  // const { generalMDMSDataById } = state.common || {};
+  // const { propertiesById } = state.properties || {};
+  // const propertyId = ownProps.match.params.propertyId;
+  // const selPropertyDetails = propertiesById[propertyId];
+  // const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
+  // const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]);
+  // const assessmentInfoKeys = [
+  //   { masterName: "Floor", dataKey: "floorNo" },
+  //   { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
+  //   { masterName: "UsageCategorySubMinor", dataKey: "usageCategorySubMinor" },
+  //   { masterName: "OccupancyType", dataKey: "occupancyType" },
+  //   { masterName: "", dataKey: "unitArea" },
+  // ];
+  // const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
+  // const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
+  // const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
+  // const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
+
+  // const { propertyDetails } = selPropertyDetails;
+  // let transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
+  //   return {
+  //     primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+  //     status: "ASSESS & PAY",
+  //     receipt: true,
+  //     assessmentNo: assessment.assessmentNumber,
+  //   };
+  // });
+  // return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
   const { urls } = state.app;
+  const { common } = state;
+  const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
-  const selPropertyDetails = propertiesById[propertyId];
+  const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]);
+  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
@@ -325,20 +360,27 @@ const mapStateToProps = (state, ownProps) => {
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];
-  const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
-  const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
+  const assessmentInfo = generalMDMSDataById
+    ? latestPropertyDetails
+      ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
+      : []
+    : [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-
+  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const { propertyDetails } = selPropertyDetails;
-  let transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
-    return {
-      primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-      status: "ASSESS & PAY",
-      receipt: true,
-      assessmentNo: assessment.assessmentNumber,
-    };
-  });
+  let transformedAssessments =
+    propertyDetails &&
+    Object.values(propertyDetails).map((assessment, index) => {
+      return {
+        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+        status: "ASSESS & PAY",
+        receipt: true,
+        assessmentNo: assessment.assessmentNumber,
+        financialYear: assessment.financialYear,
+        propertyId: propertyId,
+      };
+    });
   return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
 };
 
@@ -346,6 +388,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
   };
 };
 

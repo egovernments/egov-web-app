@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   propertiesById: {},
   draftsById: {},
+  assessmentsByStatus: {},
   error: false,
   errorMessage: "",
 };
@@ -127,6 +128,29 @@ const propertyReducer = (state = initialState, action) => {
         error: false,
         errorMessage: "",
         receipts,
+      };
+    case actionTypes.ASSESSMENT_STATUS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: "",
+      };
+    case actionTypes.ASSESSMENT_STATUS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        errorMessage: action.error,
+      };
+    case actionTypes.ASSESSMENT_STATUS_COMPLETE:
+      const assessmentsByStatus = {};
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        errorMessage: "",
+        assessmentsByStatus,
       };
     default:
       return state;

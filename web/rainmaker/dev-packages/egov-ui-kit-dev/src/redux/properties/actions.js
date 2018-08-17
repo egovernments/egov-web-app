@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import { PROPERTY, DRAFT, PGService, RECEIPT } from "egov-ui-kit/utils/endPoints";
 import { httpRequest } from "egov-ui-kit/utils/api";
+import { transformById } from "egov-ui-kit/utils/commons";
 
 const propertyFetchPending = () => {
   return {
@@ -94,6 +95,24 @@ const ReceiptFetchPending = () => {
   };
 };
 
+const AssessmentStatusFetchError = (error) => {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_ERROR,
+    error,
+  };
+};
+const AssessmentStatusFetchComplete = (payload) => {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_COMPLETE,
+    payload,
+  };
+};
+const AssessmentStatusFetchPending = () => {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_PENDING,
+  };
+};
+
 export const fetchProperties = (queryObjectproperty, queryObjectDraft, queryObjectFailedPayments, queryObjectSuccessPayments) => {
   return async (dispatch) => {
     if (queryObjectDraft) {
@@ -146,6 +165,61 @@ export const fetchReceipts = (queryObj) => {
       dispatch(ReceiptFetchComplete(payloadReceipts));
     } catch (error) {
       dispatch(ReceiptFetchError(error.message));
+    }
+  };
+};
+
+export const getAssesmentsandStatus = (queryObjectproperty) => {
+  return async (dispatch) => {
+    console.log("inside status.....");
+    dispatch(AssessmentStatusFetchPending());
+    try {
+      const payloadProperty = await httpRequest(PROPERTY.GET.URL, PROPERTY.GET.ACTION, queryObjectproperty);
+      const propertybyId = transformById(payloadProperty["Properties"], "propertyId");
+      const consumerCodes =
+        propertybyId &&
+        Object.values(propertybyId).reduce((result, curr) => {
+          const propertyDetail =
+            curr &&
+            curr.propertyDetails &&
+            curr.propertyDetails.reduce((consumerCodes, item) => {
+              consumerCodes[`${curr.propertyId}:${item.assessmentNumber}`] = { ...item, propertyId: curr.propertyId, address: curr.address };
+              return consumerCodes;
+            }, []);
+
+          result.push(propertyDetail);
+          return result;
+        }, []);
+      const finalcc =
+        consumerCodes &&
+        consumerCodes.reduce((acc, curr) => {
+          Object.keys(curr).map((item) => {
+            acc[item] = curr[item];
+          });
+          return acc;
+        }, {});
+      console.log(finalcc);
+      const commaSeperatedCC = Object.keys(finalcc).join(",");
+
+      const payloadReceipts = await httpRequest(RECEIPT.GET.URL, RECEIPT.GET.ACTION, [{ key: "consumerCode", value: commaSeperatedCC }], {}, [], {
+        ts: 0,
+      });
+      const receiptbyId = transformById(payloadReceipts["Receipt"], "transactionId");
+      const receiptDetails =
+        receiptbyId &&
+        Object.values(receiptbyId).reduce((acc, curr) => {
+          if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
+          acc[curr.Bill[0].billDetails[0].consumerCode] = {
+            amountPaid: curr.Bill[0].billDetails[0].amountPaid,
+            consumerCode: curr.Bill[0].billDetails[0].consumerCode,
+            totalAmount: curr.Bill[0].billDetails[0].totalAmount,
+          };
+          return acc;
+        }, {});
+      console.log(receiptDetails);
+      // dispatch(AssessmentStatusFetchComplete(result));
+    } catch (error) {
+      dispatch(AssessmentStatusFetchError(error.message));
     }
   };
 };

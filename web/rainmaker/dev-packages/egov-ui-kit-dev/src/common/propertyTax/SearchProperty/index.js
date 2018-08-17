@@ -82,7 +82,7 @@ class SearchProperty extends Component {
                   );
                 }
               : (e) => {
-                  history.push(`/property-tax/property/${propertyId}`);
+                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
                 }
           }
           label={<Label buttonLabel={true} label={userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View"} fontSize="12px" />}
