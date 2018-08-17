@@ -108,9 +108,24 @@ const formConfig = {
         },
         dataPath: ["MdmsRes.PropertyTax.OwnerType"],
       },
-      updateDependentFields: ({ formKey, field: sourceField, dispatch }) => {
+      updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
+        let documentTypes = get(state, "employee.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+          .filter((docu) => {
+            return docu.ownerTypeCode === value
+          })
+          .reduce((acc, curr) => {
+            let currAcc = [...acc]
+            let dropDownData = {
+              label: curr.name,
+              value: curr.code,
+            }
+            currAcc.push(dropDownData)
+            return currAcc
+          }, [])
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         switch (value) {
           case "NONE":
             setDependentFields(dependentFields, dispatch, formKey, true);
@@ -126,6 +141,21 @@ const formConfig = {
         const { fieldKey, formKey, propertyValue } = action;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE")
+        let documentTypes = get(state, "employee.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+          .filter((docu) => {
+            return docu.ownerTypeCode === currentCategory
+          })
+          .reduce((acc, curr) => {
+            let currAcc = [...acc]
+            let dropDownData = {
+              label: curr.name,
+              value: curr.code,
+            }
+            currAcc.push(dropDownData)
+            return currAcc
+          }, [])
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
+        dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         if (propertyValue.length > 0) {
           if (currentCategory === "NONE") {
             setDependentFields(dependentFields, dispatch, formKey, true);
