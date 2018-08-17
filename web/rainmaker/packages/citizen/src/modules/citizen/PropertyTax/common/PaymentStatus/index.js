@@ -11,7 +11,17 @@ const labelStyle = {
   fontWeight: 500,
 };
 
-const PaymentStatus = ({ noExistingPropertyId, receiptUIDetails, receiptDetails, floatingButtonColor, icon, messages, buttons, primaryAction }) => {
+const PaymentStatus = ({
+  generalMDMSDataById,
+  noExistingPropertyId,
+  receiptUIDetails,
+  receiptDetails,
+  floatingButtonColor,
+  icon,
+  messages,
+  buttons,
+  primaryAction,
+}) => {
   return (
     <div>
       <div style={{ marginBottom: "50px" }} className="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4">
@@ -74,7 +84,7 @@ const PaymentStatus = ({ noExistingPropertyId, receiptUIDetails, receiptDetails,
           receiptDetails.ReceiptNo && (
             <div
               onClick={() => {
-                generateReceipt("pt-reciept-citizen", receiptDetails);
+                generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById);
               }}
             >
               <Label
@@ -85,20 +95,6 @@ const PaymentStatus = ({ noExistingPropertyId, receiptUIDetails, receiptDetails,
             </div>
           )}
       </div>
-
-      {/* {receiptDetails.printIcon &&
-        receiptDetails.downloadIcon && (
-          <div className="pt-success-receipt" style={{ alignItems: "center", paddingLeft: "8%", paddingRight: "8%", display: "flex" }}>
-            <div>
-              <Icon style={downloadIconStyle} id="receipt-download" className="receipt-download" action="action" name="print" />
-              <Label label="Print Receipt" />
-            </div>
-            <div>
-              <Icon style={printIconStyle} id="receipt-print" className="receipt-download" action="action" name="print" />
-              <Label label="Print Receipt" />
-            </div>
-          </div>
-        )} */}
       <ActionFooter label2={buttons.button2} primaryAction={primaryAction} />
     </div>
   );

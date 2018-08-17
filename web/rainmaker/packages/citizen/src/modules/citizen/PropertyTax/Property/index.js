@@ -218,13 +218,12 @@ const transform = (floor, key, generalMDMSDataById) => {
     return floor[dataKey];
   } else {
     if (floor[dataKey]) {
-      if (floor[dataKey] === "NONRESIDENTIAL") {
-        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
-      } else if (floor[dataKey] === "RESIDENTIAL") {
-        return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
-      } else {
-        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
-      }
+      // if (floor[dataKey] === "NONRESIDENTIAL") {
+      //   return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
+      // } else if (floor[dataKey] === "RESIDENTIAL") {
+      //   return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
+      // } else {
+      return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
     } else {
       return "-";
     }

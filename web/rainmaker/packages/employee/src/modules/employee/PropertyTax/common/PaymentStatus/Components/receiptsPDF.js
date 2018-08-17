@@ -3,7 +3,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const generateReceipt = (role, details) => {
+const generateReceipt = (role, details, generalMDMSDataById) => {
   let data;
   let { owners, address, propertyDetails, tax, taxNew, receipts, header } = details;
   let tableborder = {
@@ -20,6 +20,16 @@ const generateReceipt = (role, details) => {
       return 0.5;
     },
   };
+
+  const transform = (value, masterName) => {
+    if (value) {
+      console.log(value, masterName);
+      return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "";
+    } else {
+      return "NA";
+    }
+  };
+
   switch (role) {
     case "pt-reciept-citizen":
       // let floorData = propertyDetails[0].noOfFloors || 1;
@@ -29,28 +39,32 @@ const generateReceipt = (role, details) => {
         let bodyData = [];
         let { units } = propertyDetails[0];
         let dataRow = [];
-        dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
-        dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
-        bodyData.push(dataRow);
-        units &&
-          units.map((unit) => {
-            dataRow = [];
-            dataRow.push(unit.floorNo || "-");
-            dataRow.push(unit.usageCategoryMinor || unit.usageCategoryMajor || "");
-            dataRow.push(unit.usageCategorySubMinor || "");
-            dataRow.push(unit.occupancyType || "");
-            if (unit.occupancyType === "RENTED") {
-              dataRow.push(unit.arv || "");
-            } else {
-              dataRow.push(unit.unitArea || "");
-            }
+        if (units && units.length) {
+          dataRow.push({ text: "Floor", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Usage Type", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Sub Usage Type", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Occupancy", style: "receipt-assess-table-header" });
+          dataRow.push({ text: "Built Area/Total Annual Rent", style: "receipt-assess-table-header" });
+          bodyData.push(dataRow);
+          units &&
+            units.map((unit) => {
+              dataRow = [];
+              dataRow.push(transform(unit.floorNo, "Floor"));
+              dataRow.push(transform(unit.usageCategoryMajor, "UsageCategoryMajor"));
+              dataRow.push(transform(unit.usageCategorySubMinor, "UsageCategorySubMinor"));
+              dataRow.push(transform(unit.occupancyType, "OccupancyType"));
+              if (unit.occupancyType === "RENTED") {
+                dataRow.push(unit.arv || "");
+              } else {
+                dataRow.push(`${unit.unitArea} sq yards` || "");
+              }
 
-            bodyData.push(dataRow);
-          });
-        return bodyData;
+              bodyData.push(dataRow);
+            });
+          return bodyData;
+        } else {
+          return null;
+        }
       };
 
       let borderKey = [true, true, false, true];
@@ -61,7 +75,7 @@ const generateReceipt = (role, details) => {
         const transformedArray = ownerArray.map((item, index) => {
           return [
             {
-              text: `Owner ${index + 1} Name`,
+              text: `Owner ${ownerArray.length > 1 ? index + 1 : ""} Name`,
               border: borderKey,
               style: "receipt-table-key",
             },
@@ -136,7 +150,7 @@ const generateReceipt = (role, details) => {
                     text: "Contact Us: ",
                     bold: true,
                   },
-                  "080 - 09567743",
+                  header.contact,
                 ],
                 alignment: "right",
               },
@@ -158,10 +172,10 @@ const generateReceipt = (role, details) => {
               {
                 text: [
                   {
-                    text: "Visit Us: ",
+                    text: "Website: ",
                     bold: true,
                   },
-                  "www.pmidc.com",
+                  header.website,
                 ],
                 alignment: "right",
               },
@@ -172,11 +186,11 @@ const generateReceipt = (role, details) => {
             table: {
               body: [
                 [
-                  { text: "Receipt No:", border: borderKey, style: "receipt-table-key" },
-                  { text: details.ReceiptNo || "", border: borderValue },
-                  { text: "Property System ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: details.existingPropertyId || "NA", border: borderValue },
+                  { text: "Property Tax Assessment ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.propertyId || "", border: borderValue }, //need to confirm this data
-                  { text: "Assessment ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Assessment No:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].assessmentNumber || "", border: borderValue },
                 ],
               ],
@@ -191,15 +205,15 @@ const generateReceipt = (role, details) => {
               body: [
                 [
                   { text: "House/Door No.:", border: borderKey, style: "receipt-table-key" },
-                  { text: address.doorNo || "", border: borderValue },
+                  { text: address.doorNo || "NA", border: borderValue },
                   { text: "Building/Colony Name.:", border: borderKey, style: "receipt-table-key" },
-                  { text: address.buildingName || "", border: borderValue },
+                  { text: address.buildingName || "NA", border: borderValue },
                 ],
                 [
                   { text: "Street Name:", border: borderKey, style: "receipt-table-key" },
-                  { text: address.street || "", border: borderValue },
+                  { text: address.street || "NA", border: borderValue },
                   { text: "Locality/Mohalla:", border: borderKey, style: "receipt-table-key" },
-                  { text: address.locality.code || "", border: borderValue },
+                  { text: address.locality.name || "NA", border: borderValue },
                 ],
               ],
             },
@@ -213,15 +227,16 @@ const generateReceipt = (role, details) => {
               body: [
                 [
                   { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
-                  { text: propertyDetails[0].landArea || "", border: borderValue },
-                  { text: "Type of Building:", border: borderKey, style: "receipt-table-key" },
-                  { text: propertyDetails[0].propertySubType || "", border: borderValue },
+                  { text: `${propertyDetails[0].landArea} sq yards` || "", border: borderValue },
+                  { text: "Property Type:", border: borderKey, style: "receipt-table-key" },
+                  { text: transform(propertyDetails[0].propertyType, "PropertyType"), border: borderValue },
                 ],
               ],
             },
             layout: tableborder,
           },
-          {
+          getFloorDetails() && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" },
+          getFloorDetails() && {
             style: "receipt-assess-table",
             table: {
               widths: ["*", "*", "*", "*", "*"],
@@ -238,7 +253,7 @@ const generateReceipt = (role, details) => {
             },
             layout: tableborder,
           },
-          { text: "TAX CALCULATION", style: "pt-reciept-citizen-subheader" },
+          { text: "PAYABLE AMOUNT", style: "pt-reciept-citizen-subheader" },
           {
             style: "receipt-assess-table",
             table: {
@@ -253,11 +268,11 @@ const generateReceipt = (role, details) => {
             },
             layout: tableborder,
           },
-          { text: "PAYMENT RECEIPT", style: "pt-reciept-citizen-subheader" },
+          { text: "PAYMENT INFORMATION", style: "pt-reciept-citizen-subheader" },
           {
             style: "pt-reciept-citizen-table",
             table: {
-              widths: receiptTableWidth,
+              widths: ["auto", "auto", "auto", "auto"],
               body: [
                 [
                   { text: "Total Amount Paid:", border: borderKey, style: "receipt-table-key" },
@@ -274,10 +289,18 @@ const generateReceipt = (role, details) => {
                   { text: receipts.bankName || "", border: borderValue },
                 ],
                 [
+                  { text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.transactionNo || "NA", border: borderValue },
+                  // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
+                  // { text: receipts.transactionId || "", border: borderValue },
+                  { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.transactionDate || "NA", border: borderValue },
+                ],
+                [
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.G8receiptNo || "", border: borderValue },
-                  { text: "G8 Receipt Issue Date", border: borderKey },
-                  { text: receipts.G8receiptDate || "", border: borderValue },
+                  { text: receipts.G8receiptNo || "NA", border: borderValue },
+                  { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" },
+                  { text: receipts.G8receiptDate || "NA", border: borderValue },
                 ],
               ],
             },
@@ -355,7 +378,7 @@ const generateReceipt = (role, details) => {
       break;
     default:
   }
-  data && pdfMake.createPdf(data).download("citizenreceipt.pdf");
+  data && pdfMake.createPdf(data).download(`${details.ReceiptNo}.pdf`);
 };
 
 export default generateReceipt;

@@ -4,10 +4,23 @@ import get from "lodash/get";
 import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
 
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
-  const taxArray = billAccountDetails.reduce(
+  const headersFromAPI = billAccountDetails.map((item) => {
+    return item.accountDescription && item.accountDescription.split("-")[0];
+  });
+  const headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_TIME_REBATE", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION"];
+  const transformedHeaders = headers.reduce((result, current) => {
+    if (headersFromAPI.indexOf(current) > -1) {
+      result.push(current);
+    }
+    return result;
+  }, []);
+  const taxArray = transformedHeaders.reduce(
     (result, current) => {
-      current.accountDescription && result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
-      current.accountDescription && result[1].push({ text: current.crAmountToBePaid });
+      result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
+      // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
+      const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
+      console.log(taxHeadContent);
+      taxHeadContent && taxHeadContent[0] && result[1].push({ text: taxHeadContent[0].crAmountToBePaid || "0" });
       return result;
     },
     [[], []]
@@ -51,7 +64,7 @@ const getHeaderDetails = (property, cities) => {
   };
 };
 
-const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities) => {
+const createReceiptDetails = (property, propertyDetails, receiptDetails, localizationLabels, cities, totalAmountToPay) => {
   return {
     ReceiptNo: get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
     header: getHeaderDetails(property, cities),
@@ -65,14 +78,16 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
       total: "100",
     },
     receipts: {
-      AmountPaid: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+      AmountPaid: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       transactionId: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       bankName: "AXIS",
       payMode: "Net Banking",
-      pendingAmt:
-        receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].totalAmount") - get(receiptDetails, "Bill[0].billDetails[0].amountPaid"),
+      pendingAmt: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+      transactionNo: receiptDetails && get(receiptDetails, "instrument.transactionNumber"),
+      transactionDate: receiptDetails && get(receiptDetails, "instrument.transactionDate"),
+      bankNameBranch: receiptDetails && `${get(receiptDetails, "instrument.bank.id")}, ${get(receiptDetails, "instrument.branchName")}`,
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,
