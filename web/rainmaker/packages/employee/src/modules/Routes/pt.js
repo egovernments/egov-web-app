@@ -31,7 +31,7 @@ const routes = [
     },
   },
   {
-    path: "property-tax/property/:propertyId",
+    path: "property-tax/property/:propertyId/:tenantId",
     component: Property,
     needsAuthentication: true,
     options: {

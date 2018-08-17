@@ -10,7 +10,6 @@ import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-import { getTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 
 const innerDivStyle = {
@@ -100,14 +99,14 @@ class Property extends Component {
             history.push(`/property-tax/my-properties/view-assessments/${propertyId}`);
           }}
         >
-          <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
+          <Label label="PT_PROPERTY_VIEW_ALL_ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
         </div>
       ),
     };
     transformedAssessments.push(viewAllAssessmentItem);
     return [
       {
-        primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -126,7 +125,7 @@ class Property extends Component {
         initiallyOpen: true,
       },
       {
-        primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />

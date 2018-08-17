@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { getTransformedItems, getFinalAssessments } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
@@ -63,6 +63,7 @@ class CompletedAssessments extends Component {
       { key: "userUuid", value: userInfo.uuid },
       { key: "txnStatus", value: "SUCCESS" },
     ]);
+    //getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
   };
 
   closeYearRangeDialogue = () => {
@@ -77,7 +78,6 @@ class CompletedAssessments extends Component {
 
   render() {
     const { urls, history, loading, sortedProperties } = this.props;
-    console.log(sortedProperties);
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
@@ -116,6 +116,7 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
       dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
+    // getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
   };
 };
 

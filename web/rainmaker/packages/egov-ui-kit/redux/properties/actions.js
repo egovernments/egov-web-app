@@ -3,7 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchReceipts = exports.fetchProperties = undefined;
+exports.getAssesmentsandStatus = exports.fetchReceipts = exports.fetchProperties = undefined;
+
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -20,6 +24,8 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _api = require("egov-ui-kit/utils/api");
+
+var _commons = require("egov-ui-kit/utils/commons");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -114,6 +120,24 @@ var ReceiptFetchComplete = function ReceiptFetchComplete(payload) {
 var ReceiptFetchPending = function ReceiptFetchPending() {
   return {
     type: actionTypes.RECEIPT_FETCH_PENDING
+  };
+};
+
+var AssessmentStatusFetchError = function AssessmentStatusFetchError(error) {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_ERROR,
+    error: error
+  };
+};
+var AssessmentStatusFetchComplete = function AssessmentStatusFetchComplete(payload) {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_COMPLETE,
+    payload: payload
+  };
+};
+var AssessmentStatusFetchPending = function AssessmentStatusFetchPending() {
+  return {
+    type: actionTypes.ASSESSMENT_STATUS_PENDING
   };
 };
 
@@ -270,6 +294,84 @@ var fetchReceipts = exports.fetchReceipts = function fetchReceipts(queryObj) {
 
     return function (_x2) {
       return _ref2.apply(this, arguments);
+    };
+  }();
+};
+
+var getAssesmentsandStatus = exports.getAssesmentsandStatus = function getAssesmentsandStatus(queryObjectproperty) {
+  return function () {
+    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
+      var payloadProperty, propertybyId, consumerCodes, finalcc, commaSeperatedCC, payloadReceipts, receiptbyId, receiptDetails;
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              console.log("inside status.....");
+              dispatch(AssessmentStatusFetchPending());
+              _context3.prev = 2;
+              _context3.next = 5;
+              return (0, _api.httpRequest)(_endPoints.PROPERTY.GET.URL, _endPoints.PROPERTY.GET.ACTION, queryObjectproperty);
+
+            case 5:
+              payloadProperty = _context3.sent;
+              propertybyId = (0, _commons.transformById)(payloadProperty["Properties"], "propertyId");
+              consumerCodes = propertybyId && Object.values(propertybyId).reduce(function (result, curr) {
+                var propertyDetail = curr && curr.propertyDetails && curr.propertyDetails.reduce(function (consumerCodes, item) {
+                  consumerCodes[curr.propertyId + ":" + item.assessmentNumber] = (0, _extends3.default)({}, item, { propertyId: curr.propertyId, address: curr.address });
+                  return consumerCodes;
+                }, []);
+
+                result.push(propertyDetail);
+                return result;
+              }, []);
+              finalcc = consumerCodes && consumerCodes.reduce(function (acc, curr) {
+                Object.keys(curr).map(function (item) {
+                  acc[item] = curr[item];
+                });
+                return acc;
+              }, {});
+
+              console.log(finalcc);
+              commaSeperatedCC = Object.keys(finalcc).join(",");
+              _context3.next = 13;
+              return (0, _api.httpRequest)(_endPoints.RECEIPT.GET.URL, _endPoints.RECEIPT.GET.ACTION, [{ key: "consumerCode", value: commaSeperatedCC }], {}, [], {
+                ts: 0
+              });
+
+            case 13:
+              payloadReceipts = _context3.sent;
+              receiptbyId = (0, _commons.transformById)(payloadReceipts["Receipt"], "transactionId");
+              receiptDetails = receiptbyId && Object.values(receiptbyId).reduce(function (acc, curr) {
+                if (!acc[curr.Bill[0].billDetails[0].consumerCode]) acc[curr.Bill[0].billDetails[0].consumerCode] = [];
+                acc[curr.Bill[0].billDetails[0].consumerCode] = {
+                  amountPaid: curr.Bill[0].billDetails[0].amountPaid,
+                  consumerCode: curr.Bill[0].billDetails[0].consumerCode,
+                  totalAmount: curr.Bill[0].billDetails[0].totalAmount
+                };
+                return acc;
+              }, {});
+
+              console.log(receiptDetails);
+              // dispatch(AssessmentStatusFetchComplete(result));
+              _context3.next = 22;
+              break;
+
+            case 19:
+              _context3.prev = 19;
+              _context3.t0 = _context3["catch"](2);
+
+              dispatch(AssessmentStatusFetchError(_context3.t0.message));
+
+            case 22:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined, [[2, 19]]);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
     };
   }();
 };

@@ -137,7 +137,7 @@ var SearchProperty = function (_Component) {
           onClick: userType === "CITIZEN" ? function (e) {
             history.push("/property-tax/assessment-form?FY=" + propertyDetails[0].financialYear + "&assessmentId=" + (propertyDetails[0] && propertyDetails[0].assessmentNumber) + "&isReassesment=true&propertyId=" + propertyId);
           } : function (e) {
-            history.push("/property-tax/property/" + propertyId);
+            history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
           },
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View", fontSize: "12px" }),
           value: propertyId,
