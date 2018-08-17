@@ -1,7 +1,7 @@
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { prepareDropDownData } from "./utils/reusableFields";
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
-import set from "lodash/set";
 import get from "lodash/get";
+import set from "lodash/set";
 
 const formConfig = {
   name: "customSelect",
@@ -47,9 +47,15 @@ const formConfig = {
       let state = store.getState();
       const { Floor } = state.common && state.common.generalMDMSDataById;
       set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
-      set(action, "form.fields.floorName.value", "");
+    } catch (e) {
+      console.log(e);
+    }
+    return action;
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
       if (action.form.name === "customSelect_0") {
-        set(action, "form.fields.floorName.value", "0");
+        dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
         dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
       }
       return action;

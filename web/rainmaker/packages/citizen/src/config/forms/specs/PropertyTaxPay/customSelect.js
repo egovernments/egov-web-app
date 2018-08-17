@@ -1,5 +1,5 @@
 import { prepareDropDownData } from "./utils/reusableFields";
-import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 
@@ -17,7 +17,6 @@ const formConfig = {
       className: "pt-floor-name",
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
-        // const formKeys = Object.keys(state.form);
         const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
           if (key.startsWith("customSelect_")) {
             const form = state.form[key];
@@ -54,11 +53,17 @@ const formConfig = {
         dispatch(setFieldProperty(action.form.name, "floorName", "hideField", false));
         const { Floor } = state.common && state.common.generalMDMSDataById;
         set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
-        set(action, "form.fields.floorName.value", "");
-        if (action.form.name === "customSelect_0") {
-          set(action, "form.fields.floorName.value", "0");
-          dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
-        }
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      if (action.form.name === "customSelect_0") {
+        dispatch(handleFieldChange("customSelect_0", "floorName", "0"));
+        dispatch(setFieldProperty("customSelect_0", "floorName", "disabled", true));
       }
       return action;
     } catch (e) {
