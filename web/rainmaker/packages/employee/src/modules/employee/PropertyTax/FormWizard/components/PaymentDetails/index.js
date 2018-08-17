@@ -120,16 +120,18 @@ class PaymentDetails extends Component {
     return (
       <div className="payment-details">
         <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
-        <AdditionalDetails
-          value={this.props.totalAmountToBePaid}
-          onRadioButtonChange={this.props.onRadioButtonChange}
-          handleFieldChange={this.handleFieldChange}
-          optionSelected={this.props.optionSelected}
-          errorText={errorText}
-          totalAmount={totalAmount && totalAmount}
-          estimationDetails={estimationDetails}
-        />
-        <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />
+        {totalAmount > 0 && (
+          <AdditionalDetails
+            value={this.props.totalAmountToBePaid}
+            onRadioButtonChange={this.props.onRadioButtonChange}
+            handleFieldChange={this.handleFieldChange}
+            optionSelected={this.props.optionSelected}
+            errorText={errorText}
+            totalAmount={totalAmount && totalAmount}
+            estimationDetails={estimationDetails}
+          />
+        )}
+        {totalAmount > 0 && <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />}
         <ReceiptDetails />
       </div>
     );

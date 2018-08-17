@@ -747,6 +747,7 @@ class FormWizard extends Component {
 
   getMultipleOwnerInfo = () => {
     const { form } = this.props;
+
     return Object.keys(form)
       .filter((formkey) => formkey.indexOf("ownerInfo_") !== -1)
       .reduce((acc, curr, currIndex, arr) => {
@@ -783,11 +784,12 @@ class FormWizard extends Component {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
+    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
     if (!get(prepareFormData, "Receipt[0].instrument.instrumentType.name")) {
       set(prepareFormData, "Receipt[0].instrument.instrumentType.name", "Cash");
     }
-    set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", this.state.totalAmountToBePaid);
+
     set(prepareFormData, "Receipt[0].instrument.tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     get(prepareFormData, "Receipt[0].instrument.transactionDateInput") &&
       set(
@@ -813,6 +815,10 @@ class FormWizard extends Component {
     if (this.state.totalAmountToBePaid === "") {
       this.props.toggleSnackbarAndSetText(true, "Amount to pay can't be empty", true);
       return;
+    }
+
+    if (!get(prepareFormData, "Receipt[0].Bill[0].paidBy")) {
+      set(prepareFormData, "Receipt[0].Bill[0].paidBy", get(prepareFormData, "Receipt[0].Bill[0].payeeName"));
     }
 
     try {
@@ -959,32 +965,43 @@ class FormWizard extends Component {
 
   onPayButtonClick = () => {
     this.setState({ dialogueOpen: true });
-    const { form } = this.props;
+    const { form, prepareFormData } = this.props;
     const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
-    const validateArray = Object.keys(form).reduce((result, item) => {
-      if (formKeysToValidate.indexOf(item) > -1) {
-        result.push({ formKey: item, formValid: validateForm(form[item]) });
+    let modeOfPaymentExists = false;
+    for (let i = 0; i < formKeysToValidate.length; i++) {
+      if (Object.keys(form).indexOf(formKeysToValidate[i]) > -1) {
+        modeOfPaymentExists = true;
+        break;
       }
-      return result;
-    }, []);
-
-    const areFormsValid = validateArray.reduce((result, current) => {
-      if (!current.formValid) {
-        result = false;
-      } else {
-        result = true;
-      }
-      return result;
-    }, false);
-
-    if (areFormsValid) {
-      this.createReceipt();
-    } else {
-      validateArray.forEach((item) => {
-        if (!item.formValid) {
-          this.props.displayFormErrorsAction(item.formKey);
+    }
+    if (modeOfPaymentExists) {
+      const validateArray = Object.keys(form).reduce((result, item) => {
+        if (formKeysToValidate.indexOf(item) > -1) {
+          result.push({ formKey: item, formValid: validateForm(form[item]) });
         }
-      });
+        return result;
+      }, []);
+
+      const areFormsValid = validateArray.reduce((result, current) => {
+        if (!current.formValid) {
+          result = false;
+        } else {
+          result = true;
+        }
+        return result;
+      }, false);
+
+      if (areFormsValid) {
+        this.createReceipt();
+      } else {
+        validateArray.forEach((item) => {
+          if (!item.formValid) {
+            this.props.displayFormErrorsAction(item.formKey);
+          }
+        });
+      }
+    } else {
+      this.createReceipt();
     }
   };
 
