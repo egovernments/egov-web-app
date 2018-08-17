@@ -9,7 +9,7 @@ import { ReOpenComplaint } from "modules/common";
 import { ReopenAcknowledgement } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
-import { Dashboard } from "modules/common";
+import LandingPage from "modules/employee/LandingPage";
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
@@ -85,11 +85,12 @@ const routes = [
   },
   {
     path: "landing-page",
-    component: Dashboard,
+    component: LandingPage,
     needsAuthentication: true,
     options: {
       hideFooter: true,
       redirectionUrl,
+      hideTitle: true,
       isHomeScreen: true,
     },
   },
