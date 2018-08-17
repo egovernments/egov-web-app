@@ -545,8 +545,6 @@ class FormWizard extends Component {
                     callDraft();
                     this.setState({ selected: index, formValidIndexArray: [...formValidIndexArray, selected] });
                   }
-                } else {
-                  alert("Plot size can't be less than total ground floor units area");
                 }
               } else {
                 displayFormErrorsAction("plotDetails");
@@ -804,30 +802,29 @@ class FormWizard extends Component {
   };
 
   validateUnitandPlotSize = (plotDetails, form) => {
-    let groundFloorIndex = null;
+    let isValid = true;
     Object.keys(form).forEach((formKey, ind) => {
       if (formKey.startsWith("customSelect_")) {
+        const floorCardIndex = formKey.split("_")[1];
         const { fields } = form[formKey];
-        if (fields.floorName.value === "0") {
-          groundFloorIndex = formKey.split("_")[1];
+        const floorNo = fields.floorName.value;
+        const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
+          if (key.startsWith(`floorDetails_${floorCardIndex}_`)) {
+            const form1 = form[key];
+            if (form1 && form1.fields.builtArea.value) {
+              unitTotal += parseFloat(form1.fields.builtArea.value);
+            }
+          }
+          return unitTotal;
+        }, 0);
+        const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
+        if (unitTotal > plotSizeInFt) {
+          alert(`Total area of floor ${floorNo} has exceeded the plot size`);
+          isValid = false;
         }
       }
     });
-    if (groundFloorIndex !== null) {
-      const unitTotal = Object.keys(form).reduce((unitTotal, key) => {
-        if (key.startsWith(`floorDetails_${groundFloorIndex}_`)) {
-          const form1 = form[key];
-          if (form1 && form1.fields.builtArea.value) {
-            unitTotal += parseFloat(form1.fields.builtArea.value);
-          }
-        }
-        return unitTotal;
-      }, 0);
-      const plotSizeInFt = parseFloat(plotDetails.fields.plotSize.value) * 9;
-      if (unitTotal > plotSizeInFt) {
-        return false;
-      } else return true;
-    } else return true;
+    return isValid;
   };
 
   getHeaderLabel = (selected) => {
