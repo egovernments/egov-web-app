@@ -23,7 +23,6 @@ const generateReceipt = (role, details, generalMDMSDataById) => {
 
   const transform = (value, masterName) => {
     if (value) {
-      console.log(value, masterName);
       return generalMDMSDataById && generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][value].name : "";
     } else {
       return "NA";
