@@ -165,7 +165,7 @@ class FormWizard extends Component {
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
-      const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "")
+      const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
         let requestBody = {
           MdmsCriteria: {
@@ -212,19 +212,19 @@ class FormWizard extends Component {
             ],
           },
         };
-        const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody)
+        const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
         this.props.generalMDMSFetchSuccess(payload, "PropertyTax", [
-           "Floor",
-           "OccupancyType",
-           "OwnerShipCategory",
-           "OwnerType",
-           "PropertySubType",
-           "PropertyType",
-           "SubOwnerShipCategory",
-           "UsageCategoryDetail",
-           "UsageCategoryMajor",
-           "UsageCategoryMinor",
-           "UsageCategorySubMinor",
+          "Floor",
+          "OccupancyType",
+          "OwnerShipCategory",
+          "OwnerType",
+          "PropertySubType",
+          "PropertyType",
+          "SubOwnerShipCategory",
+          "UsageCategoryDetail",
+          "UsageCategoryMajor",
+          "UsageCategoryMinor",
+          "UsageCategorySubMinor",
         ]);
       }
       this.setState(
@@ -774,10 +774,10 @@ class FormWizard extends Component {
       const jsonPath = institutionDetails.fields[field].jsonPath;
       instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined);
     });
-    instiObj.designation = get(institutionAuthority, "fields.designation.value", "")
-    const ownerArray = [ownerObj]
-    return { instiObj, ownerArray }
-  }
+    instiObj.designation = get(institutionAuthority, "fields.designation.value", "");
+    const ownerArray = [ownerObj];
+    return { instiObj, ownerArray };
+  };
 
   createReceipt = async () => {
     const { prepareFormData } = this.props;
@@ -810,7 +810,7 @@ class FormWizard extends Component {
       return;
     }
 
-    if (!this.state.totalAmountToBePaid) {
+    if (this.state.totalAmountToBePaid === "") {
       this.props.toggleSnackbarAndSetText(true, "Amount to pay can't be empty", true);
       return;
     }
@@ -861,7 +861,7 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
-        const { instiObj, ownerArray } = this.getInstituteInfo()
+        const { instiObj, ownerArray } = this.getInstituteInfo();
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
         set(prepareFormData, "Properties[0].propertyDetails[0].institute", instiObj);
       }
@@ -1033,7 +1033,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
-    generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray))
+    generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
   };
 };
 
