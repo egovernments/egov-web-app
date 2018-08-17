@@ -35,7 +35,7 @@ var ActionFooter = function ActionFooter(_ref) {
         label: label2,
         style: { width: "36%" },
         backgroundColor: "#fe7a51",
-        labelStyle: { letterSpacing: 0.7, padding: 0, color: "#fff" },
+        labelStyle: { letterSpacing: 0.7, color: "#fff" },
         buttonStyle: { border: 0 },
         onClick: primaryAction
       })

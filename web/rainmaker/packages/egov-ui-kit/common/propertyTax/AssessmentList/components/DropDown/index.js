@@ -22,11 +22,11 @@ var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
 var _api = require("egov-ui-kit/utils/api");
 
-var _createReceipt = require("modules/citizen/PropertyTax/common/PaymentStatus/Components/createReceipt");
+var _createReceipt = require("../createReceipt");
 
 var _createReceipt2 = _interopRequireDefault(_createReceipt);
 
-var _receiptsPDF = require("modules/citizen/PropertyTax/common/PaymentStatus/Components/receiptsPDF");
+var _receiptsPDF = require("../receiptsPDF");
 
 var _receiptsPDF2 = _interopRequireDefault(_receiptsPDF);
 

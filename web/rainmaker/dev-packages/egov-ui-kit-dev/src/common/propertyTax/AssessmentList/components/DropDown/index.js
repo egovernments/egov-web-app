@@ -1,8 +1,8 @@
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import createReceipt from "modules/citizen/PropertyTax/common/PaymentStatus/Components/createReceipt";
-import generateReceipt from "modules/citizen/PropertyTax/common/PaymentStatus/Components/receiptsPDF";
+import createReceipt from "../createReceipt";
+import generateReceipt from "../receiptsPDF";
 import React from "react";
 
 const styles = {
