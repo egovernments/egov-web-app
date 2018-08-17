@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updatePrepareFormDataFromDraft = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.updatePrepareFormDataFromDraft = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -104,7 +104,8 @@ var prepareFormData = exports.prepareFormData = function prepareFormData(jsonPat
     value: value
   };
 };
-var generalMDMSFetchSuccess = function generalMDMSFetchSuccess(payload, moduleName, masterArray) {
+
+var generalMDMSFetchSuccess = exports.generalMDMSFetchSuccess = function generalMDMSFetchSuccess(payload, moduleName, masterArray) {
   return {
     type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
     payload: payload,

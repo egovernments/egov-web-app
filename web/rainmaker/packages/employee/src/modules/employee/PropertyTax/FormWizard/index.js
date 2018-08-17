@@ -34,7 +34,7 @@ import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
-import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { fetchGeneralMDMSData, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import PaymentDetails from "modules/employee/PropertyTax/FormWizard/components/PaymentDetails";
 import "./index.css";
 
@@ -165,6 +165,68 @@ class FormWizard extends Component {
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
+      const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "")
+      if (!!activeModule) {
+        let requestBody = {
+          MdmsCriteria: {
+            tenantId: activeModule,
+            moduleDetails: [
+              {
+                moduleName: "PropertyTax",
+                masterDetails: [
+                  {
+                    name: "Floor",
+                  },
+                  {
+                    name: "OccupancyType",
+                  },
+                  {
+                    name: "OwnerShipCategory",
+                  },
+                  {
+                    name: "OwnerType",
+                  },
+                  {
+                    name: "PropertySubType",
+                  },
+                  {
+                    name: "PropertyType",
+                  },
+                  {
+                    name: "SubOwnerShipCategory",
+                  },
+                  {
+                    name: "UsageCategoryDetail",
+                  },
+                  {
+                    name: "UsageCategoryMajor",
+                  },
+                  {
+                    name: "UsageCategoryMinor",
+                  },
+                  {
+                    name: "UsageCategorySubMinor",
+                  },
+                ],
+              },
+            ],
+          },
+        };
+        const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody)
+        this.props.generalMDMSFetchSuccess(payload, "PropertyTax", [
+           "Floor",
+           "OccupancyType",
+           "OwnerShipCategory",
+           "OwnerType",
+           "PropertySubType",
+           "PropertyType",
+           "SubOwnerShipCategory",
+           "UsageCategoryDetail",
+           "UsageCategoryMajor",
+           "UsageCategoryMinor",
+           "UsageCategorySubMinor",
+        ]);
+      }
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -214,7 +276,7 @@ class FormWizard extends Component {
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
-    this.addOwner();
+    this.addOwner(true);
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
@@ -703,6 +765,23 @@ class FormWizard extends Component {
       }, []);
   };
 
+  getInstituteInfo = () => {
+    const { institutionAuthority, institutionDetails } = this.props.form;
+    const ownerObj = {};
+    const instiObj = {};
+    Object.keys(institutionAuthority.fields).map((field) => {
+      const jsonPath = institutionAuthority.fields[field].jsonPath;
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined);
+    });
+    Object.keys(institutionDetails.fields).map((field) => {
+      const jsonPath = institutionDetails.fields[field].jsonPath;
+      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined);
+    });
+    instiObj.designation = get(institutionAuthority, "fields.designation.value", "")
+    const ownerArray = [ownerObj]
+    return { instiObj, ownerArray }
+  }
+
   createReceipt = async () => {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
@@ -783,6 +862,11 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      }
+      if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+        const { instiObj, ownerArray } = this.getInstituteInfo()
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institute", instiObj);
       }
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
@@ -952,6 +1036,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleSpinner: () => dispatch(toggleSpinner()),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray))
   };
 };
 

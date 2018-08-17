@@ -81,7 +81,8 @@ export const prepareFormData = (jsonPath, value) => {
     value,
   };
 };
-const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
+
+export const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
   return {
     type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
     payload,
