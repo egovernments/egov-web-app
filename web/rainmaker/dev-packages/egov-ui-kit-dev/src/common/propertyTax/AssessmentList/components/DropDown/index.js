@@ -1,8 +1,8 @@
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import createReceipt from "../../../PaymentStatus/Components/createReceipt";
-import generateReceipt from "../../../PaymentStatus/Components/receiptsPDF";
+import createReceipt from "modules/citizen/PropertyTax/common/PaymentStatus/Components/createReceipt";
+import generateReceipt from "modules/citizen/PropertyTax/common/PaymentStatus/Components/receiptsPDF";
 import React from "react";
 
 const styles = {
@@ -16,6 +16,21 @@ const styles = {
   underlineStyle: { display: "none" },
   hintStyle: { color: "#484848", top: 0 },
 };
+
+const PartiallyPaiddropDownData = [
+  {
+    label: "Download Statement",
+    value: "Download Statement",
+  },
+  {
+    label: "Re-Assess",
+    value: "Re-Assess",
+  },
+  {
+    label: "Complete Payment",
+    value: "Complete Payment",
+  },
+];
 
 const onSelectFieldChange = (event, key, payload, history, item) => {
   switch (payload) {
@@ -46,7 +61,7 @@ const onSelectFieldChange = (event, key, payload, history, item) => {
 };
 
 const downloadReceipt = async (item) => {
-  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerCode", value: item.consumerCode }];
+  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerNo", value: item.consumerCode }];
   try {
     const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
     const receiptDetails =

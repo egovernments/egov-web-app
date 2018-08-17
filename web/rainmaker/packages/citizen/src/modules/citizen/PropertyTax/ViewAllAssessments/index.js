@@ -4,9 +4,11 @@ import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import { getTransformedItems } from "../common/TransformedAssessments";
+import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import isEqual from "lodash/isEqual";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -24,8 +26,9 @@ class ViewAllAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { renderCustomTitleForPt, customTitle } = this.props;
+    const { renderCustomTitleForPt, customTitle, selPropertyDetails, getSingleAssesmentandStatus } = this.props;
     renderCustomTitleForPt(customTitle);
+    selPropertyDetails && getSingleAssesmentandStatus(selPropertyDetails);
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -46,7 +49,7 @@ class ViewAllAssessments extends Component {
   };
 
   render() {
-    const { urls, history, loading, transformedItems, location } = this.props;
+    const { urls, history, loading, sortedProperties, location } = this.props;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length == 0 && localStorage.getItem("path") === pathname) {
@@ -55,10 +58,10 @@ class ViewAllAssessments extends Component {
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
-        {transformedItems && (
+        {sortedProperties && (
           <AssessmentList
             innerDivStyle={innerDivStyle}
-            items={transformedItems}
+            items={sortedProperties}
             noAssessmentMessage="You have no past assessments."
             button={true}
             history={history}
@@ -73,21 +76,25 @@ class ViewAllAssessments extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { properties, common } = state;
+  const { properties, common, app } = state;
   const { cities } = common;
   const { urls } = state.app;
-  const { loading, propertiesById } = properties || {};
+  const { localizationLabels } = app;
+  const { loading, propertiesById, singleAssessmentByStatus } = properties || {};
   const propertyId = ownProps.match.params.propertyId;
   const selPropertyDetails = propertiesById[propertyId];
-  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
-  const transformedItems = selPropertyDetails && getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
+  const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
+  const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  // const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  // const transformedItems = selPropertyDetails && getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
 
-  return { urls, loading, transformedItems, urls, customTitle };
+  return { urls, loading, selPropertyDetails, sortedProperties, urls };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
   };
 };
 

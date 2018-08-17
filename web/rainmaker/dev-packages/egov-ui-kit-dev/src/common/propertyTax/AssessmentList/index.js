@@ -1,8 +1,9 @@
 import React from "react";
-import { Icon, Button, DropDown } from "components";
+import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import PTList from "./components/PTList";
 import BlankAssessment from "./components/BlankAssessment";
+import DropDown from "./components/DropDown";
 import "./index.css";
 
 const PAIDdropDownData = [
@@ -47,10 +48,7 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          {/* <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div> */}
+
           <div>
             <DropDown
               autoWidth={true}
@@ -72,14 +70,7 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="COMPLETE PAYMENT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;

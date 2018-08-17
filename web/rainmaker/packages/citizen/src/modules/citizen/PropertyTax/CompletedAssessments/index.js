@@ -5,7 +5,9 @@ import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
-import { getTransformedItems, getFinalAssessments } from "../common/TransformedAssessments";
+import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import get from "lodash/get";
+import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
@@ -59,11 +61,11 @@ class CompletedAssessments extends Component {
   componentDidMount = () => {
     const { addBreadCrumbs, title, userInfo, fetchProperties, getAssesmentsandStatus } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
-      { key: "userUuid", value: userInfo.uuid },
-      { key: "txnStatus", value: "SUCCESS" },
-    ]);
-    //getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
+    // fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
+    //   { key: "userUuid", value: userInfo.uuid },
+    //   { key: "txnStatus", value: "SUCCESS" },
+    // ]);
+    getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
   };
 
   closeYearRangeDialogue = () => {
@@ -98,25 +100,36 @@ class CompletedAssessments extends Component {
   }
 }
 
+// const mapStateToProps = (state) => {
+//   const { properties, common, app } = state;
+//   const { localizationLabels } = app;
+//   const { cities } = common;
+//   const { urls } = state.app;
+//   const { loading, propertiesById, successPayments } = properties || {};
+//   const numProperties = propertiesById && Object.keys(propertiesById).length;
+//   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
+//   let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);import { getCompletedTransformedItems } from "../common/TransformedAssessments";
+//   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+//   return { urls, sortedProperties, loading, numProperties };
+// };
+
 const mapStateToProps = (state) => {
   const { properties, common, app } = state;
   const { localizationLabels } = app;
   const { cities } = common;
   const { urls } = state.app;
-  const { loading, propertiesById, successPayments } = properties || {};
-  const numProperties = propertiesById && Object.keys(propertiesById).length;
-  const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
-  let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);
+  const { assessmentsByStatus, loading } = properties || {};
+  const completedAssessments = getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels);
   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { urls, sortedProperties, loading, numProperties };
+  return { sortedProperties, urls, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
-      dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
-    //getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
+    // fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
+    //   dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
+    getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
   };
 };
 

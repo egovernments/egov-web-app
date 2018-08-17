@@ -7,7 +7,6 @@ import DropDown from "./components/DropDown";
 import "./index.css";
 
 const getItemStatus = (item, history) => {
-
   let status = item.status;
   let styles = {
     paidIconStyle: {
@@ -23,10 +22,6 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: 10 }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          {/* <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div> */}
           <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
@@ -38,14 +33,7 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="COMPLETE PAYMENT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;
@@ -61,8 +49,9 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
-            localStorage.setItem('draftId',"");
-            history && history.push(`/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&tenantId=${item.tenantId}`);
+            localStorage.setItem("draftId", "");
+            history &&
+              history.push(`/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&tenantId=${item.tenantId}`);
           }}
           className="assessment-displayInline"
           style={{ marginTop: "10px" }}
@@ -79,7 +68,7 @@ const getItemStatus = (item, history) => {
             label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
             primary={true}
             onClick={(e) => {
-              localStorage.setItem('draftId',"");
+              localStorage.setItem("draftId", "");
               history.push(
                 `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
                   item.propertyId

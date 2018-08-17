@@ -26,6 +26,10 @@ var _BlankAssessment = require("./components/BlankAssessment");
 
 var _BlankAssessment2 = _interopRequireDefault(_BlankAssessment);
 
+var _DropDown = require("./components/DropDown");
+
+var _DropDown2 = _interopRequireDefault(_DropDown);
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -71,7 +75,7 @@ var getItemStatus = function getItemStatus(item, history) {
         _react2.default.createElement(
           "div",
           null,
-          _react2.default.createElement(_components.DropDown, {
+          _react2.default.createElement(_DropDown2.default, {
             autoWidth: true,
             menuInnerDivStyle: { padding: "0px 6px" },
             menuStyle: { marginTop: 0 },
@@ -95,15 +99,8 @@ var getItemStatus = function getItemStatus(item, history) {
         ),
         _react2.default.createElement(
           "div",
-          { className: "assessment-displayInline", style: { marginTop: "8px" } },
-          _react2.default.createElement(_translationNode2.default, { label: "COMPLETE PAYMENT", labelStyle: { marginLeft: "8px" }, color: "#fe7a51", fontSize: "12px" }),
-          _react2.default.createElement(_components.Icon, { style: { marginLeft: 10, height: "18px" }, action: "editor", name: "vertical-align-bottom", color: "#fe7a51" })
-        ),
-        _react2.default.createElement(
-          "div",
-          { className: "assessment-displayInline", style: { marginTop: "8px" } },
-          _react2.default.createElement(_translationNode2.default, { label: "DOWNLOAD RECEIPT", labelStyle: { marginLeft: "8px" }, color: "#fe7a51", fontSize: "12px" }),
-          _react2.default.createElement(_components.Icon, { style: { marginLeft: 10, height: "18px" }, action: "editor", name: "vertical-align-bottom", color: "#fe7a51" })
+          { style: { height: "30px", marginTop: "8px" } },
+          history && _react2.default.createElement(_DropDown2.default, { history: history, item: item })
         )
       );
       break;

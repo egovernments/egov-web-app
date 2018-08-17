@@ -147,12 +147,32 @@ var propertyReducer = function propertyReducer() {
         errorMessage: action.error
       });
     case actionTypes.ASSESSMENT_STATUS_COMPLETE:
-      var assessmentsByStatus = {};
+      var assessmentsByStatus = action.payload;
       return (0, _extends3.default)({}, state, {
         loading: false,
         error: false,
         errorMessage: "",
         assessmentsByStatus: assessmentsByStatus
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_COMPLETE:
+      var singleAssessmentByStatus = action.payload;
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        singleAssessmentByStatus: singleAssessmentByStatus
       });
     default:
       return state;
