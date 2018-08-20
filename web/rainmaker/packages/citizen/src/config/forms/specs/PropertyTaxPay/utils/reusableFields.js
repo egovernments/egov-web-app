@@ -234,11 +234,11 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    const unitFormUpdate=()=>{
+    const unitFormUpdate=(usageCategoryMinor,skipMajorUpdate=true)=>{
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
-          return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+          return subUsageMinor.usageCategoryMinor === get(state,usageCategoryMinor);
         }
       );
       if (filteredSubUsageMinor.length > 0) {
@@ -252,7 +252,7 @@ export const beforeInitForm = {
           "form.fields.subUsageType.dropDownData",
           mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
         );
-        if (get(action, "form.fields.subUsageType.jsonPath")) {
+        if (get(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch(
             prepareFormData(
               `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
@@ -267,7 +267,7 @@ export const beforeInitForm = {
     }
 
     if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
-      unitFormUpdate()
+      unitFormUpdate("common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -276,7 +276,7 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-        unitFormUpdate();
+        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,false);
       }
       else {
         set(action, "form.fields.subUsageType.hideField", true);
