@@ -60,7 +60,7 @@ class FormWizard extends Component {
     },
     propertyDetails: {},
     bill: [],
-    totalAmountToBePaid: 0,
+    totalAmountToBePaid: 1,
     isFullPayment: true,
     valueSelected: "Full_Amount",
   };
@@ -474,7 +474,7 @@ class FormWizard extends Component {
     if (e.target.value === "Full_Amount") {
       this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount" });
     } else {
-      this.setState({ totalAmountToBePaid: 0, valueSelected: "Partial_Amount" });
+      this.setState({ totalAmountToBePaid: 1, valueSelected: "Partial_Amount" });
     }
   };
 
