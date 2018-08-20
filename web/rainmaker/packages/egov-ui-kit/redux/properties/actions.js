@@ -468,24 +468,22 @@ var getSingleAssesmentandStatus = exports.getSingleAssesmentandStatus = function
               }, {});
 
 
-              console.log(receiptDetails);
-              console.log(mergeReceiptsInProperty(receiptDetails, consumerCodes));
               dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
-              _context4.next = 17;
+              _context4.next = 15;
               break;
 
-            case 14:
-              _context4.prev = 14;
+            case 12:
+              _context4.prev = 12;
               _context4.t0 = _context4["catch"](1);
 
               dispatch(SingleAssessmentStatusFetchError(_context4.t0.message));
 
-            case 17:
+            case 15:
             case "end":
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[1, 14]]);
+      }, _callee4, undefined, [[1, 12]]);
     }));
 
     return function (_x4) {

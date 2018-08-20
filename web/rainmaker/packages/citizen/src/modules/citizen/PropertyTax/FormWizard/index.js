@@ -281,7 +281,7 @@ class FormWizard extends Component {
   getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
-    let { renderCustomTitleForPt, fetchGeneralMDMSData } = this.props;
+    let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
     let { search } = this.props.location;
     const assessmentId = this.getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isReassesment = !!this.getQueryValue(search, "isReassesment");

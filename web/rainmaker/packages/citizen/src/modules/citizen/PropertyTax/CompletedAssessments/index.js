@@ -93,26 +93,13 @@ class CompletedAssessments extends Component {
             yearDialogue={this.state.dialogueOpen}
             closeDialogue={this.closeYearRangeDialogue}
             onNewPropertyButtonClick={this.onNewPropertyButtonClick}
+            hoverColor="#fff"
           />
         )}
       </Screen>
     );
   }
 }
-
-// const mapStateToProps = (state) => {
-//   const { properties, common, app } = state;
-//   const { localizationLabels } = app;
-//   const { cities } = common;
-//   const { urls } = state.app;
-//   const { loading, propertiesById, successPayments } = properties || {};
-//   const numProperties = propertiesById && Object.keys(propertiesById).length;
-//   const mergedData = successPayments && propertiesById && getFinalAssessments(successPayments, propertiesById);
-//   let completedAssessments = mergedData && getTransformedItems(mergedData, cities, localizationLabels);import { getCompletedTransformedItems } from "../common/TransformedAssessments";
-//   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-//   return { urls, sortedProperties, loading, numProperties };
-// };
-
 const mapStateToProps = (state) => {
   const { properties, common, app } = state;
   const { localizationLabels } = app;
@@ -127,8 +114,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
-    // fetchProperties: (queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty) =>
-    //   dispatch(fetchProperties(queryObjectProperty, queryObjectDraft, queryObjectFailedPayments, querySuccessProperty)),
     getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
   };
 };

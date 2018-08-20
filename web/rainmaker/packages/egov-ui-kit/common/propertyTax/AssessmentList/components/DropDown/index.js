@@ -48,24 +48,13 @@ var styles = {
   hintStyle: { color: "#484848", top: 0 }
 };
 
-var PartiallyPaiddropDownData = [{
-  label: "Download Statement",
-  value: "Download Statement"
-}, {
-  label: "Re-Assess",
-  value: "Re-Assess"
-}, {
-  label: "Complete Payment",
-  value: "Complete Payment"
-}];
-
 var onSelectFieldChange = function onSelectFieldChange(event, key, payload, history, item) {
   switch (payload) {
     case "Re-Assess":
       localStorage.setItem("draftId", "");
       history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
       break;
-    case "Download Statement":
+    case "Download Receipt":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func
       downloadReceipt(item);
@@ -137,7 +126,7 @@ var DropDown = function DropDown(_ref2) {
           return onSelectFieldChange(event, key, payload, history, item);
         }
       },
-      _react2.default.createElement(_MenuItem2.default, { value: "Download Statement", primaryText: "Download Statement" }),
+      _react2.default.createElement(_MenuItem2.default, { value: "Download Receipt", primaryText: "Download Receipt" }),
       _react2.default.createElement(_MenuItem2.default, { value: "Re-Assess", primaryText: "Re-Assess" }),
       item.status === "Partially Paid" && _react2.default.createElement(_MenuItem2.default, { value: "Complete Payment", primaryText: "Complete Payment" })
     )

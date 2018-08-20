@@ -28,7 +28,7 @@ const onSelectFieldChange = (event, key, payload, history, item) => {
           }&tenantId=${item.tenantId}`
         );
       break;
-    case "Download Statement":
+    case "Download Receipt":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func
       downloadReceipt(item);
@@ -70,7 +70,7 @@ const DropDown = ({ history, item }) => {
         hintStyle={styles.hintStyle}
         onChange={(event, key, payload) => onSelectFieldChange(event, key, payload, history, item)}
       >
-        <MenuItem value="Download Statement" primaryText="Download Statement" />
+        <MenuItem value="Download Receipt" primaryText="Download Receipt" />
         <MenuItem value="Re-Assess" primaryText="Re-Assess" />
         {item.status === "Partially Paid" && <MenuItem value="Complete Payment" primaryText="Complete Payment" />}
       </SelectField>

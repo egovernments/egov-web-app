@@ -6,32 +6,6 @@ import BlankAssessment from "./components/BlankAssessment";
 import DropDown from "./components/DropDown";
 import "./index.css";
 
-const PAIDdropDownData = [
-  {
-    label: "Download Statement",
-    value: "Download Statement",
-  },
-  {
-    label: "Re-Assess",
-    value: "Re-Assess",
-  },
-];
-
-const PartiallyPaiddropDownData = [
-  {
-    label: "Download Statement",
-    value: "Download Statement",
-  },
-  {
-    label: "Re-Assess",
-    value: "Re-Assess",
-  },
-  {
-    label: "Complete Payment",
-    value: "Complete Payment",
-  },
-];
-
 const getItemStatus = (item, history) => {
   let status = item.status;
   let styles = {
@@ -49,17 +23,7 @@ const getItemStatus = (item, history) => {
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
 
-          <div>
-            <DropDown
-              autoWidth={true}
-              menuInnerDivStyle={{ padding: "0px 6px" }}
-              menuStyle={{ marginTop: 0 }}
-              iconStyle={{ top: "-3px", fill: "#484848", width: "35px" }}
-              style={{ backgroundColor: "transperent", height: "45px", width: "150px" }}
-              dropDownData={PAIDdropDownData}
-              hintText="Select action"
-            />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;

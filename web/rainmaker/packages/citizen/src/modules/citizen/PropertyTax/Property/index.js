@@ -10,6 +10,8 @@ import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 
 const innerDivStyle = {
@@ -43,7 +45,16 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle, fetchProperties } = this.props;
+    const {
+      location,
+      addBreadCrumbs,
+      fetchGeneralMDMSData,
+      selPropertyDetails,
+      getSingleAssesmentandStatus,
+      renderCustomTitleForPt,
+      customTitle,
+      fetchProperties,
+    } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -87,6 +98,7 @@ class Property extends Component {
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
+    selPropertyDetails && getSingleAssesmentandStatus(selPropertyDetails);
     renderCustomTitleForPt(customTitle);
   };
 
@@ -187,7 +199,7 @@ const getAddressInfo = (addressObj, extraItems) => {
         items: [
           {
             key: " House No:",
-            value: addressObj.houseNo || "NA",
+            value: addressObj.doorNo || "NA",
           },
           {
             key: "Street Name:",
@@ -199,11 +211,11 @@ const getAddressInfo = (addressObj, extraItems) => {
           },
           {
             key: "Colony Name:",
-            value: addressObj.colonyName || "NA",
+            value: addressObj.buildingName || "NA",
           },
           {
             key: "Mohalla:",
-            value: addressObj.mohalla || "NA",
+            value: addressObj.locality.name || "NA",
           },
           ...extraItems,
         ],
@@ -331,11 +343,11 @@ const getLatestPropertyDetails = (propertyDetailsArray) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { urls } = state.app;
-  const { common } = state;
+  const { app, common } = state;
+  const { urls, localizationLabels } = app;
   const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
-  const { propertiesById } = state.properties || {};
+  const { propertiesById, singleAssessmentByStatus, loading } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
@@ -356,19 +368,59 @@ const mapStateToProps = (state, ownProps) => {
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const { propertyDetails } = selPropertyDetails;
-  let transformedAssessments =
-    propertyDetails &&
-    Object.values(propertyDetails).map((assessment, index) => {
-      return {
-        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-        status: "ASSESS & PAY",
-        receipt: true,
-        assessmentNo: assessment.assessmentNumber,
-        financialYear: assessment.financialYear,
-        propertyId: propertyId,
-      };
-    });
-  return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
+  let yearList = ["2019-18", "2018-17", "2017-16", "2016-15"];
+  // let transformedAssessments = yearList.forEach((year) => {
+  //   singleAssessmentByStatus &&
+  //     Object.values(singleAssessmentByStatus).reduce((acc, curr) => {
+  //       console.log(singleAssessmentByStatus);
+  //       console.log(curr);
+  //       if (curr.financialYear === year) {
+  //         acc.push({
+  //           primaryText: <Label label={curr.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+  //           status: "ASSESS & PAY",
+  //           receipt: true,
+  //           assessmentNo: curr.assessmentNumber,
+  //           financialYear: curr.financialYear,
+  //           propertyId: curr.propertyId,
+  //         });
+  //       } else {
+  //         acc.push({
+  //           primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+  //           status: "ASSESS & PAY",
+  //           propertyInfo: true,
+  //         });
+  //       }
+  //       return acc;
+  //     }, []);
+  // });
+
+  let transformedAssessments = yearList.reduce((acc, year) => {
+    singleAssessmentByStatus &&
+      Object.values(singleAssessmentByStatus).reduce((result, property) => {
+        const singleAssessment =
+          property &&
+          (property.financialYear
+            ? result.push({
+                primaryText: <Label label={property.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+                status: property.receiptInfo.status,
+                receipt: true,
+                assessmentNo: property.assessmentNumber,
+                financialYear: property.financialYear,
+                propertyId: property.propertyId,
+              })
+            : result.push({
+                primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+                status: "ASSESS & PAY",
+                receipt: true,
+              }));
+        acc.push(singleAssessment);
+        return result;
+      }, []);
+    console.log(acc);
+    return acc;
+  }, []);
+
+  return { urls, propertyItems, propertyId, customTitle, selPropertyDetails, transformedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -376,6 +428,7 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
+    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
   };
 };
 
