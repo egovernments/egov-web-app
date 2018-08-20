@@ -693,6 +693,17 @@ class FormWizard extends Component {
     }
   };
 
+  getSingleOwnerInfo = () => {
+    const { ownerInfo } = this.props.form;
+    const ownerObj = {};
+    Object.keys(ownerInfo.fields).map((field) => {
+      const jsonPath = ownerInfo.fields[field].jsonPath;
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null
+    });
+    const ownerArray = [ownerObj];
+    return ownerArray
+  }
+
   getMultipleOwnerInfo = () => {
     let { form } = this.props;
     return Object.keys(form)
@@ -703,7 +714,7 @@ class FormWizard extends Component {
         const ownerObj = {};
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined);
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null
         });
         ownerData.push(ownerObj);
         return ownerData;
@@ -716,11 +727,11 @@ class FormWizard extends Component {
     const instiObj = {};
     Object.keys(institutionAuthority.fields).map((field) => {
       const jsonPath = institutionAuthority.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined);
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined) || null
     });
     Object.keys(institutionDetails.fields).map((field) => {
       const jsonPath = institutionDetails.fields[field].jsonPath;
-      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined);
+      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined) || null
     });
     instiObj.designation = get(institutionAuthority, "fields.designation.value", "");
     const ownerArray = [ownerObj];
@@ -728,7 +739,9 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { prepareFormData, location, form } = this.props;
+    let { location, form } = this.props;
+    let prepareFormData = { ...this.props.prepareFormData };
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
@@ -736,6 +749,9 @@ class FormWizard extends Component {
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if (selectedownerShipCategoryType === "SINGLEOWNER") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
@@ -767,7 +783,9 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { prepareFormData, toggleSpinner, location, form } = this.props;
+    let { toggleSpinner, location, form } = this.props;
+    let prepareFormData = { ...this.props.prepareFormData };
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
     let { search } = location;
     const propertyId = this.getQueryValue(search, "propertyId");
     const assessmentId = this.getQueryValue(search, "assessmentId");
@@ -781,6 +799,10 @@ class FormWizard extends Component {
     if (!!propertyId) {
       set(prepareFormData, "Properties[0].propertyId", propertyId);
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
+    }
+
+    if (selectedownerShipCategoryType === "SINGLEOWNER") {
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
     }
 
     if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
