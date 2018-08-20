@@ -176,7 +176,7 @@ const getAddressInfo = (addressObj, extraItems) => {
         items: [
           {
             key: " House No:",
-            value: addressObj.houseNo || "NA",
+            value: addressObj.doorNo || "NA",
           },
           {
             key: "Street Name:",
@@ -188,11 +188,11 @@ const getAddressInfo = (addressObj, extraItems) => {
           },
           {
             key: "Colony Name:",
-            value: addressObj.colonyName || "NA",
+            value: addressObj.buildingName || "NA",
           },
           {
             key: "Mohalla:",
-            value: addressObj.mohalla || "NA",
+            value: addressObj.locality.name || "NA",
           },
           ...extraItems,
         ],

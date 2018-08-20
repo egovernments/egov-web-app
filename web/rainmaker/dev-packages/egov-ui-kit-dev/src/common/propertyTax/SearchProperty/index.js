@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import Screen from "egov-ui-kit/common/common/Screen";
+import YearDialogue from "../YearDialogue";
 import { Button } from "egov-ui-kit/components";
 import { BreadCrumbs } from "egov-ui-kit/components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
@@ -75,11 +76,10 @@ class SearchProperty extends Component {
         <Button
           onClick={
             userType === "CITIZEN"
-              ? (e) => {
-                  history.push(
-                    `/property-tax/assessment-form?FY=${propertyDetails[0].financialYear}&assessmentId=${propertyDetails[0] &&
-                      propertyDetails[0].assessmentNumber}&isReassesment=true&propertyId=${propertyId}`
-                  );
+              ? () => {
+                  this.setState({
+                    dialogueOpen: true,
+                  });
                 }
               : (e) => {
                   history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
@@ -115,6 +115,7 @@ class SearchProperty extends Component {
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
     const { showTable } = this.state;
+    const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const pathname = location && location.pathname;
     const tableData = this.extractTableData(propertiesFound);
@@ -124,7 +125,6 @@ class SearchProperty extends Component {
     return (
       <Screen loading={loading}>
         {userType === "CITIZEN" ? <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> : []}
-        {/* <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} /> */}
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
         {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
         {showTable &&
@@ -143,6 +143,7 @@ class SearchProperty extends Component {
               </div>
             </div>
           )}
+        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );
   }

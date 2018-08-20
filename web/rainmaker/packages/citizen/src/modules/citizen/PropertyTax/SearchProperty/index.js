@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
+import YearDialogue from "../common/YearDialogue";
 import { Screen } from "modules/common";
 import { BreadCrumbs, Button } from "components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
@@ -19,6 +20,7 @@ class SearchProperty extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dialogueOpen: false,
       searchResult: [],
       showTable: false,
     };
@@ -31,6 +33,10 @@ class SearchProperty extends Component {
     if (!(localStorage.getItem("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
+  };
+
+  closeYearRangeDialogue = () => {
+    this.setState({ dialogueOpen: false });
   };
 
   onSearchClick = (form, formKey) => {
@@ -60,8 +66,9 @@ class SearchProperty extends Component {
 
   extractTableData = (properties) => {
     const { history } = this.props;
+    const userType = JSON.parse(localStorage.getItem("user-info")).type;
     const tableData = properties.reduce((tableData, property, index) => {
-      let { propertyId, oldPropertyId, address, propertyDetails,tenantId } = property;
+      let { propertyId, oldPropertyId, address, propertyDetails, tenantId } = property;
       const { doorNo, buildingName, street, locality } = address;
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
@@ -69,15 +76,17 @@ class SearchProperty extends Component {
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button
-          onClick={(e) => {
-            localStorage.setItem("draftId","");
-            propertyDetails[0] &&
-              history.push(
-                `/property-tax/assessment-form?FY=${propertyDetails[0].financialYear}&assessmentId=${
-                  propertyDetails[0].assessmentNumber
-                }&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
-              );
-          }}
+          onClick={
+            userType === "CITIZEN"
+              ? () => {
+                  this.setState({
+                    dialogueOpen: true,
+                  });
+                }
+              : (e) => {
+                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+                }
+          }
           label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
           value={propertyId}
           primary={true}
@@ -98,6 +107,7 @@ class SearchProperty extends Component {
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
     const { showTable } = this.state;
+    const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const { pathname } = location;
     const tableData = this.extractTableData(propertiesFound);
@@ -125,6 +135,7 @@ class SearchProperty extends Component {
               </div>
             </div>
           )}
+        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );
   }
