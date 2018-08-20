@@ -86,8 +86,8 @@ class Property extends Component {
   };
 
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, history, transformedAssessments } = props;
-    console.log(transformedAssessments);
+    const { propertyItems, propertyId, tenantId, history, transformedAssessments } = props;
+    console.log(propertyItems);
     const viewAllAssessmentItem = {
       primaryText: (
         <div
@@ -110,7 +110,7 @@ class Property extends Component {
         ),
         nestedItems: [
           {
-            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} />,
+            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} tenantId={tenantId} />,
           },
         ],
         rightIcon: (
@@ -315,41 +315,13 @@ const getLatestPropertyDetails = (propertyDetailsArray) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // const { urls } = state.app;
-  // const { generalMDMSDataById } = state.common || {};
-  // const { propertiesById } = state.properties || {};
-  // const propertyId = ownProps.match.params.propertyId;
-  // const selPropertyDetails = propertiesById[propertyId];
-  // const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  // const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]);
-  // const assessmentInfoKeys = [
-  //   { masterName: "Floor", dataKey: "floorNo" },
-  //   { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
-  //   { masterName: "UsageCategorySubMinor", dataKey: "usageCategorySubMinor" },
-  //   { masterName: "OccupancyType", dataKey: "occupancyType" },
-  //   { masterName: "", dataKey: "unitArea" },
-  // ];
-  // const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
-  // const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
-  // const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  // const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-
-  // const { propertyDetails } = selPropertyDetails;
-  // let transformedAssessments = Object.values(propertyDetails).map((assessment, index) => {
-  //   return {
-  //     primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-  //     status: "ASSESS & PAY",
-  //     receipt: true,
-  //     assessmentNo: assessment.assessmentNumber,
-  //   };
-  // });
-  // return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
   const { urls } = state.app;
   const { common } = state;
   const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
+  const tenantId = ownProps.match.params.tenantId;
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
@@ -381,7 +353,7 @@ const mapStateToProps = (state, ownProps) => {
         propertyId: propertyId,
       };
     });
-  return { urls, propertyItems, propertyId, customTitle, transformedAssessments };
+  return { urls, propertyItems, tenantId, propertyId, customTitle, transformedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {

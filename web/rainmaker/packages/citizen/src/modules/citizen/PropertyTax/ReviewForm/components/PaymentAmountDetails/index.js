@@ -90,14 +90,18 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
           </div>
           {optionSelected &&
             optionSelected === "Partial_Amount" && (
-              <div className="rainmaker-displayInline" style={{ padding: "12px 0px 12px 12px", backgroundColor: "#f2f2f2", marginTop: 10 }}>
-                <Icon action="action" name="info" />
-                <Label
-                  containerStyle={{ marginLeft: 16 }}
-                  fontSize="14px"
-                  color="#484848"
-                  label="No rebate is applicable for partial payments."
-                />
+              <div
+                className="rainmaker-displayInline"
+                style={{
+                  padding: "12px 0px 12px 12px",
+                  backgroundColor: "#f2f2f2",
+                  marginTop: 10,
+                  border: "1px solid #5aaafa",
+                  borderLeft: "5px solid #5aaafa",
+                }}
+              >
+                <Icon action="action" name="info" color="#30588c" />
+                <Label containerStyle={{ marginLeft: 16 }} fontSize="14px" color="#484848" label="No rebate is applicable for partial payments." />
               </div>
             )}
         </div>

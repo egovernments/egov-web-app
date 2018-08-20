@@ -6,6 +6,9 @@ const Property = asyncComponent(() => import("modules/employee/PropertyTax/Prope
 const FormWizard = asyncComponent(() => import("modules/employee/PropertyTax/FormWizard").then((module) => module.default));
 const PaymentSuccess = asyncComponent(() => import("modules/employee/PropertyTax/PaymentSuccess").then((module) => module.default));
 const PaymentFailure = asyncComponent(() => import("modules/employee/PropertyTax/PaymentFailure").then((module) => module.default));
+const PropertyInformationForm = asyncComponent(() =>
+  import("modules/employee/PropertyTax/Property/components/PropertyInformationForm").then((module) => module.default)
+);
 
 const routes = [
   // property tax routes
@@ -74,6 +77,16 @@ const routes = [
   {
     path: "property-tax/payment-failure/:propertyId/:tenantId/:assessmentNumber/:assessmentYear",
     component: PaymentFailure,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      hideTitle: true,
+    },
+  },
+  {
+    path: "property-tax/property/:propertyId/:tenantId/edit-property",
+    component: PropertyInformationForm,
     needsAuthentication: true,
     options: {
       hideFooter: true,

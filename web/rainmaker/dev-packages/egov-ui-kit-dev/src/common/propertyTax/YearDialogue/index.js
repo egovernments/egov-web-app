@@ -6,6 +6,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
 // const getYearList = () => {
@@ -33,7 +34,7 @@ const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPa
 
 class YearDialog extends Component {
   componentDidMount = () => {
-    const { fetchGeneralMDMSData } = this.props;
+    const { fetchGeneralMDMSData, toggleSpinner } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -49,7 +50,9 @@ class YearDialog extends Component {
         ],
       },
     };
+    toggleSpinner();
     fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
+    toggleSpinner();
   };
 
   resetFormWizard = () => {
@@ -117,6 +120,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     removeForm: (formkey) => dispatch(removeForm(formkey)),
+    toggleSpinner: () => dispatch(toggleSpinner()),
   };
 };
 
