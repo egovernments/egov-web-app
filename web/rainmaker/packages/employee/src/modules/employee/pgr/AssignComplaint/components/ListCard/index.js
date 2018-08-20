@@ -34,23 +34,32 @@ export default class ListCard extends Component {
     margin: "0px",
   };
 
+  getItemForDepartment = (item, department) => {
+    return {
+      ...item,
+      assignments: item.assignments.filter((assignmentItem) => assignmentItem.department === department),
+    };
+  };
+
   prepareRawDataToFormat = (rawData) => {
     let { designationsById, departmentById } = this.props;
     const seperateByDepartment =
       rawData &&
       rawData.reduce((result, item) => {
-        if (!result[item.assignments[0].department]) result[item.assignments[0].department] = [];
-        result[item.assignments[0].department].push(item);
+        for (let i = 0; i < item.assignments.length; i++) {
+          if (!result[item.assignments[i].department]) result[item.assignments[i].department] = [];
+          result[item.assignments[i].department].push(this.getItemForDepartment(item, item.assignments[i].department));
+        }
         return result;
       }, {});
     return (
       seperateByDepartment &&
       Object.keys(seperateByDepartment).map((depDetails, index) => {
         return {
-          id: seperateByDepartment[depDetails][0].assignments[0].department,
+          id: depDetails,
           primaryText: (
             <Label
-              label={getNameFromId(departmentById, seperateByDepartment[depDetails][0].assignments[0].department, "Administration")}
+              label={getNameFromId(departmentById, depDetails, "Administration")}
               dark={true}
               bold={true}
               containerStyle={{ position: "absolute", top: 0, left: 0 }}

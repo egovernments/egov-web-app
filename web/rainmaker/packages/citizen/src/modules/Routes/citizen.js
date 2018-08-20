@@ -6,7 +6,8 @@ import OTP from "modules/citizen/User/OTP";
 import Profile from "modules/citizen/User/Profile";
 
 // common screens
-import Home from "modules/citizen/Home";
+import PGRHome from "modules/citizen/Home";
+import LandingPage from "modules/citizen/LandingPage";
 import HowItWorks from "modules/citizen/HowItWorks";
 import ContactUs from "modules/citizen/ContactUs";
 import { ImageModalDisplay } from "modules/common";
@@ -22,9 +23,9 @@ import { ComplaintType } from "modules/common";
 import AddComplaint from "modules/citizen/pgr/AddComplaint";
 import FeedbackAcknowledge from "modules/citizen/pgr/FeedbackAcknowledgement";
 import { ReopenAcknowledgement } from "modules/common";
-// import ptRoutes from "./pt";
+import ptRoutes from "./pt";
 import { PrivacyPolicy } from "modules/common";
-const ptRoutes = [];
+// const ptRoutes = [];
 
 const routes = [
   {
@@ -59,12 +60,17 @@ const routes = [
     options: { hideFooter: true, title: "Edit Profile" },
   },
   {
-    path: "/",
-    component: Home,
+    path: "pgr-home",
+    component: PGRHome,
     needsAuthentication: true,
     options: { isHomeScreen: true, title: "Home", hideTitle: true, redirectionUrl: "/user/register" },
   },
-
+  {
+    path: "/",
+    component: LandingPage,
+    needsAuthentication: true,
+    options: { isHomeScreen: true, hideTitle: true, redirectionUrl: "/user/register" },
+  },
   {
     path: "image",
     component: ImageModalDisplay,

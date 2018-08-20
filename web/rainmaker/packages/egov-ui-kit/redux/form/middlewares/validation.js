@@ -38,12 +38,12 @@ var formValidation = function formValidation(store) {
           var validationObject = (0, _utils.validateField)(field);
           var errorText = validationObject.errorText;
 
-          if (updateDependentFields) {
-            updateDependentFields(formKey, field, dispatch);
-          }
           dispatch((0, _actions2.setFieldValidation)(formKey, fieldKey, errorText));
         }
         dispatch((0, _actions.prepareFormData)(field.jsonPath, field.value));
+        if (updateDependentFields) {
+          updateDependentFields({ formKey: formKey, field: field, dispatch: dispatch, state: state });
+        }
       } else {
         next(action);
       }

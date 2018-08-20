@@ -186,10 +186,15 @@ class AssessmentFormWizard extends Component {
           />
           <div className="flexbox-container">
             <div className="flex-item">
-              <Button onClick={this.handlePrev} fullWidth={true} primary={true} label="GO BACK" />
+              <Button
+                onClick={this.handlePrev}
+                fullWidth={true}
+                primary={true}
+                label={<Label buttonLabel={true} label="PT_COMMONS_GO_BACK" color="#fe7a51" />}
+              />
             </div>
             <div className="flex-item">
-              <Button onClick={this.handleNext} fullWidth={true} label="NEXT" />
+              <Button onClick={this.handleNext} fullWidth={true} label={<Label buttonLabel={true} label="PT_COMMONS_NEXT" color="#ffffff" />} />
             </div>
           </div>
         </div>

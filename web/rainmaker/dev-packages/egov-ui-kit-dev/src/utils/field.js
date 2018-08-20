@@ -35,6 +35,7 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
             iconPosition="right"
             Icon={Icon}
             {...fieldProps}
+            {...rest}
             onIconClick={
               iconRedirectionURL
                 ? () => {

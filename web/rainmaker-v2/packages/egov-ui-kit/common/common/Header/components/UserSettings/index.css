@@ -1,0 +1,10 @@
+.userSettingsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.userSettingsInnerContainer {
+  margin-right: 60px;
+  display: flex; }
+  .userSettingsInnerContainer .img-responsive {
+    height: 33px !important; }

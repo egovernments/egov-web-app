@@ -86,7 +86,7 @@ class ActionMenuComp extends Component {
   };
   addMenuItems = (path, splitArray, menuItems, index) => {
     let { role, actionListArr } = this.props;
-    const transformedRole = role === "citizen" ? "citizen" : "employee";
+    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let actionList = actionListArr;
 
     if (splitArray.length > 1) {
@@ -121,7 +121,7 @@ class ActionMenuComp extends Component {
   menuChange = (pathParam) => {
     let path = pathParam.path;
     let { role, actionListArr } = this.props;
-    const transformedRole = role === "citizen" ? "citizen" : "employee";
+    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let actionList = actionListArr;
     let menuItems = [];
 
@@ -177,7 +177,7 @@ class ActionMenuComp extends Component {
 
   render() {
     let { role, actionListArr } = this.props;
-    const transformedRole = role === "citizen" ? "citizen" : "employee";
+    // const transformedRole = role === "citizen" ? "citizen" : "employee";
     let { searchText, path, menuItems } = this.state;
     let { changeLevel, menuChange } = this;
     let actionList = actionListArr;

@@ -24,9 +24,9 @@ var _Icon = require("@material-ui/core/Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _info = require("egov-ui-kit/assets/info.svg");
+var _translationNode = require("egov-ui-kit/utils/translationNode");
 
-var _info2 = _interopRequireDefault(_info);
+var _translationNode2 = _interopRequireDefault(_translationNode);
 
 require("./index.css");
 
@@ -52,10 +52,10 @@ var ToolTipUi = function ToolTipUi(_ref) {
 
   return _react2.default.createElement(
     _Tooltip2.default,
-    { id: id, title: title, placement: placement || "right", PopperProps: PopperProps },
+    { id: id, title: _react2.default.createElement(_translationNode2.default, { label: title, color: "#fff", fontSize: "12px" }), placement: placement || "right", PopperProps: PopperProps },
     _react2.default.createElement(
       _Icon2.default,
-      { color: "disabled", style: { fontSize: 50 } },
+      { color: "disabled", style: { fontSize: 24 } },
       _react2.default.createElement(_Info2.default, null)
     )
   );

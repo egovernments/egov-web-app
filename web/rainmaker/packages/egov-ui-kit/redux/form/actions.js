@@ -125,7 +125,7 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
               }
 
               _context.next = 16;
-              return (0, _api.loginRequest)(formData.login.username, formData.login.password);
+              return (0, _api.loginRequest)(formData.login.username, formData.login.password, "", "password", "", "CITIZEN");
 
             case 16:
               formResponse = _context.sent;
@@ -139,7 +139,7 @@ var submitForm = exports.submitForm = function submitForm(formKey, saveUrl) {
               }
 
               _context.next = 22;
-              return (0, _api.loginRequest)(formData.employee.username, formData.employee.password, "", "password", formData.employee.tenantId);
+              return (0, _api.loginRequest)(formData.employee.username, formData.employee.password, "", "password", formData.employee.tenantId, "EMPLOYEE");
 
             case 22:
               formResponse = _context.sent;

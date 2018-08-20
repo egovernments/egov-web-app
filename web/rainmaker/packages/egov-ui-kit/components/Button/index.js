@@ -26,6 +26,7 @@ var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//button component
 var Button = function Button(_ref) {
   var _ref$label = _ref.label,
       label = _ref$label === undefined ? "Continue" : _ref$label,

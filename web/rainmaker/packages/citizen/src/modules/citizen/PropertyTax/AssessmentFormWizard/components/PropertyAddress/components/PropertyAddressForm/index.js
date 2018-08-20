@@ -15,10 +15,6 @@ const PropertyAddressForm = ({ form, handleFieldChange }) => {
               </div>
             );
           })}
-
-          {/* <Link to="/citizen/map?propertyTax">
-        <TextFieldIcon id="pt-location" {...fields.location} iconPosition="after" Icon={TrackIcon} />
-      </Link> */}
         </div>
       }
     />

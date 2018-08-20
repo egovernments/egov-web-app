@@ -33,6 +33,10 @@ const requiredStyle = {
   color: "red",
 };
 
+const underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0",
+};
+
 const underlineFocusBaseStyle = {
   borderColor: "#e0e0e0",
 };
@@ -59,9 +63,13 @@ const TextField = ({
   autoFocus,
   maxLength,
   multiLine,
+  ErrorText,
   errorMessage,
+  dropDownData,
+  dataFetchConfig,
   jsonPath,
   toolTip,
+  updateDependentFields,
   toolTipMessage,
   ...rest
 }) => {
@@ -98,6 +106,7 @@ const TextField = ({
       maxLength={maxLength}
       autoComplete={type === "password" ? "new-password" : "off"}
       multiLine={multiLine}
+      underlineDisabledStyle={underlineDisabledStyle}
       {...rest}
     />
   );
@@ -113,7 +122,7 @@ TextField.propTypes = {
   hintText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   required: PropTypes.bool,
   hide: PropTypes.bool,
-  floatingLabelText: PropTypes.string,
+  floatingLabelText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   className: PropTypes.string,
 };
 

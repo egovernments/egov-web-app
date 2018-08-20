@@ -9,6 +9,9 @@ import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
 import ReceiptDialog from "./components/ReceiptDialog";
+import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 
 const innerDivStyle = {
@@ -42,7 +45,16 @@ class Property extends Component {
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle } = this.props;
+    const {
+      location,
+      addBreadCrumbs,
+      fetchGeneralMDMSData,
+      selPropertyDetails,
+      getSingleAssesmentandStatus,
+      renderCustomTitleForPt,
+      customTitle,
+      fetchProperties,
+    } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -81,18 +93,32 @@ class Property extends Component {
       "OccupancyType",
       "PropertyType",
     ]);
+    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     const { pathname } = location;
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
+    selPropertyDetails && getSingleAssesmentandStatus(selPropertyDetails);
     renderCustomTitleForPt(customTitle);
   };
 
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, history } = props;
+    const { propertyItems, propertyId, history, transformedAssessments } = props;
+    const viewAllAssessmentItem = {
+      primaryText: (
+        <div
+          onClick={() => {
+            history.push(`/property-tax/my-properties/view-assessments/${propertyId}`);
+          }}
+        >
+          <Label label="PT_PROPERTY_VIEW_ALL_ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
+        </div>
+      ),
+    };
+    transformedAssessments.push(viewAllAssessmentItem);
     return [
       {
-        primaryText: <Label label="Property Information" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="info" color="#484848" />
@@ -100,7 +126,7 @@ class Property extends Component {
         ),
         nestedItems: [
           {
-            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} />,
+            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} />,
           },
         ],
         rightIcon: (
@@ -108,52 +134,16 @@ class Property extends Component {
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
           </div>
         ),
+        initiallyOpen: true,
       },
       {
-        primaryText: <Label label="Assessment History" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+        primaryText: <Label label="PT_PROPERTY_ASSESSMENT_HISTORY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
         leftIcon: (
           <div style={IconStyle}>
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
           </div>
         ),
-        nestedItems: [
-          {
-            primaryText: <Label label="2018 - 2019" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "Paid",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2017 - 2018" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2016 - 2017" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "Paid",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2015 - 2016" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-            receipt: true,
-          },
-          {
-            primaryText: <Label label="2014 - 2015" fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-            status: "ASSESS & PAY",
-            receipt: true,
-          },
-          {
-            primaryText: (
-              <div
-                onClick={() => {
-                  history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
-                }}
-              >
-                <Label label="VIEW ALL ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
-              </div>
-            ),
-          },
-        ],
+        nestedItems: transformedAssessments,
         rightIcon: (
           <div style={IconStyle}>
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
@@ -175,7 +165,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history } = this.props;
+    const { urls, location, history, transformedAssessments } = this.props;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
@@ -187,10 +177,10 @@ class Property extends Component {
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         {
           <AssessmentList
-            items={this.getAssessmentListItems(this.props)}
+            items={transformedAssessments && this.getAssessmentListItems(this.props)}
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
-            history={this.props.history}
+            history={history}
           />
         }
         <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
@@ -200,36 +190,38 @@ class Property extends Component {
 }
 
 const getAddressInfo = (addressObj, extraItems) => {
-  return [
-    {
-      heading: "Property Address",
-      iconAction: "action",
-      iconName: "home",
-      items: [
-        {
-          key: " House No:",
-          value: addressObj.houseNo || "NA",
-        },
-        {
-          key: "Street Name:",
-          value: addressObj.street || "NA",
-        },
-        {
-          key: "Pincode:",
-          value: addressObj.pincode || "NA",
-        },
-        {
-          key: "Colony Name:",
-          value: addressObj.colonyName || "NA",
-        },
-        {
-          key: "Mohalla:",
-          value: addressObj.mohalla || "NA",
-        },
-        ...extraItems,
-      ],
-    },
-  ];
+  return (
+    addressObj && [
+      {
+        heading: "Property Address",
+        iconAction: "action",
+        iconName: "home",
+        items: [
+          {
+            key: " House No:",
+            value: addressObj.doorNo || "NA",
+          },
+          {
+            key: "Street Name:",
+            value: addressObj.street || "NA",
+          },
+          {
+            key: "Pincode:",
+            value: addressObj.pincode || "NA",
+          },
+          {
+            key: "Colony Name:",
+            value: addressObj.buildingName || "NA",
+          },
+          {
+            key: "Mohalla:",
+            value: addressObj.locality.name || "NA",
+          },
+          ...extraItems,
+        ],
+      },
+    ]
+  );
 };
 
 const transform = (floor, key, generalMDMSDataById) => {
@@ -237,109 +229,129 @@ const transform = (floor, key, generalMDMSDataById) => {
   if (!masterName) {
     return floor[dataKey];
   } else {
-    if (floor[dataKey] === "NONRESIDENTIAL") {
-      return generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name;
+    if (floor[dataKey]) {
+      // if (floor[dataKey] === "NONRESIDENTIAL") {
+      //   return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
+      // } else if (floor[dataKey] === "RESIDENTIAL") {
+      //   return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
+      // } else {
+      return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
     } else {
-      return generalMDMSDataById[masterName][floor[dataKey]].name;
+      return "-";
     }
   }
 };
 
 const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
-  const { units } = propertyDetails;
-  return [
-    {
-      heading: "Assessment Information",
-      iconAction: "action",
-      iconName: "assignment",
-      showTable: true,
-      tableHeaderItems: [
-        {
-          key: "Plot Size:",
-          value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
+  const { units } = propertyDetails || {};
+  return (
+    propertyDetails && [
+      {
+        heading: "Assessment Information",
+        iconAction: "action",
+        iconName: "assignment",
+        showTable: true,
+        tableHeaderItems: [
+          {
+            key: "Plot Size:",
+            value: propertyDetails.uom ? `${propertyDetails.landArea} ${propertyDetails.uom}` : `${propertyDetails.landArea} sq yards`,
+          },
+          {
+            key: "Type of Building:",
+            value:
+              generalMDMSDataById && generalMDMSDataById["PropertyType"] && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
+                ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+                : "NA",
+          },
+        ],
+        items: {
+          header: units ? ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"] : [],
+          values: units
+            ? units.map((floor) => {
+                return {
+                  value: keys.map((key) => {
+                    return transform(floor, key, generalMDMSDataById);
+                  }),
+                };
+              })
+            : [],
         },
-        {
-          key: "Type of Building:",
-          value: generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name,
-        },
-      ],
-      items: {
-        header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
-        values: units.map((floor) => {
-          return {
-            value: keys.map((key) => {
-              return transform(floor, key, generalMDMSDataById);
-            }),
-          };
-        }),
       },
-    },
-  ];
+    ]
+  );
 };
 
 const getOwnerInfo = (ownerDetails) => {
-  return [
-    {
-      heading: "Ownership Information",
-      iconAction: "social",
-      iconName: "person",
-      nestedItems: true,
-      items: ownerDetails.map((owner) => {
-        return {
-          items: [
-            {
-              key: "Name",
-              value: owner.name || "NA",
-            },
-            {
-              key: "Gender:",
-              value: owner.gender || "NA",
-            },
-            {
-              key: "Mobile No:",
-              value: owner.mobileNumber || "NA",
-            },
-            {
-              key: "Father's Name:",
-              value: owner.fatherOrHusbandName || "NA",
-            },
-            {
-              key: "User Category:",
-              value: owner.ownerType || "NA",
-            },
-            {
-              key: "Email ID:",
-              value: owner.emailId || "NA",
-            },
-            {
-              key: "Correspondence Address:",
-              value: owner.correspondenceAddress || "NA",
-            },
-          ],
-        };
-      }),
-    },
-  ];
+  return (
+    ownerDetails && [
+      {
+        heading: "Ownership Information",
+        iconAction: "social",
+        iconName: "person",
+        nestedItems: true,
+        items: ownerDetails.map((owner) => {
+          return {
+            items: [
+              {
+                key: "Name",
+                value: owner.name || "NA",
+              },
+              {
+                key: "Gender:",
+                value: owner.gender || "NA",
+              },
+              {
+                key: "Mobile No:",
+                value: owner.mobileNumber || "NA",
+              },
+              {
+                key: "Father's Name:",
+                value: owner.fatherOrHusbandName || "NA",
+              },
+              {
+                key: "User Category:",
+                value: owner.ownerType || "NA",
+              },
+              {
+                key: "Email ID:",
+                value: owner.emailId || "NA",
+              },
+              {
+                key: "Correspondence Address:",
+                value: owner.correspondenceAddress || "NA",
+              },
+            ],
+          };
+        }),
+      },
+    ]
+  );
 };
 
 const getLatestPropertyDetails = (propertyDetailsArray) => {
-  if (propertyDetailsArray.length > 1) {
-    return propertyDetailsArray.reduce((acc, curr) => {
-      return acc.assessmentDate > curr.assessmentDate ? acc : curr;
-    });
+  if (propertyDetailsArray) {
+    if (propertyDetailsArray.length > 1) {
+      return propertyDetailsArray.reduce((acc, curr) => {
+        return acc.assessmentDate > curr.assessmentDate ? acc : curr;
+      });
+    } else {
+      return propertyDetailsArray[0];
+    }
   } else {
-    return propertyDetailsArray[0];
+    return;
   }
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { urls } = state.app;
+  const { app, common } = state;
+  const { urls, localizationLabels } = app;
+  const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
-  const { propertiesById } = state.properties || {};
+  const { propertiesById, singleAssessmentByStatus, loading } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
-  const selPropertyDetails = propertiesById[propertyId];
+  const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]);
+  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
@@ -347,18 +359,76 @@ const mapStateToProps = (state, ownProps) => {
     { masterName: "OccupancyType", dataKey: "occupancyType" },
     { masterName: "", dataKey: "unitArea" },
   ];
-  const assessmentInfo = generalMDMSDataById ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById) : [];
-  const ownerInfo = getOwnerInfo(latestPropertyDetails.owners);
+  const assessmentInfo = generalMDMSDataById
+    ? latestPropertyDetails
+      ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
+      : []
+    : [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
-  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
+  const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  const { propertyDetails } = selPropertyDetails;
+  let yearList = ["2019-18", "2018-17", "2017-16", "2016-15"];
+  // let transformedAssessments = yearList.forEach((year) => {
+  //   singleAssessmentByStatus &&
+  //     Object.values(singleAssessmentByStatus).reduce((acc, curr) => {
+  //       console.log(singleAssessmentByStatus);
+  //       console.log(curr);
+  //       if (curr.financialYear === year) {
+  //         acc.push({
+  //           primaryText: <Label label={curr.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+  //           status: "ASSESS & PAY",
+  //           receipt: true,
+  //           assessmentNo: curr.assessmentNumber,
+  //           financialYear: curr.financialYear,
+  //           propertyId: curr.propertyId,
+  //         });
+  //       } else {
+  //         acc.push({
+  //           primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+  //           status: "ASSESS & PAY",
+  //           propertyInfo: true,
+  //         });
+  //       }
+  //       return acc;
+  //     }, []);
+  // });
 
-  return { urls, propertyItems, propertyId, customTitle };
+  let transformedAssessments = yearList.reduce((acc, year) => {
+    singleAssessmentByStatus &&
+      Object.values(singleAssessmentByStatus).reduce((result, property) => {
+        const singleAssessment =
+          property &&
+          (property.financialYear
+            ? result.push({
+                primaryText: <Label label={property.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+                status: property.receiptInfo.status,
+                receipt: true,
+                assessmentNo: property.assessmentNumber,
+                financialYear: property.financialYear,
+                propertyId: property.propertyId,
+              })
+            : result.push({
+                primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
+                status: "ASSESS & PAY",
+                receipt: true,
+              }));
+        acc.push(singleAssessment);
+        return result;
+      }, []);
+    console.log(acc);
+    return acc;
+  }, []);
+
+  return { urls, propertyItems, propertyId, customTitle, selPropertyDetails, transformedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
+    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
   };
 };
 

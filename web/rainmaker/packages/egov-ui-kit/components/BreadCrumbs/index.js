@@ -16,6 +16,10 @@ var _Icon = require("../Icon");
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
+var _translationNode = require("egov-ui-kit/utils/translationNode");
+
+var _translationNode2 = _interopRequireDefault(_translationNode);
+
 var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -52,7 +56,7 @@ var BreadCrumbs = function BreadCrumbs(_ref) {
             },
             style: url.length - 1 === index ? style : (0, _extends3.default)({}, selStyle, style)
           },
-          item.title
+          _react2.default.createElement(_translationNode2.default, { label: item.title })
         )
       );
     })

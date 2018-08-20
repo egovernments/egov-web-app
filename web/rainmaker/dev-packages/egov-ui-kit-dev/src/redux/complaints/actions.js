@@ -7,23 +7,24 @@ import uniq from "lodash/uniq";
 import commonConfig from "config/common.js";
 
 //checking users there in action history
-const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
+const checkUsers = (dispatch, state, actionHistory, hasUsers, tenantId) => {
   if (hasUsers) {
     let employeeIds = [],
       userIds = [];
     actionHistory.forEach((actions) => {
-      actions.actions.forEach((action) => {
-        if (action.by) {
-          let { userId, employeeId } = getUserEmployeeId(action.by);
-          if (userId) userIds.push(userId);
-          if (employeeId) employeeIds.push(employeeId);
-        }
-        if (action.assignee) {
-          let { userId, employeeId } = getUserEmployeeId(action.assignee);
-          if (userId) userIds.push(userId);
-          if (employeeId) employeeIds.push(employeeId);
-        }
-      });
+      actions.actions &&
+        actions.actions.forEach((action) => {
+          if (action.by) {
+            let { userId, employeeId } = getUserEmployeeId(action.by);
+            if (userId) userIds.push(userId);
+            if (employeeId) employeeIds.push(employeeId);
+          }
+          if (action.assignee) {
+            let { userId, employeeId } = getUserEmployeeId(action.assignee);
+            if (userId) userIds.push(userId);
+            if (employeeId) employeeIds.push(employeeId);
+          }
+        });
     });
     let { common, auth } = state;
     if (employeeIds.length > 0) {
@@ -35,8 +36,8 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
         uniq(difference(employeeIds, cachedEmployeeIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type !== "CITIZEN"
           ? [...uniq(difference(employeeIds, cachedEmployeeIds)), auth.userInfo.id].join(",")
           : [...uniq(difference(employeeIds, cachedEmployeeIds))].join(",");
-
-      if (value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value }]));
+      const queryObject = tenantId ? [{ key: "tenantId", value: tenantId }, { key: "id", value }] : [{ key: "id", value }];
+      if (value.length) dispatch(commonActions.fetchEmployees(queryObject));
     }
     if (userIds.length > 0) {
       let cachedUserIds = [];
@@ -47,7 +48,7 @@ const checkUsers = (dispatch, state, actionHistory, hasUsers) => {
         uniq(difference(userIds, cachedUserIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type === "CITIZEN"
           ? [...uniq(difference(userIds, cachedUserIds)), auth.userInfo.id]
           : [...uniq(difference(userIds, cachedUserIds))];
-      if (id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id }));
+      if (id.length) dispatch(commonActions.fetchCitizens({ id }));
     }
   }
 };
@@ -105,8 +106,12 @@ export const fetchComplaints = (queryObject, hasUsers = true, overWrite) => {
   return async (dispatch, getState) => {
     dispatch(complaintFetchPending());
     try {
+      let tenantId = "";
       const payload = await httpRequest(COMPLAINT.GET.URL, COMPLAINT.GET.ACTION, queryObject);
-      checkUsers(dispatch, getState(), payload.actionHistory, hasUsers);
+      if (payload.services && payload.services.length === 1) {
+        tenantId = payload.services[0].tenantId;
+      }
+      checkUsers(dispatch, getState(), payload.actionHistory, hasUsers, tenantId);
       dispatch(complaintFetchComplete(payload, overWrite));
     } catch (error) {
       dispatch(complaintFetchError(error.message));

@@ -4,7 +4,7 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 
-const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
+const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
   return (
     <div>
       <div className="receipt-displayInline">
@@ -37,33 +37,12 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
                   <Receipt receiptItems={item.items} />
                 )}
               </div>
-              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+              {index < items.length - 1 && (
+                <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }} />
+              )}
             </div>
           );
         })}
-      </div>
-      <div className="text-center">
-        <Button
-          className="receipt-button"
-          primary={true}
-          label={<Label buttonLabel={true} label="ASSESS & PAY" />}
-          style={{
-            height: 36,
-            lineHeight: "auto",
-            minWidth: "inherit",
-          }}
-          labelStyle={{
-            padding: "0 31px",
-            letterSpacing: "0.6px",
-            display: "inline-block",
-            height: "22px",
-            lineHeight: "22px",
-            fontSize: "14px",
-          }}
-          onClick={(e) => {
-            // this.props.redirectToMap(true);
-          }}
-        />
       </div>
     </div>
   );

@@ -1,56 +1,56 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
-import {subUsageType,occupancy,builtArea,annualRent} from "../utils/reusableFields";
+import { prepareFormData } from "egov-ui-kit/redux/common/actions";
+import { subUsageType, occupancy, builtArea, annualRent, beforeInitForm,mergeMaster,prepareDropDownData,getPresentMasterObj,getAbsentMasterObj } from "../utils/reusableFields";
+import filter from "lodash/filter";
+import get from "lodash/get";
+import set from "lodash/set";
+import isEmpty from "lodash/isEmpty";
 
 const formConfig = {
   name: "floorDetails",
   fields: {
     usageType: {
       id: "assessment-usageType",
-      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMajor",
+      jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "singleValueList",
-      floatingLabelText: "Usage Type",
-      value: "Residential",
+      floatingLabelText: "PT_FORM2_USAGE_TYPE",
       required: true,
       numcols: 4,
-      dropDownData: [
-        { label: "Residential", value: "RESIDENTIAL" },
-        { label: "Commercial", value: "COMMERCIAL" },
-        { label: "Institutional", value: "INSTITUTIONAL" },
-        { label: "Industrial", value: "INDUSTRIAL" },
-        { label: "Public Space", value: "PUBLICSPACE" },
-        { label: "Religious", value: "RELIGIOUS" },
-        { label: "Other", value: "OTHER" },
-        { label: "Mixed", value: "MIXED" },
-      ],
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: {},
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "UsageCategoryMajor",
-      //             },
-      //           ],
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   dataPath: "MdmsRes.PropertyTax.UsageCategoryMajor",
-      // },
+      dropDownData: [],
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        let minorObject = get(state, `common.generalMDMSDataById.UsageCategoryMinor[${field.value}]`);
+        if (!isEmpty(minorObject)) {
+          dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`, minorObject.usageCategoryMajor));
+          var filteredSubUsageMinor = filter(
+            prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
+            (subUsageMinor) => {
+              return subUsageMinor.usageCategoryMinor === field.value;
+            }
+          );
+          if (filteredSubUsageMinor.length > 0) {
+            var filteredUsageCategoryDetails = getPresentMasterObj(
+              prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategoryDetail"), true),
+              filteredSubUsageMinor,
+              "usageCategorySubMinor"
+            );
+            setDependentFields(["subUsageType"], dispatch, formKey, false);
+            setDependentFields(["subUsageType"], dispatch, formKey, mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"),"dropDownData");
+          }
+        } else {
+          setDependentFields(["subUsageType"], dispatch, formKey, true);
+          dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`, field.value));
+          dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMinor`, null));
+        }
+      }
     },
     ...subUsageType,
     ...occupancy,
     ...builtArea,
-    ...annualRent
+    ...annualRent,
   },
   isFormValid: false,
+  ...beforeInitForm,
 };
 
 export default formConfig;
