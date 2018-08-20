@@ -1,6 +1,7 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/citizen/PropertyTax/FormWizard/utils/enableDependentFields";
 import { removeFormKey } from "modules/citizen/PropertyTax/FormWizard/utils/removeFloors";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
@@ -50,8 +51,20 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      // removeFormKey(formKey, field, dispatch, state);
-      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+      var previousFloorNo=localStorage.getItem("previousFloorNo") || -1;
+      localStorage.setItem("previousFloorNo",field.value);
+      if (previousFloorNo>field.value) {
+          for (var i = field.value; i < previousFloorNo; i++) {
+            if (state.form.hasOwnProperty(`customSelect_${i}`)) {
+              dispatch(removeForm(`customSelect_${i}`));
+            }
+              for (var variable in state.form) {
+                if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
+                  dispatch(removeForm(variable));
+                }
+              }
+          }
+      }
     },
   },
 };
@@ -246,6 +259,7 @@ export const beforeInitForm = {
             )
           );
         }
+        set(action, "form.fields.subUsageType.hideField", false);
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
@@ -261,10 +275,7 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-      }
-      if (get(state, `common.prepareFormData.${action.form.fields.usageType.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`)) {
-          // unitFormUpdate();
-          // set(action, "form.fields.subUsageType.hideField", false);
+        unitFormUpdate();
       }
       else {
         set(action, "form.fields.subUsageType.hideField", true);

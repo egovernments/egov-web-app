@@ -59,6 +59,7 @@ const formConfig = {
   beforeInitForm: (action, store) => {
     try {
       let state = store.getState();
+      localStorage.setItem("previousFloorNo",-1);
       var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
       var masterTwo = get(state, "common.generalMDMSDataById.UsageCategoryMinor");
       set(action, "form.fields.typeOfUsage.dropDownData", mergeMaster(masterOne, masterTwo, "usageCategoryMajor"));

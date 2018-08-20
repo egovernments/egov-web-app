@@ -1,12 +1,12 @@
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
 import { removeFormKey } from "modules/employee/PropertyTax/FormWizard/utils/removeFloors";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import filter from "lodash/filter";
-import { removeForm } from "egov-ui-kit/redux/form/actions";
 
 let floorDropDownData = [];
 
@@ -51,8 +51,20 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      // removeFormKey(formKey, field, dispatch, state);
-      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+      var previousFloorNo=localStorage.getItem("previousFloorNo") || -1;
+      localStorage.setItem("previousFloorNo",field.value);
+      if (previousFloorNo>field.value) {
+          for (var i = field.value; i < previousFloorNo; i++) {
+            if (state.form.hasOwnProperty(`customSelect_${i}`)) {
+              dispatch(removeForm(`customSelect_${i}`));
+            }
+              for (var variable in state.form) {
+                if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
+                  dispatch(removeForm(variable));
+                }
+              }
+          }
+      }
     },
   },
 };
@@ -221,7 +233,7 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
+    const unitFormUpdate=()=>{
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
@@ -247,9 +259,14 @@ export const beforeInitForm = {
             )
           );
         }
+        set(action, "form.fields.subUsageType.hideField", false);
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
+    }
+
+    if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
+      unitFormUpdate()
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -258,9 +275,7 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-      }
-      if (get(action, "form.fields.usageType.value")) {
-        set(action, "form.fields.subUsageType.hideField", false);
+        unitFormUpdate();
       }
       else {
         set(action, "form.fields.subUsageType.hideField", true);
