@@ -676,6 +676,7 @@ class FormWizard extends Component {
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
         if (get(getBill, "Bill[0].billDetails[0].totalAmount")) {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
+          localStorage.setItem("assessmentYear",assessmentYear);
           window.location = redirectionUrl;
         } else {
           toggleSpinner();

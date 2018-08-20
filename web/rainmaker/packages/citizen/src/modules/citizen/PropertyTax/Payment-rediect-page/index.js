@@ -26,7 +26,7 @@ class PaymentRedirect extends React.Component {
             "/" +
             moduleId.split(":")[1] +
             "/" +
-            "2019-18" +
+            localStorage.getItem("assessmentYear") +
             "/" +
             txnAmount
         );
