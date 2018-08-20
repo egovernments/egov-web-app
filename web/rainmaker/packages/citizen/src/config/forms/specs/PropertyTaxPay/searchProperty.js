@@ -51,7 +51,7 @@ const formConfig = {
       pattern: /^(\+\d{1,2}\s)?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       value: "",
     },
-    oldAssessmentNumber: {
+    oldpropertyids: {
       id: "old-property-id",
       jsonPath: "",
       type: "textfield",
