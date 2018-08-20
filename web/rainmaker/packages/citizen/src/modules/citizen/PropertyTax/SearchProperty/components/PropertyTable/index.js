@@ -26,7 +26,7 @@ const PropertyTable = ({ tableData, onActionClick }) => {
                 fontSize: "16px",
                 fontWeight: 500,
                 letterSpacing: "0px",
-                textAlign: "left",
+                textAlign: "center",
                 color: "#484848",
               }}
             />
