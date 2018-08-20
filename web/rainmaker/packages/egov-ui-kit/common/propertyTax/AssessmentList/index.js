@@ -34,25 +34,6 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PAIDdropDownData = [{
-  label: "Download Statement",
-  value: "Download Statement"
-}, {
-  label: "Re-Assess",
-  value: "Re-Assess"
-}];
-
-var PartiallyPaiddropDownData = [{
-  label: "Download Statement",
-  value: "Download Statement"
-}, {
-  label: "Re-Assess",
-  value: "Re-Assess"
-}, {
-  label: "Complete Payment",
-  value: "Complete Payment"
-}];
-
 var getItemStatus = function getItemStatus(item, history) {
   var status = item.status;
   var styles = {
@@ -74,16 +55,8 @@ var getItemStatus = function getItemStatus(item, history) {
         ),
         _react2.default.createElement(
           "div",
-          null,
-          _react2.default.createElement(_DropDown2.default, {
-            autoWidth: true,
-            menuInnerDivStyle: { padding: "0px 6px" },
-            menuStyle: { marginTop: 0 },
-            iconStyle: { top: "-3px", fill: "#484848", width: "35px" },
-            style: { backgroundColor: "transperent", height: "45px", width: "150px" },
-            dropDownData: PAIDdropDownData,
-            hintText: "Select action"
-          })
+          { style: { height: "30px", marginTop: "8px" } },
+          history && _react2.default.createElement(_DropDown2.default, { history: history, item: item })
         )
       );
       break;

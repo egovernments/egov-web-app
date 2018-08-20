@@ -36,6 +36,10 @@ var _Screen = require("egov-ui-kit/common/common/Screen");
 
 var _Screen2 = _interopRequireDefault(_Screen);
 
+var _YearDialogue = require("../YearDialogue");
+
+var _YearDialogue2 = _interopRequireDefault(_YearDialogue);
+
 var _components = require("egov-ui-kit/components");
 
 var _actions = require("egov-ui-kit/redux/app/actions");
@@ -134,8 +138,10 @@ var SearchProperty = function (_Component) {
         var displayAddress = doorNo ? "" + (doorNo ? doorNo + "," : "") + ("" + (buildingName ? buildingName + "," : "")) + ("" + (street ? street + "," : "")) : "" + (locality.name ? locality.name : "");
         var name = propertyDetails[0].owners[0].name;
         var button = _react2.default.createElement(_components.Button, {
-          onClick: userType === "CITIZEN" ? function (e) {
-            history.push("/property-tax/assessment-form?FY=" + propertyDetails[0].financialYear + "&assessmentId=" + (propertyDetails[0] && propertyDetails[0].assessmentNumber) + "&isReassesment=true&propertyId=" + propertyId);
+          onClick: userType === "CITIZEN" ? function () {
+            _this.setState({
+              dialogueOpen: true
+            });
           } : function (e) {
             history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
           },
@@ -183,6 +189,7 @@ var SearchProperty = function (_Component) {
           propertiesFound = _props.propertiesFound,
           loading = _props.loading;
       var showTable = this.state.showTable;
+      var closeYearRangeDialogue = this.closeYearRangeDialogue;
 
       var urlArray = [];
       var pathname = location && location.pathname;
@@ -218,7 +225,8 @@ var SearchProperty = function (_Component) {
               fullWidth: true
             })
           )
-        )
+        ),
+        _react2.default.createElement(_YearDialogue2.default, { open: this.state.dialogueOpen, history: history, closeDialogue: closeYearRangeDialogue })
       );
     }
   }]);

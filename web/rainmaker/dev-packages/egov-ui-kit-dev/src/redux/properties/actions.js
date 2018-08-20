@@ -327,8 +327,6 @@ export const getSingleAssesmentandStatus = (queryObjectproperty) => {
           return acc;
         }, {});
 
-      console.log(receiptDetails);
-      console.log(mergeReceiptsInProperty(receiptDetails, consumerCodes));
       dispatch(SingleAssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, consumerCodes)));
     } catch (error) {
       dispatch(SingleAssessmentStatusFetchError(error.message));
