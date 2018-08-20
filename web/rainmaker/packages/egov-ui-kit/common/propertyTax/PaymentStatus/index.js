@@ -47,7 +47,6 @@ var PaymentStatus = function PaymentStatus(_ref) {
       tenantId = _ref.tenantId,
       receiptImageUrl = _ref.receiptImageUrl;
 
-  console.log(receiptImageUrl);
   return _react2.default.createElement(
     "div",
     null,
