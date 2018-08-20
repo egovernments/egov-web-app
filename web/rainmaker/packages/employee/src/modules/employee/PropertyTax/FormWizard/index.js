@@ -1028,7 +1028,7 @@ class FormWizard extends Component {
           formValidIndexArray={formValidIndexArray}
           updateIndex={this.updateIndex}
           backLabel="PT_COMMONS_GO_BACK"
-          nextLabel={selected === 4 ? "PT_HOME_PAY1" : "PT_COMMONS_NEXT"}
+          nextLabel={selected === 4 ? "PT_COMMONS_NEXT" : "PT_COMMONS_NEXT"}
           ownerInfoArr={ownerInfoArr}
           closeDialogue={closeDeclarationDialogue}
           dialogueOpen={dialogueOpen}
