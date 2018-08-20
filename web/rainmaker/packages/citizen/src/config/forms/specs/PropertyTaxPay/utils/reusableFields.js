@@ -220,7 +220,7 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
+    const unitFormUpdate=()=>{
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
@@ -249,6 +249,10 @@ export const beforeInitForm = {
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
+    }
+
+    if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
+      unitFormUpdate()
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -258,7 +262,13 @@ export const beforeInitForm = {
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
       }
-      set(action, "form.fields.subUsageType.hideField", true);
+      if (get(state, `common.prepareFormData.${action.form.fields.usageType.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`)) {
+          // unitFormUpdate();
+          // set(action, "form.fields.subUsageType.hideField", false);
+      }
+      else {
+        set(action, "form.fields.subUsageType.hideField", true);
+      }
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
     if (get(action, "form.fields.subUsageType.jsonPath")) {

@@ -51,8 +51,8 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      removeFormKey(formKey, field, dispatch, state);
-      dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
+      // removeFormKey(formKey, field, dispatch, state);
+      // dispatch(prepareFormData(`Properties[0].propertyDetails[0].units`, []));
     },
   },
 };
@@ -259,7 +259,12 @@ export const beforeInitForm = {
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
       }
-      set(action, "form.fields.subUsageType.hideField", true);
+      if (get(action, "form.fields.usageType.value")) {
+        set(action, "form.fields.subUsageType.hideField", false);
+      }
+      else {
+        set(action, "form.fields.subUsageType.hideField", true);
+      }
     }
     set(action, "form.fields.occupancy.dropDownData", prepareDropDownData(occupancy));
     if (get(action, "form.fields.subUsageType.jsonPath")) {

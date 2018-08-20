@@ -1,7 +1,7 @@
-import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import { prepareDropDownData } from "./utils/reusableFields";
-import get from "lodash/get";
+import { setFieldProperty, handleFieldChange } from "egov-ui-kit/redux/form/actions";
 import set from "lodash/set";
+import get from "lodash/get";
 
 const formConfig = {
   name: "customSelect",
@@ -17,7 +17,6 @@ const formConfig = {
       className: "pt-floor-name",
       beforeFieldChange: ({ action, dispatch, state }) => {
         const { value } = action;
-        // const formKeys = Object.keys(state.form);
         const floorValues = Object.keys(state.form).reduce((floorValues, key) => {
           if (key.startsWith("customSelect_")) {
             const form = state.form[key];
@@ -45,12 +44,20 @@ const formConfig = {
   beforeInitForm: (action, store, dispatch) => {
     try {
       let state = store.getState();
-      const { Floor } = state.common && state.common.generalMDMSDataById;
-      set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      if (
+        get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor") !== "RESIDENTIAL" &&
+        get(state, "common.prepareFormData.Properties[0].propertyDetails[0].propertySubType") === "SHAREDPROPERTY"
+      ) {
+        dispatch(setFieldProperty(action.form.name, "floorName", "hideField", true));
+      } else {
+        dispatch(setFieldProperty(action.form.name, "floorName", "hideField", false));
+        const { Floor } = state.common && state.common.generalMDMSDataById;
+        set(action, "form.fields.floorName.dropDownData", prepareDropDownData(Floor));
+      }
+      return action;
     } catch (e) {
       console.log(e);
     }
-    return action;
   },
   afterInitForm: (action, store, dispatch) => {
     try {
