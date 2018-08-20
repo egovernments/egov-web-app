@@ -107,7 +107,8 @@ var DatePickerUi = function DatePickerUi(_ref) {
       toolTip = _ref.toolTip,
       updateDependentFields = _ref.updateDependentFields,
       toolTipMessage = _ref.toolTipMessage,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine", "ErrorText", "formatDate", "errorMessage", "dropDownData", "dataFetchConfig", "jsonPath", "toolTip", "updateDependentFields", "toolTipMessage"]);
+      textFieldStyle = _ref.textFieldStyle,
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine", "ErrorText", "formatDate", "errorMessage", "dropDownData", "dataFetchConfig", "jsonPath", "toolTip", "updateDependentFields", "toolTipMessage", "textFieldStyle"]);
 
   return _react2.default.createElement(_DatePicker2.default, (0, _extends3.default)({
     errorText: errorText,
@@ -137,6 +138,7 @@ var DatePickerUi = function DatePickerUi(_ref) {
     type: type,
     autoFocus: autoFocus,
     maxLength: maxLength,
+    textFieldStyle: textFieldStyle,
     autoComplete: type === "password" ? "new-password" : "off",
     multiLine: multiLine,
     underlineDisabledStyle: underlineDisabledStyle
