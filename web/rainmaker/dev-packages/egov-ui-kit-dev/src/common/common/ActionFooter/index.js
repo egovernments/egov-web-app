@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button } from "components";
+import "./index.css";
 
 const ActionFooter = ({ label1, label2, primaryAction, secondaryAction }) => {
   return (
-    <div className="wizard-footer col-xs-12" style={{ textAlign: "right" }}>
+    <div className="col-xs-12 wizard-footer" style={{ textAlign: "right" }}>
       <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
         {label1 && (
           <Button

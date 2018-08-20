@@ -10,6 +10,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _components = require("components");
 
+require("./index.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ActionFooter = function ActionFooter(_ref) {
@@ -20,7 +22,7 @@ var ActionFooter = function ActionFooter(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { className: "wizard-footer col-xs-12", style: { textAlign: "right" } },
+    { className: "col-xs-12 wizard-footer", style: { textAlign: "right" } },
     _react2.default.createElement(
       "div",
       { className: "col-xs-6", style: { float: "right", padding: 0 } },
