@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "components";
 import "./index.css";
 
-const SingleButtonForm = ({ label, form, handleFieldChange, history, resetFormWizard }) => {
+const SingleButtonForm = ({ label, form, handleFieldChange, history, resetFormWizard, urlToAppend }) => {
   const fields = form.fields || {};
   return (
     <Button
@@ -11,7 +11,7 @@ const SingleButtonForm = ({ label, form, handleFieldChange, history, resetFormWi
       onClick={() => {
         handleFieldChange("button", label);
         resetFormWizard();
-        history && history.push(`/property-tax/assessment-form?FY=${label}&type=new`);
+        history && urlToAppend ? history.push(`${urlToAppend}&FY=${label}`) : history.push(`/property-tax/assessment-form?FY=${label}&type=new`);
       }}
       className="year-range-button"
       label={label}

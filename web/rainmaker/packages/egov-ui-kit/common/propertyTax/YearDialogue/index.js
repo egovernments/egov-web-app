@@ -38,6 +38,8 @@ var _form = require("egov-ui-kit/hocs/form");
 
 var _form2 = _interopRequireDefault(_form);
 
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
+
 var _reactRedux = require("react-redux");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
@@ -86,7 +88,9 @@ var YearDialog = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = YearDialog.__proto__ || Object.getPrototypeOf(YearDialog)).call.apply(_ref, [this].concat(args))), _this), _this.componentDidMount = function () {
-      var fetchGeneralMDMSData = _this.props.fetchGeneralMDMSData;
+      var _this$props = _this.props,
+          fetchGeneralMDMSData = _this$props.fetchGeneralMDMSData,
+          toggleSpinner = _this$props.toggleSpinner;
 
       var requestBody = {
         MdmsCriteria: {
@@ -99,18 +103,15 @@ var YearDialog = function (_Component) {
           }]
         }
       };
+      toggleSpinner();
       fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
-    }, _this.resetFormWizard = function () {
-      var _this$props = _this.props,
-          formKeys = _this$props.formKeys,
-          removeForm = _this$props.removeForm;
+      toggleSpinner();
+    }, _this.resetForm = function () {
+      var _this$props2 = _this.props,
+          form = _this$props2.form,
+          removeForm = _this$props2.removeForm;
 
-      var formToReset = ["basicInformation", "propertyAddress", "plotDetails", "ownershipType", "institutionAuthority", "institutionDetails", "cashInfo", "paymentModes", "receiptInfo"];
-      formKeys.forEach(function (formKey) {
-        if (formToReset.includes(formKey) || formKey.startsWith("ownerInfo") || formKey.startsWith("customSelect_") || formKey.startsWith("floorDetails_")) {
-          removeForm(formKey);
-        }
-      });
+      (0, _PTCommon.resetFormWizard)(form, removeForm);
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
@@ -139,7 +140,7 @@ var YearDialog = function (_Component) {
             "div",
             { className: "year-range-botton-cont" },
             getYearList && Object.values(getYearList).map(function (item, index) {
-              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history, resetFormWizard: _this2.resetFormWizard });
+              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history, resetFormWizard: _this2.resetForm });
             })
           )
         )],
@@ -160,8 +161,7 @@ var mapStateToProps = function mapStateToProps(state) {
 
   var FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
   var getYearList = FinancialYear && Object.keys(FinancialYear);
-  var formKeys = Object.keys(form);
-  return { getYearList: getYearList, formKeys: formKeys };
+  return { getYearList: getYearList, form: form };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -171,6 +171,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     removeForm: function removeForm(formkey) {
       return dispatch((0, _actions2.removeForm)(formkey));
+    },
+    toggleSpinner: function toggleSpinner() {
+      return dispatch((0, _actions.toggleSpinner)());
     }
   };
 };

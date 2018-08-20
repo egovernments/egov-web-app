@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
 import { Icon, BreadCrumbs } from "components";
@@ -328,20 +329,6 @@ const getOwnerInfo = (ownerDetails) => {
   );
 };
 
-const getLatestPropertyDetails = (propertyDetailsArray) => {
-  if (propertyDetailsArray) {
-    if (propertyDetailsArray.length > 1) {
-      return propertyDetailsArray.reduce((acc, curr) => {
-        return acc.assessmentDate > curr.assessmentDate ? acc : curr;
-      });
-    } else {
-      return propertyDetailsArray[0];
-    }
-  } else {
-    return;
-  }
-};
-
 const mapStateToProps = (state, ownProps) => {
   const { app, common } = state;
   const { urls, localizationLabels } = app;
@@ -416,7 +403,6 @@ const mapStateToProps = (state, ownProps) => {
         acc.push(singleAssessment);
         return result;
       }, []);
-    console.log(acc);
     return acc;
   }, []);
 
