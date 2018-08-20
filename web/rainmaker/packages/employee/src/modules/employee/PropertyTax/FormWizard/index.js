@@ -153,7 +153,7 @@ class FormWizard extends Component {
 
   fetchDraftDetails = async (draftId) => {
     const { draftRequest } = this.state;
-    const { toggleSpinner } = this.props;
+    const { toggleSpinner, fetchMDMDDocumentTypeSuccess } = this.props;
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -876,7 +876,9 @@ class FormWizard extends Component {
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
-        set(prepareFormData, "Properties[0].propertyDetails[0].institute", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       }
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
@@ -896,7 +898,8 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    let { prepareFormData } = this.props;
+    let { prepareFormData, form } = this.props;
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       set(
         prepareFormData,
@@ -908,6 +911,19 @@ class FormWizard extends Component {
         "Properties[0].propertyDetails[0].citizenInfo.name",
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
       );
+
+      if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      }
+
+      if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+        const { instiObj, ownerArray } = this.getInstituteInfo();
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+        set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
+      }
+
       const properties = this.normalizePropertyDetails(prepareFormData.Properties);
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
       callDraft([], get(createPropertyResponse, "Properties[0].propertyDetails[0].assessmentNumber"));

@@ -743,6 +743,8 @@ class FormWizard extends Component {
         const { instiObj, ownerArray } = this.getInstituteInfo();
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
         set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
       }
       const propertyDetails = this.normalizePropertyDetails(prepareFormData.Properties);
       let estimateResponse = await httpRequest("pt-calculator-v2/propertytax/_estimate", "_estimate", [], {
@@ -764,11 +766,12 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { prepareFormData, toggleSpinner, location } = this.props;
+    let { prepareFormData, toggleSpinner, location, form } = this.props;
     let { search } = location;
     const propertyId = this.getQueryValue(search, "propertyId");
     const assessmentId = this.getQueryValue(search, "assessmentId");
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
+    const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     toggleSpinner();
     if (financialYearFromQuery) {
       set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
@@ -777,6 +780,17 @@ class FormWizard extends Component {
     if (!!propertyId) {
       set(prepareFormData, "Properties[0].propertyId", propertyId);
       set(prepareFormData, "Properties[0].propertyDetails[0].assessmentNumber", assessmentId);
+    }
+
+    if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+    }
+    if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
+      const { instiObj, ownerArray } = this.getInstituteInfo();
+      set(prepareFormData, "Properties[0].propertyDetails[0].owners", ownerArray);
+      set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
     }
 
     try {
