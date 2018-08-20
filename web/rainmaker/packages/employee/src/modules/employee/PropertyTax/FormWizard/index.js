@@ -752,6 +752,17 @@ class FormWizard extends Component {
     return new Date(date).getTime();
   };
 
+  getSingleOwnerInfo = () => {
+    const { ownerInfo } = this.props.form;
+    const ownerObj = {};
+    Object.keys(ownerInfo.fields).map((field) => {
+      const jsonPath = ownerInfo.fields[field].jsonPath;
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null
+    });
+    const ownerArray = [ownerObj];
+    return ownerArray
+  }
+
   getMultipleOwnerInfo = () => {
     const { form } = this.props;
 
@@ -763,7 +774,7 @@ class FormWizard extends Component {
         const ownerObj = {};
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined);
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null
         });
         ownerData.push(ownerObj);
         return ownerData;
@@ -776,11 +787,11 @@ class FormWizard extends Component {
     const instiObj = {};
     Object.keys(institutionAuthority.fields).map((field) => {
       const jsonPath = institutionAuthority.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined);
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined) || null
     });
     Object.keys(institutionDetails.fields).map((field) => {
       const jsonPath = institutionDetails.fields[field].jsonPath;
-      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined);
+      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined) || null
     });
     instiObj.designation = get(institutionAuthority, "fields.designation.value", "");
     const ownerArray = [ownerObj];
@@ -862,13 +873,18 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { prepareFormData, form } = this.props;
+    let { form } = this.props;
+    let prepareFormData = { ...this.props.prepareFormData }
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
     const { draft } = this.state.draftRequest;
     const { financialYearFromQuery } = this.state;
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
         set(prepareFormData, "Properties[0].propertyDetails[0].financialYear", financialYearFromQuery);
+      }
+      if (selectedownerShipCategoryType === "SINGLEOWNER") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
@@ -898,23 +914,25 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    let { prepareFormData, form } = this.props;
+    let { form } = this.props;
+
+    let prepareFormData = { ...this.props.prepareFormData }
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
-      set(
-        prepareFormData,
-        "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
-        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
-      );
-      set(
-        prepareFormData,
-        "Properties[0].propertyDetails[0].citizenInfo.name",
-        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
-      );
+      if (selectedownerShipCategoryType === "SINGLEOWNER") {
+        set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+      }
 
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
       }
+
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
+        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
+      )
 
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -922,7 +940,17 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
         set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
+        set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
+          get(form, "institutionAuthority.fields.mobile.value",
+            get(form, "institutionAuthority.fields.telephone.value", null
+        )));
       }
+
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].citizenInfo.name",
+        get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].name")
+      );
 
       const properties = this.normalizePropertyDetails(prepareFormData.Properties);
       let createPropertyResponse = await httpRequest("pt-services-v2/property/_create", "_create", [], { Properties: properties });
