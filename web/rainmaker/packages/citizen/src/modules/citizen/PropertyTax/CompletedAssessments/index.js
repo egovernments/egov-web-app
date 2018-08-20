@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
+import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
@@ -59,13 +61,14 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, userInfo, fetchProperties, getAssesmentsandStatus } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchProperties, getAssesmentsandStatus, form, removeForm } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
     // fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
     //   { key: "userUuid", value: userInfo.uuid },
     //   { key: "txnStatus", value: "SUCCESS" },
     // ]);
     getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
+    resetFormWizard(form, removeForm);
   };
 
   closeYearRangeDialogue = () => {
@@ -101,20 +104,21 @@ class CompletedAssessments extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { properties, common, app } = state;
+  const { properties, common, app, form } = state;
   const { localizationLabels } = app;
   const { cities } = common;
   const { urls } = state.app;
   const { assessmentsByStatus, loading } = properties || {};
   const completedAssessments = getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels);
   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { sortedProperties, urls, loading };
+  return { sortedProperties, urls, loading, form };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
+    removeForm: (formkey) => dispatch(removeForm(formkey)),
   };
 };
 

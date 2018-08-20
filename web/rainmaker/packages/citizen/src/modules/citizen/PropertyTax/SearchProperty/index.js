@@ -8,6 +8,7 @@ import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
+import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
 import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
@@ -23,6 +24,7 @@ class SearchProperty extends Component {
       dialogueOpen: false,
       searchResult: [],
       showTable: false,
+      urlToAppend: "",
     };
   }
 
@@ -73,18 +75,25 @@ class SearchProperty extends Component {
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
         : `${locality.name ? locality.name : ""}`;
-      let name = propertyDetails[0].owners[0].name;
+      const latestAssessment = getLatestPropertyDetails(propertyDetails);
+      let name = latestAssessment.owners[0].name;
+      let assessmentNo = latestAssessment.assessmentNumber;
       let button = (
         <Button
           onClick={
             userType === "CITIZEN"
               ? () => {
+                  // history &&
+                  //   history.push(
+                  //     `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
+                  //   );
                   this.setState({
                     dialogueOpen: true,
+                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
-                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+                  history.push(`/property-tax/property/${propertyId}/${tenantId}`);
                 }
           }
           label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
@@ -106,7 +115,7 @@ class SearchProperty extends Component {
 
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
-    const { showTable } = this.state;
+    const { showTable, urlToAppend } = this.state;
     const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const { pathname } = location;
@@ -135,7 +144,7 @@ class SearchProperty extends Component {
               </div>
             </div>
           )}
-        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />
+        <YearDialogue open={this.state.dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );
   }

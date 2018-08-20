@@ -3,6 +3,7 @@ import { Dialog } from "components";
 import SingleButtonForm from "./components/SingleButtonForm";
 import Label from "egov-ui-kit/utils/translationNode";
 import formHoc from "egov-ui-kit/hocs/form";
+import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
@@ -55,33 +56,13 @@ class YearDialog extends Component {
     toggleSpinner();
   };
 
-  resetFormWizard = () => {
-    const { formKeys, removeForm } = this.props;
-    const formToReset = [
-      "basicInformation",
-      "propertyAddress",
-      "plotDetails",
-      "ownershipType",
-      "institutionAuthority",
-      "institutionDetails",
-      "cashInfo",
-      "paymentModes",
-      "receiptInfo",
-    ];
-    formKeys.forEach((formKey) => {
-      if (
-        formToReset.includes(formKey) ||
-        formKey.startsWith("ownerInfo") ||
-        formKey.startsWith("customSelect_") ||
-        formKey.startsWith("floorDetails_")
-      ) {
-        removeForm(formKey);
-      }
-    });
+  resetForm = () => {
+    const { form, removeForm } = this.props;
+    resetFormWizard(form, removeForm);
   };
 
   render() {
-    let { open, closeDialogue, getYearList, history } = this.props;
+    let { open, closeDialogue, getYearList, history, urlToAppend } = this.props;
     return (
       <Dialog
         open={open}
@@ -93,7 +74,7 @@ class YearDialog extends Component {
             <div className="year-range-botton-cont">
               {getYearList &&
                 Object.values(getYearList).map((item, index) => (
-                  <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetFormWizard} />
+                  <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetForm} urlToAppend={urlToAppend} />
                 ))}
             </div>
           </div>,
@@ -112,8 +93,7 @@ const mapStateToProps = (state) => {
   const { generalMDMSDataById } = common;
   const FinancialYear = generalMDMSDataById && generalMDMSDataById.FinancialYear;
   const getYearList = FinancialYear && Object.keys(FinancialYear);
-  const formKeys = Object.keys(form);
-  return { getYearList, formKeys };
+  return { getYearList, form };
 };
 
 const mapDispatchToProps = (dispatch) => {
