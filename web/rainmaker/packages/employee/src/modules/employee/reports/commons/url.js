@@ -1,5 +1,5 @@
 export const options = {
-  "rainmaker-pgr": [
+  "rainmaker-pgr-nonframework": [
     {
       reportResultUrl: "/rainmaker-pgr/v1/reports/_get",
       metaDataUrl: "/report/rainmaker-pgr/metadata/_get",
