@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes";
-import {prepareFormData} from "../../common/actions";
+import { prepareFormData } from "../../common/actions";
 import { setFieldValidation } from "../actions";
 import { validateField, getFormField } from "../utils";
 
@@ -12,16 +12,16 @@ const formValidation = (store) => (next) => (action) => {
     const state = store.getState();
     const form = state.form[formKey] || {};
     const field = getFormField(form, fieldKey);
-    const { required, pattern, updateDependentFields } = field;
+    const { required, pattern, updateDependentFields } = field;    
     if (pattern || required) {
       const validationObject = validateField(field);
       const { errorText } = validationObject;
-      if (updateDependentFields) {
-        updateDependentFields(formKey, field, dispatch)
-      }
       dispatch(setFieldValidation(formKey, fieldKey, errorText));
     }
-    dispatch(prepareFormData(field.jsonPath,field.value))
+    dispatch(prepareFormData(field.jsonPath, field.value));
+    if (updateDependentFields) {
+      updateDependentFields({ formKey, field, dispatch, state })
+    }
   } else {
     next(action);
   }

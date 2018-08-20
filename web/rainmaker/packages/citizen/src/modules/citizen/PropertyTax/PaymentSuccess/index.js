@@ -1,120 +1,209 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { Icon } from "components";
 import PaymentStatus from "../common/PaymentStatus";
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
+import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/actions";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
+import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
+import createReceiptDetails from "../common/PaymentStatus/Components/createReceipt";
+import Label from "egov-ui-kit/utils/translationNode";
+import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import get from "lodash/get";
 
-const receiptDetails = {
-  ReceiptNo: "PT03-067-03-117",
-  TransactionID: "ZRN-647-98-756",
-  AssessmentNo: "ZRN-453-98",
-  payedDate: "24.04.18",
-  OwnerName: "Harishikesh Anand",
-  OldPropertyID: "PID-78-567",
-  PropertyAddress: "EB-154, Maya Enclave Harinagar, KT Marg Amritsar - 53",
-  PaymentTerm: "2017-18",
-  PayableAmount: "1432.47",
-  AmountPaid: "1432.47",
-  AmountDue: "0.00",
-  button1: "Link previous payments",
-  button2: "Finish",
-  oldPropertyId: "oldPropertyId",
-  propertyId: "PB-PT-2018_07_19-000016",
-  header: {
-    header: "AMRITSAR MUNICIPAL CORPORATION",
-    subheader: "Property Tax Payment Receipt (Citizen Copy)",
-    logo: msevaLogo,
-  },
-  tax: {
-    AmountPaid: "100",
-    fireCess: "10",
-    rebate: "10",
-    total: "100",
-  },
-  receipts: {
-    AmountPaid: "60",
-    transactionId: "TR123",
-    bankName: "ICICI",
-    payMode: "Net Banking",
-    pendingAmt: "40",
-    paymentDate: "24/07/2018",
-  },
-  propertyDetails: [
-    {
-      noOfFloors: 2,
-      landArea: 10,
-      propertySubType: "INDEPENDENTBUILDING",
-      financialYear: "2017-18",
-      assessmentDate: 1531987969654,
-      assessmentNumber: "PB-PT-2018_07_19-000019",
-      documents: [
-        {
-          name: "aadhar",
-          id: "12345",
-        },
-      ],
-      units: [
-        {
-          floorNo: "1",
-          occupancyType: "RENTED",
-          usageCategoryDetail: "GROCERYSTORE",
-          usageCategoryMajor: "NONRESIDENTIAL",
-          usageCategoryMinor: "COMMERCIAL",
-          usageCategorySubMinor: "RETAIL",
-          unitArea: 10,
-          arv: 100.1,
-        },
-        {
-          floorNo: "2",
-          occupancyType: "SELFOCCUPIED",
-          usageCategoryDetail: "GROCERYSTORE",
-          usageCategoryMajor: "NONRESIDENTIAL",
-          usageCategoryMinor: "COMMERCIAL",
-          usageCategorySubMinor: "RETAIL",
-          unitArea: 90,
-          arv: 200,
-        },
-      ],
-    },
-  ],
-  address: {
-    buildingName: "Springfield",
-    city: "amritsar",
-    locality: {
-      code: "abc",
-    },
+class PaymentSuccess extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    street: "Sarjapur Road",
-    doorNo: "1/11",
-  },
-  owners: {
-    mobileNumber: "9000000007",
-    OwnershipType: "Individual",
-    name: "testseven",
-    ownerType: "WIDOW",
+  icon = <Icon action="navigation" name="check" />;
 
-    correspondenceAddress: "bangalore",
-  },
+  buttons = {
+    button1: "Link previous payments",
+    button2: "Finish",
+  };
+
+  successMessages = {
+    Message1: (
+      <Label containerStyle={{ paddingTop: "10px" }} fontSize={16} label={"PT_RECEIPT_THANKYOU"} labelStyle={{ color: "#484848", fontWeight: 500 }} />
+    ),
+    Message2: (
+      <Label
+        containerStyle={{ paddingTop: "10px" }}
+        fontSize={16}
+        label={"PT_RECEIPTS_SUCCESS_MESSAGE"}
+        labelStyle={{ color: "#484848", fontWeight: 500 }}
+      />
+    ),
+  };
+
+  componentDidMount = () => {
+    const { fetchProperties, fetchReceipts, match, fetchGeneralMDMSData } = this.props;
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "PropertyTax",
+            masterDetails: [
+              {
+                name: "Floor",
+              },
+              {
+                name: "UsageCategoryMajor",
+              },
+              {
+                name: "UsageCategoryMinor",
+              },
+              {
+                name: "UsageCategorySubMinor",
+              },
+              {
+                name: "OccupancyType",
+              },
+              {
+                name: "PropertyType",
+              },
+            ],
+          },
+        ],
+      },
+    };
+    fetchGeneralMDMSData(requestBody, "PropertyTax", [
+      "Floor",
+      "UsageCategoryMajor",
+      "UsageCategoryMinor",
+      "UsageCategorySubMinor",
+      "OccupancyType",
+      "PropertyType",
+    ]);
+    fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
+    fetchReceipts([
+      { key: "tenantId", value: match.params.tenantId },
+      { key: "consumerCode", value: `${match.params.propertyId}:${match.params.assessmentId}` },
+    ]);
+  };
+
+  goToHome = () => {
+    this.props.history.push("/property-tax");
+  };
+
+  render() {
+    const { generalMDMSDataById } = this.props;
+    return (
+      <Screen>
+        <PaymentStatus
+          receiptUIDetails={this.props.receiptUIDetails}
+          receiptDetails={this.props.receiptDetails}
+          floatingButtonColor="#22b25f"
+          icon={this.icon}
+          messages={this.successMessages}
+          buttons={this.buttons}
+          primaryAction={this.goToHome}
+          noExistingPropertyId={!this.props.existingPropertyId}
+          generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
+        />
+      </Screen>
+    );
+  }
+}
+
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay) => {
+  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
+  return {
+    propertyInfo: property && [
+      ownerDetails.length > 1
+        ? ownerDetails.reduce((result, current, index) => {
+            result["key"] = `Owner${index + 1} name:`;
+            result["value"] = current.name;
+            return result;
+          }, {})
+        : { key: "Owner name:", value: ownerDetails[0].name },
+      {
+        key: "Existing Property ID:",
+        value: property.oldPropertyId,
+      },
+      {
+        key: "Property Tax Assessment ID:",
+        value: property.propertyId,
+      },
+      {
+        key: "Property Address:",
+        value: getCommaSeperatedAddress(property.address, cities),
+      },
+    ],
+    receiptInfo: [
+      {
+        key: "Assessment No.: ",
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].consumerCode").split(":")[1],
+      },
+      {
+        key: "Receipt No:",
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
+      },
+      {
+        key: "Payment Term:",
+        value: financialYear,
+      },
+      {
+        key: "Date:",
+        value: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
+      },
+      {
+        key: "Payable Amount:",
+        value: totalAmountToPay ? totalAmountToPay.toString() : 0,
+      },
+      {
+        key: "Amount Paid:",
+        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
+      },
+      {
+        key: "Amount Due:",
+        value: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
+      },
+    ],
+  };
 };
 
-const buttons = {
-  button1: "Link previous payments",
-  button2: "Finish",
+const getLatestPropertyDetails = (propertyDetailsArray) => {
+  if (propertyDetailsArray.length > 1) {
+    return propertyDetailsArray.reduce((acc, curr) => {
+      return acc.assessmentDate > curr.assessmentDate ? acc : curr;
+    });
+  } else {
+    return propertyDetailsArray[0];
+  }
 };
 
-const successMessages = {
-  Message1: "Thank you !",
-  Message2: "Payment has been made successfully!",
+const mapStateToProps = (state, ownProps) => {
+  const { properties, common, app } = state || {};
+  const { localizationLabels } = app;
+  const { cities } = common;
+  const { generalMDMSDataById } = state.common || {};
+  const { propertiesById, receipts } = properties;
+  const selProperty = propertiesById && propertiesById[ownProps.match.params.propertyId];
+  const existingPropertyId = selProperty && selProperty.oldPropertyId;
+  const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
+  const totalAmountToPay = receipts && get(receipts[receipts.length - 1], "Bill[0].billDetails[0].totalAmount");
+  const rawReceiptDetails = receipts && receipts[0];
+  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay);
+  const receiptDetails =
+    selProperty &&
+    rawReceiptDetails &&
+    cities &&
+    createReceiptDetails(selProperty, latestPropertyDetails, rawReceiptDetails, localizationLabels, cities, totalAmountToPay);
+  return { receiptUIDetails, receiptDetails, cities, existingPropertyId, generalMDMSDataById };
 };
 
-const icon = <Icon action="navigation" name="check" />;
-
-const PaymentSuccess = () => {
-  return (
-    <Screen>
-      <PaymentStatus receiptDetails={receiptDetails} floatingButtonColor="#22b25f" icon={icon} messages={successMessages} buttons={buttons} />
-    </Screen>
-  );
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+  };
 };
-
-export default PaymentSuccess;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentSuccess);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RaisedButton from "material-ui/RaisedButton";
-
+//button component
 const Button = ({ label = "Continue", jsonPath, ...rest }) => {
   return <RaisedButton label={label} {...rest} />;
 };

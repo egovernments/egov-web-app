@@ -1,6 +1,7 @@
 import React from "react";
 import Field from "egov-ui-kit/utils/field";
 import { Button, Card } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick }) => {
@@ -23,7 +24,13 @@ const SearchPropertyForm = ({ handleFieldChange, form, formKey, onSearchClick })
               );
             })}
             <div className="search-property-btn col-xs-12">
-              <Button label={"SEARCH"} className="" onClick={() => onSearchClick(form, formKey)} primary={true} fullWidth={true} />
+              <Button
+                label={<Label label="PT_SEARCH_BUTTON" buttonLabel={true} fontSize="16px" />}
+                className=""
+                onClick={() => onSearchClick(form, formKey)}
+                primary={true}
+                fullWidth={true}
+              />
             </div>
           </div>
         }

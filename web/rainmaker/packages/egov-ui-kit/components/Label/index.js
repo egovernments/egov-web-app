@@ -16,11 +16,16 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var labelText = function labelText(label, labelStyle, labelClassName) {
+var labelText = function labelText(label, labelStyle, labelClassName, required) {
   return label && label.length ? _react2.default.createElement(
     "div",
     { className: "label-text " + labelClassName, style: labelStyle },
-    label
+    label,
+    required && _react2.default.createElement(
+      "span",
+      { style: { color: "red" } },
+      " *"
+    )
   ) : "";
 };
 
@@ -45,7 +50,8 @@ var Label = function Label(_ref) {
       labelClassName = _ref$labelClassName === undefined ? "" : _ref$labelClassName,
       _ref$buttonLabel = _ref.buttonLabel,
       buttonLabel = _ref$buttonLabel === undefined ? false : _ref$buttonLabel,
-      id = _ref.id;
+      id = _ref.id,
+      required = _ref.required;
 
   var additionalStyles = {};
 
@@ -75,7 +81,7 @@ var Label = function Label(_ref) {
   return _react2.default.createElement(
     "div",
     { id: id, style: containerStyle, className: buttonLabel ? "button-label-container " + className : "label-container " + className },
-    labelText(label, labelStyle, labelClassName)
+    labelText(label, labelStyle, labelClassName, required)
   );
 };
 

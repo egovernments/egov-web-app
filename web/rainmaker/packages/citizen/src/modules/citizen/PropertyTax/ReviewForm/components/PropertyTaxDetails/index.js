@@ -1,84 +1,130 @@
 import React from "react";
+import { Divider } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import "./index.css";
 
-const PropertyTaxDetails = ({ form }) => {
-  return (
-    <Card style={{ marginBottom: 200, "background-color": "white" }}>
-      <CardHeader
-        className="tax-calculation-card-header"
-        actAsExpander={true}
-        showExpandableButton={true}
-        closeIcon={
-          <div>
-            <div className="pt-tax-calc-details-btn">View Details</div>
-          </div>
-        }
-        iconStyle={{}}
-        title={
-          <div className="">
-            <div className="tax-header-price">
-              <span>Property Tax Dues</span> <span className="pt-total">1,432.50</span>
-            </div>
-          </div>
-        }
-      />
-      <CardText expandable={true}>
-        <div className="fare-section">
-          <div className="pt-rf-detailed-bill">
-            <div>
-              <div className="pt-rf-detailed-bill-text col-md-6 col-lg-6">Detailed Bill</div>
-              <div className="pt-rf-detailed-bill-text col-md-6 col-lg-6">Due Date: 20/05/2018</div>
-            </div>
+class PropertyTaxDetails extends React.Component {
+  state = {
+    isExpanded: true,
+  }
 
-            <div className="pt-rf-detailed-bill-table">
-              <div className="pt-rf-detailed-bill-points">
-                <span className="">Property Tax</span>
-                <span className="pt-rf-price">1432.50</span>
-              </div>
-              <div className="pt-rf-detailed-bill-points">
-                <span className="">Fire Cess (10% of property tax)</span>
-                <span className="pt-rf-price">103.20</span>
-              </div>
-              <div className="pt-rf-detailed-bill-points">
-                <span className="">Rebate (Paid before 20/05/2018)</span>
-                <span className="pt-rf-price">-103.20</span>
+  toggleExpander = () => this.setState({
+    isExpanded: !this.state.isExpanded,
+  })
+
+  componentDidMount = () => {
+    document.getElementsByClassName("tax-calculation-card-header")[0].addEventListener("click", this.toggleExpander);
+  }
+
+  render () {
+    const { estimationDetails, importantDates } = this.props
+    const { isExpanded } = this.state
+    const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
+    const { fireCess, intrest, penalty, rebate } = importantDates;
+    return (
+      <Card style={{ marginBottom: 20, "background-color": "white" }} expanded={isExpanded}>
+        <CardHeader
+          className="tax-calculation-card-header"
+          actAsExpander={true}
+          showExpandableButton={true}
+          closeIcon={
+            <div>
+              <div className="pt-tax-calc-details-btn" onClick={this.toggleExpander}>
+                View Details
               </div>
             </div>
-            <div className="pt-rf-detailed-bill-total">
-              <span className="">Total</span>
-              <span className="pt-rf-price">1432.50</span>
+          }
+          iconStyle={{}}
+          title={
+            <div className="tax-header-price rainmaker-displayInline" onClick={this.toggleExpander}>
+              <Label label="PT_FORM4_PT_DUE" fontSize="16px" color="#484848" />
+              <Label
+                className="property-dues-total-amount"
+                label={`INR ${totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}`}
+                fontSize="16px"
+                color="#484848"
+              />
+            </div>
+          }
+          ref={el => this.xyz = el}
+        />
+        <CardText expandable={true} expanded={true}>
+          <div className="clearfix fare-section">
+            <div className="col-sm-6" style={{ backgroundColor: "#f2f2f2", marginRight: 100, padding: 16 }}>
+              <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_DETAILED_BILL" bold={true} />
+              {taxHeadEstimates &&
+                taxHeadEstimates.map((item, index) => {
+                  return (
+                    item.estimateAmount > 0 && (
+                      <div key={index} className="clearfix" style={{ marginBottom: 8 }}>
+                        <div className="col-sm-9" style={{ padding: 0 }}>
+                          <Label label={item.taxHeadCode} />
+                        </div>
+                        <div className="col-sm-3">
+                          <Label
+                            containerStyle={{ textAlign: "right" }}
+                            className="pt-rf-price"
+                            label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
+                          />
+                        </div>
+                      </div>
+                    )
+                  );
+                })}
+              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, height: 2 }} />
+              <div className="clearfix" style={{ marginTop: 8 }}>
+                <div className="col-sm-9" style={{ padding: 0 }}>
+                  <Label label="PT_FORM4_TOTAL" />
+                </div>
+                <div className="col-sm-3">
+                  <Label
+                    containerStyle={{ textAlign: "right" }}
+                    labelStyle={{ fontSize: "20px", fontWeight: 500, color: "#fe7a51" }}
+                    label={totalAmount ? `${totalAmount}` : totalAmount === 0 ? "0" : "NA"}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-6">
+              <div className="date-details">
+                <Label containerStyle={{ marginBottom: 16 }} color="#484848" label="PT_FORM4_IMPORTANT_DATES" bold={true} />
+                <ul>
+                  {rebate &&
+                    rebate.endingDay && (
+                      <li>
+                        <span>
+                          <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
+                        </span>
+                        <span>{`${rebate.endingDay}/${rebate.fromFY && rebate.fromFY.slice(0, 4)}`}</span>
+                      </li>
+                    )}
+                  {penalty &&
+                    penalty.startingDay && (
+                      <li>
+                        <span>
+                          <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
+                        </span>
+                        <span>{`${penalty.startingDay}/${penalty.fromFY && penalty.fromFY.slice(0, 4)}`}</span>
+                      </li>
+                    )}
+                  {intrest &&
+                    intrest.startingDay && (
+                      <li>
+                        <span>
+                          <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
+                        </span>
+                        <span>{`${intrest.startingDay}/${intrest.fromFY && intrest.fromFY.slice(0, 4)}`}</span>
+                      </li>
+                    )}
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="date-details">
-            <span className="header">Dates</span>
-            <ul>
-              <li>
-                <span>Due Date</span>
-                <span>01-01-2019</span>
-              </li>
-              <li>
-                <span>Payment Date</span>
-                <span>01-01-2019</span>
-              </li>
-              <li>
-                <span>Last Date for Rebate (20% of PT)</span>
-                <span>01-01-2019</span>
-              </li>
-              <li>
-                <span>Penalty (20% of PT) applied from</span>
-                <span>01-01-2019</span>
-              </li>
-              <li>
-                <span>Interest (18% p.a. daily) applied from</span>
-                <span>01-01-2019</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </CardText>
-    </Card>
-  );
+        </CardText>
+      </Card>
+    );
+  }
 };
 
 export default PropertyTaxDetails;

@@ -159,39 +159,40 @@ var searchUser = exports.searchUser = function searchUser() {
 var refreshTokenRequest = exports.refreshTokenRequest = function refreshTokenRequest() {
   return function () {
     var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
-      var refreshToken, grantType, response;
+      var refreshToken, grantType, userType, response;
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               refreshToken = window.localStorage.getItem("refresh-token");
               grantType = "refresh_token";
-              _context2.prev = 2;
-              _context2.next = 5;
-              return (0, _api.loginRequest)(null, null, refreshToken, grantType);
+              userType = process.env.REACT_APP_NAME === "Citizen" ? "CITIZEN" : "EMPLOYEE";
+              _context2.prev = 3;
+              _context2.next = 6;
+              return (0, _api.loginRequest)(null, null, refreshToken, grantType, "", userType);
 
-            case 5:
+            case 6:
               response = _context2.sent;
 
               delete response.ResponseInfo;
               dispatch(authenticated(response));
               // only option for the time being!
               window.location.reload();
-              _context2.next = 14;
+              _context2.next = 15;
               break;
 
-            case 11:
-              _context2.prev = 11;
-              _context2.t0 = _context2["catch"](2);
+            case 12:
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](3);
 
               dispatch(logout());
 
-            case 14:
+            case 15:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, undefined, [[2, 11]]);
+      }, _callee2, undefined, [[3, 12]]);
     }));
 
     return function (_x7) {

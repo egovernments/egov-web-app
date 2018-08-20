@@ -4,9 +4,11 @@ import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
-import { getTransformedItems } from "../common/TransformedAssessments";
+import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
+import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import isEqual from "lodash/isEqual";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -14,7 +16,7 @@ const innerDivStyle = {
   borderBottom: "1px solid #e0e0e0",
 };
 
-class CompletedAssessments extends Component {
+class ViewAllAssessments extends Component {
   iconStyle = {
     marginLeft: "10px",
     height: "20px",
@@ -24,8 +26,9 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { renderCustomTitleForPt, customTitle } = this.props;
+    const { renderCustomTitleForPt, customTitle, selPropertyDetails, getSingleAssesmentandStatus } = this.props;
     renderCustomTitleForPt(customTitle);
+    selPropertyDetails && getSingleAssesmentandStatus(selPropertyDetails);
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -46,7 +49,7 @@ class CompletedAssessments extends Component {
   };
 
   render() {
-    const { urls, history, loading, transformedItems, location } = this.props;
+    const { urls, history, loading, sortedProperties, location } = this.props;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length == 0 && localStorage.getItem("path") === pathname) {
@@ -55,12 +58,13 @@ class CompletedAssessments extends Component {
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
-        {transformedItems && (
+        {sortedProperties && (
           <AssessmentList
             innerDivStyle={innerDivStyle}
-            items={transformedItems}
-            noAssessmentMessage="You have no complete assessments."
+            items={sortedProperties}
+            noAssessmentMessage="You have no past assessments."
             button={true}
+            history={history}
             yearDialogue={this.state.dialogueOpen}
             closeDialogue={this.closeYearRangeDialogue}
             onNewPropertyButtonClick={this.onNewPropertyButtonClick}
@@ -72,24 +76,29 @@ class CompletedAssessments extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { properties } = state;
+  const { properties, common, app } = state;
+  const { cities } = common;
   const { urls } = state.app;
-  const { loading, propertiesById } = properties || {};
+  const { localizationLabels } = app;
+  const { loading, propertiesById, singleAssessmentByStatus } = properties || {};
   const propertyId = ownProps.match.params.propertyId;
   const selPropertyDetails = propertiesById[propertyId];
-  const customTitle = getCommaSeperatedAddress(selPropertyDetails.address.buildingName, selPropertyDetails.address.street);
-  const transformedItems = getTransformedItems([selPropertyDetails]);
+  const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
+  const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  // const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
+  // const transformedItems = selPropertyDetails && getTransformedItems([selPropertyDetails]); // function implements Object.values for iteration
 
-  return { urls, loading, transformedItems, urls, customTitle };
+  return { urls, loading, selPropertyDetails, sortedProperties, urls };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CompletedAssessments);
+)(ViewAllAssessments);

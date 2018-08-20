@@ -7,6 +7,7 @@ const { rootReducer, middlewares } = storeConfigs
 
 const store = createStore(combineReducers({
   ...rootReducer,
+  citizen: citizenReducer,
 }), applyMiddleware(...middlewares))
 
 export default store

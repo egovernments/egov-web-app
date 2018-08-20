@@ -1,3 +1,24 @@
-const citizenReducer = {}
+import { DOCUMENT_TYPES_MDMS_SUCCESS } from "./actionTypes"
 
-export default citizenReducer
+const initialState = {
+  mdms: {},
+}
+
+const citizenReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case DOCUMENT_TYPES_MDMS_SUCCESS:
+      return {
+        ...state,
+        mdms: {
+          ...state.mdms,
+          document: {
+            ...action.data,
+          }
+        }
+      }
+    default:
+      return state
+  }
+};
+
+export default citizenReducer;

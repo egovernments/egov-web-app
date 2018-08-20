@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
+import YearDialogue from "../common/YearDialogue";
 import { Screen } from "modules/common";
-import { BreadCrumbs } from "components";
-import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+import { BreadCrumbs, Button } from "components";
+import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
-import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
+import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
-import { Button } from "components";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 
 import "./index.css";
@@ -20,32 +20,38 @@ class SearchProperty extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dialogueOpen: false,
       searchResult: [],
+      showTable: false,
     };
   }
 
   componentDidMount = () => {
-    const { location, addBreadCrumbs, title } = this.props;
+    const { location, addBreadCrumbs, title, resetForm } = this.props;
     const { pathname } = location;
+    resetForm("searchProperty");
     if (!(localStorage.getItem("path") === pathname)) {
       title && addBreadCrumbs({ title: title, path: window.location.pathname });
     }
   };
 
+  closeYearRangeDialogue = () => {
+    this.setState({ dialogueOpen: false });
+  };
+
   onSearchClick = (form, formKey) => {
+    const { city, ids, oldAssessmentNumber, mobileNumber } = form.fields || {};
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
+    } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {
+      this.props.toggleSnackbarAndSetText(true, "Please fill atleast one field along with city", true);
     } else {
-      const { city, ids, name, oldAssessmentNumber, mobileNumber } = form.fields || {};
       const queryParams = [];
       if (city.value) {
         queryParams.push({ key: "tenantId", value: city.value });
       }
       if (ids.value) {
         queryParams.push({ key: "ids", value: ids.value });
-      }
-      if (name.value) {
-        queryParams.push({ key: "name", value: name.value });
       }
       if (oldAssessmentNumber.value) {
         queryParams.push({ key: "oldAssessmentNumber", value: oldAssessmentNumber.value });
@@ -54,17 +60,34 @@ class SearchProperty extends Component {
         queryParams.push({ key: "mobileNumber", value: mobileNumber.value });
       }
       this.props.fetchProperties(queryParams);
+      this.setState({ showTable: true });
     }
   };
 
   extractTableData = (properties) => {
+    const { history } = this.props;
+    const userType = JSON.parse(localStorage.getItem("user-info")).type;
     const tableData = properties.reduce((tableData, property, index) => {
-      let { propertyId, oldPropertyId, address, propertyDetails } = property;
-      let displayAddress = address.doorNo + "," + address.buildingName + "," + address.street;
+      let { propertyId, oldPropertyId, address, propertyDetails, tenantId } = property;
+      const { doorNo, buildingName, street, locality } = address;
+      let displayAddress = doorNo
+        ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
+        : `${locality.name ? locality.name : ""}`;
       let name = propertyDetails[0].owners[0].name;
       let button = (
         <Button
-          label={<Label buttonLabel={true} label={"Assess & Pay"} fontSize="12px" />}
+          onClick={
+            userType === "CITIZEN"
+              ? () => {
+                  this.setState({
+                    dialogueOpen: true,
+                  });
+                }
+              : (e) => {
+                  history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
+                }
+          }
+          label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
           value={propertyId}
           primary={true}
           style={{ height: 20, lineHeight: "auto", minWidth: "inherit" }}
@@ -82,7 +105,9 @@ class SearchProperty extends Component {
   };
 
   render() {
-    const { urls, location, history, propertiesFound } = this.props;
+    const { urls, location, history, propertiesFound, loading } = this.props;
+    const { showTable } = this.state;
+    const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const { pathname } = location;
     const tableData = this.extractTableData(propertiesFound);
@@ -90,10 +115,27 @@ class SearchProperty extends Component {
       urlArray = JSON.parse(localStorage.getItem("breadCrumbObject"));
     }
     return (
-      <Screen>
+      <Screen loading={loading}>
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} history={history} />
         <PropertySearchFormHOC history={this.props.history} onSearchClick={this.onSearchClick} />
-        <PropertyTable tableData={tableData} onActionClick={this.onActionClick} />
+        {tableData.length > 0 && showTable ? <PropertyTable tableData={tableData} onActionClick={this.onActionClick} /> : null}
+        {showTable &&
+          tableData.length === 0 && (
+            <div className="search-no-property-found">
+              <div className="no-search-text">No property records found</div>
+              <div className="new-assess-btn">
+                <Button
+                  label={"New Property Assessment"}
+                  labelStyle={{ fontSize: 12 }}
+                  className="new-property-assessment"
+                  onClick={() => history.push("/property-tax/assess-pay")}
+                  primary={true}
+                  fullWidth={true}
+                />
+              </div>
+            </div>
+          )}
+        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );
   }
@@ -102,9 +144,9 @@ class SearchProperty extends Component {
 const mapStateToProps = (state) => {
   const { properties } = state;
   const { urls } = state.app;
-  const { propertiesById } = properties && properties;
+  const { propertiesById, loading } = properties && properties;
   const propertiesFound = Object.values(propertiesById);
-  return { propertiesFound, urls };
+  return { propertiesFound, urls, loading };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -112,6 +154,8 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     displayFormErrors: (formKey) => dispatch(displayFormErrors(formKey)),
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
+    toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
+    resetForm: (formKey) => dispatch(resetForm(formKey)),
   };
 };
 

@@ -20,7 +20,7 @@ var ActionFooter = function ActionFooter(_ref) {
 
   return _react2.default.createElement(
     "div",
-    { className: "wizard-footer col-xs-12", style: { textAlign: "right", padding: 0 } },
+    { className: "wizard-footer col-xs-12", style: { textAlign: "right" } },
     _react2.default.createElement(
       "div",
       { className: "col-xs-6", style: { float: "right", padding: 0 } },
@@ -35,7 +35,7 @@ var ActionFooter = function ActionFooter(_ref) {
         label: label2,
         style: { width: "36%" },
         backgroundColor: "#fe7a51",
-        labelStyle: { letterSpacing: 0.7, padding: 0, color: "#fff" },
+        labelStyle: { letterSpacing: 0.7, color: "#fff" },
         buttonStyle: { border: 0 },
         onClick: primaryAction
       })

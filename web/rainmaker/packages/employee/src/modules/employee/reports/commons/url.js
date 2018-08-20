@@ -1,12 +1,12 @@
 export const options = {
-  "rainmaker-pgr": [
+  "rainmaker-pgr-nonframework": [
     {
       reportResultUrl: "/rainmaker-pgr/v1/reports/_get",
       metaDataUrl: "/report/rainmaker-pgr/metadata/_get",
       customReportName: "SourceWiseReport",
       needDefaultSearch: true,
     },
-  ],
+  ]
 };
 
 export const getResultUrl = (moduleName) => {

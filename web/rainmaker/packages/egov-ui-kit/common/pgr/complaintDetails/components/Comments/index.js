@@ -104,7 +104,7 @@ var Comments = function (_Component) {
                 containerStyle: { marginBottom: "6px" },
                 fontSize: "10px",
                 labelStyle: { fontWeight: "500" },
-                label: comment.role === "Citizen Service Representative" ? complainant + " (From citizen service desk)" : comment.name ? comment.name + " (" + comment.designation + ")" : ""
+                label: comment.role === "Citizen Service Representative" ? complainant + " (From citizen service desk)" : comment.name ? comment.name + " " + (comment.designation && "(" + comment.designation + ")") : ""
               }),
               _react2.default.createElement(_translationNode2.default, { containerStyle: { marginBottom: "6px" }, labelStyle: { color: "#767676" }, label: comment.comment }),
               _react2.default.createElement(_translationNode2.default, { labelClassName: "text-right", fontSize: "10px", label: (0, _commons.getDateFromEpoch)(comment.when) })
@@ -141,7 +141,8 @@ var Comments = function (_Component) {
             _react2.default.createElement(_components.List, {
               listContainerStyle: { marginTop: "24px", background: "transparent" },
               listItemStyle: { marginBottom: "-8.5px" },
-              items: items
+              items: items,
+              disabled: true
             }),
             isAssignedToEmployee && role === "employee" || role === "citizen" || role === "ao" || role === "csr" ? currentstatus && currentstatus.toLowerCase() !== "closed" && _react2.default.createElement(WriteCommentHOC, { userImage: userImage, currentstatus: currentstatus }) : ""
           )

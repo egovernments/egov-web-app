@@ -8,7 +8,6 @@ const IncompleteAssessments = asyncComponent(() => import("modules/citizen/Prope
 const MyProperties = asyncComponent(() => import("modules/citizen/PropertyTax/MyProperties").then((module) => module.default));
 const Property = asyncComponent(() => import("modules/citizen/PropertyTax/Property").then((module) => module.default));
 const MyReceipts = asyncComponent(() => import("modules/citizen/PropertyTax/MyReceipts").then((module) => module.default));
-const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
 // const PropertyTaxAssessmentFormWizard = asyncComponent(() =>
 //   import("modules/citizen/PropertyTax/AssessmentFormWizard").then((module) => module.default)
 // );
@@ -22,6 +21,11 @@ const ReviewForm = asyncComponent(() => import("modules/citizen/PropertyTax/Revi
 const FormWizard = asyncComponent(() => import("modules/citizen/PropertyTax/FormWizard").then((module) => module.default));
 
 const PastPayment = asyncComponent(() => import("modules/citizen/PropertyTax/LinkPastPayments").then((module) => module.default));
+
+const PaymentRedirectPage = asyncComponent(() => import("modules/citizen/PropertyTax/Payment-rediect-page").then((module) => module.default));
+const HowItWorks = asyncComponent(() => import("modules/citizen/PropertyTax/HowItWorks").then((module) => module.default));
+const ViewAllAssessments = asyncComponent(() => import("modules/citizen/PropertyTax/ViewAllAssessments").then((module) => module.default));
+const PTExamples = asyncComponent(() => import("modules/citizen/PropertyTax/PTExample").then((module) => module.default));
 
 const routes = [
   // property tax routes
@@ -42,7 +46,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Assess & Pay : Select Property",
+      title: "PT_ASSESPAY_SELECTPROPERTY",
       hideBackButton: true,
     },
   },
@@ -52,7 +56,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Incomplete Assessments",
+      title: "PT_INCOMPLETE_ASSESSMENT",
       hideBackButton: true,
     },
   },
@@ -62,7 +66,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Completed Assessments",
+      title: "PT_COMPLETED_ASSESSMENTS",
       hideBackButton: true,
     },
   },
@@ -73,12 +77,12 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "My Properties",
+      title: "PT_MY_PROPERTY",
       hideBackButton: true,
     },
   },
   {
-    path: "property-tax/my-properties/property/:propertyId",
+    path: "property-tax/my-properties/property/:propertyId/:tenantId",
     component: Property,
     needsAuthentication: true,
     options: {
@@ -87,10 +91,11 @@ const routes = [
     },
   },
   {
-    path: "property-tax/my-properties/property/view-assessments/:propertyId",
+    path: "property-tax/my-properties/view-assessments/:propertyId",
     component: ViewAllAssessments,
     needsAuthentication: true,
     options: {
+      title: "View All Assessments",
       hideFooter: true,
       hideBackButton: true,
     },
@@ -101,7 +106,7 @@ const routes = [
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "Search Property",
+      title: "PT_SEARCH_PROPERTY",
       hideBackButton: true,
     },
   },
@@ -116,21 +121,23 @@ const routes = [
     },
   },
   {
-    path: "property-tax/payment-success",
+    path: "property-tax/payment-success/:propertyId/:tenantId/:assessmentId",
     component: PaymentSuccess,
     needsAuthentication: true,
     options: {
       hideFooter: true,
       hideBackButton: true,
+      hideTitle: true,
     },
   },
   {
-    path: "property-tax/payment-failure",
+    path: "property-tax/payment-failure/:propertyId/:tenantId/:assessmentNumber/:assessmentYear/:txnAmount",
     component: PaymentFailure,
     needsAuthentication: true,
     options: {
       hideFooter: true,
       hideBackButton: true,
+      hideTitle: true,
     },
   },
   {
@@ -140,7 +147,6 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "Assessment Form",
     },
   },
   {
@@ -156,6 +162,36 @@ const routes = [
     path: "property-tax/past-payment",
     component: PastPayment,
     needsAuthentication: true,
+  },
+  {
+    path: "property-tax/payment-redirect-page",
+    component: PaymentRedirectPage,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      hideTitle: true,
+    },
+  },
+  {
+    path: "property-tax/how-it-works",
+    component: HowItWorks,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "FAQs",
+    },
+  },
+  {
+    path: "property-tax/pt-examples",
+    component: PTExamples,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      hideBackButton: true,
+      title: "Examples",
+    },
   },
 ];
 

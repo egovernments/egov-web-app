@@ -38,11 +38,12 @@ var List = function List(_ref) {
       _ref$listItemStyle = _ref.listItemStyle,
       listItemStyle = _ref$listItemStyle === undefined ? {} : _ref$listItemStyle,
       innerDivStyle = _ref.innerDivStyle,
+      hoverColor = _ref.hoverColor,
       _ref$listContainerSty = _ref.listContainerStyle,
       listContainerStyle = _ref$listContainerSty === undefined ? {} : _ref$listContainerSty,
       _ref$items = _ref.items,
       items = _ref$items === undefined ? [] : _ref$items,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["listItemContainer", "onItemClick", "listItemStyle", "innerDivStyle", "listContainerStyle", "items"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["listItemContainer", "onItemClick", "listItemStyle", "innerDivStyle", "hoverColor", "listContainerStyle", "items"]);
 
   var renderListItems = function renderListItems(items) {
     return items.map(function (item, index) {
@@ -61,9 +62,9 @@ var List = function List(_ref) {
         onClick: function onClick() {
           return onItemClick && onItemClick(item, index);
         },
-        innerDivStyle: innerDivStyle
-        // innerDivStyle={item && item.leftIcon ? (innerDivStyle ? innerDivStyle : {}) : nestedItemStyle}
-        , containerElement: listItemContainer,
+        innerDivStyle: innerDivStyle,
+        containerElement: listItemContainer,
+        hoverColor: hoverColor,
         key: index
       }, rest, item));
     });

@@ -1,6 +1,7 @@
 import React from "react";
 import AutoComplete from "material-ui/AutoComplete";
 import PropTypes from "prop-types";
+import filter from "lodash/filter";
 
 const hintBaseStyle = {
   fontSize: "16px",
@@ -20,35 +21,83 @@ const underlineFocusBaseStyle = {
 const requiredStyle = {
   color: "red",
 };
-
-const AutoSuggestDropdown = ({ onChange, dataSource, floatingLabelText, className, required, ...restProps }) => {
-  return (
-    <AutoComplete
-      className={`autosuggest ${className}`}
-      floatingLabelFixed={true}
-      floatingLabelStyle={{ ...floatingLabelStyle }}
-      hintStyle={{ ...hintBaseStyle }}
-      underlineFocusStyle={{ ...underlineFocusBaseStyle }}
-      filter={AutoComplete.caseInsensitiveFilter}
-      openOnFocus={false}
-      fullWidth={true}
-      dataSource={(dataSource && [...dataSource]) || []}
-      menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
-      dataSourceConfig={{ text: "label", value: "value" }}
-      onNewRequest={onChange}
-      floatingLabelText={[
-        floatingLabelText,
-        required ? (
-          <span key={`error-${className}`} style={requiredStyle}>
-            {" "}
-            *
-          </span>
-        ) : null,
-      ]}
-      {...restProps}
-    />
-  );
+const underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0",
 };
+
+class AutoSuggestDropdown extends React.Component {
+  state = {
+    searchText: "",
+  };
+
+  getNameById = (id) => {
+    const { dropDownData } = this.props;
+    const filteredArray = filter(dropDownData, { value: id });
+    return filteredArray.length > 0 ? filteredArray[0].label : id;
+  };
+
+  componentWillReceiveProps(nextProps) {
+    let { getNameById } = this;
+    if (nextProps.value) {
+      this.setState({ searchText: getNameById(nextProps.value) });
+    }
+  }
+
+  onChangeText = (searchText, dataSource, params) => {
+    this.setState({ searchText });
+  };
+
+  render() {
+    let {
+      onChange,
+      dataSource,
+      floatingLabelText,
+      className,
+      required,
+      value,
+      jsonPath,
+      errorMessage,
+      boundary,
+      dropDownData,
+      ...restProps
+    } = this.props;
+
+    const { filterAutoComplete, getNameById, onChangeText } = this;
+    const { searchText } = this.state;
+
+    return (
+      <AutoComplete
+        className={`autosuggest ${className}`}
+        floatingLabelFixed={true}
+        floatingLabelStyle={{ ...floatingLabelStyle }}
+        hintStyle={{ ...hintBaseStyle }}
+        underlineFocusStyle={{ ...underlineFocusBaseStyle }}
+        openOnFocus={false}
+        fullWidth={true}
+        searchText={searchText}
+        underlineDisabledStyle={underlineDisabledStyle}
+        dataSource={(dataSource && [...dataSource]) || []}
+        menuStyle={{ maxHeight: "150px", overflowY: "auto" }}
+        dataSourceConfig={{ text: "label", value: "value" }}
+        onNewRequest={onChange}
+        onUpdateInput={onChangeText}
+        filter={(searchText, key) => {
+          return key.toLowerCase().includes(getNameById(searchText) && getNameById(searchText.toLowerCase()));
+        }}
+        floatingLabelText={[
+          floatingLabelText,
+          required ? (
+            <span key={`error-${className}`} style={requiredStyle}>
+              {" "}
+              *
+            </span>
+          ) : null,
+        ]}
+        {...restProps}
+      />
+    );
+  }
+}
 
 AutoSuggestDropdown.propTypes = {
   onNewRequest: PropTypes.func,
@@ -68,3 +117,6 @@ AutoSuggestDropdown.propTypes = {
 };
 
 export default AutoSuggestDropdown;
+
+// value={value}
+// searchKey={value}

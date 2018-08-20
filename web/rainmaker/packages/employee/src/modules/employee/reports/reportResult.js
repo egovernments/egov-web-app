@@ -171,7 +171,6 @@ class ShowField extends Component {
       ctx.drawImage(this, 0, 0);
       dataURL = canvas.toDataURL();
       callback(dataURL);
-      //console.log(dataURL);
       canvas = null;
       dar = dataURL;
     };
@@ -194,7 +193,7 @@ class ShowField extends Component {
     const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
-    let reportTitle =  this.getReportTitle();
+    let reportTitle = this.getReportTitle();
 
     const buttons = [
       {
@@ -212,11 +211,11 @@ class ShowField extends Component {
         pageSize: "A4",
         footer: true,
         customize: function(doc) {
-         // _this.PrintingCutomize(doc);
-         console.log(doc.content)
-         doc.content[0].text = [];
-         doc.content[0].text.push({text:"mSeva System Reports\n\n",bold:true,fontSize:20});
-         doc.content[0].text.push({text:reportTitle,fontSize:18})
+          // _this.PrintingCutomize(doc);
+          console.log(doc.content);
+          doc.content[0].text = [];
+          doc.content[0].text.push({ text: "mSeva System Reports\n\n", bold: true, fontSize: 20 });
+          doc.content[0].text.push({ text: reportTitle, fontSize: 18 });
         },
         className: "report-pdf-button",
       },
@@ -432,10 +431,8 @@ class ShowField extends Component {
         }
       );
     } else if (object.defaultValue && object.defaultValue.search("_url") > -1) {
-      // console.log(item1);
       let afterURL = object.defaultValue.split("?")[1];
       let URLparams = afterURL.split(":");
-      // console.log(URLparams, URLparams.length);
       if (URLparams.length > 1) {
         setRoute(`${URLparams[0] + encodeURIComponent(item1)}`);
       } else {

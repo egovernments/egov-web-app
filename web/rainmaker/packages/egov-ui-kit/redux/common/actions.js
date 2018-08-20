@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.prepareFormData = exports.setDropDownData = undefined;
+exports.updatePrepareFormDataFromDraft = exports.toggleSpinner = exports.fetchGeneralMDMSData = exports.fetchEmployeeToAssign = exports.fetchMDMSData = exports.fetchCitizens = exports.fetchEmployees = exports.generalMDMSFetchSuccess = exports.prepareFormData = exports.setDropDownData = undefined;
 
 var _regenerator = require("babel-runtime/regenerator");
 
@@ -104,7 +104,8 @@ var prepareFormData = exports.prepareFormData = function prepareFormData(jsonPat
     value: value
   };
 };
-var generalMDMSFetchSuccess = function generalMDMSFetchSuccess(payload, moduleName, masterArray) {
+
+var generalMDMSFetchSuccess = exports.generalMDMSFetchSuccess = function generalMDMSFetchSuccess(payload, moduleName, masterArray) {
   return {
     type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
     payload: payload,
@@ -120,7 +121,7 @@ var generalMDMSFetchError = function generalMDMSFetchError(error) {
   };
 };
 
-var fetchEmployees = exports.fetchEmployees = function fetchEmployees(requestBody) {
+var fetchEmployees = exports.fetchEmployees = function fetchEmployees(queryObj) {
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
       var payload;
@@ -131,7 +132,7 @@ var fetchEmployees = exports.fetchEmployees = function fetchEmployees(requestBod
               dispatch(employeeFetchPending());
               _context.prev = 1;
               _context.next = 4;
-              return (0, _api.httpRequest)(_endPoints.EMPLOYEE.GET.URL, _endPoints.EMPLOYEE.GET.ACTION, requestBody);
+              return (0, _api.httpRequest)(_endPoints.EMPLOYEE.GET.URL, _endPoints.EMPLOYEE.GET.ACTION, queryObj);
 
             case 4:
               payload = _context.sent;
@@ -318,4 +319,17 @@ var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralM
       return _ref5.apply(this, arguments);
     };
   }();
+};
+
+var toggleSpinner = exports.toggleSpinner = function toggleSpinner() {
+  return {
+    type: actionTypes.TOGGLE_SPINNER
+  };
+};
+
+var updatePrepareFormDataFromDraft = exports.updatePrepareFormDataFromDraft = function updatePrepareFormDataFromDraft(prepareFormData) {
+  return {
+    type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
+    prepareFormData: prepareFormData
+  };
 };

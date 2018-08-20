@@ -137,3 +137,17 @@ var DRAFT = exports.DRAFT = {
     ACTION: "_get"
   }
 };
+
+var PGService = exports.PGService = {
+  GET: {
+    URL: "/pg-service/transaction/v1/_search",
+    ACTION: "_get"
+  }
+};
+
+var RECEIPT = exports.RECEIPT = {
+  GET: {
+    URL: "/collection-services/receipts/_search",
+    ACTION: "_get"
+  }
+};
