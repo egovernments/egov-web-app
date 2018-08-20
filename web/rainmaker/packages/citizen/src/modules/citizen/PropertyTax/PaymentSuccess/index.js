@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Screen } from "modules/common";
 import { Icon } from "components";
-import PaymentStatus from "../common/PaymentStatus";
-import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
+import PaymentStatus from "egov-ui-kit/common/propertyTax/PaymentStatus";
 import { fetchProperties, fetchReceipts } from "egov-ui-kit/redux/properties/actions";
-import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
-import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
-import createReceiptDetails from "../common/PaymentStatus/Components/createReceipt";
+import { createReceiptDetails, createReceiptUIInfo } from "egov-ui-kit/common/propertyTax/PaymentStatus/Components/createReceipt";
 import Label from "egov-ui-kit/utils/translationNode";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import get from "lodash/get";
@@ -16,6 +13,10 @@ class PaymentSuccess extends Component {
   constructor(props) {
     super(props);
   }
+
+  state = {
+    imageUrl: "",
+  };
 
   icon = <Icon action="navigation" name="check" />;
 
@@ -83,14 +84,43 @@ class PaymentSuccess extends Component {
       { key: "tenantId", value: match.params.tenantId },
       { key: "consumerCode", value: `${match.params.propertyId}:${match.params.assessmentId}` },
     ]);
+    this.convertImgToDataURLviaCanvas(
+      this.createImageUrl(match.params.tenantId),
+      function(data) {
+        console.log(this);
+        this.setState({ imageUrl: data });
+      }.bind(this)
+    );
   };
 
   goToHome = () => {
     this.props.history.push("/property-tax");
   };
 
+  convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {
+    var img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = function() {
+      var canvas = document.createElement("CANVAS");
+      var ctx = canvas.getContext("2d");
+      var dataURL;
+      canvas.height = this.height;
+      canvas.width = this.width;
+      ctx.drawImage(this, 0, 0);
+      dataURL = canvas.toDataURL(outputFormat);
+      callback(dataURL);
+      canvas = null;
+    };
+    img.src = url;
+  };
+
+  createImageUrl = (tenantId) => {
+    return `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${tenantId}/logo.png`;
+  };
+
   render() {
-    const { generalMDMSDataById } = this.props;
+    const { generalMDMSDataById, match } = this.props;
+    const { imageUrl } = this.state;
     return (
       <Screen>
         <PaymentStatus
@@ -103,68 +133,12 @@ class PaymentSuccess extends Component {
           primaryAction={this.goToHome}
           noExistingPropertyId={!this.props.existingPropertyId}
           generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
+          receiptImageUrl={imageUrl && imageUrl}
         />
       </Screen>
     );
   }
 }
-
-const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay) => {
-  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
-  return {
-    propertyInfo: property && [
-      ownerDetails.length > 1
-        ? ownerDetails.reduce((result, current, index) => {
-            result["key"] = `Owner${index + 1} name:`;
-            result["value"] = current.name;
-            return result;
-          }, {})
-        : { key: "Owner name:", value: ownerDetails[0].name },
-      {
-        key: "Existing Property ID:",
-        value: property.oldPropertyId,
-      },
-      {
-        key: "Property Tax Assessment ID:",
-        value: property.propertyId,
-      },
-      {
-        key: "Property Address:",
-        value: getCommaSeperatedAddress(property.address, cities),
-      },
-    ],
-    receiptInfo: [
-      {
-        key: "Assessment No.: ",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].consumerCode").split(":")[1],
-      },
-      {
-        key: "Receipt No:",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-      },
-      {
-        key: "Payment Term:",
-        value: financialYear,
-      },
-      {
-        key: "Date:",
-        value: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
-      },
-      {
-        key: "Payable Amount:",
-        value: totalAmountToPay ? totalAmountToPay.toString() : 0,
-      },
-      {
-        key: "Amount Paid:",
-        value: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
-      },
-      {
-        key: "Amount Due:",
-        value: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
-      },
-    ],
-  };
-};
 
 const getLatestPropertyDetails = (propertyDetailsArray) => {
   if (propertyDetailsArray.length > 1) {
@@ -187,7 +161,7 @@ const mapStateToProps = (state, ownProps) => {
   const latestPropertyDetails = selProperty && getLatestPropertyDetails(selProperty.propertyDetails);
   const totalAmountToPay = receipts && get(receipts[receipts.length - 1], "Bill[0].billDetails[0].totalAmount");
   const rawReceiptDetails = receipts && receipts[0];
-  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay);
+  const receiptUIDetails = selProperty && cities && createReceiptUIInfo(selProperty, rawReceiptDetails, cities, totalAmountToPay, true);
   const receiptDetails =
     selProperty &&
     rawReceiptDetails &&

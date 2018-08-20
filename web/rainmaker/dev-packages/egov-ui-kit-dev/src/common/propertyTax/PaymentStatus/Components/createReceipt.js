@@ -2,6 +2,7 @@ import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 import { getDateFromEpoch } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import { getTranslatedLabel } from "egov-ui-kit/utils/commons";
+import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 
 const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headersFromAPI = billAccountDetails.map((item) => {
@@ -29,35 +30,14 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   return taxArray;
 };
 
-const getBase64FromImageUrl = async (url) => {
-  var img = new Image();
-  var dataURL;
-  img.setAttribute("crossOrigin", "anonymous");
-
-  img.onload = await function() {
-    var canvas = document.createElement("canvas");
-    canvas.width = this.width;
-    canvas.height = this.height;
-
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(this, 0, 0);
-
-    dataURL = canvas.toDataURL("image/png");
-
-    dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-  };
-  console.log(dataURL);
-
-  return dataURL;
-};
-// const url = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${property.tenantId}/logo.png`;
 const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
   console.log(propertyTenant);
+
   return {
     header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
     subheader: "Property Tax Payment Receipt (Citizen Copy)",
-    logo: propertyTenant[0].imageId || msevaLogo,
+    logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl,
   };
@@ -96,4 +76,61 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
   };
 };
 
-export default createReceiptDetails;
+const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay, success) => {
+  const { owners: ownerDetails, financialYear } = property.propertyDetails[0];
+  const ownerInfo = ownerDetails.map((item, index) => {
+    return {
+      key: `Owner${ownerDetails.length > 1 ? index + 1 : ""} name:`,
+      value: item.name,
+    };
+  });
+  return {
+    propertyInfo: property && [
+      ...ownerInfo,
+      {
+        key: "Existing Property ID:",
+        value: property.oldPropertyId,
+      },
+      {
+        key: "Property Tax Assessment ID:",
+        value: property.propertyId,
+      },
+      {
+        key: "Property Address:",
+        value: getCommaSeperatedAddress(property.address, cities),
+      },
+    ],
+    receiptInfo: [
+      {
+        key: "Assessment No.: ",
+        value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].consumerCode" : "billDetails[0].consumerCode").split(":")[1],
+      },
+      {
+        key: "Receipt No:",
+        value: receiptDetails && get(receiptDetails, success ? "Bill[0].billDetails[0].receiptNumber" : "billDetails[0].receiptNumber"),
+      },
+      {
+        key: "Payment Term:",
+        value: financialYear,
+      },
+      {
+        key: "Date:",
+        value: receiptDetails && getDateFromEpoch(get(receiptDetails, success ? "Bill[0].billDetails[0].receiptDate" : "billDetails[0].billDate")),
+      },
+      {
+        key: "Payable Amount:",
+        value: totalAmountToPay ? totalAmountToPay.toString() : 0,
+      },
+      {
+        key: "Amount Paid:",
+        value: receiptDetails && success ? get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString() : "0",
+      },
+      {
+        key: "Amount Due:",
+        value: receiptDetails && (totalAmountToPay - (success ? get(receiptDetails, "Bill[0].billDetails[0].amountPaid") : 0)).toString(),
+      },
+    ],
+  };
+};
+
+export { createReceiptUIInfo, createReceiptDetails };
