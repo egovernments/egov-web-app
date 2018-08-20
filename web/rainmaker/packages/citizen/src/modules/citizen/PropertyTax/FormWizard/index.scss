@@ -137,6 +137,13 @@
   input[type="radio"]:checked:before {
     background: #fe7a51;
   }
+
+  .rainmaker-card {
+    .rainmaker-card {
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+  }
 }
 
 .propertyAddress {
@@ -165,3 +172,7 @@
 //   background-color: #fe7a51;
 //   content: '';
 // }
+
+.remove-unit-assessment {
+  float: right;
+}

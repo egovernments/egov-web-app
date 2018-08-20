@@ -17,7 +17,7 @@ const formConfig = {
       type: "textfield",
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
-      pattern: /^(\+\d{1,2}[\s-]{0,1})?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^(\+\d{1,2}[-]{0,1})?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
     },
     designation: {
@@ -31,7 +31,7 @@ const formConfig = {
     },
     telephone: {
       id: "authority-telephone",
-      jsonPath: "Properties[0].propertyDetails[0].owners[0].mobileNumber",
+      jsonPath: "Properties[0].propertyDetails[0].owners[0].altContactNumber",
       type: "textfield",
       floatingLabelText: "Landline No.(with STD code)",
       hintText: "Enter Landline No.",

@@ -11,7 +11,7 @@ const GenericForm = ({ form, handleFieldChange, formKey, containerStyle, handleR
       textChildren={
         <div className={`${formKey} col-xs-12`}>
           {handleRemoveItem && (
-            <div className="text-right" style={{ cursor: "pointer" }} onClick={handleRemoveItem}>
+            <div className="remove-unit-assessment" style={{ cursor: "pointer" }} onClick={handleRemoveItem}>
               <Icon action="navigation" name="close" />
             </div>
           )}

@@ -24,7 +24,7 @@ const formConfig = {
       floatingLabelText: "PT_FORM3_MOBILE_NO",
       hintText: "PT_FORM3_MOBILE_NO_PLACEHOLDER",
       required: true,
-      pattern: /^([0]|((\+\d{1,2}[\s-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
+      pattern: /^([0]|((\+\d{1,2}[-]{0,1})))?\(?[6-9]\d{2}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i,
       errorMessage: "Enter valid mobile number",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     },
