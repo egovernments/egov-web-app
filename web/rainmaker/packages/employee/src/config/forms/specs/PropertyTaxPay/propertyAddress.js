@@ -1,4 +1,4 @@
-import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "./utils/reusableFields";
+import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
