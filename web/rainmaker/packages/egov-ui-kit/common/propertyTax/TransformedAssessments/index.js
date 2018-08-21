@@ -112,9 +112,10 @@ var getCompletedTransformedItems = exports.getCompletedTransformedItems = functi
       tenantId: item.tenantId,
       date: (0, _commons.getDateFromEpoch)(item.assessmentDate),
       status: (0, _get2.default)(item, "receiptInfo.status"),
-      consumerCode: index,
+      consumerCode: item.propertyId + ":" + item.assessmentNumber,
       receipt: true,
-      localizationLabels: localizationLabels
+      localizationLabels: localizationLabels,
+      cities: cities
     };
   });
 };

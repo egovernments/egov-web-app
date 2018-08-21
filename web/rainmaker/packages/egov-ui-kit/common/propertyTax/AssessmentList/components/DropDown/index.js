@@ -80,7 +80,7 @@ var downloadReceipt = function () {
 
           case 4:
             payload = _context.sent;
-            receiptDetails = payload && payload.Receipt && (0, _createReceipt2.default)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels);
+            receiptDetails = payload && payload.Receipt && (0, _createReceipt2.default)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
 
             receiptDetails && (0, _receiptsPDF2.default)("pt-reciept-citizen", receiptDetails);
             _context.next = 12;

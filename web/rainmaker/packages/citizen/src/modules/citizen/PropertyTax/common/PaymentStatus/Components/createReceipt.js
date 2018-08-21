@@ -14,6 +14,7 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     }
     return result;
   }, []);
+  console.log("bill details", billAccountDetails);
   const taxArray = transformedHeaders.reduce(
     (result, current) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
@@ -51,6 +52,7 @@ const getBase64FromImageUrl = async (url) => {
 };
 // const url = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${property.tenantId}/logo.png`;
 const getHeaderDetails = (property, cities) => {
+  console.log("cities .... ", cities);
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
   return {
     header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,

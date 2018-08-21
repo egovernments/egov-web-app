@@ -71,7 +71,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //   return yearRange;
 // };
 
-var YearDialogueHOC = (0, _form2.default)({ formKey: "financialYear", path: "PropertyTaxPay" })(_SingleButtonForm2.default);
+var YearDialogueHOC = (0, _form2.default)({ formKey: "financialYear", path: "PropertyTaxPay", isCoreConfiguration: true })(_SingleButtonForm2.default);
 
 var YearDialog = function (_Component) {
   (0, _inherits3.default)(YearDialog, _Component);

@@ -128,9 +128,10 @@ export const getCompletedTransformedItems = (assessmentsByStatus, cities, locali
         tenantId: item.tenantId,
         date: getDateFromEpoch(item.assessmentDate),
         status: get(item, "receiptInfo.status"),
-        consumerCode: index,
+        consumerCode: `${item.propertyId}:${item.assessmentNumber}`,
         receipt: true,
         localizationLabels: localizationLabels,
+        cities: cities,
       };
     })
   );
