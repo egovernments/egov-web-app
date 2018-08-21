@@ -60,6 +60,7 @@ class FormWizard extends Component {
     },
     propertyDetails: {},
     bill: [],
+    partialAmountError: "",
     totalAmountToBePaid: 1,
     isFullPayment: true,
     valueSelected: "Full_Amount",
@@ -106,10 +107,11 @@ class FormWizard extends Component {
     // }
   };
 
-  updateTotalAmount = (value, isFullPayment) => {
+  updateTotalAmount = (value, isFullPayment, errorText) => {
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
+      partialAmountError: errorText,
     });
   };
 
@@ -479,15 +481,15 @@ class FormWizard extends Component {
     let { estimation } = this.state;
     let { totalAmount } = estimation[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount" });
+      this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount", partialAmountError: "" });
     } else {
-      this.setState({ totalAmountToBePaid: 1, valueSelected: "Partial_Amount" });
+      this.setState({ totalAmountToBePaid: 100, valueSelected: "Partial_Amount" });
     }
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
-    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected } = this.state;
+    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected, partialAmountError } = this.state;
     const { onRadioButtonChange, updateTotalAmount } = this;
     switch (selected) {
       case 0:
@@ -539,6 +541,7 @@ class FormWizard extends Component {
             totalAmountToBePaid={totalAmountToBePaid}
             optionSelected={valueSelected}
             importantDates={importantDates}
+            partialAmountError={partialAmountError}
           />
         );
       default:
@@ -1022,6 +1025,8 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
+    const { isFullPayment, partialAmountError } = this.state;
+    if (!isFullPayment && partialAmountError) return
     this.setState({ dialogueOpen: true });
     const { form, prepareFormData } = this.props;
     const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];

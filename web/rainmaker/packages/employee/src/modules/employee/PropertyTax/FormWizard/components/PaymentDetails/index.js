@@ -74,19 +74,33 @@ class PaymentDetails extends Component {
     totalAmountToBePaid: 0,
   };
 
+  getErrorMessage = (value) => {
+    let { totalAmount } = this.props.estimationDetails[0] || {};
+    let errorText = `amount should be numeric`
+    if (isFinite(value) && value >= totalAmount) {
+      errorText = `can't be greater than ${parseInt(totalAmount)-1}`
+    } else if (isFinite(value) && value <= 100) {
+      errorText = "can't be less than 100"
+    }
+    return errorText
+  }
+
   handleFieldChange = (event, value) => {
     let { estimationDetails, updateTotalAmount } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-    if (isNaN(parseFloat(value)) || !isFinite(value) || value > totalAmount - 1 || value <= 1-1) {
+    if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value < 100) {
       this.setState({
-        errorText: `amount should be numeric and can't be greater than ${totalAmount - 1}`,
+        errorText: this.getErrorMessage(value),
+      }, () => {
+        updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
       });
     } else {
       this.setState({
         errorText: "",
+      }, () => {
+        updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
       });
     }
-    updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount");
   };
 
   // onRadioButtonChange = (e) => {
@@ -101,7 +115,7 @@ class PaymentDetails extends Component {
       updateTotalAmount && updateTotalAmount(totalAmount, this.state.valueSelected === "Full_Amount");
       // this.setState({ totalAmountTobePaid: totalAmount, valueSelected: "Full_Amount" });
     } else {
-      updateTotalAmount && updateTotalAmount(0, this.state.valueSelected === "Partial_Amount");
+      updateTotalAmount && updateTotalAmount(100, this.state.valueSelected === "Partial_Amount");
       // this.setState({ totalAmountTobePaid: 0, valueSelected: "Partial_Amount" });
     }
   };
@@ -115,9 +129,8 @@ class PaymentDetails extends Component {
 
   render() {
     const { paymentModeDetails, valueSelected, totalAmountTobePaid, errorText } = this.state;
-    const { estimationDetails, importantDates } = this.props;
+    const { estimationDetails, importantDates, partialAmountError } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
-
     return (
       <div className="payment-details">
         <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
@@ -127,7 +140,7 @@ class PaymentDetails extends Component {
             onRadioButtonChange={this.props.onRadioButtonChange}
             handleFieldChange={this.handleFieldChange}
             optionSelected={this.props.optionSelected}
-            errorText={errorText}
+            errorText={partialAmountError}
             totalAmount={totalAmount && totalAmount}
             estimationDetails={estimationDetails}
           />

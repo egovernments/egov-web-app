@@ -36,6 +36,7 @@ import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess,
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
+import ReactDOM from "react-dom"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -55,8 +56,9 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
-    totalAmountToBePaid: 1,
+    totalAmountToBePaid: 100,
     isFullPayment: true,
+    partialAmountError: "",
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -455,10 +457,11 @@ class FormWizard extends Component {
     }
   };
 
-  updateTotalAmount = (value, isFullPayment) => {
+  updateTotalAmount = (value, isFullPayment, errorText) => {
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
+      partialAmountError: errorText,
     });
   };
 
@@ -505,9 +508,10 @@ class FormWizard extends Component {
               updateTotalAmount={updateTotalAmount}
               currentTenantId={currentTenantId}
               isPartialPaymentInValid={
-                get(this.state, "estimation[0].totalAmount", 1) === 0 ||
+                get(this.state, "estimation[0].totalAmount", 1) < 100 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
               }
+              ref={(reviewFormRef) => { this.reviewFormRef = reviewFormRef }}
             />
           </div>
         );
@@ -927,6 +931,8 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
+    const { isFullPayment, partialAmountError } = this.state;
+    if (!isFullPayment && partialAmountError) return
     this.setState({ dialogueOpen: true });
   };
 
