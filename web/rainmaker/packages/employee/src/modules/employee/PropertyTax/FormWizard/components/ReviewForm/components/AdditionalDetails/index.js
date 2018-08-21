@@ -92,6 +92,7 @@ const AdditionalDetails = ({ optionSelected, handleFieldChange, onRadioButtonCha
                 disabled={optionSelected === "Full_Amount"}
                 required={true}
                 errorText={errorText}
+                underlineDisabledStyle={{ borderBottom: "1px solid #e0e0e0" }}
               />
             </div>
           </div>

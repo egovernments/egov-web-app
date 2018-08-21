@@ -19,7 +19,6 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
       // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
       const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
-      console.log(taxHeadContent);
       taxHeadContent && taxHeadContent[0] && result[1].push({ text: taxHeadContent[0].crAmountToBePaid || "0" });
       return result;
     },
@@ -47,7 +46,6 @@ const getBase64FromImageUrl = async (url) => {
 
     dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   };
-  console.log(dataURL);
 
   return dataURL;
 };

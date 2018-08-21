@@ -82,7 +82,6 @@ const mapStateToProps = (state) => {
   const transformedComplaints = transformComplaintForComponent(complaints, role, employeeById, citizenById, categoriesById, displayStatus);
   const closedComplaints = orderby(transformedComplaints.filter((complaint) => complaint.complaintStatus === "CLOSED"), "latestActionTime", "desc");
   const numClosedComplaints = closedComplaints.length;
-  console.log(numClosedComplaints);
   return { userInfo, closedComplaints, role, loading, numClosedComplaints };
 };
 

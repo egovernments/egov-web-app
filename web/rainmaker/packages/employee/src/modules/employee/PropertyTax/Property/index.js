@@ -97,7 +97,6 @@ class Property extends Component {
   onAssessPayClick = () => {
     const { selPropertyDetails, propertyId, tenantId } = this.props;
     const assessmentNo = selPropertyDetails && selPropertyDetails.assessmentNumber;
-    console.log(assessmentNo);
     this.setState({
       dialogueOpen: true,
       urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,

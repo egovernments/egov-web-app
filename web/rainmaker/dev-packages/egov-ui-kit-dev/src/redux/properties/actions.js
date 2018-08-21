@@ -275,8 +275,7 @@ export const getAssesmentsandStatus = (queryObjectproperty) => {
           });
           return acc;
         }, {});
-      console.log(receiptDetails);
-      console.log(mergeReceiptsInProperty(receiptDetails, finalcc));
+
       dispatch(AssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, finalcc)));
     } catch (error) {
       dispatch(AssessmentStatusFetchError(error.message));

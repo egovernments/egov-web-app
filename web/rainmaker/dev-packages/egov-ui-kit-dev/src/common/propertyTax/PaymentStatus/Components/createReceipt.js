@@ -32,7 +32,6 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
 
 const getHeaderDetails = (property, cities) => {
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
-  console.log(propertyTenant);
 
   return {
     header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
