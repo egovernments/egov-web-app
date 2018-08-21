@@ -15,7 +15,7 @@ import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import get from "lodash/get";
 import "./index.css";
 
-const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay" })(SearchPropertyForm);
+const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(SearchPropertyForm);
 
 class SearchProperty extends Component {
   constructor(props) {

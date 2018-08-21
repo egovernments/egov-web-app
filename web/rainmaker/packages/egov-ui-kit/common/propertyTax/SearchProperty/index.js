@@ -99,7 +99,7 @@ var SearchProperty = function (_Component) {
           oldAssessmentNumber = _ref.oldAssessmentNumber,
           mobileNumber = _ref.mobileNumber;
 
-      console.log(ids);
+      console.log(oldAssessmentNumber, mobileNumber);
       if (!(0, _utils.validateForm)(form)) {
         _this.props.displayFormErrors(formKey);
       } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {

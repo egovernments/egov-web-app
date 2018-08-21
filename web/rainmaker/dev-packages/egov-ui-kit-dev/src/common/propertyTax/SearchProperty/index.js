@@ -41,7 +41,7 @@ class SearchProperty extends Component {
 
   onSearchClick = (form, formKey) => {
     const { city, ids, oldAssessmentNumber, mobileNumber } = form.fields || {};
-    console.log(ids);
+    console.log(oldAssessmentNumber, mobileNumber);
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {

@@ -11,7 +11,7 @@ const buttons = {
   button2: "SAVE",
 };
 
-const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay" })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
 
 const PropertyInformation = () => {
   return (
