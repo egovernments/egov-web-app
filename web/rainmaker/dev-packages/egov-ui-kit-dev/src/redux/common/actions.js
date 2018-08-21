@@ -148,6 +148,7 @@ export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
   return async (dispatch) => {
     try {
       const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+
       dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
     } catch (error) {
       dispatch(generalMDMSFetchError(error.message));
@@ -159,7 +160,7 @@ export const toggleSpinner = () => ({
   type: actionTypes.TOGGLE_SPINNER,
 });
 
-export const updatePrepareFormDataFromDraft = prepareFormData => ({
+export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
   type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
   prepareFormData,
-})
+});

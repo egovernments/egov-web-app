@@ -51,14 +51,12 @@ class YearDialog extends Component {
         ],
       },
     };
-    toggleSpinner();
     fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
-    toggleSpinner();
   };
 
   render() {
     let { open, closeDialogue, getYearList, history, form, removeForm, urlToAppend } = this.props;
-    return (
+    return getYearList ? (
       <Dialog
         open={open}
         children={[
@@ -67,16 +65,15 @@ class YearDialog extends Component {
               <Label label="PT_PROPERTY_TAX_WHICH_YEAR_QUESTIONS" fontSize="16px" color="#484848" />
             </div>
             <div className="year-range-botton-cont">
-              {getYearList &&
-                Object.values(getYearList).map((item, index) => (
-                  <YearDialogueHOC
-                    key={index}
-                    label={item}
-                    history={history}
-                    resetFormWizard={() => resetFormWizard(form, removeForm)}
-                    urlToAppend={urlToAppend}
-                  />
-                ))}
+              {Object.values(getYearList).map((item, index) => (
+                <YearDialogueHOC
+                  key={index}
+                  label={item}
+                  history={history}
+                  resetFormWizard={() => resetFormWizard(form, removeForm)}
+                  urlToAppend={urlToAppend}
+                />
+              ))}
             </div>
           </div>,
         ]}
@@ -85,7 +82,7 @@ class YearDialog extends Component {
         onRequestClose={closeDialogue}
         contentStyle={{ width: "20%" }}
       />
-    );
+    ) : null;
   }
 }
 
@@ -101,7 +98,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     removeForm: (formkey) => dispatch(removeForm(formkey)),
-    toggleSpinner: () => dispatch(toggleSpinner()),
   };
 };
 
