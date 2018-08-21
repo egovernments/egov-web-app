@@ -542,6 +542,10 @@ class FormWizard extends Component {
             optionSelected={valueSelected}
             importantDates={importantDates}
             partialAmountError={partialAmountError}
+            isPartialPaymentInValid={
+              get(this.state, "estimation[0].totalAmount", 1) < 100 ||
+              get(this.props.form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
+            }
           />
         );
       default:

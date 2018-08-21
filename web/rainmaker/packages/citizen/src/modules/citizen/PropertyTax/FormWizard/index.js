@@ -511,7 +511,6 @@ class FormWizard extends Component {
                 get(this.state, "estimation[0].totalAmount", 1) < 100 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
               }
-              ref={(reviewFormRef) => { this.reviewFormRef = reviewFormRef }}
             />
           </div>
         );

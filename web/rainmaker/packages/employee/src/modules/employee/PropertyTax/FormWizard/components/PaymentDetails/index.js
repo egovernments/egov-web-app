@@ -129,12 +129,12 @@ class PaymentDetails extends Component {
 
   render() {
     const { paymentModeDetails, valueSelected, totalAmountTobePaid, errorText } = this.state;
-    const { estimationDetails, importantDates, partialAmountError } = this.props;
+    const { estimationDetails, importantDates, partialAmountError, isPartialPaymentInValid } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
     return (
       <div className="payment-details">
         <TaxBreakUp estimationDetails={estimationDetails} importantDates={importantDates} />
-        {totalAmount > 0 && (
+        {!isPartialPaymentInValid && (
           <AdditionalDetails
             value={this.props.totalAmountToBePaid}
             onRadioButtonChange={this.props.onRadioButtonChange}
@@ -143,6 +143,7 @@ class PaymentDetails extends Component {
             errorText={partialAmountError}
             totalAmount={totalAmount && totalAmount}
             estimationDetails={estimationDetails}
+            isPartialPaymentInValid={isPartialPaymentInValid}
           />
         )}
         {totalAmount > 0 && <PaymentModes paymentModeDetails={paymentModeDetails} PaymentModeSelector={PaymentModeSelector} />}
