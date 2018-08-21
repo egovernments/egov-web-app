@@ -85,6 +85,7 @@ const PaymentAmountDetails = ({ optionSelected, handleFieldChange, onRadioButton
                 underlineFocusStyle={{ borderColor: "#e0e0e0" }}
                 disabled={optionSelected === "Full_Amount"}
                 errorText={errorText}
+                underlineDisabledStyle={{ borderBottom: "1px solid #e0e0e0" }}
               />
             </div>
           </div>
