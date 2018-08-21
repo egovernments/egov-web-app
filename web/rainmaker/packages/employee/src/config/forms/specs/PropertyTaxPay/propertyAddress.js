@@ -1,7 +1,5 @@
-import { CITY } from "egov-ui-kit/utils/endPoints";
 import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "./utils/reusableFields";
-import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-
+import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
 // const Search = <Icon action="action" name="home" color="#30588c" />;
 
 const formConfig = {
@@ -32,7 +30,11 @@ const formConfig = {
       maxLength: 64,
     },
   },
-
+  afterInitForm: (action, store, dispatch) => {
+    let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    dispatch(handleFieldChange("propertyAddress", "city", tenantId));
+    return action;
+  },
   action: "",
   redirectionRoute: "",
   saveUrl: "",

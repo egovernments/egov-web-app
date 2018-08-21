@@ -438,6 +438,8 @@ export const city = {
     required: true,
     type: "singleValueList",
     floatingLabelText: "CORE_COMMON_CITY",
+    className: "pt-emp-property-address-city",
+    disabled: true,
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     fullWidth: true,
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
