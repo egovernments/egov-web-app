@@ -14,7 +14,7 @@ const PastPaymentDetailsForm = ({ handleFieldChange, form }) => {
 };
 
 const PastPaymentDetailsFormHoc = (props) => {
-  const DetailsForm = formHoc({ ...props })(PastPaymentDetailsForm);
+  const DetailsForm = formHoc({ ...props, isCoreConfiguration: true })(PastPaymentDetailsForm);
   return <DetailsForm />;
 };
 

@@ -40,22 +40,27 @@ class FloorDetails extends React.Component {
       if (unitKeys.length === 0) {
         const formKey = `${componentDetails.copyName}_${key}_unit_0`;
         units.push({
-          component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
+          component: formHoc({ ...componentDetails, copyName: formKey, disabled, isCoreConfiguration: true })(GenericForm),
           formKey: formKey,
         });
       } else {
         unitKeys.forEach((formKey, ind) => {
           units.push({
-            component: formHoc({ ...componentDetails, copyName: formKey, disabled })(GenericForm),
+            component: formHoc({ ...componentDetails, copyName: formKey, disabled, isCoreConfiguration: true })(GenericForm),
             formKey: formKey,
           });
         });
       }
       return {
         floorId: key,
-        floorDropDown: formHoc({ formKey: "customSelect", makeCopy: true, copyName: "customSelect_" + key, path: "PropertyTaxPay", disabled })(
-          CustomSelectForm
-        ),
+        floorDropDown: formHoc({
+          formKey: "customSelect",
+          makeCopy: true,
+          copyName: "customSelect_" + key,
+          path: "PropertyTaxPay",
+          disabled,
+          isCoreConfiguration: true,
+        })(CustomSelectForm),
         units,
       };
     });
@@ -93,7 +98,7 @@ class FloorDetails extends React.Component {
     const index = parseInt(unitKeys[unitKeys.length - 1].split("unit_")[1]);
     const formKey = `${componentDetails.copyName}_${floorIndex}_unit_${index + 1}`;
     floors[floorIndex].units.push({
-      component: formHoc({ ...componentDetails, copyName: formKey })(GenericForm),
+      component: formHoc({ ...componentDetails, copyName: formKey, isCoreConfiguration: true })(GenericForm),
       formKey: formKey,
     });
     this.setState({

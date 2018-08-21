@@ -108,7 +108,8 @@ class FormWizard extends Component {
     // }
   };
 
-  configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
+  configOwner = (ownersCount) =>
+    formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay", isCoreConfiguration: true })(OwnerInformation);
 
   addOwner = (isMultiple) => {
     const { ownerInfoArr, ownersCount } = this.state;

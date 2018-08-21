@@ -1,23 +1,9 @@
 import React, { Component } from "react";
-import { List } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-//import PastPaymentDetailsForm from "modules/citizen/PropertyTax/LinkPastPayments/PastPaymentDetailsForm"
-//import XYZ from "modules/citizen/PropertyTax/LinkPastPayments/index"
-import formHoc from "egov-ui-kit/hocs/form";
-import Field from "egov-ui-kit/utils/field";
 import get from "lodash/get";
 import { connect } from "react-redux";
 import { Card, Icon } from "components";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
-// import {
-//   UsageInformationHOC,
-//   PropertyAddressHOC,
-//   OwnershipTypeHOC,
-//   OwnerInfoHOC,
-//   InstitutionHOC,
-//   OwnerInformation,
-//   InstitutionAuthorityHOC,
-// } from "modules/citizen/PropertyTax/FormWizard/components/Forms";
 
 const FormDetails = ({ item }) => {
   return (
