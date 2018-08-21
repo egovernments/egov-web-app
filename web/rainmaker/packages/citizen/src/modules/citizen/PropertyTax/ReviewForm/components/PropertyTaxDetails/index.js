@@ -2,24 +2,26 @@ import React from "react";
 import { Divider } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
+import isUndefined from "lodash/isUndefined";
 import "./index.css";
 
 class PropertyTaxDetails extends React.Component {
   state = {
     isExpanded: true,
-  }
+  };
 
-  toggleExpander = () => this.setState({
-    isExpanded: !this.state.isExpanded,
-  })
+  toggleExpander = () =>
+    this.setState({
+      isExpanded: !this.state.isExpanded,
+    });
 
   componentDidMount = () => {
     document.getElementsByClassName("tax-calculation-card-header")[0].addEventListener("click", this.toggleExpander);
-  }
+  };
 
-  render () {
-    const { estimationDetails, importantDates } = this.props
-    const { isExpanded } = this.state
+  render() {
+    const { estimationDetails, importantDates } = this.props;
+    const { isExpanded } = this.state;
     const { taxHeadEstimates, totalAmount } = estimationDetails[0] || {};
     const { fireCess, intrest, penalty, rebate } = importantDates;
     return (
@@ -47,7 +49,7 @@ class PropertyTaxDetails extends React.Component {
               />
             </div>
           }
-          ref={el => this.xyz = el}
+          ref={(el) => (this.xyz = el)}
         />
         <CardText expandable={true} expanded={true}>
           <div className="clearfix fare-section">
@@ -56,7 +58,7 @@ class PropertyTaxDetails extends React.Component {
               {taxHeadEstimates &&
                 taxHeadEstimates.map((item, index) => {
                   return (
-                    item.estimateAmount > 0 && (
+                    !isUndefined(item.estimateAmount) && (
                       <div key={index} className="clearfix" style={{ marginBottom: 8 }}>
                         <div className="col-sm-9" style={{ padding: 0 }}>
                           <Label label={item.taxHeadCode} />
@@ -65,7 +67,10 @@ class PropertyTaxDetails extends React.Component {
                           <Label
                             containerStyle={{ textAlign: "right" }}
                             className="pt-rf-price"
-                            label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
+                            label={
+                              (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
+                              `${item.estimateAmount}`
+                            }
                           />
                         </div>
                       </div>
@@ -125,6 +130,6 @@ class PropertyTaxDetails extends React.Component {
       </Card>
     );
   }
-};
+}
 
 export default PropertyTaxDetails;

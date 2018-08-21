@@ -2,6 +2,7 @@ import React from "react";
 import { Divider, Icon } from "components";
 import { Card, CardHeader, CardText } from "material-ui/Card";
 import Label from "egov-ui-kit/utils/translationNode";
+import isUndefined from "lodash/isUndefined";
 
 const AdditionalDetails = ({ estimationDetails, importantDates }) => {
   const { taxHeadEstimates, totalAmount } = (estimationDetails && estimationDetails[0]) || {};
@@ -39,7 +40,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
             {taxHeadEstimates &&
               taxHeadEstimates.map((item, index) => {
                 return (
-                  item.estimateAmount > 0 && (
+                  !isUndefined(item.estimateAmount) && (
                     <div key={index} className="clearfix" style={{ marginBottom: 8 }}>
                       <div className="col-sm-9" style={{ padding: 0 }}>
                         <Label label={item.taxHeadCode} />
@@ -48,7 +49,10 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                         <Label
                           containerStyle={{ textAlign: "right" }}
                           className="pt-rf-price"
-                          label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
+                          label={
+                            (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
+                            `${item.estimateAmount}`
+                          }
                         />
                       </div>
                     </div>

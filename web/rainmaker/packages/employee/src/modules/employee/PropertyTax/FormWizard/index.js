@@ -991,15 +991,15 @@ class FormWizard extends Component {
   getHeaderLabel = (selected) => {
     switch (selected) {
       case 0:
-        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM1_HEADER_MESSAGE" />;
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_EMP_FORM1_HEADER_MESSAGE" />;
       case 1:
-        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM2_HEADER_MESSAGE" />;
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_EMP_FORM2_HEADER_MESSAGE" />;
       case 2:
-        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM3_HEADER_MESSAGE" />;
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_EMP_FORM3_HEADER_MESSAGE" />;
       case 3:
-        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM4_HEADER_MESSAGE" />;
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_EMP_FORM4_HEADER_MESSAGE" />;
       case 4:
-        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_FORM5_HEADER_MESSAGE" />;
+        return <Label containerStyle={{ marginTop: 12 }} fontSize="16px" color="#484848" label="PT_EMP_FORM5_HEADER_MESSAGE" />;
     }
   };
 

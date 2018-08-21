@@ -2,6 +2,7 @@ import React from "react";
 import { Divider, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Card, CardHeader, CardText } from "material-ui/Card";
+import isUndefined from "lodash/isUndefined";
 import "./index.css";
 
 class PropertyTaxDetails extends React.Component {
@@ -52,7 +53,7 @@ class PropertyTaxDetails extends React.Component {
                 {taxHeadEstimates &&
                   taxHeadEstimates.map((item, index) => {
                     return (
-                      item.estimateAmount > 0 && (
+                      !isUndefined(item.estimateAmount) && (
                         <div className="clearfix" style={{ marginBottom: 8 }}>
                           <div className="col-sm-9" style={{ padding: 0 }}>
                             <Label label={item.taxHeadCode} />
@@ -61,7 +62,10 @@ class PropertyTaxDetails extends React.Component {
                             <Label
                               containerStyle={{ textAlign: "right" }}
                               className="pt-rf-price"
-                              label={(item.category === "EXEMPTION" || item.category === "REBATE" ? "- " : "") + `${item.estimateAmount}`}
+                              label={
+                                (item.estimateAmount > 0 && (item.category === "EXEMPTION" || item.category === "REBATE") ? "- " : "") +
+                                `${item.estimateAmount}`
+                              }
                             />
                           </div>
                         </div>

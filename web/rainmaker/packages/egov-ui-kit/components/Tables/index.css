@@ -19,10 +19,12 @@
 .material-table-pagination span {
   font-size: 14px; }
 
-.MuiTableCell-numeric-42 {
+.MuiTableCell-numeric-42,
+.jss42 {
   text-align: center !important; }
 
-.MuiTableCell-root-38 {
+.MuiTableCell-root-38,
+.jss38 {
   padding: 4px 8px 4px 8px !important; }
 
 .TableUi-tableWrapper-3 {
