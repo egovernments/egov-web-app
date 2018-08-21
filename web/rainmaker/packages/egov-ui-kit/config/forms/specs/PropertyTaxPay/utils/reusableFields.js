@@ -13,9 +13,9 @@ var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
-var _enableDependentFields = require("modules/employee/PropertyTax/FormWizard/utils/enableDependentFields");
+var _enableDependentFields = require("./enableDependentFields");
 
-var _removeFloors = require("modules/employee/PropertyTax/FormWizard/utils/removeFloors");
+var _removeFloors = require("./removeFloors");
 
 var _actions2 = require("egov-ui-kit/redux/form/actions");
 

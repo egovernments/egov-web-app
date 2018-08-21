@@ -1,7 +1,7 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
-import { removeFormKey } from "modules/employee/PropertyTax/FormWizard/utils/removeFloors";
+import { setDependentFields } from "./enableDependentFields";
+import { removeFormKey } from "./removeFloors";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import set from "lodash/set";
 import get from "lodash/get";
