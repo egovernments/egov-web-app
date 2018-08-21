@@ -23,7 +23,7 @@ var PTList = function PTList(_ref) {
       label = _ref.label,
       onItemClick = _ref.onItemClick,
       innerDivStyle = _ref.innerDivStyle,
-      listItemStyle = _ref.listItemStyle;
+      hoverColor = _ref.hoverColor;
 
   return _react2.default.createElement(
     "div",
@@ -44,7 +44,8 @@ var PTList = function PTList(_ref) {
         listItemStyle: { padding: "0px 20px", borderWidth: "10px 10px 0px" },
         nestedListStyle: { padding: "0px" },
         primaryTogglesNestedList: true,
-        onItemClick: onItemClick
+        onItemClick: onItemClick,
+        hoverColor: hoverColor
       })
     })
   );

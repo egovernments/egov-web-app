@@ -42,6 +42,7 @@ import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
 import SearchProperty from "egov-ui-kit/common/propertyTax/SearchProperty";
 import PropertyInformation from "egov-ui-kit/common/propertyTax/PropertyInformation";
 import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
+import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
 
 export {
   Banner,
@@ -81,4 +82,5 @@ export {
   PropertyInformation,
   AssessmentList,
   Dashboard,
+  YearDialogue,
 };

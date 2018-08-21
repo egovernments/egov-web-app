@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTransformedItems = undefined;
+exports.getCompletedTransformedItems = exports.getTransformedItems = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -18,6 +18,10 @@ var _commons = require("egov-ui-kit/utils/commons");
 var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
+
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -70,4 +74,47 @@ var getTransformedItems = exports.getTransformedItems = function getTransformedI
     acc = [].concat((0, _toConsumableArray3.default)(acc), (0, _toConsumableArray3.default)(propertyDetail));
     return acc;
   }, []);
+};
+
+var getCompletedTransformedItems = exports.getCompletedTransformedItems = function getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels) {
+  return assessmentsByStatus && Object.values(assessmentsByStatus).map(function (item, index) {
+    return {
+      primaryText: _react2.default.createElement(_translationNode2.default, {
+        label: "INR " + (0, _get2.default)(item, "receiptInfo.totalAmount"),
+        fontSize: "16px",
+        color: "#484848",
+        bold: true,
+        labelStyle: primaryTextLabelStyle
+      }),
+      secondaryText: _react2.default.createElement(
+        "div",
+        { style: { height: "auto", marginTop: 0 } },
+        _react2.default.createElement(_translationNode2.default, { label: item && item.financialYear, containerStyle: secondaryTextContainer, labelStyle: secondaryTextLabelStyle, color: "#484848" }),
+        _react2.default.createElement(_translationNode2.default, {
+          label: (0, _commons.getCommaSeperatedAddress)(item.address, cities),
+          containerStyle: secondaryTextContainer,
+          labelStyle: secondaryTextLabelStyle,
+          color: "#484848"
+        }),
+        _react2.default.createElement(_translationNode2.default, {
+          label: "Assessment No.: " + item.assessmentNumber,
+          containerStyle: secondaryTextContainer,
+          labelStyle: secondaryTextLabelStyle,
+          color: "#484848"
+        })
+      ),
+      epocDate: item.assessmentDate,
+      financialYear: item.financialYear,
+      assessmentNo: item.assessmentNumber,
+      propertyId: item.propertyId,
+      propertyDetails: item,
+      property: item.property,
+      tenantId: item.tenantId,
+      date: (0, _commons.getDateFromEpoch)(item.assessmentDate),
+      status: (0, _get2.default)(item, "receiptInfo.status"),
+      consumerCode: index,
+      receipt: true,
+      localizationLabels: localizationLabels
+    };
+  });
 };

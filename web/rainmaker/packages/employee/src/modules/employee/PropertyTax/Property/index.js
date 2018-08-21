@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
-import { AssessmentList } from "modules/common";
+import { AssessmentList, YearDialogue } from "modules/common";
 import { Screen } from "modules/common";
 import { Icon } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
-import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
+import { fetchProperties, getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
 import PropertyInformation from "./components/PropertyInformation";
+import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/TransformedAssessments";
 import isEqual from "lodash/isEqual";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -38,6 +40,7 @@ class Property extends Component {
     this.state = {
       pathName: null,
       dialogueOpen: false,
+      urlToAppend: "",
     };
   }
 
@@ -85,21 +88,23 @@ class Property extends Component {
     renderCustomTitleForPt(customTitle);
   };
 
+  onListItemClick = (item) => {
+    const { getSingleAssesmentandStatus } = this.props;
+    const { route } = item;
+    route && getSingleAssesmentandStatus(route);
+  };
+
+  onAssessPayClick = () => {
+    const { selPropertyDetails, propertyId, tenantId } = this.props;
+    const assessmentNo = selPropertyDetails && selPropertyDetails.assessmentNumber;
+    console.log(assessmentNo);
+    this.setState({
+      dialogueOpen: true,
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+    });
+  };
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, tenantId, history, transformedAssessments } = props;
-    console.log(propertyItems);
-    const viewAllAssessmentItem = {
-      primaryText: (
-        <div
-          onClick={() => {
-            history.push(`/property-tax/my-properties/property/view-assessments/${propertyId}`);
-          }}
-        >
-          <Label label="PT_PROPERTY_VIEW_ALL_ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
-        </div>
-      ),
-    };
-    transformedAssessments && transformedAssessments.push(viewAllAssessmentItem);
+    const { propertyItems, propertyId, tenantId, history, sortedAssessments, selPropertyDetails } = props;
     return [
       {
         primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -110,7 +115,15 @@ class Property extends Component {
         ),
         nestedItems: [
           {
-            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} tenantId={tenantId} />,
+            secondaryText: (
+              <PropertyInformation
+                items={propertyItems}
+                propertyTaxAssessmentID={propertyId}
+                history={history}
+                tenantId={tenantId}
+                onButtonClick={this.onAssessPayClick}
+              />
+            ),
           },
         ],
         rightIcon: (
@@ -127,7 +140,8 @@ class Property extends Component {
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
           </div>
         ),
-        nestedItems: transformedAssessments,
+        route: selPropertyDetails,
+        nestedItems: sortedAssessments && sortedAssessments,
         rightIcon: (
           <div style={IconStyle}>
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
@@ -144,23 +158,26 @@ class Property extends Component {
     }
   };
 
-  closeReceiptDialogue = () => {
+  closeYearRangeDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
 
   render() {
-    const { history, transformedAssessments } = this.props;
-
+    const { history } = this.props;
+    const { closeYearRangeDialogue } = this;
+    const { dialogueOpen, urlToAppend } = this.state;
     return (
       <Screen>
-        {transformedAssessments && (
-          <AssessmentList
-            items={this.getAssessmentListItems(this.props)}
-            innerDivStyle={innerDivStyle}
-            listItemStyle={listItemStyle}
-            history={history}
-          />
-        )}
+        <AssessmentList
+          onItemClick={this.onListItemClick}
+          items={this.getAssessmentListItems(this.props)}
+          innerDivStyle={innerDivStyle}
+          listItemStyle={listItemStyle}
+          history={history}
+          hoverColor="#fff"
+        />
+
+        {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
       </Screen>
     );
   }
@@ -315,11 +332,11 @@ const getLatestPropertyDetails = (propertyDetailsArray) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { urls } = state.app;
+  const { urls, localizationLabels } = state.app;
   const { common } = state;
   const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
-  const { propertiesById } = state.properties || {};
+  const { propertiesById, singleAssessmentByStatus } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
   const tenantId = ownProps.match.params.tenantId;
   const selPropertyDetails = propertiesById[propertyId] || {};
@@ -340,27 +357,17 @@ const mapStateToProps = (state, ownProps) => {
   const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
-  const { propertyDetails } = selPropertyDetails;
-  let transformedAssessments =
-    propertyDetails &&
-    Object.values(propertyDetails).map((assessment, index) => {
-      return {
-        primaryText: <Label label={assessment.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-        status: "ASSESS & PAY",
-        receipt: true,
-        assessmentNo: assessment.assessmentNumber,
-        financialYear: assessment.financialYear,
-        propertyId: propertyId,
-      };
-    });
-  return { urls, propertyItems, tenantId, propertyId, customTitle, transformedAssessments };
+  const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
+  const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  return { urls, propertyItems, tenantId, propertyId, customTitle, selPropertyDetails, sortedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+    // addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     fetchProperties: (queryObjectProperty) => dispatch(fetchProperties(queryObjectProperty)),
+    getSingleAssesmentandStatus: (queryObj) => dispatch(getSingleAssesmentandStatus(queryObj)),
   };
 };
 

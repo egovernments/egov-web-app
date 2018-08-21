@@ -152,6 +152,7 @@ const AssessmentList = ({
   yearDialogue,
   closeDialogue,
   onNewPropertyButtonClick,
+  hoverColor,
 }) => {
   return items.length == 0 ? (
     <BlankAssessment
@@ -169,6 +170,7 @@ const AssessmentList = ({
       onItemClick={onItemClick}
       innerDivStyle={innerDivStyle}
       listItemStyle={listItemStyle}
+      hoverColor={hoverColor}
     />
   );
 };

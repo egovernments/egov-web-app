@@ -175,7 +175,8 @@ var AssessmentList = function AssessmentList(_ref) {
       noAssessmentMessage = _ref.noAssessmentMessage,
       yearDialogue = _ref.yearDialogue,
       closeDialogue = _ref.closeDialogue,
-      onNewPropertyButtonClick = _ref.onNewPropertyButtonClick;
+      onNewPropertyButtonClick = _ref.onNewPropertyButtonClick,
+      hoverColor = _ref.hoverColor;
 
   return items.length == 0 ? _react2.default.createElement(_BlankAssessment2.default, {
     noAssessmentMessage: noAssessmentMessage,
@@ -189,7 +190,8 @@ var AssessmentList = function AssessmentList(_ref) {
     history: history,
     onItemClick: onItemClick,
     innerDivStyle: innerDivStyle,
-    listItemStyle: listItemStyle
+    listItemStyle: listItemStyle,
+    hoverColor: hoverColor
   });
 };
 

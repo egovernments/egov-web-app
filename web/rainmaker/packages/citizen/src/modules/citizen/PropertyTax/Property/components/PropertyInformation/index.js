@@ -4,18 +4,28 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 
-const ReceiptItems = ({ items, propertyTaxAssessmentID, history }) => {
+const ReceiptItems = ({ items, propertyTaxAssessmentID, history, onButtonClick }) => {
   return (
     <div>
-      <div className="receipt-displayInline">
-        <Icon action="action" name="assignment" color="#767676" />
-        <Label
-          bold={true}
-          label={`Property Tax Assessment ID.: ${propertyTaxAssessmentID}`}
-          containerStyle={{ marginLeft: "13px" }}
-          labelStyle={{ letterSpacing: 0 }}
-          color="#767676"
-        />
+      <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
+        <div className="receipt-displayInline">
+          <Icon action="action" name="assignment" color="#767676" />
+          <Label
+            bold={true}
+            label={`Property Tax Assessment ID.: ${propertyTaxAssessmentID}`}
+            containerStyle={{ marginLeft: "13px" }}
+            labelStyle={{ letterSpacing: 0 }}
+            color="#767676"
+          />
+        </div>
+        <div className="receipt-displayInline text-right" style={{ cursor: "pointer", marginRight: 5 }}>
+          <Button
+            onClick={onButtonClick}
+            label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
+            primary={true}
+            style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
+          />
+        </div>
       </div>
       <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
       <div>

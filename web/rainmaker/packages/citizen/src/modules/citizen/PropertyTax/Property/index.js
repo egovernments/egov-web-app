@@ -43,20 +43,12 @@ class Property extends Component {
     this.state = {
       pathName: null,
       dialogueOpen: false,
+      urlToAppend: "",
     };
   }
 
   componentDidMount = () => {
-    const {
-      location,
-      addBreadCrumbs,
-      fetchGeneralMDMSData,
-      selPropertyDetails,
-      getSingleAssesmentandStatus,
-      renderCustomTitleForPt,
-      customTitle,
-      fetchProperties,
-    } = this.props;
+    const { location, addBreadCrumbs, fetchGeneralMDMSData, renderCustomTitleForPt, customTitle, fetchProperties } = this.props;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -109,24 +101,17 @@ class Property extends Component {
     route && getSingleAssesmentandStatus(route);
   };
 
+  onAssessPayClick = () => {
+    const { selPropertyDetails, propertyId, tenantId } = this.props;
+    const assessmentNo = selPropertyDetails && selPropertyDetails.assessmentNumber;
+    this.setState({
+      dialogueOpen: true,
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+    });
+  };
+
   getAssessmentListItems = (props) => {
     const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails } = props;
-    const viewAllAssessmentItem = {
-      primaryText: (
-        <Button
-          onClick={() => {
-            this.setState({
-              dialogueOpen: true,
-            });
-          }}
-          label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
-          value={propertyId}
-          primary={true}
-          style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
-        />
-      ),
-    };
-    sortedAssessments && sortedAssessments.push(viewAllAssessmentItem);
     return [
       {
         primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -137,7 +122,14 @@ class Property extends Component {
         ),
         nestedItems: [
           {
-            secondaryText: <PropertyInformation items={propertyItems} propertyTaxAssessmentID={propertyId} history={history} />,
+            secondaryText: (
+              <PropertyInformation
+                items={propertyItems}
+                propertyTaxAssessmentID={propertyId}
+                history={history}
+                onButtonClick={this.onAssessPayClick}
+              />
+            ),
           },
         ],
         rightIcon: (
@@ -179,7 +171,7 @@ class Property extends Component {
   render() {
     const { urls, location, history } = this.props;
     const { closeYearRangeDialogue } = this;
-    const { dialogueOpen } = this.state;
+    const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
@@ -198,7 +190,7 @@ class Property extends Component {
             history={history}
           />
         }
-        {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />}
+        {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
       </Screen>
     );
   }
@@ -345,6 +337,7 @@ const mapStateToProps = (state, ownProps) => {
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById, singleAssessmentByStatus, loading } = state.properties || {};
   const propertyId = ownProps.match.params.propertyId;
+  const tenantId = ownProps.match.params.tenantId;
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
@@ -365,7 +358,7 @@ const mapStateToProps = (state, ownProps) => {
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
   const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { urls, propertyItems, propertyId, customTitle, selPropertyDetails, sortedAssessments };
+  return { urls, propertyItems, propertyId, tenantId, customTitle, selPropertyDetails, sortedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
