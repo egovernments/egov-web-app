@@ -140,7 +140,8 @@ var SearchProperty = function (_Component) {
         var button = _react2.default.createElement(_components.Button, {
           onClick: userType === "CITIZEN" ? function () {
             _this.setState({
-              dialogueOpen: true
+              dialogueOpen: true,
+              urlToAppend: "/property-tax/assessment-form?assessmentId=" + assessmentNo + "&isReassesment=true&propertyId=" + propertyId + "&tenantId=" + tenantId
             });
           } : function (e) {
             history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
@@ -174,7 +175,8 @@ var SearchProperty = function (_Component) {
     _this.state = {
       dialogueOpen: false,
       searchResult: [],
-      showTable: false
+      showTable: false,
+      urlToAppend: ""
     };
     return _this;
   }
@@ -188,7 +190,9 @@ var SearchProperty = function (_Component) {
           history = _props.history,
           propertiesFound = _props.propertiesFound,
           loading = _props.loading;
-      var showTable = this.state.showTable;
+      var _state = this.state,
+          showTable = _state.showTable,
+          urlToAppend = _state.urlToAppend;
       var closeYearRangeDialogue = this.closeYearRangeDialogue;
 
       var urlArray = [];
@@ -226,7 +230,7 @@ var SearchProperty = function (_Component) {
             })
           )
         ),
-        _react2.default.createElement(_YearDialogue2.default, { open: this.state.dialogueOpen, history: history, closeDialogue: closeYearRangeDialogue })
+        _react2.default.createElement(_YearDialogue2.default, { open: this.state.dialogueOpen, history: history, urlToAppend: urlToAppend, closeDialogue: closeYearRangeDialogue })
       );
     }
   }]);

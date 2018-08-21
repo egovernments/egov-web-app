@@ -27,6 +27,7 @@ class SearchProperty extends Component {
       dialogueOpen: false,
       searchResult: [],
       showTable: false,
+      urlToAppend: "",
     };
   }
 
@@ -79,6 +80,7 @@ class SearchProperty extends Component {
               ? () => {
                   this.setState({
                     dialogueOpen: true,
+                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
@@ -114,7 +116,7 @@ class SearchProperty extends Component {
 
   render() {
     const { urls, location, history, propertiesFound, loading } = this.props;
-    const { showTable } = this.state;
+    const { showTable, urlToAppend } = this.state;
     const { closeYearRangeDialogue } = this;
     let urlArray = [];
     const pathname = location && location.pathname;
@@ -143,7 +145,7 @@ class SearchProperty extends Component {
               </div>
             </div>
           )}
-        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />
+        <YearDialogue open={this.state.dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />
       </Screen>
     );
   }

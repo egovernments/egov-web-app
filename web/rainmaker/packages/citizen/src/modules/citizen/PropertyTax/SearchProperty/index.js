@@ -83,10 +83,6 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? () => {
-                  // history &&
-                  //   history.push(
-                  //     `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`
-                  //   );
                   this.setState({
                     dialogueOpen: true,
                     urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,

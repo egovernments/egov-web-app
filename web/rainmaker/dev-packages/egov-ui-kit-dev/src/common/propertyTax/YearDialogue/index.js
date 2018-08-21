@@ -62,8 +62,8 @@ class YearDialog extends Component {
   };
 
   render() {
-    let { open, closeDialogue, getYearList, history, urlToAppend } = this.props;
-    return (
+    let { open, closeDialogue, getYearList, history, form, removeForm, urlToAppend } = this.props;
+    return getYearList ? (
       <Dialog
         open={open}
         children={[
@@ -74,7 +74,13 @@ class YearDialog extends Component {
             <div className="year-range-botton-cont">
               {getYearList &&
                 Object.values(getYearList).map((item, index) => (
-                  <YearDialogueHOC key={index} label={item} history={history} resetFormWizard={this.resetForm} urlToAppend={urlToAppend} />
+                  <YearDialogueHOC
+                    key={index}
+                    label={item}
+                    history={history}
+                    resetFormWizard={() => resetFormWizard(form, removeForm)}
+                    urlToAppend={urlToAppend}
+                  />
                 ))}
             </div>
           </div>,
@@ -84,7 +90,7 @@ class YearDialog extends Component {
         onRequestClose={closeDialogue}
         contentStyle={{ width: "20%" }}
       />
-    );
+    ) : null;
   }
 }
 

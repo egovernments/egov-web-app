@@ -118,16 +118,16 @@ var YearDialog = function (_Component) {
   (0, _createClass3.default)(YearDialog, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props,
           open = _props.open,
           closeDialogue = _props.closeDialogue,
           getYearList = _props.getYearList,
           history = _props.history,
+          form = _props.form,
+          removeForm = _props.removeForm,
           urlToAppend = _props.urlToAppend;
 
-      return _react2.default.createElement(_components.Dialog, {
+      return getYearList ? _react2.default.createElement(_components.Dialog, {
         open: open,
         children: [_react2.default.createElement(
           "div",
@@ -141,7 +141,15 @@ var YearDialog = function (_Component) {
             "div",
             { className: "year-range-botton-cont" },
             getYearList && Object.values(getYearList).map(function (item, index) {
-              return _react2.default.createElement(YearDialogueHOC, { key: index, label: item, history: history, resetFormWizard: _this2.resetForm, urlToAppend: urlToAppend });
+              return _react2.default.createElement(YearDialogueHOC, {
+                key: index,
+                label: item,
+                history: history,
+                resetFormWizard: function resetFormWizard() {
+                  return (0, _PTCommon.resetFormWizard)(form, removeForm);
+                },
+                urlToAppend: urlToAppend
+              });
             })
           )
         )],
@@ -149,7 +157,7 @@ var YearDialog = function (_Component) {
         isClose: false,
         onRequestClose: closeDialogue,
         contentStyle: { width: "20%" }
-      });
+      }) : null;
     }
   }]);
   return YearDialog;

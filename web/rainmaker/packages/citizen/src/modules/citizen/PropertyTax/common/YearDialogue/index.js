@@ -7,7 +7,6 @@ import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
-import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
 // const getYearList = () => {
