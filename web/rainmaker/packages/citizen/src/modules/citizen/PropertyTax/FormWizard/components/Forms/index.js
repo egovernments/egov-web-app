@@ -195,17 +195,17 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
   );
 };
 
-const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" })(GenericForm);
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay" })(GenericForm);
+const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" ,isCoreConfiguration:true })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay",isCoreConfiguration:true })(GenericForm);
 //const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
-const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
-const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
-const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
-const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm);
+const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" ,isCoreConfiguration:true })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay",isCoreConfiguration:true  })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay",isCoreConfiguration:true  })(GenericForm);
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" ,isCoreConfiguration:true})(GenericForm);
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
-const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(
+const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution",isCoreConfiguration:true })(
   InstitutionAuthority
 );
 

@@ -46,13 +46,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var form = function form(_ref) {
   var formKey = _ref.formKey,
-      _ref$path = _ref.path,
-      path = _ref$path === undefined ? "" : _ref$path,
+      path = _ref.path,
       copyName = _ref.copyName,
       rowData = _ref.rowData,
+      isCoreConfiguration = _ref.isCoreConfiguration,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "copyName", "rowData", "edit"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "copyName", "rowData", "isCoreConfiguration", "edit"]);
   return function (Form) {
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
@@ -89,7 +89,9 @@ var form = function form(_ref) {
         var extraFields = rest.extraFields;
 
         try {
-          if (path && path !== "") {
+          if (isCoreConfiguration && path) {
+            _this.formConfig = require("egov-ui-kit/config/forms/specs/" + path + "/" + formKey).default;
+          } else if (path) {
             _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
             _this.formConfig = require("config/forms/specs/" + formKey).default;

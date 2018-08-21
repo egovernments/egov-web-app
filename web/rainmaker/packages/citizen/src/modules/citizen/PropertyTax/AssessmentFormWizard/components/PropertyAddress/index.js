@@ -3,7 +3,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import PropertyAddressForm from "./components/PropertyAddressForm";
 import { Screen } from "modules/common";
 
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress" })(PropertyAddressForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress",isCoreConfiguration:true,path:"PropertyTaxPay" })(PropertyAddressForm);
 
 class PropertyAddress extends Component {
   render() {

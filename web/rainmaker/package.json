@@ -12,6 +12,7 @@
     "dev:employee": "cd packages/employee && npm start",
     "prod:citizen": "cd packages/citizen && npm run build",
     "prod:employee": "cd packages/employee && npm run build",
+    "egov-ui-kit-config": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/config --out-dir packages/egov-ui-kit/config --copy-files",
     "egov-ui-kit-components": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/components --out-dir packages/egov-ui-kit/components --copy-files",
     "egov-ui-kit-redux": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/redux --out-dir packages/egov-ui-kit/redux --copy-files",
     "egov-ui-kit-utils": "npm run build-css && babel dev-packages/egov-ui-kit-dev/src/utils --out-dir packages/egov-ui-kit/utils --copy-files",

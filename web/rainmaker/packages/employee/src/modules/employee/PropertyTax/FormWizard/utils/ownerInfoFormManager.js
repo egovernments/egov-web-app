@@ -3,7 +3,7 @@ import GenericForm from "../components/GenericForm";
 
 const combinationToFormkeyMapping = {
   Institution: {
-    ownerForm: formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm),
+    ownerForm: formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" ,isCoreConfiguration:true})(GenericForm),
   },
 };
 

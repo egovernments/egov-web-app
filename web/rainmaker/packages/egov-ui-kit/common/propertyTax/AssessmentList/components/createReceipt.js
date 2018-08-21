@@ -66,12 +66,9 @@ var getBase64FromImageUrl = function () {
 
           case 4:
             img.onload = _context.sent;
-
-            console.log(dataURL);
-
             return _context.abrupt("return", dataURL);
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -88,7 +85,6 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   var propertyTenant = cities.filter(function (item) {
     return item.code === property.tenantId;
   });
-  console.log(propertyTenant);
   return {
     header: propertyTenant[0].name + " MUNICIPAL CORPORATION",
     subheader: "Property Tax Payment Receipt (Citizen Copy)",

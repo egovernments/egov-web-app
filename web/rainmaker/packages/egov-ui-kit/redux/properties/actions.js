@@ -403,24 +403,23 @@ var getAssesmentsandStatus = exports.getAssesmentsandStatus = function getAssesm
                 return acc;
               }, {});
 
-              console.log(receiptDetails);
-              console.log(mergeReceiptsInProperty(receiptDetails, finalcc));
+
               dispatch(AssessmentStatusFetchComplete(mergeReceiptsInProperty(receiptDetails, finalcc)));
-              _context3.next = 22;
+              _context3.next = 20;
               break;
 
-            case 19:
-              _context3.prev = 19;
+            case 17:
+              _context3.prev = 17;
               _context3.t0 = _context3["catch"](1);
 
               dispatch(AssessmentStatusFetchError(_context3.t0.message));
 
-            case 22:
+            case 20:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, undefined, [[1, 19]]);
+      }, _callee3, undefined, [[1, 17]]);
     }));
 
     return function (_x3) {
