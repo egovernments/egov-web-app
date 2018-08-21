@@ -18,7 +18,7 @@ import "./index.css";
 
 const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
 
-const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay" })(SearchPropertyForm);
+const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(SearchPropertyForm);
 
 class SearchProperty extends Component {
   constructor(props) {
@@ -41,6 +41,7 @@ class SearchProperty extends Component {
 
   onSearchClick = (form, formKey) => {
     const { city, ids, oldAssessmentNumber, mobileNumber } = form.fields || {};
+    console.log(ids);
     if (!validateForm(form)) {
       this.props.displayFormErrors(formKey);
     } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {

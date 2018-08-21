@@ -70,7 +70,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
 
-var PropertySearchFormHOC = (0, _form2.default)({ formKey: "searchProperty", path: "PropertyTaxPay" })(_SearchPropertyForm2.default);
+var PropertySearchFormHOC = (0, _form2.default)({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(_SearchPropertyForm2.default);
 
 var SearchProperty = function (_Component) {
   (0, _inherits3.default)(SearchProperty, _Component);
@@ -99,6 +99,7 @@ var SearchProperty = function (_Component) {
           oldAssessmentNumber = _ref.oldAssessmentNumber,
           mobileNumber = _ref.mobileNumber;
 
+      console.log(ids);
       if (!(0, _utils.validateForm)(form)) {
         _this.props.displayFormErrors(formKey);
       } else if (!oldAssessmentNumber.value && !ids.value && !mobileNumber.value) {
