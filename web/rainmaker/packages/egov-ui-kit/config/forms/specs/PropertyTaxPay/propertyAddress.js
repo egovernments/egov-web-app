@@ -47,7 +47,8 @@ var formConfig = {
         },
         dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [{
-          fieldKey: "mohalla"
+          fieldKey: "mohalla",
+          hierarchyType: "REVENUE"
         }]
       }
     },
@@ -107,8 +108,7 @@ var formConfig = {
         action: "",
         queryParams: [],
         requestBody: {},
-        isDependent: true,
-        dataPath: "$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==" + cityCode + ")]..children[?(@.label=='Locality')]"
+        isDependent: true
       },
       dropDownData: [],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },

@@ -41,6 +41,7 @@ const formConfig = {
         dependants: [
           {
             fieldKey: "mohalla",
+            hierarchyType: "REVENUE",
           },
         ],
       },
@@ -102,7 +103,6 @@ const formConfig = {
         queryParams: [],
         requestBody: {},
         isDependent: true,
-        dataPath: `$.TenantBoundary.*.boundary[?(@.label=='City'&&@.code==${cityCode})]..children[?(@.label=='Locality')]`,
       },
       dropDownData: [],
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
