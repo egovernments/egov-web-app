@@ -297,6 +297,7 @@ var fetchGeneralMDMSData = exports.fetchGeneralMDMSData = function fetchGeneralM
             case 3:
               payload = _context5.sent;
 
+
               dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
               _context5.next = 10;
               break;

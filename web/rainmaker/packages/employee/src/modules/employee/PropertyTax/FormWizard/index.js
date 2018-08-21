@@ -228,8 +228,8 @@ class FormWizard extends Component {
           "UsageCategoryMinor",
           "UsageCategorySubMinor",
         ]);
-        const documentTypeMdms = await getDocumentTypes()
-        if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
+        const documentTypeMdms = await getDocumentTypes();
+        if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
       this.setState(
         {
@@ -269,21 +269,27 @@ class FormWizard extends Component {
   componentWillMount = () => {};
 
   componentDidMount = async () => {
-    let { history, location, fetchMDMDDocumentTypeSuccess } = this.props;
+    let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt } = this.props;
     let { search } = location;
     let financialYearFromQuery = window.location.search.split("FY=")[1];
+    const propertyId = this.getAssessmentId(search, "propertyId");
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
+
     if (financialYearFromQuery) {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
       this.setState({
         financialYearFromQuery,
       });
     }
+    const customTitle = isReassesment
+      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
+      : `Property Assessment (${financialYearFromQuery}) : New Property`;
     const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = this.getAssessmentId(search, "type");
     if (assessmentId && !isFreshAssesment) this.fetchDraftDetails(assessmentId);
     this.addOwner(true);
-    const documentTypeMdms = await getDocumentTypes()
-    if(!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms)
+    const documentTypeMdms = await getDocumentTypes();
+    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
     if (this.props.location.search.split("&").length > 3) {
       try {
         let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
@@ -298,6 +304,7 @@ class FormWizard extends Component {
         // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
       }
     }
+    renderCustomTitleForPt(customTitle);
   };
 
   getImportantDates = async (financialYearFromQuery) => {
@@ -1102,7 +1109,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     toggleSnackbarAndSetText: (open, message, error) => dispatch(toggleSnackbarAndSetText(open, message, error)),
     generalMDMSFetchSuccess: (payload, moduleName, masterArray) => dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray)),
-    fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data))
+    fetchMDMDDocumentTypeSuccess: (data) => dispatch(fetchMDMDDocumentTypeSuccess(data)),
   };
 };
 

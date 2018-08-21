@@ -118,7 +118,7 @@ const getListItems = (items, history) => {
             ) : (
               <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
             )),
-          route: item.route,
+          route: item.route && item.route,
           leftIcon: item.leftIcon,
           rightIcon: getRightIconItems(item, history),
           tenantId: item.tenantId,

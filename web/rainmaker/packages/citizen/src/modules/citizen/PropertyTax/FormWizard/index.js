@@ -38,8 +38,6 @@ import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/m
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
 import "./index.css";
 
-const customTitle = window.location.search && `Property Assessment (${window.location.search.split("FY=")[1].split("&")[0]}) : New Property`;
-
 class FormWizard extends Component {
   state = {
     financialYearFromQuery: "",
@@ -287,6 +285,8 @@ class FormWizard extends Component {
     const isReassesment = !!this.getQueryValue(search, "isReassesment");
     const isFreshAssesment = this.getQueryValue(search, "type");
     const tenantId = this.getQueryValue(search, "tenantId");
+    const propertyId = this.getQueryValue(search, "propertyId");
+
     if (assessmentId) {
       let requestBody = {
         MdmsCriteria: {
@@ -367,6 +367,10 @@ class FormWizard extends Component {
         financialYearFromQuery,
       });
     }
+    const customTitle = isReassesment
+      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
+      : `Property Assessment (${financialYearFromQuery}) : New Property`;
+
     renderCustomTitleForPt(customTitle);
   };
 

@@ -50,7 +50,6 @@ const routes = [
     options: {
       hideFooter: true,
       hideBackButton: true,
-      title: "Assessment Form",
     },
   },
 

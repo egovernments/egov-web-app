@@ -51,19 +51,19 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      var previousFloorNo=localStorage.getItem("previousFloorNo") || -1;
-      localStorage.setItem("previousFloorNo",field.value);
-      if (previousFloorNo>field.value) {
-          for (var i = field.value; i < previousFloorNo; i++) {
-            if (state.form.hasOwnProperty(`customSelect_${i}`)) {
-              dispatch(removeForm(`customSelect_${i}`));
-            }
-              for (var variable in state.form) {
-                if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
-                  dispatch(removeForm(variable));
-                }
-              }
+      var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
+      localStorage.setItem("previousFloorNo", field.value);
+      if (previousFloorNo > field.value) {
+        for (var i = field.value; i < previousFloorNo; i++) {
+          if (state.form.hasOwnProperty(`customSelect_${i}`)) {
+            dispatch(removeForm(`customSelect_${i}`));
           }
+          for (var variable in state.form) {
+            if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
+              dispatch(removeForm(variable));
+            }
+          }
+        }
       }
     },
   },
@@ -234,11 +234,11 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    const unitFormUpdate=(usageCategoryMinor,skipMajorUpdate=true)=>{
+    const unitFormUpdate = (usageCategoryMinor, skipMajorUpdate = true) => {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
-          return subUsageMinor.usageCategoryMinor === get(state,usageCategoryMinor);
+          return subUsageMinor.usageCategoryMinor === get(state, usageCategoryMinor);
         }
       );
       if (filteredSubUsageMinor.length > 0) {
@@ -264,10 +264,10 @@ export const beforeInitForm = {
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
-    }
+    };
 
     if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
-      unitFormUpdate("common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")
+      unitFormUpdate("common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -276,9 +276,8 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,false);
-      }
-      else {
+        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`, false);
+      } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
     }
@@ -291,10 +290,9 @@ export const beforeInitForm = {
         )
       );
     }
-    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action, "form.fields.occupancy.jsonPath")}`) === "RENTED") {
       set(action, "form.fields.annualRent.hideField", false);
-    }
-    else {
+    } else {
       set(action, "form.fields.annualRent.hideField", true);
     }
     return action;
@@ -374,10 +372,9 @@ export const beforeInitFormForPlot = {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
     }
-    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action, "form.fields.occupancy.jsonPath")}`) === "RENTED") {
       set(action, "form.fields.annualRent.hideField", false);
-    }
-    else {
+    } else {
       set(action, "form.fields.annualRent.hideField", true);
     }
     return action;

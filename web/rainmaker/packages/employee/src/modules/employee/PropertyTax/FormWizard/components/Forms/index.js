@@ -52,6 +52,7 @@ const OwnerInformation = ({
   handleRemoveOwner,
   formId,
   disabled,
+  checkBox,
 }) => {
   const fields = form.fields || {};
   const genderSelected = get(fields, "ownerGender.value", "Male");
@@ -61,16 +62,17 @@ const OwnerInformation = ({
         <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
-            {!disabled && deleteBtn && (
-              <div
-                className="pt-ownerinfo-deletebtn"
-                onClick={() => {
-                  handleRemoveOwner(formId, formKey);
-                }}
-              >
-                <Icon action="content" name="clear" />
-              </div>
-            )}
+            {!disabled &&
+              deleteBtn && (
+                <div
+                  className="pt-ownerinfo-deletebtn"
+                  onClick={() => {
+                    handleRemoveOwner(formId, formKey);
+                  }}
+                >
+                  <Icon action="content" name="clear" />
+                </div>
+              )}
           </div>
           <div className={`${formKey} col-sm-12`}>
             <div className="col-sm-6">
@@ -138,18 +140,20 @@ const OwnerInformation = ({
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div className="col-sm-6" style={{ paddingBottom: "8px"}}>
+            <div className="col-sm-6" style={{ paddingBottom: "8px" }}>
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div>
-              <Field
-                fieldKey="isSameAsPropertyAddress"
-                field={fields.isSameAsPropertyAddress}
-                handleFieldChange={handleFieldChange}
-                disabled={disabled}
-                containerClassName="property-corr"
-              />
-            </div>
+            {!checkBox && (
+              <div>
+                <Field
+                  fieldKey="isSameAsPropertyAddress"
+                  field={fields.isSameAsPropertyAddress}
+                  handleFieldChange={handleFieldChange}
+                  disabled={disabled}
+                  containerClassName="property-corr"
+                />
+              </div>
+            )}
           </div>
         </div>
       }

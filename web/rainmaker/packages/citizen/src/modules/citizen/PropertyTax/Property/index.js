@@ -3,17 +3,18 @@ import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
+import YearDialogue from "../common/YearDialogue";
 import AssessmentList from "../common/AssessmentList";
 import { Screen } from "modules/common";
-import { Icon, BreadCrumbs } from "components";
+import { Icon, BreadCrumbs, Button } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import PropertyInformation from "./components/PropertyInformation";
-import ReceiptDialog from "./components/ReceiptDialog";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
 import { getSingleAssesmentandStatus } from "egov-ui-kit/redux/properties/actions";
 import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import isEqual from "lodash/isEqual";
+import orderby from "lodash/orderBy";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -99,24 +100,33 @@ class Property extends Component {
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
     }
-    selPropertyDetails && getSingleAssesmentandStatus(selPropertyDetails);
     renderCustomTitleForPt(customTitle);
   };
 
+  onListItemClick = (item) => {
+    const { getSingleAssesmentandStatus } = this.props;
+    const { route } = item;
+    route && getSingleAssesmentandStatus(route);
+  };
+
   getAssessmentListItems = (props) => {
-    const { propertyItems, propertyId, history, transformedAssessments } = props;
+    const { propertyItems, propertyId, history, sortedAssessments, selPropertyDetails } = props;
     const viewAllAssessmentItem = {
       primaryText: (
-        <div
+        <Button
           onClick={() => {
-            history.push(`/property-tax/my-properties/view-assessments/${propertyId}`);
+            this.setState({
+              dialogueOpen: true,
+            });
           }}
-        >
-          <Label label="PT_PROPERTY_VIEW_ALL_ASSESSMENTS" fontSize="16px" color="#fe7a51" bold={true} />
-        </div>
+          label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
+          value={propertyId}
+          primary={true}
+          style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
+        />
       ),
     };
-    transformedAssessments.push(viewAllAssessmentItem);
+    sortedAssessments && sortedAssessments.push(viewAllAssessmentItem);
     return [
       {
         primaryText: <Label label="PT_PROPERTY_INFORMATION" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
@@ -144,7 +154,8 @@ class Property extends Component {
             <Icon action="action" name="receipt" color="#484848" style={IconStyle} />
           </div>
         ),
-        nestedItems: transformedAssessments,
+        route: selPropertyDetails,
+        nestedItems: sortedAssessments && sortedAssessments,
         rightIcon: (
           <div style={IconStyle}>
             <Icon action="hardware" name="keyboard-arrow-right" color="#484848" />
@@ -161,12 +172,14 @@ class Property extends Component {
     }
   };
 
-  closeReceiptDialogue = () => {
+  closeYearRangeDialogue = () => {
     this.setState({ dialogueOpen: false });
   };
 
   render() {
-    const { urls, location, history, transformedAssessments } = this.props;
+    const { urls, location, history } = this.props;
+    const { closeYearRangeDialogue } = this;
+    const { dialogueOpen } = this.state;
     let urlArray = [];
     const { pathname } = location;
     if (urls.length === 0 && localStorage.getItem("path") === pathname) {
@@ -178,13 +191,14 @@ class Property extends Component {
         <BreadCrumbs url={urls.length > 0 ? urls : urlArray} pathname={pathname} history={history} />
         {
           <AssessmentList
-            items={transformedAssessments && this.getAssessmentListItems(this.props)}
+            onItemClick={this.onListItemClick}
+            items={this.getAssessmentListItems(this.props)}
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
             history={history}
           />
         }
-        <ReceiptDialog open={this.state.dialogueOpen} closeDialogue={this.closeReceiptDialogue} />
+        {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} closeDialogue={closeYearRangeDialogue} />}
       </Screen>
     );
   }
@@ -231,11 +245,6 @@ const transform = (floor, key, generalMDMSDataById) => {
     return floor[dataKey];
   } else {
     if (floor[dataKey]) {
-      // if (floor[dataKey] === "NONRESIDENTIAL") {
-      //   return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
-      // } else if (floor[dataKey] === "RESIDENTIAL") {
-      //   return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
-      // } else {
       return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
     } else {
       return "-";
@@ -354,59 +363,9 @@ const mapStateToProps = (state, ownProps) => {
   const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
-  const { propertyDetails } = selPropertyDetails;
-  let yearList = ["2019-18", "2018-17", "2017-16", "2016-15"];
-  // let transformedAssessments = yearList.forEach((year) => {
-  //   singleAssessmentByStatus &&
-  //     Object.values(singleAssessmentByStatus).reduce((acc, curr) => {
-  //       console.log(singleAssessmentByStatus);
-  //       console.log(curr);
-  //       if (curr.financialYear === year) {
-  //         acc.push({
-  //           primaryText: <Label label={curr.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-  //           status: "ASSESS & PAY",
-  //           receipt: true,
-  //           assessmentNo: curr.assessmentNumber,
-  //           financialYear: curr.financialYear,
-  //           propertyId: curr.propertyId,
-  //         });
-  //       } else {
-  //         acc.push({
-  //           primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-  //           status: "ASSESS & PAY",
-  //           propertyInfo: true,
-  //         });
-  //       }
-  //       return acc;
-  //     }, []);
-  // });
-
-  let transformedAssessments = yearList.reduce((acc, year) => {
-    singleAssessmentByStatus &&
-      Object.values(singleAssessmentByStatus).reduce((result, property) => {
-        const singleAssessment =
-          property &&
-          (property.financialYear
-            ? result.push({
-                primaryText: <Label label={property.financialYear} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-                status: property.receiptInfo.status,
-                receipt: true,
-                assessmentNo: property.assessmentNumber,
-                financialYear: property.financialYear,
-                propertyId: property.propertyId,
-              })
-            : result.push({
-                primaryText: <Label label={year} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />,
-                status: "ASSESS & PAY",
-                receipt: true,
-              }));
-        acc.push(singleAssessment);
-        return result;
-      }, []);
-    return acc;
-  }, []);
-
-  return { urls, propertyItems, propertyId, customTitle, selPropertyDetails, transformedAssessments };
+  const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
+  const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
+  return { urls, propertyItems, propertyId, customTitle, selPropertyDetails, sortedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
