@@ -41,6 +41,7 @@ const formConfig = {
         dependants: [
           {
             fieldKey: "mohalla",
+            hierarchyType: "REVENUE",
           },
         ],
       },

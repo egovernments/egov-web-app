@@ -467,6 +467,7 @@ export const city = {
       dependants: [
         {
           fieldKey: "mohalla",
+          hierarchyType: "REVENUE",
         },
       ],
     },
