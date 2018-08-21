@@ -1,8 +1,8 @@
-import { MDMS } from "egov-ui-kit/utils/endPoints";
-import { setDependentFields } from "./enableDependentFields";
-import { removeFormKey } from "./removeFloors";
+import { CITY } from "egov-ui-kit/utils/endPoints";
+import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { setDependentFields } from "modules/employee/PropertyTax/FormWizard/utils/enableDependentFields";
+import { removeFormKey } from "modules/employee/PropertyTax/FormWizard/utils/removeFloors";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
-import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
@@ -51,19 +51,19 @@ export const floorCount = {
     numcols: 6,
     dropDownData: floorDropDownData,
     updateDependentFields: ({ formKey, field, dispatch, state }) => {
-      var previousFloorNo=localStorage.getItem("previousFloorNo") || -1;
-      localStorage.setItem("previousFloorNo",field.value);
-      if (previousFloorNo>field.value) {
-          for (var i = field.value; i < previousFloorNo; i++) {
-            if (state.form.hasOwnProperty(`customSelect_${i}`)) {
-              dispatch(removeForm(`customSelect_${i}`));
-            }
-              for (var variable in state.form) {
-                if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
-                  dispatch(removeForm(variable));
-                }
-              }
+      var previousFloorNo = localStorage.getItem("previousFloorNo") || -1;
+      localStorage.setItem("previousFloorNo", field.value);
+      if (previousFloorNo > field.value) {
+        for (var i = field.value; i < previousFloorNo; i++) {
+          if (state.form.hasOwnProperty(`customSelect_${i}`)) {
+            dispatch(removeForm(`customSelect_${i}`));
           }
+          for (var variable in state.form) {
+            if (state.form.hasOwnProperty(variable) && variable.startsWith(`floorDetails_${i}`)) {
+              dispatch(removeForm(variable));
+            }
+          }
+        }
       }
     },
   },
@@ -171,7 +171,6 @@ export const annualRent = {
     pattern: /^([1-9]\d{0,7})(\.\d+)?$/,
     hideField: true,
     numcols: 4,
-    errorMessage: "Enter a valid amount",
   },
 };
 
@@ -234,11 +233,11 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    const unitFormUpdate=(usageCategoryMinor,skipMajorUpdate=true)=>{
+    const unitFormUpdate = () => {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
-          return subUsageMinor.usageCategoryMinor === get(state,usageCategoryMinor);
+          return subUsageMinor.usageCategoryMinor === get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
         }
       );
       if (filteredSubUsageMinor.length > 0) {
@@ -252,7 +251,7 @@ export const beforeInitForm = {
           "form.fields.subUsageType.dropDownData",
           mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
         );
-        if (get(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
+        if (get(action, "form.fields.subUsageType.jsonPath")) {
           dispatch(
             prepareFormData(
               `${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,
@@ -264,10 +263,10 @@ export const beforeInitForm = {
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
-    }
+    };
 
     if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
-      unitFormUpdate("common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")
+      unitFormUpdate();
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = get(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -276,9 +275,8 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,false);
-      }
-      else {
+        unitFormUpdate();
+      } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
     }
@@ -291,10 +289,9 @@ export const beforeInitForm = {
         )
       );
     }
-    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action, "form.fields.occupancy.jsonPath")}`) === "RENTED") {
       set(action, "form.fields.annualRent.hideField", false);
-    }
-    else {
+    } else {
       set(action, "form.fields.annualRent.hideField", true);
     }
     return action;
@@ -374,13 +371,219 @@ export const beforeInitFormForPlot = {
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].noOfFloors`, 2));
       dispatch(prepareFormData(`Properties[0].propertyDetails[0].units[0].floorNo`, -1));
     }
-    if (get(state, `common.prepareFormData.${get(action,"form.fields.occupancy.jsonPath")}`)==='RENTED') {
+    if (get(state, `common.prepareFormData.${get(action, "form.fields.occupancy.jsonPath")}`) === "RENTED") {
       set(action, "form.fields.annualRent.hideField", false);
-    }
-    else {
+    } else {
       set(action, "form.fields.annualRent.hideField", true);
     }
     return action;
+  },
+};
+
+export const city = {
+  city: {
+    id: "city",
+    jsonPath: "Properties[0].address.city",
+    required: true,
+    type: "singleValueList",
+    floatingLabelText: "CORE_COMMON_CITY",
+    className: "pt-emp-property-address-city",
+    disabled: true,
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    fullWidth: true,
+    hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
+    numcols: 6,
+    dataFetchConfig: {
+      url: CITY.GET.URL,
+      action: CITY.GET.ACTION,
+      queryParams: [],
+      requestBody: {
+        MdmsCriteria: {
+          tenantId: "pb",
+          moduleDetails: [
+            {
+              moduleName: "tenant",
+              masterDetails: [
+                {
+                  name: "tenants",
+                },
+              ],
+            },
+          ],
+        },
+      },
+      dataPath: ["MdmsRes.tenant.tenants"],
+      dependants: [
+        {
+          fieldKey: "mohalla",
+          hierarchyType: "REVENUE",
+        },
+      ],
+    },
+    updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      dispatch(prepareFormData("Properties[0].tenantId", field.value));
+      let requestBody = {
+        MdmsCriteria: {
+          tenantId: field.value,
+          moduleDetails: [
+            {
+              moduleName: "PropertyTax",
+              masterDetails: [
+                {
+                  name: "Floor",
+                },
+                {
+                  name: "OccupancyType",
+                },
+                {
+                  name: "OwnerShipCategory",
+                },
+                {
+                  name: "OwnerType",
+                },
+                {
+                  name: "PropertySubType",
+                },
+                {
+                  name: "PropertyType",
+                },
+                {
+                  name: "SubOwnerShipCategory",
+                },
+                {
+                  name: "UsageCategoryDetail",
+                },
+                {
+                  name: "UsageCategoryMajor",
+                },
+                {
+                  name: "UsageCategoryMinor",
+                },
+                {
+                  name: "UsageCategorySubMinor",
+                },
+              ],
+            },
+          ],
+        },
+      };
+
+      dispatch(
+        fetchGeneralMDMSData(requestBody, "PropertyTax", [
+          "Floor",
+          "OccupancyType",
+          "OwnerShipCategory",
+          "OwnerType",
+          "PropertySubType",
+          "PropertyType",
+          "SubOwnerShipCategory",
+          "UsageCategoryDetail",
+          "UsageCategoryMajor",
+          "UsageCategoryMinor",
+          "UsageCategorySubMinor",
+          "Rebate",
+          "Penalty",
+          "Interest",
+          "FireCess",
+        ])
+      );
+    },
+  },
+};
+
+export const dummy = {
+  dummy: {
+    numcols: 6,
+    type: "dummy",
+  },
+};
+
+export const houseNumber = {
+  houseNumber: {
+    id: "house-number",
+    jsonPath: "Properties[0].address.doorNo",
+    type: "textfield",
+    floatingLabelText: "PT_PROPERTY_DETAILS_DOOR_NUMBER",
+    hintText: "PT_PROPERTY_DETAILS_DOOR_NUMBER_PLACEHOLDER",
+    numcols: 6,
+    errorMessage: "PT_PROPERTY_DETAILS_DOOR_NUMBER_ERRORMSG",
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    maxLength: 64,
+  },
+};
+
+export const colony = {
+  colony: {
+    id: "property-colony",
+    jsonPath: "Properties[0].address.buildingName",
+    type: "textfield",
+    floatingLabelText: "PT_PROPERTY_DETAILS_BUILDING_COLONY_NAME",
+    hintText: "PT_PROPERTY_DETAILS_BUILDING_COLONY_NAME_PLACEHOLDER",
+    numcols: 6,
+    errorMessage: "PT_PROPERTY_DETAILS_COLONY_NAME_ERRORMSG",
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    maxLength: 64,
+  },
+};
+
+export const street = {
+  street: {
+    id: "property-street",
+    jsonPath: "Properties[0].address.street",
+    type: "textfield",
+    floatingLabelText: "PT_PROPERTY_DETAILS_STREET_NAME",
+    hintText: "PT_PROPERTY_DETAILS_STREET_NAME_PLACEHOLDER",
+    numcols: 6,
+    errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    maxLength: 64,
+  },
+};
+
+export const mohalla = {
+  mohalla: {
+    id: "mohalla",
+    jsonPath: "Properties[0].address.locality.code",
+    type: "autoSuggestDropdown",
+    floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
+    hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
+    fullWidth: true,
+    toolTip: true,
+    toolTipMessage: "PT_MOHALLA_TOOLTIP_MESSAGE",
+    //toolTipMessage: "Name of the area in which your property is located",
+    boundary: true,
+    numcols: 6,
+    errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
+    dataFetchConfig: {
+      url: "egov-location/location/v11/boundarys/_search",
+      action: "",
+      queryParams: [],
+      requestBody: {},
+      isDependent: true,
+    },
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    required: true,
+    updateDependentFields: ({ formKey, field, dispatch }) => {
+      const mohalla = field.dropDownData.find((option) => {
+        return option.value === field.value;
+      });
+      dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
+    },
+  },
+};
+
+export const pincode = {
+  pincode: {
+    id: "pincode",
+    type: "number",
+    jsonPath: "Properties[0].address.pincode",
+    floatingLabelText: "PT_PROPERTY_DETAILS_PINCODE",
+    hintText: "PT_PROPERTY_DETAILS_PINCODE_PLACEHOLDER",
+    numcols: 6,
+    //errorMessage: "PT_PROPERTY_DETAILS_PINCODE_ERRORMSG",
+    errorMessage: "Pincode should be 6 digits",
+    errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
+    pattern: "^([0-9]){6}$",
   },
 };
 

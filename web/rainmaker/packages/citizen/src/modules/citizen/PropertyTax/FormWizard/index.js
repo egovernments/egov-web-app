@@ -146,9 +146,11 @@ class FormWizard extends Component {
     };
   };
 
-  fetchDraftDetails = async (draftId, isReassesment) => {
+  fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
+    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -157,7 +159,7 @@ class FormWizard extends Component {
         [
           {
             key: "userId",
-            value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+            value: uuid,
           },
           {
             key: isReassesment ? "assessmentNumber" : "id",
@@ -286,6 +288,7 @@ class FormWizard extends Component {
     const isFreshAssesment = this.getQueryValue(search, "type");
     const tenantId = this.getQueryValue(search, "tenantId");
     const propertyId = this.getQueryValue(search, "propertyId");
+    const draftUuid = this.getQueryValue(search, "uuid");
 
     if (assessmentId) {
       let requestBody = {
@@ -355,7 +358,7 @@ class FormWizard extends Component {
         "FireCess",
       ]);
 
-      await this.fetchDraftDetails(assessmentId, isReassesment);
+      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
