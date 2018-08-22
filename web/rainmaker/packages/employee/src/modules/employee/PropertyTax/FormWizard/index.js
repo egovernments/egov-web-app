@@ -60,6 +60,7 @@ class FormWizard extends Component {
     },
     propertyDetails: {},
     bill: [],
+    partialAmountError: "",
     totalAmountToBePaid: 1,
     isFullPayment: true,
     valueSelected: "Full_Amount",
@@ -106,10 +107,11 @@ class FormWizard extends Component {
     // }
   };
 
-  updateTotalAmount = (value, isFullPayment) => {
+  updateTotalAmount = (value, isFullPayment, errorText) => {
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
+      partialAmountError: errorText,
     });
   };
 
@@ -480,15 +482,15 @@ class FormWizard extends Component {
     let { estimation } = this.state;
     let { totalAmount } = estimation[0] || {};
     if (e.target.value === "Full_Amount") {
-      this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount" });
+      this.setState({ totalAmountToBePaid: totalAmount, valueSelected: "Full_Amount", partialAmountError: "" });
     } else {
-      this.setState({ totalAmountToBePaid: 1, valueSelected: "Partial_Amount" });
+      this.setState({ totalAmountToBePaid: 100, valueSelected: "Partial_Amount" });
     }
   };
 
   renderStepperContent = (selected, fromReviewPage) => {
     const { renderPlotAndFloorDetails, getOwnerDetails, updateEstimate } = this;
-    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected } = this.state;
+    const { draftRequest, estimation, totalAmountToBePaid, financialYearFromQuery, importantDates, valueSelected, partialAmountError } = this.state;
     const { onRadioButtonChange, updateTotalAmount } = this;
     switch (selected) {
       case 0:
@@ -540,6 +542,11 @@ class FormWizard extends Component {
             totalAmountToBePaid={totalAmountToBePaid}
             optionSelected={valueSelected}
             importantDates={importantDates}
+            partialAmountError={partialAmountError}
+            isPartialPaymentInValid={
+              get(this.state, "estimation[0].totalAmount", 1) < 100 ||
+              get(this.props.form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
+            }
           />
         );
       default:
@@ -884,7 +891,7 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { form } = this.props;
+    let { form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -897,9 +904,15 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -926,7 +939,7 @@ class FormWizard extends Component {
 
   pay = async () => {
     const { callPGService, callDraft } = this;
-    let { form } = this.props;
+    let { form, common } = this.props;
 
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
@@ -935,10 +948,16 @@ class FormWizard extends Component {
     try {
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
 
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
 
       set(
@@ -1029,6 +1048,8 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
+    const { isFullPayment, partialAmountError } = this.state;
+    if (!isFullPayment && partialAmountError) return
     this.setState({ dialogueOpen: true });
     const { form, prepareFormData } = this.props;
     const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
@@ -1103,7 +1124,7 @@ const mapStateToProps = (state) => {
   const { propertyAddress } = form;
   const { city } = (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
   const currentTenantId = (city && city.value) || "pb";
-  return { form, currentTenantId, prepareFormData: common.prepareFormData };
+  return { form, currentTenantId, prepareFormData: common.prepareFormData, common };
 };
 
 const mapDispatchToProps = (dispatch) => {

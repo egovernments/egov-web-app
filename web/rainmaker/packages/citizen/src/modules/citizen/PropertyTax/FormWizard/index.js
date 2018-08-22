@@ -36,6 +36,7 @@ import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess,
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
+import ReactDOM from "react-dom"
 import "./index.css";
 
 class FormWizard extends Component {
@@ -55,9 +56,10 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
+    totalAmountToBePaid: 100,
     draftByIDResponse: {},
-    totalAmountToBePaid: 1,
     isFullPayment: true,
+    partialAmountError: "",
   };
 
   updateDraftinLocalStorage = (draftInfo) => {
@@ -462,10 +464,11 @@ class FormWizard extends Component {
     }
   };
 
-  updateTotalAmount = (value, isFullPayment) => {
+  updateTotalAmount = (value, isFullPayment, errorText) => {
     this.setState({
       totalAmountToBePaid: value,
       isFullPayment,
+      partialAmountError: errorText,
     });
   };
 
@@ -512,7 +515,7 @@ class FormWizard extends Component {
               updateTotalAmount={updateTotalAmount}
               currentTenantId={currentTenantId}
               isPartialPaymentInValid={
-                get(this.state, "estimation[0].totalAmount", 1) === 0 ||
+                get(this.state, "estimation[0].totalAmount", 1) < 100 ||
                 get(form, "basicInformation.fields.typeOfBuilding.value", "").toLowerCase() === "vacant"
               }
             />
@@ -753,7 +756,7 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { location, form } = this.props;
+    let { location, form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -767,9 +770,15 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -798,7 +807,7 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { toggleSpinner, location, form } = this.props;
+    let { toggleSpinner, location, form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -819,10 +828,16 @@ class FormWizard extends Component {
 
     if (selectedownerShipCategoryType === "SINGLEOWNER") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
 
     if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
     if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
       const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -970,6 +985,8 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
+    const { isFullPayment, partialAmountError } = this.state;
+    if (!isFullPayment && partialAmountError) return
     this.setState({ dialogueOpen: true });
   };
 
@@ -1007,7 +1024,7 @@ const mapStateToProps = (state) => {
   const { propertyAddress } = form;
   const { city } = (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
   const currentTenantId = (city && city.value) || "pb";
-  return { form, prepareFormData: common.prepareFormData, currentTenantId };
+  return { form, prepareFormData: common.prepareFormData, currentTenantId, common };
 };
 
 const mapDispatchToProps = (dispatch) => {
