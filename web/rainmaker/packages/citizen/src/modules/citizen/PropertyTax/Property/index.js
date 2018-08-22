@@ -74,6 +74,9 @@ class Property extends Component {
               {
                 name: "PropertyType",
               },
+              {
+                name: "OwnerType",
+              },
             ],
           },
         ],
@@ -86,8 +89,12 @@ class Property extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "OwnerType",
     ]);
-    fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
+    fetchProperties([
+      { key: "ids", value: decodeURIComponent(this.props.match.params.propertyId) },
+      { key: "tenantId", value: this.props.match.params.tenantId },
+    ]);
     const { pathname } = location;
     if (!(localStorage.getItem("path") === pathname)) {
       customTitle && addBreadCrumbs({ title: customTitle, path: window.location.pathname });
@@ -283,7 +290,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
   );
 };
 
-const getOwnerInfo = (ownerDetails) => {
+const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
   return (
     ownerDetails && [
       {
@@ -312,7 +319,7 @@ const getOwnerInfo = (ownerDetails) => {
               },
               {
                 key: "User Category:",
-                value: owner.ownerType || "NA",
+                value: generalMDMSDataById["OwnerType"][owner.ownerType].name || "NA",
               },
               {
                 key: "Email ID:",
@@ -336,8 +343,8 @@ const mapStateToProps = (state, ownProps) => {
   const { cities } = common;
   const { generalMDMSDataById } = state.common || {};
   const { propertiesById, singleAssessmentByStatus, loading } = state.properties || {};
-  const propertyId = ownProps.match.params.propertyId;
   const tenantId = ownProps.match.params.tenantId;
+  const propertyId = decodeURIComponent(ownProps.match.params.propertyId);
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
@@ -353,7 +360,7 @@ const mapStateToProps = (state, ownProps) => {
       ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
       : []
     : [];
-  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners, generalMDMSDataById)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);

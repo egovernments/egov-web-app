@@ -66,6 +66,9 @@ class PaymentSuccess extends Component {
               {
                 name: "PropertyType",
               },
+              {
+                name: "PropertySubType",
+              },
             ],
           },
         ],
@@ -78,6 +81,7 @@ class PaymentSuccess extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "PropertySubType",
     ]);
     fetchProperties([{ key: "ids", value: match.params.propertyId }, { key: "tenantId", value: match.params.tenantId }]);
     fetchReceipts([
@@ -98,6 +102,7 @@ class PaymentSuccess extends Component {
   };
 
   convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {
+    console.log(url);
     var img = new Image();
     img.crossOrigin = "Anonymous";
     img.onload = function() {
@@ -121,6 +126,7 @@ class PaymentSuccess extends Component {
   render() {
     const { generalMDMSDataById, match } = this.props;
     const { imageUrl } = this.state;
+    console.log(imageUrl);
     return (
       <Screen>
         <PaymentStatus

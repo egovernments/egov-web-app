@@ -22,11 +22,9 @@ var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
 var _api = require("egov-ui-kit/utils/api");
 
-var _createReceipt = require("../createReceipt");
+var _createReceipt = require("../../../PaymentStatus/Components/createReceipt");
 
-var _createReceipt2 = _interopRequireDefault(_createReceipt);
-
-var _receiptsPDF = require("../receiptsPDF");
+var _receiptsPDF = require("../../../PaymentStatus/Components/receiptsPDF");
 
 var _receiptsPDF2 = _interopRequireDefault(_receiptsPDF);
 
@@ -48,16 +46,21 @@ var styles = {
   hintStyle: { color: "#484848", top: 0 }
 };
 
-var onSelectFieldChange = function onSelectFieldChange(event, key, payload, history, item) {
+var onSelectFieldChange = function onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById) {
   switch (payload) {
     case "Re-Assess":
       localStorage.setItem("draftId", "");
       history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
       break;
-    case "Download Receipt":
+    case "Download Citizen Receipt":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func
-      downloadReceipt(item);
+      downloadReceipt(item, generalMDMSDataById);
+      break;
+    case "Download Employee Receipt":
+      //Need 1. Property, 2. Property Details, 3. receiptdetails
+      // call receiptcreate func
+      downloadReceipt(item, generalMDMSDataById, true);
       break;
     case "Complete Payment":
       localStorage.setItem("draftId", "");
@@ -67,7 +70,7 @@ var onSelectFieldChange = function onSelectFieldChange(event, key, payload, hist
 };
 
 var downloadReceipt = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(item) {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(item, generalMDMSDataById, isEmployeeReceipt) {
     var queryObj, payload, receiptDetails;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
@@ -80,9 +83,9 @@ var downloadReceipt = function () {
 
           case 4:
             payload = _context.sent;
-            receiptDetails = payload && payload.Receipt && (0, _createReceipt2.default)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
+            receiptDetails = payload && payload.Receipt && (0, _createReceipt.createReceiptDetails)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
 
-            receiptDetails && (0, _receiptsPDF2.default)("pt-reciept-citizen", receiptDetails);
+            receiptDetails && (0, _receiptsPDF2.default)("pt-reciept-citizen", receiptDetails, generalMDMSDataById, "", isEmployeeReceipt);
             _context.next = 12;
             break;
 
@@ -100,14 +103,15 @@ var downloadReceipt = function () {
     }, _callee, undefined, [[1, 9]]);
   }));
 
-  return function downloadReceipt(_x) {
+  return function downloadReceipt(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();
 
 var DropDown = function DropDown(_ref2) {
   var history = _ref2.history,
-      item = _ref2.item;
+      item = _ref2.item,
+      generalMDMSDataById = _ref2.generalMDMSDataById;
 
   return _react2.default.createElement(
     "div",
@@ -123,10 +127,11 @@ var DropDown = function DropDown(_ref2) {
         style: styles.customWidth,
         hintStyle: styles.hintStyle,
         onChange: function onChange(event, key, payload) {
-          return onSelectFieldChange(event, key, payload, history, item);
+          return onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById);
         }
       },
-      _react2.default.createElement(_MenuItem2.default, { value: "Download Receipt", primaryText: "Download Receipt" }),
+      _react2.default.createElement(_MenuItem2.default, { value: "Download Citizen Receipt", primaryText: "Download Citizen Receipt" }),
+      _react2.default.createElement(_MenuItem2.default, { value: "Download Employee Receipt", primaryText: "Download Employee Receipt" }),
       _react2.default.createElement(_MenuItem2.default, { value: "Re-Assess", primaryText: "Re-Assess" }),
       item.status === "Partially Paid" && _react2.default.createElement(_MenuItem2.default, { value: "Complete Payment", primaryText: "Complete Payment" })
     )

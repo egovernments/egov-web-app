@@ -8,7 +8,30 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headersFromAPI = billAccountDetails.map((item) => {
     return item.accountDescription && item.accountDescription.split("-")[0];
   });
-  const headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_TIME_REBATE", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION"];
+  const headers = [
+    "PT_TAX",
+    "PT_FIRE_CESS",
+    "PT_TIME_REBATE",
+    "PT_TIME_INTEREST",
+    "PT_UNIT_USAGE_EXEMPTION",
+    "PT_OWNER_EXEMPTION",
+    "PT_ADHOC_PENALTY",
+    "PT_ADHOC_REBATE",
+    "PT_ADVANCE_CARRYFORWARD",
+    "PT_DECIMAL_CEILING",
+    "PT_DECIMAL_CEILING_CREDIT",
+    "PT_DECIMAL_CEILING_CREDIT_DEBIT",
+    "PT_DECIMAL_CEILING_DEBIT",
+  ];
+  const negativeHeaders = [
+    "PT_ADHOC_REBATE",
+    "PT_ADVANCE_CARRYFORWARD",
+    "PT_DECIMAL_CEILING_CREDIT_DEBIT",
+    "PT_DECIMAL_CEILING_DEBIT",
+    "PT_OWNER_EXEMPTION",
+    "PT_TIME_REBATE",
+    "PT_UNIT_USAGE_EXEMPTION",
+  ];
   const transformedHeaders = headers.reduce((result, current) => {
     if (headersFromAPI.indexOf(current) > -1) {
       result.push(current);
@@ -20,7 +43,16 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
       // result[0].push({ text: getTranslatedLabel(current.accountDescription.split("-")[0], localizationLabels) });
       const taxHeadContent = billAccountDetails.filter((item) => item.accountDescription && item.accountDescription.split("-")[0] === current);
-      taxHeadContent && taxHeadContent[0] && result[1].push({ text: taxHeadContent[0].crAmountToBePaid || "0" });
+      taxHeadContent &&
+        taxHeadContent[0] &&
+        result[1].push({
+          text:
+            taxHeadContent[0] && taxHeadContent[0].crAmountToBePaid
+              ? negativeHeaders.indexOf(taxHeadContent[0].accountDescription.split("-")[0]) > -1
+                ? `-${taxHeadContent[0].crAmountToBePaid}`
+                : taxHeadContent[0].crAmountToBePaid
+              : "0",
+        });
       return result;
     },
     [[], []]
@@ -35,7 +67,7 @@ const getHeaderDetails = (property, cities) => {
 
   return {
     header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
-    subheader: "Property Tax Payment Receipt (Citizen Copy)",
+    subheader: "Property Tax Payment Receipt",
     logo: msevaLogo,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl,
@@ -64,8 +96,10 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && get(receiptDetails, "instrument.transactionNumber"),
-      transactionDate: receiptDetails && get(receiptDetails, "instrument.transactionDate"),
+      transactionDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "instrument.transactionDateInput")),
       bankNameBranch: receiptDetails && `${get(receiptDetails, "instrument.bank.id")}, ${get(receiptDetails, "instrument.branchName")}`,
+      G8receiptNo: receiptDetails && get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate")),
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,

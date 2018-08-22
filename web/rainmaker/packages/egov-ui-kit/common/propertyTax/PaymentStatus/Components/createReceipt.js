@@ -29,7 +29,8 @@ var getTaxInfo = function getTaxInfo(billAccountDetails, totalAmount, localizati
   var headersFromAPI = billAccountDetails.map(function (item) {
     return item.accountDescription && item.accountDescription.split("-")[0];
   });
-  var headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_TIME_REBATE", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION"];
+  var headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING", "PT_DECIMAL_CEILING_CREDIT", "PT_DECIMAL_CEILING_CREDIT_DEBIT", "PT_DECIMAL_CEILING_DEBIT"];
+  var negativeHeaders = ["PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING_CREDIT_DEBIT", "PT_DECIMAL_CEILING_DEBIT", "PT_OWNER_EXEMPTION", "PT_TIME_REBATE", "PT_UNIT_USAGE_EXEMPTION"];
   var transformedHeaders = headers.reduce(function (result, current) {
     if (headersFromAPI.indexOf(current) > -1) {
       result.push(current);
@@ -42,7 +43,9 @@ var getTaxInfo = function getTaxInfo(billAccountDetails, totalAmount, localizati
     var taxHeadContent = billAccountDetails.filter(function (item) {
       return item.accountDescription && item.accountDescription.split("-")[0] === current;
     });
-    taxHeadContent && taxHeadContent[0] && result[1].push({ text: taxHeadContent[0].crAmountToBePaid || "0" });
+    taxHeadContent && taxHeadContent[0] && result[1].push({
+      text: taxHeadContent[0] && taxHeadContent[0].crAmountToBePaid ? negativeHeaders.indexOf(taxHeadContent[0].accountDescription.split("-")[0]) > -1 ? "-" + taxHeadContent[0].crAmountToBePaid : taxHeadContent[0].crAmountToBePaid : "0"
+    });
     return result;
   }, [[], []]);
   taxArray[0].push({ text: "Total" });
@@ -57,7 +60,7 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
 
   return {
     header: propertyTenant[0].name + " MUNICIPAL CORPORATION",
-    subheader: "Property Tax Payment Receipt (Citizen Copy)",
+    subheader: "Property Tax Payment Receipt",
     logo: _pblogo2.default,
     contact: propertyTenant[0].contactNumber,
     website: propertyTenant[0].domainUrl
@@ -84,8 +87,10 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
       paymentDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.transactionNumber"),
-      transactionDate: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.transactionDate"),
-      bankNameBranch: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.id") + ", " + (0, _get2.default)(receiptDetails, "instrument.branchName")
+      transactionDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "instrument.transactionDateInput")),
+      bankNameBranch: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.id") + ", " + (0, _get2.default)(receiptDetails, "instrument.branchName"),
+      G8receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate"))
     },
     propertyDetails: [(0, _extends3.default)({}, propertyDetails)],
     address: property.address,

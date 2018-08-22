@@ -20,7 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _pdfmake2.default.vfs = _vfs_fonts2.default.pdfMake.vfs;
 
-var generateReceipt = function generateReceipt(role, details, generalMDMSDataById, receiptImageUrl) {
+var generateReceipt = function generateReceipt(role, details, generalMDMSDataById, receiptImageUrl, isEmployeeReceipt) {
   var data = void 0;
   var owners = details.owners,
       address = details.address,
@@ -122,12 +122,15 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           table: {
             widths: [50, "*", 100],
             body: [[{
-              image: receiptImageUrl || "",
+              image: receiptImageUrl || _pblogo2.default,
               width: 30,
               margin: [10, 10, 10, 10]
             }, {
               //stack is used here to give multiple sections one after another in same body
-              stack: [{ text: header.header || "", style: "receipt-logo-header" }, { text: header.subheader || "", style: "receipt-logo-sub-header" }],
+              stack: [{ text: header.header || "", style: "receipt-logo-header" }, {
+                text: header.subheader + " " + (isEmployeeReceipt ? "(Employee Copy)" : "(Citizen Copy)") + " " || "",
+                style: "receipt-logo-sub-header"
+              }],
               alignment: "center",
               margin: [0, 5, 0, 0]
             }, {
@@ -188,7 +191,10 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
           style: "pt-reciept-citizen-table",
           table: {
             widths: receiptTableWidth,
-            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea + " sq yards" || "", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, { text: transform(propertyDetails[0].propertyType, "PropertyType"), border: borderValue }]]
+            body: [[{ text: "Plot Size:", border: borderKey, style: "receipt-table-key" }, { text: propertyDetails[0].landArea + " sq yards" || "", border: borderValue }, { text: "Property Type:", border: borderKey, style: "receipt-table-key" }, {
+              text: propertyDetails[0].propertySubType ? transform(propertyDetails[0].propertySubType, "PropertySubType") : transform(propertyDetails[0].propertyType, "PropertyType"),
+              border: borderValue
+            }]]
           },
           layout: tableborder
         }, getFloorDetails() && { text: "BUILT-UP AREA DETAILS", style: "pt-reciept-citizen-subheader" }, getFloorDetails() && {
@@ -225,7 +231,7 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
-            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8paymentDate || "NA", border: borderValue }]]
+            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]
           },
           layout: tableborder
         }, { text: "Commissioner/EO", alignment: "right", color: "#484848", fontSize: 12, bold: true, margin: [0, 30, 0, 30] }, { text: "Note:", alignment: "left", style: "receipt-footer" }, {

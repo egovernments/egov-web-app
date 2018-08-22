@@ -6,7 +6,7 @@ import BlankAssessment from "./components/BlankAssessment";
 import DropDown from "./components/DropDown";
 import "./index.css";
 
-const getItemStatus = (item, history) => {
+const getItemStatus = (item, history, generalMDMSDataById) => {
   let status = item.status;
   let styles = {
     paidIconStyle: {
@@ -23,7 +23,9 @@ const getItemStatus = (item, history) => {
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
 
-          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
+          <div style={{ height: "30px", marginTop: "8px" }}>
+            {history && <DropDown history={history} item={item} generalMDMSDataById={generalMDMSDataById} />}
+          </div>
         </div>
       );
       break;
@@ -34,7 +36,9 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
+          <div style={{ height: "30px", marginTop: "8px" }}>
+            {history && <DropDown generalMDMSDataById={generalMDMSDataById} history={history} item={item} />}
+          </div>
         </div>
       );
       break;
@@ -82,7 +86,7 @@ const getItemStatus = (item, history) => {
   }
 };
 
-const getRightIconItems = (item, history) => {
+const getRightIconItems = (item, history, generalMDMSDataById) => {
   return item.date || item.status || item.receipt || item.action ? (
     <div
       className="assessment-right-icon"
@@ -90,7 +94,7 @@ const getRightIconItems = (item, history) => {
     >
       <div>
         {item.date && <Label label={item.date} containerStyle={{ marginRight: 5 }} labelStyle={{ textAlign: "right" }} color="#484848" />}
-        {getItemStatus(item, history)}
+        {getItemStatus(item, history, generalMDMSDataById)}
       </div>
     </div>
   ) : (
@@ -98,7 +102,7 @@ const getRightIconItems = (item, history) => {
   );
 };
 
-const getListItems = (items, history) => {
+const getListItems = (items, history, generalMDMSDataById) => {
   return (
     items &&
     items.map((item, index) => {
@@ -114,7 +118,7 @@ const getListItems = (items, history) => {
             )),
           route: item.route,
           leftIcon: item.leftIcon,
-          rightIcon: getRightIconItems(item, history),
+          rightIcon: getRightIconItems(item, history, generalMDMSDataById),
           initiallyOpen: item.initiallyOpen,
           nestedItems:
             item &&
@@ -132,7 +136,7 @@ const getListItems = (items, history) => {
                 ),
                 secondaryText: nestedItem.secondaryText,
                 route: nestedItem.route,
-                rightIcon: getRightIconItems(nestedItem, history),
+                rightIcon: getRightIconItems(nestedItem, history, generalMDMSDataById),
               };
             }),
         }
@@ -153,6 +157,7 @@ const AssessmentList = ({
   closeDialogue,
   onNewPropertyButtonClick,
   hoverColor,
+  generalMDMSDataById,
 }) => {
   return items.length == 0 ? (
     <BlankAssessment
@@ -165,7 +170,7 @@ const AssessmentList = ({
     />
   ) : (
     <PTList
-      items={getListItems(items, history)}
+      items={getListItems(items, history, generalMDMSDataById)}
       history={history}
       onItemClick={onItemClick}
       innerDivStyle={innerDivStyle}

@@ -64,9 +64,10 @@ class MyProperties extends Component {
     });
   };
 
+  encodeURI
   onListItemClick = (item) => {
     const { route: propertyId, tenantId } = item;
-    this.props.history.push(`/property-tax/my-properties/property/${propertyId}/${tenantId}`);
+    this.props.history.push(`/property-tax/my-properties/property/${encodeURIComponent(propertyId)}/${tenantId}`);
   };
 
   // onBreadcrumbsClick = (index, path) => {

@@ -3,7 +3,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import msevaLogo from "egov-ui-kit/assets/images/pblogo.png";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl) => {
+const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, isEmployeeReceipt) => {
   let data;
   let { owners, address, propertyDetails, tax, taxNew, receipts, header } = details;
   let tableborder = {
@@ -101,7 +101,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl) =>
               body: [
                 [
                   {
-                    image: receiptImageUrl || "",
+                    image: receiptImageUrl || msevaLogo,
                     width: 30,
                     margin: [10, 10, 10, 10],
                   },
@@ -109,7 +109,10 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl) =>
                     //stack is used here to give multiple sections one after another in same body
                     stack: [
                       { text: header.header || "", style: "receipt-logo-header" },
-                      { text: header.subheader || "", style: "receipt-logo-sub-header" },
+                      {
+                        text: `${header.subheader} ${isEmployeeReceipt ? `(Employee Copy)` : `(Citizen Copy)`} ` || "",
+                        style: "receipt-logo-sub-header",
+                      },
                     ],
                     alignment: "center",
                     margin: [0, 5, 0, 0],
@@ -228,7 +231,12 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl) =>
                   { text: "Plot Size:", border: borderKey, style: "receipt-table-key" },
                   { text: `${propertyDetails[0].landArea} sq yards` || "", border: borderValue },
                   { text: "Property Type:", border: borderKey, style: "receipt-table-key" },
-                  { text: transform(propertyDetails[0].propertyType, "PropertyType"), border: borderValue },
+                  {
+                    text: propertyDetails[0].propertySubType
+                      ? transform(propertyDetails[0].propertySubType, "PropertySubType")
+                      : transform(propertyDetails[0].propertyType, "PropertyType"),
+                    border: borderValue,
+                  },
                 ],
               ],
             },
@@ -299,7 +307,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl) =>
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.G8receiptNo || "NA", border: borderValue },
                   { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" },
-                  { text: receipts.G8paymentDate || "NA", border: borderValue },
+                  { text: receipts.G8receiptDate || "NA", border: borderValue },
                 ],
               ],
             },

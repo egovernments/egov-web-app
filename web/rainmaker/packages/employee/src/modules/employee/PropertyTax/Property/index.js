@@ -71,6 +71,9 @@ class Property extends Component {
               {
                 name: "PropertyType",
               },
+              {
+                name: "OwnerType",
+              },
             ],
           },
         ],
@@ -83,6 +86,7 @@ class Property extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "OwnerType",
     ]);
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
     renderCustomTitleForPt(customTitle);
@@ -162,7 +166,7 @@ class Property extends Component {
   };
 
   render() {
-    const { history } = this.props;
+    const { history, generalMDMSDataById } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     return (
@@ -174,6 +178,7 @@ class Property extends Component {
           listItemStyle={listItemStyle}
           history={history}
           hoverColor="#fff"
+          generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
         />
 
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
@@ -271,7 +276,7 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
   ];
 };
 
-const getOwnerInfo = (ownerDetails) => {
+const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
   return [
     {
       heading: "Ownership Information",
@@ -299,7 +304,7 @@ const getOwnerInfo = (ownerDetails) => {
             },
             {
               key: "User Category:",
-              value: owner.ownerType || "NA",
+              value: (generalMDMSDataById && generalMDMSDataById["OwnerType"] && generalMDMSDataById["OwnerType"][owner.ownerType].name) || "NA",
             },
             {
               key: "Email ID:",
@@ -353,12 +358,12 @@ const mapStateToProps = (state, ownProps) => {
       ? getAssessmentInfo(latestPropertyDetails, assessmentInfoKeys, generalMDMSDataById)
       : []
     : [];
-  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners)) || [];
+  const ownerInfo = (latestPropertyDetails && getOwnerInfo(latestPropertyDetails.owners, generalMDMSDataById)) || [];
   const propertyItems = [...addressInfo, ...assessmentInfo, ...ownerInfo];
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
   const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { urls, propertyItems, tenantId, propertyId, customTitle, selPropertyDetails, sortedAssessments };
+  return { urls, propertyItems, generalMDMSDataById, tenantId, propertyId, customTitle, selPropertyDetails, sortedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {
