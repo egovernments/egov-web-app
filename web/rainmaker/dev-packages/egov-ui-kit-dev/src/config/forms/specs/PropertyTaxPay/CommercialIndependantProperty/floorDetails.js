@@ -9,7 +9,7 @@ const formConfig = {
       jsonPath: "Properties[0].propertyDetails[0].units[0].usageCategoryMinor",
       type: "textfield",
       floatingLabelText: "PT_FORM2_USAGE_TYPE",
-      value: "COMMERCIAL",
+      value: "Commercial",
       required: true,
       disabled: true,
       numcols: 4,
