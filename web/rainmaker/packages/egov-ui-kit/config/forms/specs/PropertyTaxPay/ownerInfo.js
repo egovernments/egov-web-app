@@ -133,7 +133,7 @@ var formConfig = {
         var value = sourceField.value;
 
         var dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        var documentTypes = (0, _get3.default)(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
+        var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
           return docu.ownerTypeCode === value;
         }).reduce(function (acc, curr) {
           var currAcc = [].concat((0, _toConsumableArray3.default)(acc));
@@ -164,7 +164,7 @@ var formConfig = {
 
         var dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         var currentCategory = (0, _get3.default)(state, "form." + formKey + ".fields." + fieldKey + ".value", "NONE");
-        var documentTypes = (0, _get3.default)(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
+        var documentTypes = (0, _get3.default)(state, (process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee") + ".mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", []).filter(function (docu) {
           return docu.ownerTypeCode === currentCategory;
         }).reduce(function (acc, curr) {
           var currAcc = [].concat((0, _toConsumableArray3.default)(acc));

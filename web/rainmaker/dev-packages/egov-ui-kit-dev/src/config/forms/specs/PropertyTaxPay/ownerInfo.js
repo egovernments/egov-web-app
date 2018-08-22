@@ -112,7 +112,7 @@ const formConfig = {
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        let documentTypes = get(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+        let documentTypes = get(state, `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`, [])
           .filter((docu) => {
             return docu.ownerTypeCode === value
           })
@@ -142,7 +142,7 @@ const formConfig = {
         const { fieldKey, formKey, propertyValue } = action;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
         const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE")
-        let documentTypes = get(state, "citizen.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument", [])
+        let documentTypes = get(state, `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`, [])
           .filter((docu) => {
             return docu.ownerTypeCode === currentCategory
           })
