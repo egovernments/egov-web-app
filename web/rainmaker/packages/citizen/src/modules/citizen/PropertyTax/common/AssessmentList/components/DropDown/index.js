@@ -50,7 +50,8 @@ const downloadReceipt = async (item) => {
   try {
     const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
     const receiptDetails =
-      payload && payload.Receipt && createReceipt(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels);
+      payload && payload.Receipt && createReceipt(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
+    console.log(receiptDetails);
     receiptDetails && generateReceipt("pt-reciept-citizen", receiptDetails);
   } catch (e) {
     console.log(e);

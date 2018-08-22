@@ -1,6 +1,6 @@
 import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 
 let DuplicateCard = [];
 

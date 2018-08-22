@@ -14,6 +14,7 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
     }
     return result;
   }, []);
+  console.log("bill details", billAccountDetails);
   const taxArray = transformedHeaders.reduce(
     (result, current) => {
       result[0].push({ text: getTranslatedLabel(current, localizationLabels) });
@@ -46,14 +47,13 @@ const getBase64FromImageUrl = async (url) => {
 
     dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   };
-  console.log(dataURL);
 
   return dataURL;
 };
 // const url = `https://s3.ap-south-1.amazonaws.com/pb-egov-assets/${property.tenantId}/logo.png`;
 const getHeaderDetails = (property, cities) => {
+  console.log("cities .... ", cities);
   const propertyTenant = cities.filter((item) => item.code === property.tenantId);
-  console.log(propertyTenant);
   return {
     header: `${propertyTenant[0].name} MUNICIPAL CORPORATION`,
     subheader: "Property Tax Payment Receipt (Citizen Copy)",

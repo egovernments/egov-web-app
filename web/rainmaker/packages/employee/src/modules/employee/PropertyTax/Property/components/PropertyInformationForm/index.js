@@ -2,7 +2,7 @@ import React from "react";
 import { Screen } from "modules/common";
 import { OwnerInfoHOC } from "../../../FormWizard/components/Forms";
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../../../FormWizard/components/GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 import { ActionFooter } from "modules/common";
 import "./index.css";
 
@@ -11,7 +11,7 @@ const buttons = {
   button2: "SAVE",
 };
 
-const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay" })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyInformation", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
 
 const PropertyInformation = () => {
   return (

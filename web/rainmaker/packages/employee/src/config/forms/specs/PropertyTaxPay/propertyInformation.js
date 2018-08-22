@@ -1,4 +1,4 @@
-import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "./utils/reusableFields";
+import { pincode, mohalla, street, colony, houseNumber, dummy, city } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
 
 const formConfig = {

@@ -54,7 +54,6 @@ var getHeaderDetails = function getHeaderDetails(property, cities) {
   var propertyTenant = cities.filter(function (item) {
     return item.code === property.tenantId;
   });
-  console.log(propertyTenant);
 
   return {
     header: propertyTenant[0].name + " MUNICIPAL CORPORATION",

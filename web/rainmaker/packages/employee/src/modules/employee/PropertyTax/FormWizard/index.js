@@ -115,7 +115,8 @@ class FormWizard extends Component {
     });
   };
 
-  configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
+  configOwner = (ownersCount) =>
+    formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay", isCoreConfiguration: true })(OwnerInformation);
 
   addOwner = (isMultiple = false) => {
     const { ownerInfoArr, ownersCount } = this.state;
@@ -771,11 +772,11 @@ class FormWizard extends Component {
     const ownerObj = {};
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
     });
     const ownerArray = [ownerObj];
-    return ownerArray
-  }
+    return ownerArray;
+  };
 
   getMultipleOwnerInfo = () => {
     const { form } = this.props;
@@ -788,7 +789,8 @@ class FormWizard extends Component {
         const ownerObj = {};
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+            get(form, `${curr}.fields.${field}.value`, undefined) || null;
         });
         ownerData.push(ownerObj);
         return ownerData;
@@ -801,11 +803,13 @@ class FormWizard extends Component {
     const instiObj = {};
     Object.keys(institutionAuthority.fields).map((field) => {
       const jsonPath = institutionAuthority.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined) || null
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+        get(institutionAuthority, `fields.${field}.value`, undefined) || null;
     });
     Object.keys(institutionDetails.fields).map((field) => {
       const jsonPath = institutionDetails.fields[field].jsonPath;
-      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined) || null
+      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+        get(institutionDetails, `fields.${field}.value`, undefined) || null;
     });
     instiObj.designation = get(institutionAuthority, "fields.designation.value", "");
     const ownerArray = [ownerObj];
@@ -888,8 +892,9 @@ class FormWizard extends Component {
 
   estimate = async () => {
     let { form } = this.props;
-    let prepareFormData = { ...this.props.prepareFormData }
-    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
+    let prepareFormData = { ...this.props.prepareFormData };
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const { draft } = this.state.draftRequest;
     const { financialYearFromQuery } = this.state;
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
@@ -930,8 +935,9 @@ class FormWizard extends Component {
     const { callPGService, callDraft } = this;
     let { form } = this.props;
 
-    let prepareFormData = { ...this.props.prepareFormData }
-    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
+    let prepareFormData = { ...this.props.prepareFormData };
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
@@ -946,7 +952,7 @@ class FormWizard extends Component {
         prepareFormData,
         "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
         get(prepareFormData, "Properties[0].propertyDetails[0].owners[0].mobileNumber")
-      )
+      );
 
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -954,10 +960,11 @@ class FormWizard extends Component {
         set(prepareFormData, "Properties[0].propertyDetails[0].institution", instiObj);
         set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory", get(form, "ownershipType.fields.typeOfOwnership.value", ""));
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", get(form, "institutionDetails.fields.type.value", ""));
-        set(prepareFormData, "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
-          get(form, "institutionAuthority.fields.mobile.value",
-            get(form, "institutionAuthority.fields.telephone.value", null
-        )));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].citizenInfo.mobileNumber",
+          get(form, "institutionAuthority.fields.mobile.value", get(form, "institutionAuthority.fields.telephone.value", null))
+        );
       }
 
       set(

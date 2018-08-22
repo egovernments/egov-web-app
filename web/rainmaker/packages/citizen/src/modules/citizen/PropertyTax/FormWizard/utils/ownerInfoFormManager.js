@@ -1,9 +1,11 @@
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../components/GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 
 const combinationToFormkeyMapping = {
   Institution: {
-    ownerForm: formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm),
+    ownerForm: formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution", isCoreConfiguration: true })(
+      GenericForm
+    ),
   },
 };
 

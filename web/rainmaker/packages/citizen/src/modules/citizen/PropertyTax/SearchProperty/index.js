@@ -12,10 +12,10 @@ import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
 import { displayFormErrors, resetForm } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-
+import get from "lodash/get";
 import "./index.css";
 
-const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay" })(SearchPropertyForm);
+const PropertySearchFormHOC = formHoc({ formKey: "searchProperty", path: "PropertyTaxPay", isCoreConfiguration: true })(SearchPropertyForm);
 
 class SearchProperty extends Component {
   constructor(props) {
@@ -78,6 +78,8 @@ class SearchProperty extends Component {
       const latestAssessment = getLatestPropertyDetails(propertyDetails);
       let name = latestAssessment.owners[0].name;
       let assessmentNo = latestAssessment.assessmentNumber;
+      const uuid = get(latestAssessment, "citizenInfo.uuid");
+
       let button = (
         <Button
           onClick={
@@ -85,7 +87,7 @@ class SearchProperty extends Component {
               ? () => {
                   this.setState({
                     dialogueOpen: true,
-                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {

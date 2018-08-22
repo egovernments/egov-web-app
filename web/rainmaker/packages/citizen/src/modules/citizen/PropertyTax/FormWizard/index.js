@@ -15,7 +15,7 @@ import {
 import ReviewForm from "modules/citizen/PropertyTax/ReviewForm";
 import FloorsDetails from "./components/Forms/FloorsDetails";
 import PlotDetails from "./components/Forms/PlotDetails";
-import { getPlotAndFloorFormConfigPath } from "./utils/assessInfoFormManager";
+import { getPlotAndFloorFormConfigPath } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/assessInfoFormManager";
 // import { getOwnerInfoFormConfigPath } from "./utils/ownerInfoFormManager";
 import isEmpty from "lodash/isEmpty";
 import MultipleOwnerInfoHOC from "./components/Forms/MultipleOwnerInfo";
@@ -57,6 +57,7 @@ class FormWizard extends Component {
       },
     },
     totalAmountToBePaid: 100,
+    draftByIDResponse: {},
     isFullPayment: true,
     partialAmountError: "",
   };
@@ -110,7 +111,8 @@ class FormWizard extends Component {
     // }
   };
 
-  configOwner = (ownersCount) => formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay" })(OwnerInformation);
+  configOwner = (ownersCount) =>
+    formHoc({ formKey: "ownerInfo", copyName: `ownerInfo_${ownersCount}`, path: "PropertyTaxPay", isCoreConfiguration: true })(OwnerInformation);
 
   addOwner = (isMultiple) => {
     const { ownerInfoArr, ownersCount } = this.state;
@@ -148,9 +150,11 @@ class FormWizard extends Component {
     };
   };
 
-  fetchDraftDetails = async (draftId, isReassesment) => {
+  fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, updatePrepareFormDataFromDraft, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
+    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+
     try {
       toggleSpinner();
       let draftsResponse = await httpRequest(
@@ -159,7 +163,7 @@ class FormWizard extends Component {
         [
           {
             key: "userId",
-            value: get(JSON.parse(localStorage.getItem("user-info")), "uuid"),
+            value: uuid,
           },
           {
             key: isReassesment ? "assessmentNumber" : "id",
@@ -169,10 +173,12 @@ class FormWizard extends Component {
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
-      // const city=get(currentDraft, "draftRecord.propertyAddress.fields.city.value");
+      this.setState({
+        draftByIDResponse: currentDraft,
+      });
+
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
-      // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
       const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
@@ -288,6 +294,7 @@ class FormWizard extends Component {
     const isFreshAssesment = this.getQueryValue(search, "type");
     const tenantId = this.getQueryValue(search, "tenantId");
     const propertyId = this.getQueryValue(search, "propertyId");
+    const draftUuid = this.getQueryValue(search, "uuid");
 
     if (assessmentId) {
       let requestBody = {
@@ -357,7 +364,7 @@ class FormWizard extends Component {
         "FireCess",
       ]);
 
-      await this.fetchDraftDetails(assessmentId, isReassesment);
+      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
@@ -683,7 +690,7 @@ class FormWizard extends Component {
         const goToPaymentGateway = await httpRequest("pg-service/transaction/v1/_create", "_create", [], requestBody);
         if (get(getBill, "Bill[0].billDetails[0].totalAmount")) {
           const redirectionUrl = get(goToPaymentGateway, "Transaction.redirectUrl");
-          localStorage.setItem("assessmentYear",assessmentYear);
+          localStorage.setItem("assessmentYear", assessmentYear);
           window.location = redirectionUrl;
         } else {
           toggleSpinner();
@@ -705,11 +712,11 @@ class FormWizard extends Component {
     const ownerObj = {};
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
     });
     const ownerArray = [ownerObj];
-    return ownerArray
-  }
+    return ownerArray;
+  };
 
   getMultipleOwnerInfo = () => {
     let { form } = this.props;
@@ -721,7 +728,8 @@ class FormWizard extends Component {
         const ownerObj = {};
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null
+          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+            get(form, `${curr}.fields.${field}.value`, undefined) || null;
         });
         ownerData.push(ownerObj);
         return ownerData;
@@ -734,11 +742,13 @@ class FormWizard extends Component {
     const instiObj = {};
     Object.keys(institutionAuthority.fields).map((field) => {
       const jsonPath = institutionAuthority.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionAuthority, `fields.${field}.value`, undefined) || null
+      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+        get(institutionAuthority, `fields.${field}.value`, undefined) || null;
     });
     Object.keys(institutionDetails.fields).map((field) => {
       const jsonPath = institutionDetails.fields[field].jsonPath;
-      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(institutionDetails, `fields.${field}.value`, undefined) || null
+      instiObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
+        get(institutionDetails, `fields.${field}.value`, undefined) || null;
     });
     instiObj.designation = get(institutionAuthority, "fields.designation.value", "");
     const ownerArray = [ownerObj];
@@ -748,7 +758,8 @@ class FormWizard extends Component {
   estimate = async () => {
     let { location, form } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
-    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const { financialYearFromQuery } = this.state;
     const { draft } = this.state.draftRequest;
     const { financialYear } = draft.draftRecord;
@@ -792,7 +803,8 @@ class FormWizard extends Component {
     const { financialYearFromQuery } = this.state;
     let { toggleSpinner, location, form } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
-    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined)) delete prepareFormData.Properties[0].propertyDetails[0].institution
+    if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
+      delete prepareFormData.Properties[0].propertyDetails[0].institution;
     let { search } = location;
     const propertyId = this.getQueryValue(search, "propertyId");
     const assessmentId = this.getQueryValue(search, "assessmentId");
@@ -843,15 +855,23 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    const { fetchDraftDetails } = this;
-    const { formValidIndexArray, selected } = this.state;
+    const { formValidIndexArray, selected, draftByIDResponse } = this.state;
+
+    let draftUuidId = draftByIDResponse.userId;
+    let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    console.log(draftUuidId, currentUuidId);
     // form validation checks needs to be written here
     // fetchDraftDetails();
+
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      this.setState({
-        selected: index,
-        formValidIndexArray: range(0, index),
-      });
+      if (draftUuidId === currentUuidId) {
+        this.setState({
+          selected: index,
+          formValidIndexArray: range(0, index),
+        });
+      } else {
+        alert("Not authorized to edit this property details");
+      }
     } else {
       // alert("Please fill required tabs");
     }

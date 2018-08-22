@@ -30,7 +30,7 @@ import "./index.css";
 //   return yearRange;
 // };
 
-const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPay" })(SingleButtonForm);
+const YearDialogueHOC = formHoc({ formKey: "financialYear", path: "PropertyTaxPay", isCoreConfiguration: true })(SingleButtonForm);
 
 class YearDialog extends Component {
   componentDidMount = () => {

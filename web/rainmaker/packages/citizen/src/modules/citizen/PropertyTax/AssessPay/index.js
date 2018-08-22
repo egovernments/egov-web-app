@@ -82,7 +82,7 @@ class AssessPay extends Component {
 
   render() {
     const { urls, history } = this.props;
-
+    console.log(history);
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
