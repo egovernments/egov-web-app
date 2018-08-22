@@ -86,7 +86,7 @@ export const subUsageType = {
         dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`, subUsageMinor.usageCategorySubMinor));
       } else {
         dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryDetail")[0]}usageCategorySubMinor`, field.value));
-        dispatch(prepareFormData("Properties[0].propertyDetails[0].usageCategoryDetail", null));
+        dispatch(prepareFormData(field.jsonPath, null));
       }
     },
   },

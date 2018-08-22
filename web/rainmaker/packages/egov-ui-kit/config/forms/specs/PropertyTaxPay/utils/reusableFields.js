@@ -130,7 +130,7 @@ var subUsageType = exports.subUsageType = {
         dispatch((0, _actions.prepareFormData)(field.jsonPath.split("usageCategoryDetail")[0] + "usageCategorySubMinor", subUsageMinor.usageCategorySubMinor));
       } else {
         dispatch((0, _actions.prepareFormData)(field.jsonPath.split("usageCategoryDetail")[0] + "usageCategorySubMinor", field.value));
-        dispatch((0, _actions.prepareFormData)("Properties[0].propertyDetails[0].usageCategoryDetail", null));
+        dispatch((0, _actions.prepareFormData)(field.jsonPath, null));
       }
     }
   }
