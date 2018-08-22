@@ -457,9 +457,7 @@ export const transformComplaintForComponent = (complaints, role, employeeById, c
         role === "citizen"
           ? displayStatus(complaintDetail.status, complaintDetail.assignee, complaintDetail.actions.filter((complaint) => complaint.status)[0].action)
           : getTransformedStatus(complaintDetail.status) === "CLOSED"
-            ? complaintDetail.rating
-              ? displayStatus(`${complaintDetail.rating}/5`)
-              : displayStatus(complaintDetail.actions[0].status)
+            ? complaintDetail.rating ? displayStatus(`${complaintDetail.rating}/5`) : displayStatus(complaintDetail.actions[0].status)
             : displayStatus(
                 returnSLAStatus(
                   getPropertyFromObj(categoriesById, complaintDetail.serviceCode, "slaHours", "NA"),
@@ -521,4 +519,12 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     dispatch(toggleSnackbarAndSetText(true, message, true));
     return;
   }
+};
+
+export const trimObj = (obj) => {
+  if (!Array.isArray(obj) && typeof obj != "object") return obj;
+  return Object.keys(obj).reduce(function(acc, key) {
+    acc[key.trim()] = typeof obj[key] == "string" ? obj[key].trim() : trimObj(obj[key]);
+    return acc;
+  }, Array.isArray(obj) ? [] : {});
 };

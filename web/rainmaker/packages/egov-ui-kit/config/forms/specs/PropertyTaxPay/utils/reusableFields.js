@@ -277,14 +277,16 @@ var beforeInitForm = exports.beforeInitForm = {
     (0, _set2.default)(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    var unitFormUpdate = function unitFormUpdate() {
+    var unitFormUpdate = function unitFormUpdate(usageCategoryMinor) {
+      var skipMajorUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
       var filteredSubUsageMinor = (0, _filter2.default)(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true), function (subUsageMinor) {
-        return subUsageMinor.usageCategoryMinor === (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
+        return subUsageMinor.usageCategoryMinor === (0, _get2.default)(state, usageCategoryMinor);
       });
       if (filteredSubUsageMinor.length > 0) {
         var filteredUsageCategoryDetails = getPresentMasterObj(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
         (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"));
-        if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath")) {
+        if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")));
         }
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", false);
@@ -294,7 +296,7 @@ var beforeInitForm = exports.beforeInitForm = {
     };
 
     if (usageCategoryMinor && usageCategoryMajor !== "MIXED") {
-      unitFormUpdate();
+      unitFormUpdate("common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     } else {
       if (usageCategoryMajor === "MIXED") {
         var masterOne = (0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryMajor");
@@ -305,7 +307,7 @@ var beforeInitForm = exports.beforeInitForm = {
         });
         (0, _set2.default)(action, "form.fields.usageType.disabled", false);
         (0, _set2.default)(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-        unitFormUpdate();
+        unitFormUpdate("common.prepareFormData." + action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", false);
       } else {
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
       }
