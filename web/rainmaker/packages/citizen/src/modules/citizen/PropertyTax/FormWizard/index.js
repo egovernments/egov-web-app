@@ -761,8 +761,6 @@ class FormWizard extends Component {
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const { financialYearFromQuery } = this.state;
-    const { draft } = this.state.draftRequest;
-    const { financialYear } = draft.draftRecord;
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     try {
       if (financialYearFromQuery) {
@@ -968,6 +966,12 @@ class FormWizard extends Component {
   normalizePropertyDetails = (properties) => {
     const propertyInfo = JSON.parse(JSON.stringify(properties));
     const property = propertyInfo[0] || {};
+    let { search } = this.props.location;
+    const isReassesment = !!this.getQueryValue(search, "isReassesment");
+    const propertyId = this.getQueryValue(search, "propertyId");
+    if (isReassesment && propertyId) {
+      property.propertyId = propertyId;
+    }
     const { propertyDetails } = property;
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
