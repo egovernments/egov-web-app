@@ -756,7 +756,7 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { location, form } = this.props;
+    let { location, form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -770,9 +770,15 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
         const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -801,7 +807,7 @@ class FormWizard extends Component {
   pay = async () => {
     const { callPGService, callDraft } = this;
     const { financialYearFromQuery } = this.state;
-    let { toggleSpinner, location, form } = this.props;
+    let { toggleSpinner, location, form, common } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
@@ -822,10 +828,16 @@ class FormWizard extends Component {
 
     if (selectedownerShipCategoryType === "SINGLEOWNER") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
 
     if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
+      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
     if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
       const { instiObj, ownerArray } = this.getInstituteInfo();
@@ -989,7 +1001,7 @@ const mapStateToProps = (state) => {
   const { propertyAddress } = form;
   const { city } = (propertyAddress && propertyAddress.fields && propertyAddress.fields) || {};
   const currentTenantId = (city && city.value) || "pb";
-  return { form, prepareFormData: common.prepareFormData, currentTenantId };
+  return { form, prepareFormData: common.prepareFormData, currentTenantId, common };
 };
 
 const mapDispatchToProps = (dispatch) => {
