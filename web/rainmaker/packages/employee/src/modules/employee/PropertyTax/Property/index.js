@@ -72,6 +72,9 @@ class Property extends Component {
                 name: "PropertyType",
               },
               {
+                name: "PropertySubType",
+              },
+              {
                 name: "OwnerType",
               },
             ],
@@ -86,6 +89,7 @@ class Property extends Component {
       "UsageCategorySubMinor",
       "OccupancyType",
       "PropertyType",
+      "PropertySubType",
       "OwnerType",
     ]);
     fetchProperties([{ key: "ids", value: this.props.match.params.propertyId }, { key: "tenantId", value: this.props.match.params.tenantId }]);
@@ -225,18 +229,12 @@ const getAddressInfo = (addressObj, extraItems) => {
 const transform = (floor, key, generalMDMSDataById) => {
   const { masterName, dataKey } = key;
   if (!masterName) {
-    return floor[dataKey];
+    return floor["occupancyType"] === "RENTED" ? `INR ${floor["arv"]}` : `${floor[dataKey]} sq yards`;
   } else {
     if (floor[dataKey]) {
-      if (floor[dataKey] === "NONRESIDENTIAL") {
-        return generalMDMSDataById["UsageCategoryMinor"] ? generalMDMSDataById["UsageCategoryMinor"][floor["usageCategoryMinor"]].name : "";
-      } else if (floor[dataKey] === "RESIDENTIAL") {
-        return generalMDMSDataById["UsageCategoryMajor"] ? generalMDMSDataById["UsageCategoryMajor"][floor[dataKey]].name : "";
-      } else {
-        return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "";
-      }
+      return generalMDMSDataById[masterName] ? generalMDMSDataById[masterName][floor[dataKey]].name : "NA";
     } else {
-      return "-";
+      return "NA";
     }
   }
 };
@@ -256,10 +254,15 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         },
         {
           key: "Type of Building:",
-          value:
-            generalMDMSDataById && generalMDMSDataById["PropertyType"] && generalMDMSDataById["PropertyType"][propertyDetails.propertyType]
-              ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
-              : "NA",
+          value: generalMDMSDataById
+            ? propertyDetails.propertySubType
+              ? generalMDMSDataById["PropertySubType"]
+                ? generalMDMSDataById["PropertySubType"][propertyDetails.propertySubType].name
+                : "NA"
+              : generalMDMSDataById["PropertyType"]
+                ? generalMDMSDataById["PropertyType"][propertyDetails.propertyType].name
+                : "NA"
+            : "NA",
         },
       ],
       items: {
@@ -345,7 +348,13 @@ const mapStateToProps = (state, ownProps) => {
   const tenantId = ownProps.match.params.tenantId;
   const selPropertyDetails = propertiesById[propertyId] || {};
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
-  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
+  const propertyCity =
+    cities && selPropertyDetails && selPropertyDetails.address && cities.filter((item) => item.key === selPropertyDetails.address.city);
+  const addressInfo =
+    getAddressInfo(selPropertyDetails.address, [
+      { key: "City:", value: (propertyCity && propertyCity[0] && propertyCity[0].name) || "NA" },
+      { key: "Property ID:", value: selPropertyDetails.propertyId },
+    ]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
