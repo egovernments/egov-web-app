@@ -55,6 +55,7 @@ class FormWizard extends Component {
         draftRecord: {},
       },
     },
+    draftByIDResponse: {},
     totalAmountToBePaid: 1,
     isFullPayment: true,
   };
@@ -170,10 +171,12 @@ class FormWizard extends Component {
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
-      // const city=get(currentDraft, "draftRecord.propertyAddress.fields.city.value");
+      this.setState({
+        draftByIDResponse: currentDraft,
+      });
+
       const ownerFormKeys = Object.keys(currentDraft.draftRecord).filter((formName) => formName.indexOf("ownerInfo_") !== -1);
       const { ownerDetails, totalowners } = this.configOwnersDetailsFromDraft(ownerFormKeys);
-      // const floorDetails = Object.keys(currentDraft.draftRecord).filter(formName => formName.indexOf("floorDetails_"))
       const activeTab = get(currentDraft, "draftRecord.selectedTabIndex", 0);
       const activeModule = get(currentDraft, "draftRecord.propertyAddress.fields.city.value", "");
       if (!!activeModule) {
@@ -849,10 +852,11 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    //const { fetchDraftDetails } = this;
-    const { formValidIndexArray, selected, draftRequest } = this.state;
-    let draftUuidId = get(draftRequest, "draft.userId");
+    const { formValidIndexArray, selected, draftByIDResponse } = this.state;
+
+    let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+    console.log(draftUuidId, currentUuidId);
     // form validation checks needs to be written here
     // fetchDraftDetails();
 
