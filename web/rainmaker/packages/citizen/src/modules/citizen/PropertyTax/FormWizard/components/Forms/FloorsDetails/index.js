@@ -3,7 +3,7 @@ import { Card, ToolTipUi } from "components";
 import { connect } from "react-redux";
 import formHoc from "egov-ui-kit/hocs/form";
 import CustomSelectForm from "../CustomSelectForm";
-import GenericForm from "../../GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 // import DynamicForm from "../../DynamicForm";

@@ -1,6 +1,6 @@
 import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card, Icon, ToolTipUi } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
@@ -139,7 +139,7 @@ const OwnerInformation = ({
             <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div className="col-sm-6" style={{ paddingBottom: "8px"}}>
+            <div className="col-sm-6" style={{ paddingBottom: "8px" }}>
               <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
             <div>
@@ -195,19 +195,23 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
   );
 };
 
-const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" ,isCoreConfiguration:true })(GenericForm);
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay",isCoreConfiguration:true })(GenericForm);
+const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
 //const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
-const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" ,isCoreConfiguration:true })(GenericForm);
-const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay",isCoreConfiguration:true  })(OwnerInformation);
-const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay",isCoreConfiguration:true  })(GenericForm);
-const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" ,isCoreConfiguration:true})(GenericForm);
+const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay", isCoreConfiguration: true })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution", isCoreConfiguration: true })(
+  GenericForm
+);
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
-const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution",isCoreConfiguration:true })(
-  InstitutionAuthority
-);
+const InstitutionAuthorityHOC = formHoc({
+  formKey: "institutionAuthority",
+  path: "PropertyTaxPay/OwnerInformation/Institution",
+  isCoreConfiguration: true,
+})(InstitutionAuthority);
 
 export {
   UsageInformationHOC,
