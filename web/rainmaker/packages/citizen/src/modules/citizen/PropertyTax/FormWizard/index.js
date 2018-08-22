@@ -853,25 +853,48 @@ class FormWizard extends Component {
 
   onTabClick = (index) => {
     const { formValidIndexArray, selected, draftByIDResponse } = this.state;
-
+    const { location } = this.props;
+    let { search } = location;
     let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
-    console.log(draftUuidId, currentUuidId);
+    const isReassesment = this.getQueryValue(search, "isReassesment");
     // form validation checks needs to be written here
     // fetchDraftDetails();
 
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      if (draftUuidId === currentUuidId) {
-        this.setState({
-          selected: index,
-          formValidIndexArray: range(0, index),
-        });
-      } else {
-        alert("Not authorized to edit this property details");
-      }
+      isReassesment > 0
+        ? draftUuidId === currentUuidId
+          ? this.setState({
+              selected: index,
+              formValidIndexArray: range(0, index),
+            })
+          : alert("Not authorized to edit this property details")
+        : this.setState({
+            selected: index,
+            formValidIndexArray: range(0, index),
+          });
     } else {
-      // alert("Please fill required tabs");
     }
+
+    // if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
+    //   if (Object.keys(obj).length > 0) {
+    //     if (draftUuidId === currentUuidId) {
+    //       this.setState({
+    //         selected: index,
+    //         formValidIndexArray: range(0, index),
+    //       });
+    //     } else {
+    //       alert("Not authorized to edit this property details");
+    //     }
+    //   } else {
+    //     this.setState({
+    //       selected: index,
+    //       formValidIndexArray: range(0, index),
+    //     });
+    //   }
+    // } else {
+    //   // alert("Please fill required tabs");
+    // }
   };
 
   validateUnitandPlotSize = (plotDetails, form) => {

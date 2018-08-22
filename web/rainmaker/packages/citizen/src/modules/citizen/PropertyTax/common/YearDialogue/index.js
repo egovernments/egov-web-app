@@ -7,6 +7,7 @@ import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import "./index.css";
 
 // const getYearList = () => {
@@ -50,7 +51,9 @@ class YearDialog extends Component {
         ],
       },
     };
+    toggleSpinner();
     fetchGeneralMDMSData(requestBody, "egf-master", ["FinancialYear"]);
+    toggleSpinner();
   };
 
   render() {
@@ -97,6 +100,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
     removeForm: (formkey) => dispatch(removeForm(formkey)),
+    toggleSpinner: () => dispatch(toggleSpinner()),
   };
 };
 
