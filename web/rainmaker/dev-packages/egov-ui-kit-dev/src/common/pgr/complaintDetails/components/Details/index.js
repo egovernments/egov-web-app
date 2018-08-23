@@ -144,7 +144,7 @@ class Details extends Component {
                   <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                     <Label
-                      label={landMark}
+                      label={`Landmark : ${landMark}`}
                       className="status-result-color"
                       id="complaint-details-complaint-location"
                       labelStyle={{ color: "inherit" }}

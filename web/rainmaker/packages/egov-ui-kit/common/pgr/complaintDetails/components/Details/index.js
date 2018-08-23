@@ -196,7 +196,7 @@ var Details = function (_Component) {
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
                 _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
                 _react2.default.createElement(_translationNode2.default, {
-                  label: landMark,
+                  label: "Landmark : " + landMark,
                   className: "status-result-color",
                   id: "complaint-details-complaint-location",
                   labelStyle: { color: "inherit" }
