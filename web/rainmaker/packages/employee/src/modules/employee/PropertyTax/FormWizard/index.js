@@ -283,7 +283,6 @@ class FormWizard extends Component {
   componentWillMount = () => {};
 
   componentDidMount = async () => {
-    try {
       let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
       let { search } = location;
       toggleSpinner()
@@ -321,10 +320,7 @@ class FormWizard extends Component {
         }
       }
       renderCustomTitleForPt(customTitle);
-    } catch (e) {
-    } finally {
-      this.props.toggleSpinner()
-    }
+      toggleSpinner()
   };
 
   getImportantDates = async (financialYearFromQuery) => {
