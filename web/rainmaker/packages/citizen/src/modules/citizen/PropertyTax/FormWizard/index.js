@@ -803,8 +803,9 @@ class FormWizard extends Component {
       });
       return estimateResponse;
     } catch (e) {
-      // alert(e);
-      this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
+      if (e.message) {
+        alert(e.message);
+      } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     }
   };
 

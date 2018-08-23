@@ -30,7 +30,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import set from "lodash/set";
-import { fetchFromLocalStorage ,trimObj} from "egov-ui-kit/utils/commons";
+import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
@@ -904,14 +904,20 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
@@ -933,7 +939,9 @@ class FormWizard extends Component {
       });
       return estimateResponse;
     } catch (e) {
-      alert(e);
+      if (e.message) {
+        alert(e.message);
+      } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
     }
   };
 
@@ -948,15 +956,21 @@ class FormWizard extends Component {
     try {
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
 
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
 
@@ -1049,7 +1063,7 @@ class FormWizard extends Component {
 
   onPayButtonClick = () => {
     const { isFullPayment, partialAmountError } = this.state;
-    if (!isFullPayment && partialAmountError) return
+    if (!isFullPayment && partialAmountError) return;
     this.setState({ dialogueOpen: true });
     const { form, prepareFormData } = this.props;
     const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
