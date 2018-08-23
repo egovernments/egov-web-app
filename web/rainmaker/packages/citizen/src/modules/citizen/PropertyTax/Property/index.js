@@ -113,8 +113,8 @@ class Property extends Component {
   };
 
   onAssessPayClick = () => {
-    const { selPropertyDetails, propertyId, tenantId } = this.props;
-    const assessmentNo = selPropertyDetails && selPropertyDetails.assessmentNumber;
+    const { latestPropertyDetails, propertyId, tenantId } = this.props;
+    const assessmentNo = latestPropertyDetails && latestPropertyDetails.assessmentNumber;
     this.setState({
       dialogueOpen: true,
       urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
@@ -380,7 +380,7 @@ const mapStateToProps = (state, ownProps) => {
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
   const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { urls, propertyItems, propertyId, tenantId, customTitle, selPropertyDetails, sortedAssessments };
+  return { urls, propertyItems, propertyId, tenantId, customTitle, latestPropertyDetails, selPropertyDetails, sortedAssessments };
 };
 
 const mapDispatchToProps = (dispatch) => {

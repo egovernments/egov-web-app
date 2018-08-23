@@ -28,7 +28,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import set from "lodash/set";
-import { fetchFromLocalStorage ,trimObj} from "egov-ui-kit/utils/commons";
+import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
@@ -36,7 +36,7 @@ import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess,
 import { MDMS } from "egov-ui-kit/utils/endPoints";
 import { getDocumentTypes } from "modules/citizen/PropertyTax/FormWizard/utils/mdmsCalls";
 import { fetchMDMDDocumentTypeSuccess } from "redux/store/actions";
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom";
 import "./index.css";
 
 class FormWizard extends Component {
@@ -768,14 +768,20 @@ class FormWizard extends Component {
       }
       if (selectedownerShipCategoryType === "SINGLEOWNER") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
         set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
-        set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+        set(
+          prepareFormData,
+          "Properties[0].propertyDetails[0].ownershipCategory",
+          get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+        );
         set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
       }
       if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
@@ -826,15 +832,21 @@ class FormWizard extends Component {
 
     if (selectedownerShipCategoryType === "SINGLEOWNER") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getSingleOwnerInfo());
-      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+      );
       set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
 
     if (selectedownerShipCategoryType === "MULTIPLEOWNERS") {
       set(prepareFormData, "Properties[0].propertyDetails[0].owners", this.getMultipleOwnerInfo());
-      set(prepareFormData, "Properties[0].propertyDetails[0].ownershipCategory",
-        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL"));
+      set(
+        prepareFormData,
+        "Properties[0].propertyDetails[0].ownershipCategory",
+        get(common, `generalMDMSDataById.SubOwnerShipCategory[${selectedownerShipCategoryType}].ownerShipCategory`, "INDIVIDUAL")
+      );
       set(prepareFormData, "Properties[0].propertyDetails[0].subOwnershipCategory", selectedownerShipCategoryType);
     }
     if (selectedownerShipCategoryType.toLowerCase().indexOf("institutional") !== -1) {
@@ -991,7 +1003,7 @@ class FormWizard extends Component {
 
   onPayButtonClick = () => {
     const { isFullPayment, partialAmountError } = this.state;
-    if (!isFullPayment && partialAmountError) return
+    if (!isFullPayment && partialAmountError) return;
     this.setState({ dialogueOpen: true });
   };
 

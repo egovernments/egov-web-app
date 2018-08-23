@@ -5,6 +5,7 @@ import Field from "egov-ui-kit/utils/field";
 import { RadioButton, Card, Icon, ToolTipUi } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
+import "./index.css";
 
 const options = [
   { value: "Male", label: <Label label="PT_FORM3_MALE" /> },

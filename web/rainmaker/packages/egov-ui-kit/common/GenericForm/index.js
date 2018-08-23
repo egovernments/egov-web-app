@@ -21,6 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var GenericForm = function GenericForm(_ref) {
   var form = _ref.form,
       handleFieldChange = _ref.handleFieldChange,
+      cardTitle = _ref.cardTitle,
       formKey = _ref.formKey,
       containerStyle = _ref.containerStyle,
       handleRemoveItem = _ref.handleRemoveItem,
@@ -39,6 +40,7 @@ var GenericForm = function GenericForm(_ref) {
         { className: "remove-unit-assessment", style: { cursor: "pointer" }, onClick: handleRemoveItem },
         _react2.default.createElement(_components.Icon, { action: "navigation", name: "close" })
       ),
+      cardTitle && cardTitle,
       formName && _react2.default.createElement(
         "div",
         { className: "text-left" },
