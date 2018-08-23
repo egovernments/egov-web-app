@@ -44,7 +44,7 @@ const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history
                           <div className="col-sm-6" style={moduleCardButtonsContainer}>
                             <Button
                               onClick={() => {
-                                onButton1Click(item, history);
+                                onButton1Click(item, history, onPGRClick);
                               }}
                               label={<Label label={item.button1} color="#fff" />}
                               primary="true"

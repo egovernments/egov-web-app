@@ -64,7 +64,11 @@ var CityPickerDialog = function (_Component) {
     }, _this.onItemClick = function (item) {
       var history = _this.props.history;
 
-      history.push("pgr-home");
+      if (process.env.REACT_APP_NAME === "Citizen") {
+        history.push("pgr-home");
+      } else {
+        history.push("all-complaints");
+      }
     }, _this.autoSuggestCallback = function () {
       var results = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var searchTerm = arguments[1];

@@ -84,7 +84,7 @@ var ModuleCard = function ModuleCard(_ref) {
                   { className: "col-sm-6", style: moduleCardButtonsContainer },
                   _react2.default.createElement(_components.Button, (_React$createElement = {
                     onClick: function onClick() {
-                      onButton1Click(item, history);
+                      onButton1Click(item, history, onPGRClick);
                     },
                     label: _react2.default.createElement(_translationNode2.default, { label: item.button1, color: "#fff" }),
                     primary: "true",
