@@ -287,8 +287,6 @@ class FormWizard extends Component {
     }
   };
 
-  // getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
-
   componentDidMount = async () => {
     let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
     let { search } = this.props.location;

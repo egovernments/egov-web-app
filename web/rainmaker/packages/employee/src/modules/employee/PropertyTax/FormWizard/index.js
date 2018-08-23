@@ -173,6 +173,10 @@ class FormWizard extends Component {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
           },
+          {
+            key: "tenantId", //hardcoded tenantId to send pb in draft call.. need to remove later
+            value: "pb",
+          },
         ],
         draftRequest
       );
