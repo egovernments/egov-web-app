@@ -283,44 +283,44 @@ class FormWizard extends Component {
   componentWillMount = () => {};
 
   componentDidMount = async () => {
-      let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
-      let { search } = location;
-      toggleSpinner()
-      let financialYearFromQuery = window.location.search.split("FY=")[1];
-      const propertyId = this.getAssessmentId(search, "propertyId");
-      const isReassesment = !!this.getAssessmentId(search, "isReassesment");
+    let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
+    let { search } = location;
+    toggleSpinner()
+    let financialYearFromQuery = window.location.search.split("FY=")[1];
+    const propertyId = this.getAssessmentId(search, "propertyId");
+    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
 
-      if (financialYearFromQuery) {
-        financialYearFromQuery = financialYearFromQuery.split("&")[0];
-        this.setState({
-          financialYearFromQuery,
-        });
-      }
-      const customTitle = isReassesment
-        ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
-        : `Property Assessment (${financialYearFromQuery}) : New Property`;
-      const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-      const isFreshAssesment = this.getAssessmentId(search, "type");
-      await this.fetchDraftDetails(assessmentId, isReassesment);
-      this.addOwner(true);
-      const documentTypeMdms = await getDocumentTypes();
-      if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
-      if (this.props.location.search.split("&").length > 3) {
-        try {
-          let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
-          let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
-          if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
-            history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
-          } else {
-            history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
-          }
-        } catch (e) {
-          alert(e);
-          // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
+    if (financialYearFromQuery) {
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      this.setState({
+        financialYearFromQuery,
+      });
+    }
+    const customTitle = isReassesment
+      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
+      : `Property Assessment (${financialYearFromQuery}) : New Property`;
+    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isFreshAssesment = this.getAssessmentId(search, "type");
+    await this.fetchDraftDetails(assessmentId, isReassesment);
+    this.addOwner(true);
+    const documentTypeMdms = await getDocumentTypes();
+    if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
+    if (this.props.location.search.split("&").length > 3) {
+      try {
+        let pgUpdateResponse = await httpRequest("pg-service/transaction/v1/_update" + search, "_update", [], {});
+        let moduleId = get(pgUpdateResponse, "Transaction[0].moduleId");
+        if (get(pgUpdateResponse, "Transaction[0].txnStatus") === "FAILURE") {
+          history.push("/property-tax/payment-failure/" + moduleId.split("-", 3).join("-"));
+        } else {
+          history.push("/property-tax/payment-success/" + moduleId.split("-", 3).join("-"));
         }
+      } catch (e) {
+        alert(e);
+        // history.push("/property-tax/payment-success/"+moduleId.split("-",(moduleId.split("-").length-1)).join("-"))
       }
-      renderCustomTitleForPt(customTitle);
-      toggleSpinner()
+    }
+    renderCustomTitleForPt(customTitle);
+    toggleSpinner()
   };
 
   getImportantDates = async (financialYearFromQuery) => {
