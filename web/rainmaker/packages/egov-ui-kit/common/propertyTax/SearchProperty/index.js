@@ -145,11 +145,13 @@ var SearchProperty = function (_Component) {
         var uuid = (0, _get2.default)(latestAssessment, "citizenInfo.uuid");
         var button = _react2.default.createElement(_components.Button, {
           onClick: userType === "CITIZEN" ? function () {
+            localStorage.setItem("draftId", "");
             _this.setState({
               dialogueOpen: true,
               urlToAppend: "/property-tax/assessment-form?assessmentId=" + assessmentNo + "&isReassesment=true&uuid=" + uuid + "&propertyId=" + propertyId + "&tenantId=" + tenantId
             });
           } : function (e) {
+            localStorage.setItem("draftId", "");
             history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
           },
           label: _react2.default.createElement(_translationNode2.default, { buttonLabel: true, label: userType === "CITIZEN" ? "PT_PAYMENT_ASSESS_AND_PAY" : "View", fontSize: "12px" }),

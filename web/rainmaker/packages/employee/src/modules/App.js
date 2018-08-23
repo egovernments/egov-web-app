@@ -10,6 +10,7 @@ import commonConfig from "config/common";
 // import logoMseva from "egov-ui-kit/assets/images/logo-white.png";
 import routes from "./Routes";
 //import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
+import { LoadingIndicator } from "components"
 
 class App extends Component {
   constructor(props) {
@@ -70,26 +71,32 @@ class App extends Component {
   }
 
   render() {
-    const { toast } = this.props;
+    const { toast, loading } = this.props;
     return (
       <div>
         <Router routes={routes} />
         {toast && toast.open && toast.message.length && <Toast open={toast.open} message={toast.message} error={toast.error} />}
+        {loading && <LoadingIndicator />}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { route, toast } = state.app;
   const props = {};
+  const { spinner } = state.common
+  const loading = ownProps.loading || spinner
   if (route && route.length) {
     props.route = route;
   }
   if (toast && toast.open && toast.message && toast.message.length) {
     props.toast = toast;
   }
-  return props;
+  return {
+    ...props,
+    loading,
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
