@@ -10,6 +10,7 @@ export const resetFormWizard = (form, removeForm) => {
     "cashInfo",
     "paymentModes",
     "receiptInfo",
+    "additionalRebate",
   ];
   formKeys.forEach((formKey) => {
     if (
