@@ -8,6 +8,14 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
+var _filter = require("lodash/filter");
+
+var _filter2 = _interopRequireDefault(_filter);
+
 var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 var _reusableFields = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields");
@@ -21,7 +29,7 @@ var formConfig = {
   fields: (0, _extends3.default)({
     city: {
       id: "city",
-      jsonPath: "Properties[0].address.city",
+      jsonPath: "Properties[1].address.city",
       required: true,
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
@@ -56,6 +64,9 @@ var formConfig = {
             state = _ref.state;
 
         dispatch((0, _actions.prepareFormData)("Properties[0].tenantId", field.value));
+        dispatch((0, _actions.prepareFormData)("Properties[0].address.city", (0, _filter2.default)((0, _get2.default)(state, "common.cities"), function (city) {
+          return city.code === field.value;
+        })[0].name));
         var requestBody = {
           MdmsCriteria: {
             tenantId: field.value,

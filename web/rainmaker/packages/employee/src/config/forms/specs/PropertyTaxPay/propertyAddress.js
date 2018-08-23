@@ -9,7 +9,7 @@ const formConfig = {
   fields: {
     city: {
       id: "city",
-      jsonPath: "Properties[0].address.city",
+      jsonPath: "PropertiesTemp[0].address.city",
       required: true,
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
@@ -140,7 +140,9 @@ const formConfig = {
   },
   afterInitForm: (action, store, dispatch) => {
     let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
+    let city = JSON.parse(localStorage.getItem("user-info")).permanentAddress;
     dispatch(handleFieldChange("propertyAddress", "city", tenantId));
+    dispatch(prepareFormData("Properties[0].address.city", city));
     return action;
   },
   action: "",

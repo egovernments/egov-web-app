@@ -1,3 +1,5 @@
+import get from "lodash/get";
+import filter from "lodash/filter";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
@@ -7,7 +9,7 @@ const formConfig = {
   fields: {
     city: {
       id: "city",
-      jsonPath: "Properties[0].address.city",
+      jsonPath: "PropertiesTemp[0].address.city",
       required: true,
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
@@ -43,6 +45,9 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
+        dispatch(prepareFormData("Properties[0].address.city", filter(get(state,"common.cities"),(city)=>{
+          return city.code===field.value
+        })[0].name));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
