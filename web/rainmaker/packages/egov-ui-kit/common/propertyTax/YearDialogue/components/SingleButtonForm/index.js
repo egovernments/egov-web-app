@@ -31,6 +31,7 @@ var SingleButtonForm = function SingleButtonForm(_ref) {
   var fields = form.fields || {};
   return _react2.default.createElement(_components.Button, (0, _extends3.default)({}, fields.button, {
     onClick: function onClick() {
+      localStorage.setItem("draftId", "");
       handleFieldChange("button", label);
       resetFormWizard();
       history && urlToAppend ? history.push(urlToAppend + "&FY=" + label) : history.push("/property-tax/assessment-form?FY=" + label + "&type=new");

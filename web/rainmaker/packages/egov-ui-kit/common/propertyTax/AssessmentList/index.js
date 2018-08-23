@@ -86,6 +86,7 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
       );
       break;
     case "Saved Draft":
+      localStorage.setItem("draftId", "");
       return _react2.default.createElement(
         "div",
         {
@@ -100,6 +101,7 @@ var getItemStatus = function getItemStatus(item, history, generalMDMSDataById) {
       );
       break;
     case "ASSESS & PAY":
+      localStorage.setItem("draftId", "");
       return _react2.default.createElement(
         "div",
         { className: "assessment-displayInline" },

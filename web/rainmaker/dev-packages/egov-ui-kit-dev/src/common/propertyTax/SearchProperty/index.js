@@ -82,12 +82,14 @@ class SearchProperty extends Component {
           onClick={
             userType === "CITIZEN"
               ? () => {
+                  localStorage.setItem("draftId", "")
                   this.setState({
                     dialogueOpen: true,
                     urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
+                  localStorage.setItem("draftId", "")
                   history.push(`/property-tax/property/${propertyId}/${property.tenantId}`);
                 }
           }

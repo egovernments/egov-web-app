@@ -51,6 +51,7 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
       );
       break;
     case "Saved Draft":
+      localStorage.setItem("draftId", "");
       return (
         <div
           onClick={() => {
@@ -65,6 +66,7 @@ const getItemStatus = (item, history, generalMDMSDataById) => {
       );
       break;
     case "ASSESS & PAY":
+      localStorage.setItem("draftId", "");
       return (
         <div className="assessment-displayInline">
           <Button

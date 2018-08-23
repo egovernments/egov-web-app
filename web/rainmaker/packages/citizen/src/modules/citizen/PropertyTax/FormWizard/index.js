@@ -173,6 +173,9 @@ class FormWizard extends Component {
         draftRequest
       );
       const currentDraft = draftsResponse.drafts.find((res) => get(res, "assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      if (!currentDraft) {
+        throw new Error("draft not found");
+      }
       this.setState({
         draftByIDResponse: currentDraft,
       });
