@@ -1,3 +1,6 @@
+import get from "lodash/get";
+import queryString from "query-string";
+
 export const resetFormWizard = (form, removeForm) => {
   const formKeys = form && Object.keys(form);
   const formToReset = [
@@ -37,3 +40,5 @@ export const getLatestPropertyDetails = (propertyDetailsArray) => {
     return;
   }
 };
+
+export const getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);

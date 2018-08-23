@@ -25,12 +25,12 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { prepareFormData } from "egov-ui-kit/utils/commons";
+import { getQueryValue } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
 import set from "lodash/set";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
-import queryString from "query-string";
+// import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
 import { fetchGeneralMDMSData, updatePrepareFormDataFromDraft, MDMSFetchSuccess, generalMDMSFetchSuccess } from "egov-ui-kit/redux/common/actions";
 import { MDMS } from "egov-ui-kit/utils/endPoints";
@@ -287,17 +287,17 @@ class FormWizard extends Component {
     }
   };
 
-  getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
+  // getQueryValue = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentDidMount = async () => {
     let { renderCustomTitleForPt, fetchGeneralMDMSData, fetchMDMDDocumentTypeSuccess } = this.props;
     let { search } = this.props.location;
-    const assessmentId = this.getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isReassesment = !!this.getQueryValue(search, "isReassesment");
-    const isFreshAssesment = this.getQueryValue(search, "type");
-    const tenantId = this.getQueryValue(search, "tenantId");
-    const propertyId = this.getQueryValue(search, "propertyId");
-    const draftUuid = this.getQueryValue(search, "uuid");
+    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isReassesment = !!getQueryValue(search, "isReassesment");
+    const isFreshAssesment = getQueryValue(search, "type");
+    const tenantId = getQueryValue(search, "tenantId");
+    const propertyId = getQueryValue(search, "propertyId");
+    const draftUuid = getQueryValue(search, "uuid");
 
     if (assessmentId) {
       let requestBody = {
@@ -820,8 +820,8 @@ class FormWizard extends Component {
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     let { search } = location;
-    const propertyId = this.getQueryValue(search, "propertyId");
-    const assessmentId = this.getQueryValue(search, "assessmentId");
+    const propertyId = getQueryValue(search, "propertyId");
+    const assessmentId = getQueryValue(search, "assessmentId");
     const propertyMethodAction = !!propertyId ? "_update" : "_create";
     const selectedownerShipCategoryType = get(form, "ownershipType.fields.typeOfOwnership.value", "");
     toggleSpinner();
@@ -887,7 +887,7 @@ class FormWizard extends Component {
     let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
 
-    const isReassesment = this.getQueryValue(search, "isReassesment");
+    const isReassesment = getQueryValue(search, "isReassesment");
     // form validation checks needs to be written here
     // fetchDraftDetails();
 
@@ -984,8 +984,8 @@ class FormWizard extends Component {
     const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
     const property = propertyInfo[0] || {};
     let { search } = this.props.location;
-    const isReassesment = !!this.getQueryValue(search, "isReassesment");
-    const propertyId = this.getQueryValue(search, "propertyId");
+    const isReassesment = !!getQueryValue(search, "isReassesment");
+    const propertyId = getQueryValue(search, "propertyId");
     if (isReassesment && propertyId) {
       property.propertyId = propertyId;
     }

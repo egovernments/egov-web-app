@@ -27,7 +27,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { prepareFormData } from "egov-ui-kit/utils/commons";
+import { getQueryValue } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
 import set from "lodash/set";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
@@ -98,7 +98,7 @@ class FormWizard extends Component {
         assessmentNumber: assessmentNo,
         prepareFormData,
       };
-      draftRequest.draft.assessmentNumber = assessmentNo
+      draftRequest.draft.assessmentNumber = assessmentNo;
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_update", "_update", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
@@ -157,14 +157,18 @@ class FormWizard extends Component {
     };
   };
 
-  fetchDraftDetails = async (draftId, isReassesment) => {
+  fetchDraftDetails = async (draftId, isReassesment, draftUuid) => {
     const { draftRequest } = this.state;
     const { toggleSpinner, fetchMDMDDocumentTypeSuccess, updatePrepareFormDataFromDraft } = this.props;
+    const uuid = draftUuid ? draftUuid : get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+
     try {
+      toggleSpinner();
       let draftsResponse = await httpRequest(
         "pt-services-v2/drafts/_search",
         "_search",
-        [{ key: "userId", value: get(JSON.parse(localStorage.getItem("user-info")), "uuid") },
+        [
+          { key: "userId", value: uuid },
           {
             key: isReassesment ? "assessmentNumber" : "id",
             value: draftId,
@@ -173,7 +177,9 @@ class FormWizard extends Component {
         draftRequest
       );
 
-      const currentDraft = draftsResponse.drafts.find((res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId);
+      const currentDraft = draftsResponse.drafts.find(
+        (res) => get(res, "draftRecord.assessmentNumber", "") === draftId || get(res, "id", "") === draftId
+      );
       if (!currentDraft) {
         throw new Error("draft not found");
       }
@@ -262,33 +268,37 @@ class FormWizard extends Component {
         },
         () => {
           //this.onTabClick(activeTab)
-          activeTab >= 3 && this.estimate().then((estimateResponse) => {
-            if (estimateResponse) {
-              this.setState({
-                estimation: estimateResponse && estimateResponse.Calculation,
-                totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
-              });
-            }
-            if (activeTab === 4) this.pay()
-          });
+          toggleSpinner();
+          activeTab >= 3 &&
+            this.estimate().then((estimateResponse) => {
+              if (estimateResponse) {
+                this.setState({
+                  estimation: estimateResponse && estimateResponse.Calculation,
+                  totalAmountToBePaid: get(estimateResponse, "Calculation[0].totalAmount", 0),
+                });
+              }
+              if (activeTab === 4) this.pay();
+            });
         }
       );
     } catch (e) {
+      toggleSpinner();
       console.log(e);
     }
   };
 
-  getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
+  // getAssessmentId = (query, key) => get(queryString.parse(query), key, undefined);
 
   componentWillMount = () => {};
 
   componentDidMount = async () => {
     let { history, location, fetchMDMDDocumentTypeSuccess, renderCustomTitleForPt, toggleSpinner } = this.props;
     let { search } = location;
-    toggleSpinner()
+    toggleSpinner();
     let financialYearFromQuery = window.location.search.split("FY=")[1];
-    const propertyId = this.getAssessmentId(search, "propertyId");
-    const isReassesment = !!this.getAssessmentId(search, "isReassesment");
+    const propertyId = getQueryValue(search, "propertyId");
+    const isReassesment = !!getQueryValue(search, "isReassesment");
+    const draftUuid = getQueryValue(search, "uuid");
 
     if (financialYearFromQuery) {
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
@@ -299,9 +309,9 @@ class FormWizard extends Component {
     const customTitle = isReassesment
       ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
-    const assessmentId = this.getAssessmentId(search, "assessmentId") || fetchFromLocalStorage("draftId");
-    const isFreshAssesment = this.getAssessmentId(search, "type");
-    await this.fetchDraftDetails(assessmentId, isReassesment);
+    const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
+    const isFreshAssesment = getQueryValue(search, "type");
+    await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     this.addOwner(true);
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
@@ -320,7 +330,7 @@ class FormWizard extends Component {
       }
     }
     renderCustomTitleForPt(customTitle);
-    toggleSpinner()
+    toggleSpinner();
   };
 
   getImportantDates = async (financialYearFromQuery) => {
@@ -568,7 +578,7 @@ class FormWizard extends Component {
   };
 
   onTabClick = (index) => {
-    const { fetchDraftDetails } = this;
+    // const { fetchDraftDetails } = this;
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
     // fetchDraftDetails();
