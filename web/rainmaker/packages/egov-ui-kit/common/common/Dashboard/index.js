@@ -24,8 +24,6 @@ require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var userType = JSON.parse(localStorage.getItem("user-info")).type;
-
 var onButton1Click = function onButton1Click(item, history, onPGRClick) {
   var route = item.route;
 
@@ -37,7 +35,7 @@ var onButton1Click = function onButton1Click(item, history, onPGRClick) {
   }
 };
 var onButton2Click = function onButton2Click(item, history) {
-  if (userType === "CITIZEN") {
+  if (process.env.REACT_APP_NAME === "Citizen") {
     if (item.moduleTitle === "Property Tax") {
       history && history.push("property-tax/how-it-works");
     }

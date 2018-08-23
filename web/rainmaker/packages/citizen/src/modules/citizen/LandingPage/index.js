@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Screen } from "modules/common";
 import { Dashboard } from "modules/common";
 import { connect } from "react-redux";
 import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
@@ -87,14 +88,16 @@ class LandingPage extends Component {
     const { getModuleItems, onPGRClick, onDialogueClose } = this;
     const moduleItems = getModuleItems(generalMDMSDataById) || [];
     return (
-      <Dashboard
-        moduleItems={moduleItems}
-        history={history}
-        userName={name}
-        onPGRClick={onPGRClick}
-        onDialogueClose={onDialogueClose}
-        dialogueOpen={this.state.dialogueOpen}
-      />
+      <Screen>
+        <Dashboard
+          moduleItems={moduleItems}
+          history={history}
+          userName={name}
+          onPGRClick={onPGRClick}
+          onDialogueClose={onDialogueClose}
+          dialogueOpen={this.state.dialogueOpen}
+        />
+      </Screen>
     );
   }
 }
