@@ -60,9 +60,11 @@ var _reactRedux = require("react-redux");
 
 var _actions3 = require("egov-ui-kit/redux/properties/actions");
 
-var _BlankAssessment = require("../AssessmentList/components/BlankAssessment");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
-var _BlankAssessment2 = _interopRequireDefault(_BlankAssessment);
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
 
 require("./index.css");
 
@@ -136,12 +138,16 @@ var SearchProperty = function (_Component) {
             locality = address.locality;
 
         var displayAddress = doorNo ? "" + (doorNo ? doorNo + "," : "") + ("" + (buildingName ? buildingName + "," : "")) + ("" + (street ? street + "," : "")) : "" + (locality.name ? locality.name : "");
-        var name = propertyDetails[0].owners[0].name;
+
+        var latestAssessment = (0, _PTCommon.getLatestPropertyDetails)(propertyDetails);
+        var name = latestAssessment.owners[0].name;
+        var assessmentNo = latestAssessment.assessmentNumber;
+        var uuid = (0, _get2.default)(latestAssessment, "citizenInfo.uuid");
         var button = _react2.default.createElement(_components.Button, {
           onClick: userType === "CITIZEN" ? function () {
             _this.setState({
               dialogueOpen: true,
-              urlToAppend: "/property-tax/assessment-form?assessmentId=" + assessmentNo + "&isReassesment=true&propertyId=" + propertyId + "&tenantId=" + tenantId
+              urlToAppend: "/property-tax/assessment-form?assessmentId=" + assessmentNo + "&isReassesment=true&uuid=" + uuid + "&propertyId=" + propertyId + "&tenantId=" + tenantId
             });
           } : function (e) {
             history.push("/property-tax/property/" + propertyId + "/" + property.tenantId);
