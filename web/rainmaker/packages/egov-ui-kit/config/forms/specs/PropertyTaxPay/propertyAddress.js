@@ -4,13 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require("babel-runtime/helpers/extends");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _endPoints = require("egov-ui-kit/utils/endPoints");
+
+var _reusableFields = require("egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var formConfig = {
   name: "propertyAddress",
-  fields: {
+  fields: (0, _extends3.default)({
     city: {
       id: "city",
       jsonPath: "Properties[0].address.city",
@@ -38,8 +46,7 @@ var formConfig = {
         },
         dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [{
-          fieldKey: "mohalla",
-          hierarchyType: "REVENUE"
+          fieldKey: "mohalla"
         }]
       },
       updateDependentFields: function updateDependentFields(_ref) {
@@ -120,40 +127,8 @@ var formConfig = {
       errorMessage: "PT_PROPERTY_DETAILS_STREET_ERRORMSG",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64
-    },
-    mohalla: {
-      id: "mohalla",
-      jsonPath: "Properties[0].address.locality.code",
-      type: "autoSuggestDropdown",
-      floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
-      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
-      fullWidth: true,
-      toolTip: true,
-      toolTipMessage: "PT_MOHALLA_TOOLTIP_MESSAGE",
-      //toolTipMessage: "Name of the area in which your property is located",
-      boundary: true,
-      numcols: 6,
-      errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      dataFetchConfig: {
-        url: "egov-location/location/v11/boundarys/_search",
-        action: "",
-        queryParams: [],
-        requestBody: {},
-        isDependent: true
-      },
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      required: true,
-      updateDependentFields: function updateDependentFields(_ref2) {
-        var formKey = _ref2.formKey,
-            field = _ref2.field,
-            dispatch = _ref2.dispatch;
-
-        var mohalla = field.dropDownData.find(function (option) {
-          return option.value === field.value;
-        });
-        dispatch((0, _actions.prepareFormData)("Properties[0].address.locality.area", mohalla.area));
-      }
-    },
+    }
+  }, _reusableFields.mohalla, {
     pincode: {
       id: "pincode",
       type: "number",
@@ -183,7 +158,7 @@ var formConfig = {
       toolTipMessage: "PT_OLDPID_TOOLTIP_MESSAGE",
       maxLength: 64
     }
-  },
+  }),
 
   action: "",
   redirectionRoute: "",

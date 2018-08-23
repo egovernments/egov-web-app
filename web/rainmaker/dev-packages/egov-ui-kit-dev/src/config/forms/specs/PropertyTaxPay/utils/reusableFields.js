@@ -233,11 +233,11 @@ export const beforeInitForm = {
     set(action, "form.fields.subUsageType.hideField", false);
     //For adding multiple units to prepareFormData
 
-    const unitFormUpdate = (usageCategoryMinor,skipMajorUpdate=true) => {
+    const unitFormUpdate = (usageCategoryMinor, skipMajorUpdate = true) => {
       var filteredSubUsageMinor = filter(
         prepareDropDownData(get(state, "common.generalMDMSDataById.UsageCategorySubMinor"), true),
         (subUsageMinor) => {
-          return subUsageMinor.usageCategoryMinor === get(state,usageCategoryMinor);
+          return subUsageMinor.usageCategoryMinor === get(state, usageCategoryMinor);
         }
       );
       if (filteredSubUsageMinor.length > 0) {
@@ -275,7 +275,7 @@ export const beforeInitForm = {
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
         set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
-        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`,false);
+        unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`, false);
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
       }
@@ -555,7 +555,7 @@ export const mohalla = {
     numcols: 6,
     errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
     dataFetchConfig: {
-      url: "egov-location/location/v11/boundarys/_search",
+      url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
       action: "",
       queryParams: [],
       requestBody: {},

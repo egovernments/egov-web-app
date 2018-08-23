@@ -531,7 +531,7 @@ var mohalla = exports.mohalla = {
     numcols: 6,
     errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
     dataFetchConfig: {
-      url: "egov-location/location/v11/boundarys/_search",
+      url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=REVENUE&boundaryType=Locality",
       action: "",
       queryParams: [],
       requestBody: {},

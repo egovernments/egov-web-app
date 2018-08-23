@@ -109,7 +109,7 @@ const formConfig = {
       // dropDownData: [{ value: "sm", label: "Shashtri Market" }, { value: "MN", label: "Malind Nagar" }, { label: "Kishanpura", value: "Kishanpura" }],
       dropDownData: [],
       dataFetchConfig: {
-        url: "egov-location/location/v11/boundarys/_search",
+        url: "egov-location/location/v11/boundarys/_search?hierarchyTypeCode=ADMIN&boundaryType=Locality",
         action: "",
         queryParams: [],
         requestBody: {},

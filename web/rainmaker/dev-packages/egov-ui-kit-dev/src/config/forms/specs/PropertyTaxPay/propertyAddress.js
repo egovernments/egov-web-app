@@ -1,4 +1,5 @@
 import { CITY } from "egov-ui-kit/utils/endPoints";
+import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 
 const formConfig = {
@@ -37,7 +38,6 @@ const formConfig = {
         dependants: [
           {
             fieldKey: "mohalla",
-            hierarchyType: "REVENUE",
           },
         ],
       },
@@ -147,35 +147,7 @@ const formConfig = {
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       maxLength: 64,
     },
-    mohalla: {
-      id: "mohalla",
-      jsonPath: "Properties[0].address.locality.code",
-      type: "autoSuggestDropdown",
-      floatingLabelText: "PT_PROPERTY_DETAILS_MOHALLA",
-      hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
-      fullWidth: true,
-      toolTip: true,
-      toolTipMessage: "PT_MOHALLA_TOOLTIP_MESSAGE",
-      //toolTipMessage: "Name of the area in which your property is located",
-      boundary: true,
-      numcols: 6,
-      errorMessage: "PT_PROPERTY_DETAILS_MOHALLA_ERRORMSG",
-      dataFetchConfig: {
-        url: "egov-location/location/v11/boundarys/_search",
-        action: "",
-        queryParams: [],
-        requestBody: {},
-        isDependent: true,
-      },
-      errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      required: true,
-      updateDependentFields: ({ formKey, field, dispatch }) => {
-        const mohalla = field.dropDownData.find((option) => {
-          return option.value === field.value;
-        });
-        dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
-      },
-    },
+    ...mohalla,
     pincode: {
       id: "pincode",
       type: "number",
