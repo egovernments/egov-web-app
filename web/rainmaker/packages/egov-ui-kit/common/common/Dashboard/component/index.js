@@ -32,6 +32,7 @@ var moduleCardButtonsContainer = {
 var ModuleCard = function ModuleCard(_ref) {
   var items = _ref.items,
       onButton1Click = _ref.onButton1Click,
+      onPGRClick = _ref.onPGRClick,
       onButton2Click = _ref.onButton2Click,
       history = _ref.history;
 
@@ -43,7 +44,7 @@ var ModuleCard = function ModuleCard(_ref) {
 
       return _react2.default.createElement(
         "div",
-        { className: "col-sm-6" },
+        { className: "col-sm-6 " + item.className },
         _react2.default.createElement(_components.Card, {
           id: "home-complaint-card",
           className: "clearfix landingPageCard",
@@ -115,7 +116,7 @@ var ModuleCard = function ModuleCard(_ref) {
                   { className: "col-sm-6", style: moduleCardButtonsContainer },
                   _react2.default.createElement(_components.Button, (_React$createElement2 = {
                     onClick: function onClick() {
-                      onButton1Click(item, history);
+                      onButton1Click(item, history, onPGRClick);
                     },
                     label: _react2.default.createElement(_translationNode2.default, { label: item.button1, color: "#fff" }),
                     primary: "true",

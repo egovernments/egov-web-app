@@ -32,6 +32,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _get = require("lodash/get");
+
+var _get2 = _interopRequireDefault(_get);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var styles = {
@@ -52,14 +56,15 @@ var onSelectFieldChange = function onSelectFieldChange(event, key, payload, hist
       localStorage.setItem("draftId", "");
       history && history.push("/property-tax/assessment-form?FY=" + item.financialYear + "&assessmentId=" + item.assessmentNo + "&isReassesment=true&propertyId=" + item.propertyId + "&tenantId=" + item.tenantId);
       break;
-    case "Download Citizen Receipt":
+    case "Download Receipt":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func
       downloadReceipt(item, generalMDMSDataById);
       break;
+    case "Download Citizen Receipt":
+      downloadReceipt(item, generalMDMSDataById);
+      break;
     case "Download Employee Receipt":
-      //Need 1. Property, 2. Property Details, 3. receiptdetails
-      // call receiptcreate func
       downloadReceipt(item, generalMDMSDataById, true);
       break;
     case "Complete Payment":
@@ -71,36 +76,37 @@ var onSelectFieldChange = function onSelectFieldChange(event, key, payload, hist
 
 var downloadReceipt = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(item, generalMDMSDataById, isEmployeeReceipt) {
-    var queryObj, payload, receiptDetails;
+    var queryObj, payload, totalAmountToPay, receiptDetails;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerNo", value: item.consumerCode }];
+            queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerCode", value: item.consumerCode }];
             _context.prev = 1;
             _context.next = 4;
             return (0, _api.httpRequest)("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
 
           case 4:
             payload = _context.sent;
-            receiptDetails = payload && payload.Receipt && (0, _createReceipt.createReceiptDetails)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
+            totalAmountToPay = payload && payload.Receipt && (0, _get2.default)(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
+            receiptDetails = payload && payload.Receipt && (0, _createReceipt.createReceiptDetails)(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities, totalAmountToPay);
 
             receiptDetails && (0, _receiptsPDF2.default)("pt-reciept-citizen", receiptDetails, generalMDMSDataById, "", isEmployeeReceipt);
-            _context.next = 12;
+            _context.next = 13;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](1);
 
             console.log(_context.t0);
 
-          case 12:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, undefined, [[1, 9]]);
+    }, _callee, undefined, [[1, 10]]);
   }));
 
   return function downloadReceipt(_x, _x2, _x3) {
@@ -113,6 +119,7 @@ var DropDown = function DropDown(_ref2) {
       item = _ref2.item,
       generalMDMSDataById = _ref2.generalMDMSDataById;
 
+  var userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
   return _react2.default.createElement(
     "div",
     null,
@@ -130,8 +137,9 @@ var DropDown = function DropDown(_ref2) {
           return onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById);
         }
       },
-      _react2.default.createElement(_MenuItem2.default, { value: "Download Citizen Receipt", primaryText: "Download Citizen Receipt" }),
-      _react2.default.createElement(_MenuItem2.default, { value: "Download Employee Receipt", primaryText: "Download Employee Receipt" }),
+      userType === "CITIZEN" && _react2.default.createElement(_MenuItem2.default, { value: "Download Receipt", primaryText: "Download Receipt" }),
+      userType === "EMPLOYEE" && _react2.default.createElement(_MenuItem2.default, { value: "Download Citizen Receipt", primaryText: "Download Citizen Receipt" }),
+      userType === "EMPLOYEE" && _react2.default.createElement(_MenuItem2.default, { value: "Download Employee Receipt", primaryText: "Download Employee Receipt" }),
       _react2.default.createElement(_MenuItem2.default, { value: "Re-Assess", primaryText: "Re-Assess" }),
       item.status === "Partially Paid" && _react2.default.createElement(_MenuItem2.default, { value: "Complete Payment", primaryText: "Complete Payment" })
     )

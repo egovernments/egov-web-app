@@ -4,6 +4,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { createReceiptDetails } from "../../../PaymentStatus/Components/createReceipt";
 import generateReceipt from "../../../PaymentStatus/Components/receiptsPDF";
 import React from "react";
+import get from "lodash/get";
 
 const styles = {
   customWidth: {
@@ -28,14 +29,15 @@ const onSelectFieldChange = (event, key, payload, history, item, generalMDMSData
           }&tenantId=${item.tenantId}`
         );
       break;
-    case "Download Citizen Receipt":
+    case "Download Receipt":
       //Need 1. Property, 2. Property Details, 3. receiptdetails
       // call receiptcreate func
       downloadReceipt(item, generalMDMSDataById);
       break;
+    case "Download Citizen Receipt":
+      downloadReceipt(item, generalMDMSDataById);
+      break;
     case "Download Employee Receipt":
-      //Need 1. Property, 2. Property Details, 3. receiptdetails
-      // call receiptcreate func
       downloadReceipt(item, generalMDMSDataById, true);
       break;
     case "Complete Payment":
@@ -51,13 +53,15 @@ const onSelectFieldChange = (event, key, payload, history, item, generalMDMSData
 };
 
 const downloadReceipt = async (item, generalMDMSDataById, isEmployeeReceipt) => {
-  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerNo", value: item.consumerCode }];
+  const queryObj = [{ key: "tenantId", value: item.tenantId }, { key: "consumerCode", value: item.consumerCode }];
+
   try {
     const payload = await httpRequest("/collection-services/receipts/_search", "_search", queryObj, {}, [], { ts: 0 });
+    const totalAmountToPay = payload && payload.Receipt && get(payload.Receipt[payload.Receipt.length - 1], "Bill[0].billDetails[0].totalAmount");
     const receiptDetails =
       payload &&
       payload.Receipt &&
-      createReceiptDetails(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities);
+      createReceiptDetails(item.property, item.propertyDetails, payload.Receipt[0], item.localizationLabels, item.cities, totalAmountToPay);
     receiptDetails && generateReceipt("pt-reciept-citizen", receiptDetails, generalMDMSDataById, "", isEmployeeReceipt);
   } catch (e) {
     console.log(e);
@@ -65,6 +69,7 @@ const downloadReceipt = async (item, generalMDMSDataById, isEmployeeReceipt) => 
 };
 
 const DropDown = ({ history, item, generalMDMSDataById }) => {
+  const userType = localStorage.getItem("user-info") && JSON.parse(localStorage.getItem("user-info")).type;
   return (
     <div>
       <SelectField
@@ -77,8 +82,9 @@ const DropDown = ({ history, item, generalMDMSDataById }) => {
         hintStyle={styles.hintStyle}
         onChange={(event, key, payload) => onSelectFieldChange(event, key, payload, history, item, generalMDMSDataById)}
       >
-        <MenuItem value="Download Citizen Receipt" primaryText="Download Citizen Receipt" />
-        <MenuItem value="Download Employee Receipt" primaryText="Download Employee Receipt" />
+        {userType === "CITIZEN" && <MenuItem value="Download Receipt" primaryText="Download Receipt" />}
+        {userType === "EMPLOYEE" && <MenuItem value="Download Citizen Receipt" primaryText="Download Citizen Receipt" />}
+        {userType === "EMPLOYEE" && <MenuItem value="Download Employee Receipt" primaryText="Download Employee Receipt" />}
         <MenuItem value="Re-Assess" primaryText="Re-Assess" />
         {item.status === "Partially Paid" && <MenuItem value="Complete Payment" primaryText="Complete Payment" />}
       </SelectField>

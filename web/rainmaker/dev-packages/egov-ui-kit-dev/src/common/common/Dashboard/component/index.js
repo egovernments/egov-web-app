@@ -10,13 +10,13 @@ const moduleCardButtonsContainer = {
   padding: "0px",
   margin: "0px",
 };
-const ModuleCard = ({ items, onButton1Click, onButton2Click, history }) => {
+const ModuleCard = ({ items, onButton1Click, onPGRClick, onButton2Click, history }) => {
   return (
     <div>
       {items &&
         items.map((item, key) => {
           return (
-            <div className="col-sm-6">
+            <div className={`col-sm-6 ${item.className}`}>
               <Card
                 id="home-complaint-card"
                 className="clearfix landingPageCard"
@@ -71,7 +71,7 @@ const ModuleCard = ({ items, onButton1Click, onButton2Click, history }) => {
                           <div className="col-sm-6" style={moduleCardButtonsContainer}>
                             <Button
                               onClick={() => {
-                                onButton1Click(item, history);
+                                onButton1Click(item, history, onPGRClick);
                               }}
                               label={<Label label={item.button1} color="#fff" />}
                               primary="true"
