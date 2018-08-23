@@ -28,7 +28,11 @@ class CityPickerDialog extends Component {
 
   onItemClick = (item) => {
     const { history } = this.props;
-    history.push("pgr-home");
+    if (process.env.REACT_APP_NAME === "Citizen") {
+      history.push("pgr-home");
+    } else {
+      history.push("all-complaints");
+    }
   };
 
   autoSuggestCallback = (results = [], searchTerm) => {

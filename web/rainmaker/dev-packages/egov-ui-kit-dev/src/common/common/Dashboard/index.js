@@ -4,8 +4,6 @@ import Label from "egov-ui-kit/utils/translationNode";
 import CityPicker from "./component/CityPicker";
 import "./index.css";
 
-let userType = JSON.parse(localStorage.getItem("user-info")).type;
-
 const onButton1Click = (item, history, onPGRClick) => {
   const { route } = item;
   if (item.moduleTitle === "Property Tax") {
@@ -16,7 +14,7 @@ const onButton1Click = (item, history, onPGRClick) => {
   }
 };
 const onButton2Click = (item, history) => {
-  if (userType === "CITIZEN") {
+  if (process.env.REACT_APP_NAME === "Citizen") {
     if (item.moduleTitle === "Property Tax") {
       history && history.push("property-tax/how-it-works");
     }
