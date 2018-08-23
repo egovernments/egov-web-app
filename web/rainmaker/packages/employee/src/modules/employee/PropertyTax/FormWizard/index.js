@@ -1047,10 +1047,15 @@ class FormWizard extends Component {
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
+    var sumOfUnitArea=0;
     units.forEach((unit) => {
       let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
       unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
+      sumOfUnitArea+=unit.unitArea;
     });
+    if (propertyDetails[0].propertySubType==="SHAREDPROPERTY") {
+      propertyDetails[0].buildUpArea=sumOfUnitArea;
+    }
     propertyDetails[0].units = units;
     return propertyInfo;
   };
