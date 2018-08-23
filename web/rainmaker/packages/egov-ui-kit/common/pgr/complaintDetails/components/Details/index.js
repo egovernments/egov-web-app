@@ -85,6 +85,7 @@ var Details = function (_Component) {
           description = _props.description,
           submittedDate = _props.submittedDate,
           address = _props.address,
+          landMark = _props.landMark,
           mapAction = _props.mapAction,
           images = _props.images,
           action = _props.action,
@@ -190,9 +191,20 @@ var Details = function (_Component) {
                   );
                 })
               ),
-              _react2.default.createElement(
+              landMark && _react2.default.createElement(
                 "div",
-                { className: "rainmaker-displayInline" },
+                { className: "rainmaker-displayInline", style: { marginTop: 10 } },
+                _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
+                _react2.default.createElement(_translationNode2.default, {
+                  label: "Landmark : " + landMark,
+                  className: "status-result-color",
+                  id: "complaint-details-complaint-location",
+                  labelStyle: { color: "inherit" }
+                })
+              ),
+              address && _react2.default.createElement(
+                "div",
+                { className: "rainmaker-displayInline", style: { marginTop: 10 } },
                 _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
                 _react2.default.createElement(_translationNode2.default, {
                   label: address,

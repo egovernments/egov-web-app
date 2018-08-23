@@ -108,8 +108,8 @@ var ActionMenuComp = function (_Component) {
       var _this$props = _this.props,
           role = _this$props.role,
           actionListArr = _this$props.actionListArr;
+      // const transformedRole = role === "citizen" ? "citizen" : "employee";
 
-      var transformedRole = role === "citizen" ? "citizen" : "employee";
       var actionList = actionListArr;
 
       if (splitArray.length > 1) {
@@ -147,8 +147,8 @@ var ActionMenuComp = function (_Component) {
       var _this$props2 = _this.props,
           role = _this$props2.role,
           actionListArr = _this$props2.actionListArr;
+      // const transformedRole = role === "citizen" ? "citizen" : "employee";
 
-      var transformedRole = role === "citizen" ? "citizen" : "employee";
       var actionList = actionListArr;
       var menuItems = [];
 
@@ -248,8 +248,8 @@ var ActionMenuComp = function (_Component) {
       var _props = this.props,
           role = _props.role,
           actionListArr = _props.actionListArr;
+      // const transformedRole = role === "citizen" ? "citizen" : "employee";
 
-      var transformedRole = role === "citizen" ? "citizen" : "employee";
       var _state = this.state,
           searchText = _state.searchText,
           path = _state.path,

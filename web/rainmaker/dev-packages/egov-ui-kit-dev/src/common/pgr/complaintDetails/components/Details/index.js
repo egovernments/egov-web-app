@@ -31,7 +31,20 @@ class Details extends Component {
   };
 
   render() {
-    const { status, complaint, applicationNo, description, submittedDate, address, mapAction, images, action, role, complaintLoc } = this.props;
+    const {
+      status,
+      complaint,
+      applicationNo,
+      description,
+      submittedDate,
+      address,
+      landMark,
+      mapAction,
+      images,
+      action,
+      role,
+      complaintLoc,
+    } = this.props;
     const icon = {};
     icon.name = "location";
     icon.style = {
@@ -107,33 +120,6 @@ class Details extends Component {
                     labelStyle={{ color: "inherit" }}
                   />
                 </div>
-                {/* <div style={{ marginLeft: "16px", marginTop: "24px", marginBottom: "17px" }}>
-                  <div className="row">
-                    {images &&
-                      images.map((image, index) => {
-                        return (
-                          image && (
-                            <div
-                              className="col-xs-4 complaint-detail-detail-section-padding-zero"
-                              id={`complaint-details-image-section-${index}`}
-                              key={index}
-                            >
-                              <Image
-                                style={{
-                                  width: "97px",
-                                  height: "93px",
-                                }}
-                                source={image}
-                                size="medium"
-                                onClick={() => this.onImageClick(image)}
-                              />
-                            </div>
-                          )
-                        );
-                      })}
-                  </div>
-                </div> */}
-
                 <div style={{ marginTop: "16px" }} className="complaint-image-cont">
                   {images &&
                     images.map((image, index) => {
@@ -154,16 +140,28 @@ class Details extends Component {
                       );
                     })}
                 </div>
-
-                <div className="rainmaker-displayInline">
-                  <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
-                  <Label
-                    label={address}
-                    className="status-result-color"
-                    id="complaint-details-complaint-location"
-                    labelStyle={{ color: "inherit" }}
-                  />
-                </div>
+                {landMark && (
+                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
+                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                    <Label
+                      label={`Landmark : ${landMark}`}
+                      className="status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                    />
+                  </div>
+                )}
+                {address && (
+                  <div className="rainmaker-displayInline" style={{ marginTop: 10 }}>
+                    <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
+                    <Label
+                      label={address}
+                      className="status-result-color"
+                      id="complaint-details-complaint-location"
+                      labelStyle={{ color: "inherit" }}
+                    />
+                  </div>
+                )}
                 <div style={{ marginTop: 10 }}>
                   {mapAction &&
                     complaintLoc.lat && (

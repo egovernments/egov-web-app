@@ -32,7 +32,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var intialState = {
   dropDownData: {},
-  prepareFormData: {}
+  prepareFormData: {},
+  spinner: false
 };
 
 var commonReducer = function commonReducer() {
@@ -123,7 +124,7 @@ var commonReducer = function commonReducer() {
       });
     case commonTypes.PREPARE_FORM_DATA:
       return (0, _extends4.default)({}, state, {
-        prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value)
+        prepareFormData: (0, _set2.default)(state.prepareFormData, action.jsonPath, action.value ? action.value : null)
       });
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
@@ -145,6 +146,15 @@ var commonReducer = function commonReducer() {
         loading: false,
         error: true,
         errorMessage: action.error
+      });
+
+    case commonTypes.TOGGLE_SPINNER:
+      return (0, _extends4.default)({}, state, {
+        spinner: !state.spinner
+      });
+    case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
+      return (0, _extends4.default)({}, state, {
+        prepareFormData: action.prepareFormData
       });
     default:
       return state;

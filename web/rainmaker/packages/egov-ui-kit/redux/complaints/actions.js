@@ -46,12 +46,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //checking users there in action history
-var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
+var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers, tenantId) {
   if (hasUsers) {
     var employeeIds = [],
         userIds = [];
     actionHistory.forEach(function (actions) {
-      actions.actions.forEach(function (action) {
+      actions.actions && actions.actions.forEach(function (action) {
         if (action.by) {
           var _getUserEmployeeId = getUserEmployeeId(action.by),
               userId = _getUserEmployeeId.userId,
@@ -79,8 +79,8 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
         cachedEmployeeIds = Object.keys(common.employeeById);
       }
       var value = (0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type !== "CITIZEN" ? [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds))), [auth.userInfo.id]).join(",") : [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(employeeIds, cachedEmployeeIds)))).join(",");
-
-      if (value.length) dispatch(commonActions.fetchEmployees([{ key: "id", value: value }]));
+      var queryObject = tenantId ? [{ key: "tenantId", value: tenantId }, { key: "id", value: value }] : [{ key: "id", value: value }];
+      if (value.length) dispatch(commonActions.fetchEmployees(queryObject));
     }
     if (userIds.length > 0) {
       var cachedUserIds = [];
@@ -88,7 +88,7 @@ var checkUsers = function checkUsers(dispatch, state, actionHistory, hasUsers) {
         cachedUserIds = Object.keys(common.citizenById);
       }
       var id = (0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds)).indexOf(auth.userInfo.id) === -1 && auth.userInfo.type === "CITIZEN" ? [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds))), [auth.userInfo.id]) : [].concat((0, _toConsumableArray3.default)((0, _uniq2.default)((0, _difference2.default)(userIds, cachedUserIds))));
-      if (id.length) dispatch(commonActions.fetchCitizens({ tenantId: localStorage.getItem("tenant-id"), id: id }));
+      if (id.length) dispatch(commonActions.fetchCitizens({ id: id }));
     }
   }
 };
@@ -148,36 +148,40 @@ var fetchComplaints = exports.fetchComplaints = function fetchComplaints(queryOb
 
   return function () {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch, getState) {
-      var payload;
+      var tenantId, payload;
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               dispatch(complaintFetchPending());
               _context.prev = 1;
-              _context.next = 4;
+              tenantId = "";
+              _context.next = 5;
               return (0, _api.httpRequest)(_endPoints.COMPLAINT.GET.URL, _endPoints.COMPLAINT.GET.ACTION, queryObject);
 
-            case 4:
+            case 5:
               payload = _context.sent;
 
-              checkUsers(dispatch, getState(), payload.actionHistory, hasUsers);
+              if (payload.services && payload.services.length === 1) {
+                tenantId = payload.services[0].tenantId;
+              }
+              checkUsers(dispatch, getState(), payload.actionHistory, hasUsers, tenantId);
               dispatch(complaintFetchComplete(payload, overWrite));
-              _context.next = 12;
+              _context.next = 14;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 11:
+              _context.prev = 11;
               _context.t0 = _context["catch"](1);
 
               dispatch(complaintFetchError(_context.t0.message));
 
-            case 12:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, undefined, [[1, 9]]);
+      }, _callee, undefined, [[1, 11]]);
     }));
 
     return function (_x2, _x3) {

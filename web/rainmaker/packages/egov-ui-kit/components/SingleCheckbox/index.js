@@ -46,7 +46,8 @@ var SingleCheckboxUi = function SingleCheckboxUi(_ref) {
       checkedIcon = _ref.checkedIcon,
       iconStyle = _ref.iconStyle,
       containerClassName = _ref.containerClassName,
-      id = _ref.id;
+      id = _ref.id,
+      disabled = _ref.disabled;
 
   var renderCheckbox = function renderCheckbox() {
     return _react2.default.createElement(_Checkbox2.default, {
@@ -58,7 +59,8 @@ var SingleCheckboxUi = function SingleCheckboxUi(_ref) {
       iconStyle: iconStyle,
       checked: typeof value === "boolean" ? value : value === "true" ? true : false,
       checkedIcon: checkedIcon,
-      labelStyle: (0, _extends3.default)({}, defaultLabelStyle, labelStyle, selectedLabelStyle)
+      labelStyle: (0, _extends3.default)({}, defaultLabelStyle, labelStyle, selectedLabelStyle),
+      disabled: disabled
     });
   };
 

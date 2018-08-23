@@ -81,7 +81,8 @@ export const prepareFormData = (jsonPath, value) => {
     value,
   };
 };
-const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
+
+export const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
   return {
     type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
     payload,
@@ -97,11 +98,11 @@ const generalMDMSFetchError = (error) => {
   };
 };
 
-export const fetchEmployees = (requestBody) => {
+export const fetchEmployees = (queryObj) => {
   return async (dispatch) => {
     dispatch(employeeFetchPending());
     try {
-      const payload = await httpRequest(EMPLOYEE.GET.URL, EMPLOYEE.GET.ACTION, requestBody);
+      const payload = await httpRequest(EMPLOYEE.GET.URL, EMPLOYEE.GET.ACTION, queryObj);
       dispatch(employeeFetchSuccess(payload));
     } catch (error) {
       dispatch(employeeFetchError(error.message));
@@ -147,9 +148,19 @@ export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
   return async (dispatch) => {
     try {
       const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
+
       dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
     } catch (error) {
       dispatch(generalMDMSFetchError(error.message));
     }
   };
 };
+
+export const toggleSpinner = () => ({
+  type: actionTypes.TOGGLE_SPINNER,
+});
+
+export const updatePrepareFormDataFromDraft = (prepareFormData) => ({
+  type: actionTypes.PREPARE_FORM_DATA_FROM_DRAFT,
+  prepareFormData,
+});

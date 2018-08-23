@@ -1,10 +1,12 @@
 import * as commonTypes from "./actionTypes";
 import { transformById } from "egov-ui-kit/utils/commons";
 import set from "lodash/set";
+import { commonActions } from "egov-ui-kit/utils/commons"
 
 const intialState = {
   dropDownData: {},
   prepareFormData: {},
+  spinner: false,
 };
 
 const commonReducer = (state = intialState, action) => {
@@ -123,7 +125,7 @@ const commonReducer = (state = intialState, action) => {
     case commonTypes.PREPARE_FORM_DATA:
       return {
         ...state,
-        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value),
+        prepareFormData: set(state.prepareFormData, action.jsonPath, action.value?action.value:null),
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
@@ -147,6 +149,17 @@ const commonReducer = (state = intialState, action) => {
         error: true,
         errorMessage: action.error,
       };
+
+    case commonTypes.TOGGLE_SPINNER:
+      return {
+        ...state,
+        spinner: !state.spinner,
+      }
+    case commonTypes.PREPARE_FORM_DATA_FROM_DRAFT:
+      return {
+        ...state,
+        prepareFormData: action.prepareFormData,
+      }
     default:
       return state;
   }

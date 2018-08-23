@@ -7,7 +7,8 @@ body div {
   color: #767676;
   font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.3px; }
+  letter-spacing: 0.3px;
+  -webkit-font-smoothing: antialiased; }
 
 body,
 body p,
@@ -18,6 +19,11 @@ body h2,
 body h3,
 body h4 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important; }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
 
 .screen {
   padding: 0 8px 60px 8px; }
@@ -193,7 +199,8 @@ body.employee-user-profile {
 .action-menu-drawer {
   background-color: #3d4951;
   min-height: calc(100vh - 64px);
-  position: fixed; }
+  position: fixed;
+  z-index: 1001; }
 
 .responsive-action-button-cont {
   position: fixed;

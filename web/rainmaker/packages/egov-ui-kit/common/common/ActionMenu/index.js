@@ -110,18 +110,23 @@ var ActionMenu = function (_Component) {
     }
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ActionMenu.__proto__ || Object.getPrototypeOf(ActionMenu)).call.apply(_ref, [this].concat(args))), _this), _this.componentDidMount = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-      var _this$props, fetchActionMenu, role, roleCode;
+      var userInfo, _this$props, fetchActionMenu, role, roles, roleCodes;
 
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              //let userInfo = localStorage.getItem("user-info");
+              userInfo = JSON.parse(localStorage.getItem("user-info"));
               _this$props = _this.props, fetchActionMenu = _this$props.fetchActionMenu, role = _this$props.role;
-              roleCode = _this.getTransformedRole(role);
-              _context.next = 4;
+              // let roleCode = this.getTransformedRole(role);
+
+              roles = (0, _lodash.get)(userInfo, "roles");
+              roleCodes = roles ? roles.map(function (role) {
+                return role.code;
+              }) : [];
+              _context.next = 6;
               return fetchActionMenu({
-                roleCodes: [roleCode],
+                roleCodes: roleCodes,
                 tenantId: "pb",
                 actionMaster: "actions-test",
                 enabled: true
@@ -129,53 +134,57 @@ var ActionMenu = function (_Component) {
                 ts: new Date().getTime()
               });
 
-            case 4:
+            case 6:
             case "end":
               return _context.stop();
           }
         }
       }, _callee, _this2);
-    })), _this.getTransformedRole = function (role) {
-      switch (role) {
-        case "citizen":
-          return "CITIZEN";
-          break;
-        case "csr":
-          return "CSR";
-          break;
-        case "ao":
-          return "GRO";
-          break;
-        case "employee":
-          return "EMPLOYEE";
-          break;
-        case "pgr-admin":
-          return "PGR-ADMIN";
-          break;
-        default:
-          return "";
-      }
-    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+    })), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(ActionMenu, [{
     key: "render",
+
+
+    // getTransformedRole = (role) => {
+    //   switch (role) {
+    //     case "citizen":
+    //       return "CITIZEN";
+    //       break;
+    //     // case "csr":
+    //     //   return "CSR";
+    //     //   break;
+    //     // case "ao":
+    //     //   return "GRO";
+    //     //   break;
+    //     // case "employee":
+    //     //   return "EMPLOYEE";
+    //     //   break;
+    //     // case "pgr-admin":
+    //     //   return "PGR-ADMIN";
+    //     //   break;
+    //     default:
+    //       return "EMPLOYEE";
+    //   }
+    // };
+
     value: function render() {
       var _props = this.props,
           actionListArr = _props.actionListArr,
           role = _props.role;
       // let { role } = this.props;
       //let actionListArr = actionList[role];
+      // let transformedRole = this.getTransformedRole(role);
 
-      var transformedRole = this.getTransformedRole(role);
-
-      if (actionListArr && actionListArr.length > 0) {
-        actionListArr.map(function (item) {
-          if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
-            item.navigationURL = "";
-          }
-        });
-      }
+      var transformedRole = "";
+      // if (actionListArr && actionListArr.length > 0) {
+      //   actionListArr.map((item) => {
+      //     if (transformedRole === "EMPLOYEE" && item.path && item.path.split(".") && item.path.split(".")[0] === "Property Tax") {
+      //       item.navigationURL = "";
+      //     }
+      //   });
+      // }
 
       return actionListArr && actionListArr.length > 0 ? _react2.default.createElement(_components3.default, { role: transformedRole, actionListArr: actionListArr }) : null;
     }

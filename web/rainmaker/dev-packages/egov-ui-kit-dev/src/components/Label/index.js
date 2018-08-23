@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-const labelText = (label, labelStyle, labelClassName) => {
+const labelText = (label, labelStyle, labelClassName, required) => {
   return label && label.length ? (
     <div className={`label-text ${labelClassName}`} style={labelStyle}>
       {label}
+      {required && <span style={{color: "red"}}> *</span>}
     </div>
   ) : (
     ""
@@ -25,6 +26,7 @@ const Label = ({
   labelClassName = "",
   buttonLabel = false,
   id,
+  required,
 }) => {
   let additionalStyles = {};
 
@@ -53,7 +55,7 @@ const Label = ({
 
   return (
     <div id={id} style={containerStyle} className={buttonLabel ? `button-label-container ${className}` : `label-container ${className}`}>
-      {labelText(label, labelStyle, labelClassName)}
+      {labelText(label, labelStyle, labelClassName, required)}
     </div>
   );
 };

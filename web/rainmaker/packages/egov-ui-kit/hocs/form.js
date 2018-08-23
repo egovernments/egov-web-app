@@ -42,17 +42,19 @@ var _reactRedux = require("react-redux");
 
 var _actions = require("egov-ui-kit/redux/form/actions");
 
+var _actions2 = require("egov-ui-kit/redux/common/actions");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var form = function form(_ref) {
   var formKey = _ref.formKey,
-      _ref$path = _ref.path,
-      path = _ref$path === undefined ? "" : _ref$path,
+      path = _ref.path,
       copyName = _ref.copyName,
       rowData = _ref.rowData,
+      isCoreConfiguration = _ref.isCoreConfiguration,
       _ref$edit = _ref.edit,
       edit = _ref$edit === undefined ? false : _ref$edit,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "copyName", "rowData", "edit"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["formKey", "path", "copyName", "rowData", "isCoreConfiguration", "edit"]);
   return function (Form) {
     var FormWrapper = function (_React$Component) {
       (0, _inherits3.default)(FormWrapper, _React$Component);
@@ -89,7 +91,9 @@ var form = function form(_ref) {
         var extraFields = rest.extraFields;
 
         try {
-          if (path && path !== "") {
+          if (isCoreConfiguration && path) {
+            _this.formConfig = require("egov-ui-kit/config/forms/specs/" + path + "/" + formKey).default;
+          } else if (path) {
             _this.formConfig = require("config/forms/specs/" + path + "/" + formKey).default;
           } else {
             _this.formConfig = require("config/forms/specs/" + formKey).default;
@@ -106,6 +110,9 @@ var form = function form(_ref) {
       (0, _createClass3.default)(FormWrapper, [{
         key: "componentDidMount",
         value: function componentDidMount() {
+          var toggleSpinner = this.props.toggleSpinner;
+
+          toggleSpinner();
           if (this.formConfig && copyName) {
             var formConf = (0, _extends4.default)({}, this.formConfig);
             formConf = this.createCopy(formConf);
@@ -113,6 +120,7 @@ var form = function form(_ref) {
           } else {
             this.formConfig && this.props.initForm(this.formConfig, rowData);
           }
+          toggleSpinner();
         }
       }, {
         key: "render",
@@ -164,6 +172,9 @@ var form = function form(_ref) {
         },
         deleteForm: function deleteForm() {
           return dispatch((0, _actions.deleteForm)(formKey));
+        },
+        toggleSpinner: function toggleSpinner() {
+          return dispatch((0, _actions2.toggleSpinner)());
         }
       };
     };

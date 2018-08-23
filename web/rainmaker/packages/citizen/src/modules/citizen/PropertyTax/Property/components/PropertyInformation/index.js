@@ -4,18 +4,28 @@ import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 import AssessmentInfoTable from "../AssessmentInfoTable";
 
-const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
+const ReceiptItems = ({ items, propertyTaxAssessmentID, history, onButtonClick }) => {
   return (
     <div>
-      <div className="receipt-displayInline">
-        <Icon action="action" name="assignment" color="#767676" />
-        <Label
-          bold={true}
-          label={`Property Tax Assessment ID.: ${propertyTaxAssessmentID}`}
-          containerStyle={{ marginLeft: "13px" }}
-          labelStyle={{ letterSpacing: 0 }}
-          color="#767676"
-        />
+      <div className="rainmaker-displayInline" style={{ justifyContent: "space-between", alignItems: "center" }}>
+        <div className="receipt-displayInline">
+          <Icon action="action" name="assignment" color="#767676" />
+          <Label
+            bold={true}
+            label={`Property Tax Assessment ID.: ${propertyTaxAssessmentID}`}
+            containerStyle={{ marginLeft: "13px" }}
+            labelStyle={{ letterSpacing: 0 }}
+            color="#767676"
+          />
+        </div>
+        <div className="receipt-displayInline text-right" style={{ cursor: "pointer", marginRight: 5 }}>
+          <Button
+            onClick={onButtonClick}
+            label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
+            primary={true}
+            style={{ height: 30, lineHeight: "auto", minWidth: "inherit" }}
+          />
+        </div>
       </div>
       <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
       <div>
@@ -37,33 +47,12 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID }) => {
                   <Receipt receiptItems={item.items} />
                 )}
               </div>
-              <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0 }} />
+              {index < items.length - 1 && (
+                <Divider className="reciept-divider" inset={true} lineStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }} />
+              )}
             </div>
           );
         })}
-      </div>
-      <div className="text-center">
-        <Button
-          className="receipt-button"
-          primary={true}
-          label={<Label buttonLabel={true} label="ASSESS & PAY" />}
-          style={{
-            height: 36,
-            lineHeight: "auto",
-            minWidth: "inherit",
-          }}
-          labelStyle={{
-            padding: "0 31px",
-            letterSpacing: "0.6px",
-            display: "inline-block",
-            height: "22px",
-            lineHeight: "22px",
-            fontSize: "14px",
-          }}
-          onClick={(e) => {
-            // this.props.redirectToMap(true);
-          }}
-        />
       </div>
     </div>
   );

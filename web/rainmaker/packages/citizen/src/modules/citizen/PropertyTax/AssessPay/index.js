@@ -33,7 +33,7 @@ class AssessPay extends Component {
       dialogueOpen: false,
       items: [
         {
-          primaryText: <Label label="Add New Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="PT_ADD_NEW_PROPERTY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/date-dialogue",
           leftIcon: (
             <div style={listIconStyle}>
@@ -42,7 +42,7 @@ class AssessPay extends Component {
           ),
         },
         {
-          primaryText: <Label label="Search Property" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
+          primaryText: <Label label="PT_SEARCH_PROPERTY" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />,
           route: "/assess-pay/search-property",
           leftIcon: (
             <div style={listIconStyle}>
@@ -82,12 +82,12 @@ class AssessPay extends Component {
 
   render() {
     const { urls, history } = this.props;
-
+    console.log(history);
     return (
       <Screen>
         <BreadCrumbs url={urls} history={history} />
         <AssessmentList onItemClick={this.onListItemClick} innerDivStyle={innerDivStyle} items={this.state.items} history={this.props.history} />
-        <YearDialogue open={this.state.dialogueOpen} closeDialogue={this.closeYearRangeDialogue} />
+        <YearDialogue open={this.state.dialogueOpen} history={history} closeDialogue={this.closeYearRangeDialogue} />
       </Screen>
     );
   }
@@ -117,3 +117,38 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AssessPay);
+
+// import React, { Component } from "react";
+// import { Icon, BreadCrumbs } from "components";
+// import { AssessPay } from "modules/common";
+// import { connect } from "react-redux";
+// import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
+
+// const list1items = {
+//   icon: <Icon action="content" name="add" />,
+//   label: "Add New Property",
+// };
+
+// class AssessandPay extends Component {
+//   render() {
+//     const { urls, history } = this.props;
+//     return <AssessPay list1items={list1items} hasbreadCrumbs={true} history={history} urls={urls} />;
+//   }
+// }
+
+// const mapStateToProps = (state) => {
+//   const { app } = state;
+//   const { urls } = app;
+//   return { urls };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
+//   };
+// };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(AssessandPay);

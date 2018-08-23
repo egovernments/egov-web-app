@@ -22,6 +22,7 @@ var initialState = {
   loading: false,
   propertiesById: {},
   draftsById: {},
+  assessmentsByStatus: {},
   error: false,
   errorMessage: ""
 };
@@ -45,6 +46,18 @@ var propertyReducer = function propertyReducer() {
         error: true,
         errorMessage: action.error
       });
+    case actionTypes.RECEIPT_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.RECEIPT_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
     case actionTypes.DRAFT_FETCH_PENDING:
       return (0, _extends3.default)({}, state, {
         loading: true,
@@ -52,6 +65,30 @@ var propertyReducer = function propertyReducer() {
         errorMessage: ""
       });
     case actionTypes.DRAFT_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.FAILED_TRANSACTION_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.FAILED_TRANSACTION_FETCH_ERROR:
       return (0, _extends3.default)({}, state, {
         loading: false,
         error: true,
@@ -72,6 +109,70 @@ var propertyReducer = function propertyReducer() {
         error: false,
         errorMessage: "",
         draftsById: draftsById
+      });
+    case actionTypes.FAILED_TRANSACTION_FETCH_COMPLETE:
+      var failedPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        failedPayments: failedPayments
+      });
+    case actionTypes.SUCCESS_TRANSACTION_FETCH_COMPLETE:
+      var successPayments = (0, _commons.transformById)(action.payload["Transaction"], "txnId");
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        successPayments: successPayments
+      });
+    case actionTypes.RECEIPT_FETCH_COMPLETE:
+      var receipts = action.payload["Receipt"];
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        receipts: receipts
+      });
+    case actionTypes.ASSESSMENT_STATUS_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.ASSESSMENT_STATUS_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.ASSESSMENT_STATUS_COMPLETE:
+      var assessmentsByStatus = action.payload;
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        assessmentsByStatus: assessmentsByStatus
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_PENDING:
+      return (0, _extends3.default)({}, state, {
+        loading: true,
+        error: false,
+        errorMessage: ""
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_ERROR:
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: true,
+        errorMessage: action.error
+      });
+    case actionTypes.SINGLE_ASSESSMENT_STATUS_COMPLETE:
+      var singleAssessmentByStatus = action.payload;
+      return (0, _extends3.default)({}, state, {
+        loading: false,
+        error: false,
+        errorMessage: "",
+        singleAssessmentByStatus: singleAssessmentByStatus
       });
     default:
       return state;

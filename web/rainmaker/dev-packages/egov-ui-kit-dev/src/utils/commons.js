@@ -7,7 +7,6 @@ import commonConfig from "config/common.js";
 import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import get from "lodash/get";
 import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
-import jp from "jsonpath";
 
 export const statusToMessageMapping = {
   rejected: "Rejected",
@@ -278,9 +277,9 @@ const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
-export const getCommaSeperatedAddress = (buildingName, street) => {
-  return `${buildingName}, ${street}`;
-};
+// export const getCommaSeperatedAddress = (buildingName, street) => {
+//   return buildingName && street ? `${buildingName}, ${street}` : "NA";
+// };
 
 export const getTransformedStatus = (status) => {
   let transformedStatus = "";
@@ -332,6 +331,28 @@ export const returnSLAStatus = (slaHours, submittedTime) => {
   } else {
     return Math.abs(daysCount) === 1 ? `${Math.abs(daysCount)} day left` : `${Math.abs(daysCount)} days left`;
   }
+};
+
+export const getCommaSeperatedAddress = (address, cities) => {
+  let name = address ? address.locality.name : "";
+  let cityValue = address ? address.city : "";
+  let pincode = address ? address.pincode : "";
+  let cityName = "";
+  cities &&
+    cities.forEach((city) => {
+      if (city.code === cityValue) {
+        cityName = city.name;
+      }
+    });
+  const addressKeys = ["doorNo", "buildingName", "street"];
+  let addressArray = addressKeys.reduce((result, curr) => {
+    if (address && address[curr]) {
+      result.push(address[curr]);
+    }
+    return [...result];
+  }, []);
+  addressArray = pincode ? [...addressArray, name, cityName, pincode] : [...addressArray, name, cityName];
+  return addressArray.join(" , ");
 };
 
 export const getLatestCreationTime = (complaint) => {
@@ -479,7 +500,8 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
   try {
     const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
     const dropdownData = boundary
-      ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+      ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+        payloadSpec.TenantBoundary[0].boundary
       : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
           dropdownData = [...dropdownData, ...get(payloadSpec, path)];
           return dropdownData;
@@ -487,7 +509,10 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     const ddData =
       dropdownData &&
       dropdownData.reduce((ddData, item) => {
-        ddData.push({ label: item.name, value: item.code });
+        let option = { label: item.name, value: item.code };
+        //Only for boundary
+        item.area && (option.area = item.area);
+        ddData.push(option);
         return ddData;
       }, []);
     dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
@@ -496,4 +521,12 @@ export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fiel
     dispatch(toggleSnackbarAndSetText(true, message, true));
     return;
   }
+};
+
+export const trimObj = (obj) => {
+  if (!Array.isArray(obj) && typeof obj != "object") return obj;
+  for (var key in obj) {
+    obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+  }
+  return obj;
 };

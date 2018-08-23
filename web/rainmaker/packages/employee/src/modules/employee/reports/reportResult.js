@@ -171,7 +171,6 @@ class ShowField extends Component {
       ctx.drawImage(this, 0, 0);
       dataURL = canvas.toDataURL();
       callback(dataURL);
-      //console.log(dataURL);
       canvas = null;
       dar = dataURL;
     };
@@ -189,12 +188,14 @@ class ShowField extends Component {
       }
     }
 
-    const { reportResult, searchForm, tabLabel } = _this.props;
+    const { reportResult, searchForm, tabLabel, metaData } = _this.props;
     const { reportName } = _this.state;
-    const reportHeader = reportResult.hasOwnProperty("reportHeader") ? reportResult.reportHeader : [];
+    const reportDetails = metaData.hasOwnProperty("reportDetails") ? metaData.reportDetails : {};
+    const reportHeader = reportDetails.hasOwnProperty("reportHeader") ? reportDetails.reportHeader : [];
     const columns = ":visible";
     const exportOptions = flag ? { rows: ".selected", columns } : { columns };
-    let reportTitle =  this.getReportTitle();
+    let reportTitle = this.getReportTitle();
+    let orientation = reportHeader.length > 6 ? 'landscape' : 'portrait';
 
     const buttons = [
       {
@@ -208,15 +209,15 @@ class ShowField extends Component {
         //title: reportTitle,
         messageTop: tabLabel,
         text: "PDF",
-        orientation: "portrait",
+        orientation: orientation,
         pageSize: "A4",
         footer: true,
         customize: function(doc) {
-         // _this.PrintingCutomize(doc);
-         console.log(doc.content)
-         doc.content[0].text = [];
-         doc.content[0].text.push({text:"mSeva System Reports\n\n",bold:true,fontSize:20});
-         doc.content[0].text.push({text:reportTitle,fontSize:18})
+          // _this.PrintingCutomize(doc);
+          console.log(doc.content);
+          doc.content[0].text = [];
+          doc.content[0].text.push({ text: "mSeva System Reports\n\n", bold: true, fontSize: 20 });
+          doc.content[0].text.push({ text: reportTitle, fontSize: 18 });
         },
         className: "report-pdf-button",
       },
@@ -432,10 +433,8 @@ class ShowField extends Component {
         }
       );
     } else if (object.defaultValue && object.defaultValue.search("_url") > -1) {
-      // console.log(item1);
       let afterURL = object.defaultValue.split("?")[1];
       let URLparams = afterURL.split(":");
-      // console.log(URLparams, URLparams.length);
       if (URLparams.length > 1) {
         setRoute(`${URLparams[0] + encodeURIComponent(item1)}`);
       } else {
@@ -689,8 +688,8 @@ class ShowField extends Component {
         let columnObj = {};
         if (headerObj.showColumn) {
           columnObj["showColumn"] = headerObj.showColumn;
-          //  columnObj["total"] = headerObj.total;
-          columnObj["total"] = true;
+          columnObj["total"] = null == headerObj.total ? false : headerObj.total;
+          // columnObj["total"] = true;
           sumColumn.push(columnObj);
         }
         // if (headerObj.total) {

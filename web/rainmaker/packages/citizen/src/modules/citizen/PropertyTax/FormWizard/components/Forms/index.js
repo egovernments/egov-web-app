@@ -1,15 +1,15 @@
 import React from "react";
 import formHoc from "egov-ui-kit/hocs/form";
-import GenericForm from "../GenericForm";
+import GenericForm from "egov-ui-kit/common/GenericForm";
 import Field from "egov-ui-kit/utils/field";
-import { RadioButton, Card, Icon } from "components";
+import { RadioButton, Card, Icon, ToolTipUi } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
 import get from "lodash/get";
 
 const options = [
-  { value: "Male", label: <Label label="Male" /> },
-  { value: "Female", label: <Label label="Female" /> },
-  { value: "Transgender", label: <Label label="Transgender" /> },
+  { value: "Male", label: <Label label="PT_FORM3_MALE" /> },
+  { value: "Female", label: <Label label="PT_FORM3_FEMALE" /> },
+  { value: "Transgender", label: <Label label="PT_FORM3_TRANSGENDER" /> },
 ];
 
 // const guardianOptions = [{ value: "Husband", label: <Label label="Husband" /> }, { value: "Father ", label: <Label label="Father" /> }];
@@ -54,40 +54,31 @@ const OwnerInformation = ({
   disabled,
 }) => {
   const fields = form.fields || {};
-  const genderSelected = get(fields, "ownerGender.value", "");
+  const genderSelected = get(fields, "ownerGender.value", "Male");
   return (
     <Card
       textChildren={
         <div className="pt-owner-info">
           <div>
             <div>{cardTitle}</div>
-            {deleteBtn && (
-              <div
-                className="pt-ownerinfo-deletebtn"
-                onClick={() => {
-                  handleRemoveOwner(formId, formKey);
-                }}
-              >
-                <Icon action="content" name="clear" />
-              </div>
-            )}
+            {!disabled &&
+              deleteBtn && (
+                <div
+                  className="pt-ownerinfo-deletebtn"
+                  onClick={() => {
+                    handleRemoveOwner(formId, formKey);
+                  }}
+                >
+                  <Icon action="content" name="clear" />
+                </div>
+              )}
           </div>
-          <div className="owner-details-form">
-            <div className="name-address">
+          <div className={`${formKey} col-sm-12`}>
+            <div className="col-sm-6">
               <Field fieldKey="ownerName" field={fields["ownerName"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field
-                fieldKey="ownerCategory"
-                field={fields["ownerCategory"]}
-                handleFieldChange={handleFieldChange}
-                disabled={disabled}
-                className="ownerCategory"
-              />
-              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
             </div>
-            <div>
-              <Label label={"Gender"} fontSize={12} labelStyle={styles.labelStyle} bold={true} />
+            <div className="col-sm-6" style={{ paddingTop: "10px", paddingBottom: "5px" }}>
+              <Label label={"Gender"} required fontSize={12} labelStyle={styles.labelStyle} bold={true} />
               <RadioButton
                 id="gender-selection"
                 name="gender-selection"
@@ -98,15 +89,34 @@ const OwnerInformation = ({
                 radioButtonItemStyle={styles.radioButtonItemStyle}
                 labelStyle={styles.radioButtonLabelStyle}
                 selectedLabelStyle={styles.selectedLabelStyle}
-                className={"owner-gender-selection"}
+                className="owner-gender-selection"
                 iconStyle={styles.iconStyle}
                 valueSelected={genderSelected}
                 disabled={disabled}
+                radioButtonItemStyle={styles.childrenStyle}
               />
-              <div className="relationship-details">
+            </div>
+            <div className="col-sm-6">
+              <Field fieldKey="ownerMobile" field={fields["ownerMobile"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div style={{ padding: 0 }} className="col-sm-6">
+              <div className="col-sm-6">
                 <Field fieldKey="ownerGuardian" field={fields["ownerGuardian"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              </div>
+              <div className="col-sm-6">
                 <Field fieldKey="ownerRelationship" field={fields["ownerRelationship"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               </div>
+            </div>
+            <div className="col-sm-6">
+              <Field
+                fieldKey="ownerCategory"
+                field={fields["ownerCategory"]}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                className="ownerCategory"
+              />
+            </div>
+            <div className="col-sm-6" style={{ paddingBottom: "4px", display: "flex", alignItems: "center" }}>
               <Field
                 fieldKey="ownerCategoryIdType"
                 field={fields["ownerCategoryIdType"]}
@@ -114,8 +124,32 @@ const OwnerInformation = ({
                 disabled={disabled}
                 className="ownerCategoryIdType"
               />
+              {fields["ownerCategoryIdType"] &&
+                fields["ownerCategoryIdType"].toolTip &&
+                !fields["ownerCategoryIdType"].hideField && (
+                  <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryIdType"].toolTipMessage} />
+                )}
+            </div>
+            <div className="col-sm-6" style={{ display: "flex", alignItems: "center" }}>
+              <Field fieldKey="ownerCategoryId" field={fields["ownerCategoryId"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              {fields["ownerCategoryId"] &&
+                fields["ownerCategoryId"].toolTip &&
+                !fields["ownerCategoryId"].hideField && <ToolTipUi id={"form-wizard-tooltip"} title={fields["ownerCategoryId"].toolTipMessage} />}
+            </div>
+            <div className="col-sm-6" style={{ paddingBottom: "4px", paddingTop: "2px" }}>
               <Field fieldKey="ownerEmail" field={fields["ownerEmail"]} handleFieldChange={handleFieldChange} disabled={disabled} />
-              <Field fieldKey="ownerAadhar" field={fields["ownerAadhar"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div className="col-sm-6" style={{ paddingBottom: "8px" }}>
+              <Field fieldKey="ownerAddress" field={fields["ownerAddress"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+            </div>
+            <div>
+              <Field
+                fieldKey="isSameAsPropertyAddress"
+                field={fields.isSameAsPropertyAddress}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                containerClassName="property-corr"
+              />
             </div>
           </div>
         </div>
@@ -146,6 +180,13 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
               <Field fieldKey="designation" field={fields["designation"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="telephone" field={fields["telephone"]} handleFieldChange={handleFieldChange} disabled={disabled} />
               <Field fieldKey="address" field={fields["address"]} handleFieldChange={handleFieldChange} disabled={disabled} />
+              <Field
+                fieldKey="isSameAsPropertyAddress"
+                field={fields.isSameAsPropertyAddress}
+                handleFieldChange={handleFieldChange}
+                disabled={disabled}
+                containerClassName="property-corr"
+              />
             </div>
           </div>
         </div>
@@ -154,24 +195,27 @@ const InstitutionAuthority = ({ form, formKey, handleFieldChange, cardTitle, for
   );
 };
 
-const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay" })(GenericForm);
-const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay" })(GenericForm);
-const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
-const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay" })(GenericForm);
-const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay" })(OwnerInformation);
-const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay" })(GenericForm);
-const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution" })(GenericForm);
+const UsageInformationHOC = formHoc({ formKey: "basicInformation", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const PropertyAddressHOC = formHoc({ formKey: "propertyAddress", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+//const PlotInformationHOC = formHoc({ formKey: "plotInformation", path: "PropertyTaxPay" })(GenericForm);
+const OwnershipTypeHOC = formHoc({ formKey: "ownershipType", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const OwnerInfoHOC = formHoc({ formKey: "ownerInfo", path: "PropertyTaxPay", isCoreConfiguration: true })(OwnerInformation);
+const ExemptionCategoryHOC = formHoc({ formKey: "exemptionCategory", path: "PropertyTaxPay", isCoreConfiguration: true })(GenericForm);
+const InstitutionHOC = formHoc({ formKey: "institutionDetails", path: "PropertyTaxPay/OwnerInformation/Institution", isCoreConfiguration: true })(
+  GenericForm
+);
 const DynamicFormHoc = (formKey, Form) => {
   return formHoc({ formKey })(Form);
 };
-const InstitutionAuthorityHOC = formHoc({ formKey: "institutionAuthority", path: "PropertyTaxPay/OwnerInformation/Institution" })(
-  InstitutionAuthority
-);
+const InstitutionAuthorityHOC = formHoc({
+  formKey: "institutionAuthority",
+  path: "PropertyTaxPay/OwnerInformation/Institution",
+  isCoreConfiguration: true,
+})(InstitutionAuthority);
 
 export {
   UsageInformationHOC,
   PropertyAddressHOC,
-  PlotInformationHOC,
   OwnershipTypeHOC,
   OwnerInfoHOC,
   ExemptionCategoryHOC,

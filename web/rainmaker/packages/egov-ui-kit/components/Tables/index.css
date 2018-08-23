@@ -16,14 +16,12 @@
   color: #484848;
   font-weight: normal; }
 
-.material-table-pagination span {
-  font-size: 14px; }
-
-.MuiTableCell-numeric-42 {
+.material-table-row td {
+  padding: 4px 8px 4px 8px !important;
   text-align: center !important; }
 
-.MuiTableCell-root-38 {
-  padding: 4px 8px 4px 8px !important; }
+.material-table-pagination span {
+  font-size: 14px; }
 
 .TableUi-tableWrapper-3 {
   overflow: hidden !important; }

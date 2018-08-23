@@ -3,13 +3,16 @@ import { LoadingIndicator } from "components";
 import { connect } from "react-redux";
 import { handleFieldChange, initForm, submitForm, deleteForm } from "egov-ui-kit/redux/form/actions";
 
-const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) => (Form) => {
+
+const form = ({ formKey, path, copyName, rowData, isCoreConfiguration, edit = false, ...rest }) => (Form) => {
   class FormWrapper extends React.Component {
     constructor(props) {
       super(props);
-      const { extraFields } = rest
+      const { extraFields } = rest;
       try {
-        if (path && path !== "") {
+        if (isCoreConfiguration && path) {
+          this.formConfig = require(`egov-ui-kit/config/forms/specs/${path}/${formKey}`).default;
+        } else if (path) {
           this.formConfig = require(`config/forms/specs/${path}/${formKey}`).default;
         } else {
           this.formConfig = require(`config/forms/specs/${formKey}`).default;
@@ -19,9 +22,9 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
             ...this.formConfig,
             ["fields"]: {
               ...this.formConfig.fields,
-              ...extraFields
-            }
-          }
+              ...extraFields,
+            },
+          };
         }
       } catch (error) {
         // the error is assumed to have occured due to absence of config; so ignore it!
@@ -39,12 +42,12 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
     }
 
     createCopy = (formConf) => {
-      let updatedFormConf = { ...formConf }
-      const { formatConfig } = updatedFormConf
+      let updatedFormConf = { ...formConf };
+      const { formatConfig } = updatedFormConf;
       updatedFormConf.name = copyName;
       formKey = updatedFormConf.name;
       if (formatConfig) {
-        updatedFormConf = formatConfig({ ...this.props, ...rest, config: updatedFormConf })
+        updatedFormConf = formatConfig({ ...this.props, ...rest, config: updatedFormConf });
       }
       return updatedFormConf;
     };
@@ -94,10 +97,7 @@ const form = ({ formKey, path = "", copyName, rowData, edit = false, ...rest }) 
     };
   };
 
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(FormWrapper);
+  return connect(mapStateToProps, mapDispatchToProps)(FormWrapper);
 };
 
 export default form;

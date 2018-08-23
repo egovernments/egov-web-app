@@ -14,6 +14,7 @@ import Screen from "egov-ui-kit/common/common/Screen";
 import ActionMenu from "egov-ui-kit/common/common/ActionMenu";
 import ActionFooter from "egov-ui-kit/common/common/ActionFooter";
 import PrivacyPolicy from "egov-ui-kit/common/common/PrivacyPolicy";
+import Dashboard from "egov-ui-kit/common/common/Dashboard";
 
 //pgr common components
 import ActionButton from "egov-ui-kit/common/pgr/complaintDetails/components/ActionButton";
@@ -35,6 +36,13 @@ import OTPForm from "egov-ui-kit/common/User/components/OTPForm";
 import ProfileForm from "egov-ui-kit/common/User/components/ProfileForm";
 import ProfileSection from "egov-ui-kit/common/User/components/ProfileSection";
 import UploadDrawer from "egov-ui-kit/common/User/components/UploadDrawer";
+
+//Pt common components
+import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
+import SearchProperty from "egov-ui-kit/common/propertyTax/SearchProperty";
+import PropertyInformation from "egov-ui-kit/common/propertyTax/PropertyInformation";
+import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
+import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
 
 export {
   Banner,
@@ -69,4 +77,10 @@ export {
   ReOpenComplaint,
   ReopenAcknowledgement,
   PrivacyPolicy,
+  AssessPay,
+  SearchProperty,
+  PropertyInformation,
+  AssessmentList,
+  Dashboard,
+  YearDialogue,
 };

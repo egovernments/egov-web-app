@@ -1,0 +1,57 @@
+.wizard-form-main-cont {
+  padding: 0;
+  position: relative; }
+
+.owner-gender-selection {
+  display: flex; }
+
+.pt-ownerinfo-deletebtn {
+  float: right !important;
+  margin-top: -30px; }
+
+.pt-owner-info .pt-ownerinfo-title {
+  margin-left: 23px; }
+
+.pt-owner-info .owner-details-form {
+  display: flex; }
+  .pt-owner-info .owner-details-form .name-address {
+    padding: 5px 352px 0 30px; }
+    .pt-owner-info .owner-details-form .name-address .textfield {
+      width: 145% !important; }
+    .pt-owner-info .owner-details-form .name-address .ownerCategory {
+      width: 145% !important;
+      display: flow-root !important; }
+  .pt-owner-info .owner-details-form .relationship-details {
+    display: flex; }
+    .pt-owner-info .owner-details-form .relationship-details div:nth-of-type(1) {
+      margin-right: 35px; }
+  .pt-owner-info .owner-details-form .ownerCategoryIdType {
+    width: 100% !important; }
+  .pt-owner-info .owner-details-form .dropdown {
+    display: flow-root !important; }
+
+.pt-institute-authority-info {
+  margin-left: 25px; }
+  .pt-institute-authority-info .pt-authority-title {
+    display: flex; }
+    .pt-institute-authority-info .pt-authority-title span:nth-of-type(2) {
+      margin-top: 2px;
+      margin-left: 5px; }
+  .pt-institute-authority-info .authority-details-form {
+    display: flex; }
+    .pt-institute-authority-info .authority-details-form .name-address .textfield {
+      width: 117% !important; }
+    .pt-institute-authority-info .authority-details-form .address {
+      margin-left: 130px; }
+
+.breadcrumb {
+  padding: 0; }
+
+.pt-add-owner-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  color: #fe7a51; }
+
+.grayout {
+  background-color: #f6f6f6 !important; }

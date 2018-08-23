@@ -1,8 +1,9 @@
 import React from "react";
 import { Icon, Button } from "components";
 import Label from "egov-ui-kit/utils/translationNode";
-import PTList from "../PTList";
+import PTList from "./components/PTList";
 import BlankAssessment from "../BlankAssessment";
+import DropDown from "./components/DropDown";
 import "./index.css";
 
 const getItemStatus = (item, history) => {
@@ -17,14 +18,11 @@ const getItemStatus = (item, history) => {
     case "Paid":
       return (
         <div>
-          <div className="assessment-displayInline" style={item.date ? { marginTop: "8px" } : { marginTop: "0px" }}>
-            <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
+          <div className="assessment-displayInline" style={item.date ? { marginTop: 8 } : { marginTop: "0px" }}>
+            <Label label={item.status} labelStyle={{ marginLeft: 10 }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;
@@ -35,22 +33,15 @@ const getItemStatus = (item, history) => {
             <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#22b25f"} />
             <Icon action="navigation" name="check" style={styles.paidIconStyle} color={"#22b25f"} />
           </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="COMPLETE PAYMENT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
-          <div className="assessment-displayInline" style={{ marginTop: "8px" }}>
-            <Label label="DOWNLOAD RECEIPT" labelStyle={{ marginLeft: "8px" }} color={"#fe7a51"} fontSize="12px" />
-            <Icon style={{ marginLeft: 10, height: "18px" }} action="editor" name="vertical-align-bottom" color={"#fe7a51"} />
-          </div>
+          <div style={{ height: "30px", marginTop: "8px" }}>{history && <DropDown history={history} item={item} />}</div>
         </div>
       );
       break;
     case "Payment failed":
       return (
         <div className="assessment-displayInline" style={{ marginTop: "10px" }}>
-          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#e74c3c"} />
           <Icon action="alert" name="warning" style={styles.paidIconStyle} color={"#e74c3c"} />
+          <Label label={item.status} labelStyle={{ marginLeft: "8px" }} color={"#e74c3c"} />
         </div>
       );
       break;
@@ -58,7 +49,9 @@ const getItemStatus = (item, history) => {
       return (
         <div
           onClick={() => {
-            history && history.push(`/property-tax/assessment-form?assessmentId=${item.assessmentNo}`);
+            localStorage.setItem("draftId", "");
+            history &&
+              history.push(`/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&tenantId=${item.tenantId}`);
           }}
           className="assessment-displayInline"
           style={{ marginTop: "10px" }}
@@ -72,8 +65,16 @@ const getItemStatus = (item, history) => {
       return (
         <div className="assessment-displayInline">
           <Button
-            label={<Label buttonLabel={true} label="ASSESS & PAY" fontSize="12px" />}
+            label={<Label buttonLabel={true} label="PT_PAYMENT_ASSESS_AND_PAY" fontSize="12px" />}
             primary={true}
+            onClick={(e) => {
+              localStorage.setItem("draftId", "");
+              history.push(
+                `/property-tax/assessment-form?FY=${item.financialYear}&assessmentId=${item.assessmentNo}&isReassesment=true&propertyId=${
+                  item.propertyId
+                }&tenantId=${item.tenantId}`
+              );
+            }}
             style={{
               height: 20,
               lineHeight: "auto",
@@ -107,38 +108,41 @@ const getListItems = (items, history) => {
   return (
     items &&
     items.map((item, index) => {
-      return {
-        primaryText: item.primaryText, //<Label label="2018 - 2019" fontSize="16px" color="#484848" labelStyle={{ fontWeight: 500 }} />
-        secondaryText:
-          item.secondaryText &&
-          (typeof item.secondaryText === "object" ? (
-            item.secondaryText
-          ) : (
-            <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
-          )),
-        route: item.route,
-        leftIcon: item.leftIcon,
-        rightIcon: getRightIconItems(item, history),
-        nestedItems:
-          item &&
-          item.nestedItems &&
-          item.nestedItems.map((nestedItem) => {
-            return {
-              primaryText: nestedItem.leftIcon ? (
-                <div style={{ alignItems: "center", display: "flex" }}>
-                  {nestedItem.leftIcon}
-                  <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
-                </div>
-              ) : (
-                nestedItem.primaryText
-                // <Label label={nestedItem.primaryText} fontSize="16px" color="#484848" containerStyle={{ padding: "10px 0" }} />
-              ),
-              secondaryText: nestedItem.secondaryText,
-              route: nestedItem.route,
-              rightIcon: getRightIconItems(nestedItem),
-            };
-          }),
-      };
+      return (
+        item && {
+          primaryText: item.primaryText,
+          secondaryText:
+            item.secondaryText &&
+            (typeof item.secondaryText === "object" ? (
+              item.secondaryText
+            ) : (
+              <Label label={item.secondaryText} fontSize="14px" color="#484848" containerStyle={{ marginTop: "15px" }} />
+            )),
+          route: item.route && item.route,
+          leftIcon: item.leftIcon,
+          rightIcon: getRightIconItems(item, history),
+          tenantId: item.tenantId,
+          initiallyOpen: item.initiallyOpen,
+          nestedItems:
+            item &&
+            item.nestedItems &&
+            item.nestedItems.map((nestedItem) => {
+              return {
+                primaryText: nestedItem.leftIcon ? (
+                  <div style={{ alignItems: "center", display: "flex" }}>
+                    {nestedItem.leftIcon}
+                    <Label label={nestedItem.primaryText} fontSize="14px" color="#484848" containerStyle={{ marginLeft: "8px" }} />
+                  </div>
+                ) : (
+                  nestedItem.primaryText
+                ),
+                secondaryText: nestedItem.secondaryText,
+                route: nestedItem.route,
+                rightIcon: getRightIconItems(nestedItem, history),
+              };
+            }),
+        }
+      );
     })
   );
 };
@@ -154,14 +158,16 @@ const AssessmentList = ({
   yearDialogue,
   closeDialogue,
   onNewPropertyButtonClick,
+  hoverColor,
 }) => {
-  return items.length == 0 ? (
+  return items && items.length == 0 ? (
     <BlankAssessment
       noAssessmentMessage={noAssessmentMessage}
       button={button}
       dialogueOpen={yearDialogue}
       closeDialogue={closeDialogue}
       onButtonClick={onNewPropertyButtonClick}
+      history={history}
     />
   ) : (
     <PTList
@@ -170,6 +176,7 @@ const AssessmentList = ({
       onItemClick={onItemClick}
       innerDivStyle={innerDivStyle}
       listItemStyle={listItemStyle}
+      hoverColor={hoverColor}
     />
   );
 };

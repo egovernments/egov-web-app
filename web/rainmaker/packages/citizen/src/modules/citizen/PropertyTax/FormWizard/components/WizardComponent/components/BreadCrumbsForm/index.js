@@ -1,5 +1,6 @@
 import React from "react";
-import { Label, Icon } from "components";
+import { Icon } from "components";
+import Label from "egov-ui-kit/utils/translationNode";
 import "./index.css";
 
 const checkIconStyle = {
@@ -9,7 +10,7 @@ const checkIconStyle = {
 
 const tabs = [
   {
-    heading: "Property Address",
+    heading: "PT_PROPERTY_DETAIL_FORM_HEADING",
     // icon: {
     //   name: "home",
     //   action: "action",
@@ -17,7 +18,7 @@ const tabs = [
     formValid: true,
   },
   {
-    heading: "Assessment Information",
+    heading: "PT_ASSESSMENT_INFORMATION_FORM_HEADING",
     // icon: {
     //   name: "assignment",
     //   action: "action",
@@ -25,7 +26,7 @@ const tabs = [
     formValid: false,
   },
   {
-    heading: "Owner Information",
+    heading: "PT_OWNER_INFORMATION_FORM_HEADING",
     // icon: {
     //   name: "person",
     //   action: "social",
@@ -33,7 +34,7 @@ const tabs = [
     formValid: false,
   },
   {
-    heading: "Review & Pay",
+    heading: "PT_REVIEW_PAY_FORM_HEADING",
     // icon: {
     //   name: "attach-money",
     //   action: "editor",
@@ -65,7 +66,7 @@ const BreadCrumbsForm = ({ onTabClick, selected, formValidIndexArray }) => {
             style={formValidIndexArray.indexOf(index) > -1 ? formValidStyle : selected === index ? selectedTabStyle : defaultTabStyle}
             href={`#${index}`}
           >
-            <div className="breadcrumb-tab">
+            <div className="breadcrumb-tab" style={{ cursor: "pointer" }}>
               {/* <Icon action={tab.icon.action} name={tab.icon.name} color={"#fff"} style={{ marginRight: 10 }} /> */}
               <div className="tab-icon">
                 {formValidIndexArray.indexOf(index) > -1 ? (

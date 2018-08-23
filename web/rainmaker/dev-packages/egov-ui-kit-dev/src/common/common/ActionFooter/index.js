@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button } from "components";
+import "./index.css";
 
 const ActionFooter = ({ label1, label2, primaryAction, secondaryAction }) => {
   return (
-    <div className="wizard-footer col-xs-12" style={{ textAlign: "right", padding: 0 }}>
+    <div className="col-xs-12 wizard-footer" style={{ textAlign: "right" }}>
       <div className="col-xs-6" style={{ float: "right", padding: 0 }}>
         {label1 && (
           <Button
@@ -18,7 +19,7 @@ const ActionFooter = ({ label1, label2, primaryAction, secondaryAction }) => {
           label={label2}
           style={{ width: "36%" }}
           backgroundColor="#fe7a51"
-          labelStyle={{ letterSpacing: 0.7, padding: 0, color: "#fff" }}
+          labelStyle={{ letterSpacing: 0.7, color: "#fff" }}
           buttonStyle={{ border: 0 }}
           onClick={primaryAction}
         />

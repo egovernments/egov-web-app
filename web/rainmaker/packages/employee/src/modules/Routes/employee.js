@@ -9,6 +9,7 @@ import { ReOpenComplaint } from "modules/common";
 import { ReopenAcknowledgement } from "modules/common";
 import { ImageModalDisplay } from "modules/common";
 import { PrivacyPolicy } from "modules/common";
+import LandingPage from "modules/employee/LandingPage";
 // Employee
 import RequestReAssign from "modules/employee/pgr/RequestReAssign";
 import AllComplaints from "modules/employee/pgr/AllComplaints";
@@ -29,6 +30,10 @@ import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
 
+//pt
+import ptRoutes from "./pt";
+// import PTHome from "modules/employee/PropertyTax/PTHome";
+
 //Redirection Url
 const redirectionUrl = "/user/login";
 
@@ -37,26 +42,14 @@ const routes = [
     path: "user/login",
     component: Login,
     needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
+    redirectionUrl: "/landing-page",
   },
   {
     path: "user/otp",
     component: OTP,
     needsAuthentication: false,
-    redirectionUrl: "/all-complaints",
+    redirectionUrl: "/landing-page",
   },
-  // {
-  //   path: "user/language-selection",
-  //   component: LanguageSelection,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/all-complaints",
-  // },
-  // {
-  //   path: "user/forgot-password",
-  //   component: ForgotPassword,
-  //   needsAuthentication: false,
-  //   redirectionUrl: "/all-complaints",
-  // },
   {
     path: "privacy-policy",
     component: PrivacyPolicy,
@@ -88,6 +81,17 @@ const routes = [
       hideFor: "ao",
       customFor: "csr",
       customTitle: "ES_ALL_COMPLAINTS_HEADER",
+    },
+  },
+  {
+    path: "landing-page",
+    component: LandingPage,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      redirectionUrl,
+      hideTitle: true,
+      isHomeScreen: true,
     },
   },
   {
@@ -312,19 +316,6 @@ const routes = [
       hideBackButton: true,
     },
   },
-
-  //create employee
-  // {
-  //   path: "create",
-  //   component: CreateEmployee,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "CS_HEADER_COMPLAINT_SUBMITTED",
-  //     hideTitle: true,
-  //     hideBackButton: true,
-  //   },
-  // },
   {
     path: "report/:moduleName/:reportName",
     component: Report,
@@ -337,6 +328,7 @@ const routes = [
       redirectionUrl,
     },
   },
+  ...ptRoutes,
 ];
 
 export default routes;

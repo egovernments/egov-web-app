@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.getCommaSeperatedAddress = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getTransformedItems = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
+exports.trimObj = exports.fetchDropdownData = exports.mergeMDMSDataArray = exports.upperCaseFirst = exports.startSMSRecevier = exports.transformComplaintForComponent = exports.findLatestAssignee = exports.getTenantForLatLng = exports.flatten = exports.transformLocalizationLabels = exports.getLatestCreationTime = exports.getCommaSeperatedAddress = exports.returnSLAStatus = exports.getPropertyFromObj = exports.getNameFromId = exports.isFileImage = exports.getFileSize = exports.getTransformedStatus = exports.isImage = exports.getCityNameByCode = exports.getUserInfo = exports.fetchImages = exports.getTranslatedLabel = exports.prepareFormData = exports.addBodyClass = exports.getBodyClassFromPath = exports.getDateFromEpoch = exports.mapCompIDToName = exports.getCurrentAddress = exports.prepareForm = exports.getRequestUrl = exports.fetchFromLocalStorage = exports.persistInLocalStorage = exports.slugify = exports.isFieldEmpty = exports.addQueryArg = exports.getQueryArg = exports.hyphenSeperatedDateTime = exports.transformById = exports.displayLocalizedStatusMessage = exports.displayStatus = exports.statusToLocalisationKeyMapping = exports.statusToMessageMapping = undefined;
 
 var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
@@ -24,10 +24,6 @@ var _typeof3 = _interopRequireDefault(_typeof2);
 var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
 
 var _set = require("lodash/set");
 
@@ -56,10 +52,6 @@ var _get = require("lodash/get");
 var _get2 = _interopRequireDefault(_get);
 
 var _actions2 = require("egov-ui-kit/redux/app/actions");
-
-var _jsonpath = require("jsonpath");
-
-var _jsonpath2 = _interopRequireDefault(_jsonpath);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -259,45 +251,6 @@ var getCurrentAddress = exports.getCurrentAddress = function () {
   };
 }();
 
-var getTransformedItems = exports.getTransformedItems = function getTransformedItems(propertiesById) {
-  return propertiesById && Object.values(propertiesById).reduce(function (acc, curr) {
-    var propertyDetail = curr.propertyDetails && curr.propertyDetails.map(function (item) {
-      return {
-        primaryText: _react2.default.createElement(Label, { label: "INR 1300.00", fontSize: "16px", color: "#484848", bold: true, labelStyle: primaryTextLabelStyle }),
-
-        secondaryText: _react2.default.createElement(
-          "div",
-          { style: { height: "auto", marginTop: 0 } },
-          _react2.default.createElement(Label, {
-            label: item && item.financialYear,
-            containerStyle: secondaryTextContainer,
-            labelStyle: secondaryTextLabelStyle,
-            color: "#484848"
-          }),
-          _react2.default.createElement(Label, {
-            label: getCommaSeperatedAddress(curr.address.buildingName, curr.address.street),
-            containerStyle: secondaryTextContainer,
-            labelStyle: secondaryTextLabelStyle,
-            color: "#484848"
-          }),
-          _react2.default.createElement(Label, {
-            label: "Assessment No.: " + item.assessmentNumber,
-            containerStyle: secondaryTextContainer,
-            labelStyle: secondaryTextLabelStyle,
-            color: "#484848"
-          })
-        ),
-        date: getDateFromEpoch(item.assessmentDate),
-        status: "Paid",
-
-        receipt: true
-      };
-    });
-    acc = [].concat((0, _toConsumableArray3.default)(acc), (0, _toConsumableArray3.default)(propertyDetail));
-    return acc;
-  }, []);
-};
-
 var mapCompIDToName = exports.mapCompIDToName = function mapCompIDToName(IDObj, compID) {
   return IDObj[compID] ? IDObj[compID].serviceCode : "Default";
 };
@@ -397,9 +350,9 @@ var dateDiffInDays = function dateDiffInDays(a, b) {
   return Math.floor((utc2 - utc1) / millsPerDay);
 };
 
-var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(buildingName, street) {
-  return buildingName + ", " + street;
-};
+// export const getCommaSeperatedAddress = (buildingName, street) => {
+//   return buildingName && street ? `${buildingName}, ${street}` : "NA";
+// };
 
 var getTransformedStatus = exports.getTransformedStatus = function getTransformedStatus(status) {
   var transformedStatus = "";
@@ -451,6 +404,27 @@ var returnSLAStatus = exports.returnSLAStatus = function returnSLAStatus(slaHour
   } else {
     return Math.abs(daysCount) === 1 ? Math.abs(daysCount) + " day left" : Math.abs(daysCount) + " days left";
   }
+};
+
+var getCommaSeperatedAddress = exports.getCommaSeperatedAddress = function getCommaSeperatedAddress(address, cities) {
+  var name = address ? address.locality.name : "";
+  var cityValue = address ? address.city : "";
+  var pincode = address ? address.pincode : "";
+  var cityName = "";
+  cities && cities.forEach(function (city) {
+    if (city.code === cityValue) {
+      cityName = city.name;
+    }
+  });
+  var addressKeys = ["doorNo", "buildingName", "street"];
+  var addressArray = addressKeys.reduce(function (result, curr) {
+    if (address && address[curr]) {
+      result.push(address[curr]);
+    }
+    return [].concat((0, _toConsumableArray3.default)(result));
+  }, []);
+  addressArray = pincode ? [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName, pincode]) : [].concat((0, _toConsumableArray3.default)(addressArray), [name, cityName]);
+  return addressArray.join(" , ");
 };
 
 var getLatestCreationTime = exports.getLatestCreationTime = function getLatestCreationTime(complaint) {
@@ -615,12 +589,16 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
 
           case 4:
             payloadSpec = _context3.sent;
-            dropdownData = boundary ? _jsonpath2.default.query(payloadSpec, dataFetchConfig.dataPath) : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
+            dropdownData = boundary ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+            payloadSpec.TenantBoundary[0].boundary : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
               dropdownData = [].concat((0, _toConsumableArray3.default)(dropdownData), (0, _toConsumableArray3.default)((0, _get2.default)(payloadSpec, path)));
               return dropdownData;
             }, []);
             ddData = dropdownData && dropdownData.reduce(function (ddData, item) {
-              ddData.push({ label: item.name, value: item.code });
+              var option = { label: item.name, value: item.code };
+              //Only for boundary
+              item.area && (option.area = item.area);
+              ddData.push(option);
               return ddData;
             }, []);
 
@@ -648,3 +626,11 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
     return _ref3.apply(this, arguments);
   };
 }();
+
+var trimObj = exports.trimObj = function trimObj(obj) {
+  if (!Array.isArray(obj) && (typeof obj === "undefined" ? "undefined" : (0, _typeof3.default)(obj)) != "object") return obj;
+  for (var key in obj) {
+    obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+  }
+  return obj;
+};

@@ -57,6 +57,10 @@ var requiredStyle = {
   color: "red"
 };
 
+var underlineDisabledStyle = {
+  borderBottom: "1px solid #e0e0e0"
+};
+
 var underlineFocusBaseStyle = {
   borderColor: "#e0e0e0"
 };
@@ -92,11 +96,15 @@ var TextField = function TextField(_ref) {
       autoFocus = _ref.autoFocus,
       maxLength = _ref.maxLength,
       multiLine = _ref.multiLine,
+      ErrorText = _ref.ErrorText,
       errorMessage = _ref.errorMessage,
+      dropDownData = _ref.dropDownData,
+      dataFetchConfig = _ref.dataFetchConfig,
       jsonPath = _ref.jsonPath,
       toolTip = _ref.toolTip,
+      updateDependentFields = _ref.updateDependentFields,
       toolTipMessage = _ref.toolTipMessage,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine", "errorMessage", "jsonPath", "toolTip", "toolTipMessage"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["style", "onChange", "id", "disabled", "floatingLabelStyle", "hintText", "errorText", "errorStyle", "fullWidth", "hintStyle", "className", "value", "floatingLabelText", "underlineShow", "inputStyle", "underlineFocusStyle", "required", "type", "autoFocus", "maxLength", "multiLine", "ErrorText", "errorMessage", "dropDownData", "dataFetchConfig", "jsonPath", "toolTip", "updateDependentFields", "toolTipMessage"]);
 
   return _react2.default.createElement(_TextField2.default, (0, _extends3.default)({
     errorText: errorText,
@@ -126,7 +134,8 @@ var TextField = function TextField(_ref) {
     autoFocus: autoFocus,
     maxLength: maxLength,
     autoComplete: type === "password" ? "new-password" : "off",
-    multiLine: multiLine
+    multiLine: multiLine,
+    underlineDisabledStyle: underlineDisabledStyle
   }, rest));
 };
 
@@ -140,7 +149,7 @@ TextField.propTypes = {
   hintText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   required: _propTypes2.default.bool,
   hide: _propTypes2.default.bool,
-  floatingLabelText: _propTypes2.default.string,
+  floatingLabelText: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   className: _propTypes2.default.string
 };
 

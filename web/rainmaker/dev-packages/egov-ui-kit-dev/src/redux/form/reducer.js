@@ -1,8 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import { validateField, getFormFields, getFiles } from "./utils";
 
-const intialState = {
-};
+const intialState = {};
 
 const setFormProperty = (state, formKey, propertyKey, propertyValue) => {
   const form = state[formKey] || {};
@@ -119,7 +118,6 @@ const form = (state = intialState, action) => {
       const { propertyName, propertyValue } = action;
       return setFieldProperty(state, formKey, fieldKey, propertyName, propertyValue);
     case actionTypes.VALIDATE_FIELD:
-
       const { errorText } = action;
       return setFieldProperty(state, formKey, fieldKey, "errorText", errorText);
     case actionTypes.VALIDATE_FORM:
@@ -150,14 +148,14 @@ const form = (state = intialState, action) => {
       return resetFiles(state, formKey);
     // end of file reducers
     case actionTypes.DELETE_FORM:
-      const updatedState = { ...state }
-      delete updatedState[formKey]
-      return updatedState
+      const updatedState = { ...state };
+      delete updatedState[formKey];
+      return updatedState;
     case actionTypes.UPDATE_FORM:
       return {
         ...state,
         ...action.forms,
-      }
+      };
     default:
       return state;
   }
