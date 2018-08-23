@@ -28,7 +28,7 @@ import { httpRequest } from "egov-ui-kit/utils/api";
 import { prepareFormData } from "egov-ui-kit/utils/commons";
 import get from "lodash/get";
 import set from "lodash/set";
-import { fetchFromLocalStorage } from "egov-ui-kit/utils/commons";
+import { fetchFromLocalStorage ,trimObj} from "egov-ui-kit/utils/commons";
 import range from "lodash/range";
 import queryString from "query-string";
 import { toggleSpinner } from "egov-ui-kit/redux/common/actions";
@@ -964,7 +964,7 @@ class FormWizard extends Component {
   };
 
   normalizePropertyDetails = (properties) => {
-    const propertyInfo = JSON.parse(JSON.stringify(properties));
+    const propertyInfo = trimObj(JSON.parse(JSON.stringify(properties)));
     const property = propertyInfo[0] || {};
     let { search } = this.props.location;
     const isReassesment = !!this.getQueryValue(search, "isReassesment");
@@ -981,6 +981,7 @@ class FormWizard extends Component {
       unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
     });
     propertyDetails[0].units = units;
+
     return propertyInfo;
   };
 
