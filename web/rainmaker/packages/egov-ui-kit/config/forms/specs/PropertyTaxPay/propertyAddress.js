@@ -29,7 +29,7 @@ var formConfig = {
   fields: (0, _extends3.default)({
     city: {
       id: "city",
-      jsonPath: "Properties[1].address.city",
+      jsonPath: "PropertiesTemp[0].address.city",
       required: true,
       type: "singleValueList",
       floatingLabelText: "CORE_COMMON_CITY",
