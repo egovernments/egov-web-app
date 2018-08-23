@@ -631,6 +631,7 @@ var trimObj = exports.trimObj = function trimObj(obj) {
   if (!Array.isArray(obj) && (typeof obj === "undefined" ? "undefined" : (0, _typeof3.default)(obj)) != "object") return obj;
   for (var key in obj) {
     obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+    if (key === "") delete obj[key];
   }
   return obj;
 };

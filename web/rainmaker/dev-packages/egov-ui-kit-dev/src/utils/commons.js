@@ -527,6 +527,7 @@ export const trimObj = (obj) => {
   if (!Array.isArray(obj) && typeof obj != "object") return obj;
   for (var key in obj) {
     obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
+    if(key==="") delete obj[key];
   }
   return obj;
 };
