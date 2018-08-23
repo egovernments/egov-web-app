@@ -882,12 +882,13 @@ class FormWizard extends Component {
     let { search } = location;
     let draftUuidId = draftByIDResponse.userId;
     let currentUuidId = get(JSON.parse(localStorage.getItem("user-info")), "uuid");
+
     const isReassesment = this.getQueryValue(search, "isReassesment");
     // form validation checks needs to be written here
     // fetchDraftDetails();
 
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
-      isReassesment > 0
+      isReassesment
         ? draftUuidId === currentUuidId
           ? this.setState({
               selected: index,
