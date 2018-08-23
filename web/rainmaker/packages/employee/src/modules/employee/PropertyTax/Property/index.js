@@ -12,6 +12,7 @@ import PropertyInformation from "./components/PropertyInformation";
 import { getCompletedTransformedItems } from "egov-ui-kit/common/propertyTax/TransformedAssessments";
 import isEqual from "lodash/isEqual";
 import orderby from "lodash/orderBy";
+import get from "lodash/get";
 
 const innerDivStyle = {
   padding: "20px 56px 20px 50px",
@@ -105,9 +106,10 @@ class Property extends Component {
   onAssessPayClick = () => {
     const { latestPropertyDetails, propertyId, tenantId } = this.props;
     const assessmentNo = latestPropertyDetails && latestPropertyDetails.assessmentNumber;
+    const uuid = get(latestPropertyDetails, "citizenInfo.uuid");
     this.setState({
       dialogueOpen: true,
-      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+      urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
     });
   };
   getAssessmentListItems = (props) => {
@@ -266,14 +268,16 @@ const getAssessmentInfo = (propertyDetails, keys, generalMDMSDataById) => {
         },
       ],
       items: {
-        header: ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"],
-        values: units.map((floor) => {
-          return {
-            value: keys.map((key) => {
-              return transform(floor, key, generalMDMSDataById);
-            }),
-          };
-        }),
+        header: units ? ["Floor", "Usage Type", "Sub Usage Type", "Occupancy", "Built Area/Total Annual Rent"] : [],
+        values: units
+          ? units.map((floor) => {
+              return {
+                value: keys.map((key) => {
+                  return transform(floor, key, generalMDMSDataById);
+                }),
+              };
+            })
+          : [],
       },
     },
   ];

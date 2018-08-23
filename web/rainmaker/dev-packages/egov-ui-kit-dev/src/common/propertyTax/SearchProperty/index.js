@@ -3,8 +3,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import Label from "egov-ui-kit/utils/translationNode";
 import Screen from "egov-ui-kit/common/common/Screen";
 import YearDialogue from "../YearDialogue";
-import { Button } from "egov-ui-kit/components";
-import { BreadCrumbs } from "egov-ui-kit/components";
+import { Button, BreadCrumbs } from "egov-ui-kit/components";
 import { addBreadCrumbs, toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 import SearchPropertyForm from "./components/SearchPropertyForm";
 import PropertyTable from "./components/PropertyTable";
@@ -12,7 +11,8 @@ import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { connect } from "react-redux";
 import { fetchProperties } from "egov-ui-kit/redux/properties/actions";
-import BlankAssessment from "../AssessmentList/components/BlankAssessment";
+import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
+import get from "lodash/get";
 
 import "./index.css";
 
@@ -72,7 +72,11 @@ class SearchProperty extends Component {
       let displayAddress = doorNo
         ? `${doorNo ? doorNo + "," : ""}` + `${buildingName ? buildingName + "," : ""}` + `${street ? street + "," : ""}`
         : `${locality.name ? locality.name : ""}`;
-      let name = propertyDetails[0].owners[0].name;
+
+      const latestAssessment = getLatestPropertyDetails(propertyDetails);
+      let name = latestAssessment.owners[0].name;
+      let assessmentNo = latestAssessment.assessmentNumber;
+      const uuid = get(latestAssessment, "citizenInfo.uuid");
       let button = (
         <Button
           onClick={
@@ -80,7 +84,7 @@ class SearchProperty extends Component {
               ? () => {
                   this.setState({
                     dialogueOpen: true,
-                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&propertyId=${propertyId}&tenantId=${tenantId}`,
+                    urlToAppend: `/property-tax/assessment-form?assessmentId=${assessmentNo}&isReassesment=true&uuid=${uuid}&propertyId=${propertyId}&tenantId=${tenantId}`,
                   });
                 }
               : (e) => {
