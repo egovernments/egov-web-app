@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Icon } from "components";
-import AssessmentList from "../common/AssessmentList";
+import { AssessmentList } from "modules/common";
 import Label from "egov-ui-kit/utils/translationNode";
 import { Screen } from "modules/common";
 import { connect } from "react-redux";
 import { BreadCrumbs } from "components";
-import { getCommaSeperatedAddress, getDateFromEpoch } from "egov-ui-kit/utils/commons";
-import get from "lodash/get";
+import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { removeForm } from "egov-ui-kit/redux/form/actions";
 import { resetFormWizard } from "egov-ui-kit/utils/PTCommon";
 import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
+import { getFetchGeneralMDMSData } from "egov-ui-kit/utils/PTCommon";
 
 const innerDivStyle = {
   paddingTop: "16px",
@@ -61,12 +61,55 @@ class CompletedAssessments extends Component {
   };
 
   componentDidMount = () => {
-    const { addBreadCrumbs, title, userInfo, fetchProperties, getAssesmentsandStatus, form, removeForm } = this.props;
+    const { addBreadCrumbs, title, userInfo, fetchProperties, fetchGeneralMDMSData, getAssesmentsandStatus, form, removeForm } = this.props;
     title && addBreadCrumbs({ title: title, path: window.location.pathname });
-    // fetchProperties([{ key: "accountId", value: userInfo.uuid }], null, null, [
-    //   { key: "userUuid", value: userInfo.uuid },
-    //   { key: "txnStatus", value: "SUCCESS" },
-    // ]);
+    //getFetchGeneralMDMSData(fetchGeneralMDMSData);
+    const requestBody = {
+      MdmsCriteria: {
+        tenantId: "pb",
+        moduleDetails: [
+          {
+            moduleName: "PropertyTax",
+            masterDetails: [
+              {
+                name: "Floor",
+              },
+              {
+                name: "UsageCategoryMajor",
+              },
+              {
+                name: "UsageCategoryMinor",
+              },
+              {
+                name: "UsageCategorySubMinor",
+              },
+              {
+                name: "OccupancyType",
+              },
+              {
+                name: "PropertyType",
+              },
+              {
+                name: "PropertySubType",
+              },
+              {
+                name: "OwnerType",
+              },
+            ],
+          },
+        ],
+      },
+    };
+    fetchGeneralMDMSData(requestBody, "PropertyTax", [
+      "Floor",
+      "UsageCategoryMajor",
+      "UsageCategoryMinor",
+      "UsageCategorySubMinor",
+      "OccupancyType",
+      "PropertyType",
+      "PropertySubType",
+      "OwnerType",
+    ]);
     getAssesmentsandStatus([{ key: "accountId", value: userInfo.uuid }]);
     resetFormWizard(form, removeForm);
   };
@@ -82,7 +125,7 @@ class CompletedAssessments extends Component {
   };
 
   render() {
-    const { urls, history, loading, sortedProperties } = this.props;
+    const { urls, history, loading, sortedProperties, generalMDMSDataById } = this.props;
     return (
       <Screen loading={loading}>
         <BreadCrumbs url={urls} history={history} />
@@ -97,6 +140,7 @@ class CompletedAssessments extends Component {
             closeDialogue={this.closeYearRangeDialogue}
             onNewPropertyButtonClick={this.onNewPropertyButtonClick}
             hoverColor="#fff"
+            generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
           />
         )}
       </Screen>
@@ -106,12 +150,12 @@ class CompletedAssessments extends Component {
 const mapStateToProps = (state) => {
   const { properties, common, app, form } = state;
   const { localizationLabels } = app;
-  const { cities } = common;
+  const { cities, generalMDMSDataById } = common;
   const { urls } = state.app;
   const { assessmentsByStatus, loading } = properties || {};
   const completedAssessments = getCompletedTransformedItems(assessmentsByStatus, cities, localizationLabels);
   const sortedProperties = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { sortedProperties, urls, loading, form };
+  return { sortedProperties, urls, loading, form, generalMDMSDataById };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -119,6 +163,7 @@ const mapDispatchToProps = (dispatch) => {
     addBreadCrumbs: (url) => dispatch(addBreadCrumbs(url)),
     getAssesmentsandStatus: (queryObj) => dispatch(getAssesmentsandStatus(queryObj)),
     removeForm: (formkey) => dispatch(removeForm(formkey)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
   };
 };
 

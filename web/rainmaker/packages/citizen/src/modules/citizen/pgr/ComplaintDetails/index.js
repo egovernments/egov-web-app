@@ -50,6 +50,7 @@ const mapStateToProps = (state, ownProps) => {
   const { complaints, common, form } = state;
   const { employeeById, departmentById, designationsById } = common || {};
   let selectedComplaint = complaints["byId"][decodeURIComponent(ownProps.match.params.serviceRequestId)];
+  console.log(selectedComplaint);
   if (selectedComplaint) {
     let details = {
       status: selectedComplaint.status,
@@ -57,6 +58,7 @@ const mapStateToProps = (state, ownProps) => {
       applicationNo: selectedComplaint.serviceRequestId,
       description: selectedComplaint.description,
       submittedDate: getDateFromEpoch(selectedComplaint.auditDetails.createdTime),
+      landMark: selectedComplaint.landmark,
       address: selectedComplaint.address,
       images: fetchImages(selectedComplaint.actions).filter((imageSource) => isImage(imageSource)),
       feedback: selectedComplaint.feedback,
