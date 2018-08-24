@@ -206,6 +206,7 @@ const formConfig = {
     ownerGender: {
       id: "ownerGender",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].gender",
+      value: "Male",
     },
     isSameAsPropertyAddress: {
       id: "rcpt",
