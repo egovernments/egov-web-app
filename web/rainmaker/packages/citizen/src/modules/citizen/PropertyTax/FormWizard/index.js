@@ -248,6 +248,7 @@ class FormWizard extends Component {
         if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);
       }
       updatePrepareFormDataFromDraft(get(currentDraft, "draftRecord.prepareFormData", {}));
+      this.props.updatePTForms(currentDraft.draftRecord);
       this.setState(
         {
           ownerInfoArr: ownerDetails,
@@ -266,7 +267,6 @@ class FormWizard extends Component {
           // floorDetails,
         },
         () => {
-          this.props.updatePTForms(currentDraft.draftRecord);
           //this.onTabClick(activeTab)
           toggleSpinner();
           {
