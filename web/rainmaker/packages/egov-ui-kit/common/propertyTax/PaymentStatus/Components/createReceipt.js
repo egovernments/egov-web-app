@@ -29,7 +29,7 @@ var getTaxInfo = function getTaxInfo(billAccountDetails, totalAmount, localizati
   var headersFromAPI = billAccountDetails.map(function (item) {
     return item.accountDescription && item.accountDescription.split("-")[0];
   });
-  var headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING", "PT_DECIMAL_CEILING_CREDIT", "PT_DECIMAL_CEILING_CREDIT_DEBIT", "PT_DECIMAL_CEILING_DEBIT"];
+  var headers = ["PT_TAX", "PT_FIRE_CESS", "PT_TIME_PENALTY", "PT_TIME_REBATE", "PT_TIME_INTEREST", "PT_UNIT_USAGE_EXEMPTION", "PT_OWNER_EXEMPTION", "PT_ADHOC_PENALTY", "PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING", "PT_DECIMAL_CEILING_CREDIT", "PT_DECIMAL_CEILING_CREDIT_DEBIT", "PT_DECIMAL_CEILING_DEBIT"];
   var negativeHeaders = ["PT_ADHOC_REBATE", "PT_ADVANCE_CARRYFORWARD", "PT_DECIMAL_CEILING_CREDIT_DEBIT", "PT_DECIMAL_CEILING_DEBIT", "PT_OWNER_EXEMPTION", "PT_TIME_REBATE", "PT_UNIT_USAGE_EXEMPTION"];
   var transformedHeaders = headers.reduce(function (result, current) {
     if (headersFromAPI.indexOf(current) > -1) {
@@ -81,16 +81,16 @@ var createReceiptDetails = function createReceiptDetails(property, propertyDetai
     receipts: {
       AmountPaid: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       transactionId: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-      bankName: "AXIS",
-      payMode: "Net Banking",
+      bankName: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.id", "NA"),
+      payMode: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.instrumentType.name", "Net Banking"),
       pendingAmt: receiptDetails && (totalAmountToPay - (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
       paymentDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.transactionNumber"),
       transactionDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "instrument.transactionDateInput")),
       bankNameBranch: receiptDetails && (0, _get2.default)(receiptDetails, "instrument.bank.id") + ", " + (0, _get2.default)(receiptDetails, "instrument.branchName"),
-      G8receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
-      G8receiptDate: receiptDetails && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate"))
+      G8receiptNo: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate: receiptDetails && (0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate") && (0, _commons.getDateFromEpoch)((0, _get2.default)(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate"))
     },
     propertyDetails: [(0, _extends3.default)({}, propertyDetails)],
     address: property.address,

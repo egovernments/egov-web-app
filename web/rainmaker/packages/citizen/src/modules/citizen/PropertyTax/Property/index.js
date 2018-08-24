@@ -329,7 +329,13 @@ const getOwnerInfo = (ownerDetails, generalMDMSDataById) => {
               },
               {
                 key: "User Category:",
-                value: (generalMDMSDataById && generalMDMSDataById["OwnerType"] && generalMDMSDataById["OwnerType"][owner.ownerType].name) || "NA",
+                value:
+                  (owner &&
+                    owner.ownerType &&
+                    generalMDMSDataById &&
+                    generalMDMSDataById["OwnerType"] &&
+                    generalMDMSDataById["OwnerType"][owner.ownerType].name) ||
+                  "NA",
               },
               {
                 key: "Email ID:",

@@ -306,7 +306,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                 [
                   { text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.G8receiptNo || "NA", border: borderValue },
-                  { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" },
+                  { text: "G8 Receipt Issue Date:", border: borderKey, style: "receipt-table-key" },
                   { text: receipts.G8receiptDate || "NA", border: borderValue },
                 ],
               ],
@@ -320,6 +320,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
               { text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] },
               { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] },
               { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] },
+              { text: "Assessment & Payment is subject to verification/Scrutiny by competitive authority.", margin: [0, 0, 0, 5] },
             ],
             alignment: "left",
             style: "receipt-footer",

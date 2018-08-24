@@ -11,6 +11,7 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
   const headers = [
     "PT_TAX",
     "PT_FIRE_CESS",
+    "PT_TIME_PENALTY",
     "PT_TIME_REBATE",
     "PT_TIME_INTEREST",
     "PT_UNIT_USAGE_EXEMPTION",
@@ -90,16 +91,19 @@ const createReceiptDetails = (property, propertyDetails, receiptDetails, localiz
     receipts: {
       AmountPaid: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].amountPaid").toString(),
       transactionId: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
-      bankName: "AXIS",
-      payMode: "Net Banking",
+      bankName: receiptDetails && get(receiptDetails, "instrument.bank.id", "NA"),
+      payMode: receiptDetails && get(receiptDetails, "instrument.instrumentType.name", "Net Banking"),
       pendingAmt: receiptDetails && (totalAmountToPay - get(receiptDetails, "Bill[0].billDetails[0].amountPaid")).toString(),
       paymentDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].receiptDate")),
       receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].receiptNumber"),
       transactionNo: receiptDetails && get(receiptDetails, "instrument.transactionNumber"),
       transactionDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "instrument.transactionDateInput")),
       bankNameBranch: receiptDetails && `${get(receiptDetails, "instrument.bank.id")}, ${get(receiptDetails, "instrument.branchName")}`,
-      G8receiptNo: receiptDetails && get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].manualReceiptNumber"),
-      G8receiptDate: receiptDetails && getDateFromEpoch(get(receiptDetails, "Receipt[0].Bill[0].billDetails[0].receiptDate")),
+      G8receiptNo: receiptDetails && get(receiptDetails, "Bill[0].billDetails[0].manualReceiptNumber"),
+      G8receiptDate:
+        receiptDetails &&
+        get(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate") &&
+        getDateFromEpoch(get(receiptDetails, "Bill[0].billDetails[0].manualReceiptDate")),
     },
     propertyDetails: [{ ...propertyDetails }],
     address: property.address,

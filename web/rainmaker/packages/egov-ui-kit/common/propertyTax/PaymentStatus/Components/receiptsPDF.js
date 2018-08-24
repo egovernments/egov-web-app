@@ -231,11 +231,11 @@ var generateReceipt = function generateReceipt(role, details, generalMDMSDataByI
             { text: "Bank Name:", border: borderKey, style: "receipt-table-key" }, { text: receipts.bankName || "", border: borderValue }], [{ text: "Transaction ID/ Cheque/ DD No.:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionNo || "", border: borderValue },
             // { text: "Transaction ID:", border: borderKey, style: "receipt-table-key" },
             // { text: receipts.transactionId || "", border: borderValue },
-            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]
+            { text: "Transaction Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.transactionDate || "", border: borderValue }], [{ text: "G8 Receipt No:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptNo || "NA", border: borderValue }, { text: "G8 Receipt Issue Date:", border: borderKey, style: "receipt-table-key" }, { text: receipts.G8receiptDate || "NA", border: borderValue }]]
           },
           layout: tableborder
         }, { text: "Commissioner/EO", alignment: "right", color: "#484848", fontSize: 12, bold: true, margin: [0, 30, 0, 30] }, { text: "Note:", alignment: "left", style: "receipt-footer" }, {
-          ol: [{ text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] }, { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] }, { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] }],
+          ol: [{ text: "Payment received by cheque/demand draft shall be subject to realization.", margin: [0, 0, 0, 5] }, { text: "This document is not a proof of Property Ownership.", margin: [0, 0, 0, 5] }, { text: "This is a computer generated document, hence requires no signature.", margin: [0, 0, 0, 5] }, { text: "Assessment & Payment is subject to verification/Scrutiny by competitive authority.", margin: [0, 0, 0, 5] }],
           alignment: "left",
           style: "receipt-footer"
         }],
