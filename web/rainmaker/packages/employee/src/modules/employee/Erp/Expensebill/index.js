@@ -11,7 +11,7 @@ class ErpExpenseBill extends Component{
             let menuUrl = "EGF/expensebill/newform";
             let loc = window.location;
             // let erp_url= 'http://longowal.coexit-dev.org/EGF/expensebill/newform';
-            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+":8080/"+menuUrl;
+            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+"/"+menuUrl;
             console.log("logged user token "+localStorage.getItem('token'));
             console.log("tenat-info :"+ localStorage.getItem('tenant-id'));
             console.log("ERP URL : "+erp_url);
