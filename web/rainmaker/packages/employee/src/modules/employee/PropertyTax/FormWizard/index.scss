@@ -402,9 +402,10 @@ input[type="radio"]:checked:before {
   background: #fe7a51;
 }
 
-.propertyAddress {
+.propertyAddress,
+.ifsc-field {
   .textfield-text div {
-    width: 55px;
+    width: 60px;
     color: #fe7a51 !important;
     margin-right: 12px !important;
   }

@@ -25,7 +25,8 @@ var Field = function Field(_ref) {
       handleFieldChange = _ref.handleFieldChange,
       _ref$field = _ref.field,
       field = _ref$field === undefined ? {} : _ref$field,
-      rest = (0, _objectWithoutProperties3.default)(_ref, ["fieldKey", "handleFieldChange", "field"]);
+      rest = (0, _objectWithoutProperties3.default)(_ref, ["fieldKey", "handleFieldChange", "field"]),
+      onTextFieldIconClick = _ref.onTextFieldIconClick;
 
   var renderField = function renderField() {
     var type = field.type,
@@ -33,9 +34,8 @@ var Field = function Field(_ref) {
         label = field.label,
         hideField = field.hideField,
         Icon = field.Icon,
-        onIconClick = field.onIconClick,
         iconRedirectionURL = field.iconRedirectionURL,
-        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField", "Icon", "onIconClick", "iconRedirectionURL"]);
+        fieldProps = (0, _objectWithoutProperties3.default)(field, ["type", "tooltip", "label", "hideField", "Icon", "iconRedirectionURL"]);
 
     if (hideField) return null;
     switch (type) {
@@ -73,7 +73,7 @@ var Field = function Field(_ref) {
         }, fieldProps, rest, {
           onIconClick: iconRedirectionURL ? function () {
             window.open(iconRedirectionURL);
-          } : onIconClick,
+          } : onTextFieldIconClick,
           onChange: function onChange(e, value) {
             return handleFieldChange(fieldKey, value);
           }

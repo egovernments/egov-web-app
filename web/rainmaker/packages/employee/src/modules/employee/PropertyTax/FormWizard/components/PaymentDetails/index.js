@@ -76,30 +76,36 @@ class PaymentDetails extends Component {
 
   getErrorMessage = (value) => {
     let { totalAmount } = this.props.estimationDetails[0] || {};
-    let errorText = `amount should be numeric`
+    let errorText = `amount should be numeric`;
     if (isFinite(value) && value >= totalAmount) {
-      errorText = `can't be greater than ${parseInt(totalAmount)-1}`
+      errorText = `can't be greater than ${parseInt(totalAmount) - 1}`;
     } else if (isFinite(value) && value <= 100) {
-      errorText = "can't be less than 100"
+      errorText = "can't be less than 100";
     }
-    return errorText
-  }
+    return errorText;
+  };
 
   handleFieldChange = (event, value) => {
     let { estimationDetails, updateTotalAmount } = this.props;
     let { totalAmount } = (estimationDetails && estimationDetails[0]) || {};
     if (isNaN(parseFloat(value)) || !isFinite(value) || value >= totalAmount || value < 100) {
-      this.setState({
-        errorText: this.getErrorMessage(value),
-      }, () => {
-        updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
-      });
+      this.setState(
+        {
+          errorText: this.getErrorMessage(value),
+        },
+        () => {
+          updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+        }
+      );
     } else {
-      this.setState({
-        errorText: "",
-      }, () => {
-        updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
-      });
+      this.setState(
+        {
+          errorText: "",
+        },
+        () => {
+          updateTotalAmount && updateTotalAmount(value, this.state.valueSelected === "Full_Amount", this.state.errorText);
+        }
+      );
     }
   };
 

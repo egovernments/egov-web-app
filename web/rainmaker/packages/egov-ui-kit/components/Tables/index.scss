@@ -16,10 +16,10 @@
     font-size: 13px;
     color: #484848;
     font-weight: normal;
-  }
-  td {
     padding: 4px 8px 4px 8px !important;
     text-align: center !important;
+    max-width: 295px;
+    word-wrap: break-word;
   }
 }
 .material-table-pagination span {

@@ -100,6 +100,7 @@ class Property extends Component {
   onListItemClick = (item) => {
     const { getSingleAssesmentandStatus } = this.props;
     const { route } = item;
+    console.log(item);
     route && getSingleAssesmentandStatus(route);
   };
 
