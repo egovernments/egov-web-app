@@ -254,6 +254,15 @@ body.employee-user-profile {
   .pgr-call-icon span {
     display: none !important; } }
 
+@media only screen and (max-width: 768px) {
+  .citizen-mobileNumber-style {
+    display: block !important;
+    margin-top: 3px; }
+  .citizen-mobileNumber-style span {
+    margin-left: 25px !important; }
+  .citizen-mobileNumber-style svg {
+    margin-left: 0px !important; } }
+
 .paginate_button {
   background: #ffffff !important;
   border: none !important; }

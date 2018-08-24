@@ -123,8 +123,8 @@ const formConfig = {
     landmark: {
       id: "landmark",
       jsonPath: "services[0].landmark",
-      floatingLabelText: "CS_ADDCOMPLAINT_LANDMARK",
-      hintText: "CS_ADDCOMPLAINT_LANDMARK_PLACEHOLDER",
+      floatingLabelText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
+      hintText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       value: "",
       errorText: "",

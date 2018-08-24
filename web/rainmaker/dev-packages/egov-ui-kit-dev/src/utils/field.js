@@ -1,9 +1,9 @@
 import React from "react";
 import { TextField, MobileNumberField, SingleCheckbox, DropDown, Label, TextFieldIcon, AutoSuggestDropdown } from "components";
 
-const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
+const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest, onTextFieldIconClick}) => {
   const renderField = () => {
-    const { type, tooltip, label, hideField, Icon, onIconClick, iconRedirectionURL, ...fieldProps } = field;
+    const { type, tooltip, label, hideField, Icon,  iconRedirectionURL, ...fieldProps } = field;
     if (hideField) return null;
     switch (type) {
       case "textfield":
@@ -41,7 +41,7 @@ const Field = ({ fieldKey, handleFieldChange, field = {}, ...rest }) => {
                 ? () => {
                     window.open(iconRedirectionURL);
                   }
-                : onIconClick
+                : onTextFieldIconClick
             }
             onChange={(e, value) => handleFieldChange(fieldKey, value)}
           />

@@ -195,12 +195,23 @@ var Details = function (_Component) {
                 "div",
                 { className: "rainmaker-displayInline", style: { marginTop: 10 } },
                 _react2.default.createElement(_components.Icon, { action: "maps", name: "place", style: iconStyle, color: "#969696" }),
-                _react2.default.createElement(_translationNode2.default, {
-                  label: "Landmark : " + landMark,
-                  className: "status-result-color",
-                  id: "complaint-details-complaint-location",
-                  labelStyle: { color: "inherit" }
-                })
+                _react2.default.createElement(
+                  "div",
+                  { className: "rainmaker-displayInline" },
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: "CS_ADDCOMPLAINT_LANDMARK",
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" }
+                  }),
+                  _react2.default.createElement(_translationNode2.default, {
+                    label: ": " + landMark,
+                    className: "status-result-color",
+                    id: "complaint-details-complaint-location",
+                    labelStyle: { color: "inherit" },
+                    containerStyle: { marginLeft: 5 }
+                  })
+                )
               ),
               address && _react2.default.createElement(
                 "div",

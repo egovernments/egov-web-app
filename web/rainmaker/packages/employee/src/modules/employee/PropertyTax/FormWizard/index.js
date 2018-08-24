@@ -585,7 +585,7 @@ class FormWizard extends Component {
     // const { fetchDraftDetails } = this;
     const { formValidIndexArray, selected } = this.state;
     // form validation checks needs to be written here
-    // fetchDraftDetails();
+    //fetchDraftDetails();
     if (formValidIndexArray.indexOf(index) !== -1 && selected >= index) {
       this.setState({
         selected: index,

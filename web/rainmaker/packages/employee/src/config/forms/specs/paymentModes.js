@@ -1,3 +1,5 @@
+import { removeForm } from "egov-ui-kit/redux/form/actions";
+
 const formConfig = {
   name: "paymentModes",
   fields: {
@@ -15,6 +17,12 @@ const formConfig = {
         { label: "Credit/Debit Card", value: "Card" },
       ],
       value: "Cash",
+      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+        const allFormkeys = ["demandInfo", "chequeInfo", "cardInfo", "cashInfo"];
+        allFormkeys.forEach((item) => {
+          dispatch(removeForm(item));
+        });
+      },
     },
   },
   action: "",

@@ -318,6 +318,20 @@ body.employee-user-profile {
     display: none !important;
   }
 }
+@media only screen and (max-width: 768px) {
+  .citizen-mobileNumber-style {
+    display: block !important;
+    margin-top: 3px;
+  }
+  .citizen-mobileNumber-style span {
+    margin-left: 25px !important;
+  }
+  .citizen-mobileNumber-style svg {
+    margin-left: 0px !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+}
 
 //report css starts
 .paginate_button {

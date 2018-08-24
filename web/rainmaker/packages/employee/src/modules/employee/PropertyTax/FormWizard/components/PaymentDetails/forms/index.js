@@ -35,7 +35,7 @@ const CashInformation = ({ form, formKey, handleFieldChange }) => {
   );
 };
 
-const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
+const ChequeInformation = ({ form, formKey, handleFieldChange, onIconClick }) => {
   const fields = form.fields || {};
   return (
     <div className="clearfix">
@@ -57,6 +57,10 @@ const ChequeInformation = ({ form, formKey, handleFieldChange }) => {
             <Icon action="action" name="date-range" />
           </div>
         </div>
+        <div className="col-sm-6 general-field-padding ifsc-field">
+          <Field fieldKey="ifscCode" field={fields.ifscCode} onTextFieldIconClick={onIconClick} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6" style={{ height: 72, marginTop: 14 }} />
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
         </div>
@@ -96,7 +100,7 @@ const ReceiptInformation = ({ form, formKey, handleFieldChange }) => {
   );
 };
 
-const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
+const DemandDraftInformation = ({ form, formKey, handleFieldChange, onIconClick }) => {
   const fields = form.fields || {};
   return (
     <div className="clearfix">
@@ -118,10 +122,13 @@ const DemandDraftInformation = ({ form, formKey, handleFieldChange }) => {
             <Icon action="action" name="date-range" />
           </div>
         </div>
+        <div className="col-sm-6 general-field-padding ifsc-field">
+          <Field fieldKey="ifscCode" field={fields.ifscCode} onTextFieldIconClick={onIconClick} handleFieldChange={handleFieldChange} />
+        </div>
+        <div className="col-sm-6" style={{ height: 72, marginTop: 14 }} />
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankName" field={fields.BankName} handleFieldChange={handleFieldChange} />
         </div>
-
         <div className="col-sm-6 general-field-padding">
           <Field fieldKey="BankBranch" field={fields.BankBranch} handleFieldChange={handleFieldChange} />
         </div>
