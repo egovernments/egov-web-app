@@ -419,8 +419,7 @@ var city = exports.city = {
       },
       dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [{
-        fieldKey: "mohalla",
-        hierarchyType: "REVENUE"
+        fieldKey: "mohalla"
       }]
     },
     updateDependentFields: function updateDependentFields(_ref6) {

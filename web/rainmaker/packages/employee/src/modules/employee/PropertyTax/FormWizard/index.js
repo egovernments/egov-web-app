@@ -918,8 +918,9 @@ class FormWizard extends Component {
   };
 
   estimate = async () => {
-    let { form, common } = this.props;
+    let { form, common, toggleSpinner } = this.props;
     let prepareFormData = { ...this.props.prepareFormData };
+    toggleSpinner();
     if (get(prepareFormData, "Properties[0].propertyDetails[0].institution", undefined))
       delete prepareFormData.Properties[0].propertyDetails[0].institution;
     const { draft } = this.state.draftRequest;
@@ -964,8 +965,10 @@ class FormWizard extends Component {
           },
         ],
       });
+      toggleSpinner();
       return estimateResponse;
     } catch (e) {
+      toggleSpinner();
       if (e.message) {
         alert(e.message);
       } else this.props.toggleSnackbarAndSetText(true, "Error calculating tax", true);
@@ -1047,14 +1050,14 @@ class FormWizard extends Component {
     const units = propertyDetails[0].units.filter((item, ind) => {
       return item !== null;
     });
-    var sumOfUnitArea=0;
+    var sumOfUnitArea = 0;
     units.forEach((unit) => {
       let unitAreaInSqYd = parseFloat(unit.unitArea) / 9;
       unit.unitArea = Math.round(unitAreaInSqYd * 1000) / 1000;
-      sumOfUnitArea+=unit.unitArea;
+      sumOfUnitArea += unit.unitArea;
     });
-    if (propertyDetails[0].propertySubType==="SHAREDPROPERTY") {
-      propertyDetails[0].buildUpArea=sumOfUnitArea;
+    if (propertyDetails[0].propertySubType === "SHAREDPROPERTY") {
+      propertyDetails[0].buildUpArea = sumOfUnitArea;
     }
     propertyDetails[0].units = units;
     return propertyInfo;
