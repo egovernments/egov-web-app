@@ -847,8 +847,10 @@ class FormWizard extends Component {
     const { prepareFormData } = this.props;
     const { Bill, propertyDetails } = this.state;
     const { assessmentNumber, propertyId, tenantId, assessmentYear } = propertyDetails;
+    set(prepareFormData, "Receipt[0].Bill", []); //Fix for re-filling of form - prepareFormData retains the old bill
     set(prepareFormData, "Receipt[0].Bill[0].billDetails[0].amountPaid", 0);
     prepareFormData.Receipt[0].Bill[0] = { ...Bill[0], ...prepareFormData.Receipt[0].Bill[0] };
+    prepareFormData.Receipt[0].Bill[0].billDetails[0] = { ...Bill[0].billDetails[0], ...prepareFormData.Receipt[0].Bill[0].billDetails[0] };
     if (!get(prepareFormData, "Receipt[0].instrument.instrumentType.name")) {
       set(prepareFormData, "Receipt[0].instrument.instrumentType.name", "Cash");
     }
