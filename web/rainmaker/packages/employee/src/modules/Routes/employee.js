@@ -29,6 +29,7 @@ import CreateEmployee from "modules/employee/pgr/CreateEmployee";
 import MDMS from "modules/common/MDMS";
 import Home from "modules/employee/Home";
 import Report from "modules/employee/reports/report";
+import ErpExpenseBill from "modules/employee/Erp/Expensebill";
 
 //pt
 import ptRoutes from "./pt";
@@ -68,19 +69,34 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true, title: "CS_HOME_HEADER_PROFILE" },
   },
+  // {
+  //   path: "all-complaints",
+  //   component: AllComplaints,
+  //   needsAuthentication: true,
+  //   options: {
+  //     hideFooter: true,
+  //     title: "ES_OPEN_COMPLAINTS_HEADER",
+  //     hideTitle: false,
+  //     redirectionUrl,
+  //     isHomeScreen: true,
+  //     hideFor: "ao",
+  //     customFor: "csr",
+  //     customTitle: "ES_ALL_COMPLAINTS_HEADER",
+  //   },
+  // },
   {
     path: "all-complaints",
-    component: AllComplaints,
+    component: ErpExpenseBill,
     needsAuthentication: true,
     options: {
       hideFooter: true,
-      title: "ES_OPEN_COMPLAINTS_HEADER",
-      hideTitle: false,
-      redirectionUrl,
+     // title: "ES_OPEN_COMPLAINTS_HEADER",
+      hideTitle: true,
+     // redirectionUrl,
       isHomeScreen: true,
       hideFor: "ao",
       customFor: "csr",
-      customTitle: "ES_ALL_COMPLAINTS_HEADER",
+      //customTitle: "ES_ALL_COMPLAINTS_HEADER",
     },
   },
   {

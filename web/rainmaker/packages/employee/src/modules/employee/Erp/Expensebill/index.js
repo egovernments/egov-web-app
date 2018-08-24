@@ -6,21 +6,25 @@ class ErpExpenseBill extends Component{
 
     render(){ 
     
-            let auth_token = 'ed0be069-1f05-461c-bff4-645c3a55f659';
+            // let auth_token = '7d030b3d-a094-4c49-a223-b59afdea0f75';
+            let auth_token = localStorage.getItem('token');
             let menuUrl = "EGF/expensebill/newform";
             let loc = window.location;
             // let erp_url= 'http://longowal.coexit-dev.org/EGF/expensebill/newform';
-            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+"/"+menuUrl;
+            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+":8080/"+menuUrl;
             console.log("logged user token "+localStorage.getItem('token'));
             console.log("tenat-info :"+ localStorage.getItem('tenant-id'));
             console.log("ERP URL : "+erp_url);
+            let userInfo = JSON.parse(localStorage.getItem('user-info'));
+            let tenantId = localStorage.getItem('tenant-id');
 
             return (
                     <div>
                     <iframe name="erp_iframe" height="800" width="1100"></iframe>
                      <form action={erp_url} id="erp_form" method="post" target="erp_iframe">
                       
-                    <input hidden="true" name="access_token" value={auth_token}></input>
+                        <input hidden="true" name="auth_token" value={auth_token}></input>
+                    
                   </form>
 
                     </div>
