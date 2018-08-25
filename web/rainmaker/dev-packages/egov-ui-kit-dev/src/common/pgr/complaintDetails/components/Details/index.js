@@ -145,13 +145,13 @@ class Details extends Component {
                     <Icon action="maps" name="place" style={iconStyle} color={"#969696"} />
                     <div className="rainmaker-displayInline">
                       <Label
-                        label={"CS_ADDCOMPLAINT_LANDMARK"}
+                        label={"CS_ADDCOMPLAINT_ADDRESSINFO"}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}
                       />
                       <Label
-                        label={`: ${landMark}`}
+                        label={landMark}
                         className="status-result-color"
                         id="complaint-details-complaint-location"
                         labelStyle={{ color: "inherit" }}

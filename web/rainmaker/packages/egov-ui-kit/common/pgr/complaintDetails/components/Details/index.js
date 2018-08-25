@@ -199,13 +199,13 @@ var Details = function (_Component) {
                   "div",
                   { className: "rainmaker-displayInline" },
                   _react2.default.createElement(_translationNode2.default, {
-                    label: "CS_ADDCOMPLAINT_LANDMARK",
+                    label: "CS_ADDCOMPLAINT_ADDRESSINFO",
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" }
                   }),
                   _react2.default.createElement(_translationNode2.default, {
-                    label: ": " + landMark,
+                    label: landMark,
                     className: "status-result-color",
                     id: "complaint-details-complaint-location",
                     labelStyle: { color: "inherit" },
