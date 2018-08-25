@@ -1,5 +1,6 @@
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
-const cityCode = "";
+
 const formConfig = {
   name: "complaint",
   idJsonPath: "services[0].serviceRequestId",
@@ -71,29 +72,28 @@ const formConfig = {
       errorText: "",
       type: "singleValueList",
       dataFetchConfig: {
-        url: CITY.GET.URL,
-        action: CITY.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "tenant",
-                masterDetails: [
-                  {
-                    name: "tenants",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.tenant.tenants"],
+        // url: CITY.GET.URL,
+        // action: CITY.GET.ACTION,
+        // queryParams: [],
+        // requestBody: {
+        //   MdmsCriteria: {
+        //     tenantId: "pb",
+        //     moduleDetails: [
+        //       {
+        //         moduleName: "tenant",
+        //         masterDetails: [
+        //           {
+        //             name: "tenants",
+        //           },
+        //         ],
+        //       },
+        //     ],
+        //   },
+        // },
+        // dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [
           {
             fieldKey: "mohalla",
-            hierarchyType: "ADMIN",
           },
         ],
       },
@@ -148,6 +148,27 @@ const formConfig = {
     type: "submit",
     label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_SUBMIT_COMPLAINT",
     id: "addComplaint-submit-complaint",
+  },
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      let state = store.getState();
+      const { cities, citiesByModule } = state.common;
+      const { PGR } = citiesByModule;
+      if (PGR) {
+        const tenants = PGR.tenants;
+        const dd = tenants.reduce((dd, tenant) => {
+          let selected = cities.find((city) => {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch(setFieldProperty("complaint", "city", "dropDownData", dd));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
   },
   action: "_create",
   saveUrl: "/rainmaker-pgr/v1/requests/_create",

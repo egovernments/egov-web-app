@@ -584,10 +584,16 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
           case 0:
             url = dataFetchConfig.url, action = dataFetchConfig.action, requestBody = dataFetchConfig.requestBody, queryParams = dataFetchConfig.queryParams;
             _context3.prev = 1;
-            _context3.next = 4;
+
+            if (!url) {
+              _context3.next = 9;
+              break;
+            }
+
+            _context3.next = 5;
             return (0, _api.httpRequest)(url, action, queryParams || [], requestBody);
 
-          case 4:
+          case 5:
             payloadSpec = _context3.sent;
             dropdownData = boundary ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
             payloadSpec.TenantBoundary[0].boundary : dataFetchConfig.dataPath.reduce(function (dropdownData, path) {
@@ -603,23 +609,25 @@ var fetchDropdownData = exports.fetchDropdownData = function () {
             }, []);
 
             dispatch((0, _actions.setFieldProperty)(formKey, fieldKey, "dropDownData", ddData));
-            _context3.next = 15;
+
+          case 9:
+            _context3.next = 16;
             break;
 
-          case 10:
-            _context3.prev = 10;
+          case 11:
+            _context3.prev = 11;
             _context3.t0 = _context3["catch"](1);
             message = _context3.t0.message;
 
             dispatch((0, _actions2.toggleSnackbarAndSetText)(true, message, true));
             return _context3.abrupt("return");
 
-          case 15:
+          case 16:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[1, 10]]);
+    }, _callee3, undefined, [[1, 11]]);
   }));
 
   return function fetchDropdownData(_x4, _x5, _x6, _x7, _x8) {

@@ -403,21 +403,25 @@ var city = exports.city = {
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     numcols: 6,
     dataFetchConfig: {
-      url: _endPoints.CITY.GET.URL,
-      action: _endPoints.CITY.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [{
-            moduleName: "tenant",
-            masterDetails: [{
-              name: "tenants"
-            }]
-          }]
-        }
-      },
-      dataPath: ["MdmsRes.tenant.tenants"],
+      // url: CITY.GET.URL,
+      // action: CITY.GET.ACTION,
+      // queryParams: [],
+      // requestBody: {
+      //   MdmsCriteria: {
+      //     tenantId: "pb",
+      //     moduleDetails: [
+      //       {
+      //         moduleName: "tenant",
+      //         masterDetails: [
+      //           {
+      //             name: "tenants",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      // },
+      // dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [{
         fieldKey: "mohalla"
       }]
@@ -461,7 +465,7 @@ var city = exports.city = {
         }
       };
 
-      dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor", "Rebate", "Penalty", "Interest", "FireCess"]));
+      dispatch((0, _actions.fetchGeneralMDMSData)(requestBody, "PropertyTax", ["Floor", "OccupancyType", "OwnerShipCategory", "OwnerType", "PropertySubType", "PropertyType", "SubOwnerShipCategory", "UsageCategoryDetail", "UsageCategoryMajor", "UsageCategoryMinor", "UsageCategorySubMinor"]));
     }
   }
 };

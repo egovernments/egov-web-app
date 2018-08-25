@@ -394,25 +394,25 @@ export const city = {
     hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
     numcols: 6,
     dataFetchConfig: {
-      url: CITY.GET.URL,
-      action: CITY.GET.ACTION,
-      queryParams: [],
-      requestBody: {
-        MdmsCriteria: {
-          tenantId: "pb",
-          moduleDetails: [
-            {
-              moduleName: "tenant",
-              masterDetails: [
-                {
-                  name: "tenants",
-                },
-              ],
-            },
-          ],
-        },
-      },
-      dataPath: ["MdmsRes.tenant.tenants"],
+      // url: CITY.GET.URL,
+      // action: CITY.GET.ACTION,
+      // queryParams: [],
+      // requestBody: {
+      //   MdmsCriteria: {
+      //     tenantId: "pb",
+      //     moduleDetails: [
+      //       {
+      //         moduleName: "tenant",
+      //         masterDetails: [
+      //           {
+      //             name: "tenants",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   },
+      // },
+      // dataPath: ["MdmsRes.tenant.tenants"],
       dependants: [
         {
           fieldKey: "mohalla",
@@ -480,10 +480,6 @@ export const city = {
           "UsageCategoryMajor",
           "UsageCategoryMinor",
           "UsageCategorySubMinor",
-          "Rebate",
-          "Penalty",
-          "Interest",
-          "FireCess",
         ])
       );
     },

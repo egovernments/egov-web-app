@@ -498,24 +498,26 @@ export const mergeMDMSDataArray = (oldData, newRow) => {
 export const fetchDropdownData = async (dispatch, dataFetchConfig, formKey, fieldKey, boundary) => {
   const { url, action, requestBody, queryParams } = dataFetchConfig;
   try {
-    const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
-    const dropdownData = boundary
-      ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
-        payloadSpec.TenantBoundary[0].boundary
-      : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
-          dropdownData = [...dropdownData, ...get(payloadSpec, path)];
-          return dropdownData;
+    if (url) {
+      const payloadSpec = await httpRequest(url, action, queryParams || [], requestBody);
+      const dropdownData = boundary
+        ? // ? jp.query(payloadSpec, dataFetchConfig.dataPath)
+          payloadSpec.TenantBoundary[0].boundary
+        : dataFetchConfig.dataPath.reduce((dropdownData, path) => {
+            dropdownData = [...dropdownData, ...get(payloadSpec, path)];
+            return dropdownData;
+          }, []);
+      const ddData =
+        dropdownData &&
+        dropdownData.reduce((ddData, item) => {
+          let option = { label: item.name, value: item.code };
+          //Only for boundary
+          item.area && (option.area = item.area);
+          ddData.push(option);
+          return ddData;
         }, []);
-    const ddData =
-      dropdownData &&
-      dropdownData.reduce((ddData, item) => {
-        let option = { label: item.name, value: item.code };
-        //Only for boundary
-        item.area && (option.area = item.area);
-        ddData.push(option);
-        return ddData;
-      }, []);
-    dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
+      dispatch(setFieldProperty(formKey, fieldKey, "dropDownData", ddData));
+    }
   } catch (error) {
     const { message } = error;
     dispatch(toggleSnackbarAndSetText(true, message, true));
@@ -527,7 +529,7 @@ export const trimObj = (obj) => {
   if (!Array.isArray(obj) && typeof obj != "object") return obj;
   for (var key in obj) {
     obj[key.trim()] = typeof obj[key] === "string" ? obj[key].trim() : trimObj(obj[key]);
-    if(key==="") delete obj[key];
+    if (key === "") delete obj[key];
   }
   return obj;
 };

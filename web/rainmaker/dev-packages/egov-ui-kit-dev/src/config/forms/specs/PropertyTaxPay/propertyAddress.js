@@ -3,6 +3,7 @@ import filter from "lodash/filter";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
+import { setFieldProperty } from "egov-ui-kit/redux/form/actions";
 
 const formConfig = {
   name: "propertyAddress",
@@ -18,25 +19,6 @@ const formConfig = {
       hintText: "PT_COMMONS_SELECT_PLACEHOLDER",
       numcols: 6,
       dataFetchConfig: {
-        url: CITY.GET.URL,
-        action: CITY.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "tenant",
-                masterDetails: [
-                  {
-                    name: "tenants",
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.tenant.tenants"],
         dependants: [
           {
             fieldKey: "mohalla",
@@ -45,9 +27,14 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
-        dispatch(prepareFormData("Properties[0].address.city", filter(get(state,"common.cities"),(city)=>{
-          return city.code===field.value
-        })[0].name));
+        dispatch(
+          prepareFormData(
+            "Properties[0].address.city",
+            filter(get(state, "common.cities"), (city) => {
+              return city.code === field.value;
+            })[0].name
+          )
+        );
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -107,10 +94,6 @@ const formConfig = {
             "UsageCategoryMajor",
             "UsageCategoryMinor",
             "UsageCategorySubMinor",
-            "Rebate",
-            "Penalty",
-            "Interest",
-            "FireCess",
           ])
         );
       },
@@ -183,7 +166,27 @@ const formConfig = {
       maxLength: 64,
     },
   },
-
+  afterInitForm: (action, store, dispatch) => {
+    try {
+      let state = store.getState();
+      const { cities, citiesByModule } = state.common;
+      const { PT } = citiesByModule;
+      if (PT) {
+        const tenants = PT.tenants;
+        const dd = tenants.reduce((dd, tenant) => {
+          let selected = cities.find((city) => {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch(setFieldProperty("propertyAddress", "city", "dropDownData", dd));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   action: "",
   redirectionRoute: "",
   saveUrl: "",

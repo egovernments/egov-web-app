@@ -10,6 +10,8 @@ var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
 var _mobileNumber;
 
+var _actions = require("egov-ui-kit/redux/form/actions");
+
 var _endPoints = require("egov-ui-kit/utils/endPoints");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28,24 +30,28 @@ var formConfig = {
       errorMessage: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      type: "singleValueList",
-      dataFetchConfig: {
-        url: _endPoints.CITY.GET.URL,
-        action: _endPoints.CITY.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [{
-              moduleName: "tenant",
-              masterDetails: [{
-                name: "tenants"
-              }]
-            }]
-          }
-        },
-        dataPath: ["MdmsRes.tenant.tenants"]
-      }
+      type: "singleValueList"
+      // dataFetchConfig: {
+      //   url: CITY.GET.URL,
+      //   action: CITY.GET.ACTION,
+      //   queryParams: [],
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "tenant",
+      //           masterDetails: [
+      //             {
+      //               name: "tenants",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //   },
+      //   dataPath: ["MdmsRes.tenant.tenants"],
+      // },
     },
     mobileNumber: (_mobileNumber = {
       id: "complainant-mobile-no",
@@ -114,6 +120,30 @@ var formConfig = {
     type: "submit",
     label: "SEARCH",
     id: "search-property"
+  },
+  afterInitForm: function afterInitForm(action, store, dispatch) {
+    try {
+      var state = store.getState();
+      var _state$common = state.common,
+          cities = _state$common.cities,
+          citiesByModule = _state$common.citiesByModule;
+      var PT = citiesByModule.PT;
+
+      if (PT) {
+        var tenants = PT.tenants;
+        var dd = tenants.reduce(function (dd, tenant) {
+          var selected = cities.find(function (city) {
+            return city.code === tenant.code;
+          });
+          dd.push({ label: selected.name, value: selected.code });
+          return dd;
+        }, []);
+        dispatch((0, _actions.setFieldProperty)("searchProperty", "city", "dropDownData", dd));
+      }
+      return action;
+    } catch (e) {
+      console.log(e);
+    }
   },
   action: "_search",
   saveUrl: "/pt-services-v2/property",
