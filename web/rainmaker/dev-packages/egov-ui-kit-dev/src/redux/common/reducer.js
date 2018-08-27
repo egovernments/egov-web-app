@@ -131,13 +131,11 @@ const commonReducer = (state = intialState, action) => {
       };
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
-      const { masterArray } = action;
+      const { masterArray, key } = action;
       const generalMDMSDataById = masterArray.reduce((result, masterName) => {
-        result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], "code");
+        result[masterName] = transformById(action.payload.MdmsRes[action.moduleName][masterName], key ? key : "code");
         return result;
       }, {});
-
-      // const generalMDMSDataById = transformById(action.payload.MdmsRes[action.moduleName][action.masterName], "code");
       return {
         ...state,
         loading: false,

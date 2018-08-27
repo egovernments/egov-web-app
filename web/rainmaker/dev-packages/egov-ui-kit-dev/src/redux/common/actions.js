@@ -82,12 +82,13 @@ export const prepareFormData = (jsonPath, value) => {
   };
 };
 
-export const generalMDMSFetchSuccess = (payload, moduleName, masterArray) => {
+export const generalMDMSFetchSuccess = (payload, moduleName, masterArray, key) => {
   return {
     type: actionTypes.GENERAL_MDMS_FETCH_SUCCESS,
     payload,
     moduleName,
     masterArray,
+    key,
   };
 };
 
@@ -144,12 +145,12 @@ export const fetchEmployeeToAssign = (queryObj, requestBody) => {
   };
 };
 
-export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray) => {
+export const fetchGeneralMDMSData = (requestBody, moduleName, masterArray, key) => {
   return async (dispatch) => {
     try {
       const payload = await httpRequest(MDMS.GET.URL, MDMS.GET.ACTION, [], requestBody);
 
-      dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray));
+      dispatch(generalMDMSFetchSuccess(payload, moduleName, masterArray, key));
     } catch (error) {
       dispatch(generalMDMSFetchError(error.message));
     }

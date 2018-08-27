@@ -53,6 +53,7 @@ class PaymentSuccess extends Component {
 
   componentDidMount = () => {
     const { fetchProperties, fetchReceipts, match, fetchGeneralMDMSData } = this.props;
+    const { tenantId } = match.params;
     const requestBody = {
       MdmsCriteria: {
         tenantId: "pb",
@@ -99,7 +100,6 @@ class PaymentSuccess extends Component {
     this.convertImgToDataURLviaCanvas(
       this.createImageUrl(match.params.tenantId),
       function(data) {
-        console.log(this);
         this.setState({ imageUrl: data });
       }.bind(this)
     );
@@ -187,7 +187,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchProperties: (queryObject) => dispatch(fetchProperties(queryObject)),
     fetchReceipts: (queryObject) => dispatch(fetchReceipts(queryObject)),
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
+    fetchGeneralMDMSData: (requestBody, moduleName, masterName, key) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName, key)),
   };
 };
 export default connect(

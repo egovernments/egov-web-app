@@ -11,7 +11,6 @@ var app = function app(store) {
     return function (action) {
       var type = action.type;
 
-
       if (type === _actionTypes.SHOW_TOAST) {
         var state = store.getState();
         var toast = state.app.toast;

@@ -13,10 +13,10 @@ class PaymentModes extends Component {
   FormDetails = ({ item }) => {
     return (
       <div className="payment-filled-details">
-        {item.forms.map((form) => {
+        {item.forms.map((form, index) => {
           const { title, comp: TransactionForm, className } = form;
           return (
-            <div className={className}>
+            <div className={className} key={index}>
               <span className="mode-title">{title}</span>
               <TransactionForm onIconClick={this.onIconClick} />
             </div>
@@ -55,7 +55,7 @@ class PaymentModes extends Component {
           if (payload === "Not Found") {
             handleFieldChange(formKey, "BankName", "");
             handleFieldChange(formKey, "BankBranch", "");
-            toggleSnackbarAndSetText(true, `Bankdetails  not found for this IFSC`, true);
+            toggleSnackbarAndSetText(true, `Bankdetails not found for this IFSC`, true);
           } else {
             setFieldProperty(formKey, "BankName", "hideField", false);
             setFieldProperty(formKey, "BankBranch", "hideField", false);
@@ -96,7 +96,6 @@ class PaymentModes extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state && state.form && state.form.paymentModes && state.form.paymentModes.fields.mode.value);
   const currentPaymentMode = (state && state.form && state.form.paymentModes && state.form.paymentModes.fields.mode.value) || "cash";
   const ifscCode = get(state, `form${currentPaymentMode === "Cheque" ? "[chequeInfo]" : "[demandInfo]"}.fields.ifscCode.value`);
   const formKey = currentPaymentMode === "Cheque" ? "chequeInfo" : "demandInfo";

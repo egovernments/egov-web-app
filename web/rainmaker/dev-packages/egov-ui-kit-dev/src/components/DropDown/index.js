@@ -64,6 +64,7 @@ const DropDownUi = ({
   autoWidth,
   toolTipMessage,
   updateDependentFields,
+  beforeFieldChange,
   ...rest
 }) => {
   const renderSelectMenuItems = () => {

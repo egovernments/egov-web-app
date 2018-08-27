@@ -9,7 +9,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
   const { fireCess, intrest, penalty, rebate } = importantDates;
 
   return (
-    <Card style={{ marginBottom: 20, "background-color": "white" }} initiallyExpanded={true}>
+    <Card style={{ marginBottom: 20, backgroundColor: "white" }} initiallyExpanded={true}>
       <CardHeader
         className="tax-calculation-card-header"
         actAsExpander={true}

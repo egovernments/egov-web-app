@@ -1,4 +1,5 @@
-import { removeForm } from "egov-ui-kit/redux/form/actions";
+import { removeForm, setFieldProperty } from "egov-ui-kit/redux/form/actions";
+import { toggleSnackbarAndSetText } from "egov-ui-kit/redux/app/actions";
 
 const formConfig = {
   name: "paymentModes",
@@ -17,11 +18,34 @@ const formConfig = {
         { label: "Credit/Debit Card", value: "Card" },
       ],
       value: "Cash",
-      updateDependentFields: ({ formKey, field, dispatch, state }) => {
+      beforeFieldChange: ({ dispatch, state, action }) => {
         const allFormkeys = ["demandInfo", "chequeInfo", "cardInfo", "cashInfo"];
-        allFormkeys.forEach((item) => {
-          dispatch(removeForm(item));
+        const formKeysInRedux = state && state.form && Object.keys(state.form);
+        let formsToRemove = [];
+        switch (action.value) {
+          case "Cash":
+            formsToRemove.push("demandInfo", "chequeInfo", "cardInfo");
+            break;
+          case "DD":
+            formsToRemove.push("chequeInfo", "cardInfo");
+            break;
+          case "Cheque":
+            formsToRemove.push("demandInfo", "cardInfo");
+            break;
+          case "Card":
+            formsToRemove.push("demandInfo", "chequeInfo");
+            break;
+          default:
+            formsToRemove.push("demandInfo", "chequeInfo", "cardInfo");
+            break;
+        }
+        formsToRemove.forEach((item) => {
+          if (formKeysInRedux.indexOf(item) > -1) {
+            dispatch(removeForm(item));
+          }
         });
+        dispatch(toggleSnackbarAndSetText(false, "", false));
+        return action;
       },
     },
   },

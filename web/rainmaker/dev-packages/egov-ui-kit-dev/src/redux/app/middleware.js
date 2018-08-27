@@ -2,7 +2,6 @@ import { SHOW_TOAST } from "./actionTypes";
 
 const app = (store) => (next) => (action) => {
   const { type } = action;
-
   if (type === SHOW_TOAST) {
     const state = store.getState();
     const { toast } = state.app;

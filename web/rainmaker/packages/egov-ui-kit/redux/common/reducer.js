@@ -130,14 +130,13 @@ var commonReducer = function commonReducer() {
       });
 
     case commonTypes.GENERAL_MDMS_FETCH_SUCCESS:
-      var masterArray = action.masterArray;
+      var masterArray = action.masterArray,
+          key = action.key;
 
       var generalMDMSDataById = masterArray.reduce(function (result, masterName) {
-        result[masterName] = (0, _commons.transformById)(action.payload.MdmsRes[action.moduleName][masterName], "code");
+        result[masterName] = (0, _commons.transformById)(action.payload.MdmsRes[action.moduleName][masterName], key ? key : "code");
         return result;
       }, {});
-
-      // const generalMDMSDataById = transformById(action.payload.MdmsRes[action.moduleName][action.masterName], "code");
       return (0, _extends4.default)({}, state, {
         loading: false,
         generalMDMSDataById: generalMDMSDataById

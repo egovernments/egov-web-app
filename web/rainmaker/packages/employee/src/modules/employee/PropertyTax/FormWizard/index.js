@@ -864,6 +864,12 @@ class FormWizard extends Component {
         "Receipt[0].instrument.transactionDateInput",
         this.changeDateToFormat(get(prepareFormData, "Receipt[0].instrument.transactionDateInput"))
       );
+    get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate") &&
+      set(
+        prepareFormData,
+        "Receipt[0].Bill[0].billDetails[0].manualReceiptDate",
+        this.changeDateToFormat(get(prepareFormData, "Receipt[0].Bill[0].billDetails[0].manualReceiptDate"))
+      );
     set(prepareFormData, "Receipt[0].instrument.amount", this.state.totalAmountToBePaid);
     set(prepareFormData, "Receipt[0].tenantId", get(prepareFormData, "Receipt[0].Bill[0].tenantId"));
     const formData = {
