@@ -311,11 +311,13 @@ class FormWizard extends Component {
       });
     }
     const customTitle = isReassesment
-      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
+      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
     const assessmentId = getQueryValue(search, "assessmentId") || fetchFromLocalStorage("draftId");
     const isFreshAssesment = getQueryValue(search, "type");
-    await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+    if (assessmentId) {
+      await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
+    }
     this.addOwner(true);
     const documentTypeMdms = await getDocumentTypes();
     if (!!documentTypeMdms) fetchMDMDDocumentTypeSuccess(documentTypeMdms);

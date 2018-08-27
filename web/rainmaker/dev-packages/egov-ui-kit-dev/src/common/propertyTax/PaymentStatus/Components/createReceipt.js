@@ -129,7 +129,7 @@ const createReceiptUIInfo = (property, receiptDetails, cities, totalAmountToPay,
         value: property.oldPropertyId,
       },
       {
-        key: "Property Tax Assessment ID:",
+        key: "Property Tax Unique ID:",
         value: property.propertyId,
       },
       {

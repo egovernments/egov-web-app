@@ -364,7 +364,6 @@ class FormWizard extends Component {
         "Interest",
         "FireCess",
       ]);
-
       await this.fetchDraftDetails(assessmentId, isReassesment, draftUuid);
     }
     const documentTypeMdms = await getDocumentTypes();
@@ -378,7 +377,7 @@ class FormWizard extends Component {
       });
     }
     const customTitle = isReassesment
-      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Assessment ID - ${propertyId}`
+      ? `Property Assessment (${financialYearFromQuery}) : Property Tax Unique ID - ${propertyId}`
       : `Property Assessment (${financialYearFromQuery}) : New Property`;
 
     renderCustomTitleForPt(customTitle);

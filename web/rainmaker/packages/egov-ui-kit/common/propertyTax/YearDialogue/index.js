@@ -127,7 +127,6 @@ var YearDialog = function (_Component) {
           removeForm = _props.removeForm,
           urlToAppend = _props.urlToAppend;
 
-      console.log(urlToAppend);
       return getYearList ? _react2.default.createElement(_components.Dialog, {
         open: open,
         children: [_react2.default.createElement(

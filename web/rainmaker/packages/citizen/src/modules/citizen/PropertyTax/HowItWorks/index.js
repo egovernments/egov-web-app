@@ -37,11 +37,11 @@ class HowItWorks extends Component {
       ],
     },
     {
-      question: "What is the difference between Existing Property ID & Property Tax Assessment ID?",
+      question: "What is the difference between Existing Property ID & Property Tax Unique ID?",
       answer: [
         {
           text:
-            "Existing Property ID has been assigned to you by your local municipal government prior to your using this platform to pay your Property Taxes. Property Tax Assessment ID is a new ID being assigned to identify your property. ",
+            "Existing Property ID has been assigned to you by your local municipal government prior to your using this platform to pay your Property Taxes. Property Tax Unique ID is a new ID being assigned to identify your property. ",
         },
       ],
     },

@@ -190,7 +190,7 @@ const generateReceipt = (role, details, generalMDMSDataById, receiptImageUrl, is
                 [
                   { text: "Existing Property ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.existingPropertyId || "NA", border: borderValue },
-                  { text: "Property Tax Assessment ID:", border: borderKey, style: "receipt-table-key" },
+                  { text: "Property Tax Unique ID:", border: borderKey, style: "receipt-table-key" },
                   { text: details.propertyId || "", border: borderValue }, //need to confirm this data
                   { text: "Assessment No:", border: borderKey, style: "receipt-table-key" },
                   { text: propertyDetails[0].assessmentNumber || "", border: borderValue },

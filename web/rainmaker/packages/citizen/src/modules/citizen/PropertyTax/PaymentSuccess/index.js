@@ -91,7 +91,6 @@ class PaymentSuccess extends Component {
     this.convertImgToDataURLviaCanvas(
       this.createImageUrl(match.params.tenantId),
       function(data) {
-        console.log(this);
         this.setState({ imageUrl: data });
       }.bind(this)
     );
@@ -102,7 +101,6 @@ class PaymentSuccess extends Component {
   };
 
   convertImgToDataURLviaCanvas = (url, callback, outputFormat) => {
-    console.log(url);
     var img = new Image();
     img.crossOrigin = "Anonymous";
     img.onload = function() {
@@ -126,7 +124,6 @@ class PaymentSuccess extends Component {
   render() {
     const { generalMDMSDataById, match } = this.props;
     const { imageUrl } = this.state;
-    console.log(imageUrl);
     return (
       <Screen>
         <PaymentStatus

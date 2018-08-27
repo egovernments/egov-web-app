@@ -63,7 +63,6 @@ class YearDialog extends Component {
 
   render() {
     let { open, closeDialogue, getYearList, history, form, removeForm, urlToAppend } = this.props;
-    console.log(urlToAppend);
     return getYearList ? (
       <Dialog
         open={open}

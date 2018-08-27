@@ -12,7 +12,7 @@ const ReceiptItems = ({ items, propertyTaxAssessmentID, history, onButtonClick }
           <Icon action="action" name="assignment" color="#767676" />
           <Label
             bold={true}
-            label={`Property Tax Assessment ID.: ${propertyTaxAssessmentID}`}
+            label={`Property Tax Unique ID.: ${propertyTaxAssessmentID}`}
             containerStyle={{ marginLeft: "13px" }}
             labelStyle={{ letterSpacing: 0 }}
             color="#767676"
