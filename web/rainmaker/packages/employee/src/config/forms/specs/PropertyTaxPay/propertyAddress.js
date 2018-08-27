@@ -141,8 +141,19 @@ const formConfig = {
   afterInitForm: (action, store, dispatch) => {
     let tenantId = JSON.parse(localStorage.getItem("user-info")).tenantId;
     let city = JSON.parse(localStorage.getItem("user-info")).permanentAddress;
-    dispatch(handleFieldChange("propertyAddress", "city", tenantId));
-    dispatch(prepareFormData("Properties[0].address.city", city));
+    let state = store.getState();
+    const { citiesByModule } = state.common;
+    const { PT } = citiesByModule || {};
+    if (PT) {
+      const tenants = PT.tenants;
+      let found = tenants.find((city) => {
+        return city.code === tenantId;
+      });
+      if (found) {
+        dispatch(handleFieldChange("propertyAddress", "city", tenantId));
+        dispatch(prepareFormData("Properties[0].address.city", city));
+      }
+    }
     return action;
   },
   action: "",
