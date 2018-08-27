@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Dashboard } from "modules/common";
 import { connect } from "react-redux";
-import { fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 
 class LandingPage extends Component {
   state = { mdmsResponse: {}, dialogueOpen: false };
@@ -16,34 +15,14 @@ class LandingPage extends Component {
       dialogueOpen: false,
     });
   };
-  componentDidMount = () => {
-    const { fetchGeneralMDMSData } = this.props;
-    const requestBody = {
-      MdmsCriteria: {
-        tenantId: "pb",
-        moduleDetails: [
-          {
-            moduleName: "tenant",
-            masterDetails: [
-              {
-                name: "citymodule",
-              },
-            ],
-          },
-        ],
-      },
-    };
-    fetchGeneralMDMSData(requestBody, "tenant", ["citymodule"]);
-  };
 
-  getModuleItems = (generalMDMSDataById) => {
-    const cityModule = (generalMDMSDataById && generalMDMSDataById.citymodule) || [];
+  getModuleItems = (citiesByModule) => {
     const { moduleData } = this;
     return (
-      cityModule &&
-      Object.keys(cityModule).reduce((acc, item) => {
+      citiesByModule &&
+      Object.keys(citiesByModule).reduce((acc, item) => {
         acc.push({
-          cities: cityModule[item].tenants.map((item) => {
+          cities: citiesByModule[item].tenants.map((item) => {
             return item.code;
           }),
           ...moduleData[item],
@@ -83,9 +62,9 @@ class LandingPage extends Component {
   };
 
   render() {
-    const { history, name, generalMDMSDataById } = this.props;
+    const { history, name, citiesByModule } = this.props;
     const { getModuleItems, onPGRClick, onDialogueClose } = this;
-    const moduleItems = getModuleItems(generalMDMSDataById) || [];
+    const moduleItems = getModuleItems(citiesByModule) || [];
     return (
       <Dashboard
         moduleItems={moduleItems}
@@ -101,19 +80,14 @@ class LandingPage extends Component {
 
 const mapStateToProps = (state) => {
   const { auth, common } = state;
-  const { generalMDMSDataById } = common || {};
+  const { citiesByModule } = common || {};
   const { userInfo } = auth;
   const name = userInfo && userInfo.name;
 
-  return { name, generalMDMSDataById };
+  return { name, citiesByModule };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchGeneralMDMSData: (requestBody, moduleName, masterName) => dispatch(fetchGeneralMDMSData(requestBody, moduleName, masterName)),
-  };
-};
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(LandingPage);

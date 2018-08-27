@@ -223,6 +223,10 @@ const getAddressInfo = (addressObj, extraItems) => {
             key: "Mohalla:",
             value: addressObj.locality.name || "NA",
           },
+          {
+            key: "City:",
+            value: addressObj.city || "NA",
+          },
           ...extraItems,
         ],
       },

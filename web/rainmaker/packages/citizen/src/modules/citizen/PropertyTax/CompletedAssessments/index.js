@@ -12,7 +12,6 @@ import { getCompletedTransformedItems } from "../common/TransformedAssessments";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
 import { fetchProperties, getAssesmentsandStatus } from "egov-ui-kit/redux/properties/actions";
 import orderby from "lodash/orderBy";
-import { getFetchGeneralMDMSData } from "egov-ui-kit/utils/PTCommon";
 
 const innerDivStyle = {
   paddingTop: "16px",

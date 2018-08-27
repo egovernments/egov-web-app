@@ -236,6 +236,10 @@ const getAddressInfo = (addressObj, extraItems) => {
             key: "Mohalla:",
             value: addressObj.locality.name || "NA",
           },
+          {
+            key: "City:",
+            value: addressObj.city || "NA",
+          },
           ...extraItems,
         ],
       },
@@ -365,11 +369,7 @@ const mapStateToProps = (state, ownProps) => {
   const latestPropertyDetails = getLatestPropertyDetails(selPropertyDetails.propertyDetails);
   const propertyCity =
     cities && selPropertyDetails && selPropertyDetails.address && cities.filter((item) => item.key === selPropertyDetails.address.city);
-  const addressInfo =
-    getAddressInfo(selPropertyDetails.address, [
-      { key: "City:", value: (propertyCity && propertyCity[0] && propertyCity[0].name) || "NA" },
-      { key: "Property ID:", value: selPropertyDetails.propertyId },
-    ]) || [];
+  const addressInfo = getAddressInfo(selPropertyDetails.address, [{ key: "Property ID:", value: selPropertyDetails.propertyId }]) || [];
   const assessmentInfoKeys = [
     { masterName: "Floor", dataKey: "floorNo" },
     { masterName: "UsageCategoryMajor", dataKey: "usageCategoryMajor" },
