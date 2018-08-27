@@ -85,13 +85,12 @@ class FormWizard extends Component {
       try {
         let draftResponse = await httpRequest("pt-services-v2/drafts/_create", "_cretae", [], draftRequest);
         const draftInfo = draftResponse.drafts[0];
-
         this.updateDraftinLocalStorage(draftInfo);
       } catch (e) {
         alert(e);
       }
     } else {
-      const assessmentNo = draftRequest.draft.assessmentNumber || assessmentNumber;
+      const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
       draftRequest.draft.draftRecord = {
         selectedTabIndex: assessmentNumber ? selected : selected + 1,
         ...form,

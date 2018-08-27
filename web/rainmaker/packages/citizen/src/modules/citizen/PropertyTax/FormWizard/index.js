@@ -87,7 +87,7 @@ class FormWizard extends Component {
         alert(e);
       }
     } else {
-      const assessmentNo = draftRequest.draft.assessmentNumber || assessmentNumber;
+      const assessmentNo = assessmentNumber || draftRequest.draft.assessmentNumber;
       draftRequest.draft = {
         ...draftRequest.draft,
         assessmentNumber: assessmentNo,
