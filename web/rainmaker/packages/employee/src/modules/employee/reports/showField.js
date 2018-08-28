@@ -7,6 +7,8 @@ import Checkbox from "material-ui/Checkbox";
 import { translate } from "./commons/common";
 import AutoComplete from "material-ui/AutoComplete";
 import Label from "egov-ui-kit/utils/translationNode";
+import UiBoundary from "./components/boundary";
+import boundaryConfig from "./commons/config";
 
 export default class ShowField extends Component {
   constructor(props) {
@@ -268,6 +270,13 @@ export default class ShowField extends Component {
               checked={obj.value ? obj.value : false}
               onCheck={(e) => this.props.handler({ target: { value: e.target.checked } }, obj.name, obj.isMandatory ? true : false, "")}
             />
+          </Col>
+        );
+
+      case "boundarylist":
+        return (
+          <Col xs={12} sm={12} md={12} lg={12}>
+            <UiBoundary item={boundaryConfig} handleFieldChange={this.props.handler} />
           </Col>
         );
 
