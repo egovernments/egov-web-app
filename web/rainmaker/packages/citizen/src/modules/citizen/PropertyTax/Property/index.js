@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import Label from "egov-ui-kit/utils/translationNode";
 import { getCommaSeperatedAddress } from "egov-ui-kit/utils/commons";
 import { getLatestPropertyDetails } from "egov-ui-kit/utils/PTCommon";
-import YearDialogue from "../common/YearDialogue";
-import AssessmentList from "../common/AssessmentList";
+import { AssessmentList, YearDialogue } from "modules/common";
 import { Screen } from "modules/common";
 import { Icon, BreadCrumbs, Button } from "components";
 import { addBreadCrumbs } from "egov-ui-kit/redux/app/actions";
@@ -181,7 +180,7 @@ class Property extends Component {
   };
 
   render() {
-    const { urls, location, history } = this.props;
+    const { urls, location, history, generalMDMSDataById } = this.props;
     const { closeYearRangeDialogue } = this;
     const { dialogueOpen, urlToAppend } = this.state;
     let urlArray = [];
@@ -200,6 +199,7 @@ class Property extends Component {
             innerDivStyle={innerDivStyle}
             listItemStyle={listItemStyle}
             history={history}
+            generalMDMSDataById={generalMDMSDataById && generalMDMSDataById}
           />
         }
         {dialogueOpen && <YearDialogue open={dialogueOpen} history={history} urlToAppend={urlToAppend} closeDialogue={closeYearRangeDialogue} />}
@@ -387,7 +387,17 @@ const mapStateToProps = (state, ownProps) => {
   const customTitle = selPropertyDetails && selPropertyDetails.address && getCommaSeperatedAddress(selPropertyDetails.address, cities);
   const completedAssessments = getCompletedTransformedItems(singleAssessmentByStatus, cities, localizationLabels);
   const sortedAssessments = completedAssessments && orderby(completedAssessments, ["epocDate"], ["desc"]);
-  return { urls, propertyItems, propertyId, tenantId, customTitle, latestPropertyDetails, selPropertyDetails, sortedAssessments };
+  return {
+    urls,
+    propertyItems,
+    propertyId,
+    tenantId,
+    customTitle,
+    latestPropertyDetails,
+    selPropertyDetails,
+    sortedAssessments,
+    generalMDMSDataById,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

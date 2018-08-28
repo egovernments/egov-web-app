@@ -41,6 +41,7 @@ import UploadDrawer from "egov-ui-kit/common/User/components/UploadDrawer";
 //Pt common components
 import AssessPay from "egov-ui-kit/common/propertyTax/AssessPay";
 import AssessmentList from "egov-ui-kit/common/propertyTax/AssessmentList";
+import YearDialogue from "egov-ui-kit/common/propertyTax/YearDialogue";
 
 export {
   Banner,
@@ -79,4 +80,5 @@ export {
   AssessPay,
   Dashboard,
   AssessmentList,
+  YearDialogue,
 };

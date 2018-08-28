@@ -24,32 +24,13 @@ var _translationNode = require("egov-ui-kit/utils/translationNode");
 
 var _translationNode2 = _interopRequireDefault(_translationNode);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var columnData = [
-  { id: "index", numeric: true, disablePadding: false, label: "S.No" },
-  { id: "name", numeric: false, disablePadding: true, label: "Owner Name" },
-  {
-    id: "propertyId",
-    numeric: false,
-    disablePadding: false,
-    label: "Property Tax Unique ID"
-  },
-  {
-    id: "oldPropertyId",
-    numeric: false,
-    disablePadding: false,
-    label: "Existing Property ID"
-  },
-  { id: "address", numeric: false, disablePadding: false, label: "Address" },
-  { id: "action", numeric: false, disablePadding: false, label: "Action" }
-];
+var columnData = [{ id: "index", numeric: true, disablePadding: false, label: "S.No" }, { id: "name", numeric: false, disablePadding: true, label: "Owner Name" }, { id: "propertyId", numeric: false, disablePadding: false, label: "Property Tax Unique ID" }, { id: "oldPropertyId", numeric: false, disablePadding: false, label: "Existing Property ID" }, { id: "address", numeric: false, disablePadding: false, label: "Address" }, { id: "action", numeric: false, disablePadding: false, label: "Action" }];
 
 var PropertyTable = function PropertyTable(_ref) {
   var tableData = _ref.tableData,
-    onActionClick = _ref.onActionClick;
+      onActionClick = _ref.onActionClick;
 
   return _react2.default.createElement(
     "div",
@@ -75,11 +56,7 @@ var PropertyTable = function PropertyTable(_ref) {
           orderby: "index",
           columnData: columnData,
           rowData: tableData,
-          ActionOnRow: _react2.default.createElement(_Button2.default, {
-            className: "search-table-assess-pay-btn",
-            label: "PT_PAYMENT_ASSESS_AND_PAY",
-            onClick: onActionClick
-          })
+          ActionOnRow: _react2.default.createElement(_Button2.default, { className: "search-table-assess-pay-btn", label: "PT_PAYMENT_ASSESS_AND_PAY", onClick: onActionClick })
         })
       )
     })

@@ -47,12 +47,13 @@ const getTaxInfo = (billAccountDetails, totalAmount, localizationLabels) => {
       taxHeadContent &&
         taxHeadContent[0] &&
         result[1].push({
-          text:
-            taxHeadContent[0] && taxHeadContent[0].crAmountToBePaid
-              ? negativeHeaders.indexOf(taxHeadContent[0].accountDescription.split("-")[0]) > -1
-                ? `-${taxHeadContent[0].crAmountToBePaid}`
-                : taxHeadContent[0].crAmountToBePaid
-              : "0",
+          text: taxHeadContent[0]
+            ? taxHeadContent[0].debitAmount
+              ? `-${taxHeadContent[0].debitAmount}`
+              : taxHeadContent[0].crAmountToBePaid
+                ? taxHeadContent[0].crAmountToBePaid
+                : "0"
+            : "NA",
         });
       return result;
     },
