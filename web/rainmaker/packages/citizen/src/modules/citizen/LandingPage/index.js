@@ -41,7 +41,7 @@ class LandingPage extends Component {
       button2: "How it works?",
       borderLeftColor: { borderLeft: "4px solid #a5d6a7" },
       iconAction: "custom",
-      iconName: "dashboard-complaint",
+      iconName: "dashboard-propertytax",
       iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
       className: "pgr-landing-card",
       //cities :
@@ -54,7 +54,7 @@ class LandingPage extends Component {
       borderLeftColor: { borderLeft: "4px solid #ef9a9a" },
       iconAction: "custom",
       route: "property-tax",
-      iconName: "dashboard-propertytax",
+      iconName: "dashboard-complaint",
       iconStyle: { width: "90px", height: "120px", marginTop: "15px", fill: "#767676" },
       className: "pt-landing-card",
       // cities :
