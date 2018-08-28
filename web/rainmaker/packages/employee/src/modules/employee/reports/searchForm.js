@@ -216,7 +216,7 @@ class ShowForm extends Component {
       if (!_.isEmpty(JSON.parse(localStorage.getItem("searchCriteria")))) {
         this.search(null, true, nextProps.metaData.reportDetails.reportName);
       } else if (needDefaultSearch) {
-        this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName);
+        this.defautSearch(null, false, nextProps.metaData.reportDetails.reportName, nextProps.match.params.moduleName);
       }
     }
   }
@@ -248,7 +248,7 @@ class ShowForm extends Component {
       metaData.reportDetails.searchParams.filter((field) => field.displayOnly).map((field) => field.name)
     );
   };
-  defautSearch = (e = null, isDrilldown = false, rptName) => {
+  defautSearch = (e = null, isDrilldown = false, rptName, moduleName) => {
     if (e) {
       e.preventDefault();
     }
@@ -280,7 +280,7 @@ class ShowForm extends Component {
       let searchParams = [];
 
       clearReportHistory();
-      let resulturl = getResultUrl(this.state.moduleName);
+      let resulturl = getResultUrl(moduleName);
       let response =
         resulturl &&
         commonApiPost(resulturl, {}, { tenantId: tenantId, reportName: rptName || this.state.reportName, searchParams }).then(
