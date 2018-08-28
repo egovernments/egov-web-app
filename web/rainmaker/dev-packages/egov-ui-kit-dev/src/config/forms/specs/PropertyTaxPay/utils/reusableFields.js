@@ -1,4 +1,4 @@
-import { CITY } from "egov-ui-kit/utils/endPoints";
+import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import { setDependentFields } from "./enableDependentFields";
 import { removeFormKey } from "./removeFloors";
@@ -231,7 +231,6 @@ export const beforeInitForm = {
     var usageCategoryMinor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     var usageCategoryMajor = get(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
     set(action, "form.fields.subUsageType.hideField", false);
-    //For adding multiple units to prepareFormData
 
     const unitFormUpdate = (usageCategoryMinor, skipMajorUpdate = true) => {
       var filteredSubUsageMinor = filter(
@@ -246,11 +245,9 @@ export const beforeInitForm = {
           filteredSubUsageMinor,
           "usageCategorySubMinor"
         );
-        set(
-          action,
-          "form.fields.subUsageType.dropDownData",
-          mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
-        );
+        const mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+        const subUsageData = sortDropdown(mergedMaster, "label", true);
+        set(action, "form.fields.subUsageType.dropDownData", subUsageData);
         if (get(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch(
             prepareFormData(
@@ -274,7 +271,8 @@ export const beforeInitForm = {
         var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
         var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
         set(action, "form.fields.usageType.disabled", false);
-        set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+        const usageTypeData = sortDropdown(filterArrayWithoutMixed, "label", true);
+        set(action, "form.fields.usageType.dropDownData", usageTypeData);
         unitFormUpdate(`common.prepareFormData.${action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0]}usageCategoryMinor`, false);
       } else {
         set(action, "form.fields.subUsageType.hideField", true);
@@ -322,11 +320,9 @@ export const beforeInitFormForPlot = {
             filteredSubUsageMinor,
             "usageCategorySubMinor"
           );
-          set(
-            action,
-            "form.fields.subUsageType.dropDownData",
-            mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor")
-          );
+          const mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+          const subUsageData = sortDropdown(mergedMaster, "label", true);
+          set(action, "form.fields.subUsageType.dropDownData", subUsageData);
           // set(
           //   action,
           //   "form.fields.subUsageType.value",
@@ -350,7 +346,8 @@ export const beforeInitFormForPlot = {
           var usageTypes = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
           var filterArrayWithoutMixed = filter(usageTypes, (item) => item.value !== "MIXED");
           set(action, "form.fields.usageType.disabled", false);
-          set(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+          const usageTypeData = sortDropdown(filterArrayWithoutMixed, "label", true);
+          set(action, "form.fields.usageType.dropDownData", usageTypeData);
         }
         set(action, "form.fields.subUsageType.hideField", true);
       }

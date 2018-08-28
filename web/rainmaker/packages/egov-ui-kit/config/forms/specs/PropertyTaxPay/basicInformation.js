@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
@@ -92,7 +92,9 @@ var formConfig = {
       localStorage.setItem("previousFloorNo", -1);
       var masterOne = (0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryMajor");
       var masterTwo = (0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryMinor");
-      (0, _set2.default)(action, "form.fields.typeOfUsage.dropDownData", mergeMaster(masterOne, masterTwo, "usageCategoryMajor"));
+      var mergedMaster = mergeMaster(masterOne, masterTwo, "usageCategoryMajor");
+      var typeOfUsageSorted = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+      (0, _set2.default)(action, "form.fields.typeOfUsage.dropDownData", typeOfUsageSorted);
       masterOne = (0, _get2.default)(state, "common.generalMDMSDataById.PropertyType");
       masterTwo = (0, _get2.default)(state, "common.generalMDMSDataById.PropertySubType");
       (0, _set2.default)(action, "form.fields.typeOfBuilding.dropDownData", mergeMaster(masterOne, masterTwo, "propertyType"));

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _get = require("lodash/get");
 
@@ -41,4 +41,62 @@ var getLatestPropertyDetails = exports.getLatestPropertyDetails = function getLa
 
 var getQueryValue = exports.getQueryValue = function getQueryValue(query, key) {
   return (0, _get2.default)(_queryString2.default.parse(query), key, undefined);
+};
+
+var findCorrectDateObj = exports.findCorrectDateObj = function findCorrectDateObj(financialYear, category) {
+  category.sort(function (a, b) {
+    var yearOne = a.fromFY && a.fromFY.slice(0, 4);
+    var yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+    if (yearOne < yearTwo) {
+      return 1;
+    } else return -1;
+  });
+  var assessYear = financialYear && financialYear.slice(0, 4);
+  var chosenDateObj = {};
+  var categoryYear = category.reduce(function (categoryYear, item) {
+    var year = item.fromFY && item.fromFY.slice(0, 4);
+    categoryYear.push(year);
+    return categoryYear;
+  }, []);
+  var index = categoryYear.indexOf(assessYear);
+  if (index > -1) {
+    chosenDateObj = category[index];
+  } else {
+    for (var i = 0; i < categoryYear.length; i++) {
+      if (assessYear > categoryYear[i]) {
+        chosenDateObj = category[i];
+        break;
+      }
+    }
+  }
+  var month = null;
+  if (chosenDateObj.startingDay) {
+    month = getMonth(chosenDateObj.startingDay);
+    if (month === 1 || month === 2 || month === 3) {
+      chosenDateObj.startingDay = chosenDateObj.startingDay + ("/" + ++assessYear);
+    } else {
+      chosenDateObj.startingDay = chosenDateObj.startingDay + ("/" + assessYear);
+    }
+  } else if (chosenDateObj.endingDay) {
+    month = getMonth(chosenDateObj.endingDay);
+    if (month === 1 || month === 2 || month === 3) {
+      chosenDateObj.endingDay = chosenDateObj.endingDay + ("/" + ++assessYear);
+    } else {
+      chosenDateObj.endingDay = chosenDateObj.endingDay + ("/" + assessYear);
+    }
+  }
+  return chosenDateObj;
+};
+
+var getMonth = function getMonth(date) {
+  return parseInt(date.split("/")[1]);
+};
+
+var sortDropdown = exports.sortDropdown = function sortDropdown(data, sortBy, isAscending) {
+  var sortedData = data.slice().sort(function (a, b) {
+    var textA = a[sortBy].toUpperCase();
+    var textB = b[sortBy].toUpperCase();
+    return isAscending ? textA < textB ? -1 : textA > textB ? 1 : 0 : textA < textB ? 1 : textA > textB ? -1 : 0;
+  });
+  return sortedData;
 };

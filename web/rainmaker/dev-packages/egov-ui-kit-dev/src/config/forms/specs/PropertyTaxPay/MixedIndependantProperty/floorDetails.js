@@ -1,7 +1,17 @@
-import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { sortDropdown } from "egov-ui-kit/utils/PTCommon";
 import { setDependentFields } from "../utils/enableDependentFields";
 import { prepareFormData } from "egov-ui-kit/redux/common/actions";
-import { subUsageType, occupancy, builtArea, annualRent, beforeInitForm,mergeMaster,prepareDropDownData,getPresentMasterObj,getAbsentMasterObj } from "../utils/reusableFields";
+import {
+  subUsageType,
+  occupancy,
+  builtArea,
+  annualRent,
+  beforeInitForm,
+  mergeMaster,
+  prepareDropDownData,
+  getPresentMasterObj,
+  getAbsentMasterObj,
+} from "../utils/reusableFields";
 import filter from "lodash/filter";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -35,14 +45,16 @@ const formConfig = {
               "usageCategorySubMinor"
             );
             setDependentFields(["subUsageType"], dispatch, formKey, false);
-            setDependentFields(["subUsageType"], dispatch, formKey, mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"),"dropDownData");
+            const mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+            const subUsageData = sortDropdown(mergedMaster, "label", true);
+            setDependentFields(["subUsageType"], dispatch, formKey, subUsageData, "dropDownData");
           }
         } else {
           setDependentFields(["subUsageType"], dispatch, formKey, true);
           dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMajor`, field.value));
           dispatch(prepareFormData(`${field.jsonPath.split("usageCategoryMinor")[0]}usageCategoryMinor`, null));
         }
-      }
+      },
     },
     ...subUsageType,
     ...occupancy,

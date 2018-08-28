@@ -8,7 +8,7 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _enableDependentFields = require("../utils/enableDependentFields");
 
@@ -60,7 +60,9 @@ var formConfig = (0, _extends3.default)({
           if (filteredSubUsageMinor.length > 0) {
             var filteredUsageCategoryDetails = (0, _reusableFields.getPresentMasterObj)((0, _reusableFields.prepareDropDownData)((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
             (0, _enableDependentFields.setDependentFields)(["subUsageType"], dispatch, formKey, false);
-            (0, _enableDependentFields.setDependentFields)(["subUsageType"], dispatch, formKey, (0, _reusableFields.mergeMaster)(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"), "dropDownData");
+            var mergedMaster = (0, _reusableFields.mergeMaster)(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+            var subUsageData = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+            (0, _enableDependentFields.setDependentFields)(["subUsageType"], dispatch, formKey, subUsageData, "dropDownData");
           }
         } else {
           (0, _enableDependentFields.setDependentFields)(["subUsageType"], dispatch, formKey, true);

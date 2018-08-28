@@ -27,7 +27,7 @@ import formHoc from "egov-ui-kit/hocs/form";
 import { validateForm } from "egov-ui-kit/redux/form/utils";
 import { displayFormErrors } from "egov-ui-kit/redux/form/actions";
 import { httpRequest } from "egov-ui-kit/utils/api";
-import { getQueryValue } from "egov-ui-kit/utils/PTCommon";
+import { getQueryValue, findCorrectDateObj } from "egov-ui-kit/utils/PTCommon";
 import get from "lodash/get";
 import set from "lodash/set";
 import { fetchFromLocalStorage, trimObj } from "egov-ui-kit/utils/commons";
@@ -367,10 +367,10 @@ class FormWizard extends Component {
       });
       if (ImpDatesResponse && ImpDatesResponse.MdmsRes.PropertyTax) {
         const { Interest, FireCess, Rebate, Penalty } = ImpDatesResponse.MdmsRes.PropertyTax;
-        const intrest = this.findCorrectDateObj(financialYearFromQuery, Interest);
-        const fireCess = this.findCorrectDateObj(financialYearFromQuery, FireCess);
-        const rebate = this.findCorrectDateObj(financialYearFromQuery, Rebate);
-        const penalty = this.findCorrectDateObj(financialYearFromQuery, Penalty);
+        const intrest = findCorrectDateObj(financialYearFromQuery, Interest);
+        const fireCess = findCorrectDateObj(financialYearFromQuery, FireCess);
+        const rebate = findCorrectDateObj(financialYearFromQuery, Rebate);
+        const penalty = findCorrectDateObj(financialYearFromQuery, Penalty);
         this.setState({
           importantDates: {
             intrest,
@@ -383,35 +383,6 @@ class FormWizard extends Component {
     } catch (e) {
       alert(e);
     }
-  };
-
-  findCorrectDateObj = (financialYear, category) => {
-    category.sort((a, b) => {
-      let yearOne = a.fromFY && a.fromFY.slice(0, 4);
-      let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
-      if (yearOne < yearTwo) {
-        return 1;
-      } else return -1;
-    });
-    const assessYear = financialYear && financialYear.slice(0, 4);
-    let chosenDateObj = {};
-    let categoryYear = category.reduce((categoryYear, item) => {
-      const year = item.fromFY && item.fromFY.slice(0, 4);
-      categoryYear.push(year);
-      return categoryYear;
-    }, []);
-    const index = categoryYear.indexOf(assessYear);
-    if (index > -1) {
-      chosenDateObj = category[index];
-    } else {
-      for (let i = 0; i < categoryYear.length; i++) {
-        if (assessYear > categoryYear[i]) {
-          chosenDateObj = category[i];
-          break;
-        }
-      }
-    }
-    return chosenDateObj;
   };
 
   handleRemoveOwner = (index, formKey) => {

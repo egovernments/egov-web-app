@@ -9,7 +9,7 @@ var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _actions = require("egov-ui-kit/redux/common/actions");
 
@@ -275,7 +275,6 @@ var beforeInitForm = exports.beforeInitForm = {
     var usageCategoryMinor = (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor");
     var usageCategoryMajor = (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMajor");
     (0, _set2.default)(action, "form.fields.subUsageType.hideField", false);
-    //For adding multiple units to prepareFormData
 
     var unitFormUpdate = function unitFormUpdate(usageCategoryMinor) {
       var skipMajorUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -285,7 +284,9 @@ var beforeInitForm = exports.beforeInitForm = {
       });
       if (filteredSubUsageMinor.length > 0) {
         var filteredUsageCategoryDetails = getPresentMasterObj(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
-        (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"));
+        var mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+        var subUsageData = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+        (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", subUsageData);
         if ((0, _get2.default)(action, "form.fields.subUsageType.jsonPath") && skipMajorUpdate) {
           dispatch((0, _actions.prepareFormData)(action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", (0, _get2.default)(state, "common.prepareFormData.Properties[0].propertyDetails[0].usageCategoryMinor")));
         }
@@ -306,7 +307,8 @@ var beforeInitForm = exports.beforeInitForm = {
           return item.value !== "MIXED";
         });
         (0, _set2.default)(action, "form.fields.usageType.disabled", false);
-        (0, _set2.default)(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+        var usageTypeData = (0, _PTCommon.sortDropdown)(filterArrayWithoutMixed, "label", true);
+        (0, _set2.default)(action, "form.fields.usageType.dropDownData", usageTypeData);
         unitFormUpdate("common.prepareFormData." + action.form.fields.subUsageType.jsonPath.split("usageCategoryDetail")[0] + "usageCategoryMinor", false);
       } else {
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
@@ -343,7 +345,9 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
         });
         if (filteredSubUsageMinor.length > 0) {
           var filteredUsageCategoryDetails = getPresentMasterObj(prepareDropDownData((0, _get2.default)(state, "common.generalMDMSDataById.UsageCategoryDetail"), true), filteredSubUsageMinor, "usageCategorySubMinor");
-          (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor"));
+          var mergedMaster = mergeMaster(filteredSubUsageMinor, filteredUsageCategoryDetails, "usageCategorySubMinor");
+          var subUsageData = (0, _PTCommon.sortDropdown)(mergedMaster, "label", true);
+          (0, _set2.default)(action, "form.fields.subUsageType.dropDownData", subUsageData);
           // set(
           //   action,
           //   "form.fields.subUsageType.value",
@@ -364,7 +368,8 @@ var beforeInitFormForPlot = exports.beforeInitFormForPlot = {
             return item.value !== "MIXED";
           });
           (0, _set2.default)(action, "form.fields.usageType.disabled", false);
-          (0, _set2.default)(action, "form.fields.usageType.dropDownData", filterArrayWithoutMixed);
+          var usageTypeData = (0, _PTCommon.sortDropdown)(filterArrayWithoutMixed, "label", true);
+          (0, _set2.default)(action, "form.fields.usageType.dropDownData", usageTypeData);
         }
         (0, _set2.default)(action, "form.fields.subUsageType.hideField", true);
       }

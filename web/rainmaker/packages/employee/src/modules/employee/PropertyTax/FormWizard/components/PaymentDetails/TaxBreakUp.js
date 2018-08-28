@@ -83,7 +83,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                       <span>
                         <Label label={`Last Date for Rebate (${rebate.rate}% of PT)`} />
                       </span>
-                      <span>{`${rebate.endingDay}/${rebate.fromFY && rebate.fromFY.slice(0, 4)}`}</span>
+                      <span>{`${rebate.endingDay}`}</span>
                     </li>
                   )}
                 {penalty &&
@@ -92,7 +92,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                       <span>
                         <Label label={`Penalty (${penalty.rate}% of PT) applied from`} />
                       </span>
-                      <span>{`${penalty.startingDay}/${penalty.fromFY && penalty.fromFY.slice(0, 4)}`}</span>
+                      <span>{`${penalty.startingDay}`}</span>
                     </li>
                   )}
                 {intrest &&
@@ -101,7 +101,7 @@ const AdditionalDetails = ({ estimationDetails, importantDates }) => {
                       <span>
                         <Label label={`Interest (${intrest.rate}% p.a. daily) applied from`} />
                       </span>
-                      <span>{`${intrest.startingDay}/${intrest.fromFY && intrest.fromFY.slice(0, 4)}`}</span>
+                      <span>{`${intrest.startingDay}`}</span>
                     </li>
                   )}
               </ul>
