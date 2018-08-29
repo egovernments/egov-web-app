@@ -1,4 +1,4 @@
-import { MDMS } from "egov-ui-kit/utils/endPoints";
+import { getOwnerCategoryByYear } from "egov-ui-kit/utils/PTCommon";
 import { setDependentFields } from "./utils/enableDependentFields";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -65,7 +65,7 @@ const formConfig = {
       hintText: "PT_FORM3_CORRESPONDENCE_ADDRESS_PLACEHOLDER",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
       pattern: /^[<>()\-+_\|\[\]\\.,;:\s$*@'"\/#%& 0-9A-Za-z]{1,500}$/,
-      errorMessage: "Enter valid address"
+      errorMessage: "Enter valid address",
     },
     ownerRelationship: {
       id: "ownerRelationship",
@@ -87,44 +87,48 @@ const formConfig = {
       dropDownData: [],
       fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dataFetchConfig: {
-        url: MDMS.GET.URL,
-        action: MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [
-              {
-                moduleName: "PropertyTax",
-                masterDetails: [
-                  {
-                    name: "OwnerType",
-                    filter: "[?(@.fromFY=='2015-16')]", //year value for this filter should be dynamic.
-                  },
-                ],
-              },
-            ],
-          },
-        },
-        dataPath: ["MdmsRes.PropertyTax.OwnerType"],
-      },
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: [],
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "PropertyTax",
+      //           masterDetails: [
+      //             {
+      //               name: "OwnerType",
+      //             },
+      //           ],
+      //         },
+      //       ],
+
+      //     },
+      //   },
+      //   dataPath: ["MdmsRes.PropertyTax.OwnerType"],
+      // },
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        let documentTypes = get(state, `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`, [])
+        let documentTypes = get(
+          state,
+          `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
+          []
+        )
           .filter((docu) => {
-            return docu.ownerTypeCode === value
+            return docu.ownerTypeCode === value;
           })
           .reduce((acc, curr) => {
-            let currAcc = [...acc]
+            let currAcc = [...acc];
             let dropDownData = {
               label: curr.name,
               value: curr.code,
-            }
-            currAcc.push(dropDownData)
-            return currAcc
-          }, [])
+            };
+            currAcc.push(dropDownData);
+            return currAcc;
+          }, []);
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         switch (value) {
@@ -138,23 +142,27 @@ const formConfig = {
       },
       updateOnSetField: (store, action) => {
         const dispatch = store.dispatch;
-        const state = store.getState()
+        const state = store.getState();
         const { fieldKey, formKey, propertyValue } = action;
         const dependentFields = ["ownerCategoryId", "ownerCategoryIdType"];
-        const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE")
-        let documentTypes = get(state, `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`, [])
+        const currentCategory = get(state, `form.${formKey}.fields.${fieldKey}.value`, "NONE");
+        let documentTypes = get(
+          state,
+          `${process.env.REACT_APP_NAME === "Citizen" ? "citizen" : "employee"}.mdms.document.MdmsRes.PropertyTax.OwnerTypeDocument`,
+          []
+        )
           .filter((docu) => {
-            return docu.ownerTypeCode === currentCategory
+            return docu.ownerTypeCode === currentCategory;
           })
           .reduce((acc, curr) => {
-            let currAcc = [...acc]
+            let currAcc = [...acc];
             let dropDownData = {
               label: curr.name,
               value: curr.code,
-            }
-            currAcc.push(dropDownData)
-            return currAcc
-          }, [])
+            };
+            currAcc.push(dropDownData);
+            return currAcc;
+          }, []);
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
         dispatch(setFieldProperty(formKey, "ownerCategoryIdType", "value", get(documentTypes, "[0].value", "")));
         if (propertyValue.length > 0) {
@@ -165,7 +173,7 @@ const formConfig = {
           }
         }
         return action;
-      }
+      },
     },
     ownerCategoryId: {
       id: "ownerCategoryId",
@@ -191,7 +199,7 @@ const formConfig = {
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dropDownData: [],//[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      dropDownData: [], //[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value } = sourceField;
         if (value === "Aadhar") {
@@ -217,16 +225,43 @@ const formConfig = {
       value: "",
       updateDependentFields: ({ formKey, field: sourceField, dispatch, state }) => {
         const { value: iscorrAddrSameProp } = sourceField;
-        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = ""} = get(state, "form.propertyAddress.fields", {});
-        const mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(mohallaData => mohallaData.value === get(mohalla, "value", ""))
+        const { city = "", colony = "", houseNumber = "", mohalla = "", pincode = "", street = "" } = get(state, "form.propertyAddress.fields", {});
+        const mohallaDetails =
+          mohalla && mohalla.dropDownData && mohalla.dropDownData.find((mohallaData) => mohallaData.value === get(mohalla, "value", ""));
         if (iscorrAddrSameProp) {
-          const correspondingAddress = [`${get(houseNumber, "value", "")}`,`${get(colony, "value", "")}`,`${get(street, "value", "")}`, `${get(mohallaDetails, "label", "")}`,`${get(city,"value","").split(".").pop()}`, `${get(pincode, "value", "")}`].join(", ").replace(/^(,\s)+|(,\s)+$/g, '').replace(/(,\s){2,}/g, ", ")
+          const correspondingAddress = [
+            `${get(houseNumber, "value", "")}`,
+            `${get(colony, "value", "")}`,
+            `${get(street, "value", "")}`,
+            `${get(mohallaDetails, "label", "")}`,
+            `${get(city, "value", "")
+              .split(".")
+              .pop()}`,
+            `${get(pincode, "value", "")}`,
+          ]
+            .join(", ")
+            .replace(/^(,\s)+|(,\s)+$/g, "")
+            .replace(/(,\s){2,}/g, ", ");
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", correspondingAddress));
         } else {
           dispatch(setFieldProperty(formKey, "ownerAddress", "value", ""));
         }
       },
     },
+  },
+  beforeInitForm: (action, store, dispatch) => {
+    try {
+      let state = store.getState();
+      const OwnerTypes = get(state, `common.generalMDMSDataById.OwnerType`);
+      let financialYearFromQuery = window.location.search.split("FY=")[1];
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      const dropdownData = getOwnerCategoryByYear(Object.values(OwnerTypes), financialYearFromQuery);
+      set(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
+    }
   },
   action: "",
   redirectionRoute: "",

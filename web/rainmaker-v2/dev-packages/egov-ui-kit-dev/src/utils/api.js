@@ -3,6 +3,19 @@ import { prepareForm, fetchFromLocalStorage, addQueryArg } from "./commons";
 import some from "lodash/some";
 import commonConfig from "config/common.js";
 
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.data && error.response.data.location) {
+      window.location = error.response.data.location;
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
+
 const instance = axios.create({
   baseURL: window.location.origin,
   headers: {
@@ -21,7 +34,7 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
     did: "1",
     key: "",
     msgId: "20170310130900|en_IN",
-    requesterId: "",
+    // requesterId: "",
     authToken,
   };
   RequestInfo = { ...RequestInfo, ...customRequestInfo };
@@ -34,7 +47,15 @@ const wrapRequestBody = (requestBody, action, customRequestInfo) => {
   );
 };
 
-export const httpRequest = async (endPoint, action, queryObject = [], requestBody = {}, headers = [], customRequestInfo = {}) => {
+export const httpRequest = async (
+  endPoint,
+  action,
+  queryObject = [],
+  requestBody = {},
+  headers = [],
+  customRequestInfo = {},
+  ignoreTenantId = false
+) => {
   const tenantId = fetchFromLocalStorage("tenant-id") || commonConfig.tenantId;
   let apiError = "Api Error";
 
@@ -43,7 +64,7 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
       headers,
     });
 
-  if (!some(queryObject, ["key", "tenantId"])) {
+  if (!some(queryObject, ["key", "tenantId"]) && !ignoreTenantId) {
     queryObject &&
       queryObject.push({
         key: "tenantId",
@@ -74,9 +95,13 @@ export const httpRequest = async (endPoint, action, queryObject = [], requestBod
   throw new Error(apiError);
 };
 
-export const uploadFile = async (endPoint, module, file) => {
+export const uploadFile = async (endPoint, module, file, ulbLevel) => {
   // Bad idea to fetch from local storage, change as feasible
-  const tenantId = fetchFromLocalStorage("tenant-id") ? fetchFromLocalStorage("tenant-id").split(".")[0] : "";
+  const tenantId = fetchFromLocalStorage("tenant-id")
+    ? ulbLevel
+      ? fetchFromLocalStorage("tenant-id")
+      : fetchFromLocalStorage("tenant-id").split(".")[0]
+    : "";
   const uploadInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
@@ -125,6 +150,7 @@ export const loginRequest = async (username = null, password = null, refreshToke
   params.append("grant_type", grantType);
   params.append("scope", "read");
   params.append("tenantId", tenantId);
+  userType && params.append("userType", userType);
 
   try {
     const response = await loginInstance.post("/user/oauth/token", params);
