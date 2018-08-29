@@ -102,7 +102,6 @@ var sortDropdown = exports.sortDropdown = function sortDropdown(data, sortBy, is
 };
 
 var getOwnerCategoryByYear = exports.getOwnerCategoryByYear = function getOwnerCategoryByYear(data, financialYear) {
-  console.log(data, financialYear);
   data.sort(function (a, b) {
     var yearOne = a.fromFY && a.fromFY.slice(0, 4);
     var yearTwo = b.fromFY && b.fromFY.slice(0, 4);
@@ -112,7 +111,6 @@ var getOwnerCategoryByYear = exports.getOwnerCategoryByYear = function getOwnerC
   });
 
   var fY = financialYear.slice(0, 4);
-  console.log(data, fY);
   var OwnerCatArray = data.reduce(function (OwnerCatArray, item) {
     var year = item.fromFY && item.fromFY.slice(0, 4);
     if (year <= fY) {
@@ -120,6 +118,5 @@ var getOwnerCategoryByYear = exports.getOwnerCategoryByYear = function getOwnerC
     }
     return OwnerCatArray;
   }, []);
-  console.log(OwnerCatArray);
   return OwnerCatArray;
 };

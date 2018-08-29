@@ -281,13 +281,10 @@ var formConfig = {
     try {
       var state = store.getState();
       var OwnerTypes = (0, _get3.default)(state, "common.generalMDMSDataById.OwnerType");
-      console.log(Object.values(OwnerTypes));
       var financialYearFromQuery = window.location.search.split("FY=")[1];
       financialYearFromQuery = financialYearFromQuery.split("&")[0];
       var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(Object.values(OwnerTypes), financialYearFromQuery);
       (0, _set2.default)(action, "form.fields.ownerCategory.dropDownData", dropdownData);
-      // dispatch(setFieldProperty("ownerInfo", "ownerCategory", "dropDownData", dropdownData));
-      console.log(dropdownData);
       return action;
     } catch (e) {
       console.log(e);
