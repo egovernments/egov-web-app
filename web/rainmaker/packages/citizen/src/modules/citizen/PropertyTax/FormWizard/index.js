@@ -709,10 +709,16 @@ class FormWizard extends Component {
 
   getSingleOwnerInfo = () => {
     const { ownerInfo } = this.props.form;
-    const ownerObj = {};
+    const ownerObj = {
+      document: {},
+    };
     Object.keys(ownerInfo.fields).map((field) => {
       const jsonPath = ownerInfo.fields[field].jsonPath;
-      ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+        ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      } else {
+        ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(ownerInfo, `fields.${field}.value`, undefined) || null;
+      }
     });
     const ownerArray = [ownerObj];
     return ownerArray;
@@ -725,11 +731,16 @@ class FormWizard extends Component {
       .reduce((acc, curr, currIndex, arr) => {
         const ownerData = [...acc];
         const currForm = form[curr];
-        const ownerObj = {};
+        const ownerObj = {
+          document: {},
+        };
         Object.keys(currForm.fields).map((field) => {
           const jsonPath = currForm.fields[field].jsonPath;
-          ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] =
-            get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          if (jsonPath.toLowerCase().indexOf("document") !== -1) {
+            ownerObj.document[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `fields.${field}.value`, undefined) || null;
+          } else {
+            ownerObj[jsonPath.substring(jsonPath.lastIndexOf(".") + 1, jsonPath.length)] = get(form, `${curr}.fields.${field}.value`, undefined) || null;
+          }
         });
         ownerData.push(ownerObj);
         return ownerData;
