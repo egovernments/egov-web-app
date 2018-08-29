@@ -61,7 +61,7 @@ class FormWizard extends Component {
     propertyDetails: {},
     bill: [],
     partialAmountError: "",
-    totalAmountToBePaid: 1,
+    totalAmountToBePaid: 100,
     isFullPayment: true,
     valueSelected: "Full_Amount",
   };
@@ -1077,46 +1077,50 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
-    const { isFullPayment, partialAmountError } = this.state;
+    const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
     if (!isFullPayment && partialAmountError) return;
-    this.setState({ dialogueOpen: true });
-    const { form, prepareFormData } = this.props;
-    const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
-    let modeOfPaymentExists = false;
-    for (let i = 0; i < formKeysToValidate.length; i++) {
-      if (Object.keys(form).indexOf(formKeysToValidate[i]) > -1) {
-        modeOfPaymentExists = true;
-        break;
+    if (totalAmountToBePaid % 1 === 0) {
+      this.setState({ dialogueOpen: true });
+      const { form, prepareFormData } = this.props;
+      const formKeysToValidate = ["cardInfo", "cashInfo", "chequeInfo", "demandInfo"];
+      let modeOfPaymentExists = false;
+      for (let i = 0; i < formKeysToValidate.length; i++) {
+        if (Object.keys(form).indexOf(formKeysToValidate[i]) > -1) {
+          modeOfPaymentExists = true;
+          break;
+        }
       }
-    }
-    if (modeOfPaymentExists) {
-      const validateArray = Object.keys(form).reduce((result, item) => {
-        if (formKeysToValidate.indexOf(item) > -1) {
-          result.push({ formKey: item, formValid: validateForm(form[item]) });
-        }
-        return result;
-      }, []);
-
-      const areFormsValid = validateArray.reduce((result, current) => {
-        if (!current.formValid) {
-          result = false;
-        } else {
-          result = true;
-        }
-        return result;
-      }, false);
-
-      if (areFormsValid) {
-        this.createReceipt();
-      } else {
-        validateArray.forEach((item) => {
-          if (!item.formValid) {
-            this.props.displayFormErrorsAction(item.formKey);
+      if (modeOfPaymentExists) {
+        const validateArray = Object.keys(form).reduce((result, item) => {
+          if (formKeysToValidate.indexOf(item) > -1) {
+            result.push({ formKey: item, formValid: validateForm(form[item]) });
           }
-        });
+          return result;
+        }, []);
+
+        const areFormsValid = validateArray.reduce((result, current) => {
+          if (!current.formValid) {
+            result = false;
+          } else {
+            result = true;
+          }
+          return result;
+        }, false);
+
+        if (areFormsValid) {
+          this.createReceipt();
+        } else {
+          validateArray.forEach((item) => {
+            if (!item.formValid) {
+              this.props.displayFormErrorsAction(item.formKey);
+            }
+          });
+        }
+      } else {
+        this.createReceipt();
       }
     } else {
-      this.createReceipt();
+      alert("Amount cannot be a fraction!");
     }
   };
 

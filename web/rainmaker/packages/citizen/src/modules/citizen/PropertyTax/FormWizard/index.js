@@ -1012,9 +1012,13 @@ class FormWizard extends Component {
   };
 
   onPayButtonClick = () => {
-    const { isFullPayment, partialAmountError } = this.state;
+    const { isFullPayment, partialAmountError, totalAmountToBePaid } = this.state;
     if (!isFullPayment && partialAmountError) return;
-    this.setState({ dialogueOpen: true });
+    if (totalAmountToBePaid % 1 === 0) {
+      this.setState({ dialogueOpen: true });
+    } else {
+      alert("Amount cannot be a fraction!");
+    }
   };
 
   render() {
