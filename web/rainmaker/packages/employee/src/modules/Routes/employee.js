@@ -69,23 +69,23 @@ const routes = [
     needsAuthentication: true,
     options: { hideFooter: true, title: "CS_HOME_HEADER_PROFILE" },
   },
-  // {
-  //   path: "all-complaints",
-  //   component: AllComplaints,
-  //   needsAuthentication: true,
-  //   options: {
-  //     hideFooter: true,
-  //     title: "ES_OPEN_COMPLAINTS_HEADER",
-  //     hideTitle: false,
-  //     redirectionUrl,
-  //     isHomeScreen: true,
-  //     hideFor: "ao",
-  //     customFor: "csr",
-  //     customTitle: "ES_ALL_COMPLAINTS_HEADER",
-  //   },
-  // },
   {
     path: "all-complaints",
+    component: AllComplaints,
+    needsAuthentication: true,
+    options: {
+      hideFooter: true,
+      title: "ES_OPEN_COMPLAINTS_HEADER",
+      hideTitle: false,
+      redirectionUrl,
+      isHomeScreen: true,
+      hideFor: "ao",
+      customFor: "csr",
+      customTitle: "ES_ALL_COMPLAINTS_HEADER",
+    },
+  },
+  {
+    path: "egf/expensebill/newform",
     component: ErpExpenseBill,
     needsAuthentication: true,
     options: {

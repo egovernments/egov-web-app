@@ -8,10 +8,10 @@ class ErpExpenseBill extends Component{
     
             // let auth_token = '7d030b3d-a094-4c49-a223-b59afdea0f75';
             let auth_token = localStorage.getItem('token');
-            let menuUrl = "EGF/expensebill/newform";
+            let menuUrl = this.props.location.pathname;
             let loc = window.location;
             // let erp_url= 'http://longowal.coexit-dev.org/EGF/expensebill/newform';
-            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+"/"+menuUrl;
+            let erp_url= loc.protocol+"//"+localStorage.getItem('tenant-id').split('.')[1]+"."+loc.hostname+menuUrl;
             console.log("logged user token "+localStorage.getItem('token'));
             console.log("tenat-info :"+ localStorage.getItem('tenant-id'));
             console.log("ERP URL : "+erp_url);
