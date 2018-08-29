@@ -2,6 +2,7 @@ import React from "react";
 import AutoComplete from "material-ui/AutoComplete";
 import PropTypes from "prop-types";
 import filter from "lodash/filter";
+import isUndefined from "lodash/isUndefined";
 
 const hintBaseStyle = {
   fontSize: "16px",
@@ -38,7 +39,7 @@ class AutoSuggestDropdown extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     let { getNameById } = this;
-    if (nextProps.value) {
+    if (!isUndefined(nextProps.value)) {
       this.setState({ searchText: getNameById(nextProps.value) });
     }
   }

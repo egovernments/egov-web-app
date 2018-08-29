@@ -556,10 +556,12 @@ export const mohalla = {
     errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
     required: true,
     updateDependentFields: ({ formKey, field, dispatch }) => {
-      const mohalla = field.dropDownData.find((option) => {
-        return option.value === field.value;
-      });
-      dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
+      if (field.value && field.value.length > 0) {
+        const mohalla = field.dropDownData.find((option) => {
+          return option.value === field.value;
+        });
+        dispatch(prepareFormData("Properties[0].address.locality.area", mohalla.area));
+      }
     },
   },
 };

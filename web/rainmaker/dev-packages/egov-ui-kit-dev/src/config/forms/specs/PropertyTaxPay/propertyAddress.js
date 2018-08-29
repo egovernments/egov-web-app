@@ -35,6 +35,8 @@ const formConfig = {
             })[0].name
           )
         );
+        dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
+
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
