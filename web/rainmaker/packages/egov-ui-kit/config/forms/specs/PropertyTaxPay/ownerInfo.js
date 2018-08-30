@@ -58,15 +58,6 @@ var formConfig = {
       required: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 }
     },
-    // ownerAadhar: {
-    //   id: "ownerAadhar",
-    //   jsonPath: "Properties[0].propertyDetails[0].owners[0].aadhaarNumber",
-    //   type: "textfield",
-    //   floatingLabelText: "Aadhar ID",
-    //   hintText: "Enter aadhar card no.",
-    //   errorMessage: "Enter valid aadhar number",
-    //   pattern: /^[0-9]{12}$/i,
-    // },
     ownerEmail: {
       id: "ownerEmail",
       jsonPath: "Properties[0].propertyDetails[0].owners[0].emailId",
@@ -107,28 +98,6 @@ var formConfig = {
       dropDownData: [],
       fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      // dataFetchConfig: {
-      //   url: MDMS.GET.URL,
-      //   action: MDMS.GET.ACTION,
-      //   queryParams: [],
-      //   requestBody: {
-      //     MdmsCriteria: {
-      //       tenantId: "pb",
-      //       moduleDetails: [
-      //         {
-      //           moduleName: "PropertyTax",
-      //           masterDetails: [
-      //             {
-      //               name: "OwnerType",
-      //             },
-      //           ],
-      //         },
-      //       ],
-
-      //     },
-      //   },
-      //   dataPath: ["MdmsRes.PropertyTax.OwnerType"],
-      // },
       updateDependentFields: function updateDependentFields(_ref) {
         var formKey = _ref.formKey,
             sourceField = _ref.field,
@@ -148,14 +117,19 @@ var formConfig = {
           currAcc.push(dropDownData);
           return currAcc;
         }, []);
+
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "dropDownData", documentTypes));
         dispatch((0, _actions.setFieldProperty)(formKey, "ownerCategoryIdType", "value", (0, _get3.default)(documentTypes, "[0].value", "")));
         switch (value) {
           case "NONE":
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, true);
             break;
+          case "WIDOW":
+            dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", "Female"));
+            break;
           default:
             (0, _enableDependentFields.setDependentFields)(dependentFields, dispatch, formKey, false);
+            dispatch((0, _actions.setFieldProperty)(formKey, "ownerGender", "value", "Male"));
             break;
         }
       },
@@ -215,7 +189,7 @@ var formConfig = {
       toolTip: true,
       toolTipMessage: "PT_DOCUMENT_ID_TYPE_TOOLTIP_MESSAGE",
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dropDownData: [], //[{ label: "AADHAR", value: "Aadhar" }, { label: "Driving License", value: "Driving License" }],
+      dropDownData: [],
       updateDependentFields: function updateDependentFields(_ref2) {
         var formKey = _ref2.formKey,
             sourceField = _ref2.field,
