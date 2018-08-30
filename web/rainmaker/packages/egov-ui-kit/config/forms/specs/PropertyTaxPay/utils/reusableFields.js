@@ -552,10 +552,12 @@ var mohalla = exports.mohalla = {
           field = _ref7.field,
           dispatch = _ref7.dispatch;
 
-      var mohalla = field.dropDownData.find(function (option) {
-        return option.value === field.value;
-      });
-      dispatch((0, _actions.prepareFormData)("Properties[0].address.locality.area", mohalla.area));
+      if (field.value && field.value.length > 0) {
+        var _mohalla = field.dropDownData.find(function (option) {
+          return option.value === field.value;
+        });
+        dispatch((0, _actions.prepareFormData)("Properties[0].address.locality.area", _mohalla.area));
+      }
     }
   }
 };

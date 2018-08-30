@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
+exports.getOwnerCategoryByYear = exports.sortDropdown = exports.findCorrectDateObj = exports.getQueryValue = exports.getLatestPropertyDetails = exports.resetFormWizard = undefined;
 
 var _get = require("lodash/get");
 
@@ -99,4 +99,24 @@ var sortDropdown = exports.sortDropdown = function sortDropdown(data, sortBy, is
     return isAscending ? textA < textB ? -1 : textA > textB ? 1 : 0 : textA < textB ? 1 : textA > textB ? -1 : 0;
   });
   return sortedData;
+};
+
+var getOwnerCategoryByYear = exports.getOwnerCategoryByYear = function getOwnerCategoryByYear(data, financialYear) {
+  data.sort(function (a, b) {
+    var yearOne = a.fromFY && a.fromFY.slice(0, 4);
+    var yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+    if (yearOne < yearTwo) {
+      return -1;
+    } else return 1;
+  });
+
+  var fY = financialYear.slice(0, 4);
+  var OwnerCatArray = data.reduce(function (OwnerCatArray, item) {
+    var year = item.fromFY && item.fromFY.slice(0, 4);
+    if (year <= fY) {
+      OwnerCatArray.push({ label: item.name, value: item.code });
+    }
+    return OwnerCatArray;
+  }, []);
+  return OwnerCatArray;
 };

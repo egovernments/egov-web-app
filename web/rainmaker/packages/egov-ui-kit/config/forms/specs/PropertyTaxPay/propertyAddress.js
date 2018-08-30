@@ -54,6 +54,8 @@ var formConfig = {
         dispatch((0, _actions.prepareFormData)("Properties[0].address.city", (0, _filter2.default)((0, _get2.default)(state, "common.cities"), function (city) {
           return city.code === field.value;
         })[0].name));
+        dispatch((0, _actions2.setFieldProperty)("propertyAddress", "mohalla", "value", ""));
+
         var requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -179,6 +181,7 @@ var formConfig = {
       return action;
     } catch (e) {
       console.log(e);
+      return action;
     }
   },
   action: "",

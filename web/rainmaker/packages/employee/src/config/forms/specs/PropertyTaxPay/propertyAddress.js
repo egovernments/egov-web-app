@@ -1,5 +1,5 @@
 import { pincode, mohalla, street, colony, houseNumber, dummy } from "egov-ui-kit/config/forms/specs/PropertyTaxPay/utils/reusableFields";
-import { handleFieldChange } from "egov-ui-kit/redux/form/actions";
+import { handleFieldChange, setFieldProperty } from "egov-ui-kit/redux/form/actions";
 import { CITY } from "egov-ui-kit/utils/endPoints";
 import { prepareFormData, fetchGeneralMDMSData } from "egov-ui-kit/redux/common/actions";
 import set from "lodash/set";
@@ -48,6 +48,7 @@ const formConfig = {
       },
       updateDependentFields: ({ formKey, field, dispatch, state }) => {
         dispatch(prepareFormData("Properties[0].tenantId", field.value));
+        dispatch(setFieldProperty("propertyAddress", "mohalla", "value", ""));
         let requestBody = {
           MdmsCriteria: {
             tenantId: field.value,
@@ -107,10 +108,6 @@ const formConfig = {
             "UsageCategoryMajor",
             "UsageCategoryMinor",
             "UsageCategorySubMinor",
-            "Rebate",
-            "Penalty",
-            "Interest",
-            "FireCess",
           ])
         );
       },

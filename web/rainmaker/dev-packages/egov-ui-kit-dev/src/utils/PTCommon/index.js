@@ -100,3 +100,23 @@ export const sortDropdown = (data, sortBy, isAscending) => {
   });
   return sortedData;
 };
+
+export const getOwnerCategoryByYear = (data, financialYear) => {
+  data.sort((a, b) => {
+    let yearOne = a.fromFY && a.fromFY.slice(0, 4);
+    let yearTwo = b.fromFY && b.fromFY.slice(0, 4);
+    if (yearOne < yearTwo) {
+      return -1;
+    } else return 1;
+  });
+
+  const fY = financialYear.slice(0, 4);
+  const OwnerCatArray = data.reduce((OwnerCatArray, item) => {
+    let year = item.fromFY && item.fromFY.slice(0, 4);
+    if (year <= fY) {
+      OwnerCatArray.push({ label: item.name, value: item.code });
+    }
+    return OwnerCatArray;
+  }, []);
+  return OwnerCatArray;
+};

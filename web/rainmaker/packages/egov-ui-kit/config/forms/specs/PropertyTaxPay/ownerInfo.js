@@ -8,7 +8,7 @@ var _toConsumableArray2 = require("babel-runtime/helpers/toConsumableArray");
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _endPoints = require("egov-ui-kit/utils/endPoints");
+var _PTCommon = require("egov-ui-kit/utils/PTCommon");
 
 var _enableDependentFields = require("./utils/enableDependentFields");
 
@@ -107,24 +107,28 @@ var formConfig = {
       dropDownData: [],
       fullWidth: true,
       errorStyle: { position: "absolute", bottom: -8, zIndex: 5 },
-      dataFetchConfig: {
-        url: _endPoints.MDMS.GET.URL,
-        action: _endPoints.MDMS.GET.ACTION,
-        queryParams: [],
-        requestBody: {
-          MdmsCriteria: {
-            tenantId: "pb",
-            moduleDetails: [{
-              moduleName: "PropertyTax",
-              masterDetails: [{
-                name: "OwnerType",
-                filter: "[?(@.fromFY=='2015-16')]" //year value for this filter should be dynamic.
-              }]
-            }]
-          }
-        },
-        dataPath: ["MdmsRes.PropertyTax.OwnerType"]
-      },
+      // dataFetchConfig: {
+      //   url: MDMS.GET.URL,
+      //   action: MDMS.GET.ACTION,
+      //   queryParams: [],
+      //   requestBody: {
+      //     MdmsCriteria: {
+      //       tenantId: "pb",
+      //       moduleDetails: [
+      //         {
+      //           moduleName: "PropertyTax",
+      //           masterDetails: [
+      //             {
+      //               name: "OwnerType",
+      //             },
+      //           ],
+      //         },
+      //       ],
+
+      //     },
+      //   },
+      //   dataPath: ["MdmsRes.PropertyTax.OwnerType"],
+      // },
       updateDependentFields: function updateDependentFields(_ref) {
         var formKey = _ref.formKey,
             sourceField = _ref.field,
@@ -261,16 +265,30 @@ var formConfig = {
             _get$street = _get.street,
             street = _get$street === undefined ? "" : _get$street;
 
-        var mohallaDetails = mohalla && mohalla.dropDownData.find(function (mohallaData) {
+        var mohallaDetails = mohalla && mohalla.dropDownData && mohalla.dropDownData.find(function (mohallaData) {
           return mohallaData.value === (0, _get3.default)(mohalla, "value", "");
         });
         if (iscorrAddrSameProp) {
-          var correspondingAddress = ["" + (0, _get3.default)(houseNumber, "value", ""), "" + (0, _get3.default)(colony, "value", ""), "" + (0, _get3.default)(street, "value", ""), "" + (0, _get3.default)(mohallaDetails, "label", ""), "" + (0, _get3.default)(city, "value", "").split(".").pop(), "" + (0, _get3.default)(pincode, "value", "")].join(", ").replace(/^(,\s)+|(,\s)+$/g, '').replace(/(,\s){2,}/g, ", ");
+          var correspondingAddress = ["" + (0, _get3.default)(houseNumber, "value", ""), "" + (0, _get3.default)(colony, "value", ""), "" + (0, _get3.default)(street, "value", ""), "" + (0, _get3.default)(mohallaDetails, "label", ""), "" + (0, _get3.default)(city, "value", "").split(".").pop(), "" + (0, _get3.default)(pincode, "value", "")].join(", ").replace(/^(,\s)+|(,\s)+$/g, "").replace(/(,\s){2,}/g, ", ");
           dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", correspondingAddress));
         } else {
           dispatch((0, _actions.setFieldProperty)(formKey, "ownerAddress", "value", ""));
         }
       }
+    }
+  },
+  beforeInitForm: function beforeInitForm(action, store, dispatch) {
+    try {
+      var state = store.getState();
+      var OwnerTypes = (0, _get3.default)(state, "common.generalMDMSDataById.OwnerType");
+      var financialYearFromQuery = window.location.search.split("FY=")[1];
+      financialYearFromQuery = financialYearFromQuery.split("&")[0];
+      var dropdownData = (0, _PTCommon.getOwnerCategoryByYear)(Object.values(OwnerTypes), financialYearFromQuery);
+      (0, _set2.default)(action, "form.fields.ownerCategory.dropDownData", dropdownData);
+      return action;
+    } catch (e) {
+      console.log(e);
+      return action;
     }
   },
   action: "",

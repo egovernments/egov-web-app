@@ -33,6 +33,16 @@ var _common2 = _interopRequireDefault(_common);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_axios2.default.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (error.response && error.response.data && error.response.data.location) {
+    window.location = error.response.data.location;
+  } else {
+    return Promise.reject(error);
+  }
+});
+
 var instance = _axios2.default.create({
   baseURL: window.location.origin,
   headers: {
@@ -51,7 +61,7 @@ var wrapRequestBody = function wrapRequestBody(requestBody, action, customReques
     did: "1",
     key: "",
     msgId: "20170310130900|en_IN",
-    requesterId: "",
+    // requesterId: "",
     authToken: authToken
   };
   RequestInfo = (0, _extends3.default)({}, RequestInfo, customRequestInfo);
@@ -66,6 +76,7 @@ var httpRequest = exports.httpRequest = function () {
     var requestBody = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     var headers = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
     var customRequestInfo = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
+    var ignoreTenantId = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : false;
 
     var tenantId, apiError, response, responseStatus, _error$response, data, status;
 
@@ -81,7 +92,7 @@ var httpRequest = exports.httpRequest = function () {
               headers: headers
             });
 
-            if (!(0, _some2.default)(queryObject, ["key", "tenantId"])) {
+            if (!(0, _some2.default)(queryObject, ["key", "tenantId"]) && !ignoreTenantId) {
               queryObject && queryObject.push({
                 key: "tenantId",
                 value: tenantId
@@ -136,14 +147,14 @@ var httpRequest = exports.httpRequest = function () {
 }();
 
 var uploadFile = exports.uploadFile = function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(endPoint, module, file) {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(endPoint, module, file, ulbLevel) {
     var tenantId, uploadInstance, requestParams, requestBody, response, responseStatus, fileStoreIds, responseData, files;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             // Bad idea to fetch from local storage, change as feasible
-            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") ? (0, _commons.fetchFromLocalStorage)("tenant-id").split(".")[0] : "";
+            tenantId = (0, _commons.fetchFromLocalStorage)("tenant-id") ? ulbLevel ? (0, _commons.fetchFromLocalStorage)("tenant-id") : (0, _commons.fetchFromLocalStorage)("tenant-id").split(".")[0] : "";
             uploadInstance = _axios2.default.create({
               baseURL: window.location.origin,
               headers: {
@@ -195,7 +206,7 @@ var uploadFile = exports.uploadFile = function () {
     }, _callee2, undefined, [[4, 17]]);
   }));
 
-  return function uploadFile(_x7, _x8, _x9) {
+  return function uploadFile(_x8, _x9, _x10, _x11) {
     return _ref2.apply(this, arguments);
   };
 }();
@@ -232,44 +243,45 @@ var loginRequest = exports.loginRequest = function () {
             params.append("grant_type", grantType);
             params.append("scope", "read");
             params.append("tenantId", tenantId);
+            userType && params.append("userType", userType);
 
-            _context3.prev = 10;
-            _context3.next = 13;
+            _context3.prev = 11;
+            _context3.next = 14;
             return loginInstance.post("/user/oauth/token", params);
 
-          case 13:
+          case 14:
             response = _context3.sent;
             responseStatus = parseInt(response.status, 10);
 
             if (!(responseStatus === 200 || responseStatus === 201)) {
-              _context3.next = 17;
+              _context3.next = 18;
               break;
             }
 
             return _context3.abrupt("return", response.data);
 
-          case 17:
-            _context3.next = 23;
+          case 18:
+            _context3.next = 24;
             break;
 
-          case 19:
-            _context3.prev = 19;
-            _context3.t0 = _context3["catch"](10);
+          case 20:
+            _context3.prev = 20;
+            _context3.t0 = _context3["catch"](11);
             _error$response2 = _context3.t0.response, data = _error$response2.data, status = _error$response2.status;
 
             if (status === 400) {
               apiError = data.hasOwnProperty("error_description") && data.error_description || apiError;
             }
 
-          case 23:
+          case 24:
             throw new Error(apiError);
 
-          case 24:
+          case 25:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, undefined, [[10, 19]]);
+    }, _callee3, undefined, [[11, 20]]);
   }));
 
   return function loginRequest() {

@@ -54,6 +54,10 @@ var _filter = require("lodash/filter");
 
 var _filter2 = _interopRequireDefault(_filter);
 
+var _isUndefined = require("lodash/isUndefined");
+
+var _isUndefined2 = _interopRequireDefault(_isUndefined);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hintBaseStyle = {
@@ -109,7 +113,7 @@ var AutoSuggestDropdown = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       var getNameById = this.getNameById;
 
-      if (nextProps.value) {
+      if (!(0, _isUndefined2.default)(nextProps.value)) {
         this.setState({ searchText: getNameById(nextProps.value) });
       }
     }
